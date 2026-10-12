@@ -1,0 +1,325 @@
+{
+  "scope": "Exact immutable evaluator output-manifest files only",
+  "remote_full_html_pdf_paper_bodies_published": 0,
+  "new_source_fetches": 0,
+  "omitted_selected_original_files": [],
+  "policy": "Retain original compact authored evidence and declared permitted minimal tokens; no arbitrary source corpus. No newly written scientific context capsules.",
+  "records": [
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/control/primary-source-index.json",
+      "original_private_sha256": "76b8b7c80bdf54c6747003b7e97fdc497c40f11f00f77a20daee08482ca48db4",
+      "public_sha256": "76b8b7c80bdf54c6747003b7e97fdc497c40f11f00f77a20daee08482ca48db4",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/treatment/primary-source-index.json",
+      "original_private_sha256": "f2f59a161ec64b1ad722f9e70fdac2f0ff91476431fc22de06c0ed1486b24e44",
+      "public_sha256": "f2f59a161ec64b1ad722f9e70fdac2f0ff91476431fc22de06c0ed1486b24e44",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P01/control/primary-source-index.json",
+      "original_private_sha256": "c2ad97559da6acd991e01d59e8c1897b2a4a149689bdfa6812c2fd81813bfb1a",
+      "public_sha256": "c2ad97559da6acd991e01d59e8c1897b2a4a149689bdfa6812c2fd81813bfb1a",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {
+        "public_evidence_policy": "Compact paraphrased findings and exact public links/locators only. No account identity, tokens, machine state, native transcripts or full source corpus.",
+        "lookup_limitations": [
+          "Some direct HTTP reads were unavailable/empty; successful web reads supplied the same primary documents.",
+          "A guessed upstream resource_limits.rs test path returned 404; no evidence or coverage claim is based on it. Actual limits.rs definitions and fuel fixtures were inspected.",
+          "docs.rs archive source failed in web reader but was successfully read through direct HTTP; no downloaded code executed."
+        ],
+        "source_license_handling": "No copied code or page corpus is redistributed. Governing public source/license links remain accessible at the exact URLs."
+      },
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P01/treatment/primary-source-index.json",
+      "original_private_sha256": "6cb3b9675022fbb961032b7d82c4acc4e96e5ea26f4a6863c5a22ed5d9e8c26d",
+      "public_sha256": "6cb3b9675022fbb961032b7d82c4acc4e96e5ea26f4a6863c5a22ed5d9e8c26d",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {
+        "public_evidence_policy": "Compact paraphrased findings and exact public links/locators only. No account identity, tokens, machine state, native transcripts or full source corpus.",
+        "lookup_limitations": [
+          "Some direct HTTP reads were unavailable/empty; successful web reads supplied the same primary documents.",
+          "A guessed upstream resource_limits.rs test path returned 404; no evidence or coverage claim is based on it. Actual limits.rs definitions and fuel fixtures were inspected.",
+          "docs.rs archive source failed in web reader but was successfully read through direct HTTP; no downloaded code executed."
+        ],
+        "source_license_handling": "No copied code or page corpus is redistributed. Governing public source/license links remain accessible at the exact URLs."
+      },
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/control/primary-source-index.json",
+      "original_private_sha256": "c5f24770f01bf08cfdd54394d97384cbbe1ae04ea291e4de01620849e6fcf7fa",
+      "public_sha256": "c5f24770f01bf08cfdd54394d97384cbbe1ae04ea291e4de01620849e6fcf7fa",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {
+        "evidence_policy": "Compact original observations and exact public links only. Body digests describe retrieved public source bytes; raw source corpora are not retained. No code was executed."
+      },
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/treatment/primary-source-index.json",
+      "original_private_sha256": "b46aa1e1a2fe62329643f2bdc6c4878da58d720d95158334bd564b2e6c355420",
+      "public_sha256": "b46aa1e1a2fe62329643f2bdc6c4878da58d720d95158334bd564b2e6c355420",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {
+        "evidence_policy": "Compact original observations and exact public links only. Body digests describe retrieved public source bytes; raw source corpora are not retained. No code was executed."
+      },
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/control/primary-source-index.json",
+      "original_private_sha256": "d91f81a5395bf0d90ebc80c1c13430a9fe52381bf5da88ed414b784afb0749d3",
+      "public_sha256": "d91f81a5395bf0d90ebc80c1c13430a9fe52381bf5da88ed414b784afb0749d3",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {
+        "source_license_context": {
+          "IETF": "Copyright IETF Trust and authors; BCP 78 and https://trustee.ietf.org/license-info. No RFC code component or source corpus redistributed.",
+          "W3C": "W3C Recommendation source notices and https://www.w3.org/Consortium/Legal/2015/doc-license retained by reference; no full source redistributed.",
+          "Hypothesis": {
+            "notice": "Copyright (c) 2013–2019 Hypothes.is Project and contributors; BSD-2-Clause, with subcomponent terms. No code redistributed.",
+            "license_url": "https://raw.githubusercontent.com/hypothesis/client/904810bde556c58043672b61f0ea33748fd0e00a/LICENSE"
+          },
+          "SQLite": null
+        }
+      },
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/evidence/input-verification.json",
+      "original_private_sha256": "fdceece40e130dc2279a33d088f3300f05f336d553da0cb87653b8e68c2f6278",
+      "public_sha256": "71a60a67c7327cc34ad07bc45de5c924e46306fadbb858b53fd09d012d4022de",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/evidence/primary-access.json",
+      "original_private_sha256": "55fcbebe459e01f8a4b8edac98afbf1911c813704ca9cf5656b040f99421b1c5",
+      "public_sha256": "55fcbebe459e01f8a4b8edac98afbf1911c813704ca9cf5656b040f99421b1c5",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/treatment/primary-source-index.json",
+      "original_private_sha256": "3556a3cc6bcf52398ce727d052c7903cf8cc0338efd348584c50da85929adbac",
+      "public_sha256": "3556a3cc6bcf52398ce727d052c7903cf8cc0338efd348584c50da85929adbac",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {
+        "source_license_context": {
+          "IETF": "Copyright IETF Trust and authors; BCP 78 and https://trustee.ietf.org/license-info. No RFC code component or source corpus redistributed.",
+          "W3C": "W3C Recommendation source notices and https://www.w3.org/Consortium/Legal/2015/doc-license retained by reference; no full source redistributed.",
+          "Hypothesis": null,
+          "SQLite": "Source files disclaim copyright; https://www.sqlite.org/copyright.html. No source code redistributed."
+        }
+      },
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/primary-source-index.json",
+      "original_private_sha256": "505befb6aee37b4e787feb2c53e3bd635bfcbb45544453fde87e3edc1c8086db",
+      "public_sha256": "505befb6aee37b4e787feb2c53e3bd635bfcbb45544453fde87e3edc1c8086db",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {
+        "source_license_policy": "No corpus copies. Only minimal code tokens in decisive evidence; PouchDB code is Apache-2.0, https://www.apache.org/licenses/LICENSE-2.0. SQLite sources public domain; Automerge source license notices remain at linked repository.",
+        "execution": "No downloaded source or upstream/application tests executed."
+      },
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/evidence/public-retrievals-01.json",
+      "original_private_sha256": "ca032b78cfd8ad228ac36a868ec12abc8b77d3d5218f011508388719e2e6101b",
+      "public_sha256": "ca032b78cfd8ad228ac36a868ec12abc8b77d3d5218f011508388719e2e6101b",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/evidence/public-retrievals-02.json",
+      "original_private_sha256": "5ef87cbfac3b64c8f965769a6d8b2dd5e16fdfcc4cdfd2addf5dcc44ea68c979",
+      "public_sha256": "5ef87cbfac3b64c8f965769a6d8b2dd5e16fdfcc4cdfd2addf5dcc44ea68c979",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/evidence/public-retrievals-03.json",
+      "original_private_sha256": "2ca1000dba0be71136f7e8aff1c8f19cd4cdcf2f016cdb3396f6a45928ba08a5",
+      "public_sha256": "2ca1000dba0be71136f7e8aff1c8f19cd4cdcf2f016cdb3396f6a45928ba08a5",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/evidence/public-retrievals-04.json",
+      "original_private_sha256": "bcd94de5cc5fde9f632b3925d24236ee0f6bfc63a54813ce28403e24869e1cbf",
+      "public_sha256": "bcd94de5cc5fde9f632b3925d24236ee0f6bfc63a54813ce28403e24869e1cbf",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/evidence/public-retrievals-05.json",
+      "original_private_sha256": "91be88d7396d68d3a54cd827cdb24bd5b19157652c051adac150cb014000f3d6",
+      "public_sha256": "91be88d7396d68d3a54cd827cdb24bd5b19157652c051adac150cb014000f3d6",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/evidence/pouch-oracle.json",
+      "original_private_sha256": "f847b237f46e7e39d7b8690b5758bedf9a035c04d8d50ddc94da778fc23fae0f",
+      "public_sha256": "f847b237f46e7e39d7b8690b5758bedf9a035c04d8d50ddc94da778fc23fae0f",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {
+        "license": "Apache License 2.0; https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/primary-source-index.json",
+      "original_private_sha256": "c2045f8369e24386d3e6f57cdf4d00c8045994752513a39623d05797a846f279",
+      "public_sha256": "d0004dc775d525a8488e1f9a4e3ccf16cf341ddc6d55a07d2da255727e45b5b8",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/primary-source-index.json",
+      "original_private_sha256": "d7212f79e8a73a928e150b7623c1c8924ab44f5664539a6f5134a0e7b8165332",
+      "public_sha256": "96b0807b9d842cad1a77231fd6b080b2f333e09c40a07e61ac32ec7303b95458",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/primary-source-index.json",
+      "original_private_sha256": "e118e4d33631651690a987131a8c9af42e307162a4d42d341fae6c9f636ba15a",
+      "public_sha256": "ce3567ec39ab3b8e7bfada12a687f58f21ae5c3a35dd3ee3f88a72121bdf773f",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/primary-source-index.json",
+      "original_private_sha256": "b4c6833af61d3968f920e2fc477ed66599f67b9575f21c7b6363f597079e4d8d",
+      "public_sha256": "a6db1e4acaffce49f7e832e39ff6994b9326c692baf13117ab7d2a5b4d320c66",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/evidence/independent-primary-research.json",
+      "original_private_sha256": "eac8af81f14ddeb7cbcbf383a3eb9cf77f396b62cf396ffb7aa248dcde943c3f",
+      "public_sha256": "eac8af81f14ddeb7cbcbf383a3eb9cf77f396b62cf396ffb7aa248dcde943c3f",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/evidence/input-verification.json",
+      "original_private_sha256": "2d188424410e9309dfc78a523e7df679977c4cffe605910709a533f74d2e6851",
+      "public_sha256": "4be742051a49a2142aad7358681eb6891aaa30bb880abc8a98ed372cabd23108",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-01.json",
+      "original_private_sha256": "e7d5ba83d3654f163fcecc89a5b993d85af85623857c6c997b3fac889f11d711",
+      "public_sha256": "e7d5ba83d3654f163fcecc89a5b993d85af85623857c6c997b3fac889f11d711",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-02.json",
+      "original_private_sha256": "6546375006e7dea817eb2c0f2a1decede621ee4eac76348b2fb93171ae09684e",
+      "public_sha256": "6546375006e7dea817eb2c0f2a1decede621ee4eac76348b2fb93171ae09684e",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-03.json",
+      "original_private_sha256": "a9317e0bedad23bb806f9cd786c65550c6093fbbebb914630f189362da20fd92",
+      "public_sha256": "a9317e0bedad23bb806f9cd786c65550c6093fbbebb914630f189362da20fd92",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-04.json",
+      "original_private_sha256": "b481766952b18ce05ce46d4742a20c4c2554332d9410e3f11cce7677a7b84a12",
+      "public_sha256": "b481766952b18ce05ce46d4742a20c4c2554332d9410e3f11cce7677a7b84a12",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-05.json",
+      "original_private_sha256": "52d9bd5c1038888d0f0c16c91c89fdbc17982802ec0c60e7f371b553e31df741",
+      "public_sha256": "52d9bd5c1038888d0f0c16c91c89fdbc17982802ec0c60e7f371b553e31df741",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {},
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/evidence/web-source-access.json",
+      "original_private_sha256": "4ce4f022a5402b2b4c232b6fc4f696df6aa3112aa01e3f2f5fedd79dd576899d",
+      "public_sha256": "4ce4f022a5402b2b4c232b6fc4f696df6aa3112aa01e3f2f5fedd79dd576899d",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {
+        "additional_access_limitation": "Later unauthenticated GitHub release API lookup returned403 rate limit; official release page supplied the needed0.5.5 context. No account/provider settings changed."
+      },
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/primary-source-index.json",
+      "original_private_sha256": "ade9874ff5db36d8942bb3424870760042197271bed921e51bc6f30ae8d89b81",
+      "public_sha256": "acd58a1ff532432447dd00896c3910e543e8124ed4f2da84c0bd84171ebbb84f",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {
+        "evidence_note": "Only bounded metadata and original evaluator summaries retained; primary code/docs were read, not executed. No private routing identity or full native transcript copied."
+      },
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/primary-source-index.json",
+      "original_private_sha256": "084f0593e2b9db40b49d7838273211da409716154553fa60656379c5d1c1faac",
+      "public_sha256": "62b9f4c616e2b72a27a85def7d96409ff29fd6127e5469821c535c7f192b6e9b",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {
+        "evidence_note": "Only bounded metadata and original evaluator summaries retained; primary code/docs were read, not executed. No private routing identity or full native transcript copied."
+      },
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/primary-source-index.json",
+      "original_private_sha256": "c1333f7e04c5542c57556743ff0e5798a3894d71bce8b5dc76bd260a8277b207",
+      "public_sha256": "077039b86c22d09cac06b0e9e67f4a1b72ab5b4b4e3f7e291fdee0929be2d460",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {
+        "evidence_note": "Only bounded metadata and original evaluator summaries retained; primary code/docs were read, not executed. No private routing identity or full native transcript copied."
+      },
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    },
+    {
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/primary-source-index.json",
+      "original_private_sha256": "473b7fcedd6fca6d1b3552e4165a1076cba97f68145376a243803b054373ee22",
+      "public_sha256": "801d60c71f093d112c5ff0e959dd304dbc42d5eecf76e0fac12bdc95498fa8d9",
+      "public_body_coverage": "Original authored index/context/retrieval capsule retained; full remote body not included by this record",
+      "original_body_policy_fields": {
+        "evidence_note": "Only bounded metadata and original evaluator summaries retained; primary code/docs were read, not executed. No private routing identity or full native transcript copied."
+      },
+      "body_hash_semantics": "Any remote response/body digest is its original source fingerprint, not this public record hash; absent/unknown source bodies remain under original limits."
+    }
+  ]
+}

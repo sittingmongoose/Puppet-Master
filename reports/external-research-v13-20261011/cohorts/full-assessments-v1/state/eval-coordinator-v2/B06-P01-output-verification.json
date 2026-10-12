@@ -1,0 +1,654 @@
+{
+  "block_id": "B06-P01",
+  "scope": "FULL",
+  "originals": [
+    {
+      "arm_id": "B06-P01-control",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/control/manifest.json",
+      "manifest_sha256": "40b4b3a7a02d995ff4ac4c18497eeef12d73bd84ad3a2626fd44e40f3ee0910c",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/control/assessment.json",
+      "assessment_sha256": "17faa0e8d5549b0e1afb55a1c70905075329de70ed7bdf5f0a33611ddf4ad1a3",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        {
+          "axis": 1,
+          "name": "Material original obligations and negative constraints",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Every current proposal obligation/negative constraint and every substantive released clause examined; no material omission found."
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "All identified consequential available mechanism families checked independently with version/default/exception and adjacent code context; qualifications are retained."
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Unfamiliar useful mechanisms and feasible execution/exchange alternatives assessed for limits and small-team burden; finite discovery review, not universal recall."
+        },
+        {
+          "axis": 4,
+          "name": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Every critic finding and plan disposition examined; accepted changes are supported and no material false rejection found."
+        },
+        {
+          "axis": 5,
+          "name": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Core proposal, optional capabilities, uncertainties and validation status survive; concrete Zed examples are compressed, recorded as nonmaterial."
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Validation cases have meaningful negative/positive outcomes and phased use; sources/tests read are explicitly distinct from product checks executed."
+        }
+      ],
+      "delivery": {
+        "judgment": "DELIVERED",
+        "frozen_final": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/control/terminal-handoffs/reviser/files/final.md",
+          "size_bytes": 26384,
+          "sha256": "857bf87d50975baf2a0fa3108067010c17ad93beb4609362b7e3841e35268afb"
+        },
+        "all_required_scientific_documents_present": true,
+        "all_assigned_stages_terminal_completed": true,
+        "pending_children_observed": false,
+        "present_manifest_members_including_supplement": 42,
+        "missing_final": false,
+        "known_failure_records": [],
+        "unlisted_prior_attempts": "UNKNOWN; prohibited to seek them"
+      },
+      "time_eligibility": {
+        "judgment": "ELIGIBLE_WITH_OBSERVATION_LIMITS",
+        "maximum_full_elapsed_s": 3600,
+        "frozen_t0_utc": "2026-10-12T00:34:05.485Z",
+        "whole_deadline_utc": "2026-10-12T01:34:05.485Z",
+        "notification_frozen_at_utc": "2026-10-12T01:28:56.663592+00:00",
+        "whole_frozen_delivery_upper_bound_s": 3291.178592,
+        "whole_frozen_delivery_before_deadline": true,
+        "native_final_completion_proxy_utc": "2026-10-12T01:14:17+00:00",
+        "t0_to_native_final_completion_proxy_s": 2411.515,
+        "last_complete_scientific_artifact_time": "UNKNOWN",
+        "request_to_quiet_final_proxy": "UNKNOWN: assigned terminal status has no timestamped quiet-final boundary",
+        "stage_observations": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T00:34:06.095Z",
+            "dispatch_requested_at_utc": "2026-10-12T00:34:06.095Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T00:34:06.691Z",
+            "native_created_at_utc": "2026-10-12T00:34:14+00:00",
+            "native_complete_at_utc": "2026-10-12T00:50:08+00:00",
+            "native_interval_s": 954,
+            "native_time_used_counter_s": 953,
+            "stage_deadline_utc": "2026-10-12T01:04:06.095Z",
+            "native_completion_within_stage_deadline": true,
+            "task_terminal_status": "completed",
+            "pending_children_observed": false,
+            "task_quiet_terminal_timestamp": "UNKNOWN",
+            "native_receipt_checks": {
+              "same_birth_and_identifier": true,
+              "exact_frozen_objective": true,
+              "active_then_complete": true,
+              "active_capture_equals_create_capture": true
+            },
+            "evidence": {
+              "manifest": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/control/terminal-handoffs/investigator/manifest.json",
+                "size_bytes": 2869,
+                "sha256": "deab138af07d3774e6cd1558231331e21808b7acfc7f83e6ee315cb5e9d76cf2"
+              },
+              "dispatch": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/control/terminal-handoffs/investigator/files/dispatch.json",
+                "size_bytes": 10654,
+                "sha256": "b81079f978a007f2bfc2c6681a21576c2c6fe62146f5d490c1d471b029f2e5a7"
+              },
+              "create": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/control/terminal-handoffs/investigator/files/native-goal-create.json",
+                "size_bytes": 525,
+                "sha256": "b69754cc01662430b24b350e3af90bea64b8e615833ab4c310def0745b6e1196"
+              },
+              "terminal": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/control/terminal-handoffs/investigator/files/native-goal-terminal.json",
+                "size_bytes": 854,
+                "sha256": "9be8e73c82ce426f37f9eb90fcdee0be5840201bc53c3e81dcc161d3c50c81c4"
+              },
+              "actual_status": {
+                "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B06-P01-control/investigator-eval-ready-status.raw.json",
+                "size_bytes": 8945,
+                "sha256": "559c4cd30fa2d41e17b072d76c568844a353400f82e16cec7f7f8e8357cb9e52"
+              }
+            }
+          },
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T00:55:56.068Z",
+            "dispatch_requested_at_utc": "2026-10-12T00:55:56.068Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T00:55:56.785Z",
+            "native_created_at_utc": "2026-10-12T00:56:06+00:00",
+            "native_complete_at_utc": "2026-10-12T01:02:40+00:00",
+            "native_interval_s": 394,
+            "native_time_used_counter_s": 393,
+            "stage_deadline_utc": "2026-10-12T01:07:56.068Z",
+            "native_completion_within_stage_deadline": true,
+            "task_terminal_status": "completed",
+            "pending_children_observed": false,
+            "task_quiet_terminal_timestamp": "UNKNOWN",
+            "native_receipt_checks": {
+              "same_birth_and_identifier": true,
+              "exact_frozen_objective": true,
+              "active_then_complete": true,
+              "active_capture_equals_create_capture": true
+            },
+            "evidence": {
+              "manifest": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/control/terminal-handoffs/critic/manifest.json",
+                "size_bytes": 2384,
+                "sha256": "869d02c5b70050732377a4a6934980a1c52a0d14f4f11d7b073983b07f3bd79e"
+              },
+              "dispatch": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/control/terminal-handoffs/critic/files/dispatch.json",
+                "size_bytes": 10516,
+                "sha256": "02446d7d808c666d4f18f347cf4e9986b8400cdffed0837903f84a039fa2dfb3"
+              },
+              "create": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/control/terminal-handoffs/critic/files/native-goal-create.json",
+                "size_bytes": 513,
+                "sha256": "a17a5cc8179e078575037507c6e04a730deca072800d0912801afe2c0652e6af"
+              },
+              "terminal": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/control/terminal-handoffs/critic/files/native-goal-terminal.json",
+                "size_bytes": 842,
+                "sha256": "2b75efbf14a6e6e1dd471a6bd9e28cd15bb3488c72f39677ab7887bfcef03eeb"
+              },
+              "actual_status": {
+                "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B06-P01-control/critic-eval-ready-status.raw.json",
+                "size_bytes": 8869,
+                "sha256": "42ce5cf3e0600aef5852a766b4b9bf09e429dfe80737fe6dd9303628f1ef96fa"
+              }
+            }
+          },
+          {
+            "stage": "reviser",
+            "prepared_at_utc": "2026-10-12T01:07:35.145Z",
+            "dispatch_requested_at_utc": "2026-10-12T01:07:35.145Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T01:07:36.077Z",
+            "native_created_at_utc": "2026-10-12T01:07:46+00:00",
+            "native_complete_at_utc": "2026-10-12T01:14:17+00:00",
+            "native_interval_s": 391,
+            "native_time_used_counter_s": 391,
+            "stage_deadline_utc": "2026-10-12T01:25:35.145Z",
+            "native_completion_within_stage_deadline": true,
+            "task_terminal_status": "completed",
+            "pending_children_observed": false,
+            "task_quiet_terminal_timestamp": "UNKNOWN",
+            "native_receipt_checks": {
+              "same_birth_and_identifier": true,
+              "exact_frozen_objective": true,
+              "active_then_complete": true,
+              "active_capture_equals_create_capture": true
+            },
+            "evidence": {
+              "manifest": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/control/terminal-handoffs/reviser/manifest.json",
+                "size_bytes": 2382,
+                "sha256": "45e2adfaf14f11cf8cd0e5744faeb3c530e39097d6e1f52a9cc956561032db54"
+              },
+              "dispatch": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/control/terminal-handoffs/reviser/files/dispatch.json",
+                "size_bytes": 10539,
+                "sha256": "60acd54e91dfe17a80191ccb1cdb12ef8a689f7ab0dd2abf7848e8ed4b1ce6fc"
+              },
+              "create": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/control/terminal-handoffs/reviser/files/native-goal-create.json",
+                "size_bytes": 515,
+                "sha256": "1ed387ec1cd9bc7c099fcaaab71c6136276c11694f93aba9b0d2f209f9ca95d6"
+              },
+              "terminal": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-control/run/B06-P01-control/control/terminal-handoffs/reviser/files/native-goal-terminal.json",
+                "size_bytes": 843,
+                "sha256": "e6910ec676217a19370383957d387f3a1f9347cf98e6d1f7a8ca520b5913fea3"
+              },
+              "actual_status": {
+                "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B06-P01-control/reviser-eval-ready-status.raw.json",
+                "size_bytes": 8311,
+                "sha256": "bc00140b868e8671ebefc26ff6a5a54f3fd2aeda444e1d9da089fa7e8cf21c8e"
+              }
+            }
+          }
+        ],
+        "qualification_limit": "Native completion timestamps are frozen receipt observations, not independently witnessed last-write or task-quiet timestamps. No clock, deadline or late-stage qualification is retrospectively changed."
+      },
+      "method_compliance": {
+        "judgment": "PARTIAL_EVIDENCE",
+        "observed_topology": [
+          "investigator",
+          "critic",
+          "reviser"
+        ],
+        "one_completed_native_capture_pair_per_stage": true,
+        "discovery_hash_matches_reveal_record": true,
+        "exact_revealed_plan_matches_supplement": true,
+        "all_critic_dispositions_examined": true,
+        "claims_of_unrun_product_validation_found": false,
+        "treatment_predecessor_maps_exactly_preserved": "NOT_APPLICABLE: linked predecessor catalogs",
+        "not_independently_established": [
+          "pre-input read/activation ordering",
+          "exactly one native call across complete context history",
+          "fresh/independent scientific sessions",
+          "absence of unlisted tools/attempts",
+          "save-before-native-complete ordering"
+        ],
+        "qualification": "Artifacts support the declared custody/topology, but full method qualification is UNKNOWN beyond the permitted frozen evidence."
+      },
+      "native_provenance": {
+        "judgment": "PARTIAL_EVIDENCE",
+        "same_identifier_birth_and_exact_objective_verified_for_every_stage": true,
+        "active_then_complete_receipts_verified": true,
+        "actual_assigned_task_status_verified": true,
+        "independent_native_session_to_task_linkage": "UNKNOWN beyond exact objective/capture custody",
+        "manifest_native_lifecycle_qualified_flags": [
+          false,
+          false,
+          false
+        ],
+        "interpretation": "Original manifest flags remain unchanged; packet/receipt enrichment is separate. Receipts do not prove source truth or independent identity linkage. Raw identifiers/transcripts and private routing are not republished."
+      },
+      "resource_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "observed_assigned_stage_count": 3,
+          "summed_native_goal_interval_proxy_s": 1739,
+          "union_native_goal_interval_proxy_s": 1739.0,
+          "native_goal_overlap_proxy_s": 0.0,
+          "native_cumulative_counter_fields_present": true,
+          "counter_values_not_exported": "Token privacy; native cumulative counters are not split provider usage or billing.",
+          "actual_created_started_context_occupancy": "UNKNOWN",
+          "active_provider_activity": "UNKNOWN",
+          "input_cached_output_reasoning_breakdown": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "billing_cost": "UNKNOWN",
+          "preparation_support_publication_costs": "UNKNOWN",
+          "full_failure_inclusive_cost": "UNKNOWN",
+          "warning": "Native lifetime proxies include possible idle/tool time and omit unobserved context tails. No occupancy-to-billing conversion or overlapping counter sum."
+        },
+        "independent_evaluation": {
+          "cost_class": "independent_evaluation",
+          "started_at_utc": "2026-10-12T01:30:14Z",
+          "original_judgment_recorded_at_utc": "2026-10-12T01:44:14.057939+00:00",
+          "shared_primary_lookup_across_assigned_pair": true,
+          "allocation_between_arms": "Shared evaluation; no invented per-arm allocation",
+          "provider_usage": "UNKNOWN",
+          "billing": "UNKNOWN",
+          "excluded_from_candidate_product": true
+        }
+      },
+      "frozen_files_verified": 5,
+      "freeze_before_comparison_supported": true,
+      "freeze_order_evidence": "Original manifest flags/assessment and separate comparison declaration, supported by later comparison filemtime; full operation ordering not transcript audited.",
+      "originals_unmodified": true
+    },
+    {
+      "arm_id": "B06-P01-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/treatment/manifest.json",
+      "manifest_sha256": "2e06df13bccd337550af71bebaa7fd0509df8c8844cfd4eec31b2b71ddfe9e5b",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/treatment/assessment.json",
+      "assessment_sha256": "0c2576688f34c2817cdbf1254c35a067ab7b33b025db8a24d3f32b6824edad4d",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        {
+          "axis": 1,
+          "name": "Material original obligations and negative constraints",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Every current proposal obligation/negative constraint and every substantive released clause examined; no material omission found."
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "All identified consequential available mechanism families checked independently with version/default/exception and adjacent code context; qualifications are retained."
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Unfamiliar useful mechanisms and feasible execution/exchange alternatives assessed for limits and small-team burden; finite discovery review, not universal recall."
+        },
+        {
+          "axis": 4,
+          "name": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Every critic finding and plan disposition examined; accepted changes are supported and no material false rejection found."
+        },
+        {
+          "axis": 5,
+          "name": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Core investigator proposals and all eight critic dispositions survive; inherited predecessor source maps match exactly."
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Validation cases have meaningful negative/positive outcomes and phased use; sources/tests read are explicitly distinct from product checks executed."
+        }
+      ],
+      "delivery": {
+        "judgment": "DELIVERED",
+        "frozen_final": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/reviser/files/final.md",
+          "size_bytes": 42580,
+          "sha256": "a1724d1a54b8891651438fd96f5fba4fe42b9165e1d7e4aeb3b3d36f9026f2bb"
+        },
+        "all_required_scientific_documents_present": true,
+        "all_assigned_stages_terminal_completed": true,
+        "pending_children_observed": false,
+        "present_manifest_members_including_supplement": 53,
+        "missing_final": false,
+        "known_failure_records": [],
+        "unlisted_prior_attempts": "UNKNOWN; prohibited to seek them"
+      },
+      "time_eligibility": {
+        "judgment": "ELIGIBLE_WITH_OBSERVATION_LIMITS",
+        "maximum_full_elapsed_s": 3600,
+        "frozen_t0_utc": "2026-10-12T00:34:02.436Z",
+        "whole_deadline_utc": "2026-10-12T01:34:02.436Z",
+        "notification_frozen_at_utc": "2026-10-12T01:28:56.663592+00:00",
+        "whole_frozen_delivery_upper_bound_s": 3294.227592,
+        "whole_frozen_delivery_before_deadline": true,
+        "native_final_completion_proxy_utc": "2026-10-12T01:08:29+00:00",
+        "t0_to_native_final_completion_proxy_s": 2066.564,
+        "last_complete_scientific_artifact_time": "UNKNOWN",
+        "request_to_quiet_final_proxy": "UNKNOWN: assigned terminal status has no timestamped quiet-final boundary",
+        "stage_observations": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T00:34:03.046Z",
+            "dispatch_requested_at_utc": "2026-10-12T00:34:03.046Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T00:34:03.717Z",
+            "native_created_at_utc": "2026-10-12T00:34:15+00:00",
+            "native_complete_at_utc": "2026-10-12T00:45:20+00:00",
+            "native_interval_s": 665,
+            "native_time_used_counter_s": 664,
+            "stage_deadline_utc": "2026-10-12T01:04:03.046Z",
+            "native_completion_within_stage_deadline": true,
+            "task_terminal_status": "completed",
+            "pending_children_observed": false,
+            "task_quiet_terminal_timestamp": "UNKNOWN",
+            "native_receipt_checks": {
+              "same_birth_and_identifier": true,
+              "exact_frozen_objective": true,
+              "active_then_complete": true,
+              "active_capture_equals_create_capture": true
+            },
+            "evidence": {
+              "manifest": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/investigator/manifest.json",
+                "size_bytes": 2870,
+                "sha256": "5072c8ab7d9d8e8daff3303d8b99889279ced3dded828b84825ccab2c981a225"
+              },
+              "dispatch": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/investigator/files/dispatch.json",
+                "size_bytes": 10716,
+                "sha256": "265f22d590462d79ab7c204ec9db0bdb4ea0db41b3e4beeb7acb4b562d5020fc"
+              },
+              "create": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/investigator/files/native-goal-create.json",
+                "size_bytes": 531,
+                "sha256": "66d7f025cd84000d155a59165134dde8eaa4f9db55e9f660e978d0adfd394b22"
+              },
+              "terminal": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/investigator/files/native-goal-terminal.json",
+                "size_bytes": 860,
+                "sha256": "a155929365e16c6dd69a236a7ad6560961aba406c94b83a03fdbdc515f445134"
+              },
+              "actual_status": {
+                "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B06-P01-treatment/investigator-eval-ready-status.raw.json",
+                "size_bytes": 10395,
+                "sha256": "f655c54a30545b26563093fdc09eb2dd071b344ff6cdd9590bdd118b270808e2"
+              }
+            }
+          },
+          {
+            "stage": "critic-breadth",
+            "prepared_at_utc": "2026-10-12T00:46:04.307Z",
+            "dispatch_requested_at_utc": "2026-10-12T00:46:04.307Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T00:46:04.987Z",
+            "native_created_at_utc": "2026-10-12T00:46:37+00:00",
+            "native_complete_at_utc": "2026-10-12T00:51:28+00:00",
+            "native_interval_s": 291,
+            "native_time_used_counter_s": 291,
+            "stage_deadline_utc": "2026-10-12T00:52:04.307Z",
+            "native_completion_within_stage_deadline": true,
+            "task_terminal_status": "completed",
+            "pending_children_observed": false,
+            "task_quiet_terminal_timestamp": "UNKNOWN",
+            "native_receipt_checks": {
+              "same_birth_and_identifier": true,
+              "exact_frozen_objective": true,
+              "active_then_complete": true,
+              "active_capture_equals_create_capture": true
+            },
+            "evidence": {
+              "manifest": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/critic-breadth/manifest.json",
+                "size_bytes": 2400,
+                "sha256": "3df17f297fac8da541493421ac9949c5471d972bc546dfd3ac0f3aea0ddbb0af"
+              },
+              "dispatch": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/critic-breadth/files/dispatch.json",
+                "size_bytes": 10762,
+                "sha256": "a1499cb5a495f1648c15f2252c25e84e1c87b57a107b027dcb48e029d03beb46"
+              },
+              "create": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/critic-breadth/files/native-goal-create.json",
+                "size_bytes": 535,
+                "sha256": "5c0df32787568008a759414041b29b02bbb7d188cca5baac0635f1b845294472"
+              },
+              "terminal": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/critic-breadth/files/native-goal-terminal.json",
+                "size_bytes": 863,
+                "sha256": "e17b21dba20620512c2718ff331303f7d3b05156f60851e3a0d459eef9f49515"
+              },
+              "actual_status": {
+                "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B06-P01-treatment/critic-breadth-eval-ready-status.raw.json",
+                "size_bytes": 8317,
+                "sha256": "4a5862b01fda1ab6f3b8b2e0295e52e562c6136f92b107260e4f58b6c0c6f45b"
+              }
+            }
+          },
+          {
+            "stage": "critic-truth",
+            "prepared_at_utc": "2026-10-12T00:46:06.113Z",
+            "dispatch_requested_at_utc": "2026-10-12T00:46:06.113Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T00:46:08.211Z",
+            "native_created_at_utc": "2026-10-12T00:46:21+00:00",
+            "native_complete_at_utc": "2026-10-12T00:50:33+00:00",
+            "native_interval_s": 252,
+            "native_time_used_counter_s": 252,
+            "stage_deadline_utc": "2026-10-12T00:52:06.113Z",
+            "native_completion_within_stage_deadline": true,
+            "task_terminal_status": "completed",
+            "pending_children_observed": false,
+            "task_quiet_terminal_timestamp": "UNKNOWN",
+            "native_receipt_checks": {
+              "same_birth_and_identifier": true,
+              "exact_frozen_objective": true,
+              "active_then_complete": true,
+              "active_capture_equals_create_capture": true
+            },
+            "evidence": {
+              "manifest": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/critic-truth/manifest.json",
+                "size_bytes": 2210,
+                "sha256": "b72eebbe0dc4d4b07fd118509a18ccc60e59d0e10d916f04aa13d3336d23a9b2"
+              },
+              "dispatch": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/critic-truth/files/dispatch.json",
+                "size_bytes": 10716,
+                "sha256": "030cf53db88283b2678127589b512bcf62b65fa974b4e02256ba6b948c38279f"
+              },
+              "create": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/critic-truth/files/native-goal-create.json",
+                "size_bytes": 531,
+                "sha256": "088d053bbc5c3e65e81c0932c8f77f0c7a966c068a29dae12ff4aa83dbbe5575"
+              },
+              "terminal": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/critic-truth/files/native-goal-terminal.json",
+                "size_bytes": 859,
+                "sha256": "e1caa4bbd5ca5ed08ebc92fd34647a366edf53c038e820410eda4840cde2c571"
+              },
+              "actual_status": {
+                "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B06-P01-treatment/critic-truth-eval-ready-status.raw.json",
+                "size_bytes": 9145,
+                "sha256": "38c6ba3ffbd777b9f938b0d6b5587ca179200c763debfd6433d071bbedf6d95d"
+              }
+            }
+          },
+          {
+            "stage": "reviser",
+            "prepared_at_utc": "2026-10-12T00:55:46.332Z",
+            "dispatch_requested_at_utc": "2026-10-12T00:55:46.332Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T00:55:47.034Z",
+            "native_created_at_utc": "2026-10-12T00:55:56+00:00",
+            "native_complete_at_utc": "2026-10-12T01:08:29+00:00",
+            "native_interval_s": 753,
+            "native_time_used_counter_s": 753,
+            "stage_deadline_utc": "2026-10-12T01:13:46.332Z",
+            "native_completion_within_stage_deadline": true,
+            "task_terminal_status": "completed",
+            "pending_children_observed": false,
+            "task_quiet_terminal_timestamp": "UNKNOWN",
+            "native_receipt_checks": {
+              "same_birth_and_identifier": true,
+              "exact_frozen_objective": true,
+              "active_then_complete": true,
+              "active_capture_equals_create_capture": true
+            },
+            "evidence": {
+              "manifest": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/reviser/manifest.json",
+                "size_bytes": 2386,
+                "sha256": "fa22de680587bb9039c95d14075f2b6ba4e5e07bbf75c6f5ac8f74554ba69edf"
+              },
+              "dispatch": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/reviser/files/dispatch.json",
+                "size_bytes": 10601,
+                "sha256": "84945bb230601eca92068ebca375cfb9357d30e2e5189b8796c02cb513103e5a"
+              },
+              "create": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/reviser/files/native-goal-create.json",
+                "size_bytes": 521,
+                "sha256": "c92625c96a40805c2baa18ffe463709601ae9c3a5880f0d6ae226b263fc1d0aa"
+              },
+              "terminal": {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P01-treatment/run/B06-P01-treatment/control/terminal-handoffs/reviser/files/native-goal-terminal.json",
+                "size_bytes": 850,
+                "sha256": "a610965926fc00d6832b03b0226bc5ac15630894a37354e1259cfee46581fe56"
+              },
+              "actual_status": {
+                "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B06-P01-treatment/reviser-eval-ready-status.raw.json",
+                "size_bytes": 8545,
+                "sha256": "454fec98ebceac4a73bb85761b16027cea0307872e59925e08fd4b6d4eab94f3"
+              }
+            }
+          }
+        ],
+        "qualification_limit": "Native completion timestamps are frozen receipt observations, not independently witnessed last-write or task-quiet timestamps. No clock, deadline or late-stage qualification is retrospectively changed."
+      },
+      "method_compliance": {
+        "judgment": "PARTIAL_EVIDENCE",
+        "observed_topology": [
+          "investigator",
+          "critic-breadth",
+          "critic-truth",
+          "reviser"
+        ],
+        "one_completed_native_capture_pair_per_stage": true,
+        "discovery_hash_matches_reveal_record": true,
+        "exact_revealed_plan_matches_supplement": true,
+        "all_critic_dispositions_examined": true,
+        "claims_of_unrun_product_validation_found": false,
+        "treatment_predecessor_maps_exactly_preserved": true,
+        "not_independently_established": [
+          "pre-input read/activation ordering",
+          "exactly one native call across complete context history",
+          "fresh/independent scientific sessions",
+          "absence of unlisted tools/attempts",
+          "save-before-native-complete ordering"
+        ],
+        "qualification": "Artifacts support the declared custody/topology, but full method qualification is UNKNOWN beyond the permitted frozen evidence."
+      },
+      "native_provenance": {
+        "judgment": "PARTIAL_EVIDENCE",
+        "same_identifier_birth_and_exact_objective_verified_for_every_stage": true,
+        "active_then_complete_receipts_verified": true,
+        "actual_assigned_task_status_verified": true,
+        "independent_native_session_to_task_linkage": "UNKNOWN beyond exact objective/capture custody",
+        "manifest_native_lifecycle_qualified_flags": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "interpretation": "Original manifest flags remain unchanged; packet/receipt enrichment is separate. Receipts do not prove source truth or independent identity linkage. Raw identifiers/transcripts and private routing are not republished."
+      },
+      "resource_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "observed_assigned_stage_count": 4,
+          "summed_native_goal_interval_proxy_s": 1961,
+          "union_native_goal_interval_proxy_s": 1725.0,
+          "native_goal_overlap_proxy_s": 236.0,
+          "native_cumulative_counter_fields_present": true,
+          "counter_values_not_exported": "Token privacy; native cumulative counters are not split provider usage or billing.",
+          "actual_created_started_context_occupancy": "UNKNOWN",
+          "active_provider_activity": "UNKNOWN",
+          "input_cached_output_reasoning_breakdown": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "billing_cost": "UNKNOWN",
+          "preparation_support_publication_costs": "UNKNOWN",
+          "full_failure_inclusive_cost": "UNKNOWN",
+          "warning": "Native lifetime proxies include possible idle/tool time and omit unobserved context tails. No occupancy-to-billing conversion or overlapping counter sum."
+        },
+        "independent_evaluation": {
+          "cost_class": "independent_evaluation",
+          "started_at_utc": "2026-10-12T01:30:14Z",
+          "original_judgment_recorded_at_utc": "2026-10-12T01:44:14.057939+00:00",
+          "shared_primary_lookup_across_assigned_pair": true,
+          "allocation_between_arms": "Shared evaluation; no invented per-arm allocation",
+          "provider_usage": "UNKNOWN",
+          "billing": "UNKNOWN",
+          "excluded_from_candidate_product": true
+        }
+      },
+      "frozen_files_verified": 5,
+      "freeze_before_comparison_supported": true,
+      "freeze_order_evidence": "Original manifest flags/assessment and separate comparison declaration, supported by later comparison filemtime; full operation ordering not transcript audited.",
+      "originals_unmodified": true
+    }
+  ],
+  "grader_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "comparison": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/comparison.md",
+  "comparison_sha256": "a4fde145033fae85ee41502dbfae8f08f2e4939628d6d9f0691e8b6a3b13e91e",
+  "verified_at_utc": "2026-10-12T01:49:29.677331+00:00",
+  "mechanics_only_not_regrade": true
+}

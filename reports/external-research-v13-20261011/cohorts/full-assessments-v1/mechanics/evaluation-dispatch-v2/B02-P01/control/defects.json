@@ -1,0 +1,109 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "B02-P01-control",
+  "material_remaining_final_defects_found": 0,
+  "findings": [
+    {
+      "id": "C-E01",
+      "dimension": "source/preservation record",
+      "severity": "NONMATERIAL",
+      "status": "PRESENT_FINAL",
+      "locator": "reviser/final.md, Exact original brief",
+      "finding": "The block labeled exact omits the sentence requiring feasible alternatives without an assumed winner and substitutes checks for work actually executed. The proposal itself fulfills the comparison/validation obligations, so this is literal-transcription fidelity, not material semantic loss.",
+      "input_sha256": "a56b83e08c6d30feb4b654f34ae17729f3c27cc7dace87f6f331c78c907330f6"
+    },
+    {
+      "id": "C-E02",
+      "dimension": "source identity",
+      "severity": "NONMATERIAL_LIMITATION",
+      "status": "EARLIER_RECORD_UNRESOLVED_LATER_BEHAVIOR_SUPPORTED",
+      "locator": "investigator/source-map S14-S15; reviser/source-map appended check",
+      "finding": "The earlier floating 1.13.2 package observation cannot be independently reconstructed from the current branch. The later pinned 1.14.4 package and callback declarations are independently verified and clearly separate. No silent rebinding or material final unsupported behavior was found.",
+      "sources": [
+        "obsidian-types",
+        "obsidian-package",
+        "obsidian-floating-package"
+      ]
+    },
+    {
+      "id": "C-M01",
+      "dimension": "method compliance",
+      "severity": "INSTRUCTION_SCOPE_AMBIGUITY",
+      "status": "SELF_REPORTED_READ_ONLY_OPERATION_NO_FORBIDDEN_CHANGE_DEMONSTRATED",
+      "locator": "reviser/source-map.json, reviser_stage.method and S14-S15 reviser_check",
+      "finding": "The reviser reports read-only git ls-remote for a public ref. The frozen rule is phrased No Git/canon, account, credential, infrastructure, installation, or unrelated service changes. Its trailing changes qualifier does not establish that a public read-only query is forbidden. No Git/canon mutation or method failure is demonstrated by this record; execution itself was not independently linked through a native transcript. This uncertainty is separate from supported pinned source truth.",
+      "input_sha256": "a61da65b333586ac8db2edc917e7255d2f87c97892fa0c7f882b44e6fd33279c"
+    },
+    {
+      "id": "C-P01",
+      "dimension": "native/timing reporting",
+      "severity": "NONMATERIAL_RECORD_DISCREPANCY",
+      "status": "PRESENT_TERMINAL_SUMMARY",
+      "locator": "critic/status.json summary versus critic/native-goal-create.json and native-goal-terminal.json",
+      "finding": "Critic summary says no timestamps were returned, but its frozen receipts include createdAt and updatedAt. The independent assessment uses receipt fields and preserves unknown native-to-task linkage; it does not copy the summary assertion."
+    },
+    {
+      "id": "C-L01",
+      "dimension": "source locators",
+      "severity": "NONMATERIAL",
+      "status": "CONVENTION_NOT_EXPLICIT",
+      "locator": "source-map numeric GitHub locators",
+      "finding": "Several numeric locators refer to rendered GitHub output rather than raw source-line numbering. Named symbols and exact commits permit semantic verification; raw locators in the primary index make the distinction explicit.",
+      "sources": [
+        "c-provider",
+        "c-search",
+        "c-tests",
+        "obsidian-types"
+      ]
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "C-01",
+      "original_classification": "material incomplete",
+      "independent_finding": "A useful surface clarification; discovery already compared combobox and dialog, and draft did compare focus/layout alternatives. The need to name a specific winning surface is not a mandatory research-proposal obligation. No material false correction results.",
+      "final_disposition": "ACCEPT clarification: final explicitly compares combobox/list, nonmodal and modal palette with truthful modality and AT decision gates.",
+      "final_locator": "Surface decision: keep the alternatives open until tested",
+      "sources": [
+        "apg-combo",
+        "apg-dialog",
+        "apg-listbox"
+      ]
+    },
+    {
+      "id": "C-02",
+      "original_classification": "honestly unresolved external input",
+      "independent_finding": "Correct: target repo/toolkit/callers/tests/keymap not supplied. Available public comparator mechanism research is still required and is present.",
+      "final_disposition": "RETAIN uncertainty; target seam inspection is future integration work, not falsely executed work.",
+      "final_locator": "Owner decisions and external inputs; Validation plan",
+      "sources": [
+        "command-registry",
+        "command-bridge"
+      ]
+    },
+    {
+      "id": "C-03",
+      "original_classification": "minor locator/wording",
+      "independent_finding": "Markup scope qualification is correct. Understanding and WCAG2ICT additionally recognize direct/platform API status needs, so the web limitation does not negate native design relevance.",
+      "final_disposition": "ACCEPT qualification; preserve polite non-focus status proposal without claiming native conformance.",
+      "final_locator": "Search, status, and interaction alternatives",
+      "sources": [
+        "status22",
+        "wcag2ict"
+      ]
+    },
+    {
+      "id": "C-04",
+      "original_classification": "minor locator/wording",
+      "independent_finding": "Floating identity is a reproducibility limit. The later immutable declarations and package are genuine and support the behavior; they cannot reconstruct the earlier 1.13.2 observation.",
+      "final_disposition": "AMEND with separately pinned 1.14.4 observation, retaining earlier source identity.",
+      "final_locator": "Source and inference boundaries; source-map S14-S15 reviser_check",
+      "sources": [
+        "obsidian-types",
+        "obsidian-package",
+        "obsidian-floating-package"
+      ]
+    }
+  ],
+  "interpretation": "Known earlier material errors remain errors of their original stage. A supported final withdrawal/correction does not retroactively change them. Process/telemetry failures are separate from source quality."
+}

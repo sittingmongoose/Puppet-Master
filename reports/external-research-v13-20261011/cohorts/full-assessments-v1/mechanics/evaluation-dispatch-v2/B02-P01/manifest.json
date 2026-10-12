@@ -1,0 +1,76 @@
+{
+  "schema": "er13.immutable-pair-original-output-manifest.v1",
+  "block_id": "B02-P01",
+  "arm_count": 2,
+  "frozen_at_utc": "2026-10-12T01:47:31.544693+00:00",
+  "comparison_performed_before_freeze": false,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/control/assessment.md",
+      "bytes": 4863,
+      "sha256": "960814ae9afc73983a5f931c8524c20bf247a217e81c7dd1c7d910e6682f5886"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/control/assessment.json",
+      "bytes": 33609,
+      "sha256": "839266825aa6f94adc747d1fcd5869559251f95251de51a8b6664df798d71e4f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/control/coverage.json",
+      "bytes": 16172,
+      "sha256": "4a92c196af1a340be1d00a8ffb322c66456225e77d732267078ff8257e5332ed"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/control/defects.json",
+      "bytes": 6214,
+      "sha256": "e871cc068527abd01636fdef0c7d7d2d63e8cc5497bcc59d89dbd01a8f370f71"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/control/primary-source-index.json",
+      "bytes": 59884,
+      "sha256": "76b8b7c80bdf54c6747003b7e97fdc497c40f11f00f77a20daee08482ca48db4"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/control/manifest.json",
+      "bytes": 1721,
+      "sha256": "8f854dd5b6d31a2f0cd7fd4569eefaa9ef9ce3660f6a2ef083ab8d03379a5beb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/assessment.md",
+      "bytes": 4646,
+      "sha256": "c381d6d0f3b1682c9b90048c171d7e7d17bf1d4896f78edadffa0c9811841076"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/assessment.json",
+      "bytes": 29997,
+      "sha256": "f4808e908eaa4ccad551023a21d783a3a82844e9a72948d31f0ae3b02ced4287"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/coverage.json",
+      "bytes": 15893,
+      "sha256": "7fecaed60bf87030a0ff37951ede9e600f63e37606f8882b09a78743c121d994"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/defects.json",
+      "bytes": 6406,
+      "sha256": "77480b5bfead5c0d1f2d8fd6dcc2adb9ae8c0298a59b19a9d655a5496d272580"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/primary-source-index.json",
+      "bytes": 61713,
+      "sha256": "f2f59a161ec64b1ad722f9e70fdac2f0ff91476431fc22de06c0ed1486b24e44"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/manifest.json",
+      "bytes": 1733,
+      "sha256": "d14b263c7f2794fc0ce6af76ab9c532d50b11c98fc1382d75f7c12d6454079c3"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/assessment.json",
+      "bytes": 64263,
+      "sha256": "11c8492f982e983a0555702c1f9039118799bd1ea8309ed54c106c51d55ff7b7"
+    }
+  ],
+  "self_hash_rule": "This manifest excludes itself; its SHA256 is reported separately.",
+  "public_privacy": "No private routing/account identity, token values, full native transcripts or local machine-state records published."
+}

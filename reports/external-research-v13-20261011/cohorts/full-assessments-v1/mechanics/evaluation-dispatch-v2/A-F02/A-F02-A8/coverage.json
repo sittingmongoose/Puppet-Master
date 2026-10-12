@@ -1,0 +1,402 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "A-F02-A8",
+  "overall": "PARTIAL",
+  "scope": "FULL original assignment; final absent means partial available science only",
+  "all_manifest_listed_science_read": true,
+  "duplicate_brief_plan_handling": "Each exact input hash verified; byte-identical brief/plan read once with each reveal custody checked.",
+  "axes": [
+    {
+      "axis": 1,
+      "contract_axis": "Material original obligations and negative constraints",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "note": "Available stage science only; final absent."
+    },
+    {
+      "axis": 2,
+      "contract_axis": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "note": "Available stage science only; final absent."
+    },
+    {
+      "axis": 3,
+      "contract_axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "note": "Available stage science only; final absent."
+    },
+    {
+      "axis": 4,
+      "contract_axis": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "note": "Available stage science only; final absent."
+    },
+    {
+      "axis": 5,
+      "contract_axis": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "UNASSESSED",
+      "complete_final_coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "note": "No investigator-to-final or critic-to-final preservation judgment is possible. Available discovery-to-draft and late critique were read in full."
+    },
+    {
+      "axis": 6,
+      "contract_axis": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "note": "Available stage science only; final absent."
+    }
+  ],
+  "obligations": [
+    {
+      "obligation": "format_identification",
+      "meaning": "Content versus extension; signature identity versus probing",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "source_ids": [
+        "E01"
+      ],
+      "witness": "investigator discovery/draft and late critique only"
+    },
+    {
+      "obligation": "metadata_duration",
+      "meaning": "Per-stream fields, duration provenance/unknown/conflict",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "source_ids": [
+        "E01"
+      ],
+      "witness": "investigator discovery/draft and late critique only"
+    },
+    {
+      "obligation": "channels",
+      "meaning": "Streams/channels, ordinal labels, optional audition, no silent downmix",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "source_ids": [
+        "E13"
+      ],
+      "witness": "investigator discovery/draft and late critique only"
+    },
+    {
+      "obligation": "transcript_association",
+      "meaning": "Confirmed IDs, ambiguity and collisions, preserve raw values",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "source_ids": [],
+      "witness": "investigator discovery/draft and late critique only"
+    },
+    {
+      "obligation": "corrected_transcripts",
+      "meaning": "New revisions/current pointer; previous files and associations retained",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "source_ids": [],
+      "witness": "investigator discovery/draft and late critique only"
+    },
+    {
+      "obligation": "safe_restart",
+      "meaning": "Stable IDs/hashes, checkpoint/reconciliation and retry boundaries",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "source_ids": [
+        "E17",
+        "E30"
+      ],
+      "witness": "investigator discovery/draft and late critique only"
+    },
+    {
+      "obligation": "portable_handoff",
+      "meaning": "Payloads/relative references or a verified durable receiver contract",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "source_ids": [
+        "E18"
+      ],
+      "witness": "investigator discovery/draft and late critique only"
+    },
+    {
+      "obligation": "warning_semantics",
+      "meaning": "Read/probe errors separate from unsupported/failed preview",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "source_ids": [
+        "E01",
+        "E11"
+      ],
+      "witness": "investigator discovery/draft and late critique only"
+    },
+    {
+      "obligation": "absent_transcript",
+      "meaning": "Neutral transcript state independent from audio",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "source_ids": [],
+      "witness": "investigator discovery/draft and late critique only"
+    },
+    {
+      "obligation": "keyboard_text_status",
+      "meaning": "All review actions, focus, accessible text and coalesced progress",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "source_ids": [
+        "E24"
+      ],
+      "witness": "investigator discovery/draft and late critique only"
+    },
+    {
+      "obligation": "scale",
+      "meaning": "40/500 items, bounded work and proposed measured thresholds",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "source_ids": [],
+      "witness": "investigator discovery/draft and late critique only"
+    },
+    {
+      "obligation": "negative_constraints",
+      "meaning": "Original bytes; no guessed rights/cloud transcription/mandatory all-item transcode",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "source_ids": [],
+      "witness": "investigator discovery/draft and late critique only"
+    },
+    {
+      "obligation": "alternatives_support_limits",
+      "meaning": "No fixed winning codec/catalog API; exact build/features/plugins and scoped histories",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "source_ids": [],
+      "witness": "investigator discovery/draft and late critique only"
+    },
+    {
+      "obligation": "planning_delivery",
+      "meaning": "Staged research/integration proposal; no collection migration or deployment",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "source_ids": [],
+      "witness": "investigator discovery/draft and late critique only"
+    }
+  ],
+  "source_families": [
+    {
+      "source_family": "FFmpeg probing",
+      "independent_research_id": "E01",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment_boundary": "No product execution; exact deployed build and museum facts remain unknown."
+    },
+    {
+      "source_family": "FFmpeg releases/distribution",
+      "independent_research_id": "E02",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment_boundary": "No legal determination or chosen distributed binary; no universal safety inference from release number."
+    },
+    {
+      "source_family": "FFmpeg FATE",
+      "independent_research_id": "E04",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment_boundary": "Definitions read; neither FATE nor museum build tests executed."
+    },
+    {
+      "source_family": "FFmpeg PSSH risk",
+      "independent_research_id": "E05",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment_boundary": "Advisory database is discovery context; governing mechanism checked in project code. Fixed release/commit not established; PR response supplied no usable fix witness."
+    },
+    {
+      "source_family": "Symphonia features",
+      "independent_research_id": "E06",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment_boundary": "No product execution; exact deployed build and museum facts remain unknown."
+    },
+    {
+      "source_family": "Symphonia callers/tests",
+      "independent_research_id": "E07",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment_boundary": "Examples are not intake policy; comparator is not a museum workflow oracle and was not executed."
+    },
+    {
+      "source_family": "Symphonia fixes",
+      "independent_research_id": "E08",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment_boundary": "Release notes/issue reports are scoped evidence, not arbitrary-file correctness. API rate-limit on later 0.5.5 lookup; public release page independently reopened."
+    },
+    {
+      "source_family": "GStreamer discovery",
+      "independent_research_id": "E11",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment_boundary": "Nanoseconds are units, not an accuracy guarantee. Plugin/build and partial-information conditions remain."
+    },
+    {
+      "source_family": "GStreamer missing plugins",
+      "independent_research_id": "E12",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment_boundary": "No product execution; exact deployed build and museum facts remain unknown."
+    },
+    {
+      "source_family": "GStreamer channels",
+      "independent_research_id": "E13",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment_boundary": "No product execution; exact deployed build and museum facts remain unknown."
+    },
+    {
+      "source_family": "GStreamer security/version/packages",
+      "independent_research_id": "E14",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment_boundary": "Helper and patch read; full local-file caller reachability not established. Two targeted caller files contained no call; absence there is not absence universally."
+    },
+    {
+      "source_family": "DROID/PRONOM",
+      "independent_research_id": "E15",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment_boundary": "Current develop SHA and earlier release-page commit counts not reconstructed. Historical LOC entry is not current version authority."
+    },
+    {
+      "source_family": "SQLite checkpoints",
+      "independent_research_id": "E17",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment_boundary": "BEGIN transactions do not nest; SAVEPOINT is a distinct mechanism. No target filesystem durability was proved."
+    },
+    {
+      "source_family": "BagIt",
+      "independent_research_id": "E18",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment_boundary": "BagIt does not supply catalog/rights semantics or active-attack authenticity. No package was validated."
+    },
+    {
+      "source_family": "WCAG",
+      "independent_research_id": "E24",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment_boundary": "No product execution; exact deployed build and museum facts remain unknown."
+    },
+    {
+      "source_family": "Filesystem rename",
+      "independent_research_id": "E30",
+      "coverage": "PARTIAL",
+      "complete_final_coverage": "UNASSESSED",
+      "assessment_boundary": "Candidate A1 S23 records an older1.97.0 header at a moving URL; earlier fetched bytes unavailable. Do not infer earlier header falsity solely from later1.99.0."
+    }
+  ],
+  "plan_dispositions": {
+    "coverage": "PARTIAL",
+    "locator": "P1-P18",
+    "assessment": "All product clauses and administrative boundaries examined; unsupported matching/path assumptions treated conditionally; no actual museum facts invented."
+  },
+  "critic_dispositions": [
+    {
+      "id": "SCW-1",
+      "judgment": "SUPPORTED_SCOPED_RISK",
+      "basis": "PSSH linked-list mechanism supported in tagged project code; no universal all-audio vulnerability or fixed release asserted.",
+      "sources": [
+        "E05"
+      ]
+    },
+    {
+      "id": "SCW-2",
+      "judgment": "SUPPORTED_QUALIFICATION__SOURCE_FAMILY_PARTIAL",
+      "basis": "RTP path, general helper and platform-package lag are distinct. Full helper/local-file reachability remains unestablished.",
+      "sources": [
+        "E14"
+      ]
+    },
+    {
+      "id": "SCW-3",
+      "judgment": "SUPPORTED_CAPABILITY_DISTINCTION",
+      "basis": "Missing plugin result establishes neither corruption nor universally valid bytes.",
+      "sources": [
+        "E11",
+        "E12"
+      ]
+    },
+    {
+      "id": "SCW-4",
+      "judgment": "SUPPORTED_FEATURE_SCOPE",
+      "basis": "Default features differ from all-codecs/all-formats.",
+      "sources": [
+        "E06"
+      ]
+    },
+    {
+      "id": "SCW-5",
+      "judgment": "SUPPORTED_TECHNICAL_VERSUS_HUMAN_SCOPE",
+      "basis": "Positions/matrices do not identify human speaker roles.",
+      "sources": [
+        "E13"
+      ]
+    },
+    {
+      "id": "ordinary restart durability",
+      "judgment": "SUPPORTED_MATERIAL_INCOMPLETENESS_IN_DRAFT",
+      "basis": "Available draft lacks payload/journal reconciliation detail; no final exists.",
+      "sources": [
+        "E17",
+        "E30"
+      ]
+    },
+    {
+      "id": "ordinary security/package scope",
+      "judgment": "SUPPORTED_QUALIFICATION",
+      "basis": "Critic does not assert helper is network-only; primary patch can refine the mechanism but no final disposition exists.",
+      "sources": [
+        "E14"
+      ]
+    },
+    {
+      "id": "missing-plugin wording",
+      "judgment": "SUPPORTED_MINOR_PRECISION",
+      "basis": "Absence of corruption proof is not proof of validity.",
+      "sources": [
+        "E11"
+      ]
+    },
+    {
+      "id": "errata and owner inputs",
+      "judgment": "ERRATA_VALID__OWNER_FACTS_UNKNOWN",
+      "basis": "Source IDs remain stable with additive packaging records. Actual museum facts remain legitimately open."
+    }
+  ],
+  "preservation": {
+    "coverage": "UNASSESSED",
+    "supported_meaning": "No investigator-to-final or critic-to-final preservation judgment is possible. Available discovery-to-draft and late critique were read in full.",
+    "losses": "Final absent; no comparable complete grade fabricated."
+  },
+  "deliberately_unassessed": [
+    {
+      "family": "Actual museum media/spreadsheet/rights/catalog facts",
+      "coverage": "UNASSESSED",
+      "reason": "Not supplied and not accessed; legitimate owner questions."
+    },
+    {
+      "family": "Future deployed software/build/media/UI/performance/restart execution",
+      "coverage": "UNASSESSED",
+      "reason": "Deliverable is research planning; proposals judged for meaningful oracles, not execution."
+    },
+    {
+      "family": "Universal codec safety/support and every upstream issue/history",
+      "coverage": "UNASSESSED",
+      "reason": "Finite governing-context assessment, not a whole-tree/history or universal correctness claim."
+    }
+  ]
+}

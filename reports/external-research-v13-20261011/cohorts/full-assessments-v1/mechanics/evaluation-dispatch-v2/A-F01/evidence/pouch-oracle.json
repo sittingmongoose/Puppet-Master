@@ -1,0 +1,19 @@
+{
+  "schema": "er13.independent_decisive_witness.v1",
+  "id": "E-PDB-ORACLE",
+  "public_url": "https://github.com/apache/pouchdb/pull/8460/files",
+  "pinned_test_url": "https://github.com/neighbourhoodie/pouchdb/blob/1a30d0525f7b778ac3a4c58d1bf0d03628533999/tests/integration/test.attachments.js",
+  "locator": "test #8456, raw file 3944–3962; PR diff 342–357",
+  "minimal_authentic_code_tokens": [
+    "db.put",
+    "err.status !== 412"
+  ],
+  "independent_reading": "After branch replication, removal and compaction, a document write containing a stale attachment stub must fail with status 412. Earlier get retrieves attachment data; its return is not the asserted 412 oracle.",
+  "relevance": "A1 published investigator/reviser source-map PDB-05 describes a stale fetch failing, conflating the governing operation.",
+  "executed": false,
+  "license": "Apache License 2.0; https://www.apache.org/licenses/LICENSE-2.0",
+  "retrieval_receipt_ids": [
+    "pouch-test-cited",
+    "pouch-regression-context"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "A-F02-A1_A8",
+  "complete_final_source_judgment": "PASS",
+  "defects": [
+    {
+      "id": "AA-D01",
+      "classification": "minor governing condition",
+      "material": false,
+      "scope": "web audition feasibility",
+      "artifact_locator": "reviser/final.md, channel paragraph; RV-02",
+      "finding": "Browser decoding alone is not every condition on MediaElementAudioSourceNode output: CORS-cross-origin media must produce graph silence. The proposed local graph remains feasible, and no cross-origin route or universal codec support is promised; the omitted origin condition is a prototype boundary, not a false rejection of live audition.",
+      "independent_primary_source_ids": [
+        "E28"
+      ],
+      "resolution": "PRESENT_IN_FROZEN_ORIGINAL"
+    },
+    {
+      "id": "AA-D02",
+      "classification": "minor locator/wording",
+      "material": false,
+      "scope": "carried source edition",
+      "artifact_locator": "reviser/source-map.json predecessor SRC-10/CR-16",
+      "finding": "Carried WCAG source identities use the2023 edition date with the current URL, now serving the2024 Recommendation edition. Applicable keyboard/focus/status criteria are supported; full earlier response custody is unavailable.",
+      "independent_primary_source_ids": [
+        "E24"
+      ],
+      "resolution": "PRESENT_IN_FROZEN_ORIGINAL"
+    },
+    {
+      "id": "AA-M01",
+      "classification": "method scope change",
+      "material": false,
+      "scope": "SCW method, separate from final source truth",
+      "artifact_locator": "critic/critique.md SCW-02",
+      "finding": "The selected sentence applies format-specific wording to any parser-successful player failure. Its intended C adds a known unsupported-format condition before testing C/C*. That narrows the selected original instead of preserving its scope. Ordinary FI-01 and the final correctly repair the overbroad message using governing media-error evidence. This does not establish full SCW method conformance.",
+      "independent_primary_source_ids": [
+        "E27"
+      ],
+      "resolution": "FINAL_SOURCE_AMENDMENT_SUPPORTED__METHOD_DEVIATION_RETAINED"
+    }
+  ],
+  "administrative_observation": {
+    "final_missing": false,
+    "source_grade_fabricated": false
+  },
+  "materiality_rule": "A concrete consequential factual rule contradicting governing versioned code is material even when the recommended explicit mapping remains sensible. Minor compression, edition and unchosen-path boundaries do not by themselves negate a supported proposal."
+}

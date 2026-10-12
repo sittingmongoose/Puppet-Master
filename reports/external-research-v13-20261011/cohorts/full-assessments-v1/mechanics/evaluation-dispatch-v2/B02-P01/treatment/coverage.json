@@ -1,0 +1,373 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "B02-P01-treatment",
+  "scope": "FULL",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "All original substantive obligations and negative constraints checked in complete lineage and final; unknown target facts remain honest rather than invented."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "Consequential available source facts, versions, definitions, exceptions and applicability independently checked. Earlier unreliable identities/pointers remain visible; final reliance is bounded to supported evidence."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "Useful mechanisms and alternatives assessed for practical relevance, with comparative code/callers/tests and actual issue/fix context. Novelty is relative to the brief, not a claim about undisclosed user knowledge."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "Every exact-plan clause and each critic finding traced to final; refinements versus required corrections and unresolved owner inputs distinguished."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "No material supported draft/criticism meaning lost in final. Compression of optional discussions and literal quotation/locator limitations are recorded; final is self-contained in substance."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "Meaningful keyboard/command state/call-count and reader/tree/speech proposals separated. No target implementation, tests, reader session or future execution demanded or falsely credited."
+    }
+  ],
+  "consequential_obligations": [
+    {
+      "id": "O01",
+      "obligation": "Component-sized proposal for editing, navigation and extension commands; no editor redesign",
+      "coverage": "COMPLETE",
+      "locator": "Recommendation and integration scope",
+      "assessment": "Stable host registry and host-owned chooser; target not invented."
+    },
+    {
+      "id": "O02",
+      "obligation": "Keyboard opening and complete operation",
+      "coverage": "COMPLETE",
+      "locator": "Opening/entry and validation",
+      "assessment": "Menu route and/or conflict-reviewed binding; input/navigation/dismissal covered."
+    },
+    {
+      "id": "O03",
+      "obligation": "Relevant unavailability with understandable reason",
+      "coverage": "COMPLETE",
+      "locator": "Availability and invocation",
+      "assessment": "Selection-dependent disabled results remain discoverable; textual/programmatic reason; accept-time state check."
+    },
+    {
+      "id": "O04",
+      "obligation": "Dismissal restores previous editing position, including invalid destination",
+      "coverage": "COMPLETE",
+      "locator": "Capture/restore and closure fallback",
+      "assessment": "Editor/view/document and caret/selection captured; surviving logical destination after closure. Control also explicitly includes scroll."
+    },
+    {
+      "id": "O05",
+      "obligation": "Mistyped-query tolerance with alternatives/trade-offs",
+      "coverage": "COMPLETE",
+      "locator": "Search comparison and proposed tests",
+      "assessment": "Lexical/subsequence/alias/approximate tiers compared; thresholds remain empirical. Treatment explicitly bounds short-token policy."
+    },
+    {
+      "id": "O06",
+      "obligation": "Names, shortcuts, scope and same-label disambiguation for visual and AT users",
+      "coverage": "COMPLETE",
+      "locator": "Descriptor/row metadata",
+      "assessment": "Current applicable shortcuts and human scope/owner distinguish rows; no opaque ID-only identity."
+    },
+    {
+      "id": "O07",
+      "obligation": "Avoid per-keystroke interruption",
+      "coverage": "COMPLETE",
+      "locator": "Status policy and reader validation",
+      "assessment": "Cancellable/coalesced status; deliberate navigation output; rapid typing tested. No identical-reader-speech guarantee."
+    },
+    {
+      "id": "O08",
+      "obligation": "Extension addition/removal while open",
+      "coverage": "COMPLETE",
+      "locator": "Lifecycle controller and race tests",
+      "assessment": "Live refresh, query/active-ID preservation where valid, logical fallback and re-resolution; stale-handler invocation prohibited."
+    },
+    {
+      "id": "O09",
+      "obligation": "Windows and Linux separately; no toolkit assumption or universal API guarantee",
+      "coverage": "COMPLETE",
+      "locator": "Platform evidence and separate reader matrix",
+      "assessment": "UIA and AT-SPI/Orca are distinct; web patterns are guidance and target mapping remains conditional."
+    },
+    {
+      "id": "O10",
+      "obligation": "Preserve ordinary typing and all existing shortcuts",
+      "coverage": "COMPLETE",
+      "locator": "Entry binding and keymap validation",
+      "assessment": "No bare typing takeover; existing command routes retained; context/platform/layout conflicts remain inventory dependent."
+    },
+    {
+      "id": "O11",
+      "obligation": "Never invoke merely because highlighted",
+      "coverage": "COMPLETE",
+      "locator": "Invocation state and zero-call validation",
+      "assessment": "Explicit Enter acceptance with live handler/state; highlight/open/filter/refresh remain nonexecuting."
+    },
+    {
+      "id": "O12",
+      "obligation": "Availability not conveyed by color alone",
+      "coverage": "COMPLETE",
+      "locator": "Availability presentation",
+      "assessment": "Text, state/reason and programmatic representation; color/icon supplemental."
+    },
+    {
+      "id": "O13",
+      "obligation": "No extension executable UI code requirement",
+      "coverage": "COMPLETE",
+      "locator": "Host boundary",
+      "assessment": "Declarative metadata and normal command behavior distinguished from executable chooser presentation."
+    },
+    {
+      "id": "O14",
+      "obligation": "Small integration plan and feasible interaction/search comparison",
+      "coverage": "COMPLETE",
+      "locator": "Integration and alternatives tables",
+      "assessment": "Surface/focus/ranking trade-offs remain conditional without assuming one winning product."
+    },
+    {
+      "id": "O15",
+      "obligation": "Available primary docs, comparative code/callers/tests and consequential history",
+      "coverage": "COMPLETE",
+      "locator": "Evidence boundary and primary source index",
+      "assessment": "Comparator evidence checked independently with conditions/versions. Unknown target repo is not invented."
+    },
+    {
+      "id": "O16",
+      "obligation": "Keyboard correctness separated from screen-reader compatibility; proposed versus executed truth",
+      "coverage": "COMPLETE",
+      "locator": "Validation and executed-status sections",
+      "assessment": "Concrete command-call/state oracles plus real reader/tree/speech proposals; no implementation, target tests or user session claimed."
+    },
+    {
+      "id": "O17",
+      "obligation": "Complete released-plan dispositions, valid criticism and preservation",
+      "coverage": "COMPLETE",
+      "locator": "Plan-disposition tables; criticism traces in assessment",
+      "assessment": "Every substantive clause examined; rejected stale-row/role assumptions justified; optional features/owner questions preserved in meaning."
+    },
+    {
+      "id": "O18",
+      "obligation": "Brief-only discovery and single revealed plan with frozen witnesses",
+      "coverage": "COMPLETE",
+      "locator": "Discovery and reveal receipts",
+      "assessment": "Discovery/revealed-plan bytes match receipts; process isolation itself is not independently proved without a native transcript."
+    },
+    {
+      "id": "O19",
+      "obligation": "60-minute maximum, includes setup/queue/retries/handoffs; no waiting credit",
+      "coverage": "COMPLETE",
+      "locator": "Time eligibility",
+      "assessment": "Fixed clocks retained. Both complete frozen packets observed before whole deadline; no stage or deadline rebased."
+    },
+    {
+      "id": "O20",
+      "obligation": "Research proposal, no requested implementation/deployment",
+      "coverage": "COMPLETE",
+      "locator": "Scope and validation boundary",
+      "assessment": "Future execution is unassessed and not a pass prerequisite."
+    }
+  ],
+  "source_families": [
+    {
+      "family": "Web interaction/focus semantics",
+      "coverage": "COMPLETE",
+      "in_source_pass_denominator": true,
+      "source_ids": [
+        "apg-combo",
+        "apg-dialog",
+        "keyboard-interface"
+      ],
+      "limit": "Finite primary inspection of the declared research proposal; no target implementation result."
+    },
+    {
+      "family": "Accessibility definitions, status and desktop interpretation",
+      "coverage": "COMPLETE",
+      "in_source_pass_denominator": true,
+      "source_ids": [
+        "wcag22",
+        "wcag2ict",
+        "status22"
+      ],
+      "limit": "Finite primary inspection of the declared research proposal; no target implementation result."
+    },
+    {
+      "family": "Windows accessibility mechanisms and exceptions",
+      "coverage": "COMPLETE",
+      "in_source_pass_denominator": true,
+      "source_ids": [
+        "win-best",
+        "win-control",
+        "win-overview",
+        "win-notification"
+      ],
+      "limit": "Finite primary inspection of the declared research proposal; no target implementation result."
+    },
+    {
+      "family": "Linux AT-SPI/toolkit/Orca mechanisms",
+      "coverage": "COMPLETE",
+      "in_source_pass_denominator": true,
+      "source_ids": [
+        "atspi",
+        "gnome",
+        "orca",
+        "atspi-state"
+      ],
+      "limit": "Finite primary inspection of the declared research proposal; no target implementation result."
+    },
+    {
+      "family": "Command registry and extension callers/disposal",
+      "coverage": "COMPLETE",
+      "in_source_pass_denominator": true,
+      "source_ids": [
+        "command-registry",
+        "command-bridge",
+        "vsc-commands"
+      ],
+      "limit": "Finite primary inspection of the declared research proposal; no target implementation result."
+    },
+    {
+      "family": "Public picker/keybinding/product defaults",
+      "coverage": "COMPLETE",
+      "in_source_pass_denominator": true,
+      "source_ids": [
+        "vsc-api",
+        "vsc-keys",
+        "vsc-ui"
+      ],
+      "limit": "Finite primary inspection of the declared research proposal; no target implementation result."
+    },
+    {
+      "family": "Approximate-match definitions and proposed-policy limits",
+      "coverage": "COMPLETE",
+      "in_source_pass_denominator": true,
+      "source_ids": [
+        "damerau-doc",
+        "damerau-code",
+        "levenshtein-doc"
+      ],
+      "limit": "Finite primary inspection of the declared research proposal; no target implementation result."
+    },
+    {
+      "family": "Keyboard/focus/color and dynamic-disabled semantics",
+      "coverage": "COMPLETE",
+      "in_source_pass_denominator": true,
+      "source_ids": [
+        "keyboard",
+        "focus-order",
+        "color",
+        "aria12",
+        "menubar"
+      ],
+      "limit": "Finite primary inspection of the declared research proposal; no target implementation result."
+    },
+    {
+      "family": "Pinned provider/internal model and test boundaries",
+      "coverage": "COMPLETE",
+      "in_source_pass_denominator": true,
+      "source_ids": [
+        "t-provider",
+        "t-types",
+        "t-tests",
+        "t-commit",
+        "vsc-search"
+      ],
+      "limit": "Finite primary inspection of the declared research proposal; no target implementation result."
+    },
+    {
+      "family": "Mismatched refresh pointer and withdrawal",
+      "coverage": "COMPLETE",
+      "in_source_pass_denominator": true,
+      "source_ids": [
+        "refresh-pr",
+        "refresh-commit"
+      ],
+      "limit": "Finite primary inspection of the declared research proposal; no target implementation result."
+    },
+    {
+      "family": "Build-specific NVDA issue/verification history",
+      "coverage": "COMPLETE",
+      "in_source_pass_denominator": true,
+      "source_ids": [
+        "nvda-issue",
+        "nvda-comments",
+        "release69"
+      ],
+      "limit": "Finite primary inspection of the declared research proposal; no target implementation result."
+    },
+    {
+      "family": "Editor observable command state and keystroke cancellation",
+      "coverage": "COMPLETE",
+      "in_source_pass_denominator": true,
+      "source_ids": [
+        "ck-arch",
+        "ck-commands",
+        "ck-keys"
+      ],
+      "limit": "Finite primary inspection of the declared research proposal; no target implementation result."
+    },
+    {
+      "family": "WCAG 2.1 status page context",
+      "coverage": "COMPLETE",
+      "in_source_pass_denominator": true,
+      "source_ids": [
+        "status21"
+      ],
+      "limit": "Finite primary inspection of the declared research proposal; no target implementation result."
+    },
+    {
+      "family": "Unnamed target editor code/callers/tests/keymap/toolkit and user facts",
+      "coverage": "UNASSESSED",
+      "in_source_pass_denominator": false,
+      "reason": "Not identified or supplied. Truthful unknown/disclosure obligation is fully assessed; the absent target facts themselves are not certified. Explicitly allowed external unknown under this contract, not an available-research omission."
+    },
+    {
+      "family": "Future target keyboard, screen-reader, accessibility-tree and corpus benchmark execution",
+      "coverage": "UNASSESSED",
+      "in_source_pass_denominator": false,
+      "reason": "The deliverable is a proposal. Test meaningfulness and executed-versus-proposed truth were fully assessed; future product execution is not required."
+    },
+    {
+      "family": "Candidate native receipt custody and task-status linkage",
+      "coverage": "PARTIAL",
+      "in_source_pass_denominator": false,
+      "reason": "Receipt fields/hashes and actual task status inspected; independent native session-to-task linkage and full ordering telemetry unavailable."
+    },
+    {
+      "family": "Candidate active-provider and billing/subscription measurements",
+      "coverage": "UNASSESSED",
+      "in_source_pass_denominator": false,
+      "reason": "Not supplied. Native cumulative counters exist but are not a billing oracle; public artifacts omit token values and private identities."
+    }
+  ],
+  "lineage_read": {
+    "all_manifest_members_hash_verified": true,
+    "complete_original_brief_and_plan_read": true,
+    "all_discovery_draft_critic_final_source_maps_read": true,
+    "identical_carried_map_fields_verified_equal_and_changes_read": true,
+    "all_manifest_source_indexes_and_consequential_receipts_examined": true,
+    "additional_parallel_critics_or_executable_witnesses_in_assigned_manifests": false
+  },
+  "early_stop": false,
+  "scope_rule": "COMPLETE denotes full finite assessment of available research-proposal obligations, not complete target product research or universal correctness. Explicit UNASSESSED external/future/telemetry domains are not presented as executed or source-certified."
+}

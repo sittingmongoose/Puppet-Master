@@ -1,0 +1,648 @@
+{
+  "schema": "er13.arm-assessment-container.v1",
+  "arms": [
+    {
+      "schema": "er13.original-assessment.v1",
+      "block_id": "B02-P01",
+      "arm_id": "B02-P01-control",
+      "scope": "FULL",
+      "evaluation_role": "Independent original evaluator; not candidate author/repair worker",
+      "governing": {
+        "contract": {
+          "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+          "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+        },
+        "workspace_AGENTS": {
+          "path": "ER13_WORKTREE/AGENTS.md",
+          "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810"
+        },
+        "handoff": {
+          "path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+          "read_sections_only": [
+            "10",
+            "12"
+          ],
+          "selected_section_text_sha256": {
+            "10": "8397e9d2b13ad807f728579ca4ed9599ebcbfbad00df0291a0ab1088fc87604f",
+            "12": "b2cd4e9ba6f5d7782bb5a5d0d5ce8175be53189e80b85b91a07b5a9e06bff70a"
+          }
+        },
+        "brief_sha256": "bf831ed54f01519ae8ffdd958258d0597826449128a5fc0865e94864bf985fc0",
+        "revealed_plan_sha256": "5f7209870cdd7e5062b0c571bad89728eb5563c319118e78d65763d1127185b0"
+      },
+      "input_integrity": {
+        "result": "PASS",
+        "packet": {
+          "path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B02-P01.json",
+          "sha256": "55a3d2de4aca340733274ab8a2c3f5f13cc3c6c8086d9717ed7fbc4b84d7be6b"
+        },
+        "coordinator_receipt": {
+          "path": "ER13_RUNTIME/state/eval-coordinator-v2/B02-P01-input-verification.json",
+          "sha256": "618be458b7b212a8398d408081ec1fd9eca72f2c886c3bf29968ef7cf9c93371"
+        },
+        "independently_verified_member_count": 42,
+        "stage_manifests": [
+          {
+            "stage": "investigator",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P01-control/run/B02-P01-control/control/terminal-handoffs/investigator/manifest.json",
+            "sha256": "3cda8ba28b46fbd38424061d4add551cea4f2f1e76b7424f3ce92129c14c6260"
+          },
+          {
+            "stage": "critic",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P01-control/run/B02-P01-control/control/terminal-handoffs/critic/manifest.json",
+            "sha256": "ac96465be8cd86bb6e20cbe8dbae7485455e80cf81ab3074b9291d1dbb9be6d1"
+          },
+          {
+            "stage": "reviser",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P01-control/run/B02-P01-control/control/terminal-handoffs/reviser/manifest.json",
+            "sha256": "3546d5e504c17e0abd10842655fc3f98547734171d85b7ef8c04d8b6c55e1502"
+          }
+        ],
+        "supplement_manifest": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B02-P01-control-eval-inputs/authored-manifest.json",
+          "sha256": "a386b3f42e99f974a7b968f446668e15a286b84e0bceefbe65470a78a6e5a6fd"
+        },
+        "verified_members": [
+          {
+            "stage": "investigator",
+            "relative_path": "discovery.md",
+            "bytes": 16128,
+            "sha256": "46c975e7481a650e743f17c5fbef0d9ccce8a855daa876e18f114122b298388e"
+          },
+          {
+            "stage": "investigator",
+            "relative_path": "draft.md",
+            "bytes": 22500,
+            "sha256": "aa3e6677eefa9e5fe9eb1be8fdb7a58550d475d204971db1b9b8017088f93f23"
+          },
+          {
+            "stage": "investigator",
+            "relative_path": "source-map.json",
+            "bytes": 16728,
+            "sha256": "85dd674a9b776e5e3415f8e7541762218760caa99b9eab6196516326592d1acb"
+          },
+          {
+            "stage": "investigator",
+            "relative_path": "revealed-plan.md",
+            "bytes": 2438,
+            "sha256": "5f7209870cdd7e5062b0c571bad89728eb5563c319118e78d65763d1127185b0"
+          },
+          {
+            "stage": "investigator",
+            "relative_path": "plan-reveal.json",
+            "bytes": 471,
+            "sha256": "ddf138a2f90d6a1c12d9052ae9979a79d4d28a2a9f21216e4fa3c776e41e0685"
+          },
+          {
+            "stage": "investigator",
+            "relative_path": "assignment.md",
+            "bytes": 10339,
+            "sha256": "1fb87eb9c0f78ffe822843976b556a231918881ea5ecc50cb45347dec1e43764"
+          },
+          {
+            "stage": "investigator",
+            "relative_path": "input-map.json",
+            "bytes": 859,
+            "sha256": "475c4f195a29b34e74e8b57697bc8ce8945ab05e1b622741adbc184f9fc6a32d"
+          },
+          {
+            "stage": "investigator",
+            "relative_path": "freeze.json",
+            "bytes": 1936,
+            "sha256": "a807f8676546748a861311f21a5dbbcd1b799a5472ce9d2ccc356e6002397411"
+          },
+          {
+            "stage": "investigator",
+            "relative_path": "request.json",
+            "bytes": 7324,
+            "sha256": "f39d26e7560c5038ec7407b68aa928de1a8046b71bbe7da8cc5fa776ebb8bafd"
+          },
+          {
+            "stage": "investigator",
+            "relative_path": "dispatch.json",
+            "bytes": 10654,
+            "sha256": "8c1cc206fef77ccb7629c96cdf626baa337c09b33fd5f60fa1a004914a62f0dc"
+          },
+          {
+            "stage": "investigator",
+            "relative_path": "status.json",
+            "bytes": 5326,
+            "sha256": "cb06956776f25294b5e7885b9f316255ca5517aa317c26cfa74014c68d451fbd"
+          },
+          {
+            "stage": "investigator",
+            "relative_path": "native-goal-create.json",
+            "bytes": 525,
+            "sha256": "81730daece85030391f2eeb47fd7eca0a267fd1ded93ed5bf0d60f62551e169a"
+          },
+          {
+            "stage": "investigator",
+            "relative_path": "native-goal-active.json",
+            "bytes": 525,
+            "sha256": "81730daece85030391f2eeb47fd7eca0a267fd1ded93ed5bf0d60f62551e169a"
+          },
+          {
+            "stage": "investigator",
+            "relative_path": "native-goal-terminal.json",
+            "bytes": 855,
+            "sha256": "5722c2866eaefd11bfebe5c3c2201fb93210e985b79347afa20a3765861e5488"
+          },
+          {
+            "stage": "investigator",
+            "relative_path": "sources/index.md",
+            "bytes": 3873,
+            "sha256": "9ee98339efdfc46673b56f3e2aff7db229b7500954f08927cbbd1ca5236427d7"
+          },
+          {
+            "stage": "critic",
+            "relative_path": "critique.md",
+            "bytes": 14332,
+            "sha256": "1b4c3b9bcb2c37acaaf39918a09e253eef3e60e24f6c6884075d433b7b7b5dd3"
+          },
+          {
+            "stage": "critic",
+            "relative_path": "source-map.json",
+            "bytes": 24261,
+            "sha256": "85d0da9f270cebb3a172aafaff15cb3d5cc6401157dc5457079f9d5aa0ca6604"
+          },
+          {
+            "stage": "critic",
+            "relative_path": "assignment.md",
+            "bytes": 9747,
+            "sha256": "8d94a8ba61969a79959f65e428f67df336bfe34f8076f7e1ae1e59d2d7d1f42c"
+          },
+          {
+            "stage": "critic",
+            "relative_path": "input-map.json",
+            "bytes": 1985,
+            "sha256": "521da15a655c8ea29170086f6221b280bdc8bb4d6a2b19dfa18547113dcbef3c"
+          },
+          {
+            "stage": "critic",
+            "relative_path": "freeze.json",
+            "bytes": 4397,
+            "sha256": "6b90185af7b734bd914847739816ab6a8a52faaf04bc6ae2878d63e1d0140dbb"
+          },
+          {
+            "stage": "critic",
+            "relative_path": "request.json",
+            "bytes": 7258,
+            "sha256": "452351d3fed36b2a8492c425f4310c1a21e3fcfdad161e236580e0e9e8e499dc"
+          },
+          {
+            "stage": "critic",
+            "relative_path": "dispatch.json",
+            "bytes": 10516,
+            "sha256": "018ec92ef63d04c39b0dc2c57dc021583ac3a0dcd5f1b52c7e46f12c4032d95c"
+          },
+          {
+            "stage": "critic",
+            "relative_path": "status.json",
+            "bytes": 5152,
+            "sha256": "bd92983b8449b1412c0deb4df8cf971cb1a4d1a47753dafa36f7c81588d1abf1"
+          },
+          {
+            "stage": "critic",
+            "relative_path": "native-goal-create.json",
+            "bytes": 513,
+            "sha256": "e61b765a42886fbc643bdffb18338e5beab5073c7e9e61e7a97e21ff779b829e"
+          },
+          {
+            "stage": "critic",
+            "relative_path": "native-goal-active.json",
+            "bytes": 513,
+            "sha256": "e61b765a42886fbc643bdffb18338e5beab5073c7e9e61e7a97e21ff779b829e"
+          },
+          {
+            "stage": "critic",
+            "relative_path": "native-goal-terminal.json",
+            "bytes": 842,
+            "sha256": "b117b00cb4671c2a209f4b631ac6e63bf86bd3cd144cb832d839ae9f41d4d883"
+          },
+          {
+            "stage": "critic",
+            "relative_path": "sources/index.md",
+            "bytes": 1996,
+            "sha256": "70ceb8d036cff13ab69ec273cce60969b3a085541c0e6571b63be17f520051c2"
+          },
+          {
+            "stage": "reviser",
+            "relative_path": "final.md",
+            "bytes": 23972,
+            "sha256": "a56b83e08c6d30feb4b654f34ae17729f3c27cc7dace87f6f331c78c907330f6"
+          },
+          {
+            "stage": "reviser",
+            "relative_path": "source-map.json",
+            "bytes": 31112,
+            "sha256": "a61da65b333586ac8db2edc917e7255d2f87c97892fa0c7f882b44e6fd33279c"
+          },
+          {
+            "stage": "reviser",
+            "relative_path": "assignment.md",
+            "bytes": 9734,
+            "sha256": "936bdd417462856b98764a6d8bc66e470ac7f630f7b29396ac9a62394a60454d"
+          },
+          {
+            "stage": "reviser",
+            "relative_path": "input-map.json",
+            "bytes": 2596,
+            "sha256": "adc49066eae971d580bfdd33a058368a2cb13135699fc553fa766237303841bd"
+          },
+          {
+            "stage": "reviser",
+            "relative_path": "freeze.json",
+            "bytes": 5951,
+            "sha256": "1964ba00805039068e2c539dba51503cf485e0ca2de4e95296b8e6d5601c5bf5"
+          },
+          {
+            "stage": "reviser",
+            "relative_path": "request.json",
+            "bytes": 7269,
+            "sha256": "3a4591aa0baa65427cb490dc8333074bf84e87627bf8400fcfd048df690c3c18"
+          },
+          {
+            "stage": "reviser",
+            "relative_path": "dispatch.json",
+            "bytes": 10539,
+            "sha256": "0a084c03f2bd657abc8c4a1a225de4d13b68128b30bae364cfeeddf51c6ab72d"
+          },
+          {
+            "stage": "reviser",
+            "relative_path": "status.json",
+            "bytes": 5911,
+            "sha256": "d42388dd4472953037525b8ccae8980b10a89ae04a3e5c038a22b009db4ee19c"
+          },
+          {
+            "stage": "reviser",
+            "relative_path": "native-goal-create.json",
+            "bytes": 515,
+            "sha256": "e94c016e03cf6469010fad99c23c76d36615dc17d55c00d6cb8ac2076c9a5700"
+          },
+          {
+            "stage": "reviser",
+            "relative_path": "native-goal-active.json",
+            "bytes": 515,
+            "sha256": "e94c016e03cf6469010fad99c23c76d36615dc17d55c00d6cb8ac2076c9a5700"
+          },
+          {
+            "stage": "reviser",
+            "relative_path": "native-goal-terminal.json",
+            "bytes": 844,
+            "sha256": "fe341548c00ce395d616baf56a45e00b870b4763b24d4ed6d974f1e7ddd8e8a5"
+          },
+          {
+            "stage": "reviser",
+            "relative_path": "sources/index.md",
+            "bytes": 4736,
+            "sha256": "19e54272bd6d3b2b0e8c8914e9f3c16c82960367b9a5000e74f42e4c6adb623c"
+          },
+          {
+            "stage": "supplement",
+            "relative_path": "configs/B02-P01-control.json",
+            "bytes": 1398,
+            "sha256": "c076ac3d923754ba5704d7a480beda7e8e5cb9eaa30d4155d6c2c38ab7c0a839"
+          },
+          {
+            "stage": "supplement",
+            "relative_path": "control-inputs/brief.md",
+            "bytes": 2405,
+            "sha256": "bf831ed54f01519ae8ffdd958258d0597826449128a5fc0865e94864bf985fc0"
+          },
+          {
+            "stage": "supplement",
+            "relative_path": "control-inputs/plan.md",
+            "bytes": 2438,
+            "sha256": "5f7209870cdd7e5062b0c571bad89728eb5563c319118e78d65763d1127185b0"
+          }
+        ],
+        "reveal": {
+          "discovery_sha256": "46c975e7481a650e743f17c5fbef0d9ccce8a855daa876e18f114122b298388e",
+          "plan_sha256": "5f7209870cdd7e5062b0c571bad89728eb5563c319118e78d65763d1127185b0",
+          "revealed_at_utc": "2026-10-12T00:47:50.611Z",
+          "single_use_field": true
+        },
+        "restrictions": "Only exact receipt-listed snapshots/supplements/status records read. Referenced active paths were not followed. No candidate history, held-out content, canon or Git was read/used by this evaluator."
+      },
+      "source_judgment": {
+        "value": "PASS",
+        "assessed_target": "Exact frozen final plus complete frozen scientific lineage",
+        "basis": "All six axes and all assessable material obligations/available source families completed. No material remaining unsupported claim, required omission, false rejection or supported-meaning loss found. Earlier corrected defects are retained, not erased.",
+        "finite_assessment": true,
+        "universal_correctness_or_deployment_claim": false,
+        "external_unknown_rule": "Unnamed target/user facts may remain unknown; available mechanism research was still independently checked. PASS does not certify those absent facts or future execution.",
+        "material_remaining_final_defects_found": 0
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "assessment": "All original substantive obligations and negative constraints checked in complete lineage and final; unknown target facts remain honest rather than invented."
+          },
+          {
+            "axis": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "assessment": "Consequential available source facts, versions, definitions, exceptions and applicability independently checked. Earlier unreliable identities/pointers remain visible; final reliance is bounded to supported evidence."
+          },
+          {
+            "axis": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "assessment": "Useful mechanisms and alternatives assessed for practical relevance, with comparative code/callers/tests and actual issue/fix context. Novelty is relative to the brief, not a claim about undisclosed user knowledge."
+          },
+          {
+            "axis": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "assessment": "Every exact-plan clause and each critic finding traced to final; refinements versus required corrections and unresolved owner inputs distinguished."
+          },
+          {
+            "axis": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "assessment": "No material supported draft/criticism meaning lost in final. Compression of optional discussions and literal quotation/locator limitations are recorded; final is self-contained in substance."
+          },
+          {
+            "axis": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "assessment": "Meaningful keyboard/command state/call-count and reader/tree/speech proposals separated. No target implementation, tests, reader session or future execution demanded or falsely credited."
+          }
+        ],
+        "available_source_families": "COMPLETE",
+        "external_target_and_future_execution": "UNASSESSED explicitly, not required as executed results",
+        "native_provenance": "PARTIAL",
+        "billing": "UNASSESSED",
+        "record": "coverage.json"
+      },
+      "defects": {
+        "record": "defects.json",
+        "remaining_final_material_count": 0,
+        "all_original_findings_retained": true
+      },
+      "delivery": {
+        "status": "DELIVERED",
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P01-control/run/B02-P01-control/control/terminal-handoffs/reviser/files/final.md",
+        "final_sha256": "a56b83e08c6d30feb4b654f34ae17729f3c27cc7dace87f6f331c78c907330f6",
+        "all_required_manifest_outputs_present": true,
+        "notified_tasks_terminal_zero_pending": true,
+        "missing_final": false
+      },
+      "time_eligibility": {
+        "whole_status": "ELIGIBLE_ON_OBSERVED_COMPLETE_FROZEN_DELIVERY",
+        "fixed_maximum_s": 3600,
+        "t0_utc": "2026-10-12T00:34:01.043Z",
+        "fixed_whole_deadline_utc": "2026-10-12T01:34:01.043Z",
+        "all_tasks_terminal_zero_pending_observed_at_packet_freeze_utc": "2026-10-12T01:28:47.248411+00:00",
+        "t0_to_complete_eval_ready_freeze_upper_bound_s": 3286.205411,
+        "last_native_goal_terminal_proxy_utc": "2026-10-12T01:18:44+00:00",
+        "t0_to_last_native_goal_terminal_proxy_s": 2682.957,
+        "complete_final_artifact_write_time_utc": null,
+        "stage_records": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T00:34:01.586Z",
+            "request_at_utc": "2026-10-12T00:34:01.586Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T00:34:02.195Z",
+            "native_goal_created_at_utc": "2026-10-12T00:34:27+00:00",
+            "native_goal_terminal_updated_at_utc": "2026-10-12T00:51:19+00:00",
+            "fixed_stage_deadline_utc": "2026-10-12T01:04:01.586Z",
+            "same_native_thread_birth_objective_across_receipts": true,
+            "active_payload_equals_create_payload": true,
+            "native_terminal_status": "complete",
+            "actual_task_terminal_status": "completed",
+            "actual_pending_children": false,
+            "native_terminal_within_stage_cap": true,
+            "request_to_native_birth_s": 25.414,
+            "native_birth_to_terminal_interval_s": 1012,
+            "native_reported_time_used_s": 1011,
+            "previous_native_end_to_this_request_s": null,
+            "last_complete_artifact_time_utc": null,
+            "task_quiet_time_utc": null,
+            "receipt_hashes": {
+              "request.json": "f39d26e7560c5038ec7407b68aa928de1a8046b71bbe7da8cc5fa776ebb8bafd",
+              "dispatch.json": "8c1cc206fef77ccb7629c96cdf626baa337c09b33fd5f60fa1a004914a62f0dc",
+              "status.json": "cb06956776f25294b5e7885b9f316255ca5517aa317c26cfa74014c68d451fbd",
+              "native-goal-create.json": "81730daece85030391f2eeb47fd7eca0a267fd1ded93ed5bf0d60f62551e169a",
+              "native-goal-active.json": "81730daece85030391f2eeb47fd7eca0a267fd1ded93ed5bf0d60f62551e169a",
+              "native-goal-terminal.json": "5722c2866eaefd11bfebe5c3c2201fb93210e985b79347afa20a3765861e5488"
+            },
+            "actual_raw_status_hash": "f00a5890e3f86350ecdcd3453f5c85738cbeacf74db19d4174fa5c956248306e"
+          },
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T00:55:52.269Z",
+            "request_at_utc": "2026-10-12T00:55:52.269Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T00:55:52.943Z",
+            "native_goal_created_at_utc": "2026-10-12T00:56:02+00:00",
+            "native_goal_terminal_updated_at_utc": "2026-10-12T01:01:02+00:00",
+            "fixed_stage_deadline_utc": "2026-10-12T01:07:52.269Z",
+            "same_native_thread_birth_objective_across_receipts": true,
+            "active_payload_equals_create_payload": true,
+            "native_terminal_status": "complete",
+            "actual_task_terminal_status": "completed",
+            "actual_pending_children": false,
+            "native_terminal_within_stage_cap": true,
+            "request_to_native_birth_s": 9.731,
+            "native_birth_to_terminal_interval_s": 300,
+            "native_reported_time_used_s": 300,
+            "previous_native_end_to_this_request_s": 273.269,
+            "last_complete_artifact_time_utc": null,
+            "task_quiet_time_utc": null,
+            "receipt_hashes": {
+              "request.json": "452351d3fed36b2a8492c425f4310c1a21e3fcfdad161e236580e0e9e8e499dc",
+              "dispatch.json": "018ec92ef63d04c39b0dc2c57dc021583ac3a0dcd5f1b52c7e46f12c4032d95c",
+              "status.json": "bd92983b8449b1412c0deb4df8cf971cb1a4d1a47753dafa36f7c81588d1abf1",
+              "native-goal-create.json": "e61b765a42886fbc643bdffb18338e5beab5073c7e9e61e7a97e21ff779b829e",
+              "native-goal-active.json": "e61b765a42886fbc643bdffb18338e5beab5073c7e9e61e7a97e21ff779b829e",
+              "native-goal-terminal.json": "b117b00cb4671c2a209f4b631ac6e63bf86bd3cd144cb832d839ae9f41d4d883"
+            },
+            "actual_raw_status_hash": "27c61e92ebae46f7ffb7cd2b33f06edd49de06c1c1c9037f2ee9bdf357dfa627"
+          },
+          {
+            "stage": "reviser",
+            "prepared_at_utc": "2026-10-12T01:07:32.981Z",
+            "request_at_utc": "2026-10-12T01:07:32.981Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T01:07:33.882Z",
+            "native_goal_created_at_utc": "2026-10-12T01:07:59+00:00",
+            "native_goal_terminal_updated_at_utc": "2026-10-12T01:18:44+00:00",
+            "fixed_stage_deadline_utc": "2026-10-12T01:25:32.981Z",
+            "same_native_thread_birth_objective_across_receipts": true,
+            "active_payload_equals_create_payload": true,
+            "native_terminal_status": "complete",
+            "actual_task_terminal_status": "completed",
+            "actual_pending_children": false,
+            "native_terminal_within_stage_cap": true,
+            "request_to_native_birth_s": 26.019,
+            "native_birth_to_terminal_interval_s": 645,
+            "native_reported_time_used_s": 645,
+            "previous_native_end_to_this_request_s": 390.981,
+            "last_complete_artifact_time_utc": null,
+            "task_quiet_time_utc": null,
+            "receipt_hashes": {
+              "request.json": "3a4591aa0baa65427cb490dc8333074bf84e87627bf8400fcfd048df690c3c18",
+              "dispatch.json": "0a084c03f2bd657abc8c4a1a225de4d13b68128b30bae364cfeeddf51c6ab72d",
+              "status.json": "d42388dd4472953037525b8ccae8980b10a89ae04a3e5c038a22b009db4ee19c",
+              "native-goal-create.json": "e94c016e03cf6469010fad99c23c76d36615dc17d55c00d6cb8ac2076c9a5700",
+              "native-goal-active.json": "e94c016e03cf6469010fad99c23c76d36615dc17d55c00d6cb8ac2076c9a5700",
+              "native-goal-terminal.json": "fe341548c00ce395d616baf56a45e00b870b4763b24d4ed6d974f1e7ddd8e8a5"
+            },
+            "actual_raw_status_hash": "e2e38ab0fcf523905690dfa8b21e55cec09e9dab4146863f7ea105d0a934be42"
+          }
+        ],
+        "all_observed_native_terminals_within_fixed_stage_caps": true,
+        "exact_stage_task_quiet_by_cap": "UNKNOWN: no stage-specific quiet capture timestamp supplied",
+        "boundary_limit": "Native updatedAt is a receipt field with second resolution, not a last-scientific-artifact timestamp or proven provider-active duration. Complete freeze before whole deadline proves timely frozen delivery; no retrospective clock correction used."
+      },
+      "method_compliance": {
+        "status": "OBSERVED_ARTIFACT_REQUIREMENTS_MET_PROCESS_ISOLATION_PARTIAL",
+        "declared_topology": "investigator → independent critic → fresh reviser",
+        "observed_stage_count": 3,
+        "final_stage": "reviser",
+        "brief_only_reveal_hash_witness_matches": true,
+        "all_required_scientific_outputs_present": true,
+        "all_critic_dispositions_examined": true,
+        "known_concern": [
+          "C-M01: reported public read-only Git lookup; wording ends in changes, so no forbidden mutation or method failure demonstrated"
+        ],
+        "unverified_process": [
+          "Actual provider model/reasoning/tier execution beyond status/request fields",
+          "Brief isolation and reveal call count/order beyond single-use receipt",
+          "No hidden context reuse or unlisted activity",
+          "Exact scientific-file save ordering relative to Goal completion"
+        ],
+        "no_unrequested_evaluator_agents_or_goals": true,
+        "evaluator_no_candidate_feedback_or_repair": true
+      },
+      "native_identity_provenance": {
+        "coverage": "PARTIAL",
+        "receipt_custody_verified": true,
+        "same_native_thread_birth_exact_objective_active_to_complete_fields": true,
+        "actual_delegated_tasks_terminal_zero_pending": true,
+        "distinct_stage_native_birth_records": 3,
+        "native_identity_or_full_transcripts_published": false,
+        "independent_native_to_task_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+        "activation_before_input_and_no_replacement_goal": "Not independently provable from permitted bounded receipts; self-reports and freeze bindings are consistent. No full native transcript sought.",
+        "manifest_flags": "Original stage manifests retain native_lifecycle_qualified=false and science_qualified=false; notified enrichment separately reports matching native identity fields. Neither flag nor capture alone is semantic source authority.",
+        "qualification": "No full independent native-recipe qualification inferred from hash/receipt consistency alone."
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL_RECEIPTS_ONLY",
+        "candidate_product": {
+          "assigned_arm_denominator": 1,
+          "notified_failure_records": [],
+          "declared_stage_context_count": 3,
+          "native_lifetime_interval_sum_s": 1957,
+          "native_time_used_fields_sum_s": 1956,
+          "native_cumulative_usage_counters_present": true,
+          "public_token_values": "WITHHELD by scientific privacy contract",
+          "provider_active_time_s": null,
+          "actual_open_context_occupancy_s": null,
+          "cached_input_output_reasoning_breakdown": null,
+          "subscription_consumption": null,
+          "billing_cost": null,
+          "native_counter_to_candidate_task_linkage": "UNKNOWN",
+          "notes": "Native lifetime/timeUsed fields are not provider-active time, full open-context residency or billing. Counters were not added to derive consumption; unknowns are not zero."
+        },
+        "preparation_support_publication_root_cost": {
+          "status": "UNKNOWN; no complete cost denominator supplied",
+          "included_in_product_cost": false
+        },
+        "independent_evaluation": {
+          "category": "independent_evaluation",
+          "first_observed_evaluator_utc": "2026-10-12 01:30:14 UTC",
+          "original_record_written_at_utc": "2026-10-12T01:47:31.534967+00:00",
+          "billing_cost": null,
+          "usage_breakdown": null,
+          "shared_primary_lookup": "One evaluator lookup reused across the assigned pair; not candidate assistance and not double-counted as two independent research executions."
+        }
+      },
+      "stage_findings": [
+        {
+          "stage": "investigator",
+          "assessment": "Complete brief-only discovery/draft examined. Concrete comparator mechanisms and alternatives useful; target facts explicitly unknown. No material unsupported final-directed mechanism found; surface refinement is optional clarification rather than proof the initial package omitted all interaction comparison."
+        },
+        {
+          "stage": "critic",
+          "assessment": "Every original critic finding independently assessed, not accepted on agreement. No materially false corrective rejection; surface/markup/identity refinements are bounded. Its terminal summary understates available native timestamps."
+        },
+        {
+          "stage": "reviser",
+          "assessment": "Complete final and final source map independently assessed against original brief/plan, all dispositions and supported predecessor content. No material remaining unsupported claim, required omission, false rejection or preservation loss found; listed nonmaterial limits and method concern remain original records."
+        }
+      ],
+      "critic_dispositions": [
+        {
+          "id": "C-01",
+          "original_classification": "material incomplete",
+          "independent_finding": "A useful surface clarification; discovery already compared combobox and dialog, and draft did compare focus/layout alternatives. The need to name a specific winning surface is not a mandatory research-proposal obligation. No material false correction results.",
+          "final_disposition": "ACCEPT clarification: final explicitly compares combobox/list, nonmodal and modal palette with truthful modality and AT decision gates.",
+          "final_locator": "Surface decision: keep the alternatives open until tested",
+          "sources": [
+            "apg-combo",
+            "apg-dialog",
+            "apg-listbox"
+          ]
+        },
+        {
+          "id": "C-02",
+          "original_classification": "honestly unresolved external input",
+          "independent_finding": "Correct: target repo/toolkit/callers/tests/keymap not supplied. Available public comparator mechanism research is still required and is present.",
+          "final_disposition": "RETAIN uncertainty; target seam inspection is future integration work, not falsely executed work.",
+          "final_locator": "Owner decisions and external inputs; Validation plan",
+          "sources": [
+            "command-registry",
+            "command-bridge"
+          ]
+        },
+        {
+          "id": "C-03",
+          "original_classification": "minor locator/wording",
+          "independent_finding": "Markup scope qualification is correct. Understanding and WCAG2ICT additionally recognize direct/platform API status needs, so the web limitation does not negate native design relevance.",
+          "final_disposition": "ACCEPT qualification; preserve polite non-focus status proposal without claiming native conformance.",
+          "final_locator": "Search, status, and interaction alternatives",
+          "sources": [
+            "status22",
+            "wcag2ict"
+          ]
+        },
+        {
+          "id": "C-04",
+          "original_classification": "minor locator/wording",
+          "independent_finding": "Floating identity is a reproducibility limit. The later immutable declarations and package are genuine and support the behavior; they cannot reconstruct the earlier 1.13.2 observation.",
+          "final_disposition": "AMEND with separately pinned 1.14.4 observation, retaining earlier source identity.",
+          "final_locator": "Source and inference boundaries; source-map S14-S15 reviser_check",
+          "sources": [
+            "obsidian-types",
+            "obsidian-package",
+            "obsidian-floating-package"
+          ]
+        }
+      ],
+      "preservation": {
+        "status": "NO_MATERIAL_LOSS_FOUND",
+        "checked": "Complete discovery/draft and all criticism versus complete final/source maps; alternatives, optional capabilities, negative constraints, availability reasons, lifecycle conditions, owner questions and proposed/executed distinction traced.",
+        "nonliteral_compression": "Research proposal may compress descriptions; a source link or ID alone was not credited as retaining a consequential obligation.",
+        "notes": "Control retains optional TF-IDF/history trade-offs and visibility-policy distinctions while adding explicit surface choices and separate API-version observations."
+      },
+      "limitations": [
+        "Imperfect blinding: exact paths, assignments and outputs reveal technique/topology.",
+        "Independent public retrievals verify applicable claims but do not reconstruct every earlier mutable page state.",
+        "No target repository/keymap/toolkit/corpus/user facts were supplied; those facts are not inferred.",
+        "No product tests, accessibility tree, screen-reader or future deployment execution required or credited.",
+        "Full native transcripts, private identity and billing telemetry were neither requested nor published.",
+        "No held-out contents, active candidate locations, history scan, Git/canon changes, provider changes, extra candidates/subagents/Goals or candidate-author feedback."
+      ],
+      "comparison_state": "Original record written before any comparative analysis; immutable after manifest freeze."
+    }
+  ]
+}

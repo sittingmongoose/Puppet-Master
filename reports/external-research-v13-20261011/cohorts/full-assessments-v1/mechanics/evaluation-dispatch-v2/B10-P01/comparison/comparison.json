@@ -1,0 +1,64 @@
+{
+  "schema": "er13.post-freeze-comparison.v1",
+  "block_id": "B10-P01",
+  "created_at_utc": "2026-10-12T01:44:08.033120+00:00",
+  "original_manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/manifest.json",
+  "original_manifest_sha256": "3ca3aa3535bc5842e7f71da07c6182eddf3fa40a906d1b8d900ce6557257fb9c",
+  "originals_verified_before_comparison": true,
+  "arm_count": 2,
+  "assigned_denominator": {
+    "notified_arms": 2,
+    "present_finals": 2,
+    "source_passing_finals": 2,
+    "missing_finals": 0,
+    "notified_stage_failures": 0,
+    "hidden_attempts": "UNKNOWN"
+  },
+  "coverage": {
+    "control": "COMPLETE for all six proposal axes",
+    "treatment": "COMPLETE for all six proposal axes",
+    "unassessed": "Real target-system integration/performance and software execution; current SQLite forum-case fix mapping; unavailable timing/linkage/billing domains remain as declared in originals."
+  },
+  "finite_quality_signal": {
+    "control": "PASS",
+    "treatment": "PASS",
+    "interpretation": "Both exact finals preserve material scope and assessed semantic quality. Nonmaterial limitations differ. This is one finite matched pair, not proof of equal quality everywhere, non-inferiority or technique causality.",
+    "descriptive_differences": [
+      "Control preserves a bounded PDF anchoring issue/fix/code/test example and optional SWHID alternative.",
+      "Treatment preserves conditional SQLite indexing alternatives/history and explicitly adds a same-strong-ETag signal, redirect-class distinctions and narrowed FTS5 warning.",
+      "These are descriptive original-output differences, not evidence that a particular prompt caused discovery or a general quality gain."
+    ]
+  },
+  "latency": {
+    "metric": "T0-to-native-final-completion receipt proxy",
+    "control_seconds": 2156.192,
+    "treatment_seconds": 2238.275,
+    "treatment_minus_control_seconds": 82.083,
+    "frozen_notification_upper_bounds_seconds": {
+      "control": 3104.897,
+      "treatment": 3116.98
+    },
+    "user_visible_request_to_quiet_final_seconds": "UNKNOWN",
+    "interpretation": "Treatment has a longer recorded native-final proxy in this pair. This does not establish user-visible completion savings, a repeatable speedup or causal attribution. Notification bounds include controller/freezing delay."
+  },
+  "resource": {
+    "control_native_lifetime_sum_seconds": 1326,
+    "treatment_native_lifetime_sum_seconds": 1691,
+    "provider_active_time": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "component_usage": "UNKNOWN",
+    "failure_inclusive_resource_per_passing_final": "UNDEFINED FROM AVAILABLE RESOURCE TELEMETRY, not zero",
+    "evaluation_cost_class": "independent_evaluation",
+    "preparation_support_publication_costs": "UNKNOWN; no invented cold composite."
+  },
+  "time_eligibility": {
+    "control": "ELIGIBLE_BY_AVAILABLE_FROZEN_RECEIPTS",
+    "treatment": "ELIGIBLE_BY_AVAILABLE_FROZEN_RECEIPTS",
+    "frozen_clocks_changed": false,
+    "science_write_times": "UNKNOWN independently"
+  },
+  "method_native_identity_limits": "Only consistent captured lifecycle/birth/objective and zero-pending terminal receipts are observed. Actual pre-input order, context freshness, native-to-task/provider linkage and hidden attempts remain UNKNOWN.",
+  "blinding": "Imperfect technique-bearing paths/prompt/output; shared independent lookup reused across this pair.",
+  "selection": "NONE. Recipe promotion/held-out selection belongs to root; no candidate feedback, repairs, repeated grader, new candidate or adjudication created.",
+  "immutable_grades": "No original grade or record altered after the manifest freeze."
+}

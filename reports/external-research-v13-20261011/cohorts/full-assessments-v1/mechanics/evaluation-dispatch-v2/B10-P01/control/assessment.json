@@ -1,0 +1,264 @@
+{
+  "schema": "er13.original-assessment.v1",
+  "block_id": "B10-P01",
+  "original": true,
+  "assigned_arm_count": 1,
+  "block_arm_count": 2,
+  "evaluated_at_utc": "2026-10-12T01:41:55.463457+00:00",
+  "governing_contract": "er13-independent-evaluation-v1",
+  "arms": [
+    {
+      "arm_id": "B10-P01-control",
+      "scope": "FULL",
+      "source_judgment": {
+        "verdict": "PASS",
+        "subject": "Exact frozen final, assessed together with its complete original investigator/critic lineage",
+        "material_final_defects_found": 0,
+        "meaning": "No material unsupported final claim, required omission, false rejection or preservation loss found under this complete finite proposal assessment. Intermediate corrections and nonmaterial limits are recorded; this is not universal correctness.",
+        "intermediate_observations": "Investigator source-map default-strength error and selected-variant omission were corrected/not propagated; critic C1/C2 are valid; C3 is honest unknown."
+      },
+      "coverage": {
+        "overall": "COMPLETE",
+        "axes": [
+          {
+            "axis_id": "A1",
+            "axis": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "final_locator": "final.md lines 7–13, 19–29, 60–81, 89–105",
+            "reason": "All brief obligations and negative constraints are retained; offline old-version evidence, manual provenance and scoped note links remain explicit."
+          },
+          {
+            "axis_id": "A2",
+            "axis": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "final_locator": "final.md lines 31–56, 62–73, 111–113",
+            "reason": "Governing definitions/variants/defaults/precedence and source scope were checked. One intermediate ETag-default error was not propagated; final limitations are nonmaterial."
+          },
+          {
+            "axis_id": "A3",
+            "axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "final_locator": "final.md lines 33–56; discovery and draft alternatives; source maps",
+            "reason": "W3C paired selectors/state, PROV-O, Memento, SWHIDs and commit links add feasible mechanisms beyond the revealed plan. The pinned Hypothesis issue/fix, exported caller, matching definition and tests substantiate the bounded failure history."
+          },
+          {
+            "axis_id": "A4",
+            "axis": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "final_locator": "final.md lines 83–113",
+            "reason": "All P01–P17 dispositions examined. The 304-selector inference is correctly rejected; C1/C2 corrections are supported, C3 uncertainty retained. No material false criticism accepted."
+          },
+          {
+            "axis_id": "A5",
+            "axis": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "final_locator": "discovery/draft → final.md lines 7–81, 115–129; final source lineage",
+            "reason": "Immutable captures, extraction versions, claim-level links, archive/identity alternatives, owner decisions, old-version/offline behavior and validation limits survive the complete final. No material preservation loss found."
+          },
+          {
+            "axis_id": "A6",
+            "axis": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "final_locator": "final.md lines 101, 125–129",
+            "reason": "Protocol, variants, ambiguity/Unicode/extraction, partial change, redirects/manual imports, privacy/offline and scale fixtures are meaningful proposals. No product/test execution is claimed."
+          }
+        ],
+        "detail_file": "coverage.json",
+        "nonrequired_unassessed_domains": [
+          "Actual target-handbook repository/schema/callers/tests/performance"
+        ]
+      },
+      "defects": {
+        "detail_file": "defects.json",
+        "ids": [
+          "C-STAGE-01",
+          "C-N01",
+          "C-N02"
+        ],
+        "material_final_defects": []
+      },
+      "delivery": {
+        "status": "DELIVERED",
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/control/terminal-handoffs/reviser/files/final.md",
+        "final_bytes": 29520,
+        "final_sha256": "455bdacf2e718692fe150c66d0ce559ce46ab8a2b2dc573b4e1a22570e14cd3d",
+        "required_manifest_outputs_present": true,
+        "missing_final": false,
+        "terminal_tasks_completed_zero_pending": true,
+        "publication_limit": "No account/native transcript or usage values copied into these public scientific artifacts."
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_BY_AVAILABLE_FROZEN_RECEIPTS",
+        "maximum_elapsed_seconds": 3600,
+        "frozen_clock_unchanged": true,
+        "t0_utc": "2026-10-12T00:37:12.808Z",
+        "whole_deadline_utc": "2026-10-12T01:37:12.808Z",
+        "stages": [
+          {
+            "stage": "investigator",
+            "request_utc": "2026-10-12T00:37:13.529Z",
+            "dispatch_receipt_captured_utc": "2026-10-12T00:37:14.344Z",
+            "native_create_utc": "2026-10-12T00:37:40+00:00",
+            "native_complete_utc": "2026-10-12T00:44:53+00:00",
+            "stage_deadline_utc": "2026-10-12T01:07:13.529Z",
+            "native_lifetime_seconds": 433,
+            "native_reported_time_used_seconds": 432,
+            "request_to_native_create_seconds": 26.471,
+            "native_complete_before_stage_deadline": true,
+            "science_write_time_utc": null,
+            "science_write_time_status": "UNKNOWN independently; package reports outputs saved before completion."
+          },
+          {
+            "stage": "critic",
+            "request_utc": "2026-10-12T00:46:01.847Z",
+            "dispatch_receipt_captured_utc": "2026-10-12T00:46:02.723Z",
+            "native_create_utc": "2026-10-12T00:46:24+00:00",
+            "native_complete_utc": "2026-10-12T00:56:07+00:00",
+            "stage_deadline_utc": "2026-10-12T00:58:01.847Z",
+            "native_lifetime_seconds": 583,
+            "native_reported_time_used_seconds": 582,
+            "request_to_native_create_seconds": 22.153,
+            "native_complete_before_stage_deadline": true,
+            "science_write_time_utc": null,
+            "science_write_time_status": "UNKNOWN independently; package reports outputs saved before completion."
+          },
+          {
+            "stage": "reviser",
+            "request_utc": "2026-10-12T01:07:47.428Z",
+            "dispatch_receipt_captured_utc": "2026-10-12T01:07:48.320Z",
+            "native_create_utc": "2026-10-12T01:07:59+00:00",
+            "native_complete_utc": "2026-10-12T01:13:09+00:00",
+            "stage_deadline_utc": "2026-10-12T01:25:47.428Z",
+            "native_lifetime_seconds": 310,
+            "native_reported_time_used_seconds": 309,
+            "request_to_native_create_seconds": 11.572,
+            "native_complete_before_stage_deadline": true,
+            "science_write_time_utc": null,
+            "science_write_time_status": "UNKNOWN independently; package reports outputs saved before completion."
+          }
+        ],
+        "interstage_observations": [
+          {
+            "after_stage": "investigator",
+            "before_stage": "critic",
+            "native_completion_to_next_request_seconds": 68.847,
+            "interpretation": "Mixed handoff/controller/possibly task-quiet delay; not isolated queue or provider activity."
+          },
+          {
+            "after_stage": "critic",
+            "before_stage": "reviser",
+            "native_completion_to_next_request_seconds": 700.428,
+            "interpretation": "Mixed handoff/controller/possibly task-quiet delay; not isolated queue or provider activity."
+          }
+        ],
+        "native_final_completion_proxy_seconds_from_t0": 2156.192,
+        "native_final_completion_proxy_limit": "Native completion receipt timestamp; not exact scientific write time or independently attested task-quiet final.",
+        "frozen_notification_utc": "2026-10-12T01:28:57.704691+00:00",
+        "t0_to_frozen_final_notification_upper_bound_seconds": 3104.897,
+        "final_notification_before_whole_deadline": true,
+        "request_to_quiet_final_proxy_seconds": null,
+        "request_to_quiet_final_proxy_status": "UNKNOWN: permitted raw terminal status receipts expose no terminal event timestamp.",
+        "last_complete_scientific_artifact_time": "UNKNOWN independently; final present by the frozen notification.",
+        "stage_failures_observed": []
+      },
+      "method_compliance": {
+        "coverage": "PARTIAL",
+        "status": "OBSERVED_CONFORMING_WITH_UNOBSERVABLE_LIMITS",
+        "observations": [
+          "One investigator, one critic and one fresh reviser are declared and have distinct captured native identities.",
+          "All required frozen science documents/indexes are present; no additional critic/witness is manifest-listed.",
+          "One-time reveal receipt matches the retained discovery and exact plan hashes.",
+          "Source IDs remain traceable; final proposal contains complete prose and dispositions."
+        ],
+        "unobservable": [
+          "Actual activation-before-input order and absence of hidden plan access/retries/extra workers cannot be proven from allowed receipts.",
+          "Actual fresh provider-context linkage and compliance with every prohibited-path constraint are not attested by native captures."
+        ],
+        "evaluator_constraints": "No extra agents, Goals, candidate repairs, author contact, Git/canon/WorkNodes/shared server/provider changes or held-out access."
+      },
+      "native_identity_provenance": {
+        "coverage": "PARTIAL",
+        "stage_records": [
+          {
+            "stage": "investigator",
+            "create_active_terminal_identity_matches": true,
+            "exact_frozen_objective_matches": true,
+            "native_status_transition": "active_to_complete",
+            "status_receipt_completed_zero_pending": true,
+            "independent_native_to_task_linkage": "UNKNOWN beyond objective/capture custody"
+          },
+          {
+            "stage": "critic",
+            "create_active_terminal_identity_matches": true,
+            "exact_frozen_objective_matches": true,
+            "native_status_transition": "active_to_complete",
+            "status_receipt_completed_zero_pending": true,
+            "independent_native_to_task_linkage": "UNKNOWN beyond objective/capture custody"
+          },
+          {
+            "stage": "reviser",
+            "create_active_terminal_identity_matches": true,
+            "exact_frozen_objective_matches": true,
+            "native_status_transition": "active_to_complete",
+            "status_receipt_completed_zero_pending": true,
+            "independent_native_to_task_linkage": "UNKNOWN beyond objective/capture custody"
+          }
+        ],
+        "native_capture_integrity": "Verified exact immutable member SHA-256 and sizes.",
+        "distinct_captured_stage_identities": true,
+        "provider_account_identity": "Not disclosed",
+        "capture_provenance_limit": "Direct fields corroborate consistent lifecycle receipts; not independent proof that the native context performed the scientific task."
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "native_lifetime_sum_seconds": 1326,
+          "native_lifetime_union_seconds": 1326,
+          "intra_arm_native_lifetime_overlap_seconds": 0,
+          "native_reported_time_used_sum_seconds": 1323,
+          "counter_domains": "Native Goal lifetime and cumulative reported time only; not provider active time, billed time or complete context residency.",
+          "created_started_context_occupancy": "UNKNOWN outside native lifetime proxies",
+          "provider_active_seconds": null,
+          "provider_active_seconds_status": "UNKNOWN",
+          "native_cumulative_usage_counters": "Present in private receipts; values not reproduced in scientific artifacts; not billing or component-resolved usage.",
+          "input_usage": "UNKNOWN",
+          "cached_input_subset": "UNKNOWN",
+          "output_usage": "UNKNOWN",
+          "reasoning_subset": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "billing_amount": null,
+          "billing_status": "UNKNOWN",
+          "hidden_failed_or_retried_attempts": "UNKNOWN beyond notified assigned stage/status records; none omitted from this two-arm assigned denominator."
+        },
+        "independent_evaluation": {
+          "resource_class": "independent_evaluation",
+          "first_observed_utc": "2026-10-12T01:30:19Z",
+          "original_assessment_written_utc": "2026-10-12T01:41:55.463457+00:00",
+          "active_provider_seconds": "UNKNOWN",
+          "billing": "UNKNOWN",
+          "allocation": "Separate from candidate product, shared lookup reused across the assigned arms; not free candidate assistance."
+        },
+        "preparation_support_publication_totals": "UNKNOWN from permitted packet; no cold composite or passing-output cost quotient asserted."
+      },
+      "input_verification": {
+        "packet_sha256": "7f80c6065c9f223d7c064a894b3c0dc227dcd0228222daf1d3b09d0849926321",
+        "all_manifest_members_verified": true,
+        "detail_file": "../evidence/input-verification.json"
+      },
+      "blinding": "Imperfect: technique-bearing paths, config prompt addition and output content were visible.",
+      "limits": [
+        "Finite assessment of the exact frozen research proposal; no claim of universal correctness or deployed behavior.",
+        "Target handbook repository, actual schemas/callers/tests, corpus, runtime, licensing and owner facts were not supplied. Their actual compatibility/performance remain UNASSESSED; honest unknowns do not defeat this generic proposal.",
+        "No candidate full native transcripts, held-out cases, active originals or scientific repair were accessed. Scientific write times, native-to-task linkage, hidden attempts and provider/billing telemetry are not independently established.",
+        "Technique-bearing arm paths/configuration and output content made blinding imperfect. Shared evaluator lookup did not supply evidence or feedback to candidate authors."
+      ]
+    }
+  ],
+  "comparative_analysis": "Not performed in original assessment; any later comparison must be separate and manifest-bound."
+}

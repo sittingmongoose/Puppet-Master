@@ -1,0 +1,1206 @@
+{
+  "schema": "er13.original_private_to_public_hash_mapping.v1",
+  "policy": "Public hashes identify normalized bytes; embedded original pins retain immutable original semantics. No edited regrades.",
+  "files": [
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/B02-P01-output-verification.json",
+      "public_path": "state/eval-coordinator-v2/B02-P01-output-verification.json",
+      "original_private_sha256": "3d0789d3b8b4fbb438c3c529afc9ebf1d0ca06d7950a5d3c9cbb7596b8c7bb40",
+      "public_sha256": "f4b2c630e486f1235f8bd61b5265125946b2f042fbeff1f64da85bb117af4670",
+      "sanitized": true,
+      "kind": "terminal_verification"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/manifest.json",
+      "original_private_sha256": "b777818402f4d6a5120055591a4c513beaf28ca2080b398e66c9261c31bb9ccb",
+      "public_sha256": "65975215bbe7ba1ae8dec0c04122c76d7e74241d22242dc993b17639c526104a",
+      "sanitized": true,
+      "kind": "original_frozen_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/control/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/control/assessment.md",
+      "original_private_sha256": "960814ae9afc73983a5f931c8524c20bf247a217e81c7dd1c7d910e6682f5886",
+      "public_sha256": "960814ae9afc73983a5f931c8524c20bf247a217e81c7dd1c7d910e6682f5886",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/control/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/control/assessment.json",
+      "original_private_sha256": "839266825aa6f94adc747d1fcd5869559251f95251de51a8b6664df798d71e4f",
+      "public_sha256": "906e849003825acc29b831ec46d5a56fb361d6afb774ec7f778bef224fc30cb3",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/control/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/control/coverage.json",
+      "original_private_sha256": "4a92c196af1a340be1d00a8ffb322c66456225e77d732267078ff8257e5332ed",
+      "public_sha256": "4a92c196af1a340be1d00a8ffb322c66456225e77d732267078ff8257e5332ed",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/control/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/control/defects.json",
+      "original_private_sha256": "e871cc068527abd01636fdef0c7d7d2d63e8cc5497bcc59d89dbd01a8f370f71",
+      "public_sha256": "e871cc068527abd01636fdef0c7d7d2d63e8cc5497bcc59d89dbd01a8f370f71",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/control/primary-source-index.json",
+      "original_private_sha256": "76b8b7c80bdf54c6747003b7e97fdc497c40f11f00f77a20daee08482ca48db4",
+      "public_sha256": "76b8b7c80bdf54c6747003b7e97fdc497c40f11f00f77a20daee08482ca48db4",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/control/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/control/manifest.json",
+      "original_private_sha256": "8f854dd5b6d31a2f0cd7fd4569eefaa9ef9ce3660f6a2ef083ab8d03379a5beb",
+      "public_sha256": "2a497913dbdba6dd38e96c1a9c8d638d66a1e3dd5bd867cab06de32f4cfa1378",
+      "sanitized": true,
+      "kind": "original_arm_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/treatment/assessment.md",
+      "original_private_sha256": "c381d6d0f3b1682c9b90048c171d7e7d17bf1d4896f78edadffa0c9811841076",
+      "public_sha256": "c381d6d0f3b1682c9b90048c171d7e7d17bf1d4896f78edadffa0c9811841076",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/treatment/assessment.json",
+      "original_private_sha256": "f4808e908eaa4ccad551023a21d783a3a82844e9a72948d31f0ae3b02ced4287",
+      "public_sha256": "aa69e45729113eb5ef01636fb2a19fc74ad61c5cdca47f52b5ad6140a31c491a",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/treatment/coverage.json",
+      "original_private_sha256": "7fecaed60bf87030a0ff37951ede9e600f63e37606f8882b09a78743c121d994",
+      "public_sha256": "7fecaed60bf87030a0ff37951ede9e600f63e37606f8882b09a78743c121d994",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/treatment/defects.json",
+      "original_private_sha256": "77480b5bfead5c0d1f2d8fd6dcc2adb9ae8c0298a59b19a9d655a5496d272580",
+      "public_sha256": "77480b5bfead5c0d1f2d8fd6dcc2adb9ae8c0298a59b19a9d655a5496d272580",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/treatment/primary-source-index.json",
+      "original_private_sha256": "f2f59a161ec64b1ad722f9e70fdac2f0ff91476431fc22de06c0ed1486b24e44",
+      "public_sha256": "f2f59a161ec64b1ad722f9e70fdac2f0ff91476431fc22de06c0ed1486b24e44",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/treatment/manifest.json",
+      "original_private_sha256": "d14b263c7f2794fc0ce6af76ab9c532d50b11c98fc1382d75f7c12d6454079c3",
+      "public_sha256": "d9f66119199ece3011c30c03b6776e6099c576c870d259335dae31e11bd602ce",
+      "sanitized": true,
+      "kind": "original_arm_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/assessment.json",
+      "original_private_sha256": "11c8492f982e983a0555702c1f9039118799bd1ea8309ed54c106c51d55ff7b7",
+      "public_sha256": "bc2ce025a53c18a5ed65712946879d22563b02be0b360108111f1d996812d66a",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/comparison.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P01/comparison.md",
+      "original_private_sha256": "27bafa48d8ae4f2f8c3777297fb32295c61029d81d86b6b2d492d60c16ae8bf4",
+      "public_sha256": "27bafa48d8ae4f2f8c3777297fb32295c61029d81d86b6b2d492d60c16ae8bf4",
+      "sanitized": false,
+      "kind": "original_comparison"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/B02-P01-request.json",
+      "public_path": "state/eval-coordinator-v2/B02-P01-request.json",
+      "original_private_sha256": "2720333d9fccefee2174d1878f4bbb03c235d77b1c506fec9f7b94aa3f8cec21",
+      "public_sha256": "995b87f3847cff882187b44a8a5e37b14b79018fcc7f3dee41623cd415369b5d",
+      "sanitized": true,
+      "kind": "actual_evaluator_request"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/B06-P01-output-verification.json",
+      "public_path": "state/eval-coordinator-v2/B06-P01-output-verification.json",
+      "original_private_sha256": "c676de4d4f6d6aa450bdf2a570c7e34092db306d2237b6e2da21445f81cddcc1",
+      "public_sha256": "6df03e678decba5c47bfec88530d72de2fa752c90fe543845e039adecfb5a790",
+      "sanitized": true,
+      "kind": "terminal_verification"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P01/manifest.json",
+      "original_private_sha256": "c3e3b978b9ef1fbcdc4ec542bc5f717839780dd14bb58df63d1a38c2f8a20421",
+      "public_sha256": "67bc2976e4028a0a9a915c2bbfd4c97bfb0e718f8e6c80e8cbfdfdebc70cce00",
+      "sanitized": true,
+      "kind": "original_frozen_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/control/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P01/control/assessment.md",
+      "original_private_sha256": "d4c2e4d5c2f082408a3e86061b0f54e204cc20bad417b27bb14c2e08033ba211",
+      "public_sha256": "d4c2e4d5c2f082408a3e86061b0f54e204cc20bad417b27bb14c2e08033ba211",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/control/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P01/control/assessment.json",
+      "original_private_sha256": "17faa0e8d5549b0e1afb55a1c70905075329de70ed7bdf5f0a33611ddf4ad1a3",
+      "public_sha256": "530601d41562c0f51f399624ecd7a1479f2468db11889caf570ad365882cb428",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/control/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P01/control/coverage.json",
+      "original_private_sha256": "4c0966461c8f47dfd519b4f0293e9c5fa9055db6bce0320f51888e4fcee8372f",
+      "public_sha256": "4c0966461c8f47dfd519b4f0293e9c5fa9055db6bce0320f51888e4fcee8372f",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/control/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P01/control/defects.json",
+      "original_private_sha256": "f59e58ca5bcee3c1a021b77d446fd623585146fb533cabb038631bd9f7d7fdd2",
+      "public_sha256": "f59e58ca5bcee3c1a021b77d446fd623585146fb533cabb038631bd9f7d7fdd2",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P01/control/primary-source-index.json",
+      "original_private_sha256": "c2ad97559da6acd991e01d59e8c1897b2a4a149689bdfa6812c2fd81813bfb1a",
+      "public_sha256": "c2ad97559da6acd991e01d59e8c1897b2a4a149689bdfa6812c2fd81813bfb1a",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/control/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P01/control/manifest.json",
+      "original_private_sha256": "40b4b3a7a02d995ff4ac4c18497eeef12d73bd84ad3a2626fd44e40f3ee0910c",
+      "public_sha256": "4f7292f32fb58a4e52f058229d699650f48bf95b8068d7976aac80d343738ee0",
+      "sanitized": true,
+      "kind": "original_arm_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/treatment/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P01/treatment/assessment.md",
+      "original_private_sha256": "e01b970f40f21c74b7d47f712b24769f9e704b9e158f1a06bbf4a0768d6dd0c7",
+      "public_sha256": "e01b970f40f21c74b7d47f712b24769f9e704b9e158f1a06bbf4a0768d6dd0c7",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/treatment/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P01/treatment/assessment.json",
+      "original_private_sha256": "0c2576688f34c2817cdbf1254c35a067ab7b33b025db8a24d3f32b6824edad4d",
+      "public_sha256": "bc1b8efa6649e9e82f0ba56f3b8a9e5c2a555d9b8455e944b6eb937e818ec373",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/treatment/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P01/treatment/coverage.json",
+      "original_private_sha256": "a6218de090d052a92e316484852c53feb71884048e6223b02a1aeb80af91f545",
+      "public_sha256": "a6218de090d052a92e316484852c53feb71884048e6223b02a1aeb80af91f545",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/treatment/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P01/treatment/defects.json",
+      "original_private_sha256": "38d24698818e2afca0536522484f524aa7f0a8d41e72ba157ff42b265b426c08",
+      "public_sha256": "38d24698818e2afca0536522484f524aa7f0a8d41e72ba157ff42b265b426c08",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P01/treatment/primary-source-index.json",
+      "original_private_sha256": "6cb3b9675022fbb961032b7d82c4acc4e96e5ea26f4a6863c5a22ed5d9e8c26d",
+      "public_sha256": "6cb3b9675022fbb961032b7d82c4acc4e96e5ea26f4a6863c5a22ed5d9e8c26d",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/treatment/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P01/treatment/manifest.json",
+      "original_private_sha256": "2e06df13bccd337550af71bebaa7fd0509df8c8844cfd4eec31b2b71ddfe9e5b",
+      "public_sha256": "ac63dd154e9f8a3d9c18d420379ee7e911723ccc29642d1801cc681bf8aeb1f3",
+      "sanitized": true,
+      "kind": "original_arm_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/comparison.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P01/comparison.md",
+      "original_private_sha256": "a4fde145033fae85ee41502dbfae8f08f2e4939628d6d9f0691e8b6a3b13e91e",
+      "public_sha256": "a4fde145033fae85ee41502dbfae8f08f2e4939628d6d9f0691e8b6a3b13e91e",
+      "sanitized": false,
+      "kind": "original_comparison"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/B06-P01-request.json",
+      "public_path": "state/eval-coordinator-v2/B06-P01-request.json",
+      "original_private_sha256": "0896b5120042da8f8b5cffbccf1268ae8c5c082c7c2eb1211ef8bd314cef5293",
+      "public_sha256": "8909e4368923a32b4bf081e90cffacda069ae015b017329a95f1e9f32b8d025d",
+      "sanitized": true,
+      "kind": "actual_evaluator_request"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/B09-P02-output-verification.json",
+      "public_path": "state/eval-coordinator-v2/B09-P02-output-verification.json",
+      "original_private_sha256": "41f29186b460f44d4c45a4434dfa034f7d7188c494e41a2456de28518cd7dbcf",
+      "public_sha256": "25298fe3b4a1838020193b05a27f40d39694953e849a1c986e4a9c8f460a12ef",
+      "sanitized": true,
+      "kind": "terminal_verification"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/manifest.json",
+      "original_private_sha256": "a26dda9dceea4255c566fd1c4e56860b1c1bae0ada2452a3a66bc1326f6292c1",
+      "public_sha256": "e0eba3eb36425efaefc4f22cfea0c1dad77a7bfe6a4cc1ebf252ce4714554a6f",
+      "sanitized": true,
+      "kind": "original_frozen_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/control/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/control/assessment.md",
+      "original_private_sha256": "89451f1bd896d72170e388bdc33271d99a5649be905f1f51364e5df8ef732b99",
+      "public_sha256": "89451f1bd896d72170e388bdc33271d99a5649be905f1f51364e5df8ef732b99",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/control/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/control/assessment.json",
+      "original_private_sha256": "15790a6466234d011d743e704f9a329913cdec6cec454e95eea194519c20cbb9",
+      "public_sha256": "4643ed274917199a9c75f2e449c572cbb59163458af415f374e6da357dc05239",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/control/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/control/coverage.json",
+      "original_private_sha256": "1dc4cb4b7147b34dc3ab05e623f6781c97bd385c0cd9a114c07f6eaea14b1b97",
+      "public_sha256": "129f3004ce495ebcf015088c639c039a84c9c8d19006d549044e5689293637d1",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/control/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/control/defects.json",
+      "original_private_sha256": "270a9e707aea5dd89a8409b7952541c1b9c1b54b37b1f02f4494a2a1077bdab4",
+      "public_sha256": "270a9e707aea5dd89a8409b7952541c1b9c1b54b37b1f02f4494a2a1077bdab4",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/control/primary-source-index.json",
+      "original_private_sha256": "c5f24770f01bf08cfdd54394d97384cbbe1ae04ea291e4de01620849e6fcf7fa",
+      "public_sha256": "c5f24770f01bf08cfdd54394d97384cbbe1ae04ea291e4de01620849e6fcf7fa",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/control/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/control/manifest.json",
+      "original_private_sha256": "e0f6ebc1c8bf0b404d3fc368a9f6a2d414c28975ddb5ed9f6ab959cbded8c5e5",
+      "public_sha256": "a6e818c899cba3351240d037b2af415e0875683d28c9fe75f1de4ccec44c3b98",
+      "sanitized": true,
+      "kind": "original_arm_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/treatment/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/treatment/assessment.md",
+      "original_private_sha256": "df8b4859c4650b805eb209b174ce0b9ab47281e6332349e199f299f8f2251842",
+      "public_sha256": "df8b4859c4650b805eb209b174ce0b9ab47281e6332349e199f299f8f2251842",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/treatment/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/treatment/assessment.json",
+      "original_private_sha256": "407428a24a1cfa90c347bf3218eae33f5e54166cc61e187be4a0bb862beb00cf",
+      "public_sha256": "541635543acacd9217114e3c3954f849be16da7336160c872b01505a63b1b640",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/treatment/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/treatment/coverage.json",
+      "original_private_sha256": "a2e4838499896c1db2d06eb08b3b9e5e583a5966112193c99549c5b2a63084a1",
+      "public_sha256": "c380ad3c75eb2f8eab0b46acb82c3fabb4fd809100174db2003b0b81f25c290c",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/treatment/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/treatment/defects.json",
+      "original_private_sha256": "c24b8ef07ea96f045434af21d2e033e171747c31798e7b08dbf5ed525d0b717a",
+      "public_sha256": "c24b8ef07ea96f045434af21d2e033e171747c31798e7b08dbf5ed525d0b717a",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/treatment/primary-source-index.json",
+      "original_private_sha256": "b46aa1e1a2fe62329643f2bdc6c4878da58d720d95158334bd564b2e6c355420",
+      "public_sha256": "b46aa1e1a2fe62329643f2bdc6c4878da58d720d95158334bd564b2e6c355420",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/treatment/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/treatment/manifest.json",
+      "original_private_sha256": "fdfdad3202436424b00d8ef7adb3a40e6b2c938843ef09814709b9edb537bfaa",
+      "public_sha256": "db20e68ec348d1dc74fbe2007b244f7685d84412e965052e10594131a166ed8c",
+      "sanitized": true,
+      "kind": "original_arm_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/assessment.json",
+      "original_private_sha256": "1e94887fce1d0ea36f1552b0312b387b21e3d91cb6437d016746a37cfe85e0c0",
+      "public_sha256": "4ecb3c0452dd4fd093d97e20d3976c2e539fd42e17b8044f60d68993798a878f",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/comparison.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P02/comparison.md",
+      "original_private_sha256": "3da1ecc59aa0d7948d1bd9fa1326d5850dbfc703e054793c449acc1ca2406598",
+      "public_sha256": "3da1ecc59aa0d7948d1bd9fa1326d5850dbfc703e054793c449acc1ca2406598",
+      "sanitized": false,
+      "kind": "original_comparison"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/B09-P02-request.json",
+      "public_path": "state/eval-coordinator-v2/B09-P02-request.json",
+      "original_private_sha256": "51610ed9898b4542c27eaf6781dd2ff9672b2739bea92d26a08f874a140646bd",
+      "public_sha256": "8f3fcd47d461df47ddb9a461b4f078b5e58a3f610f9ad58aaedbf541a53b9b7d",
+      "sanitized": true,
+      "kind": "actual_evaluator_request"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/B10-P01-output-verification.json",
+      "public_path": "state/eval-coordinator-v2/B10-P01-output-verification.json",
+      "original_private_sha256": "8695794995f6a5bcd98be668dc434c0deec91a6548b36d6e859ce1c594e926a6",
+      "public_sha256": "78d2eed9dfaeb05d690bf323902f9224ab529d1d411d6d7a83c3b252e93e46bb",
+      "sanitized": true,
+      "kind": "terminal_verification"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/manifest.json",
+      "original_private_sha256": "3ca3aa3535bc5842e7f71da07c6182eddf3fa40a906d1b8d900ce6557257fb9c",
+      "public_sha256": "c747bb53c04860110a83619da2edb5a1d48c49f81e9572977e0cb720c5c7fc60",
+      "sanitized": true,
+      "kind": "original_frozen_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/control/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/control/assessment.json",
+      "original_private_sha256": "9ae16995a7b56b9b4cd16314b697ea98ebf40a2416b79a84b79aefffdce8b70e",
+      "public_sha256": "cbcbddbf321f9bb746f53fbf84932b3fab9bae35a0469a912ab02cff26ad4b2b",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/control/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/control/assessment.md",
+      "original_private_sha256": "933e4ddc7de72fc0919bd3f6da1bde1d1133ca725244322629faeb15d9041330",
+      "public_sha256": "933e4ddc7de72fc0919bd3f6da1bde1d1133ca725244322629faeb15d9041330",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/control/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/control/coverage.json",
+      "original_private_sha256": "7be21245c94717e4d10eaabb9bc408bd29c10e3c9ead71bbce9b2f08b65bd444",
+      "public_sha256": "7be21245c94717e4d10eaabb9bc408bd29c10e3c9ead71bbce9b2f08b65bd444",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/control/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/control/defects.json",
+      "original_private_sha256": "98ffac28374fdbf0c124a0b415c9190d8e72162167305c6a29352af1854732e6",
+      "public_sha256": "98ffac28374fdbf0c124a0b415c9190d8e72162167305c6a29352af1854732e6",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/control/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/control/manifest.json",
+      "original_private_sha256": "d750896d0512e99e9fe25fe43e14ef6ee4a80ae789f592e91bdb52bca8b4f8ba",
+      "public_sha256": "c6745cbcd32745714ad699e98800620189ad87c8ead591a91a81e2ec14dd7d35",
+      "sanitized": true,
+      "kind": "original_arm_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/control/primary-source-index.json",
+      "original_private_sha256": "d91f81a5395bf0d90ebc80c1c13430a9fe52381bf5da88ed414b784afb0749d3",
+      "public_sha256": "d91f81a5395bf0d90ebc80c1c13430a9fe52381bf5da88ed414b784afb0749d3",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/evidence/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/evidence/input-verification.json",
+      "original_private_sha256": "fdceece40e130dc2279a33d088f3300f05f336d553da0cb87653b8e68c2f6278",
+      "public_sha256": "71a60a67c7327cc34ad07bc45de5c924e46306fadbb858b53fd09d012d4022de",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/evidence/primary-access.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/evidence/primary-access.json",
+      "original_private_sha256": "55fcbebe459e01f8a4b8edac98afbf1911c813704ca9cf5656b040f99421b1c5",
+      "public_sha256": "55fcbebe459e01f8a4b8edac98afbf1911c813704ca9cf5656b040f99421b1c5",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/treatment/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/treatment/assessment.json",
+      "original_private_sha256": "5c1ec171c918b22d5cea4ca7865d016ea7691daec6ce2c5a382bc8c92c8c4b52",
+      "public_sha256": "ecb8e1c303f4006435d06e898b47f1f0f9870b70b49ccdc562f9131e3e53e17c",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/treatment/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/treatment/assessment.md",
+      "original_private_sha256": "dca07c3cce10a4ddb109146bfeb0d66bc631717685b98739485d0988f03c5173",
+      "public_sha256": "dca07c3cce10a4ddb109146bfeb0d66bc631717685b98739485d0988f03c5173",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/treatment/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/treatment/coverage.json",
+      "original_private_sha256": "77d117942695f9d1b8875c0d9af7db3d40ca9452130017044e04c19b81c08184",
+      "public_sha256": "77d117942695f9d1b8875c0d9af7db3d40ca9452130017044e04c19b81c08184",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/treatment/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/treatment/defects.json",
+      "original_private_sha256": "79c6e7dc909338e86797ebf0c673620b06aca63bd1f1ed029e8b394464becffb",
+      "public_sha256": "79c6e7dc909338e86797ebf0c673620b06aca63bd1f1ed029e8b394464becffb",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/treatment/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/treatment/manifest.json",
+      "original_private_sha256": "a9021fc66cb9bd2f87ff445382e1993c013514ad7225b01c1ce651ef95892175",
+      "public_sha256": "7469a185fde409f2b025d1614c58a68f42b136bfedb4b1731f93a13777bd4bf7",
+      "sanitized": true,
+      "kind": "original_arm_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/treatment/primary-source-index.json",
+      "original_private_sha256": "3556a3cc6bcf52398ce727d052c7903cf8cc0338efd348584c50da85929adbac",
+      "public_sha256": "3556a3cc6bcf52398ce727d052c7903cf8cc0338efd348584c50da85929adbac",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/comparison/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/comparison/manifest.json",
+      "original_private_sha256": "8d4efe7cd3e98112b8dedfc40272f9eb877a38e9a3cd6070a66e62e2cea3ac21",
+      "public_sha256": "b9533fd7b3177f42d436b1e052da3063a14a1405bea1427a56f96533300e5845",
+      "sanitized": true,
+      "kind": "original_frozen_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/comparison/comparison.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/comparison/comparison.json",
+      "original_private_sha256": "1dff6eca8a3aa4f924724a58daf69f97f4e352e6092d0cbcb6ff5df6af8f6a52",
+      "public_sha256": "4ef39d88f4bae6b934c57cc6e85bc23b1cda4bd4fb7a8454078f86a4f201efe3",
+      "sanitized": true,
+      "kind": "original_comparison"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/comparison/comparison.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P01/comparison/comparison.md",
+      "original_private_sha256": "3238e10a830c2df6fb2d1bf440f39adde0a95079cf2c097f6c77fcf866a091fc",
+      "public_sha256": "3238e10a830c2df6fb2d1bf440f39adde0a95079cf2c097f6c77fcf866a091fc",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/B10-P01-request.json",
+      "public_path": "state/eval-coordinator-v2/B10-P01-request.json",
+      "original_private_sha256": "7497a496564282a438c9b5c78366c4a4e61de23f8496b557a8d3a98e4e64f4c2",
+      "public_sha256": "abc998adfb4b7082c3151d8204888a4a2865918f015f600504a407b595e37868",
+      "sanitized": true,
+      "kind": "actual_evaluator_request"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/A-F01-output-verification.json",
+      "public_path": "state/eval-coordinator-v2/A-F01-output-verification.json",
+      "original_private_sha256": "e4e170381ff49a84bea13b691037a573ceb6f19342b5bfefdddd471e9d805a09",
+      "public_sha256": "3a4437f34fb1ddd3c20e519dd6403694441af21edae6a90cc5b6f691f5893a77",
+      "sanitized": true,
+      "kind": "terminal_verification"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/manifest.json",
+      "original_private_sha256": "91b7cf91b1c196d46858d2d65876de775f2250a48f6a5d7d875d05e66f4bcca2",
+      "public_sha256": "871c33d9da80fefc4d748a9e9a077b3784e6a3578a8d4c05af568927ff3f0074",
+      "sanitized": true,
+      "kind": "original_frozen_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/input-verification.json",
+      "original_private_sha256": "e1bcccb1c4de4542434225ef92ad5325688625f4c75f1821e11b985ef3331461",
+      "public_sha256": "506c005fe553c2c81a248e3cce0e190ff847afc9c7c62a6e8ae2c8ad02fdba7d",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/primary-source-index.json",
+      "original_private_sha256": "505befb6aee37b4e787feb2c53e3bd635bfcbb45544453fde87e3edc1c8086db",
+      "public_sha256": "505befb6aee37b4e787feb2c53e3bd635bfcbb45544453fde87e3edc1c8086db",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/evaluation-record.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/evaluation-record.json",
+      "original_private_sha256": "b11a8d4d4f37694d803317666ea832d7c3f5b0320277f8f2d5e6c808d2d3339a",
+      "public_sha256": "7c97b41284bd061cdc830ddaed80aced95c580e084db882a96acae7d627c4727",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/assessment.json",
+      "original_private_sha256": "7d0fffb769042f7d9744c212bc84c2eea2ac74099166ea02958f7ce20bbe64e4",
+      "public_sha256": "0f0190713147aa48881693bd945d2ed02f98ad77c9efe4c3f720d5db73889266",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/evidence/public-retrievals-01.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/evidence/public-retrievals-01.json",
+      "original_private_sha256": "ca032b78cfd8ad228ac36a868ec12abc8b77d3d5218f011508388719e2e6101b",
+      "public_sha256": "ca032b78cfd8ad228ac36a868ec12abc8b77d3d5218f011508388719e2e6101b",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/evidence/public-retrievals-02.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/evidence/public-retrievals-02.json",
+      "original_private_sha256": "5ef87cbfac3b64c8f965769a6d8b2dd5e16fdfcc4cdfd2addf5dcc44ea68c979",
+      "public_sha256": "5ef87cbfac3b64c8f965769a6d8b2dd5e16fdfcc4cdfd2addf5dcc44ea68c979",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/evidence/public-retrievals-03.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/evidence/public-retrievals-03.json",
+      "original_private_sha256": "2ca1000dba0be71136f7e8aff1c8f19cd4cdcf2f016cdb3396f6a45928ba08a5",
+      "public_sha256": "2ca1000dba0be71136f7e8aff1c8f19cd4cdcf2f016cdb3396f6a45928ba08a5",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/evidence/public-retrievals-04.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/evidence/public-retrievals-04.json",
+      "original_private_sha256": "bcd94de5cc5fde9f632b3925d24236ee0f6bfc63a54813ce28403e24869e1cbf",
+      "public_sha256": "bcd94de5cc5fde9f632b3925d24236ee0f6bfc63a54813ce28403e24869e1cbf",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/evidence/public-retrievals-05.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/evidence/public-retrievals-05.json",
+      "original_private_sha256": "91be88d7396d68d3a54cd827cdb24bd5b19157652c051adac150cb014000f3d6",
+      "public_sha256": "91be88d7396d68d3a54cd827cdb24bd5b19157652c051adac150cb014000f3d6",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/evidence/pouch-oracle.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/evidence/pouch-oracle.json",
+      "original_private_sha256": "f847b237f46e7e39d7b8690b5758bedf9a035c04d8d50ddc94da778fc23fae0f",
+      "public_sha256": "f847b237f46e7e39d7b8690b5758bedf9a035c04d8d50ddc94da778fc23fae0f",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/assessment.md",
+      "original_private_sha256": "7fda79a4426679cd6b388c0dea46e1e79919af22dfd872941590667443d9d6fd",
+      "public_sha256": "7fda79a4426679cd6b388c0dea46e1e79919af22dfd872941590667443d9d6fd",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/assessment.json",
+      "original_private_sha256": "006254869eac5606b9ba0e71f430262305c2ebd19bd117bc024e373ab1c1e70b",
+      "public_sha256": "bdaf6620744c0bfdb544c981c5d482fa33e5a68af1c8ade4b42d5e589b90f79e",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/coverage.json",
+      "original_private_sha256": "bc9b317caafe29aa86d001e04218273aa65ff530d2adc598a4e2710509f0c69c",
+      "public_sha256": "0e58da57fd37a438974e9a240ec2328ecf95415bcf3b927efc0dd56abd900c83",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/defects.json",
+      "original_private_sha256": "22199a4cc59f2ba67737b3b26eb1fcd61aa8750981123ad74c34ff20c05e8b9e",
+      "public_sha256": "22199a4cc59f2ba67737b3b26eb1fcd61aa8750981123ad74c34ff20c05e8b9e",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/primary-source-index.json",
+      "original_private_sha256": "c2045f8369e24386d3e6f57cdf4d00c8045994752513a39623d05797a846f279",
+      "public_sha256": "d0004dc775d525a8488e1f9a4e3ccf16cf341ddc6d55a07d2da255727e45b5b8",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/manifest.json",
+      "original_private_sha256": "65beca9a8a5d25a8772ea8ac5863a7a4bc9945eb4e6779bf14dae1e776710d92",
+      "public_sha256": "678f4d5edf02405833b9c1067d25f0481515d41103f59a83ad59a70f38b7f0dc",
+      "sanitized": true,
+      "kind": "original_arm_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/assessment.md",
+      "original_private_sha256": "947be13f71ce976dcc408f47d98a92fdcaa5715c2161ea0aac0fd54fbdd60720",
+      "public_sha256": "947be13f71ce976dcc408f47d98a92fdcaa5715c2161ea0aac0fd54fbdd60720",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/assessment.json",
+      "original_private_sha256": "ae33d567a6a12ea1e4188d1b49aed14a2221a566542bf4cad69f47218ebf7331",
+      "public_sha256": "1ca62ecc795a437737cfbf4cb503efd0af78712dc0435265a5c8c5e0e7836a53",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/coverage.json",
+      "original_private_sha256": "61608c48b4e7636cef49394c34f746ee2f59312350dc98900163ef878d4dc55d",
+      "public_sha256": "6a348fd4cddbde64acf7780c53a0b9c986bc1a02d30724603be5b8b21b733dcf",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/defects.json",
+      "original_private_sha256": "1eeb1a226ca1e0ab401c0616c3ac107473f458a6ad63e63ebef6c28d3529604f",
+      "public_sha256": "1eeb1a226ca1e0ab401c0616c3ac107473f458a6ad63e63ebef6c28d3529604f",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/primary-source-index.json",
+      "original_private_sha256": "d7212f79e8a73a928e150b7623c1c8924ab44f5664539a6f5134a0e7b8165332",
+      "public_sha256": "96b0807b9d842cad1a77231fd6b080b2f333e09c40a07e61ac32ec7303b95458",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/manifest.json",
+      "original_private_sha256": "3cf301062d5d0992855b70807d62068388b7c73d88149c3a253adc122f782e3f",
+      "public_sha256": "411e4edd169cadd84f32a3ba9899550e25fbede638ce90a1aebc384aab2e09cc",
+      "sanitized": true,
+      "kind": "original_arm_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/assessment.md",
+      "original_private_sha256": "91e1b7d7ccf3eff4a88529abdd189b2556b2a6777be1a35f20e099b11d91addd",
+      "public_sha256": "91e1b7d7ccf3eff4a88529abdd189b2556b2a6777be1a35f20e099b11d91addd",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/assessment.json",
+      "original_private_sha256": "8e258bf04c23e16d6b632b154d06b6c7909e1650da017453d439bc518d574d4c",
+      "public_sha256": "36df0bb05a5f23863e425cd13308bf0bc9e1b72b8c5b67aafa3d8620ab80a6ee",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/coverage.json",
+      "original_private_sha256": "064d4f7cef05154c196a04e3b82450d28b976c3866bb4432500444d721f37545",
+      "public_sha256": "df609fe625c590d291f9da37a87c97fde9390f54b3d2db9ab76fd9deb3411d15",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/defects.json",
+      "original_private_sha256": "b1cfd87e56955138528cd38d2be6d1fd58eccf11cef38af4b50fe4b4ed188bee",
+      "public_sha256": "b1cfd87e56955138528cd38d2be6d1fd58eccf11cef38af4b50fe4b4ed188bee",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/primary-source-index.json",
+      "original_private_sha256": "e118e4d33631651690a987131a8c9af42e307162a4d42d341fae6c9f636ba15a",
+      "public_sha256": "ce3567ec39ab3b8e7bfada12a687f58f21ae5c3a35dd3ee3f88a72121bdf773f",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/manifest.json",
+      "original_private_sha256": "e1e9565fed104fe72ce91aebbb2b27ccbfadac9e40f624541804e64c96db4354",
+      "public_sha256": "341b8975a518b2f7d8ae98ecc038390b8402ae0eb42764496beb07da0954f822",
+      "sanitized": true,
+      "kind": "original_arm_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/assessment.md",
+      "original_private_sha256": "79e95469caeb5d65739748387700767cf2bfba5c30c5ba567c9cfd22ebfaf3e7",
+      "public_sha256": "79e95469caeb5d65739748387700767cf2bfba5c30c5ba567c9cfd22ebfaf3e7",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/assessment.json",
+      "original_private_sha256": "7cd39d0dc25e6c3e40ce916d3736484194d6fb65e6af9d4fa60477cbb7952754",
+      "public_sha256": "83e39d87e327c0e9caeaf1e893bd63163f6938dae460d49062a479910896003f",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/coverage.json",
+      "original_private_sha256": "50e4065df6725522f2a064e4b7108c5a97fcf2f1172ded4df487f7e0d342c766",
+      "public_sha256": "a284c4ff13312bdfab2ddbab7a91b091037d141e4fb41756523a9161be88526f",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/defects.json",
+      "original_private_sha256": "395de181fe6ea8e9f1cc6259a81a50bb7b98841040742de5ce40701416ea09e1",
+      "public_sha256": "395de181fe6ea8e9f1cc6259a81a50bb7b98841040742de5ce40701416ea09e1",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/primary-source-index.json",
+      "original_private_sha256": "b4c6833af61d3968f920e2fc477ed66599f67b9575f21c7b6363f597079e4d8d",
+      "public_sha256": "a6db1e4acaffce49f7e832e39ff6994b9326c692baf13117ab7d2a5b4d320c66",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/manifest.json",
+      "original_private_sha256": "547e40e00deec4d5a1f20cfdd695aaceae355b0f5ba216426dbffc2bd93c5df3",
+      "public_sha256": "bfa4421263be6dc828b13eca31661f4e2001598d454edf37e0abcf15688fd048",
+      "sanitized": true,
+      "kind": "original_arm_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/output-paths-sha256.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/output-paths-sha256.txt",
+      "original_private_sha256": "c2dce1bc50b828a1d7b92bbf0ab8237be5c2cae519cf9e5b8cfd5228cdbd830f",
+      "public_sha256": "154cc36dc4e744924b81248a5972a681e616f9f4a86d78dd8bc84f04dabed3fb",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/comparison-manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/comparison-manifest.json",
+      "original_private_sha256": "c5b0f05fad6597e96f2de65518885ec6b26235845ad9a13a2497f3eb0b0989b8",
+      "public_sha256": "cc7fdad0e207cfe2f8c2a2b46235615f90564d72d9331b082f7bb66ddaccb4db",
+      "sanitized": true,
+      "kind": "original_frozen_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/comparison.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/comparison.json",
+      "original_private_sha256": "ec00eb431a93ab75da23fa068cb25a121c136f579051017d8238558affe0470c",
+      "public_sha256": "ad208507ee76db03bdbd27ff6539ca7beffa38e0f25c032034241156675b36c5",
+      "sanitized": true,
+      "kind": "original_comparison"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/comparison.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F01/comparison.md",
+      "original_private_sha256": "fd082b5080235abc53e41ab04d856aa8b1acfe0950fb2a21a38552ef7ebb26b2",
+      "public_sha256": "fd082b5080235abc53e41ab04d856aa8b1acfe0950fb2a21a38552ef7ebb26b2",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/A-F01-request.json",
+      "public_path": "state/eval-coordinator-v2/A-F01-request.json",
+      "original_private_sha256": "6151c16a69f53e334d68d86d025bbe19b90eb51affc8ba3969c8d319137de3ce",
+      "public_sha256": "f06f10109823bf3f9ca7c75529654dd7b0088f2132a50759b6f9d0d903c7126c",
+      "sanitized": true,
+      "kind": "actual_evaluator_request"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/A-F02-output-verification.json",
+      "public_path": "state/eval-coordinator-v2/A-F02-output-verification.json",
+      "original_private_sha256": "12f1b3023db439e49a96e81e724c317006464059a17e105c3bf3a70ba807c99a",
+      "public_sha256": "9b7e8d40784ef445131e2fbfc1b08655d44d1592f0c8b01bcc017712258acc30",
+      "sanitized": true,
+      "kind": "terminal_verification"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/manifest.json",
+      "original_private_sha256": "e8688ef0621cea0079d16e2f2fe2dc1c43a81e2b5c98d6840623d4b125fc5872",
+      "public_sha256": "d412c4c3c561c432ca484ac1710d928ad8dc6687e690842fc6e903aee0ad2291",
+      "sanitized": true,
+      "kind": "original_frozen_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/assessment.json",
+      "original_private_sha256": "14d2bdce1e985e7a9bcade3a8ad061c2b5cb8fc4725041990613f4c53b1d3ae8",
+      "public_sha256": "529448e76e05c6c354b083f7255c49fa7aed82fb9ba611068050c40bab892edc",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/independent-primary-research.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/evidence/independent-primary-research.json",
+      "original_private_sha256": "eac8af81f14ddeb7cbcbf383a3eb9cf77f396b62cf396ffb7aa248dcde943c3f",
+      "public_sha256": "eac8af81f14ddeb7cbcbf383a3eb9cf77f396b62cf396ffb7aa248dcde943c3f",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/evidence/input-verification.json",
+      "original_private_sha256": "2d188424410e9309dfc78a523e7df679977c4cffe605910709a533f74d2e6851",
+      "public_sha256": "4be742051a49a2142aad7358681eb6891aaa30bb880abc8a98ed372cabd23108",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-01.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-01.json",
+      "original_private_sha256": "e7d5ba83d3654f163fcecc89a5b993d85af85623857c6c997b3fac889f11d711",
+      "public_sha256": "e7d5ba83d3654f163fcecc89a5b993d85af85623857c6c997b3fac889f11d711",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-02.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-02.json",
+      "original_private_sha256": "6546375006e7dea817eb2c0f2a1decede621ee4eac76348b2fb93171ae09684e",
+      "public_sha256": "6546375006e7dea817eb2c0f2a1decede621ee4eac76348b2fb93171ae09684e",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-03.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-03.json",
+      "original_private_sha256": "a9317e0bedad23bb806f9cd786c65550c6093fbbebb914630f189362da20fd92",
+      "public_sha256": "a9317e0bedad23bb806f9cd786c65550c6093fbbebb914630f189362da20fd92",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-04.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-04.json",
+      "original_private_sha256": "b481766952b18ce05ce46d4742a20c4c2554332d9410e3f11cce7677a7b84a12",
+      "public_sha256": "b481766952b18ce05ce46d4742a20c4c2554332d9410e3f11cce7677a7b84a12",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-05.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-05.json",
+      "original_private_sha256": "52d9bd5c1038888d0f0c16c91c89fdbc17982802ec0c60e7f371b553e31df741",
+      "public_sha256": "52d9bd5c1038888d0f0c16c91c89fdbc17982802ec0c60e7f371b553e31df741",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/web-source-access.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/evidence/web-source-access.json",
+      "original_private_sha256": "4ce4f022a5402b2b4c232b6fc4f696df6aa3112aa01e3f2f5fedd79dd576899d",
+      "public_sha256": "4ce4f022a5402b2b4c232b6fc4f696df6aa3112aa01e3f2f5fedd79dd576899d",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/assessment.md",
+      "original_private_sha256": "7008f942a91b122a6be99ec9ad985e1ce5ee9053bd09fef69e59560a607fc26e",
+      "public_sha256": "7008f942a91b122a6be99ec9ad985e1ce5ee9053bd09fef69e59560a607fc26e",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/assessment.json",
+      "original_private_sha256": "5694db32397d61f847492bcf884f4efeed7c46eec6695d64842ce767a51f4e58",
+      "public_sha256": "f973a5b2ea3ee853e1418db9f8e8e8f7840d0cc416187a18fae6274d177ef6db",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/coverage.json",
+      "original_private_sha256": "3c3e720eeac239f68219aad618c5a4e4151c12c900aeb14dfc7220a1dd5663f4",
+      "public_sha256": "3c3e720eeac239f68219aad618c5a4e4151c12c900aeb14dfc7220a1dd5663f4",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/defects.json",
+      "original_private_sha256": "cb13dbe21d1543e58e1dd91e46679a282c1c360a6d07493462c6518821bfdef5",
+      "public_sha256": "cb13dbe21d1543e58e1dd91e46679a282c1c360a6d07493462c6518821bfdef5",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/primary-source-index.json",
+      "original_private_sha256": "ade9874ff5db36d8942bb3424870760042197271bed921e51bc6f30ae8d89b81",
+      "public_sha256": "acd58a1ff532432447dd00896c3910e543e8124ed4f2da84c0bd84171ebbb84f",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/manifest.json",
+      "original_private_sha256": "7f2fa60c3a7dc91ef30b4fe2cf67369615907599c306e5af5b9d72cffeb0a06a",
+      "public_sha256": "e346a8933e997405e38b9df5aa7fb69e2e7c17a7ca2a31f49ba5de197ea7b22d",
+      "sanitized": true,
+      "kind": "original_arm_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/assessment.md",
+      "original_private_sha256": "3648ce8a41cda8ceff30acf291c4419e73f4838dee082405def30bc6eb0c115f",
+      "public_sha256": "3648ce8a41cda8ceff30acf291c4419e73f4838dee082405def30bc6eb0c115f",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/assessment.json",
+      "original_private_sha256": "834ea42aa08133b71398d772211be22ba827f2884684e3ce640506a9281ea6d8",
+      "public_sha256": "97596289b761fb8caa48c26a1e7648e65fcbc912332e8c1813e4e70a3acfc83f",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/coverage.json",
+      "original_private_sha256": "5ec28059ca870391b871b63c67215da923ab853d650eb4c2fd5cff3ee0423898",
+      "public_sha256": "5ec28059ca870391b871b63c67215da923ab853d650eb4c2fd5cff3ee0423898",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/defects.json",
+      "original_private_sha256": "07a9a3c98f4464ba7e2d0f0e7b3e0850a79a0de85761c36d32d930b8778d75e6",
+      "public_sha256": "07a9a3c98f4464ba7e2d0f0e7b3e0850a79a0de85761c36d32d930b8778d75e6",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/primary-source-index.json",
+      "original_private_sha256": "084f0593e2b9db40b49d7838273211da409716154553fa60656379c5d1c1faac",
+      "public_sha256": "62b9f4c616e2b72a27a85def7d96409ff29fd6127e5469821c535c7f192b6e9b",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/manifest.json",
+      "original_private_sha256": "be1e0238ff23fe8577e0272db74af502b45c3e2370807dad3177d61774a7184a",
+      "public_sha256": "ee0710af77bd1b22d0b2661107665440e0164ec67db113d8397b26cdbf5fa29a",
+      "sanitized": true,
+      "kind": "original_arm_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/assessment.md",
+      "original_private_sha256": "27c388ff65909d723419474a7d91e37023a4d03ed4075eeb2671aeff77f2ae3d",
+      "public_sha256": "27c388ff65909d723419474a7d91e37023a4d03ed4075eeb2671aeff77f2ae3d",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/assessment.json",
+      "original_private_sha256": "a1abe89c541fbe8bf2259a143212e1fddf8198ba6ad1922e5b871429ab4673b1",
+      "public_sha256": "3c261a81b5f2bd542c59767f0ac9e9abf51b9fd0f57ac321286f0499b35c3233",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/coverage.json",
+      "original_private_sha256": "030c1656d185e617226c18947c90f57cda8e2ff947e990a8fb8f25dec2815d9c",
+      "public_sha256": "030c1656d185e617226c18947c90f57cda8e2ff947e990a8fb8f25dec2815d9c",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/defects.json",
+      "original_private_sha256": "5dd874ce8c1f184eb20282379cddfe1e47815637fb47890896ba4a2865f1e285",
+      "public_sha256": "5dd874ce8c1f184eb20282379cddfe1e47815637fb47890896ba4a2865f1e285",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/primary-source-index.json",
+      "original_private_sha256": "c1333f7e04c5542c57556743ff0e5798a3894d71bce8b5dc76bd260a8277b207",
+      "public_sha256": "077039b86c22d09cac06b0e9e67f4a1b72ab5b4b4e3f7e291fdee0929be2d460",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/manifest.json",
+      "original_private_sha256": "3df00a3716188d76c2964f78a1f854cab6bab631b4659c876418e997855c09d6",
+      "public_sha256": "c83130884f41706e73472665aea9fc4b6c386fa9c66a78a5b6d7f52b891da6e6",
+      "sanitized": true,
+      "kind": "original_arm_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/assessment.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/assessment.md",
+      "original_private_sha256": "e6db9f5f3383c4bdca456c2cc36237fb1b2ece3829be33bcdb0dc9a775d56145",
+      "public_sha256": "e6db9f5f3383c4bdca456c2cc36237fb1b2ece3829be33bcdb0dc9a775d56145",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/assessment.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/assessment.json",
+      "original_private_sha256": "628fce32c2046931c2ca50c1086490a45209c2bd57033003c6b4d4071c6304d6",
+      "public_sha256": "aa346aca63a713bf9fdf5f219fe7351c902d4e80d2919f903e535302f6889d17",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/coverage.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/coverage.json",
+      "original_private_sha256": "3cf0eda5dbd58cd0d231d3e1c776f0f9d23e9848ac3bf75ef5951cc96ee147e9",
+      "public_sha256": "3cf0eda5dbd58cd0d231d3e1c776f0f9d23e9848ac3bf75ef5951cc96ee147e9",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/defects.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/defects.json",
+      "original_private_sha256": "0b588463e689df83bf9c13d93eb5f236ef7a301e3c066cb20cb6a87c2093e48d",
+      "public_sha256": "0b588463e689df83bf9c13d93eb5f236ef7a301e3c066cb20cb6a87c2093e48d",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/primary-source-index.json",
+      "original_private_sha256": "473b7fcedd6fca6d1b3552e4165a1076cba97f68145376a243803b054373ee22",
+      "public_sha256": "801d60c71f093d112c5ff0e959dd304dbc42d5eecf76e0fac12bdc95498fa8d9",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/manifest.json",
+      "original_private_sha256": "29a82dda6b2cf50c871ee4cebe021e1b05f3eba504ec782e73caa4e6cf9e3da9",
+      "public_sha256": "55ef50d2592fd693037d9870fd822e14b06120efef03b44bd5da955e302e37c4",
+      "sanitized": true,
+      "kind": "original_arm_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/comparison-manifest.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/comparison-manifest.json",
+      "original_private_sha256": "e13f1713707ff6d67472228d91e8c3a0d4452a72622f61ee9febb5fb48d691b5",
+      "public_sha256": "62598d7d16b8faff2fd4ca738d3d1391982a5cfc0474c2c4ce65b20f3856f1e5",
+      "sanitized": true,
+      "kind": "original_frozen_manifest"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/comparison.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/comparison.md",
+      "original_private_sha256": "6f60b87c5f090d374fb33abe5faa4961065059a83b8d1789bd756b134de47b23",
+      "public_sha256": "6f60b87c5f090d374fb33abe5faa4961065059a83b8d1789bd756b134de47b23",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/comparison.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/A-F02/comparison.json",
+      "original_private_sha256": "2f09dfb3b5f16822a6ff0f4f89b89723dd1972e4fb6b04f4130e6b3fc8ac5186",
+      "public_sha256": "bb98e21a3b11d027436afddb0786efa911a53852c2c7353d2579a89130308144",
+      "sanitized": true,
+      "kind": "original_comparison"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-v2/A-F02-request.json",
+      "public_path": "state/eval-coordinator-v2/A-F02-request.json",
+      "original_private_sha256": "fc74b520f67cf38d7be055d187a664a175edacbbf3dfd1259aa5f3cc42387966",
+      "public_sha256": "ccc8481275d54a9a0c3d6edc44e50a7e93078337b009448d309daf6201e76b7c",
+      "sanitized": true,
+      "kind": "actual_evaluator_request"
+    }
+  ]
+}

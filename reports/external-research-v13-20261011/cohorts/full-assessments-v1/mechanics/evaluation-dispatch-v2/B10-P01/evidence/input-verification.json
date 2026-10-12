@@ -1,0 +1,110 @@
+{
+  "schema": "er13.original-input-verification.v1",
+  "block_id": "B10-P01",
+  "verified_at_utc": "2026-10-12T01:38:40.508390+00:00",
+  "packet": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B10-P01.json",
+  "packet_sha256": "7f80c6065c9f223d7c064a894b3c0dc227dcd0228222daf1d3b09d0849926321",
+  "allowlist_receipt": "ER13_RUNTIME/state/eval-coordinator-v2/B10-P01-input-verification.json",
+  "allowlist_receipt_sha256": "eb357825de4c136882505e75b465c8af3b0a800cb4c5d578525056a0d3d2b408",
+  "allowlist_member_check": true,
+  "manifests_verified": 8,
+  "manifest_members_verified": 83,
+  "raw_status_receipts_verified": 6,
+  "mismatches": [],
+  "records": [
+    {
+      "arm_id": "B10-P01-control",
+      "stage": "investigator",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/control/terminal-handoffs/investigator/manifest.json",
+      "manifest_sha256": "67cdcfbac45e28c473d0e042ae4ec416f29f58087a95445ac6f617c09d23a153",
+      "verified_members": 15,
+      "status_receipt": "ER13_RUNTIME/state/dispatcher-v1/arms/B10-P01-control/investigator-eval-ready-status.raw.json",
+      "status_receipt_sha256": "de770e64d6b3b4fc841b93440463849fd71eec34c8dcd260fed9690766c8012d"
+    },
+    {
+      "arm_id": "B10-P01-control",
+      "stage": "critic",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/control/terminal-handoffs/critic/manifest.json",
+      "manifest_sha256": "301a7dc0473487d758ffc22756d2a2794d4a3373ccabed76d6546277f1eeb645",
+      "verified_members": 11,
+      "status_receipt": "ER13_RUNTIME/state/dispatcher-v1/arms/B10-P01-control/critic-eval-ready-status.raw.json",
+      "status_receipt_sha256": "5bb162428f9d03eda98d447b914c6f8e6e701c93a38a67cb54589edc478b5bd6"
+    },
+    {
+      "arm_id": "B10-P01-control",
+      "stage": "reviser",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/control/terminal-handoffs/reviser/manifest.json",
+      "manifest_sha256": "b8fc3fd62993413c13fe5ac10fbb12af10cf17d88adc052fdd79630da3e10e3a",
+      "verified_members": 12,
+      "status_receipt": "ER13_RUNTIME/state/dispatcher-v1/arms/B10-P01-control/reviser-eval-ready-status.raw.json",
+      "status_receipt_sha256": "d18c8c324ce3bd3e888a930ac5dee34264a205d50111e316d1dea4de88d63958"
+    },
+    {
+      "arm_id": "B10-P01-control",
+      "kind": "supplement",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B10-P01-control-eval-inputs/authored-manifest.json",
+      "manifest_sha256": "54baee763b1803e1059cf9c924ae90b61365b6b17d015bf200378a135ecfa6bd",
+      "verified_members": 3
+    },
+    {
+      "arm_id": "B10-P01-treatment",
+      "stage": "investigator",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/control/terminal-handoffs/investigator/manifest.json",
+      "manifest_sha256": "8ceb38a091531422c03fcf02ea982aa61d68e0039c55ebc91fd964feb7c08c32",
+      "verified_members": 15,
+      "status_receipt": "ER13_RUNTIME/state/dispatcher-v1/arms/B10-P01-treatment/investigator-eval-ready-status.raw.json",
+      "status_receipt_sha256": "5005b617191dfd227a535c9dbb90c8525303680313c1f1955d704d3ff3d623c6"
+    },
+    {
+      "arm_id": "B10-P01-treatment",
+      "stage": "critic",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/control/terminal-handoffs/critic/manifest.json",
+      "manifest_sha256": "b4b80e761764fbf9bf2f68a588d774237fc0da8a8f42ecc3fe6c2968741766aa",
+      "verified_members": 12,
+      "status_receipt": "ER13_RUNTIME/state/dispatcher-v1/arms/B10-P01-treatment/critic-eval-ready-status.raw.json",
+      "status_receipt_sha256": "28ce2a3e9f2c35b0d45e06540d2cf282837e0f278bd45e3b346c7261aeb6c841"
+    },
+    {
+      "arm_id": "B10-P01-treatment",
+      "stage": "reviser",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/control/terminal-handoffs/reviser/manifest.json",
+      "manifest_sha256": "bda7fa8177486c1b74ac89a4eae9128404ff8f0f06a33dc2dfff54f7afdd8ed7",
+      "verified_members": 12,
+      "status_receipt": "ER13_RUNTIME/state/dispatcher-v1/arms/B10-P01-treatment/reviser-eval-ready-status.raw.json",
+      "status_receipt_sha256": "80802523139583ba5139f959f0213ed34dd8c6debbc8243c5039533326b34b11"
+    },
+    {
+      "arm_id": "B10-P01-treatment",
+      "kind": "supplement",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B10-P01-treatment-eval-inputs/authored-manifest.json",
+      "manifest_sha256": "d134b7367ce156372a1bfb87390a01ae4fa5d5e869db3aafb214effdf52056d8",
+      "verified_members": 3
+    }
+  ],
+  "governing_contract": {
+    "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+    "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+  },
+  "workspace_instructions": {
+    "path": "ER13_WORKTREE/AGENTS.md",
+    "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810"
+  },
+  "handoff": {
+    "path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+    "sections_read": [
+      {
+        "section": 10,
+        "start_line": 216,
+        "end_line": 227,
+        "selected_text_sha256": "8397e9d2b13ad807f728579ca4ed9599ebcbfbad00df0291a0ab1088fc87604f"
+      },
+      {
+        "section": 12,
+        "start_line": 242,
+        "end_line": 261,
+        "selected_text_sha256": "b2cd4e9ba6f5d7782bb5a5d0d5ce8175be53189e80b85b91a07b5a9e06bff70a"
+      }
+    ]
+  },
+  "boundary": "Only exact notified immutable snapshots/supplements/status receipts, actual workspace instructions, named contract and handoff sections 10/12 were read as case/governance material. No referenced active originals, held-out content, recursive tree/history scan, candidate feedback or other arms."
+}

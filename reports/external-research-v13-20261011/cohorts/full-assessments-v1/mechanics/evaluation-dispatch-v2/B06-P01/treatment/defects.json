@@ -1,0 +1,77 @@
+{
+  "schema": "er13.original_defects.local-v1",
+  "arm_id": "B06-P01-treatment",
+  "material_defects": [],
+  "nonmaterial_findings": [
+    {
+      "id": "T-N01",
+      "severity": "NONMATERIAL",
+      "kind": "upstream test oracle overstatement",
+      "status": "PRESENT_IN_INHERITED_FROZEN_RECORDS",
+      "locator": "investigator discovery Native helper process; investigator/final source-map BWRAP-TEST",
+      "finding": "The carried description calls the upstream network case a denial test. test-run.sh lines 39–41 only runs true under unshare-net and asserts namespace setup success; no forbidden request is attempted. The conditional shadow-file cases do test read denial.",
+      "primary_sources": [
+        "BWRAPTEST"
+      ],
+      "materiality_reason": "The final does not claim those tests ran or proved the proposed policy. It separately proposes actual negative file/network tests before enablement, so this is an evidence-description defect without a material safety or validation-truth claim."
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "CB-01",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED; comparator added",
+      "evidence": "In-process Wasmtime is distinguished from unrestricted native modules; rejection is scoped to the default shared-process failure envelope."
+    },
+    {
+      "id": "CB-02",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED presentation refinement; addressed",
+      "evidence": "An exchange table preserves the already discussed pipes, WIT and shared-memory tradeoffs; formats do not grant authority."
+    },
+    {
+      "id": "CB-03",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED unknown-context gate; addressed",
+      "evidence": "Actual host selection/revision/undo/callers/tests/update research is explicitly deferred only because no host was named."
+    },
+    {
+      "id": "CT-01",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED precision amendment; addressed",
+      "evidence": "Final explicitly includes both fuel and epochs in the blocked-host-call limitation; discovery/map already contained it."
+    },
+    {
+      "id": "CT-02",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED qualification; addressed",
+      "evidence": "AppContainer base/container-local file access is qualified; literal zero access is not inferred."
+    },
+    {
+      "id": "CT-03",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED qualification; addressed",
+      "evidence": "Final adds WMI creation, breakaway, last-handle, handle control, explicit termination and nesting conditions."
+    },
+    {
+      "id": "CT-04",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED missing mechanism precision; addressed",
+      "evidence": "Explicit tmpfs byte/inode bounds replace an unspecified bounded private mount; cgroup memory is not a disk quota."
+    },
+    {
+      "id": "CT-05",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED qualification; addressed",
+      "evidence": "One-run host bytes and portal persistence/path caveats preserved; folder assurance copy is conditional on negative tests."
+    }
+  ],
+  "unresolved_user_facts": [
+    "actual host and language choice",
+    "target OS/kernel/distribution matrix",
+    "resource/latency budgets",
+    "publisher trust/key/revocation policy",
+    "permission persistence/update product policy"
+  ],
+  "grade_change_policy": "These are original findings, not prospective repairs. Later engineering/schema changes do not alter this grade; disputes use new adjudication."
+}

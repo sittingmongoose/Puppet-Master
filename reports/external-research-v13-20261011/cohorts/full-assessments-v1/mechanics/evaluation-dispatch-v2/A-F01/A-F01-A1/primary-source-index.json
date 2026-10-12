@@ -1,0 +1,54 @@
+{
+  "schema": "er13.arm_primary_index.v1",
+  "arm_id": "A-F01-A1",
+  "shared_independent_index": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/primary-source-index.json",
+    "sha256": "505befb6aee37b4e787feb2c53e3bd635bfcbb45544453fde87e3edc1c8086db"
+  },
+  "used_entry_ids": [
+    "E-AM-CODE",
+    "E-AM-CONFLICT",
+    "E-AM-HISTORY",
+    "E-AM-STORAGE",
+    "E-CDB-CONFLICT",
+    "E-CDB-FIX",
+    "E-CDB-MEDIA",
+    "E-CDB-REPLICATION",
+    "E-PDB-ORACLE",
+    "E-PDB-RELEASES",
+    "E-RX",
+    "E-SQL-APPLY",
+    "E-SQL-ATOMIC",
+    "E-SQL-BACKUP",
+    "E-SQL-CODE",
+    "E-SQL-CORRUPT",
+    "E-SQL-PRAGMA",
+    "E-SQL-SESSION",
+    "E-SQL-WAL",
+    "E-UUID"
+  ],
+  "independent_lookup": "Own governing documentation, definitions, release contexts, code/callers/tests and relevant issue/fix contexts reused across assigned arms. Candidate citations treated as navigation, not authority.",
+  "particular_context_limits": [
+    {
+      "family": "existing_survey_application_code_callers_tests",
+      "coverage": "UNASSESSED",
+      "reason": "No application identity/repository/revision supplied. This is an explicit external integration input, not a material omission in a planning proposal."
+    },
+    {
+      "family": "future_runtime_platform_performance_and_usability",
+      "coverage": "UNASSESSED",
+      "reason": "No deployment/implementation requested. Selected binary, filesystem, field sizes/link rates and user studies are future validation; no pass inferred."
+    },
+    {
+      "family": "native_to_task_independent_session_linkage_and_billing",
+      "coverage": "UNASSESSED",
+      "reason": "Frozen receipts are internally consistent but no independent task-session linkage or billing telemetry supplied."
+    }
+  ],
+  "decisive_evidence": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/evidence/pouch-oracle.json",
+      "sha256": "f847b237f46e7e39d7b8690b5758bedf9a035c04d8d50ddc94da778fc23fae0f"
+    }
+  ]
+}

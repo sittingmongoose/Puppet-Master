@@ -1,0 +1,57 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "A-F01-A1_A8",
+  "records": [
+    {
+      "id": "COMBO-METHOD01",
+      "domain": "method_compliance",
+      "severity": "MATERIAL_METHOD_ONLY",
+      "status_in_frozen_final": "OPEN",
+      "locator": "critic SCW-05 and SCW-06 C*",
+      "finding": "SCW-05 changes both API selector and return predicate (winner-only/no conflict information → all losing bodies). SCW-06 changes media representation and possibility/necessity modality (can transfer embedded attachments → necessarily fetch external URI). Both exceed the one-selector rule while presented as valid SCWs.",
+      "evidence_ids": [
+        "FROZEN-ASSIGNMENTS",
+        "E-CDB-CONFLICT",
+        "E-CDB-MEDIA"
+      ],
+      "materiality_reason": "A8 witness-method qualification fails independently of source quality; final conclusions about IDs/bodies and external references are otherwise supported."
+    },
+    {
+      "id": "COMBO-N02",
+      "domain": "source_scope_wording",
+      "severity": "NONMATERIAL",
+      "status_in_frozen_final": "OPEN",
+      "locator": "final SCW-05 Requested bodies can be missing after compaction",
+      "finding": "The sentence follows open_revs=all and does not restate non-leaf/historical-body condition. Official docs distinguish current leaf bodies from explicit historical revision requests.",
+      "evidence_ids": [
+        "E-CDB-CONFLICT"
+      ],
+      "materiality_reason": "Overbroad wording, but final source map explicitly specifies old non-leaf bodies and proposal retains its own event history; no supported current conflict is discarded or CouchDB falsely rejected."
+    },
+    {
+      "id": "COMBO-N03",
+      "domain": "delivery_schema",
+      "severity": "NONMATERIAL",
+      "status_in_frozen_final": "OPEN",
+      "locator": "final source-map top-level stage",
+      "finding": "Final source map still labels stage as critic while adding reviser_review.",
+      "evidence_ids": [
+        "FROZEN-MANIFESTS"
+      ],
+      "materiality_reason": "Stage-label schema error; IDs and distinct reviser annotations preserve attribution. No engineering repair was applied to original candidate or grade."
+    },
+    {
+      "id": "COMBO-N04",
+      "domain": "source_metadata",
+      "severity": "NONMATERIAL",
+      "status_in_frozen_final": "CORRECTED_IN_FINAL",
+      "locator": "original S13 status and final SCW-03",
+      "finding": "Original issue 889 Open status is stale. Critic/reviser explicitly qualify it as closed/converted and preserve the 2.1.11 applicability boundary.",
+      "evidence_ids": [
+        "E-AM-HISTORY"
+      ],
+      "materiality_reason": "Correction is supported and transparent; no inference of a 3.4.1 defect."
+    }
+  ],
+  "external_unknowns_are_not_zero_or_defects": true
+}

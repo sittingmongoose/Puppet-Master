@@ -1,0 +1,53 @@
+{
+  "schema": "er13.immutable-original-output-manifest.v1",
+  "arm_id": "B10-P01-treatment",
+  "original": true,
+  "frozen_at_utc": "2026-10-12T01:43:22.633980+00:00",
+  "comparison_not_yet_performed": true,
+  "grade_immutable": true,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/treatment/assessment.md",
+      "relative_to_output_root": "treatment/assessment.md",
+      "bytes": 6740,
+      "sha256": "dca07c3cce10a4ddb109146bfeb0d66bc631717685b98739485d0988f03c5173"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/treatment/assessment.json",
+      "relative_to_output_root": "treatment/assessment.json",
+      "bytes": 15444,
+      "sha256": "5c1ec171c918b22d5cea4ca7865d016ea7691daec6ce2c5a382bc8c92c8c4b52"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/treatment/coverage.json",
+      "relative_to_output_root": "treatment/coverage.json",
+      "bytes": 16546,
+      "sha256": "77d117942695f9d1b8875c0d9af7db3d40ca9452130017044e04c19b81c08184"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/treatment/defects.json",
+      "relative_to_output_root": "treatment/defects.json",
+      "bytes": 2297,
+      "sha256": "79c6e7dc909338e86797ebf0c673620b06aca63bd1f1ed029e8b394464becffb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/treatment/primary-source-index.json",
+      "relative_to_output_root": "treatment/primary-source-index.json",
+      "bytes": 20365,
+      "sha256": "3556a3cc6bcf52398ce727d052c7903cf8cc0338efd348584c50da85929adbac"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/evidence/input-verification.json",
+      "relative_to_output_root": "evidence/input-verification.json",
+      "bytes": 6567,
+      "sha256": "fdceece40e130dc2279a33d088f3300f05f336d553da0cb87653b8e68c2f6278"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/evidence/primary-access.json",
+      "relative_to_output_root": "evidence/primary-access.json",
+      "bytes": 14788,
+      "sha256": "55fcbebe459e01f8a4b8edac98afbf1911c813704ca9cf5656b040f99421b1c5"
+    }
+  ],
+  "scope": "Five original assessment records plus shared necessary independent evidence. Manifest does not recursively hash itself. Original files will not be changed by later comparison/adjudication."
+}

@@ -1,0 +1,699 @@
+{
+  "block_id": "A-F02",
+  "scope": "FULL",
+  "arm_count": 4,
+  "originals": [
+    {
+      "arm_id": "A-F02-R0",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/manifest.json",
+      "manifest_sha256": "7f2fa60c3a7dc91ef30b4fe2cf67369615907599c306e5af5b9d72cffeb0a06a",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/assessment.json",
+      "assessment_sha256": "5694db32397d61f847492bcf884f4efeed7c46eec6695d64842ce767a51f4e58",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        {
+          "axis": 1,
+          "contract_axis": "Material original obligations and negative constraints",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+        },
+        {
+          "axis": 2,
+          "contract_axis": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "FAIL",
+          "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+        },
+        {
+          "axis": 3,
+          "contract_axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+        },
+        {
+          "axis": 4,
+          "contract_axis": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+        },
+        {
+          "axis": 5,
+          "contract_axis": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "Original/copy fixity, independent states, explicit channels, transcript versions, rights/custody distinction, optional local preview, all media-stack alternatives, DROID limits, restart, packaging, scale and accessibility proposals survive. All four critic findings disposed."
+        },
+        {
+          "axis": 6,
+          "contract_axis": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+        }
+      ],
+      "delivery": {
+        "status": "COMPLETE",
+        "final_present": true,
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/control/terminal-handoffs/reviser/files/final.md",
+        "final_sha256": "7a9b18514abab1b261d29bf2618a97e46cca2bcb823eff483cd0465df4de5635",
+        "original_missing_final_preserved": false,
+        "complete_final_grade_fabricated": false
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_BY_FROZEN_NATIVE_TERMINAL_MARKERS",
+        "maximum_elapsed_minutes": 60,
+        "frozen_clocks_unchanged": true,
+        "t0_utc": "2026-10-12T00:30:27.944Z",
+        "whole_deadline_utc": "2026-10-12T01:30:27.944Z",
+        "stages": [
+          {
+            "stage": "investigator",
+            "preparation_utc": "2026-10-12T00:30:28.592Z",
+            "native_goal_created_utc": "2026-10-12T00:30:42+00:00",
+            "native_goal_terminal_utc": "2026-10-12T00:41:11+00:00",
+            "native_goal_lifetime_seconds": 629,
+            "frozen_stage_deadline_utc": "2026-10-12T01:00:28.592Z",
+            "late_native_terminal_seconds": 0,
+            "same_birth_exact_objective_in_receipts": true,
+            "active_to_complete_in_receipts": true,
+            "actual_task_status": "completed",
+            "hasPendingChildRuns": false,
+            "counter_fields_present": true,
+            "last_complete_scientific_artifact_utc": "UNKNOWN",
+            "request_admission_queue_provider_activity_boundaries": "UNKNOWN"
+          },
+          {
+            "stage": "critic",
+            "preparation_utc": "2026-10-12T00:41:50.569Z",
+            "native_goal_created_utc": "2026-10-12T00:42:16+00:00",
+            "native_goal_terminal_utc": "2026-10-12T00:51:42+00:00",
+            "native_goal_lifetime_seconds": 566,
+            "frozen_stage_deadline_utc": "2026-10-12T00:53:50.569Z",
+            "late_native_terminal_seconds": 0,
+            "same_birth_exact_objective_in_receipts": true,
+            "active_to_complete_in_receipts": true,
+            "actual_task_status": "completed",
+            "hasPendingChildRuns": false,
+            "counter_fields_present": true,
+            "last_complete_scientific_artifact_utc": "UNKNOWN",
+            "request_admission_queue_provider_activity_boundaries": "UNKNOWN"
+          },
+          {
+            "stage": "reviser",
+            "preparation_utc": "2026-10-12T00:55:41.444Z",
+            "native_goal_created_utc": "2026-10-12T00:55:55+00:00",
+            "native_goal_terminal_utc": "2026-10-12T01:02:18+00:00",
+            "native_goal_lifetime_seconds": 383,
+            "frozen_stage_deadline_utc": "2026-10-12T01:13:41.444Z",
+            "late_native_terminal_seconds": 0,
+            "same_birth_exact_objective_in_receipts": true,
+            "active_to_complete_in_receipts": true,
+            "actual_task_status": "completed",
+            "hasPendingChildRuns": false,
+            "counter_fields_present": true,
+            "last_complete_scientific_artifact_utc": "UNKNOWN",
+            "request_admission_queue_provider_activity_boundaries": "UNKNOWN"
+          }
+        ],
+        "t0_to_final_native_terminal_proxy_seconds": 1910.056,
+        "proxy_is_last_artifact_or_quiet_time": false,
+        "last_complete_scientific_artifact_utc": "UNKNOWN",
+        "quiet_observation_upper_bound_utc": "2026-10-12T01:28:58.525181+00:00",
+        "quiet_observation_basis": "Packet/status receipts report all actual tasks terminal with zero pending children; exact per-task quiet boundary absent.",
+        "missing_final_has_no_zero_second_success": true,
+        "full_context_occupancy_and_provider_active_time": "UNKNOWN; native Goal lifetimes are distinct observational proxies, not billed work."
+      },
+      "method_compliance": {
+        "status": "PARTIAL",
+        "declared_topology": "investigator -> independent critic -> fresh complete reviser",
+        "present_stage_count": 3,
+        "planned_stage_count": 3,
+        "brief_first_reveal_custody": "Discovery bytes/hash and exact plan match single-use reveal receipts. Actual pre-reveal access chronology beyond captures UNKNOWN.",
+        "scw_artifact_content": "NOT_APPLICABLE",
+        "scw_selection_before_fetch_or_verdict": "UNKNOWN where applicable; complete native transcripts not supplied/read",
+        "activation_before_case_input_and_save_before_completion": "UNKNOWN beyond supplied custody; R0 reviser rounded research window also begins before its native activation marker, insufficient to resolve actual ordering.",
+        "late_or_missing_stage": "No frozen native terminal exceeds its declared stage deadline.",
+        "extra_unlisted_attempts": "UNKNOWN; no full campaign/history scan authorized."
+      },
+      "native_provenance": {
+        "coverage": "PARTIAL",
+        "receipt_custody": "All supplied native create/active/terminal snapshot hashes checked; same birth/exact objective and active-to-complete match in every present stage.",
+        "terminal_manifest_lifecycle_qualified_flag": false,
+        "notification_same_birth_exact_objective_flags_verified": true,
+        "independent_native_to_T3_task_linkage": "UNKNOWN beyond assigned capture/objective custody",
+        "native_realness_freshness_preinput_order": "UNKNOWN beyond supplied receipts; status/hashes do not establish source truth",
+        "public_identity_policy": "No account/provider routing identity, native UUIDs or full native transcripts published."
+      },
+      "resource_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "planned_contexts": 3,
+          "present_native_stage_receipts": 3,
+          "cumulative_goal_counter_fields": "OBSERVED; values withheld by public-artifact privacy contract; not additive billing",
+          "input_cached_output_reasoning_breakdown": "UNKNOWN",
+          "provider_activity_context_occupancy": "UNKNOWN",
+          "subscription_consumption_billing": "UNKNOWN",
+          "complete_product_path_total": "UNKNOWN; missing/bounded observations never treated as zero"
+        },
+        "independent_evaluation": {
+          "cost_category": "independent_evaluation",
+          "first_observed_utc": "2026-10-12T01:30:19Z",
+          "original_assessment_written_utc": "2026-10-12T01:53:30.502639+00:00",
+          "provider_activity_counters_billing": "UNKNOWN",
+          "separate_from_candidate_product": true
+        },
+        "preparation_support_publication_root_totals": "UNKNOWN outside this assignment; no cold full-pipeline/component total inferred."
+      },
+      "frozen_files_verified": 13,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    },
+    {
+      "arm_id": "A-F02-A1",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/manifest.json",
+      "manifest_sha256": "be1e0238ff23fe8577e0272db74af502b45c3e2370807dad3177d61774a7184a",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/assessment.json",
+      "assessment_sha256": "834ea42aa08133b71398d772211be22ba827f2884684e3ce640506a9281ea6d8",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        {
+          "axis": 1,
+          "contract_axis": "Material original obligations and negative constraints",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+        },
+        {
+          "axis": 2,
+          "contract_axis": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+        },
+        {
+          "axis": 3,
+          "contract_axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+        },
+        {
+          "axis": 4,
+          "contract_axis": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+        },
+        {
+          "axis": 5,
+          "contract_axis": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "All required topics and FFprobe/GStreamer/Symphonia/MediaInfo, PBCore/BagIt, per-channel remap, rights/revisions and validation boundaries survive. All F01-F06 disposed; reviewer access caveats are retained."
+        },
+        {
+          "axis": 6,
+          "contract_axis": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+        }
+      ],
+      "delivery": {
+        "status": "COMPLETE",
+        "final_present": true,
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1/run/A-F02-A1/control/terminal-handoffs/reviser/files/final.md",
+        "final_sha256": "3ba45b3f64067b63810eaf50c645cfff58fd0f66f509fbc484569f70ee7bbd06",
+        "original_missing_final_preserved": false,
+        "complete_final_grade_fabricated": false
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_BY_FROZEN_NATIVE_TERMINAL_MARKERS",
+        "maximum_elapsed_minutes": 60,
+        "frozen_clocks_unchanged": true,
+        "t0_utc": "2026-10-12T00:30:35.058Z",
+        "whole_deadline_utc": "2026-10-12T01:30:35.058Z",
+        "stages": [
+          {
+            "stage": "investigator",
+            "preparation_utc": "2026-10-12T00:30:35.629Z",
+            "native_goal_created_utc": "2026-10-12T00:30:45+00:00",
+            "native_goal_terminal_utc": "2026-10-12T00:50:00+00:00",
+            "native_goal_lifetime_seconds": 1155,
+            "frozen_stage_deadline_utc": "2026-10-12T01:00:35.058Z",
+            "late_native_terminal_seconds": 0,
+            "same_birth_exact_objective_in_receipts": true,
+            "active_to_complete_in_receipts": true,
+            "actual_task_status": "completed",
+            "hasPendingChildRuns": false,
+            "counter_fields_present": true,
+            "last_complete_scientific_artifact_utc": "UNKNOWN",
+            "request_admission_queue_provider_activity_boundaries": "UNKNOWN"
+          },
+          {
+            "stage": "critic",
+            "preparation_utc": "2026-10-12T00:55:50.486Z",
+            "native_goal_created_utc": "2026-10-12T00:56:00+00:00",
+            "native_goal_terminal_utc": "2026-10-12T01:04:48+00:00",
+            "native_goal_lifetime_seconds": 528,
+            "frozen_stage_deadline_utc": "2026-10-12T01:12:35.058Z",
+            "late_native_terminal_seconds": 0,
+            "same_birth_exact_objective_in_receipts": true,
+            "active_to_complete_in_receipts": true,
+            "actual_task_status": "completed",
+            "hasPendingChildRuns": false,
+            "counter_fields_present": true,
+            "last_complete_scientific_artifact_utc": "UNKNOWN",
+            "request_admission_queue_provider_activity_boundaries": "UNKNOWN"
+          },
+          {
+            "stage": "reviser",
+            "preparation_utc": "2026-10-12T01:07:28.414Z",
+            "native_goal_created_utc": "2026-10-12T01:07:47+00:00",
+            "native_goal_terminal_utc": "2026-10-12T01:17:45+00:00",
+            "native_goal_lifetime_seconds": 598,
+            "frozen_stage_deadline_utc": "2026-10-12T01:30:35.058Z",
+            "late_native_terminal_seconds": 0,
+            "same_birth_exact_objective_in_receipts": true,
+            "active_to_complete_in_receipts": true,
+            "actual_task_status": "completed",
+            "hasPendingChildRuns": false,
+            "counter_fields_present": true,
+            "last_complete_scientific_artifact_utc": "UNKNOWN",
+            "request_admission_queue_provider_activity_boundaries": "UNKNOWN"
+          }
+        ],
+        "t0_to_final_native_terminal_proxy_seconds": 2829.942,
+        "proxy_is_last_artifact_or_quiet_time": false,
+        "last_complete_scientific_artifact_utc": "UNKNOWN",
+        "quiet_observation_upper_bound_utc": "2026-10-12T01:28:58.525181+00:00",
+        "quiet_observation_basis": "Packet/status receipts report all actual tasks terminal with zero pending children; exact per-task quiet boundary absent.",
+        "missing_final_has_no_zero_second_success": true,
+        "full_context_occupancy_and_provider_active_time": "UNKNOWN; native Goal lifetimes are distinct observational proxies, not billed work."
+      },
+      "method_compliance": {
+        "status": "PARTIAL",
+        "declared_topology": "investigator -> independent critic -> fresh complete reviser",
+        "present_stage_count": 3,
+        "planned_stage_count": 3,
+        "brief_first_reveal_custody": "Discovery bytes/hash and exact plan match single-use reveal receipts. Actual pre-reveal access chronology beyond captures UNKNOWN.",
+        "scw_artifact_content": "NOT_APPLICABLE",
+        "scw_selection_before_fetch_or_verdict": "UNKNOWN where applicable; complete native transcripts not supplied/read",
+        "activation_before_case_input_and_save_before_completion": "UNKNOWN beyond supplied custody; R0 reviser rounded research window also begins before its native activation marker, insufficient to resolve actual ordering.",
+        "late_or_missing_stage": "No frozen native terminal exceeds its declared stage deadline.",
+        "extra_unlisted_attempts": "UNKNOWN; no full campaign/history scan authorized."
+      },
+      "native_provenance": {
+        "coverage": "PARTIAL",
+        "receipt_custody": "All supplied native create/active/terminal snapshot hashes checked; same birth/exact objective and active-to-complete match in every present stage.",
+        "terminal_manifest_lifecycle_qualified_flag": false,
+        "notification_same_birth_exact_objective_flags_verified": true,
+        "independent_native_to_T3_task_linkage": "UNKNOWN beyond assigned capture/objective custody",
+        "native_realness_freshness_preinput_order": "UNKNOWN beyond supplied receipts; status/hashes do not establish source truth",
+        "public_identity_policy": "No account/provider routing identity, native UUIDs or full native transcripts published."
+      },
+      "resource_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "planned_contexts": 3,
+          "present_native_stage_receipts": 3,
+          "cumulative_goal_counter_fields": "OBSERVED; values withheld by public-artifact privacy contract; not additive billing",
+          "input_cached_output_reasoning_breakdown": "UNKNOWN",
+          "provider_activity_context_occupancy": "UNKNOWN",
+          "subscription_consumption_billing": "UNKNOWN",
+          "complete_product_path_total": "UNKNOWN; missing/bounded observations never treated as zero"
+        },
+        "independent_evaluation": {
+          "cost_category": "independent_evaluation",
+          "first_observed_utc": "2026-10-12T01:30:19Z",
+          "original_assessment_written_utc": "2026-10-12T01:53:30.502639+00:00",
+          "provider_activity_counters_billing": "UNKNOWN",
+          "separate_from_candidate_product": true
+        },
+        "preparation_support_publication_root_totals": "UNKNOWN outside this assignment; no cold full-pipeline/component total inferred."
+      },
+      "frozen_files_verified": 13,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    },
+    {
+      "arm_id": "A-F02-A8",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/manifest.json",
+      "manifest_sha256": "3df00a3716188d76c2964f78a1f854cab6bab631b4659c876418e997855c09d6",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/assessment.json",
+      "assessment_sha256": "a1abe89c541fbe8bf2259a143212e1fddf8198ba6ad1922e5b871429ab4673b1",
+      "source_judgment": "UNASSESSED",
+      "coverage": "PARTIAL",
+      "axis_coverage": [
+        {
+          "axis": 1,
+          "contract_axis": "Material original obligations and negative constraints",
+          "coverage": "PARTIAL",
+          "complete_final_coverage": "UNASSESSED",
+          "judgment": "UNASSESSED",
+          "note": "Available stage science only; final absent."
+        },
+        {
+          "axis": 2,
+          "contract_axis": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "PARTIAL",
+          "complete_final_coverage": "UNASSESSED",
+          "judgment": "UNASSESSED",
+          "note": "Available stage science only; final absent."
+        },
+        {
+          "axis": 3,
+          "contract_axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "PARTIAL",
+          "complete_final_coverage": "UNASSESSED",
+          "judgment": "UNASSESSED",
+          "note": "Available stage science only; final absent."
+        },
+        {
+          "axis": 4,
+          "contract_axis": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "PARTIAL",
+          "complete_final_coverage": "UNASSESSED",
+          "judgment": "UNASSESSED",
+          "note": "Available stage science only; final absent."
+        },
+        {
+          "axis": 5,
+          "contract_axis": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "UNASSESSED",
+          "complete_final_coverage": "UNASSESSED",
+          "judgment": "UNASSESSED",
+          "note": "No investigator-to-final or critic-to-final preservation judgment is possible. Available discovery-to-draft and late critique were read in full."
+        },
+        {
+          "axis": 6,
+          "contract_axis": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "PARTIAL",
+          "complete_final_coverage": "UNASSESSED",
+          "judgment": "UNASSESSED",
+          "note": "Available stage science only; final absent."
+        }
+      ],
+      "delivery": {
+        "status": "UNASSESSED",
+        "final_present": false,
+        "final_path": null,
+        "final_sha256": null,
+        "original_missing_final_preserved": true,
+        "complete_final_grade_fabricated": false
+      },
+      "time_eligibility": {
+        "status": "INELIGIBLE_ORIGINAL_STAGE_CAP",
+        "maximum_elapsed_minutes": 60,
+        "frozen_clocks_unchanged": true,
+        "t0_utc": "2026-10-12T00:30:25.046Z",
+        "whole_deadline_utc": "2026-10-12T01:30:25.046Z",
+        "stages": [
+          {
+            "stage": "investigator",
+            "preparation_utc": "2026-10-12T00:30:25.581Z",
+            "native_goal_created_utc": "2026-10-12T00:30:34+00:00",
+            "native_goal_terminal_utc": "2026-10-12T00:44:45+00:00",
+            "native_goal_lifetime_seconds": 851,
+            "frozen_stage_deadline_utc": "2026-10-12T01:00:25.581Z",
+            "late_native_terminal_seconds": 0,
+            "same_birth_exact_objective_in_receipts": true,
+            "active_to_complete_in_receipts": true,
+            "actual_task_status": "completed",
+            "hasPendingChildRuns": false,
+            "counter_fields_present": true,
+            "last_complete_scientific_artifact_utc": "UNKNOWN",
+            "request_admission_queue_provider_activity_boundaries": "UNKNOWN"
+          },
+          {
+            "stage": "critic",
+            "preparation_utc": "2026-10-12T00:45:59.136Z",
+            "native_goal_created_utc": "2026-10-12T00:46:14+00:00",
+            "native_goal_terminal_utc": "2026-10-12T01:03:11+00:00",
+            "native_goal_lifetime_seconds": 1017,
+            "frozen_stage_deadline_utc": "2026-10-12T00:57:59.136Z",
+            "late_native_terminal_seconds": 311.864,
+            "same_birth_exact_objective_in_receipts": true,
+            "active_to_complete_in_receipts": true,
+            "actual_task_status": "completed",
+            "hasPendingChildRuns": false,
+            "counter_fields_present": true,
+            "last_complete_scientific_artifact_utc": "UNKNOWN",
+            "request_admission_queue_provider_activity_boundaries": "UNKNOWN"
+          }
+        ],
+        "t0_to_final_native_terminal_proxy_seconds": null,
+        "proxy_is_last_artifact_or_quiet_time": false,
+        "last_complete_scientific_artifact_utc": "UNKNOWN",
+        "quiet_observation_upper_bound_utc": "2026-10-12T01:28:58.525181+00:00",
+        "quiet_observation_basis": "Packet/status receipts report all actual tasks terminal with zero pending children; exact per-task quiet boundary absent.",
+        "missing_final_has_no_zero_second_success": true,
+        "full_context_occupancy_and_provider_active_time": "UNKNOWN; native Goal lifetimes are distinct observational proxies, not billed work."
+      },
+      "method_compliance": {
+        "status": "PARTIAL",
+        "declared_topology": "investigator -> independent critic -> fresh complete reviser",
+        "present_stage_count": 2,
+        "planned_stage_count": 3,
+        "brief_first_reveal_custody": "Discovery bytes/hash and exact plan match single-use reveal receipts. Actual pre-reveal access chronology beyond captures UNKNOWN.",
+        "scw_artifact_content": "PARTIAL; A8-M01, no final",
+        "scw_selection_before_fetch_or_verdict": "UNKNOWN where applicable; complete native transcripts not supplied/read",
+        "activation_before_case_input_and_save_before_completion": "UNKNOWN beyond supplied custody; R0 reviser rounded research window also begins before its native activation marker, insufficient to resolve actual ordering.",
+        "late_or_missing_stage": "Original late critic and missing reviser make FULL method incomplete/ineligible.",
+        "extra_unlisted_attempts": "UNKNOWN; no full campaign/history scan authorized."
+      },
+      "native_provenance": {
+        "coverage": "PARTIAL",
+        "receipt_custody": "All supplied native create/active/terminal snapshot hashes checked; same birth/exact objective and active-to-complete match in every present stage.",
+        "terminal_manifest_lifecycle_qualified_flag": false,
+        "notification_same_birth_exact_objective_flags_verified": true,
+        "independent_native_to_T3_task_linkage": "UNKNOWN beyond assigned capture/objective custody",
+        "native_realness_freshness_preinput_order": "UNKNOWN beyond supplied receipts; status/hashes do not establish source truth",
+        "public_identity_policy": "No account/provider routing identity, native UUIDs or full native transcripts published."
+      },
+      "resource_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "planned_contexts": 3,
+          "present_native_stage_receipts": 2,
+          "cumulative_goal_counter_fields": "OBSERVED; values withheld by public-artifact privacy contract; not additive billing",
+          "input_cached_output_reasoning_breakdown": "UNKNOWN",
+          "provider_activity_context_occupancy": "UNKNOWN",
+          "subscription_consumption_billing": "UNKNOWN",
+          "complete_product_path_total": "UNKNOWN; missing/bounded observations never treated as zero"
+        },
+        "independent_evaluation": {
+          "cost_category": "independent_evaluation",
+          "first_observed_utc": "2026-10-12T01:30:19Z",
+          "original_assessment_written_utc": "2026-10-12T01:53:30.502639+00:00",
+          "provider_activity_counters_billing": "UNKNOWN",
+          "separate_from_candidate_product": true
+        },
+        "preparation_support_publication_root_totals": "UNKNOWN outside this assignment; no cold full-pipeline/component total inferred."
+      },
+      "frozen_files_verified": 13,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    },
+    {
+      "arm_id": "A-F02-A1_A8",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/manifest.json",
+      "manifest_sha256": "29a82dda6b2cf50c871ee4cebe021e1b05f3eba504ec782e73caa4e6cf9e3da9",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/assessment.json",
+      "assessment_sha256": "628fce32c2046931c2ca50c1086490a45209c2bd57033003c6b4d4071c6304d6",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        {
+          "axis": 1,
+          "contract_axis": "Material original obligations and negative constraints",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+        },
+        {
+          "axis": 2,
+          "contract_axis": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+        },
+        {
+          "axis": 3,
+          "contract_axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+        },
+        {
+          "axis": 4,
+          "contract_axis": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+        },
+        {
+          "axis": 5,
+          "contract_axis": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "FFprobe, MediaInfo, Siegfried, libsndfile, raw IDs/leading-zero cautions, Web Audio/WebVTT limits, rights, byte copies, restart, BagIt/custom package, all ordinary/SCW criticisms and proposal/execution boundaries survive. Predecessor source maps compare exactly."
+        },
+        {
+          "axis": 6,
+          "contract_axis": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "COMPLETE",
+          "complete_final_coverage": "COMPLETE",
+          "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+          "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+        }
+      ],
+      "delivery": {
+        "status": "COMPLETE",
+        "final_present": true,
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-A1_A8/run/A-F02-A1_A8/control/terminal-handoffs/reviser/files/final.md",
+        "final_sha256": "61a6b9db136b386b66340d2e4c423c32c6920e75f3a84f6607aae7c2a4f96f7a",
+        "original_missing_final_preserved": false,
+        "complete_final_grade_fabricated": false
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_BY_FROZEN_NATIVE_TERMINAL_MARKERS",
+        "maximum_elapsed_minutes": 60,
+        "frozen_clocks_unchanged": true,
+        "t0_utc": "2026-10-12T00:30:31.731Z",
+        "whole_deadline_utc": "2026-10-12T01:30:31.731Z",
+        "stages": [
+          {
+            "stage": "investigator",
+            "preparation_utc": "2026-10-12T00:30:32.399Z",
+            "native_goal_created_utc": "2026-10-12T00:30:48+00:00",
+            "native_goal_terminal_utc": "2026-10-12T00:45:28+00:00",
+            "native_goal_lifetime_seconds": 880,
+            "frozen_stage_deadline_utc": "2026-10-12T01:00:31.731Z",
+            "late_native_terminal_seconds": 0,
+            "same_birth_exact_objective_in_receipts": true,
+            "active_to_complete_in_receipts": true,
+            "actual_task_status": "completed",
+            "hasPendingChildRuns": false,
+            "counter_fields_present": true,
+            "last_complete_scientific_artifact_utc": "UNKNOWN",
+            "request_admission_queue_provider_activity_boundaries": "UNKNOWN"
+          },
+          {
+            "stage": "critic",
+            "preparation_utc": "2026-10-12T00:46:10.482Z",
+            "native_goal_created_utc": "2026-10-12T00:46:35+00:00",
+            "native_goal_terminal_utc": "2026-10-12T01:00:56+00:00",
+            "native_goal_lifetime_seconds": 861,
+            "frozen_stage_deadline_utc": "2026-10-12T01:12:31.731Z",
+            "late_native_terminal_seconds": 0,
+            "same_birth_exact_objective_in_receipts": true,
+            "active_to_complete_in_receipts": true,
+            "actual_task_status": "completed",
+            "hasPendingChildRuns": false,
+            "counter_fields_present": true,
+            "last_complete_scientific_artifact_utc": "UNKNOWN",
+            "request_admission_queue_provider_activity_boundaries": "UNKNOWN"
+          },
+          {
+            "stage": "reviser",
+            "preparation_utc": "2026-10-12T01:07:30.554Z",
+            "native_goal_created_utc": "2026-10-12T01:07:48+00:00",
+            "native_goal_terminal_utc": "2026-10-12T01:16:50+00:00",
+            "native_goal_lifetime_seconds": 542,
+            "frozen_stage_deadline_utc": "2026-10-12T01:30:31.731Z",
+            "late_native_terminal_seconds": 0,
+            "same_birth_exact_objective_in_receipts": true,
+            "active_to_complete_in_receipts": true,
+            "actual_task_status": "completed",
+            "hasPendingChildRuns": false,
+            "counter_fields_present": true,
+            "last_complete_scientific_artifact_utc": "UNKNOWN",
+            "request_admission_queue_provider_activity_boundaries": "UNKNOWN"
+          }
+        ],
+        "t0_to_final_native_terminal_proxy_seconds": 2778.269,
+        "proxy_is_last_artifact_or_quiet_time": false,
+        "last_complete_scientific_artifact_utc": "UNKNOWN",
+        "quiet_observation_upper_bound_utc": "2026-10-12T01:28:58.525181+00:00",
+        "quiet_observation_basis": "Packet/status receipts report all actual tasks terminal with zero pending children; exact per-task quiet boundary absent.",
+        "missing_final_has_no_zero_second_success": true,
+        "full_context_occupancy_and_provider_active_time": "UNKNOWN; native Goal lifetimes are distinct observational proxies, not billed work."
+      },
+      "method_compliance": {
+        "status": "PARTIAL",
+        "declared_topology": "investigator -> independent critic -> fresh complete reviser",
+        "present_stage_count": 3,
+        "planned_stage_count": 3,
+        "brief_first_reveal_custody": "Discovery bytes/hash and exact plan match single-use reveal receipts. Actual pre-reveal access chronology beyond captures UNKNOWN.",
+        "scw_artifact_content": "PARTIAL; AA-M01 despite supported final amendment",
+        "scw_selection_before_fetch_or_verdict": "UNKNOWN where applicable; complete native transcripts not supplied/read",
+        "activation_before_case_input_and_save_before_completion": "UNKNOWN beyond supplied custody; R0 reviser rounded research window also begins before its native activation marker, insufficient to resolve actual ordering.",
+        "late_or_missing_stage": "No frozen native terminal exceeds its declared stage deadline.",
+        "extra_unlisted_attempts": "UNKNOWN; no full campaign/history scan authorized."
+      },
+      "native_provenance": {
+        "coverage": "PARTIAL",
+        "receipt_custody": "All supplied native create/active/terminal snapshot hashes checked; same birth/exact objective and active-to-complete match in every present stage.",
+        "terminal_manifest_lifecycle_qualified_flag": false,
+        "notification_same_birth_exact_objective_flags_verified": true,
+        "independent_native_to_T3_task_linkage": "UNKNOWN beyond assigned capture/objective custody",
+        "native_realness_freshness_preinput_order": "UNKNOWN beyond supplied receipts; status/hashes do not establish source truth",
+        "public_identity_policy": "No account/provider routing identity, native UUIDs or full native transcripts published."
+      },
+      "resource_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "planned_contexts": 3,
+          "present_native_stage_receipts": 3,
+          "cumulative_goal_counter_fields": "OBSERVED; values withheld by public-artifact privacy contract; not additive billing",
+          "input_cached_output_reasoning_breakdown": "UNKNOWN",
+          "provider_activity_context_occupancy": "UNKNOWN",
+          "subscription_consumption_billing": "UNKNOWN",
+          "complete_product_path_total": "UNKNOWN; missing/bounded observations never treated as zero"
+        },
+        "independent_evaluation": {
+          "cost_category": "independent_evaluation",
+          "first_observed_utc": "2026-10-12T01:30:19Z",
+          "original_assessment_written_utc": "2026-10-12T01:53:30.502639+00:00",
+          "provider_activity_counters_billing": "UNKNOWN",
+          "separate_from_candidate_product": true
+        },
+        "preparation_support_publication_root_totals": "UNKNOWN outside this assignment; no cold full-pipeline/component total inferred."
+      },
+      "frozen_files_verified": 13,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    }
+  ],
+  "grader_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "comparison": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/comparison.json",
+  "comparison_sha256": "2f09dfb3b5f16822a6ff0f4f89b89723dd1972e4fb6b04f4130e6b3fc8ac5186",
+  "verified_at_utc": "2026-10-12T01:58:01.795722+00:00",
+  "mechanics_only_not_regrade": true,
+  "missing_final_complete_science_UNASSESSED": true,
+  "factorial_interaction_UNASSESSED": true
+}

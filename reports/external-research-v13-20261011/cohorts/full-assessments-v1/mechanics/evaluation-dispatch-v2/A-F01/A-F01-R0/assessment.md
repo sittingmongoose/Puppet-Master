@@ -1,0 +1,12 @@
+# Original assessment — A-F01-R0
+
+Source judgment: **PASS**. All six axes received COMPLETE finite proposal-level assessment. External app integration, future runtime validation, independent session linkage and billing remain expressly UNASSESSED/unknown. This is an original frozen judgment, not a repair or a universal-correctness claim.
+The complete brief/revealed plan, discovery, draft, every supplied critique, final, all source maps and manifested source indexes were read after hash verification. No other admitted/live candidate files, held-out cases or tree/history scans were used. Technique paths and assignments make blinding imperfect.
+
+- **R0-N01 (NONMATERIAL, QUALIFIED_IN_FINAL):** Original mutable API page labeled JS 3.4.1; critic observed 3.5.0. Final explicitly retains both observations and bases release-specific semantics on pinned implementation/tests. Already transparently qualified; no final behavior relies on the incorrect mutable-page pin. Locator: investigator source-map S16; final critique disposition C-03.
+
+The final validly adds the conditional fixed-build/backport gate from [SQLite WAL §11](https://www.sqlite.org/wal.html), preserves exact plan/critic dispositions, and retains competing edits, tombstones, optional photos, archive and manual transfer. [Tagged Automerge conflict source](https://github.com/automerge/automerge/blob/8d7b12f8da553afbb325e37a6c66942b8dd4d994/javascript/src/implementation.ts) supports the release-specific conflict API boundary.
+
+Timing eligibility: **PARTIAL/UNKNOWN**. All three native terminal timestamps lie inside their unchanged stage/whole envelopes, but exact artifact and task-quiet completion boundaries are unavailable. Native lifetimes: 716 s, 247 s, 442 s; these are receipt lifetimes, not provider activity or billing. The initial failed setup and UNKNOWN exact T0 remain in the denominator. The conservative deadline is unchanged; there is no post-setup reset. Method compliance: **PARTIAL**. Native receipt consistency is established within the frozen captures; independent native-to-task linkage, receipt freshness and billing remain UNKNOWN. Grading resources are independent_evaluation and are not charged to candidate product.
+
+Every supported investigator-to-final meaning and every critique disposition was examined; the detailed coverage and disposition records are in assessment.json/coverage.json. All application, crash, interoperability, performance and usability validations are proposals. Upstream tests were read, not run. No deployment was required.

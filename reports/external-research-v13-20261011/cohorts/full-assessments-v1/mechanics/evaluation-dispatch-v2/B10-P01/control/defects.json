@@ -1,0 +1,51 @@
+{
+  "schema": "er13.defects.v1",
+  "arm_id": "B10-P01-control",
+  "source_final_judgment": "PASS",
+  "material_final_defects": [],
+  "findings": [
+    {
+      "defect_id": "C-STAGE-01",
+      "severity": "material_wrong",
+      "scope": "investigator source-map only; not the final",
+      "locator": "investigator/source-map.json sources[RFC9110].governing_conditions_defaults_exceptions",
+      "finding": "The investigator map reverses the ETag default strength, describing weak unless marked strong. RFC 9110 8.8.3 makes strong the default and uses W/ to mark weakness.",
+      "primary_source_ids": [
+        "P01"
+      ],
+      "final_status": "NOT_PROPAGATED",
+      "final_effect": "The critic/final maps remove that false default; the final records strength and correctly distinguishes weak comparison. This is an intermediate finding, not a material final defect."
+    },
+    {
+      "defect_id": "C-N01",
+      "severity": "nonmaterial_completeness_limit",
+      "scope": "final",
+      "locator": "final.md lines 49–56, 67, 111",
+      "finding": "The final is conservative about 304 evidence and does not expose the useful same-strong-ETag signal separately. It does not assert that strong validators lack semantics or that 304 reruns selectors. This is a limited opportunity, not a required scope loss.",
+      "primary_source_ids": [
+        "P01",
+        "P02"
+      ],
+      "final_status": "PRESENT",
+      "grade_effect": "Does not defeat source PASS."
+    },
+    {
+      "defect_id": "C-N02",
+      "severity": "nonmaterial_policy_context_limit",
+      "scope": "final",
+      "locator": "final.md lines 24, 111",
+      "finding": "Vary:* and unreproducible selecting fields are treated conservatively as comparison unavailable. Wildcard cache matching and origin revalidation are distinct; reported erratum 9185 raises a related strong-ETag mismatch case but is not verified. The explicit privacy/unavailable policy is permissible; it is not a universal HTTP impossibility theorem.",
+      "primary_source_ids": [
+        "P01",
+        "P02",
+        "P24",
+        "P25",
+        "P26"
+      ],
+      "final_status": "PRESENT",
+      "grade_effect": "No material false rejection under the stated proposal policy."
+    }
+  ],
+  "critic_dispositions_file": "coverage.json",
+  "no_adjudication_or_repair": "Original findings only; candidate files unchanged. Any dispute requires a new separate adjudication."
+}

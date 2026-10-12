@@ -1,0 +1,787 @@
+{
+  "schema": "er13.independent-primary-source-index.v1",
+  "arm_id": "B02-P01-control",
+  "research_reuse": "Evaluator-owned lookup shared across matched assigned arms; candidate source judgments were not used as authority. Each arm has separate immutable judgments.",
+  "sources": [
+    {
+      "id": "apg-combo",
+      "title": "W3C APG combobox",
+      "version_context": "Living web authoring guidance",
+      "locator": "About; manual/automatic selection; keyboard interaction; listbox and dialog popup notes",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Editable input and popup are a value-selection pattern; text editing keys remain platform standard. List/grid active-descendant keeps DOM focus in input; dialog popups move actual focus. Accepting a suggestion/default action is distinct from executing on highlight. These are comparison semantics, not native toolkit guarantees.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://www.w3.org/WAI/ARIA/apg/patterns/combobox/",
+        "resolved_url": "https://www.w3.org/WAI/ARIA/apg/patterns/combobox/",
+        "status": 200,
+        "bytes": 66608,
+        "sha256": "8dc390fbd8363d10bb3e7e1753a01fc6ba3284b533fd4fc6b32e0c2003d899db",
+        "access_utc": "2026-10-12T01:35:15.471427+00:00",
+        "text_sha256": "7b6bc3b5f53022c26842efe7010ad10e8536399f8969fedc9bccea9ae1f8c469",
+        "text_lines": 274
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "apg-dialog",
+      "title": "W3C APG modal dialog",
+      "version_context": "Living web authoring guidance",
+      "locator": "About; Keyboard Interaction; focus-return exceptions; modal-role warning",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Modal outside content is inert for all users. Focus enters, Tab cycles inside, Escape closes. Return to invoker has disappearance/workflow exceptions. Both finals use logical fallback and conditional surface choice; no native role is certified.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+        "resolved_url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+        "status": 200,
+        "bytes": 43147,
+        "sha256": "551bcc5d306ac9f213337012cfe1ce226344f4e2eff1f05f41e6711e5abf19f1",
+        "access_utc": "2026-10-12T01:35:15.451255+00:00",
+        "text_sha256": "e1a77be4a6af1cb1a3192f5236e5b9b8ce593cf51eb441cce72e2d4ac7c622ee",
+        "text_lines": 109
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "status22",
+      "title": "W3C Understanding SC 4.1.3",
+      "version_context": "WCAG 2.2 supporting, mutable informative page",
+      "locator": "Success Criterion; Intent; result-list distinction; Other uses of live regions or alerts",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Formal criterion says markup-language content; the explanatory note also discusses direct accessibility API announcements. Result-count/no-result text can be status, while the result list itself is not automatically status. Excessive alerts can be chatty. No universal debounce duration is specified.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html",
+        "resolved_url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html",
+        "status": 200,
+        "bytes": 60299,
+        "sha256": "d5a085f7be8814e4f01520db08d41d09b62491f40dc0fb6fb4941ec762cf3746",
+        "access_utc": "2026-10-12T01:35:15.459372+00:00",
+        "text_sha256": "f7dd374674dc4fee83d94d3c324a1802bd41645774257521938c88347bf8dc57",
+        "text_lines": 293
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "wcag22",
+      "title": "WCAG 2.2",
+      "version_context": "W3C Recommendation 2024-12-12, exact dated URL",
+      "locator": "SC 1.4.1, 2.1.1, 2.1.2, 2.1.4, 2.4.3, 4.1.2, 4.1.3; definitions and conformance scope",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Web standard: keyboard operation has a movement-path exception; no trap permits a documented exit; printable-character-only shortcuts need off/remap/focus-only safeguards. Color alone is insufficient. Programmatic name/state/change notification and non-focus status are relevant design constraints, not proof of desktop conformance.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+        "resolved_url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+        "status": 200,
+        "bytes": 512457,
+        "sha256": "6e3c5fe397257cae509a2fb4752b73062cf8cbeb92c2cec618989b17e4cf7057",
+        "access_utc": "2026-10-12T01:35:15.569506+00:00",
+        "text_sha256": "7848db3d28b7ae85da255e3ca5e130f08b6a3095f9370832cbc169073bd3e22e",
+        "text_lines": 2766
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "wcag2ict",
+      "title": "WCAG2ICT",
+      "version_context": "Informative W3C Group Note 2025-12-11; current URL at access",
+      "locator": "Scope/limitations; Applying SC 2.1.4 and 4.1.3; added non-markup-software note",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Non-web interpretation does not set normative requirements or suffice alone for accessibility. SC 4.1.3 added note explicitly preserves the user need for programmatic non-focus status in non-markup software through platform accessibility services. The treatment accurately identifies its informative status.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://www.w3.org/TR/wcag2ict-22/",
+        "resolved_url": "https://www.w3.org/TR/wcag2ict-22/",
+        "status": 200,
+        "bytes": 536627,
+        "sha256": "265077c096b19d21d9f6b29ce60604d1cf88f8cf4a8663312ee46490a2c9b2e7",
+        "access_utc": "2026-10-12T01:35:15.697885+00:00",
+        "text_sha256": "8dab7c1966d335a42ea0c65cb088c04f1834eea38da39fbccf17ac060e8130b2",
+        "text_lines": 2540
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "keyboard-interface",
+      "title": "W3C APG keyboard interface",
+      "version_context": "Living web authoring guidance",
+      "locator": "Persistence of focus; roving tabindex; active descendant; disabled-control focusability; shortcut conflicts",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Roving actual focus and active descendant have different trade-offs. Dynamic removal requires managed focus. Disabled controls can remain discoverable in appropriate patterns. Shortcut conflicts include AT and OS commands; a registry mechanism alone does not solve them.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/",
+        "resolved_url": "https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/",
+        "status": 200,
+        "bytes": 82438,
+        "sha256": "ab72cd7fe1d45d0b489f402b5dc7c96da37b24542e06cb666cdc2ebfedc56cc7",
+        "access_utc": "2026-10-12T01:35:15.702340+00:00",
+        "text_sha256": "73f1334659852c7646516c12aa936ce9df4f3d9b2cf1be997252ac9608fbc7ec",
+        "text_lines": 391
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "win-overview",
+      "title": "Microsoft UI Automation overview",
+      "version_context": "Mutable Microsoft Learn, not a toolkit release",
+      "locator": "Provider/client components; tree/properties/patterns/events; interoperability limits",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Provider support and control patterns expose programmatic capabilities. Custom controls need suitable support; UIA API availability is not successful reader interaction. Process/user interoperability limits are separate from this unnamed product; no target guarantee is inferred.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://learn.microsoft.com/en-us/windows/win32/winauto/uiauto-uiautomationoverview",
+        "resolved_url": "https://learn.microsoft.com/en-us/windows/win32/winauto/uiauto-uiautomationoverview",
+        "status": 200,
+        "bytes": 56737,
+        "sha256": "b3b87693346e683606d7fc795cac7cd2a71ab119a14780c9c5e085ea4c73b5fc",
+        "access_utc": "2026-10-12T01:35:15.897293+00:00",
+        "text_sha256": "9c24c63c17069b805e293a10c8a6815a192635c0eab03b748ce5ea2ea73d5201",
+        "text_lines": 113
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "win-control",
+      "title": "Microsoft UIA control types",
+      "version_context": "Mutable Microsoft Learn; updated 2025-07-14",
+      "locator": "Control Type Requisites; LocalizedControlType",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Control types carry required patterns, properties, events and tree structure. A custom type still needs descriptive patterns/properties. A generic role alone cannot establish useful speech or select the native chooser surface.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://learn.microsoft.com/en-us/windows/win32/winauto/uiauto-controltypesoverview",
+        "resolved_url": "https://learn.microsoft.com/en-us/windows/win32/winauto/uiauto-controltypesoverview",
+        "status": 200,
+        "bytes": 56234,
+        "sha256": "3f443d3ce228c80ae9dce2a630a76e782f95738bc7ff156b6004fb3e84efb5ca",
+        "access_utc": "2026-10-12T01:35:15.756758+00:00",
+        "text_sha256": "d6c1fb1c559237bd3035e4b70d9de0749d42747eeaba5c5df97f834fd699753e",
+        "text_lines": 126
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "win-best",
+      "title": "Microsoft accessibility best practices",
+      "version_context": "Mutable Microsoft Learn; updated 2025-07-14",
+      "locator": "Programmatic Access; Keyboard Navigation; Alternatives to Color",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Custom controls must expose labels, properties and appropriate events. Visible keyboard focus, respect for accessibility settings and alternatives to color matter. Application state changes need programmatic representation; announcement coalescing must not imply an inaccessible stale tree.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://learn.microsoft.com/en-us/windows/win32/winauto/accessibility-best-practices",
+        "resolved_url": "https://learn.microsoft.com/en-us/windows/win32/winauto/accessibility-best-practices",
+        "status": 200,
+        "bytes": 59286,
+        "sha256": "4a417677cc8677407aa7a9f7a9a66b9e51f7b745afd3918bc68c9999768eb657",
+        "access_utc": "2026-10-12T01:35:15.684376+00:00",
+        "text_sha256": "01fc7f55fffbb857f4ec9bdef11966c9bb308f3b36c2854bfe7a7a170d319e7a",
+        "text_lines": 142
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "atspi",
+      "title": "GNOME accessibility-stack architecture",
+      "version_context": "Mutable AT-SPI development guide",
+      "locator": "Toolkit integration and screen-reader architecture",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Toolkit objects are translated through ATK/DBus or direct DBus paths; Orca and other AT consume accessible representations. This supports a separate Linux investigation and does not establish target behavior.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://gnome.pages.gitlab.gnome.org/at-spi2-core/devel-docs/architecture.html",
+        "resolved_url": "https://gnome.pages.gitlab.gnome.org/at-spi2-core/devel-docs/architecture.html",
+        "status": 200,
+        "bytes": 15224,
+        "sha256": "2a26c1b35cb7649124b0fe2b8ebd82403467b0a0d1b4539d584a78370c60f69c",
+        "access_utc": "2026-10-12T01:35:15.892092+00:00",
+        "text_sha256": "9c7c780aeb22e412882c3b316260bbb89c0d7677c368ada091fba64c76b860b1",
+        "text_lines": 141
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "gnome",
+      "title": "GNOME developer accessibility",
+      "version_context": "Mutable developer documentation",
+      "locator": "AT-SPI D-Bus; GtkAccessible/toolkit support paragraph",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "GTK exposes accessibility for its widgets; the guidance says reasonably well rather than guaranteeing custom semantics. The proposals correctly keep actual target mapping and reader validation open.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://developer.gnome.org/documentation/guidelines/accessibility.html",
+        "resolved_url": "https://developer.gnome.org/documentation/guidelines/accessibility.html",
+        "status": 200,
+        "bytes": 34038,
+        "sha256": "ec16ff655a48bf2a41b407b7b9ef98f60626d40a0dbaffd25ddd184b60143169",
+        "access_utc": "2026-10-12T01:35:15.897332+00:00",
+        "text_sha256": "f46c9672bb5f14f32d6db80473b14e417bfc76727732543b0e70d635a01b7e55",
+        "text_lines": 164
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "orca",
+      "title": "GNOME Orca introduction",
+      "version_context": "Mutable help documentation",
+      "locator": "AT-SPI application/toolkit dependency",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Orca relies on application/toolkit AT-SPI support. Named supported frameworks are examples, not certification of an unnamed custom chooser.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://help.gnome.org/orca/introduction.html",
+        "resolved_url": "https://help.gnome.org/orca/introduction.html",
+        "status": 200,
+        "bytes": 13331,
+        "sha256": "03bdaa57e1a3ac781d0e8ea4ada85a66b811e353504d064bfc47b205ef77ef5e",
+        "access_utc": "2026-10-12T01:35:15.948326+00:00",
+        "text_sha256": "3aa039a0dc4eb523b67a4bc8c24dad1271e985ef1e9bb129316cca02dadf158b",
+        "text_lines": 117
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "atspi-state",
+      "title": "libatspi accessible state API",
+      "version_context": "API 2.0; library 2.62.0.1 observed",
+      "locator": "Accessible.get_state_set; related name/description/role/selection methods",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "The accessible object API exposes current state; name, description, role and selection are separately represented. The documentation supplies mechanism-level feasibility, not a speech oracle or a target toolkit choice.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://gnome.pages.gitlab.gnome.org/at-spi2-core/libatspi/method.Accessible.get_state_set.html",
+        "resolved_url": "https://gnome.pages.gitlab.gnome.org/at-spi2-core/libatspi/method.Accessible.get_state_set.html",
+        "status": 200,
+        "bytes": 12303,
+        "sha256": "0a2245bdf0e8bdcee68e30c9dee6a93b60065d8ad2ca075bc2dd942f135db984",
+        "access_utc": "2026-10-12T01:38:48.722028+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "win-notification",
+      "title": "UIA NotificationProcessing",
+      "version_context": "Microsoft Learn updated 2025-06-09; base minimum Windows 10 1709",
+      "locator": "MostRecent; CurrentThenMostRecent; requirements; newer important variant exception",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Windows offers processing hints for retaining recent notifications and allowing current speech to finish. The important current-then-recent variant is introduced in build 26100. This independently confirms a possible platform mechanism; neither candidate claims it or needs to adopt it without target/version data.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://learn.microsoft.com/en-us/windows/win32/api/uiautomationcore/ne-uiautomationcore-notificationprocessing",
+        "resolved_url": "https://learn.microsoft.com/en-us/windows/win32/api/uiautomationcore/ne-uiautomationcore-notificationprocessing",
+        "status": 200,
+        "bytes": 52746,
+        "sha256": "3e0af897cd9e43d6349096e2b8f27edd3abf82e8b30071c33217847378d26563",
+        "access_utc": "2026-10-12T01:38:48.507830+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "vsc-ui",
+      "title": "VS Code command-palette documentation",
+      "version_context": "Mutable current product documentation",
+      "locator": "Command Palette section",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Windows/Linux Ctrl+Shift+P is a VS Code default and commands expose shortcut information. Both arms use it only as a precedent; they preserve target conflict review and keyboard-accessible opening without assigning that chord.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://code.visualstudio.com/docs/editing/getting-started/userinterface",
+        "resolved_url": "https://code.visualstudio.com/docs/editing/getting-started/userinterface",
+        "status": 200,
+        "bytes": 220731,
+        "sha256": "9812f0bec316c7b229cc528eb73189330b151c295f6fccd164ede70e33cc4514",
+        "access_utc": "2026-10-12T01:35:16.153422+00:00",
+        "text_sha256": "d6cf7c27c35156a809c012345b4980f01da1d316b72a1c3ac29f5514ef29fc0a",
+        "text_lines": 885
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "vsc-api",
+      "title": "VS Code QuickPick public API",
+      "version_context": "Mutable API documentation, not pinned to comparator source commits",
+      "locator": "QuickPick and QuickPickOptions: items, events, description/detail, matching defaults",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Description/detail matching are separate flags defaulting false. Item replacement, active/selected state and input changes are represented separately. The API is not a general unavailable-reason contract or proof of speech behavior.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://code.visualstudio.com/api/references/vscode-api",
+        "resolved_url": "https://code.visualstudio.com/api/references/vscode-api",
+        "status": 200,
+        "bytes": 2464209,
+        "sha256": "9e40f9a2b459ace849f895c9ef32d7abcce8c4f068a5b7af36e401c2a49196e8",
+        "access_utc": "2026-10-12T01:35:17.414437+00:00",
+        "text_sha256": "fdb93425306a5780e0901a40a9017cf07421f453b25b58d670c5cb9c6f4e247f",
+        "text_lines": 15480
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "vsc-commands",
+      "title": "VS Code extension commands guide",
+      "version_context": "Mutable documentation; explicit pre-1.74 activation exception",
+      "locator": "Registering command; user-facing contribution; activation note",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Manifest command metadata and runtime registerCommand handlers are distinct. Since 1.74 declared user-facing commands auto-activate; earlier targets require onCommand activation entries. Action logic is executable but is not extension-authored chooser UI.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://code.visualstudio.com/api/extension-guides/command/",
+        "resolved_url": "https://code.visualstudio.com/api/extension-guides/command/",
+        "status": 200,
+        "bytes": 100702,
+        "sha256": "003fbc89f8f9dd044b8293be5370564129eb47c29ca52a8af9a5bdfb59188d15",
+        "access_utc": "2026-10-12T01:35:16.154243+00:00",
+        "text_sha256": "c73bed9b73c28c4b3193516f357321f81ad69f9ea8ac1147a8a251583a045e57",
+        "text_lines": 388
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "vsc-keys",
+      "title": "VS Code keybinding rules",
+      "version_context": "Mutable product documentation",
+      "locator": "Evaluation order; when-clause contexts; layout handling",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Bindings are context-scoped, and evaluation accepts the first matching rule from bottom to top. This demonstrates why a target inventory is needed and why an arbitrary borrowed shortcut can shadow existing actions.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://code.visualstudio.com/docs/configure/keybindings",
+        "resolved_url": "https://code.visualstudio.com/docs/configure/keybindings",
+        "status": 200,
+        "bytes": 171762,
+        "sha256": "63747ff0d6db119a9c508ad890f6bee579abbcfd1da43881665f776a04500bd2",
+        "access_utc": "2026-10-12T01:35:16.207545+00:00",
+        "text_sha256": "8c859f47f7d343ba5c61766d5c37c9795301cc78881be3e3872841a6118fe006",
+        "text_lines": 741
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "command-registry",
+      "title": "VS Code command registry definition",
+      "version_context": "Commit 9b463ccc1d17131640406ee961b4724c0ec75433",
+      "locator": "Raw registerCommand/getCommand 67-145",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Registration creates a disposable; disposal removes the registered handler, and lookup can return absent. The examined registry emits registration but no corresponding removal event in that path. Both finals correctly require inspecting/adding a target lifecycle event rather than claiming a universal comparator refresh API.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/microsoft/vscode/9b463ccc1d17131640406ee961b4724c0ec75433/src/vs/platform/commands/common/commands.ts",
+        "resolved_url": "https://raw.githubusercontent.com/microsoft/vscode/9b463ccc1d17131640406ee961b4724c0ec75433/src/vs/platform/commands/common/commands.ts",
+        "status": 200,
+        "bytes": 5143,
+        "sha256": "61b0d5d3ef6c441f193e1fe8a17dd6628016e073d8036a0aafc3999a41322e5a",
+        "access_utc": "2026-10-12T01:33:36.093634+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "command-bridge",
+      "title": "VS Code extension command caller",
+      "version_context": "Commit 9b463ccc1d17131640406ee961b4724c0ec75433",
+      "locator": "Raw register/unregister 57-70 and bridge disposal 33-36",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Host registration forwards command behavior to the extension proxy; unregister disposes that registration. This is concrete lifecycle/caller evidence for handler ownership, not a target live-picker result.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/microsoft/vscode/9b463ccc1d17131640406ee961b4724c0ec75433/src/vs/workbench/api/browser/mainThreadCommands.ts",
+        "resolved_url": "https://raw.githubusercontent.com/microsoft/vscode/9b463ccc1d17131640406ee961b4724c0ec75433/src/vs/workbench/api/browser/mainThreadCommands.ts",
+        "status": 200,
+        "bytes": 4623,
+        "sha256": "59c2720d8d196a6afd844d6553d6f28bfa7966c1bc05a78493372b5d54e7ab57",
+        "access_utc": "2026-10-12T01:33:36.202868+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "damerau-doc",
+      "title": "RapidFuzz Damerau-Levenshtein",
+      "version_context": "Official documentation reports 3.14.6",
+      "locator": "distance definition, cutoffs, CA/ABC example",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Unrestricted Damerau-Levenshtein is distinct from plain Levenshtein and has a defined cutoff contract. It does not provide empirical support for the treatment four-character threshold or a guarantee of useful short-token recall.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://rapidfuzz.github.io/RapidFuzz/Usage/distance/DamerauLevenshtein.html",
+        "resolved_url": "https://rapidfuzz.github.io/RapidFuzz/Usage/distance/DamerauLevenshtein.html",
+        "status": 200,
+        "bytes": 30558,
+        "sha256": "779c2ecb46221e6031ba649db14a3e4c59f6a92b3c3d2a9fe9ec5ad79997c796",
+        "access_utc": "2026-10-12T01:38:48.132562+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "damerau-code",
+      "title": "RapidFuzz Damerau-Levenshtein implementation",
+      "version_context": "Tag v3.14.6, exact first-party source path",
+      "locator": "Raw recurrence 27-45",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "The inspected recurrence includes adjacent transposition paths in addition to insertion/deletion/substitution. No downloaded code or benchmark was run. This independently supports the algorithmic distinction in treatment, not its proposed inventory policy.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/rapidfuzz/RapidFuzz/v3.14.6/src/rapidfuzz/distance/DamerauLevenshtein_py.py",
+        "resolved_url": "https://raw.githubusercontent.com/rapidfuzz/RapidFuzz/v3.14.6/src/rapidfuzz/distance/DamerauLevenshtein_py.py",
+        "status": 200,
+        "bytes": 6591,
+        "sha256": "fb374c338befef40e4e551c085b8de0794e939debe6346c54b4b986d2041f459",
+        "access_utc": "2026-10-12T01:38:48.242711+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "levenshtein-doc",
+      "title": "RapidFuzz Levenshtein definition",
+      "version_context": "Official documentation reports 3.14.6",
+      "locator": "Insertion/deletion/substitution definition and uniform weights",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Plain uniform Levenshtein uses insertion/deletion/substitution; a simple adjacent swap is not one such operation. Neither alternative proves a winning search ranking without the target corpus.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://rapidfuzz.github.io/RapidFuzz/Usage/distance/Levenshtein.html",
+        "resolved_url": "https://rapidfuzz.github.io/RapidFuzz/Usage/distance/Levenshtein.html",
+        "status": 200,
+        "bytes": 57287,
+        "sha256": "abcb3d419911dd05b15107ab9b1b4482f8b4028715c24624231b3812709b7ead",
+        "access_utc": "2026-10-12T01:38:48.333131+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "apg-listbox",
+      "title": "W3C APG listbox",
+      "version_context": "Living web authoring guidance",
+      "locator": "About; keyboard notes; focus versus selection",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Option names are flat speech units. Long names hinder perception and embedded controls cannot be operated through listbox interaction. Focus, selection and command invocation are separate. This supports concise command rows and alternatives for richer interactive content.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://www.w3.org/WAI/ARIA/apg/patterns/listbox/",
+        "resolved_url": "https://www.w3.org/WAI/ARIA/apg/patterns/listbox/",
+        "status": 200,
+        "bytes": 52534,
+        "sha256": "133ebdc0027cdaa5fa2dafc5c608ae6ae4264c1f5501f687d44393e924cb35d8",
+        "access_utc": "2026-10-12T01:35:15.464401+00:00",
+        "text_sha256": "0982b821b63d21eed17bbcd0f904f7d1edf123a150e3bdfeaa560fac540b348d",
+        "text_lines": 167
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "fuse",
+      "title": "Fuse.js approximate search",
+      "version_context": "Mutable first-party library guide, no release pin",
+      "locator": "Bitap; threshold/location/distance defaults; ignoreLocation",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "The guide gives threshold 0.6, location 0 and distance 100, creating about a 60-character position window; ignoreLocation changes that. Its modified Bitap supports approximate matching. This is a bounded configuration warning, not evidence that a tuned command inventory has passed.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://www.fusejs.io/fuzzy-search.html",
+        "resolved_url": "https://www.fusejs.io/fuzzy-search.html",
+        "status": 200,
+        "bytes": 33916,
+        "sha256": "8feea7cabd28b7243c0cea37e7f9bfd63cf6d2f8c579657aadac01a66ef76fb6",
+        "access_utc": "2026-10-12T01:35:15.971783+00:00",
+        "text_sha256": "644ca2ade75df516a74c29c7afe081200ed7c46e4e3b473b6cdfa1dabd9684f5",
+        "text_lines": 96
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "vsc-at",
+      "title": "VS Code accessibility documentation",
+      "version_context": "Mutable current product documentation",
+      "locator": "Screen readers; keyboard navigation; Linux support notes",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "The tested-reader list includes NVDA/JAWS on Windows and Orca on Linux. Runtime/accessibility settings affect behavior. This is a comparator support matrix, not a target reader result.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://code.visualstudio.com/docs/configure/accessibility/accessibility",
+        "resolved_url": "https://code.visualstudio.com/docs/configure/accessibility/accessibility",
+        "status": 200,
+        "bytes": 143711,
+        "sha256": "94d1655add6d7e8853977e99a8a9faddc834aef69a9ea922974769a05c8ecab6",
+        "access_utc": "2026-10-12T01:35:18.093421+00:00",
+        "text_sha256": "bcce0868ecded5cee72bff9625a065c606e3a64cad6237eb7bcb724904910b4e",
+        "text_lines": 610
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "c-provider",
+      "title": "VS Code command provider",
+      "version_context": "Commit 645f29cc3176500b4b5762ba887cf2a7f0ffdf2c, release tag 1.137.0 independently verified",
+      "locator": "Raw lines 49-94, 119-142, 226-264, 273-300",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "One constructor promise races extension registration against 800 ms; subsequent pick requests await it. Global MenuItemAction entries are filtered by enabled state and category-prefixed. The provider alone does not establish open-picker add/remove subscription. Show All Commands uses Ctrl/Cmd+Shift+P except Firefox and F1 secondary.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/microsoft/vscode/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c/src/vs/workbench/contrib/quickaccess/browser/commandsQuickAccess.ts",
+        "resolved_url": "https://raw.githubusercontent.com/microsoft/vscode/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c/src/vs/workbench/contrib/quickaccess/browser/commandsQuickAccess.ts",
+        "status": 200,
+        "bytes": 14555,
+        "sha256": "baced4ee573ba6a418d06b99cad0e367369dea05db495310ea00d41b11da4881",
+        "access_utc": "2026-10-12T01:32:21.392180+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "c-search",
+      "title": "VS Code command search and accept",
+      "version_context": "Commit 645f29cc3176500b4b5762ba887cf2a7f0ffdf2c",
+      "locator": "Raw lines 32-56, 77-180, 280-324, 342-351",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Label/alias contiguous/word matches precede exact-ID and unmatched-query TF-IDF fallback (length at least 3, score strictly above 0.5, at most 5). Duplicate labels get ID descriptions; MRU ranking and keybinding accessibility labels are explicit. Handler execution is in acceptance, not highlight.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/microsoft/vscode/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c/src/vs/platform/quickinput/browser/commandsQuickAccess.ts",
+        "resolved_url": "https://raw.githubusercontent.com/microsoft/vscode/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c/src/vs/platform/quickinput/browser/commandsQuickAccess.ts",
+        "status": 200,
+        "bytes": 19806,
+        "sha256": "4af1752ab1fe86bee10eb21cf9ec3e150b478f3b454973bebc3c05cac415087a",
+        "access_utc": "2026-10-12T01:32:21.406858+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "c-tests",
+      "title": "VS Code quick-access tests",
+      "version_context": "Commit 645f29cc3176500b4b5762ba887cf2a7f0ffdf2c",
+      "locator": "Raw registry-when test 145 onward; provider cancellation tests; restoration test 407-452",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Assertions cover provider-context filtering, cancellation/disposal and active-editor/order/selection restoration after transient editors. They are inspected tests, not tests executed by this grader, and not screen-reader or live extension lifecycle tests.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/microsoft/vscode/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c/src/vs/workbench/test/browser/quickAccess.test.ts",
+        "resolved_url": "https://raw.githubusercontent.com/microsoft/vscode/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c/src/vs/workbench/test/browser/quickAccess.test.ts",
+        "status": 200,
+        "bytes": 22044,
+        "sha256": "0123fcd9922905ae6b2675aaebb521b6b6e98feffc03eed87eb3c130f60e3d42",
+        "access_utc": "2026-10-12T01:32:21.446862+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "c-package",
+      "title": "VS Code package metadata",
+      "version_context": "Commit 645f29cc3176500b4b5762ba887cf2a7f0ffdf2c",
+      "locator": "Top-level version/license",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Package version is 1.137.0 and license is MIT. This identifies the comparator snapshot; no target version follows.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/microsoft/vscode/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c/package.json",
+        "resolved_url": "https://raw.githubusercontent.com/microsoft/vscode/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c/package.json",
+        "status": 200,
+        "bytes": 15375,
+        "sha256": "4d71f4ec18c8d6a8ee419b9e404b9571210a62112a8d6098bdd35ce56f0e2d6f",
+        "access_utc": "2026-10-12T01:32:21.401480+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "c-tag",
+      "title": "VS Code release ref",
+      "version_context": "Exact public refs/tags/1.137.0 API response",
+      "locator": "object.sha/type",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "The tag resolves to commit 645f29cc3176500b4b5762ba887cf2a7f0ffdf2c. This independently checks the control release identity without invoking Git.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://api.github.com/repos/microsoft/vscode/git/ref/tags/1.137.0",
+        "resolved_url": "https://api.github.com/repos/microsoft/vscode/git/ref/tags/1.137.0",
+        "status": 200,
+        "bytes": 343,
+        "sha256": "4be2c7432284e5b052ad3312c75b8307bd24809d557aff2cdc13093c2530278b",
+        "access_utc": "2026-10-12T01:33:36.328833+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "c-commit",
+      "title": "VS Code pinned commit identity",
+      "version_context": "Commit 645f29cc3176500b4b5762ba887cf2a7f0ffdf2c; timestamp 2026-09-08",
+      "locator": "sha and commit timestamp/message",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "The exact full commit exists; package and tag independently tie it to 1.137.0. Commit verification does not prove any target behavior.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://api.github.com/repos/microsoft/vscode/commits/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c",
+        "resolved_url": "https://api.github.com/repos/microsoft/vscode/commits/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c",
+        "status": 200,
+        "bytes": 35703,
+        "sha256": "8d17faab59600e8312e80b1cf794f30d7a30878522c0073fcfcdc5f3be256c20",
+        "access_utc": "2026-10-12T01:32:21.663700+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "picker-caller",
+      "title": "VS Code picker acceptance/cancellation caller",
+      "version_context": "Commit 645f29cc3176500b4b5762ba887cf2a7f0ffdf2c",
+      "locator": "Raw provide 146-180; value/accept listeners 335-360",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "The caller cancels prior pick requests, disables generic filtering when provider controls ranking, listens to input changes and dispatches the selected item accept handler. This independently supports the control search/accept explanation and bounds it to this comparator.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/microsoft/vscode/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c/src/vs/platform/quickinput/browser/pickerQuickAccess.ts",
+        "resolved_url": "https://raw.githubusercontent.com/microsoft/vscode/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c/src/vs/platform/quickinput/browser/pickerQuickAccess.ts",
+        "status": 200,
+        "bytes": 14375,
+        "sha256": "5e1a1ae8096b4bcd5b4002fe7fc5e963e42630e81217e1e540c2fba1eb4b0dfe",
+        "access_utc": "2026-10-12T01:33:36.282470+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "editor-restoration",
+      "title": "VS Code PickerEditorState implementation",
+      "version_context": "Commit 645f29cc3176500b4b5762ba887cf2a7f0ffdf2c",
+      "locator": "Raw set/openTransientEditor/restore 58-125",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "The implementation stores editor/group/view state and reopens its saved editor during restoration. Its tests do not establish target closure fallback or scroll/AT guarantees. The control appropriately proposes guarding destination validity rather than blindly inheriting comparator behavior.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/microsoft/vscode/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c/src/vs/workbench/browser/quickaccess.ts",
+        "resolved_url": "https://raw.githubusercontent.com/microsoft/vscode/645f29cc3176500b4b5762ba887cf2a7f0ffdf2c/src/vs/workbench/browser/quickaccess.ts",
+        "status": 200,
+        "bytes": 5261,
+        "sha256": "d7babb3efa906bddc51893c7bd85c0be4f40daef2160bfaac87edba734080539",
+        "access_utc": "2026-10-12T01:33:36.303440+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "visibility-issue",
+      "title": "VS Code missing-command issue 268450",
+      "version_context": "Report 2025-09-26, VS Code 1.104.2",
+      "locator": "Issue body: setup-installed precondition and absent palette command",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "The report identifies a useful command excluded after chat setup. The linked fix broadens its predicate; the lesson is visibility policy and discoverability, not a universal command-state rule.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://api.github.com/repos/microsoft/vscode/issues/268450",
+        "resolved_url": "https://api.github.com/repos/microsoft/vscode/issues/268450",
+        "status": 200,
+        "bytes": 8642,
+        "sha256": "308b8821cddb5dc1a37b54c5f2e7c3747d4925191e9a9089cf4b3dfcee34d05e",
+        "access_utc": "2026-10-12T01:33:36.184736+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "visibility-pr",
+      "title": "VS Code PR 268462",
+      "version_context": "Merged 2025-10-22; 0734942d32769ea1e77e42e056d6f16579e78fd6",
+      "locator": "Title/body; merged_at; linked issue",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "PR explicitly fixes 268450 and widens command visibility. Status and merge identity independently match the control description.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://api.github.com/repos/microsoft/vscode/pulls/268462",
+        "resolved_url": "https://api.github.com/repos/microsoft/vscode/pulls/268462",
+        "status": 200,
+        "bytes": 21314,
+        "sha256": "0e1e76a4a85c78d3f648413e2d5212a4eb2bfacc64ce6b08a81d607bc4b0fd31",
+        "access_utc": "2026-10-12T01:33:36.432394+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "visibility-files",
+      "title": "VS Code visibility-fix diff",
+      "version_context": "Exact PR 268462 changed-file response",
+      "locator": "chatSetup.ts precondition hunk",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "The patch removes Setup.installed.negate from the conjunction while retaining Setup.hidden.negate. This checks actual governing condition rather than merely trusting the PR title.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://api.github.com/repos/microsoft/vscode/pulls/268462/files",
+        "resolved_url": "https://api.github.com/repos/microsoft/vscode/pulls/268462/files",
+        "status": 200,
+        "bytes": 1217,
+        "sha256": "cd731a6b8f50ac4344d6f4121c458e1766e100be7c96852b406c0b3e0cc38274",
+        "access_utc": "2026-10-12T01:33:36.232381+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "release106",
+      "title": "VS Code 1.106 release notes",
+      "version_context": "Release date 2025-11-12, October 2025 edition",
+      "locator": "Release header and contribution entry for PR 268462",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "The contribution list includes the visibility PR. This supports the limited release trace, without claiming a broader regression oracle.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://code.visualstudio.com/updates/v1_106",
+        "resolved_url": "https://code.visualstudio.com/updates/v1_106",
+        "status": 200,
+        "bytes": 200693,
+        "sha256": "d7ecf2882807dc3f941107727f43cd89ac6fcf35f5997ee62b4f746a0dae9339",
+        "access_utc": "2026-10-12T01:35:16.747452+00:00",
+        "text_sha256": "ae61c732103aa6d486c31fbcc0e658478682849b3dc368af78d189cbbacf88f8",
+        "text_lines": 799
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "obsidian-types",
+      "title": "Obsidian command declarations",
+      "version_context": "Commit 9abd9605ce081383674aae1ed111c456edde0688, API types package 1.14.4",
+      "locator": "Raw Command 2826 onward; checkCallback 2877-2908; editor callbacks; Plugin add/remove 7189-7197",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "False/undefined checking hides the command; checking=true must not perform the action, while checking=false performs it. Editor callbacks are scoped and override generic callbacks. Manual removeCommand exists for dynamic registration. This does not specify live chooser updates or unavailable reasons.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-api/9abd9605ce081383674aae1ed111c456edde0688/obsidian.d.ts",
+        "resolved_url": "https://raw.githubusercontent.com/obsidianmd/obsidian-api/9abd9605ce081383674aae1ed111c456edde0688/obsidian.d.ts",
+        "status": 200,
+        "bytes": 306430,
+        "sha256": "97c86417c893db691e401fdffd9026e348dc96da6bfcfa5d49a301d7fe7542a0",
+        "access_utc": "2026-10-12T01:32:21.504909+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "obsidian-package",
+      "title": "Obsidian API package identity",
+      "version_context": "Commit 9abd9605ce081383674aae1ed111c456edde0688",
+      "locator": "Top-level version, types and license",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "Version is 1.14.4, types path obsidian.d.ts, MIT license. This is the types package rather than desktop runtime version. The earlier floating 1.13.2 observation is not independently reconstructible from the later branch head.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-api/9abd9605ce081383674aae1ed111c456edde0688/package.json",
+        "resolved_url": "https://raw.githubusercontent.com/obsidianmd/obsidian-api/9abd9605ce081383674aae1ed111c456edde0688/package.json",
+        "status": 200,
+        "bytes": 612,
+        "sha256": "327e9c193b0e70e9fc1dcc9d3d85e916037f04606a4fadb53639be318161e41e",
+        "access_utc": "2026-10-12T01:32:21.502890+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    },
+    {
+      "id": "obsidian-floating-package",
+      "title": "Obsidian current floating package",
+      "version_context": "Mutable master at independent access",
+      "locator": "Top-level version",
+      "operation": "Independent exact-URL primary-document/code/API retrieval and relevant surrounding-context inspection; no product execution",
+      "observation_and_applicability": "The independently retrieved branch package is 1.14.4. This confirms later observation only; it cannot retrospectively certify the investigator floating-branch 1.13.2 capture.",
+      "coverage": "COMPLETE",
+      "retrieval": {
+        "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-api/master/package.json",
+        "resolved_url": "https://raw.githubusercontent.com/obsidianmd/obsidian-api/master/package.json",
+        "status": 200,
+        "bytes": 612,
+        "sha256": "327e9c193b0e70e9fc1dcc9d3d85e916037f04606a4fadb53639be318161e41e",
+        "access_utc": "2026-10-12T01:38:48.798210+00:00"
+      },
+      "public_source_notice": "First-party material; copyright/license remains with source. Microsoft/Obsidian/RapidFuzz code declares MIT where inspected; W3C material subject to W3C document/WAI use terms. No source corpus or raw native transcript republished."
+    }
+  ],
+  "locator_note": "Code locators here are raw file lines/symbols. Candidate GitHub rendered-page offsets are not silently treated as raw lines. Living-page locators are headings/semantic sections.",
+  "nonpublic_fix_boundary": null
+}

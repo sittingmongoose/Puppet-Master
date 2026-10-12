@@ -1,0 +1,128 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "B02-P01-treatment",
+  "material_remaining_final_defects_found": 0,
+  "findings": [
+    {
+      "id": "T-E01",
+      "dimension": "source facts",
+      "severity": "MATERIAL_WRONG_IN_INVESTIGATOR",
+      "status": "CORRECTED_BEFORE_FINAL",
+      "locator": "investigator/discovery.md, refresh discussion; source-map S-VSCODE-REFRESH-PR; critic C-01",
+      "finding": "The described reload method/tests are not established by the exact PR/commit pointer. Independent primary lookup confirms the critic withdrawal. The final quarantines the ID and does not rely on that alleged patch; the supported live-refresh proposal is preserved.",
+      "sources": [
+        "refresh-pr",
+        "refresh-commit",
+        "command-registry",
+        "command-bridge"
+      ]
+    },
+    {
+      "id": "T-L01",
+      "dimension": "source locators",
+      "severity": "NONMATERIAL",
+      "status": "RENDERED_VERSUS_RAW_CONVENTION",
+      "locator": "S-VSCODE-QUICKINPUT-TESTS investigator and critic locators",
+      "finding": "The critic changes the rendered-page locator, but it is not portable raw numbering. Independently inspected raw tests are 528-575 (scroll), 577-598 (selected replacement), and 600-616 (active event). Test substance is supported.",
+      "sources": [
+        "t-tests"
+      ]
+    },
+    {
+      "id": "T-V01",
+      "dimension": "validation/proposal precision",
+      "severity": "NONMATERIAL_LIMITATION",
+      "status": "PRESENT_FINAL",
+      "locator": "final.md, Interaction and announcement behavior versus preserved active-ID lifecycle",
+      "finding": "Settled speech refers to the top candidate while lifecycle refresh preserves an existing active ID. Their relationship is not fully specified when ranking and preserved activity diverge. The final separately requires active-row and mutation speech checks; no executed mismatch or material behavior guarantee is claimed."
+    },
+    {
+      "id": "T-S01",
+      "dimension": "search applicability",
+      "severity": "NONMATERIAL_EXPLICIT_LIMITATION",
+      "status": "PRESENT_AND_TESTED_PROSPECTIVELY",
+      "locator": "final.md, Search alternatives and proposed keyboard tests",
+      "finding": "The proposed distance-one fallback excludes 1-3 character tokens; short typo recovery therefore depends on aliases/other tiers and actual corpus results. This boundary is explicit, empirical policy is not claimed as validated, and short cases are included in proposed validation.",
+      "sources": [
+        "damerau-doc",
+        "damerau-code",
+        "levenshtein-doc"
+      ]
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "C-01",
+      "original_classification": "material wrong",
+      "independent_finding": "Confirmed: PR 281303 is an exclude-settings toggle and exact commit is a merge, not the described refresh patch.",
+      "final_disposition": "REJECT source as evidence; retain original ID quarantined. Live-refresh proposal survives on brief plus inspected registration/disposal mechanisms.",
+      "final_locator": "Evidence and executed status; source-map S-VSCODE-REFRESH-PR",
+      "sources": [
+        "refresh-pr",
+        "refresh-commit",
+        "command-registry",
+        "command-bridge"
+      ]
+    },
+    {
+      "id": "C-02",
+      "original_classification": "material incomplete",
+      "independent_finding": "Valid event-policy clarification: count coalescing alone cannot prove absence of active-item chatter; comparator tests show item replacement can emit active changes. No runtime chatter was demonstrated and the original draft already required quiet speech.",
+      "final_disposition": "AMEND: settled-query current count/candidate output, intentional-navigation announcements, stale-update suppression, separate reader tests.",
+      "final_locator": "Interaction and announcement behavior; Proposed validation",
+      "sources": [
+        "t-tests",
+        "status21",
+        "keyboard-interface",
+        "win-notification"
+      ]
+    },
+    {
+      "id": "C-03",
+      "original_classification": "minor locator/wording",
+      "independent_finding": "Tests genuinely cover scroll/item replacement. Recorded rendered-page offsets are not raw source lines; independent raw locators are supplied in the primary index. No semantic rejection depends on the offsets.",
+      "final_disposition": "AMEND locator in source map; retain control-tests versus AT-tests distinction.",
+      "final_locator": "source-map S-VSCODE-QUICKINPUT-TESTS; Evidence and executed status",
+      "sources": [
+        "t-tests"
+      ]
+    },
+    {
+      "id": "C-04",
+      "original_classification": "minor locator/wording",
+      "independent_finding": "Surface containment and focus ownership are distinct; reusing a host surface is an implementation choice rather than a separate focus mechanism.",
+      "final_disposition": "AMEND into separate surface and focus comparisons.",
+      "final_locator": "Interaction and announcement behavior",
+      "sources": [
+        "apg-combo",
+        "apg-dialog",
+        "keyboard-interface"
+      ]
+    },
+    {
+      "id": "C-05",
+      "original_classification": "minor locator/wording",
+      "independent_finding": "Four-character threshold is proposed policy, not source-established recall. The limitation for short labels is real and explicitly retained.",
+      "final_disposition": "ACCEPT boundary and add short-token typo/false-positive cases; no claim of universal typo recovery.",
+      "final_locator": "Search alternatives; Proposed validation",
+      "sources": [
+        "damerau-doc",
+        "damerau-code",
+        "levenshtein-doc"
+      ]
+    },
+    {
+      "id": "C-06",
+      "original_classification": "honestly unresolved external input",
+      "independent_finding": "Correct external unknown; no target behavior fabricated.",
+      "final_disposition": "RETAIN uncertainty with explicit owner questions; proposed tests remain unrun.",
+      "final_locator": "Owner decisions before implementation; Evidence and executed status",
+      "sources": [
+        "win-overview",
+        "gnome",
+        "command-registry"
+      ]
+    }
+  ],
+  "interpretation": "Known earlier material errors remain errors of their original stage. A supported final withdrawal/correction does not retroactively change them. Process/telemetry failures are separate from source quality."
+}

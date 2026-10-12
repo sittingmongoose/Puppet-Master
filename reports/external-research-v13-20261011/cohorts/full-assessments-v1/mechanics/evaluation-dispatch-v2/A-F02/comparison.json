@@ -1,0 +1,111 @@
+{
+  "schema": "er13.separate-post-freeze-comparison.v1",
+  "assignment_id": "A-F02",
+  "written_utc": "2026-10-12T01:55:21.312593+00:00",
+  "original_output_manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/manifest.json",
+  "original_output_manifest_sha256": "e8688ef0621cea0079d16e2f2fe2dc1c43a81e2b5c98d6840623d4b125fc5872",
+  "originals_reverified_unchanged": true,
+  "original_assigned_denominator": 4,
+  "cells": [
+    {
+      "arm_id": "A-F02-R0",
+      "frozen_source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "delivery": "COMPLETE",
+      "final_present": true,
+      "time_eligibility": "ELIGIBLE_BY_FROZEN_NATIVE_TERMINAL_MARKERS",
+      "native_final_terminal_proxy_seconds": 1910.056,
+      "method_compliance": "PARTIAL",
+      "native_task_linkage": "UNKNOWN",
+      "resource_billing": "UNKNOWN",
+      "original_arm_manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/manifest.json",
+      "original_arm_manifest_sha256": "7f2fa60c3a7dc91ef30b4fe2cf67369615907599c306e5af5b9d72cffeb0a06a"
+    },
+    {
+      "arm_id": "A-F02-A1",
+      "frozen_source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "delivery": "COMPLETE",
+      "final_present": true,
+      "time_eligibility": "ELIGIBLE_BY_FROZEN_NATIVE_TERMINAL_MARKERS",
+      "native_final_terminal_proxy_seconds": 2829.942,
+      "method_compliance": "PARTIAL",
+      "native_task_linkage": "UNKNOWN",
+      "resource_billing": "UNKNOWN",
+      "original_arm_manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/manifest.json",
+      "original_arm_manifest_sha256": "be1e0238ff23fe8577e0272db74af502b45c3e2370807dad3177d61774a7184a"
+    },
+    {
+      "arm_id": "A-F02-A8",
+      "frozen_source_judgment": "UNASSESSED",
+      "coverage": "PARTIAL",
+      "delivery": "UNASSESSED",
+      "final_present": false,
+      "time_eligibility": "INELIGIBLE_ORIGINAL_STAGE_CAP",
+      "native_final_terminal_proxy_seconds": null,
+      "method_compliance": "PARTIAL",
+      "native_task_linkage": "UNKNOWN",
+      "resource_billing": "UNKNOWN",
+      "original_arm_manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/manifest.json",
+      "original_arm_manifest_sha256": "3df00a3716188d76c2964f78a1f854cab6bab631b4659c876418e997855c09d6"
+    },
+    {
+      "arm_id": "A-F02-A1_A8",
+      "frozen_source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "delivery": "COMPLETE",
+      "final_present": true,
+      "time_eligibility": "ELIGIBLE_BY_FROZEN_NATIVE_TERMINAL_MARKERS",
+      "native_final_terminal_proxy_seconds": 2778.269,
+      "method_compliance": "PARTIAL",
+      "native_task_linkage": "UNKNOWN",
+      "resource_billing": "UNKNOWN",
+      "original_arm_manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1_A8/manifest.json",
+      "original_arm_manifest_sha256": "29a82dda6b2cf50c871ee4cebe021e1b05f3eba504ec782e73caa4e6cf9e3da9"
+    }
+  ],
+  "observed_complete_final_count": 3,
+  "observed_finite_source_passing_final_count": 2,
+  "missing_cell_not_scored_as_pass_or_zero_cost": true,
+  "factorial": {
+    "A1_at_A8_absent": {
+      "raw_native_marker_difference_seconds": 919.886,
+      "quality_comparable": false,
+      "interpretation": "R0 is source FAIL and A1 source PASS; this is not equal-quality latency evidence."
+    },
+    "A8_at_A1_present": {
+      "raw_native_marker_difference_seconds": -51.673,
+      "raw_percent_difference": -1.826,
+      "interpretation": "About52seconds earlier final native marker in the finite source-PASS cell. Exact scientific completion/queue/activity are unknown, method conformance is not established, and one case cannot establish savings/non-inferiority."
+    },
+    "A8_at_A1_absent": {
+      "estimate": "UNASSESSED",
+      "reason": "Original A8 final missing; late critic terminal is not successful final latency."
+    },
+    "A1_at_A8_present": {
+      "estimate": "UNASSESSED",
+      "reason": "Original A8 final missing."
+    },
+    "interaction": {
+      "estimate": "UNASSESSED",
+      "reason": "Missing A8 outcome; no imputation or double-counted shared control."
+    }
+  },
+  "native_goal_window_proxies": {
+    "present_receipt_intervals": 11,
+    "sum_seconds": 8010.0,
+    "union_seconds": 2652.0,
+    "overlapping_window_seconds": 5358.0,
+    "interpretation": "Native Goal timestamp-window proxies only. These are not created/started-context occupancy, provider-active time, independent task linkage, billing or free overlap."
+  },
+  "resource_tradeoffs": {
+    "candidate_total_consumption": "UNKNOWN",
+    "billing_affordability": "UNKNOWN",
+    "consumption_per_observed_passing_final": "UNKNOWN; numerator unavailable, denominator2; not expected retry cost",
+    "independent_evaluation": "Separate cost category; original assessment observation timestamps retained; token/activity/billing unavailable",
+    "complete_experiment_preparation_support_publication_totals": "UNKNOWN",
+    "missing_and_failed_attempts_in_denominator": true
+  },
+  "quality_signal": "Finite differentiated source findings, not universal correctness or discovery-recall effectiveness. This is FULL scope, not a shared-package COMPONENT result.",
+  "selection": "NONE; root retains sole recipe/C/D/Git authority. No held-out case was accessed, no further grader/candidate/repair was commissioned."
+}

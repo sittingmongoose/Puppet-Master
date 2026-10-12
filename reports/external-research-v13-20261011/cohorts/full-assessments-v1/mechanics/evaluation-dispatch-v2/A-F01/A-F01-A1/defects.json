@@ -1,0 +1,55 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "A-F01-A1",
+  "records": [
+    {
+      "id": "A1-M01",
+      "domain": "source_witness_and_validation",
+      "severity": "MATERIAL",
+      "status_in_frozen_final": "OPEN",
+      "locator": "final source-map reviser_rechecks[PDB-05].governing_condition_default_exception; investigator sources[PDB-05]; critic sources[PDB-05]",
+      "finding": "The asserted upstream regression oracle is stale fetch failure 412. The actual test asserts a failed document PUT carrying a stale attachment stub, after branch removal/compaction.",
+      "evidence_ids": [
+        "E-PDB-ORACLE"
+      ],
+      "materiality_reason": "The governing operation/oracle of a consequential attachment failure witness is wrong and repeated after purported independent recheck. The fix chain is real, but its stated validation witness is materially unsupported. This fails source PASS for the complete published package without implying the general architecture fails."
+    },
+    {
+      "id": "A1-N02",
+      "domain": "access_provenance",
+      "severity": "NONMATERIAL",
+      "status_in_frozen_final": "OPEN",
+      "locator": "final source-map sources[CRIT-01] and [CRIT-SRCMAP-01].access_utc",
+      "finding": "Reviser input-read records use 00:47:57Z, before the reviser native creation at 00:56:09Z and before critic terminal at 00:53:01Z.",
+      "evidence_ids": [
+        "FROZEN-RECEIPTS"
+      ],
+      "materiality_reason": "Copied access metadata cannot establish that the reviser actually read those completed critic inputs at that time; not proof that no later reading occurred."
+    },
+    {
+      "id": "A1-N03",
+      "domain": "method_navigation",
+      "severity": "NONMATERIAL",
+      "status_in_frozen_final": "OPEN",
+      "locator": "critic frozen manifest",
+      "finding": "Critic has critique.md and source-map.json but no sources/index.md listed.",
+      "evidence_ids": [
+        "FROZEN-MANIFESTS"
+      ],
+      "materiality_reason": "Auxiliary navigation expectation is unmet; final provides an index and the scientific minimum files are present."
+    },
+    {
+      "id": "A1-N04",
+      "domain": "source_locator",
+      "severity": "NONMATERIAL",
+      "status_in_frozen_final": "OPEN",
+      "locator": "AM-04 preserved investigator/final source map",
+      "finding": "The SmartBear Automerge release locator returned 404 in this review; final marks it carried-only and does not bind consequential behavior to that release.",
+      "evidence_ids": [
+        "E-AM-HISTORY"
+      ],
+      "materiality_reason": "Access failure is a reproducibility limit, not product absence or a basis to reject Automerge."
+    }
+  ],
+  "external_unknowns_are_not_zero_or_defects": true
+}

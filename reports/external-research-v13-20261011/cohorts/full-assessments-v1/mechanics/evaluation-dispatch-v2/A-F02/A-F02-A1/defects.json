@@ -1,0 +1,37 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "A-F02-A1",
+  "complete_final_source_judgment": "PASS",
+  "defects": [
+    {
+      "id": "A1-D01",
+      "classification": "minor preservation loss",
+      "material": false,
+      "scope": "discovery to final",
+      "artifact_locator": "investigator/discovery.md, alternatives/history; reviser/final.md, support/history and validation",
+      "finding": "Discovery names the supported0.5.5 ADTS length-approximation fix; the complete final omits this specific historical fixture motivation. Broader uncertain-duration handling, pinned regression comparison,0.6.1 fixes and ADPCM history remain. This is a bounded detail loss, not a material removal of duration research or validation.",
+      "independent_primary_source_ids": [
+        "E08"
+      ],
+      "resolution": "PRESENT_IN_FROZEN_ORIGINAL"
+    },
+    {
+      "id": "A1-D02",
+      "classification": "minor locator/wording",
+      "material": false,
+      "scope": "source edition custody",
+      "artifact_locator": "reviser/source-map.json S17 and S23",
+      "finding": "WCAG references retain its2023 original-publication date while the current URL is the2024 Recommendation edition. S23 labels a moving Rust URL1.97.0; evaluator fetch reports1.99.0. Earlier page bytes are unavailable, so the latter difference does not prove a false earlier observation. The cited keyboard/status/rename conditions are independently supported.",
+      "independent_primary_source_ids": [
+        "E24",
+        "E30"
+      ],
+      "resolution": "PRESENT_IN_FROZEN_ORIGINAL"
+    }
+  ],
+  "administrative_observation": {
+    "final_missing": false,
+    "source_grade_fabricated": false
+  },
+  "materiality_rule": "A concrete consequential factual rule contradicting governing versioned code is material even when the recommended explicit mapping remains sensible. Minor compression, edition and unchosen-path boundaries do not by themselves negate a supported proposal."
+}

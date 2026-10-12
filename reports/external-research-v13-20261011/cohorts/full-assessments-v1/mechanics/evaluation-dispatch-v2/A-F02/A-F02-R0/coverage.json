@@ -1,0 +1,380 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "A-F02-R0",
+  "overall": "COMPLETE",
+  "scope": "FULL complete frozen proposal",
+  "all_manifest_listed_science_read": true,
+  "duplicate_brief_plan_handling": "Each exact input hash verified; byte-identical brief/plan read once with each reveal custody checked.",
+  "axes": [
+    {
+      "axis": 1,
+      "contract_axis": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+      "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+    },
+    {
+      "axis": 2,
+      "contract_axis": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+    },
+    {
+      "axis": 3,
+      "contract_axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+      "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+    },
+    {
+      "axis": 4,
+      "contract_axis": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+      "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+    },
+    {
+      "axis": 5,
+      "contract_axis": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+      "note": "Original/copy fixity, independent states, explicit channels, transcript versions, rights/custody distinction, optional local preview, all media-stack alternatives, DROID limits, restart, packaging, scale and accessibility proposals survive. All four critic findings disposed."
+    },
+    {
+      "axis": 6,
+      "contract_axis": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS",
+      "note": "Full original brief/plan and all available frozen stage documents checked; source/preservation limitations recorded separately."
+    }
+  ],
+  "obligations": [
+    {
+      "obligation": "format_identification",
+      "meaning": "Content versus extension; signature identity versus probing",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "source_ids": [
+        "E01"
+      ],
+      "witness": "Complete final: released-plan dispositions, record/review model, alternatives, staged integration and validation; preservation witness below."
+    },
+    {
+      "obligation": "metadata_duration",
+      "meaning": "Per-stream fields, duration provenance/unknown/conflict",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "source_ids": [
+        "E01"
+      ],
+      "witness": "Complete final: released-plan dispositions, record/review model, alternatives, staged integration and validation; preservation witness below."
+    },
+    {
+      "obligation": "channels",
+      "meaning": "Streams/channels, ordinal labels, optional audition, no silent downmix",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "source_ids": [
+        "E03"
+      ],
+      "witness": "Complete final: released-plan dispositions, record/review model, alternatives, staged integration and validation; preservation witness below."
+    },
+    {
+      "obligation": "transcript_association",
+      "meaning": "Confirmed IDs, ambiguity and collisions, preserve raw values",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "source_ids": [],
+      "witness": "Complete final: released-plan dispositions, record/review model, alternatives, staged integration and validation; preservation witness below."
+    },
+    {
+      "obligation": "corrected_transcripts",
+      "meaning": "New revisions/current pointer; previous files and associations retained",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "source_ids": [],
+      "witness": "Complete final: released-plan dispositions, record/review model, alternatives, staged integration and validation; preservation witness below."
+    },
+    {
+      "obligation": "safe_restart",
+      "meaning": "Stable IDs/hashes, checkpoint/reconciliation and retry boundaries",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "source_ids": [
+        "E17",
+        "E30"
+      ],
+      "witness": "Complete final: released-plan dispositions, record/review model, alternatives, staged integration and validation; preservation witness below."
+    },
+    {
+      "obligation": "portable_handoff",
+      "meaning": "Payloads/relative references or a verified durable receiver contract",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "source_ids": [
+        "E18"
+      ],
+      "witness": "Complete final: released-plan dispositions, record/review model, alternatives, staged integration and validation; preservation witness below."
+    },
+    {
+      "obligation": "warning_semantics",
+      "meaning": "Read/probe errors separate from unsupported/failed preview",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "source_ids": [
+        "E01",
+        "E11"
+      ],
+      "witness": "Complete final: released-plan dispositions, record/review model, alternatives, staged integration and validation; preservation witness below."
+    },
+    {
+      "obligation": "absent_transcript",
+      "meaning": "Neutral transcript state independent from audio",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "source_ids": [],
+      "witness": "Complete final: released-plan dispositions, record/review model, alternatives, staged integration and validation; preservation witness below."
+    },
+    {
+      "obligation": "keyboard_text_status",
+      "meaning": "All review actions, focus, accessible text and coalesced progress",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "source_ids": [
+        "E24"
+      ],
+      "witness": "Complete final: released-plan dispositions, record/review model, alternatives, staged integration and validation; preservation witness below."
+    },
+    {
+      "obligation": "scale",
+      "meaning": "40/500 items, bounded work and proposed measured thresholds",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "source_ids": [],
+      "witness": "Complete final: released-plan dispositions, record/review model, alternatives, staged integration and validation; preservation witness below."
+    },
+    {
+      "obligation": "negative_constraints",
+      "meaning": "Original bytes; no guessed rights/cloud transcription/mandatory all-item transcode",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "source_ids": [],
+      "witness": "Complete final: released-plan dispositions, record/review model, alternatives, staged integration and validation; preservation witness below."
+    },
+    {
+      "obligation": "alternatives_support_limits",
+      "meaning": "No fixed winning codec/catalog API; exact build/features/plugins and scoped histories",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "source_ids": [],
+      "witness": "Complete final: released-plan dispositions, record/review model, alternatives, staged integration and validation; preservation witness below."
+    },
+    {
+      "obligation": "planning_delivery",
+      "meaning": "Staged research/integration proposal; no collection migration or deployment",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "source_ids": [],
+      "witness": "Complete final: released-plan dispositions, record/review model, alternatives, staged integration and validation; preservation witness below."
+    }
+  ],
+  "source_families": [
+    {
+      "source_family": "FFmpeg probing",
+      "independent_research_id": "E01",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "No product execution; exact deployed build and museum facts remain unknown."
+    },
+    {
+      "source_family": "FFmpeg releases/distribution",
+      "independent_research_id": "E02",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "No legal determination or chosen distributed binary; no universal safety inference from release number."
+    },
+    {
+      "source_family": "FFmpeg automatic selection and channel mapping",
+      "independent_research_id": "E03",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "Static code analysis only. Manual channel-count summary omits code conditions; explicit mapping remains prudent."
+    },
+    {
+      "source_family": "FFmpeg FATE",
+      "independent_research_id": "E04",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "Definitions read; neither FATE nor museum build tests executed."
+    },
+    {
+      "source_family": "FFmpeg PSSH risk",
+      "independent_research_id": "E05",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "Advisory database is discovery context; governing mechanism checked in project code. Fixed release/commit not established; PR response supplied no usable fix witness."
+    },
+    {
+      "source_family": "Symphonia features",
+      "independent_research_id": "E06",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "No product execution; exact deployed build and museum facts remain unknown."
+    },
+    {
+      "source_family": "Symphonia callers/tests",
+      "independent_research_id": "E07",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "Examples are not intake policy; comparator is not a museum workflow oracle and was not executed."
+    },
+    {
+      "source_family": "Symphonia fixes",
+      "independent_research_id": "E08",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "Release notes/issue reports are scoped evidence, not arbitrary-file correctness. API rate-limit on later 0.5.5 lookup; public release page independently reopened."
+    },
+    {
+      "source_family": "Symphonia regression discussion",
+      "independent_research_id": "E09",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "Duration observations must not be attributed to the maintainer reply. Discussion is not a formal duration contract."
+    },
+    {
+      "source_family": "Symphonia Opus adapter",
+      "independent_research_id": "E10",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "Third-party adapter primary documentation; not native/default Symphonia support."
+    },
+    {
+      "source_family": "GStreamer discovery",
+      "independent_research_id": "E11",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "Nanoseconds are units, not an accuracy guarantee. Plugin/build and partial-information conditions remain."
+    },
+    {
+      "source_family": "GStreamer missing plugins",
+      "independent_research_id": "E12",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "No product execution; exact deployed build and museum facts remain unknown."
+    },
+    {
+      "source_family": "DROID/PRONOM",
+      "independent_research_id": "E15",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "Current develop SHA and earlier release-page commit counts not reconstructed. Historical LOC entry is not current version authority."
+    },
+    {
+      "source_family": "Sound preservation context",
+      "independent_research_id": "E16",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "No product execution; exact deployed build and museum facts remain unknown."
+    },
+    {
+      "source_family": "SQLite checkpoints",
+      "independent_research_id": "E17",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "BEGIN transactions do not nest; SAVEPOINT is a distinct mechanism. No target filesystem durability was proved."
+    },
+    {
+      "source_family": "BagIt",
+      "independent_research_id": "E18",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "BagIt does not supply catalog/rights semantics or active-attack authenticity. No package was validated."
+    },
+    {
+      "source_family": "WCAG",
+      "independent_research_id": "E24",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "No product execution; exact deployed build and museum facts remain unknown."
+    },
+    {
+      "source_family": "Filesystem rename",
+      "independent_research_id": "E30",
+      "coverage": "COMPLETE",
+      "complete_final_coverage": "COMPLETE",
+      "assessment_boundary": "Candidate A1 S23 records an older1.97.0 header at a moving URL; earlier fetched bytes unavailable. Do not infer earlier header falsity solely from later1.99.0."
+    }
+  ],
+  "plan_dispositions": {
+    "coverage": "COMPLETE",
+    "locator": "P1-P8",
+    "assessment": "All product clauses and administrative boundaries examined; unsupported matching/path assumptions treated conditionally; no actual museum facts invented."
+  },
+  "critic_dispositions": [
+    {
+      "id": "MI-01",
+      "judgment": "SUPPORTED_CRITICISM_AND_PROPOSAL_AMENDMENT",
+      "basis": "SQLite database scope does not cover external files. Final adds intermediate-state reconciliation, source-change handling and no-overwrite publication; target durability tests remain proposed.",
+      "sources": [
+        "E17",
+        "E30"
+      ]
+    },
+    {
+      "id": "MIN-01",
+      "judgment": "SUPPORTED_CLARIFICATION",
+      "basis": "Final creates pending-hash rows before probing and populates hashes after reading; no impossible pre-read hash requirement."
+    },
+    {
+      "id": "MIN-02",
+      "judgment": "SUPPORTED_IDENTITY_LIMITATION_RETAINED",
+      "basis": "Moving DROID branch was not pinned. Final does not substitute a tagged release for that branch or certify an unchosen binary.",
+      "sources": [
+        "E15"
+      ]
+    },
+    {
+      "id": "EX-01",
+      "judgment": "LEGITIMATE_UNKNOWN_OWNER_FACTS",
+      "basis": "Catalog, spreadsheet, rights vocabulary, target platform and workload thresholds are absent; technical mechanisms were still researched."
+    },
+    {
+      "id": "critic no material wrong",
+      "judgment": "DISAGREEMENT",
+      "basis": "Independent tagged selection code exposes R0-D01; critic manual agreement is not governing authority.",
+      "sources": [
+        "E03"
+      ]
+    }
+  ],
+  "preservation": {
+    "coverage": "COMPLETE",
+    "supported_meaning": "Original/copy fixity, independent states, explicit channels, transcript versions, rights/custody distinction, optional local preview, all media-stack alternatives, DROID limits, restart, packaging, scale and accessibility proposals survive. All four critic findings disposed.",
+    "losses": "No material supported loss found. Invalid automatic-selection fact is carried into final and assessed as source failure, not preserved truth."
+  },
+  "deliberately_unassessed": [
+    {
+      "family": "Actual museum media/spreadsheet/rights/catalog facts",
+      "coverage": "UNASSESSED",
+      "reason": "Not supplied and not accessed; legitimate owner questions."
+    },
+    {
+      "family": "Future deployed software/build/media/UI/performance/restart execution",
+      "coverage": "UNASSESSED",
+      "reason": "Deliverable is research planning; proposals judged for meaningful oracles, not execution."
+    },
+    {
+      "family": "Universal codec safety/support and every upstream issue/history",
+      "coverage": "UNASSESSED",
+      "reason": "Finite governing-context assessment, not a whole-tree/history or universal correctness claim."
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "er13.defects.v1",
+  "arm_id": "B10-P01-treatment",
+  "source_final_judgment": "PASS",
+  "material_final_defects": [],
+  "findings": [
+    {
+      "defect_id": "T-N01",
+      "severity": "minor_locator_wording",
+      "scope": "all treatment source maps and final source index",
+      "locator": "S08 locator; final sources/README.md line 13",
+      "finding": "The numerical FTS5 command locators are stale: the inspected page labels integrity-check 6.7 and rebuild 6.12, while the maps/index say 6.4 and 6.3. Named commands and URLs resolve the right mechanisms; substantive behavior is supported.",
+      "primary_source_ids": [
+        "P16"
+      ],
+      "final_status": "PRESENT",
+      "grade_effect": "Nonmaterial locator defect; no semantic failure."
+    },
+    {
+      "defect_id": "T-N02",
+      "severity": "minor_status_wording",
+      "scope": "final",
+      "locator": "final.md lines 33–37",
+      "finding": "The accepted-validator status bullet includes missing validator/incomplete variant context without explicitly saying it applies only after a conditional response. Line 37 separately requires the true no-validator/error outcome. Read in context this is imprecise branching, not a demonstrated invented check or a material loss of the no-check invariant.",
+      "primary_source_ids": [
+        "P01",
+        "P02"
+      ],
+      "final_status": "PRESENT",
+      "grade_effect": "Nonmaterial wording limitation."
+    },
+    {
+      "defect_id": "T-N03",
+      "severity": "nonmaterial_version_context_limit",
+      "scope": "final",
+      "locator": "final.md lines 17, 34, 92, 104",
+      "finding": "Same-variant reproduction is a conservative policy. Reported erratum 9185 discusses strong-ETag identification across selecting-header mismatch; it is not a verified normative change. No material capability required by the brief is lost by the final policy.",
+      "primary_source_ids": [
+        "P01",
+        "P02",
+        "P24",
+        "P25",
+        "P26"
+      ],
+      "final_status": "PRESENT",
+      "grade_effect": "No material false rejection."
+    }
+  ],
+  "critic_dispositions_file": "coverage.json",
+  "no_adjudication_or_repair": "Original findings only; candidate files unchanged. Any dispute requires a new separate adjudication."
+}

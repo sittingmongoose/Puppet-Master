@@ -1,0 +1,122 @@
+[
+  {
+    "id": "ffprobe9",
+    "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/doc/ffprobe.texi",
+    "accessed_utc": "2026-10-12T01:34:03.602310+00:00",
+    "operation": "HTTPS GET, source text read only; no execution",
+    "final_url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/doc/ffprobe.texi",
+    "status": 200,
+    "bytes": 21757,
+    "sha256": "9f28004a19dcba2f854595ac96f122dbd44fd82119944456f209fd990e0c58a9"
+  },
+  {
+    "id": "fate9",
+    "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/tests/fate/ffprobe.mak",
+    "accessed_utc": "2026-10-12T01:34:03.602737+00:00",
+    "operation": "HTTPS GET, source text read only; no execution",
+    "final_url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/tests/fate/ffprobe.mak",
+    "status": 200,
+    "bytes": 1648,
+    "sha256": "2fc0c23bb6fe89bbf9adfe0ee66546c4a55d40242ef6e8970a875f95debb1446"
+  },
+  {
+    "id": "format8",
+    "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n8.1.1/doc/formats.texi",
+    "accessed_utc": "2026-10-12T01:34:03.603041+00:00",
+    "operation": "HTTPS GET, source text read only; no execution",
+    "final_url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n8.1.1/doc/formats.texi",
+    "status": 200,
+    "bytes": 10684,
+    "sha256": "4f4dd6b2916087b866b1ffea78bdd7ad42e91c09f85ee90e6578124bfbb95d43"
+  },
+  {
+    "id": "symcargo",
+    "url": "https://raw.githubusercontent.com/pdeljanov/Symphonia/v0.6.1/symphonia/Cargo.toml",
+    "accessed_utc": "2026-10-12T01:34:03.603371+00:00",
+    "operation": "HTTPS GET, source text read only; no execution",
+    "final_url": "https://raw.githubusercontent.com/pdeljanov/Symphonia/v0.6.1/symphonia/Cargo.toml",
+    "status": 200,
+    "bytes": 4429,
+    "sha256": "af70d8a894cbcf79d482efee2aa5ad88c2582ac50abadb05c8d126aa8ed2dacc"
+  },
+  {
+    "id": "symcaller",
+    "url": "https://raw.githubusercontent.com/pdeljanov/Symphonia/v0.6.1/symphonia/examples/getting-started.rs",
+    "accessed_utc": "2026-10-12T01:34:03.603800+00:00",
+    "operation": "HTTPS GET, source text read only; no execution",
+    "final_url": "https://raw.githubusercontent.com/pdeljanov/Symphonia/v0.6.1/symphonia/examples/getting-started.rs",
+    "status": 200,
+    "bytes": 3854,
+    "sha256": "674b9c502c043c39c6e5f37c49e502be67589afe07554a6b9b5dead57b9ca209"
+  },
+  {
+    "id": "symplayer",
+    "url": "https://raw.githubusercontent.com/pdeljanov/Symphonia/v0.6.1/symphonia-play/src/main.rs",
+    "accessed_utc": "2026-10-12T01:34:03.607582+00:00",
+    "operation": "HTTPS GET, source text read only; no execution",
+    "final_url": "https://raw.githubusercontent.com/pdeljanov/Symphonia/v0.6.1/symphonia-play/src/main.rs",
+    "status": 200,
+    "bytes": 19619,
+    "sha256": "ee277879aa00ae52910d9dafada15429d20d61d56ac5de7b3dcbbc48b9703706"
+  },
+  {
+    "id": "symcheck",
+    "url": "https://raw.githubusercontent.com/pdeljanov/Symphonia/v0.6.1/symphonia-check/src/main.rs",
+    "accessed_utc": "2026-10-12T01:34:03.725585+00:00",
+    "operation": "HTTPS GET, source text read only; no execution",
+    "final_url": "https://raw.githubusercontent.com/pdeljanov/Symphonia/v0.6.1/symphonia-check/src/main.rs",
+    "status": 200,
+    "bytes": 16798,
+    "sha256": "a20e2c93c777c61a28d0af4b062b197596186295d374b4c66d54e80c7c2d7c12"
+  },
+  {
+    "id": "encryption",
+    "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/libavutil/encryption_info.c",
+    "accessed_utc": "2026-10-12T01:34:03.733219+00:00",
+    "operation": "HTTPS GET, source text read only; no execution",
+    "final_url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/libavutil/encryption_info.c",
+    "status": 200,
+    "bytes": 11135,
+    "sha256": "da459d3113d590cffbcea6f14ad55de20a32869cf8979eea17ab3bf83e2641ba"
+  },
+  {
+    "id": "mov",
+    "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/libavformat/mov.c",
+    "accessed_utc": "2026-10-12T01:34:03.737793+00:00",
+    "operation": "HTTPS GET, source text read only; no execution",
+    "final_url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/libavformat/mov.c",
+    "status": 200,
+    "bytes": 420246,
+    "sha256": "533674687505d25db7176cf876036f600e6d8cb25079ffa6b28b4a8e8266eae1"
+  },
+  {
+    "id": "siegfried",
+    "url": "https://raw.githubusercontent.com/richardlehane/siegfried/v1.11.9/README.md",
+    "accessed_utc": "2026-10-12T01:34:03.749743+00:00",
+    "operation": "HTTPS GET, source text read only; no execution",
+    "final_url": "https://raw.githubusercontent.com/richardlehane/siegfried/v1.11.9/README.md",
+    "status": 200,
+    "bytes": 12879,
+    "sha256": "de2b8ad6c416dfd1197941e0666e4d5271ed9bb08827c4ceac01d672b6f80b17"
+  },
+  {
+    "id": "sndfile",
+    "url": "https://raw.githubusercontent.com/libsndfile/libsndfile/1.2.2/docs/api.md",
+    "accessed_utc": "2026-10-12T01:34:03.753419+00:00",
+    "operation": "HTTPS GET, source text read only; no execution",
+    "final_url": "https://raw.githubusercontent.com/libsndfile/libsndfile/1.2.2/docs/api.md",
+    "status": 200,
+    "bytes": 35274,
+    "sha256": "ebd2ccdbee3381ffd488702f8483aa4ef7871d7d2aa67e0ab10d5dae9e253a46"
+  },
+  {
+    "id": "mediafields",
+    "url": "https://raw.githubusercontent.com/MediaArea/MediaInfoLib/v26.10/Source/Resource/Text/Stream/Audio.csv",
+    "accessed_utc": "2026-10-12T01:34:03.789369+00:00",
+    "operation": "HTTPS GET, source text read only; no execution",
+    "final_url": "https://raw.githubusercontent.com/MediaArea/MediaInfoLib/v26.10/Source/Resource/Text/Stream/Audio.csv",
+    "status": 200,
+    "bytes": 30501,
+    "sha256": "2f54b49a94b8ce3dd98af629f4f6381524bf5069b541322ba32887b6dfeaa851"
+  }
+]

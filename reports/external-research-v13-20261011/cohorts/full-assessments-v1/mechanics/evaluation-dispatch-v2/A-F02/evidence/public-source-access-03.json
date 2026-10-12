@@ -1,0 +1,112 @@
+[
+  {
+    "id": "symrelease",
+    "url": "https://api.github.com/repos/pdeljanov/Symphonia/releases/tags/v0.6.1",
+    "accessed_utc": "2026-10-12T01:38:01.035314+00:00",
+    "operation": "Public HTTPS GET; release/issue/fix history read only",
+    "final_url": "https://api.github.com/repos/pdeljanov/Symphonia/releases/tags/v0.6.1",
+    "status": 200,
+    "bytes": 3750,
+    "sha256": "aab0fbb016e335ebd636be7de54f0e1453f4a5fcfd9253ae072593469dbaa009"
+  },
+  {
+    "id": "symADPCMissue",
+    "url": "https://api.github.com/repos/pdeljanov/Symphonia/issues/41",
+    "accessed_utc": "2026-10-12T01:38:01.035775+00:00",
+    "operation": "Public HTTPS GET; release/issue/fix history read only",
+    "final_url": "https://api.github.com/repos/pdeljanov/Symphonia/issues/41",
+    "status": 200,
+    "bytes": 7853,
+    "sha256": "306d802a053158efca2febcf01d12541f546062a3502d6eebeb9e844eff887a0"
+  },
+  {
+    "id": "symADPCMpr",
+    "url": "https://api.github.com/repos/pdeljanov/Symphonia/pulls/160",
+    "accessed_utc": "2026-10-12T01:38:01.036137+00:00",
+    "operation": "Public HTTPS GET; release/issue/fix history read only",
+    "final_url": "https://api.github.com/repos/pdeljanov/Symphonia/pulls/160",
+    "status": 200,
+    "bytes": 17244,
+    "sha256": "e60a5b0820af86ad6959e325e7092e0ea70224cd9d06dd8b734140bb9a0f26b5"
+  },
+  {
+    "id": "symdiscussion",
+    "url": "https://github.com/pdeljanov/Symphonia/discussions/337",
+    "accessed_utc": "2026-10-12T01:38:01.036483+00:00",
+    "operation": "Public HTTPS GET; release/issue/fix history read only",
+    "final_url": "https://github.com/pdeljanov/Symphonia/discussions/337",
+    "status": 200,
+    "bytes": 282124,
+    "sha256": "bfb2d5114f4f2383f430c2d37fcfd4806120a4833ff8ddfda4044e7eea8d0c7e"
+  },
+  {
+    "id": "mediarelease",
+    "url": "https://api.github.com/repos/MediaArea/MediaInfo/releases/tags/v26.10",
+    "accessed_utc": "2026-10-12T01:38:01.038578+00:00",
+    "operation": "Public HTTPS GET; release/issue/fix history read only",
+    "final_url": "https://api.github.com/repos/MediaArea/MediaInfo/releases/tags/v26.10",
+    "status": 200,
+    "bytes": 4839,
+    "sha256": "25b5cce823d55ef41bb7272c6a702d33a7128cc7db89704066c8d8566f0e646e"
+  },
+  {
+    "id": "mediaDuration",
+    "url": "https://api.github.com/repos/MediaArea/MediaInfo/issues/373",
+    "accessed_utc": "2026-10-12T01:38:01.040639+00:00",
+    "operation": "Public HTTPS GET; release/issue/fix history read only",
+    "final_url": "https://api.github.com/repos/MediaArea/MediaInfo/issues/373",
+    "status": 200,
+    "bytes": 51130,
+    "sha256": "e754709208eb4d4c289606e3888450023f059d127a83ee0a086b09dcc17d8dd7"
+  },
+  {
+    "id": "mediaDurationComments",
+    "url": "https://api.github.com/repos/MediaArea/MediaInfo/issues/373/comments?per_page=100",
+    "accessed_utc": "2026-10-12T01:38:01.177455+00:00",
+    "operation": "Public HTTPS GET; release/issue/fix history read only",
+    "final_url": "https://api.github.com/repos/MediaArea/MediaInfo/issues/373/comments?per_page=100",
+    "status": 200,
+    "bytes": 92407,
+    "sha256": "889ef404c31705b53b36e21508a1b86158b69cecb6c554b1af2ab357812eb6e1"
+  },
+  {
+    "id": "mediaJSON",
+    "url": "https://api.github.com/repos/MediaArea/MediaInfo/issues/1103",
+    "accessed_utc": "2026-10-12T01:38:01.181636+00:00",
+    "operation": "Public HTTPS GET; release/issue/fix history read only",
+    "final_url": "https://api.github.com/repos/MediaArea/MediaInfo/issues/1103",
+    "status": 200,
+    "bytes": 2873,
+    "sha256": "e5e82a48d960076e62d6dab6e750fd0c161a13ef2250499360e6e301cfe531c7"
+  },
+  {
+    "id": "mediaJSONpr",
+    "url": "https://api.github.com/repos/MediaArea/MediaInfoLib/pulls/2295",
+    "accessed_utc": "2026-10-12T01:38:01.223214+00:00",
+    "operation": "Public HTTPS GET; release/issue/fix history read only",
+    "final_url": "https://api.github.com/repos/MediaArea/MediaInfoLib/pulls/2295",
+    "status": 200,
+    "bytes": 16441,
+    "sha256": "28576e47c73cbcdb7c21374c51aebe1e94f34af8c2100f86fe307bb29226cda5"
+  },
+  {
+    "id": "gstpatch",
+    "url": "https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests/12642.patch",
+    "accessed_utc": "2026-10-12T01:38:01.265359+00:00",
+    "operation": "Public HTTPS GET; release/issue/fix history read only",
+    "final_url": "https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests/12642.patch",
+    "status": 200,
+    "bytes": 6350,
+    "sha256": "5dc2e58c124b0e2496821109c2aaa08839d234275bcb17df988301893ee62fbb"
+  },
+  {
+    "id": "ffpatch",
+    "url": "https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/24593",
+    "accessed_utc": "2026-10-12T01:38:01.331066+00:00",
+    "operation": "Public HTTPS GET; release/issue/fix history read only",
+    "final_url": "https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/24593",
+    "status": 200,
+    "bytes": 228321,
+    "sha256": "39d6a731b3aadfbca5b9eccc1f62a7be45cc22e2922694ec255ebf010addc0ce"
+  }
+]

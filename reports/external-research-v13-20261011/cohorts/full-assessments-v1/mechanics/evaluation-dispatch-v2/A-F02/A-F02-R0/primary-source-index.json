@@ -1,0 +1,366 @@
+{
+  "schema": "er13.original-primary-source-index.v1",
+  "arm_id": "A-F02-R0",
+  "independent_primary_research": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/independent-primary-research.json",
+  "independent_primary_research_sha256": "eac8af81f14ddeb7cbcbf383a3eb9cf77f396b62cf396ffb7aa248dcde943c3f",
+  "cost_category": "independent_evaluation",
+  "lookup_reuse": "Only evaluator-owned lookup reused across assigned matched arms; judgments separate.",
+  "blinding": "Imperfect: technique-bearing IDs/paths/prompts are visible.",
+  "sources": [
+    {
+      "id": "E01",
+      "family": "FFmpeg probing",
+      "urls": [
+        "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/doc/ffprobe.texi",
+        "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n8.1.1/doc/ffprobe.texi",
+        "https://ffmpeg.org/ffprobe.html"
+      ],
+      "version_context": "n9.0.2 and n8.1.1; living manual distinguished",
+      "locator": "Description; show_error/format/streams/versions; show_optional_fields",
+      "independent_observation": "Probe reports build-dependent fields; JSON auto can omit invalid fields. Failed recognition is not proof of corruption.",
+      "limits": "No product execution; exact deployed build and museum facts remain unknown.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E02",
+      "family": "FFmpeg releases/distribution",
+      "urls": [
+        "https://ffmpeg.org/download.html",
+        "https://ffmpeg.org/legal.html"
+      ],
+      "version_context": "Living project pages; 9.0.2 listed, released 2026-09-18",
+      "locator": "Release branches, binary links, enabled components",
+      "independent_observation": "Upstream distributes source; release and configured binary differ. Licensing depends on enabled components and distribution facts.",
+      "limits": "No legal determination or chosen distributed binary; no universal safety inference from release number.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E03",
+      "family": "FFmpeg automatic selection and channel mapping",
+      "urls": [
+        "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/fftools/ffmpeg_mux_init.c",
+        "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/doc/filters.texi",
+        "https://www.ffmpeg.org/ffmpeg.html"
+      ],
+      "version_context": "Tagged n9.0.2 code/documentation; living manual summary",
+      "locator": "map_auto_audio; channelsplit; pan",
+      "independent_observation": "Selection code gives packet/default flags weight beyond channel count. channelsplit defaults stereo; pure pan mapping has gain/input conditions.",
+      "limits": "Static code analysis only. Manual channel-count summary omits code conditions; explicit mapping remains prudent.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E04",
+      "family": "FFmpeg FATE",
+      "urls": [
+        "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/tests/fate/ffprobe.mak",
+        "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n8.1.1/tests/fate/ffprobe.mak"
+      ],
+      "version_context": "Tagged n9.0.2/n8.1.1",
+      "locator": "Generated NUT fixture; output-mode targets and build prerequisites",
+      "independent_observation": "FATE defines JSON and other writer checks on a synthetic fixture, conditional on configuration.",
+      "limits": "Definitions read; neither FATE nor museum build tests executed.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E05",
+      "family": "FFmpeg PSSH risk",
+      "urls": [
+        "https://github.com/advisories/GHSA-rp4v-7m3g-89vg",
+        "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/libavformat/mov.c",
+        "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/libavutil/encryption_info.c",
+        "https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/24593"
+      ],
+      "version_context": "Reported 2026-10-08; tagged n9.0.2 code",
+      "locator": "mov_read_pssh; av_encryption_init_info_free",
+      "independent_observation": "Tagged code builds linked initialization data and recursively frees it; reported many-PSSH availability risk is applicable to untrusted MP4.",
+      "limits": "Advisory database is discovery context; governing mechanism checked in project code. Fixed release/commit not established; PR response supplied no usable fix witness.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E06",
+      "family": "Symphonia features",
+      "urls": [
+        "https://docs.rs/symphonia/0.6.1/symphonia/",
+        "https://raw.githubusercontent.com/pdeljanov/Symphonia/v0.6.1/symphonia/Cargo.toml"
+      ],
+      "version_context": "0.6.1 / v0.6.1",
+      "locator": "Default/aggregate features; docs.rs all-features configuration",
+      "independent_observation": "Cargo defaults and available codecs/formats differ; AAC/ALAC/MP3, AIFF/CAF/MP4 require explicit features.",
+      "limits": "No product execution; exact deployed build and museum facts remain unknown.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E07",
+      "family": "Symphonia callers/tests",
+      "urls": [
+        "https://raw.githubusercontent.com/pdeljanov/Symphonia/v0.6.1/symphonia/examples/getting-started.rs",
+        "https://raw.githubusercontent.com/pdeljanov/Symphonia/v0.6.1/symphonia-play/src/main.rs",
+        "https://raw.githubusercontent.com/pdeljanov/Symphonia/v0.6.1/symphonia-check/src/main.rs"
+      ],
+      "version_context": "v0.6.1; candidate commit ee35874b571a35a9a6e15d3bc9a3aaf8f11fbeee",
+      "locator": "Hint/default audio track; decode/output errors; run_test/run_check",
+      "independent_observation": "Callers separate probing, decoding and device output. Check utility compares samples against selected reference decoders.",
+      "limits": "Examples are not intake policy; comparator is not a museum workflow oracle and was not executed.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E08",
+      "family": "Symphonia fixes",
+      "urls": [
+        "https://github.com/pdeljanov/Symphonia/releases/tag/v0.6.1",
+        "https://github.com/pdeljanov/Symphonia/issues/41",
+        "https://github.com/pdeljanov/Symphonia/pull/160",
+        "https://github.com/pdeljanov/Symphonia/releases/tag/v0.5.5"
+      ],
+      "version_context": "0.6.1 published 2026-08-13; PR160 merged 2022-11-08; 0.5.5 maintenance release",
+      "locator": "Release fixes; ADPCM PR restrictions; earlier ADTS approximation fix",
+      "independent_observation": "History supports decoder regressions and variant-specific limits. Opus channel metadata is not an Opus decoder.",
+      "limits": "Release notes/issue reports are scoped evidence, not arbitrary-file correctness. API rate-limit on later 0.5.5 lookup; public release page independently reopened.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E09",
+      "family": "Symphonia regression discussion",
+      "urls": [
+        "https://github.com/pdeljanov/Symphonia/discussions/337"
+      ],
+      "version_context": "Discussion Jan 2025; maintainer reply Jan 15",
+      "locator": "Opening post versus maintainer reply",
+      "independent_observation": "Opening author describes duration/PTS differences; maintainer describes personal-library checks and reproducibility limitations.",
+      "limits": "Duration observations must not be attributed to the maintainer reply. Discussion is not a formal duration contract.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E10",
+      "family": "Symphonia Opus adapter",
+      "urls": [
+        "https://docs.rs/symphonia-adapter-libopus/0.3.0/symphonia_adapter_libopus/"
+      ],
+      "version_context": "Adapter 0.3.0; compatible Symphonia 0.6",
+      "locator": "Registry registration; linking/bundling",
+      "independent_observation": "Separate adapter supplies libopus; default bundling adds dependency/linking work.",
+      "limits": "Third-party adapter primary documentation; not native/default Symphonia support.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E11",
+      "family": "GStreamer discovery",
+      "urls": [
+        "https://gstreamer.freedesktop.org/documentation/pbutils/gstdiscoverer.html",
+        "https://gstreamer.freedesktop.org/documentation/tutorials/basic/media-information-gathering.html"
+      ],
+      "version_context": "Living 1.x APIs; annotations govern individual entries",
+      "locator": "Result enum; duration; asynchronous loop; tutorial non-OK branch",
+      "independent_observation": "Discovery distinguishes missing plugins, timeout, errors and other results; async requires a GLib loop. Tutorial shortcut loses useful distinctions.",
+      "limits": "Nanoseconds are units, not an accuracy guarantee. Plugin/build and partial-information conditions remain.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E12",
+      "family": "GStreamer missing plugins",
+      "urls": [
+        "https://gstreamer.freedesktop.org/documentation/additional/design/missing-plugins.html"
+      ],
+      "version_context": "Project design page; historical API version context",
+      "locator": "Typefind/demuxer/decoder messages; application policy",
+      "independent_observation": "Missing demuxer/decoder share a message type; capability absence is not a corruption verdict.",
+      "limits": "No product execution; exact deployed build and museum facts remain unknown.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E15",
+      "family": "DROID/PRONOM",
+      "urls": [
+        "https://raw.githubusercontent.com/digital-preservation/droid/6.9.13/README.md",
+        "https://www.nationalarchives.gov.uk/information-management/manage-information/preserving-digital-records/our-role/",
+        "https://loc.gov/standards/premis/tools_for_premis.php"
+      ],
+      "version_context": "DROID6.9.13 README; mutable TNA guidance; historical LOC entry",
+      "locator": "Signatures, extension fallback, CSV, coverage and update behavior",
+      "independent_observation": "Signature identity is separate from decoding. TNA reports incomplete signature coverage; binary/signature versions need separate pins.",
+      "limits": "Current develop SHA and earlier release-page commit counts not reconstructed. Historical LOC entry is not current version authority.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E16",
+      "family": "Sound preservation context",
+      "urls": [
+        "https://www.loc.gov/preservation/digital/formats/content/sound_curator.shtml"
+      ],
+      "version_context": "Living LOC format guidance",
+      "locator": "Table2, mono/stereo sound including oral histories",
+      "independent_observation": "PCM WAVE/BWF and AIFF preferences are preservation context, not mandatory donor rejection criteria.",
+      "limits": "No product execution; exact deployed build and museum facts remain unknown.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E17",
+      "family": "SQLite checkpoints",
+      "urls": [
+        "https://www.sqlite.org/lang_transaction.html",
+        "https://www.sqlite.org/atomiccommit.html"
+      ],
+      "version_context": "Living official documentation; runtime unselected",
+      "locator": "One writer; busy; rollback/WAL; flush/locking; crash recovery",
+      "independent_observation": "Database transactions protect database changes under storage assumptions; separate copied files require reconciliation.",
+      "limits": "BEGIN transactions do not nest; SAVEPOINT is a distinct mechanism. No target filesystem durability was proved.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E18",
+      "family": "BagIt",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc8493.html"
+      ],
+      "version_context": "RFC8493, October2018, Informational, BagIt1.0",
+      "locator": "Payload/tag manifests; complete/valid; security/path handling",
+      "independent_observation": "Validity requires completeness and all relevant checksums, not payload hashes alone; paths and payload semantics need separate interpretation.",
+      "limits": "BagIt does not supply catalog/rights semantics or active-attack authenticity. No package was validated.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E24",
+      "family": "WCAG",
+      "urls": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html",
+        "https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html"
+      ],
+      "version_context": "Current Recommendation12Dec2024; original edition5Oct2023 distinguished",
+      "locator": "Keyboard exception, no trap/focus, name/role/value, markup status messages",
+      "independent_observation": "Keyboard and textual status requirements are supported; WCAG web criteria do not prove native toolkit conformance.",
+      "limits": "No product execution; exact deployed build and museum facts remain unknown.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    },
+    {
+      "id": "E30",
+      "family": "Filesystem rename",
+      "urls": [
+        "https://doc.rust-lang.org/std/fs/fn.rename.html",
+        "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html"
+      ],
+      "version_context": "POSIX Issue8 /2024; current Rust page1.99.0(b940084d7,2026-09-28)",
+      "locator": "Rename replacement/cross-filesystem behavior; single-operation atomicity",
+      "independent_observation": "Rename scope is one filesystem operation; ordinary rename can replace a target and cannot transact with an external database.",
+      "limits": "Candidate A1 S23 records an older1.97.0 header at a moving URL; earlier fetched bytes unavailable. Do not infer earlier header falsity solely from later1.99.0.",
+      "access_utc_window": [
+        "2026-10-12T01:30:19Z",
+        "2026-10-12T01:53:30.502639+00:00"
+      ],
+      "access_time_basis": "Bounded evaluator window; direct-fetch details in public-source-access-01 through 04.json. Web tool exposes no original-page byte digest.",
+      "coverage": "COMPLETE_FOR_DECLARED_FINAL_CLAIMS"
+    }
+  ],
+  "access_records": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-01.json",
+      "sha256": "e7d5ba83d3654f163fcecc89a5b993d85af85623857c6c997b3fac889f11d711"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-02.json",
+      "sha256": "6546375006e7dea817eb2c0f2a1decede621ee4eac76348b2fb93171ae09684e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-03.json",
+      "sha256": "a9317e0bedad23bb806f9cd786c65550c6093fbbebb914630f189362da20fd92"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-04.json",
+      "sha256": "b481766952b18ce05ce46d4742a20c4c2554332d9410e3f11cce7677a7b84a12"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-05.json",
+      "sha256": "52d9bd5c1038888d0f0c16c91c89fdbc17982802ec0c60e7f371b553e31df741"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/web-source-access.json",
+      "sha256": "4ce4f022a5402b2b4c232b6fc4f696df6aa3112aa01e3f2f5fedd79dd576899d"
+    }
+  ],
+  "evidence_note": "Only bounded metadata and original evaluator summaries retained; primary code/docs were read, not executed. No private routing identity or full native transcript copied."
+}

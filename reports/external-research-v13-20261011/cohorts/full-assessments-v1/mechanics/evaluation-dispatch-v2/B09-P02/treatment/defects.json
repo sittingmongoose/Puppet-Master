@@ -1,0 +1,35 @@
+{
+  "arm_id": "B09-P02-treatment",
+  "source_judgment": "PASS",
+  "material_final_defects": [],
+  "nonmaterial_findings": [
+    {
+      "defect_id": "T-N01",
+      "classification": "minor exact-reproduction wording",
+      "material": false,
+      "status": "PRESENT",
+      "locator": "final.md:224-253",
+      "finding": "The statement that the complete released plan is reproduced omits its final shared deadline paragraph (and title).",
+      "primary_source_ids": [],
+      "why_nonmaterial": "All substantive product/scope clauses are reproduced and disposed. The full 60-minute contract remains in the verified inputs and assignments; no retrospective clock adjustment is made."
+    }
+  ],
+  "all_critic_dispositions": [
+    {
+      "id": "MI-1",
+      "judgment": "VALID",
+      "final_disposition": "ACCEPTED; hard-cap versus order-only fallback matrix, protected floor and Windows metric caveat",
+      "final_locator": "final.md:142-152,203",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "MI-2",
+      "judgment": "VALID",
+      "final_disposition": "ACCEPTED; inert worker, assignment/membership before extension code, controlled launch paths and disclosed fallback",
+      "final_locator": "final.md:77-83,175-177,204",
+      "status": "RESOLVED"
+    }
+  ],
+  "rejected_criticism": [],
+  "scope_of_pass": "Complete finite assessment of the research proposal, not deployed software or universal correctness."
+}

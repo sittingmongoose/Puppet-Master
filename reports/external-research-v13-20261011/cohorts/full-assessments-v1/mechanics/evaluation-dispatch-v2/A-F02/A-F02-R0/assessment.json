@@ -1,0 +1,184 @@
+{
+  "schema": "er13.original-assessment.v1",
+  "assignment_id": "A-F02",
+  "original": true,
+  "written_utc": "2026-10-12T01:53:30.502639+00:00",
+  "blinding": "Imperfect from technique-bearing paths/prompts; no active candidate/held-out inputs read.",
+  "arms": [
+    {
+      "arm_id": "A-F02-R0",
+      "scope": "FULL",
+      "source_judgment": {
+        "status": "FAIL",
+        "coverage": "COMPLETE",
+        "basis": "FAIL for a consequential unqualified FFmpeg default-selection fact (R0-D01), despite a largely useful scoped proposal. A lower-channel DEFAULT stream can outrank a higher-channel stream in the tagged algorithm. Explicit mapping remains sensible; agreeing manual-based reviews do not cure the factual error.",
+        "finite_assessment_not_universal_correctness": true,
+        "actual_validation_not_required": true
+      },
+      "coverage": {
+        "overall": "COMPLETE",
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/coverage.json",
+        "sha256": "3c3e720eeac239f68219aad618c5a4e4151c12c900aeb14dfc7220a1dd5663f4",
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE",
+            "complete_final_coverage": "COMPLETE",
+            "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS"
+          },
+          {
+            "axis": 2,
+            "coverage": "COMPLETE",
+            "complete_final_coverage": "COMPLETE",
+            "judgment": "FAIL"
+          },
+          {
+            "axis": 3,
+            "coverage": "COMPLETE",
+            "complete_final_coverage": "COMPLETE",
+            "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE",
+            "complete_final_coverage": "COMPLETE",
+            "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE",
+            "complete_final_coverage": "COMPLETE",
+            "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE",
+            "complete_final_coverage": "COMPLETE",
+            "judgment": "SUPPORTED_WITH_DECLARED_NONMATERIAL_LIMITS"
+          }
+        ]
+      },
+      "defects": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-R0/defects.json",
+        "sha256": "cb13dbe21d1543e58e1dd91e46679a282c1c360a6d07493462c6518821bfdef5",
+        "material_final_defect_ids": [
+          "R0-D01"
+        ],
+        "partial_stage_material_ids": []
+      },
+      "delivery": {
+        "status": "COMPLETE",
+        "final_present": true,
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F02-R0/run/A-F02-R0/control/terminal-handoffs/reviser/files/final.md",
+        "final_sha256": "7a9b18514abab1b261d29bf2618a97e46cca2bcb823eff483cd0465df4de5635",
+        "original_missing_final_preserved": false,
+        "complete_final_grade_fabricated": false
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_BY_FROZEN_NATIVE_TERMINAL_MARKERS",
+        "maximum_elapsed_minutes": 60,
+        "frozen_clocks_unchanged": true,
+        "t0_utc": "2026-10-12T00:30:27.944Z",
+        "whole_deadline_utc": "2026-10-12T01:30:27.944Z",
+        "stages": [
+          {
+            "stage": "investigator",
+            "preparation_utc": "2026-10-12T00:30:28.592Z",
+            "native_goal_created_utc": "2026-10-12T00:30:42+00:00",
+            "native_goal_terminal_utc": "2026-10-12T00:41:11+00:00",
+            "native_goal_lifetime_seconds": 629,
+            "frozen_stage_deadline_utc": "2026-10-12T01:00:28.592Z",
+            "late_native_terminal_seconds": 0,
+            "same_birth_exact_objective_in_receipts": true,
+            "active_to_complete_in_receipts": true,
+            "actual_task_status": "completed",
+            "hasPendingChildRuns": false,
+            "counter_fields_present": true,
+            "last_complete_scientific_artifact_utc": "UNKNOWN",
+            "request_admission_queue_provider_activity_boundaries": "UNKNOWN"
+          },
+          {
+            "stage": "critic",
+            "preparation_utc": "2026-10-12T00:41:50.569Z",
+            "native_goal_created_utc": "2026-10-12T00:42:16+00:00",
+            "native_goal_terminal_utc": "2026-10-12T00:51:42+00:00",
+            "native_goal_lifetime_seconds": 566,
+            "frozen_stage_deadline_utc": "2026-10-12T00:53:50.569Z",
+            "late_native_terminal_seconds": 0,
+            "same_birth_exact_objective_in_receipts": true,
+            "active_to_complete_in_receipts": true,
+            "actual_task_status": "completed",
+            "hasPendingChildRuns": false,
+            "counter_fields_present": true,
+            "last_complete_scientific_artifact_utc": "UNKNOWN",
+            "request_admission_queue_provider_activity_boundaries": "UNKNOWN"
+          },
+          {
+            "stage": "reviser",
+            "preparation_utc": "2026-10-12T00:55:41.444Z",
+            "native_goal_created_utc": "2026-10-12T00:55:55+00:00",
+            "native_goal_terminal_utc": "2026-10-12T01:02:18+00:00",
+            "native_goal_lifetime_seconds": 383,
+            "frozen_stage_deadline_utc": "2026-10-12T01:13:41.444Z",
+            "late_native_terminal_seconds": 0,
+            "same_birth_exact_objective_in_receipts": true,
+            "active_to_complete_in_receipts": true,
+            "actual_task_status": "completed",
+            "hasPendingChildRuns": false,
+            "counter_fields_present": true,
+            "last_complete_scientific_artifact_utc": "UNKNOWN",
+            "request_admission_queue_provider_activity_boundaries": "UNKNOWN"
+          }
+        ],
+        "t0_to_final_native_terminal_proxy_seconds": 1910.056,
+        "proxy_is_last_artifact_or_quiet_time": false,
+        "last_complete_scientific_artifact_utc": "UNKNOWN",
+        "quiet_observation_upper_bound_utc": "2026-10-12T01:28:58.525181+00:00",
+        "quiet_observation_basis": "Packet/status receipts report all actual tasks terminal with zero pending children; exact per-task quiet boundary absent.",
+        "missing_final_has_no_zero_second_success": true,
+        "full_context_occupancy_and_provider_active_time": "UNKNOWN; native Goal lifetimes are distinct observational proxies, not billed work."
+      },
+      "method_compliance": {
+        "status": "PARTIAL",
+        "declared_topology": "investigator -> independent critic -> fresh complete reviser",
+        "present_stage_count": 3,
+        "planned_stage_count": 3,
+        "brief_first_reveal_custody": "Discovery bytes/hash and exact plan match single-use reveal receipts. Actual pre-reveal access chronology beyond captures UNKNOWN.",
+        "scw_artifact_content": "NOT_APPLICABLE",
+        "scw_selection_before_fetch_or_verdict": "UNKNOWN where applicable; complete native transcripts not supplied/read",
+        "activation_before_case_input_and_save_before_completion": "UNKNOWN beyond supplied custody; R0 reviser rounded research window also begins before its native activation marker, insufficient to resolve actual ordering.",
+        "late_or_missing_stage": "No frozen native terminal exceeds its declared stage deadline.",
+        "extra_unlisted_attempts": "UNKNOWN; no full campaign/history scan authorized."
+      },
+      "native_identity_provenance": {
+        "coverage": "PARTIAL",
+        "receipt_custody": "All supplied native create/active/terminal snapshot hashes checked; same birth/exact objective and active-to-complete match in every present stage.",
+        "terminal_manifest_lifecycle_qualified_flag": false,
+        "notification_same_birth_exact_objective_flags_verified": true,
+        "independent_native_to_T3_task_linkage": "UNKNOWN beyond assigned capture/objective custody",
+        "native_realness_freshness_preinput_order": "UNKNOWN beyond supplied receipts; status/hashes do not establish source truth",
+        "public_identity_policy": "No account/provider routing identity, native UUIDs or full native transcripts published."
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "planned_contexts": 3,
+          "present_native_stage_receipts": 3,
+          "cumulative_goal_counter_fields": "OBSERVED; values withheld by public-artifact privacy contract; not additive billing",
+          "input_cached_output_reasoning_breakdown": "UNKNOWN",
+          "provider_activity_context_occupancy": "UNKNOWN",
+          "subscription_consumption_billing": "UNKNOWN",
+          "complete_product_path_total": "UNKNOWN; missing/bounded observations never treated as zero"
+        },
+        "independent_evaluation": {
+          "cost_category": "independent_evaluation",
+          "first_observed_utc": "2026-10-12T01:30:19Z",
+          "original_assessment_written_utc": "2026-10-12T01:53:30.502639+00:00",
+          "provider_activity_counters_billing": "UNKNOWN",
+          "separate_from_candidate_product": true
+        },
+        "preparation_support_publication_root_totals": "UNKNOWN outside this assignment; no cold full-pipeline/component total inferred."
+      }
+    }
+  ]
+}

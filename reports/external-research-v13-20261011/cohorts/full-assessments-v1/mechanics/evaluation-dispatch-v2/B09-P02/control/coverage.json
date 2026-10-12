@@ -1,0 +1,342 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "B09-P02-control",
+  "overall": "COMPLETE",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED",
+      "rationale": "All material brief obligations and negative constraints are carried into the self-contained proposal."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_WITH_NONMATERIAL_LIMITS",
+      "rationale": "Consequential platform/storage facts match governing authorities with capability, metric, version and durability qualifications; minor historical issue context is recorded separately."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED",
+      "rationale": "Useful mechanisms include OS job/cgroup boundaries, high versus max, DRR as analogy, semaphore limits and WAL-reset history. Source-backed choices are separated from measured defaults."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_WITH_NONMATERIAL_LIMITS",
+      "rationale": "Product clauses are correctly retained, narrowed or amended; F01-F05 are all independently assessed and explicitly disposed. No criticism is falsely rejected."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED",
+      "rationale": "Supported queue, fairness alternatives, fencing, fallback, unknowns and validation status survive revision. Shutdown and the previously undefined barrier are improved; no material preservation loss found."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED",
+      "rationale": "Proposed race/crash/platform/load checks have relevant properties and measurements. No tests, workload or target deployment are represented as performed."
+    }
+  ],
+  "obligations": [
+    {
+      "obligation": "queue_ownership_burst_limits",
+      "coverage": "COMPLETE",
+      "final_locator": "final.md:17-23",
+      "finding": "Host owns durable state; active and waiting caps, verified identities and backpressure."
+    },
+    {
+      "obligation": "fairness_classes_long_jobs",
+      "coverage": "COMPLETE",
+      "final_locator": "final.md:25-40",
+      "finding": "FIFO/priority/RR/DRR compared; fit and bypass barrier conditions and long-job limits are explicit."
+    },
+    {
+      "obligation": "unreliable_estimates_variable_memory",
+      "coverage": "COMPLETE",
+      "final_locator": "final.md:42-58",
+      "finding": "Declarations, observed distributions, reservation heuristic, pressure, OS boundaries and counts are distinct."
+    },
+    {
+      "obligation": "windows_linux_ownership_no_admin",
+      "coverage": "COMPLETE",
+      "final_locator": "final.md:50-56,76-82",
+      "finding": "Conditional platform boundaries, assignment/descendants, delegation, fallback and verified termination."
+    },
+    {
+      "obligation": "queued_running_cancel",
+      "coverage": "COMPLETE",
+      "final_locator": "final.md:62-64",
+      "finding": "Durable cancel wins before publication, cooperative stop then owned escalation, stopped state differs from request."
+    },
+    {
+      "obligation": "progress_wait_explanations",
+      "coverage": "COMPLETE",
+      "final_locator": "final.md:66",
+      "finding": "Optional rate-limited structured progress, scoped queue position, concrete blocker and no invented ETA."
+    },
+    {
+      "obligation": "partial_complete_cancel_publication",
+      "coverage": "COMPLETE",
+      "final_locator": "final.md:64,132-136",
+      "finding": "Generation/state CAS and host-record visibility; cancel-first and success-first ordering; no cross-resource atomicity claim."
+    },
+    {
+      "obligation": "shutdown_restart_resume",
+      "coverage": "COMPLETE",
+      "final_locator": "final.md:70-82",
+      "finding": "Queued rows persist; reconcile old workers, fencing, idempotency/versioned checkpoints, no unsafe duplicate."
+    },
+    {
+      "obligation": "manual_override_consequences",
+      "coverage": "COMPLETE",
+      "final_locator": "final.md:68,118",
+      "finding": "One-use promotion and optional capped pressure override; peer delay and failure/responsiveness consequences."
+    },
+    {
+      "obligation": "negative_constraints",
+      "coverage": "COMPLETE",
+      "final_locator": "final.md:7,35-56,68,138",
+      "finding": "No count-as-memory, payment priority, elevation requirement, unrelated kill, full platform or deployment."
+    },
+    {
+      "obligation": "measurement_phases_validation_truth",
+      "coverage": "COMPLETE",
+      "final_locator": "final.md:58,84-104,193",
+      "finding": "Values require measurement; phased integration and meaningful failure/load oracles are proposed, not executed."
+    }
+  ],
+  "source_families": [
+    {
+      "family": "Windows Job Objects",
+      "coverage": "COMPLETE",
+      "sources": [
+        "E01",
+        "E02",
+        "E03",
+        "E04"
+      ],
+      "scope": "Applicable limits, definitions, assignment rights/version/descendant exceptions, ownership and cleanup; runtime support not asserted."
+    },
+    {
+      "family": "Linux cgroup memory and process organization",
+      "coverage": "COMPLETE",
+      "sources": [
+        "E05",
+        "E07"
+      ],
+      "scope": "Controller/delegation conditions, high/max/accounting, startup inheritance and containment caveats; installed support remains unknown."
+    },
+    {
+      "family": "Fairness and resource-admission proposals",
+      "coverage": "COMPLETE",
+      "sources": [
+        "E29",
+        "E16",
+        "E17",
+        "E18",
+        "E19",
+        "E20",
+        "E21",
+        "E22",
+        "E23"
+      ],
+      "scope": "Compare qualitative mechanisms and proposed properties; no imported packet guarantees or unmeasured empirical result."
+    },
+    {
+      "family": "SQLite state, durability and release/fix context",
+      "coverage": "COMPLETE",
+      "sources": [
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E15"
+      ],
+      "scope": "Optional same-host journal, single-writer/durability conditions, WAL-reset scenario and affected/fixed versions; target bundle unknown."
+    },
+    {
+      "family": "Progress/cancellation precedent",
+      "coverage": "COMPLETE",
+      "sources": [
+        "E24"
+      ],
+      "scope": "Signal versus forced stop, callback lifetime and reference-product applicability; test-plan status distinguished."
+    },
+    {
+      "family": "Host publication/recovery contract",
+      "coverage": "COMPLETE",
+      "sources": [
+        "E09",
+        "E12",
+        "E14",
+        "E01",
+        "E05"
+      ],
+      "scope": "Reasoned state/file protocol assessed as a planning proposal; unknown extension trust/input/checkpoint facts retained."
+    },
+    {
+      "family": "Optional systemd managed worker route",
+      "coverage": "COMPLETE",
+      "sources": [
+        "E07",
+        "E08"
+      ],
+      "scope": "Verified the supported optional source-map opportunity. The final index retains the route; detailed product integration stays unselected."
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "F01",
+      "judgment": "VALID",
+      "final_disposition": "ACCEPTED; shutdown/reaping sequence supplied",
+      "final_locator": "final.md:74-82",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "F02",
+      "judgment": "VALID",
+      "final_disposition": "ACCEPTED/AMENDED; L-lookahead and K-conflicting-bypass barrier; no wall-clock guarantee",
+      "final_locator": "final.md:36-40",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "F03",
+      "judgment": "VALID, NONMATERIAL",
+      "final_disposition": "Separate R07 corrects top-release metadata; S12 retained transparently as history",
+      "final_locator": "final.md:72,172; reviser source-map R07",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "F04",
+      "judgment": "VALID LIMITATION, NOT A FALSE SOURCE CLAIM",
+      "final_disposition": "AMENDED; reservation formula stays an unmeasured heuristic",
+      "final_locator": "final.md:44,173",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "F05",
+      "judgment": "HONESTLY UNRESOLVED USER INPUT",
+      "final_disposition": "Uncertainty retained; unnamed host not replaced with an upstream product",
+      "final_locator": "final.md:11,174,180-187",
+      "status": "RETAINED_UNKNOWN"
+    }
+  ],
+  "preservation": {
+    "coverage": "COMPLETE",
+    "material_losses_found": [],
+    "source_record_identity_check": "Original source records compared as complete JSON values: control carries S00-S16 and C01-C09 exactly; treatment carries S01-S13 exactly. New observations are separate.",
+    "scope": "Meaning, conditions, opportunities, alternatives, uncertainty and validation status; not lexical identity or citation count."
+  },
+  "input_read_inventory": [
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/control/terminal-handoffs/investigator/files/discovery.md",
+      "sha256": "e2710b14aff19dc31a87f3f5c0abbfd48b24cc907d2a90ba4cb3786008aaae7f",
+      "bytes": 13916
+    },
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/control/terminal-handoffs/investigator/files/draft.md",
+      "sha256": "cf7b7f8fcb469520a004ddb62a7e20817be4e6b8fd2506466ec5e304b1191ee7",
+      "bytes": 28058
+    },
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/control/terminal-handoffs/investigator/files/source-map.json",
+      "sha256": "7bfd2a164e09207cf441b8ae8fdd1e7018a1104956ebb8e46bd441637aff5fe3",
+      "bytes": 17983
+    },
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/control/terminal-handoffs/investigator/files/revealed-plan.md",
+      "sha256": "80356345baad2274724e5dfc67de202b988f3a5a87bec342e6946c35438d70e3",
+      "bytes": 2391
+    },
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/control/terminal-handoffs/investigator/files/plan-reveal.json",
+      "sha256": "0dd20e7f63ff7481d4a518d6ce4d7d6d5901a780622040f9276a9b877d6d7ee4",
+      "bytes": 471
+    },
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/control/terminal-handoffs/investigator/files/sources/index.md",
+      "sha256": "f40ca56b665ecc23047f740a4852e3bfc2359e9d40235b26bb015a96e4cc2482",
+      "bytes": 4521
+    },
+    {
+      "stage": "critic",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/control/terminal-handoffs/critic/files/critique.md",
+      "sha256": "5561035e9c6629037030ab4cb3f156c3e30aa0150b6d09f085e8c3d2187c2f58",
+      "bytes": 9928
+    },
+    {
+      "stage": "critic",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/control/terminal-handoffs/critic/files/source-map.json",
+      "sha256": "baf5f4b0d5ae3104873419f5c857406cb1f31675717ae815d97618e0a67e4ac0",
+      "bytes": 13355
+    },
+    {
+      "stage": "critic",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/control/terminal-handoffs/critic/files/sources/index.md",
+      "sha256": "cdde3301ed85306a47a7e67699ec06e0a53501e9dbac715ea54312f5edad067e",
+      "bytes": 2478
+    },
+    {
+      "stage": "reviser",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/control/terminal-handoffs/reviser/files/final.md",
+      "sha256": "9d141a9e71cccddf45fcda3702cf92a4fac6ece7266b767e3bd79484a5ca58d5",
+      "bytes": 37429
+    },
+    {
+      "stage": "reviser",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/control/terminal-handoffs/reviser/files/source-map.json",
+      "sha256": "44c1e4a73973e1d45dc8686ce37c345c39abc5a17f81df5badc6fd479e41845b",
+      "bytes": 45946
+    },
+    {
+      "stage": "reviser",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P02-control/run/B09-P02-control/control/terminal-handoffs/reviser/files/sources/index.md",
+      "sha256": "f7bfb22f1a498d146f97b6a4d3762440fd355b94194294855eb03fad2bbef2b6",
+      "bytes": 8393
+    }
+  ],
+  "input_integrity": {
+    "packet_path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B09-P02.json",
+    "packet_sha256": "2a254455e4f7c64f8995719115273287ccb2247d431fc4581a6ec72576b77e45",
+    "verification_receipt_path": "ER13_RUNTIME/state/eval-coordinator-v2/B09-P02-input-verification.json",
+    "verification_receipt_sha256": "adc076acb0cac62820de37e86d04b1f9cd8a7762c55b269efacce4252741de81",
+    "verified_exact_allowlist_members_for_this_arm": 49,
+    "hash_or_size_mismatches": [],
+    "boundary": "Only supplied immutable terminal snapshots, supplements/status receipts and named governing files. Embedded active locations were not followed."
+  },
+  "outside_declared_assessment": [
+    {
+      "subject": "Unknown target application source/callers/tests and installed OS/storage/workload",
+      "coverage": "UNASSESSED",
+      "reason": "No identity or files supplied; uncertainty is appropriate for this proposal."
+    },
+    {
+      "subject": "Future execution/deployment and empirical scheduler/resource performance",
+      "coverage": "UNASSESSED",
+      "reason": "Not requested or performed; proposal validation quality was assessed."
+    },
+    {
+      "subject": "Universal scheduler proofs, all upstream implementation/history and all DRR proofs/simulations",
+      "coverage": "UNASSESSED",
+      "reason": "Finite consequence-focused source assessment; not universal certification."
+    }
+  ],
+  "early_failure_stop": false
+}

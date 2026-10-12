@@ -1,0 +1,134 @@
+[
+  {
+    "id": "sqlite-crash50",
+    "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.50.0/test/crash.test",
+    "resolved_url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.50.0/test/crash.test",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:36:24.966047+00:00",
+    "access_end_utc": "2026-10-12T01:36:25.078297+00:00",
+    "response_bytes": 13399,
+    "response_sha256": "4a5128570b2c7d4ac244c3625565fbb9ed0b18f4c172de147eef2e6887b6e527",
+    "operation": "independent source text retrieval; definitions and test contexts inspected; no downloaded code executed"
+  },
+  {
+    "id": "sqlite-crash54",
+    "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.54.0/test/crash.test",
+    "resolved_url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.54.0/test/crash.test",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:36:24.967189+00:00",
+    "access_end_utc": "2026-10-12T01:36:25.084952+00:00",
+    "response_bytes": 13399,
+    "response_sha256": "4a5128570b2c7d4ac244c3625565fbb9ed0b18f4c172de147eef2e6887b6e527",
+    "operation": "independent source text retrieval; definitions and test contexts inspected; no downloaded code executed"
+  },
+  {
+    "id": "sqlite-walcrash54",
+    "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.54.0/test/walcrash.test",
+    "resolved_url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.54.0/test/walcrash.test",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:36:24.968000+00:00",
+    "access_end_utc": "2026-10-12T01:36:25.100542+00:00",
+    "response_bytes": 9314,
+    "response_sha256": "488170ee7c3cb7455d173b598c03fb2461dc371f52087d06e454e23893c0eac6",
+    "operation": "independent source text retrieval; definitions and test contexts inspected; no downloaded code executed"
+  },
+  {
+    "id": "sqlite-wal54",
+    "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.54.0/src/wal.c",
+    "resolved_url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.54.0/src/wal.c",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:36:24.968764+00:00",
+    "access_end_utc": "2026-10-12T01:36:25.136311+00:00",
+    "response_bytes": 183813,
+    "response_sha256": "11ab3050c715b8d4b05f20c9030ea96ed70475080ba62fe3f60e441ac765eb47",
+    "operation": "independent source text retrieval; definitions and test contexts inspected; no downloaded code executed"
+  },
+  {
+    "id": "automerge-impl",
+    "url": "https://raw.githubusercontent.com/automerge/automerge/8d7b12f8da553afbb325e37a6c66942b8dd4d994/javascript/src/implementation.ts",
+    "resolved_url": "https://raw.githubusercontent.com/automerge/automerge/8d7b12f8da553afbb325e37a6c66942b8dd4d994/javascript/src/implementation.ts",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:36:24.969388+00:00",
+    "access_end_utc": "2026-10-12T01:36:25.098750+00:00",
+    "response_bytes": 59592,
+    "response_sha256": "16fdb304e02cf38574992040bf283d449ced2d64d4f48f9cb89ad4f3ff68d407",
+    "operation": "independent source text retrieval; definitions and test contexts inspected; no downloaded code executed"
+  },
+  {
+    "id": "automerge-test",
+    "url": "https://raw.githubusercontent.com/automerge/automerge/8d7b12f8da553afbb325e37a6c66942b8dd4d994/javascript/test/conflicts.ts",
+    "resolved_url": "https://raw.githubusercontent.com/automerge/automerge/8d7b12f8da553afbb325e37a6c66942b8dd4d994/javascript/test/conflicts.ts",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:36:25.078977+00:00",
+    "access_end_utc": "2026-10-12T01:36:25.175593+00:00",
+    "response_bytes": 4933,
+    "response_sha256": "a5899a59c531e1725cfbb3ea3b19f22849bcef2ad9307232509735cee54f2370",
+    "operation": "independent source text retrieval; definitions and test contexts inspected; no downloaded code executed"
+  },
+  {
+    "id": "automerge-package",
+    "url": "https://raw.githubusercontent.com/automerge/automerge/8d7b12f8da553afbb325e37a6c66942b8dd4d994/javascript/package.json",
+    "resolved_url": "https://raw.githubusercontent.com/automerge/automerge/8d7b12f8da553afbb325e37a6c66942b8dd4d994/javascript/package.json",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:36:25.085591+00:00",
+    "access_end_utc": "2026-10-12T01:36:25.215422+00:00",
+    "response_bytes": 3229,
+    "response_sha256": "d0019f8ca4995a0dc22563d4229b9f0dd3666921b363bc3e86a5e6d4839d1220",
+    "operation": "independent source text retrieval; definitions and test contexts inspected; no downloaded code executed"
+  },
+  {
+    "id": "automerge-readme",
+    "url": "https://raw.githubusercontent.com/automerge/automerge/8d7b12f8da553afbb325e37a6c66942b8dd4d994/README.md",
+    "resolved_url": "https://raw.githubusercontent.com/automerge/automerge/8d7b12f8da553afbb325e37a6c66942b8dd4d994/README.md",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:36:25.099473+00:00",
+    "access_end_utc": "2026-10-12T01:36:25.208577+00:00",
+    "response_bytes": 8132,
+    "response_sha256": "fb915850be93dbfb1a24cdc3484eb78640a92a8615414b3b9c329b7ac98d1ded",
+    "operation": "independent source text retrieval; definitions and test contexts inspected; no downloaded code executed"
+  },
+  {
+    "id": "couch-coordinator",
+    "url": "https://raw.githubusercontent.com/apache/couchdb/3.5.3/src/couch_replicator/src/couch_replicator.erl",
+    "resolved_url": "https://raw.githubusercontent.com/apache/couchdb/3.5.3/src/couch_replicator/src/couch_replicator.erl",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:36:25.101249+00:00",
+    "access_end_utc": "2026-10-12T01:36:25.211122+00:00",
+    "response_bytes": 13995,
+    "response_sha256": "3b30b29e94f7f4dd67a1cf022a22906fbac332a6ab9465c9d74386df2ccc0c50",
+    "operation": "independent source text retrieval; definitions and test contexts inspected; no downloaded code executed"
+  },
+  {
+    "id": "pouch-test-current",
+    "url": "https://raw.githubusercontent.com/apache/pouchdb/master/tests/integration/test.conflicts.js",
+    "resolved_url": "https://raw.githubusercontent.com/apache/pouchdb/master/tests/integration/test.conflicts.js",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:36:25.137294+00:00",
+    "access_end_utc": "2026-10-12T01:36:25.239824+00:00",
+    "response_bytes": 16345,
+    "response_sha256": "e21bd81bb41f0b3979c6326894555a7267bdd2ec3c439569d9d50f100bfb1dc8",
+    "operation": "independent source text retrieval; definitions and test contexts inspected; no downloaded code executed"
+  },
+  {
+    "id": "pouch-fix",
+    "url": "https://raw.githubusercontent.com/neighbourhoodie/pouchdb/1a30d0525f7b778ac3a4c58d1bf0d03628533999/packages/node_modules/pouchdb-adapter-indexeddb/src/bulkDocs.js",
+    "resolved_url": "https://raw.githubusercontent.com/neighbourhoodie/pouchdb/1a30d0525f7b778ac3a4c58d1bf0d03628533999/packages/node_modules/pouchdb-adapter-indexeddb/src/bulkDocs.js",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:36:25.176192+00:00",
+    "access_end_utc": "2026-10-12T01:36:25.290842+00:00",
+    "response_bytes": 11453,
+    "response_sha256": "32e0fd2c88f331512e4b3e834159998cebc5890333ac518b7d8296a176114613",
+    "operation": "independent source text retrieval; definitions and test contexts inspected; no downloaded code executed"
+  },
+  {
+    "id": "pouch-test-cited",
+    "url": "https://raw.githubusercontent.com/neighbourhoodie/pouchdb/1a30d0525f7b778ac3a4c58d1bf0d03628533999/tests/integration/test.attachments.js",
+    "resolved_url": "https://raw.githubusercontent.com/neighbourhoodie/pouchdb/1a30d0525f7b778ac3a4c58d1bf0d03628533999/tests/integration/test.attachments.js",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:36:25.209183+00:00",
+    "access_end_utc": "2026-10-12T01:36:25.306393+00:00",
+    "response_bytes": 139670,
+    "response_sha256": "696848045d5622891179d4e04d8fd56f3263f4ebfa5141d59434e10834c164fe",
+    "operation": "independent source text retrieval; definitions and test contexts inspected; no downloaded code executed"
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "gstPatch",
+    "url": "https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests/12642.patch",
+    "accessed_utc": "2026-10-12T01:39:21.651766+00:00",
+    "operation": "HTTPS GET; governing function and adjacent callers; read only",
+    "status": 200,
+    "bytes": 6350,
+    "sha256": "5dc2e58c124b0e2496821109c2aaa08839d234275bcb17df988301893ee62fbb"
+  },
+  {
+    "id": "gstChannelsOld",
+    "url": "https://raw.githubusercontent.com/GStreamer/gstreamer/1.28.7/subprojects/gst-plugins-base/gst-libs/gst/audio/audio-channels.c",
+    "accessed_utc": "2026-10-12T01:39:22.057944+00:00",
+    "operation": "HTTPS GET; governing function and adjacent callers; read only",
+    "status": 200,
+    "bytes": 23051,
+    "sha256": "3ba395ba2a43abd79a58b4148e0e5f0f6315d6b092b77c3414eb352eab13928d"
+  },
+  {
+    "id": "gstWavCaller",
+    "url": "https://raw.githubusercontent.com/GStreamer/gstreamer/1.28.7/subprojects/gst-plugins-good/gst/wavparse/gstwavparse.c",
+    "accessed_utc": "2026-10-12T01:39:22.195094+00:00",
+    "operation": "HTTPS GET; governing function and adjacent callers; read only",
+    "status": 200,
+    "bytes": 94832,
+    "sha256": "599cf80bd11baf5935fd2df5c6e1918ae563aec801f567c4ae5035539fa790cc"
+  },
+  {
+    "id": "gstAudioInfoCaller",
+    "url": "https://raw.githubusercontent.com/GStreamer/gstreamer/1.28.7/subprojects/gst-plugins-base/gst-libs/gst/audio/audio-info.c",
+    "accessed_utc": "2026-10-12T01:39:22.307432+00:00",
+    "operation": "HTTPS GET; governing function and adjacent callers; read only",
+    "status": 200,
+    "bytes": 14765,
+    "sha256": "c04ef55545dbe8ce03178c9c3f468715a34f29e0058b5f157a8c2a2aedad85bc"
+  },
+  {
+    "id": "ffAudioSelection",
+    "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/fftools/ffmpeg_mux_init.c",
+    "accessed_utc": "2026-10-12T01:39:22.417122+00:00",
+    "operation": "HTTPS GET; governing function and adjacent callers; read only",
+    "status": 200,
+    "bytes": 119752,
+    "sha256": "a74812b6e019e5cd2a0e6a28a63e989d55008b081a55acde8510774310e965c2"
+  }
+]

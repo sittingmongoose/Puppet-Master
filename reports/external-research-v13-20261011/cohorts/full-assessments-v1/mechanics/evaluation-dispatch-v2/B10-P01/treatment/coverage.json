@@ -1,0 +1,413 @@
+{
+  "schema": "er13.coverage.v1",
+  "arm_id": "B10-P01-treatment",
+  "assessment_scope": "FULL exact frozen originals; generic research-planning proposal, with all final consequential claims examined",
+  "overall": "COMPLETE",
+  "axes": [
+    {
+      "axis_id": "A1",
+      "axis": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "final.md lines 10–42, 68–164",
+      "reason": "The complete generic proposal retains older/offline editions, passage-level links, manual provenance, bounds/privacy and every negative constraint."
+    },
+    {
+      "axis_id": "A2",
+      "axis": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "final.md lines 15–38, 48–58, source maps S01–S12",
+      "reason": "HTTP strengths/selected representations, digest inputs, annotations, lineage, archive behavior and SQLite release/build/synchronization scope are supported. Minor locator/status limitations are recorded."
+    },
+    {
+      "axis_id": "A3",
+      "axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "discovery lines 22–41; final.md lines 44–58; sources S08–S12",
+      "reason": "Useful added mechanisms include State-bound selectors, hash identity, Memento, explicit provenance and conditional FTS5 alternatives. The exact upstream test, issue correction, maintainer illustration, release context and scoped update/storage code were checked; no measured winner is asserted."
+    },
+    {
+      "axis_id": "A4",
+      "axis": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "final.md lines 60–164",
+      "reason": "All 17 plan clauses and C-01–C-05 dispositions were examined. The 304-selector inference is correctly rejected; accepted qualifications do not wrongly remove supported capability. Critic severity is independently qualified."
+    },
+    {
+      "axis_id": "A5",
+      "axis": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "discovery/draft → final.md lines 10–58, 68–158",
+      "reason": "Immutable source/extraction states, provenance/dedup distinction, privacy, old-version/offline intent, per-link review, alternatives and owner uncertainties remain. FTS5 warning is narrowed with evidence; no material preservation loss found."
+    },
+    {
+      "axis_id": "A6",
+      "axis": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "final_locator": "final.md lines 130–146, 166–170",
+      "reason": "Deterministic HTTP/variant/redirect, anchor/parser, manual/privacy/offline, index consistency and scale proposals have appropriate expected outcomes. Test source reading is distinguished from execution/reproduction."
+    }
+  ],
+  "obligations": [
+    {
+      "obligation_id": "O01",
+      "obligation": "Revision identity, URLs and retained payloads",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_IN_PROPOSAL"
+    },
+    {
+      "obligation_id": "O02",
+      "obligation": "Evidence-backed source/edition relationships",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_IN_PROPOSAL"
+    },
+    {
+      "obligation_id": "O03",
+      "obligation": "Freshness and representation-specific change detection",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_IN_PROPOSAL"
+    },
+    {
+      "obligation_id": "O04",
+      "obligation": "Deliberate older-version applicability",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_IN_PROPOSAL"
+    },
+    {
+      "obligation_id": "O05",
+      "obligation": "Note excerpt to exact cached passage",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_IN_PROPOSAL"
+    },
+    {
+      "obligation_id": "O06",
+      "obligation": "Changed/missing/ambiguous passage and partial invalidation",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_IN_PROPOSAL"
+    },
+    {
+      "obligation_id": "O07",
+      "obligation": "Optional bounded checks and continued offline use",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_IN_PROPOSAL"
+    },
+    {
+      "obligation_id": "O08",
+      "obligation": "URL moves/disappearance and manual imports",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_IN_PROPOSAL"
+    },
+    {
+      "obligation_id": "O09",
+      "obligation": "Several-thousand-document local integration",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_IN_PROPOSAL"
+    },
+    {
+      "obligation_id": "O10",
+      "obligation": "No automatic note rewrite or whole-note support inference",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_IN_PROPOSAL"
+    },
+    {
+      "obligation_id": "O11",
+      "obligation": "No HTTP-date proof and no private-note egress",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_IN_PROPOSAL"
+    },
+    {
+      "obligation_id": "O12",
+      "obligation": "Feasible alternatives, primary implementation/tests/history",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_IN_PROPOSAL"
+    },
+    {
+      "obligation_id": "O13",
+      "obligation": "Proposed versus executed validation and proposal-only boundary",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_IN_PROPOSAL"
+    }
+  ],
+  "exact_plan_dispositions": [
+    {
+      "candidate_clause_id": "Clause 01",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "Full sentence/fragment and its final disposition read against the exact revealed plan."
+    },
+    {
+      "candidate_clause_id": "Clause 02",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "Full sentence/fragment and its final disposition read against the exact revealed plan."
+    },
+    {
+      "candidate_clause_id": "Clause 03",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "Full sentence/fragment and its final disposition read against the exact revealed plan."
+    },
+    {
+      "candidate_clause_id": "Clause 04",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "Full sentence/fragment and its final disposition read against the exact revealed plan."
+    },
+    {
+      "candidate_clause_id": "Clause 05",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "Full sentence/fragment and its final disposition read against the exact revealed plan."
+    },
+    {
+      "candidate_clause_id": "Clause 06",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "304-selector guarantee correctly rejected; changed hash scoped to new retained candidate and affected links."
+    },
+    {
+      "candidate_clause_id": "Clause 07",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "Full sentence/fragment and its final disposition read against the exact revealed plan."
+    },
+    {
+      "candidate_clause_id": "Clause 08",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "Full sentence/fragment and its final disposition read against the exact revealed plan."
+    },
+    {
+      "candidate_clause_id": "Clause 09",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "Full sentence/fragment and its final disposition read against the exact revealed plan."
+    },
+    {
+      "candidate_clause_id": "Clause 10",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "Full sentence/fragment and its final disposition read against the exact revealed plan."
+    },
+    {
+      "candidate_clause_id": "Clause 11",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "Full sentence/fragment and its final disposition read against the exact revealed plan."
+    },
+    {
+      "candidate_clause_id": "Clause 12",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "Full sentence/fragment and its final disposition read against the exact revealed plan."
+    },
+    {
+      "candidate_clause_id": "Clause 13",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "Full sentence/fragment and its final disposition read against the exact revealed plan."
+    },
+    {
+      "candidate_clause_id": "Clause 14",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "Full sentence/fragment and its final disposition read against the exact revealed plan."
+    },
+    {
+      "candidate_clause_id": "Clause 15",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "Full sentence/fragment and its final disposition read against the exact revealed plan."
+    },
+    {
+      "candidate_clause_id": "Clause 16",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "Full sentence/fragment and its final disposition read against the exact revealed plan."
+    },
+    {
+      "candidate_clause_id": "Clause 17",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED_DISPOSITION",
+      "note": "Full sentence/fragment and its final disposition read against the exact revealed plan."
+    }
+  ],
+  "all_critic_dispositions": [
+    {
+      "id": "C-01",
+      "coverage": "COMPLETE",
+      "final_disposition": "accept_with_qualification",
+      "independent_judgment": "The same-strong-ETag signal is supported when resource/representation and tag strength are established; it is distinct from local rehashing and extraction. Calling its absence material incomplete overstates the necessity for this generic proposal, but the final adds a valid optional distinction.",
+      "sources": [
+        "P01",
+        "P02"
+      ],
+      "final_locator": "lines 29–35, 98, 104"
+    },
+    {
+      "id": "C-02",
+      "coverage": "COMPLETE",
+      "final_disposition": "accept",
+      "independent_judgment": "Permanent/temporary/303 distinctions are correct and useful. Final retains history without automatic identity merging or blanket forced review. GET-only checking avoids the consequential method-change edge; verified erratum 7109 was considered.",
+      "sources": [
+        "P01",
+        "P23"
+      ],
+      "final_locator": "lines 38, 110"
+    },
+    {
+      "id": "C-03",
+      "coverage": "COMPLETE",
+      "final_disposition": "accept_and_narrow",
+      "independent_judgment": "The corrected report and maintainer illustration support a conditional test risk, not an FTS5 ban or proof of a required append-only architecture. The final narrows topology/data/version claims and truthfully leaves fix status unknown.",
+      "sources": [
+        "P16",
+        "P17",
+        "P18",
+        "P20",
+        "P21",
+        "P22"
+      ],
+      "final_locator": "lines 58, 134, 146"
+    },
+    {
+      "id": "C-04",
+      "coverage": "COMPLETE",
+      "final_disposition": "accept",
+      "independent_judgment": "Digest input boundary is usefully defined as persisted bytes, with encoded versus decoded policy stated as a design choice. This is specification precision, not a repudiation of local digests.",
+      "sources": [
+        "P01",
+        "P07"
+      ],
+      "final_locator": "lines 16, 68"
+    },
+    {
+      "id": "C-05",
+      "coverage": "COMPLETE",
+      "final_disposition": "retain_external_uncertainty",
+      "independent_judgment": "No actual target repo/schema/callers were supplied; final does not fabricate them or claim its upstream tests are handbook validation.",
+      "sources": [],
+      "final_locator": "lines 6, 140, 158, 168–170"
+    }
+  ],
+  "preservation_groups": [
+    {
+      "group_id": "G1",
+      "coverage": "COMPLETE",
+      "judgment": "PRESERVED_OR_VALIDLY_QUALIFIED",
+      "observation": "Family/edition/payload/capture/extraction split preserves bytes without merging differing provenance."
+    },
+    {
+      "group_id": "G2",
+      "coverage": "COMPLETE",
+      "judgment": "PRESERVED_OR_VALIDLY_QUALIFIED",
+      "observation": "Pinned old-version/platform/locale intent and unknown taxonomy remain; newest is not substituted."
+    },
+    {
+      "group_id": "G3",
+      "coverage": "COMPLETE",
+      "judgment": "PRESERVED_OR_VALIDLY_QUALIFIED",
+      "observation": "Quote/context/structural selectors remain extraction-bound; candidate remapping is human-reviewed."
+    },
+    {
+      "group_id": "G4",
+      "coverage": "COMPLETE",
+      "judgment": "PRESERVED_OR_VALIDLY_QUALIFIED",
+      "observation": "Hash/HTTP/Memento/FTS5/existing-engine alternatives and runtime/version limits retained."
+    },
+    {
+      "group_id": "G5",
+      "coverage": "COMPLETE",
+      "judgment": "PRESERVED_OR_VALIDLY_QUALIFIED",
+      "observation": "FTS5 uncertainty is narrowed rather than falsely rejected; immutable evidence remains independent of that implementation risk."
+    },
+    {
+      "group_id": "G6",
+      "coverage": "COMPLETE",
+      "judgment": "PRESERVED_OR_VALIDLY_QUALIFIED",
+      "observation": "Offline/manual/privacy/bounds and per-link invalidation retained; proposed validation is not upgraded into executed tests."
+    }
+  ],
+  "source_families": [
+    {
+      "family": "HTTP semantics/caching/errata/history",
+      "coverage": "COMPLETE",
+      "source_ids": [
+        "P01",
+        "P02",
+        "P23",
+        "P24",
+        "P25",
+        "P26"
+      ],
+      "limit": "Reported erratum is not treated as adopted authority; conservative application policy distinguished from protocol impossibility."
+    },
+    {
+      "family": "Passage selectors/state and provenance relations",
+      "coverage": "COMPLETE",
+      "source_ids": [
+        "P03",
+        "P04"
+      ]
+    },
+    {
+      "family": "Revision pins/digest boundaries",
+      "coverage": "COMPLETE",
+      "source_ids": [
+        "P05",
+        "P07"
+      ]
+    },
+    {
+      "family": "Archive alternatives",
+      "coverage": "COMPLETE",
+      "source_ids": [
+        "P08"
+      ],
+      "limit": "No live recovery or coverage test required/claimed."
+    },
+    {
+      "family": "Relevant public implementation/callers/tests/failure history",
+      "coverage": "COMPLETE",
+      "source_ids": [
+        "P16",
+        "P17",
+        "P18",
+        "P19",
+        "P20",
+        "P21",
+        "P22"
+      ],
+      "limit": "Historical pinned behavior, not deployment or universal regression proof."
+    },
+    {
+      "family": "Actual target-handbook repository/schema/callers/tests/performance",
+      "coverage": "UNASSESSED",
+      "required_for_source_pass": false,
+      "reason": "No target repository/data supplied; product-specific conclusions not made."
+    },
+    {
+      "family": "Latest SQLite fix mapping for the forum reproduction",
+      "coverage": "UNASSESSED",
+      "required_for_source_pass": false,
+      "reason": "No fixed/unfixed conclusion or library adoption asserted. Focused code/test/report/release research was performed; a current fix mapping was not established."
+    }
+  ],
+  "executed_validation": {
+    "candidate_product_execution": "NONE CLAIMED",
+    "evaluator_product_execution": "NONE",
+    "required": "Proposal and source research only; no deployment required.",
+    "evaluator_executed": "Exact input SHA-256/size/allowlist checks, complete frozen document reads, independent primary/source-code/test-context inspection."
+  },
+  "limits": [
+    "Finite assessment of the exact frozen research proposal; no claim of universal correctness or deployed behavior.",
+    "Target handbook repository, actual schemas/callers/tests, corpus, runtime, licensing and owner facts were not supplied. Their actual compatibility/performance remain UNASSESSED; honest unknowns do not defeat this generic proposal.",
+    "No candidate full native transcripts, held-out cases, active originals or scientific repair were accessed. Scientific write times, native-to-task linkage, hidden attempts and provider/billing telemetry are not independently established.",
+    "Technique-bearing arm paths/configuration and output content made blinding imperfect. Shared evaluator lookup did not supply evidence or feedback to candidate authors."
+  ]
+}

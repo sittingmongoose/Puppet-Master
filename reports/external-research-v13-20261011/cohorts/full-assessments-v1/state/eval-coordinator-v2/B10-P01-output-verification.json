@@ -1,0 +1,463 @@
+{
+  "block_id": "B10-P01",
+  "scope": "FULL",
+  "originals": [
+    {
+      "arm_id": "B10-P01-control",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/control/manifest.json",
+      "manifest_sha256": "d750896d0512e99e9fe25fe43e14ef6ee4a80ae789f592e91bdb52bca8b4f8ba",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/control/assessment.json",
+      "assessment_sha256": "9ae16995a7b56b9b4cd16314b697ea98ebf40a2416b79a84b79aefffdce8b70e",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        {
+          "axis_id": "A1",
+          "axis": "Material original obligations and negative constraints",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "final_locator": "final.md lines 7\u201313, 19\u201329, 60\u201381, 89\u2013105",
+          "reason": "All brief obligations and negative constraints are retained; offline old-version evidence, manual provenance and scoped note links remain explicit."
+        },
+        {
+          "axis_id": "A2",
+          "axis": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "final_locator": "final.md lines 31\u201356, 62\u201373, 111\u2013113",
+          "reason": "Governing definitions/variants/defaults/precedence and source scope were checked. One intermediate ETag-default error was not propagated; final limitations are nonmaterial."
+        },
+        {
+          "axis_id": "A3",
+          "axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "final_locator": "final.md lines 33\u201356; discovery and draft alternatives; source maps",
+          "reason": "W3C paired selectors/state, PROV-O, Memento, SWHIDs and commit links add feasible mechanisms beyond the revealed plan. The pinned Hypothesis issue/fix, exported caller, matching definition and tests substantiate the bounded failure history."
+        },
+        {
+          "axis_id": "A4",
+          "axis": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "final_locator": "final.md lines 83\u2013113",
+          "reason": "All P01\u2013P17 dispositions examined. The 304-selector inference is correctly rejected; C1/C2 corrections are supported, C3 uncertainty retained. No material false criticism accepted."
+        },
+        {
+          "axis_id": "A5",
+          "axis": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "final_locator": "discovery/draft \u2192 final.md lines 7\u201381, 115\u2013129; final source lineage",
+          "reason": "Immutable captures, extraction versions, claim-level links, archive/identity alternatives, owner decisions, old-version/offline behavior and validation limits survive the complete final. No material preservation loss found."
+        },
+        {
+          "axis_id": "A6",
+          "axis": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "final_locator": "final.md lines 101, 125\u2013129",
+          "reason": "Protocol, variants, ambiguity/Unicode/extraction, partial change, redirects/manual imports, privacy/offline and scale fixtures are meaningful proposals. No product/test execution is claimed."
+        }
+      ],
+      "delivery": {
+        "status": "DELIVERED",
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-control/run/B10-P01-control/control/terminal-handoffs/reviser/files/final.md",
+        "final_bytes": 29520,
+        "final_sha256": "455bdacf2e718692fe150c66d0ce559ce46ab8a2b2dc573b4e1a22570e14cd3d",
+        "required_manifest_outputs_present": true,
+        "missing_final": false,
+        "terminal_tasks_completed_zero_pending": true,
+        "publication_limit": "No account/native transcript or usage values copied into these public scientific artifacts."
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_BY_AVAILABLE_FROZEN_RECEIPTS",
+        "maximum_elapsed_seconds": 3600,
+        "frozen_clock_unchanged": true,
+        "t0_utc": "2026-10-12T00:37:12.808Z",
+        "whole_deadline_utc": "2026-10-12T01:37:12.808Z",
+        "stages": [
+          {
+            "stage": "investigator",
+            "request_utc": "2026-10-12T00:37:13.529Z",
+            "dispatch_receipt_captured_utc": "2026-10-12T00:37:14.344Z",
+            "native_create_utc": "2026-10-12T00:37:40+00:00",
+            "native_complete_utc": "2026-10-12T00:44:53+00:00",
+            "stage_deadline_utc": "2026-10-12T01:07:13.529Z",
+            "native_lifetime_seconds": 433,
+            "native_reported_time_used_seconds": 432,
+            "request_to_native_create_seconds": 26.471,
+            "native_complete_before_stage_deadline": true,
+            "science_write_time_utc": null,
+            "science_write_time_status": "UNKNOWN independently; package reports outputs saved before completion."
+          },
+          {
+            "stage": "critic",
+            "request_utc": "2026-10-12T00:46:01.847Z",
+            "dispatch_receipt_captured_utc": "2026-10-12T00:46:02.723Z",
+            "native_create_utc": "2026-10-12T00:46:24+00:00",
+            "native_complete_utc": "2026-10-12T00:56:07+00:00",
+            "stage_deadline_utc": "2026-10-12T00:58:01.847Z",
+            "native_lifetime_seconds": 583,
+            "native_reported_time_used_seconds": 582,
+            "request_to_native_create_seconds": 22.153,
+            "native_complete_before_stage_deadline": true,
+            "science_write_time_utc": null,
+            "science_write_time_status": "UNKNOWN independently; package reports outputs saved before completion."
+          },
+          {
+            "stage": "reviser",
+            "request_utc": "2026-10-12T01:07:47.428Z",
+            "dispatch_receipt_captured_utc": "2026-10-12T01:07:48.320Z",
+            "native_create_utc": "2026-10-12T01:07:59+00:00",
+            "native_complete_utc": "2026-10-12T01:13:09+00:00",
+            "stage_deadline_utc": "2026-10-12T01:25:47.428Z",
+            "native_lifetime_seconds": 310,
+            "native_reported_time_used_seconds": 309,
+            "request_to_native_create_seconds": 11.572,
+            "native_complete_before_stage_deadline": true,
+            "science_write_time_utc": null,
+            "science_write_time_status": "UNKNOWN independently; package reports outputs saved before completion."
+          }
+        ],
+        "interstage_observations": [
+          {
+            "after_stage": "investigator",
+            "before_stage": "critic",
+            "native_completion_to_next_request_seconds": 68.847,
+            "interpretation": "Mixed handoff/controller/possibly task-quiet delay; not isolated queue or provider activity."
+          },
+          {
+            "after_stage": "critic",
+            "before_stage": "reviser",
+            "native_completion_to_next_request_seconds": 700.428,
+            "interpretation": "Mixed handoff/controller/possibly task-quiet delay; not isolated queue or provider activity."
+          }
+        ],
+        "native_final_completion_proxy_seconds_from_t0": 2156.192,
+        "native_final_completion_proxy_limit": "Native completion receipt timestamp; not exact scientific write time or independently attested task-quiet final.",
+        "frozen_notification_utc": "2026-10-12T01:28:57.704691+00:00",
+        "t0_to_frozen_final_notification_upper_bound_seconds": 3104.897,
+        "final_notification_before_whole_deadline": true,
+        "request_to_quiet_final_proxy_seconds": null,
+        "request_to_quiet_final_proxy_status": "UNKNOWN: permitted raw terminal status receipts expose no terminal event timestamp.",
+        "last_complete_scientific_artifact_time": "UNKNOWN independently; final present by the frozen notification.",
+        "stage_failures_observed": []
+      },
+      "method_compliance": {
+        "coverage": "PARTIAL",
+        "status": "OBSERVED_CONFORMING_WITH_UNOBSERVABLE_LIMITS",
+        "observations": [
+          "One investigator, one critic and one fresh reviser are declared and have distinct captured native identities.",
+          "All required frozen science documents/indexes are present; no additional critic/witness is manifest-listed.",
+          "One-time reveal receipt matches the retained discovery and exact plan hashes.",
+          "Source IDs remain traceable; final proposal contains complete prose and dispositions."
+        ],
+        "unobservable": [
+          "Actual activation-before-input order and absence of hidden plan access/retries/extra workers cannot be proven from allowed receipts.",
+          "Actual fresh provider-context linkage and compliance with every prohibited-path constraint are not attested by native captures."
+        ],
+        "evaluator_constraints": "No extra agents, Goals, candidate repairs, author contact, Git/canon/WorkNodes/shared server/provider changes or held-out access."
+      },
+      "native_provenance": {
+        "coverage": "PARTIAL",
+        "stage_records": [
+          {
+            "stage": "investigator",
+            "create_active_terminal_identity_matches": true,
+            "exact_frozen_objective_matches": true,
+            "native_status_transition": "active_to_complete",
+            "status_receipt_completed_zero_pending": true,
+            "independent_native_to_task_linkage": "UNKNOWN beyond objective/capture custody"
+          },
+          {
+            "stage": "critic",
+            "create_active_terminal_identity_matches": true,
+            "exact_frozen_objective_matches": true,
+            "native_status_transition": "active_to_complete",
+            "status_receipt_completed_zero_pending": true,
+            "independent_native_to_task_linkage": "UNKNOWN beyond objective/capture custody"
+          },
+          {
+            "stage": "reviser",
+            "create_active_terminal_identity_matches": true,
+            "exact_frozen_objective_matches": true,
+            "native_status_transition": "active_to_complete",
+            "status_receipt_completed_zero_pending": true,
+            "independent_native_to_task_linkage": "UNKNOWN beyond objective/capture custody"
+          }
+        ],
+        "native_capture_integrity": "Verified exact immutable member SHA-256 and sizes.",
+        "distinct_captured_stage_identities": true,
+        "provider_account_identity": "Not disclosed",
+        "capture_provenance_limit": "Direct fields corroborate consistent lifecycle receipts; not independent proof that the native context performed the scientific task."
+      },
+      "resource_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "native_lifetime_sum_seconds": 1326,
+          "native_lifetime_union_seconds": 1326,
+          "intra_arm_native_lifetime_overlap_seconds": 0,
+          "native_reported_time_used_sum_seconds": 1323,
+          "counter_domains": "Native Goal lifetime and cumulative reported time only; not provider active time, billed time or complete context residency.",
+          "created_started_context_occupancy": "UNKNOWN outside native lifetime proxies",
+          "provider_active_seconds": null,
+          "provider_active_seconds_status": "UNKNOWN",
+          "native_cumulative_usage_counters": "Present in private receipts; values not reproduced in scientific artifacts; not billing or component-resolved usage.",
+          "input_usage": "UNKNOWN",
+          "cached_input_subset": "UNKNOWN",
+          "output_usage": "UNKNOWN",
+          "reasoning_subset": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "billing_amount": null,
+          "billing_status": "UNKNOWN",
+          "hidden_failed_or_retried_attempts": "UNKNOWN beyond notified assigned stage/status records; none omitted from this two-arm assigned denominator."
+        },
+        "independent_evaluation": {
+          "resource_class": "independent_evaluation",
+          "first_observed_utc": "2026-10-12T01:30:19Z",
+          "original_assessment_written_utc": "2026-10-12T01:41:55.463457+00:00",
+          "active_provider_seconds": "UNKNOWN",
+          "billing": "UNKNOWN",
+          "allocation": "Separate from candidate product, shared lookup reused across the assigned arms; not free candidate assistance."
+        },
+        "preparation_support_publication_totals": "UNKNOWN from permitted packet; no cold composite or passing-output cost quotient asserted."
+      },
+      "frozen_files_verified": 7,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    },
+    {
+      "arm_id": "B10-P01-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/treatment/manifest.json",
+      "manifest_sha256": "a9021fc66cb9bd2f87ff445382e1993c013514ad7225b01c1ce651ef95892175",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/treatment/assessment.json",
+      "assessment_sha256": "5c1ec171c918b22d5cea4ca7865d016ea7691daec6ce2c5a382bc8c92c8c4b52",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        {
+          "axis_id": "A1",
+          "axis": "Material original obligations and negative constraints",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "final_locator": "final.md lines 10\u201342, 68\u2013164",
+          "reason": "The complete generic proposal retains older/offline editions, passage-level links, manual provenance, bounds/privacy and every negative constraint."
+        },
+        {
+          "axis_id": "A2",
+          "axis": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "final_locator": "final.md lines 15\u201338, 48\u201358, source maps S01\u2013S12",
+          "reason": "HTTP strengths/selected representations, digest inputs, annotations, lineage, archive behavior and SQLite release/build/synchronization scope are supported. Minor locator/status limitations are recorded."
+        },
+        {
+          "axis_id": "A3",
+          "axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "final_locator": "discovery lines 22\u201341; final.md lines 44\u201358; sources S08\u2013S12",
+          "reason": "Useful added mechanisms include State-bound selectors, hash identity, Memento, explicit provenance and conditional FTS5 alternatives. The exact upstream test, issue correction, maintainer illustration, release context and scoped update/storage code were checked; no measured winner is asserted."
+        },
+        {
+          "axis_id": "A4",
+          "axis": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "final_locator": "final.md lines 60\u2013164",
+          "reason": "All 17 plan clauses and C-01\u2013C-05 dispositions were examined. The 304-selector inference is correctly rejected; accepted qualifications do not wrongly remove supported capability. Critic severity is independently qualified."
+        },
+        {
+          "axis_id": "A5",
+          "axis": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "final_locator": "discovery/draft \u2192 final.md lines 10\u201358, 68\u2013158",
+          "reason": "Immutable source/extraction states, provenance/dedup distinction, privacy, old-version/offline intent, per-link review, alternatives and owner uncertainties remain. FTS5 warning is narrowed with evidence; no material preservation loss found."
+        },
+        {
+          "axis_id": "A6",
+          "axis": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "final_locator": "final.md lines 130\u2013146, 166\u2013170",
+          "reason": "Deterministic HTTP/variant/redirect, anchor/parser, manual/privacy/offline, index consistency and scale proposals have appropriate expected outcomes. Test source reading is distinguished from execution/reproduction."
+        }
+      ],
+      "delivery": {
+        "status": "DELIVERED",
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B10-P01-treatment/run/B10-P01-treatment/control/terminal-handoffs/reviser/files/final.md",
+        "final_bytes": 23722,
+        "final_sha256": "aeae34085117e39b969692c10ee759ed9ba18f7c1a674d7a2bda7984fe5579c8",
+        "required_manifest_outputs_present": true,
+        "missing_final": false,
+        "terminal_tasks_completed_zero_pending": true,
+        "publication_limit": "Frozen final includes unneeded native usage details; no such private details are copied into these public scientific artifacts."
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_BY_AVAILABLE_FROZEN_RECEIPTS",
+        "maximum_elapsed_seconds": 3600,
+        "frozen_clock_unchanged": true,
+        "t0_utc": "2026-10-12T00:37:00.725Z",
+        "whole_deadline_utc": "2026-10-12T01:37:00.725Z",
+        "stages": [
+          {
+            "stage": "investigator",
+            "request_utc": "2026-10-12T00:37:01.374Z",
+            "dispatch_receipt_captured_utc": "2026-10-12T00:37:02.107Z",
+            "native_create_utc": "2026-10-12T00:37:17+00:00",
+            "native_complete_utc": "2026-10-12T00:52:00+00:00",
+            "stage_deadline_utc": "2026-10-12T01:07:01.374Z",
+            "native_lifetime_seconds": 883,
+            "native_reported_time_used_seconds": 882,
+            "request_to_native_create_seconds": 15.626,
+            "native_complete_before_stage_deadline": true,
+            "science_write_time_utc": null,
+            "science_write_time_status": "UNKNOWN independently; package reports outputs saved before completion."
+          },
+          {
+            "stage": "critic",
+            "request_utc": "2026-10-12T00:56:04.457Z",
+            "dispatch_receipt_captured_utc": "2026-10-12T00:56:05.266Z",
+            "native_create_utc": "2026-10-12T00:56:30+00:00",
+            "native_complete_utc": "2026-10-12T01:03:43+00:00",
+            "stage_deadline_utc": "2026-10-12T01:08:04.457Z",
+            "native_lifetime_seconds": 433,
+            "native_reported_time_used_seconds": 432,
+            "request_to_native_create_seconds": 25.543,
+            "native_complete_before_stage_deadline": true,
+            "science_write_time_utc": null,
+            "science_write_time_status": "UNKNOWN independently; package reports outputs saved before completion."
+          },
+          {
+            "stage": "reviser",
+            "request_utc": "2026-10-12T01:07:50.065Z",
+            "dispatch_receipt_captured_utc": "2026-10-12T01:07:50.874Z",
+            "native_create_utc": "2026-10-12T01:08:04+00:00",
+            "native_complete_utc": "2026-10-12T01:14:19+00:00",
+            "stage_deadline_utc": "2026-10-12T01:25:50.065Z",
+            "native_lifetime_seconds": 375,
+            "native_reported_time_used_seconds": 375,
+            "request_to_native_create_seconds": 13.935,
+            "native_complete_before_stage_deadline": true,
+            "science_write_time_utc": null,
+            "science_write_time_status": "UNKNOWN independently; package reports outputs saved before completion."
+          }
+        ],
+        "interstage_observations": [
+          {
+            "after_stage": "investigator",
+            "before_stage": "critic",
+            "native_completion_to_next_request_seconds": 244.457,
+            "interpretation": "Mixed handoff/controller/possibly task-quiet delay; not isolated queue or provider activity."
+          },
+          {
+            "after_stage": "critic",
+            "before_stage": "reviser",
+            "native_completion_to_next_request_seconds": 247.065,
+            "interpretation": "Mixed handoff/controller/possibly task-quiet delay; not isolated queue or provider activity."
+          }
+        ],
+        "native_final_completion_proxy_seconds_from_t0": 2238.275,
+        "native_final_completion_proxy_limit": "Native completion receipt timestamp; not exact scientific write time or independently attested task-quiet final.",
+        "frozen_notification_utc": "2026-10-12T01:28:57.704691+00:00",
+        "t0_to_frozen_final_notification_upper_bound_seconds": 3116.98,
+        "final_notification_before_whole_deadline": true,
+        "request_to_quiet_final_proxy_seconds": null,
+        "request_to_quiet_final_proxy_status": "UNKNOWN: permitted raw terminal status receipts expose no terminal event timestamp.",
+        "last_complete_scientific_artifact_time": "UNKNOWN independently; final present by the frozen notification.",
+        "stage_failures_observed": []
+      },
+      "method_compliance": {
+        "coverage": "PARTIAL",
+        "status": "OBSERVED_CONFORMING_WITH_UNOBSERVABLE_LIMITS",
+        "observations": [
+          "One investigator, one critic and one fresh reviser are declared and have distinct captured native identities.",
+          "All required frozen science documents/indexes are present; no additional critic/witness is manifest-listed.",
+          "One-time reveal receipt matches the retained discovery and exact plan hashes.",
+          "Source IDs remain traceable; final proposal contains complete prose and dispositions.",
+          "Treatment critic addition addresses strong-validator, redirect and FTS5 restriction claims while retaining ordinary review."
+        ],
+        "unobservable": [
+          "Actual activation-before-input order and absence of hidden plan access/retries/extra workers cannot be proven from allowed receipts.",
+          "Actual fresh provider-context linkage and compliance with every prohibited-path constraint are not attested by native captures."
+        ],
+        "evaluator_constraints": "No extra agents, Goals, candidate repairs, author contact, Git/canon/WorkNodes/shared server/provider changes or held-out access."
+      },
+      "native_provenance": {
+        "coverage": "PARTIAL",
+        "stage_records": [
+          {
+            "stage": "investigator",
+            "create_active_terminal_identity_matches": true,
+            "exact_frozen_objective_matches": true,
+            "native_status_transition": "active_to_complete",
+            "status_receipt_completed_zero_pending": true,
+            "independent_native_to_task_linkage": "UNKNOWN beyond objective/capture custody"
+          },
+          {
+            "stage": "critic",
+            "create_active_terminal_identity_matches": true,
+            "exact_frozen_objective_matches": true,
+            "native_status_transition": "active_to_complete",
+            "status_receipt_completed_zero_pending": true,
+            "independent_native_to_task_linkage": "UNKNOWN beyond objective/capture custody"
+          },
+          {
+            "stage": "reviser",
+            "create_active_terminal_identity_matches": true,
+            "exact_frozen_objective_matches": true,
+            "native_status_transition": "active_to_complete",
+            "status_receipt_completed_zero_pending": true,
+            "independent_native_to_task_linkage": "UNKNOWN beyond objective/capture custody"
+          }
+        ],
+        "native_capture_integrity": "Verified exact immutable member SHA-256 and sizes.",
+        "distinct_captured_stage_identities": true,
+        "provider_account_identity": "Not disclosed",
+        "capture_provenance_limit": "Direct fields corroborate consistent lifecycle receipts; not independent proof that the native context performed the scientific task."
+      },
+      "resource_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "native_lifetime_sum_seconds": 1691,
+          "native_lifetime_union_seconds": 1691,
+          "intra_arm_native_lifetime_overlap_seconds": 0,
+          "native_reported_time_used_sum_seconds": 1689,
+          "counter_domains": "Native Goal lifetime and cumulative reported time only; not provider active time, billed time or complete context residency.",
+          "created_started_context_occupancy": "UNKNOWN outside native lifetime proxies",
+          "provider_active_seconds": null,
+          "provider_active_seconds_status": "UNKNOWN",
+          "native_cumulative_usage_counters": "Present in private receipts; values not reproduced in scientific artifacts; not billing or component-resolved usage.",
+          "input_usage": "UNKNOWN",
+          "cached_input_subset": "UNKNOWN",
+          "output_usage": "UNKNOWN",
+          "reasoning_subset": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "billing_amount": null,
+          "billing_status": "UNKNOWN",
+          "hidden_failed_or_retried_attempts": "UNKNOWN beyond notified assigned stage/status records; none omitted from this two-arm assigned denominator."
+        },
+        "independent_evaluation": {
+          "resource_class": "independent_evaluation",
+          "first_observed_utc": "2026-10-12T01:30:19Z",
+          "original_assessment_written_utc": "2026-10-12T01:41:55.463457+00:00",
+          "active_provider_seconds": "UNKNOWN",
+          "billing": "UNKNOWN",
+          "allocation": "Separate from candidate product, shared lookup reused across the assigned arms; not free candidate assistance."
+        },
+        "preparation_support_publication_totals": "UNKNOWN from permitted packet; no cold composite or passing-output cost quotient asserted."
+      },
+      "frozen_files_verified": 7,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    }
+  ],
+  "grader_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "comparison": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P01/comparison/comparison.json",
+  "comparison_sha256": "1dff6eca8a3aa4f924724a58daf69f97f4e352e6092d0cbcb6ff5df6af8f6a52",
+  "verified_at_utc": "2026-10-12T01:47:29.824265+00:00",
+  "mechanics_only_not_regrade": true
+}

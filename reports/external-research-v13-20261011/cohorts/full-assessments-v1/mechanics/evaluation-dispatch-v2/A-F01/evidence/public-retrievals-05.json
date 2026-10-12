@@ -1,0 +1,57 @@
+[
+  {
+    "id": "am-impl-context",
+    "url": "https://raw.githubusercontent.com/automerge/automerge/8d7b12f8da553afbb325e37a6c66942b8dd4d994/javascript/src/implementation.ts",
+    "resolved_url": "https://raw.githubusercontent.com/automerge/automerge/8d7b12f8da553afbb325e37a6c66942b8dd4d994/javascript/src/implementation.ts",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:38:59.489721+00:00",
+    "access_end_utc": "2026-10-12T01:38:59.532889+00:00",
+    "response_bytes": 59592,
+    "response_sha256": "16fdb304e02cf38574992040bf283d449ced2d64d4f48f9cb89ad4f3ff68d407",
+    "operation": "focused independent public context inspection; no source execution"
+  },
+  {
+    "id": "am-test-context",
+    "url": "https://raw.githubusercontent.com/automerge/automerge/8d7b12f8da553afbb325e37a6c66942b8dd4d994/javascript/test/conflicts.ts",
+    "resolved_url": "https://raw.githubusercontent.com/automerge/automerge/8d7b12f8da553afbb325e37a6c66942b8dd4d994/javascript/test/conflicts.ts",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:38:59.533209+00:00",
+    "access_end_utc": "2026-10-12T01:38:59.583141+00:00",
+    "response_bytes": 4933,
+    "response_sha256": "a5899a59c531e1725cfbb3ea3b19f22849bcef2ad9307232509735cee54f2370",
+    "operation": "focused independent public context inspection; no source execution"
+  },
+  {
+    "id": "pouch-test-context",
+    "url": "https://raw.githubusercontent.com/apache/pouchdb/master/tests/integration/test.conflicts.js",
+    "resolved_url": "https://raw.githubusercontent.com/apache/pouchdb/master/tests/integration/test.conflicts.js",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:38:59.583743+00:00",
+    "access_end_utc": "2026-10-12T01:38:59.626690+00:00",
+    "response_bytes": 16345,
+    "response_sha256": "e21bd81bb41f0b3979c6326894555a7267bdd2ec3c439569d9d50f100bfb1dc8",
+    "operation": "focused independent public context inspection; no source execution"
+  },
+  {
+    "id": "pouch-regression-context",
+    "url": "https://raw.githubusercontent.com/neighbourhoodie/pouchdb/1a30d0525f7b778ac3a4c58d1bf0d03628533999/tests/integration/test.attachments.js",
+    "resolved_url": "https://raw.githubusercontent.com/neighbourhoodie/pouchdb/1a30d0525f7b778ac3a4c58d1bf0d03628533999/tests/integration/test.attachments.js",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:38:59.627355+00:00",
+    "access_end_utc": "2026-10-12T01:38:59.667492+00:00",
+    "response_bytes": 139670,
+    "response_sha256": "696848045d5622891179d4e04d8fd56f3263f4ebfa5141d59434e10834c164fe",
+    "operation": "focused independent public context inspection; no source execution"
+  },
+  {
+    "id": "couch-recreate-context",
+    "url": "https://raw.githubusercontent.com/apache/couchdb/c885b36/src/couch/test/eunit/couch_db_recreate_att_tests.erl",
+    "resolved_url": "https://raw.githubusercontent.com/apache/couchdb/c885b36/src/couch/test/eunit/couch_db_recreate_att_tests.erl",
+    "status": 200,
+    "access_start_utc": "2026-10-12T01:38:59.668593+00:00",
+    "access_end_utc": "2026-10-12T01:38:59.770912+00:00",
+    "response_bytes": 6522,
+    "response_sha256": "3b05584803fcb92d2eff9311ad8d89bed588a5484f2dfa02bc328a8f87e090b1",
+    "operation": "focused independent public context inspection; no source execution"
+  }
+]

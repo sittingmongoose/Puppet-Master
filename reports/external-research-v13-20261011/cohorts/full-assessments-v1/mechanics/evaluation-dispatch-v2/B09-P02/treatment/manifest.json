@@ -1,0 +1,35 @@
+{
+  "schema": "er13.original-output-manifest.v1",
+  "arm_id": "B09-P02-treatment",
+  "frozen_utc": "2026-10-12T01:42:12.213046+00:00",
+  "before_comparative_analysis": true,
+  "immutable_originals": true,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/treatment/assessment.md",
+      "bytes": 5825,
+      "sha256": "df8b4859c4650b805eb209b174ce0b9ab47281e6332349e199f299f8f2251842"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/treatment/assessment.json",
+      "bytes": 11440,
+      "sha256": "407428a24a1cfa90c347bf3218eae33f5e54166cc61e187be4a0bb862beb00cf"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/treatment/coverage.json",
+      "bytes": 14009,
+      "sha256": "a2e4838499896c1db2d06eb08b3b9e5e583a5966112193c99549c5b2a63084a1"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/treatment/defects.json",
+      "bytes": 1431,
+      "sha256": "c24b8ef07ea96f045434af21d2e033e171747c31798e7b08dbf5ed525d0b717a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P02/treatment/primary-source-index.json",
+      "bytes": 16661,
+      "sha256": "b46aa1e1a2fe62329643f2bdc6c4878da58d720d95158334bd564b2e6c355420"
+    }
+  ],
+  "manifest_self_hash": "Reported externally; self-excluded."
+}

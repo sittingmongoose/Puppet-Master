@@ -1,0 +1,325 @@
+{
+  "schema": "er13.original_coverage.v1",
+  "arm_id": "A-F01-A1",
+  "scope": "FULL frozen research-planning proposal",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Every fixed scope/negative constraint preserved; unknown field facts not invented."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "basis": "Governing facts/version boundaries checked independently; current pages not silently release-pinned. A1-M01 is material: upstream 412 oracle belongs to PUT, not fetch."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Useful storage, causal, revision-tree and CRDT alternatives/history surveyed; not a product winner."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "All plan clauses and criticism dispositions assessed independently; supported interpretations retained."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Supported event/history/delete/media/retry/owner meanings survive into full final; source IDs carried transparently."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "basis": "Failure-oriented proposals have meaningful invariants; no own execution claimed. Upstream witness operation/oracle separately checked. A1-M01 is material: upstream 412 oracle belongs to PUT, not fetch."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O1",
+      "obligation": "Three laptops and seven-day partition; 50,000 observations with unknown media/link sizes",
+      "coverage": "COMPLETE",
+      "final_locator": "Scope, integration sequence, workload tests",
+      "judgment": "SATISFIED_AS_PROPOSAL"
+    },
+    {
+      "id": "O2",
+      "obligation": "Site identifiers, notes, confidence and separate photo references",
+      "coverage": "COMPLETE",
+      "final_locator": "Record/operation envelope and review fields",
+      "judgment": "SATISFIED_AS_PROPOSAL"
+    },
+    {
+      "id": "O3",
+      "obligation": "Local interrupted save and reconnect recovery",
+      "coverage": "COMPLETE",
+      "final_locator": "Transaction/replay/receipts and photo staging/restart",
+      "judgment": "SATISFIED_AS_PROPOSAL"
+    },
+    {
+      "id": "O4",
+      "obligation": "Stable identity, reinstall/clone/restore, duplicate/reordered operations",
+      "coverage": "COMPLETE",
+      "final_locator": "Actor/epoch or random IDs, ancestry and retry tests",
+      "judgment": "SATISFIED_AS_PROPOSAL"
+    },
+    {
+      "id": "O5",
+      "obligation": "Competing edits, disjoint fields, same-field alternatives and resolution history",
+      "coverage": "COMPLETE",
+      "final_locator": "Field rules, causal frontier, explicit resolution operations",
+      "judgment": "SATISFIED_AS_PROPOSAL"
+    },
+    {
+      "id": "O6",
+      "obligation": "Delete/edit/photo overlap; no silent resurrection",
+      "coverage": "COMPLETE",
+      "final_locator": "Tombstone and explicit restore; incoming edit/reference never restores",
+      "judgment": "SATISFIED_AS_PROPOSAL"
+    },
+    {
+      "id": "O7",
+      "obligation": "Recoverable competing/resolved history and safe retention",
+      "coverage": "COMPLETE",
+      "final_locator": "App event log, archive/ack/retirement gates; unknown retention policy explicit",
+      "judgment": "SATISFIED_AS_PROPOSAL"
+    },
+    {
+      "id": "O8",
+      "obligation": "External photos, optional byte transfer and accurate missing-file state",
+      "coverage": "COMPLETE",
+      "final_locator": "Stable photo identity/digest, separate local locators and selection",
+      "judgment": "SATISFIED_AS_PROPOSAL"
+    },
+    {
+      "id": "O9",
+      "obligation": "No required hosted account, no automatic photo upload, no wall-clock winner",
+      "coverage": "COMPLETE",
+      "final_locator": "All three negative constraints preserved explicitly",
+      "judgment": "SATISFIED_AS_PROPOSAL"
+    },
+    {
+      "id": "O10",
+      "obligation": "Manual transfer without network and feasible transport alternatives",
+      "coverage": "COMPLETE",
+      "final_locator": "Versioned bundle and optional relay, same idempotent importer",
+      "judgment": "SATISFIED_AS_PROPOSAL"
+    },
+    {
+      "id": "O11",
+      "obligation": "Small comprehensible operator explanation and bounded integration",
+      "coverage": "COMPLETE",
+      "final_locator": "Sample operator strings; staged identity/durability/import/review/measurement",
+      "judgment": "SATISFIED_AS_PROPOSAL"
+    },
+    {
+      "id": "O12",
+      "obligation": "Primary docs/code/callers/tests/history, exact plan dispositions, truthful validation",
+      "coverage": "COMPLETE",
+      "final_locator": "Inspected alternative mechanisms, release context and all critique dispositions; no future deployment required",
+      "judgment": "FAIL_SOURCE_WITNESS_ONLY"
+    }
+  ],
+  "source_families": [
+    {
+      "family": "local_storage",
+      "coverage": "COMPLETE",
+      "evidence_ids": [
+        "E-SQL-WAL",
+        "E-SQL-PRAGMA",
+        "E-SQL-ATOMIC",
+        "E-SQL-CODE"
+      ],
+      "assessed_scope": "Transaction scope, WAL conditions, versions, upstream recovery domains"
+    },
+    {
+      "family": "identity_and_causality",
+      "coverage": "COMPLETE",
+      "evidence_ids": [
+        "E-UUID",
+        "E-AM-CONFLICT",
+        "E-CDB-CONFLICT"
+      ],
+      "assessed_scope": "ID versus label/counter/clock, ancestry, reinstalls and competing branches"
+    },
+    {
+      "family": "backup_manual_history",
+      "coverage": "COMPLETE",
+      "evidence_ids": [
+        "E-SQL-BACKUP",
+        "E-SQL-CORRUPT",
+        "E-CDB-CONFLICT",
+        "E-AM-STORAGE"
+      ],
+      "assessed_scope": "Coherent backup versus replica merge, idempotent bundles and history retention"
+    },
+    {
+      "family": "couchdb_sync_media",
+      "coverage": "COMPLETE",
+      "evidence_ids": [
+        "E-CDB-CONFLICT",
+        "E-CDB-REPLICATION",
+        "E-CDB-MEDIA"
+      ],
+      "assessed_scope": "Default versus conflict-aware reads, tombstone/filter conditions, managed attachment transfer"
+    },
+    {
+      "family": "automerge",
+      "coverage": "COMPLETE",
+      "evidence_ids": [
+        "E-AM-CONFLICT",
+        "E-AM-STORAGE",
+        "E-AM-CODE",
+        "E-AM-HISTORY"
+      ],
+      "assessed_scope": "Map conflict/delete semantics, pinned JS source, release/history applicability"
+    },
+    {
+      "family": "upstream_code_callers_tests",
+      "coverage": "COMPLETE",
+      "evidence_ids": [
+        "E-SQL-CODE",
+        "E-AM-CODE",
+        "E-CDB-FIX"
+      ],
+      "assessed_scope": "Relevant definitions, callers and test oracles inspected as text, not executed"
+    },
+    {
+      "family": "sqlite_session_helper",
+      "coverage": "COMPLETE",
+      "evidence_ids": [
+        "E-SQL-SESSION",
+        "E-SQL-APPLY"
+      ],
+      "assessed_scope": "PK/schema/coalescing/apply callback boundaries; helper versus journal"
+    },
+    {
+      "family": "pouchdb_attachment_fix_oracle",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "evidence_ids": [
+        "E-PDB-ORACLE",
+        "E-PDB-RELEASES"
+      ],
+      "assessed_scope": "Exact fix/caller/regression operation and release inclusion"
+    },
+    {
+      "family": "rxdb_custom_backend",
+      "coverage": "COMPLETE",
+      "evidence_ids": [
+        "E-RX"
+      ],
+      "assessed_scope": "Offline/checkpoint mechanism and master-wins default"
+    },
+    {
+      "family": "existing_survey_application_code_callers_tests",
+      "coverage": "UNASSESSED",
+      "reason": "No application identity/repository/revision supplied. This is an explicit external integration input, not a material omission in a planning proposal."
+    },
+    {
+      "family": "future_runtime_platform_performance_and_usability",
+      "coverage": "UNASSESSED",
+      "reason": "No deployment/implementation requested. Selected binary, filesystem, field sizes/link rates and user studies are future validation; no pass inferred."
+    },
+    {
+      "family": "native_to_task_independent_session_linkage_and_billing",
+      "coverage": "UNASSESSED",
+      "reason": "Frozen receipts are internally consistent but no independent task-session linkage or billing telemetry supplied."
+    }
+  ],
+  "declared_coverage": "COMPLETE for available mechanism research, full frozen science documents, every proposal obligation, plan/critique disposition and preservation review. Named unavailable external/runtime/provenance families explicitly UNASSESSED.",
+  "early_failure_stop_used": false,
+  "full_document_inventory": [
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/investigator/files/discovery.md",
+      "sha256": "54d89f407a04054cccfddefb0cf279b9d963e03b4ae69bed44f9e3d0cf1dab1a",
+      "bytes": 7364,
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/investigator/files/draft.md",
+      "sha256": "b67e503f9a726765b65d730054f22bd65b892556c83d7fb8fd65e131b206b083",
+      "bytes": 28654,
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/investigator/files/source-map.json",
+      "sha256": "d923fdd25240c2035153a3d07fcd176553d0ea4336b1a31ccf6f26a5c04e070d",
+      "bytes": 13704,
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/investigator/files/revealed-plan.md",
+      "sha256": "9415bac7a1feba432895879eaa283f75facac34896039a869facf5b620c1f8d4",
+      "bytes": 2368,
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/investigator/files/plan-reveal.json",
+      "sha256": "b4a7d2db6a721cf02a626b62b926faac6517d6c1eb4c1448479d54c1cfe4377a",
+      "bytes": 456,
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/investigator/files/sources/index.md",
+      "sha256": "2373f671f5ee2ae4285b25516312086eda609840aa786b1b10d617a488c3533c",
+      "bytes": 2732,
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "critic",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/critic/files/critique.md",
+      "sha256": "f71f089349e8b106cc2b9517a760da930eb254484c260c5b6a018d31399f4ff2",
+      "bytes": 16294,
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "critic",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/critic/files/source-map.json",
+      "sha256": "69c35757011f3f7fa4728cfe53be7bad09023d904dfda26409a285141769b420",
+      "bytes": 19401,
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/reviser/files/final.md",
+      "sha256": "39b4d7bed2a9414daa000f118457a1b5dee9baa01b77a17354c59d74712964bc",
+      "bytes": 35696,
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/reviser/files/source-map.json",
+      "sha256": "69842f7a8484d85eca092de94ae07c54aa7961bb3024aa898d4002f469ebd385",
+      "bytes": 65318,
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/reviser/files/sources/index.md",
+      "sha256": "09d358f57d1097f0be6e28ea46929a750068f916f9e7a59daa244a725d394226",
+      "bytes": 3770,
+      "read": "COMPLETE"
+    }
+  ],
+  "finite_assessment_not_universal_correctness": true,
+  "component_discovery_inference": "NONE; this is FULL, no COMPONENT conclusion imported."
+}

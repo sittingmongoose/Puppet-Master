@@ -1,0 +1,657 @@
+{
+  "schema": "er13.independent_primary_index.v1",
+  "scope": "Shared independent lookup for this exact four-arm block; no candidate assistance",
+  "entries": [
+    {
+      "id": "E-SQL-WAL",
+      "title": "SQLite WAL",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_context": "Current official page, last updated 2026-08-25; build-dependent",
+      "locator": "§§1, 2.2–2.3, 4, 6, 11",
+      "independent_observation": "One local writer; same-host WAL; persistent sidecar; reader end marks and reader gaps; commit durability differs by synchronous mode. Reset race: likely affected 3.7.0–3.51.2, fixed 3.51.3+, backports 3.44.6/3.50.7. Condition: concurrent connections in separate threads/processes writing/checkpointing.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:35:59.633830+00:00",
+          "end": "2026-10-12T01:35:59.779746+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "sqlite-wal"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-SQL-PRAGMA",
+      "title": "SQLite synchronous",
+      "url": "https://www.sqlite.org/pragma.html",
+      "version_context": "Current unpinned official reference",
+      "locator": "synchronous description and journal-mode matrix",
+      "independent_observation": "WAL FULL syncs each commit; WAL NORMAL remains consistent but can lose a recent commit after system/power failure. Rollback FULL/EXTRA have distinct durability conditions; VFS/storage assumptions still apply.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:35:37.580704+00:00",
+          "end": "2026-10-12T01:35:37.772493+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "sqlite-pragma"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-SQL-SESSION",
+      "title": "SQLite Session introduction",
+      "url": "https://www.sqlite.org/sessionintro.html",
+      "version_context": "Current documentation; version exceptions noted",
+      "locator": "§§1.2–1.3, 2.1–2.3, capture/apply examples",
+      "independent_observation": "Compile-time enablement; declared PK and compatible schema/baseline; NULL PK rows omitted; stat1/API exceptions need care. Repeated row changes coalesce and reversions can disappear. Not an immutable per-action history.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:35:37.581019+00:00",
+          "end": "2026-10-12T01:35:37.738041+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "sqlite-session"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-SQL-APPLY",
+      "title": "SQLite Session API",
+      "url": "https://www.sqlite.org/session.html",
+      "version_context": "Current reference; some rebase/apply APIs experimental",
+      "locator": "changeset/patchset construction, sqlite3changeset_apply conflict callbacks",
+      "independent_observation": "OMIT/REPLACE/ABORT have conflict-specific scope. Patchsets omit old non-key values and cannot report DATA conflicts; consumer supplies policy. This supports a conditional delta helper, not semantic conflict resolution.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:35:37.581278+00:00",
+          "end": "2026-10-12T01:35:37.788378+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "sqlite-session-api"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-SQL-BACKUP",
+      "title": "SQLite Online Backup",
+      "url": "https://www.sqlite.org/backup.html",
+      "version_context": "Current unpinned reference",
+      "locator": "§§1, 1.1, 3 and C API caller examples",
+      "independent_observation": "Completed backup is coherent; concurrent external source writes can restart incremental work. Main-file-only live WAL copy omits state; external-copy interruption can damage destination. Snapshot is not replica merge.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:35:37.581460+00:00",
+          "end": "2026-10-12T01:35:37.740793+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "sqlite-backup"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-SQL-ATOMIC",
+      "title": "SQLite atomic commit",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "version_context": "Current technical article; detailed walkthrough is rollback mode",
+      "locator": "Hardware Assumptions, §§8–9",
+      "independent_observation": "Single DB atomic commit assumes working locks and sync/flush. Modified I/O crash tests check before/after recovery. File placement and a separate journal are separate commit domains.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:35:37.581643+00:00",
+          "end": "2026-10-12T01:35:37.748875+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "sqlite-atomic"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-SQL-TESTING",
+      "title": "SQLite testing",
+      "url": "https://www.sqlite.org/testing.html",
+      "version_context": "Current technical article",
+      "locator": "§3.3 crash testing and VFS failure injection",
+      "independent_observation": "Upstream simulates reordered/unsynced writes and uses transaction outcome plus integrity checks. These are test designs, not executions by candidates.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:35:37.742010+00:00",
+          "end": "2026-10-12T01:35:37.941395+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "sqlite-testing"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-SQL-CORRUPT",
+      "title": "SQLite corruption cautions",
+      "url": "https://www.sqlite.org/howtocorrupt.html",
+      "version_context": "Current technical article",
+      "locator": "hot-journal/WAL pairing and network-locking sections",
+      "independent_observation": "Interrupted-state sidecars must accompany the database; active raw copy and broken filesystem locks can cause loss/corruption. Does not establish photo/DB atomicity.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:35:37.742961+00:00",
+          "end": "2026-10-12T01:35:37.943726+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "sqlite-corruption"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-SQL-RELEASES",
+      "title": "SQLite release identities",
+      "url": "https://www.sqlite.org/releaselog/3_54_0.html",
+      "version_context": "3.54.0, 2026-10-09, source ID be8d059e9a49089ab2dce5ed26dd87aaf598fdc5fbe0b107c0dd758464bcd5e3",
+      "locator": "release heading/Hashes; also 3.50.0 release 2025-05-29",
+      "independent_observation": "Verified 3.54.0 identity and separate 3.50.0 source ID dfc790f998f450d9c35e3ba1c8c89c17466cb559f87b0239e4aab9d34e28f742. Release observations do not identify an eventual embedded binary.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:35:59.634174+00:00",
+          "end": "2026-10-12T01:35:59.760440+00:00"
+        },
+        {
+          "start": "2026-10-12T01:35:59.635351+00:00",
+          "end": "2026-10-12T01:35:59.787690+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "sqlite-release54",
+        "sqlite-release50"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-SQL-CODE",
+      "title": "SQLite tagged code and recovery tests",
+      "url": "https://github.com/sqlite/sqlite/blob/version-3.54.0/src/wal.c",
+      "version_context": "Mirror tags version-3.54.0 and version-3.50.0",
+      "locator": "wal.c reader/checkpoint definitions/callers; crash.test crash-1.1–1.11; walcrash.test walcrash-1.*, -2.*, -7.*",
+      "independent_observation": "Read WAL implementation/callers and rollback/WAL test source. Rollback and WAL domains differ. WAL tests check reopened data and integrity after I/O/checkpoint interruptions.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:36:24.968764+00:00",
+          "end": "2026-10-12T01:36:25.136311+00:00"
+        },
+        {
+          "start": "2026-10-12T01:36:24.966047+00:00",
+          "end": "2026-10-12T01:36:25.078297+00:00"
+        },
+        {
+          "start": "2026-10-12T01:36:24.967189+00:00",
+          "end": "2026-10-12T01:36:25.084952+00:00"
+        },
+        {
+          "start": "2026-10-12T01:36:24.968000+00:00",
+          "end": "2026-10-12T01:36:25.100542+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "sqlite-wal54",
+        "sqlite-crash50",
+        "sqlite-crash54",
+        "sqlite-walcrash54"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-CDB-CONFLICT",
+      "title": "CouchDB conflicts",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "version_context": "Moving official 3.5 documentation; not exact patch-pinned",
+      "locator": "§§2.3.1–2.3.4, GET/conflicts=true/open_revs and revision-tree examples",
+      "independent_observation": "Default GET gives one winner; conflicts=true adds revision IDs; rev-specific GET or open_revs obtains bodies. Compaction drops non-leaf bodies, not all current conflict leaves. Explicit historical revision requests can be missing.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:35:59.636558+00:00",
+          "end": "2026-10-12T01:36:01.953773+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "couch-conflicts"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-CDB-REPLICATION",
+      "title": "CouchDB replication and filters",
+      "url": "https://docs.couchdb.org/en/stable/replication/intro.html",
+      "version_context": "Moving official 3.5 docs",
+      "locator": "§§2.1.3–2.1.5",
+      "independent_observation": "One-way push/pull with checkpoints; deleted revision propagation. Content-dependent filters can lose required old fields; documented workaround retains body and attachments. This caveat is conditional, not universal.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:35:59.637093+00:00",
+          "end": "2026-10-12T01:36:01.978247+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "couch-intro"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-CDB-MEDIA",
+      "title": "CouchDB attachment API/protocol",
+      "url": "https://docs.couchdb.org/en/stable/api/document/common.html",
+      "version_context": "Moving 3.5 docs; replication protocol v3",
+      "locator": "§1.4.1.1; protocol definitions and document/attachment fetch/upload flows",
+      "independent_observation": "Read attachment stub/request definitions and replication transfer flow. Metadata-only document GET is not metadata-only replication. External URI fields are distinct from managed attachments; application fetching remains separate.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:35:59.761084+00:00",
+          "end": "2026-10-12T01:36:01.936230+00:00"
+        },
+        {
+          "start": "2026-10-12T01:35:59.780407+00:00",
+          "end": "2026-10-12T01:36:01.975949+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "couch-attachments",
+        "couch-protocol"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-CDB-FIX",
+      "title": "CouchDB delete/recreate attachment history",
+      "url": "https://github.com/apache/couchdb/pull/6129",
+      "version_context": "Issue #6126 reports 3.5.2; fix c885b36; merge 83a487b754af09d271ce44a60fae6e4f4c24aa8b, 2026-09-25; official 3.5.3 notes",
+      "locator": "issue reproducer; couch_att/couch_db_updater definitions/callers; recreate_att EUnit tests; release entry",
+      "independent_observation": "Skipped intermediate deletion plus same ID/name with changed bytes produced stale target content. Revpos fix and tests cover repeated deletes, atts_since, replication, and deterministic revisions. Verified upstream release inclusion, not a local package.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:36:45.345356+00:00",
+          "end": "2026-10-12T01:36:45.539093+00:00"
+        },
+        {
+          "start": "2026-10-12T01:36:45.345702+00:00",
+          "end": "2026-10-12T01:36:45.558391+00:00"
+        },
+        {
+          "start": "2026-10-12T01:36:45.345957+00:00",
+          "end": "2026-10-12T01:36:45.616498+00:00"
+        },
+        {
+          "start": "2026-10-12T01:38:59.668593+00:00",
+          "end": "2026-10-12T01:38:59.770912+00:00"
+        },
+        {
+          "start": "2026-10-12T01:35:59.788372+00:00",
+          "end": "2026-10-12T01:36:02.048099+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "couch6126",
+        "couch6129",
+        "couch6129files",
+        "couch-recreate-context",
+        "couch-release"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-CDB-COORD",
+      "title": "CouchDB replication coordinator",
+      "url": "https://github.com/apache/couchdb/blob/3.5.3/src/couch_replicator/src/couch_replicator.erl",
+      "version_context": "3.5.3 tag",
+      "locator": "replicate/2, do_replication_loop, status definitions and EUnit",
+      "independent_observation": "Read API caller/loop and pending/running/crashing/completed/failed definitions; source supports progress-state design, not product or all-replication correctness.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:36:25.101249+00:00",
+          "end": "2026-10-12T01:36:25.211122+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "couch-coordinator"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-CDB-FSYNC",
+      "title": "CouchDB reset fsync history",
+      "url": "https://github.com/apache/couchdb/pull/6025",
+      "version_context": "Merge e4eea5ae0735404a06fe123a9b85b33dad576da8, 2026-06-05",
+      "locator": "maintainer PR rationale",
+      "independent_observation": "Fix syncs reset/truncate headers and relevant file-size metadata; package inclusion is not supplied. Context supports pinned storage-stack qualification.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:36:45.346181+00:00",
+          "end": "2026-10-12T01:36:45.555684+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "couch6025"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-PDB-GUIDES",
+      "title": "PouchDB replication/conflicts/attachments",
+      "url": "https://pouchdb.com/guides/replication.html",
+      "version_context": "Moving official guides; no package pin inferred",
+      "locator": "local peer and live/retry examples; conflict retrieval; attachment stub/full-read examples",
+      "independent_observation": "Local-to-local replication possible; live retry must be enabled. Ordinary winner hides alternatives until queried. Normal attachment reads return stubs/digests; this does not promise replication omits bytes.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:36:01.937594+00:00",
+          "end": "2026-10-12T01:36:02.120933+00:00"
+        },
+        {
+          "start": "2026-10-12T01:36:01.954571+00:00",
+          "end": "2026-10-12T01:36:02.123032+00:00"
+        },
+        {
+          "start": "2026-10-12T01:36:01.977460+00:00",
+          "end": "2026-10-12T01:36:02.117946+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "pouch-replication",
+        "pouch-conflicts",
+        "pouch-attachments"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-PDB-ORACLE",
+      "title": "PouchDB attachment regression oracle",
+      "url": "https://github.com/apache/pouchdb/pull/8460/files",
+      "version_context": "IndexedDB issue #8456; fix 1a30d0525f7b778ac3a4c58d1bf0d03628533999; merged 2022-03-29; listed in 7.3.0",
+      "locator": "revHasAttachment and writtenRev caller; test.attachments.js:3899–3967, especially 3944–3962",
+      "independent_observation": "Verified affected written-revision attachment guard. Regression branches/replicates, removes attachment-bearing branch and compacts, then attempts PUT with stale stub; that write must fail 412. It is not a fetch-412 oracle.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:36:25.176192+00:00",
+          "end": "2026-10-12T01:36:25.290842+00:00"
+        },
+        {
+          "start": "2026-10-12T01:36:25.209183+00:00",
+          "end": "2026-10-12T01:36:25.306393+00:00"
+        },
+        {
+          "start": "2026-10-12T01:38:59.627355+00:00",
+          "end": "2026-10-12T01:38:59.667492+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "pouch-fix",
+        "pouch-test-cited",
+        "pouch-regression-context"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-PDB-DELETE",
+      "title": "PouchDB deletion report and test caller",
+      "url": "https://github.com/apache/pouchdb/issues/9085",
+      "version_context": "Open report 2025-05-22; moving master tests",
+      "locator": "report: read-only React Native CouchDB→PouchDB, revs_limit 1/3; test.conflicts.js:48–64",
+      "independent_observation": "Report describes low-history deletion failure after multiple edits, not confirmed general/default failure. Independent test source removes and explicitly re-puts without old _rev, showing recreation API capability, not desired domain policy.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:36:25.137294+00:00",
+          "end": "2026-10-12T01:36:25.239824+00:00"
+        },
+        {
+          "start": "2026-10-12T01:38:59.583743+00:00",
+          "end": "2026-10-12T01:38:59.626690+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "pouch-test-current",
+        "pouch-test-context"
+      ],
+      "limits": "Issue inspected via web after unauthenticated API 403. No reproduction or default-limit safety proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-PDB-RELEASES",
+      "title": "PouchDB releases",
+      "url": "https://github.com/apache/pouchdb/releases",
+      "version_context": "7.3.0 tag 2e2aa6c; 8.0.0 tag 6cebe42, 2022-12-15; 9.0.0 b2882c1, 2024-06-21",
+      "locator": "release headings, #8460 listing, normal remove versus purge",
+      "independent_observation": "Verified shipped attachment-fix listing and replicated tombstone versus administrative purge distinction. Version observations do not pin moving guides/tests.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:32:06Z",
+          "end": "2026-10-12T01:47:29.991291+00:00",
+          "precision": "bounded evaluator research window; web per-fetch timestamp unavailable"
+        }
+      ],
+      "retrieval_receipt_ids": [],
+      "limits": "Direct 7.3.0 tag tool error; official release listing supplied release context. API 403 recorded, not absence evidence.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-AM-CONFLICT",
+      "title": "Automerge conflicts/merge rules",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "version_context": "Moving official docs; pinned JS corroboration separate",
+      "locator": "getConflicts example, operation-ID order; merge-rules map delete/set",
+      "independent_observation": "Ordinary same-property read selects deterministic actor/counter winner; alternatives exist via API until later assignment resolves it. Concurrent map delete/set retains set. Domain tombstone policy is separate.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:35:37.749923+00:00",
+          "end": "2026-10-12T01:35:37.886483+00:00"
+        },
+        {
+          "start": "2026-10-12T01:36:01.979508+00:00",
+          "end": "2026-10-12T01:36:02.067113+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "automerge-conflicts",
+        "automerge-rules"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-AM-STORAGE",
+      "title": "Automerge Repo storage",
+      "url": "https://automerge.org/docs/reference/under-the-hood/storage/",
+      "version_context": "Moving Repo documentation",
+      "locator": "incremental keys, snapshots, concurrent compaction",
+      "independent_observation": "Compaction removes loaded changes incorporated in snapshot; concurrent unseen changes remain. Storage-file compaction is distinct from application history retention or laptop durability.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:35:37.774151+00:00",
+          "end": "2026-10-12T01:35:38.919378+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "automerge-storage"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-AM-CODE",
+      "title": "Automerge JS implementation and tests",
+      "url": "https://github.com/automerge/automerge/blob/8d7b12f8da553afbb325e37a6c66942b8dd4d994/javascript/src/implementation.ts",
+      "version_context": "JS 3.4.1, commit 8d7b12f8da553afbb325e37a6c66942b8dd4d994",
+      "locator": "saveIncremental:830, merge:869, getConflicts:948; complete conflicts.ts test source; package.json; README",
+      "independent_observation": "Verified API definitions, nested-object identity call path, clone/change/merge test callers, and retained map/list alternatives across actors. Tests distinguish mutations inside versus outside change callbacks. JS package pin does not prove Rust parity.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:36:24.969388+00:00",
+          "end": "2026-10-12T01:36:25.098750+00:00"
+        },
+        {
+          "start": "2026-10-12T01:38:59.489721+00:00",
+          "end": "2026-10-12T01:38:59.532889+00:00"
+        },
+        {
+          "start": "2026-10-12T01:36:25.078977+00:00",
+          "end": "2026-10-12T01:36:25.175593+00:00"
+        },
+        {
+          "start": "2026-10-12T01:38:59.533209+00:00",
+          "end": "2026-10-12T01:38:59.583141+00:00"
+        },
+        {
+          "start": "2026-10-12T01:36:25.085591+00:00",
+          "end": "2026-10-12T01:36:25.215422+00:00"
+        },
+        {
+          "start": "2026-10-12T01:36:25.099473+00:00",
+          "end": "2026-10-12T01:36:25.208577+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "automerge-impl",
+        "am-impl-context",
+        "automerge-test",
+        "am-test-context",
+        "automerge-package",
+        "automerge-readme"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-AM-HISTORY",
+      "title": "Automerge issue/release scope",
+      "url": "https://github.com/automerge/automerge/issues/889",
+      "version_context": "Issue 889 cites JS 2.1.11; converted to discussion 2026-09-10; issue 526 open; JS 3.4.1 tag independently verified",
+      "locator": "issue descriptions/activity; release tag",
+      "independent_observation": "No-op assignment report and nested-object reassignment report are version-specific risks, not demonstrated 3.4.1 defects. Corrected closed/discussion status independently confirmed. Neither issue proves Rust behavior.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:36:45.347207+00:00",
+          "end": "2026-10-12T01:36:45.522352+00:00"
+        },
+        {
+          "start": "2026-10-12T01:36:45.523379+00:00",
+          "end": "2026-10-12T01:36:45.707649+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "am526",
+        "am889"
+      ],
+      "limits": "No reproducer executed; no inference of current-release failure from old report. A1 SmartBear release locator returns 404; no absence claim inferred.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-AM-RUST",
+      "title": "Autosurgeon typed mapping",
+      "url": "https://github.com/automerge/autosurgeon",
+      "version_context": "Moving README; not selected dependency",
+      "locator": "Reconcile/Hydrate example with fork/change/merge",
+      "independent_observation": "Independent README confirms Rust typed mapping capability. Exact binding, version parity, packaging and survey integration remain open.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:32:06Z",
+          "end": "2026-10-12T01:47:29.991291+00:00",
+          "precision": "bounded evaluator research window; web per-fetch timestamp unavailable"
+        }
+      ],
+      "retrieval_receipt_ids": [],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-RX",
+      "title": "RxDB custom replication",
+      "url": "https://rxdb.info/replication.html",
+      "version_context": "Moving official docs",
+      "locator": "push/pull/checkpoint and conflict handling",
+      "independent_observation": "Custom backend protocol permits offline edits; default conflict handler discards fork state for master. Loss-preserving custom policy and manual transfer require app work.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:35:37.789757+00:00",
+          "end": "2026-10-12T01:35:37.899603+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "rxdb"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-UUID",
+      "title": "UUID identity definition",
+      "url": "https://www.rfc-editor.org/rfc/rfc9562.html",
+      "version_context": "RFC 9562, May 2024",
+      "locator": "§§5.4, 5.7, 6.7–6.9",
+      "independent_observation": "UUIDv4 random/pseudorandom; v7 embeds millisecond epoch time. Collision resistance is conditional/probabilistic. Neither identifier version proves causality or person identity.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:36:02.049257+00:00",
+          "end": "2026-10-12T01:36:02.176124+00:00"
+        }
+      ],
+      "retrieval_receipt_ids": [
+        "uuid"
+      ],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E-HASH",
+      "title": "Secure hash definition",
+      "url": "https://csrc.nist.gov/pubs/fips/180-4/upd1/final",
+      "version_context": "FIPS 180-4, August 2015; revision-planning note distinct",
+      "locator": "official standard abstract and publication identity",
+      "independent_observation": "Digest detects changes relative to an expected digest. Unkeyed digest alone is not sender authentication or encryption; trust of manifest is a separate design concern.",
+      "access_utc": [
+        {
+          "start": "2026-10-12T01:32:06Z",
+          "end": "2026-10-12T01:47:29.991291+00:00",
+          "precision": "bounded evaluator research window; web per-fetch timestamp unavailable"
+        }
+      ],
+      "retrieval_receipt_ids": [],
+      "limits": "Finite source inspection; no product execution or compatibility proof.",
+      "coverage": "COMPLETE"
+    }
+  ],
+  "additional_context_urls": [
+    "https://www.sqlite.org/releaselog/3_50_0.html",
+    "https://github.com/sqlite/sqlite/blob/version-3.54.0/test/crash.test",
+    "https://github.com/sqlite/sqlite/blob/version-3.54.0/test/walcrash.test",
+    "https://github.com/apache/couchdb/issues/6126",
+    "https://docs.couchdb.org/en/stable/whatsnew/3.5.html",
+    "https://docs.couchdb.org/en/stable/replication/protocol.html",
+    "https://pouchdb.com/guides/conflicts.html",
+    "https://pouchdb.com/guides/attachments.html",
+    "https://github.com/apache/pouchdb/issues/8456",
+    "https://github.com/automerge/automerge/blob/8d7b12f8da553afbb325e37a6c66942b8dd4d994/javascript/test/conflicts.ts",
+    "https://github.com/automerge/automerge/issues/526",
+    "https://automerge.org/docs/reference/under-the-hood/merge-rules/"
+  ],
+  "source_license_policy": "No corpus copies. Only minimal code tokens in decisive evidence; PouchDB code is Apache-2.0, https://www.apache.org/licenses/LICENSE-2.0. SQLite sources public domain; Automerge source license notices remain at linked repository.",
+  "temporal_limit": "Current primary pages were checked; past candidate fetch content has no independent server snapshot. Pinned code is release-specific.",
+  "execution": "No downloaded source or upstream/application tests executed."
+}

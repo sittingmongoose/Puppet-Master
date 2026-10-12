@@ -1,0 +1,18 @@
+{
+  "schema": "er13.web-access-limitations.v1",
+  "access_utc_window": [
+    "2026-10-12T01:30:19Z",
+    "2026-10-12T01:49:37.528629+00:00"
+  ],
+  "urls": [
+    "https://ffmpeg.org/download.html",
+    "https://docs.slint.dev/latest/docs/slint/reference/common/",
+    "https://docs.slint.dev/latest/docs/slint/reference/keyboard-input/focusscope/",
+    "https://loc.gov/standards/premis/tools_for_premis.php",
+    "https://github.com/pdeljanov/Symphonia/releases/tag/v0.5.5"
+  ],
+  "operation": "Official primary pages reopened through web tool; relevant sections and adjacent context read.",
+  "per_page_access_time": "UNKNOWN within bounded window",
+  "original_html_sha256": "UNKNOWN; web tool does not expose original HTML bytes",
+  "additional_access_limitation": "Later unauthenticated GitHub release API lookup returned403 rate limit; official release page supplied the needed0.5.5 context. No account/provider settings changed."
+}

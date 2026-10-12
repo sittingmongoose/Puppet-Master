@@ -1,0 +1,36 @@
+{
+  "schema": "er13.immutable-original-output-manifest.v1",
+  "arm_id": "B02-P01-treatment",
+  "scope": "FULL",
+  "frozen_at_utc": "2026-10-12T01:47:31.543161+00:00",
+  "comparison_performed_before_freeze": false,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/assessment.md",
+      "bytes": 4646,
+      "sha256": "c381d6d0f3b1682c9b90048c171d7e7d17bf1d4896f78edadffa0c9811841076"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/assessment.json",
+      "bytes": 29997,
+      "sha256": "f4808e908eaa4ccad551023a21d783a3a82844e9a72948d31f0ae3b02ced4287"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/coverage.json",
+      "bytes": 15893,
+      "sha256": "7fecaed60bf87030a0ff37951ede9e600f63e37606f8882b09a78743c121d994"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/defects.json",
+      "bytes": 6406,
+      "sha256": "77480b5bfead5c0d1f2d8fd6dcc2adb9ae8c0298a59b19a9d655a5496d272580"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P01/treatment/primary-source-index.json",
+      "bytes": 61713,
+      "sha256": "f2f59a161ec64b1ad722f9e70fdac2f0ff91476431fc22de06c0ed1486b24e44"
+    }
+  ],
+  "self_hash_rule": "Manifest itself is hashed in the pair manifest and terminal reply, avoiding a self-referential hash.",
+  "immutability": "Original grades/evidence must not be altered. New disputes require separate adjudication."
+}

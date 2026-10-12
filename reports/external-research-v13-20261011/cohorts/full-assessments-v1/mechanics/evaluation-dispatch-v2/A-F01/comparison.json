@@ -1,0 +1,111 @@
+{
+  "schema": "er13.postfreeze_finite_comparison.v1",
+  "block_id": "A-F01",
+  "written_after_original_freeze_utc": "2026-10-12T01:49:57.594230+00:00",
+  "original_manifest": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/manifest.json",
+    "sha256": "91b7cf91b1c196d46858d2d65876de775f2250a48f6a5d7d875d05e66f4bcca2",
+    "frozen_at_utc": "2026-10-12T01:48:42.828761+00:00"
+  },
+  "arm_count": 4,
+  "cells": [
+    {
+      "arm_id": "A-F01-R0",
+      "source_judgment": "PASS",
+      "six_axis_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "time_eligibility": "PARTIAL_UNKNOWN_ELIGIBILITY",
+      "method_compliance": "PARTIAL",
+      "t0_marker_to_native_terminal_seconds": 2324.303,
+      "native_lifetime_sum_seconds": 1405.0,
+      "resource_billing": "UNKNOWN"
+    },
+    {
+      "arm_id": "A-F01-A1",
+      "source_judgment": "FAIL",
+      "six_axis_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "time_eligibility": "PARTIAL_UNKNOWN_ELIGIBILITY",
+      "method_compliance": "PARTIAL",
+      "t0_marker_to_native_terminal_seconds": 2418.635,
+      "native_lifetime_sum_seconds": 2162.0,
+      "resource_billing": "UNKNOWN"
+    },
+    {
+      "arm_id": "A-F01-A8",
+      "source_judgment": "PASS",
+      "six_axis_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "time_eligibility": "PARTIAL_UNKNOWN_ELIGIBILITY",
+      "method_compliance": "PARTIAL",
+      "t0_marker_to_native_terminal_seconds": 2693.553,
+      "native_lifetime_sum_seconds": 1894.0,
+      "resource_billing": "UNKNOWN"
+    },
+    {
+      "arm_id": "A-F01-A1_A8",
+      "source_judgment": "PASS",
+      "six_axis_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "time_eligibility": "PARTIAL_UNKNOWN_ELIGIBILITY",
+      "method_compliance": "FAIL",
+      "t0_marker_to_native_terminal_seconds": 3433.657,
+      "native_lifetime_sum_seconds": 2258.0,
+      "resource_billing": "UNKNOWN"
+    }
+  ],
+  "descriptive_factor_contrasts": {
+    "A1_at_A8_absent_seconds": 94.332,
+    "A1_at_A8_present_seconds": 740.104,
+    "A8_at_A1_absent_seconds": 369.25,
+    "A8_at_A1_present_seconds": 1015.022,
+    "A1_mean_marker_contrast_seconds": 417.218,
+    "A8_mean_marker_contrast_seconds": 692.136,
+    "interaction_marker_contrast_seconds": 645.772
+  },
+  "contrast_domain": "Arithmetic only on frozen T0/conservative marker to native-terminal receipt updatedAt. Not exact artifact latency, request-to-quiet task latency, provider activity, or billing. R0 exact original T0 is unknown and setup failure remains included.",
+  "source_factor_signal": "A1-only final has a material source/test-oracle error; the combination does not repeat that error and source-passes, but fails its one-selector method. No equal-quality A1 saving is established. Source labels are finite, not numeric universal quality scores.",
+  "quality_comparability": "No confirmed fully eligible four-cell quality/time/method/billing block. Differences in scientific errors and method validity forbid treating proxy arithmetic as causal speedups.",
+  "all_assigned_denominator": {
+    "original_arms": 4,
+    "notified_terminal_stages": 12,
+    "missing_finals": 0,
+    "retained_initial_setup_failures": 1,
+    "setup_failure_arm": "A-F01-R0",
+    "setup_failure_candidate_starts": 0,
+    "extra_candidates": 0,
+    "failure_cost_latency_separate": "UNKNOWN; never removed or reset"
+  },
+  "sum_arm_marker_intervals_seconds": 10870.148,
+  "sum_domain": "Sum of four arm marker intervals; not campaign makespan or billed activity; shared control counted once.",
+  "candidate_total_consumption": "UNKNOWN",
+  "complete_experiment_total_consumption": "UNKNOWN; independent evaluation, preparation/support/publication/root observations separately unavailable",
+  "consumption_per_observed_source_passing_final": "UNDEFINED with unknown numerator and uncertain eligibility; three finite source passes alone do not supply comparable billed cost",
+  "component_or_cold_pipeline_inference": "NONE. No component discovery score or cold full-pipeline conclusion imported.",
+  "root_selection": "NONE; root alone selects recipes/locks and held-out cases remain unrevealed.",
+  "uncertainty": "One original case in four cells; no replicated dispersion/reliability/non-inferiority estimate. Imperfect blinding and shared independent lookup disclosed. Original grades unchanged."
+}

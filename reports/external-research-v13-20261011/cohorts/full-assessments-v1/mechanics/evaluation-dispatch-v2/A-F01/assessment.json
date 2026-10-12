@@ -1,0 +1,400 @@
+{
+  "schema": "er13.original_block_assessment.v1",
+  "block_id": "A-F01",
+  "arm_count": 4,
+  "scope": "FULL",
+  "packet_sha256": "f7b32d1b75e3630d587d79be0199bbe4a6ac0ef7dcf3bbdada08acfab837b173",
+  "arms": [
+    {
+      "arm_id": "A-F01-R0",
+      "source_judgment": {
+        "value": "PASS",
+        "coverage": "COMPLETE_WITH_NAMED_EXTERNAL_EXCLUSIONS",
+        "material_defect_ids": [],
+        "meaning": "Finite assessed source quality; not universal correctness or executed product success."
+      },
+      "delivery": {
+        "status": "COMPLETE_SCIENCE_DELIVERY",
+        "final_present": true,
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-R0/run/A-F01-R0/control/terminal-handoffs/reviser/files/final.md",
+        "final_sha256": "f684f7e615350273466feb90f93e6c610ce34575b9f109f48033a8f5b862b97c",
+        "scientific_required_files_present": true,
+        "auxiliary_limit": null
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 2,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 3,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          }
+        ],
+        "detail": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/coverage.json"
+      },
+      "defects": {
+        "file": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/defects.json",
+        "ids": [
+          "R0-N01"
+        ],
+        "source_material_count": 0,
+        "method_material_count": 0
+      },
+      "time_eligibility": {
+        "status": "PARTIAL_UNKNOWN_ELIGIBILITY",
+        "detail": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/assessment.json",
+        "native_terminal_within_whole_deadline": true
+      },
+      "method_compliance": {
+        "status": "PARTIAL",
+        "ordinary_scope": "Complete fixed brief/plan and all frozen science documents assessed",
+        "one_time_discovery_reveal": "Matching discovery/plan hashes, single_use=true receipt; actual hidden-before-reveal reading order UNKNOWN independently",
+        "native_one_goal_per_stage": "One create/active/terminal set per notified stage; matching identity/birth/objective; unobserved additional lifecycle behavior UNKNOWN",
+        "variant_record": "Ordinary protocol observable outputs; pre-input/source-reading order not independently proved",
+        "scientific_source_judgment_separate": true,
+        "defect_ids": []
+      },
+      "native_identity_provenance": {
+        "status": "PARTIAL",
+        "native_receipt_identity_birth_objective_consistency": "PASS",
+        "active_and_complete_receipts_present": true,
+        "independent_native_to_task_session_linkage": "UNKNOWN beyond exact objective/capture custody",
+        "receipt_freshness_clock_accuracy_and_actual_before_input_order": "UNKNOWN independently",
+        "actual_notified_tasks": "Three stages completed; zero pending children at notification",
+        "non_proofs": [
+          "Receipt field consistency is not source truth.",
+          "Goal counters are not independent evidence of provider/session attribution.",
+          "No full native transcripts or private routing/account identity published."
+        ]
+      },
+      "resource_billing_coverage": {
+        "status": "PARTIAL_UNKNOWN_BILLING",
+        "classification_of_grading": "independent_evaluation",
+        "unknown_not_zero": true,
+        "detail": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-R0/assessment.json"
+      }
+    },
+    {
+      "arm_id": "A-F01-A1",
+      "source_judgment": {
+        "value": "FAIL",
+        "coverage": "COMPLETE_WITH_NAMED_EXTERNAL_EXCLUSIONS",
+        "material_defect_ids": [
+          "A1-M01"
+        ],
+        "meaning": "Finite assessed source quality; not universal correctness or executed product success."
+      },
+      "delivery": {
+        "status": "COMPLETE_SCIENCE_DELIVERY",
+        "final_present": true,
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/reviser/files/final.md",
+        "final_sha256": "39b4d7bed2a9414daa000f118457a1b5dee9baa01b77a17354c59d74712964bc",
+        "scientific_required_files_present": true,
+        "auxiliary_limit": "Critic source index absent"
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 2,
+            "coverage": "COMPLETE",
+            "judgment": "FAIL"
+          },
+          {
+            "axis": 3,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE",
+            "judgment": "FAIL"
+          }
+        ],
+        "detail": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/coverage.json"
+      },
+      "defects": {
+        "file": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/defects.json",
+        "ids": [
+          "A1-M01",
+          "A1-N02",
+          "A1-N03",
+          "A1-N04"
+        ],
+        "source_material_count": 1,
+        "method_material_count": 0
+      },
+      "time_eligibility": {
+        "status": "PARTIAL_UNKNOWN_ELIGIBILITY",
+        "detail": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/assessment.json",
+        "native_terminal_within_whole_deadline": true
+      },
+      "method_compliance": {
+        "status": "PARTIAL",
+        "ordinary_scope": "Complete fixed brief/plan and all frozen science documents assessed",
+        "one_time_discovery_reveal": "Matching discovery/plan hashes, single_use=true receipt; actual hidden-before-reveal reading order UNKNOWN independently",
+        "native_one_goal_per_stage": "One create/active/terminal set per notified stage; matching identity/birth/objective; unobserved additional lifecycle behavior UNKNOWN",
+        "variant_record": "Ordinary protocol observable outputs; pre-input/source-reading order not independently proved",
+        "scientific_source_judgment_separate": true,
+        "defect_ids": [
+          "A1-N02",
+          "A1-N03"
+        ]
+      },
+      "native_identity_provenance": {
+        "status": "PARTIAL",
+        "native_receipt_identity_birth_objective_consistency": "PASS",
+        "active_and_complete_receipts_present": true,
+        "independent_native_to_task_session_linkage": "UNKNOWN beyond exact objective/capture custody",
+        "receipt_freshness_clock_accuracy_and_actual_before_input_order": "UNKNOWN independently",
+        "actual_notified_tasks": "Three stages completed; zero pending children at notification",
+        "non_proofs": [
+          "Receipt field consistency is not source truth.",
+          "Goal counters are not independent evidence of provider/session attribution.",
+          "No full native transcripts or private routing/account identity published."
+        ]
+      },
+      "resource_billing_coverage": {
+        "status": "PARTIAL_UNKNOWN_BILLING",
+        "classification_of_grading": "independent_evaluation",
+        "unknown_not_zero": true,
+        "detail": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/assessment.json"
+      }
+    },
+    {
+      "arm_id": "A-F01-A8",
+      "source_judgment": {
+        "value": "PASS",
+        "coverage": "COMPLETE_WITH_NAMED_EXTERNAL_EXCLUSIONS",
+        "material_defect_ids": [],
+        "meaning": "Finite assessed source quality; not universal correctness or executed product success."
+      },
+      "delivery": {
+        "status": "COMPLETE_SCIENCE_DELIVERY",
+        "final_present": true,
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A8/run/A-F01-A8/control/terminal-handoffs/reviser/files/final.md",
+        "final_sha256": "8ad557eab2b6ce069c3370c84b107c26a42db0dbbdb99e219b4e0352c3874c50",
+        "scientific_required_files_present": true,
+        "auxiliary_limit": null
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 2,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 3,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          }
+        ],
+        "detail": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/coverage.json"
+      },
+      "defects": {
+        "file": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/defects.json",
+        "ids": [
+          "A8-N01",
+          "A8-N02"
+        ],
+        "source_material_count": 0,
+        "method_material_count": 0
+      },
+      "time_eligibility": {
+        "status": "PARTIAL_UNKNOWN_ELIGIBILITY",
+        "detail": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/assessment.json",
+        "native_terminal_within_whole_deadline": true
+      },
+      "method_compliance": {
+        "status": "PARTIAL",
+        "ordinary_scope": "Complete fixed brief/plan and all frozen science documents assessed",
+        "one_time_discovery_reveal": "Matching discovery/plan hashes, single_use=true receipt; actual hidden-before-reveal reading order UNKNOWN independently",
+        "native_one_goal_per_stage": "One create/active/terminal set per notified stage; matching identity/birth/objective; unobserved additional lifecycle behavior UNKNOWN",
+        "variant_record": "Internally inconsistent announced/reported SCW-03 contrast; original selected claim unchanged",
+        "scientific_source_judgment_separate": true,
+        "defect_ids": [
+          "A8-N01"
+        ]
+      },
+      "native_identity_provenance": {
+        "status": "PARTIAL",
+        "native_receipt_identity_birth_objective_consistency": "PASS",
+        "active_and_complete_receipts_present": true,
+        "independent_native_to_task_session_linkage": "UNKNOWN beyond exact objective/capture custody",
+        "receipt_freshness_clock_accuracy_and_actual_before_input_order": "UNKNOWN independently",
+        "actual_notified_tasks": "Three stages completed; zero pending children at notification",
+        "non_proofs": [
+          "Receipt field consistency is not source truth.",
+          "Goal counters are not independent evidence of provider/session attribution.",
+          "No full native transcripts or private routing/account identity published."
+        ]
+      },
+      "resource_billing_coverage": {
+        "status": "PARTIAL_UNKNOWN_BILLING",
+        "classification_of_grading": "independent_evaluation",
+        "unknown_not_zero": true,
+        "detail": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A8/assessment.json"
+      }
+    },
+    {
+      "arm_id": "A-F01-A1_A8",
+      "source_judgment": {
+        "value": "PASS",
+        "coverage": "COMPLETE_WITH_NAMED_EXTERNAL_EXCLUSIONS",
+        "material_defect_ids": [],
+        "meaning": "Finite assessed source quality; not universal correctness or executed product success."
+      },
+      "delivery": {
+        "status": "COMPLETE_SCIENCE_DELIVERY",
+        "final_present": true,
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1_A8/run/A-F01-A1_A8/control/terminal-handoffs/reviser/files/final.md",
+        "final_sha256": "4de5e4784701f4cb79b8ddf1c2b892a139edf77c00788ce631c57ab1810425a0",
+        "scientific_required_files_present": true,
+        "auxiliary_limit": "Final source-map stage mislabeled critic"
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 2,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 3,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          }
+        ],
+        "detail": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/coverage.json"
+      },
+      "defects": {
+        "file": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/defects.json",
+        "ids": [
+          "COMBO-METHOD01",
+          "COMBO-N02",
+          "COMBO-N03",
+          "COMBO-N04"
+        ],
+        "source_material_count": 0,
+        "method_material_count": 1
+      },
+      "time_eligibility": {
+        "status": "PARTIAL_UNKNOWN_ELIGIBILITY",
+        "detail": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/assessment.json",
+        "native_terminal_within_whole_deadline": true
+      },
+      "method_compliance": {
+        "status": "FAIL",
+        "ordinary_scope": "Complete fixed brief/plan and all frozen science documents assessed",
+        "one_time_discovery_reveal": "Matching discovery/plan hashes, single_use=true receipt; actual hidden-before-reveal reading order UNKNOWN independently",
+        "native_one_goal_per_stage": "One create/active/terminal set per notified stage; matching identity/birth/objective; unobserved additional lifecycle behavior UNKNOWN",
+        "variant_record": "Invalid single-selector SCW-05/06 contrasts",
+        "scientific_source_judgment_separate": true,
+        "defect_ids": [
+          "COMBO-METHOD01"
+        ]
+      },
+      "native_identity_provenance": {
+        "status": "PARTIAL",
+        "native_receipt_identity_birth_objective_consistency": "PASS",
+        "active_and_complete_receipts_present": true,
+        "independent_native_to_task_session_linkage": "UNKNOWN beyond exact objective/capture custody",
+        "receipt_freshness_clock_accuracy_and_actual_before_input_order": "UNKNOWN independently",
+        "actual_notified_tasks": "Three stages completed; zero pending children at notification",
+        "non_proofs": [
+          "Receipt field consistency is not source truth.",
+          "Goal counters are not independent evidence of provider/session attribution.",
+          "No full native transcripts or private routing/account identity published."
+        ]
+      },
+      "resource_billing_coverage": {
+        "status": "PARTIAL_UNKNOWN_BILLING",
+        "classification_of_grading": "independent_evaluation",
+        "unknown_not_zero": true,
+        "detail": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1_A8/assessment.json"
+      }
+    }
+  ],
+  "comparison": "Not part of original assessment. Written only after original manifests freeze.",
+  "blinding": "Imperfect from technique-bearing frozen paths/prompts",
+  "original": true
+}

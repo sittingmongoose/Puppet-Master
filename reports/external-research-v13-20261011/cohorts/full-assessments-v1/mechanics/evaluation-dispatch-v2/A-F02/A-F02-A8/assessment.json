@@ -1,0 +1,169 @@
+{
+  "schema": "er13.original-assessment.v1",
+  "assignment_id": "A-F02",
+  "original": true,
+  "written_utc": "2026-10-12T01:53:30.502639+00:00",
+  "blinding": "Imperfect from technique-bearing paths/prompts; no active candidate/held-out inputs read.",
+  "arms": [
+    {
+      "arm_id": "A-F02-A8",
+      "scope": "FULL",
+      "source_judgment": {
+        "status": "UNASSESSED",
+        "coverage": "PARTIAL",
+        "basis": "Final source judgment, delivery and complete-final preservation are UNASSESSED. Available full investigator and late critic science are assessed only as PARTIAL. The original critic completion exceeded its frozen stage deadline, and no original final exists. No replacement or clock rescue is supplied.",
+        "finite_assessment_not_universal_correctness": true,
+        "actual_validation_not_required": true
+      },
+      "coverage": {
+        "overall": "PARTIAL",
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/coverage.json",
+        "sha256": "030c1656d185e617226c18947c90f57cda8e2ff947e990a8fb8f25dec2815d9c",
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 2,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 3,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 4,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 5,
+            "coverage": "UNASSESSED",
+            "complete_final_coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 6,
+            "coverage": "PARTIAL",
+            "complete_final_coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          }
+        ]
+      },
+      "defects": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A8/defects.json",
+        "sha256": "5dd874ce8c1f184eb20282379cddfe1e47815637fb47890896ba4a2865f1e285",
+        "material_final_defect_ids": [],
+        "partial_stage_material_ids": [
+          "A8-D01",
+          "A8-D02"
+        ]
+      },
+      "delivery": {
+        "status": "UNASSESSED",
+        "final_present": false,
+        "final_path": null,
+        "final_sha256": null,
+        "original_missing_final_preserved": true,
+        "complete_final_grade_fabricated": false
+      },
+      "time_eligibility": {
+        "status": "INELIGIBLE_ORIGINAL_STAGE_CAP",
+        "maximum_elapsed_minutes": 60,
+        "frozen_clocks_unchanged": true,
+        "t0_utc": "2026-10-12T00:30:25.046Z",
+        "whole_deadline_utc": "2026-10-12T01:30:25.046Z",
+        "stages": [
+          {
+            "stage": "investigator",
+            "preparation_utc": "2026-10-12T00:30:25.581Z",
+            "native_goal_created_utc": "2026-10-12T00:30:34+00:00",
+            "native_goal_terminal_utc": "2026-10-12T00:44:45+00:00",
+            "native_goal_lifetime_seconds": 851,
+            "frozen_stage_deadline_utc": "2026-10-12T01:00:25.581Z",
+            "late_native_terminal_seconds": 0,
+            "same_birth_exact_objective_in_receipts": true,
+            "active_to_complete_in_receipts": true,
+            "actual_task_status": "completed",
+            "hasPendingChildRuns": false,
+            "counter_fields_present": true,
+            "last_complete_scientific_artifact_utc": "UNKNOWN",
+            "request_admission_queue_provider_activity_boundaries": "UNKNOWN"
+          },
+          {
+            "stage": "critic",
+            "preparation_utc": "2026-10-12T00:45:59.136Z",
+            "native_goal_created_utc": "2026-10-12T00:46:14+00:00",
+            "native_goal_terminal_utc": "2026-10-12T01:03:11+00:00",
+            "native_goal_lifetime_seconds": 1017,
+            "frozen_stage_deadline_utc": "2026-10-12T00:57:59.136Z",
+            "late_native_terminal_seconds": 311.864,
+            "same_birth_exact_objective_in_receipts": true,
+            "active_to_complete_in_receipts": true,
+            "actual_task_status": "completed",
+            "hasPendingChildRuns": false,
+            "counter_fields_present": true,
+            "last_complete_scientific_artifact_utc": "UNKNOWN",
+            "request_admission_queue_provider_activity_boundaries": "UNKNOWN"
+          }
+        ],
+        "t0_to_final_native_terminal_proxy_seconds": null,
+        "proxy_is_last_artifact_or_quiet_time": false,
+        "last_complete_scientific_artifact_utc": "UNKNOWN",
+        "quiet_observation_upper_bound_utc": "2026-10-12T01:28:58.525181+00:00",
+        "quiet_observation_basis": "Packet/status receipts report all actual tasks terminal with zero pending children; exact per-task quiet boundary absent.",
+        "missing_final_has_no_zero_second_success": true,
+        "full_context_occupancy_and_provider_active_time": "UNKNOWN; native Goal lifetimes are distinct observational proxies, not billed work."
+      },
+      "method_compliance": {
+        "status": "PARTIAL",
+        "declared_topology": "investigator -> independent critic -> fresh complete reviser",
+        "present_stage_count": 2,
+        "planned_stage_count": 3,
+        "brief_first_reveal_custody": "Discovery bytes/hash and exact plan match single-use reveal receipts. Actual pre-reveal access chronology beyond captures UNKNOWN.",
+        "scw_artifact_content": "PARTIAL; A8-M01, no final",
+        "scw_selection_before_fetch_or_verdict": "UNKNOWN where applicable; complete native transcripts not supplied/read",
+        "activation_before_case_input_and_save_before_completion": "UNKNOWN beyond supplied custody; R0 reviser rounded research window also begins before its native activation marker, insufficient to resolve actual ordering.",
+        "late_or_missing_stage": "Original late critic and missing reviser make FULL method incomplete/ineligible.",
+        "extra_unlisted_attempts": "UNKNOWN; no full campaign/history scan authorized."
+      },
+      "native_identity_provenance": {
+        "coverage": "PARTIAL",
+        "receipt_custody": "All supplied native create/active/terminal snapshot hashes checked; same birth/exact objective and active-to-complete match in every present stage.",
+        "terminal_manifest_lifecycle_qualified_flag": false,
+        "notification_same_birth_exact_objective_flags_verified": true,
+        "independent_native_to_T3_task_linkage": "UNKNOWN beyond assigned capture/objective custody",
+        "native_realness_freshness_preinput_order": "UNKNOWN beyond supplied receipts; status/hashes do not establish source truth",
+        "public_identity_policy": "No account/provider routing identity, native UUIDs or full native transcripts published."
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "planned_contexts": 3,
+          "present_native_stage_receipts": 2,
+          "cumulative_goal_counter_fields": "OBSERVED; values withheld by public-artifact privacy contract; not additive billing",
+          "input_cached_output_reasoning_breakdown": "UNKNOWN",
+          "provider_activity_context_occupancy": "UNKNOWN",
+          "subscription_consumption_billing": "UNKNOWN",
+          "complete_product_path_total": "UNKNOWN; missing/bounded observations never treated as zero"
+        },
+        "independent_evaluation": {
+          "cost_category": "independent_evaluation",
+          "first_observed_utc": "2026-10-12T01:30:19Z",
+          "original_assessment_written_utc": "2026-10-12T01:53:30.502639+00:00",
+          "provider_activity_counters_billing": "UNKNOWN",
+          "separate_from_candidate_product": true
+        },
+        "preparation_support_publication_root_totals": "UNKNOWN outside this assignment; no cold full-pipeline/component total inferred."
+      }
+    }
+  ]
+}

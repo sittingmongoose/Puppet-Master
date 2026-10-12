@@ -1,0 +1,282 @@
+{
+  "schema": "er13.original_coverage.local-v1",
+  "arm_id": "B06-P01-control",
+  "scope": "FULL generic research proposal; not implementation certification",
+  "overall": "COMPLETE",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Every current proposal obligation/negative constraint and every substantive released clause examined; no material omission found."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "All identified consequential available mechanism families checked independently with version/default/exception and adjacent code context; qualifications are retained."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Unfamiliar useful mechanisms and feasible execution/exchange alternatives assessed for limits and small-team burden; finite discovery review, not universal recall."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Every critic finding and plan disposition examined; accepted changes are supported and no material false rejection found."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Core proposal, optional capabilities, uncertainties and validation status survive; concrete Zed examples are compressed, recorded as nonmaterial."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Validation cases have meaningful negative/positive outcomes and phased use; sources/tests read are explicitly distinct from product checks executed."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "responsive",
+      "obligation": "Loops, crashes, cancellation and invalid result",
+      "coverage": "COMPLETE",
+      "basis": "Worker supervision, budgets, discard and recovery are proposed; no responsive UI is claimed measured."
+    },
+    {
+      "id": "boundary",
+      "obligation": "Component and data exchange boundary",
+      "coverage": "COMPLETE",
+      "basis": "Immutable copied input, explicit schema/API boundary and proposal-only output; viable alternatives compared."
+    },
+    {
+      "id": "capabilities",
+      "obligation": "Deny ambient file/network authority",
+      "coverage": "COMPLETE",
+      "basis": "Manifest and omitted SDK functions are not enforcement. Both require narrow imports/brokers plus actual OS policy and fail closed."
+    },
+    {
+      "id": "diagram-read",
+      "obligation": "Active diagram/selection read scope",
+      "coverage": "COMPLETE",
+      "basis": "Read-only selection plus approved context. Broader scope remains a product capability choice; no live mutable objects."
+    },
+    {
+      "id": "optional-file",
+      "obligation": "User-selected optional file",
+      "coverage": "COMPLETE",
+      "basis": "Host picker and bounded bytes/request-scoped read capability; no bare path as authority; cancellation and retention considered."
+    },
+    {
+      "id": "additions",
+      "obligation": "Add objects",
+      "coverage": "COMPLETE",
+      "basis": "Temporary/reserved IDs and host assignment/remapping; collisions/references validated before preview."
+    },
+    {
+      "id": "concurrency",
+      "obligation": "No silent overwrite of intervening edits",
+      "coverage": "COMPLETE",
+      "basis": "Commit-time revision/preconditions and explicit conflict handling; conservative initial global revision policy in treatment."
+    },
+    {
+      "id": "atomicity",
+      "obligation": "No partially validated result on live diagram",
+      "coverage": "COMPLETE",
+      "basis": "Whole-response rejection, detached/host-computed preview and one transaction/undo step."
+    },
+    {
+      "id": "permission-ux",
+      "obligation": "Understandable permission requests",
+      "coverage": "COMPLETE",
+      "basis": "Identity, purpose, data, scope/duration, decline and revoke are described in the final."
+    },
+    {
+      "id": "failure-ux",
+      "obligation": "Understandable failed operation feedback",
+      "coverage": "COMPLETE",
+      "basis": "No-change status plus recovery/disable/details, conflict and timeout explanation; internals need not be understood."
+    },
+    {
+      "id": "platforms",
+      "obligation": "Windows/Linux and undecided languages",
+      "coverage": "COMPLETE",
+      "basis": "Conditional platform/backend comparison and authoring/toolchain burden; no unsupported OS or language promise."
+    },
+    {
+      "id": "builtins",
+      "obligation": "Built-ins survive extension loading failures",
+      "coverage": "COMPLETE",
+      "basis": "Independent command registration and usable editor during discovery, launch, failure and update paths."
+    },
+    {
+      "id": "updates",
+      "obligation": "Host-owned updates; no custom installers",
+      "coverage": "COMPLETE",
+      "basis": "Bounded validation/staging, integrity/compatibility, consent changes, atomic switch and rollback; no author hooks."
+    },
+    {
+      "id": "alternatives",
+      "obligation": "Execution/exchange limits and burden",
+      "coverage": "COMPLETE",
+      "basis": "Both compare viable Wasm/native/in-process choices and typed versus serialized interfaces; treatment also explicitly compares shared memory."
+    },
+    {
+      "id": "phases",
+      "obligation": "Phased integration and meaningful validation",
+      "coverage": "COMPLETE",
+      "basis": "Ordered contract/prototype/enforcement/UX-update/preview work; promotion is conditional future planning."
+    },
+    {
+      "id": "research",
+      "obligation": "Primary docs/code/callers/tests/history where consequential",
+      "coverage": "COMPLETE",
+      "basis": "Identified external mechanisms researched independently; no target editor repository was supplied."
+    },
+    {
+      "id": "truthful-work",
+      "obligation": "Proposal, unrun validation and no security audit",
+      "coverage": "COMPLETE",
+      "basis": "No deployment, third-party installation, product tests or audit are represented as performed."
+    },
+    {
+      "id": "reveal",
+      "obligation": "Exact plan reveal/dispositions",
+      "coverage": "COMPLETE",
+      "basis": "All substantive released clauses and provisional/unknown status are addressed; discovery/reveal hashes match."
+    }
+  ],
+  "source_families": [
+    {
+      "family": "Wasm/runtime",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "WSEC",
+        "WCONFIG",
+        "WLIMIT",
+        "WDEV",
+        "WFUEL",
+        "WREL",
+        "WFUELTEST"
+      ],
+      "limit": "Bounded factual/applicability review; neither all upstream tests nor future implementation behavior certified."
+    },
+    {
+      "family": "Typed/exchange interface",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "WIT",
+        "FIGMAUI"
+      ],
+      "limit": "Bounded factual/applicability review; neither all upstream tests nor future implementation behavior certified."
+    },
+    {
+      "family": "Linux OS restrictions",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "LANDLOCK"
+      ],
+      "limit": "Bounded factual/applicability review; neither all upstream tests nor future implementation behavior certified."
+    },
+    {
+      "family": "Windows OS restrictions",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "WINAPP"
+      ],
+      "limit": "Bounded factual/applicability review; neither all upstream tests nor future implementation behavior certified."
+    },
+    {
+      "family": "Permission/network precedent",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "FIGMAMAN",
+        "FIGMANET",
+        "FIGMARES",
+        "VSSEC"
+      ],
+      "limit": "Bounded factual/applicability review; neither all upstream tests nor future implementation behavior certified."
+    },
+    {
+      "family": "Editor hosts/edit API/history",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "VSHOST",
+        "VSAPI",
+        "VSISSUE",
+        "VSFIX"
+      ],
+      "limit": "Bounded factual/applicability review; neither all upstream tests nor future implementation behavior certified."
+    },
+    {
+      "family": "Author tooling",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "ZEDDEV"
+      ],
+      "limit": "Bounded factual/applicability review; neither all upstream tests nor future implementation behavior certified."
+    },
+    {
+      "family": "Archive/host bridge/code/caller/test/history",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "ZEDADV",
+        "ZEDARCH",
+        "ZEDHOST",
+        "ZEDCALL",
+        "ZEDFS",
+        "ZEDLOCK",
+        "ASYNCARCH",
+        "ASYNCENTRY"
+      ],
+      "limit": "Bounded factual/applicability review; neither all upstream tests nor future implementation behavior certified."
+    },
+    {
+      "family": "Update trust threats",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "TUF"
+      ],
+      "limit": "Bounded factual/applicability review; neither all upstream tests nor future implementation behavior certified."
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "M1",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED; accepted and addressed",
+      "evidence": "The draft lacked concrete prompt/decline/revoke/failure copy; the final carries it from discovery and adds examples."
+    },
+    {
+      "id": "M2",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED; accepted and addressed",
+      "evidence": "The draft had a test inventory without ordered integration gates; the final supplies five phases and gates."
+    }
+  ],
+  "unavailable_or_future_domains": [
+    {
+      "domain": "Unnamed target editor repository/code/callers/tests/release history",
+      "coverage": "UNASSESSED",
+      "reason": "No target product or repository supplied. This is unavailable user context, not omitted available mechanism research; it remains an integration gate."
+    },
+    {
+      "domain": "Future product enforcement, performance, usability, updater and transaction execution",
+      "coverage": "UNASSESSED",
+      "reason": "Deliverable is a proposal; no deployment or execution required or inferred."
+    }
+  ],
+  "stop_rule": "No decisive-failure early stop used. All assigned scientific originals were read completely; no additional candidate, held-out case, tree or history inspected.",
+  "reading_limits": "Long tool outputs were reread in bounded portions when truncated. Embedded unchanged treatment predecessor source maps were equality-checked against the complete read originals."
+}

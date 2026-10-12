@@ -1,0 +1,72 @@
+{
+  "arm_id": "B09-P02-control",
+  "source_judgment": "PASS",
+  "material_final_defects": [],
+  "nonmaterial_findings": [
+    {
+      "defect_id": "C-N01",
+      "classification": "minor source-context/wording",
+      "material": false,
+      "status": "PRESENT_IN_HISTORICAL_RECORD",
+      "locator": "investigator discovery.md: fairness paragraph; investigator source-map S09; final source index S09",
+      "finding": "The historic issue is described as a spawned task lacking progress, but its reproducer uses join! in one task. The archive points at 4624 without explaining the 1.19.0 fix.",
+      "primary_source_ids": [
+        "E19",
+        "E20",
+        "E21",
+        "E22",
+        "E23"
+      ],
+      "why_nonmaterial": "The final does not assert that current FIFO semaphore behavior is broken or that this old reproducer persists in 1.53.2. General limits of cooperative in-process work and the process-boundary comparison remain supported."
+    },
+    {
+      "defect_id": "C-N02",
+      "classification": "minor exact-clause accounting",
+      "material": false,
+      "status": "PRESENT",
+      "locator": "investigator draft.md:25; final.md:3,106-144",
+      "finding": "Draft labels the shutdown sentence P2.3 while skipping the separate worker sentence in that exact-clause list; the final fixes those two product clauses. The final still overstates every-sentence accounting: the source-resolution/no-deployment sentences and shared time paragraph lack separate dispositions.",
+      "primary_source_ids": [],
+      "why_nonmaterial": "Their substantive requirements are preserved in the scope, evidence, owner decisions, and frozen assignment clocks. No product obligation is missing."
+    }
+  ],
+  "all_critic_dispositions": [
+    {
+      "id": "F01",
+      "judgment": "VALID",
+      "final_disposition": "ACCEPTED; shutdown/reaping sequence supplied",
+      "final_locator": "final.md:74-82",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "F02",
+      "judgment": "VALID",
+      "final_disposition": "ACCEPTED/AMENDED; L-lookahead and K-conflicting-bypass barrier; no wall-clock guarantee",
+      "final_locator": "final.md:36-40",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "F03",
+      "judgment": "VALID, NONMATERIAL",
+      "final_disposition": "Separate R07 corrects top-release metadata; S12 retained transparently as history",
+      "final_locator": "final.md:72,172; reviser source-map R07",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "F04",
+      "judgment": "VALID LIMITATION, NOT A FALSE SOURCE CLAIM",
+      "final_disposition": "AMENDED; reservation formula stays an unmeasured heuristic",
+      "final_locator": "final.md:44,173",
+      "status": "RESOLVED"
+    },
+    {
+      "id": "F05",
+      "judgment": "HONESTLY UNRESOLVED USER INPUT",
+      "final_disposition": "Uncertainty retained; unnamed host not replaced with an upstream product",
+      "final_locator": "final.md:11,174,180-187",
+      "status": "RETAINED_UNKNOWN"
+    }
+  ],
+  "rejected_criticism": [],
+  "scope_of_pass": "Complete finite assessment of the research proposal, not deployed software or universal correctness."
+}

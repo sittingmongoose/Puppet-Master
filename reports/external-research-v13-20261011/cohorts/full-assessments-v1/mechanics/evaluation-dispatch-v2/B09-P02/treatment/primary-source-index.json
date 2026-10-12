@@ -1,0 +1,311 @@
+{
+  "schema": "er13.independent-primary-source-index.v1",
+  "arm_id": "B09-P02-treatment",
+  "sources": [
+    {
+      "source_id": "E01",
+      "title": "Microsoft Job Objects",
+      "exact_url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+      "version_context": "Live Win32 documentation; updated 2025-07-14",
+      "locator": "Creating/Managing Processes; Limits; Managing Job Objects; Process Tree",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Membership determines accounting and termination; CreateProcess inheritance has WMI/breakaway exceptions; nesting starts with Windows 8; kill-on-close depends on the last handle.",
+      "assessment_scope": "Worker ownership, descendant capture, shutdown and scope of cancellation.",
+      "limits": "No target-host capability or security sandbox established."
+    },
+    {
+      "source_id": "E02",
+      "title": "Basic Job Object limits",
+      "exact_url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_basic_limit_information",
+      "version_context": "Live Win32 API reference",
+      "locator": "JOB_MEMORY, PROCESS_MEMORY, KILL_ON_JOB_CLOSE flags",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Job memory restricts the sum of committed memory; commits exceeding the limit fail. Notification-only limits differ.",
+      "assessment_scope": "Memory semantics and cancellation preconditions.",
+      "limits": ""
+    },
+    {
+      "source_id": "E03",
+      "title": "Extended Job Object limits",
+      "exact_url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_extended_limit_information",
+      "version_context": "Live reference; updated 2021-04-02",
+      "locator": "ProcessMemoryLimit; JobMemoryLimit; Remarks",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "The limits concern committed virtual memory and require corresponding flags. Job and process caps are independent.",
+      "assessment_scope": "Meaning of Windows cap, measurement and override conditions.",
+      "limits": "Commit limits are not a physical RAM/RSS ceiling."
+    },
+    {
+      "source_id": "E04",
+      "title": "AssignProcessToJobObject",
+      "exact_url": "https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-assignprocesstojobobject",
+      "version_context": "Live reference; updated 2021-10-13",
+      "locator": "Parameters; Remarks; older Windows exceptions",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Assignment requires handle rights, session compatibility and valid nesting; earlier memory operations are not examined.",
+      "assessment_scope": "Inert/suspended launch, assignment failure and supported-version caveats.",
+      "limits": ""
+    },
+    {
+      "source_id": "E06",
+      "title": "Linux cgroup v2",
+      "exact_url": "https://docs.kernel.org/7.1/admin-guide/cgroup-v2.html",
+      "version_context": "Kernel documentation 7.1",
+      "locator": "Introduction/Processes; Organize Once; Delegation; Memory",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Forked children inherit the current cgroup; later migration leaves existing descendants behind. Memory accounting has qualifications; high and max are different controls.",
+      "assessment_scope": "Launch containment, capability fallback and accounting.",
+      "limits": "Installed kernel, delegation, HugeTLB configuration and actual workload remain unknown."
+    },
+    {
+      "source_id": "E07",
+      "title": "systemd cgroup delegation",
+      "exact_url": "https://systemd.io/CGROUP_DELEGATION/",
+      "version_context": "Live guidance; controller-list request since v236; hierarchy changes v256/v258",
+      "locator": "Single writer; Delegation; Three Scenarios",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Delegate requests a subtree/controllers; availability and enablement differ. Inner-node placement and single-owner rules constrain setup.",
+      "assessment_scope": "Conditional rootless adapters and optional managed-unit approach.",
+      "limits": ""
+    },
+    {
+      "source_id": "E09",
+      "title": "SQLite WAL",
+      "exact_url": "https://www.sqlite.org/wal.html",
+      "version_context": "Live official documentation; section 11 includes 2026-08-24 update",
+      "locator": "Overview; Concurrency; Checkpoints; WAL-reset bug",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "WAL is same-host, single-writer and reader-sensitive for checkpoint completion. The reset race is fixed in 3.51.3 and listed backports, under specific multi-connection write/checkpoint timing.",
+      "assessment_scope": "Queue durability, recovery, fix applicability.",
+      "limits": "No claim that the target bundles SQLite or that DB transactions commit report files."
+    },
+    {
+      "source_id": "E10",
+      "title": "SQLite release history",
+      "exact_url": "https://www.sqlite.org/changes.html",
+      "version_context": "3.54.0 dated 2026-10-09; 3.51.3 dated 2026-03-13; 3.52.0 withdrawn",
+      "locator": "Named release entries",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "The current upstream release and WAL-reset fix entries support the final release statements and correction of older top-release metadata.",
+      "assessment_scope": "Version/fix and historic-source correction.",
+      "limits": ""
+    },
+    {
+      "source_id": "E11",
+      "title": "SQLite synchronous",
+      "exact_url": "https://www.sqlite.org/pragma.html#pragma_synchronous",
+      "version_context": "Live official pragma reference",
+      "locator": "FULL/NORMAL WAL behavior, lines 820-844 in retrieved text",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "NORMAL in WAL can lose recent commits after system/power failure; application-crash durability differs. FULL adds a per-commit sync.",
+      "assessment_scope": "Durability versus performance owner choice.",
+      "limits": ""
+    },
+    {
+      "source_id": "E12",
+      "title": "SQLite transactions",
+      "exact_url": "https://www.sqlite.org/lang_transaction.html",
+      "version_context": "Live documentation",
+      "locator": "Read/write; DEFERRED/IMMEDIATE; Errors",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "IMMEDIATE takes the write transaction at start and can encounter SQLITE_BUSY; transactions and error handling remain local to the database.",
+      "assessment_scope": "Short serialized state/publication gate.",
+      "limits": ""
+    },
+    {
+      "source_id": "E13",
+      "title": "SQLite result codes",
+      "exact_url": "https://www.sqlite.org/rescode.html#busy",
+      "version_context": "Live documentation",
+      "locator": "SQLITE_BUSY and SQLITE_BUSY_SNAPSHOT",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Concurrent writers can produce BUSY; busy handlers and transaction mode are relevant.",
+      "assessment_scope": "Bounded queue-state mutation handling.",
+      "limits": ""
+    },
+    {
+      "source_id": "E14",
+      "title": "SQLite transactional guarantee",
+      "exact_url": "https://www.sqlite.org/transactional.html",
+      "version_context": "Live documentation",
+      "locator": "Single-transaction guarantee and crash-test-harness note",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "The guarantee concerns a database transaction; configuration/storage conditions still matter.",
+      "assessment_scope": "No DB/filesystem atomicity inference.",
+      "limits": "Upstream testing is not execution by the candidate or evaluator."
+    },
+    {
+      "source_id": "E15",
+      "title": "SQLite recent news",
+      "exact_url": "https://www.sqlite.org/news.html",
+      "version_context": "3.54.0, 2026-10-09",
+      "locator": "3.54.0 and WAL-reset patch entries",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "The date-bounded upstream version agrees with the proposal.",
+      "assessment_scope": "Version context only.",
+      "limits": ""
+    },
+    {
+      "source_id": "E24",
+      "title": "VS Code API",
+      "exact_url": "https://code.visualstudio.com/api/references/vscode-api",
+      "version_context": "Live API, retrieved 2026-10-12",
+      "locator": "window.withProgress; ProgressOptions/CancellationToken",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Promise settlement governs progress lifetime. Notification progress supports discrete progress and cancellation UI; the token is cooperative.",
+      "assessment_scope": "Progress/cancellation precedent only.",
+      "limits": ""
+    },
+    {
+      "source_id": "E25",
+      "title": "VS Code extension host",
+      "exact_url": "https://code.visualstudio.com/api/advanced-topics/extension-host",
+      "version_context": "Live product documentation",
+      "locator": "Extension Host configurations/runtimes",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Hosts differ by runtime/location; this does not supply a per-task boundary.",
+      "assessment_scope": "Shared extension-host alternative.",
+      "limits": "Evaluator could open the page; predecessors disclosed their direct-open failures."
+    },
+    {
+      "source_id": "E26",
+      "title": "VS Code extension-host progress bridge",
+      "exact_url": "https://raw.githubusercontent.com/microsoft/vscode/main/src/vs/workbench/api/common/extHostProgress.ts",
+      "version_context": "Moving main; independent API lookup observed 80101bda7057c6f2081cc64f510b6fa3cbf2de5b",
+      "locator": "withProgress; _withProgress; acceptProgressCanceled; throttledReport",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Cancellable operations get a token source; cancel signals it, while the callback promise governs completion.",
+      "assessment_scope": "Actual bridge/caller and declaration semantics.",
+      "limits": "The evaluator lookup does not retroactively pin predecessor retrievals. Copyright Microsoft; MIT license.",
+      "retrieved_body_sha256": "3fd021aeb9296ad5907ba2b29702f8ad07421c45d4b223d8cab0ca13f11cf95e"
+    },
+    {
+      "source_id": "E27",
+      "title": "VS Code main-thread progress bridge",
+      "exact_url": "https://raw.githubusercontent.com/microsoft/vscode/main/src/vs/workbench/api/browser/mainThreadProgress.ts",
+      "version_context": "Moving main; same independently observed commit context",
+      "locator": "startProgress; progressEnd; createTask",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "The UI cancellation callback invokes the extension-host bridge; ending progress resolves its tracking promise.",
+      "assessment_scope": "Cooperative signal, not forced process termination.",
+      "limits": "Read, not executed; copyright Microsoft, MIT license.",
+      "retrieved_body_sha256": "35b7c7047d6a640c1c5ef9804917c4595cfde4382bffb52a0fa6252f25cc8bd4"
+    },
+    {
+      "source_id": "E28",
+      "title": "VS Code issue 93822",
+      "exact_url": "https://github.com/microsoft/vscode/issues/93822",
+      "version_context": "2020-03-31; closed completed 2020-04-01; testplan-item",
+      "locator": "Manual Testing; API declaration pinned to 21293c4; status",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "The issue is an upstream manual progress test plan, with a notification-cancel caveat; closure is not a target-app or candidate validation pass.",
+      "assessment_scope": "History/test-context interpretation.",
+      "limits": ""
+    },
+    {
+      "source_id": "E29",
+      "title": "Shreedhar/Varghese DRR paper",
+      "exact_url": "https://web.stanford.edu/class/ee384x/EE384X/papers/DRR.pdf",
+      "version_context": "IEEE/ACM Transactions on Networking 4(3), June 1996",
+      "locator": "Indexed primary-paper text: section III p377 and conclusion p385",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Deficit carries unused quantum across rounds; fairness is normalized transmitted service among backlogged flows. The paper discusses whole-unit applications beyond packets.",
+      "assessment_scope": "Qualified qualitative analogy to variable jobs, not imported job/memory/latency guarantees.",
+      "limits": "PDF is image-only; local text extraction unavailable and screenshot transport returned only a locator. Independent inspection used indexed text of the primary paper. All proofs and simulations were not audited."
+    }
+  ],
+  "evidence_policy": "Compact original observations and exact public links only. Body digests describe retrieved public source bytes; raw source corpora are not retained. No code was executed.",
+  "lookup_failures_and_limits": [
+    {
+      "lookup": "Version-pinned docs.rs 1.53.2 URL",
+      "result": "web internal error; mutable latest succeeded and displayed 1.53.2",
+      "consequence": "No semantic conclusion from failed retrieval."
+    },
+    {
+      "lookup": "DRR PDF text/screenshot transport",
+      "result": "Image-only PDF; no local PDF extractor, screenshot transport supplied locator only; indexed primary-paper sections available",
+      "consequence": "Qualified analogy assessed; all proofs/simulations outside declared assessment."
+    },
+    {
+      "lookup": "Guessed VS Code extHostProgress.test.ts",
+      "result": "HTTP 404",
+      "consequence": "No claim that upstream tests do not exist; bridge code and manual test plan inspected."
+    }
+  ]
+}

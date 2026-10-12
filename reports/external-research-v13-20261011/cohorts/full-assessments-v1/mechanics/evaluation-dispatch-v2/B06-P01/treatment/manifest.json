@@ -1,0 +1,38 @@
+{
+  "schema": "er13.original_output_manifest.local-v1",
+  "arm_id": "B06-P01-treatment",
+  "scope": "FULL",
+  "frozen_at_utc": "2026-10-12T01:45:49.567345+00:00",
+  "original_judgment": "PASS",
+  "comparison_existed_at_freeze": false,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/treatment/assessment.md",
+      "size_bytes": 5604,
+      "sha256": "e01b970f40f21c74b7d47f712b24769f9e704b9e158f1a06bbf4a0768d6dd0c7"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/treatment/assessment.json",
+      "size_bytes": 23487,
+      "sha256": "0c2576688f34c2817cdbf1254c35a067ab7b33b025db8a24d3f32b6824edad4d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/treatment/coverage.json",
+      "size_bytes": 12575,
+      "sha256": "a6218de090d052a92e316484852c53feb71884048e6223b02a1aeb80af91f545"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/treatment/defects.json",
+      "size_bytes": 3570,
+      "sha256": "38d24698818e2afca0536522484f524aa7f0a8d41e72ba157ff42b265b426c08"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P01/treatment/primary-source-index.json",
+      "size_bytes": 33313,
+      "sha256": "6cb3b9675022fbb961032b7d82c4acc4e96e5ea26f4a6863c5a22ed5d9e8c26d"
+    }
+  ],
+  "evidence_policy": "Necessary independent source observations are contained in primary-source-index.json; no raw source corpus or native transcripts exported.",
+  "self_hash": "Excluded to avoid circular hashing; enclosing block manifest and terminal reply identify this manifest hash.",
+  "immutability": "Original files set read-only and must not be altered; later disputes require a separate new adjudication."
+}

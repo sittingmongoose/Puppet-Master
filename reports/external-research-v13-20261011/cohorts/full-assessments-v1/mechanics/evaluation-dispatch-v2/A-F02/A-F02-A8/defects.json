@@ -1,0 +1,62 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "A-F02-A8",
+  "complete_final_source_judgment": "UNASSESSED",
+  "defects": [
+    {
+      "id": "A8-D01",
+      "classification": "material incomplete",
+      "material": true,
+      "scope": "available investigator draft only; final unassessed",
+      "artifact_locator": "investigator/draft.md, Preserve and verify / restart; critic ordinary restart finding",
+      "finding": "Temporary copy, rename and journal updates lack a complete payload/journal crash reconciliation and concurrent-source-change protocol. Critic identifies the gap; no reviser/final exists. This is partial-stage science, never a fabricated final failure grade.",
+      "independent_primary_source_ids": [
+        "E17",
+        "E30"
+      ],
+      "resolution": "UNRESOLVED_IN_AVAILABLE_DRAFT__NO_FINAL"
+    },
+    {
+      "id": "A8-D02",
+      "classification": "material incomplete",
+      "material": true,
+      "scope": "available investigator draft only; final unassessed",
+      "artifact_locator": "investigator/draft.md overview and S10; critic SCW-2",
+      "finding": "The advisory contains a general audio-helper condition as well as its RTP/SDP path. Critic correctly retains uncertainty about helper reachability and installer lag. Primary patch/helper code are available and were inspected here, but full local-file reachability was not established. No final disposition exists.",
+      "independent_primary_source_ids": [
+        "E14"
+      ],
+      "resolution": "QUALIFIED_BY_LATE_CRITIC__NO_FINAL"
+    },
+    {
+      "id": "A8-D03",
+      "classification": "minor source locator",
+      "material": false,
+      "scope": "brief-only discovery",
+      "artifact_locator": "investigator/discovery.md GStreamer packaging citation S17; sources/errata.md",
+      "finding": "S17 identifies historical LOC DROID material, not GStreamer packaging. Errata preserves the original identity and appends supporting S21/S22; the post-reveal draft uses the corrected references.",
+      "independent_primary_source_ids": [
+        "E14",
+        "E15"
+      ],
+      "resolution": "RESOLVED_IN_AVAILABLE_DRAFT_WITH_ERRATA"
+    },
+    {
+      "id": "A8-M01",
+      "classification": "method artifact incomplete",
+      "material": false,
+      "scope": "SCW method, separate from source truth",
+      "artifact_locator": "critic/critique.md SCW-1 through SCW-5 and critic/source-map.json",
+      "finding": "Selected records provide paraphrased evidence and source pointers but do not retain the required authentic scope-bearing source excerpts as such. The frozen text cannot establish when selection was first recorded. No final SCW adjudication exists.",
+      "independent_primary_source_ids": [
+        "E14"
+      ],
+      "resolution": "METHOD_LIMITATION__NO_FINAL"
+    }
+  ],
+  "administrative_observation": {
+    "final_missing": true,
+    "source_grade_fabricated": false
+  },
+  "materiality_rule": "A concrete consequential factual rule contradicting governing versioned code is material even when the recommended explicit mapping remains sensible. Minor compression, edition and unchosen-path boundaries do not by themselves negate a supported proposal."
+}

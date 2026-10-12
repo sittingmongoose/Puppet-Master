@@ -1,0 +1,20 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "A-F01-R0",
+  "records": [
+    {
+      "id": "R0-N01",
+      "domain": "source_metadata",
+      "severity": "NONMATERIAL",
+      "status_in_frozen_final": "QUALIFIED_IN_FINAL",
+      "locator": "investigator source-map S16; final critique disposition C-03",
+      "finding": "Original mutable API page labeled JS 3.4.1; critic observed 3.5.0. Final explicitly retains both observations and bases release-specific semantics on pinned implementation/tests.",
+      "evidence_ids": [
+        "E-AM-CODE",
+        "E-AM-HISTORY"
+      ],
+      "materiality_reason": "Already transparently qualified; no final behavior relies on the incorrect mutable-page pin."
+    }
+  ],
+  "external_unknowns_are_not_zero_or_defects": true
+}

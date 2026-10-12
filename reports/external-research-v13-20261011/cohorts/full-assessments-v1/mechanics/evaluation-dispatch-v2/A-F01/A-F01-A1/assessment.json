@@ -1,0 +1,329 @@
+{
+  "schema": "er13.original_assessment.v1",
+  "packet_sha256": "f7b32d1b75e3630d587d79be0199bbe4a6ac0ef7dcf3bbdada08acfab837b173",
+  "arms": [
+    {
+      "arm_id": "A-F01-A1",
+      "scope": "FULL",
+      "source_judgment": {
+        "value": "FAIL",
+        "coverage": "COMPLETE_WITH_NAMED_EXTERNAL_EXCLUSIONS",
+        "material_defect_ids": [
+          "A1-M01"
+        ],
+        "meaning": "Finite assessed source quality; not universal correctness or executed product success."
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Every fixed scope/negative constraint preserved; unknown field facts not invented."
+          },
+          {
+            "axis": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "basis": "Governing facts/version boundaries checked independently; current pages not silently release-pinned. A1-M01 is material: upstream 412 oracle belongs to PUT, not fetch."
+          },
+          {
+            "axis": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Useful storage, causal, revision-tree and CRDT alternatives/history surveyed; not a product winner."
+          },
+          {
+            "axis": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "All plan clauses and criticism dispositions assessed independently; supported interpretations retained."
+          },
+          {
+            "axis": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Supported event/history/delete/media/retry/owner meanings survive into full final; source IDs carried transparently."
+          },
+          {
+            "axis": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "basis": "Failure-oriented proposals have meaningful invariants; no own execution claimed. Upstream witness operation/oracle separately checked. A1-M01 is material: upstream 412 oracle belongs to PUT, not fetch."
+          }
+        ],
+        "coverage_file": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/coverage.json",
+        "external_unassessed_families": [
+          "existing_survey_application_code_callers_tests",
+          "future_runtime_platform_performance_and_usability",
+          "native_to_task_independent_session_linkage_and_billing"
+        ]
+      },
+      "defects": {
+        "file": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F01/A-F01-A1/defects.json",
+        "ids": [
+          "A1-M01",
+          "A1-N02",
+          "A1-N03",
+          "A1-N04"
+        ],
+        "source_material_count": 1,
+        "method_material_count": 0
+      },
+      "delivery": {
+        "status": "COMPLETE_SCIENCE_DELIVERY",
+        "final_present": true,
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/reviser/files/final.md",
+        "final_sha256": "39b4d7bed2a9414daa000f118457a1b5dee9baa01b77a17354c59d74712964bc",
+        "scientific_required_files_present": true,
+        "auxiliary_limit": "Critic source index absent"
+      },
+      "time_eligibility": {
+        "status": "PARTIAL_UNKNOWN_ELIGIBILITY",
+        "full_max_seconds": 3600,
+        "frozen_t0_marker_utc": "2026-10-12T00:30:26.365Z",
+        "exact_t0": "2026-10-12T00:30:26.365Z",
+        "whole_deadline_utc": "2026-10-12T01:30:26.365Z",
+        "deadline_unchanged": true,
+        "stage_observations": [
+          {
+            "stage": "investigator",
+            "prepared_utc": "2026-10-12T00:30:26.975Z",
+            "request_utc": "2026-10-12T00:30:26.975Z",
+            "dispatch_receipt_utc": "2026-10-12T00:30:27.725Z",
+            "native_created_utc": "2026-10-12T00:30:39+00:00",
+            "native_terminal_updated_utc": "2026-10-12T00:42:30+00:00",
+            "native_lifetime_seconds": 711.0,
+            "stage_deadline_utc": "2026-10-12T01:00:26.365Z",
+            "native_terminal_within_stage_deadline": true,
+            "same_receipt_birth_objective": true,
+            "native_active_to_complete": true,
+            "actual_task_terminal": "completed",
+            "pending_children_at_notification": false,
+            "science_before_completion_timestamp": "UNKNOWN independently; asserted by stage terminal summaries",
+            "artifact_completion_utc": null,
+            "request_to_quiet_final_proxy_utc": null,
+            "receipts": [
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/investigator/files/native-goal-create.json",
+                "sha256": "de7059d91334f0bbe4d40aa75917f4e6f199b5caeea40230beab43d2bdf4e9b4"
+              },
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/investigator/files/native-goal-terminal.json",
+                "sha256": "72975201d9b1695d7e37c23c920a25b9aa45a3a8c3831af5849f586fe039fa97"
+              },
+              {
+                "path": "ER13_RUNTIME/state/dispatcher-v1/arms/A-F01-A1/investigator-eval-ready-status.raw.json",
+                "sha256": "ce16dccb6b7015b5c8733e0d79726d01cd1c3fc894db7269ca5687bd9f44198f"
+              }
+            ]
+          },
+          {
+            "stage": "critic",
+            "prepared_utc": "2026-10-12T00:43:14.660Z",
+            "request_utc": "2026-10-12T00:43:14.660Z",
+            "dispatch_receipt_utc": "2026-10-12T00:43:15.584Z",
+            "native_created_utc": "2026-10-12T00:43:26+00:00",
+            "native_terminal_updated_utc": "2026-10-12T00:53:01+00:00",
+            "native_lifetime_seconds": 575.0,
+            "stage_deadline_utc": "2026-10-12T01:12:26.365Z",
+            "native_terminal_within_stage_deadline": true,
+            "same_receipt_birth_objective": true,
+            "native_active_to_complete": true,
+            "actual_task_terminal": "completed",
+            "pending_children_at_notification": false,
+            "science_before_completion_timestamp": "UNKNOWN independently; asserted by stage terminal summaries",
+            "artifact_completion_utc": null,
+            "request_to_quiet_final_proxy_utc": null,
+            "receipts": [
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/critic/files/native-goal-create.json",
+                "sha256": "a43f9098c68d91192a4ff1c032fe821fd2dad49caef79afdfe198f327435cac9"
+              },
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/critic/files/native-goal-terminal.json",
+                "sha256": "a54ed90e68b96c823243e074ecc4b3049bc22664a16b86f62bf37055a566b18b"
+              },
+              {
+                "path": "ER13_RUNTIME/state/dispatcher-v1/arms/A-F01-A1/critic-eval-ready-status.raw.json",
+                "sha256": "87c249bee36d36c6652c55ff8bf087988fd61675394d38dd494fae6cf962b691"
+              }
+            ]
+          },
+          {
+            "stage": "reviser",
+            "prepared_utc": "2026-10-12T00:55:43.751Z",
+            "request_utc": "2026-10-12T00:55:43.751Z",
+            "dispatch_receipt_utc": "2026-10-12T00:55:44.641Z",
+            "native_created_utc": "2026-10-12T00:56:09+00:00",
+            "native_terminal_updated_utc": "2026-10-12T01:10:45+00:00",
+            "native_lifetime_seconds": 876.0,
+            "stage_deadline_utc": "2026-10-12T01:30:26.365Z",
+            "native_terminal_within_stage_deadline": true,
+            "same_receipt_birth_objective": true,
+            "native_active_to_complete": true,
+            "actual_task_terminal": "completed",
+            "pending_children_at_notification": false,
+            "science_before_completion_timestamp": "UNKNOWN independently; asserted by stage terminal summaries",
+            "artifact_completion_utc": null,
+            "request_to_quiet_final_proxy_utc": null,
+            "receipts": [
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/reviser/files/native-goal-create.json",
+                "sha256": "e2a6e233e17aa6205910c7ddf129d90aaf29caf0881fd4b119cc09ec384832bb"
+              },
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/A-F01-A1/run/A-F01-A1/control/terminal-handoffs/reviser/files/native-goal-terminal.json",
+                "sha256": "fcdda28d99b58edbd66648c4aba0ac252323476a2dfa7c59819234b9b1dfb152"
+              },
+              {
+                "path": "ER13_RUNTIME/state/dispatcher-v1/arms/A-F01-A1/reviser-eval-ready-status.raw.json",
+                "sha256": "b5561d6b7ab96694ae81e95b5f28ec88663d4898b2db88678cdd5ee4df269956"
+              }
+            ]
+          }
+        ],
+        "native_marker_to_final_seconds": 2418.635,
+        "proxy_label": "T0 marker to saved native-terminal updatedAt; not exact artifact completion and not task request-to-quiet proxy",
+        "native_terminal_within_whole_deadline": true,
+        "summed_native_lifetime_seconds": 2162.0,
+        "native_interstage_gaps_seconds": [
+          56.0,
+          188.0
+        ],
+        "provider_active_duration": "UNKNOWN",
+        "context_occupancy": "PARTIAL: native-created-to-terminal lifetimes only, not full created/started task residency",
+        "exact_final_artifact_time": "UNKNOWN",
+        "exact_request_to_quiet_final_proxy": "UNKNOWN",
+        "eligibility_reason": "Receipts are consistent with deadlines; exact save/delivery/quiet boundaries and receipt-clock linkage not independently established. No lateness inferred from later collection."
+      },
+      "method_compliance": {
+        "status": "PARTIAL",
+        "ordinary_scope": "Complete fixed brief/plan and all frozen science documents assessed",
+        "one_time_discovery_reveal": "Matching discovery/plan hashes, single_use=true receipt; actual hidden-before-reveal reading order UNKNOWN independently",
+        "native_one_goal_per_stage": "One create/active/terminal set per notified stage; matching identity/birth/objective; unobserved additional lifecycle behavior UNKNOWN",
+        "variant_record": "Ordinary protocol observable outputs; pre-input/source-reading order not independently proved",
+        "scientific_source_judgment_separate": true,
+        "defect_ids": [
+          "A1-N02",
+          "A1-N03"
+        ]
+      },
+      "native_identity_provenance": {
+        "status": "PARTIAL",
+        "native_receipt_identity_birth_objective_consistency": "PASS",
+        "active_and_complete_receipts_present": true,
+        "independent_native_to_task_session_linkage": "UNKNOWN beyond exact objective/capture custody",
+        "receipt_freshness_clock_accuracy_and_actual_before_input_order": "UNKNOWN independently",
+        "actual_notified_tasks": "Three stages completed; zero pending children at notification",
+        "non_proofs": [
+          "Receipt field consistency is not source truth.",
+          "Goal counters are not independent evidence of provider/session attribution.",
+          "No full native transcripts or private routing/account identity published."
+        ]
+      },
+      "resource_billing_coverage": {
+        "status": "PARTIAL_UNKNOWN_BILLING",
+        "candidate_product": {
+          "native_cumulative_usage_counters": "Present in private allowed receipts; semantics/linkage not independently verified, values not republished or summed",
+          "input_cached_output_reasoning_breakdown": "UNKNOWN",
+          "active_provider_activity": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "billing_currency_amount": null,
+          "billing_status": "UNKNOWN, not zero"
+        },
+        "failure_inclusive_denominator": "This original arm, all three stages and setup/queue/handoff/retry/delivery costs; R0 initial failure retained. No observed missing final in A-F01.",
+        "independent_evaluation": {
+          "classification": "independent_evaluation",
+          "shared_lookup": "Own primary-source work shared across the exact four arms; separate from candidate product/preparation",
+          "billing": "UNKNOWN",
+          "full_resource_total": "UNKNOWN",
+          "first_reportable_clock_utc": "2026-10-12T01:32:06Z",
+          "exact_evaluator_start_utc": "UNKNOWN before that reportable clock",
+          "failed_evaluator_operations_included": "Unavailable bs4 prerequisite and failed public retrievals retained as evaluator operations; no install or extra scientific candidate"
+        },
+        "passing_output_resource_quotient": "UNDEFINED from unavailable comparable candidate billing/consumption; do not convert unknown telemetry to zero."
+      },
+      "critique_dispositions": [
+        {
+          "id": "F-01",
+          "final": "ACCEPT",
+          "independent": "VALID_WITH_SCOPE",
+          "basis": "Arrival order may queue transport; cannot establish causality. Plan did not explicitly endorse arrival as winner; final retains the feasible transport interpretation."
+        },
+        {
+          "id": "F-02",
+          "final": "ACCEPT_AMEND",
+          "independent": "VALID_WITH_SCOPE",
+          "basis": "Replica continuation versus independent clone is explicitly gated; divergent identity histories quarantined, payloads retained."
+        },
+        {
+          "id": "F-03",
+          "final": "ACCEPT_AMEND",
+          "independent": "VALID_WITH_SCOPE",
+          "basis": "Seven-day plus grace floor, unresolved protection and scoped receiver acknowledgments added."
+        },
+        {
+          "id": "F-04",
+          "final": "ACCEPT_AMEND",
+          "independent": "VALID_WITH_SCOPE",
+          "basis": "File staging/durable placement and database commit domains separated; missing/selected states preserved."
+        },
+        {
+          "id": "F-05",
+          "final": "ACCEPT_AMEND",
+          "independent": "VALID_WITH_SCOPE",
+          "basis": "Finite import caps, schema/collision/path handling added as proposed controls, not executed security guarantees."
+        },
+        {
+          "id": "F-06",
+          "final": "ACCEPT",
+          "independent": "VALID_WITH_SCOPE",
+          "basis": "Delete/restore/defer/photo choices preserve source branches; unknown authority stays owner decision."
+        },
+        {
+          "id": "F-07",
+          "final": "ACCEPT",
+          "independent": "INVALID_SOURCE_ORACLE_ACCEPTANCE",
+          "basis": "Alternative facts mostly corroborated, but PDB-05 validation oracle remains wrong after accepted recheck."
+        },
+        {
+          "id": "F-08",
+          "final": "ACCEPT",
+          "independent": "VALID_WITH_SCOPE",
+          "basis": "Existing app and field-policy data legitimately unknown."
+        },
+        {
+          "id": "F-09",
+          "final": "ACCEPT",
+          "independent": "VALID_WITH_SCOPE",
+          "basis": "Own product validation remains proposed. Upstream test reading must still be accurate; A1-M01 concerns that separate truth claim."
+        }
+      ],
+      "preservation": {
+        "coverage": "COMPLETE",
+        "judgment": "No material supported-meaning loss found; source oracle error is separately A1-M01",
+        "examined": [
+          "identity/ancestry and retry",
+          "delete/restore/photo constraints",
+          "local DB/file durability conditions",
+          "competing/resolved history and archive",
+          "manual/relay alternatives and optional capabilities",
+          "owner unknowns, field merge rules, scale data gaps",
+          "every criticism including accepted, rejected and uncertain SCW hypotheses",
+          "proposed versus actual execution"
+        ],
+        "limits": "Moving-page access timestamps cannot prove historical server content; preserved record versus independent observation distinguished."
+      },
+      "blinding": "Imperfect: arm IDs, paths, assignments and SCW text expose techniques. Own primary lookup shared; original per-arm records written without comparative selection."
+    }
+  ],
+  "original": true,
+  "adjudication": "Any dispute requires new separate review; original never changed."
+}

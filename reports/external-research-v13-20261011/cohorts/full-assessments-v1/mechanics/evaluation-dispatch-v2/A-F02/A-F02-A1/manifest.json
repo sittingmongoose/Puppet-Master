@@ -1,0 +1,76 @@
+{
+  "schema": "er13.original-output-manifest.v1",
+  "arm_id": "A-F02-A1",
+  "frozen_utc": "2026-10-12T01:53:30.502639+00:00",
+  "original": true,
+  "comparison_not_yet_performed": true,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/assessment.md",
+      "bytes": 5309,
+      "sha256": "3648ce8a41cda8ceff30acf291c4419e73f4838dee082405def30bc6eb0c115f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/assessment.json",
+      "bytes": 9359,
+      "sha256": "834ea42aa08133b71398d772211be22ba827f2884684e3ce640506a9281ea6d8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/coverage.json",
+      "bytes": 17737,
+      "sha256": "5ec28059ca870391b871b63c67215da923ab853d650eb4c2fd5cff3ee0423898"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/defects.json",
+      "bytes": 1977,
+      "sha256": "07a9a3c98f4464ba7e2d0f0e7b3e0850a79a0de85761c36d32d930b8778d75e6"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/A-F02-A1/primary-source-index.json",
+      "bytes": 21670,
+      "sha256": "084f0593e2b9db40b49d7838273211da409716154553fa60656379c5d1c1faac"
+    }
+  ],
+  "shared_independent_evidence": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/independent-primary-research.json",
+      "bytes": 30621,
+      "sha256": "eac8af81f14ddeb7cbcbf383a3eb9cf77f396b62cf396ffb7aa248dcde943c3f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/input-verification.json",
+      "bytes": 10537,
+      "sha256": "2d188424410e9309dfc78a523e7df679977c4cffe605910709a533f74d2e6851"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-01.json",
+      "bytes": 5671,
+      "sha256": "e7d5ba83d3654f163fcecc89a5b993d85af85623857c6c997b3fac889f11d711"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-02.json",
+      "bytes": 12079,
+      "sha256": "6546375006e7dea817eb2c0f2a1decede621ee4eac76348b2fb93171ae09684e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-03.json",
+      "bytes": 4922,
+      "sha256": "a9317e0bedad23bb806f9cd786c65550c6093fbbebb914630f189362da20fd92"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-04.json",
+      "bytes": 2072,
+      "sha256": "b481766952b18ce05ce46d4742a20c4c2554332d9410e3f11cce7677a7b84a12"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/public-source-access-05.json",
+      "bytes": 965,
+      "sha256": "52d9bd5c1038888d0f0c16c91c89fdbc17982802ec0c60e7f371b553e31df741"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/A-F02/evidence/web-source-access.json",
+      "bytes": 938,
+      "sha256": "4ce4f022a5402b2b4c232b6fc4f696df6aa3112aa01e3f2f5fedd79dd576899d"
+    }
+  ]
+}

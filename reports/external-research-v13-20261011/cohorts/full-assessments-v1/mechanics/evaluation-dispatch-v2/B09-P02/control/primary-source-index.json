@@ -1,0 +1,386 @@
+{
+  "schema": "er13.independent-primary-source-index.v1",
+  "arm_id": "B09-P02-control",
+  "sources": [
+    {
+      "source_id": "E01",
+      "title": "Microsoft Job Objects",
+      "exact_url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+      "version_context": "Live Win32 documentation; updated 2025-07-14",
+      "locator": "Creating/Managing Processes; Limits; Managing Job Objects; Process Tree",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Membership determines accounting and termination; CreateProcess inheritance has WMI/breakaway exceptions; nesting starts with Windows 8; kill-on-close depends on the last handle.",
+      "assessment_scope": "Worker ownership, descendant capture, shutdown and scope of cancellation.",
+      "limits": "No target-host capability or security sandbox established."
+    },
+    {
+      "source_id": "E02",
+      "title": "Basic Job Object limits",
+      "exact_url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_basic_limit_information",
+      "version_context": "Live Win32 API reference",
+      "locator": "JOB_MEMORY, PROCESS_MEMORY, KILL_ON_JOB_CLOSE flags",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Job memory restricts the sum of committed memory; commits exceeding the limit fail. Notification-only limits differ.",
+      "assessment_scope": "Memory semantics and cancellation preconditions.",
+      "limits": ""
+    },
+    {
+      "source_id": "E03",
+      "title": "Extended Job Object limits",
+      "exact_url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_extended_limit_information",
+      "version_context": "Live reference; updated 2021-04-02",
+      "locator": "ProcessMemoryLimit; JobMemoryLimit; Remarks",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "The limits concern committed virtual memory and require corresponding flags. Job and process caps are independent.",
+      "assessment_scope": "Meaning of Windows cap, measurement and override conditions.",
+      "limits": "Commit limits are not a physical RAM/RSS ceiling."
+    },
+    {
+      "source_id": "E04",
+      "title": "AssignProcessToJobObject",
+      "exact_url": "https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-assignprocesstojobobject",
+      "version_context": "Live reference; updated 2021-10-13",
+      "locator": "Parameters; Remarks; older Windows exceptions",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Assignment requires handle rights, session compatibility and valid nesting; earlier memory operations are not examined.",
+      "assessment_scope": "Inert/suspended launch, assignment failure and supported-version caveats.",
+      "limits": ""
+    },
+    {
+      "source_id": "E05",
+      "title": "Linux cgroup v2",
+      "exact_url": "https://docs.kernel.org/6.14/admin-guide/cgroup-v2.html",
+      "version_context": "Kernel documentation 6.14",
+      "locator": "Processes; Delegation; Memory; memory.current/peak/high/max; cgroup.kill",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "High is throttle/reclaim, max may trigger local OOM and temporarily overshoot; accounting includes descendants. Delegation/controller permissions matter; peak resets apply per open descriptor.",
+      "assessment_scope": "Linux resource and worker-boundary claims.",
+      "limits": "This documents APIs, not the target desktop configuration; a cgroup is not an extension security sandbox."
+    },
+    {
+      "source_id": "E07",
+      "title": "systemd cgroup delegation",
+      "exact_url": "https://systemd.io/CGROUP_DELEGATION/",
+      "version_context": "Live guidance; controller-list request since v236; hierarchy changes v256/v258",
+      "locator": "Single writer; Delegation; Three Scenarios",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Delegate requests a subtree/controllers; availability and enablement differ. Inner-node placement and single-owner rules constrain setup.",
+      "assessment_scope": "Conditional rootless adapters and optional managed-unit approach.",
+      "limits": ""
+    },
+    {
+      "source_id": "E08",
+      "title": "systemd control-group interfaces",
+      "exact_url": "https://systemd.io/CONTROL_GROUP_INTERFACE/",
+      "version_context": "Live document with historical and current sections",
+      "locator": "Transient units; Accounting; Controller/Delegation",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Transient services/scopes and accounting properties offer a managed-worker route; these are conditional manager APIs.",
+      "assessment_scope": "Optional Linux mechanism in the investigator source map.",
+      "limits": "Historical paragraphs cannot be treated as a universal current user-manager configuration."
+    },
+    {
+      "source_id": "E09",
+      "title": "SQLite WAL",
+      "exact_url": "https://www.sqlite.org/wal.html",
+      "version_context": "Live official documentation; section 11 includes 2026-08-24 update",
+      "locator": "Overview; Concurrency; Checkpoints; WAL-reset bug",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "WAL is same-host, single-writer and reader-sensitive for checkpoint completion. The reset race is fixed in 3.51.3 and listed backports, under specific multi-connection write/checkpoint timing.",
+      "assessment_scope": "Queue durability, recovery, fix applicability.",
+      "limits": "No claim that the target bundles SQLite or that DB transactions commit report files."
+    },
+    {
+      "source_id": "E10",
+      "title": "SQLite release history",
+      "exact_url": "https://www.sqlite.org/changes.html",
+      "version_context": "3.54.0 dated 2026-10-09; 3.51.3 dated 2026-03-13; 3.52.0 withdrawn",
+      "locator": "Named release entries",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "The current upstream release and WAL-reset fix entries support the final release statements and correction of older top-release metadata.",
+      "assessment_scope": "Version/fix and historic-source correction.",
+      "limits": ""
+    },
+    {
+      "source_id": "E11",
+      "title": "SQLite synchronous",
+      "exact_url": "https://www.sqlite.org/pragma.html#pragma_synchronous",
+      "version_context": "Live official pragma reference",
+      "locator": "FULL/NORMAL WAL behavior, lines 820-844 in retrieved text",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "NORMAL in WAL can lose recent commits after system/power failure; application-crash durability differs. FULL adds a per-commit sync.",
+      "assessment_scope": "Durability versus performance owner choice.",
+      "limits": ""
+    },
+    {
+      "source_id": "E12",
+      "title": "SQLite transactions",
+      "exact_url": "https://www.sqlite.org/lang_transaction.html",
+      "version_context": "Live documentation",
+      "locator": "Read/write; DEFERRED/IMMEDIATE; Errors",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "IMMEDIATE takes the write transaction at start and can encounter SQLITE_BUSY; transactions and error handling remain local to the database.",
+      "assessment_scope": "Short serialized state/publication gate.",
+      "limits": ""
+    },
+    {
+      "source_id": "E13",
+      "title": "SQLite result codes",
+      "exact_url": "https://www.sqlite.org/rescode.html#busy",
+      "version_context": "Live documentation",
+      "locator": "SQLITE_BUSY and SQLITE_BUSY_SNAPSHOT",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Concurrent writers can produce BUSY; busy handlers and transaction mode are relevant.",
+      "assessment_scope": "Bounded queue-state mutation handling.",
+      "limits": ""
+    },
+    {
+      "source_id": "E14",
+      "title": "SQLite transactional guarantee",
+      "exact_url": "https://www.sqlite.org/transactional.html",
+      "version_context": "Live documentation",
+      "locator": "Single-transaction guarantee and crash-test-harness note",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "The guarantee concerns a database transaction; configuration/storage conditions still matter.",
+      "assessment_scope": "No DB/filesystem atomicity inference.",
+      "limits": "Upstream testing is not execution by the candidate or evaluator."
+    },
+    {
+      "source_id": "E15",
+      "title": "SQLite recent news",
+      "exact_url": "https://www.sqlite.org/news.html",
+      "version_context": "3.54.0, 2026-10-09",
+      "locator": "3.54.0 and WAL-reset patch entries",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "The date-bounded upstream version agrees with the proposal.",
+      "assessment_scope": "Version context only.",
+      "limits": ""
+    },
+    {
+      "source_id": "E16",
+      "title": "Tokio Semaphore API",
+      "exact_url": "https://docs.rs/tokio/latest/tokio/sync/struct.Semaphore.html",
+      "version_context": "Retrieved page displays 1.53.2; latest is mutable",
+      "locator": "Fairness; acquire_many; cancellation safety",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "FIFO request order includes acquire-many, so a large head request can delay smaller ones.",
+      "assessment_scope": "Primitive versus durable extension scheduler comparison.",
+      "limits": "A counting semaphore alone is neither a byte bound nor a host policy."
+    },
+    {
+      "source_id": "E17",
+      "title": "Tokio batch semaphore implementation",
+      "exact_url": "https://raw.githubusercontent.com/tokio-rs/tokio/tokio-1.53.2/tokio/src/sync/batch_semaphore.rs",
+      "version_context": "Release tag resolves to ff0c4068a4ba5f3af0fe3c5657ba42879b6ea599",
+      "locator": "Waiter queue; poll_acquire; Acquire poll/drop",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Waiter ordering and assigned-permit cleanup implement the documented behavior; cooperative budget checking is present.",
+      "assessment_scope": "Implementation and cancellation context.",
+      "limits": "Read, not executed. Original investigators did not resolve the commit SHA.",
+      "retrieved_body_sha256": "67827ef1df46de200add7eb6f0b954667cc32dfb47640fb7c1d4aabfb5697323"
+    },
+    {
+      "source_id": "E18",
+      "title": "Tokio semaphore tests",
+      "exact_url": "https://raw.githubusercontent.com/tokio-rs/tokio/tokio-1.53.2/tokio/tests/sync_semaphore.rs",
+      "version_context": "Same 1.53.2 release tag",
+      "locator": "Acquire/add/merge/split; stress_test",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Tests include permit-accounting assertions and a 1000-task acquisition stress case.",
+      "assessment_scope": "Truth of the inspected upstream-test claim.",
+      "limits": "Not run; no extension fairness or memory-containment oracle.",
+      "retrieved_body_sha256": "3ae64f4ee2af339a53b33d0c0c43ea925c6733570780e0a03dc7c5712cc4bb1e"
+    },
+    {
+      "source_id": "E19",
+      "title": "Tokio issue 4612",
+      "exact_url": "https://github.com/tokio-rs/tokio/issues/4612",
+      "version_context": "2022-04-11; reporter used Tokio 1.17.0",
+      "locator": "Reproducer and linked resolution",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "The reproducer joins two futures in one task; it does not spawn the second task. The issue is closed via PR 4624.",
+      "assessment_scope": "Historic applicability of the cooperation warning.",
+      "limits": ""
+    },
+    {
+      "source_id": "E20",
+      "title": "Tokio PR 4624",
+      "exact_url": "https://github.com/tokio-rs/tokio/pull/4624",
+      "version_context": "Merged 2022-05-07; commit 1872a42",
+      "locator": "Motivation; Solution; merge/release linkage",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Rotation of the first-polled future addresses the joined-future budget starvation case.",
+      "assessment_scope": "Issue-to-fix context, distinct from FIFO permit ordering.",
+      "limits": ""
+    },
+    {
+      "source_id": "E21",
+      "title": "Tokio join implementation",
+      "exact_url": "https://raw.githubusercontent.com/tokio-rs/tokio/tokio-1.53.2/tokio/src/macros/join.rs",
+      "version_context": "1.53.2 release tag",
+      "locator": "Fairness docs; rotator; biased entry",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Default polling rotates; biased mode transfers ordering responsibility to the caller.",
+      "assessment_scope": "Current caller context for the historical issue.",
+      "limits": ""
+    },
+    {
+      "source_id": "E22",
+      "title": "Tokio join regression tests",
+      "exact_url": "https://raw.githubusercontent.com/tokio-rs/tokio/tokio-1.53.2/tokio/tests/macros_join.rs",
+      "version_context": "1.53.2 release tag",
+      "locator": "join_does_not_allow_tasks_to_starve; poll-order test",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "The tests assert progress for both futures under budget consumption and check changing poll order.",
+      "assessment_scope": "Regression oracle for issue 4612.",
+      "limits": "Inspected, not executed."
+    },
+    {
+      "source_id": "E23",
+      "title": "Tokio changelog",
+      "exact_url": "https://raw.githubusercontent.com/tokio-rs/tokio/tokio-1.53.2/tokio/CHANGELOG.md",
+      "version_context": "1.19.0 entry, 2022-06-03, inside 1.53.2 tag",
+      "locator": "Fixed: join/try_join starvation, PR 4624",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "The relevant historical fix shipped in 1.19.0.",
+      "assessment_scope": "Version applicability of the illustrative issue.",
+      "limits": "Target runtime is unknown."
+    },
+    {
+      "source_id": "E24",
+      "title": "VS Code API",
+      "exact_url": "https://code.visualstudio.com/api/references/vscode-api",
+      "version_context": "Live API, retrieved 2026-10-12",
+      "locator": "window.withProgress; ProgressOptions/CancellationToken",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Promise settlement governs progress lifetime. Notification progress supports discrete progress and cancellation UI; the token is cooperative.",
+      "assessment_scope": "Progress/cancellation precedent only.",
+      "limits": ""
+    },
+    {
+      "source_id": "E29",
+      "title": "Shreedhar/Varghese DRR paper",
+      "exact_url": "https://web.stanford.edu/class/ee384x/EE384X/papers/DRR.pdf",
+      "version_context": "IEEE/ACM Transactions on Networking 4(3), June 1996",
+      "locator": "Indexed primary-paper text: section III p377 and conclusion p385",
+      "access_utc_interval": [
+        "2026-10-12T01:30:14+00:00",
+        "2026-10-12T01:41:47.810128+00:00"
+      ],
+      "observed_operation": "Independent primary-source retrieval and inspection",
+      "governing_observation": "Deficit carries unused quantum across rounds; fairness is normalized transmitted service among backlogged flows. The paper discusses whole-unit applications beyond packets.",
+      "assessment_scope": "Qualified qualitative analogy to variable jobs, not imported job/memory/latency guarantees.",
+      "limits": "PDF is image-only; local text extraction unavailable and screenshot transport returned only a locator. Independent inspection used indexed text of the primary paper. All proofs and simulations were not audited."
+    }
+  ],
+  "evidence_policy": "Compact original observations and exact public links only. Body digests describe retrieved public source bytes; raw source corpora are not retained. No code was executed.",
+  "lookup_failures_and_limits": [
+    {
+      "lookup": "Version-pinned docs.rs 1.53.2 URL",
+      "result": "web internal error; mutable latest succeeded and displayed 1.53.2",
+      "consequence": "No semantic conclusion from failed retrieval."
+    },
+    {
+      "lookup": "DRR PDF text/screenshot transport",
+      "result": "Image-only PDF; no local PDF extractor, screenshot transport supplied locator only; indexed primary-paper sections available",
+      "consequence": "Qualified analogy assessed; all proofs/simulations outside declared assessment."
+    },
+    {
+      "lookup": "Guessed VS Code extHostProgress.test.ts",
+      "result": "HTTP 404",
+      "consequence": "No claim that upstream tests do not exist; bridge code and manual test plan inspected."
+    }
+  ]
+}

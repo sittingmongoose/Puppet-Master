@@ -1,0 +1,65 @@
+{
+  "schema": "er13.original_defects.local-v1",
+  "arm_id": "B06-P01-control",
+  "material_defects": [],
+  "nonmaterial_findings": [
+    {
+      "id": "C-N01",
+      "severity": "NONMATERIAL",
+      "kind": "source wording",
+      "status": "PRESENT_IN_FROZEN_FINAL",
+      "locator": "final.md: Capability model and user experience / Network; draft Alternatives",
+      "finding": "The Figma deny-by-default wording compresses a configured none workflow into a general default. networkAccess is optional and the governing text conditions enforcement on its use.",
+      "primary_sources": [
+        "FIGMAMAN",
+        "FIGMANET"
+      ],
+      "materiality_reason": "The proposed host independently denies network and explicitly limits the Figma analogy. No unrestricted host authority or false enforcement guarantee follows."
+    },
+    {
+      "id": "C-N02",
+      "severity": "NONMATERIAL",
+      "kind": "preservation compression",
+      "status": "PRESENT_IN_FROZEN_FINAL",
+      "locator": "discovery.md: Zed authoring and preopens; draft Recommendation/Packages; final Execution and exchange alternatives/Packages",
+      "finding": "The final retains general tooling/import/host-bridge cautions but omits the concrete Zed Rust/wasm32-wasip2 authoring example and the explicit all-permission preopens/stdio example from discovery. They survive in inherited source records rather than final prose.",
+      "primary_sources": [
+        "ZEDDEV",
+        "ZEDHOST"
+      ],
+      "materiality_reason": "No required language choice, viable alternative, capability condition or recommendation is reversed or removed. The final still compares team burden and requires a narrow import surface. This is a useful-detail loss, not a material scope loss."
+    },
+    {
+      "id": "C-R01",
+      "severity": "NONMATERIAL",
+      "kind": "clerical source count",
+      "status": "RESOLVED_BEFORE_FROZEN_FINAL",
+      "locator": "critic Scope says C01–C17; critic map enumerates C01–C16; final Critique disposition",
+      "finding": "The final explicitly identifies the critic count error and invents no C17.",
+      "primary_sources": [],
+      "materiality_reason": "No source identity is rebound and no nonexistent source is used as evidence."
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "M1",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED; accepted and addressed",
+      "evidence": "The draft lacked concrete prompt/decline/revoke/failure copy; the final carries it from discovery and adds examples."
+    },
+    {
+      "id": "M2",
+      "coverage": "COMPLETE",
+      "judgment": "SUPPORTED; accepted and addressed",
+      "evidence": "The draft had a test inventory without ordered integration gates; the final supplies five phases and gates."
+    }
+  ],
+  "unresolved_user_facts": [
+    "actual host and language choice",
+    "target OS/kernel/distribution matrix",
+    "resource/latency budgets",
+    "publisher trust/key/revocation policy",
+    "permission persistence/update product policy"
+  ],
+  "grade_change_policy": "These are original findings, not prospective repairs. Later engineering/schema changes do not alter this grade; disputes use new adjudication."
+}

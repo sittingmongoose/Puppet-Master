@@ -1,0 +1,13 @@
+Separate comparison after original freeze
+
+Original block manifest SHA-256: e8688ef0621cea0079d16e2f2fe2dc1c43a81e2b5c98d6840623d4b125fc5872. Every original file was rechecked unchanged before this comparison. All four assigned cells remain in the denominator.
+
+R0 has COMPLETE source coverage and FAIL for its unconditional FFmpeg default-ranking claim. A1 and A1+A8 have finite COMPLETE source PASS judgments, with documented nonmaterial limits. A8 has PARTIAL available-stage coverage and UNASSESSED final source/delivery/preservation: the late critic was retained and the original final is missing. Observed complete finals are3of4; observed finite source-passing finals are2of4. These counts do not assign a comparable failing final grade to A8.
+
+The native final-terminal proxies are R0 1910.056seconds, A1 2829.942seconds, A1+A8 2778.269seconds after their frozenT0s. A1 minusR0 is 919.886seconds, but source quality differs, so this is not equal-quality savings. A1+A8 minusA1 is -51.673seconds (-1.826percent), a small single-case marker difference. These markers are not exact last-scientific-artifact, request-to-quiet or active-provider times. Their gaps include unseparated setup/queue/handoff effects.
+
+The A8 effect withoutA1, the A1 effect withA8, and the interaction are UNASSESSED because the A8 final is absent. Its critic terminal cannot substitute for delivery, and its unknown cost is not zero. The shared control is counted once.
+
+Native Goal receipt windows sum to8010.0seconds with union2652.0seconds; overlap5358.0seconds is only a timestamp-window observation. Actual context creation/residency, provider activity and native-to-task linkage are unknown. These windows do not establish billed work or free concurrency. Cumulative Goal counter fields exist, but public values are withheld and billing/input/cache/output/reasoning details are unavailable. Candidate consumption per passing final is UNKNOWN, not an expected retry cost. Independent grading and preparation/support/publication/root costs remain separate; complete experiment totals are unavailable.
+
+Method conformance is PARTIAL/limited by unavailable ordering/linkage telemetry, A8 excerpt/final limitations and A1+A8 SCW scope drift. Supported final amendments do not retroactively establish method compliance. No optimizer, recipe or promotion is selected; no20–30percent or2x saving/non-inferiority is established. This one failure-qualified block supplies uncertain finite research-quality observations only. Root retains selection authority; no held-out case, extra candidate, repeated grader or repair is introduced.

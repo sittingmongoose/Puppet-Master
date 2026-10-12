@@ -1,0 +1,27 @@
+{
+  "schema": "er13.original_evaluator_record.v1",
+  "written_utc": "2026-10-12T01:47:29.991291+00:00",
+  "classification": "independent_evaluation",
+  "arm_count": 4,
+  "workspace_agents_read": {
+    "path": "ER13_WORKTREE/AGENTS.md",
+    "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810"
+  },
+  "contract": {
+    "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+    "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+  },
+  "handoff_semantic_read": "ONLY sections 10 and 12 of supplied handoff; no held-out contents exposed",
+  "coordinator_receipt_sha256": "f0c5657724366d0ece4e64fd9fe811fcb1786b1fc2bd440813c4ab7bfe75e7f7",
+  "exact_packet_and_194_inputs_hash_verified_before_science": true,
+  "all_frozen_scientific_documents_read": true,
+  "forbidden_source_paths_not_followed": true,
+  "no_git_canon_shared_servers_accounts_provider_changes": true,
+  "no_extra_agents_candidates_or_goals": true,
+  "no_findings_sent_to_candidate_authors": true,
+  "timing_correction": "Preliminary commentary overstated late completion; explicit epoch conversion confirms native terminals inside envelopes. Original grades record eligibility as partial/unknown rather than late.",
+  "evaluation_total_billing": "UNKNOWN",
+  "exact_evaluator_start": "UNKNOWN before first reportable 01:32:06Z clock",
+  "resource_cost_denominator": "Public retrieval successes/failures, one unavailable parsing dependency attempt, all tool/context/write work are independent_evaluation; no claim of free shared research.",
+  "immutability": "These originals will be individually manifested and made read-only before any comparative artifact is computed."
+}

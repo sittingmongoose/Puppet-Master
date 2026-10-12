@@ -1,0 +1,34 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "A-F01-A8",
+  "records": [
+    {
+      "id": "A8-N01",
+      "domain": "method_record",
+      "severity": "NONMATERIAL",
+      "status_in_frozen_final": "OPEN",
+      "locator": "critic selection item 3 versus SCW-03 record; final SCW-03",
+      "finding": "Selection text describes ordinary-to-conflict-variant read diagnostic; record instead changes can to cannot. The exact selected draft sentence remains the same, but the diagnostic record is internally inconsistent.",
+      "evidence_ids": [
+        "FROZEN-ASSIGNMENTS",
+        "E-CDB-CONFLICT",
+        "E-PDB-GUIDES"
+      ],
+      "materiality_reason": "Cannot infer a prohibited claim substitution solely from this difference: the instruction locks selected draft claims, not explicitly every predeclared contrast. However, the record does not support exact replication of its announced contrast; method compliance is PARTIAL."
+    },
+    {
+      "id": "A8-N02",
+      "domain": "source_locator",
+      "severity": "NONMATERIAL",
+      "status_in_frozen_final": "OPEN",
+      "locator": "S05/S06/S14 source-map line locators",
+      "finding": "Several line locators are rendered-page coordinates rather than raw source-file coordinates. Independent source reading identifies the named cases (e.g. PouchDB remove/re-put is raw lines 48–64).",
+      "evidence_ids": [
+        "E-SQL-CODE",
+        "E-PDB-DELETE"
+      ],
+      "materiality_reason": "Named URLs and cases still lead to supported behavior; no validation execution is claimed."
+    }
+  ],
+  "external_unknowns_are_not_zero_or_defects": true
+}

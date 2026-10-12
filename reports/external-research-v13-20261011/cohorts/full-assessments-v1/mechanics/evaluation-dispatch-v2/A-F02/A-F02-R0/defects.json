@@ -1,0 +1,36 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "A-F02-R0",
+  "complete_final_source_judgment": "FAIL",
+  "defects": [
+    {
+      "id": "R0-D01",
+      "classification": "material wrong",
+      "material": true,
+      "scope": "complete final source fact",
+      "artifact_locator": "reviser/final.md, P7 and Feasible approaches; investigator discovery/draft and critic C02 also carry the rule",
+      "finding": "The unqualified most-channels automatic audio-selection rule is incomplete for tagged FFmpeg9.0.2. map_auto_audio weights NEW_PACKETS and DEFAULT disposition before channel count. Static witness: with equal packet flags, a mono DEFAULT stream outranks a stereo non-default stream in one input. The final recommends explicit mapping, which remains sensible, but presents an incorrect consequential default rule for multitrack/channel review. No media test was run.",
+      "independent_primary_source_ids": [
+        "E03"
+      ],
+      "resolution": "PRESENT_IN_FROZEN_ORIGINAL"
+    },
+    {
+      "id": "R0-D02",
+      "classification": "minor locator/wording",
+      "material": false,
+      "scope": "carried source authority",
+      "artifact_locator": "reviser/source-map.json S09/C08; investigator source-map S09",
+      "finding": "Discussion337 duration/PTS observations are in the opening author post; the maintainer reply concerns private-library checks and reproducibility. The broad duration-provenance recommendation remains supported; attributing the duration remarks to the maintainer overstates that witness.",
+      "independent_primary_source_ids": [
+        "E09"
+      ],
+      "resolution": "PRESENT_IN_FROZEN_ORIGINAL"
+    }
+  ],
+  "administrative_observation": {
+    "final_missing": false,
+    "source_grade_fabricated": false
+  },
+  "materiality_rule": "A concrete consequential factual rule contradicting governing versioned code is material even when the recommended explicit mapping remains sensible. Minor compression, edition and unchosen-path boundaries do not by themselves negate a supported proposal."
+}

@@ -1,0 +1,23 @@
+{
+  "observations": [
+    {
+      "id": "ffprobe8",
+      "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n8.1.1/doc/ffprobe.texi",
+      "accessed_utc": "2026-10-12T01:50:09.189812+00:00",
+      "status": 200,
+      "bytes": 21757,
+      "sha256": "9f28004a19dcba2f854595ac96f122dbd44fd82119944456f209fd990e0c58a9",
+      "operation": "Exact n8.1.1 governing probe/writer and FATE sections read; no execution"
+    },
+    {
+      "id": "fate8",
+      "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n8.1.1/tests/fate/ffprobe.mak",
+      "accessed_utc": "2026-10-12T01:50:09.333923+00:00",
+      "status": 200,
+      "bytes": 1648,
+      "sha256": "2fc0c23bb6fe89bbf9adfe0ee66546c4a55d40242ef6e8970a875f95debb1446",
+      "operation": "Exact n8.1.1 governing probe/writer and FATE sections read; no execution"
+    }
+  ],
+  "note": "Exact-tag follow-up after research-catalog drafting, before original judgments; supplements E01/E04 access window."
+}
