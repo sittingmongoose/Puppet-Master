@@ -49,4 +49,3 @@ inline svgs. Round 2, in `src/js` with one CSS file `src/css/25-glyphs.css`:
   the sound button (speaker / speaker-off, swapped whole), the details "?" (help), the tour's zone arrow.
 - Unchanged: the art scenes (`A.glyph` inside scenes, card GLY-4), the logo, the tour pointer, QR and identity art.
 - pm7-no-pills takes the onboarding pills' boxes in a later branch; the marks inside them are these.
-

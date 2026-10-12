@@ -132,7 +132,7 @@ def main() -> None:
             c = pcand.get((pkg, name))
             glyph, conf = (c[0], c[1]) if c and c[0] not in ('', 'NONE') and c[1] in ('high', 'med', 'medium') else (name.lower(), 'same-name')
         out.append({'surface': pkg, 'surfaces': [pkg], 'table': 'home-' + pkg, 'name': name, 'old': markup, 'vb': vb or viewbox(markup),  # the packages' 16-grid icons say so; guess only when they don't
-                   
+
                     'glyph': glyph, 'by': conf, 'at': f"{r['file']}:{r['line']}"})
     # the runtime census (W1) cross-checked against this map (W4, Kimi): shapes PMConcept7 shows that no source table
     # held, mapped by the lead in runtime-lead-map.csv (the rail's knock-out badges, the tour spotlights and the
