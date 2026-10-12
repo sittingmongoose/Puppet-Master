@@ -58,7 +58,7 @@ const LF_RUN = (() => {
     const shape = SHAPE[st] || st;
     let gl = head.querySelector(':scope > .lf-lead');
     if (!gl) {
-      gl = glyph(shape, st === 'run');
+      gl = glyph(shape);
       gl.classList.add('lf-lead');
       gl.setAttribute('data-d-st', st);
       inject(head, gl, head.querySelector(':scope > .sh-dot') || head.querySelector(':scope > .sh-main'));
@@ -68,7 +68,6 @@ const LF_RUN = (() => {
     gl.setAttribute('data-d-st', st);
     gl.setAttribute('data-gl', shape);
     gl.innerHTML = svgFor(shape);
-    if (st === 'run') gl.setAttribute('data-pulse', ''); else gl.removeAttribute('data-pulse');
     if (animate) popGlyph(gl);
   }
   /* move a node to a new parent and remember where it lived */
@@ -145,7 +144,6 @@ const LF_RUN = (() => {
       if (!gl || gl.getAttribute('data-gl') === shape) return;
       gl.setAttribute('data-gl', shape);
       gl.innerHTML = svgFor(shape);
-      if (st === 'run') gl.setAttribute('data-pulse', ''); else gl.removeAttribute('data-pulse');
       if (animate) popGlyph(gl);
     });
   }

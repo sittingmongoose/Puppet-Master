@@ -113,7 +113,7 @@
         if (kind === 'cloud') out += C.note(T('server.wait.cloudNote'), 'info', 'cloud');
         out += C.field({ bind: 'addr', label: T(kind === 'cloud' ? 'server.wait.cloudLabel' : 'connect.route.addressLabel'), value: sv.addr || '', placeholder: u.address, hint: hit ? T('server.wait.found', { name: u.name }) : T('connect.route.addressHint'), valid: hit });
       } else if (!unclaimedFound(S)) {
-        out += `<div class="o55-row o55-row-wait" data-key="scan"><span class="o55-spin" aria-hidden="true"></span><span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.wait.looking'))}</span></span></div>`;
+        out += `<div class="o55-row o55-row-wait" data-key="scan">${C.spin(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('server.wait.looking'))}</span></span></div>`;
       }
       if (unclaimedFound(S) || (sv.manual && String(sv.addr || '').trim().toLowerCase() === u.address)) {
         out += C.cards('pick', [{ v: u.id, glyph: 'server', title: T('server.wait.found', { name: u.name }), sub: T('server.wait.notSetUp'), tag: '' }], sv.target, { label: T('server.wait.title') });
@@ -214,7 +214,7 @@
     body(S) {
       const sv = S.sess.server, u = unclaimed(S);
       const name = serverNameOf(S);
-      if (sv.claimed) return `<div class="o55-banner" data-key="done">${C.small('check', 18)}<span>${U.esc(T('chrome.alreadyDone'))}</span></div>`;
+      if (sv.claimed) return `<div class="o55-banner" data-key="done">${C.done(18)}<span>${U.esc(T('chrome.alreadyDone'))}</span></div>`;
       let out = C.identity(u.seed, words(u.seed), u.address);
       out += C.field({ bind: 'name', label: T('server.confirm.nameLabel'), value: name, placeholder: 'Home NAS', error: F.nonEmpty(name) ? '' : T('name.empty'), invalid: !F.nonEmpty(name) });
       out += F.chips('suggest', suggestions(S), name);
@@ -421,7 +421,7 @@
       }
       if (!inviteOpen(S)) card += `<div class="o55-sublinks" data-key="expirednew">${C.link(T('chrome.newCode'), 'newCode')}</div>`;
       if ((sv.paired || []).length) {
-        const rows = sv.paired.map((p) => `<div class="o55-row" data-key="paired-${U.esc(U.slug(p.id))}">${C.small('check', 18)}`
+        const rows = sv.paired.map((p) => `<div class="o55-row" data-key="paired-${U.esc(U.slug(p.id))}">${C.done(18)}`
           + `<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(p.name)}</span><span class="o55-rowmeta">${U.esc(T('server.ready.pairedDev'))}</span></span></div>`).join('');
         card += C.group(T('server.ready.pairedTitle'), rows + `<p class="o55-hint" data-key="pairedsub">${U.esc(T('server.ready.pairedSub'))}</p>`);
       }

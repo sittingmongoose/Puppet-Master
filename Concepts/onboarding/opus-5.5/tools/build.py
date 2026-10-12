@@ -894,6 +894,15 @@ def _rail():
     return rail_layer
 
 
+def _glyphs():
+    """The glyph layer (Concepts/glyph-system/opus-5.5/tools/glyph_layer.py), imported when first needed."""
+    glyph_tools = str(CONCEPTS / 'glyph-system' / 'opus-5.5' / 'tools')
+    if glyph_tools not in sys.path:
+        sys.path.insert(0, glyph_tools)
+    import glyph_layer  # noqa: E402
+    return glyph_layer
+
+
 def _home():
     """The Home layer (Concepts/home-redesign/tools/home_layer.py: the universal panels and the terminal), imported when
     first needed."""
@@ -958,7 +967,10 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     # 4. The left rail: concept D (Polish) from Concepts/leftrail-redesign, a skin over the shell's own rail panels
     #    (its CSS, its script and data-rail-* on the <html> tag); the review copy with concepts A-C is build_rail.py.
     text, SETTINGS_NOTES['rail'] = _rail().apply_published(text, need)
-    # 5. Home: the universal panel system and the terminal tab kind from Concepts/home-redesign (D28: after Usage and the
+    # 5. The glyph system (Concepts/glyph-system, Jared's D44): the 5.6 Pro neon renderer, the PMG registry and the PM7
+    #    bridge in the head, so every surface can draw PMG.icon / PMG.status; nothing changes until a surface adopts it.
+    text, SETTINGS_NOTES['glyphs'] = _glyphs().apply_published(text, need)
+    # 6. Home: the universal panel system and the terminal tab kind from Concepts/home-redesign (D28: after Usage and the
     #    rail). home_layer.apply() adds the early script and its CSS between HOME:CSS markers before </head>, the panels
     #    and the terminal between HOME:BODY markers before </body>, three NieR selector hooks and three guarded app JS
     #    patches; it anchors after the O55 and rail blocks, so it runs last.
@@ -972,7 +984,8 @@ def build_text(usage: bool = True, home: bool = True) -> str:
 
 
 def check(built: str) -> list[str]:
-    problems = lint_sources() + syntax_check(built) + _rail().published_problems(built) + _home().published_problems(built)
+    problems = (lint_sources() + syntax_check(built) + _rail().published_problems(built) + _glyphs().published_problems(built)
+                + _home().published_problems(built))
     for removed in dict.fromkeys(['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
                                   'pm7-onboarding-css', 'pm7-guided-tour-css', "'.pm7gt-callout", ".closest('.pm7gt')",
                                   "getElementById('pm7-onboarding')", "getElementById('pm7-guided-tour')",
@@ -1045,7 +1058,7 @@ def main() -> int:
             print('CHECK:', p)
         print('check', 'ok' if not problems else f'failed ({len(problems)})')
         return 0 if not problems else 1
-    problems = lint_sources() + syntax_check(built, usage=usage) + _rail().published_problems(built)
+    problems = lint_sources() + syntax_check(built, usage=usage) + _rail().published_problems(built) + _glyphs().published_problems(built)
     if home:
         problems += _home().published_problems(built)
     if problems:

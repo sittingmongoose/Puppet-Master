@@ -73,7 +73,6 @@ const LANE_E = (() => {
       g.innerHTML = svgFor(st);
     }
     if (g.getAttribute('data-d-st') !== st) g.setAttribute('data-d-st', st);
-    if (st === 'run') { if (!g.hasAttribute('data-pulse')) g.setAttribute('data-pulse', ''); } else if (g.hasAttribute('data-pulse')) g.removeAttribute('data-pulse');
     return g;
   }
   /* a shell chip whose word the shared vocabulary reads wrongly: force its state (and glyph); "token" = a plain fact */
@@ -198,7 +197,7 @@ const LANE_E = (() => {
     if (applies.length < 2) { serviceFact(panel, sel, nameOf(applies[0])); return; }
     const value = PMR.h('span.d-select-v');
     const trig = PMR.h('button', { type: 'button', class: 'd-select d-e-service', 'aria-haspopup': 'menu', 'aria-expanded': 'false', 'aria-label': 'Automation service' },
-      value, PMR.icon('chevD'));
+      value, PMR.icon('chevD', 'd-select-chev'));
     PMR.hover(trig, 'Choose the automation service', 'This project has ' + applies.length + ' automation services. GitHub keeps Current Branch, Workflows and Settings; the others show their own native view.');
     const sync = () => { const o = sel.options[sel.selectedIndex]; value.textContent = o ? o.textContent.trim() : ''; };
     sync();

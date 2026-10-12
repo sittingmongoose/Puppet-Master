@@ -611,15 +611,9 @@
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="conflict"] { color: var(--d-conflict) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="orphan"] { color: var(--d-orange) !important; }
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) [data-d-st="current"] { color: var(--accent-primary) !important; }
-/* the glyph: its shape is the state, its colour follows the word */
+/* the glyph: the neon set draws it in its tone ink (pm7-glyphs, RAIL); the box stays 12 px */
 [data-rail-skin="d"] .d-gl { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 12px; height: 12px; position: relative; color: inherit; }
 [data-rail-skin="d"] .d-gl svg { width: 12px; height: 12px; display: block; overflow: visible; }
-[data-rail-skin="d"] .d-gl[data-pulse]::after {
-  content: ''; position: absolute; inset: 1px; border-radius: 50%; border: 1.5px solid currentColor; opacity: 0; pointer-events: none;
-  animation: d-pulse 2.2s cubic-bezier(.2, .7, .3, 1) infinite;
-}
-[data-rail-skin="d"][data-o55-nier-parts~="square"] .d-gl[data-pulse]::after, [data-rail-skin="d"][data-theme^="retro"] .d-gl[data-pulse]::after { border-radius: 0; }
-@keyframes d-pulse { 0% { opacity: .55; transform: scale(.7); } 70%, 100% { opacity: 0; transform: scale(1.65); } }
 /* dots that became glyphs: the element stays (contracts, colours from markup) but draws the glyph */
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) :is(.sh-dot, .dot).d-dot {
   width: 12px !important; height: 12px !important; border-radius: 0 !important; background: none !important; box-shadow: none !important;
@@ -642,11 +636,6 @@
 [data-rail-skin="d"] :is(#panel-files,#panel-search,#panel-source,#panel-git,#panel-docker,#panel-testing,#panel-run,#panel-agents,#panel-artifacts) .fm-gitbadge.d-word { min-width: 0; font: 500 var(--d-fs-small)/1 var(--body-font) !important; color: var(--d-text-3) !important; }
 /* counts that change roll; numbers never jump */
 [data-rail-skin="d"] .d-roll { display: inline-block; font-variant-numeric: tabular-nums; }
-/* pending turns slowly (it is waiting on something); a live dot breathes only when it is restarting or watching */
-[data-rail-skin="d"] .d-gl .d-spin { transform-origin: 8px 8px; animation: d-spin 7s linear infinite; }
-@keyframes d-spin { to { transform: rotate(360deg); } }
-[data-rail-skin="d"][data-theme^="retro"] .d-gl .d-spin { animation-timing-function: steps(8, end); animation-duration: 4s; }
-[data-rail-skin="d"] .d-gl[data-pulse]::after { inset: 0; }
 
 /* ---- 6. Controls ---------------------------------------------------------------------------------------------------------
    One button: a quiet filled rectangle with the inner radius, 28 px high, sentence-case 12 px label. The primary action
@@ -1528,7 +1517,6 @@
 [data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-rd-sessions"] [data-d-st="fail"] { color: var(--d-fail); }
 [data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-rd-sessions"] [data-d-st="idle"] { color: var(--d-idle); }
 [data-rail-skin="d"] .pmr-menu[data-pmr-menu="d-rd-sessions"] [data-d-st="idle"] + .pm6-chat-modelname { text-decoration: line-through; color: var(--d-text-3); }
-[data-rail-skin="d"][data-o55-nier="on"] .pmr-menu[data-pmr-menu="d-rd-sessions"] .pmr-mi:hover > .d-gl { color: inherit; }
 
 /* header status: the skin's line replaces the shell's two lengths */
 [data-rail-skin="d"] #panel-run #rdStatus > .sh-btext { display: none !important; }
@@ -1845,7 +1833,6 @@
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 24%, transparent);
 }
 [data-rail-skin="d"][data-o55-nier="on"] #bottomDebugHost .rd-sestab.active { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink) !important; box-shadow: none; }
-[data-rail-skin="d"][data-o55-nier="on"] #bottomDebugHost .rd-sestab.active > .d-gl { color: inherit !important; }
 [data-rail-skin="d"] #bottomDebugHost .rd-sestab > .sh-sdot { display: none !important; }
 [data-rail-skin="d"] #bottomDebugHost .rd-chrome {
   flex-wrap: wrap; gap: 6px 12px !important; min-height: 40px; padding: 5px 12px !important; border-bottom: 1px solid var(--d-line) !important;
@@ -2336,18 +2323,17 @@
 [data-rail-skin="d"] #panel-testing [data-d-st="errored"], [data-rail-skin="d"] #panel-agents [data-d-st="errored"] { --lf-st: var(--d-orange); color: var(--lf-st) !important; }
 [data-rail-skin="d"] #panel-testing .pm-chip[data-d-st], [data-rail-skin="d"] #panel-agents .pm-chip[data-d-st] { color: var(--lf-st) !important; }
 /* light modes (and NieR dark): the graph colours are made for marks, not for 12 px words on a tinted shelf (Running in
-   Retro light measured 1.4:1). Status words take a deeper tone of their colour, mixed toward the text colour; glyphs
-   keep more of the colour (they are shapes, not text). Measured in GPU Chrome against the pixels under each word and
-   glyph, rows open, in every light variant and NieR dark: words 4.1:1 or better (most above 4.5:1), glyphs 3.3:1 or
-   better (2026-10-09, lane F). */
+   Retro light measured 1.4:1). Status words take a deeper tone of their colour, mixed toward the text colour; the
+   glyphs take their tone ink from the neon mark itself (pm7-glyphs, RAIL). Measured in GPU Chrome against the pixels
+   under each word and glyph, rows open, in every light variant and NieR dark: words 4.1:1 or better (most above 4.5:1),
+   glyphs 3.3:1 or better (2026-10-09, lane F). */
 [data-rail-skin="d"] { --lf-tx: 100%; --lf-gl: 100%; }
 [data-rail-skin="d"][data-theme$="-light"] { --lf-tx: 42%; --lf-gl: 58%; }
 [data-rail-skin="d"][data-theme^="friendly"][data-theme$="-light"] { --lf-tx: 36%; }
 [data-rail-skin="d"][data-theme^="glass"][data-theme$="-light"] { --lf-tx: 30%; --lf-gl: 50%; }
 [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-light"] { --lf-tx: 36%; --lf-gl: 48%; }
 [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] { --lf-tx: 40%; --lf-gl: 66%; }
-[data-rail-skin="d"][data-theme$="-light"] #panel-testing [data-d-st], [data-rail-skin="d"][data-theme$="-light"] #panel-agents [data-d-st], [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-testing [data-d-st], [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-agents [data-d-st],
-[data-rail-skin="d"][data-theme$="-light"] #panel-testing [data-d-st] > .d-gl, [data-rail-skin="d"][data-theme$="-light"] #panel-agents [data-d-st] > .d-gl, [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-testing [data-d-st] > .d-gl, [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-agents [data-d-st] > .d-gl {
+[data-rail-skin="d"][data-theme$="-light"] #panel-testing [data-d-st], [data-rail-skin="d"][data-theme$="-light"] #panel-agents [data-d-st], [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-testing [data-d-st], [data-rail-skin="d"][data-o55-nier="on"][data-theme$="-dark"] #panel-agents [data-d-st] {
   color: color-mix(in oklab, var(--lf-st) var(--lf-gl), var(--d-text)) !important;
 }
 [data-rail-skin="d"][data-theme$="-light"] #panel-testing :is(.pm-chip, .lf-state, .c)[data-d-st], [data-rail-skin="d"][data-theme$="-light"] #panel-agents :is(.pm-chip, .lf-state, .c)[data-d-st],
@@ -2707,11 +2693,7 @@
 [data-rail-skin="d"][data-motion="reduced"] #activityBar *, [data-rail-skin="d"][data-reduced-motion="1"] #activityBar * {
   transition: none !important; animation: none !important;
 }
-[data-rail-skin="d"][data-motion="reduced"] .d-gl::after, [data-rail-skin="d"][data-reduced-motion="1"] .d-gl::after { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
   [data-rail-skin="d"] :is(#sidePanelSlot, #bottomDebugHost) *, [data-rail-skin="d"] #activityBar *, [data-rail-skin="d"] #activityBar .icon, [data-rail-skin="d"] #activityBar .icon .symbol { transition: none !important; animation: none !important; }
-  [data-rail-skin="d"] .d-gl::after { display: none !important; }
-  [data-rail-skin="d"] .d-gl .d-spin { animation: none !important; }
 }
-[data-rail-skin="d"][data-motion="reduced"] .d-gl .d-spin, [data-rail-skin="d"][data-reduced-motion="1"] .d-gl .d-spin { animation: none !important; }
 [data-rail-skin="d"][data-motion="reduced"] #activityBar .icon, [data-rail-skin="d"][data-reduced-motion="1"] #activityBar .icon { transition: none !important; }
