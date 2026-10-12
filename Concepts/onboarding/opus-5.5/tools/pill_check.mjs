@@ -24,11 +24,13 @@
  *
  * Usage:
  *   node pill_check.mjs <page.html> [--out <dir>] [--dialogs] [--quick] [--looks a,b] [--scopes s,t,f]
- *                       [--viewport WxH] [--reduced] [--cdp <endpoint>]
+ *                       [--viewport WxH] [--reduced] [--cdp <endpoint>] [--fresh-context]
  *     --viewport  page size in CSS pixels (default 1920x1080)
  *     --reduced   emulate prefers-reduced-motion: reduce for the whole walk
  *     --cdp       drive an existing Chrome over CDP (an agent-browser session on the P1000) instead of launching one;
  *                 the walk opens and closes its own tab there and reports the WebGL renderer it ran on
+ *     --fresh-context  with --cdp, own an isolated context and close it on success, failure or signals;
+ *                      without this flag, keep using the session's default context. The owner stops the session.
  *     --dialogs   also open every one-click Settings dialog/sheet per page (slow)
  *     --quick     Settings home + 6 representative pages only (manager tabs still walked)
  *     --looks     comma list out of: basic-light friendly-light glass-dark retro-dark basic-dark friendly-dark
@@ -85,6 +87,9 @@ const pagePath = resolve(pageArg || join(here, '../../PMConcept7.html'));
 const outDir = argOf('--out') ? resolve(argOf('--out')) : null;
 const withDialogs = hasFlag('--dialogs');
 const cdpEndpoint = argOf('--cdp');
+const freshContext = hasFlag('--fresh-context');
+if (freshContext && !cdpEndpoint) { console.error('--fresh-context requires --cdp'); process.exit(2); }
+const contextMode = cdpEndpoint ? (freshContext ? 'cdp-isolated' : 'cdp-default') : 'launched';
 const reducedMotion = hasFlag('--reduced');
 const vpMatch = /^(\d{3,4})x(\d{3,4})$/.exec(argOf('--viewport') || '1920x1080');
 if (!vpMatch) { console.error('--viewport must be WxH, e.g. 1600x1000'); process.exit(2); }
@@ -285,6 +290,7 @@ const findings = [];        /* one row per instance */
 const viewsWalked = [];
 const viewsFailed = [];
 let browser = null, page = null;
+let ownedContext = null; /* retain the promise so signals also wait for in-flight context creation */
 
 /* open the Settings page through the page's own navigation (the tab can sit in the title bar's overflow at narrow widths) */
 async function openSettingsPage() {
@@ -293,9 +299,10 @@ async function openSettingsPage() {
 }
 
 async function boot() {
+  progress('context=' + contextMode);
   if (cdpEndpoint) {
     browser = await chromium.connectOverCDP(cdpEndpoint);
-    const ctx = browser.contexts()[0] || await browser.newContext();
+    const ctx = freshContext ? await (ownedContext = browser.newContext()) : browser.contexts()[0] || await browser.newContext();
     page = await ctx.newPage();
     await page.setViewportSize(VIEWPORT);
   } else {
@@ -516,6 +523,7 @@ async function main() {
     progress('look ' + look.id + ' static views');
     await walkStaticViews(look);
   }
+  if (ownedContext) { await (await ownedContext).close(); ownedContext = null; }
   if (cdpEndpoint) await page.close().catch(() => {});   /* over CDP, close() only disconnects: the session's owner stops it */
   await browser.close(); browser = null;
 
@@ -549,13 +557,14 @@ async function main() {
     }
   }
   const seconds = Math.round((Date.now() - t0) / 1000);
-  console.log('RESULT findings=' + sorted.length + ' instances=' + findings.length + ' looks=' + looks.length + ' views=' + viewsWalked.length + ' failed=' + viewsFailed.length + ' page_errors=' + pageErrors.length + ' seconds=' + seconds + ' viewport=' + VIEWPORT.width + 'x' + VIEWPORT.height + ' reduced=' + reducedMotion + ' renderer=' + JSON.stringify(renderer));
+  console.log('RESULT findings=' + sorted.length + ' instances=' + findings.length + ' looks=' + looks.length + ' views=' + viewsWalked.length + ' failed=' + viewsFailed.length + ' page_errors=' + pageErrors.length + ' seconds=' + seconds + ' viewport=' + VIEWPORT.width + 'x' + VIEWPORT.height + ' reduced=' + reducedMotion + ' renderer=' + JSON.stringify(renderer) + ' context=' + contextMode);
   if (outDir) {
     mkdirSync(outDir, { recursive: true });
     writeFileSync(join(outDir, 'report.json'), JSON.stringify({
       rule: 'FinalGUISpec F3-648 / DL-184 (no-pills gate)', generated_at: new Date().toISOString(),
       page: pagePath, page_sha256: pageSha, looks: looks.map((l) => l.id), scopes: activeScopes,
       quick, dialogs: withDialogs, viewport: VIEWPORT, reduced_motion: reducedMotion, renderer, cdp: !!cdpEndpoint,
+      context_mode: contextMode,
       views_walked: viewsWalked, views_failed: viewsFailed,
       page_errors: pageErrors, seconds,
       findings: sorted.map((g) => ({ kind: g.kind, scope: g.scope, signature: g.sig, look: g.look, count: g.count, views: g.views,
@@ -570,9 +579,10 @@ async function main() {
   else process.exitCode = 0;
 }
 
-for (const sig of ['SIGINT', 'SIGTERM']) process.once(sig, async () => { try { if (browser) await browser.close(); } catch (_) {} process.exit(sig === 'SIGINT' ? 130 : 143); });
+for (const sig of ['SIGINT', 'SIGTERM']) process.once(sig, async () => { try { if (ownedContext) await (await ownedContext).close(); } catch (_) {} try { if (browser) await browser.close(); } catch (_) {} process.exit(sig === 'SIGINT' ? 130 : 143); });
 main().catch(async (e) => {
   console.error('FATAL ' + ((e && e.stack) || e).toString().split('\n').slice(0, 6).join('\n'));
+  try { if (ownedContext) await (await ownedContext).close(); } catch (_) {}
   try { if (browser) await browser.close(); } catch (_) {}
   process.exit(2);
 });
