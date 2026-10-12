@@ -652,6 +652,34 @@ async function n3ChipsNew(page) {
   result.inputs = await page.evaluate(() => window.__pmgInputs || []);
   result.status = 'MEASURED_PENDING_FRAME_REVIEW_AND_OWNER_DARK_BLOOM_REVIEW';
 }
+async function n3PillsNew(page) {
+  await floaterFixture(page);
+  const completedPath = arg('--completed-new-pills');
+  const completed = new Set(completedPath ? JSON.parse(readFileSync(completedPath, 'utf8')).passed_case_ids : []);
+  result.previous_passed_pill_case_ids = [...completed];
+  result.scope = 'Only missing affected original floaters and exact two-site supplementary collector; no contrast/hover acceptance after Basic Light HOLD';
+  for (const label of ['not-done', 'done']) {
+    if (label === 'done') await committedResumeFixture(page);
+    for (const look of TEN_LOOKS) {
+      const state = await setLook(page, look);
+      for (const which of label === 'done' ? ['resume'] : ['resume', 'tourchip']) {
+        await showFloater(page, which);
+        const binding = await page.evaluate((w) => ({ saved: window.O55.store.get('onboarding', null)?.status,
+          commit: window.O55.store.get('onboarding', null)?.commit?.state,
+          label: document.querySelector('#o55-' + w + ' button[data-o55-chip="resume"]')?.textContent.trim() }), which);
+        if (binding.saved !== 'closed' || (binding.commit === 'done') !== (label === 'done')) throw new Error('UNVERIFIED: pill fixture label/state mismatch');
+        await ruleScopeProof(page, 'SCOPE-PILL-' + look + '-' + which + '-' + label, { look, state, host: which, resume_label: label, binding });
+        const id = 'NEW-PILL-' + look + '-' + which + '-' + label;
+        if (completed.has(id)) continue;
+        const pill = await populatedPills(page, id, look, state, which, ['floaters']);
+        pill.resume_label = label; pill.binding = binding; save();
+        if (pill.status !== 'PASS') throw new Error('HOLD: missing affected floaters collector finding');
+      }
+    }
+  }
+  result.inputs = await page.evaluate(() => window.__pmgInputs || []);
+  result.status = 'PILL_SCOPES_PASS; CHIP_CONTRAST_HOLD_UNCHANGED';
+}
 async function setOnboardingLook(page, look) {
   const [family, themeMode] = look.split('-'), wantedFamily = family === 'nier' ? 'basic' : family;
   const root = '#pm-o55-onboarding';
@@ -1024,6 +1052,7 @@ try {
   else if (mode === 'n3-narrow') await n3Narrow(page);
   else if (mode === 'n3-narrow-new') await n3NarrowNew(page);
   else if (mode === 'n3-chips-new') await n3ChipsNew(page);
+  else if (mode === 'n3-pills-new') await n3PillsNew(page);
   else if (mode === 'r1') await r1(page);
   else if (mode === 'n4') await n4(page);
   else throw new Error('HOLD: case mode not implemented: ' + mode);

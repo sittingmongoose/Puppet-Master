@@ -109,7 +109,7 @@
       "sha256": "71a310d1385570c943887a3646401f2d5fc542acbeed28db892f63c1a9b05bb5"
     }
   },
-  "updated_utc": "2026-10-12T10:04:51.763654+00:00",
+  "updated_utc": "2026-10-12T10:33:31.839276+00:00",
   "R1": {
     "label": "native-control-hover-under-PMH-rests",
     "status": "PARTIAL/UNVERIFIED",
@@ -365,5 +365,257 @@
       "frame_review": "PENDING"
     },
     "remaining": "GLfocus/RM/pill,4RetroNieRlooks, allscopeproofs andframes"
+  },
+  "source816_chip_failure": {
+    "actual_head": "e6f1a823f7f4b2f6e3fca2c69f446c47ff1a50b8",
+    "manifest_sha256": "7b7700e58459fbe7260a9a075d7d7b9288f0dd2c26827ad1cd678e9fd4a3779b",
+    "case": {
+      "id": "NEW-CHIP-basic-light-resume-not-done-rest",
+      "requirement": "N3-resume-history",
+      "look": "basic-light",
+      "state": {
+        "theme": "basic-light",
+        "nier": null,
+        "reduced_media": false,
+        "motion": null
+      },
+      "host": "resume",
+      "resume_label": "not-done",
+      "pose": "rest",
+      "began": {
+        "utc_ms": 1791800887615,
+        "at": 45559.29999999702
+      },
+      "ended": {
+        "utc_ms": 1791800888303,
+        "at": 46247.29999999702
+      },
+      "actual_glyphs": [
+        {
+          "index": 0,
+          "x": 882.9921875,
+          "y": 55,
+          "w": 14,
+          "h": 14,
+          "ink": "rgb(11, 26, 43)",
+          "op": 1,
+          "glyph": "history",
+          "key": "history",
+          "title": null,
+          "where": "o55-resume",
+          "halo_alpha": "0",
+          "halo_width": "3.4px",
+          "button": {
+            "x": 868.9921875,
+            "y": 46,
+            "w": 153.203125,
+            "h": 32
+          },
+          "card": {
+            "x": 868.9921875,
+            "y": 46,
+            "w": 182.015625,
+            "h": 32,
+            "radius": "4px"
+          },
+          "clips": []
+        }
+      ],
+      "after_glyphs": [
+        {
+          "index": 0,
+          "x": 882.9921875,
+          "y": 55,
+          "w": 14,
+          "h": 14,
+          "ink": "rgb(11, 26, 43)",
+          "op": 1,
+          "glyph": "history",
+          "key": "history",
+          "title": null,
+          "where": "o55-resume",
+          "halo_alpha": "0",
+          "halo_width": "3.4px",
+          "button": {
+            "x": 868.9921875,
+            "y": 46,
+            "w": 153.203125,
+            "h": 32
+          },
+          "card": {
+            "x": 868.9921875,
+            "y": 46,
+            "w": 182.015625,
+            "h": 32,
+            "radius": "4px"
+          },
+          "clips": []
+        }
+      ],
+      "pixel_capture_clip": {
+        "x": 874,
+        "y": 47,
+        "width": 31,
+        "height": 30
+      },
+      "pixel_capture_viewport": {
+        "w": 1920,
+        "h": 1080,
+        "dpr": 1
+      },
+      "hidden_without_layout_shift": true,
+      "measured": [
+        {
+          "index": 0,
+          "x": 882.9921875,
+          "y": 55,
+          "w": 14,
+          "h": 14,
+          "ink": "rgb(11, 26, 43)",
+          "op": 1,
+          "glyph": "history",
+          "key": "history",
+          "title": null,
+          "where": "o55-resume",
+          "halo_alpha": "0",
+          "halo_width": "3.4px",
+          "button": {
+            "x": 868.9921875,
+            "y": 46,
+            "w": 153.203125,
+            "h": 32
+          },
+          "card": {
+            "x": 868.9921875,
+            "y": 46,
+            "w": 182.015625,
+            "h": 32,
+            "radius": "4px"
+          },
+          "clips": [],
+          "bg": [
+            0,
+            86,
+            179
+          ],
+          "ratio": 2.49,
+          "worst": 2.49
+        }
+      ],
+      "foreground_pixel_support": [
+        {
+          "glyph": "history",
+          "changed_pixels": 94,
+          "observed_pixel_max_contrast": 2.4915386654975604,
+          "observed_pixel_p90_contrast": 2.4915386654975604,
+          "five_largest_delta_samples": [
+            {
+              "delta": 136,
+              "ratio": 2.4915386654975604,
+              "fg": [
+                11,
+                26,
+                43
+              ],
+              "behind": [
+                0,
+                86,
+                179
+              ]
+            },
+            {
+              "delta": 136,
+              "ratio": 2.4915386654975604,
+              "fg": [
+                11,
+                26,
+                43
+              ],
+              "behind": [
+                0,
+                86,
+                179
+              ]
+            },
+            {
+              "delta": 136,
+              "ratio": 2.4915386654975604,
+              "fg": [
+                11,
+                26,
+                43
+              ],
+              "behind": [
+                0,
+                86,
+                179
+              ]
+            },
+            {
+              "delta": 136,
+              "ratio": 2.4915386654975604,
+              "fg": [
+                11,
+                26,
+                43
+              ],
+              "behind": [
+                0,
+                86,
+                179
+              ]
+            },
+            {
+              "delta": 136,
+              "ratio": 2.4915386654975604,
+              "fg": [
+                11,
+                26,
+                43
+              ],
+              "behind": [
+                0,
+                86,
+                179
+              ]
+            }
+          ],
+          "note": "Foreground pairs include antialiasing and halos; observed peak supports, and does not replace, the source-owner effective-core contrast gate."
+        }
+      ],
+      "contrast_status": "HOLD",
+      "visual_status": "PENDING_FRAME_REVIEW",
+      "exact_zero_hide_layout_shift": true
+    },
+    "session": "a908228e3f39",
+    "recording": "f7efe33242e8",
+    "remaining": "Affected chip acceptance stopped for owner; both done label and other9look poses/pill gates incomplete; no repair or waiver"
+  },
+  "source816_narrow_checkpoint": {
+    "head": "e6f1a823f7f4b2f6e3fca2c69f446c47ff1a50b8",
+    "page_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+    "manifest": "8554c577647845369e7fb0d08c2c0fe28c8d365349f5271fac6d90d261c601ca",
+    "session": "bccf248bcd89",
+    "recording": "00b268f3dab6",
+    "status": "MEASURED_PENDING_FRAME_REVIEW",
+    "contrast_cases": 13,
+    "min_worst": 3.14,
+    "all_exact_zero_hide_layout_shift": true,
+    "scope_proofs": 10,
+    "scope_all_pass": true,
+    "fresh_narrow_pill_cases": 5,
+    "pills_zero_findings": true,
+    "RM": [
+      {
+        "id": "NEW-NARROW-glass-light-RM",
+        "probe_lit": true,
+        "probe_still": true,
+        "status": "MEASURED_PENDING_FRAME_REVIEW"
+      }
+    ]
+  },
+  "N4_static_diagnosis": {
+    "manifest_sha256": "7b86a8bb765cff3ea93334ee821a9a814b6d9cf1ffd80bb916c6d24366082679",
+    "disposition": "UNVERIFIED/HOLD; required producers absent; only missingUnstage authorized, no extra transition attempts"
   }
 }
