@@ -1,0 +1,79 @@
+{
+  "schema": "pm7.glass.performance-integration.v1",
+  "status": "BASELINE_VERIFIED_AWAITING_PEER_HEADS",
+  "input": {
+    "created_utc": "2026-10-12T16:37:28.929384+00:00",
+    "source_owner_head": "8a94be0853fe9371792c8ba9fe10f4c3d4a185c4",
+    "source_owner_branch": "concept/pm7-liquid-glass-20261011",
+    "frozen_preview": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-11-liquid-glass-v2/PMConcept7-LiquidGlass-v2.2.html",
+      "bytes": 19360897,
+      "sha256": "41202d26c0db26de49ea25af553ce3f5520234bae88d6e7fe217f313fd386440"
+    },
+    "exported_base": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/BASE-PMConcept7.html",
+      "sha256": "5e1ac1863c886f4a349448513a85d8021fe1917cbff02754e02cc2cb0002fd82"
+    },
+    "current_main": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
+    "input_branch": "fix/pm7-glass-perf-input-20261012",
+    "input_head": "fd5d486c435a5d2b62469004b7ed999bc4521bda",
+    "input_worktree": "/home/sittingmongoose/pm-worktrees/pm7-glass-perf-input-20261012",
+    "glass_source_tree_exact": true,
+    "changed_paths": [
+      "Concepts/liquid-glass/opus-5.5/NOTE.md",
+      "Concepts/liquid-glass/opus-5.5/README.md",
+      "Concepts/liquid-glass/opus-5.5/art/index.html",
+      "Concepts/liquid-glass/opus-5.5/art/troupe.js",
+      "Concepts/liquid-glass/opus-5.5/concept-hub.json",
+      "Concepts/liquid-glass/opus-5.5/index.html",
+      "Concepts/liquid-glass/opus-5.5/src/glass.css",
+      "Concepts/liquid-glass/opus-5.5/src/glass.js",
+      "Concepts/liquid-glass/opus-5.5/src/walls/orbs-dark.webp",
+      "Concepts/liquid-glass/opus-5.5/src/walls/orbs-light.webp",
+      "Concepts/liquid-glass/opus-5.5/src/walls/prism-dark.webp",
+      "Concepts/liquid-glass/opus-5.5/src/walls/prism-light.webp",
+      "Concepts/liquid-glass/opus-5.5/src/walls/ribbons-dark.webp",
+      "Concepts/liquid-glass/opus-5.5/src/walls/ribbons-light.webp",
+      "Concepts/liquid-glass/opus-5.5/tools/build_proto.py",
+      "Concepts/liquid-glass/opus-5.5/tools/contrast.mjs",
+      "Concepts/liquid-glass/opus-5.5/tools/film.mjs",
+      "Concepts/liquid-glass/opus-5.5/tools/frametime.mjs",
+      "Concepts/liquid-glass/opus-5.5/tools/stills.mjs",
+      "Concepts/liquid-glass/opus-5.5/tools/walls.mjs"
+    ],
+    "authority": "Jared performance work; exact source snapshot only, no design/canon/governance/main landing"
+  },
+  "baseline_receipt": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/integration/baseline-reconstruction.json",
+    "sha256": "f6dd0947934e50aa9a1cae3ea875c02f167a0063d1249a02a245342eb36dc9b1"
+  },
+  "protected_source": {
+    "css_sha256": "cf87090104cde318defa085d6015bfac73b3c797f516144c6d92a23ce91efba8",
+    "js_sha256": "1fd2823e8acde153e564731be93809ac7d1e2047201bd64314a73f994e3b6d48"
+  },
+  "peer_heads": {},
+  "candidate": null,
+  "validation": {
+    "baseline_reconstruction": "PASS_BYTE_IDENTICAL",
+    "baseline_glass_js_syntax": "PASS",
+    "baseline_diff_check": "PASS",
+    "integration_lifecycle": "NOT_RUN_PEERS_PENDING",
+    "live_performance": "NOT_RUN_PROFILER_OWNS",
+    "visual_parity": "NOT_RUN_PROFILER_OWNS"
+  },
+  "outstanding": [
+    "Review runtime, baking, and lens minimal diffs and focused tests.",
+    "Build distinct candidate after authorized merges.",
+    "Sole profiler measures matching baseline/candidate states on P1000.",
+    "Jared visual feedback, owner review, and parent go-ahead remain required for any later landing."
+  ],
+  "resources": {
+    "own_browser_runs": 0,
+    "own_gpu_runs": 0,
+    "own_video_runs": 0,
+    "new_extra_agents": 0,
+    "main_landings": 0,
+    "t3_account_or_server_changes": 0,
+    "mail_waiters": 1
+  }
+}
