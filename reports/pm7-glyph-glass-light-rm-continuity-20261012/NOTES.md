@@ -1,0 +1,27 @@
+ONE Glass Light narrow RM — HOLD / ALL FRAMES RECORDED FOR SOURCE REVIEW
+
+The single authorized film is4.266s (cap5), H264/h264_nvenc1920×1080 at nominal60fps, CSS700×900/DPR1. Browser`1a1b650764c7`, record`16bdc61a7ec7`, QuadroP1000 hardware renderer; both normal stops complete. MovieSHA`2cc880bd3ceebb5ea4b2ca6fba5794e0c5b495de52ca0f8a23a0d252a5d2ea40`/180987B. Actual tested head is`e43f8f6ab624841398c65dc7219783a04eea8404`, source816/publication0a8, app18866028B/bb87e95f and Rail19500575B/454cc7ef frozen. The later report commit does not relabel the film.
+
+The published Glass Light Welcome responsive target is20×44 `.o55-demopill > svg.nx`, sparkles/concept14. Viewport/look/RM were established before recording. One requested700ms rest at680,870 → trusted ownhover1400ms at10,450 → trustedleave/rest700ms at680,870 path ran once. Actual clock intervals are751/1430/703ms; requested sleeps and all original clocks are retained without normalization. RM remains enabled through final observation, recording stop and post-stop observation. There were398 native samples,0 RMfalse/invisible/running-animation samples; all parts transform none/opacity1. The initial pointer setup executed before the event listener, so no separate initial isTrusted event receipt was saved; both critical pointermoves have trusted receipts. No critical screenshots, hides, contrast, geometry/style changes or motion resets occurred.
+
+One CUDA/h264_cuvid decoder exported ALL256 originalPTS frames,0..68000 at1/16000 (last4.250s), with exact packet/decoder index matching. Fullframes1/128/256 were opened before matching the native crop(0,420,36,60); all256 target crops were then reviewed across7 complete sheets at6× nearest-neighbor. All fullframes and native crops remain posted. No video trim/transcode/PTS normalization or sparse selection was performed by the worker. No visible missing part, displacement, act, blank cell, halo or clipping was seen in these decoded frames. Those are recorded-frame observations, not full source/look acceptance or unsampled/FPS certification.
+
+The case-specific pixel runs are:
+
+| Frames | Original PTS | Observation |
+| --- | --- | --- |
+|1–114|0–1.883|Violet rest; glyph RGB equals this film initialrest.|
+|115–120|1.900–1.983|Complete fixed lit shape with residual top-part violet tint.|
+|121–199|2.000–3.300|Complete fixed dark text-ink shape; one RGB hash across79 frames.|
+|200–240|3.317–3.983|Returned violet;208/210 glyph-region pixels differ from same initialrest, maxchannel26.|
+|241–256|4.000–4.250|Glyph-region RGB equals same initialrest exactly,0delta.|
+
+Exact comparison is the15×14 pixel region(2,443). The36×60 native crop PNG differs between first/last; whole-background RGB identity remains unverified. This scope is explicit. The early-lit and early-return differences remain HOLD, with source/compositor/encoder cause UNKNOWN. Their changes at2/4s coincide with movie keyframes, a correlation that does not establish cause. Old tint/blank causes remain UNKNOWN. Original-owner frame review is required.
+
+Exact native events are hover1791830005051 and leave1791830006481 (1430ms apart). Recorded first lit/return effects are PTS1.900/3.317 (1417ms). Their ordered correspondence supports this single-case scene; it does not supply an independent exposure/inputPTS anchor. Mapping events to glyph paint would assume the instant-entry criterion under test. Readiness/unit times are lifecycle facts. No invented firstframe, stop-minus-duration or±500ms mapping was used. Instant entry/return and full case continuity remain UNVERIFIED/HOLD. The recorded cursor appears fixed in the3 opened fullframes; its region has2 RGB hashes across256, not strictconstant pixels. A premature1-hash mailbox claim was corrected and its failed Nas1-Pillow analysis diagnostic retained; still-PNG analysis used existing P1000 Pillow, no installation/Nas1 video decode.
+
+New helperSHA`f80db4d6b316481f26cf82229de0f8986d9e7c5bb7f36f2a01f3d9005c361dcb` is external, with four verbatim archived components. No original driver/helper, source25, art/map/catalog/build47PATCHES, Settings, legacy, old report/film/seal or canon edit occurred. No passed generators/matrices were rerun. Only these two new compact reports may be committed with ordinary hooks; final completion binds soleparent e43/all16110 prior blob/modes unchanged and both exact remote refs/main e254.
+
+Raw evidence: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012`. Its549-entry manifest SHA is`06a996487fb2650d08553ec9db71aa69511f0ad6c9f98633e74947df7518f584`. Result JSON binds film/helper/PTS/index/allframe review, original sources/drivers, normal admissions/stops, clocks and diagnostics.539 P1000 files were verified against posted copies before own runtime/local copies/profile removal. GLOBAL0/ownedGPU0 was verified and ONLY the assigned performanceGPU lease was released; landing-lock untouched. Root/profiler release mails1012184448-dc75/bfc0. Only the own mailbox waiter remains during CPU report closure; final completion binds its disarm and explicit0 owned resources/no finalwaiter.
+
+All unrelated N1/originalspark/N2strict15/BasicLight2.49–83STOP/N4/R1RMmenu/2272CRLF/WindowsGLY4/Jared/fullsource/root/landing holds remain; all20 old continuity rows stay unchanged. No second recording, P3 replay/decode, oldchip/focus/menu/matrix extension, source/look repair or acceptance is inferred.

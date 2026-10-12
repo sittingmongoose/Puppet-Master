@@ -1,0 +1,515 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-12T18:48:44.256615+00:00",
+  "worker": "codex-pm7-glyph-compose",
+  "task": "ONE GlassLight narrow Reduced-Motion continuity supplement",
+  "case_id": "GLASS-LIGHT-NARROW-RM-CONTINUITY",
+  "status": "HOLD / RECORDED_ALLFRAMES_FOR_SOURCE_REVIEW",
+  "actual_tested_and_frozen_report_parent": "e43f8f6ab624841398c65dc7219783a04eea8404",
+  "branch": "fix/pm7-glyphs-compose-20261012",
+  "main_both_remotes": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
+  "source_head": "81617137658b89ace8af7eeac2baf8c5918364f8",
+  "publication": "0a8f57d69b8778c1d9d207a59313aceb56ae1dca",
+  "frozen_production_lineage": [
+    {
+      "path": "Concepts/PMConcept7.html",
+      "bytes": 18866028,
+      "sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+      "blob": "eb6cb91b7d236c51b27aaca4bf3fdae3729d975a"
+    },
+    {
+      "path": "Concepts/HomeTestPMConcept7.html",
+      "bytes": 18866028,
+      "sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+      "blob": "eb6cb91b7d236c51b27aaca4bf3fdae3729d975a"
+    },
+    {
+      "path": "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html",
+      "bytes": 18866028,
+      "sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+      "blob": "eb6cb91b7d236c51b27aaca4bf3fdae3729d975a"
+    },
+    {
+      "path": "Concepts/LeftRailPMConcept7.html",
+      "bytes": 19500575,
+      "sha256": "454cc7ef4ce3f28a337585a1654f39dfc5e227399f03acb25cb65740a3ca30e9",
+      "blob": "48ef4fb3b69d9ce2364d57c701ed011a64379c5f"
+    },
+    {
+      "path": "Concepts/onboarding/opus-5.5/src/css/25-glyphs.css",
+      "bytes": 4752,
+      "sha256": "37a7c6b2e3552141647ca0b2a57995064e79debdcf42426629b9c0c9d7c03b87",
+      "blob": "2cf9de94cc2da10ae97e46ca2ce25262a82bde1d"
+    },
+    {
+      "path": "Concepts/onboarding/opus-5.5/tools/pill_check.mjs",
+      "bytes": 35036,
+      "sha256": "2d2ed65deadf51b2d4ff1e53551cc37b9b77c85100319f14c9b0a56100180041",
+      "blob": "3dfdd9fbdab822591bb4a2358bb2cf7574331e1f"
+    },
+    {
+      "path": "Concepts/onboarding/opus-5.5/tools/settings_nopills_accept.mjs",
+      "bytes": 16737,
+      "sha256": "f0f9293cc82498e866c1eadac5a8c5eb70b62ca76da102a9bc9bb5e3cc3c2728",
+      "blob": "c19ae242ebdf2ff6dff5b902d34aab3abb9951c3"
+    }
+  ],
+  "prior_tracked_blob_mode_rows": 16110,
+  "only_allowed_new_repo_paths": [
+    "reports/pm7-glyph-glass-light-rm-continuity-20261012/NOTES.md",
+    "reports/pm7-glyph-glass-light-rm-continuity-20261012/result.json"
+  ],
+  "root_GO": "2026-10-12 same-channel explicit queued ONE GlassLight narrowRM acquisition/allframe hardware review, <=5s; no extra actors/source/criteria authority",
+  "owner_review": {
+    "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-rm-sample-owner-review/REVIEW.md",
+    "sha256": "2b655bc8e8985afb8aadd7c639b3f1f0f2e23ca35de432a12c09d02e8e426ece",
+    "manifest_sha256": "c5ddaacba5af9eea3b56964035848b7068a5f177d36b96b727227d01effe11d4",
+    "read_full": true,
+    "scope": "one NEW GlassLight RM same initialrest/instantentry/litstill/return; allcritical frames, RMthroughstop; no source-look approval inferred"
+  },
+  "new_external_helper": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/acquire-one-RM.mjs",
+    "sha256": "f80db4d6b316481f26cf82229de0f8986d9e7c5bb7f36f2a01f3d9005c361dcb",
+    "verbatim_original_components": [
+      {
+        "name": "scene",
+        "bytes": 1427,
+        "sha256": "90eec8ec259eb513b870ff7b2f78582aae8f52d7e0babc8bb8294e23b4786c77"
+      },
+      {
+        "name": "trustedInputs",
+        "bytes": 717,
+        "sha256": "61b1d19d84717b78a27406b98822d26ef172602ec81390fbd97139289a5ee29a"
+      },
+      {
+        "name": "nativeSample",
+        "bytes": 2283,
+        "sha256": "706367b0a93c1ae99750ba3b6f8f6dfa23e0143177a1039796d84802ff852eab"
+      },
+      {
+        "name": "setOnboardingLook",
+        "bytes": 1762,
+        "sha256": "b9c2ac86586a5dba3f0e6f98026902945231a2524591c45998959cf7a1113013"
+      }
+    ],
+    "critical_paint_mutations_or_screenshots": 0,
+    "motion_reset_after_recording_starts": false,
+    "existing_original_source_helpers_or_drivers_changed_or_executed": false
+  },
+  "normal_session": {
+    "browser_id": "1a1b650764c7",
+    "record_id": "16bdc61a7ec7",
+    "window_id": "0x2c00003",
+    "renderer": "ANGLE (NVIDIA Corporation, Quadro P1000/PCIe/SSE2, OpenGL 4.5.0)",
+    "CSS_viewport": [
+      700,
+      900
+    ],
+    "DPR": 1,
+    "native_record_rectangle": [
+      1920,
+      1080
+    ],
+    "codec": "h264",
+    "encoder": "h264_nvenc",
+    "fps_nominal": 60,
+    "ordinary_GLOBAL_admission": true,
+    "preflight_GLOBAL_browsers_recorders_NVENC_decoder": 0,
+    "ordinary_browser_and_record_stop": "complete",
+    "caps": {
+      "recordings": 5,
+      "recordings_with_Moonlight": 3,
+      "browsers_with_recording": 8
+    },
+    "one_capture_and_one_hardware_decoder_job": true
+  },
+  "target": {
+    "published_route": "actual O55 Welcome narrow responsive state; trusted published header Glass Light look-menu clicks before recording, reducedMotion reduce before recording",
+    "selector": ".o55-demopill > svg.nx",
+    "glyph": "sparkles",
+    "role": "concept",
+    "host_css_rect": [
+      0,
+      428,
+      20,
+      44
+    ],
+    "SVG_css_rect": [
+      2.5,
+      443,
+      14,
+      14
+    ],
+    "no_forced_layout_attribute_geometry_or_theme": true,
+    "native_crop_rect": [
+      0,
+      420,
+      36,
+      60
+    ],
+    "fullscene_matching": "Viewed fullframes1,128,256 before crops; title/theme/layout/probe boxes match original native canvas scene at origin."
+  },
+  "native_interval": {
+    "requested_holds_ms": {
+      "initial_rest": 700,
+      "hover": 1400,
+      "return_rest": 700
+    },
+    "coordinates": {
+      "initial": [
+        680,
+        870
+      ],
+      "hover": [
+        10,
+        450
+      ],
+      "leave": [
+        680,
+        870
+      ]
+    },
+    "initial_rest_start": {
+      "utc_ms": 1791830004300,
+      "monotonic_ns": "83340892786945"
+    },
+    "hover_request": {
+      "utc_ms": 1791830005041,
+      "monotonic_ns": "83341633594045"
+    },
+    "hover_return": {
+      "utc_ms": 1791830005054,
+      "monotonic_ns": "83341646605685"
+    },
+    "leave_request": {
+      "utc_ms": 1791830006476,
+      "monotonic_ns": "83343068049481"
+    },
+    "leave_return": {
+      "utc_ms": 1791830006483,
+      "monotonic_ns": "83343075407983"
+    },
+    "final_observation": {
+      "utc_ms": 1791830007184,
+      "monotonic_ns": "83343776818624"
+    },
+    "trusted_input_events": [
+      {
+        "type": "pointermove",
+        "trusted": true,
+        "at": 19107.10000000894,
+        "utc_ms": 1791830005051,
+        "x": 10,
+        "y": 450,
+        "key": null,
+        "target": {
+          "tag": "path",
+          "id": "",
+          "cls": "nx-c nx-p nx-p0"
+        }
+      },
+      {
+        "type": "pointermove",
+        "trusted": true,
+        "at": 20537.5,
+        "utc_ms": 1791830006481,
+        "x": 680,
+        "y": 870,
+        "key": null,
+        "target": {
+          "tag": "DIV",
+          "id": "",
+          "cls": "o55-scrim"
+        }
+      }
+    ],
+    "actual_event_elapsed_ms": {
+      "initial_rest_start_to_trusted_hover": 751,
+      "trusted_hover_to_trusted_leave": 1430,
+      "trusted_leave_to_final_observation": 703
+    },
+    "initial_setup_trusted_event_receipt_gap": "Trusted mouse API to680,870 executed before listener/recording. Separate initial isTrusted event receipt was not saved; initial native host rest is sampled.",
+    "RM_preflight_final_after_record_stop": true,
+    "RM_trace_samples": 398,
+    "RM_false_samples": 0,
+    "invisible_samples": 0,
+    "running_animations": 0,
+    "parts_none_opacity1_all": true,
+    "no_probe_only_visual_PASS": true
+  },
+  "movie": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/evidence/glass-light-RM.mp4",
+    "bytes": 180987,
+    "sha256": "2cc880bd3ceebb5ea4b2ca6fba5794e0c5b495de52ca0f8a23a0d252a5d2ea40",
+    "duration_seconds": 4.266,
+    "cap_seconds": 5,
+    "time_base": "1/16000",
+    "first_original_pts": 0,
+    "last_original_pts": 68000,
+    "last_original_pts_time": "4.250",
+    "nominal_frame_rate": "60/1",
+    "average_frame_rate": "128000/2133",
+    "pixel_format": "yuv420p",
+    "normal_helper_partial_verified_time_base": "1/1000",
+    "no_worker_trim_transcode_or_PTS_normalization": true,
+    "actual_tested_head": "e43f8f6ab624841398c65dc7219783a04eea8404"
+  },
+  "hardware_allframe_review": {
+    "decoder": "h264_cuvid/CUDA/NVDEC",
+    "decode_exit": 0,
+    "original_packets": 256,
+    "decoded_fullframes": 256,
+    "native_crops": 256,
+    "contact_sheets": 7,
+    "all_original_decoder_pts_match_movie_packets": true,
+    "reviewed_every_native_crop": true,
+    "opened_fullframes": [
+      1,
+      128,
+      256
+    ],
+    "native_region_glyph_RGB_runs": [
+      {
+        "first_frame": 1,
+        "last_frame": 114,
+        "first_PTS": "0",
+        "last_PTS": "1.883",
+        "count": 114,
+        "RGB_sha256": "39d9b2fbe9d01d757ca53fa3c9a7795b535ebfc1f89a409ee7229225d572bd5c",
+        "versus_same_record_initial": {
+          "different_pixel_count": 0,
+          "max_channel_delta": 0
+        }
+      },
+      {
+        "first_frame": 115,
+        "last_frame": 120,
+        "first_PTS": "1.9",
+        "last_PTS": "1.983",
+        "count": 6,
+        "RGB_sha256": "5ef09bfacb23dca10c8d0fd67ef52859618229548002173ba87556c0fae9c0d7",
+        "versus_same_record_initial": {
+          "different_pixel_count": 206,
+          "max_channel_delta": 124
+        }
+      },
+      {
+        "first_frame": 121,
+        "last_frame": 199,
+        "first_PTS": "2",
+        "last_PTS": "3.3",
+        "count": 79,
+        "RGB_sha256": "75c31190f8395b2db1e72a85e5831758085ea1f082675807d8990e7a9dac7793",
+        "versus_same_record_initial": {
+          "different_pixel_count": 206,
+          "max_channel_delta": 135
+        }
+      },
+      {
+        "first_frame": 200,
+        "last_frame": 240,
+        "first_PTS": "3.317",
+        "last_PTS": "3.983",
+        "count": 41,
+        "RGB_sha256": "30521478f188cbadda91ca912786f29d691ab6a0d1a31b6269d2dbe27eaf3d87",
+        "versus_same_record_initial": {
+          "different_pixel_count": 208,
+          "max_channel_delta": 26
+        }
+      },
+      {
+        "first_frame": 241,
+        "last_frame": 256,
+        "first_PTS": "4",
+        "last_PTS": "4.25",
+        "count": 16,
+        "RGB_sha256": "39d9b2fbe9d01d757ca53fa3c9a7795b535ebfc1f89a409ee7229225d572bd5c",
+        "versus_same_record_initial": {
+          "different_pixel_count": 0,
+          "max_channel_delta": 0
+        }
+      }
+    ],
+    "observations": {
+      "1_114": "Complete stationary violet sparkles, exact glyph RGB equal same-record initial frame.",
+      "115_120": "Complete fixed lit shape; visible residual violet tint in top part compared with121_199. One exact RGB hash within6 frames; no displaced/missing part.",
+      "121_199": "Complete fixed dark/text-ink shape. One exact RGB hash for79 consecutive frames; no visible act/halo/clipping.",
+      "200_240": "Complete fixed returned violet shape;208/210 glyph-region pixels differ from same-record initial, maxchannel26.",
+      "241_256": "Complete fixed returned violet shape;0 different glyph-region pixels/maxchannel0 vs same-record initial.",
+      "all256": "No blank/glyph-less frame, missing part, visible displacement/act, halo or clipping observed."
+    },
+    "same_record_comparison_scope": {
+      "glyph_RGB_rect_xywh": [
+        2,
+        443,
+        15,
+        14
+      ],
+      "exact_final_glyph_RGB_frames": [
+        241,
+        256
+      ],
+      "initial_glyph_RGB_frame": 1,
+      "full_native_crop_rect_xywh": [
+        0,
+        420,
+        36,
+        60
+      ],
+      "first_last_full_crop_PNG_bytes_equal": false,
+      "full_background_crop_RGB_identity": "UNVERIFIED; PNG bytes differ, exact glyph-region RGB facts do not establish whole-crop identity",
+      "no_scope_or_threshold_relaxation": true
+    },
+    "keyframe_PTS": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "keyframe_interpretation": "RGB hash transitions at2 and4 coincide with movie keyframePTS; this is metadata correlation only, not an encoder/source cause proof.",
+    "review_evidence": "allframe-review.json, allframe-native-index.json, fullframes/, native-crops/, contact-sheets/",
+    "sample_limits": "All retained decoded frames reviewed, not unsampled exposure continuity or exclusive FPS/performance certification; H26414px yuv420p, computed-state and visual-pixel facts separate."
+  },
+  "event_movie_binding": {
+    "ordered_pose_correspondence": "Whole single-case film shows rest/lit/rest matching native trusted pointermove order. Reviewing all movieframes covers every recorded critical frame without needing UTC origin estimate.",
+    "native_hover_UTC_ms": 1791830005051,
+    "native_leave_UTC_ms": 1791830006481,
+    "native_interval_ms": 1430,
+    "observed_first_lit_PTS": "1.900",
+    "observed_first_return_PTS": "3.317",
+    "observed_effect_interval_ms": 1417,
+    "independent_exposure_or_inputPTS_anchor": null,
+    "alignment_verdict": "UNVERIFIED/HOLD: anchoring native event to glyph paint would assume instant-entry criterion; normal lifecycle/readiness is not exposure. No inventedfirstframe/stop-minus-duration/+/-500ms mapping.",
+    "cursor_region_proof": {
+      "native_still_PNG_analysis_only": true,
+      "video_decode_jobs_added": 0,
+      "region_xywh": [
+        1268,
+        690,
+        32,
+        40
+      ],
+      "frames": 256,
+      "unique_cursor_region_RGB_hashes": [
+        "5971c4e99eb72170545e4a791857aa5e937fa8fb78a5a3d81e261c99a4decbdb",
+        "d3872d8b81718f14c629600a41b66e67e266a2cd3ffe5e7560090d90d1444178"
+      ],
+      "count": 2
+    },
+    "cursor_observation": "Opened fullframes1,128,256 show cursor at same outside-scene location. Actual region has2 RGB hashes across256, not strictconstant pixels; supplies no independently timed native input cue."
+  },
+  "criterion_status": {
+    "one_normal_single_capture_under5_at_actual_supported_target": "PASS mechanical scope",
+    "RM_before_through_final_and_record_stop": "PASS read-only preference/state binding",
+    "all256_originalPTS_fullframes_crops_reviewed": "PASS evidence completeness",
+    "no_blank_missing_shape_act_or_clip_in_decoded_frames": "PASS observed frames only; source-owner visual acceptance pending",
+    "strict_uninterrupted_pixel_stillness_and_instant_RM_entry": "HOLD:6 earlylit frames differ from stablelit; causeUNKNOWN, independent eventPTS anchor absent",
+    "instant_return_with_same_initialrest_pixels": "HOLD:41 earlyreturn frames differ; final16 matchinitial exactly, independent eventPTS anchor absent",
+    "full_case_source_look_acceptance": "HOLD pending originalowner/root"
+  },
+  "cause": "UNKNOWN for earlylit tint/initialreturnRGB variation; no source/compositor/encoder cause established. Old blank cause remains UNKNOWN.",
+  "genuine_unresolved_source_question": "Six early-lit frames retain a different tint,41 early-return frames differ from same initial glyph RGB despite fixed computed parts/RM. Original owner/root must review whether this is residual paint vs capture/codec; no worker source/colour/platform diagnosis or repair inferred.",
+  "raw": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/SHA256SUMS",
+    "entries": 549,
+    "sha256": "06a996487fb2650d08553ec9db71aa69511f0ad6c9f98633e74947df7518f584"
+  },
+  "bound_proofs": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/frozen-start-and-lease.json",
+      "sha256": "d7879f7734c2ed9179c577294db00f074b684fb945b40cca5b49ee7ef78f845d"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/owner-review-binding.json",
+      "sha256": "036b17eff97551dac6c088f4286fcb1031f1a11178d43e4533d7a2aa3e61b07a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/P1000-preflight.json",
+      "sha256": "105d8f22ee927398fea9edc3265463b95e0ccdb0591323765822824343b33264"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/helper-custody.json",
+      "sha256": "33407761dfa52ba15045d1347f54eeeaf86aa69d7235642a210311a70c862ab8"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/metadata-command.json",
+      "sha256": "75b360e5dd8312e83fa55e3d0526369be9382dde2ef945e796ca283ef33cdac4"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/original-movie-metadata.json",
+      "sha256": "f044825659b516215b256a9c8eb9b71e906b8c534103a1b3420ba50a6a1aec77"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/decode-command.json",
+      "sha256": "99c7cc521f235bb853bcb50fa2bf6d6943a6d73a36c94218de8e4a4605d96ea7"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/decode.stderr",
+      "sha256": "765dbd653214b08fd9786eeecb5570c8e7176c2edd7c1ec4b72ae0032379ce64"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/allframe-native-index.json",
+      "sha256": "af58b26090492cc6d9d12d50ec9e2e0276f54d525fe998ce62ac206170c7e9a1"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/allframe-review.json",
+      "sha256": "57b3d2def2809c547ee510ba581f7afcba46973f40c7234cde2fbbfe71e18977"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/recorded-cursor-region-proof.json",
+      "sha256": "fa06c6726a8184e6244955e7a8edf928f100328ad9183a657d7c3ca0cffa7590"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/own-still-analysis-diagnostic-correction.json",
+      "sha256": "b18887cc6b42f63d33506f9e783b216bddfb59d95f6be116bb9c67a67052e838"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/posted-retention-verification.json",
+      "sha256": "63f050d89419e02817c579a90aa6b7a0724508b1ff3bb53a91cc47371c6ee832"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/owned-GPU-final-census.json",
+      "sha256": "f55649ecc082b32f39a247cf5a8456a6c32ce36d60e453ba14d7179c8f1fd912"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/owned-P1000-runtime-cleanup.json",
+      "sha256": "cc0d092aa6e63f312611384e3301657f9192a5f31126b1b333c08c138b54f74b"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/assigned-GPU-lease-release.json",
+      "sha256": "ed818d714add2b025f183c736a1c52ad949d34c17489cf9d456003bed0d42895"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/evidence/acquisition-result.json",
+      "sha256": "ae180781ba018a6e6622d1305a0a0b5856310115efcd629cce3795e065d25273"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-glass-light-rm-continuity-20261012/evidence/native-RM-trace.json",
+      "sha256": "37424a7adfa868f748011f9d55ee9e689ff97c22d66995ddcd3eedc359d489a8"
+    }
+  ],
+  "untouched_original_holds": [
+    "All20 continuity rows remain held:4 stoppedchips+15 P3normalrows+oldGLRM row. New evidence does not relabel any old head/frame/verdict.",
+    "BasicLight HOST2.49/Jared pairing;83 chipposes/bothlabels/RM STOP.",
+    "N1 NOELIGIBLE, original resume-spark descriptor, N2strict15 geometry and other temporal gaps.",
+    "N4 no producer, R1RMmenu timeout causeUNDETERMINED; no replay.",
+    "2272 frozen CRLF whitespace findings/15 files FAILEDexit2; no normalization/exemption/hookbypass.",
+    "Mandatory Windows rail/GLY4/fullsource/root/landing remainHOLD.",
+    "P3 replay/decode, other5 focus, otherlook/oldmatrix/generator campaigns excluded."
+  ],
+  "GPU_cleanup_and_lease": {
+    "retained_P1000_files_verified": 539,
+    "owned_jobs_browser_recorders_decoders_servers_forwarders_profiles": 0,
+    "local_P1000_runtime_and_all_duplicate_copies_removed": true,
+    "assigned_perf_GPU_lease_released": true,
+    "release_mail_root": "1012184448-dc75",
+    "release_mail_profiler": "1012184448-bfc0",
+    "no_landing_lock_touched": true,
+    "no_other_owner_services_or_profiles_touched": true,
+    "local_mail_waiter": "one until finalreport/push; completion receipt binds final disarm/explicit0"
+  },
+  "own_diagnostic_correction": "Premature constant-all256 cursor claim1012184005 corrected by1012184202: Nas1 Pillow import failed, existing P1000 still-PNG analysis shows2 regionRGB hashes. No Nas1 video decode or tooling install; original messages/evidence retained.",
+  "production_and_prior_reports_custody": "Completion receipt will prove soleparent e43, exactly2 NEW reports, all16110 prior blob/mode rows identical, cleanWT and independent dualrefs/main; no source/look acceptance.",
+  "source_design_look_canon_or_landing_GO": false
+}
