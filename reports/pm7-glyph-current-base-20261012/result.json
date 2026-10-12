@@ -109,7 +109,7 @@
       "sha256": "71a310d1385570c943887a3646401f2d5fc542acbeed28db892f63c1a9b05bb5"
     }
   },
-  "updated_utc": "2026-10-12T09:33:20.815678+00:00",
+  "updated_utc": "2026-10-12T10:04:51.763654+00:00",
   "R1": {
     "label": "native-control-hover-under-PMH-rests",
     "status": "PARTIAL/UNVERIFIED",
@@ -211,5 +211,132 @@
     "bytes": 4178,
     "manifest": "0943d725bc08f4e7a3a0da8a3959a2b4fec9d2e40fdad3fb1c74cf0bc99499e2",
     "authorized": "Separate exact source merge; generator-only four-page publication, exact inverse-block proof; new-byte chip checks. Not yet imported at this checkpoint."
+  },
+  "source816_publication": {
+    "source_head": "81617137658b89ace8af7eeac2baf8c5918364f8",
+    "old_checkpoint": "98db897087e2954e2bf14cece424e1c4a8ad818a",
+    "transport_head": "52e03a11e351128644c7799ac9f4ca9e7db93fcc",
+    "pages": [
+      {
+        "path": "Concepts/PMConcept7.html",
+        "old_bytes": 18864603,
+        "old_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
+        "new_bytes": 18866028,
+        "new_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+        "exact_append_occurrences": 1,
+        "insertion_byte_offset": 4477535,
+        "css25_section_byte_offset": 4474174,
+        "inserted_bytes": 1425,
+        "inserted_lines": 15,
+        "inverse_byte_identical": true,
+        "inverse_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0"
+      },
+      {
+        "path": "Concepts/HomeTestPMConcept7.html",
+        "old_bytes": 18864603,
+        "old_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
+        "new_bytes": 18866028,
+        "new_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+        "exact_append_occurrences": 1,
+        "insertion_byte_offset": 4477535,
+        "css25_section_byte_offset": 4474174,
+        "inserted_bytes": 1425,
+        "inserted_lines": 15,
+        "inverse_byte_identical": true,
+        "inverse_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0"
+      },
+      {
+        "path": "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html",
+        "old_bytes": 18864603,
+        "old_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
+        "new_bytes": 18866028,
+        "new_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+        "exact_append_occurrences": 1,
+        "insertion_byte_offset": 4477535,
+        "css25_section_byte_offset": 4474174,
+        "inserted_bytes": 1425,
+        "inserted_lines": 15,
+        "inverse_byte_identical": true,
+        "inverse_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0"
+      },
+      {
+        "path": "Concepts/LeftRailPMConcept7.html",
+        "old_bytes": 19499150,
+        "old_sha256": "f61e8a6bfb52c3c947b40c0e617029a9d04219578983dc78b95ac2f1306a6838",
+        "new_bytes": 19500575,
+        "new_sha256": "454cc7ef4ce3f28a337585a1654f39dfc5e227399f03acb25cb65740a3ca30e9",
+        "exact_append_occurrences": 1,
+        "insertion_byte_offset": 4477806,
+        "css25_section_byte_offset": 4474445,
+        "inserted_bytes": 1425,
+        "inserted_lines": 15,
+        "inverse_byte_identical": true,
+        "inverse_sha256": "f61e8a6bfb52c3c947b40c0e617029a9d04219578983dc78b95ac2f1306a6838"
+      }
+    ],
+    "approved_block_sha256": "68e5b5784781375352ea09561fa16e44035c667949e324cac9c6dc3f4a84a77f",
+    "frozen_files": [
+      {
+        "path": "Concepts/Onboarding concepts/TestOpusPMConcpet.html",
+        "bytes": 6986659,
+        "sha256": "6691bd47bb80582a6baef98bbb713492fa61db095f28b4f26fbfc20a4c15225f",
+        "old_byte_identity": true
+      },
+      {
+        "path": "Concepts/onboarding/opus-5.5/tools/pill_check.mjs",
+        "bytes": 35036,
+        "sha256": "2d2ed65deadf51b2d4ff1e53551cc37b9b77c85100319f14c9b0a56100180041",
+        "old_byte_identity": true
+      },
+      {
+        "path": "Concepts/onboarding/opus-5.5/tools/settings_nopills_accept.mjs",
+        "bytes": 16737,
+        "sha256": "f0f9293cc82498e866c1eadac5a8c5eb70b62ca76da102a9bc9bb5e3cc3c2728",
+        "old_byte_identity": true
+      },
+      {
+        "path": "reports/pm7-glyph-compose-20261012/NOTES.md",
+        "bytes": 5045,
+        "sha256": "c8faa9a55c52abe5cbec2a32bedc14ce278cd10c7c4307dcf536023e5f807a77",
+        "old_byte_identity": true
+      },
+      {
+        "path": "reports/pm7-glyph-compose-20261012/result.json",
+        "bytes": 69403,
+        "sha256": "872c3d6dac0975273047cd1707b0ca264a4fdf0531041a871e029b9062a26011",
+        "old_byte_identity": true
+      }
+    ],
+    "builder_sha256": "6b0d3c3f526c54f3e592c8c1834422a02383f0f3442c6d6b8100174cf07dc1bc",
+    "main_PATCHES_count": 47,
+    "legacy_preserved": true,
+    "only_four_generated_outputs_changed": true,
+    "raw_manifest_sha256": "1b92b49d1679ccb891e7c2d700d69e372f0b7178b542ca64d2837b36151a500a",
+    "generator_checks": [
+      {
+        "path": "Concepts/onboarding/opus-5.5/tools/build.py",
+        "generate_exit": 0,
+        "check_exit": 0
+      },
+      {
+        "path": "Concepts/home-redesign/tools/build_home.py",
+        "generate_exit": 0,
+        "check_exit": 0
+      },
+      {
+        "path": "Concepts/leftrail-redesign/tools/build_rail.py",
+        "generate_exit": 0,
+        "check_exit": 0
+      }
+    ],
+    "selector_scope_proof": "PENDING; no unaffected result carried over yet",
+    "affected_revalidation": "PENDING",
+    "publication_head": "0a8f57d69b8778c1d9d207a59313aceb56ae1dca",
+    "publication_commit_paths": [
+      "Concepts/PMConcept7.html",
+      "Concepts/HomeTestPMConcept7.html",
+      "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html",
+      "Concepts/LeftRailPMConcept7.html"
+    ]
   }
 }

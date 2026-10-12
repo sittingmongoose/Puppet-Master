@@ -192,6 +192,34 @@ async function n1(page) {
 }
 const TEN_LOOKS = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark', 'glass-light', 'retro-dark', 'retro-light', 'nier-dark', 'nier-light'];
 const TOAST_KINDS = ['info', 'warn', 'error', 'success'];
+const CHIP_RULE = ':is(#o55-resume, #o55-tourchip) svg.nx:not([class*="nx-t-"])';
+const NARROW_RULE = 'html[data-theme="glass-light"] .o55-demo[data-o55-narrow] .o55-demopill > svg.nx.o55-sg';
+async function ruleScopeProof(page, id, fields = {}) {
+  const proof = await page.evaluate(([chip, narrow]) => {
+    const describe = (g) => ({ glyph: g.dataset.nx, cls: g.getAttribute('class'), parent: g.parentElement.tagName,
+      host: g.closest('#o55-resume,#o55-tourchip,#o55-demo')?.id, rect: g.getBoundingClientRect().toJSON() });
+    const first = [...document.querySelectorAll(chip)], second = [...document.querySelectorAll(narrow)];
+    const expectedNarrow = document.documentElement.dataset.theme === 'glass-light' &&
+      !!document.querySelector('.o55-demo[data-o55-narrow]');
+    return { utc_ms: Date.now(), at: performance.now(), theme: document.documentElement.dataset.theme,
+      nier: document.documentElement.getAttribute('data-o55-nier'),
+      window_layout: document.querySelector('#pm-o55-onboarding')?.getAttribute('data-o55-layout'),
+      narrow: !!document.querySelector('.o55-demo[data-o55-narrow]'), first: first.map(describe), second: second.map(describe),
+      first_scope_exact: first.every((g) => !!g.closest('#o55-resume,#o55-tourchip') && !/nx-t-/.test(g.getAttribute('class'))),
+      second_scope_exact: second.length === (expectedNarrow ? 1 : 0) && second.every((g) =>
+        g.parentElement.matches('.o55-demopill') && g.closest('#o55-demo') && g.dataset.nx === 'sparkles'),
+      other_UI_matches: [...document.querySelectorAll(chip + ',' + narrow)].filter((g) =>
+        !g.closest('#o55-resume,#o55-tourchip,#o55-demo')).map(describe),
+      present_other_UI_glyph_counts: Object.fromEntries(['#pm-o55-onboarding','#pm-o55-tour','.pmu-card',
+        '#panel-testing','#panel-source','#panel-search','#rsStage','#rsStack','#settings-pane'].map((s) =>
+        [s, document.querySelectorAll(s + ' svg.nx').length])) };
+  }, [CHIP_RULE, NARROW_RULE]);
+  const row = { id, requirement: 'source816-selector-scope', ...fields, selectors: [CHIP_RULE, NARROW_RULE], ...proof,
+    status: proof.first_scope_exact && proof.second_scope_exact && !proof.other_UI_matches.length ? 'PASS' : 'HOLD' };
+  result.scope_proofs ||= []; result.scope_proofs.push(row); save();
+  if (row.status !== 'PASS') throw new Error('HOLD: approved rule scope mismatch: ' + JSON.stringify(row));
+  return row;
+}
 function contrastMethod() {
   // Reuse the source owner's accepted field measurement, not the old campaign or its state setup.
   const text = readFileSync(resolve(arg('--contrast-source')), 'utf8');
@@ -414,7 +442,7 @@ async function showFloater(page, which) {
   await page.locator('#o55-' + which).waitFor({ state: 'visible' });
   await sleep(300);
 }
-async function populatedPills(page, id, look, state, fixture) {
+async function populatedPills(page, id, look, state, fixture, scopes = ['shell', 'floaters']) {
   await page.waitForFunction(() => !document.querySelector('#rsStage .n-card'), null, { timeout: 10000 });
   await page.evaluate(() => {
     window.toast.clear(); window.toast.collapse();
@@ -428,7 +456,7 @@ async function populatedPills(page, id, look, state, fixture) {
     resume: !!document.querySelector('#o55-resume'), tourchip: !!document.querySelector('#o55-tourchip'),
     demo: !!document.querySelector('.o55-demopill'), narrow: document.querySelector('#o55-demo')?.hasAttribute('data-o55-narrow') }));
   if (!states.stage.length || !states.stack.length) throw new Error('UNVERIFIED: pill collector fixture is not stage AND stack populated');
-  const row = await collectPills(page, id, { requirement: 'N2/N3-pill', look, state, fixture, actual_states: states });
+  const row = await collectPills(page, id, { requirement: 'N2/N3-pill', look, state, fixture, actual_states: states }, scopes);
   await page.screenshot({ path: join(out, id + '--populated.png') });
   return row;
 }
@@ -487,6 +515,119 @@ async function n3Baseline(page) {
     await page.mouse.move(1850, 1000);
   }
   result.status = 'BASELINE_REPRODUCTION_ONLY';
+}
+async function newBytePose(page, measure, id, host, selector, pose, fields, outside) {
+  await page.mouse.move(outside.x, outside.y);
+  if (await page.locator(host).evaluate((e) => e.matches(':focus'))) await page.keyboard.press('Tab');
+  await sleep(800);
+  if (pose === 'rest') {
+    const row = await measureGlyphs(page, measure, id, selector, { ...fields, pose });
+    row.exact_zero_hide_layout_shift = row.actual_glyphs.length === row.after_glyphs.length && row.actual_glyphs.every((g, i) =>
+      ['x', 'y', 'w', 'h'].every((k) => g[k] === row.after_glyphs[i][k])); save();
+    if (row.contrast_status !== 'MEASURED' || !row.exact_zero_hide_layout_shift) throw new Error('HOLD: new-byte contrast/layout criterion failed: ' + id);
+    return;
+  }
+  if (pose === 'focus-visible') {
+    // Setup on the existing own button, then trusted Tab leaves it and Shift+Tab returns through browser navigation.
+    // The trace begins after the setup focus has left; no focus class or geometry is forced.
+    await page.locator(host).focus(); await page.keyboard.press('Tab'); await sleep(400);
+  }
+  const before = await page.evaluate(nativeSample, selector);
+  await beginNativeTrace(page, selector, id + '-native-act');
+  if (pose === 'hover') await page.locator(host).hover(); else await page.keyboard.press('Shift+Tab');
+  await sleep(1000);
+  const active = await page.evaluate(nativeSample, selector);
+  const reached = active.glyphs.length && active.glyphs.every((g) => pose === 'hover' ? g.host?.hover : g.host?.focus_visible);
+  if (!reached) throw new Error('UNVERIFIED: trusted native route did not reach requested pose: ' + id);
+  await page.screenshot({ path: join(out, id + '--native-active.png') });
+  const row = await measureGlyphs(page, measure, id, selector, { ...fields, pose });
+  row.exact_zero_hide_layout_shift = row.actual_glyphs.length === row.after_glyphs.length && row.actual_glyphs.every((g, i) =>
+    ['x', 'y', 'w', 'h'].every((k) => g[k] === row.after_glyphs[i][k]));
+  if (pose === 'focus-visible') await page.keyboard.press('Tab');
+  await page.mouse.move(outside.x, outside.y); await sleep(1000);
+  const left = await page.evaluate(nativeSample, selector), trace = await endNativeTrace(page);
+  const noStuck = left.glyphs.every((g) => !g.host?.hover && !g.host?.focus_visible &&
+    g.halo_alpha === '0' && g.halo_visibility === 'hidden');
+  result.cases.push({ id: id + '-native-act', ...fields, pose, before, active, left, trace,
+    focus_route: pose === 'focus-visible' ? 'existing own-button setup focus, trusted Tab, trace, trusted Shift+Tab return, trusted Tab leave' : null,
+    no_stuck_native_paint_after_leave_and_blur: noStuck,
+    status: noStuck ? 'MEASURED_PENDING_FRAME_REVIEW' : 'HOLD' }); save();
+  if (row.contrast_status !== 'MEASURED' || !row.exact_zero_hide_layout_shift || !noStuck) throw new Error('HOLD: new-byte contrast/layout/native criterion failed: ' + id);
+}
+async function reducedNative(page, id, host, selector, fields, outside) {
+  await page.emulateMedia({ reducedMotion: 'reduce' }); await sleep(1000);
+  await page.mouse.move(outside.x, outside.y);
+  if (await page.locator(host).evaluate((e) => e.matches(':focus'))) await page.keyboard.press('Tab');
+  await beginNativeTrace(page, selector, id);
+  await page.locator(host).hover(); await sleep(1400);
+  const active = await page.evaluate(nativeSample, selector);
+  await page.screenshot({ path: join(out, id + '--lit-still.png') });
+  const trace = await endNativeTrace(page);
+  const late = trace.rows.filter((r) => r.at >= trace.rows.at(-1).at - 700);
+  const shapes = new Set(late.map((r) => JSON.stringify(r.glyphs.map((g) => g.moving_parts))));
+  const probeLit = active.glyphs.every((g) => g.host?.hover && g.halo_visibility === 'visible' && Number(g.halo_alpha) > 0);
+  const probeStill = shapes.size === 1 && late.every((r) => r.glyphs.every((g) => !g.animations.some((a) => a.play_state === 'running')));
+  result.cases.push({ id, ...fields, reduced: true, active, trace, probe_lit: probeLit, probe_still: probeStill,
+    status: probeLit && probeStill ? 'MEASURED_PENDING_FRAME_REVIEW' : 'UNVERIFIED' }); save();
+  await page.mouse.move(outside.x, outside.y); await page.emulateMedia({ reducedMotion: 'no-preference' }); await sleep(800);
+}
+async function committedResumeFixture(page) {
+  // This is one bounded fixture setup for the other published label, not a rerun of the onboarding matrix.
+  // The published draft API supplies a valid local draft; a real Review/Create click produces the fixture receipt.
+  await setLook(page, 'basic-dark');
+  await page.evaluate(() => { window.PM_O55_ONBOARDING.open({ fresh: true, screen: 'welcome' });
+    window.O55.S.set({ project_name: 'Current glyph label fixture' }); window.O55.ui.go('review'); });
+  const primary = '#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-primary';
+  await page.waitForFunction((sel) => { const b = document.querySelector(sel); return b && !b.disabled && b.getAttribute('data-o55-do') === 'commit'; }, primary, { timeout: 30000 });
+  await page.locator(primary).click();
+  await page.waitForFunction(() => ['done', 'failed'].includes(window.O55.S.sess.commit.state), null, { timeout: 30000 });
+  const receipt = await page.evaluate(() => ({ commit: window.O55.S.sess.commit, draft: window.O55.draft.exportPlan(window.O55.S.sess.drafts.main) }));
+  if (receipt.commit.state !== 'done') throw new Error('UNVERIFIED: supported local fixture did not produce the committed resume label');
+  await page.locator('#pm-o55-onboarding .o55-close').click();
+  await page.waitForFunction(() => !window.O55.S.open && document.querySelector('#o55-resume'), null, { timeout: 15000 });
+  result.committed_resume_fixture = { route: 'published welcome open, O55.S.set valid local draft name, published go(review), trusted Create, terminal fixture receipt, trusted Close', receipt,
+    saved: await page.evaluate(() => window.O55.store.get('onboarding', null)) }; save();
+}
+async function n3ChipsNew(page) {
+  const measure = contrastMethod(); await floaterFixture(page);
+  result.original_resume_spark_row = 'UNVERIFIED/HOLD; corrected N3-resume-history remains separate';
+  const outside = { x: 1850, y: 1000 };
+  for (const label of ['not-done', 'done']) {
+    if (label === 'done') await committedResumeFixture(page);
+    for (const look of TEN_LOOKS) {
+      const state = await setLook(page, look);
+      const hosts = label === 'done' ? ['resume'] : ['resume', 'tourchip'];
+      for (const which of hosts) {
+        await showFloater(page, which);
+        const host = '#o55-' + which + ' button[data-o55-chip="resume"]', selector = host + ' > svg.nx';
+        const binding = await page.locator(host).evaluate((b) => ({ text: b.textContent.trim(), svg: b.querySelector('svg.nx')?.dataset.nx,
+          saved_status: window.O55.store.get('onboarding', null)?.status, commit_state: window.O55.store.get('onboarding', null)?.commit?.state }));
+        if (binding.svg !== (which === 'resume' ? 'history' : 'sparkles') || (which === 'resume' &&
+          (binding.saved_status !== 'closed' || (binding.commit_state === 'done') !== (label === 'done')))) throw new Error('HOLD: new chip source/state binding drift');
+        const fields = { requirement: which === 'resume' ? 'N3-resume-history' : 'N3-tourchip-sparkles', look, state, host: which, resume_label: label, binding };
+        await ruleScopeProof(page, 'SCOPE-wide-' + look + '-' + which + '-' + label, fields);
+      }
+      // The failed Basic Dark hover and never-run focus are measured before any rest or other-look acceptance.
+      for (const pose of look === 'basic-dark' ? ['hover', 'focus-visible', 'rest'] : ['rest', 'hover', 'focus-visible']) {
+        for (const which of hosts) {
+          await showFloater(page, which);
+          const host = '#o55-' + which + ' button[data-o55-chip="resume"]', selector = host + ' > svg.nx';
+          await newBytePose(page, measure, 'NEW-CHIP-' + look + '-' + which + '-' + label + '-' + pose, host, selector, pose,
+            { requirement: which === 'resume' ? 'N3-resume-history' : 'N3-tourchip-sparkles', look, state, host: which, resume_label: label }, outside);
+        }
+      }
+      for (const which of hosts) {
+        await showFloater(page, which);
+        const host = '#o55-' + which + ' button[data-o55-chip="resume"]';
+        if (look === 'glass-dark' && label === 'not-done') await reducedNative(page, 'NEW-CHIP-glass-dark-' + which + '-RM', host, host + ' > svg.nx',
+          { requirement: which === 'resume' ? 'N3-resume-history' : 'N3-tourchip-sparkles', look, host: which, resume_label: label }, outside);
+        const pill = await populatedPills(page, 'NEW-PILL-' + look + '-' + which + '-' + label, look, state, which, ['floaters']);
+        if (pill.status !== 'PASS') throw new Error('HOLD: fresh affected floaters collector finding');
+      }
+    }
+  }
+  result.inputs = await page.evaluate(() => window.__pmgInputs || []);
+  result.status = 'MEASURED_PENDING_FRAME_REVIEW_AND_OWNER_DARK_BLOOM_REVIEW';
 }
 async function setOnboardingLook(page, look) {
   const [family, themeMode] = look.split('-'), wantedFamily = family === 'nier' ? 'basic' : family;
@@ -551,6 +692,32 @@ async function n3Narrow(page) {
   }
   result.status = hold ? 'HOLD' : 'MEASURED_PENDING_FRAME_REVIEW';
   result.inputs = await page.evaluate(() => window.__pmgInputs || []);
+}
+async function n3NarrowNew(page) {
+  const measure = contrastMethod(); await trustedInputs(page);
+  const order = ['glass-light', 'retro-dark', 'retro-light', 'nier-dark', 'nier-light', 'basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark'];
+  const carryover = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark'];
+  result.old_narrow_rows_retained = { actual_head: '7f7cb1491e1e81783482e2dc19b9f9d14230f889',
+    page_sha256: '890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0',
+    manifest_sha256: '6a3072e05d31172e442f6580a9e2a769f0f17e0b87a4cbb9ecf1a727383a7041', looks: carryover,
+    reuse: 'Only after the separate exact page-delta proof and successful selector-scope proofs; no old evidence is relabeled.' };
+  for (const look of order) {
+    const state = await setOnboardingLook(page, look);
+    await ruleScopeProof(page, 'SCOPE-narrow-' + look, { look, state, route: 'supported narrow O55 window' });
+    if (carryover.includes(look)) continue;
+    const actual = await page.evaluate(() => ({ layout: document.querySelector('#pm-o55-onboarding')?.getAttribute('data-o55-layout'),
+      narrow: document.querySelector('#o55-demo')?.hasAttribute('data-o55-narrow'),
+      button: document.querySelector('.o55-demopill').getBoundingClientRect().toJSON() }));
+    if (actual.layout !== 'narrow' || !actual.narrow || actual.button.width !== 20 || actual.button.height !== 44) throw new Error('HOLD: supported narrow geometry drift');
+    for (const pose of ['rest', 'hover', 'focus-visible']) await newBytePose(page, measure, 'NEW-NARROW-' + look + '-' + pose,
+      '.o55-demopill', '.o55-demopill > svg.nx', pose, { requirement: 'N3-narrow-demo', look, state, actual }, { x: 680, y: 870 });
+    if (look === 'glass-light') await reducedNative(page, 'NEW-NARROW-glass-light-RM', '.o55-demopill', '.o55-demopill > svg.nx',
+      { requirement: 'N3-narrow-demo', look, actual }, { x: 680, y: 870 });
+    const pill = await collectPills(page, 'NEW-PILL-NARROW-' + look, { requirement: 'N3-narrow-pill', look, state, actual }, ['floaters']);
+    if (pill.status !== 'PASS') throw new Error('HOLD: new narrow floaters finding');
+  }
+  result.inputs = await page.evaluate(() => window.__pmgInputs || []);
+  result.status = 'MEASURED_PENDING_FRAME_REVIEW';
 }
 async function r1(page) {
   await trustedInputs(page);
@@ -794,7 +961,7 @@ async function n2(page) {
 try {
   result.global_helper_sessions_before = command(['list']);
   result.recording_request_utc_ms = Date.now();
-  session = mode === 'n3-narrow' ? command(['start', '--headed']) : command(['start', '--record', join(out, mode + '.mp4'), '--codec', 'h264']);
+  session = mode.startsWith('n3-narrow') ? command(['start', '--headed']) : command(['start', '--record', join(out, mode + '.mp4'), '--codec', 'h264']);
   result.browser_ready_utc_ms = Date.now();
   result.admitted_session = session; save();
   const spec = arg('--playwright-module', 'playwright-core');
@@ -805,7 +972,7 @@ try {
   const page = pages[0];
   page.on('pageerror', (error) => { result.errors.push({ kind: 'pageerror', message: error.message }); save(); });
   page.on('console', (message) => { if (message.type() === 'error') { result.errors.push({ kind: 'console', message: message.text() }); save(); } });
-  if (mode === 'n3-narrow') {
+  if (mode.startsWith('n3-narrow')) {
     const viewportSession = await page.context().newCDPSession(page);
     await viewportSession.send('Emulation.setDeviceMetricsOverride', { width: 700, height: 900, deviceScaleFactor: 1, mobile: false });
     // CSS viewport established before recording; the ordinary helper's 1920x1080 capture window is not resized.
@@ -826,6 +993,8 @@ try {
   else if (mode === 'n3') await n3(page);
   else if (mode === 'n3-baseline') await n3Baseline(page);
   else if (mode === 'n3-narrow') await n3Narrow(page);
+  else if (mode === 'n3-narrow-new') await n3NarrowNew(page);
+  else if (mode === 'n3-chips-new') await n3ChipsNew(page);
   else if (mode === 'r1') await r1(page);
   else if (mode === 'n4') await n4(page);
   else throw new Error('HOLD: case mode not implemented: ' + mode);
