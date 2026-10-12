@@ -1,0 +1,93 @@
+{
+  "schema": "er13.original-output-block-manifest.v1",
+  "block_id": "B11-P02",
+  "arm_count": 2,
+  "frozen_at_utc": "2026-10-12T02:27:37.407695+00:00",
+  "immutable_originals": true,
+  "comparison_performed": false,
+  "hash_algorithm": "SHA-256",
+  "entries": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/input-verification.json",
+      "bytes": 35928,
+      "sha256": "0740ba0b5242c8a3610fd6eccf519144c05e4efe7c038489d397c2fc33e3e379"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/control/assessment.md",
+      "bytes": 4727,
+      "sha256": "141f124b5230d4449486767400c38d2c065a904ec9a7cfce22a59de37a92e3eb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/control/assessment.json",
+      "bytes": 24517,
+      "sha256": "163a21a3d44a7e3d5740a2b85df56cd216f2bf6e32f3a94fa0d573ee1f0e191b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/control/coverage.json",
+      "bytes": 11852,
+      "sha256": "96e488ff5a51ee3253f3fcb37449ce18922bbd7a6a08501a003374c3d4299c38"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/control/defects.json",
+      "bytes": 2189,
+      "sha256": "80ddde9e0639c8014b976285c52e4c7f518094015b0629d6973da4e6f03c1cf2"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/control/primary-source-index.json",
+      "bytes": 22376,
+      "sha256": "b5e70460eafc860197b40ad01cf7cbfa4183dca28cc60c4a70f6fb69a41c8966"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/control/evidence/loro-1.16.2-context.txt",
+      "bytes": 13482,
+      "sha256": "e923c327ad092cf00548a9bfe189de6993b85fead949bd6c6add64548ccac349"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/control/manifest.json",
+      "bytes": 1891,
+      "sha256": "9233180acad00a01270f4aad90f1c4c6e69ea3b67f6b444a510957bcbbe7d4e5"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/treatment/assessment.md",
+      "bytes": 5646,
+      "sha256": "7a58cf23dd81db949f1ba13c468df0a3fcc60afcd27ac0e53a0b6464edbd0541"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/treatment/assessment.json",
+      "bytes": 28510,
+      "sha256": "14a97c0559328875bd3323cf8522bf65fa1bf4d43bea59c991ecbd99da2e27a7"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/treatment/coverage.json",
+      "bytes": 12219,
+      "sha256": "9de02eb9d708a7a9e7ebb3d194a2ff16dcbd5d6da111d4423d55a1855f5cbf13"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/treatment/defects.json",
+      "bytes": 4487,
+      "sha256": "6cd7ba114f5bc1443784615dc7eb09a651d5481c60e9f870b0054c0222b4a043"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/treatment/primary-source-index.json",
+      "bytes": 23416,
+      "sha256": "a5c92e2f2271c908091979414e1c9db186ecbf5ca684733cf4848aa8663ae1c4"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/treatment/evidence/automerge-0.12.0-state-context.txt",
+      "bytes": 10848,
+      "sha256": "b7469db129e964ab178607deb6438672135c3598d333ff1538dde66fd66e4d81"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/treatment/manifest.json",
+      "bytes": 1916,
+      "sha256": "1eb9eadff5d0bcf8faeee37a97dfd0ea74ebccf35eb59bdfca043721ece2b071"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/assessment.json",
+      "bytes": 27901,
+      "sha256": "6e867a7afa4fc20eb30bd4f12556077f75eb99693ef1682234e07f85f4681dec"
+    }
+  ],
+  "self_hash": "Excluded; exact root manifest hash is the external freeze receipt.",
+  "comparison_rule": "Comparative analysis may begin only after this manifest exists. Original records must not be altered."
+}

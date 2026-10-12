@@ -1,0 +1,78 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "B06-P02-control",
+  "final_material_defects": [],
+  "resolved_or_rejected_stage_findings": [
+    {
+      "id": "C-R01",
+      "stage": "draft",
+      "kind": "material incomplete",
+      "finding": "Free-text contact safeguard was underspecified. F-01 is accepted and the final supplies a conservative reviewed projection.",
+      "final_status": "RESOLVED"
+    },
+    {
+      "id": "C-R02",
+      "stage": "critic",
+      "kind": "unsupported criticism",
+      "finding": "The zero current Checks tab does not negate the historical merge count. The final correctly rejects that criticism.",
+      "final_status": "REJECTED_CORRECTLY"
+    }
+  ],
+  "nonmaterial_findings_and_limits": [
+    {
+      "id": "C-L01",
+      "severity": "nonmaterial",
+      "finding": "Automerge conflict-view lifetime is not stated in final prose. The proposal keeps explicit application event history and does not make getConflicts a durable audit guarantee.",
+      "evidence": [
+        "E34"
+      ]
+    },
+    {
+      "id": "C-L02",
+      "severity": "nonmaterial",
+      "finding": "Known optional checkpoint and filtered-deletion conditions are less visible in final prose but remain in the complete source register/index. Neither concrete API nor filtered replication configuration is selected.",
+      "evidence": [
+        "E05",
+        "E25"
+      ]
+    },
+    {
+      "id": "C-L03",
+      "severity": "nonmaterial",
+      "finding": "Browser/native platform, numeric photo budget and retention values remain undecided; this is appropriate user/implementation uncertainty, not performed validation.",
+      "evidence": [
+        "E36"
+      ]
+    },
+    {
+      "id": "C-L04",
+      "severity": "nonmaterial",
+      "finding": "Exclusive offline ownership is a refinement to the draft, not a literal promise made by it; correction labeling is broader than the quoted plan assumption."
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "F-01",
+      "candidate_disposition": "accept_and_amend",
+      "independent_result": "SUPPORTED",
+      "evidence": [
+        "E02"
+      ],
+      "final_locator": "final.md:132 and Search and access",
+      "note": "Unreviewed free text is excluded; uncertain screening omits text and raw snippets are not returned."
+    },
+    {
+      "id": "F-02",
+      "candidate_disposition": "reject_specific_unsupported_count_conclusion",
+      "independent_result": "SUPPORTED",
+      "evidence": [
+        "E11",
+        "E12",
+        "E13"
+      ],
+      "final_locator": "final.md:134",
+      "note": "Historical merge record and current Checks tab are different observations; no local test execution is claimed."
+    }
+  ],
+  "repair_or_candidate_feedback_provided": false
+}

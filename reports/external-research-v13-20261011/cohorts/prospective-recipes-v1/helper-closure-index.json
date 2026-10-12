@@ -1,0 +1,668 @@
+{
+  "schema": "er13.prospective_recipe_public_closure.v1",
+  "publication_commit_for_parent": "47b2ed72a712291a2853d3f4068d1251495ebda5",
+  "parent_manifest_sha256": "ee5939ef2f60a70b966e7135ca9afe2771158f6bf062ff47604b81bf16b223d7",
+  "members": [
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/CHANGELOG.md",
+      "source_sha256": "be7db9c904e9c9079b792d067d1f8199aaf7dafa7ee52aef505f883076d6db8c",
+      "bytes": 1586,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/CHANGELOG.md",
+      "common_published_v1": true,
+      "public_sha256": "be7db9c904e9c9079b792d067d1f8199aaf7dafa7ee52aef505f883076d6db8c",
+      "public_bytes": 1586
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/README.md",
+      "source_sha256": "38ef161059454d92bb4fbd403ec84411a0ccbbdeedb25e248c1c0829e3722117",
+      "bytes": 7947,
+      "retained_reference": "helpers/c-successor-materializer-v1/README.md",
+      "common_published_v1": false,
+      "public_sha256": "04f30ac9d87767a183c1237602499346cedda10b69066d11a05707d1d1a967ec",
+      "public_bytes": 7757
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/ROUTES.md",
+      "source_sha256": "fc9d2538595b07a213477e3c70c658032f449586bd76fe8c575eaefc86ce2c7a",
+      "bytes": 3041,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/ROUTES.md",
+      "common_published_v1": true,
+      "public_sha256": "fc9d2538595b07a213477e3c70c658032f449586bd76fe8c575eaefc86ce2c7a",
+      "public_bytes": 3041
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/b-check-results.json",
+      "source_sha256": "6165ce69e0dacc39831f55496095a9ef7599b2bd84f198b28e0f6f8b713842f7",
+      "bytes": 20303,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/b-check-results.json",
+      "common_published_v1": true,
+      "public_sha256": "6165ce69e0dacc39831f55496095a9ef7599b2bd84f198b28e0f6f8b713842f7",
+      "public_bytes": 20303
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/b-checks.py",
+      "source_sha256": "98140c56418e292c407b4537865fcc89471ed31dca51c956305d106b307454ef",
+      "bytes": 8551,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/b-checks.py",
+      "common_published_v1": true,
+      "public_sha256": "98140c56418e292c407b4537865fcc89471ed31dca51c956305d106b307454ef",
+      "public_bytes": 8551
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/c-checks.py",
+      "source_sha256": "7e72f266bc7a4e9104f2e6c56deb895e661eadd1d26b27c5420985b19df7adbe",
+      "bytes": 16994,
+      "retained_reference": "helpers/c-successor-materializer-v1/c-checks.py",
+      "common_published_v1": false,
+      "public_sha256": "393ff657abb1ea8a04655560e162643b4b39e8d95ddc781475f9e75cb24e41bc",
+      "public_bytes": 16994
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/check-results.json",
+      "source_sha256": "6cd47c000dcba33274aafc67a306faf89661a80d30a69ade64aa4a7b052b48a8",
+      "bytes": 28834,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/check-results.json",
+      "common_published_v1": true,
+      "public_sha256": "6cd47c000dcba33274aafc67a306faf89661a80d30a69ade64aa4a7b052b48a8",
+      "public_bytes": 28834
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/checks.py",
+      "source_sha256": "d032b74a855e08f7863d9b6437ca9cd71798cf8ea43637ef8d67d5a1c9fa8a21",
+      "bytes": 15045,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/checks.py",
+      "common_published_v1": true,
+      "public_sha256": "d032b74a855e08f7863d9b6437ca9cd71798cf8ea43637ef8d67d5a1c9fa8a21",
+      "public_bytes": 15045
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/delta-checks.py",
+      "source_sha256": "bd3d2d3327b6937e620d0f4a5ce93cb1c573c2f0d842ce64a4ed8578a74f1b94",
+      "bytes": 14315,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/delta-checks.py",
+      "common_published_v1": true,
+      "public_sha256": "bd3d2d3327b6937e620d0f4a5ce93cb1c573c2f0d842ce64a4ed8578a74f1b94",
+      "public_bytes": 14315
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/er13-checks.py",
+      "source_sha256": "e59e27d10d413e32749ef1972964f20f94a4de35e8b5b9a703d1cfedc77d5a03",
+      "bytes": 14987,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/er13-checks.py",
+      "common_published_v1": true,
+      "public_sha256": "e59e27d10d413e32749ef1972964f20f94a4de35e8b5b9a703d1cfedc77d5a03",
+      "public_bytes": 14987
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/extra-checks.py",
+      "source_sha256": "cdb2b6ea7a174898e19a9508001c351714017b33454e9b97818179f7297ffea6",
+      "bytes": 8208,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/extra-checks.py",
+      "common_published_v1": true,
+      "public_sha256": "cdb2b6ea7a174898e19a9508001c351714017b33454e9b97818179f7297ffea6",
+      "public_bytes": 8208
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/materialize.py",
+      "source_sha256": "6d9089fc4d46a31f62a9acd764dc34fa7536a08a65d950dd4fb49608ae1ff51c",
+      "bytes": 26976,
+      "retained_reference": "helpers/c-successor-materializer-v1/materialize.py",
+      "common_published_v1": false,
+      "public_sha256": "6d9089fc4d46a31f62a9acd764dc34fa7536a08a65d950dd4fb49608ae1ff51c",
+      "public_bytes": 26976
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/methods/C-S1-v2/critic_prompt_delta.txt",
+      "source_sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "bytes": 479,
+      "retained_reference": "helpers/c-successor-materializer-v1/methods/C-S1-v2/critic_prompt_delta.txt",
+      "common_published_v1": false,
+      "public_sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "public_bytes": 479
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/methods/C-S1-v2/investigator_prompt_delta.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained_reference": "helpers/c-successor-materializer-v1/methods/C-S1-v2/investigator_prompt_delta.txt",
+      "common_published_v1": false,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_bytes": 0
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/methods/C-S1-v2/method.json",
+      "source_sha256": "402701f257e2574ba88d5817245939daae622d829eabd4c959a79fa686da18c0",
+      "bytes": 1158,
+      "retained_reference": "helpers/c-successor-materializer-v1/methods/C-S1-v2/method.json",
+      "common_published_v1": false,
+      "public_sha256": "402701f257e2574ba88d5817245939daae622d829eabd4c959a79fa686da18c0",
+      "public_bytes": 1158
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/methods/C-S1-v2/reviser_prompt_delta.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained_reference": "helpers/c-successor-materializer-v1/methods/C-S1-v2/reviser_prompt_delta.txt",
+      "common_published_v1": false,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_bytes": 0
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/methods/C-S2-v2/critic_prompt_delta.txt",
+      "source_sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "bytes": 479,
+      "retained_reference": "helpers/c-successor-materializer-v1/methods/C-S2-v2/critic_prompt_delta.txt",
+      "common_published_v1": false,
+      "public_sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "public_bytes": 479
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/methods/C-S2-v2/investigator_prompt_delta.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained_reference": "helpers/c-successor-materializer-v1/methods/C-S2-v2/investigator_prompt_delta.txt",
+      "common_published_v1": false,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_bytes": 0
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/methods/C-S2-v2/method.json",
+      "source_sha256": "0c32141a99f640d767301b000d6d75aa373f7b48bbf9119ba6e571450352916d",
+      "bytes": 1393,
+      "retained_reference": "helpers/c-successor-materializer-v1/methods/C-S2-v2/method.json",
+      "common_published_v1": false,
+      "public_sha256": "0c32141a99f640d767301b000d6d75aa373f7b48bbf9119ba6e571450352916d",
+      "public_bytes": 1393
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/methods/C-S2-v2/reviser_prompt_delta.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained_reference": "helpers/c-successor-materializer-v1/methods/C-S2-v2/reviser_prompt_delta.txt",
+      "common_published_v1": false,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_bytes": 0
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/preservation-check.json",
+      "source_sha256": "e451352b47c01d61167e586006f2f51b5765a7311527fb2fed9afbc64afcc9aa",
+      "bytes": 1247,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/preservation-check.json",
+      "common_published_v1": true,
+      "public_sha256": "e451352b47c01d61167e586006f2f51b5765a7311527fb2fed9afbc64afcc9aa",
+      "public_bytes": 1247
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/prior-v2-README.md",
+      "source_sha256": "4028de4641f7d53f5fc8671224b5f813b22d2790b0a536f4e268b5004b6d10bd",
+      "bytes": 10400,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/prior-v2-README.md",
+      "common_published_v1": true,
+      "public_sha256": "4028de4641f7d53f5fc8671224b5f813b22d2790b0a536f4e268b5004b6d10bd",
+      "public_bytes": 10400
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/prior-v2-bundle-manifest.json",
+      "source_sha256": "4368e32d3dd2fde6c31231531fff4b1ce089e6c79c25f7142e42a98b2662b0fa",
+      "bytes": 4444,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/prior-v2-bundle-manifest.json",
+      "common_published_v1": true,
+      "public_sha256": "4368e32d3dd2fde6c31231531fff4b1ce089e6c79c25f7142e42a98b2662b0fa",
+      "public_bytes": 4444
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/prior-v2-check-results.json",
+      "source_sha256": "a49bba8ab9f38e056c030058cf6c9f4228c99665433a176899e488194bd97e09",
+      "bytes": 22580,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/prior-v2-check-results.json",
+      "common_published_v1": true,
+      "public_sha256": "a49bba8ab9f38e056c030058cf6c9f4228c99665433a176899e488194bd97e09",
+      "public_bytes": 22580
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/prior-v3-README.md",
+      "source_sha256": "78c87b7be4c63cf654ae20a49edc1dd9337980dce5166dd253cd39761baa6973",
+      "bytes": 11024,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/prior-v3-README.md",
+      "common_published_v1": true,
+      "public_sha256": "78c87b7be4c63cf654ae20a49edc1dd9337980dce5166dd253cd39761baa6973",
+      "public_bytes": 11024
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/prior-v3-READY.json",
+      "source_sha256": "8e5ac7195d1e18e07395b0c17bbe6378d55e2a54055295ac56b8b07d8dce4e72",
+      "bytes": 1134,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/prior-v3-READY.json",
+      "common_published_v1": true,
+      "public_sha256": "8e5ac7195d1e18e07395b0c17bbe6378d55e2a54055295ac56b8b07d8dce4e72",
+      "public_bytes": 1134
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/prior-v3-bundle-manifest.json",
+      "source_sha256": "1049fcdd18a49d1f6b773ce6d997b75617f3346dad7fa143104463fd4854774b",
+      "bytes": 6897,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/prior-v3-bundle-manifest.json",
+      "common_published_v1": true,
+      "public_sha256": "1049fcdd18a49d1f6b773ce6d997b75617f3346dad7fa143104463fd4854774b",
+      "public_bytes": 6897
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/prior-v3-check-results.json",
+      "source_sha256": "ba76f9c639c871cc902b9af7472ef92dc085045fe37693a0988ab240f6987d2e",
+      "bytes": 21318,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/prior-v3-check-results.json",
+      "common_published_v1": true,
+      "public_sha256": "ba76f9c639c871cc902b9af7472ef92dc085045fe37693a0988ab240f6987d2e",
+      "public_bytes": 21318
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/prior-v3-source-lineage.json",
+      "source_sha256": "8a3e70326ce6b1b79987a1ba2028aaade7906bcd1f83460e46db634f3cf4260b",
+      "bytes": 14448,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/prior-v3-source-lineage.json",
+      "common_published_v1": true,
+      "public_sha256": "8a3e70326ce6b1b79987a1ba2028aaade7906bcd1f83460e46db634f3cf4260b",
+      "public_bytes": 14448
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/public-input-dependency-manifest.json",
+      "source_sha256": "22b8e7fa88c3b963243bd31a8b7a155bca2a2f7bd179f2dfa0a5b9fc507ce23f",
+      "bytes": 6457,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/public-input-dependency-manifest.json",
+      "common_published_v1": true,
+      "public_sha256": "22b8e7fa88c3b963243bd31a8b7a155bca2a2f7bd179f2dfa0a5b9fc507ce23f",
+      "public_bytes": 6457
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/repin.py",
+      "source_sha256": "7945f33d51f97d80a6fed36d14b0183d5e26349eb3e8ac9d0667eb5f04ac7047",
+      "bytes": 2998,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/repin.py",
+      "common_published_v1": true,
+      "public_sha256": "7945f33d51f97d80a6fed36d14b0183d5e26349eb3e8ac9d0667eb5f04ac7047",
+      "public_bytes": 2998
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/routes.py",
+      "source_sha256": "a796ef30cce00ff6e2a9727a7c917eb70be363c7ef62e54b2dc4f81486dbf5bb",
+      "bytes": 2475,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/routes.py",
+      "common_published_v1": true,
+      "public_sha256": "a796ef30cce00ff6e2a9727a7c917eb70be363c7ef62e54b2dc4f81486dbf5bb",
+      "public_bytes": 2475
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/source-lineage.json",
+      "source_sha256": "aed9dfcac758925dadb034ff1cbc740336426351ff5865289b71a56dc4f1d202",
+      "bytes": 10098,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/source-lineage.json",
+      "common_published_v1": true,
+      "public_sha256": "aed9dfcac758925dadb034ff1cbc740336426351ff5865289b71a56dc4f1d202",
+      "public_bytes": 10098
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json",
+      "source_sha256": "1b8d3601153aa051d64622ab86c7c14c26d048443f6d39631d2e48fb448a8a93",
+      "bytes": 945,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json",
+      "common_published_v1": true,
+      "public_sha256": "1b8d3601153aa051d64622ab86c7c14c26d048443f6d39631d2e48fb448a8a93",
+      "public_bytes": 945
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/helpers/er12-composite-A1-A8-v1/prepare.py",
+      "source_sha256": "82737c5926ac8157e1e1b89bf6b46d73cf536dccc2464370181d49cb0feacc20",
+      "bytes": 4818,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/helpers/er12-composite-A1-A8-v1/prepare.py",
+      "common_published_v1": true,
+      "public_sha256": "82737c5926ac8157e1e1b89bf6b46d73cf536dccc2464370181d49cb0feacc20",
+      "public_bytes": 4818
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/helpers/er12-screen-v1/bootstrap.js",
+      "source_sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56",
+      "bytes": 4352,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/helpers/er12-screen-v1/bootstrap.js",
+      "common_published_v1": true,
+      "public_sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56",
+      "public_bytes": 4352
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/helpers/er12-screen-v1/handoff.py",
+      "source_sha256": "8d11c185462c580acc7c7922acdf19628fc93019b4cfcf6ef0dfee0a40f21a10",
+      "bytes": 4032,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/helpers/er12-screen-v1/handoff.py",
+      "common_published_v1": true,
+      "public_sha256": "8d11c185462c580acc7c7922acdf19628fc93019b4cfcf6ef0dfee0a40f21a10",
+      "public_bytes": 4032
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/helpers/er12-screen-v1/prepare.py",
+      "source_sha256": "8a341bfc47c4609341bc85f6ce363dd02f2579cee7c4807a9990c3b8334002ff",
+      "bytes": 29943,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/helpers/er12-screen-v1/prepare.py",
+      "common_published_v1": true,
+      "public_sha256": "8a341bfc47c4609341bc85f6ce363dd02f2579cee7c4807a9990c3b8334002ff",
+      "public_bytes": 29943
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/helpers/er12-screen-v1/reveal.py",
+      "source_sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "bytes": 2880,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/helpers/er12-screen-v1/reveal.py",
+      "common_published_v1": true,
+      "public_sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "public_bytes": 2880
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/mechanics/exact-activation-capture-v2-1/README.md",
+      "source_sha256": "0822e9c39dd60e06a3092f8d291bfefad4936e1ae1f178632de13e9092cd27b2",
+      "bytes": 5187,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-activation-capture-v2-1/README.md",
+      "common_published_v1": true,
+      "public_sha256": "0822e9c39dd60e06a3092f8d291bfefad4936e1ae1f178632de13e9092cd27b2",
+      "public_bytes": 5187
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/mechanics/exact-activation-capture-v2-1/ROOT_VERIFICATION.json",
+      "source_sha256": "a38caf70251cbe7fd27a5cdb9464ec4a21183034091eccb44fa9b67acf69e685",
+      "bytes": 1229,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-activation-capture-v2-1/ROOT_VERIFICATION.json",
+      "common_published_v1": true,
+      "public_sha256": "a38caf70251cbe7fd27a5cdb9464ec4a21183034091eccb44fa9b67acf69e685",
+      "public_bytes": 1229
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/mechanics/exact-activation-capture-v2-1/activation-snippet-template.js",
+      "source_sha256": "3eed7edf2cb7d5cd506daecaab89502d45eb07b64d1006f6ab72b3f7afc6e6f5",
+      "bytes": 2355,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-activation-capture-v2-1/activation-snippet-template.js",
+      "common_published_v1": true,
+      "public_sha256": "3eed7edf2cb7d5cd506daecaab89502d45eb07b64d1006f6ab72b3f7afc6e6f5",
+      "public_bytes": 2355
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/mechanics/exact-activation-capture-v2-1/dependency-sha256.json",
+      "source_sha256": "bba569a9dd50ad6344f3314ac022803c56d273213030e540f9e6bbfa2980deaf",
+      "bytes": 284,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-activation-capture-v2-1/dependency-sha256.json",
+      "common_published_v1": true,
+      "public_sha256": "bba569a9dd50ad6344f3314ac022803c56d273213030e540f9e6bbfa2980deaf",
+      "public_bytes": 284
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/mechanics/exact-activation-capture-v2-1/overlay.py",
+      "source_sha256": "f79d4689649cb520bdd993f228666f72cc60257e5df73b6e7a01c37e7a96380c",
+      "bytes": 10501,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-activation-capture-v2-1/overlay.py",
+      "common_published_v1": true,
+      "public_sha256": "f79d4689649cb520bdd993f228666f72cc60257e5df73b6e7a01c37e7a96380c",
+      "public_bytes": 10501
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+      "source_sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+      "bytes": 3151,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+      "common_published_v1": true,
+      "public_sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+      "public_bytes": 3151
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/mechanics/exact-goal-binding-guard-v1/overlay.py",
+      "source_sha256": "05c96bcda9ee1babe46e9dff17a454b5b1cc769df7c4c6fc479a454f574cf4ff",
+      "bytes": 8570,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-goal-binding-guard-v1/overlay.py",
+      "common_published_v1": true,
+      "public_sha256": "05c96bcda9ee1babe46e9dff17a454b5b1cc769df7c4c6fc479a454f574cf4ff",
+      "public_bytes": 8570
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/mechanics/invocation-clarification-v1/helper-pins.json",
+      "source_sha256": "34f88b16e053dc7941044109f5a5d601bc03de52ddd98a92dd2602cb320db0ba",
+      "bytes": 242,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/invocation-clarification-v1/helper-pins.json",
+      "common_published_v1": true,
+      "public_sha256": "34f88b16e053dc7941044109f5a5d601bc03de52ddd98a92dd2602cb320db0ba",
+      "public_bytes": 242
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/mechanics/invocation-clarification-v1/transform.py",
+      "source_sha256": "3eeb571945b1ad45f38e3116c98fb5724c0fc5a2bd023fc5b66a807a11a93be8",
+      "bytes": 7821,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/invocation-clarification-v1/transform.py",
+      "common_published_v1": true,
+      "public_sha256": "3eeb571945b1ad45f38e3116c98fb5724c0fc5a2bd023fc5b66a807a11a93be8",
+      "public_bytes": 7821
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/mechanics/native-root-code-mode/captureSpecJS.js",
+      "source_sha256": "1769a27979b991ae9569699d730c6bb430ec9ae4807aa79c230c4adbb442211c",
+      "bytes": 394,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/native-root-code-mode/captureSpecJS.js",
+      "common_published_v1": true,
+      "public_sha256": "1769a27979b991ae9569699d730c6bb430ec9ae4807aa79c230c4adbb442211c",
+      "public_bytes": 394
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/mechanics/native-root-code-mode/clarifySpecJS.js",
+      "source_sha256": "bb25e8ec79588d59aad269b9adff256ed9ea0bf7e4c28080245a2a45ea74556a",
+      "bytes": 380,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/native-root-code-mode/clarifySpecJS.js",
+      "common_published_v1": true,
+      "public_sha256": "bb25e8ec79588d59aad269b9adff256ed9ea0bf7e4c28080245a2a45ea74556a",
+      "public_bytes": 380
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/mechanics/native-root-code-mode/exactSpecJS.js",
+      "source_sha256": "127a1b34c143125583abf26b5cd3f4c139d0b2fd71470d9a65036b56fa63f03c",
+      "bytes": 376,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/native-root-code-mode/exactSpecJS.js",
+      "common_published_v1": true,
+      "public_sha256": "127a1b34c143125583abf26b5cd3f4c139d0b2fd71470d9a65036b56fa63f03c",
+      "public_bytes": 376
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/mechanics/native-root-code-mode/standardSpecJS.js",
+      "source_sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92",
+      "bytes": 2503,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/native-root-code-mode/standardSpecJS.js",
+      "common_published_v1": true,
+      "public_sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92",
+      "public_bytes": 2503
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/methods/A8/critic_prompt_delta.txt",
+      "source_sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "bytes": 3398,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/A8/critic_prompt_delta.txt",
+      "common_published_v1": true,
+      "public_sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "public_bytes": 3398
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/methods/A8/reviser_prompt_delta.txt",
+      "source_sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "bytes": 1715,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/A8/reviser_prompt_delta.txt",
+      "common_published_v1": true,
+      "public_sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "public_bytes": 1715
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/methods/B07/critic_prompt_delta.txt",
+      "source_sha256": "0822c0b36200aa459064c8780b79e3e5914900c2f339908fc3a30f6331447a13",
+      "bytes": 419,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B07/critic_prompt_delta.txt",
+      "common_published_v1": true,
+      "public_sha256": "0822c0b36200aa459064c8780b79e3e5914900c2f339908fc3a30f6331447a13",
+      "public_bytes": 419
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/methods/B07/investigator_prompt_delta.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B07/investigator_prompt_delta.txt",
+      "common_published_v1": true,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_bytes": 0
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/methods/B07/method.json",
+      "source_sha256": "4c997da053e4af70406f9974cd49f8749658c90bd60be2750a60cf8b5a0826c5",
+      "bytes": 494,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B07/method.json",
+      "common_published_v1": true,
+      "public_sha256": "4c997da053e4af70406f9974cd49f8749658c90bd60be2750a60cf8b5a0826c5",
+      "public_bytes": 494
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/methods/B07/reviser_prompt_delta.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B07/reviser_prompt_delta.txt",
+      "common_published_v1": true,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_bytes": 0
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/methods/B09/critic_prompt_delta.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B09/critic_prompt_delta.txt",
+      "common_published_v1": true,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_bytes": 0
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/methods/B09/investigator_prompt_delta.txt",
+      "source_sha256": "11603cb5faf1166c3c035d2ddef8b90df312d9e5661ccf459d5ad17cd3e4be88",
+      "bytes": 416,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B09/investigator_prompt_delta.txt",
+      "common_published_v1": true,
+      "public_sha256": "11603cb5faf1166c3c035d2ddef8b90df312d9e5661ccf459d5ad17cd3e4be88",
+      "public_bytes": 416
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/methods/B09/method.json",
+      "source_sha256": "a858f1ffe405528222f1417a864c4df4bc6a1e0572edaee10af2a7239fb77b65",
+      "bytes": 494,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B09/method.json",
+      "common_published_v1": true,
+      "public_sha256": "a858f1ffe405528222f1417a864c4df4bc6a1e0572edaee10af2a7239fb77b65",
+      "public_bytes": 494
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/methods/B09/reviser_prompt_delta.txt",
+      "source_sha256": "4797b38d36f6441e83513aed15f13bac3835534bda6185dfc9ef2e93ff6614f8",
+      "bytes": 437,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B09/reviser_prompt_delta.txt",
+      "common_published_v1": true,
+      "public_sha256": "4797b38d36f6441e83513aed15f13bac3835534bda6185dfc9ef2e93ff6614f8",
+      "public_bytes": 437
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/methods/B10/critic_prompt_delta.txt",
+      "source_sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "bytes": 479,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B10/critic_prompt_delta.txt",
+      "common_published_v1": true,
+      "public_sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "public_bytes": 479
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/methods/B10/investigator_prompt_delta.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B10/investigator_prompt_delta.txt",
+      "common_published_v1": true,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_bytes": 0
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/methods/B10/method.json",
+      "source_sha256": "c14924fa786abed1326c640d8031d7c449a3acc3d44a37b7e997019bf1c6550c",
+      "bytes": 494,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B10/method.json",
+      "common_published_v1": true,
+      "public_sha256": "c14924fa786abed1326c640d8031d7c449a3acc3d44a37b7e997019bf1c6550c",
+      "public_bytes": 494
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/sources/methods/B10/reviser_prompt_delta.txt",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "retained_reference": "PUBLISHED_V1:helpers/materialize-er13-v1/sealed/full-v1/sources/methods/B10/reviser_prompt_delta.txt",
+      "common_published_v1": true,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_bytes": 0
+    },
+    {
+      "logical_path": "helpers/c-successor-materializer-v1/successor-lineage.json",
+      "source_sha256": "e9f406b994494704bce557911d1848699d296d12c07368f492eaf2ab8840d7a3",
+      "bytes": 17489,
+      "retained_reference": "helpers/c-successor-materializer-v1/successor-lineage.json",
+      "common_published_v1": false,
+      "public_sha256": "3bdbeffd8408cb89c230c19b8b171072632dc563c00fb95f99d2848261932637",
+      "public_bytes": 17451
+    },
+    {
+      "logical_path": "helpers/prospective-capture-v1/README.md",
+      "source_sha256": "83009cfb2f12d465a6c3099963e384cdc1818dd609c0e2dee85d803fb5a61a25",
+      "bytes": 6709,
+      "retained_reference": "helpers/prospective-capture-v1/README.md",
+      "common_published_v1": false,
+      "public_sha256": "a02184d514281c7b1d1c9526dd2332006cda09164250e3cfe8e44a4bacd56b3b",
+      "public_bytes": 6671
+    },
+    {
+      "logical_path": "helpers/prospective-capture-v1/activation-template.js",
+      "source_sha256": "e4c4b1e96308cee17a548a03ed507a3aedd2249c364d83c8b2c6c300bac6f412",
+      "bytes": 3614,
+      "retained_reference": "helpers/prospective-capture-v1/activation-template.js",
+      "common_published_v1": false,
+      "public_sha256": "e4c4b1e96308cee17a548a03ed507a3aedd2249c364d83c8b2c6c300bac6f412",
+      "public_bytes": 3614
+    },
+    {
+      "logical_path": "helpers/prospective-capture-v1/captureSpec-shim.js",
+      "source_sha256": "5e22bd87a1f04cad97a936eb1ce99c2062321f6ff6c6f8f2f45ee02ceab31ac9",
+      "bytes": 701,
+      "retained_reference": "helpers/prospective-capture-v1/captureSpec-shim.js",
+      "common_published_v1": false,
+      "public_sha256": "5e22bd87a1f04cad97a936eb1ce99c2062321f6ff6c6f8f2f45ee02ceab31ac9",
+      "public_bytes": 701
+    },
+    {
+      "logical_path": "helpers/prospective-capture-v1/install.py",
+      "source_sha256": "d462daa854097de524f019c33a488bc96f9b087e3992ab77fd5b7bf20a45cc75",
+      "bytes": 11490,
+      "retained_reference": "helpers/prospective-capture-v1/install.py",
+      "common_published_v1": false,
+      "public_sha256": "d462daa854097de524f019c33a488bc96f9b087e3992ab77fd5b7bf20a45cc75",
+      "public_bytes": 11490
+    },
+    {
+      "logical_path": "helpers/prospective-capture-v1/tests.py",
+      "source_sha256": "08080ece3d31166c5401995994349058e1613653841f77a131512333758ae14c",
+      "bytes": 17216,
+      "retained_reference": "helpers/prospective-capture-v1/tests.py",
+      "common_published_v1": false,
+      "public_sha256": "08080ece3d31166c5401995994349058e1613653841f77a131512333758ae14c",
+      "public_bytes": 17216
+    }
+  ],
+  "private_named_manifest_mapping": {
+    "helpers/c-successor-materializer-v1/manifest.json": "helpers/c-successor-materializer-v1/bundle-manifest.json",
+    "helpers/prospective-capture-v1/manifest.json": "helpers/prospective-capture-v1/MANIFEST.json"
+  },
+  "public_capture_manifest_sha256": "24ff3ed714c7108a49a2614d0afbda003fdac0bed50044a9952c3f77860d29ba",
+  "public_c_successor_manifest_sha256": "126125fbb0999c029b40eef46e56e0c5f9c0193c1a3658e6df7a148f8c6c5435",
+  "recipe_algorithms_method_deltas_changed": false,
+  "mechanical_changes": [
+    "Private path/account/route metadata normalized",
+    "Public capture/c-successor member hashes rebound to actual normalized bytes",
+    "Exactly two expected capture-seal literals in existing c-checks.py rebound to public capture manifest; no test logic added"
+  ],
+  "public_wrappers": "READY/SHA256SUMS bind actual public helper bytes, original seals preserved in original-public-hashes mapping"
+}

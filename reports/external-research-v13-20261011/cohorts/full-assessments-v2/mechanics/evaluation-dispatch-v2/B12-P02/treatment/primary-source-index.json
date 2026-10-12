@@ -1,0 +1,307 @@
+{
+  "schema": "er13.independent-primary-source-index.v1",
+  "arm_id": "B12-P02-treatment",
+  "lookup_owner": "independent original evaluator",
+  "reuse": "Own primary lookup reused across assigned matched arms, never candidate assistance",
+  "sources": [
+    {
+      "id": "E01",
+      "title": "Tokio blocking work",
+      "urls": [
+        "https://docs.rs/tokio/1.53.2/tokio/task/fn.spawn_blocking.html"
+      ],
+      "version_context": "Tokio 1.53.2, rt feature",
+      "locator": "Description; cancellation/shutdown; dedicated-thread guidance",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Large configured ceiling; running blocking closures are not abortable. Aborting before start may prevent execution. Shutdown timeout stops waiting, not the work. A scheduler and hard-stop boundary remain application responsibilities.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E02",
+      "title": "Rust Child and bounded transport",
+      "urls": [
+        "https://doc.rust-lang.org/std/process/struct.Child.html",
+        "https://doc.rust-lang.org/std/sync/mpsc/fn.sync_channel.html"
+      ],
+      "version_context": "Rust std 1.99.0 documentation",
+      "locator": "Child warning, kill/wait; sync_channel buffer semantics",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Child drop does not kill/wait. kill targets the direct child; wait/reap is explicit. sync_channel is bounded FIFO and full sends block; zero capacity is rendezvous. Neither primitive supplies an app priority policy or parser sandbox.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E03",
+      "title": "Windows Job Objects",
+      "urls": [
+        "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects"
+      ],
+      "version_context": "Win32 documentation; nested jobs Windows 8/Server 2012 onward",
+      "locator": "Managing processes; limits; managing a process tree",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "CreateProcess descendants normally join, subject to breakaway and WMI exceptions. Associated processes can be terminated and resource limits applied. Group supervision is distinct from filesystem/network isolation.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E04",
+      "title": "Thumbnail validity and atomic publication",
+      "urls": [
+        "https://specifications.freedesktop.org/thumbnail/latest-single/",
+        "https://pubs.opengroup.org/onlinepubs/9799919799/functions/open.html",
+        "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html"
+      ],
+      "version_context": "Thumbnail Managing Standard 0.9.0; POSIX.1-2024 Issue 8",
+      "locator": "FDO sections 5.2, 6.2, 7, 8; POSIX open access modes and rename errors/rationale",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "FDO uses URI/mtime with optional size checks, warns of second-resolution collisions, and specifies cache-side temporary rename. Read-only open describes access permission, not immutable bytes. POSIX rename supplies atomic name replacement with filesystem conditions; it does not atomically capture or hash mutable source content.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {
+        "POSIX open": "57b770918aa3e0c25186972675df8c96da119cf4b973335ed4487405e260dc3a",
+        "POSIX rename": "06671610134b0a52cdf4dcdaf382f72fef85ef51088b8a52b8679c7f03829318"
+      }
+    },
+    {
+      "id": "E05",
+      "title": "SQLite commit/recovery",
+      "urls": [
+        "https://www.sqlite.org/atomiccommit.html",
+        "https://www.sqlite.org/wal.html"
+      ],
+      "version_context": "Current official articles; rollback-journal versus WAL; WAL since 3.7.0",
+      "locator": "Atomic-commit assumptions; WAL concurrency/checkpoint/shared-memory sections",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Rollback atomicity depends on documented storage/VFS assumptions. WAL allows readers alongside one writer and needs same-host shared memory; sidecars/checkpoints matter. Neither transaction mode automatically coordinates external artifact files. Cache remains derived/rebuildable.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E06",
+      "title": "Cancellation ownership and slot ordering",
+      "urls": [
+        "https://docs.rs/tokio-util/latest/tokio_util/sync/struct.CancellationToken.html",
+        "https://docs.rs/tokio/latest/tokio/sync/struct.Semaphore.html",
+        "https://docs.rs/tokio/latest/tokio/process/struct.Command.html"
+      ],
+      "version_context": "Headers verified: tokio-util 0.7.20, Tokio 1.53.2",
+      "locator": "Token child_token/clone/cancel; semaphore fairness; Command kill_on_drop/process_group",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Cloned tokens share cancellation; child cancellation does not cancel its parent. Tokens signal interest, not hard termination. Semaphore fairness is request-order FIFO including acquire_many head blocking. kill_on_drop defaults false; Unix process groups and prompt reaping require explicit supervision. These primitives do not settle shared-render subscriber ownership.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E07",
+      "title": "Concrete unprivileged containment authorities",
+      "urls": [
+        "https://docs.kernel.org/userspace-api/landlock.html",
+        "https://learn.microsoft.com/en-us/windows/win32/secauthz/implementing-an-appcontainer",
+        "https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html"
+      ],
+      "version_context": "Landlock August 2026 docs and runtime ABI; AppContainer Windows 8+; Apple archived 2017 entitlement reference",
+      "locator": "Landlock policy, ABI, descriptors and erratum 1; AppContainer launch/capabilities; App Sandbox inheritance",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Landlock handles TCP from ABI 4 and UDP from ABI 10; explicit handled rights and descriptor hygiene matter. Other protocols are not thereby a firewall. AppContainer capability/DACL launch can constrain an unprivileged parser separately from Jobs. Apple inherited sandbox rights are static; selected-file access and separately configured XPC helpers need deliberate handoff. Unknown target OS does not prevent researching these available alternatives.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E08",
+      "title": "Apple worker and native preview alternatives",
+      "urls": [
+        "https://developer.apple.com/documentation/xpc",
+        "https://developer.apple.com/documentation/xpc/xpcsession/cancel(reason:)",
+        "https://developer.apple.com/documentation/xpc/xpc_connection_cancel(_:)",
+        "https://developer.apple.com/documentation/quicklookthumbnailing/qlthumbnailgenerator",
+        "https://developer.apple.com/documentation/foundation/operationqueue"
+      ],
+      "version_context": "Official Markdown versions fetched directly; XPCSession macOS 14+; connection cancellation macOS 10.7+; QLThumbnailGenerator macOS 10.15+; OperationQueue macOS 10.5+",
+      "locator": "XPC service table; cancellation discussions; Quick Look topics; OperationQueue readiness/cancellation",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Bundled XPC service lifecycle is launchd-managed. Connection cancellation is non-preemptive; session cancellation discards unsent messages, not a hard-kill guarantee. Quick Look offers async representations/cancel. OperationQueue uses priority/readiness; canceled queued operations remain until started/finished. Current API availability must be checked against owner platforms.",
+      "coverage": "COMPLETE",
+      "limits": [
+        "Browser JS stubs/Markdown content-type failed; official .md content was successfully read via direct HTTP. Copyright 2026 Apple Inc.; all rights reserved."
+      ],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E13",
+      "title": "Slint and CPU/transport alternatives",
+      "urls": [
+        "https://docs.rs/slint/1.18.1/slint/fn.invoke_from_event_loop.html",
+        "https://docs.rs/tokio/latest/tokio/sync/mpsc/fn.channel.html",
+        "https://docs.rs/rayon/1.12.0/rayon/struct.ThreadPool.html"
+      ],
+      "version_context": "Slint 1.18.1; latest mpsc header verified Tokio 1.53.2; Rayon 1.12.0",
+      "locator": "Slint closure signature/example; mpsc description; Rayon pool/work-stealing and FIFO methods",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Slint queues Send closures onto the event-loop owner thread. mpsc buffers bounded FIFO with backpressure. Rayon supports configured pools, work stealing and FIFO spawn variants; lacking this app lane policy is a design inference, not a prohibition on application priority. Versioned mpsc URL failed, latest route provided matching version.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E14",
+      "title": "PDF.js API, cancellation and caller/tests",
+      "urls": [
+        "https://mozilla.github.io/pdf.js/api/draft/module-pdfjsLib-RenderTask.html",
+        "https://mozilla.github.io/pdf.js/api/draft/module-pdfjsLib.html",
+        "https://github.com/mozilla/pdf.js/blob/v6.3.289/src/display/api.js",
+        "https://github.com/mozilla/pdf.js/blob/v6.3.289/test/unit/api_spec.js"
+      ],
+      "version_context": "Mutable draft API clearly separated from tagged 6.3.289 code/tests",
+      "locator": "RenderTask.cancel/promise; DocumentInitParameters/OnProgressParameters; tagged InternalRenderTask and cancellation tests",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Draft documents pause-aware cancellation, rejected completion, unlimited maxImageSize default, stopAtErrors false and NaN percent without total. Tagged code calls endDrawing before callback settlement. Unit-test source asserts cancel rejection and canvas reuse; neither the grader nor candidates executed those tests.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {
+        "6.3.289 api.js": "9858ca9516c732acd46eeb4b8ca1eafea942ff4c708aeaff34eb4f93315a150c",
+        "6.3.289 api_spec.js": "ceea4456a7dd2e892a90ae13e1299e6f3bb5f6892ae040b71b1277ba9e401802"
+      }
+    },
+    {
+      "id": "E15",
+      "title": "PDF.js cancellation fix history",
+      "urls": [
+        "https://github.com/mozilla/pdf.js/issues/11595",
+        "https://github.com/andriivitiv/pdf.js/commit/af995bb76f38a938612fa728fcdfb2e0bf184223",
+        "https://github.com/mozilla/pdf.js/pull/20503",
+        "https://github.com/mozilla/pdf.js/commit/58ac273f1f36b3d01b21f2a07b19f5884eca1b2a",
+        "https://github.com/mozilla/pdf.js/blob/v6.3.289/src/core/worker.js"
+      ],
+      "version_context": "Original issue 2.3.200/2.2.228; December 2025 fork; upstream merge 2026-02-06; tagged 6.3.289",
+      "locator": "Issue maintainer/later reports and linked PR; merge event/API; onFailure and surrounding callers",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Initial rejected-Promise explanation differs from later worker errors. PR 20503 merged upstream as 58ac273f1f36b3d01b21f2a07b19f5884eca1b2a on 2026-02-06. Tagged 6.3.289 onFailure returns when terminated. Fork-only evidence does not establish upstream status, but the linked upstream authority does. Earliest containing release was not mapped.",
+      "coverage": "PARTIAL",
+      "limits": [
+        "No first-fixed release or exhaustive downstream regression map; no tests rerun. PR bot logs include infrastructure failures and maintainer comments, not grader execution."
+      ],
+      "retrieved_body_sha256": {
+        "upstream PR API": "169e97079389d8ae79c4fad6ab1a9b401833c6819ca705d10c3c9fddc329c3c5",
+        "6.3.289 worker.js": "e46407d83873faf81a5df882da9e5a0444ba3bb0b493fc5d7d00378d6c888456",
+        "old parent worker.js": "a5e5acbd6ba816a6b8cc65ddc76b1d0a2aa99d4c46e1da5205b795b63f179722"
+      }
+    },
+    {
+      "id": "E16",
+      "title": "PDF.js reporter/support-context boundaries",
+      "urls": [
+        "https://github.com/mozilla/pdf.js/issues/21867",
+        "https://github.com/mozilla/pdf.js/issues/21934"
+      ],
+      "version_context": "Reports September 2026; 5.7.284/6.3.289 teardown; Windows Node 24 selected 5.x/6.x matrix",
+      "locator": "Complete consequential report/maintainer discussion; foreign-canvas and worker_threads support limitations",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "21867 uses synthetic throwing cleanup and later foreign node-canvas; the supplied document worked in the project example and maintainers requested a supported reproducer. 21934 is one-host reporter evidence; Node worker_threads are unsupported and latest-release support is explicit. Neither proves a universal defect or verified cross-host fix. Both finals should retain those boundaries.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E17",
+      "title": "GNOME API versus governing implementation",
+      "urls": [
+        "https://gnome.pages.gitlab.gnome.org/gnome-desktop/html/gnome-desktop3/gnome-desktop3-GnomeDesktopThumbnailFactory.html",
+        "https://gitlab.gnome.org/GNOME/gnome-desktop/-/blob/566be8d52f47e55b93a7b2f3af43e374c034ee6b/libgnome-desktop/gnome-desktop-thumbnail.c",
+        "https://gitlab.gnome.org/GNOME/gnome-desktop/-/blob/566be8d52f47e55b93a7b2f3af43e374c034ee6b/libgnome-desktop/gnome-desktop-thumbnail-script.c",
+        "https://gitlab.gnome.org/GNOME/gnome-desktop/-/blob/566be8d52f47e55b93a7b2f3af43e374c034ee6b/NEWS",
+        "https://gitlab.gnome.org/GNOME/gnome-desktop/-/blob/master/libgnome-desktop/gnome-desktop-thumbnail.c"
+      ],
+      "version_context": "Official manual release unspecified; tagged 43.2 commit 566be8d52f47e55b93a7b2f3af43e374c034ee6b; current master corroboration by body hash",
+      "locator": "43.2 factory lines 1092-1156 and async caller 1177-1234; script 562-680 and 1121-1158; current factory 1113-1182",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Manual claims a gdk-pixbuf fallback after missing/failed helper. Tagged and current code instead returns the helper result or NOT_FOUND, after a separate preview-icon attempt; PNG decoding of helper output is not fallback source rendering. Code also offers async callers and Bubblewrap/seccomp setup under platform/build/container conditions. Manual prose alone cannot establish current implemented fallback.",
+      "coverage": "COMPLETE",
+      "limits": [
+        "Only relevant functions/callers and bounded release context inspected; no full history/tree scan or execution. GNOME source license notices remain at linked original files; no source corpus copied."
+      ],
+      "retrieved_body_sha256": {
+        "43.2 factory": "8b2ca477211bb2d9d88cff8745a18c1c4d0fa72cc451241a7b720248f98851c7",
+        "43.2 script": "f223cd4b711788b3f932c2a0e57106964d918f4d7b283e4fb54bcd7f6e132d54",
+        "current master factory": "9600d95873f519e3111a9935fb4fec7e7c550e295499c87ada8d432f81fb2081"
+      }
+    }
+  ],
+  "unavailable_access_notes": [
+    "Some versioned docs.rs paths failed; matching-version latest headers verified.",
+    "Apple browser exposed JS stub/unsupported Markdown; direct official Markdown fetched successfully.",
+    "Direct man7 memfd fetch timed out; search result alone was not used for any decisive grade.",
+    "Unprovided owner platform/renderer/budget facts remain unknown."
+  ]
+}

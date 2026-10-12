@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "track": "C",
+  "locked_by": "codex-er13-root",
+  "locked_utc": "2026-10-12T02:28:23.879607+00:00",
+  "heldout_manifest_sha256": "a96ff537e4fd6e015b6588c0a43603091e39abf31b2dccfcec3004150d678131",
+  "heldout_helper_hash_manifest_sha256": "90859ab6a24663db9520d55a749b4b75d4df98a270f9c4bb1f0b2130375e4d70",
+  "complete_recipes_locked": true,
+  "decision_rule": "C development tests two prospectivegenericB10integratedsuccessors of originalB02/B06; both originals1/2treatments sourcePASS/FAIL vs2/2controlsPASS, no purefailedrecipepromotion or onecaseoptimization. Freeze exactrecipe/input/budget before scoring. Alloriginalgrades/failures/costs retained. D selection follows independentCresults and uses prospectivelylabeled diagnostic if no crediblejointimprovement.",
+  "assignment_rule": "C-P01/02 ->C-S1-v2 (queueC-R1-P01/02); C-P03/04 ->C-S2-v2 (queueC-R2-P01/02), botharms sameexactbrief/plan/defaultroute/commonmechanics; allD16unstarted/sealed",
+  "case_assignments": {
+    "C-P01": "C-S1-v2",
+    "C-P02": "C-S1-v2",
+    "C-P03": "C-S2-v2",
+    "C-P04": "C-S2-v2"
+  },
+  "recipes": {
+    "C-S1-v2": {
+      "whole_recipe": {
+        "materializer": "ER13_RUNTIME/helpers/c-successor-materializer-v1",
+        "materializer_manifest_sha256": "fffa5d116aa54b2c8fd11eb550ad5a855d52816e0d4688ae962cb4c9e1281e98",
+        "materialize_sha256": "6d9089fc4d46a31f62a9acd764dc34fa7536a08a65d950dd4fb49608ae1ff51c",
+        "capture_helper": "ER13_RUNTIME/helpers/prospective-capture-v1",
+        "capture_manifest_sha256": "30b992fad9649a5a1607d329b66eae9c9af6ef453b874348c2b7e1662ebd8a24",
+        "native_guard_sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+        "route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "whole_maximum_seconds": 3600,
+        "time_contract": "maximum60 elapsed incl armsetup/queue/tools/Goal/handoffs/writing; no minimum, earlycompletion allowed",
+        "investigator_input_boundary": "BRIEF_ONLY; exactplan released once after discovery.md exists and is frozen through inheritedone-shotreveal.py gate",
+        "output_selection": "inheritedcomplete discovery/draft/revealedplan/source maps, allcritique/dispositions, completefullfinal; actualwitness code/results whenused",
+        "native": "freshoneGoalperdeclaredcontext before input through exacthashloadedcapture, sameGoalterminal directreceipt, no nested candidatedelegation/premiumassist/accountswitch",
+        "matched_R0": {
+          "method": "R0",
+          "contexts": 3,
+          "stage_maxima_seconds": [
+            1800,
+            720,
+            1080
+          ],
+          "scientific_delta": null
+        },
+        "method": "B02",
+        "method_directory": "ER13_RUNTIME/helpers/c-successor-materializer-v1/methods/C-S1-v2",
+        "card_sha256": "402701f257e2574ba88d5817245939daae622d829eabd4c959a79fa686da18c0",
+        "generic_critic_delta_sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+        "critic_delta_stage": "critic",
+        "stage_maxima_seconds": [
+          1800,
+          1800
+        ],
+        "candidate_contexts": 2,
+        "other_supplemental_deltas": "EMPTY, fullordinaryduties retained"
+      },
+      "scientific_label": "EXPLORATORY_NEW_INTEGRATION; no qualified optimizerclaim"
+    },
+    "C-S2-v2": {
+      "whole_recipe": {
+        "materializer": "ER13_RUNTIME/helpers/c-successor-materializer-v1",
+        "materializer_manifest_sha256": "fffa5d116aa54b2c8fd11eb550ad5a855d52816e0d4688ae962cb4c9e1281e98",
+        "materialize_sha256": "6d9089fc4d46a31f62a9acd764dc34fa7536a08a65d950dd4fb49608ae1ff51c",
+        "capture_helper": "ER13_RUNTIME/helpers/prospective-capture-v1",
+        "capture_manifest_sha256": "30b992fad9649a5a1607d329b66eae9c9af6ef453b874348c2b7e1662ebd8a24",
+        "native_guard_sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+        "route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "whole_maximum_seconds": 3600,
+        "time_contract": "maximum60 elapsed incl armsetup/queue/tools/Goal/handoffs/writing; no minimum, earlycompletion allowed",
+        "investigator_input_boundary": "BRIEF_ONLY; exactplan released once after discovery.md exists and is frozen through inheritedone-shotreveal.py gate",
+        "output_selection": "inheritedcomplete discovery/draft/revealedplan/source maps, allcritique/dispositions, completefullfinal; actualwitness code/results whenused",
+        "native": "freshoneGoalperdeclaredcontext before input through exacthashloadedcapture, sameGoalterminal directreceipt, no nested candidatedelegation/premiumassist/accountswitch",
+        "matched_R0": {
+          "method": "R0",
+          "contexts": 3,
+          "stage_maxima_seconds": [
+            1800,
+            720,
+            1080
+          ],
+          "scientific_delta": null
+        },
+        "method": "B06",
+        "method_directory": "ER13_RUNTIME/helpers/c-successor-materializer-v1/methods/C-S2-v2",
+        "card_sha256": "0c32141a99f640d767301b000d6d75aa373f7b48bbf9119ba6e571450352916d",
+        "generic_critic_delta_sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+        "critic_delta_stage": "critic-truth",
+        "stage_maxima_seconds": [
+          1800,
+          360,
+          360,
+          1080
+        ],
+        "candidate_contexts": 4,
+        "other_supplemental_deltas": "EMPTY, fullordinaryduties retained"
+      },
+      "scientific_label": "EXPLORATORY_NEW_INTEGRATION; no qualified optimizerclaim"
+    }
+  },
+  "case_bodies_root_model_unread_before_lock": true,
+  "scientific_intent_lineage": [
+    "c-selection-intent-v1.json",
+    "c-selection-intent-v2.json",
+    "c-selection-intent-v3.json"
+  ],
+  "active_intent_sha256": "e2dc3b2cfd253b66b43a196c79d197d29520007081d8fbcae729650ff370ec22",
+  "evaluation_contract": {
+    "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+    "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+  },
+  "common_private_preparation": "After selection, machine-only private input preparation from frozen ciphertext for the existing reference materializer; rootmodel/candidates do not receive plan before inheriteddiscoverygate; rubric/key not candidateinput. This is preparation, not a false before-discovery comparison-point receipt."
+}

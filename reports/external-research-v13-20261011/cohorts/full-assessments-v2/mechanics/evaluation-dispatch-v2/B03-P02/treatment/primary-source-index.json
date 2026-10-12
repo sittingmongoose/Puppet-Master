@@ -1,0 +1,450 @@
+{
+  "schema": "er13.independent-primary-source-index.v1",
+  "arm_id": "B03-P02-treatment",
+  "sources": [
+    {
+      "candidate_source_id": "S01",
+      "title": "SQLite Online Backup API",
+      "exact_url": "https://www.sqlite.org/backup.html",
+      "declared_version": "Rolling official documentation; page last updated 2025-11-13T07:12:58Z",
+      "independent_observed_version_or_context": "SQLite living backup documentation, page update 2025-11-13",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Overview and section 3.1, checked against C interface",
+      "independent_finding": "The final correctly incorporates other-connection restart/noncompletion and a configured cap; its final map uses completion consistency rather than an unconditional initial-commencement promise.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:50.698938+00:00",
+        "resolved_url": "https://www.sqlite.org/backup.html",
+        "response_sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S02",
+      "title": "SQLite Isolation",
+      "exact_url": "https://www.sqlite.org/isolation.html",
+      "declared_version": "Rolling official documentation; no release version identified",
+      "independent_observed_version_or_context": "SQLite living isolation documentation",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Separate-connection isolation; WAL read transactions; rollback mode; shared-cache/read_uncommitted exception",
+      "independent_finding": "WAL read transactions retain their read view; independent page transactions do not. Shared cache plus read_uncommitted is a specific exception. Database isolation does not freeze external blobs.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:50.698363+00:00",
+        "resolved_url": "https://www.sqlite.org/isolation.html",
+        "response_sha256": "23395653f04984e4310b287ed548202d874e06ecd2cba17f32b2714e5b7ebef7",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S03",
+      "title": "SQLite Write-Ahead Logging",
+      "exact_url": "https://www.sqlite.org/wal.html",
+      "declared_version": "Rolling official documentation; no release version identified",
+      "independent_observed_version_or_context": "SQLite living WAL documentation",
+      "coverage": "COMPLETE",
+      "inspected_scope": "End mark, checkpointing, same-host constraint",
+      "independent_finding": "A read view retains its end mark; long readers can inhibit checkpoint progress and grow the WAL. Same-host shared-memory requirements are correctly kept conditional.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.390366+00:00",
+        "resolved_url": "https://www.sqlite.org/wal.html",
+        "response_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S04",
+      "title": "rusqlite Backup API documentation",
+      "exact_url": "https://docs.rs/rusqlite/0.40.2/rusqlite/backup/struct.Backup.html",
+      "declared_version": "rusqlite 0.40.2",
+      "independent_observed_version_or_context": "rusqlite 0.40.2",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Backup feature, step and completion APIs",
+      "independent_finding": "The backup feature is optional; negative page count copies all remaining pages. Busy/Locked and long-lock tradeoffs require explicit policy.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.405065+00:00",
+        "resolved_url": "https://docs.rs/rusqlite/0.40.2/rusqlite/backup/struct.Backup.html",
+        "response_sha256": "97ccd29ecfc86ae5cac1e09d0789f0beecd8112fb7d78f32f44a214108f3ea61",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S05",
+      "title": "rusqlite backup implementation",
+      "exact_url": "https://github.com/rusqlite/rusqlite/blob/e88f112bef7899234a497baed5cc3c3d553deeb8/src/backup.rs",
+      "declared_version": "Commit e88f112bef7899234a497baed5cc3c3d553deeb8; rusqlite 0.40.2 release",
+      "independent_observed_version_or_context": "Commit e88f112bef7899234a497baed5cc3c3d553deeb8; Cargo.toml confirms 0.40.2",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Backup step/run_to_completion/drop plus caller/test module",
+      "independent_finding": "The helper loops on More/Busy/Locked with sleeps and has no built-in duration cap. The final proposes a cap instead of claiming the helper guarantees liveness. Tests and calls were read only.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:52.402560+00:00",
+        "resolved_url": "https://raw.githubusercontent.com/rusqlite/rusqlite/e88f112bef7899234a497baed5cc3c3d553deeb8/src/backup.rs",
+        "response_sha256": "595d5bc77e3a720791760a3ea61a8cd246a0ad134a317e03030a259ef069eb20",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S06",
+      "title": "PKWARE .ZIP File Format Specification",
+      "exact_url": "https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT",
+      "declared_version": "Version 6.3.10, FINAL, revised 2022-11-01",
+      "independent_observed_version_or_context": "APPNOTE 6.3.10 FINAL, revised 2022-11-01",
+      "coverage": "COMPLETE",
+      "inspected_scope": "4.3.5, 4.3.9, 4.3.12-16, 4.5.3",
+      "independent_finding": "Descriptors permit streaming; ZIP64 expands size/count/offset representations; each member has central-directory metadata. Structural close does not prove application completeness, authenticity, or an OS reader matrix.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:50.700667+00:00",
+        "resolved_url": "https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT",
+        "response_sha256": "0b993022a7d320a0bf704e6980bea36fafd17a6066ab994db0a0c16278a50cd6",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S07",
+      "title": "zip-rs/zip2 writer source",
+      "exact_url": "https://github.com/zip-rs/zip2/blob/v8.6.0/src/write.rs",
+      "declared_version": "zip crate tag v8.6.0 (stable); source version pinned by tag",
+      "independent_observed_version_or_context": "zip v8.6.0; Cargo.toml confirms version and MIT license",
+      "coverage": "COMPLETE",
+      "inspected_scope": "new_stream, StreamWriter Write/Seek adapter, abort_file, finish/finalize, central directory",
+      "independent_finding": "Write-only inner sinks are supported by the adapter; rewind operations fail, and finish writes archive structures. The files IndexMap grows with member count. No constant total memory or universal reader compatibility is established.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:52.332038+00:00",
+        "resolved_url": "https://raw.githubusercontent.com/zip-rs/zip2/v8.6.0/src/write.rs",
+        "response_sha256": "b21269cccc3b39994cbefc0dc5fb1978c68ec5d684e68f33d48a5e325bec686d",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S08",
+      "title": "zip-rs issue #715: ZIP64 output regression",
+      "exact_url": "https://github.com/zip-rs/zip2/issues/715",
+      "declared_version": "Issue opened 2026-03-09; reports regression in zip 8.2.0",
+      "independent_observed_version_or_context": "Issue 715, March 9, 2026; reproducer pins 8.2.0",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Reproducer and report context",
+      "independent_finding": "Deflated plus large_file(true) malformed output is supported. The reproducer uses seekable File/ZipWriter::new, not new_stream. Calling it streaming is loose terminology, not evidence for a non-seekable test. See T03.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.460735+00:00",
+        "resolved_url": "https://github.com/zip-rs/zip2/issues/715",
+        "response_sha256": "679a1328ae13d1e9aa6b7385d882fd9b1eae22acbf8f66038a88834192228656",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S09",
+      "title": "zip-rs PR #717: ZIP64 fix",
+      "exact_url": "https://github.com/zip-rs/zip2/pull/717",
+      "declared_version": "Merged 2026-03-16; fix for issue #715",
+      "independent_observed_version_or_context": "PR 717, merged March 16, 2026",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Actual patch plus issue linkage and changed tests",
+      "independent_finding": "The patch propagates large_file into ZIP64 central-header fields, adjusts size sentinels and adds the small regression fixture. This was checked in the patch, not inferred from an automated PR summary.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.525421+00:00",
+        "resolved_url": "https://github.com/zip-rs/zip2/pull/717",
+        "response_sha256": "78011738f5da0d01510cc46843ced1aa5f70a7dab844ce695da9bc4202e7d2f2",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S10",
+      "title": "zip-rs v8.3.0 release",
+      "exact_url": "https://github.com/zip-rs/zip2/releases/tag/v8.3.0",
+      "declared_version": "zip crate release v8.3.0",
+      "independent_observed_version_or_context": "zip v8.3.0 release",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Release notes bug-fix entry",
+      "independent_finding": "The release lists malformed ZIP64 output fix 715/717. This establishes release lineage, not product execution or immunity to later defects.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.773739+00:00",
+        "resolved_url": "https://github.com/zip-rs/zip2/releases/tag/v8.3.0",
+        "response_sha256": "5906c40e55519d96f7dcd10322ddbcae637dd26b81fc06360a4a5449e1fdeaa2",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S11",
+      "title": "BagIt File Packaging Format",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "declared_version": "RFC 8493 (Informational), 2018-10",
+      "independent_observed_version_or_context": "RFC 8493, Informational, October 2018",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Payload/tag manifests, complete/valid definitions, fetch.txt and security considerations",
+      "independent_finding": "Completeness and successful checksum verification are distinct. Payload fixity does not authenticate an editable package. Remote fetch capability needs restriction in an offline profile. No BagIt conformance is claimed.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.775311+00:00",
+        "resolved_url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+        "response_sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S12",
+      "title": "Frictionless Data Package specification",
+      "exact_url": "https://specs.frictionlessdata.io/data-package/",
+      "declared_version": "Data Package v1; specification page says created 2007 and updated 2017-05-02",
+      "independent_observed_version_or_context": "Data Package version 1; updated May 2, 2017 on the exact page",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Descriptor/resources and local, remote, inline data",
+      "independent_finding": "The descriptor pattern and URL possibility are supported; offline bundling is an application restriction. This is metadata inspiration, not an archive container or tracker schema.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.857164+00:00",
+        "resolved_url": "https://specs.frictionlessdata.io/data-package/",
+        "response_sha256": "e1a03e381b5aae9246268fe4ffd08a421898f9b795326ed57cee6d6102492e4d",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S13",
+      "title": "The JSON Data Interchange Format",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc8259.html",
+      "declared_version": "RFC 8259, STD 90, 2017-12",
+      "independent_observed_version_or_context": "RFC 8259, 2017",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Sections 4, 6, 8.1, 9",
+      "independent_finding": "UTF-8 exchange, SHOULD-unique keys, integer interoperability limits and parser limits are supported. Rejecting duplicate keys is an application policy. NDJSON is not specified here.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.980576+00:00",
+        "resolved_url": "https://www.rfc-editor.org/rfc/rfc8259.html",
+        "response_sha256": "5302d6ccb6cf221817bdd1f8cd7221661d4519372e0ac0b4cf641e11e8037de7",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S14",
+      "title": "Date and Time on the Internet: Timestamps",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc3339.html",
+      "declared_version": "RFC 3339, 2002-07; updated by RFC 9557",
+      "independent_observed_version_or_context": "RFC 3339, 2002, updated by RFC 9557, 2024",
+      "coverage": "COMPLETE",
+      "inspected_scope": "3339 4.3/5.6 and 9557 2.1-2.3/3.4",
+      "independent_finding": "RFC 3339 instants, RFC 9557 updates and separate date-only/local semantics were checked. The final avoids the obsolete -00:00-versus-Z assertion.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:52.050950+00:00",
+        "resolved_url": "https://www.rfc-editor.org/rfc/rfc3339.html",
+        "response_sha256": "c53b2d121b9f284e2cb28e2989c907470ae26a9db441bcd8a3236c6004a60bee",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S15",
+      "title": "Date and Time on the Internet: Timestamps with Additional Information (IXDTF)",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc9557.html",
+      "declared_version": "RFC 9557, 2024-04; updates RFC 3339",
+      "independent_observed_version_or_context": "RFC 9557, April 2024, updates RFC 3339",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Section 2 update; 3.3 critical suffixes; 3.4 inconsistencies; syntax",
+      "independent_finding": "Offset and named zone convey different facts; rules can change and critical inconsistency requires handling. The final does not contradict the updated Z meaning and preserves distinct local/date-only types.",
+      "retrieval": null
+    },
+    {
+      "candidate_source_id": "S16",
+      "title": "Universally Unique IDentifiers (UUIDs)",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc9562.html",
+      "declared_version": "RFC 9562, 2024-05",
+      "independent_observed_version_or_context": "RFC 9562, May 2024",
+      "coverage": "COMPLETE",
+      "inspected_scope": "128-bit identifiers and 6.5 name-based generation",
+      "independent_finding": "Same canonical name/namespace yields the same ID; changed names generally change it. Avoiding mutable display-name identity is a sound design inference, not a literal named prohibition in the RFC.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:52.138218+00:00",
+        "resolved_url": "https://www.rfc-editor.org/rfc/rfc9562.html",
+        "response_sha256": "e2d10634480471b56fe6e032091c5986eeb95b456475c714fbfe520efa97b656",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S17",
+      "title": "JSON Schema Core",
+      "exact_url": "https://json-schema.org/draft/2020-12/json-schema-core",
+      "declared_version": "JSON Schema Draft 2020-12",
+      "independent_observed_version_or_context": "JSON Schema draft 2020-12 Core",
+      "coverage": "COMPLETE",
+      "inspected_scope": "8.1.1 dialect, references and 9.3.1 bundling",
+      "independent_finding": "Dialect identification and bundled resources are supported. URI identifiers need not cause remote fetching if locally resolved; an offline policy must define that resolution.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:52.165897+00:00",
+        "resolved_url": "https://json-schema.org/draft/2020-12/json-schema-core",
+        "response_sha256": "2e1ce75bbf1462f809e3613ebe602fbdc48785d748dbf2b1758f9fe7b27bac29",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S18",
+      "title": "JSON Schema Validation",
+      "exact_url": "https://json-schema.org/draft/2020-12/json-schema-validation",
+      "declared_version": "JSON Schema Draft 2020-12",
+      "independent_observed_version_or_context": "JSON Schema draft 2020-12 Validation",
+      "coverage": "COMPLETE",
+      "inspected_scope": "7.2 format annotation/assertion and defined formats",
+      "independent_finding": "Default annotation is distinct from optional assertion; optional assertion under annotation is disabled by default. Explicit temporal and cross-record semantic checks are correctly proposed.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:52.168791+00:00",
+        "resolved_url": "https://json-schema.org/draft/2020-12/json-schema-validation",
+        "response_sha256": "164aeeb9590a74d8b47492a58d808a1ae38a523ded290aa4d19fc76db926f4bf",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S19",
+      "title": "JSON Schema Draft 2020-12 release notes",
+      "exact_url": "https://json-schema.org/draft/2020-12/release-notes",
+      "declared_version": "Draft 2020-12 release notes",
+      "independent_observed_version_or_context": "JSON Schema 2020-12 release notes",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Format vocabulary split",
+      "independent_finding": "Corroborates the normative distinction; it is not a substitute for Core/Validation.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:52.236170+00:00",
+        "resolved_url": "https://json-schema.org/draft/2020-12/release-notes",
+        "response_sha256": "7736da9dc75d288ec46b43b86c3f0f2a4b89d078eaf35ee86becb273717b7f10",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S20",
+      "title": "GitLab project file export documentation",
+      "exact_url": "https://docs.gitlab.com/user/project/settings/import_export/",
+      "declared_version": "Rolling GitLab documentation; page references version-specific 19.2 import/export YAML; accessed during GitLab 19.5 doc state",
+      "independent_observed_version_or_context": "Living GitLab export documentation",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Backup warning; user mapping; NDJSON; compatibility; version-dependent item inventory",
+      "independent_finding": "An explicit warning against using project exports as backups is present. Item scope and user mapping depend on GitLab version and roles. It is precedent, not the unknown tracker contract.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:50.824575+00:00",
+        "resolved_url": "https://docs.gitlab.com/user/project/settings/import_export/",
+        "response_sha256": "78e204f2af57efb0008c92e74a193e49d0ae408af5e6b8788c1bcba274c1274e",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S21",
+      "title": "GHSA-94vh-gphv-8pm8 / CVE-2025-29787",
+      "exact_url": "https://github.com/advisories/GHSA-94vh-gphv-8pm8",
+      "declared_version": "Published 2025-03; Rust zip crate affected >=1.3.0,<2.3.0; patched in 2.3.0 per advisory",
+      "independent_observed_version_or_context": "GHSA-94vh-gphv-8pm8 / CVE-2025-29787, March 2025",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Maintainer advisory, curated affected range, extraction methods and release boundary",
+      "independent_finding": "The curated range >=1.3.0,<2.3.0 and patch 2.3.0 are supported. The maintainer describes extraction through earlier symlinks; this does not indict ZIP writing or establish safety of every later version.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:52.238127+00:00",
+        "resolved_url": "https://github.com/advisories/GHSA-94vh-gphv-8pm8",
+        "response_sha256": "7ca87da7f9d6cd205b39212b723e50f419e63b6c04ac2acf6b9542f4cb453c17",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S22",
+      "title": "zip-rs ZIP64 large-file test source",
+      "exact_url": "https://github.com/zip-rs/zip2/blob/v8.6.0/tests/zip64_large.rs",
+      "declared_version": "zip crate tag v8.6.0 (stable); test source pinned by tag",
+      "independent_observed_version_or_context": "zip v8.6.0",
+      "coverage": "COMPLETE",
+      "inspected_scope": "zip64_large tests: entry count, force_large_file, large-offset helper and cfg conditions",
+      "independent_finding": "The count is u16::MAX+10 using seekable Cursor; the tiny fixture references 715. The large helper tests aggregate offsets with large local files. These tests do not prove a >4 GiB individual member, non-seekable output, OS readers or executed success.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:52.399023+00:00",
+        "resolved_url": "https://raw.githubusercontent.com/zip-rs/zip2/v8.6.0/tests/zip64_large.rs",
+        "response_sha256": "55c70ebb9363f8578f929c9e26d2877749cd47f75c653fe368210d049dbeed11",
+        "error": null
+      }
+    }
+  ],
+  "adjacent_primary_context": [
+    {
+      "id": "independent:time-update",
+      "coverage": "COMPLETE",
+      "url": "https://www.rfc-editor.org/rfc/rfc9557.html",
+      "response_sha256": "d7cc2c033d8e4f4e3f7149003023567374997129c553dca1c68cf914bc2cd827",
+      "access_utc": "2026-10-12T02:14:52.063665+00:00"
+    },
+    {
+      "id": "independent:backup-api",
+      "coverage": "COMPLETE",
+      "url": "https://www.sqlite.org/c3ref/backup_finish.html",
+      "response_sha256": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+      "access_utc": "2026-10-12T02:14:52.274868+00:00"
+    },
+    {
+      "id": "independent:zip-fix-diff",
+      "coverage": "COMPLETE",
+      "url": "https://patch-diff.githubusercontent.com/raw/zip-rs/zip2/pull/717.diff",
+      "response_sha256": "5531ca591cd34114b2075dd34ea4f6ff942031cb1bf7d8fa26cb59ef965a13f3",
+      "access_utc": "2026-10-12T02:18:11.649982+00:00"
+    },
+    {
+      "id": "independent:rusqlite-version",
+      "coverage": "COMPLETE",
+      "url": "https://raw.githubusercontent.com/rusqlite/rusqlite/e88f112bef7899234a497baed5cc3c3d553deeb8/Cargo.toml",
+      "response_sha256": "686a033825d89e9a81d87f9492975ddcee757a740edca6b6e157214a5eef6701",
+      "access_utc": "2026-10-12T02:18:11.851915+00:00"
+    },
+    {
+      "id": "independent:zip-version",
+      "coverage": "COMPLETE",
+      "url": "https://raw.githubusercontent.com/zip-rs/zip2/v8.6.0/Cargo.toml",
+      "response_sha256": "a0d0c22e1a88331b6aade076372ba83d0ec2c5bc96375b8754ccab85e8daaccf",
+      "access_utc": "2026-10-12T02:18:11.985053+00:00"
+    },
+    {
+      "id": "independent:maintainer-advisory",
+      "coverage": "COMPLETE",
+      "url": "https://github.com/zip-rs/zip2/security/advisories/GHSA-94vh-gphv-8pm8",
+      "transport": "independent web retrieval",
+      "response_sha256": null,
+      "scope": "Maintainer description and extraction APIs; corroborated by curated advisory version range"
+    }
+  ],
+  "bounded_evidence": [
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc9557.html#section-2.2",
+      "version": "RFC 9557 (2024)",
+      "locator": "2.2, read with 2.1-2.3 and 3.4",
+      "short_exact_quote": "interpreting the offset Z to mean the same as -00:00",
+      "observation": "The update is normative for RFC 3339 section 4.3; +00:00 retains its earlier semantics."
+    },
+    {
+      "url": "https://www.sqlite.org/backup.html#file_and_database_connection_locking",
+      "locator": "3.1",
+      "short_exact_quote": "frequently enough it may never run to completion",
+      "observation": "The surrounding text distinguishes another connection from same-handle update propagation; the C API confirms automatic restart."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/project/settings/import_export/",
+      "locator": "Export overview backup warning",
+      "short_exact_quote": "You should not use project export files to back up your data.",
+      "observation": "This is a GitLab-specific warning; it makes treatment critic F2 false and the final rejection supported."
+    }
+  ],
+  "source_evidence_limits": [
+    "Full responses were used transiently for independent research, not republished as a corpus. Response hashes identify the retrieved bytes, not an attestation that later living-page retrievals will match.",
+    "No downloaded code was executed. Exact candidate research histories and original per-page bytes are not available.",
+    "No third-party text/code license notices were stripped into a republished code corpus; only short attributed quotations and evaluator paraphrases are retained. RFC legal notices remain at the linked governing documents."
+  ],
+  "external_user_facts": {
+    "coverage": "UNASSESSED",
+    "scope": "Actual tracker backend, application callers/tests, object-store guarantees, reader matrix, policy decisions and physical deployment",
+    "reason": "Not supplied in the exact frozen inputs; conditionality and truthful unresolved status were assessed. These are not a requirement to deploy or invent facts."
+  }
+}

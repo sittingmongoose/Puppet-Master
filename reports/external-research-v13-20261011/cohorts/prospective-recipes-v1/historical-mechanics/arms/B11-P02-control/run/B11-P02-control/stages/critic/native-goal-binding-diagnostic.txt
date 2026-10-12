@@ -1,0 +1,8 @@
+functions.exec failure during receipt save/binding command:
+STOP: save/binding failed; preserve original receipt/diagnostic; no second Goal:
+  File "<string>", line 1
+    import os,sys; from pathlib import Path; d=Path(sys.argv[1]); assert d.is_absolute() and not any(x.is_symlink() for x in (d,*d.parents)); data=sys.argv[2]; paths=[d/'native-goal-create.json',d/'native-goal-active.json']; fds=[]; try: [fds.append(os.open(str(p),os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o444)) for p in paths]; [os.fdopen(fd,'w',encoding='utf-8').write(data) for fd in fds]; except BaseException: [os.close(fd) for fd in fds if fd>=0]; raise
+                                                                                                                                                                                                                                         ^^^
+SyntaxError: invalid syntax
+
+No case/source input was read. The native create_goal call had already returned in the failed exec cell; its response was not persisted. Per the stage capture instruction, no retry or replacement Goal was made.

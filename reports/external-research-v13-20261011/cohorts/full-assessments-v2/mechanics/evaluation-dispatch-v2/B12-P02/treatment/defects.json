@@ -1,0 +1,145 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "B12-P02-treatment",
+  "defects": [
+    {
+      "id": "T-01",
+      "severity": "material",
+      "classification": "integration-contract omission",
+      "axes": [
+        1
+      ],
+      "obligations": [
+        "O03",
+        "O04"
+      ],
+      "locator": {
+        "document": "reviser/final.md",
+        "lines": [
+          13,
+          24,
+          48,
+          54
+        ]
+      },
+      "finding": "JoinedIdentical/deduplication is combined with never-reused per-request IDs and request-scoped cancellation, but shared execution versus subscriber identity, interest retention and cancellation ownership are not defined.",
+      "consequence": "Two callers can need the same render key, including a visible caller and background import. Cancellation of one caller has no stated outcome for the other or for the shared running handler. Distinct request IDs alone do not specify fan-out or when underlying work becomes obsolete. This is a consequential planning ambiguity, not proof that an implemented scheduler executed incorrectly.",
+      "independent_primary_ids": [
+        "E06"
+      ],
+      "counterevidence_considered": "Target-scoped supersession correctly preserves different-page/profile work and tokens are one-way. The missing case is identical shared work, not those different-key requests.",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "T-02",
+      "severity": "material",
+      "classification": "required available-mechanism research omitted",
+      "axes": [
+        3
+      ],
+      "obligations": [
+        "O05",
+        "O10",
+        "O11"
+      ],
+      "locator": {
+        "document": "reviser/final.md",
+        "lines": [
+          15,
+          58,
+          83,
+          87
+        ]
+      },
+      "finding": "The final adds a sound fail-closed HandlerPolicy but defers the actual per-user sandbox/process-tree alternatives to OS owner decisions. S01-S17 research Jobs/direct-child lifecycle, not governing isolation mechanisms for untrusted parsers.",
+      "consequence": "Unknown supported OS, signing model and installed facilities are legitimate owner facts. Available primary research into concrete unprivileged isolation alternatives is nevertheless part of this brief. Job Objects are explicitly not a sandbox; a policy saying to select one later does not complete mechanism comparison.",
+      "independent_primary_ids": [
+        "E07",
+        "E08",
+        "E17"
+      ],
+      "counterevidence_considered": "SecurityUnavailable and no unrestricted fallback are useful safeguards. No deployment or successful future sandbox experiment is demanded by this finding. The omission concerns research and platform conditions, not unprovided user facts.",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "T-03",
+      "severity": "material",
+      "classification": "unsupported current implementation/applicability claim",
+      "axes": [
+        2,
+        3
+      ],
+      "obligations": [
+        "O11"
+      ],
+      "locator": {
+        "document": "reviser/final.md",
+        "line": 81
+      },
+      "predecessor_locator": {
+        "document": "investigator/source-map.json",
+        "source_id": "S08"
+      },
+      "finding": "GNOME is presented as an implemented dispatch/fallback precedent to borrow, relying on an unversioned manual that says failed or missing external thumbnailers fall back to gdk-pixbuf. The governing 43.2 and current factory code does not implement that fallback.",
+      "consequence": "After preview-icon lookup, an external-helper branch returns its result (including failure); absent helper produces NOT_FOUND. Decoding helper-produced PNG bytes is not a fallback renderer of the original document. A documented historical pattern has been promoted to current implemented behavior without version/context qualification.",
+      "independent_primary_ids": [
+        "E17"
+      ],
+      "counterevidence_considered": "The official manual and source documentation comment really do contain the fallback wording, and normal/large 128/256 size and blocking lookup claims are supported. The defect is the conflict with executable governing logic, not fabricated citation or those other claims.",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "T-04",
+      "severity": "material",
+      "classification": "consequential upstream fix-history omission",
+      "axes": [
+        2,
+        3
+      ],
+      "obligations": [
+        "O11"
+      ],
+      "locator": {
+        "document": "reviser/final.md",
+        "line": 82
+      },
+      "predecessor_locator": {
+        "document": "investigator/source-map.json",
+        "source_ids": [
+          "S11",
+          "S12"
+        ]
+      },
+      "finding": "The final carries the December 2025 fork fix and leaves upstream status unverified, although the cited original issue links upstream PR 20503, merged on 2026-02-06 as 58ac273f1f36b3d01b21f2a07b19f5884eca1b2a. The guarded onFailure is also present in tagged 6.3.289.",
+      "consequence": "Required available issue/fix/version context was not completed. This changes the implementation-history account from a fork-only uncertain repair to a confirmed upstream correction. It does not invalidate the broader idempotent terminal-settlement lesson and does not establish the first fixed release or universal cancellation safety.",
+      "independent_primary_ids": [
+        "E15"
+      ],
+      "counterevidence_considered": "S12 is indeed a fork commit and does not itself prove upstream merge; the final does not falsely assert it was never merged. The material failure is omitted readily linked governing history, rather than a fabricated claim about its own research.",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "T-L01",
+      "severity": "nonmaterial",
+      "classification": "source-context limit",
+      "axes": [
+        2
+      ],
+      "obligations": [
+        "O11"
+      ],
+      "locator": {
+        "document": "reviser/final.md",
+        "line": 82
+      },
+      "finding": "The 21867 account is properly reporter-scoped and marked closed/not reproduced, but omits the synthetic/foreign node-canvas condition and maintainer supported-example counterevidence.",
+      "consequence": "Applicability is less precise than the governing discussion. Because the final does not present this as an accepted universal/current supported defect, this is not an additional material failure.",
+      "independent_primary_ids": [
+        "E14",
+        "E16"
+      ],
+      "confidence": "HIGH"
+    }
+  ],
+  "source_pass_rescued_by_delivery_or_hashes": false
+}

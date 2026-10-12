@@ -1,0 +1,627 @@
+{
+  "schema": "er13.prospective_capture_offline_checks.v1",
+  "checks": [
+    {
+      "name": "actual Python compiles install.py",
+      "passed": true
+    },
+    {
+      "name": "actual Python compiles tests.py",
+      "passed": true
+    },
+    {
+      "name": "actual Python compiles materialize.py",
+      "passed": true
+    },
+    {
+      "name": "sealed v21 readObjective compiles and has no try",
+      "passed": true
+    },
+    {
+      "name": "sealed v21 save compiles and has no try",
+      "passed": true
+    },
+    {
+      "name": "original diagnostic manifest exact pin",
+      "passed": true
+    },
+    {
+      "name": "sole diagnostic exact size/hash",
+      "passed": true
+    },
+    {
+      "name": "original SyntaxError reproduced and command differs",
+      "passed": true
+    },
+    {
+      "name": "symmetry-R0 actual existing materializer API",
+      "passed": true
+    },
+    {
+      "name": "symmetry-R0 actual generated bootstrap stops before real dispatch ",
+      "passed": true
+    },
+    {
+      "name": "R0 unused repeat is idempotent",
+      "passed": true
+    },
+    {
+      "name": "R0 original clocks route scope budget exact",
+      "passed": true
+    },
+    {
+      "name": "R0 config T0/topology/route unchanged",
+      "passed": true
+    },
+    {
+      "name": "R0 original substantive task/assignment prefix exact",
+      "passed": true
+    },
+    {
+      "name": "R0 request target/client key preserved",
+      "passed": true
+    },
+    {
+      "name": "R0 actual generated Python compiles readObjective",
+      "passed": true
+    },
+    {
+      "name": "R0 actual generated Python compiles save",
+      "passed": true
+    },
+    {
+      "name": "R0 actual generated JavaScript compiles",
+      "passed": true
+    },
+    {
+      "name": "R0 program immutable mode and exact pin",
+      "passed": true
+    },
+    {
+      "name": "R0 dispatched stage refusal",
+      "passed": true
+    },
+    {
+      "name": "R0 changed overlay refused before import",
+      "passed": true
+    },
+    {
+      "name": "R0 one root bootstrap injection marker",
+      "passed": true
+    },
+    {
+      "name": "R0 actual shimmed bootstrap idempotent before mock dispatch ",
+      "passed": true
+    },
+    {
+      "name": "R0 critic actual preparation API + shim ",
+      "passed": true
+    },
+    {
+      "name": "R0 critic same route and original clipped cap",
+      "passed": true
+    },
+    {
+      "name": "R0 critic actual generated Python + JavaScript compiles",
+      "passed": true
+    },
+    {
+      "name": "R0 reviser actual preparation API + shim ",
+      "passed": true
+    },
+    {
+      "name": "R0 reviser same route and original clipped cap",
+      "passed": true
+    },
+    {
+      "name": "R0 reviser actual generated Python + JavaScript compiles",
+      "passed": true
+    },
+    {
+      "name": "symmetry-A8 actual existing materializer API",
+      "passed": true
+    },
+    {
+      "name": "symmetry-A8 actual generated bootstrap stops before real dispatch ",
+      "passed": true
+    },
+    {
+      "name": "A8 unused repeat is idempotent",
+      "passed": true
+    },
+    {
+      "name": "A8 original clocks route scope budget exact",
+      "passed": true
+    },
+    {
+      "name": "A8 config T0/topology/route unchanged",
+      "passed": true
+    },
+    {
+      "name": "A8 original substantive task/assignment prefix exact",
+      "passed": true
+    },
+    {
+      "name": "A8 request target/client key preserved",
+      "passed": true
+    },
+    {
+      "name": "A8 actual generated Python compiles readObjective",
+      "passed": true
+    },
+    {
+      "name": "A8 actual generated Python compiles save",
+      "passed": true
+    },
+    {
+      "name": "A8 actual generated JavaScript compiles",
+      "passed": true
+    },
+    {
+      "name": "A8 program immutable mode and exact pin",
+      "passed": true
+    },
+    {
+      "name": "A8 dispatched stage refusal",
+      "passed": true
+    },
+    {
+      "name": "A8 changed overlay refused before import",
+      "passed": true
+    },
+    {
+      "name": "A8 one root bootstrap injection marker",
+      "passed": true
+    },
+    {
+      "name": "A8 actual shimmed bootstrap idempotent before mock dispatch ",
+      "passed": true
+    },
+    {
+      "name": "A8 critic actual preparation API + shim ",
+      "passed": true
+    },
+    {
+      "name": "A8 critic same route and original clipped cap",
+      "passed": true
+    },
+    {
+      "name": "A8 critic actual generated Python + JavaScript compiles",
+      "passed": true
+    },
+    {
+      "name": "A8 reviser actual preparation API + shim ",
+      "passed": true
+    },
+    {
+      "name": "A8 reviser same route and original clipped cap",
+      "passed": true
+    },
+    {
+      "name": "A8 reviser actual generated Python + JavaScript compiles",
+      "passed": true
+    },
+    {
+      "name": "symmetry-B02 actual existing materializer API",
+      "passed": true
+    },
+    {
+      "name": "symmetry-B02 actual generated bootstrap stops before real dispatch ",
+      "passed": true
+    },
+    {
+      "name": "B02 unused repeat is idempotent",
+      "passed": true
+    },
+    {
+      "name": "B02 original clocks route scope budget exact",
+      "passed": true
+    },
+    {
+      "name": "B02 config T0/topology/route unchanged",
+      "passed": true
+    },
+    {
+      "name": "B02 original substantive task/assignment prefix exact",
+      "passed": true
+    },
+    {
+      "name": "B02 request target/client key preserved",
+      "passed": true
+    },
+    {
+      "name": "B02 actual generated Python compiles readObjective",
+      "passed": true
+    },
+    {
+      "name": "B02 actual generated Python compiles save",
+      "passed": true
+    },
+    {
+      "name": "B02 actual generated JavaScript compiles",
+      "passed": true
+    },
+    {
+      "name": "B02 program immutable mode and exact pin",
+      "passed": true
+    },
+    {
+      "name": "B02 dispatched stage refusal",
+      "passed": true
+    },
+    {
+      "name": "B02 changed overlay refused before import",
+      "passed": true
+    },
+    {
+      "name": "B02 one root bootstrap injection marker",
+      "passed": true
+    },
+    {
+      "name": "B02 actual shimmed bootstrap idempotent before mock dispatch ",
+      "passed": true
+    },
+    {
+      "name": "B02 critic actual preparation API + shim ",
+      "passed": true
+    },
+    {
+      "name": "B02 critic same route and original clipped cap",
+      "passed": true
+    },
+    {
+      "name": "B02 critic actual generated Python + JavaScript compiles",
+      "passed": true
+    },
+    {
+      "name": "symmetry-B06 actual existing materializer API",
+      "passed": true
+    },
+    {
+      "name": "symmetry-B06 actual generated bootstrap stops before real dispatch ",
+      "passed": true
+    },
+    {
+      "name": "B06 unused repeat is idempotent",
+      "passed": true
+    },
+    {
+      "name": "B06 original clocks route scope budget exact",
+      "passed": true
+    },
+    {
+      "name": "B06 config T0/topology/route unchanged",
+      "passed": true
+    },
+    {
+      "name": "B06 original substantive task/assignment prefix exact",
+      "passed": true
+    },
+    {
+      "name": "B06 request target/client key preserved",
+      "passed": true
+    },
+    {
+      "name": "B06 actual generated Python compiles readObjective",
+      "passed": true
+    },
+    {
+      "name": "B06 actual generated Python compiles save",
+      "passed": true
+    },
+    {
+      "name": "B06 actual generated JavaScript compiles",
+      "passed": true
+    },
+    {
+      "name": "B06 program immutable mode and exact pin",
+      "passed": true
+    },
+    {
+      "name": "B06 dispatched stage refusal",
+      "passed": true
+    },
+    {
+      "name": "B06 changed overlay refused before import",
+      "passed": true
+    },
+    {
+      "name": "B06 one root bootstrap injection marker",
+      "passed": true
+    },
+    {
+      "name": "B06 actual shimmed bootstrap idempotent before mock dispatch ",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-breadth actual preparation API + shim ",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-breadth same route and original clipped cap",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-breadth actual generated Python + JavaScript compiles",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-truth actual preparation API + shim ",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-truth same route and original clipped cap",
+      "passed": true
+    },
+    {
+      "name": "B06 critic-truth actual generated Python + JavaScript compiles",
+      "passed": true
+    },
+    {
+      "name": "B06 reviser actual preparation API + shim ",
+      "passed": true
+    },
+    {
+      "name": "B06 reviser same route and original clipped cap",
+      "passed": true
+    },
+    {
+      "name": "B06 reviser actual generated Python + JavaScript compiles",
+      "passed": true
+    },
+    {
+      "name": "native-success actual existing materializer API",
+      "passed": true
+    },
+    {
+      "name": "native-success actual generated bootstrap stops before real dispatch ",
+      "passed": true
+    },
+    {
+      "name": "success real shell/Python mock harness returns",
+      "passed": true
+    },
+    {
+      "name": "success exact native counter no retry/get/update",
+      "passed": true
+    },
+    {
+      "name": "success expected guard success/stop",
+      "passed": true
+    },
+    {
+      "name": "success full nested native JSON bytes preserved twice + raw output",
+      "passed": true
+    },
+    {
+      "name": "native-wronghash actual existing materializer API",
+      "passed": true
+    },
+    {
+      "name": "native-wronghash actual generated bootstrap stops before real dispatch ",
+      "passed": true
+    },
+    {
+      "name": "wronghash real shell/Python mock harness returns",
+      "passed": true
+    },
+    {
+      "name": "wronghash exact native counter no retry/get/update",
+      "passed": true
+    },
+    {
+      "name": "wronghash expected guard success/stop",
+      "passed": true
+    },
+    {
+      "name": "native-existing actual existing materializer API",
+      "passed": true
+    },
+    {
+      "name": "native-existing actual generated bootstrap stops before real dispatch ",
+      "passed": true
+    },
+    {
+      "name": "existing real shell/Python mock harness returns",
+      "passed": true
+    },
+    {
+      "name": "existing exact native counter no retry/get/update",
+      "passed": true
+    },
+    {
+      "name": "existing expected guard success/stop",
+      "passed": true
+    },
+    {
+      "name": "existing receipt unchanged",
+      "passed": true
+    },
+    {
+      "name": "native-savefail actual existing materializer API",
+      "passed": true
+    },
+    {
+      "name": "native-savefail actual generated bootstrap stops before real dispatch ",
+      "passed": true
+    },
+    {
+      "name": "savefail real shell/Python mock harness returns",
+      "passed": true
+    },
+    {
+      "name": "savefail exact native counter no retry/get/update",
+      "passed": true
+    },
+    {
+      "name": "savefail expected guard success/stop",
+      "passed": true
+    },
+    {
+      "name": "failed save keeps raw response/attempt and no receipt",
+      "passed": true
+    },
+    {
+      "name": "native-partialsave actual existing materializer API",
+      "passed": true
+    },
+    {
+      "name": "native-partialsave actual generated bootstrap stops before real dispatch ",
+      "passed": true
+    },
+    {
+      "name": "partialsave real shell/Python mock harness returns",
+      "passed": true
+    },
+    {
+      "name": "partialsave exact native counter no retry/get/update",
+      "passed": true
+    },
+    {
+      "name": "partialsave expected guard success/stop",
+      "passed": true
+    },
+    {
+      "name": "partial save preserves first receipt/raced second + stops",
+      "passed": true
+    },
+    {
+      "name": "native-unknown actual existing materializer API",
+      "passed": true
+    },
+    {
+      "name": "native-unknown actual generated bootstrap stops before real dispatch ",
+      "passed": true
+    },
+    {
+      "name": "unknown real shell/Python mock harness returns",
+      "passed": true
+    },
+    {
+      "name": "unknown exact native counter no retry/get/update",
+      "passed": true
+    },
+    {
+      "name": "unknown expected guard success/stop",
+      "passed": true
+    },
+    {
+      "name": "unknown creation unknown never fabricates receipt",
+      "passed": true
+    },
+    {
+      "name": "native-unsupported actual existing materializer API",
+      "passed": true
+    },
+    {
+      "name": "native-unsupported actual generated bootstrap stops before real dispatch ",
+      "passed": true
+    },
+    {
+      "name": "unsupported real shell/Python mock harness returns",
+      "passed": true
+    },
+    {
+      "name": "unsupported exact native counter no retry/get/update",
+      "passed": true
+    },
+    {
+      "name": "unsupported expected guard success/stop",
+      "passed": true
+    },
+    {
+      "name": "unsupported creation unknown never fabricates receipt",
+      "passed": true
+    },
+    {
+      "name": "native-wrongobjective actual existing materializer API",
+      "passed": true
+    },
+    {
+      "name": "native-wrongobjective actual generated bootstrap stops before real dispatch ",
+      "passed": true
+    },
+    {
+      "name": "wrongobjective real shell/Python mock harness returns",
+      "passed": true
+    },
+    {
+      "name": "wrongobjective exact native counter no retry/get/update",
+      "passed": true
+    },
+    {
+      "name": "wrongobjective expected guard success/stop",
+      "passed": true
+    },
+    {
+      "name": "wrongobjective full nested native JSON bytes preserved twice + raw output",
+      "passed": true
+    },
+    {
+      "name": "native-expired actual existing materializer API",
+      "passed": true
+    },
+    {
+      "name": "native-expired actual generated bootstrap stops before real dispatch ",
+      "passed": true
+    },
+    {
+      "name": "expired real shell/Python mock harness returns",
+      "passed": true
+    },
+    {
+      "name": "expired exact native counter no retry/get/update",
+      "passed": true
+    },
+    {
+      "name": "expired expected guard success/stop",
+      "passed": true
+    },
+    {
+      "name": "native-changedfreeze actual existing materializer API",
+      "passed": true
+    },
+    {
+      "name": "native-changedfreeze actual generated bootstrap stops before real dispatch ",
+      "passed": true
+    },
+    {
+      "name": "changedfreeze real shell/Python mock harness returns",
+      "passed": true
+    },
+    {
+      "name": "changedfreeze exact native counter no retry/get/update",
+      "passed": true
+    },
+    {
+      "name": "changedfreeze expected guard success/stop",
+      "passed": true
+    },
+    {
+      "name": "native-guardhash actual existing materializer API",
+      "passed": true
+    },
+    {
+      "name": "native-guardhash actual generated bootstrap stops before real dispatch ",
+      "passed": true
+    },
+    {
+      "name": "guardhash real shell/Python mock harness returns",
+      "passed": true
+    },
+    {
+      "name": "guardhash exact native counter no retry/get/update",
+      "passed": true
+    },
+    {
+      "name": "guardhash expected guard success/stop",
+      "passed": true
+    }
+  ],
+  "passed": 154,
+  "failed": 0,
+  "actual_native_calls": 0,
+  "actual_candidate_dispatches": 0,
+  "synthetic_inputs_only": true,
+  "scratch_removed": true
+}

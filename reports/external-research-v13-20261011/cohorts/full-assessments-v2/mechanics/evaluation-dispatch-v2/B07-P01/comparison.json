@@ -1,0 +1,82 @@
+{
+  "schema": "er13.post-original-freeze-comparison.v1",
+  "block_id": "B07-P01",
+  "arm_count": 2,
+  "written_at_utc": "2026-10-12T02:05:29.584075+00:00",
+  "original_manifest": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/manifest.json",
+    "sha256": "436df7f2f85b9988ff69c0153e912334ff13b2e2008c7f2f8da926698bc12223",
+    "frozen_at_utc": "2026-10-12T02:04:34.053145+00:00"
+  },
+  "original_source_judgments": {
+    "B07-P01-control": "FAIL",
+    "B07-P01-treatment": "PASS"
+  },
+  "original_grades_changed": false,
+  "assessment_coverage": "All six proposal-assessment axes COMPLETE for both; actual unprovided application/owner source families UNASSESSED. No early failure screen curtailed available source review.",
+  "quality_signal": "Treatment has a finite observed source PASS; control has required integration/preservation loss and false source correction. One pair cannot establish discovery recall, general method reliability or causally isolate the critic delta.",
+  "timing_observations": {
+    "control_t0_to_final_native_proxy_seconds": 3251.651,
+    "treatment_t0_to_final_native_proxy_seconds": 2293.721,
+    "treatment_minus_control_seconds": -957.93,
+    "all_assigned_proxy_duration_sum_seconds": 5545.372,
+    "interpretation": "Named native-terminal proxies only; not task-quiet delivery times or active provider effort. Different source grades prevent an equal-quality savings conclusion. Both frozen completed envelopes are before the unchanged 60-minute deadline."
+  },
+  "resources": {
+    "per_arm_native_cumulative_goal_counters": [
+      {
+        "arm_id": "B07-P01-control",
+        "stage_counts": [
+          {
+            "stage": "investigator",
+            "raw_numeric_native_counter": 212089
+          },
+          {
+            "stage": "critic",
+            "raw_numeric_native_counter": 97409
+          },
+          {
+            "stage": "reviser",
+            "raw_numeric_native_counter": 110246
+          }
+        ]
+      },
+      {
+        "arm_id": "B07-P01-treatment",
+        "stage_counts": [
+          {
+            "stage": "investigator",
+            "raw_numeric_native_counter": 211669
+          },
+          {
+            "stage": "critic",
+            "raw_numeric_native_counter": 166015
+          },
+          {
+            "stage": "reviser",
+            "raw_numeric_native_counter": 161303
+          }
+        ]
+      }
+    ],
+    "source_passing_finals": 1,
+    "assigned_finals": 2,
+    "assigned_stage_attempts": 6,
+    "billing": null,
+    "input_cached_output_reasoning_breakdown": null,
+    "candidate_consumption_per_passing_final": "UNKNOWN/NOT COMPUTABLE: attributable product consumption unavailable; numeric native counters are not a billing denominator.",
+    "complete_product_plus_preparation_support_root_total": "UNKNOWN",
+    "grader_classification": "independent_evaluation",
+    "grader_elapsed_start_to_this_postfreeze_write_seconds": 788.584,
+    "grader_elapsed_basis": "Observed start clock to this output write, excluding remaining terminal handback; no provider-activity or billing inference.",
+    "shared_primary_lookup_cost": "Independent evaluation only, never candidate product assistance or free candidate preparation.",
+    "unknown_is_zero": false
+  },
+  "provenance_and_method": "Captured native birth/objective/active/complete fields agree, but independent native-to-task linkage, sole-Goal/pre-input ordering and full actual context occupancy remain UNKNOWN. Source quality is independently assessed; hashes and raw receipts do not prove it.",
+  "scope_boundaries": [
+    "FULL notified pair only; no COMPONENT grade or discovery-effectiveness inference from shared package preparation.",
+    "Cold complete-pipeline success, cache/reuse denominator and native-recipe qualification are not proved by these receipts.",
+    "Imperfect blinding disclosed. No held-out cases, extra candidate/grader, repair, author feedback, recipe selection, Git/canon/main/C-D lock, or clock change. V1 idle untouched.",
+    "No promotion or campaign recipe recommendation; sole selection remains with root. Disputes require separate new adjudication preserving original brief/findings/responses/unresolved objections."
+  ]
+}

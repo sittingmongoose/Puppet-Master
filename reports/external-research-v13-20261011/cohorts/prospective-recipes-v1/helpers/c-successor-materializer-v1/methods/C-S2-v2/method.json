@@ -1,0 +1,28 @@
+{
+  "schema": "er13.prospective-method-fragment.v1",
+  "card_id": "B06",
+  "method_id": "B06",
+  "version": "C-S2-v2",
+  "scope": "FULL",
+  "topology": "investigator -> two complementary independent critics -> fresh reviser; explicit full coverage/disagreement/overlap retained",
+  "candidate_contexts": 4,
+  "stage_maxima_seconds": {
+    "investigator": 1800,
+    "critic-breadth": 360,
+    "critic-truth": 360,
+    "reviser": 1080
+  },
+  "summed_critic_maximum_seconds": 720,
+  "critic_delta_stage": "critic-truth",
+  "full_obligations_retained": true,
+  "role_deltas": {
+    "investigator": "empty; ordinary investigation unchanged",
+    "critic-breadth": "empty supplement; ordinary complementary breadth review unchanged",
+    "critic-truth": "exact generic B10 critic bytes",
+    "reviser": "unused empty supplemental delta; ordinary complete reviser unchanged"
+  },
+  "composition": "B06 four-context complementary review topology plus exact existing B10 primary-context challenge only in critic-truth",
+  "hypothesis": "Existing generic B10 governing primary context and released version exceptions may help challenge consequential unsupported negative/default/limit claims; untested hypothesis, not a successful repair claim.",
+  "authority": "root final prospective C composition fixed before admissions/inputs; no case or evaluator facts",
+  "state": "PROSPECTIVE_UNSTARTED_ONLY"
+}

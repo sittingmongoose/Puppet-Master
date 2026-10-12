@@ -1,0 +1,82 @@
+{
+  "schema": "er13.original-versus-separate-findings-map.v1",
+  "block_id": "B10-P02",
+  "originals_immutable": true,
+  "not_original_grade_counts": true,
+  "prior_grade_records": [
+    {
+      "arm_id": "B10-P02-control",
+      "original_assessment_sha256": "5d1514db38c4e85a93dae9e09762539cd6e2e3264bb5b26261575f4fe0faa94d",
+      "original_manifest_sha256": "2bc2dce24dd198d9dbb1568c0efe83466ade705d6b387a6d06097dfc6508ff45",
+      "original_source_judgment": "UNASSESSED",
+      "original_coverage": "PARTIAL",
+      "original_six_axes": "UNASSESSED",
+      "separate_source_judgment": "FAIL",
+      "separate_coverage": "COMPLETE",
+      "original_grade_or_metadata_changed": false
+    },
+    {
+      "arm_id": "B10-P02-treatment",
+      "original_assessment_sha256": "0709d645c5b4fea36342f10749e1654827bcce671f578fa6370634c95088dec9",
+      "original_manifest_sha256": "dfe7f202cf91e21cb6b461de8ef23b04f60d522cd5c4fc937cf46407a593f951",
+      "original_source_judgment": "FAIL",
+      "original_coverage": "PARTIAL",
+      "original_six_axes": "UNASSESSED",
+      "separate_source_judgment": "FAIL",
+      "separate_coverage": "COMPLETE",
+      "original_grade_or_metadata_changed": false
+    }
+  ],
+  "finding_map": [
+    {
+      "arm_id": "B10-P02-control",
+      "original_id": "C-D1",
+      "separate_id": "CC-CN01",
+      "disposition": "Retained nonmaterial; original unchanged"
+    },
+    {
+      "arm_id": "B10-P02-control",
+      "original_id": "C-D2",
+      "separate_id": "CC-CN02",
+      "disposition": "Retained nonmaterial; original unchanged"
+    },
+    {
+      "arm_id": "B10-P02-control",
+      "original_id": "C-D3",
+      "separate_id": "CC-CN03",
+      "disposition": "Retained nonmaterial; original unchanged"
+    },
+    {
+      "arm_id": "B10-P02-control",
+      "original_id": null,
+      "separate_id": "CC-C01",
+      "disposition": "New required-input research finding; original clipboard family UNASSESSED, no retrospective change"
+    },
+    {
+      "arm_id": "B10-P02-treatment",
+      "original_id": "T-D2",
+      "separate_id": "CC-TN02",
+      "disposition": "Retained nonmaterial; original unchanged"
+    },
+    {
+      "arm_id": "B10-P02-treatment",
+      "original_id": "T-D1",
+      "separate_id": "CC-T01",
+      "disposition": "Retained material; exact primary release/body independently agrees; original unchanged"
+    },
+    {
+      "arm_id": "B10-P02-treatment",
+      "original_id": null,
+      "separate_id": "CC-T02",
+      "disposition": "New required-input research finding; original clipboard family UNASSESSED, no retrospective change"
+    },
+    {
+      "arm_id": "B10-P02-treatment",
+      "original_id": null,
+      "separate_id": "CC-TN03",
+      "disposition": "New nonmaterial ecosystem-context observation; not a claim of tested product suitability"
+    }
+  ],
+  "disagreements_with_valid_prior_material_findings": [],
+  "critic_severity_note": "Treatment C2's added fidelity matrix is useful and retained. The prior evaluator's caveat is preserved: absence of a literal matrix alone does not establish a material original defect when separate QA was already proposed. No author correction or supported capability removal is requested."
+}

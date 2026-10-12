@@ -1,0 +1,582 @@
+{
+  "schema": "er13.original-block-assessment.v1",
+  "assignment_id": "B12-P02",
+  "scope": "FULL",
+  "original": true,
+  "arm_count": 2,
+  "arms": [
+    {
+      "schema": "er13.original-assessment.v1",
+      "arm_id": "B12-P02-control",
+      "assignment_id": "B12-P02",
+      "scope": "FULL",
+      "original": true,
+      "source_judgment": {
+        "grade": "FAIL",
+        "source_pass": false,
+        "decisive_material_defect_ids": [
+          "C-01"
+        ],
+        "finite_assessment": true,
+        "universal_correctness_claim": false
+      },
+      "coverage": {
+        "overall": "PARTIAL",
+        "axes": {
+          "1": "COMPLETE",
+          "2": "PARTIAL",
+          "3": "COMPLETE",
+          "4": "COMPLETE",
+          "5": "COMPLETE",
+          "6": "COMPLETE"
+        },
+        "record": "coverage.json",
+        "declared_limits": [
+          "Zotero worker architectures",
+          "Actual owner platforms, installed handlers, renderer implementation, runtime sandbox/performance execution"
+        ]
+      },
+      "defects": {
+        "material_ids": [
+          "C-01"
+        ],
+        "nonmaterial_ids": [],
+        "record": "defects.json"
+      },
+      "delivery": {
+        "status": "DELIVERED",
+        "final_missing": false,
+        "exact_frozen_final": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-control/run/B12-P02-control/control/terminal-handoffs/reviser/files/final.md",
+        "sha256": "6f1ddeea893085b2624d0bd2ab8281b3f0ddcd74e261a1cc979596693ea429c5",
+        "bytes": 30091,
+        "all_manifest_listed_scientific_documents_read": true,
+        "missing_required_outputs": [],
+        "last_complete_scientific_write_utc": "UNKNOWN",
+        "delivered_snapshot_frozen_at_utc": "2026-10-12T01:43:40.736712+00:00"
+      },
+      "time_eligibility": {
+        "maximum_elapsed_seconds": 3600,
+        "t0_utc": "2026-10-12T01:01:26.223Z",
+        "whole_deadline_utc": "2026-10-12T02:01:26.223Z",
+        "whole_delivery": "ELIGIBLE on supplied frozen snapshot timestamp, within unchanged 60-minute envelope",
+        "t0_to_frozen_delivery_observation_seconds": 2534.513712,
+        "t0_to_native_final_complete_proxy_seconds": 2502.777,
+        "stage_observations": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T01:01:27.104Z",
+            "request_at_utc": "2026-10-12T01:01:27.104Z",
+            "dispatch_capture_utc": "2026-10-12T01:01:28.358Z",
+            "native_birth_utc": "2026-10-12T01:01:43+00:00",
+            "native_complete_utc": "2026-10-12T01:20:01+00:00",
+            "native_open_interval_seconds": 1098,
+            "stage_deadline_utc": "2026-10-12T01:31:27.104Z",
+            "native_proxy_within_deadline": true,
+            "task_quiet_utc": "UNKNOWN",
+            "last_complete_science_write_utc": "UNKNOWN"
+          },
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T01:23:44.267Z",
+            "request_at_utc": "2026-10-12T01:23:44.267Z",
+            "dispatch_capture_utc": "2026-10-12T01:23:45.156Z",
+            "native_birth_utc": "2026-10-12T01:24:42+00:00",
+            "native_complete_utc": "2026-10-12T01:35:23+00:00",
+            "native_open_interval_seconds": 641,
+            "stage_deadline_utc": "2026-10-12T01:35:44.267Z",
+            "native_proxy_within_deadline": true,
+            "task_quiet_utc": "UNKNOWN",
+            "last_complete_science_write_utc": "UNKNOWN"
+          },
+          {
+            "stage": "reviser",
+            "prepared_at_utc": "2026-10-12T01:36:01.937Z",
+            "request_at_utc": "2026-10-12T01:36:01.937Z",
+            "dispatch_capture_utc": "2026-10-12T01:36:03.181Z",
+            "native_birth_utc": "2026-10-12T01:36:16+00:00",
+            "native_complete_utc": "2026-10-12T01:43:09+00:00",
+            "native_open_interval_seconds": 413,
+            "stage_deadline_utc": "2026-10-12T01:54:01.937Z",
+            "native_proxy_within_deadline": true,
+            "task_quiet_utc": "UNKNOWN",
+            "last_complete_science_write_utc": "UNKNOWN"
+          }
+        ],
+        "stage_native_terminal_proxies": "ALL_WITHIN_ORIGINAL_STAGE_DEADLINES",
+        "exact_stage_delivery_eligibility": "UNKNOWN: task quiet/write timestamps not exposed; native terminal is a distinct proxy",
+        "request_to_quiet_final_proxy": "UNKNOWN: raw actual-task terminal statuses have no quiet timestamps",
+        "prewrite": "NOT_APPLICABLE",
+        "clock_corrections": false
+      },
+      "method_compliance": {
+        "status": "PARTIAL_OBSERVABLE_COMPLIANCE",
+        "declared_topology": "three serial investigator/critic/reviser contexts",
+        "discovery_and_revealed_plan_hashes_match": true,
+        "all_plan_clauses_assessed": true,
+        "all_critic_dispositions_assessed": true,
+        "criticism_records": [
+          {
+            "critic_id": "C1",
+            "final_disposition": "ACCEPT_OR_RETAIN_UNCERTAINTY",
+            "independent_judgment": "JUSTIFIED",
+            "note": "Zotero timeout/serialization correction independently confirmed in pinned code."
+          },
+          {
+            "critic_id": "C2",
+            "final_disposition": "ACCEPT_OR_RETAIN_UNCERTAINTY",
+            "independent_judgment": "JUSTIFIED",
+            "note": "Per-subscriber cancellation ownership added and substantively specified."
+          },
+          {
+            "critic_id": "C3",
+            "final_disposition": "ACCEPT_OR_RETAIN_UNCERTAINTY",
+            "independent_judgment": "JUSTIFIED",
+            "note": "XPC connection cancel versus hard process termination qualified; Windows association/version exceptions retained."
+          },
+          {
+            "critic_id": "C4",
+            "final_disposition": "ACCEPT_OR_RETAIN_UNCERTAINTY",
+            "independent_judgment": "JUSTIFIED",
+            "note": "Landlock ABI/descriptor caveats supported; whole-network proof remains conditional, not promised by rights alone."
+          },
+          {
+            "critic_id": "C5",
+            "final_disposition": "ACCEPT_OR_RETAIN_UNCERTAINTY",
+            "independent_judgment": "JUSTIFIED",
+            "note": "Generic Linux service properly removed because FDO is a cache convention."
+          },
+          {
+            "critic_id": "C6",
+            "final_disposition": "ACCEPT_OR_RETAIN_UNCERTAINTY",
+            "independent_judgment": "JUSTIFIED",
+            "note": "FIFO/front-priority mixture acknowledged; policy replacements remain proposed."
+          },
+          {
+            "critic_id": "C7",
+            "final_disposition": "ACCEPT_OR_RETAIN_UNCERTAINTY",
+            "independent_judgment": "JUSTIFIED",
+            "note": "Retry/deadline/circuit classes clarified; numeric thresholds explicitly unvalidated."
+          },
+          {
+            "critic_id": "C8",
+            "final_disposition": "ACCEPT_OR_RETAIN_UNCERTAINTY",
+            "independent_judgment": "JUSTIFIED",
+            "note": "Unknown owner platforms/formats/revisions/budgets appropriately retained."
+          }
+        ],
+        "preservation_records": [
+          {
+            "topic": "Identity, profile/cache key and view generation",
+            "judgment": "RETAINED"
+          },
+          {
+            "topic": "Scheduling, service fairness, layered resources and bounds",
+            "judgment": "RETAINED_AS_PROPOSALS"
+          },
+          {
+            "topic": "Cooperative cancellation versus force-stop, retries, crashes and stall recovery",
+            "judgment": "RETAINED_WITH_PLATFORM_CONDITIONS"
+          },
+          {
+            "topic": "Cache/restart/import-owner distinction, progress and negative constraints",
+            "judgment": "RETAINED"
+          },
+          {
+            "topic": "Alternatives, source conditions, unknown owner facts and validation truth",
+            "judgment": "RETAINED_WITH_DECLARED_SOURCE_LIMITS"
+          },
+          {
+            "topic": "Mutable-input immutable snapshot safeguard from discovery line 31",
+            "judgment": "MATERIAL_LOSS_OR_WEAKENING",
+            "defect_id": "C-01"
+          }
+        ],
+        "late_critique_binding": null,
+        "process_limitations": [
+          "No full native transcripts or live tasks read; pre-input ordering, single activation count and source-access conduct beyond supplied captures are not independently established.",
+          "Frozen artifacts support compliance observations, not blanket process qualification."
+        ]
+      },
+      "native_identity_provenance": {
+        "status": "CAPTURE_CUSTODY_VERIFIED; INDEPENDENT_NATIVE_TO_TASK_LINKAGE_UNKNOWN",
+        "separate_captured_births": 3,
+        "stages": [
+          {
+            "stage": "investigator",
+            "objective_matches_frozen": true,
+            "same_birth_create_active_terminal": true,
+            "create_active_byte_equal": true,
+            "create_status": "active",
+            "terminal_status": "complete",
+            "manifest_native_lifecycle_qualified": false,
+            "actual_task_status": "completed",
+            "has_pending_child_runs": false,
+            "goal_usage_fields_present": true,
+            "capture_hashes": {
+              "native-goal-create.json": "4057923429f3f26baf35164205c75713063c48acff8fb1a4e6f15a930dcbcb0c",
+              "native-goal-active.json": "4057923429f3f26baf35164205c75713063c48acff8fb1a4e6f15a930dcbcb0c",
+              "native-goal-terminal.json": "c781d697a99861f13b91b009560308db5bed87d99c390899a07e30d0dd734f81"
+            }
+          },
+          {
+            "stage": "critic",
+            "objective_matches_frozen": true,
+            "same_birth_create_active_terminal": true,
+            "create_active_byte_equal": true,
+            "create_status": "active",
+            "terminal_status": "complete",
+            "manifest_native_lifecycle_qualified": false,
+            "actual_task_status": "completed",
+            "has_pending_child_runs": false,
+            "goal_usage_fields_present": true,
+            "capture_hashes": {
+              "native-goal-create.json": "58c8fced832a2650c03440bffcf903739d4fd1ba4c07fa8f8221b2151918b1e4",
+              "native-goal-active.json": "58c8fced832a2650c03440bffcf903739d4fd1ba4c07fa8f8221b2151918b1e4",
+              "native-goal-terminal.json": "1c1c5239e7c0ec5e35adb0d702368d4b7aed5b488176410c72d329ed6e6b4368"
+            }
+          },
+          {
+            "stage": "reviser",
+            "objective_matches_frozen": true,
+            "same_birth_create_active_terminal": true,
+            "create_active_byte_equal": true,
+            "create_status": "active",
+            "terminal_status": "complete",
+            "manifest_native_lifecycle_qualified": false,
+            "actual_task_status": "completed",
+            "has_pending_child_runs": false,
+            "goal_usage_fields_present": true,
+            "capture_hashes": {
+              "native-goal-create.json": "213b5b88aa8cfcb12af9ed9e8ec81f870134635808de7e88bdaef6322169274f",
+              "native-goal-active.json": "213b5b88aa8cfcb12af9ed9e8ec81f870134635808de7e88bdaef6322169274f",
+              "native-goal-terminal.json": "1c7b1cdf6ef313691e5465fb62d7276a663258480a268cabe274e55b5536c200"
+            }
+          }
+        ],
+        "capture_provenance_and_freshness": "UNKNOWN beyond exact frozen capture/objective custody. Native IDs/private routing not reproduced.",
+        "raw_receipts_prove_source_truth": false
+      },
+      "resource_billing_coverage": {
+        "cost_class": "candidate_product",
+        "assigned_arm_denominator": 1,
+        "stages_in_supplied_packet": 3,
+        "actual_task_terminal_receipts": 3,
+        "active_provider_activity": "UNKNOWN",
+        "actual_created_started_context_occupancy": "UNKNOWN",
+        "captured_goal_open_intervals_seconds": [
+          1098,
+          641,
+          413
+        ],
+        "native_goal_counters": "Present; values excluded by public privacy contract, attribution and provider accounting UNKNOWN. Not summed or treated as billing.",
+        "input_cached_output_reasoning_subsets": "UNKNOWN",
+        "subscription_consumption": "UNKNOWN",
+        "billing": "UNKNOWN",
+        "preparation_support_publication_cost": "UNKNOWN",
+        "independent_evaluation_cost": "Separate independent_evaluation; no candidate charge or free-assistance inference",
+        "unknown_is_zero": false
+      },
+      "independence": {
+        "imperfect_blinding": true,
+        "disclosure": "Control/treatment path names and the overlap/provisional instructions reveal technique. Independent primary lookup was reused across matched arms, but this original judgment is recorded before comparative analysis.",
+        "candidate_feedback_or_repairs": false,
+        "new_candidates_subagents_or_goals_launched_by_grader": false
+      },
+      "independent_evaluation": {
+        "cost_class": "independent_evaluation",
+        "observed_start_utc": "2026-10-12T02:14:43Z",
+        "original_write_utc": "2026-10-12T02:32:45.629253+00:00",
+        "provider_activity_tokens_billing": "UNKNOWN; separate from candidate product; no public token/account/transcript/machine-state data",
+        "research_execution": "Read-only primary-source/document review and hash checks; no renderer, benchmark, product build or upstream test execution"
+      }
+    },
+    {
+      "schema": "er13.original-assessment.v1",
+      "arm_id": "B12-P02-treatment",
+      "assignment_id": "B12-P02",
+      "scope": "FULL",
+      "original": true,
+      "source_judgment": {
+        "grade": "FAIL",
+        "source_pass": false,
+        "decisive_material_defect_ids": [
+          "T-01",
+          "T-02",
+          "T-03",
+          "T-04"
+        ],
+        "finite_assessment": true,
+        "universal_correctness_claim": false
+      },
+      "coverage": {
+        "overall": "PARTIAL",
+        "axes": {
+          "1": "COMPLETE",
+          "2": "PARTIAL",
+          "3": "COMPLETE",
+          "4": "COMPLETE",
+          "5": "COMPLETE",
+          "6": "COMPLETE"
+        },
+        "record": "coverage.json",
+        "declared_limits": [
+          "PDF.js cancellation fix history",
+          "Actual owner platforms, installed handlers, renderer implementation, runtime sandbox/performance execution"
+        ]
+      },
+      "defects": {
+        "material_ids": [
+          "T-01",
+          "T-02",
+          "T-03",
+          "T-04"
+        ],
+        "nonmaterial_ids": [
+          "T-L01"
+        ],
+        "record": "defects.json"
+      },
+      "delivery": {
+        "status": "DELIVERED",
+        "final_missing": false,
+        "exact_frozen_final": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/control/terminal-handoffs/reviser/files/final.md",
+        "sha256": "b0c23f10675fc666a9d41529945a339c0239606fb16cb4d38ad24b6955598a78",
+        "bytes": 24761,
+        "all_manifest_listed_scientific_documents_read": true,
+        "missing_required_outputs": [],
+        "last_complete_scientific_write_utc": "UNKNOWN",
+        "delivered_snapshot_frozen_at_utc": "2026-10-12T01:43:40.736712+00:00"
+      },
+      "time_eligibility": {
+        "maximum_elapsed_seconds": 3600,
+        "t0_utc": "2026-10-12T01:01:18.012Z",
+        "whole_deadline_utc": "2026-10-12T02:01:18.012Z",
+        "whole_delivery": "ELIGIBLE on supplied frozen snapshot timestamp, within unchanged 60-minute envelope",
+        "t0_to_frozen_delivery_observation_seconds": 2542.724712,
+        "t0_to_native_final_complete_proxy_seconds": 2217.988,
+        "stage_observations": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T01:01:18.983Z",
+            "request_at_utc": "2026-10-12T01:01:18.983Z",
+            "dispatch_capture_utc": "2026-10-12T01:01:20.081Z",
+            "native_birth_utc": "2026-10-12T01:01:35+00:00",
+            "native_complete_utc": "2026-10-12T01:08:52+00:00",
+            "native_open_interval_seconds": 437,
+            "stage_deadline_utc": "2026-10-12T01:31:18.983Z",
+            "native_proxy_within_deadline": true,
+            "task_quiet_utc": "UNKNOWN",
+            "last_complete_science_write_utc": "UNKNOWN"
+          },
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T01:23:46.693Z",
+            "request_at_utc": "2026-10-12T01:23:46.693Z",
+            "dispatch_capture_utc": "2026-10-12T01:23:48.112Z",
+            "native_birth_utc": "2026-10-12T01:24:01+00:00",
+            "native_complete_utc": "2026-10-12T01:32:34+00:00",
+            "native_open_interval_seconds": 513,
+            "stage_deadline_utc": "2026-10-12T01:35:46.693Z",
+            "native_proxy_within_deadline": true,
+            "task_quiet_utc": "UNKNOWN",
+            "last_complete_science_write_utc": "UNKNOWN"
+          },
+          {
+            "stage": "reviser",
+            "prepared_at_utc": "2026-10-12T01:23:49.379Z",
+            "request_at_utc": "2026-10-12T01:23:49.379Z",
+            "dispatch_capture_utc": "2026-10-12T01:23:50.760Z",
+            "native_birth_utc": "2026-10-12T01:24:02+00:00",
+            "native_complete_utc": "2026-10-12T01:38:16+00:00",
+            "native_open_interval_seconds": 854,
+            "stage_deadline_utc": "2026-10-12T01:41:49.379Z",
+            "native_proxy_within_deadline": true,
+            "task_quiet_utc": "UNKNOWN",
+            "last_complete_science_write_utc": "UNKNOWN"
+          }
+        ],
+        "stage_native_terminal_proxies": "ALL_WITHIN_ORIGINAL_STAGE_DEADLINES",
+        "exact_stage_delivery_eligibility": "UNKNOWN: task quiet/write timestamps not exposed; native terminal is a distinct proxy",
+        "request_to_quiet_final_proxy": "UNKNOWN: raw actual-task terminal statuses have no quiet timestamps",
+        "prewrite": {
+          "release_sha256": "59dc1161910eb670e2c0550ace900d2002a33852c646e77e38259c825c7b0838",
+          "published_at_utc": "2026-10-12T01:33:08.181330+00:00",
+          "bound_at_utc": "2026-10-12T01:33:08.907498+00:00",
+          "provisional_sha256": "8d4c8e5683b37ce731d6aaa4b196dfea1d0377904f78aa33c0fb0cbbfe9ae61b",
+          "package_hashes_match": true,
+          "prewriting_deadline_utc": "2026-10-12T01:29:49.379Z",
+          "actual_provisional_save_utc": "UNKNOWN",
+          "six_minute_prewrite_eligibility": "UNKNOWN from provided receipts; successful later binding alone is not a save-time receipt"
+        },
+        "clock_corrections": false
+      },
+      "method_compliance": {
+        "status": "PARTIAL_OBSERVABLE_COMPLIANCE",
+        "declared_topology": "investigator then concurrent independent critic and provisional reviser, one sealed late-critique binding",
+        "discovery_and_revealed_plan_hashes_match": true,
+        "all_plan_clauses_assessed": true,
+        "all_critic_dispositions_assessed": true,
+        "criticism_records": [
+          {
+            "critic_id": "C1",
+            "final_disposition": "ACCEPT_OR_RETAIN_UNCERTAINTY",
+            "independent_judgment": "JUSTIFIED",
+            "note": "SourceLease exact-byte binding, currentness and fail-closed rule are a valid conceptual correction; no future execution demanded."
+          },
+          {
+            "critic_id": "C2",
+            "final_disposition": "ACCEPT_OR_RETAIN_UNCERTAINTY",
+            "independent_judgment": "JUSTIFIED",
+            "note": "Unknown trust is no longer silently accepted; missing required isolation fails closed. Concrete mechanism research still has T-02."
+          },
+          {
+            "critic_id": "C3",
+            "final_disposition": "ACCEPT_OR_RETAIN_UNCERTAINTY",
+            "independent_judgment": "JUSTIFIED",
+            "note": "Rayon evidence added and app-policy inference properly qualified."
+          },
+          {
+            "critic_id": "C4",
+            "final_disposition": "ACCEPT_OR_RETAIN_UNCERTAINTY",
+            "independent_judgment": "JUSTIFIED",
+            "note": "Selected-version reporter evidence and maintainer support comments separated; no universal fix claim."
+          }
+        ],
+        "preservation_records": [
+          {
+            "topic": "Identity, profile/cache key and view generation",
+            "judgment": "RETAINED"
+          },
+          {
+            "topic": "Scheduling, service fairness, layered resources and bounds",
+            "judgment": "RETAINED_AS_PROPOSALS"
+          },
+          {
+            "topic": "Cooperative cancellation versus force-stop, retries, crashes and stall recovery",
+            "judgment": "RETAINED_WITH_PLATFORM_CONDITIONS"
+          },
+          {
+            "topic": "Cache/restart/import-owner distinction, progress and negative constraints",
+            "judgment": "RETAINED"
+          },
+          {
+            "topic": "Alternatives, source conditions, unknown owner facts and validation truth",
+            "judgment": "RETAINED_WITH_DECLARED_SOURCE_LIMITS"
+          },
+          {
+            "topic": "All provisional obligations plus every critique amendment",
+            "judgment": "RETAINED_OR_EXPLICITLY_CORRECTED; no supported draft-to-final loss found. Existing omissions/unsupported history remain distinct defects."
+          }
+        ],
+        "late_critique_binding": {
+          "release_sha256": "59dc1161910eb670e2c0550ace900d2002a33852c646e77e38259c825c7b0838",
+          "published_at_utc": "2026-10-12T01:33:08.181330+00:00",
+          "bound_at_utc": "2026-10-12T01:33:08.907498+00:00",
+          "provisional_sha256": "8d4c8e5683b37ce731d6aaa4b196dfea1d0377904f78aa33c0fb0cbbfe9ae61b",
+          "package_hashes_match": true,
+          "prewriting_deadline_utc": "2026-10-12T01:29:49.379Z",
+          "actual_provisional_save_utc": "UNKNOWN",
+          "six_minute_prewrite_eligibility": "UNKNOWN from provided receipts; successful later binding alone is not a save-time receipt"
+        },
+        "process_limitations": [
+          "No full native transcripts or live tasks read; pre-input ordering, single activation count and source-access conduct beyond supplied captures are not independently established.",
+          "Frozen artifacts support compliance observations, not blanket process qualification."
+        ]
+      },
+      "native_identity_provenance": {
+        "status": "CAPTURE_CUSTODY_VERIFIED; INDEPENDENT_NATIVE_TO_TASK_LINKAGE_UNKNOWN",
+        "separate_captured_births": 3,
+        "stages": [
+          {
+            "stage": "investigator",
+            "objective_matches_frozen": true,
+            "same_birth_create_active_terminal": true,
+            "create_active_byte_equal": true,
+            "create_status": "active",
+            "terminal_status": "complete",
+            "manifest_native_lifecycle_qualified": false,
+            "actual_task_status": "completed",
+            "has_pending_child_runs": false,
+            "goal_usage_fields_present": true,
+            "capture_hashes": {
+              "native-goal-create.json": "f09bb444ea39593ff4b67a60d1843b0d063f42a3024188b9068511a32c314825",
+              "native-goal-active.json": "f09bb444ea39593ff4b67a60d1843b0d063f42a3024188b9068511a32c314825",
+              "native-goal-terminal.json": "df6f7c3ecc2e9438bd978080d1616cbbbe1cf67842a44efd38f09ea328a5a678"
+            }
+          },
+          {
+            "stage": "critic",
+            "objective_matches_frozen": true,
+            "same_birth_create_active_terminal": true,
+            "create_active_byte_equal": true,
+            "create_status": "active",
+            "terminal_status": "complete",
+            "manifest_native_lifecycle_qualified": false,
+            "actual_task_status": "completed",
+            "has_pending_child_runs": false,
+            "goal_usage_fields_present": true,
+            "capture_hashes": {
+              "native-goal-create.json": "9a2e1c0b5a28e487965065e1abab43ea762ea7c02bbed5e048e2dc67ebc3ee51",
+              "native-goal-active.json": "9a2e1c0b5a28e487965065e1abab43ea762ea7c02bbed5e048e2dc67ebc3ee51",
+              "native-goal-terminal.json": "bdc23f1caace6dea594706924f736b38e6bc737b43400e5d0d72f8aa70b84884"
+            }
+          },
+          {
+            "stage": "reviser",
+            "objective_matches_frozen": true,
+            "same_birth_create_active_terminal": true,
+            "create_active_byte_equal": true,
+            "create_status": "active",
+            "terminal_status": "complete",
+            "manifest_native_lifecycle_qualified": false,
+            "actual_task_status": "completed",
+            "has_pending_child_runs": false,
+            "goal_usage_fields_present": true,
+            "capture_hashes": {
+              "native-goal-create.json": "e9bd387e82ebd20f6eac644fa16e05cd244a31a0dbea694595a3c2006d41022a",
+              "native-goal-active.json": "e9bd387e82ebd20f6eac644fa16e05cd244a31a0dbea694595a3c2006d41022a",
+              "native-goal-terminal.json": "56962dbda5a04c8e20ed3ae21ec224dfa90f6b8ff288d9af801505701a71c7d6"
+            }
+          }
+        ],
+        "capture_provenance_and_freshness": "UNKNOWN beyond exact frozen capture/objective custody. Native IDs/private routing not reproduced.",
+        "raw_receipts_prove_source_truth": false
+      },
+      "resource_billing_coverage": {
+        "cost_class": "candidate_product",
+        "assigned_arm_denominator": 1,
+        "stages_in_supplied_packet": 3,
+        "actual_task_terminal_receipts": 3,
+        "active_provider_activity": "UNKNOWN",
+        "actual_created_started_context_occupancy": "UNKNOWN",
+        "captured_goal_open_intervals_seconds": [
+          437,
+          513,
+          854
+        ],
+        "native_goal_counters": "Present; values excluded by public privacy contract, attribution and provider accounting UNKNOWN. Not summed or treated as billing.",
+        "input_cached_output_reasoning_subsets": "UNKNOWN",
+        "subscription_consumption": "UNKNOWN",
+        "billing": "UNKNOWN",
+        "preparation_support_publication_cost": "UNKNOWN",
+        "independent_evaluation_cost": "Separate independent_evaluation; no candidate charge or free-assistance inference",
+        "unknown_is_zero": false
+      },
+      "independence": {
+        "imperfect_blinding": true,
+        "disclosure": "Control/treatment path names and the overlap/provisional instructions reveal technique. Independent primary lookup was reused across matched arms, but this original judgment is recorded before comparative analysis.",
+        "candidate_feedback_or_repairs": false,
+        "new_candidates_subagents_or_goals_launched_by_grader": false
+      },
+      "independent_evaluation": {
+        "cost_class": "independent_evaluation",
+        "observed_start_utc": "2026-10-12T02:14:43Z",
+        "original_write_utc": "2026-10-12T02:32:45.629253+00:00",
+        "provider_activity_tokens_billing": "UNKNOWN; separate from candidate product; no public token/account/transcript/machine-state data",
+        "research_execution": "Read-only primary-source/document review and hash checks; no renderer, benchmark, product build or upstream test execution"
+      }
+    }
+  ],
+  "independent_evaluation_cost_class": "independent_evaluation",
+  "comparative_analysis_performed": false
+}

@@ -1,0 +1,68 @@
+{
+  "arm_id": "B11-P01-treatment",
+  "defects": [
+    {
+      "id": "T-D01",
+      "dimension": "delivery",
+      "classification": "required JSON format invalid",
+      "material": true,
+      "source_material": false,
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-treatment/run/B11-P01-treatment/control/terminal-handoffs/reviser/files/source-map.json",
+      "finding": "Strict JSON decoding fails with Extra data at character 34629, line 438 column 2. Two literal bytes 5c6e follow the JSON object.",
+      "evidence_ids": [
+        "W-T-JSON"
+      ],
+      "impact": "The required source map is delivered as invalid JSON. Its full record content was inspected with a non-mutating prefix decode; this does not cure the original delivery failure or make the final missing."
+    },
+    {
+      "id": "T-D02",
+      "dimension": "method_compliance",
+      "classification": "minor chronology metadata inconsistency",
+      "material": false,
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-treatment/run/B11-P01-treatment/control/terminal-handoffs/investigator/files/source-map.json :: brief_only_research/plan_released_at_freeze; ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-treatment/run/B11-P01-treatment/control/terminal-handoffs/critic/files/critique.md :: Discovery, alternatives, and source quality",
+      "finding": "The investigator map has brief-only/unreleased flags alongside dated post-plan S15-S20 additions. The critic describes the pivot as post-plan, although the hash-bound discovery already contains its table.",
+      "evidence_ids": [
+        "W-T-REVEAL"
+      ],
+      "impact": "The written chronology is inconsistent. Reveal/discovery hashes match; precise research sequencing and five-minute pivot timing remain unproved."
+    },
+    {
+      "id": "T-D03",
+      "dimension": "source_assessment",
+      "classification": "nonmaterial prose/context limit",
+      "material": false,
+      "axes": [
+        2,
+        5
+      ],
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-treatment/run/B11-P01-treatment/control/terminal-handoffs/reviser/files/final.md :: macOS adapter and Alternatives; inherited critic map V02",
+      "finding": "The final body compresses documentIdentifier semantics without spelling out safe-save continuity; V02 retains it in the carried map.",
+      "evidence_ids": [
+        "E18"
+      ],
+      "impact": "Logical document continuity and immutable filesystem-object identity differ. Scoped hints, path-following semantics and the absence of equal-ID auto-rebinding prevent a material identity guarantee error under this assessment."
+    },
+    {
+      "id": "T-D04",
+      "dimension": "source_assessment",
+      "classification": "nonmaterial implementation-policy limit",
+      "material": false,
+      "axes": [
+        1,
+        2,
+        6
+      ],
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-treatment/run/B11-P01-treatment/control/terminal-handoffs/reviser/files/final.md :: Reference record and locator; Portable paths; platform validation",
+      "finding": "Symlink/alias/mount containment semantics are less specified than the other locator rules.",
+      "evidence_ids": [
+        "E33",
+        "E34",
+        "E35",
+        "E36",
+        "E37"
+      ],
+      "impact": "The portability statement is conditional on project and target moving together and the validation matrix includes symlinks. No universal containment algorithm is claimed; detailed indirection policy remains unvalidated implementation work."
+    }
+  ],
+  "original_grade_unchanged_by_prospective_repairs": true
+}

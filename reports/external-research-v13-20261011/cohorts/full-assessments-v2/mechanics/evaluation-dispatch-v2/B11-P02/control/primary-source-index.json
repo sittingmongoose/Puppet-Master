@@ -1,0 +1,441 @@
+{
+  "arm_id": "B11-P02-control",
+  "reviewer_lookup": "Independent governing primary lookup; matched-arm lookup may be shared, candidate agreement is not authority.",
+  "source_records": [
+    {
+      "id": "E01",
+      "url": "https://loro.dev/docs/tutorial/list",
+      "title": "Loro list and movable list",
+      "version_context": "Living JS/WASM tutorial; versioned Rust cross-check E04",
+      "locator": "List and MovableList, concurrent examples, overhead statement",
+      "independent_observation": "Delete/reinsert does not implement unique concurrent moves; a native movable element has a deterministic resulting placement. Encoding/memory overhead is documented for insertion/deletion workloads.",
+      "governing_condition_and_applicability": "Deterministic convergence is not intent approval; the example ties logical time using peer identity. Tutorial overhead is not a target-app benchmark.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S01"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E02",
+      "url": "https://loro.dev/docs/tutorial/cursor",
+      "title": "Loro cursor",
+      "version_context": "Living JS/WASM documentation",
+      "locator": "Motivation, Updating Cursors, UTF-16 note",
+      "independent_observation": "Stable cursor references track sequence positions; deleted target recovery may replay history. JS offsets are UTF-16.",
+      "governing_condition_and_applicability": "Optional text-span mechanism; cue identity remains an application ID. No tested Rust editor-offset mapping is claimed.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S02"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E03",
+      "url": "https://loro.dev/docs/tutorial/sync",
+      "title": "Loro sync and container identity",
+      "version_context": "Living JS/WASM documentation; Rust import cross-check E04",
+      "locator": "Real-time Collaboration; import success/pending explanation",
+      "independent_observation": "Same delivered operation set converges despite duplicates/order. Ordinary child containers independently created under one Map key can hide one branch. Pending import ranges indicate unseen prerequisites.",
+      "governing_condition_and_applicability": "Eventual delivery is required; app must request dependencies and use appropriate mergeable logical child identities. Update import does not provide networking or durable acknowledgement.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S03"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E04",
+      "url": "https://docs.rs/loro/1.16.2/src/loro/lib.rs.html",
+      "title": "Loro Rust API, implementation and adjacent native tests",
+      "version_context": "loro/loro-internal 1.16.2; wrapper package VCS af130d97d8b110add13283fc5bfc81d97a9a609f; archive digests in evidence",
+      "locator": "LoroDoc description/commit/import_batch/checkout/cmp_frontiers; LoroMovableList::mov -> native handler; native basic_handler_ops/basic_sync",
+      "independent_observation": "Native Rust API supports move, import, causal frontier comparison and historical checkout. Commit groups history/events and is not a durable ACID flush. Checkout detaches state. Selected native tests exercise move and snapshot/update import.",
+      "governing_condition_and_applicability": "Storage, relay, business conflict recording and approval are app responsibilities. Reattach before ordinary editing if checkout was used. Code/tests were inspected but not run.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S04",
+          "S15"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": [
+        "https://docs.rs/loro/1.16.2/loro/struct.LoroDoc.html",
+        "https://docs.rs/loro-internal/1.16.2/src/loro_internal/handler.rs.html",
+        "https://docs.rs/loro-internal/1.16.2/src/loro_internal/state/movable_list_state.rs.html"
+      ]
+    },
+    {
+      "id": "E05",
+      "url": "https://loro.dev/docs/concepts/peerid_management",
+      "title": "Loro peer identity",
+      "version_context": "Living documentation; native API cross-check",
+      "locator": "Automatic assignment; manual reuse warning",
+      "independent_observation": "New document instances default to random writer identity; operation identity combines peer and counter. Concurrent reuse risks collisions.",
+      "governing_condition_and_applicability": "Intentional reuse requires restoring matching local history before remote updates and preventing concurrent emitters. Final states library-safe reuse/single-writer condition and tests copied profiles.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S05"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E06",
+      "url": "https://loro.dev/docs/concepts/shallow_snapshots",
+      "title": "Loro shallow history boundary",
+      "version_context": "Living documentation",
+      "locator": "Synchronization Limitations; Archive and Trim; Best Practices",
+      "independent_observation": "A trimmed document cannot synchronize a peer whose version predates its retained boundary. Full history archiving and coordinated trimming are documented.",
+      "governing_condition_and_applicability": "Long-offline retention is consequential. Control preserves full snapshots and postpones shallow snapshots until an owner-approved safe boundary.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S04",
+          "S06"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E07",
+      "url": "https://github.com/loro-dev/loro/releases",
+      "title": "Loro release history",
+      "version_context": "loro-crdt@1.16.4, September 30 2026, 45708d0; separate Rust package",
+      "locator": "1.16.4 patch notes; 1.16.2 older-snapshot notes",
+      "independent_observation": "JS/WASM notes describe failure-atomic diff/revert/import, unknown-container and revived-container fixes. Release package/version is explicitly distinct from the Rust API package.",
+      "governing_condition_and_applicability": "A release note is history and does not establish the chosen Rust dependency or rehearsal adapter behavior. Control preserves this applicability limit.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S06"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E08",
+      "url": "https://github.com/loro-dev/loro/issues/957",
+      "title": "Loro import incident and fix",
+      "version_context": "April 23 2026 report: loro-crdt 1.11.1, Node/macOS/WebRTC third-party adapter; PR958 merged April25",
+      "locator": "Issue environment/lock trace; PR summary and testing",
+      "independent_observation": "Reported lock re-entry involved DocState/OpLog during import. PR958 substitutes a cached operation count and describes regression coverage across rollback/import paths.",
+      "governing_condition_and_applicability": "This concrete implementation lesson does not prove a current Rust-native defect or that every adapter fails. Fix tests were reported/read, not independently run.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S07",
+          "S07-PR958"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": [
+        "https://github.com/loro-dev/loro/pull/958"
+      ]
+    },
+    {
+      "id": "E09",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "title": "Automerge property conflicts",
+      "version_context": "Living JS guide, Rust 0.12.0 ReadDoc cross-check E12",
+      "locator": "Concurrent writes; getConflicts; later assignment; counter/actor tie-break",
+      "independent_observation": "Concurrent same-property values remain inspectable; ordinary reads expose a deterministic operation-ID winner. A later assignment closes the observed property conflicts.",
+      "governing_condition_and_applicability": "Not wall-clock arbitration or human approval. An app audit/resolution layer must preserve context and late concurrent candidates.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S08"
+        ],
+        "B11-P02-treatment": [
+          "S06",
+          "C07",
+          "R06"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E10",
+      "url": "https://automerge.org/docs/reference/documents/lists/",
+      "title": "Automerge fine-grained modeling",
+      "version_context": "Living JS guide",
+      "locator": "Entity-map/ID-list example and whole-object replacement caveat",
+      "independent_observation": "Fine-grained updates preserve independent work better than replacing the containing entity map/list object.",
+      "governing_condition_and_applicability": "Modeling guidance does not guarantee an application move algorithm, duplicate placement policy, or approval UI.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S09"
+        ],
+        "B11-P02-treatment": [
+          "S08",
+          "C04"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E11",
+      "url": "https://docs.rs/automerge/0.12.0/automerge/sync/index.html",
+      "title": "Automerge native synchronization",
+      "version_context": "Rust 0.12.0; generated unversioned alternative link checked against pinned source",
+      "locator": "Module protocol requirement and send/receive/generate loop; E13 callers",
+      "independent_observation": "The native protocol maintains per-peer State and requires reliable ordered message exchange; a generated frame can change State before it is sent.",
+      "governing_condition_and_applicability": "Idempotent document changes do not make arbitrary stateful-frame loss or regeneration safe. Session recovery is app responsibility.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S10"
+        ],
+        "B11-P02-treatment": [
+          "S03"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": [
+        "https://automerge.org/automerge/automerge/sync/index.html"
+      ]
+    },
+    {
+      "id": "E23",
+      "url": "https://docs.yjs.dev/getting-started/allowing-offline-editing",
+      "title": "Yjs offline persistence",
+      "version_context": "Living docs; browser y-indexeddb example",
+      "locator": "Offline Support and native-provider paragraph",
+      "independent_observation": "IndexedDB persists local document updates and can combine with network providers; docs also identify environment-specific native database providers.",
+      "governing_condition_and_applicability": "Browser persistence is not itself a native Rust storage adapter, and offline app assets are separate. Control preserves this limitation.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S11"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E24",
+      "url": "https://docs.yjs.dev/api/relative-positions",
+      "title": "Yjs relative position semantics",
+      "version_context": "Living JS documentation",
+      "locator": "RelativePosition motivation/API and null condition",
+      "independent_observation": "Relative positions encode stable sequence anchors and resolve to current offsets; missing/deleted types can return null.",
+      "governing_condition_and_applicability": "Optional range anchors within a document, not durable cue identity. Control explicitly keeps removed targets visible.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S12"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E25",
+      "url": "https://share.github.io/sharedb/",
+      "title": "ShareDB OT/server model and reconnect example",
+      "version_context": "Living Node/JS docs; OT semantics delegated to type plugins",
+      "locator": "Introduction/features; Getting Started client socket config",
+      "independent_observation": "Node coordinates/commits edits, provides historical versions and reconnection sync. The example disables closed-socket buffering because it is undefined and ShareDB already handles dropped messages.",
+      "governing_condition_and_applicability": "This socket setting is not a durable storage contract. Control does not falsely reject all offline OT; it treats durable outbox/approval as app work.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S13",
+          "S14"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": [
+        "https://share.github.io/sharedb/getting-started"
+      ]
+    }
+  ],
+  "public_package_receipts": [
+    {
+      "url": "https://static.crates.io/crates/loro/loro-1.16.2.crate",
+      "sha256": "8e86dea63b66576db244cbc3a40bdb17517263c93f318e2fbe08aca3be1192cb",
+      "version": "1.16.2",
+      "vcs_metadata": {
+        "git": {
+          "sha1": "af130d97d8b110add13283fc5bfc81d97a9a609f"
+        },
+        "path_in_vcs": "crates/loro"
+      }
+    },
+    {
+      "url": "https://static.crates.io/crates/loro-internal/loro-internal-1.16.2.crate",
+      "sha256": "8d5806b65ee68c3ae7891959dd968898860dab74fbf6498b312de9b548dce5ec",
+      "version": "1.16.2",
+      "vcs_metadata": {
+        "git": {
+          "sha1": "af130d97d8b110add13283fc5bfc81d97a9a609f"
+        },
+        "path_in_vcs": "crates/loro-internal"
+      }
+    }
+  ],
+  "input_scientific_document_receipts": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P02-control-eval-inputs/control-inputs/brief.md",
+      "bytes": 2284,
+      "sha256": "6ecee5e70ec43f86f7759ccab36f73c30015ec37b8668077b7687725c26d3990",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P02-control-eval-inputs/control-inputs/plan.md",
+      "bytes": 1770,
+      "sha256": "4131b95dae344ad0f1db60b7cd96bb1b12bdd05940bf686f776d0830d8cf9f1b",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/discovery.md",
+      "bytes": 10784,
+      "sha256": "fef9c87c00a0d9c4ab9ca63fe8454d08fd6153606d9cf30c042711018bfd0e52",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/draft.md",
+      "bytes": 22452,
+      "sha256": "9d5e18ef664d8288e4449e108e7711bb4f01818031997c4b5abf3c39f8b954b6",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/source-map.json",
+      "bytes": 14003,
+      "sha256": "30a105e41a2b2018dfb229ef242d1bd20738c25325a9c88d89535aa520a647f3",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/revealed-plan.md",
+      "bytes": 1770,
+      "sha256": "4131b95dae344ad0f1db60b7cd96bb1b12bdd05940bf686f776d0830d8cf9f1b",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/plan-reveal.json",
+      "bytes": 471,
+      "sha256": "575495c6c5b8a507d9bcdac6af55a90dfbc8a6c7fdfd6a638a7b117024617a00",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/sources/index.md",
+      "bytes": 2581,
+      "sha256": "c615ae8f64ac9be440951acab7ad17d3fddeb2beeb7ab732aa51be34953acf03",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/critic/files/critique.md",
+      "bytes": 10985,
+      "sha256": "63824089011e828eecb4e4ee21e2ebd15a3d9dfda3b1022f5d8a2164b4be8fd1",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/critic/files/source-map.json",
+      "bytes": 26732,
+      "sha256": "f4083f3e43a8cc2cd7957b5a714d6d6ac9593bc936cab53b8d987c6911847d7e",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/critic/files/sources/index.md",
+      "bytes": 2783,
+      "sha256": "f040f1a56fcd1c0b6e1f2710178078382409935e49117532f8ee48453b997162",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/final.md",
+      "bytes": 26313,
+      "sha256": "b9785b3b3af592d87758734f2916326ef554f898fe205c7f1ca185db3a5e12bf",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/source-map.json",
+      "bytes": 30919,
+      "sha256": "88525b0fa4847063c6011cd306b5a52d076f4bc9794f1ce8624df318092b7718",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/sources/index.md",
+      "bytes": 3092,
+      "sha256": "add8473cf42e06a2952c5239511b02d862f8de09c180b9825bf0c3e993f9059f",
+      "kind": "frozen_member"
+    }
+  ],
+  "access_limits": [
+    "Versioned docs.rs pages unavailable via the web tool were accessible directly over HTTPS or in exact release archives; this distinction is preserved.",
+    "Public source archive VCS metadata identifies a commit but is not a native/candidate provenance claim.",
+    "Only selected governing source/code/test context inspected; no entire public codebase or repository history scan and no downloaded source executed."
+  ]
+}

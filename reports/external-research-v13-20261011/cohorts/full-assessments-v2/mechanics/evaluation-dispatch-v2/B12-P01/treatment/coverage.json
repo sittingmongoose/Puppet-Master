@@ -1,0 +1,524 @@
+{
+  "schema": "er13.original_coverage.v1",
+  "arm_id": "B12-P01-treatment",
+  "scope": "FULL",
+  "declared_extent": "Complete assigned brief, exact revealed plan, all frozen investigator/critic/reviser scientific documents and source maps/indexes. Primary assessment covers each consequential assertion/family, not a universal format audit.",
+  "overall": "COMPLETE",
+  "axes": [
+    {
+      "axis": 1,
+      "label": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "note": "Complete brief and final read. Required fidelity, data hazards, selection/recovery, exports and negative constraints are substantively addressed."
+    },
+    {
+      "axis": 2,
+      "label": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "note": "All consequential asserted source facts checked in governing primary families, including adjacent code/callers, conditions and relevant history. Finite claim coverage, not every line of each source."
+    },
+    {
+      "axis": 3,
+      "label": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "note": "ELAN tiers/shared time slots, TextGrid interval/point semantics, EPUB packaging/audio overlays and FFmpeg adapter loss/history are useful discoveries. D-T02 is nonmaterial."
+    },
+    {
+      "axis": 4,
+      "label": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "note": "Every material exact-plan choice and every supplied critic finding reviewed. No rejected critic finding in this final; accepted changes checked independently."
+    },
+    {
+      "axis": 5,
+      "label": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "note": "Full draft/provisional/critique/final preservation reviewed. All supported mechanisms, conditions, unknowns and validations retained; criticism integrated without a material loss."
+    },
+    {
+      "axis": 6,
+      "label": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "note": "Future tests have meaningful preservation, resource/path, recovery and UI oracles. Product execution is not claimed or required; small-check receipts support only their narrow domain."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "obligation": "Clips, multiple subtitle/transcript tracks and descriptive metadata",
+      "coverage": "COMPLETE",
+      "final_locator": "Representation; Data model",
+      "note": "Package/resource/clip/track/cue entities and source metadata retained."
+    },
+    {
+      "id": "O02",
+      "obligation": "Language, timing, overlap, association and meaningful formatting",
+      "coverage": "COMPLETE",
+      "final_locator": "Representation; Compatibility",
+      "note": "Explicit identities/language, exact clocks, structured text and overlap preserved within declared profiles."
+    },
+    {
+      "id": "O03",
+      "obligation": "Unsupported content and lossy export",
+      "coverage": "COMPLETE",
+      "final_locator": "Compatibility; Export preview",
+      "note": "Opaque/source preservation is distinguished from support, and per-item losses are visible."
+    },
+    {
+      "id": "O04",
+      "obligation": "Missing files and duplicates",
+      "coverage": "COMPLETE",
+      "final_locator": "Import; Diagnostics",
+      "note": "Unresolved references and entry occurrence identity; no basename or last-wins substitution."
+    },
+    {
+      "id": "O05",
+      "obligation": "Malformed text",
+      "coverage": "COMPLETE",
+      "final_locator": "Import; Validation",
+      "note": "Source bytes retained and parse/encoding locations diagnosed."
+    },
+    {
+      "id": "O06",
+      "obligation": "Large attachments and unsafe paths",
+      "coverage": "COMPLETE",
+      "final_locator": "Import boundaries",
+      "note": "Expanded bytes/count/work budgets, path/type/no-follow rules; numeric user limits legitimately unresolved."
+    },
+    {
+      "id": "O07",
+      "obligation": "Practical alternatives and unfamiliar mechanisms",
+      "coverage": "COMPLETE",
+      "final_locator": "Interchange alternatives",
+      "note": "Alternatives evaluated by layer and profile; no requirement to discover every product."
+    },
+    {
+      "id": "O08",
+      "obligation": "Useful preview and diagnostics",
+      "coverage": "COMPLETE",
+      "final_locator": "Preview; Import",
+      "note": "Language/kind/association, overlap, formatting, inclusion and actionable source-local findings."
+    },
+    {
+      "id": "O09",
+      "obligation": "Selective import and recoverable cancellation",
+      "coverage": "COMPLETE",
+      "final_locator": "Import; Recovery",
+      "note": "Selection precedes commit; partial staging remains resumable/discardable."
+    },
+    {
+      "id": "O10",
+      "obligation": "Export inclusion and original preservation",
+      "coverage": "COMPLETE",
+      "final_locator": "Export; Compatibility",
+      "note": "New output, explicit included/changed/omitted items, source originals retained when lossy."
+    },
+    {
+      "id": "O11",
+      "obligation": "No paid cloud, playback rewrite, automatic network fetch or universal support",
+      "coverage": "COMPLETE",
+      "final_locator": "Recommendation; Import",
+      "note": "All four negative constraints explicitly retained in final."
+    },
+    {
+      "id": "O12",
+      "obligation": "Current primary documentation, code and real history",
+      "coverage": "COMPLETE",
+      "final_locator": "Sources; Alternatives",
+      "note": "Governing facts and implementation examples assessed separately from citation counts."
+    },
+    {
+      "id": "O13",
+      "obligation": "Exact-plan choices and uncertainty",
+      "coverage": "COMPLETE",
+      "final_locator": "Plan dispositions; Owner decisions",
+      "note": "Every material choice independently checked; unknown teacher tools/platforms/thresholds remain unknown."
+    },
+    {
+      "id": "O14",
+      "obligation": "Future validation versus executed checks",
+      "coverage": "COMPLETE",
+      "final_locator": "Validation / research record",
+      "note": "Meaningful semantic, hostile-input, recovery and UI oracles proposed; no future product execution demanded."
+    }
+  ],
+  "exact_plan_choices": [
+    {
+      "id": "P01",
+      "choice": "ZIP/metadata/media/track-file shape",
+      "coverage": "COMPLETE",
+      "assessment": "Retain/correct versioned envelope"
+    },
+    {
+      "id": "P02",
+      "choice": "Temporary extraction",
+      "coverage": "COMPLETE",
+      "assessment": "Inventory then selected isolated staging"
+    },
+    {
+      "id": "P03",
+      "choice": "Filename flattening",
+      "coverage": "COMPLETE",
+      "assessment": "Reject identity loss; safe generated storage allowed"
+    },
+    {
+      "id": "P04",
+      "choice": "Plain-text normalization",
+      "coverage": "COMPLETE",
+      "assessment": "Reject formatting loss; structured view and original retention"
+    },
+    {
+      "id": "P05",
+      "choice": "Floating seconds",
+      "coverage": "COMPLETE",
+      "assessment": "Replace canonical float-only clock with exact/source time"
+    },
+    {
+      "id": "P06",
+      "choice": "One cue interval",
+      "coverage": "COMPLETE",
+      "assessment": "Preserve outer interval and richer/opaque source timing"
+    },
+    {
+      "id": "P07",
+      "choice": "Sorting",
+      "coverage": "COMPLETE",
+      "assessment": "Source order retained; separate presentation/target order"
+    },
+    {
+      "id": "P08",
+      "choice": "Overlap warning",
+      "coverage": "COMPLETE",
+      "assessment": "Keep valid overlaps; warn for specific display/target conflicts"
+    },
+    {
+      "id": "P09",
+      "choice": "Unknown fields only in originals",
+      "coverage": "COMPLETE",
+      "assessment": "Expose opaque fields and export consequences"
+    },
+    {
+      "id": "P10",
+      "choice": "Choose tracks/media before transaction",
+      "coverage": "COMPLETE",
+      "assessment": "Retain selection and validate dependencies"
+    },
+    {
+      "id": "P11",
+      "choice": "Export same internal package",
+      "coverage": "COMPLETE",
+      "assessment": "Retain versioned native export"
+    },
+    {
+      "id": "P12",
+      "choice": "Simple subtitle interchange",
+      "coverage": "COMPLETE",
+      "assessment": "Named/profile-specific candidate sidecars with loss reporting"
+    },
+    {
+      "id": "P13",
+      "choice": "Language suffix",
+      "coverage": "COMPLETE",
+      "assessment": "Reject authority; confirmed hint only"
+    },
+    {
+      "id": "P14",
+      "choice": "Basename association",
+      "coverage": "COMPLETE",
+      "assessment": "Reject authority; stable references/user resolution"
+    },
+    {
+      "id": "P15",
+      "choice": "Delete staging on cancel",
+      "coverage": "COMPLETE",
+      "assessment": "Replace with resumable/discardable staging"
+    },
+    {
+      "id": "P16",
+      "choice": "Keep existing lessons untouched",
+      "coverage": "COMPLETE",
+      "assessment": "Retain visibility/no-mutation invariant"
+    },
+    {
+      "id": "P17",
+      "choice": "Text/time/warnings preview",
+      "coverage": "COMPLETE",
+      "assessment": "Retain and extend associations, formatting, overlap and loss"
+    },
+    {
+      "id": "P18",
+      "choice": "Compressed cap/absolute paths",
+      "coverage": "COMPLETE",
+      "assessment": "Retain minimum controls; add expansion/path/type/work boundaries"
+    },
+    {
+      "id": "P19",
+      "choice": "Examine representation/compatibility/error/recovery/round trips",
+      "coverage": "COMPLETE",
+      "assessment": "All addressed in complete proposal"
+    },
+    {
+      "id": "P20",
+      "choice": "Originals/no remote fetch/no implementation proof",
+      "coverage": "COMPLETE",
+      "assessment": "Retain hard and epistemic boundaries"
+    },
+    {
+      "id": "P21",
+      "choice": "Maximum 60 elapsed minutes",
+      "coverage": "COMPLETE",
+      "assessment": "Assessed separately in time_eligibility; no clock correction"
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "C1",
+      "coverage": "COMPLETE",
+      "candidate_disposition": "amend",
+      "independent_judgment": "Final removes inconsistent launch wording while retaining research of external candidates; target corpus is future validation."
+    },
+    {
+      "id": "C2",
+      "coverage": "COMPLETE",
+      "candidate_disposition": "accept",
+      "independent_judgment": "Recovery boundary clarified. Process/OS restart is a proposed extension; the brief itself only required recoverable cancellation."
+    },
+    {
+      "id": "C3",
+      "coverage": "COMPLETE",
+      "candidate_disposition": "accept",
+      "independent_judgment": "Cross-store states and idempotent marker add useful design detail. These remain proposed, conditional on storage/DB semantics."
+    },
+    {
+      "id": "C4",
+      "coverage": "COMPLETE",
+      "candidate_disposition": "amend",
+      "independent_judgment": "Broad compatibility characterization removed; sidecar opportunity remains. Lack of target corpus is not a requirement to deploy now."
+    },
+    {
+      "id": "C5",
+      "coverage": "COMPLETE",
+      "candidate_disposition": "accept",
+      "independent_judgment": "Concrete None-tier overlap constraint matches official manual; other stereotypes remain distinct."
+    }
+  ],
+  "supported_preservation": [
+    {
+      "id": "L01",
+      "family": "Immutable source files and source lineage",
+      "coverage": "COMPLETE",
+      "result": "Retained"
+    },
+    {
+      "id": "L02",
+      "family": "Stable resource/clip/track/cue identities and associations",
+      "coverage": "COMPLETE",
+      "result": "Retained"
+    },
+    {
+      "id": "L03",
+      "family": "Language/label/kind/default/forced distinctions",
+      "coverage": "COMPLETE",
+      "result": "Retained"
+    },
+    {
+      "id": "L04",
+      "family": "Exact clocks, source timing/order and overlapping cues",
+      "coverage": "COMPLETE",
+      "result": "Retained"
+    },
+    {
+      "id": "L05",
+      "family": "Structured formatting and unsupported/opaque content",
+      "coverage": "COMPLETE",
+      "result": "Retained"
+    },
+    {
+      "id": "L06",
+      "family": "Profile-level compatibility and original-versus-semantic equality",
+      "coverage": "COMPLETE",
+      "result": "Retained"
+    },
+    {
+      "id": "L07",
+      "family": "Alternative mechanisms and implementation history",
+      "coverage": "COMPLETE",
+      "result": "Retained with recorded limits"
+    },
+    {
+      "id": "L08",
+      "family": "Inventory, path/resource limits, duplicates and missing assets",
+      "coverage": "COMPLETE",
+      "result": "Retained"
+    },
+    {
+      "id": "L09",
+      "family": "Selection, cancellation, recovery and existing lesson protection",
+      "coverage": "COMPLETE",
+      "result": "Retained"
+    },
+    {
+      "id": "L10",
+      "family": "Inclusion/loss preview and original preservation",
+      "coverage": "COMPLETE",
+      "result": "Retained"
+    },
+    {
+      "id": "L11",
+      "family": "Unknown tools/platforms/limits and optional adapter priorities",
+      "coverage": "COMPLETE",
+      "result": "Retained"
+    },
+    {
+      "id": "L12",
+      "family": "Future validation distinct from research checks",
+      "coverage": "COMPLETE",
+      "result": "Retained"
+    }
+  ],
+  "source_families": [
+    {
+      "id": "P-VTT",
+      "family": "WebVTT",
+      "coverage": "COMPLETE",
+      "extent": "Status; §§2.1–2.2, 3.1–3.4, 4.1–4.4, 7–8",
+      "limits": "Format support and rendering are profile/processor dependent; malformed preservation cannot be labeled conformant."
+    },
+    {
+      "id": "P-TTML",
+      "family": "TTML2",
+      "coverage": "COMPLETE",
+      "extent": "§§5, 7.2, 10, 12, 14; Appendix I",
+      "limits": "Exact profile and inherited parameters govern interpretation; metadata formal validity does not promise application preservation."
+    },
+    {
+      "id": "P-MKV",
+      "family": "Matroska",
+      "coverage": "COMPLETE",
+      "extent": "TrackEntry; timestamps; §§18–21 flags, selection and attachments",
+      "limits": "Container/codec/player semantics differ from a multi-clip lesson graph. Notes fetched directly after a browser access error."
+    },
+    {
+      "id": "P-ZIP14",
+      "family": "ZIP/Python 3.14",
+      "coverage": "COMPLETE",
+      "extent": "ZipInfo/open; extract/extractall; Path; compression and ZIP64",
+      "limits": "Product limits must apply to actual bytes; declarations and extraction helpers alone are insufficient."
+    },
+    {
+      "id": "P-FF-RELEASE",
+      "family": "FFmpeg release applicability",
+      "coverage": "COMPLETE",
+      "extent": "9.0.2 and 8.1.3 release entries; §2.5 subtitle matrix",
+      "limits": "The older n8.1.1 code remains a valid pinned example, but calling it latest in October is unsupported."
+    },
+    {
+      "id": "P-SRT9",
+      "family": "FFmpeg SRT n9.0.2 and governing caller",
+      "coverage": "COMPLETE",
+      "extent": "ff_srt_muxer; FF_OFMT_FLAG_MAX_ONE_OF_EACH definition; mux initialization validation",
+      "limits": "Implementation-specific sidecar limit; default codec and flag combination govern. Direct source fetch resolved browser find misses."
+    },
+    {
+      "id": "P-FF-VTT",
+      "family": "FFmpeg WebVTT n9.0.2",
+      "coverage": "COMPLETE",
+      "extent": "read_ts; webvtt_read_header; read_packet; FATE WebVTT cases",
+      "limits": "Those tests were read, not run; conversion fixtures do not prove semantic package preservation."
+    },
+    {
+      "id": "P-FF-HISTORY",
+      "family": "FFmpeg history",
+      "coverage": "COMPLETE",
+      "extent": "Discussion body; flag definition and SRT diff",
+      "limits": "Discussion is not merge proof; later tagged source supplies behavior evidence."
+    },
+    {
+      "id": "P-FF-CLI",
+      "family": "FFmpeg CLI",
+      "coverage": "COMPLETE",
+      "extent": "§4 stream selection; map/metadata/disposition options",
+      "limits": "Named binary/build and target profiles still require future validation."
+    },
+    {
+      "id": "P-JSON",
+      "family": "JSON",
+      "coverage": "COMPLETE",
+      "extent": "§4 objects; §8 encoding",
+      "limits": "Rejecting duplicate manifest keys is a proposed product policy stronger than the RFC's SHOULD."
+    },
+    {
+      "id": "P-UTF8",
+      "family": "UTF-8",
+      "coverage": "COMPLETE",
+      "extent": "§§3–4 and security",
+      "limits": "Silent repair is a product preservation problem; the RFC does not prescribe this component's diagnostic UX."
+    },
+    {
+      "id": "P-LANG",
+      "family": "BCP 47",
+      "coverage": "COMPLETE",
+      "extent": "§§2.1, 3 and 4.5",
+      "limits": "Raw source tag/display label must remain separate from normalized comparison value."
+    },
+    {
+      "id": "P-EPUB",
+      "family": "EPUB package/media overlays",
+      "coverage": "COMPLETE",
+      "extent": "§4 OCF paths/ZIP; §9 media overlays",
+      "limits": "Current overlays synchronize audio, not video; reading-system behavior remains conditional."
+    },
+    {
+      "id": "P-EAF",
+      "family": "ELAN EAF model",
+      "coverage": "COMPLETE",
+      "extent": "XSD headType/timeType/tierType/alignableType/refAnnoType; manual stereotype table",
+      "limits": "Manual None tiers disallow overlap; subdivision/association rules differ. PDF browser reopen failed; indexed official text plus directly read XSD/manual corroborate all assessed claims. Whole PDF text review is not claimed."
+    },
+    {
+      "id": "P-PRAAT",
+      "family": "Praat TextGrid",
+      "coverage": "COMPLETE",
+      "extent": "Tier definitions; file-format §§6–7",
+      "limits": "Importer/exporter restrictions must be profile-specific; no promise of arbitrary overlaps in one interval tier."
+    },
+    {
+      "id": "P-DURABILITY",
+      "family": "Proposed persistence mechanism context",
+      "coverage": "COMPLETE",
+      "extent": "SQLite commit/journal flush and storage assumptions; directory sync requirement",
+      "limits": "Illustrative context only: neither arm selects SQLite, and the treatment expressly defers verification of platform/storage primitives."
+    }
+  ],
+  "excluded_or_unavailable": [
+    {
+      "domain": "Future application/parser/conversion/UI/security/crash/durability execution",
+      "coverage": "UNASSESSED",
+      "consequential_to_current_deliverable": false,
+      "reason": "Proposal-only deliverable; no deployment or future product execution required."
+    },
+    {
+      "domain": "All authoring tools, profiles, dialects and future releases",
+      "coverage": "UNASSESSED",
+      "consequential_to_current_deliverable": false,
+      "reason": "No universal support claimed; user roster and required features legitimately unknown."
+    },
+    {
+      "domain": "Authenticated native-task linkage, complete provider activity/context lifetime and billing",
+      "coverage": "UNASSESSED",
+      "consequential_to_current_deliverable": false,
+      "reason": "Only exact supplied captures available; separate assessment dimensions remain unknown."
+    }
+  ],
+  "expensive_review_stopped_after_decisive_failure": false,
+  "limits": [
+    "Full EAF PDF text extraction was unavailable. Official indexed EAF text, directly read 3.0 XSD and current manuals independently corroborate the assessed model claims. Detailed whole-document/schema exhaustiveness is not claimed.",
+    "Durability primitives and exact target interoperability are proposed validation, not executed results."
+  ]
+}

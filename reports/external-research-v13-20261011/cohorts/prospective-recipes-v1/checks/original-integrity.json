@@ -1,0 +1,51 @@
+{
+  "helper_pins": {
+    "helpers/c-successor-materializer-v1/bundle-manifest.json": "fffa5d116aa54b2c8fd11eb550ad5a855d52816e0d4688ae962cb4c9e1281e98",
+    "helpers/prospective-capture-v1/MANIFEST.json": "30b992fad9649a5a1607d329b66eae9c9af6ef453b874348c2b7e1662ebd8a24"
+  },
+  "recipe_helper_original_members_verified": 72,
+  "parent_common_members": 55,
+  "original_synthetic_reports": [
+    131,
+    154
+  ],
+  "selection_pins": {
+    "state/c-selection-lock-v1.json": "a9addb0a69e202c417fc2ae0feeb37f5f438f046053c8fdd0e604820a7434e67",
+    "state/dispatch-release-C-v1.json": "55b2be115766f77093d1751a6fdd9f04ebc79bd29818d9b81dffcd89451825f8"
+  },
+  "supplements": [
+    {
+      "arm_id": "B03-P01-treatment",
+      "selected": 2,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B03-P02-treatment",
+      "selected": 2,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B06-P01-treatment",
+      "selected": 1,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B09-P02-treatment",
+      "selected": 1,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B10-P02-control",
+      "selected": 1,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "B11-P02-control",
+      "selected": 1,
+      "all_hashes_match": true
+    }
+  ],
+  "original_science_edited": false,
+  "heldout_keys_briefs_plans_rubrics_read": false,
+  "active_stage_science_read": false
+}

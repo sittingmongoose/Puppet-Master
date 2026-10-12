@@ -1,0 +1,100 @@
+{
+  "id": "sn-import",
+  "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Importer/AssetImporter.php",
+  "resolved_url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Importer/AssetImporter.php",
+  "access_utc": "2026-10-12T02:01:58.286585+00:00",
+  "response_sha256": "1c03c4d92ad44cacc8923d5ea5d48bada62e660a25b630102f7c8a905d2f6254",
+  "response_bytes": 17725,
+  "operation": "read-only fetch",
+  "evidence": [
+    {
+      "line": 343,
+      "text": "                // while another checkout runs through the UI) could race here:"
+    },
+    {
+      "line": 344,
+      "text": "                // the fresh() read + canCheckoutTo() check is followed by a"
+    },
+    {
+      "line": 345,
+      "text": "                // checkOut() call with no row lock. Re-fetch the row under"
+    },
+    {
+      "line": 346,
+      "text": "                // lockForUpdate and evaluate the ownership / eligibility"
+    },
+    {
+      "line": 347,
+      "text": "                // conditions against the locked snapshot. If a racing operator"
+    },
+    {
+      "line": 348,
+      "text": "                // claimed the asset in the interim, skip this row rather than"
+    },
+    {
+      "line": 349,
+      "text": "                // stacking a duplicate history entry."
+    },
+    {
+      "line": 350,
+      "text": "                $asset = Asset::whereKey($asset->id)->lockForUpdate()->first();"
+    },
+    {
+      "line": 351,
+      "text": "                if (! $asset) {"
+    },
+    {
+      "line": 352,
+      "text": "                    return;"
+    },
+    {
+      "line": 353,
+      "text": "                }"
+    },
+    {
+      "line": 354,
+      "text": ""
+    },
+    {
+      "line": 355,
+      "text": "                if (! $asset->canCheckoutTo($target)) {"
+    },
+    {
+      "line": 356,
+      "text": "                    $this->log(trans('general.error_checkout_company_mismatch', ["
+    },
+    {
+      "line": 357,
+      "text": "                        'item' => trans('general.asset').' \"'.$asset->display_name.'\"',"
+    },
+    {
+      "line": 358,
+      "text": "                        'item_company' => $asset->company?->name ?? trans('general.unassigned'),"
+    },
+    {
+      "line": 359,
+      "text": "                        'target' => ($target->name ?? $target->username ?? $target->id),"
+    },
+    {
+      "line": 360,
+      "text": "                    ]));"
+    },
+    {
+      "line": 361,
+      "text": "                } else {"
+    },
+    {
+      "line": 362,
+      "text": "                    $targetType = get_class($target);"
+    },
+    {
+      "line": 363,
+      "text": "                    $alreadyCheckedOutToTarget = ($asset->assigned_to == $target->id) && ($asset->assigned_type === $targetType);"
+    },
+    {
+      "line": 364,
+      "text": ""
+    }
+  ],
+  "license_context": "Public focused source excerpts; upstream license notice remains at https://github.com/grokability/snipe-it. No product code or tests executed."
+}

@@ -1,0 +1,421 @@
+{
+  "packet_sha256": "e476f7f3e933597bb5fc8a58d53778ce27a546b1d863554ed969f0927c1ed0d0",
+  "result": "PASS",
+  "arms": [
+    {
+      "arm_id": "B09-P01-control",
+      "verified_members": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B09-P01-control-eval-inputs/configs/B09-P01-control.json",
+          "bytes": 1398,
+          "sha256": "8845d2fa8ffc230cbee8b68119e27f1c95e56c3e100da0de1c0b655f05f62781"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B09-P01-control-eval-inputs/control-inputs/brief.md",
+          "bytes": 2263,
+          "sha256": "38b97542db84680933501648395ce6bf7a03c6cbb191aca8d122e24cb8386d50"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B09-P01-control-eval-inputs/control-inputs/plan.md",
+          "bytes": 2278,
+          "sha256": "42c359b02876f8ba1620ebdd8fcfb1813194047145111d5443c58510e6ebe9b4"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/investigator/files/discovery.md",
+          "bytes": 10114,
+          "sha256": "8e2295083c78ecbb909d0fa8eeefdfa4aeaa65d0ca717fe0e806c73713582be5"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/investigator/files/draft.md",
+          "bytes": 22164,
+          "sha256": "bae6360c205398726bfa8697f17c79e4906fcb1c8941a7f45321636ce73e6b92"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/investigator/files/source-map.json",
+          "bytes": 23527,
+          "sha256": "a0b471fc3031e75a7770ce122f1fe2924392f299a1c82aa2661316437f8a8543"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/investigator/files/revealed-plan.md",
+          "bytes": 2278,
+          "sha256": "42c359b02876f8ba1620ebdd8fcfb1813194047145111d5443c58510e6ebe9b4"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/investigator/files/plan-reveal.json",
+          "bytes": 471,
+          "sha256": "99c773e8f3edf40ab5e4890dab94d433ef05d88513a6b0b58909380e809be1e6"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/investigator/files/assignment.md",
+          "bytes": 10339,
+          "sha256": "abe4fa90ca60167331eaa9c0215ec138d7a7b9c50a06d5fb492cb099ba68802f"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/investigator/files/input-map.json",
+          "bytes": 859,
+          "sha256": "9259352a4319ed0994319f1d1e1244d41eddf3d153ffd87bf8e20e1820d6d15a"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/investigator/files/freeze.json",
+          "bytes": 1936,
+          "sha256": "319db444204bb4ae1c99a207b4dac9e18e0a93b88363bfd9354df014c2d8b13c"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/investigator/files/request.json",
+          "bytes": 7324,
+          "sha256": "e31e87b6f53d4cb19ceaf8448cd1ccc5ade519e2f1fd3cb676c612c9a201c499"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/investigator/files/dispatch.json",
+          "bytes": 10654,
+          "sha256": "c547364c832bb990520a275280d8f49e121d4ff0c808aa8bb7dc8133c91c6837"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/investigator/files/status.json",
+          "bytes": 5014,
+          "sha256": "2a4c231c51d7d72386a3b6af4d7ed097e6954462724fa124b226e076a0c6e1ef"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/investigator/files/native-goal-create.json",
+          "bytes": 525,
+          "sha256": "4133c7f051e749ecc096589cc4fb20e27c36e50daa564c74d19ec3c341792b05"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/investigator/files/native-goal-active.json",
+          "bytes": 525,
+          "sha256": "4133c7f051e749ecc096589cc4fb20e27c36e50daa564c74d19ec3c341792b05"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/investigator/files/native-goal-terminal.json",
+          "bytes": 854,
+          "sha256": "50627de86758e8b89a77e8ee21879c9b2617348d2bb966b7243e04191b8c82e2"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/investigator/files/sources/index.md",
+          "bytes": 7007,
+          "sha256": "956b7f4eae69ae6face1b1e61d3b703dbde4b0dd4b28401fc105641bcb582bd7"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/critic/files/critique.md",
+          "bytes": 13019,
+          "sha256": "9aa1737f4f6e018b12e66e2ca90da4b4debbc92a64eda9fb8033719e7ba5d769"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/critic/files/source-map.json",
+          "bytes": 32230,
+          "sha256": "c2677e7350c6b207156465ed21e29d9e6a6842ecc559ddc3f249daf427975a8b"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/critic/files/assignment.md",
+          "bytes": 9747,
+          "sha256": "384d2ac12d90a27169a4bcb96c379eac068096c9e7b5dda518008444365e757c"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/critic/files/input-map.json",
+          "bytes": 1985,
+          "sha256": "7b91c71805c3e2553892d6f4bb8a7d65c48b7f9f75d6e40d3a35d3a874d406f6"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/critic/files/freeze.json",
+          "bytes": 4397,
+          "sha256": "d8931b8f10dae62fc1e24bfd99d4e24c13bec8d5ca7f2a8d118a22cf9cc0e9c1"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/critic/files/request.json",
+          "bytes": 7258,
+          "sha256": "c10315db6dc0c41b8aa351ae7af5fe1a405d62496064f58870f08b7f789d4529"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/critic/files/dispatch.json",
+          "bytes": 10516,
+          "sha256": "b09de0e45fdd05a2a8de7c8a66037b43a2690935bc480084943ef3acb5571496"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/critic/files/status.json",
+          "bytes": 3966,
+          "sha256": "1f9498bc9128d99d43854f181087a63a52ece940e54d53c982e915a9a65c7b18"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/critic/files/native-goal-active.json",
+          "bytes": 513,
+          "sha256": "053cd1a67f374514ce91ac8877ac864f9f5d38f90ce2e3ef9ed134b6ad937c92"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/critic/files/native-goal-terminal.json",
+          "bytes": 842,
+          "sha256": "739cf8f0f110c442585b58eed32ccf7b463c1231a8b743a2eb868fc111c7e982"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/reviser/files/final.md",
+          "bytes": 26780,
+          "sha256": "77d749fa8ec150f80881043ab98858ecbe39a87a7babcc845fa5a7b5127ae3d2"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/reviser/files/source-map.json",
+          "bytes": 37541,
+          "sha256": "533c9ebbc3dddff812bcf7690cec8ca7866166c39ef20a76b2d53bd4614b5063"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/reviser/files/assignment.md",
+          "bytes": 9734,
+          "sha256": "926f4b851ad59974857f170ed43f44bcce9d24fb6e51fabcb8b5e73ce2d6f0a1"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/reviser/files/input-map.json",
+          "bytes": 2440,
+          "sha256": "bcf6feb0446264ccbbd2c0b4816a1bf6de9658f20f94b051df3b886c1be75c5b"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/reviser/files/freeze.json",
+          "bytes": 5506,
+          "sha256": "ae0a3947c13610f269731b55cb1f94c2a30edc936baf33d6969f930a5573f27e"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/reviser/files/request.json",
+          "bytes": 7269,
+          "sha256": "fceff75f5d40db5ccc96f08643114df8a57c2564d690211bc87fb2d2ac2de010"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/reviser/files/dispatch.json",
+          "bytes": 10539,
+          "sha256": "7bbbe00c749ca4140fe84c8f1dadc53ca7c6dcb9f0208db7db9494bca7df9a97"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/reviser/files/status.json",
+          "bytes": 5455,
+          "sha256": "4c55bf7cf3eea659c21ca0765329150b1f0f9573e8343760f61aecc6b1612b4f"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/reviser/files/native-goal-create.json",
+          "bytes": 515,
+          "sha256": "004e6c2172f6c59e7a3bcade24fecd73fe1e3f6d89dc7e9f880f536a2db6c65a"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/reviser/files/native-goal-active.json",
+          "bytes": 515,
+          "sha256": "004e6c2172f6c59e7a3bcade24fecd73fe1e3f6d89dc7e9f880f536a2db6c65a"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/reviser/files/native-goal-terminal.json",
+          "bytes": 844,
+          "sha256": "6f7b00cd8ce17351d965fba73f25d6fa93368874dec9ba10d02c3d639058882e"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-control/run/B09-P01-control/control/terminal-handoffs/reviser/files/sources/index.md",
+          "bytes": 10729,
+          "sha256": "8599d922e375f89ff5d9be6140eb7ccd798491c727ed761ec144605d21f2111a"
+        }
+      ]
+    },
+    {
+      "arm_id": "B09-P01-treatment",
+      "verified_members": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B09-P01-treatment-eval-inputs/configs/B09-P01-treatment.json",
+          "bytes": 3208,
+          "sha256": "cda347c48d2341d4720bf6b73697dc78292899a161b077a2d7e654c7be889a04"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B09-P01-treatment-eval-inputs/control-inputs/brief.md",
+          "bytes": 2263,
+          "sha256": "38b97542db84680933501648395ce6bf7a03c6cbb191aca8d122e24cb8386d50"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B09-P01-treatment-eval-inputs/control-inputs/plan.md",
+          "bytes": 2278,
+          "sha256": "42c359b02876f8ba1620ebdd8fcfb1813194047145111d5443c58510e6ebe9b4"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/investigator/files/discovery.md",
+          "bytes": 8724,
+          "sha256": "7670b22199aa7720ab42dbaeece5830070827d035c2e32aee2da89a0a74277f2"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/investigator/files/draft.md",
+          "bytes": 17751,
+          "sha256": "c6a02d167c9b6a65b083793254ab86cc051b11fb6e1715dccfdf948a65aa9b8e"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/investigator/files/source-map.json",
+          "bytes": 17379,
+          "sha256": "3f0fa684c918e93330c1ef0f6dd1eee534d10a32a7de22f27b9c0d4062708900"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/investigator/files/revealed-plan.md",
+          "bytes": 2278,
+          "sha256": "42c359b02876f8ba1620ebdd8fcfb1813194047145111d5443c58510e6ebe9b4"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/investigator/files/plan-reveal.json",
+          "bytes": 474,
+          "sha256": "651fb45eb31cec6cad7504ba0edd93096fde2a4500df21157ef8771e894f94a6"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/investigator/files/assignment.md",
+          "bytes": 10876,
+          "sha256": "676a50e5c76f1151be292249be9dc2df0c9f7d0362e5b2fd04aa6155578443ad"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/investigator/files/input-map.json",
+          "bytes": 873,
+          "sha256": "d6c3c82508e6926d034cee06be7d93469bbb84b3c1f02943a1b870dc37bc0571"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/investigator/files/freeze.json",
+          "bytes": 3211,
+          "sha256": "d357d99610604e3a1a12cc328228eabc43dce75a5643210c680c1a9882416e8b"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/investigator/files/request.json",
+          "bytes": 7362,
+          "sha256": "4e02033eab9241d261086a5897b143415f663b386074763228355a985a685616"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/investigator/files/dispatch.json",
+          "bytes": 10716,
+          "sha256": "7982b1509dbee3f58181c9b32dee1aa12a26bf0eb38cccfd5a71906ba1cdeb36"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/investigator/files/status.json",
+          "bytes": 5844,
+          "sha256": "a2ed709ee9093338ab92cc5787ed0b6d0df9b5c7e3942be3433efebf658814b2"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/investigator/files/native-goal-create.json",
+          "bytes": 531,
+          "sha256": "367d928124ef963b438804b6a539d107eb07e08bfd7998235b84a28ae4d71348"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/investigator/files/native-goal-active.json",
+          "bytes": 531,
+          "sha256": "367d928124ef963b438804b6a539d107eb07e08bfd7998235b84a28ae4d71348"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/investigator/files/native-goal-terminal.json",
+          "bytes": 861,
+          "sha256": "73bcbd921911aefe9e65219af08453895feebcfc3505e8ea9bb4b5eb1771b668"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/investigator/files/sources/index.md",
+          "bytes": 3599,
+          "sha256": "9c18c0970c9512da049d03ad26eb1b9abd8617ebb9697242a56e2236d00238ba"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/critic/files/critique.md",
+          "bytes": 12711,
+          "sha256": "64cdf34569a0ed231688325e90d7bbee73bfc276c6c7592eaa566e5db8aa8b93"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/critic/files/source-map.json",
+          "bytes": 28735,
+          "sha256": "ae08ff127e53b307c299e9ea2a647c2d4e710d1b8c6e495dbab81c3bfb83c786"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/critic/files/assignment.md",
+          "bytes": 9781,
+          "sha256": "d650abafd5339fb868ac5bfe92a35489846e27b37e85cb191a5bfa11e4d50403"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/critic/files/input-map.json",
+          "bytes": 2027,
+          "sha256": "e41eefea3df64d312f1767debd74beead73a30200ea5b3daa9a2b36ac42adf26"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/critic/files/freeze.json",
+          "bytes": 5292,
+          "sha256": "391fb96b640f2b1e66fae06305530c423313260843cbd3bab96c86cdc5c92b78"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/critic/files/request.json",
+          "bytes": 7296,
+          "sha256": "923efce514bf059dec10fb0a3cb55d148fa1b1dc37c15c523e736aee17c6494a"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/critic/files/dispatch.json",
+          "bytes": 10578,
+          "sha256": "14d88f4d7b7bddd265e106f89cb306adcb3bbd0a186c0e28336a7699b99ab0dd"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/critic/files/status.json",
+          "bytes": 4098,
+          "sha256": "5507dac4e8cd7c6d76cf57cae6c3269e7e55e099479fe1b9e80529b83cc73ab8"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/critic/files/native-goal-create.json",
+          "bytes": 519,
+          "sha256": "36dd3b67c60002309f2aa852cdafefee06cacc4fe4f7e0d5e2995eff95513ad1"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/critic/files/native-goal-active.json",
+          "bytes": 519,
+          "sha256": "36dd3b67c60002309f2aa852cdafefee06cacc4fe4f7e0d5e2995eff95513ad1"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/critic/files/native-goal-terminal.json",
+          "bytes": 848,
+          "sha256": "f4246de7cd0a2f119a476a53c52cf5e2cb260c04c49d5097ca0a356e73585fc5"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/reviser/files/final.md",
+          "bytes": 25111,
+          "sha256": "4f3fc5066b1abd80fe814adfcdaf26d234e37eae642c245df431007ab3b0225d"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/reviser/files/source-map.json",
+          "bytes": 40047,
+          "sha256": "92e4bf1371979837e3c548ea1d271458497ec44b75e217750b9c3e2544b4e543"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/reviser/files/assignment.md",
+          "bytes": 10282,
+          "sha256": "22e18e0888fc3e77e414436bfac54ba5f30d7b82f9f73ba69242b24a3a6ef164"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/reviser/files/input-map.json",
+          "bytes": 2494,
+          "sha256": "add3397c384dc942535d1a2bed2b331b7f26d1623a095948f8bb57924b6cb547"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+          "bytes": 6858,
+          "sha256": "0a14fac63af23eae89af0b9ca3057840ccf09cc2fdb24f11fe3e5becf68132e8"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/reviser/files/request.json",
+          "bytes": 7307,
+          "sha256": "d7af28c25b1ec2ffcf651d6a37e7ea691b2606a4b5e09c94240a6f0076f16524"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/reviser/files/dispatch.json",
+          "bytes": 10601,
+          "sha256": "86897a75139c311d88de853a2836a4ae813bbcfadf8bddaa4bb8aed168ef5a5f"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/reviser/files/status.json",
+          "bytes": 5667,
+          "sha256": "ec43ac1ea0e9a49e176e92bfd785c74a51ea508ca724bdb04fbcd670a9412f72"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/reviser/files/native-goal-create.json",
+          "bytes": 521,
+          "sha256": "a4f179aa1182d6c0772e3b1d4aee1aafc397723cf1c7187de3416b639ee18160"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/reviser/files/native-goal-active.json",
+          "bytes": 521,
+          "sha256": "a4f179aa1182d6c0772e3b1d4aee1aafc397723cf1c7187de3416b639ee18160"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/reviser/files/native-goal-terminal.json",
+          "bytes": 850,
+          "sha256": "d49285d26057f1ebe5a7e1b37a7e7d1dc2f01c11fbd2d22e91e0b7b2fa922176"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B09-P01-treatment/run/B09-P01-treatment/control/terminal-handoffs/reviser/files/sources/index.md",
+          "bytes": 6191,
+          "sha256": "81a4aaf18816c9f4a28170d306b6b09ad6a45ab03d45e0153e2518999ee0ce4a"
+        }
+      ]
+    }
+  ]
+}

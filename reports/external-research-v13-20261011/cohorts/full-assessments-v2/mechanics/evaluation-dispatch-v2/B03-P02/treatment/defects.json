@@ -1,0 +1,62 @@
+{
+  "schema": "er13.independent-defects.v1",
+  "arm_id": "B03-P02-treatment",
+  "defects": [
+    {
+      "id": "T01",
+      "severity": "MATERIAL_WRONG_CRITIC_ATTRIBUTION_CORRECTED",
+      "stage": "critic",
+      "counts_against_final_source_judgment": false,
+      "locator": "critique.md F2; final.md:67; final source map S20",
+      "finding": "The critic denies an explicit GitLab backup warning that is present at the exact cited primary URL. The final rejects this criticism with the supported narrower GitLab-specific attribution.",
+      "primary_evidence": [
+        "https://docs.gitlab.com/user/project/settings/import_export/"
+      ],
+      "resolution_in_frozen_final": "CORRECTED by supported rejection."
+    },
+    {
+      "id": "T02",
+      "severity": "CONSEQUENTIAL_DRAFT_MECHANISM_OMISSION_CORRECTED",
+      "stage": "investigator draft",
+      "counts_against_final_source_judgment": false,
+      "locator": "critique.md F3; final.md:17,68,110; final source map S01",
+      "finding": "Draft backup research omitted a bounded completion policy for repeated SQLite restarts. The final adds the documented condition and configured duration/restart cap with visibly incomplete failure. Final source notes replace the unconditional initial-commencement summary with completion consistency.",
+      "primary_evidence": [
+        "https://www.sqlite.org/backup.html#file_and_database_connection_locking",
+        "https://www.sqlite.org/c3ref/backup_finish.html"
+      ],
+      "resolution_in_frozen_final": "CORRECTED; execution remains proposed."
+    },
+    {
+      "id": "T03",
+      "severity": "MINOR_HISTORY_PATH_WORDING",
+      "stage": "discovery/draft/final source index",
+      "counts_against_final_source_judgment": false,
+      "locator": "S08 history; sources/index.md S06-S10; final source map S22",
+      "finding": "Calling issue 715 a streaming regression is imprecise: its reproducer uses seekable File/ZipWriter::new and large_file(true). The final explicitly says the cited tests use seekable Cursor and do not prove non-seekable output or OS reader behavior, and proposes exact-path tests.",
+      "primary_evidence": [
+        "https://github.com/zip-rs/zip2/issues/715",
+        "https://raw.githubusercontent.com/zip-rs/zip2/v8.6.0/tests/zip64_large.rs"
+      ],
+      "resolution_in_frozen_final": "Scope limitation correctly retained; loose history wording remains."
+    },
+    {
+      "id": "T04",
+      "severity": "MINOR_INFERENCE_ATTRIBUTION",
+      "stage": "source map/index",
+      "counts_against_final_source_judgment": false,
+      "locator": "S16 mutable-name caveat",
+      "finding": "Avoiding mutable names follows from RFC 9562 name-based generation semantics; it is a sound design inference, not a literal mutable-name prohibition in section 6.5. The final does not require replacing native source IDs.",
+      "primary_evidence": [
+        "https://www.rfc-editor.org/rfc/rfc9562.html#section-6.5"
+      ],
+      "resolution_in_frozen_final": "Design recommendation supported as inference."
+    }
+  ],
+  "final_material_defect_ids": [],
+  "external_unknowns_are_not_fabricated_defects": [
+    "Actual application repository/backend/blob store and user redaction policy were not supplied.",
+    "No deployed product or future test execution is demanded."
+  ],
+  "originality": "Original independent findings; no repairs, candidate feedback, repeat grading or adjudication was performed."
+}

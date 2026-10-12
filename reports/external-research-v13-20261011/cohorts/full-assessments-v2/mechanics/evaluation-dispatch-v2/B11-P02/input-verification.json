@@ -1,0 +1,651 @@
+{
+  "block_id": "B11-P02",
+  "verified_at_utc": "2026-10-12T02:27:36.759418+00:00",
+  "verification": "All notified manifests, exact frozen members, and named terminal raw status receipts independently rehashed before grading; rechecked before writing originals.",
+  "result": "MATCH",
+  "arm_count": 2,
+  "manifest_and_member_receipts": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P02-control-eval-inputs/authored-manifest.json",
+      "bytes": 793,
+      "sha256": "abcb728335cbfb40e3ca15271b7458040d4f2d5d025ec7ca169c97cd875f8ea6",
+      "kind": "manifest"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P02-control-eval-inputs/configs/B11-P02-control.json",
+      "bytes": 1398,
+      "sha256": "560caac460e2c571fbf1bf42f846f44afb5b3a7334f064f8079e0930c34302b9",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P02-control-eval-inputs/control-inputs/brief.md",
+      "bytes": 2284,
+      "sha256": "6ecee5e70ec43f86f7759ccab36f73c30015ec37b8668077b7687725c26d3990",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P02-control-eval-inputs/control-inputs/plan.md",
+      "bytes": 1770,
+      "sha256": "4131b95dae344ad0f1db60b7cd96bb1b12bdd05940bf686f776d0830d8cf9f1b",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P02-control-eval-inputs/run/B11-P02-control/control/run.json",
+      "bytes": 581,
+      "sha256": "2c8e030de26e1ad540029b844fe024642ff3746ea8d4dfdff5337c9c2efa035f",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/manifest.json",
+      "bytes": 2869,
+      "sha256": "6d27c8189e06d2a7fe836fa3f83dd2bc55370fbb45dfca1fe2f31c0f77099ff2",
+      "kind": "manifest"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/discovery.md",
+      "bytes": 10784,
+      "sha256": "fef9c87c00a0d9c4ab9ca63fe8454d08fd6153606d9cf30c042711018bfd0e52",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/draft.md",
+      "bytes": 22452,
+      "sha256": "9d5e18ef664d8288e4449e108e7711bb4f01818031997c4b5abf3c39f8b954b6",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/source-map.json",
+      "bytes": 14003,
+      "sha256": "30a105e41a2b2018dfb229ef242d1bd20738c25325a9c88d89535aa520a647f3",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/revealed-plan.md",
+      "bytes": 1770,
+      "sha256": "4131b95dae344ad0f1db60b7cd96bb1b12bdd05940bf686f776d0830d8cf9f1b",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/plan-reveal.json",
+      "bytes": 471,
+      "sha256": "575495c6c5b8a507d9bcdac6af55a90dfbc8a6c7fdfd6a638a7b117024617a00",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/assignment.md",
+      "bytes": 10339,
+      "sha256": "ef2164dc60425f4819a8ff97add5dee763ababfef375040a99f644590d8df503",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/input-map.json",
+      "bytes": 859,
+      "sha256": "67cc316b0493a76756660572779096f19ecf562e0a58b2973505833c1c3a3873",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/freeze.json",
+      "bytes": 1936,
+      "sha256": "d97372e0488f1f86348a78103b9f97ea2643b603622b89220a695df77c84fdc2",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/request.json",
+      "bytes": 7324,
+      "sha256": "23fb88fd52a07260d8f7f9145b37471773c143a9e91f582cd724bc8c26cc11e0",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/dispatch.json",
+      "bytes": 10654,
+      "sha256": "41c4589249c474ab32110313e16a6840e748ccf6bb83616aefaae6e07ba03989",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/status.json",
+      "bytes": 6118,
+      "sha256": "36e945f6be701d73cd77def7956b89585dfdbbcbb780c6f33b6b295bb5810f7d",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/native-goal-create.json",
+      "bytes": 525,
+      "sha256": "cde0e1771b0ea7ad2c325119f31066e32e3d380ba12559e5436629889d7478d1",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/native-goal-active.json",
+      "bytes": 525,
+      "sha256": "cde0e1771b0ea7ad2c325119f31066e32e3d380ba12559e5436629889d7478d1",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/native-goal-terminal.json",
+      "bytes": 854,
+      "sha256": "74459d16dd947552e601b83d45b60c5f20c3b05451cddd3a6d59ab20027c1bf6",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/investigator/files/sources/index.md",
+      "bytes": 2581,
+      "sha256": "c615ae8f64ac9be440951acab7ad17d3fddeb2beeb7ab732aa51be34953acf03",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/critic/manifest.json",
+      "bytes": 2218,
+      "sha256": "22e228af6622c73eed9bb3e050229d6d53ef012f1d759dccc8a45d762a5b1934",
+      "kind": "manifest"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/critic/files/critique.md",
+      "bytes": 10985,
+      "sha256": "63824089011e828eecb4e4ee21e2ebd15a3d9dfda3b1022f5d8a2164b4be8fd1",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/critic/files/source-map.json",
+      "bytes": 26732,
+      "sha256": "f4083f3e43a8cc2cd7957b5a714d6d6ac9593bc936cab53b8d987c6911847d7e",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/critic/files/assignment.md",
+      "bytes": 9747,
+      "sha256": "59af32258a1a1d921c95953c6fb814b79d4ed7c346c014edf4a42af628b36916",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/critic/files/input-map.json",
+      "bytes": 1985,
+      "sha256": "497fd985b73f509f637401b63d93c7c1f36c6b573f0cab97914ee6b36385f8b5",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/critic/files/freeze.json",
+      "bytes": 4397,
+      "sha256": "97bf1670f64ca8026a1f88b14556785775f368e458020d4eb52a39fe638bf4e5",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/critic/files/request.json",
+      "bytes": 7258,
+      "sha256": "49286ad42bb25166c22d5b9a1d72b092c9a6a36c1c3b3a28084a6b778a64f51e",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/critic/files/dispatch.json",
+      "bytes": 10516,
+      "sha256": "0d88dfa90934cd650e0aeaa15bff6d6de92523eb51a6d160e052d66c43bec175",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/critic/files/status.json",
+      "bytes": 5000,
+      "sha256": "9b2a316e3173cc6bd2f25892b60c01d292eee540819c8cb69b84b9fd7e74ae48",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/critic/files/native-goal-active.json",
+      "bytes": 517,
+      "sha256": "38b43d7b9354a1239da1ee368ae332719f656f07d64682deb7e5832643c99602",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/critic/files/native-goal-terminal.json",
+      "bytes": 842,
+      "sha256": "3431b57635bbd7128c177c7f0a6f03b9890ae9d54a333186033a668afda36bd3",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/critic/files/sources/index.md",
+      "bytes": 2783,
+      "sha256": "f040f1a56fcd1c0b6e1f2710178078382409935e49117532f8ee48453b997162",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/manifest.json",
+      "bytes": 2383,
+      "sha256": "a809a317b932b46fd7cec0c46d3fb6d81ab8c6514919410d0d1e1a71ecf6fe8c",
+      "kind": "manifest"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/final.md",
+      "bytes": 26313,
+      "sha256": "b9785b3b3af592d87758734f2916326ef554f898fe205c7f1ca185db3a5e12bf",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/source-map.json",
+      "bytes": 30919,
+      "sha256": "88525b0fa4847063c6011cd306b5a52d076f4bc9794f1ce8624df318092b7718",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/assignment.md",
+      "bytes": 9734,
+      "sha256": "4fa8b0a127c80d0d6fc2397893dd097bd10b86e834452e190f6370a5412367aa",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/input-map.json",
+      "bytes": 2596,
+      "sha256": "5c62883a698de90316c5e32732ca8345a1a3dea9b2331c0215e7035998842040",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "bytes": 5951,
+      "sha256": "d3d1ef9da2ab82acfa6828a6c9eb3f31e5e10549e4da5ca2dcc02a0d085c0f21",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/request.json",
+      "bytes": 7269,
+      "sha256": "fb838cb54dc4a54a9d47ccb631c95764404d0976f58eaee2fa0cb55b24a78045",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/dispatch.json",
+      "bytes": 10539,
+      "sha256": "d91a79a0dcad736d210f0d388f4c811392802bd2332d6ad2611e7aa073861500",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/status.json",
+      "bytes": 4737,
+      "sha256": "fcb65e5ffb88f925d6d7389ce0a9158d00b754cab984f158cf3f19ae720f4587",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/native-goal-create.json",
+      "bytes": 515,
+      "sha256": "25db0be524cd5482285db0fd4f7fb2f8f7428d9d3f41630100aacd488fc47c93",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/native-goal-active.json",
+      "bytes": 515,
+      "sha256": "25db0be524cd5482285db0fd4f7fb2f8f7428d9d3f41630100aacd488fc47c93",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/native-goal-terminal.json",
+      "bytes": 769,
+      "sha256": "7b39699d135243108156d769972af531bc55a5289b019e6da086d34d55d0fdaa",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-control/run/B11-P02-control/control/terminal-handoffs/reviser/files/sources/index.md",
+      "bytes": 3092,
+      "sha256": "add8473cf42e06a2952c5239511b02d862f8de09c180b9825bf0c3e993f9059f",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B11-P02-control/investigator-eval-ready-status.raw.json",
+      "bytes": 12259,
+      "sha256": "13c963b649bee11b3002b177f4ce7ec60afe581f3cc3b3e150bd0c485542dc04",
+      "kind": "terminal_status_receipt"
+    },
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B11-P02-control/critic-eval-ready-status.raw.json",
+      "bytes": 10021,
+      "sha256": "37ae5a1eb5b148f84ac90eddb507617bb1628b0b462fcdd18ce3d713f033ea00",
+      "kind": "terminal_status_receipt"
+    },
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B11-P02-control/reviser-eval-ready-status.raw.json",
+      "bytes": 9491,
+      "sha256": "9f6547d0e0fe434cf522febc23e3dc4622cf069b2e47b81d2e2c7aab26bb4d1e",
+      "kind": "terminal_status_receipt"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P02-treatment-eval-inputs/authored-manifest.json",
+      "bytes": 798,
+      "sha256": "758a9c9cc88d92f44a3ea80f9f3cdfc10fe927788362fda44df1b9bf889385ff",
+      "kind": "manifest"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P02-treatment-eval-inputs/configs/B11-P02-treatment.json",
+      "bytes": 4277,
+      "sha256": "60add7c5b0d3e91d077ea0196db474e57975e066252ab1ca7ca34dfe3bfb9030",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P02-treatment-eval-inputs/control-inputs/brief.md",
+      "bytes": 2284,
+      "sha256": "6ecee5e70ec43f86f7759ccab36f73c30015ec37b8668077b7687725c26d3990",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P02-treatment-eval-inputs/control-inputs/plan.md",
+      "bytes": 1770,
+      "sha256": "4131b95dae344ad0f1db60b7cd96bb1b12bdd05940bf686f776d0830d8cf9f1b",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P02-treatment-eval-inputs/run/B11-P02-treatment/control/run.json",
+      "bytes": 2567,
+      "sha256": "6822eba00ffb436c0c08da8f75c615dc7aa3aab29ec0216b3500772c64b96164",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/manifest.json",
+      "bytes": 2872,
+      "sha256": "2b613e4c3ded6f76e4c46f8c32731f5f1dabcfa1c93f536cbd2ee46a8e12a4e9",
+      "kind": "manifest"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/discovery.md",
+      "bytes": 10360,
+      "sha256": "0ef61e7f021740c3d1b440a9503388a2f8226f4c6f8f51b10a2bf4166bd29e7e",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/draft.md",
+      "bytes": 14724,
+      "sha256": "18a83b9b128424d4edf29c3724b2eaae320ff7c1ce8b91a41bf1310d13fa7ca7",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/source-map.json",
+      "bytes": 20188,
+      "sha256": "70ac37c5d4eebe643ece5710f8665a7fabc3ae2f6bda8272520af60fcb35464c",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/revealed-plan.md",
+      "bytes": 1770,
+      "sha256": "4131b95dae344ad0f1db60b7cd96bb1b12bdd05940bf686f776d0830d8cf9f1b",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/plan-reveal.json",
+      "bytes": 475,
+      "sha256": "856c27e4e44b634427477ea6dc7254b3df8df1e8b323f6f2bdeb6b5780177442",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/assignment.md",
+      "bytes": 12140,
+      "sha256": "96c499e20d3dd4902cb9d1ddf6547e3c6c18193db216def2d7e9197c80a8bc09",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/input-map.json",
+      "bytes": 873,
+      "sha256": "e44f4180b882a8e68d8524262e49cd7230c04f8abd7f52f55bd4c52fb94ab45d",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/freeze.json",
+      "bytes": 4481,
+      "sha256": "571536607e1782b437501e8ae7557d8d97ea4680b85c02d1ec52ba19cef83ee7",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/request.json",
+      "bytes": 7362,
+      "sha256": "954f46ef90bdee8cd573fe28a9881a9da8db3aa6bbd132a8b417a30fb876ea9a",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/dispatch.json",
+      "bytes": 10716,
+      "sha256": "e8529729382b305e1a0a71442de39057ff4c995411a247ce209c7761ea04cc1d",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/status.json",
+      "bytes": 5174,
+      "sha256": "1aeaa349ca1b659d69908cd8d37c0f36411aba5c5a59c3ba01a8822d991734f1",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/native-goal-create.json",
+      "bytes": 531,
+      "sha256": "a302fbbc98e0d7721fc159babae4d2a7685147caf3af9da82d481814191ee4f5",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/native-goal-active.json",
+      "bytes": 531,
+      "sha256": "a302fbbc98e0d7721fc159babae4d2a7685147caf3af9da82d481814191ee4f5",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/native-goal-terminal.json",
+      "bytes": 860,
+      "sha256": "462632c6653bbf14d093822484c88762d258659da02c07472a2b50e308a8f99f",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/sources/index.md",
+      "bytes": 16623,
+      "sha256": "28b48df3aa54f425fafc4bf3146cf346cf7b688d6abc2230dcb6dab7ce6d44c5",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/manifest.json",
+      "bytes": 2386,
+      "sha256": "534c2b7319fa257eb7dc7bf7e85071b3c7162ebdf561208a9d75b3c2df3eccde",
+      "kind": "manifest"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/files/critique.md",
+      "bytes": 13152,
+      "sha256": "b870f072430a48eac5858334daa224ff3bd8c9be8c9d2b1f88af712365995dbb",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/files/source-map.json",
+      "bytes": 13250,
+      "sha256": "29aca2e53f11c9374d8601154ec7c50fed97fb60aab0dcff0d306a81f8fb99c9",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/files/assignment.md",
+      "bytes": 9967,
+      "sha256": "9e6745ce04ddce82084add9dc1b67683b760a58c6497c044398e9a02cf0c584c",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/files/input-map.json",
+      "bytes": 2027,
+      "sha256": "8320c99b2082de62a08f73d4209970c9e9b76107d9b7fefaad8fd8d733e62d76",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "bytes": 5407,
+      "sha256": "dc3ad5153ef2c3e7c4db1289317af691c544c5e4c1d9bee7e9d934613d77a25d",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/files/request.json",
+      "bytes": 7296,
+      "sha256": "7ca5887009824047e5ed11b5e97dd83fafa9c5fc345fd1eca756c292691d504c",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/files/dispatch.json",
+      "bytes": 10578,
+      "sha256": "260c7e429682d35a42572e600581b846a5e8c3bbef224b7fa664ee805f10f9f9",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/files/status.json",
+      "bytes": 5142,
+      "sha256": "a987181b05e3501f470ab4498d9fe9c0a3fe586ca0d17f503c33508e799b9456",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/files/native-goal-create.json",
+      "bytes": 519,
+      "sha256": "735d158b5c4fd0640573e0db45195cacbada35071df7ac613b6d66b953df7a6c",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/files/native-goal-active.json",
+      "bytes": 519,
+      "sha256": "735d158b5c4fd0640573e0db45195cacbada35071df7ac613b6d66b953df7a6c",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/files/native-goal-terminal.json",
+      "bytes": 848,
+      "sha256": "a5c3851753507e497bd30fd4316ce707a28734283f564b705202d00a1d258b1f",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/files/sources/index.md",
+      "bytes": 2684,
+      "sha256": "d8ac77d5c1beb202ae809dce7bdf7832ae86994169133988b38be8b6eca0745f",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/manifest.json",
+      "bytes": 2385,
+      "sha256": "02844cae167f63a7f2fae8782e706fe99d1142e16a9a9f7d018bf67cb986d109",
+      "kind": "manifest"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/final.md",
+      "bytes": 27680,
+      "sha256": "4092018d9fd34edcc559b6f274ba3075007896be8068cd636c8737fd054fb4e0",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/source-map.json",
+      "bytes": 44555,
+      "sha256": "b8095fb33dad39868e0b77ba7a8e64e106afce75a1e9c755ee2fc5a8aae20aae",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/assignment.md",
+      "bytes": 9971,
+      "sha256": "298e16365f85013df4bad79f9d482f4fb464bfc2d178623ceaf09246bfdf11fa",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/input-map.json",
+      "bytes": 2654,
+      "sha256": "f34321f63419780db89c06d141da54b9081f71af7820eb5d2e2fca1c82f88c9e",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "bytes": 7004,
+      "sha256": "f960f5e101e8c505990cd1372f5662b7cd53124ede96fe949219349fc9494d59",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/request.json",
+      "bytes": 7307,
+      "sha256": "f91b0ca83019f0018969453af60461a87055049c78381c350859e6ff3225e424",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/dispatch.json",
+      "bytes": 10601,
+      "sha256": "749e90af3288c218fc81fe4b45cc0bd1215ea1c92d90bf150fa8469b34da3d20",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/status.json",
+      "bytes": 4807,
+      "sha256": "caa706f99155b2f72825574d7a800b31c6ef3d9b01d7d4d21d0277123e42ff3d",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/native-goal-create.json",
+      "bytes": 521,
+      "sha256": "6b8f6eceb577fda1898457dbd9a31127045cf74b168b770717bfdc5dcfcbfe4a",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/native-goal-active.json",
+      "bytes": 521,
+      "sha256": "6b8f6eceb577fda1898457dbd9a31127045cf74b168b770717bfdc5dcfcbfe4a",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/native-goal-terminal.json",
+      "bytes": 850,
+      "sha256": "17472bbf961ccf46c6faebfd3f1d6b0f03280b4e4cb34f78ddba4b9400dd0606",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/sources/index.md",
+      "bytes": 3595,
+      "sha256": "3798dd763cfa26dd774ea96eb681e0e168be1177c0acf273dcc2be835d96311f",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B11-P02-treatment/investigator-eval-ready-status.raw.json",
+      "bytes": 10367,
+      "sha256": "82991ec4e224e608c8f499931fcf191c3c202264b06ea59c87744380554b7f5e",
+      "kind": "terminal_status_receipt"
+    },
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B11-P02-treatment/critic-eval-ready-status.raw.json",
+      "bytes": 10301,
+      "sha256": "5cdb1cb6848083f885b57630f6c7facf84ce49066981dd3d808581f5c35af300",
+      "kind": "terminal_status_receipt"
+    },
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B11-P02-treatment/reviser-eval-ready-status.raw.json",
+      "bytes": 9631,
+      "sha256": "f0e6dc9112927702f79b2d52d5fd2029b6117166a392fdd902333a26cf6a29e3",
+      "kind": "terminal_status_receipt"
+    }
+  ],
+  "governing_inputs": [
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B11-P02.json",
+      "bytes": 15812,
+      "sha256": "c7ba71bc64ccc979007857534b2bcd013158ba3ed935d584824ec0f341270ffe"
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-v2/B11-P02-input-verification.json",
+      "bytes": 22572,
+      "sha256": "1046209ba09efd0a2cd6cdf56e8b42571c333bdb5bef8ea11077252e7a352782"
+    },
+    {
+      "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+      "bytes": 3800,
+      "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+    },
+    {
+      "path": "ER13_WORKTREE/AGENTS.md",
+      "bytes": 20950,
+      "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810"
+    },
+    {
+      "path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+      "section": 10,
+      "hash_scope": "exact extracted section text, not whole file",
+      "bytes": 2007,
+      "sha256": "8397e9d2b13ad807f728579ca4ed9599ebcbfbad00df0291a0ab1088fc87604f"
+    },
+    {
+      "path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+      "section": 12,
+      "hash_scope": "exact extracted section text, not whole file",
+      "bytes": 3008,
+      "sha256": "b2cd4e9ba6f5d7782bb5a5d0d5ce8175be53189e80b85b91a07b5a9e06bff70a"
+    }
+  ],
+  "missing_input_outcomes": [
+    {
+      "arm_id": "B11-P02-control",
+      "stage": "critic",
+      "required_missing": [
+        "native-goal-create.json"
+      ],
+      "interpretation": "Declared capture gap; not a missing final and not proof that no Goal existed."
+    }
+  ],
+  "access_boundary": "Only exact allowlisted immutable snapshots/supplements/status receipts plus specifically permitted governance and public primary research. No active originals or referenced source paths were followed. No held-out cases, repository tree/history, candidate feedback, Git, canon, WorkNodes, server/provider settings, extra scientific candidates, subagents, or Goals.",
+  "receipt_limit": "Input integrity and terminal custody do not establish semantic source truth or independent native-to-task linkage."
+}

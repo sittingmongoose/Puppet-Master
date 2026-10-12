@@ -1,0 +1,404 @@
+{
+  "id": "sw-modules",
+  "url": "https://raw.githubusercontent.com/SpaceWorks-HQ/SpaceWorks/main/docs/MODULES.md",
+  "resolved_url": "https://raw.githubusercontent.com/SpaceWorks-HQ/SpaceWorks/main/docs/MODULES.md",
+  "access_utc": "2026-10-12T02:01:58.413987+00:00",
+  "response_sha256": "5e5de064711b935c590d1224290bd09580225366c47bd3b0733e53c801b44686",
+  "response_bytes": 31578,
+  "operation": "read-only fetch",
+  "evidence": [
+    {
+      "line": 61,
+      "text": "## Inventory"
+    },
+    {
+      "line": 65,
+      "text": ""
+    },
+    {
+      "line": 66,
+      "text": "### public_inventory"
+    },
+    {
+      "line": 67,
+      "text": ""
+    },
+    {
+      "line": 68,
+      "text": "**Core — cannot be uninstalled.**"
+    },
+    {
+      "line": 69,
+      "text": ""
+    },
+    {
+      "line": 70,
+      "text": "- **What it is** — the public browse catalogue and item detail pages at `/m/<slug>`."
+    },
+    {
+      "line": 71,
+      "text": "- **What it adds** — the `catalog` workflow: the public product list and detail view."
+    },
+    {
+      "line": 72,
+      "text": "- **Without it** — not an option. It is the surface the whole system exists to publish. What you *can*"
+    },
+    {
+      "line": 73,
+      "text": "  control is per item: `is_public` removes a product from the public list entirely, and"
+    },
+    {
+      "line": 74,
+      "text": "  `public_availability_mode` (`exact_count` / `status_only` / `hidden`) decides how much of its stock"
+    },
+    {
+      "line": 75,
+      "text": "  level a visitor sees. A space that wants no public catalogue publishes nothing."
+    },
+    {
+      "line": 76,
+      "text": "- **Data** — core; not separately purgeable."
+    },
+    {
+      "line": 77,
+      "text": ""
+    },
+    {
+      "line": 78,
+      "text": "### request_workflow"
+    },
+    {
+      "line": 79,
+      "text": ""
+    },
+    {
+      "line": 80,
+      "text": "**Core — cannot be uninstalled.**"
+    },
+    {
+      "line": 81,
+      "text": ""
+    },
+    {
+      "line": 82,
+      "text": "- **What it is** — member hardware requests and the state machine behind them"
+    },
+    {
+      "line": 83,
+      "text": "  (`draft → pending_approval → accepted → issued → returned`)."
+    },
+    {
+      "line": 84,
+      "text": "- **What it adds** — the `request_submit` and `request_status` workflows: submitting a borrow request"
+    },
+    {
+      "line": 85,
+      "text": "  and following it, plus the staff review queue."
+    },
+    {
+      "line": 86,
+      "text": "- **Without it** — not an option. Every handover in the system — staff issue, front-desk handout, member"
+    },
+    {
+      "line": 87,
+      "text": "  self-checkout — records itself through this workflow, and it is the only place a request's status is"
+    },
+    {
+      "line": 88,
+      "text": "  allowed to change."
+    },
+    {
+      "line": 89,
+      "text": "- **Who may submit is set by `membership`, not by this module.** Being core, this module is present in every"
+    },
+    {
+      "line": 90,
+      "text": "  makerspace and therefore must work with `membership` uninstalled: members only when `membership` is on,"
+    },
+    {
+      "line": 91,
+      "text": "  any signed-in account when it is off, and account-less strangers only when an operator has explicitly"
+    },
+    {
+      "line": 92,
+      "text": "  opted in (`manage.py set_request_access --mode anyone`, which is refused while `membership` is installed)."
+    },
+    {
+      "line": 93,
+      "text": "  See the `membership` module below, and **Who may submit a borrow request** in `docs/INVARIANTS.md`."
+    },
+    {
+      "line": 94,
+      "text": "- **Accept and reject are one request at a time.** There is no bulk accept or bulk reject anywhere —"
+    },
+    {
+      "line": 97,
+      "text": ""
+    },
+    {
+      "line": 98,
+      "text": "### staff_admin"
+    },
+    {
+      "line": 99,
+      "text": ""
+    },
+    {
+      "line": 100,
+      "text": "**Core — cannot be uninstalled.**"
+    },
+    {
+      "line": 101,
+      "text": ""
+    },
+    {
+      "line": 102,
+      "text": "- **What it is** — the staff console's inventory and request administration API."
+    },
+    {
+      "line": 103,
+      "text": "- **What it adds** — the `staff_inventory` and `staff_requests` workflows: products, categories, assets,"
+    },
+    {
+      "line": 104,
+      "text": "  the needs-fixing queue, exports and the request review screens."
+    },
+    {
+      "line": 105,
+      "text": "- **Without it** — not an option; a space with no staff console cannot be run. Who sees what inside it is"
+    },
+    {
+      "line": 106,
+      "text": "  a **roles** question, not a module one — see the role/action matrix."
+    },
+    {
+      "line": 107,
+      "text": "- **Data** — core; not separately purgeable."
+    },
+    {
+      "line": 108,
+      "text": ""
+    },
+    {
+      "line": 109,
+      "text": "### evidence_uploads"
+    },
+    {
+      "line": 110,
+      "text": ""
+    },
+    {
+      "line": 111,
+      "text": "**Core — cannot be uninstalled.**"
+    },
+    {
+      "line": 112,
+      "text": ""
+    },
+    {
+      "line": 113,
+      "text": "- **What it is** — immutable issue and return evidence photos in a private bucket."
+    },
+    {
+      "line": 114,
+      "text": "- **What it adds** — the `evidence_uploads` workflow: presigned upload, and the photo attached to every"
+    },
+    {
+      "line": 115,
+      "text": "  issue and return."
+    },
+    {
+      "line": 116,
+      "text": "- **Without it** — not an option: hardware cannot be issued without an issue photo, nor returned without"
+    },
+    {
+      "line": 117,
+      "text": "  a return photo and a remark. That is the accountability rule the product is built around."
+    },
+    {
+      "line": 118,
+      "text": "- **Data** — core; not separately purgeable. Evidence rows are immutable and only ever removed when the"
+    },
+    {
+      "line": 119,
+      "text": "  whole makerspace is purged. The *object bytes* are a separate question: an optional per-makerspace"
+    },
+    {
+      "line": 120,
+      "text": "  retention policy deletes the stored image once its window passes, keeping the immutable row, the"
+    },
+    {
+      "line": 121,
+      "text": "  remarks, the QR scans and the audit trail. An expired photo then reads as a truthful expired state"
+    },
+    {
+      "line": 122,
+      "text": "  (410) rather than a broken link, so the accountability record survives the picture."
+    },
+    {
+      "line": 123,
+      "text": ""
+    },
+    {
+      "line": 124,
+      "text": "### qr_management"
+    },
+    {
+      "line": 125,
+      "text": ""
+    },
+    {
+      "line": 126,
+      "text": "**Core — cannot be uninstalled.**"
+    },
+    {
+      "line": 127,
+      "text": ""
+    },
+    {
+      "line": 128,
+      "text": "- **What it is** — generating, revoking and printing the QR codes for boxes, tools and asset units."
+    },
+    {
+      "line": 129,
+      "text": "- **What it adds** — the `qr_generate`, `qr_revoke` and `qr_print` workflows, plus QR rebinding."
+    },
+    {
+      "line": 130,
+      "text": "- **Without it** — not an option: issuing reviewed-request hardware requires a box QR scan, so a space"
+    },
+    {
+      "line": 131,
+      "text": "  with no QR codes could not complete a handover."
+    },
+    {
+      "line": 132,
+      "text": "- **Data** — core; not separately purgeable. Scan records are immutable."
+    },
+    {
+      "line": 133,
+      "text": ""
+    },
+    {
+      "line": 134,
+      "text": "### scanner"
+    },
+    {
+      "line": 135,
+      "text": ""
+    },
+    {
+      "line": 136,
+      "text": "**Core — cannot be uninstalled.**"
+    },
+    {
+      "line": 137,
+      "text": ""
+    },
+    {
+      "line": 138,
+      "text": "- **What it is** — the camera scanner and the container lookup it feeds."
+    },
+    {
+      "line": 139,
+      "text": "- **What it adds** — the `qr_scan` and `container_lookup` workflows."
+    },
+    {
+      "line": 140,
+      "text": "- **Without it** — not an option, for the same reason as `qr_management`: no scan, no handover."
+    },
+    {
+      "line": 141,
+      "text": "- **Data** — core; not separately purgeable."
+    },
+    {
+      "line": 142,
+      "text": ""
+    },
+    {
+      "line": 143,
+      "text": "### asset_units"
+    },
+    {
+      "line": 144,
+      "text": ""
+    },
+    {
+      "line": 145,
+      "text": "- **What it is** — individually QR-tracked units of a product, so \"drill #3\" is a thing rather than \"one"
+    },
+    {
+      "line": 146,
+      "text": "  of four drills\"."
+    },
+    {
+      "line": 147,
+      "text": "- **What it adds** — per-unit QR generation and asset-level status tracking; asset units become"
+    },
+    {
+      "line": 148,
+      "text": "  selectable at issue time."
+    },
+    {
+      "line": 149,
+      "text": "- **Without it** — products are tracked by **quantity only**. Availability maths, requests and handovers"
+    },
+    {
+      "line": 150,
+      "text": "  all still work; you simply cannot say *which* physical unit went out, and per-unit QR labels are"
+    },
+    {
+      "line": 151,
+      "text": "  unavailable."
+    },
+    {
+      "line": 152,
+      "text": "- **Data** — `purge_module_data` reports it stores no data of its own to purge separately."
+    },
+    {
+      "line": 153,
+      "text": ""
+    },
+    {
+      "line": 154,
+      "text": "### containers"
+    },
+    {
+      "line": 155,
+      "text": ""
+    },
+    {
+      "line": 156,
+      "text": "- **What it is** — the physical container hierarchy (boxes inside shelves inside rooms) and moves"
+    },
+    {
+      "line": 157,
+      "text": "  between them."
+    },
+    {
+      "line": 158,
+      "text": "- **What it adds** — creating and listing containers, the parent/child hierarchy and container moves; a"
+    },
+    {
+      "line": 159,
+      "text": "  direct handout can resolve a scanned container into the loan."
+    },
+    {
+      "line": 160,
+      "text": "- **Without it** — you cannot create, list or re-parent containers in the console, and a direct handout"
+    },
+    {
+      "line": 161,
+      "text": "  will not accept one. Storage location stops being modelled as a hierarchy. Scanning a box QR still"
+    },
+    {
+      "line": 162,
+      "text": "  resolves — that is [`scanner`](#scanner) — and containers that already exist keep their codes, so the"
+    },
+    {
+      "line": 163,
+      "text": "  box-scan-at-issue rule is unaffected."
+    }
+  ],
+  "license_context": "Public focused source excerpts; current upstream LICENSE identifies GNU AGPL v3: https://github.com/SpaceWorks-HQ/SpaceWorks/blob/main/LICENSE. LICENSE at the specific historical commit was not resolved (404). No execution; do not infer historical license identity from moving main."
+}

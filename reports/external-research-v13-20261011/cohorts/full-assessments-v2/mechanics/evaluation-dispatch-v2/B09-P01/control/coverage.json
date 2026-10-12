@@ -1,0 +1,182 @@
+{
+  "arm_id": "B09-P01-control",
+  "requested_scope": "FULL original",
+  "reading_coverage": "COMPLETE for all exact notified scientific documents, source maps, indexes and reveal witnesses. Shared identical brief/plan bytes read once and verified for both. No extra critic documents are listed in these manifests.",
+  "assessment_coverage": "PARTIAL; no comparable exhaustive FULL grade claimed",
+  "axes": [
+    {
+      "axis_id": "A1",
+      "axis": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "basis": "Complete brief/plan and final requirement/negative-constraint audit."
+    },
+    {
+      "axis_id": "A2",
+      "axis": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "PARTIAL",
+      "basis": "Focused governing docs and selected pinned code/callers/tests independently checked; material defects found; listed remainder UNASSESSED."
+    },
+    {
+      "axis_id": "A3",
+      "axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "PARTIAL",
+      "basis": "Visible useful mechanisms and alternatives examined, with bounded implementation/fix history; remaining release/code lineage UNASSESSED."
+    },
+    {
+      "axis_id": "A4",
+      "axis": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "basis": "Every plan clause and every assigned critic disposition read and independently judged."
+    },
+    {
+      "axis_id": "A5",
+      "axis": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "basis": "Entire investigator/draft/critic/final text and source-map lineage examined for supported semantic loss; no material loss found within this audit."
+    },
+    {
+      "axis_id": "A6",
+      "axis": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "basis": "All proposed validation cases/oracles/status statements examined; no deployment or executed product tests demanded."
+    }
+  ],
+  "obligations": [
+    {
+      "obligation_id": "O01",
+      "obligation": "Durable physical-unit identity; names/serials not keys; non-reuse and readable labels",
+      "coverage": "COMPLETE",
+      "limit": "Complete finite review of stated proposal obligation; not universal implementation correctness."
+    },
+    {
+      "obligation_id": "O02",
+      "obligation": "Current availability; coordinator acknowledgement and Internet versus LAN/server outage",
+      "coverage": "COMPLETE",
+      "limit": "Complete finite review of stated proposal obligation; not universal implementation correctness."
+    },
+    {
+      "obligation_id": "O03",
+      "obligation": "Two volunteer concurrency; one active loan; retries/idempotency",
+      "coverage": "PARTIAL",
+      "limit": "Proposal/design meaning examined; selected candidate mechanisms independently researched, but complete candidate-wide caller/retention/search implementation coverage not claimed."
+    },
+    {
+      "obligation_id": "O04",
+      "obligation": "Reasoned loan/return correction retaining prior facts",
+      "coverage": "PARTIAL",
+      "limit": "Proposal/design meaning examined; selected candidate mechanisms independently researched, but complete candidate-wide caller/retention/search implementation coverage not claimed."
+    },
+    {
+      "obligation_id": "O05",
+      "obligation": "Kits/removable parts, incomplete returns and maintenance hold",
+      "coverage": "PARTIAL",
+      "limit": "Proposal/design meaning examined; selected candidate mechanisms independently researched, but complete candidate-wide caller/retention/search implementation coverage not claimed."
+    },
+    {
+      "obligation_id": "O06",
+      "obligation": "Aliases/similar-item search and physical disambiguation",
+      "coverage": "PARTIAL",
+      "limit": "Proposal/design meaning examined; selected candidate mechanisms independently researched, but complete candidate-wide caller/retention/search implementation coverage not claimed."
+    },
+    {
+      "obligation_id": "O07",
+      "obligation": "Minimum staff-limited contacts; reminder policy remains open; no automatic sends",
+      "coverage": "COMPLETE",
+      "limit": "Complete finite review of stated proposal obligation; not universal implementation correctness."
+    },
+    {
+      "obligation_id": "O08",
+      "obligation": "No paid cloud dependency; feasible alternatives and local operations burden",
+      "coverage": "COMPLETE",
+      "limit": "Complete finite review of stated proposal obligation; not universal implementation correctness."
+    },
+    {
+      "obligation_id": "O09",
+      "obligation": "Due dates never imply return; retirement never erases loan history",
+      "coverage": "COMPLETE",
+      "limit": "Complete finite review of stated proposal obligation; not universal implementation correctness."
+    },
+    {
+      "obligation_id": "O10",
+      "obligation": "800 items and five years; migration ambiguities remain unresolved",
+      "coverage": "COMPLETE",
+      "limit": "Complete finite review of stated proposal obligation; not universal implementation correctness."
+    },
+    {
+      "obligation_id": "O11",
+      "obligation": "Organizational policies/permissions/backup owners/RPO/RTO not invented",
+      "coverage": "COMPLETE",
+      "limit": "Complete finite review of stated proposal obligation; not universal implementation correctness."
+    },
+    {
+      "obligation_id": "O12",
+      "obligation": "Staged adoption, synthetic fixtures, shadow authority, recovery oracles",
+      "coverage": "COMPLETE",
+      "limit": "Complete finite review of stated proposal obligation; not universal implementation correctness."
+    },
+    {
+      "obligation_id": "O13",
+      "obligation": "Research proposal only; no deployment/live borrower processing/outbound communication",
+      "coverage": "COMPLETE",
+      "limit": "Complete finite review of stated proposal obligation; not universal implementation correctness."
+    },
+    {
+      "obligation_id": "O14",
+      "obligation": "Complete original brief, exact plan and all notified scientific documents read",
+      "coverage": "COMPLETE",
+      "limit": "Complete finite review of stated proposal obligation; not universal implementation correctness."
+    },
+    {
+      "obligation_id": "O15",
+      "obligation": "Consequential available docs/code/callers/tests/issue-to-fix/release research",
+      "coverage": "PARTIAL",
+      "limit": "Proposal/design meaning examined; selected candidate mechanisms independently researched, but complete candidate-wide caller/retention/search implementation coverage not claimed."
+    },
+    {
+      "obligation_id": "O16",
+      "obligation": "Every critic disposition and supported investigator-to-final meaning assessed",
+      "coverage": "COMPLETE",
+      "limit": "Complete finite review of stated proposal obligation; not universal implementation correctness."
+    }
+  ],
+  "source_families": [
+    {
+      "family": "Koha documentation/status/bundles/offline/logging",
+      "coverage": "PARTIAL",
+      "assessed": "Governing manual contexts, conditions and adjacent caveats",
+      "unassessed": "Release-pinned checkout/return/correction callers/tests; historical 24.05 identity mapping; full issue-to-fix lineage."
+    },
+    {
+      "family": "Snipe-IT model, ordinary checkout/check-in callers, adjacent status tests and release attribution",
+      "coverage": "COMPLETE",
+      "assessed": "Focused v8.8.0 model/UI/API/permission paths and status test source; exact v8.7.2 release list. Omitted research identified; no runtime or race-proof inference.",
+      "unassessed": "Other button/bulk routes, database/event atomicity proof, full regression history and application execution."
+    },
+    {
+      "family": "SQLite/PostgreSQL governing primitives",
+      "coverage": "COMPLETE",
+      "assessed": "Declared host/concurrency/version/partial-index/row-lock claims in current WAL/use and versioned PostgreSQL docs",
+      "unassessed": "SQLite fix diff/induced race execution and any future custom application implementation."
+    },
+    {
+      "family": "InvenTree stock/retention/deployment/release/history",
+      "coverage": "PARTIAL",
+      "assessed": "Stock tracking retention and deployment docs; 1.5.7 release and take_stock PR scope",
+      "unassessed": "Full BOM/serialized definitions, deletion callers, original issue/fix/test lineage."
+    },
+    {
+      "family": "Koha K07 mutable source inspection witness",
+      "coverage": "UNASSESSED",
+      "assessed": "Its limitation/provenance language was read and retained",
+      "unassessed": "Actual original unpinned remote bytes, released-callers/test equivalence; no active candidate sources followed."
+    },
+    {
+      "family": "Snipe-IT import/security wider lineage",
+      "coverage": "PARTIAL",
+      "assessed": "Importer lock and tagged soft-deleted target test; advisory scope",
+      "unassessed": "All lifecycle endpoints and complete advisory fix/caller chain."
+    }
+  ],
+  "expensive_exhaustive_review_stopped_after_decisive_failure": true,
+  "remainder_rule": "Every unassessed field above is UNASSESSED. No score inferred for it. COMPLETE refers only to the explicitly declared finite claim/context domain, never the entire repository."
+}

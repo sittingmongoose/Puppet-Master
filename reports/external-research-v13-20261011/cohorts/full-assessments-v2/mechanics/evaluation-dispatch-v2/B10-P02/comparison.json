@@ -1,0 +1,48 @@
+{
+  "schema": "er13.post-freeze-pair-observation.v1",
+  "block_id": "B10-P02",
+  "arm_count": 2,
+  "written_at_utc": "2026-10-12T02:06:48.953679+00:00",
+  "original_manifest": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P02/manifest.json",
+    "sha256": "060116080d58d6fc5b33d8976e8f02d7e178c79a20bac09e5e9a65aba2d0bc58"
+  },
+  "source_judgments": {
+    "B10-P02-control": "UNASSESSED",
+    "B10-P02-treatment": "FAIL"
+  },
+  "comparability": "NOT_ESTABLISHED: both six-axis contract grades UNASSESSED; source coverage PARTIAL; control is not PASS",
+  "matched_inputs": "Exact brief and plan hashes match; requested candidate model/effort/tier and stage-cap scheme match. Technique-bearing configuration/critic delta exposes arm identities.",
+  "quality_observations": "Both finals retain scope, data boundaries, revised completion policy, owner questions and proposed-only validation. Treatment incorporates the supported H5P non-reproduction context and output matrix, but omits explicit lifecycle warning from its cited release. Control retains minor locator/source-context limitations. These are finite arm observations, not a recipe recommendation.",
+  "latency_observations": [
+    {
+      "arm_id": "B10-P02-control",
+      "t0_to_native_final_terminal_proxy_seconds": 1474.347,
+      "delivery_elapsed_upper_bound_seconds": 3434.705083,
+      "actual_request_to_quiet_final_seconds": "UNKNOWN",
+      "scope": "Native terminal proxy and conservative shared freeze custody bound; neither is exact last scientific-write time"
+    },
+    {
+      "arm_id": "B10-P02-treatment",
+      "t0_to_native_final_terminal_proxy_seconds": 3330.963,
+      "delivery_elapsed_upper_bound_seconds": 3421.321083,
+      "actual_request_to_quiet_final_seconds": "UNKNOWN",
+      "scope": "Native terminal proxy and conservative shared freeze custody bound; neither is exact last scientific-write time"
+    }
+  ],
+  "proxy_delta_treatment_minus_control_seconds": 1856.616,
+  "proxy_delta_interpretation": "No equal-quality saving, billing claim, causal technique attribution, or complete cold-pipeline claim",
+  "assigned_denominator": {
+    "arms": 2,
+    "delivered_finals": 2,
+    "observed_full_source_passes": 0,
+    "known_source_failures": 1,
+    "unassessed_source_judgments": 1,
+    "candidate_attempts_beyond_packet": "UNKNOWN"
+  },
+  "failure_inclusive_passing_output_cost_quotient": "UNDEFINED: no assessed full passing finals; resource/billing also UNKNOWN",
+  "resource_comparison": "UNKNOWN; native counters/Goal residency are not an input/cache/output/reasoning or billed-work decomposition; independent_evaluation remains separate",
+  "selection": "NOT_PERFORMED; reserved to root",
+  "originals_changed": false,
+  "further_adjudication": "If exact contract becomes available or findings are disputed, use a new separate adjudication preserving original brief/findings/responses/unresolved objections; do not modify originals or repeatedly grade until pass."
+}

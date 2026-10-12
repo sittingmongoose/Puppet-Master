@@ -1,0 +1,21 @@
+{
+  "scope": "These exact files/hashes only; private route/account/home/host literals never exempt",
+  "exceptions": [
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-host.json",
+      "sha256": "4003fbba4ebadde16af8d222ac705f085dddb040c00b810f81a8ce91c60dbc27",
+      "literals": [
+        "POSTGRES_PASSWORD=replace-with-a-strong-password"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/evidence/mkdocs-material-LICENSE.txt",
+      "sha256": "e1150f26b4c0f872627b39fda49ae3bd850304f2f7f3171ae0531c1f8f4dd078",
+      "literals": [
+        "martin.donath@squidfunk.com"
+      ],
+      "basis": "Frozen public upstream source author/license/contact notice, example path or public GitHub SSH locator; reviewed source context, no private campaign identity."
+    }
+  ]
+}

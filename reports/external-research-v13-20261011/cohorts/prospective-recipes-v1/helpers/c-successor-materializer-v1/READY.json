@@ -1,0 +1,31 @@
+{
+  "schema": "er13.c_successor_materializer_ready.v1",
+  "helper_root": "ER13_RUNTIME/helpers/c-successor-materializer-v1",
+  "capture_helper_root": "ER13_RUNTIME/helpers/prospective-capture-v1",
+  "manifest_sha256": "126125fbb0999c029b40eef46e56e0c5f9c0193c1a3658e6df7a148f8c6c5435",
+  "materialize_sha256": "6d9089fc4d46a31f62a9acd764dc34fa7536a08a65d950dd4fb49608ae1ff51c",
+  "checks_sha256": "e4ea8a9f42032c7e6d24b9149d59b7c9446301f29df1ab9d5735e4934f4009f2",
+  "focused_checks_passed": 131,
+  "generic_critic_sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+  "cards": {
+    "C-S1-v2": {
+      "card_sha256": "402701f257e2574ba88d5817245939daae622d829eabd4c959a79fa686da18c0",
+      "critic_delta_stage": "critic",
+      "critic_sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "empty_investigator_and_reviser_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "C-S2-v2": {
+      "card_sha256": "0c32141a99f640d767301b000d6d75aa373f7b48bbf9119ba6e571450352916d",
+      "critic_delta_stage": "critic-truth",
+      "critic_sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "empty_investigator_and_reviser_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "common_capture_manifest_sha256": "24ff3ed714c7108a49a2614d0afbda003fdac0bed50044a9952c3f77860d29ba",
+  "qualified_domain": "focused offline source/API matrix only; all C/D held for root exact release",
+  "actual_native_calls": 0,
+  "actual_candidate_dispatches": 0,
+  "scientific_pass_claim": false,
+  "prospective_only": true,
+  "publication_scope": "Public normalized materialization of original pinned C helper; Root original lock/admission unchanged"
+}

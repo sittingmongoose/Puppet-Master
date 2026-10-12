@@ -1,0 +1,35 @@
+{
+  "schema": "er13.original-output-manifest.v1",
+  "arm_id": "B06-P02-control",
+  "frozen_at_utc": "2026-10-12T02:03:41.699235+00:00",
+  "comparison_exists_at_freeze": false,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P02/control/assessment.json",
+      "bytes": 8319,
+      "sha256": "dbe0a41d5af0c6da9926dcd672dd53ae18e05000faa66e7c9ba970c9104975fa"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P02/control/assessment.md",
+      "bytes": 3707,
+      "sha256": "70e5d5b092be4890de9e9b49ae52374d2f012ea4cf0ecb20257962e85277e076"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P02/control/coverage.json",
+      "bytes": 14889,
+      "sha256": "65cc934015f4b69f1e009cb46dae9508eb5f12688b00d5d75351fa2c5c6ea344"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P02/control/defects.json",
+      "bytes": 2760,
+      "sha256": "731944368d217a458ec280b2c834f03bda76043bdbcf1b03f1b2edbb216f11b1"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P02/control/primary-source-index.json",
+      "bytes": 24010,
+      "sha256": "85605c3fbca817549d9d67f27fa7f5a25dc71156741daf5dbff8f335647f2a4a"
+    }
+  ],
+  "self_excluded": "Manifest self hash is reported externally; all original assessment/evidence members are covered.",
+  "immutability": "Original assessment is final. Any dispute/new evidence requires a separate adjudication without editing these originals."
+}

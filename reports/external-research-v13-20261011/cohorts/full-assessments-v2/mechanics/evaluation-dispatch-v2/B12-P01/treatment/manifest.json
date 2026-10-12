@@ -1,0 +1,44 @@
+{
+  "schema": "er13.original_output_manifest.v1",
+  "block_id": "B12-P01",
+  "arm_id": "B12-P01-treatment",
+  "scope": "FULL",
+  "frozen_at_utc": "2026-10-12T02:32:10.747012+00:00",
+  "all_original_outputs_and_necessary_evidence_listed": true,
+  "evidence_note": "Independent public-source conditions, locators and any direct response digests are in primary-source-index.json; no source corpus or private transcript reproduced.",
+  "before_any_comparative_analysis": true,
+  "original_judgment_unchanged_after_freeze": true,
+  "entries": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P01/treatment/assessment.md",
+      "relative_path": "treatment/assessment.md",
+      "bytes": 6967,
+      "sha256": "8576c6318a0d7830f35541143f9b16d42a1d6a00f9c0e9d97bb8c8b31e0f9bd2"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P01/treatment/assessment.json",
+      "relative_path": "treatment/assessment.json",
+      "bytes": 18366,
+      "sha256": "d228bc7f2aedd422238ebd888471c8f5deac92c1542f4109b557e52f41fb5592"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P01/treatment/coverage.json",
+      "relative_path": "treatment/coverage.json",
+      "bytes": 20038,
+      "sha256": "55798effe4ebceeb11d3bb392d48529afe73884aeb0386eb0c0162415b3ddace"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P01/treatment/defects.json",
+      "relative_path": "treatment/defects.json",
+      "bytes": 1502,
+      "sha256": "9d74cd658178afdf0037373fbeabcfb4ff913f31acf74229c1f1f5bf54e0b7a5"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P01/treatment/primary-source-index.json",
+      "relative_path": "treatment/primary-source-index.json",
+      "bytes": 16113,
+      "sha256": "efdf3157c5c3785897701ffe85132aca2cd2664bda59c11ea0b2fa0bae9feed1"
+    }
+  ],
+  "self_digest_policy": "Manifest self SHA256 is reported separately; no circular self entry."
+}

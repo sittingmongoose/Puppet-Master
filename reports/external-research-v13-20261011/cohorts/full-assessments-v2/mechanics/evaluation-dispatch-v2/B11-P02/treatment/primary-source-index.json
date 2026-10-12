@@ -1,0 +1,465 @@
+{
+  "arm_id": "B11-P02-treatment",
+  "reviewer_lookup": "Independent governing primary lookup; matched-arm lookup may be shared, candidate agreement is not authority.",
+  "source_records": [
+    {
+      "id": "E09",
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "title": "Automerge property conflicts",
+      "version_context": "Living JS guide, Rust 0.12.0 ReadDoc cross-check E12",
+      "locator": "Concurrent writes; getConflicts; later assignment; counter/actor tie-break",
+      "independent_observation": "Concurrent same-property values remain inspectable; ordinary reads expose a deterministic operation-ID winner. A later assignment closes the observed property conflicts.",
+      "governing_condition_and_applicability": "Not wall-clock arbitration or human approval. An app audit/resolution layer must preserve context and late concurrent candidates.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S08"
+        ],
+        "B11-P02-treatment": [
+          "S06",
+          "C07",
+          "R06"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E10",
+      "url": "https://automerge.org/docs/reference/documents/lists/",
+      "title": "Automerge fine-grained modeling",
+      "version_context": "Living JS guide",
+      "locator": "Entity-map/ID-list example and whole-object replacement caveat",
+      "independent_observation": "Fine-grained updates preserve independent work better than replacing the containing entity map/list object.",
+      "governing_condition_and_applicability": "Modeling guidance does not guarantee an application move algorithm, duplicate placement policy, or approval UI.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S09"
+        ],
+        "B11-P02-treatment": [
+          "S08",
+          "C04"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E11",
+      "url": "https://docs.rs/automerge/0.12.0/automerge/sync/index.html",
+      "title": "Automerge native synchronization",
+      "version_context": "Rust 0.12.0; generated unversioned alternative link checked against pinned source",
+      "locator": "Module protocol requirement and send/receive/generate loop; E13 callers",
+      "independent_observation": "The native protocol maintains per-peer State and requires reliable ordered message exchange; a generated frame can change State before it is sent.",
+      "governing_condition_and_applicability": "Idempotent document changes do not make arbitrary stateful-frame loss or regeneration safe. Session recovery is app responsibility.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-control": [
+          "S10"
+        ],
+        "B11-P02-treatment": [
+          "S03"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": [
+        "https://automerge.org/automerge/automerge/sync/index.html"
+      ]
+    },
+    {
+      "id": "E12",
+      "url": "https://docs.rs/automerge/0.12.0/automerge/trait.ReadDoc.html",
+      "title": "Automerge values, history, author/actor and transaction APIs",
+      "version_context": "Rust 0.12.0; released archive VCS metadata 37545d0d72b50f52084a2eca2cadf2eb1a5a512a",
+      "locator": "get_all/get_all_at/get_cursor; Authors and Actors; apply_changes/save; Transactable and manual_transaction",
+      "independent_observation": "Conflict values are returned with originating operation IDs; historical APIs read specified heads. Author is optional opaque metadata. Transactions group local changes and expose insert/delete/splice/text operations, not a shipped semantic cue move.",
+      "governing_condition_and_applicability": "Author metadata is not authentication; save serializes bytes rather than flushing storage. JS API spelling/frequency advice is not a Rust adapter proof.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-treatment": [
+          "S01",
+          "S02",
+          "C01",
+          "C02",
+          "C03",
+          "R01",
+          "R02",
+          "R03",
+          "R04"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": [
+        "https://docs.rs/automerge/0.12.0/automerge/struct.Automerge.html",
+        "https://docs.rs/automerge/0.12.0/src/automerge/read.rs.html",
+        "https://docs.rs/automerge/0.12.0/automerge/transaction/trait.Transactable.html",
+        "https://docs.rs/automerge/0.12.0/src/automerge/transaction/manual_transaction.rs.html"
+      ]
+    },
+    {
+      "id": "E13",
+      "url": "https://docs.rs/automerge/0.12.0/src/automerge/sync/state.rs.html",
+      "title": "Automerge partial State persistence and actual callers",
+      "version_context": "Rust 0.12.0; exact release archive checksum/member hashes in evidence",
+      "locator": "state.rs 27-78,108-150; sync.rs 238-253,279-287,386-463; inline read-only/in-flight tests inspected",
+      "independent_observation": "Native encode saves only shared_heads. Decode initializes other live protocol fields afresh, including in_flight, sent_hashes, peer heads, capabilities and read_only. Generation/receipt reads and mutates those fields.",
+      "governing_condition_and_applicability": "The native serialization is deliberately connection-crossing state, not an exact live frame/State snapshot. App custom full-state serialization is possible in principle but is not specified in the final. No library execution or crash test was performed.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-treatment": [
+          "S04",
+          "S05",
+          "R05"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": [
+        "https://docs.rs/automerge/0.12.0/automerge/sync/struct.State.html",
+        "https://docs.rs/automerge/0.12.0/src/automerge/sync.rs.html"
+      ]
+    },
+    {
+      "id": "E14",
+      "url": "https://github.com/automerge/automerge/issues/1284",
+      "title": "Automerge lost-message report",
+      "version_context": "February13 2026, open issue; no target crate version identified",
+      "locator": "Generated-and-lost frame reproducer; maintainer reliable-stream/reset response",
+      "independent_observation": "Dropping a generated message and retaining the altered State caused an infinite loop in the report. Keeping the frame avoided that report; the maintainer requires reset when loss is possible.",
+      "governing_condition_and_applicability": "Not evidence every current release fails; not a supplied durable relay implementation. Scope and open-version caveat are preserved.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-treatment": [
+          "S05",
+          "C08",
+          "R05"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E15",
+      "url": "https://automerge.org/docs/reference/under-the-hood/merge-rules/",
+      "title": "Automerge merge rules",
+      "version_context": "Living official documentation",
+      "locator": "Map/list/text rules; predecessor IDs; reverse insertion caveat",
+      "independent_observation": "Updates/deletes refer to element IDs and inserts to predecessor elements. Concurrent insert order is deterministic; reverse insertion can produce unintuitive runs.",
+      "governing_condition_and_applicability": "A converged list/text is not an intelligible semantic resolution. Application order constraints and human review are distinct.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-treatment": [
+          "S10",
+          "C05",
+          "R07"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E16",
+      "url": "https://automerge.org/docs/reference/documents/text/",
+      "title": "Automerge text adapter guidance",
+      "version_context": "Living JavaScript guide; native Transactable cross-check E12",
+      "locator": "splice/updateText; frequency caveat",
+      "independent_observation": "Fine editing operations merge text. Infrequent whole-value diff conversion may merge poorly; guide recommends frequent updates.",
+      "governing_condition_and_applicability": "This does not implement or validate the native Slint editor or semantic overlap detector. Treatment keeps those as proposed work.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-treatment": [
+          "S07",
+          "C09"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E17",
+      "url": "https://arxiv.org/abs/2311.14007v2",
+      "title": "Extending JSON CRDTs with Move Operations",
+      "version_context": "Da/Kleppmann v2, March19 2024; PaPoC2024, DOI10.1145/3642976.3653030",
+      "locator": "Version record and abstract",
+      "independent_observation": "JSON subtree/list moves can create duplicate/cycle anomalies under naive merge. The paper introduces an algorithm and describes planned Automerge integration.",
+      "governing_condition_and_applicability": "A research algorithm and its abstract do not establish a shipped Rust move API. Flat cue-order constraint cycles are an app-level concern; no deployment claim is inferred.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-treatment": [
+          "S09",
+          "C06",
+          "R08"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E18",
+      "url": "https://github.com/y-crdt/y-crdt/releases",
+      "title": "Yrs release and regression context",
+      "version_context": "v0.28.0, September17 2026,23b7f56; v0.27.3,ac476a4",
+      "locator": "v0.28.0 and v0.27.3 release entries",
+      "independent_observation": "Earlier notes identify head-insertion and StickyIndex association fixes; the later pinned version is independently confirmed by package VCS metadata.",
+      "governing_condition_and_applicability": "Release identity/history does not prove absence of other bugs or chosen-app correctness.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-treatment": [
+          "S11",
+          "C10"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E19",
+      "url": "https://docs.rs/yrs/0.28.0/yrs/",
+      "title": "Yrs updates, identity and stable positions",
+      "version_context": "Rust yrs0.28.0; package VCS23b7f5693bbf9e7d26340c521ee8647f79bdfba2; package checksum recorded below",
+      "locator": "Root ClientID warning/MapRef rules; TransactionMut apply_update/encode_update; StickyIndex description",
+      "independent_observation": "Updates ignore duplicate blocks and buffer missing predecessors; convergence still needs eventual delivery. Active peers require distinct ClientIDs or concurrent changes can corrupt state. Map conflicts use a deterministic ClientID tie-break; StickyIndex follows blocks and supports serialization.",
+      "governing_condition_and_applicability": "Cue IDs differ from writer ClientIDs. Stable text positions have empty/deleted-target conditions and do not replace cue identity. Treatment drops the supported writer-identity safety condition from its self-contained final.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-treatment": [
+          "S12",
+          "S13",
+          "S14"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": [
+        "https://docs.rs/yrs/0.28.0/yrs/struct.TransactionMut.html",
+        "https://docs.rs/yrs/0.28.0/yrs/struct.StickyIndex.html"
+      ]
+    },
+    {
+      "id": "E20",
+      "url": "https://docs.yjs.dev/getting-started/working-with-shared-types",
+      "title": "Yjs shared-type movement",
+      "version_context": "Living JS documentation",
+      "locator": "Caveats",
+      "independent_observation": "An integrated shared type cannot simply be integrated at another position; stable cue records should remain separate from the reorder sequence.",
+      "governing_condition_and_applicability": "This JS caveat is scoped; versioned Yrs APIs are separately researched.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-treatment": [
+          "S15"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    },
+    {
+      "id": "E21",
+      "url": "https://automerge.org/docs/reference/repositories/",
+      "title": "Automerge Repo adapters and history sizing",
+      "version_context": "Living JavaScript documentation",
+      "locator": "StorageAdapter/NetworkAdapter example; Modeling Data performance; demo network caveat",
+      "independent_observation": "Repo separates storage and network plumbing. Documents retain full histories; sizing is workload-dependent. The public demo relay is not a privacy/reliability recommendation.",
+      "governing_condition_and_applicability": "No off-the-shelf native Slint repository is established. Unknown cue counts are sizing inputs, not an exemption from mechanism research.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-treatment": [
+          "S08",
+          "S16",
+          "C11"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": [
+        "https://automerge.org/docs/cookbook/modeling-data/",
+        "https://automerge.org/docs/tutorial/network-sync/"
+      ]
+    },
+    {
+      "id": "E22",
+      "url": "https://github.com/automerge/automerge/issues/945",
+      "title": "Automerge stale JS handshake documentation",
+      "version_context": "JS2.2.4/2.2.8, August23 2024 maintainer correction; closed",
+      "locator": "Maintainer receiveSyncMessage/generateSyncMessage explanation",
+      "independent_observation": "The earlier guide wrongly suggested receive returned a new reply; clients need a separate generate call.",
+      "governing_condition_and_applicability": "A historical JS API/docs mismatch, not a current Rust defect. It supports exact native-version adapter research and future handshake tests.",
+      "coverage": "COMPLETE",
+      "candidate_crosswalk": {
+        "B11-P02-treatment": [
+          "S17"
+        ]
+      },
+      "access_utc": {
+        "from": "2026-10-12T02:12:37Z",
+        "through": "2026-10-12T02:27:36.759418+00:00",
+        "precision": "Reviewer interval; exact per-page timestamp unavailable unless saved evidence says otherwise."
+      },
+      "supplementary_links": []
+    }
+  ],
+  "public_package_receipts": [
+    {
+      "url": "https://static.crates.io/crates/automerge/automerge-0.12.0.crate",
+      "sha256": "2fb849130973a7808a167887f56b1e8bdc36b9b541542602dcb337f34aecf47b",
+      "version": "0.12.0",
+      "vcs_metadata": {
+        "git": {
+          "sha1": "37545d0d72b50f52084a2eca2cadf2eb1a5a512a"
+        },
+        "path_in_vcs": "rust/automerge"
+      }
+    },
+    {
+      "url": "https://static.crates.io/crates/yrs/yrs-0.28.0.crate",
+      "sha256": "52c70dc8beca8666c77612a96889106ca3cd65318609721f464624ff79685da9",
+      "version": "0.28.0",
+      "vcs_metadata": {
+        "git": {
+          "sha1": "23b7f5693bbf9e7d26340c521ee8647f79bdfba2"
+        },
+        "path_in_vcs": "yrs"
+      }
+    }
+  ],
+  "input_scientific_document_receipts": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P02-treatment-eval-inputs/control-inputs/brief.md",
+      "bytes": 2284,
+      "sha256": "6ecee5e70ec43f86f7759ccab36f73c30015ec37b8668077b7687725c26d3990",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P02-treatment-eval-inputs/control-inputs/plan.md",
+      "bytes": 1770,
+      "sha256": "4131b95dae344ad0f1db60b7cd96bb1b12bdd05940bf686f776d0830d8cf9f1b",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/discovery.md",
+      "bytes": 10360,
+      "sha256": "0ef61e7f021740c3d1b440a9503388a2f8226f4c6f8f51b10a2bf4166bd29e7e",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/draft.md",
+      "bytes": 14724,
+      "sha256": "18a83b9b128424d4edf29c3724b2eaae320ff7c1ce8b91a41bf1310d13fa7ca7",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/source-map.json",
+      "bytes": 20188,
+      "sha256": "70ac37c5d4eebe643ece5710f8665a7fabc3ae2f6bda8272520af60fcb35464c",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/revealed-plan.md",
+      "bytes": 1770,
+      "sha256": "4131b95dae344ad0f1db60b7cd96bb1b12bdd05940bf686f776d0830d8cf9f1b",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/plan-reveal.json",
+      "bytes": 475,
+      "sha256": "856c27e4e44b634427477ea6dc7254b3df8df1e8b323f6f2bdeb6b5780177442",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/investigator/files/sources/index.md",
+      "bytes": 16623,
+      "sha256": "28b48df3aa54f425fafc4bf3146cf346cf7b688d6abc2230dcb6dab7ce6d44c5",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/files/critique.md",
+      "bytes": 13152,
+      "sha256": "b870f072430a48eac5858334daa224ff3bd8c9be8c9d2b1f88af712365995dbb",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/files/source-map.json",
+      "bytes": 13250,
+      "sha256": "29aca2e53f11c9374d8601154ec7c50fed97fb60aab0dcff0d306a81f8fb99c9",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/critic/files/sources/index.md",
+      "bytes": 2684,
+      "sha256": "d8ac77d5c1beb202ae809dce7bdf7832ae86994169133988b38be8b6eca0745f",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/final.md",
+      "bytes": 27680,
+      "sha256": "4092018d9fd34edcc559b6f274ba3075007896be8068cd636c8737fd054fb4e0",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/source-map.json",
+      "bytes": 44555,
+      "sha256": "b8095fb33dad39868e0b77ba7a8e64e106afce75a1e9c755ee2fc5a8aae20aae",
+      "kind": "frozen_member"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/sources/index.md",
+      "bytes": 3595,
+      "sha256": "3798dd763cfa26dd774ea96eb681e0e168be1177c0acf273dcc2be835d96311f",
+      "kind": "frozen_member"
+    }
+  ],
+  "access_limits": [
+    "Versioned docs.rs pages unavailable via the web tool were accessible directly over HTTPS or in exact release archives; this distinction is preserved.",
+    "Public source archive VCS metadata identifies a commit but is not a native/candidate provenance claim.",
+    "Only selected governing source/code/test context inspected; no entire public codebase or repository history scan and no downloaded source executed."
+  ]
+}

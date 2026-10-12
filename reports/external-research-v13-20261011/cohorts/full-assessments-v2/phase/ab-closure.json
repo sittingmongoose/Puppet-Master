@@ -1,0 +1,153 @@
+{
+  "original_sha256": "e7b5b22e839b82c4bed09a6459d9099bbc30eeb35925b172ca976ce00de51eb1",
+  "actual_phase_fields": {
+    "scope": "A/B original grader cohort mechanics closure only; not all80 completion or scientific qualification",
+    "recorded_utc": "2026-10-12T02:37:07.239481+00:00",
+    "original_records": 56,
+    "completed_contexts": 26,
+    "active_contexts": 0,
+    "queue": [],
+    "remaining_original_records": 24,
+    "root_held_C_D": 24,
+    "original_counts_include_partial_unassessed_missing_finals_and_failures": true,
+    "separate_root_B10_completion_excluded": true,
+    "native_goal_first_cohort_remains_complete": true,
+    "v1_receipt_cost_unchanged": true,
+    "no_new_campaign_goal_or_global_block": true
+  },
+  "selected_receipt_index": [
+    {
+      "block_id": "B02-P02",
+      "arm_count": 2,
+      "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B02-P02-001",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B02-P02-001",
+      "output_verification": "ER13_RUNTIME/state/eval-coordinator-v2/B02-P02-output-verification.json",
+      "output_verification_sha256": "59e08c7efc79783acd090a00138ee2cd7f8bd5fea7d3d302cfe083121625f3c8",
+      "terminal_zero_pending": true,
+      "settled": true,
+      "root_each_original_dual_notified": true
+    },
+    {
+      "block_id": "B06-P02",
+      "arm_count": 2,
+      "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B06-P02-001",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B06-P02-001",
+      "output_verification": "ER13_RUNTIME/state/eval-coordinator-v2/B06-P02-output-verification.json",
+      "output_verification_sha256": "107f9d8843a3913d2afd70386f35174ee798e50cd11e8f378cf385f8d25515eb",
+      "terminal_zero_pending": true,
+      "settled": true,
+      "root_each_original_dual_notified": true
+    },
+    {
+      "block_id": "B07-P02",
+      "arm_count": 2,
+      "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B07-P02-001",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B07-P02-001",
+      "output_verification": "ER13_RUNTIME/state/eval-coordinator-v2/B07-P02-output-verification.json",
+      "output_verification_sha256": "a752076216dc940204e1c8c8bc5429fa6d15ad94d03986677475349b3bd063db",
+      "terminal_zero_pending": true,
+      "settled": true,
+      "root_each_original_dual_notified": true
+    },
+    {
+      "block_id": "B07-P01",
+      "arm_count": 2,
+      "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B07-P01-001",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B07-P01-001",
+      "output_verification": "ER13_RUNTIME/state/eval-coordinator-v2/B07-P01-output-verification.json",
+      "output_verification_sha256": "ec5c4f15c66bd994dd98e970b8461a3c2be2e3bf571d164229393638c145826e",
+      "terminal_zero_pending": true,
+      "settled": true,
+      "root_each_original_dual_notified": true
+    },
+    {
+      "block_id": "B10-P02",
+      "arm_count": 2,
+      "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B10-P02-001",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B10-P02-001",
+      "output_verification": "ER13_RUNTIME/state/eval-coordinator-v2/B10-P02-output-verification.json",
+      "output_verification_sha256": "ce289bbf9d27e41c497afbbe7af73b49607a76d33539ed60783d153af7308400",
+      "terminal_zero_pending": true,
+      "settled": true,
+      "root_each_original_dual_notified": true
+    },
+    {
+      "block_id": "B09-P01",
+      "arm_count": 2,
+      "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B09-P01-001",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B09-P01-001",
+      "output_verification": "ER13_RUNTIME/state/eval-coordinator-v2/B09-P01-output-verification.json",
+      "output_verification_sha256": "a8948678456181b57bd137fcc602ded8bb413c21ebd37ce5c66ab37f67250bef",
+      "terminal_zero_pending": true,
+      "settled": true,
+      "root_each_original_dual_notified": true
+    },
+    {
+      "block_id": "B03-P02",
+      "arm_count": 2,
+      "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B03-P02-001",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B03-P02-001",
+      "output_verification": "ER13_RUNTIME/state/eval-coordinator-v2/B03-P02-output-verification.json",
+      "output_verification_sha256": "ff994f1d1f566972ac2cf4b17994c875d6eee09590ab4cafab2802641168a204",
+      "terminal_zero_pending": true,
+      "settled": true,
+      "root_each_original_dual_notified": true
+    },
+    {
+      "block_id": "B11-P02",
+      "arm_count": 2,
+      "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B11-P02-001",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B11-P02-001",
+      "output_verification": "ER13_RUNTIME/state/eval-coordinator-v2/B11-P02-output-verification.json",
+      "output_verification_sha256": "619c82cdfedd5f218d3f1bf0a12b6b22f374e281ff7d41d5c2dc7f38114d0f93",
+      "terminal_zero_pending": true,
+      "settled": true,
+      "root_each_original_dual_notified": true
+    },
+    {
+      "block_id": "B11-P01",
+      "arm_count": 2,
+      "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B11-P01-001",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B11-P01-001",
+      "output_verification": "ER13_RUNTIME/state/eval-coordinator-v2/B11-P01-output-verification.json",
+      "output_verification_sha256": "34c13fa465369490d1cde77cc35a57bc6780b36b3ab0d84bd9e82b42c0f3b118",
+      "terminal_zero_pending": true,
+      "settled": true,
+      "root_each_original_dual_notified": true
+    },
+    {
+      "block_id": "B03-P01",
+      "arm_count": 2,
+      "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B03-P01-001",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B03-P01-001",
+      "output_verification": "ER13_RUNTIME/state/eval-coordinator-v2/B03-P01-output-verification.json",
+      "output_verification_sha256": "8b0777bf3d10db18cc816f7df26c4d262d4e8d3b2b3c8f7a0d2024f36aa75574",
+      "terminal_zero_pending": true,
+      "settled": true,
+      "root_each_original_dual_notified": true
+    },
+    {
+      "block_id": "B12-P01",
+      "arm_count": 2,
+      "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B12-P01-001",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B12-P01-001",
+      "output_verification": "ER13_RUNTIME/state/eval-coordinator-v2/B12-P01-output-verification.json",
+      "output_verification_sha256": "01797d738c16c28018b2dbe8c5aaca9043eef3ec875c0c42048fe0faee1edb60",
+      "terminal_zero_pending": true,
+      "settled": true,
+      "root_each_original_dual_notified": true
+    },
+    {
+      "block_id": "B12-P02",
+      "arm_count": 2,
+      "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B12-P02-001",
+      "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B12-P02-001",
+      "output_verification": "ER13_RUNTIME/state/eval-coordinator-v2/B12-P02-output-verification.json",
+      "output_verification_sha256": "a78dd6259a292f8c1753647215161f095d250241d01d28dfbb32f4d9e6b0af39",
+      "terminal_zero_pending": true,
+      "settled": true,
+      "root_each_original_dual_notified": true
+    }
+  ],
+  "interpretation": "Historical A/B mechanics closure with56 original records including partial/unassessed/missing-final/failure records; not56 comparable complete grades or all80 completion. Separate root B10 coverage completion excluded."
+}

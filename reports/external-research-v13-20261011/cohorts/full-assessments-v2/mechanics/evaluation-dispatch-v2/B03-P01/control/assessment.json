@@ -1,0 +1,185 @@
+{
+  "schema": "er13.original-independent-assessment.v1",
+  "arm_id": "B03-P01-control",
+  "scope": "FULL",
+  "original": true,
+  "frozen_input_packet_sha256": "2b250282601e9f9ccbb228fe2d7edbc6f50741e30f8493020886fbece6382386",
+  "governing_contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+  "blinding": "Imperfect; paths/assignments reveal topology. Judgments frozen separately before any comparative file.",
+  "source_judgment": {
+    "value": "FAIL",
+    "material_defect_ids": [
+      "B03-P01-C-D01",
+      "B03-P01-C-D02"
+    ],
+    "finite_not_universal": true,
+    "rationale": "Material tokenizer unit/boundary falsehood remains in complete final. Supported trigram conditions also lost in final package.",
+    "no_deployment_or_future_execution_demand": true
+  },
+  "coverage": {
+    "overall": "PARTIAL",
+    "axes": [
+      {
+        "axis": 1,
+        "coverage": "COMPLETE",
+        "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+      },
+      {
+        "axis": 2,
+        "coverage": "PARTIAL",
+        "judgment": "MATERIAL_DEFECT_FOUND"
+      },
+      {
+        "axis": 3,
+        "coverage": "COMPLETE",
+        "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+      },
+      {
+        "axis": 4,
+        "coverage": "COMPLETE",
+        "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+      },
+      {
+        "axis": 5,
+        "coverage": "COMPLETE",
+        "judgment": "MATERIAL_DEFECT_FOUND"
+      },
+      {
+        "axis": 6,
+        "coverage": "COMPLETE",
+        "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+      }
+    ],
+    "details": "coverage.json",
+    "limits": "Unidentified target app, actual user/runtime facts, historical current reproduction and complete historical SQLite test body are UNASSESSED."
+  },
+  "defects": {
+    "material_ids": [
+      "B03-P01-C-D01",
+      "B03-P01-C-D02"
+    ],
+    "record": "defects.json"
+  },
+  "delivery": {
+    "status": "FINAL_PRESENT",
+    "final": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/reviser/files/final.md",
+      "bytes": 21492,
+      "sha256": "5b5006cbf9f3b4b85f23e14ba85c45e415a1c55fda3042eb2b1163b7e9529445"
+    },
+    "required_scientific_members_present": true,
+    "task_terminal_no_pending": true,
+    "deliverable": "Complete research planning proposal; source judgment separate.",
+    "missing_final": false
+  },
+  "time_eligibility": {
+    "status": "ELIGIBLE_ON_FROZEN_WHOLE_RUN_OBSERVATIONS",
+    "original_maximum_elapsed_seconds": 3600,
+    "t0_utc": "2026-10-12T00:58:14.272Z",
+    "whole_deadline_utc": "2026-10-12T01:58:14.272Z",
+    "packet_frozen_at_utc": "2026-10-12T01:44:03.451614+00:00",
+    "clocks_changed": false,
+    "stages": [
+      {
+        "stage": "investigator",
+        "requested_at_utc": "2026-10-12T00:58:15.114Z",
+        "native_created_utc": "2026-10-12T00:58:25+00:00",
+        "native_terminal_updated_utc": "2026-10-12T01:21:13+00:00",
+        "native_boundary_interval_seconds": 1368,
+        "stage_deadline_utc": "2026-10-12T01:28:15.114Z",
+        "same_birth_exact_objective": true,
+        "native_states": [
+          "active",
+          "complete"
+        ],
+        "task_terminal_no_pending_verified": true,
+        "deadline_observation": "Native terminal precedes notified deadline. Member write times independently unknown."
+      },
+      {
+        "stage": "critic",
+        "requested_at_utc": "2026-10-12T01:30:09.717Z",
+        "native_created_utc": "2026-10-12T01:30:25+00:00",
+        "native_terminal_updated_utc": "2026-10-12T01:36:25+00:00",
+        "native_boundary_interval_seconds": 360,
+        "stage_deadline_utc": "2026-10-12T01:42:09.717Z",
+        "same_birth_exact_objective": true,
+        "native_states": [
+          "active",
+          "complete"
+        ],
+        "task_terminal_no_pending_verified": true,
+        "deadline_observation": "Native terminal precedes notified deadline. Member write times independently unknown."
+      },
+      {
+        "stage": "reviser",
+        "requested_at_utc": "2026-10-12T01:36:47.715Z",
+        "native_created_utc": "2026-10-12T01:37:00+00:00",
+        "native_terminal_updated_utc": "2026-10-12T01:43:36+00:00",
+        "native_boundary_interval_seconds": 396,
+        "stage_deadline_utc": "2026-10-12T01:54:47.715Z",
+        "same_birth_exact_objective": true,
+        "native_states": [
+          "active",
+          "complete"
+        ],
+        "task_terminal_no_pending_verified": true,
+        "deadline_observation": "Native terminal precedes notified deadline. Member write times independently unknown."
+      }
+    ],
+    "last_stage_native_terminal_proxy_elapsed_seconds": 2721.728,
+    "proxy_definition": "T0 to frozen last-stage native updatedAt complete timestamp; not exact provider activity or user-visible delivery. Native timestamps have second resolution.",
+    "exact_last_scientific_artifact_time": "UNKNOWN",
+    "whole_run_final_present_before_deadline": true,
+    "stage_artifact_timestamp_coverage": "PARTIAL: native completion and prepared deadlines observed; not every member write independently timestamped."
+  },
+  "method_compliance": {
+    "coverage": "PARTIAL",
+    "status": "FROZEN_MECHANICS_CONSISTENT; EXECUTION_PROVENANCE_LIMITED",
+    "requested_topology": "fresh investigator -> fresh independent critic -> fresh reviser",
+    "one_time_reveal_discovery_hash_match": true,
+    "revealed_plan_exact_hash_match": true,
+    "draft_and_critique_complete_and_present": true,
+    "retention_custody_witnesses": "Separate stage births and terminal handoffs consistent.",
+    "unverified": [
+      "pre-input activation ordering beyond frozen receipts",
+      "complete access history and author/critic isolation",
+      "full provider activity/session linkage"
+    ],
+    "scientific_compliance": "Material source/preservation findings remain separate from mechanical custody. No recipe selection or author repair."
+  },
+  "native_identity_provenance": {
+    "coverage": "PARTIAL",
+    "native_create_terminal_present": true,
+    "per_stage_same_birth_exact_frozen_objective_verified": true,
+    "observed_lifecycle": "All supplied native captures active -> complete; all actual task receipts terminal with zero pending.",
+    "retained_author_transitions": "not applicable",
+    "independent_native_to_task_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody. Receipt consistency does not prove live session authenticity or no unseen replacement.",
+    "provider_model_tier": "Requested public model gpt-6-luna / max / default in matched configs; actual billing/routing identity not exported or independently authenticated.",
+    "capture_field_export_policy": "No account/provider routing identity, native IDs/full transcripts, usage counts or machine/process state in these public outputs."
+  },
+  "resource_billing_coverage": {
+    "coverage": "PARTIAL",
+    "candidate_product": "Frozen native elapsed/counter fields exist, but granular provider activity, input/cache/output/reasoning breakdown, subscription consumption, dollars and complete billing are UNKNOWN. Numeric usage counts are not exported.",
+    "native_goal_boundary_sum_seconds": 2124,
+    "native_goal_boundaries_are_context_or_billing": "No: native goal intervals are observed boundaries, not authenticated T3 created/started occupancy or paid activity. Retained overlap is not free.",
+    "context_created_started_occupancy": "UNKNOWN; only receipt-bound native intervals and treatment root residence/wait witnesses available.",
+    "active_provider_activity_seconds": null,
+    "billing_cost": null,
+    "billing_currency": null,
+    "unknown_is_not_zero": true,
+    "independent_evaluation": {
+      "category": "independent_evaluation",
+      "grader_start_observed_utc": "2026-10-12T02:19:41.611Z",
+      "original_record_written_utc": "2026-10-12T02:31:36.247073+00:00",
+      "billing": "UNKNOWN; separate from candidate product, preparation, support and root observation costs."
+    },
+    "all_assigned_denominator": 1,
+    "failed_final_included": true,
+    "consumption_per_source_passing_final": "UNDEFINED: this arm has zero source passes."
+  },
+  "critic_disposition_record": "coverage.json",
+  "preservation_record": "coverage.json",
+  "input_custody": "../shared/input-integrity.json",
+  "no_candidate_feedback": true,
+  "no_canon_git_goals_delegation": true
+}

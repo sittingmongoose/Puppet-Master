@@ -1,0 +1,60 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "B10-P02-treatment",
+  "defects": [
+    {
+      "id": "T-D1",
+      "severity": "material_incomplete_and_unsupported_context",
+      "stage": "critic/reviser",
+      "locator": "critic.md Evidence and validation status; source-map.json S20; final.md Workflow alternatives and Source-quality and scope notes (line 164)",
+      "finding": "Final treats current Material maintenance as unknown from cited 9.7.7 release and carries only historical feature-freeze context. The very release has an explicit near-term EOL/support warning, predating candidate clocks. This changes the maintainability decision for a new handbook and was not reported.",
+      "final_status": "Unresolved decisive source failure",
+      "primary_sources": [
+        "P35",
+        "P36"
+      ],
+      "evidence": "evidence/material-lifecycle.json",
+      "requires_deployment": false
+    },
+    {
+      "id": "T-D2",
+      "severity": "minor_wording",
+      "stage": "investigator/reviser",
+      "locator": "final.md Decision summary",
+      "finding": "Says offline plugin explicitly disables its versioning plugin; docs instead instruct the author to disable Fetch-dependent versioning. Tag 9.7.7 code does not do that automatically. Later prose/source map state the condition correctly, limiting consequence.",
+      "final_status": "Nonmaterial inconsistency, independent of T-D1",
+      "primary_sources": [
+        "P19",
+        "P20"
+      ]
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "finding": "C1 H5P missing later non-reproduction/version context",
+      "independent_disposition": "Supported context correction; final accurately preserves unknown installed version, contributor non-reproduction and absence of confirmed resolution."
+    },
+    {
+      "finding": "C2 export fidelity too abstract",
+      "independent_disposition": "Final matrix is useful and honest. Original already required separate QA; the critic material severity is not conclusively established solely by absence of a matrix. No false capability removal or executed-validation claim results."
+    },
+    {
+      "finding": "C3 H5P download configuration condition",
+      "independent_disposition": "Supported; final explicitly carries critic source and discloses reviser timeout."
+    },
+    {
+      "finding": "C4 lowest installation burden inference",
+      "independent_disposition": "Supported narrowing; final makes it a conditional pilot hypothesis."
+    },
+    {
+      "finding": "C5 unknown audience/governance choices",
+      "independent_disposition": "Legitimate owner input; preserved without fabricating user facts."
+    },
+    {
+      "finding": "S20 does not establish current roadmap",
+      "independent_disposition": "Material source-context omission remains; T-D1 independently contradicts this account of the cited release."
+    }
+  ],
+  "prospective_repairs_provided": false,
+  "limitations": "Original judgments are immutable; missing contract is evaluation infrastructure, not a candidate defect."
+}

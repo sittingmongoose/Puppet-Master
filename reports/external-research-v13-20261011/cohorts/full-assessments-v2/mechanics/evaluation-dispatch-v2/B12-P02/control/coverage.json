@@ -1,0 +1,257 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "B12-P02-control",
+  "overall": "PARTIAL",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "note": "All brief obligations and negative constraints read and evaluated; substantive failure IDs are recorded separately from coverage."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "PARTIAL",
+      "note": "Governing docs and focused implementation/caller/test/history context independently inspected. Ancillary architecture or first-fixed-release tracing remains partial as identified by source family; no universal source pass."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "note": "Available mechanisms and consequential research omissions evaluated; no exhaustive recall claim over every possible library or platform."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "note": "All released-plan choices and every frozen critic finding independently adjudicated; no rejected criticism concealed."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "note": "Complete discovery, draft, criticism, source maps/indexes and final read; treatment also complete provisional and binding witnesses. Supported preservation assessed, not inferred from token/citation counts."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "note": "Proposed oracles/races/resource/crash tests and execution statements evaluated as a research proposal; future product deployment/tests were not required."
+    }
+  ],
+  "consequential_obligations": [
+    {
+      "id": "O01",
+      "obligation": "Responsive UI and off-event-loop I/O",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_FAILURE_FOUND",
+      "defect_ids": []
+    },
+    {
+      "id": "O02",
+      "obligation": "Visible preference without import starvation",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_FAILURE_FOUND",
+      "defect_ids": []
+    },
+    {
+      "id": "O03",
+      "obligation": "Cancelable jobs, bounded shutdown and shared ownership",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_FAILURE_FOUND",
+      "defect_ids": []
+    },
+    {
+      "id": "O04",
+      "obligation": "Request/source identity, keyed result validity and never-stale display",
+      "coverage": "COMPLETE",
+      "judgment": "MATERIAL_FAILURE",
+      "defect_ids": [
+        "C-01"
+      ]
+    },
+    {
+      "id": "O05",
+      "obligation": "Unreliable/untrusted handlers, crash and stall recovery",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_FAILURE_FOUND",
+      "defect_ids": []
+    },
+    {
+      "id": "O06",
+      "obligation": "Large-input and layered queue/CPU/memory/output/disk bounds",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_FAILURE_FOUND",
+      "defect_ids": []
+    },
+    {
+      "id": "O07",
+      "obligation": "Cache identity, complete publication and recovery",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_FAILURE_FOUND",
+      "defect_ids": []
+    },
+    {
+      "id": "O08",
+      "obligation": "Derived previews versus durable import/restart intent",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_FAILURE_FOUND",
+      "defect_ids": []
+    },
+    {
+      "id": "O09",
+      "obligation": "Truthful, bounded and identity-stamped progress",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_FAILURE_FOUND",
+      "defect_ids": []
+    },
+    {
+      "id": "O10",
+      "obligation": "Local/no-upload/no-GPU/no-privileged-service/no-small-or-trusted-parser assumptions",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_FAILURE_FOUND",
+      "defect_ids": []
+    },
+    {
+      "id": "O11",
+      "obligation": "Useful unfamiliar mechanisms, alternatives and governing implementation history",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_FAILURE_FOUND",
+      "defect_ids": []
+    },
+    {
+      "id": "O12",
+      "obligation": "Every material exact-plan disposition",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_FAILURE_FOUND",
+      "defect_ids": []
+    },
+    {
+      "id": "O13",
+      "obligation": "Every critic disposition, correction/rejection and uncertainty",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_FAILURE_FOUND",
+      "defect_ids": []
+    },
+    {
+      "id": "O14",
+      "obligation": "Discovery/draft/criticism/provisional-to-final supported preservation",
+      "coverage": "COMPLETE",
+      "judgment": "MATERIAL_FAILURE",
+      "defect_ids": [
+        "C-01"
+      ]
+    },
+    {
+      "id": "O15",
+      "obligation": "Meaningful proposed validation versus actual executed work",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_FAILURE_FOUND",
+      "defect_ids": []
+    }
+  ],
+  "consequential_source_families": [
+    {
+      "family_id": "E01",
+      "name": "Tokio blocking work",
+      "coverage": "COMPLETE",
+      "source_index_id": "E01",
+      "limits": []
+    },
+    {
+      "family_id": "E02",
+      "name": "Rust Child and bounded transport",
+      "coverage": "COMPLETE",
+      "source_index_id": "E02",
+      "limits": []
+    },
+    {
+      "family_id": "E03",
+      "name": "Windows Job Objects",
+      "coverage": "COMPLETE",
+      "source_index_id": "E03",
+      "limits": []
+    },
+    {
+      "family_id": "E04",
+      "name": "Thumbnail validity and atomic publication",
+      "coverage": "COMPLETE",
+      "source_index_id": "E04",
+      "limits": []
+    },
+    {
+      "family_id": "E05",
+      "name": "SQLite commit/recovery",
+      "coverage": "COMPLETE",
+      "source_index_id": "E05",
+      "limits": []
+    },
+    {
+      "family_id": "E06",
+      "name": "Cancellation ownership and slot ordering",
+      "coverage": "COMPLETE",
+      "source_index_id": "E06",
+      "limits": []
+    },
+    {
+      "family_id": "E07",
+      "name": "Concrete unprivileged containment authorities",
+      "coverage": "COMPLETE",
+      "source_index_id": "E07",
+      "limits": []
+    },
+    {
+      "family_id": "E08",
+      "name": "Apple worker and native preview alternatives",
+      "coverage": "COMPLETE",
+      "source_index_id": "E08",
+      "limits": [
+        "Browser JS stubs/Markdown content-type failed; official .md content was successfully read via direct HTTP. Copyright 2026 Apple Inc.; all rights reserved."
+      ]
+    },
+    {
+      "family_id": "E09",
+      "name": "Windows Shell thumbnails",
+      "coverage": "COMPLETE",
+      "source_index_id": "E09",
+      "limits": []
+    },
+    {
+      "family_id": "E10",
+      "name": "Zotero attachment preview and release context",
+      "coverage": "COMPLETE",
+      "source_index_id": "E10",
+      "limits": []
+    },
+    {
+      "family_id": "E11",
+      "name": "Zotero worker architectures",
+      "coverage": "PARTIAL",
+      "source_index_id": "E11",
+      "limits": [
+        "Document-worker README was read completely; its build/test/iOS implementation was not independently traced. No project code executed. Zotero source copyright Corporation for Digital Scholarship; AGPL-3.0-or-later."
+      ]
+    },
+    {
+      "family_id": "E12",
+      "name": "ZoteroThumbFile bounded rendering precedent",
+      "coverage": "COMPLETE",
+      "source_index_id": "E12",
+      "limits": [
+        "Tests and runtime receipts were not executed. Upstream license AGPL-3.0-or-later."
+      ]
+    },
+    {
+      "family_id": "FUTURE-PLATFORM-INSTANCE",
+      "name": "Actual owner platforms, installed handlers, renderer implementation, runtime sandbox/performance execution",
+      "coverage": "UNASSESSED",
+      "limits": [
+        "Unprovided owner facts/future application work. Not demanded for this research-proposal grade; not represented as completed validation."
+      ]
+    }
+  ],
+  "unread_assigned_scientific_documents": [],
+  "expensive_review_cutoff": "No early decisive-failure cutoff used. Full assigned scientific documents were read. Explicit source-family limits remain.",
+  "universal_recall_or_correctness_claim": false
+}

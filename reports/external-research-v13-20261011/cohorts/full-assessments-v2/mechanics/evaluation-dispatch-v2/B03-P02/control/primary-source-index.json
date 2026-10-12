@@ -1,0 +1,452 @@
+{
+  "schema": "er13.independent-primary-source-index.v1",
+  "arm_id": "B03-P02-control",
+  "sources": [
+    {
+      "candidate_source_id": "S01",
+      "title": "SQLite isolation",
+      "exact_url": "https://www.sqlite.org/isolation.html",
+      "declared_version": "SQLite official living documentation; WAL supported since 3.7.0 (2010-07-21)",
+      "independent_observed_version_or_context": "SQLite living isolation documentation",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Separate-connection isolation; WAL read transactions; rollback mode; shared-cache/read_uncommitted exception",
+      "independent_finding": "WAL read transactions retain their read view; independent page transactions do not. Shared cache plus read_uncommitted is a specific exception. Database isolation does not freeze external blobs.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:50.698363+00:00",
+        "resolved_url": "https://www.sqlite.org/isolation.html",
+        "response_sha256": "23395653f04984e4310b287ed548202d874e06ecd2cba17f32b2714e5b7ebef7",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S02",
+      "title": "SQLite Online Backup API",
+      "exact_url": "https://www.sqlite.org/backup.html",
+      "declared_version": "SQLite official living documentation",
+      "independent_observed_version_or_context": "SQLite living backup documentation, page update 2025-11-13",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Overview and section 3.1, checked against C interface",
+      "independent_finding": "Incremental copying releases source locks. Other-connection writes can restart the copy; repeated restarts can prevent completion. A successful result is consistent, but an unpinned initial start-time identity must not be inferred after restarts.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:50.698938+00:00",
+        "resolved_url": "https://www.sqlite.org/backup.html",
+        "response_sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S03",
+      "title": "PostgreSQL transaction isolation",
+      "exact_url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+      "declared_version": "PostgreSQL 18 docs",
+      "independent_observed_version_or_context": "PostgreSQL 18",
+      "coverage": "COMPLETE",
+      "inspected_scope": "13.2.2 Repeatable Read, including read-only/retry distinctions",
+      "independent_finding": "The stable snapshot begins at the first non-transaction-control statement. Read-only Repeatable Read does not need serialization-conflict retries; a stable view is not a claim of serializable business-rule consistency.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:50.699298+00:00",
+        "resolved_url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+        "response_sha256": "e5753b8bae282c289fb3541715a92d5451b5ec6a49329679082e58f95bdc0978",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S04",
+      "title": "RFC 8259 JSON",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc8259",
+      "declared_version": "RFC 8259, Standards Track, Dec. 2017",
+      "independent_observed_version_or_context": "RFC 8259, 2017",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Sections 4, 6, 8.1, 9",
+      "independent_finding": "UTF-8 exchange, SHOULD-unique keys, integer interoperability limits and parser limits are supported. Rejecting duplicate keys is an application policy. NDJSON is not specified here.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:50.699693+00:00",
+        "resolved_url": "https://www.rfc-editor.org/info/rfc8259/",
+        "response_sha256": "eb76bf6b2534db2311e7791a346bdf7eb4d06135cf925914016b0429bde19827",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S05",
+      "title": "RFC 3339 timestamps",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc3339",
+      "declared_version": "RFC 3339, July 2002; RFC Editor says updated by RFC 9557",
+      "independent_observed_version_or_context": "RFC 3339, 2002, updated by RFC 9557, 2024",
+      "coverage": "COMPLETE",
+      "inspected_scope": "3339 4.3/5.6 and 9557 2.1-2.3/3.4",
+      "independent_finding": "The final repeats the original 3339 distinction between -00:00 and Z while acknowledging an update in its source map. The governing 9557 update gives Z and -00:00 the same unknown-local-offset meaning; +00:00 remains distinct. See C01.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:50.700177+00:00",
+        "resolved_url": "https://www.rfc-editor.org/info/rfc3339/",
+        "response_sha256": "d648eea437ea22aecd1adf572621bd6dc1c91c079ad2a6b32e2b464084587cf5",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S06",
+      "title": "PKWARE ZIP APPNOTE",
+      "exact_url": "https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT",
+      "declared_version": "ZIP APPNOTE 6.3.10 FINAL, revised 2022-11-01",
+      "independent_observed_version_or_context": "APPNOTE 6.3.10 FINAL, revised 2022-11-01",
+      "coverage": "COMPLETE",
+      "inspected_scope": "4.3.5, 4.3.9, 4.3.12-16, 4.5.3",
+      "independent_finding": "Descriptors permit streaming; ZIP64 expands size/count/offset representations; each member has central-directory metadata. Structural close does not prove application completeness, authenticity, or an OS reader matrix.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:50.700667+00:00",
+        "resolved_url": "https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT",
+        "response_sha256": "0b993022a7d320a0bf704e6980bea36fafd17a6066ab994db0a0c16278a50cd6",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S07",
+      "title": "GNU tar manual",
+      "exact_url": "https://www.gnu.org/software/tar/manual/tar.html",
+      "declared_version": "GNU tar 1.35, released 2023-08-22",
+      "independent_observed_version_or_context": "Retrieved living GNU tar manual: 1.35.90, 11 June 2026",
+      "coverage": "COMPLETE",
+      "inspected_scope": "8.3.4-8.3.7 and format definitions",
+      "independent_finding": "PAX/ustar comparisons are supported. The frozen source map labels this living URL as GNU tar 1.35; the retrieved edition is different. The final explicitly caveats its predecessor retrieval limits. See C03.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:50.766503+00:00",
+        "resolved_url": "https://www.gnu.org/software/tar/manual/tar.html",
+        "response_sha256": "0d1b696a086d3c5e96207da825e2ed23657e0407e3b8d931b0e86b0832bc4970",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S08",
+      "title": "GitLab export docs",
+      "exact_url": "https://docs.gitlab.com/user/project/settings/import_export/",
+      "declared_version": "GitLab living docs accessed 2026-10-12, not version-pinned",
+      "independent_observed_version_or_context": "Living GitLab export documentation",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Backup warning; user mapping; NDJSON; compatibility; version-dependent item inventory",
+      "independent_finding": "An explicit warning against using project exports as backups is present. Item scope and user mapping depend on GitLab version and roles. It is precedent, not the unknown tracker contract.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:50.824575+00:00",
+        "resolved_url": "https://docs.gitlab.com/user/project/settings/import_export/",
+        "response_sha256": "78e204f2af57efb0008c92e74a193e49d0ae408af5e6b8788c1bcba274c1274e",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S09",
+      "title": "GitLab project export schema",
+      "exact_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/lib/gitlab/import_export/project/import_export.yml",
+      "declared_version": "GitLab 19.2 stable EE branch head, commit fc45538465514c4777fc196641900b63470c6236",
+      "independent_observed_version_or_context": "Exact commit fc45538465514c4777fc196641900b63470c6236",
+      "coverage": "COMPLETE",
+      "inspected_scope": "CE/EE relation tree, included/excluded attributes, custom_attributes, issues, import_only_tree",
+      "independent_finding": "The explicit domain allowlist and compatibility-only associations are real. This commit is independently verified; the branch-head label is not independently attested by a historical branch capture.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:50.847827+00:00",
+        "resolved_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/lib/gitlab/import_export/project/import_export.yml",
+        "response_sha256": "3938638398081923caf996e39514761c59f5da5ddc01aa4d3d533facb5bdb90a",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S10",
+      "title": "GitLab project TreeSaver",
+      "exact_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/lib/gitlab/import_export/project/tree_saver.rb",
+      "declared_version": "GitLab 19.2 branch commit fc45538465514c4777fc196641900b63470c6236",
+      "independent_observed_version_or_context": "Exact GitLab commit as above",
+      "coverage": "COMPLETE",
+      "inspected_scope": "TreeSaver initialize/save/stream_export/exportable/json_writer",
+      "independent_finding": "Current user and excluded relations reach the serializer; writer close is in ensure; Net::OpenTimeout retries are present. This code does not itself establish a global snapshot.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:50.853092+00:00",
+        "resolved_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/lib/gitlab/import_export/project/tree_saver.rb",
+        "response_sha256": "945164030a6e9f149d28869539ac10f26c83004efa7fd7f69c197cc321ef0d7c",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S11",
+      "title": "GitLab StreamingSerializer",
+      "exact_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/lib/gitlab/import_export/json/streaming_serializer.rb",
+      "declared_version": "GitLab 19.2 branch commit fc45538465514c4777fc196641900b63470c6236",
+      "independent_observed_version_or_context": "Exact GitLab commit as above",
+      "coverage": "COMPLETE",
+      "inspected_scope": "StreamingSerializer execute, batching, authorization, rescue and callbacks",
+      "independent_finding": "BATCH_SIZE=100, keyset/configured ordering, restricted-association authorization and a log-and-skip relation-batch rescue are verified. Callbacks and replica use preclude inferring generic source immutability from this precedent.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:50.907905+00:00",
+        "resolved_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/lib/gitlab/import_export/json/streaming_serializer.rb",
+        "response_sha256": "d14ef04dbc8a0524456b26fd654b54698e0cc07a2fc5179cf53d283ac2d29d46",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S12",
+      "title": "GitLab ExportService",
+      "exact_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/app/services/projects/import_export/export_service.rb",
+      "declared_version": "GitLab 19.2 branch commit fc45538465514c4777fc196641900b63470c6236",
+      "independent_observed_version_or_context": "Exact GitLab commit as above",
+      "coverage": "COMPLETE",
+      "inspected_scope": "ExportService authorization, component savers, archive saver, error path and ensure cleanup",
+      "independent_finding": "Authorization and separate data/blob/repository savers, archive orchestration and cleanup are supported. This application-specific orchestration is not evidence that the proposed tracker exporter has been built or is read-only.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:50.939295+00:00",
+        "resolved_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/app/services/projects/import_export/export_service.rb",
+        "response_sha256": "779e2ab9f61246f31b6945e27383f0ef74683327a54329d7f795dfb37e654491",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S13",
+      "title": "GitLab ExportTask caller",
+      "exact_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/lib/gitlab/import_export/project/export_task.rb",
+      "declared_version": "GitLab 19.2 branch commit fc45538465514c4777fc196641900b63470c6236",
+      "independent_observed_version_or_context": "Exact GitLab commit as above",
+      "coverage": "COMPLETE",
+      "inspected_scope": "ExportTask export/file_path_exists?/with_export",
+      "independent_finding": "The task checks project and destination directory, calls ExportService with a move strategy, and disables object storage for that path. It is a caller example, not a guarantee for every destination.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.041826+00:00",
+        "resolved_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/lib/gitlab/import_export/project/export_task.rb",
+        "response_sha256": "26fb0fa56cc91f26750d1ac130ee439bfa293b087a0c84c33c81b82c4e6bada6",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S14",
+      "title": "GitLab NDJSON writer",
+      "exact_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/lib/gitlab/import_export/json/ndjson_writer.rb",
+      "declared_version": "GitLab 19.2 branch commit fc45538465514c4777fc196641900b63470c6236",
+      "independent_observed_version_or_context": "Exact GitLab commit as above",
+      "coverage": "COMPLETE",
+      "inspected_scope": "NdjsonWriter attributes/single relation/relation array/with_file",
+      "independent_finding": "Array relations are emitted one JSON value and newline at a time; file mode is append. The final appropriately treats this as an application convention.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.049458+00:00",
+        "resolved_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/lib/gitlab/import_export/json/ndjson_writer.rb",
+        "response_sha256": "51c2c3747fd17af3323c4cbd011fe14a77c0523390efa86183f99e84f1a0f2e7",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S15",
+      "title": "GitLab TreeSaver tests",
+      "exact_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/spec/lib/gitlab/import_export/project/tree_saver_spec.rb",
+      "declared_version": "GitLab 19.2 branch commit fc45538465514c4777fc196641900b63470c6236",
+      "independent_observed_version_or_context": "Exact GitLab commit as above",
+      "coverage": "COMPLETE",
+      "inspected_scope": "TreeSaver test setup and root/issue/merge-request/comment/author/relation assertions",
+      "independent_finding": "Relevant intended field and relationship assertions are present. Neither candidate nor evaluator ran this suite.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.171101+00:00",
+        "resolved_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/spec/lib/gitlab/import_export/project/tree_saver_spec.rb",
+        "response_sha256": "eb8a124ec62730bbd9e61c3c1874f3e7425196b8838d5df85a3804020ebdb616",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S16",
+      "title": "GitLab NDJSON writer tests",
+      "exact_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/spec/lib/gitlab/import_export/json/ndjson_writer_spec.rb",
+      "declared_version": "GitLab 19.2 branch commit fc45538465514c4777fc196641900b63470c6236",
+      "independent_observed_version_or_context": "Exact GitLab commit as above",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Entire NDJSON writer test file",
+      "independent_finding": "Root, relation append and write/read assertions are present. Source inspection is not executed validation or a complete fidelity test.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.179450+00:00",
+        "resolved_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/spec/lib/gitlab/import_export/json/ndjson_writer_spec.rb",
+        "response_sha256": "de005bc0b234f826684bdb65eed6165883d389b91c5de18b26105aae1dc24a1d",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S17",
+      "title": "GitLab EE permission tests",
+      "exact_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/ee/spec/lib/ee/gitlab/import_export/project/tree_saver_spec.rb",
+      "declared_version": "GitLab 19.2 branch commit fc45538465514c4777fc196641900b63470c6236",
+      "independent_observed_version_or_context": "Exact GitLab commit as above",
+      "coverage": "COMPLETE",
+      "inspected_scope": "EE TreeSaver tests: epic unreadability and denied note association",
+      "independent_finding": "An inaccessible epic is omitted; denying one note leaves the other two. These are GitLab-specific test definitions, not proof of the unknown tracker authorization policy.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.179733+00:00",
+        "resolved_url": "https://gitlab.com/gitlab-org/gitlab/-/raw/fc45538465514c4777fc196641900b63470c6236/ee/spec/lib/ee/gitlab/import_export/project/tree_saver_spec.rb",
+        "response_sha256": "36a88a76840872c3c67dc3ada595d1fc2d8982cae30876dfec1ff4ba342cf1b7",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S18",
+      "title": "NIST Secure Hash Standard",
+      "exact_url": "https://csrc.nist.gov/pubs/fips/180-4/upd1/final",
+      "declared_version": "FIPS 180-4 final 2015-08-04; revision planned per NIST page",
+      "independent_observed_version_or_context": "FIPS 180-4, August 2015; revision planning note 2023",
+      "coverage": "COMPLETE",
+      "inspected_scope": "NIST publication abstract and planning note",
+      "independent_finding": "Digest-based change detection is supported. An editable manifest does not authenticate the producer.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.181278+00:00",
+        "resolved_url": "https://csrc.nist.gov/pubs/fips/180-4/upd1/final",
+        "response_sha256": "8c872484bf77ae6ca4c0757043eb9576d71dfe7cf8562aeac7e77672c6520024",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S19",
+      "title": "OWASP archive security test guide",
+      "exact_url": "https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/10-Business_Logic/09-Upload_of_Malicious_Files/",
+      "declared_version": "OWASP WSTG latest living page, version not pinned",
+      "independent_observed_version_or_context": "Living OWASP WSTG guidance",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Archive traversal, symlinks, decompression bombs",
+      "independent_finding": "Extraction and later processing can cross directory boundaries or exhaust resources. These threats support importer limits; they do not require content-addressed exporter paths.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.241044+00:00",
+        "resolved_url": "https://wstg.owasp.org/latest/4-Web_Application_Security_Testing/10-Business_Logic/09-Upload_of_Malicious_Files/",
+        "response_sha256": "312acdcf5abeddf5f2f776c20747ef123790e337fd18a319fcce1e3240111c8e",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S20",
+      "title": "GitLab large export issue",
+      "exact_url": "https://gitlab.com/gitlab-org/gitlab/-/issues/436638",
+      "declared_version": "Reporter says self-managed GitLab 16.5.3 on Kubernetes; no fix status established in reviewed page",
+      "independent_observed_version_or_context": "Issue report: self-hosted GitLab 16.5.3",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Issue body, reported export status, upload/destination symptoms and environment version",
+      "independent_finding": "The large-export report was accessible in the independent retrieval. The symptoms are reported observations; no root cause or current fix was established. Candidate retrieval failure is not disproved by a different later transport succeeding.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.304539+00:00",
+        "resolved_url": "https://gitlab.com/gitlab-org/gitlab/-/work_items/436638",
+        "response_sha256": "d1c726e61ab4cb9363b7d8b9a86c9663523f3be18727bfc86b3540f09521e0f8",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S21",
+      "title": "GitLab relation export MR",
+      "exact_url": "https://gitlab.com/gitlab-org/gitlab/-/merge_requests/90650",
+      "declared_version": "Merged MR, June 2022; release adoption not established",
+      "independent_observed_version_or_context": "Historical MR requested June 20, 2022; page edited July 19, 2022",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Overview, relation service/worker/saver, validation instructions",
+      "independent_finding": "Independent web retrieval verifies staged per-relation exports, object-store upload and tarball assembly as a then-unused proposal. Terminal urllib returned HTTP 403. Current adoption is not asserted or established.",
+      "retrieval": {
+        "status": "UNAVAILABLE",
+        "access_utc": "2026-10-12T02:14:51.307874+00:00",
+        "resolved_url": null,
+        "response_sha256": null,
+        "error": "HTTP Error 403: Forbidden"
+      }
+    },
+    {
+      "candidate_source_id": "S22",
+      "title": "GitLab direct-transfer release history",
+      "exact_url": "https://about.gitlab.com/blog/how-to-migrate-gitlab-groups-and-projects-more-efficiently/",
+      "declared_version": "First-party blog 2023-08-02; describes GitLab 15.10/16.3",
+      "independent_observed_version_or_context": "First-party GitLab post, August 2, 2023",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Direct-transfer timeouts and relation batching",
+      "independent_finding": "16.3 batching/parallelism is supported, with earlier 16.2 availability and feature-flag conditions. It concerns direct transfer, not a general task-archive performance guarantee.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.331329+00:00",
+        "resolved_url": "https://about.gitlab.com/blog/how-to-migrate-gitlab-groups-and-projects-more-efficiently/",
+        "response_sha256": "3e4308336049cd3d840ce3d750224bb771615d0f8fde8a85d0a203ebf4766bc7",
+        "error": null
+      }
+    },
+    {
+      "candidate_source_id": "S23",
+      "title": "GitLab repository backup performance history",
+      "exact_url": "https://about.gitlab.com/blog/how-we-decreased-gitlab-repo-backup-times-from-48-hours-to-41-minutes/",
+      "declared_version": "First-party blog 2025-06-05; improvements in GitLab 18.0",
+      "independent_observed_version_or_context": "First-party GitLab post, June 5, 2025",
+      "coverage": "COMPLETE",
+      "inspected_scope": "Git bundle duplicate-reference loop, benchmark and 18.0 availability",
+      "independent_finding": "The O(N²) reference loop and reported benchmark/release context are supported. They do not identify a bottleneck in this tracker.",
+      "retrieval": {
+        "status": "FETCHED",
+        "access_utc": "2026-10-12T02:14:51.368565+00:00",
+        "resolved_url": "https://about.gitlab.com/blog/how-we-decreased-gitlab-repo-backup-times-from-48-hours-to-41-minutes/",
+        "response_sha256": "15df3b248b6d8f7c6f3780754408c656cd422ae173b99209ff1be53446802030",
+        "error": null
+      }
+    }
+  ],
+  "adjacent_primary_context": [
+    {
+      "id": "independent:time-update",
+      "coverage": "COMPLETE",
+      "url": "https://www.rfc-editor.org/rfc/rfc9557.html",
+      "response_sha256": "d7cc2c033d8e4f4e3f7149003023567374997129c553dca1c68cf914bc2cd827",
+      "access_utc": "2026-10-12T02:14:52.063665+00:00"
+    },
+    {
+      "id": "independent:backup-api",
+      "coverage": "COMPLETE",
+      "url": "https://www.sqlite.org/c3ref/backup_finish.html",
+      "response_sha256": "3beb8d98440837d57fe8841e13a0d90c4a71b7387ed8dbaf5b92c79f4247325b",
+      "access_utc": "2026-10-12T02:14:52.274868+00:00"
+    },
+    {
+      "id": "independent:gitlab-mr-web",
+      "coverage": "COMPLETE",
+      "url": "https://gitlab.com/gitlab-org/gitlab/-/merge_requests/90650",
+      "transport": "independent web retrieval after terminal HTTP 403",
+      "response_sha256": null,
+      "scope": "Overview and historical then-unused service/worker context; exact response bytes unavailable"
+    }
+  ],
+  "bounded_evidence": [
+    {
+      "url": "https://www.rfc-editor.org/rfc/rfc9557.html#section-2.2",
+      "version": "RFC 9557 (2024)",
+      "locator": "2.2, read with 2.1-2.3 and 3.4",
+      "short_exact_quote": "interpreting the offset Z to mean the same as -00:00",
+      "observation": "The update is normative for RFC 3339 section 4.3; +00:00 retains its earlier semantics."
+    },
+    {
+      "url": "https://www.sqlite.org/backup.html#file_and_database_connection_locking",
+      "locator": "3.1",
+      "short_exact_quote": "frequently enough it may never run to completion",
+      "observation": "The surrounding text distinguishes another connection from same-handle update propagation; the C API confirms automatic restart."
+    },
+    {
+      "url": "https://docs.gitlab.com/user/project/settings/import_export/",
+      "locator": "Export overview backup warning",
+      "short_exact_quote": "You should not use project export files to back up your data.",
+      "observation": "This is a GitLab-specific warning; it makes treatment critic F2 false and the final rejection supported."
+    }
+  ],
+  "source_evidence_limits": [
+    "Full responses were used transiently for independent research, not republished as a corpus. Response hashes identify the retrieved bytes, not an attestation that later living-page retrievals will match.",
+    "No downloaded code was executed. Exact candidate research histories and original per-page bytes are not available.",
+    "No third-party text/code license notices were stripped into a republished code corpus; only short attributed quotations and evaluator paraphrases are retained. RFC legal notices remain at the linked governing documents."
+  ],
+  "external_user_facts": {
+    "coverage": "UNASSESSED",
+    "scope": "Actual tracker backend, application callers/tests, object-store guarantees, reader matrix, policy decisions and physical deployment",
+    "reason": "Not supplied in the exact frozen inputs; conditionality and truthful unresolved status were assessed. These are not a requirement to deploy or invent facts."
+  }
+}

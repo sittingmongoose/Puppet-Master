@@ -1,0 +1,33 @@
+{
+  "schema": "er13.original-evaluation-context.v1",
+  "block_id": "B02-P02",
+  "scope": "FULL",
+  "arm_count": 2,
+  "evaluation_started_utc": "2026-10-12T01:45:56Z",
+  "role": "independent original evaluator; no candidate author/repair role",
+  "packet": {
+    "path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B02-P02.json",
+    "sha256": "60b5067b9999ffa7e7baf2fb632fca0808c8cc0b36a24a61230acb5c4149aa2b"
+  },
+  "governing_sources": [
+    {
+      "path": "ER13_WORKTREE/AGENTS.md",
+      "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810",
+      "read_scope": "actual workspace AGENTS.md"
+    },
+    {
+      "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+      "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+      "read_scope": "complete evaluation contract"
+    },
+    {
+      "path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+      "sha256": "c84a82bd989487f8dec655c82df955958bcf8abb23e5b7384bb1cee39e262dac",
+      "read_scope": "ONLY sections 10 and 12; whole-file digest does not imply other sections read"
+    }
+  ],
+  "blinding": "Imperfect: control/treatment paths, stage topology, assignment text and output headers reveal technique. Shared lookup reused; separate judgments frozen before comparison.",
+  "boundary": "Only exact allowlisted terminal snapshots, supplements/status receipts and governing documents read locally. No active originals, held-out cases, full-tree/history scan, Git/canon, provider changes, subagents, extra Goals or candidate feedback.",
+  "resource_class": "independent_evaluation",
+  "measurement_limit": "No evaluator billing/provider activity/subscription telemetry available; unknown is not zero. Evaluator elapsed window is separate from unchanged candidate clocks."
+}

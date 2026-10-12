@@ -1,0 +1,48 @@
+{
+  "finding": "CTRL-D02",
+  "classification": "independent_evaluation",
+  "public_evidence_only": true,
+  "observed_via": "Independent web opening plus exact tagged public-code retrieval; no supplied reproduction executed",
+  "web_observation_interval_utc": [
+    "2026-10-12T01:52:21Z",
+    "2026-10-12T02:04:34.051551+00:00"
+  ],
+  "excerpts": [
+    {
+      "url": "https://duckdb.org/docs/preview/data/csv/overview",
+      "locator": "CSV option table, sample_size row",
+      "verbatim_excerpt": "Number of sample lines for auto detection of parameters.",
+      "qualification": "Table wording alone does not define physical versus logical lines."
+    },
+    {
+      "url": "https://duckdb.org/docs/preview/data/csv/auto_detection",
+      "locator": "Sample Size section",
+      "verbatim_excerpt": "The default sample size is 20,480 rows.",
+      "qualification": "Adjacent governing context expressly uses rows; sniff_csv discussion also specifies number of rows sampled."
+    }
+  ],
+  "code_context": [
+    {
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.4.2/src/execution/operator/csv_scanner/util/csv_reader_options.cpp",
+      "context": "v1.4.2, sample_size option around lines 236-248",
+      "body_sha256": "677982afb599f31d7defa835280c6d8d2f8c890ed9cf7fc3082defa9392c979b",
+      "observation": "Sample parameter is converted to vector-sized chunk counts. This is source inspection, not an executed sample-count benchmark.",
+      "license_notice": "DuckDB source is MIT licensed; source text not redistributed. Public upstream license: https://github.com/duckdb/duckdb/blob/v1.4.2/LICENSE"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.4.2/src/execution/operator/csv_scanner/sniffer/type_refinement.cpp",
+      "context": "v1.4.2, CSVSniffer::RefineTypes around lines 46-89",
+      "body_sha256": "66c1e77144d4c987ad1cc590369446f48afa541d1fe7ad678a2478ad399e4d7d",
+      "observation": "Refinement traverses parsed data chunks and their row cardinality, corroborating record-oriented sampling rather than a physical-newline budget.",
+      "license_notice": "DuckDB source is MIT licensed; source text not redistributed. Public upstream license: https://github.com/duckdb/duckdb/blob/v1.4.2/LICENSE"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.4.2/src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp",
+      "context": "v1.4.2, QuotedNewLine/AddRowInternal/AddRow",
+      "body_sha256": "eff96aefd0d1c53bc0293a2306216cb4b6ca9965b4746b58ba30bc5864d13fef",
+      "observation": "Quoted newlines and record addition are separate paths. This is adjacent definition context for the sample-unit criticism, not universal future-version proof.",
+      "license_notice": "DuckDB source is MIT licensed; source text not redistributed. Public upstream license: https://github.com/duckdb/duckdb/blob/v1.4.2/LICENSE"
+    }
+  ],
+  "limit": "Finite context rebuttal of the frozen categorical physical-line claim. No universal affected-version, precise executed count or future-version assertion."
+}

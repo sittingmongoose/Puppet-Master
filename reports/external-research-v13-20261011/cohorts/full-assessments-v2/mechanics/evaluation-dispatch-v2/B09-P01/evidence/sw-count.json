@@ -1,0 +1,24 @@
+{
+  "id": "sw-count",
+  "url": "https://api.github.com/repos/SpaceWorks-HQ/SpaceWorks/commits/6707d60b2bd680288d45785e94af52bc347f1897",
+  "resolved_url": "https://api.github.com/repos/SpaceWorks-HQ/SpaceWorks/commits/6707d60b2bd680288d45785e94af52bc347f1897",
+  "access_utc": "2026-10-12T02:01:58.457505+00:00",
+  "response_sha256": "80c671d83e552c4a5c3cebbe0f9f1224c135b82b3737f99af1ace73c6033829a",
+  "response_bytes": 8494,
+  "operation": "read-only fetch",
+  "evidence": {
+    "sha": "6707d60b2bd680288d45785e94af52bc347f1897",
+    "message": "fix(inventory): reconcile individual asset fix counts",
+    "files": [
+      {
+        "filename": "backend/apps/inventory/availability.py",
+        "patch": "@@ -1,4 +1,5 @@\n from django.db import connection, transaction\n+from django.db.models import Count\n \n from apps.inventory.models import InventoryAsset, InventoryProduct, TrackingMode\n \n@@ -16,6 +17,38 @@ class InsufficientStock(Exception):\n     InventoryAsset.Status.MAINTENANCE: \"needs_fix_quantity\",\n }\n \n+ASSET_QUANTITY_FIELDS = tuple(dict.fromkeys(ASSET_QUANTITY_BUCKETS.values()))\n+\n+\n+def reconcile_individual_product_from_assets(product):\n+    \"\"\"Make individual-tracked product buckets match serialized asset rows.\"\"\"\n+    if product.tracking_mode != TrackingMode.INDIVIDUAL:\n+        return product\n+\n+    counts = {field: 0 for field in ASSET_QUANTITY_FIELDS}\n+    for row in (\n+        InventoryAsset.objects.filter(product_id=product.pk)\n+        .values(\"status\")\n+        .annotate(count=Count(\"id\"))\n+    ):\n+        bucket = ASSET_QUANTITY_BUCKETS.get(row[\"status\"])\n+        if bucket:\n+            counts[bucket] += row[\"count\"]\n+\n+    total = sum(counts.values())\n+    changed = []\n+    for field, value in counts.items():\n+        if getattr(product, field) != value:\n+            setattr(product, field, value)\n+            changed.append(field)\n+    if product.total_quantity != total:\n+        product.total_quantity = total\n+        changed.append(\"total_quantity\")\n+\n+    if changed:\n+        product.save(update_fields=[*changed, \"updated_at\"])\n+    return product\n+\n \n def move_asset_status(asset, new_status):\n     \"\"\"Move one serialized asset between product quantity buckets.\n@@ -36,6 +69,7 @@ def move_asset_status(asset, new_status):\n         )\n \n     product = InventoryProduct.objects.select_for_update().get(pk=asset.product_id)\n+    reconcile_individual_product_from_assets(product)\n     old_value = getattr(product, old_bucket)\n     if old_value < 1:\n         raise InsufficientStock("
+      },
+      {
+        "filename": "backend/tests/test_handover_broken_reject.py",
+        "patch": "@@ -231,6 +231,45 @@ def test_individual_asset_can_move_to_fix_and_back():\n     assert AuditLog.objects.filter(action=\"inventory.asset_needs_fix_repair\").exists()\n \n \n+def test_individual_asset_repair_reconciles_stale_product_counts():\n+    makerspace = make_space(\"asset-fix-stale-counts\")\n+    admin = make_member(\"asset-fix-stale-counts-admin\", makerspace)\n+    product = make_product(\n+        makerspace,\n+        tracking_mode=TrackingMode.INDIVIDUAL,\n+        total_quantity=2,\n+        available_quantity=2,\n+        needs_fix_quantity=0,\n+    )\n+    available = InventoryAsset.objects.create(\n+        makerspace=makerspace,\n+        product=product,\n+        asset_tag=\"ARDUINO-AVAILABLE\",\n+        status=InventoryAsset.Status.AVAILABLE,\n+    )\n+    maintenance = InventoryAsset.objects.create(\n+        makerspace=makerspace,\n+        product=product,\n+        asset_tag=\"ARDUINO-FIXED\",\n+        status=InventoryAsset.Status.MAINTENANCE,\n+    )\n+\n+    response = authenticated_client(admin).post(\n+        f\"/api/v1/admin/assets/{maintenance.id}/fix-status\",\n+        {\"action\": \"repair\"},\n+        format=\"json\",\n+    )\n+\n+    assert response.status_code == 200\n+    maintenance.refresh_from_db()\n+    available.refresh_from_db()\n+    product.refresh_from_db()\n+    assert maintenance.status == InventoryAsset.Status.AVAILABLE\n+    assert available.status == InventoryAsset.Status.AVAILABLE\n+    assert product.available_quantity == 2\n+    assert product.needs_fix_quantity == 0\n+    assert product.total_quantity == 2\n+\n def test_individual_asset_fix_rejects_issued_asset():\n     makerspace = make_space(\"asset-fix-issued\")\n     admin = make_member(\"asset-fix-issued-admin\", makerspace)"
+      }
+    ]
+  },
+  "license_context": "Public focused source excerpts; current upstream LICENSE identifies GNU AGPL v3: https://github.com/SpaceWorks-HQ/SpaceWorks/blob/main/LICENSE. LICENSE at the specific historical commit was not resolved (404). No execution; do not infer historical license identity from moving main."
+}

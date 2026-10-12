@@ -1,0 +1,89 @@
+[
+  {
+    "block_id": "B02-P02",
+    "output_verification_original_sha256": "59e08c7efc79783acd090a00138ee2cd7f8bd5fea7d3d302cfe083121625f3c8",
+    "original_fields": {
+      "separate_record_errata": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/record-errata.json",
+      "separate_record_errata_sha256": "50883feba387a8524a694ea37a5cb94231148800a6f45782c55911b9a9a7b7bc",
+      "original_grade_changes": false
+    }
+  },
+  {
+    "block_id": "B03-P01",
+    "output_verification_original_sha256": "8b0777bf3d10db18cc816f7df26c4d262d4e8d3b2b3c8f7a0d2024f36aa75574",
+    "original_fields": {
+      "summary": "Both original FULL finals source FAIL. Both misstate Tantivy default cutoff as40characters; pinned implementation accepts UTF-8byte length strictly below40, rejects14CJKcharacters/42bytes and40ASCIIbytes. Control also loses FTS5trigram under3Unicodecharacter MATCH no-hit and conditional LIKE/GLOB scan restrictions. Axis2PARTIAL, other5COMPLETE, remainder explicitUNASSESSED; no future execution required. Nativeproxy2721.728/2035.701s, exactcomparableartifactfinishUNKNOWN; FAIL/FAIL no equal-quality saving. Native-tasklinkage/provideractivity/billing UNKNOWN; independent evaluation separate."
+    }
+  },
+  {
+    "block_id": "B03-P02",
+    "output_verification_original_sha256": "ff994f1d1f566972ac2cf4b17994c875d6eee09590ab4cafab2802641168a204",
+    "original_fields": {
+      "summary": "ControlFAIL/treatmentPASS, all6axes COMPLETE in finite proposal scope. Control C01 retained obsolete RFC3339 Z versus -00:00 distinction despite RFC9557 update (Z and -00:00 same unknown-localoffset convention, +00:00 distinct). Treatment supported GitLabbackup-warning rejection, SQLiteboundedrestart and manifestself-exclusion; no materialfinaldefectfound. No deployment/futureexecution required. Native terminalproxies2460.635/2171.608s; FAIL/PASS cannot establish equalqualitysaving. Treatment contextsum2545/union2149/overlap396s +openwait1017.185s versus controlsum/union1231s; notactiveinference/billing. Independentnative-tasklinkage/billing UNKNOWN."
+    }
+  },
+  {
+    "block_id": "B06-P02",
+    "output_verification_original_sha256": "107f9d8843a3913d2afd70386f35174ee798e50cd11e8f378cf385f8d25515eb",
+    "original_fields": {}
+  },
+  {
+    "block_id": "B07-P01",
+    "output_verification_original_sha256": "ec5c4f15c66bd994dd98e970b8461a3c2be2e3bf571d164229393638c145826e",
+    "original_fields": {}
+  },
+  {
+    "block_id": "B07-P02",
+    "output_verification_original_sha256": "a752076216dc940204e1c8c8bc5429fa6d15ad94d03986677475349b3bd063db",
+    "original_fields": {}
+  },
+  {
+    "block_id": "B09-P01",
+    "output_verification_original_sha256": "a8948678456181b57bd137fcc602ded8bb413c21ebd37ce5c66ab37f67250bef",
+    "original_fields": {
+      "summary": "FAIL/FAIL with PARTIAL primary-research coverage. Axes1/4/5/6 COMPLETE,2/3 PARTIAL; remainder UNASSESSED. Control unsupported Snipe-ITv8.7.2 duplicate-checkout attribution; both consequential available checkout/checkin caller/tests omitted. No future deployment required. Native proxies3307.696/3339.282s not exact scientific completion; control critic creation capture missing; native linkage and billing UNKNOWN. No equal-quality saving."
+    }
+  },
+  {
+    "block_id": "B10-P02",
+    "output_verification_original_sha256": "ce289bbf9d27e41c497afbbe7af73b49607a76d33539ed60783d153af7308400",
+    "original_fields": {
+      "grader_infrastructure_limitation": "Original evaluator failed to locate governing contract; all6formalaxesUNASSESSED. Contract exists at exact path now hashverified. Initialbrief gave filename without absolutepath; prospectivequeuedrequests fixed and activeB09locatorsteered, no frozenregrade.",
+      "complete_comparable_source_grade_available": false
+    }
+  },
+  {
+    "block_id": "B11-P01",
+    "output_verification_original_sha256": "34c13fa465369490d1cde77cc35a57bc6780b36b3ab0d84bd9e82b42c0f3b118",
+    "original_fields": {
+      "summary": "Control source FAIL for conditional SQLite WAL corruption/version restriction omitted; treatment source PASS but delivery FAIL for malformed required final source-map JSON (literal backslash-n after object). Final content present and assessed through non-mutating prefix decode, no repair. All six axes COMPLETE finite proposal coverage. No arm satisfies both source and strict delivery. Nonmaterial Zotero release/metadata and treatment chronology/safe-save/containment limits retained. Native proxies2479.782/2371.538s, both frozen attempts within unchanged60min; no equal-quality savings. Native-task linkage, activity, occupancy and billing UNKNOWN; independent evaluation separate."
+    }
+  },
+  {
+    "block_id": "B11-P02",
+    "output_verification_original_sha256": "619c82cdfedd5f218d3f1bf0a12b6b22f374e281ff7d41d5c2dc7f38114d0f93",
+    "original_fields": {
+      "strict_no_comparison_before_freeze": false,
+      "evaluator_ordering_deviation": {
+        "observation": "A preliminary internal subtraction of native completion proxies was considered during telemetry planning before the original output manifest was frozen.",
+        "effect": "No comparative artifact or campaign selection existed before freeze, and original semantic judgments were not based on the latency subtraction. Nevertheless strict no-comparison-before-freeze ordering is not claimed without this qualification.",
+        "handling": "Disclosed in this new separate post-freeze record. All original grades and hashes remain unchanged; no replacement, repeat grader, repair or adjudication was performed."
+      },
+      "summary": "ControlsourcePASS/treatmentsourceFAIL, all6axesCOMPLETE finite proposal scope. TreatmentT-S01 omits Automerge0.12 nativeState encodeonlyshared_heads vs claimed exactliveState recovery;T-P01 loses distinctactiveYrsClientIDs and identitytest from selfcontainedfinal. Controlcriticmissingcreatecapture separatemethodFAIL, no sourceFAIL. Graderstrictfreezeordering deviation: preliminarytimingsubtraction beforemanifest disclosedseparatecomparison, originalgradesunchanged. Nativeproxy2322.200/2294.735s, bothfinalcustodywithin60min; PASS/FAILcannotestablishequalqualitysaving. Native-tasklinkage/activity/occupancy/billingUNKNOWN, evaluatorcostseparate."
+    }
+  },
+  {
+    "block_id": "B12-P01",
+    "output_verification_original_sha256": "01797d738c16c28018b2dbe8c5aaca9043eef3ec875c0c42048fe0faee1edb60",
+    "original_fields": {
+      "summary": "Control FAIL/PARTIAL for Aegisub lossless-save eligibility wrongly presented as SRT export rejection; format/export caller/SRT writer do not establish that guard. Control axes2/3PARTIAL due inaccessible optionalH5P package spec; other4COMPLETE. Treatment PASS with all6axesCOMPLETE declared proposal coverage, EAF PDF fullreading unavailable but indexedprimary/XSD/manual contextualcoverage disclosed, citation-index and TextGridprose limits nonmaterial. Nativeproxy2289.060/2038.827s, exactfinalwrite/taskquietUNKNOWN; treatment sixminute prewritecutoff UNKNOWN. Frozen native qualification flagsfalse unchanged; no deployment demand or equal-quality savings; independent evaluation separate, billingUNKNOWN."
+    }
+  },
+  {
+    "block_id": "B12-P02",
+    "output_verification_original_sha256": "a78dd6259a292f8c1753647215161f095d250241d01d28dfbb32f4d9e6b0af39",
+    "original_fields": {
+      "summary": "FAIL/FAIL; axis2PARTIAL, other5COMPLETE, remaining primarycontext/runtime limits explicit. Control C-01 weakens mutable-input snapshot guarantee while promising never-stale preview (matchingpre/postdigests cannot ensure consumedbytes). Treatment T-01 shared-work subscriber/cancellation ownership ambiguous; T-02 available unprivileged parser isolation mechanisms omitted; T-03 GNOME manual fallback promoted to implementedcurrentbehavior despite governingfactorycode; T-04 cited PDF.js upstreamfix mergedFeb6/tag6.3.289 leftunverified. No executed software failure or future deployment demand. Frozen delivery within60min; exactwrite/quiet and sixminuteprovisionaltimingUNKNOWN. Native-tasklinkage/activity/occupancy/billingUNKNOWN; no equal-quality savings, evaluation cost separate."
+    }
+  }
+]

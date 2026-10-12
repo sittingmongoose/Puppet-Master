@@ -1,0 +1,217 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "B10-P02-control",
+  "assigned_scope": "FULL",
+  "aggregate_coverage": "PARTIAL",
+  "contract_axes": [
+    {
+      "contract_axis_ordinal": 1,
+      "contract_axis_name": null,
+      "coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "reason": "Exact evaluation-contract-v1.json unavailable; ordinal is a missing-contract slot, not an invented axis definition."
+    },
+    {
+      "contract_axis_ordinal": 2,
+      "contract_axis_name": null,
+      "coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "reason": "Exact evaluation-contract-v1.json unavailable; ordinal is a missing-contract slot, not an invented axis definition."
+    },
+    {
+      "contract_axis_ordinal": 3,
+      "contract_axis_name": null,
+      "coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "reason": "Exact evaluation-contract-v1.json unavailable; ordinal is a missing-contract slot, not an invented axis definition."
+    },
+    {
+      "contract_axis_ordinal": 4,
+      "contract_axis_name": null,
+      "coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "reason": "Exact evaluation-contract-v1.json unavailable; ordinal is a missing-contract slot, not an invented axis definition."
+    },
+    {
+      "contract_axis_ordinal": 5,
+      "contract_axis_name": null,
+      "coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "reason": "Exact evaluation-contract-v1.json unavailable; ordinal is a missing-contract slot, not an invented axis definition."
+    },
+    {
+      "contract_axis_ordinal": 6,
+      "contract_axis_name": null,
+      "coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "reason": "Exact evaluation-contract-v1.json unavailable; ordinal is a missing-contract slot, not an invented axis definition."
+    }
+  ],
+  "obligations": [
+    {
+      "obligation": "Maintain structured pages, diagrams and exercises; compare authoring/storage",
+      "coverage": "COMPLETE",
+      "judgment": "Supported proposed architecture/alternatives, no selected winner",
+      "final_locator": "Recommendation; alternatives; data boundaries"
+    },
+    {
+      "obligation": "Offline reading/topic search, versions and retirement",
+      "coverage": "COMPLETE",
+      "judgment": "Bundled assets/index and current/retired labels with historical access; implementation and owner ranking choices remain proposed",
+      "primary_sources": [
+        "P01",
+        "P02",
+        "P03",
+        "P09",
+        "P17",
+        "P18"
+      ]
+    },
+    {
+      "obligation": "Local personal progress; no account or upload; content updates preserve history",
+      "coverage": "COMPLETE",
+      "judgment": "Revision-specific local store, no network progress payload, cache/content separation, loss disclosure and proposed interrupted-update checks",
+      "primary_sources": [
+        "P10",
+        "P11",
+        "P38",
+        "P39"
+      ]
+    },
+    {
+      "obligation": "Material exercise changes cannot inherit misleading completion",
+      "coverage": "COMPLETE",
+      "judgment": "Corrected default carry-forward; explicit reviewed nonmaterial equivalence preserves earlier record; materiality belongs to owner"
+    },
+    {
+      "obligation": "Keyboard, meaningful sequence, diagrams; no text-image substitute",
+      "coverage": "COMPLETE",
+      "judgment": "Standards/guidance support requirements; no conformance or output-equivalence claim",
+      "primary_sources": [
+        "P06",
+        "P07",
+        "P08"
+      ]
+    },
+    {
+      "obligation": "Word-processor input limitations and export fidelity",
+      "coverage": "PARTIAL",
+      "judgment": "DOCX loss/style/track-change and output QA assessed; direct clipboard-paste mechanism and representative round-trip not exhaustively researched by evaluator. No execution was required or claimed.",
+      "primary_sources": [
+        "P04",
+        "P13",
+        "P14",
+        "P05",
+        "P15",
+        "P16"
+      ]
+    },
+    {
+      "obligation": "Printable handout for non-installers; no print/interactive parity",
+      "coverage": "COMPLETE",
+      "judgment": "Static text/instructions plus separate print/PDF checks, forms/progress intentionally differ"
+    },
+    {
+      "obligation": "Modest author review and phased adoption",
+      "coverage": "COMPLETE",
+      "judgment": "Preview/checklist/signoff and synthetic lesson/author pilot; accessible update/privacy validation is proposed"
+    },
+    {
+      "obligation": "No publication, volunteer installation or actual learning-record processing",
+      "coverage": "COMPLETE",
+      "judgment": "Preserved negative constraints; no product execution receipts or claimed deployment"
+    },
+    {
+      "obligation": "Current maintenance/version context for considered tools",
+      "coverage": "PARTIAL",
+      "judgment": "Candidate offers toolchain pinning; broader current support/lifecycle survey not exhaustive"
+    },
+    {
+      "obligation": "Full revealed-plan disposition, criticisms and preservation",
+      "coverage": "COMPLETE",
+      "judgment": "Every scientific plan clause and critic finding examined; supported methods/options/history retained; bookkeeping gaps disclosed"
+    }
+  ],
+  "source_families": [
+    {
+      "family": "Authoring and offline/search",
+      "coverage": "COMPLETE",
+      "sources": [
+        "P01",
+        "P02",
+        "P03",
+        "P17",
+        "P18"
+      ],
+      "limits": "Proposed targets not runtime tests; independent MkDocs test-file probe returned 404 and was not treated as absence."
+    },
+    {
+      "family": "DOCX and export",
+      "coverage": "PARTIAL",
+      "sources": [
+        "P04",
+        "P13",
+        "P14",
+        "P05",
+        "P15",
+        "P16"
+      ],
+      "limits": "Governing claimed paths checked; clipboard-paste adapters and all export-engine exceptions not exhaustive."
+    },
+    {
+      "family": "Accessibility",
+      "coverage": "COMPLETE",
+      "sources": [
+        "P06",
+        "P07",
+        "P08"
+      ],
+      "limits": "Requirements/source applicability only, not full WCAG conformance assessment of nonexistent software."
+    },
+    {
+      "family": "Local data and updates",
+      "coverage": "COMPLETE",
+      "sources": [
+        "P10",
+        "P11",
+        "P38",
+        "P39",
+        "P09",
+        "P37"
+      ],
+      "limits": "Storage/caching design does not itself prove update atomicity or no upload."
+    },
+    {
+      "family": "Quarto dashboard issue/release context",
+      "coverage": "COMPLETE",
+      "sources": [
+        "P12"
+      ],
+      "limits": "Report and enhancement context checked; not independently reproduced."
+    },
+    {
+      "family": "Current product lifecycle beyond cited behavior",
+      "coverage": "PARTIAL",
+      "sources": [
+        "P01",
+        "P03",
+        "P16"
+      ],
+      "limits": "No exhaustive current support survey or exact governing contract."
+    },
+    {
+      "family": "Clipboard paste implementations",
+      "coverage": "UNASSESSED",
+      "sources": [],
+      "limits": "Distinct from DOCX reader; no definitive candidate defect inferred from this unassessed family."
+    }
+  ],
+  "document_read_coverage": "COMPLETE for all exact frozen scientific documents, source maps/indexes and reveal witnesses; request/dispatch/status/native objects inspected for custody/telemetry",
+  "limitations": [
+    "Exact evaluation contract unavailable; no full source PASS can be issued.",
+    "Primary lookup reused across this assigned pair; paths/config/critic delta make blinding imperfect.",
+    "Finite source review does not establish universal correctness.",
+    "No candidate tests/builds/deployment required or executed by evaluator.",
+    "Independent evaluator access windows are batch bounds, not exact per-URL timestamps."
+  ]
+}

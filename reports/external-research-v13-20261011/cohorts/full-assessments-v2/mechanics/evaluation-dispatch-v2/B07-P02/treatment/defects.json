@@ -1,0 +1,76 @@
+{
+  "arm_id": "B07-P02-treatment",
+  "defects": [
+    {
+      "id": "B07-P02-treatment-D01",
+      "severity": "MATERIAL",
+      "class": "required_research_omission",
+      "axes": [
+        1,
+        2,
+        3
+      ],
+      "coverage": "COMPLETE",
+      "confidence": "MEDIUM_HIGH",
+      "finding": "Available announcement-delivery mechanism research is deferred rather than performed. Desired focus and speech behavior plus future AT tests do not supply a researched conditional integration mechanism.",
+      "obligation": "The exact plan requires platform-specific research for seek announcements and interval editing. The evaluation contract permits unknown target-platform facts but requires available mechanism research.",
+      "candidate_locators": [
+        "final.md: Time, seeking, and editing steps 4-6 / accessibility owner decision / exact focus clause",
+        "investigator/draft.md: focus/announcement design and owner/platform decisions",
+        "critic/critique.md: accessible interaction coverage and no material scope omission conclusion"
+      ],
+      "evidence_ids": [
+        "P07",
+        "P08",
+        "P09",
+        "P10",
+        "P11"
+      ],
+      "analysis": "APG slider keys/value guidance is useful, but the final only specifies concise status messages and defers the target accessibility matrix. No concrete markup or native announcement-delivery mechanism is investigated.",
+      "materiality": "Screen-reader review and explicit seek/mark feedback are central to the requested proposal. At least conditional mechanism feasibility/constraints can be researched without selecting an OS, implementing a player, or running future AT sessions. This is a research gap, not a finding that the proposed UI cannot work.",
+      "scope_limit": "No particular vendor API, OS, deployed application, participant recruitment or executed screen-reader validation is demanded. Named source mechanisms demonstrate availability, not a mandatory architecture.",
+      "original_grade_effect": "Precludes source PASS under the stated interpretation; a dispute must be separate adjudication, not editing this grade."
+    },
+    {
+      "id": "B07-P02-treatment-D02",
+      "severity": "NONMATERIAL",
+      "class": "wrong_source_default_wording",
+      "axes": [
+        2
+      ],
+      "coverage": "COMPLETE",
+      "finding": "Critic WS-CODE-01 says zero end defaults to start. The pinned constructor uses a nullish fallback, so numeric zero is not the missing-value case. This inaccurate record is carried verbatim in the final inherited source map.",
+      "candidate_locators": [
+        "critic/source-map.json: WS-CODE-01 governing condition",
+        "reviser/source-map.json: inherited critic record set"
+      ],
+      "evidence_ids": [
+        "P23"
+      ],
+      "grade_effect": "The final does not repeat this default rule and rejects invalid empty/reversed comment intervals. Localized source-map error, not a demonstrated wrong product correction."
+    },
+    {
+      "id": "B07-P02-treatment-D03",
+      "severity": "NONMATERIAL",
+      "class": "source_access_and_locator_limit",
+      "axes": [
+        2,
+        3
+      ],
+      "coverage": "COMPLETE",
+      "finding": "Original ELAN boundary URL access is unavailable and is explicitly preserved alongside a recovered URL. EAF direct access was limited to search extracts in predecessor review; the final discloses that limit. Independent evaluator retrieved the actual EAF 3.0 PDF and confirmed the limited same-tier overlap comparison.",
+      "candidate_locators": [
+        "final.md: ELAN/EAF alternative and Work actually executed",
+        "source-map.json: ELAN-UI-01, ELAN-UI-02 and EAF-SPEC-01"
+      ],
+      "evidence_ids": [
+        "P34",
+        "P35"
+      ],
+      "grade_effect": "Not an unsupported final conclusion or fabricated execution result; provenance and access limitation retained."
+    }
+  ],
+  "material_count": 1,
+  "nonmaterial_count": 2,
+  "limits": "No claim that undiscovered defects are absent outside coverage."
+}

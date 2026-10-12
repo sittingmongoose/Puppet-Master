@@ -1,0 +1,179 @@
+{
+  "schema": "er13.original-independent-assessment.v1",
+  "arm_id": "B03-P01-treatment",
+  "scope": "FULL",
+  "original": true,
+  "frozen_input_packet_sha256": "2b250282601e9f9ccbb228fe2d7edbc6f50741e30f8493020886fbece6382386",
+  "governing_contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+  "blinding": "Imperfect; paths/assignments reveal topology. Judgments frozen separately before any comparative file.",
+  "source_judgment": {
+    "value": "FAIL",
+    "material_defect_ids": [
+      "B03-P01-T-D01"
+    ],
+    "finite_not_universal": true,
+    "rationale": "Material tokenizer unit/boundary falsehood remains in complete final.",
+    "no_deployment_or_future_execution_demand": true
+  },
+  "coverage": {
+    "overall": "PARTIAL",
+    "axes": [
+      {
+        "axis": 1,
+        "coverage": "COMPLETE",
+        "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+      },
+      {
+        "axis": 2,
+        "coverage": "PARTIAL",
+        "judgment": "MATERIAL_DEFECT_FOUND"
+      },
+      {
+        "axis": 3,
+        "coverage": "COMPLETE",
+        "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+      },
+      {
+        "axis": 4,
+        "coverage": "COMPLETE",
+        "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+      },
+      {
+        "axis": 5,
+        "coverage": "COMPLETE",
+        "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+      },
+      {
+        "axis": 6,
+        "coverage": "COMPLETE",
+        "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+      }
+    ],
+    "details": "coverage.json",
+    "limits": "Unidentified target app, actual user/runtime facts, historical current reproduction and complete historical SQLite test body are UNASSESSED."
+  },
+  "defects": {
+    "material_ids": [
+      "B03-P01-T-D01"
+    ],
+    "record": "defects.json"
+  },
+  "delivery": {
+    "status": "FINAL_PRESENT",
+    "final": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-retained-final/run/B03-P01-treatment/stages/investigator/final/final.md",
+      "bytes": 23369,
+      "sha256": "9340fad59fcaba255c7107f9a1f49292e1e64dbebc07b5028bafa9113fb68421"
+    },
+    "required_scientific_members_present": true,
+    "task_terminal_no_pending": true,
+    "deliverable": "Complete research planning proposal; source judgment separate.",
+    "missing_final": false
+  },
+  "time_eligibility": {
+    "status": "ELIGIBLE_ON_FROZEN_WHOLE_RUN_OBSERVATIONS",
+    "original_maximum_elapsed_seconds": 3600,
+    "t0_utc": "2026-10-12T00:58:13.299Z",
+    "whole_deadline_utc": "2026-10-12T01:58:13.299Z",
+    "packet_frozen_at_utc": "2026-10-12T01:44:03.451614+00:00",
+    "clocks_changed": false,
+    "stages": [
+      {
+        "stage": "critic",
+        "requested_at_utc": "2026-10-12T01:18:45.769217+00:00",
+        "native_created_utc": "2026-10-12T01:19:31+00:00",
+        "native_terminal_updated_utc": "2026-10-12T01:28:06+00:00",
+        "native_boundary_interval_seconds": 515,
+        "stage_deadline_utc": "2026-10-12T01:30:45.769217+00:00",
+        "same_birth_exact_objective": true,
+        "native_states": [
+          "active",
+          "complete"
+        ],
+        "task_terminal_no_pending_verified": true,
+        "deadline_observation": "Native terminal precedes notified deadline. Member write times independently unknown."
+      },
+      {
+        "stage": "investigator",
+        "requested_at_utc": "2026-10-12T00:58:13.504Z",
+        "native_created_utc": "2026-10-12T00:58:29+00:00",
+        "native_terminal_updated_utc": "2026-10-12T01:32:09+00:00",
+        "native_boundary_interval_seconds": 2020,
+        "stage_deadline_utc": "2026-10-12T01:47:23.401793+00:00",
+        "same_birth_exact_objective": true,
+        "native_states": [
+          "active",
+          "complete"
+        ],
+        "task_terminal_no_pending_verified": true,
+        "deadline_observation": "Native terminal precedes notified deadline. Member write times independently unknown."
+      }
+    ],
+    "last_stage_native_terminal_proxy_elapsed_seconds": 2035.701,
+    "proxy_definition": "T0 to frozen last-stage native updatedAt complete timestamp; not exact provider activity or user-visible delivery. Native timestamps have second resolution.",
+    "exact_last_scientific_artifact_time": "UNKNOWN",
+    "whole_run_final_present_before_deadline": true,
+    "stage_artifact_timestamp_coverage": "PARTIAL: native completion and prepared deadlines observed; not every member write independently timestamped.",
+    "draft_frozen_at_utc": "2026-10-12T01:13:10.101335+00:00",
+    "waiting_started_at_utc": "2026-10-12T01:13:10.210674+00:00",
+    "waiting_ended_at_utc": "2026-10-12T01:29:24.389698+00:00",
+    "retained_wait_seconds": 974.179024,
+    "resumed_at_utc": "2026-10-12T01:29:35.223023+00:00",
+    "final_artifact_root_witness_utc": "2026-10-12T01:32:09.953980+00:00",
+    "final_artifact_root_witness_elapsed_seconds": 2036.65498,
+    "final_artifact_witness_hashes_match_frozen_files": true,
+    "retained_resident_interval_root_witness_seconds": 2021.127923,
+    "same_active_birth_across_wait_resume_precompletion": true,
+    "retained_method_time_note": "30-minute substantive investigation cap applies to draft readiness; the same native Goal legitimately spans waiting and later finalization. Wait is not inference or free occupancy. All notified deadlines unchanged."
+  },
+  "method_compliance": {
+    "coverage": "PARTIAL",
+    "status": "FROZEN_MECHANICS_CONSISTENT; EXECUTION_PROVENANCE_LIMITED",
+    "requested_topology": "retained original investigator -> fresh independent critic -> same author finalization",
+    "one_time_reveal_discovery_hash_match": true,
+    "revealed_plan_exact_hash_match": true,
+    "draft_and_critique_complete_and_present": true,
+    "retention_custody_witnesses": "Same active birth through wait/resume, frozen critic release, final-ready and terminal observations consistent.",
+    "unverified": [
+      "pre-input activation ordering beyond frozen receipts",
+      "complete access history and author/critic isolation",
+      "no paid inference during retained wait"
+    ],
+    "scientific_compliance": "Material source/preservation findings remain separate from mechanical custody. No recipe selection or author repair."
+  },
+  "native_identity_provenance": {
+    "coverage": "PARTIAL",
+    "native_create_terminal_present": true,
+    "per_stage_same_birth_exact_frozen_objective_verified": true,
+    "observed_lifecycle": "All supplied native captures active -> complete; all actual task receipts terminal with zero pending.",
+    "retained_author_transitions": true,
+    "independent_native_to_task_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody. Receipt consistency does not prove live session authenticity or no unseen replacement.",
+    "provider_model_tier": "Requested public model gpt-6-luna / max / default in matched configs; actual billing/routing identity not exported or independently authenticated.",
+    "capture_field_export_policy": "No account/provider routing identity, native IDs/full transcripts, usage counts or machine/process state in these public outputs."
+  },
+  "resource_billing_coverage": {
+    "coverage": "PARTIAL",
+    "candidate_product": "Frozen native elapsed/counter fields exist, but granular provider activity, input/cache/output/reasoning breakdown, subscription consumption, dollars and complete billing are UNKNOWN. Numeric usage counts are not exported.",
+    "native_goal_boundary_sum_seconds": 2535,
+    "native_goal_boundaries_are_context_or_billing": "No: native goal intervals are observed boundaries, not authenticated T3 created/started occupancy or paid activity. Retained overlap is not free.",
+    "context_created_started_occupancy": "UNKNOWN; only receipt-bound native intervals and treatment root residence/wait witnesses available.",
+    "active_provider_activity_seconds": null,
+    "billing_cost": null,
+    "billing_currency": null,
+    "unknown_is_not_zero": true,
+    "independent_evaluation": {
+      "category": "independent_evaluation",
+      "grader_start_observed_utc": "2026-10-12T02:19:41.611Z",
+      "original_record_written_utc": "2026-10-12T02:31:36.250355+00:00",
+      "billing": "UNKNOWN; separate from candidate product, preparation, support and root observation costs."
+    },
+    "all_assigned_denominator": 1,
+    "failed_final_included": true,
+    "consumption_per_source_passing_final": "UNDEFINED: this arm has zero source passes."
+  },
+  "critic_disposition_record": "coverage.json",
+  "preservation_record": "coverage.json",
+  "input_custody": "../shared/input-integrity.json",
+  "no_candidate_feedback": true,
+  "no_canon_git_goals_delegation": true
+}

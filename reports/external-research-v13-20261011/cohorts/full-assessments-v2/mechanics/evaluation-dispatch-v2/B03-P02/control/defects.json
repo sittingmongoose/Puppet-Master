@@ -1,0 +1,65 @@
+{
+  "schema": "er13.independent-defects.v1",
+  "arm_id": "B03-P02-control",
+  "defects": [
+    {
+      "id": "C01",
+      "severity": "MATERIAL_WRONG",
+      "stage": "final and carried source maps",
+      "counts_against_final_source_judgment": true,
+      "locator": "final.md:17; S05 governing condition in investigator/critic/reviser source-map.json",
+      "finding": "The proposal presents -00:00 as semantically different from Z under RFC 3339, while its source map acknowledges RFC 9557. RFC 9557 updates that exact convention: Z and -00:00 carry the same unknown-local-offset meaning; +00:00 remains distinct. The final does not declare a legacy-only timestamp profile.",
+      "consequence": "A future archive reader/importer following the proposed semantic distinction can interpret retained timezone information incorrectly. This is material to the explicit date-representation and retained-meaning obligations, even though both forms denote the same UTC instant.",
+      "primary_evidence": [
+        "https://www.rfc-editor.org/rfc/rfc9557.html#section-2.2",
+        "https://www.rfc-editor.org/rfc/rfc9557.html#section-3.4"
+      ],
+      "resolution_in_frozen_final": "UNRESOLVED; critic did not catch it and reviser repeated it."
+    },
+    {
+      "id": "C02",
+      "severity": "NONMATERIAL_CONDITIONAL_MECHANISM_LIMIT",
+      "stage": "final/source maps",
+      "counts_against_final_source_judgment": false,
+      "locator": "final.md:21,23,97; S02 and S03 source conditions",
+      "finding": "The available SQLite restart/noncompletion condition is recorded in critic/source observations but not operationalized in the final backup validation. The map also summarizes commencement-time snapshot provenance and PostgreSQL transaction-start timing without their more precise restart/first-statement qualifications.",
+      "consequence": "These need resolution if those mechanisms are selected. The final leaves backend selection and snapshot guarantees blocking/open, so this assessment does not treat the conditional gap as a second decisive defect.",
+      "primary_evidence": [
+        "https://www.sqlite.org/backup.html#file_and_database_connection_locking",
+        "https://www.sqlite.org/c3ref/backup_finish.html",
+        "https://www.postgresql.org/docs/18/transaction-iso.html#XACT-REPEATABLE-READ"
+      ],
+      "resolution_in_frozen_final": "OPEN conditional mechanism qualification."
+    },
+    {
+      "id": "C03",
+      "severity": "MINOR_VERSION_METADATA",
+      "stage": "source maps",
+      "counts_against_final_source_judgment": false,
+      "locator": "S07 exact GNU tar manual URL/version record",
+      "finding": "The exact living URL independently retrieved is manual 1.35.90 (11 June 2026), whereas the frozen map labels it 1.35. General PAX/ustar comparisons remain supported and the final discloses predecessor retrieval limits.",
+      "primary_evidence": [
+        "https://www.gnu.org/software/tar/manual/tar.html"
+      ],
+      "resolution_in_frozen_final": "Version label not corrected; concrete reader choice remains open."
+    },
+    {
+      "id": "C04",
+      "severity": "MINOR_CRITIQUE_OVERSTATEMENT",
+      "stage": "critic/final dispositions",
+      "counts_against_final_source_judgment": false,
+      "locator": "critic.md P19; final.md P19; investigator draft P19",
+      "finding": "The investigator accurately named its own earlier stage cutoff. Describing that frozen historical note as materially wrong for the later critic is overstated. The final correctly names its own cutoff, and no frozen clock changes.",
+      "primary_evidence": [],
+      "resolution_in_frozen_final": "Accepted as stale-note clarification; no scientific scope or eligibility harm."
+    }
+  ],
+  "final_material_defect_ids": [
+    "C01"
+  ],
+  "external_unknowns_are_not_fabricated_defects": [
+    "Actual application repository/backend/blob store and user redaction policy were not supplied.",
+    "No deployed product or future test execution is demanded."
+  ],
+  "originality": "Original independent findings; no repairs, candidate feedback, repeat grading or adjudication was performed."
+}

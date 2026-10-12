@@ -1,0 +1,102 @@
+{
+  "schema": "er13.private_locked_input_preparation.v1",
+  "selection_lock_sha256": "a9addb0a69e202c417fc2ae0feeb37f5f438f046053c8fdd0e604820a7434e67",
+  "started_utc": "2026-10-12T02:30:07.314835+00:00",
+  "completed_utc": "2026-10-12T02:30:07.316598+00:00",
+  "elapsed_seconds": 0.001763,
+  "case_ids": [
+    "C-P01",
+    "C-P02",
+    "C-P03",
+    "C-P04"
+  ],
+  "files": [
+    {
+      "case_id": "C-P01",
+      "kind": "brief",
+      "path": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P01/brief.md",
+      "sha256": "2fa255df39e8ae5d6fb794931111f411acbc954261f582359c3ff7cd6e075273",
+      "bytes": 2337,
+      "root_model_received_body": false,
+      "candidate_release": false,
+      "purpose": "PRIVATE_REFERENCE_MATERIALIZER_INPUT_PREPARATION_AFTER_SELECTION"
+    },
+    {
+      "case_id": "C-P01",
+      "kind": "plan",
+      "path": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P01/plan.md",
+      "sha256": "8e08396ed2143c628be908dd9d39a770fcca5565e5f10151fb18a770f4ddb725",
+      "bytes": 2347,
+      "root_model_received_body": false,
+      "candidate_release": false,
+      "purpose": "PRIVATE_REFERENCE_MATERIALIZER_INPUT_PREPARATION_AFTER_SELECTION"
+    },
+    {
+      "case_id": "C-P02",
+      "kind": "brief",
+      "path": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P02/brief.md",
+      "sha256": "59dd485d74ad37b8f65acd5b503426a84d073afa61a5a0f45596e0f20e7e9233",
+      "bytes": 2410,
+      "root_model_received_body": false,
+      "candidate_release": false,
+      "purpose": "PRIVATE_REFERENCE_MATERIALIZER_INPUT_PREPARATION_AFTER_SELECTION"
+    },
+    {
+      "case_id": "C-P02",
+      "kind": "plan",
+      "path": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P02/plan.md",
+      "sha256": "51e0f5e5cc9489d1c7614948da0b04e1f1c14fa070b6d8fc1eabe6c64ab574c7",
+      "bytes": 2415,
+      "root_model_received_body": false,
+      "candidate_release": false,
+      "purpose": "PRIVATE_REFERENCE_MATERIALIZER_INPUT_PREPARATION_AFTER_SELECTION"
+    },
+    {
+      "case_id": "C-P03",
+      "kind": "brief",
+      "path": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P03/brief.md",
+      "sha256": "c44ccd6826d053b9dbec1750f254f632019a27ecc1ad4c1e6af5bf9dd0a77579",
+      "bytes": 2433,
+      "root_model_received_body": false,
+      "candidate_release": false,
+      "purpose": "PRIVATE_REFERENCE_MATERIALIZER_INPUT_PREPARATION_AFTER_SELECTION"
+    },
+    {
+      "case_id": "C-P03",
+      "kind": "plan",
+      "path": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P03/plan.md",
+      "sha256": "b5700b0f07842886843c7280586652281f1362a0cbfad4c46ba2069860989642",
+      "bytes": 2326,
+      "root_model_received_body": false,
+      "candidate_release": false,
+      "purpose": "PRIVATE_REFERENCE_MATERIALIZER_INPUT_PREPARATION_AFTER_SELECTION"
+    },
+    {
+      "case_id": "C-P04",
+      "kind": "brief",
+      "path": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P04/brief.md",
+      "sha256": "b94bb075dcf8f4217efb6edbd4ce62f8cf149b969da555bbd169e730632f64f9",
+      "bytes": 2386,
+      "root_model_received_body": false,
+      "candidate_release": false,
+      "purpose": "PRIVATE_REFERENCE_MATERIALIZER_INPUT_PREPARATION_AFTER_SELECTION"
+    },
+    {
+      "case_id": "C-P04",
+      "kind": "plan",
+      "path": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P04/plan.md",
+      "sha256": "4272bc763dfb1c1f9373b33f7749cb9ee0422f6b3377bd9761ba1b5d37ebb48e",
+      "bytes": 2239,
+      "root_model_received_body": false,
+      "candidate_release": false,
+      "purpose": "PRIVATE_REFERENCE_MATERIALIZER_INPUT_PREPARATION_AFTER_SELECTION"
+    }
+  ],
+  "root_model_case_body_read": false,
+  "candidate_initial_input": "briefonly",
+  "plan_candidate_release": "inheritedreveal_plan.py onceafter actual frozen discovery, no earlycomparisonpointreceipt",
+  "rubric_decoded": false,
+  "D_decoded": false,
+  "keys_printed_or_dispatched": false,
+  "procedural_note": "Used existing decrypt_entry+check_selection for rootprivatepreparation; planCLI earlyrelease not invoked and no false reached-assertion. Physicalprivate plaintext is present for unchangedreference materializer, concealedfromscoredcontexts by inheritedexactstageinput contract. HelperCLIplan-release policy remains for actual candidateexposure. Procedural custody is not same-user OSprivilege isolation."
+}

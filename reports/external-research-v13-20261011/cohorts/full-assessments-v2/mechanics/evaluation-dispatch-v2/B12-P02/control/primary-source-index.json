@@ -1,0 +1,279 @@
+{
+  "schema": "er13.independent-primary-source-index.v1",
+  "arm_id": "B12-P02-control",
+  "lookup_owner": "independent original evaluator",
+  "reuse": "Own primary lookup reused across assigned matched arms, never candidate assistance",
+  "sources": [
+    {
+      "id": "E01",
+      "title": "Tokio blocking work",
+      "urls": [
+        "https://docs.rs/tokio/1.53.2/tokio/task/fn.spawn_blocking.html"
+      ],
+      "version_context": "Tokio 1.53.2, rt feature",
+      "locator": "Description; cancellation/shutdown; dedicated-thread guidance",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Large configured ceiling; running blocking closures are not abortable. Aborting before start may prevent execution. Shutdown timeout stops waiting, not the work. A scheduler and hard-stop boundary remain application responsibilities.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E02",
+      "title": "Rust Child and bounded transport",
+      "urls": [
+        "https://doc.rust-lang.org/std/process/struct.Child.html",
+        "https://doc.rust-lang.org/std/sync/mpsc/fn.sync_channel.html"
+      ],
+      "version_context": "Rust std 1.99.0 documentation",
+      "locator": "Child warning, kill/wait; sync_channel buffer semantics",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Child drop does not kill/wait. kill targets the direct child; wait/reap is explicit. sync_channel is bounded FIFO and full sends block; zero capacity is rendezvous. Neither primitive supplies an app priority policy or parser sandbox.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E03",
+      "title": "Windows Job Objects",
+      "urls": [
+        "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects"
+      ],
+      "version_context": "Win32 documentation; nested jobs Windows 8/Server 2012 onward",
+      "locator": "Managing processes; limits; managing a process tree",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "CreateProcess descendants normally join, subject to breakaway and WMI exceptions. Associated processes can be terminated and resource limits applied. Group supervision is distinct from filesystem/network isolation.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E04",
+      "title": "Thumbnail validity and atomic publication",
+      "urls": [
+        "https://specifications.freedesktop.org/thumbnail/latest-single/",
+        "https://pubs.opengroup.org/onlinepubs/9799919799/functions/open.html",
+        "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html"
+      ],
+      "version_context": "Thumbnail Managing Standard 0.9.0; POSIX.1-2024 Issue 8",
+      "locator": "FDO sections 5.2, 6.2, 7, 8; POSIX open access modes and rename errors/rationale",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "FDO uses URI/mtime with optional size checks, warns of second-resolution collisions, and specifies cache-side temporary rename. Read-only open describes access permission, not immutable bytes. POSIX rename supplies atomic name replacement with filesystem conditions; it does not atomically capture or hash mutable source content.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {
+        "POSIX open": "57b770918aa3e0c25186972675df8c96da119cf4b973335ed4487405e260dc3a",
+        "POSIX rename": "06671610134b0a52cdf4dcdaf382f72fef85ef51088b8a52b8679c7f03829318"
+      }
+    },
+    {
+      "id": "E05",
+      "title": "SQLite commit/recovery",
+      "urls": [
+        "https://www.sqlite.org/atomiccommit.html",
+        "https://www.sqlite.org/wal.html"
+      ],
+      "version_context": "Current official articles; rollback-journal versus WAL; WAL since 3.7.0",
+      "locator": "Atomic-commit assumptions; WAL concurrency/checkpoint/shared-memory sections",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Rollback atomicity depends on documented storage/VFS assumptions. WAL allows readers alongside one writer and needs same-host shared memory; sidecars/checkpoints matter. Neither transaction mode automatically coordinates external artifact files. Cache remains derived/rebuildable.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E06",
+      "title": "Cancellation ownership and slot ordering",
+      "urls": [
+        "https://docs.rs/tokio-util/latest/tokio_util/sync/struct.CancellationToken.html",
+        "https://docs.rs/tokio/latest/tokio/sync/struct.Semaphore.html",
+        "https://docs.rs/tokio/latest/tokio/process/struct.Command.html"
+      ],
+      "version_context": "Headers verified: tokio-util 0.7.20, Tokio 1.53.2",
+      "locator": "Token child_token/clone/cancel; semaphore fairness; Command kill_on_drop/process_group",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Cloned tokens share cancellation; child cancellation does not cancel its parent. Tokens signal interest, not hard termination. Semaphore fairness is request-order FIFO including acquire_many head blocking. kill_on_drop defaults false; Unix process groups and prompt reaping require explicit supervision. These primitives do not settle shared-render subscriber ownership.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E07",
+      "title": "Concrete unprivileged containment authorities",
+      "urls": [
+        "https://docs.kernel.org/userspace-api/landlock.html",
+        "https://learn.microsoft.com/en-us/windows/win32/secauthz/implementing-an-appcontainer",
+        "https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html"
+      ],
+      "version_context": "Landlock August 2026 docs and runtime ABI; AppContainer Windows 8+; Apple archived 2017 entitlement reference",
+      "locator": "Landlock policy, ABI, descriptors and erratum 1; AppContainer launch/capabilities; App Sandbox inheritance",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Landlock handles TCP from ABI 4 and UDP from ABI 10; explicit handled rights and descriptor hygiene matter. Other protocols are not thereby a firewall. AppContainer capability/DACL launch can constrain an unprivileged parser separately from Jobs. Apple inherited sandbox rights are static; selected-file access and separately configured XPC helpers need deliberate handoff. Unknown target OS does not prevent researching these available alternatives.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E08",
+      "title": "Apple worker and native preview alternatives",
+      "urls": [
+        "https://developer.apple.com/documentation/xpc",
+        "https://developer.apple.com/documentation/xpc/xpcsession/cancel(reason:)",
+        "https://developer.apple.com/documentation/xpc/xpc_connection_cancel(_:)",
+        "https://developer.apple.com/documentation/quicklookthumbnailing/qlthumbnailgenerator",
+        "https://developer.apple.com/documentation/foundation/operationqueue"
+      ],
+      "version_context": "Official Markdown versions fetched directly; XPCSession macOS 14+; connection cancellation macOS 10.7+; QLThumbnailGenerator macOS 10.15+; OperationQueue macOS 10.5+",
+      "locator": "XPC service table; cancellation discussions; Quick Look topics; OperationQueue readiness/cancellation",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Bundled XPC service lifecycle is launchd-managed. Connection cancellation is non-preemptive; session cancellation discards unsent messages, not a hard-kill guarantee. Quick Look offers async representations/cancel. OperationQueue uses priority/readiness; canceled queued operations remain until started/finished. Current API availability must be checked against owner platforms.",
+      "coverage": "COMPLETE",
+      "limits": [
+        "Browser JS stubs/Markdown content-type failed; official .md content was successfully read via direct HTTP. Copyright 2026 Apple Inc.; all rights reserved."
+      ],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E09",
+      "title": "Windows Shell thumbnails",
+      "urls": [
+        "https://learn.microsoft.com/en-us/windows/win32/shell/thumbnail-providers"
+      ],
+      "version_context": "Documented Vista-era Shell model; target-provider behavior remains owner-specific",
+      "locator": "Thumbnail Processes; Cache and Sizing",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Out-of-process default can be bypassed by a NULL bind context or registry opt-out. Cache uses modification time and discrete size buckets subject to change. This supports an optional adapter, not app-controlled cancellation, resource isolation, or strong content identity.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {}
+    },
+    {
+      "id": "E10",
+      "title": "Zotero attachment preview and release context",
+      "urls": [
+        "https://github.com/zotero/zotero/blob/6af5a484fd6688aab23150938d69df42dfca10e4/chrome/content/zotero/elements/attachmentPreview.js",
+        "https://github.com/zotero/zotero-docs/blob/0218554ffa63c2fd005f3167ccd4a92d64306866/content/7.0_changelog.md",
+        "https://github.com/zotero/zotero/issues/238",
+        "https://api.github.com/repos/zotero/zotero/git/tags/845c1859fd5e3f075419f0a8f49f5878cae30431"
+      ],
+      "version_context": "Annotated 7.0.12 tag independently resolves to 6af5a484fd6688aab23150938d69df42dfca10e4",
+      "locator": "Raw preview lines 269-426, notify/render callers; changelog 7.0.4/7.0.12; issue completion",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Latest-task coalescing and post-await item checks are present. A three-second Promise.race resets bookkeeping without canceling losing work. Changelog records disappearance and rapid-switch wrong-item fixes. Feature request completion in 2025 is a history observation, not the feature introduction date. Scope is pinned UI implementation, not an OS process boundary.",
+      "coverage": "COMPLETE",
+      "limits": [],
+      "retrieved_body_sha256": {
+        "attachmentPreview.js": "a644396c1901952431e7b61181c5070a2c9528d24f01911408679eea805fc199"
+      }
+    },
+    {
+      "id": "E11",
+      "title": "Zotero worker architectures",
+      "urls": [
+        "https://github.com/zotero/zotero/blob/6af5a484fd6688aab23150938d69df42dfca10e4/chrome/content/zotero/xpcom/pdfWorker/manager.js",
+        "https://github.com/zotero/document-worker/blob/9d11471391fc3f609a0d1e7012b82b9be6ca9c12/README.md"
+      ],
+      "version_context": "Zotero 7.0.12 manager; document-worker pinned 9d11471391fc3f609a0d1e7012b82b9be6ca9c12",
+      "locator": "Manager lines 30-152 and query/caller entry; complete document-worker README",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Manager serializes one Web Worker queue, unshifts priority work, and logs errors with no restart in the inspected file. README describes Node tests/tooling, desktop Web Worker and iOS JSContext. No OS security boundary follows from that architecture.",
+      "coverage": "PARTIAL",
+      "limits": [
+        "Document-worker README was read completely; its build/test/iOS implementation was not independently traced. No project code executed. Zotero source copyright Corporation for Digital Scholarship; AGPL-3.0-or-later."
+      ],
+      "retrieved_body_sha256": {
+        "manager.js": "5839bac06059091d373fa3042aae0fc17c8bbacb3f9c9968a847993f47147fa1",
+        "document-worker README": "ee2a904ffff49fbae74eb21e44999105d09f802742a0d304c69fecdd1bafa13d"
+      }
+    },
+    {
+      "id": "E12",
+      "title": "ZoteroThumbFile bounded rendering precedent",
+      "urls": [
+        "https://github.com/gchapron/ZoteroThumbFile/blob/22a07714ae8227aa560921c4b4262eb47eb05bac/README.md",
+        "https://github.com/gchapron/ZoteroThumbFile/blob/22a07714ae8227aa560921c4b4262eb47eb05bac/bootstrap.js",
+        "https://github.com/gchapron/ZoteroThumbFile/blob/22a07714ae8227aa560921c4b4262eb47eb05bac/tests/plugin.test.cjs",
+        "https://api.github.com/repos/gchapron/ZoteroThumbFile/git/tags/2c3049f928451aade200d25a0ae51fd478fc7d02"
+      ],
+      "version_context": "v1.1.5 annotated tag independently resolves to 22a07714ae8227aa560921c4b4262eb47eb05bac",
+      "locator": "README rendering/compatibility; bootstrap lines 314-488; portable tests 63-101 and 122-159",
+      "independent_operation": "Opened primary authority; inspected the indicated governing context as text. No upstream software or tests executed.",
+      "access_utc": {
+        "earliest_bound_utc": "2026-10-12T02:14:43Z",
+        "latest_bound_utc": "2026-10-12T02:32:45.629253+00:00",
+        "precision": "bounded evaluator lookup interval; individual browser HTTP request timestamps unavailable"
+      },
+      "facts_and_applicability": "Code caps two render tasks, rejects canceled/old-generation output, budgets 48 images and approximate 24 MiB string payload, and waits for replacement decode. Thirteen source tests use mocks and assert these mechanisms. macOS Zotero 9/10 runtime compatibility is maintainer-reported, not independently established or universal.",
+      "coverage": "COMPLETE",
+      "limits": [
+        "Tests and runtime receipts were not executed. Upstream license AGPL-3.0-or-later."
+      ],
+      "retrieved_body_sha256": {
+        "README": "690834f73c77f14d2ea652eed5284e84951c32bee23700db6aa8a9911ff5508a",
+        "bootstrap.js": "2e6233be4fdacdfa302af2eb47ae77fe92d039ba5863b238cd13d65a9b0194cf",
+        "tests/plugin.test.cjs": "8b67112e0c10d9f566b3227b21a8db717360d309be281f1c589481e46b73099d"
+      }
+    }
+  ],
+  "unavailable_access_notes": [
+    "Some versioned docs.rs paths failed; matching-version latest headers verified.",
+    "Apple browser exposed JS stub/unsupported Markdown; direct official Markdown fetched successfully.",
+    "Direct man7 memfd fetch timed out; search result alone was not used for any decisive grade.",
+    "Unprovided owner platform/renderer/budget facts remain unknown."
+  ]
+}

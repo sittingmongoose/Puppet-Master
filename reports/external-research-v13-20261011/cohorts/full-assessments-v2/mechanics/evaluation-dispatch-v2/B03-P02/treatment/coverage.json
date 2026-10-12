@@ -1,0 +1,359 @@
+{
+  "schema": "er13.independent-coverage.v1",
+  "arm_id": "B03-P02-treatment",
+  "scope": "FULL research planning proposal",
+  "assessment_scope_note": "COMPLETE means the finite assessment covered the identified obligations and available governing evidence. It does not mean future execution, universal correctness, or knowledge of absent user facts.",
+  "axes": [
+    {
+      "axis": 1,
+      "contract_axis": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED",
+      "notes": "All original substantive obligations and negative constraints checked in complete discovery, draft, critique, final and source maps."
+    },
+    {
+      "axis": 2,
+      "contract_axis": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED",
+      "notes": "Available governing primary authorities, versions, definitions and relevant adjacent code/history checked; conditional target applicability examined."
+    },
+    {
+      "axis": 3,
+      "contract_axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED",
+      "notes": "Alternative mechanisms and useful opportunities assessed for relevance and truth, not citation count."
+    },
+    {
+      "axis": 4,
+      "contract_axis": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED",
+      "notes": "Every critic disposition and revealed-plan technical/process obligation checked; observations below."
+    },
+    {
+      "axis": 5,
+      "contract_axis": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED",
+      "notes": "Supported snapshot/permission/identity/type/packaging/verification/alternative/import/uncertainty meaning traced into final. No material supported-meaning loss established; C01 repeats an incorrect premise."
+    },
+    {
+      "axis": 6,
+      "contract_axis": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED",
+      "notes": "Proposed cases and expected oracles checked; no deployment or future software execution required. Research/reveal checks are not product tests."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "obligation": "Snapshot across rows and relations; external attachment version boundary",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O02",
+      "obligation": "Stable source/entity identity and attachment relationship identity",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O03",
+      "obligation": "Attachment paths, exact bytes, metadata and omissions",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O04",
+      "obligation": "Text, dates, custom-field types and unknown/null semantics",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O05",
+      "obligation": "Versioned schema and bounded future importer/fidelity claim",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O06",
+      "obligation": "Offline human reading without original app or required network",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O07",
+      "obligation": "Permissions, inaccessible projects and safe omission disclosure",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O08",
+      "obligation": "50/50,000 scale, payload buffers, growing metadata and final/scratch capacity",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O09",
+      "obligation": "Cancellation/failures, source unchanged and incomplete/completed publication",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O10",
+      "obligation": "Safe structural/semantic/member verification and integrity/authenticity boundary",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O11",
+      "obligation": "Feasible packaging/streaming alternatives and unresolved product choices",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O12",
+      "obligation": "Primary code/callers/tests and consequential failure/fix/release context",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O13",
+      "obligation": "Research proposal only; no real-team export, implementation or false executed result",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "F1",
+      "coverage": "COMPLETE",
+      "final_disposition": "AMEND_REMAINS_OPEN",
+      "independent_assessment": "No application repository was supplied; relevant upstream implementation/caller/tests were researched. Correct unresolved input, not proof of repository absence."
+    },
+    {
+      "id": "F2",
+      "coverage": "COMPLETE",
+      "final_disposition": "REJECT",
+      "independent_assessment": "Independent primary page contains the explicit backup warning. Rejection and narrower GitLab-specific claim are supported."
+    },
+    {
+      "id": "F3",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT_AND_AMEND",
+      "independent_assessment": "Restart/starvation condition and configured cap appear in final proposal and validation."
+    },
+    {
+      "id": "F4",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT_AND_AMEND",
+      "independent_assessment": "Manifest excluded from its digest inventory; CRC/authenticity distinction is honest."
+    }
+  ],
+  "plan_dispositions": {
+    "coverage": "COMPLETE",
+    "scope": "All substantive clauses of the exact revealed plan plus provisional status, unknown-product-fact boundary, no-deployment and maximum-time process clauses",
+    "result": "Technical clauses dispositioned; process scope and clocks preserved in governing receipts and verbatim reference."
+  },
+  "preservation": [
+    {
+      "family": "database-versus-blob consistency",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "source identities and relations",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "privacy/omissions/no fabricated bytes",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "text/date/custom-field distinctions",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "format-independent records and schema evolution",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "folder/staged/streaming alternatives",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "source immutability and incomplete publication",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "capacity/buffer/metadata distinctions",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "fixity versus authenticity",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "finite fidelity and importer trust",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "reference code/test/history applicability",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "proposed versus executed work",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "owner decisions and uncertainty",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    }
+  ],
+  "source_families": [
+    {
+      "family": "S01",
+      "coverage": "COMPLETE",
+      "scope": "Overview and section 3.1, checked against C interface"
+    },
+    {
+      "family": "S02",
+      "coverage": "COMPLETE",
+      "scope": "Separate-connection isolation; WAL read transactions; rollback mode; shared-cache/read_uncommitted exception"
+    },
+    {
+      "family": "S03",
+      "coverage": "COMPLETE",
+      "scope": "End mark, checkpointing, same-host constraint"
+    },
+    {
+      "family": "S04",
+      "coverage": "COMPLETE",
+      "scope": "Backup feature, step and completion APIs"
+    },
+    {
+      "family": "S05",
+      "coverage": "COMPLETE",
+      "scope": "Backup step/run_to_completion/drop plus caller/test module"
+    },
+    {
+      "family": "S06",
+      "coverage": "COMPLETE",
+      "scope": "4.3.5, 4.3.9, 4.3.12-16, 4.5.3"
+    },
+    {
+      "family": "S07",
+      "coverage": "COMPLETE",
+      "scope": "new_stream, StreamWriter Write/Seek adapter, abort_file, finish/finalize, central directory"
+    },
+    {
+      "family": "S08",
+      "coverage": "COMPLETE",
+      "scope": "Reproducer and report context"
+    },
+    {
+      "family": "S09",
+      "coverage": "COMPLETE",
+      "scope": "Actual patch plus issue linkage and changed tests"
+    },
+    {
+      "family": "S10",
+      "coverage": "COMPLETE",
+      "scope": "Release notes bug-fix entry"
+    },
+    {
+      "family": "S11",
+      "coverage": "COMPLETE",
+      "scope": "Payload/tag manifests, complete/valid definitions, fetch.txt and security considerations"
+    },
+    {
+      "family": "S12",
+      "coverage": "COMPLETE",
+      "scope": "Descriptor/resources and local, remote, inline data"
+    },
+    {
+      "family": "S13",
+      "coverage": "COMPLETE",
+      "scope": "Sections 4, 6, 8.1, 9"
+    },
+    {
+      "family": "S14",
+      "coverage": "COMPLETE",
+      "scope": "3339 4.3/5.6 and 9557 2.1-2.3/3.4"
+    },
+    {
+      "family": "S15",
+      "coverage": "COMPLETE",
+      "scope": "Section 2 update; 3.3 critical suffixes; 3.4 inconsistencies; syntax"
+    },
+    {
+      "family": "S16",
+      "coverage": "COMPLETE",
+      "scope": "128-bit identifiers and 6.5 name-based generation"
+    },
+    {
+      "family": "S17",
+      "coverage": "COMPLETE",
+      "scope": "8.1.1 dialect, references and 9.3.1 bundling"
+    },
+    {
+      "family": "S18",
+      "coverage": "COMPLETE",
+      "scope": "7.2 format annotation/assertion and defined formats"
+    },
+    {
+      "family": "S19",
+      "coverage": "COMPLETE",
+      "scope": "Format vocabulary split"
+    },
+    {
+      "family": "S20",
+      "coverage": "COMPLETE",
+      "scope": "Backup warning; user mapping; NDJSON; compatibility; version-dependent item inventory"
+    },
+    {
+      "family": "S21",
+      "coverage": "COMPLETE",
+      "scope": "Maintainer advisory, curated affected range, extraction methods and release boundary"
+    },
+    {
+      "family": "S22",
+      "coverage": "COMPLETE",
+      "scope": "zip64_large tests: entry count, force_large_file, large-offset helper and cfg conditions"
+    }
+  ],
+  "unassessed_domains": [
+    {
+      "coverage": "UNASSESSED",
+      "domain": "Actual tracker application integration and user policy facts",
+      "reason": "Absent from authorized frozen inputs; the proposals explicitly retain these as unknown."
+    },
+    {
+      "coverage": "UNASSESSED",
+      "domain": "Execution of product/export/import/performance/security tests",
+      "reason": "Deliverable is a planning proposal; no such execution was claimed or required."
+    },
+    {
+      "coverage": "UNASSESSED",
+      "domain": "Complete native transcript, provider activity/billing, independent task/session mapping",
+      "reason": "Unavailable telemetry; hashes and receipts do not prove it."
+    }
+  ],
+  "early_stop": false,
+  "held_out_cases_read": false
+}

@@ -1,0 +1,75 @@
+{
+  "arm_id": "B03-P01-treatment",
+  "source_judgment": "FAIL",
+  "material_defect_ids": [
+    "B03-P01-T-D01"
+  ],
+  "findings": [
+    {
+      "defect_id": "B03-P01-T-D01",
+      "classification": "material wrong",
+      "severity": "MATERIAL",
+      "axes": [
+        2
+      ],
+      "location": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-retained-final/run/B03-P01-treatment/stages/investigator/final/final.md",
+        "line": 24,
+        "section": "P3.1 disposition"
+      },
+      "claim": "Tantivy 0.26.2 default removes tokens longer than 40 characters.",
+      "governing_sources": [
+        "PS12",
+        "PS13",
+        "PS14",
+        "PS15",
+        "PS16",
+        "PS19"
+      ],
+      "independent_evidence": "../shared/tantivy-token-boundary.json",
+      "finding": "Actual default accepts only UTF-8 token lengths <40 bytes. It rejects a 14-character CJK run (42 bytes) and exactly 40 ASCII bytes. The overview is imprecise; adjacent API, caller and implementation govern.",
+      "materiality": "Copied excerpts in different scripts are an explicit brief obligation. The wrong unit/boundary hides a concrete source of missing multilingual results and misstates the candidate comparison/fixture premise. Generic future language testing does not make this present source fact true.",
+      "lineage": "Present in discovery/draft/source maps, repeated or affirmed by critic, retained in final. No supported criticism was falsely rejected; this error escaped review.",
+      "validation_boundary": "Static primary-source finding and byte arithmetic; not an engine execution, private-notebook benchmark or deployment requirement."
+    },
+    {
+      "defect_id": "B03-P01-T-N01",
+      "classification": "minor source-map wording",
+      "severity": "NONMATERIAL",
+      "axes": [
+        2
+      ],
+      "location": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-retained-final/run/B03-P01-treatment/stages/investigator/final/source-map.json",
+        "source_id": "S01"
+      },
+      "governing_sources": [
+        "PS01"
+      ],
+      "finding": "Carried S01 summary says REBUILD requires external content, which is too broad: ordinary stored-content FTS5 can rebuild from its internal content. Final P3.2 correctly says table or configured content table; the recommended fresh contentless generation does not rely on that overbroad summary."
+    },
+    {
+      "defect_id": "B03-P01-T-N02",
+      "classification": "nonmaterial preservation limitation",
+      "severity": "NONMATERIAL",
+      "axes": [
+        5
+      ],
+      "location": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-retained-final/run/B03-P01-treatment/stages/investigator/final/final.md",
+        "line": 68
+      },
+      "governing_sources": [
+        "PS01"
+      ],
+      "finding": "Detailed trigram conditions and external integrity rank=1 remain in final source-map S01 but are abbreviated in final prose. The discovery’s case-sensitive GLOB-only detail is not repeated. No selected trigram configuration or broad short-query promise is made."
+    }
+  ],
+  "unresolved_external_inputs": [
+    "target repository and store capabilities",
+    "packaged runtime/platforms",
+    "required scripts, query/tag/title semantics and performance/resource budgets"
+  ],
+  "no_feedback_to_candidate_authors": true,
+  "prospective_repairs_or_regrades": false
+}

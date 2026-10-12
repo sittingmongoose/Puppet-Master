@@ -1,0 +1,242 @@
+{
+  "schema": "er13.root_C_dispatch_release.v1",
+  "released_utc": "2026-10-12T02:34:13.461819+00:00",
+  "owner": "codex-er13-root",
+  "sole_candidate_dispatcher": "codex-er13-dispatch",
+  "selection_lock": "ER13_RUNTIME/state/c-selection-lock-v1.json",
+  "selection_lock_sha256": "a9addb0a69e202c417fc2ae0feeb37f5f438f046053c8fdd0e604820a7434e67",
+  "materializer": "ER13_RUNTIME/helpers/c-successor-materializer-v1",
+  "materializer_manifest_sha256": "fffa5d116aa54b2c8fd11eb550ad5a855d52816e0d4688ae962cb4c9e1281e98",
+  "capture_helper": "ER13_RUNTIME/helpers/prospective-capture-v1",
+  "capture_manifest_sha256": "30b992fad9649a5a1607d329b66eae9c9af6ef453b874348c2b7e1662ebd8a24",
+  "route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "primary_arm_bindings": {
+    "C-R1-P01-control": {
+      "arm_id": "C-R1-P01-control",
+      "block_id": "C-R1-P01",
+      "case_id": "C-P01",
+      "case_domain": "accessibility",
+      "scope": "FULL",
+      "recipe": "R0-ER13-C-v1",
+      "method": "R0",
+      "method_directory": null,
+      "brief": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P01/brief.md",
+      "plan": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P01/plan.md",
+      "brief_sha256": "2fa255df39e8ae5d6fb794931111f411acbc954261f582359c3ff7cd6e075273",
+      "plan_sha256": "8e08396ed2143c628be908dd9d39a770fcca5565e5f10151fb18a770f4ddb725",
+      "metadata": "ER13_RUNTIME/inputs/heldout-v1/C-P01/metadata.json",
+      "rubric": "SEALED_EVALUATOR_ONLY_UNTIL_ORIGINAL_OUTPUT_FREEZE",
+      "stage_budgets_seconds": [
+        1800,
+        720,
+        1080
+      ],
+      "whole_budget_seconds": 3600,
+      "T0": "Dispatcher persist ONCE before arm-specific materialization; shared private fixture preparation cost separate; no reset",
+      "source_state_at_dispatch": "UNASSESSED_FRESH_EXPLORATORY_INTEGRATION"
+    },
+    "C-R1-P01-treatment": {
+      "arm_id": "C-R1-P01-treatment",
+      "block_id": "C-R1-P01",
+      "case_id": "C-P01",
+      "case_domain": "accessibility",
+      "scope": "FULL",
+      "recipe": "C-S1-v2",
+      "method": "B02",
+      "method_directory": "ER13_RUNTIME/helpers/c-successor-materializer-v1/methods/C-S1-v2",
+      "brief": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P01/brief.md",
+      "plan": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P01/plan.md",
+      "brief_sha256": "2fa255df39e8ae5d6fb794931111f411acbc954261f582359c3ff7cd6e075273",
+      "plan_sha256": "8e08396ed2143c628be908dd9d39a770fcca5565e5f10151fb18a770f4ddb725",
+      "metadata": "ER13_RUNTIME/inputs/heldout-v1/C-P01/metadata.json",
+      "rubric": "SEALED_EVALUATOR_ONLY_UNTIL_ORIGINAL_OUTPUT_FREEZE",
+      "stage_budgets_seconds": [
+        1800,
+        1800
+      ],
+      "whole_budget_seconds": 3600,
+      "T0": "Dispatcher persist ONCE before arm-specific materialization; shared private fixture preparation cost separate; no reset",
+      "source_state_at_dispatch": "UNASSESSED_FRESH_EXPLORATORY_INTEGRATION"
+    },
+    "C-R1-P02-control": {
+      "arm_id": "C-R1-P02-control",
+      "block_id": "C-R1-P02",
+      "case_id": "C-P02",
+      "case_domain": "media",
+      "scope": "FULL",
+      "recipe": "R0-ER13-C-v1",
+      "method": "R0",
+      "method_directory": null,
+      "brief": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P02/brief.md",
+      "plan": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P02/plan.md",
+      "brief_sha256": "59dd485d74ad37b8f65acd5b503426a84d073afa61a5a0f45596e0f20e7e9233",
+      "plan_sha256": "51e0f5e5cc9489d1c7614948da0b04e1f1c14fa070b6d8fc1eabe6c64ab574c7",
+      "metadata": "ER13_RUNTIME/inputs/heldout-v1/C-P02/metadata.json",
+      "rubric": "SEALED_EVALUATOR_ONLY_UNTIL_ORIGINAL_OUTPUT_FREEZE",
+      "stage_budgets_seconds": [
+        1800,
+        720,
+        1080
+      ],
+      "whole_budget_seconds": 3600,
+      "T0": "Dispatcher persist ONCE before arm-specific materialization; shared private fixture preparation cost separate; no reset",
+      "source_state_at_dispatch": "UNASSESSED_FRESH_EXPLORATORY_INTEGRATION"
+    },
+    "C-R1-P02-treatment": {
+      "arm_id": "C-R1-P02-treatment",
+      "block_id": "C-R1-P02",
+      "case_id": "C-P02",
+      "case_domain": "media",
+      "scope": "FULL",
+      "recipe": "C-S1-v2",
+      "method": "B02",
+      "method_directory": "ER13_RUNTIME/helpers/c-successor-materializer-v1/methods/C-S1-v2",
+      "brief": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P02/brief.md",
+      "plan": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P02/plan.md",
+      "brief_sha256": "59dd485d74ad37b8f65acd5b503426a84d073afa61a5a0f45596e0f20e7e9233",
+      "plan_sha256": "51e0f5e5cc9489d1c7614948da0b04e1f1c14fa070b6d8fc1eabe6c64ab574c7",
+      "metadata": "ER13_RUNTIME/inputs/heldout-v1/C-P02/metadata.json",
+      "rubric": "SEALED_EVALUATOR_ONLY_UNTIL_ORIGINAL_OUTPUT_FREEZE",
+      "stage_budgets_seconds": [
+        1800,
+        1800
+      ],
+      "whole_budget_seconds": 3600,
+      "T0": "Dispatcher persist ONCE before arm-specific materialization; shared private fixture preparation cost separate; no reset",
+      "source_state_at_dispatch": "UNASSESSED_FRESH_EXPLORATORY_INTEGRATION"
+    },
+    "C-R2-P01-control": {
+      "arm_id": "C-R2-P01-control",
+      "block_id": "C-R2-P01",
+      "case_id": "C-P03",
+      "case_domain": "local_data",
+      "scope": "FULL",
+      "recipe": "R0-ER13-C-v1",
+      "method": "R0",
+      "method_directory": null,
+      "brief": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P03/brief.md",
+      "plan": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P03/plan.md",
+      "brief_sha256": "c44ccd6826d053b9dbec1750f254f632019a27ecc1ad4c1e6af5bf9dd0a77579",
+      "plan_sha256": "b5700b0f07842886843c7280586652281f1362a0cbfad4c46ba2069860989642",
+      "metadata": "ER13_RUNTIME/inputs/heldout-v1/C-P03/metadata.json",
+      "rubric": "SEALED_EVALUATOR_ONLY_UNTIL_ORIGINAL_OUTPUT_FREEZE",
+      "stage_budgets_seconds": [
+        1800,
+        720,
+        1080
+      ],
+      "whole_budget_seconds": 3600,
+      "T0": "Dispatcher persist ONCE before arm-specific materialization; shared private fixture preparation cost separate; no reset",
+      "source_state_at_dispatch": "UNASSESSED_FRESH_EXPLORATORY_INTEGRATION"
+    },
+    "C-R2-P01-treatment": {
+      "arm_id": "C-R2-P01-treatment",
+      "block_id": "C-R2-P01",
+      "case_id": "C-P03",
+      "case_domain": "local_data",
+      "scope": "FULL",
+      "recipe": "C-S2-v2",
+      "method": "B06",
+      "method_directory": "ER13_RUNTIME/helpers/c-successor-materializer-v1/methods/C-S2-v2",
+      "brief": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P03/brief.md",
+      "plan": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P03/plan.md",
+      "brief_sha256": "c44ccd6826d053b9dbec1750f254f632019a27ecc1ad4c1e6af5bf9dd0a77579",
+      "plan_sha256": "b5700b0f07842886843c7280586652281f1362a0cbfad4c46ba2069860989642",
+      "metadata": "ER13_RUNTIME/inputs/heldout-v1/C-P03/metadata.json",
+      "rubric": "SEALED_EVALUATOR_ONLY_UNTIL_ORIGINAL_OUTPUT_FREEZE",
+      "stage_budgets_seconds": [
+        1800,
+        360,
+        360,
+        1080
+      ],
+      "whole_budget_seconds": 3600,
+      "T0": "Dispatcher persist ONCE before arm-specific materialization; shared private fixture preparation cost separate; no reset",
+      "source_state_at_dispatch": "UNASSESSED_FRESH_EXPLORATORY_INTEGRATION"
+    },
+    "C-R2-P02-control": {
+      "arm_id": "C-R2-P02-control",
+      "block_id": "C-R2-P02",
+      "case_id": "C-P04",
+      "case_domain": "plugin_isolation_resource",
+      "scope": "FULL",
+      "recipe": "R0-ER13-C-v1",
+      "method": "R0",
+      "method_directory": null,
+      "brief": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P04/brief.md",
+      "plan": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P04/plan.md",
+      "brief_sha256": "b94bb075dcf8f4217efb6edbd4ce62f8cf149b969da555bbd169e730632f64f9",
+      "plan_sha256": "4272bc763dfb1c1f9373b33f7749cb9ee0422f6b3377bd9761ba1b5d37ebb48e",
+      "metadata": "ER13_RUNTIME/inputs/heldout-v1/C-P04/metadata.json",
+      "rubric": "SEALED_EVALUATOR_ONLY_UNTIL_ORIGINAL_OUTPUT_FREEZE",
+      "stage_budgets_seconds": [
+        1800,
+        720,
+        1080
+      ],
+      "whole_budget_seconds": 3600,
+      "T0": "Dispatcher persist ONCE before arm-specific materialization; shared private fixture preparation cost separate; no reset",
+      "source_state_at_dispatch": "UNASSESSED_FRESH_EXPLORATORY_INTEGRATION"
+    },
+    "C-R2-P02-treatment": {
+      "arm_id": "C-R2-P02-treatment",
+      "block_id": "C-R2-P02",
+      "case_id": "C-P04",
+      "case_domain": "plugin_isolation_resource",
+      "scope": "FULL",
+      "recipe": "C-S2-v2",
+      "method": "B06",
+      "method_directory": "ER13_RUNTIME/helpers/c-successor-materializer-v1/methods/C-S2-v2",
+      "brief": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P04/brief.md",
+      "plan": "ER13_RUNTIME/inputs/private-admission-C-v1/C-P04/plan.md",
+      "brief_sha256": "b94bb075dcf8f4217efb6edbd4ce62f8cf149b969da555bbd169e730632f64f9",
+      "plan_sha256": "4272bc763dfb1c1f9373b33f7749cb9ee0422f6b3377bd9761ba1b5d37ebb48e",
+      "metadata": "ER13_RUNTIME/inputs/heldout-v1/C-P04/metadata.json",
+      "rubric": "SEALED_EVALUATOR_ONLY_UNTIL_ORIGINAL_OUTPUT_FREEZE",
+      "stage_budgets_seconds": [
+        1800,
+        360,
+        360,
+        1080
+      ],
+      "whole_budget_seconds": 3600,
+      "T0": "Dispatcher persist ONCE before arm-specific materialization; shared private fixture preparation cost separate; no reset",
+      "source_state_at_dispatch": "UNASSESSED_FRESH_EXPLORATORY_INTEGRATION"
+    }
+  },
+  "primary_allow": [
+    "C-R1-P01-control",
+    "C-R1-P01-treatment",
+    "C-R1-P02-control",
+    "C-R1-P02-treatment",
+    "C-R2-P01-control",
+    "C-R2-P01-treatment",
+    "C-R2-P02-control",
+    "C-R2-P02-treatment"
+  ],
+  "remaining_D_held": true,
+  "D_primary_unstarted": 16,
+  "AB_closed_record": "ER13_RUNTIME/state/dispatcher-v1/ab-closure-record.json",
+  "AB_unmodified": true,
+  "candidate_phase_boundary": "Brief only initially; inherited one-shot plan release after actual discovery; full matched case scope",
+  "candidate_prompt_limits": "Assignment and generic delta only; no original grader findings, private keys, rubrics, cross-arm inputs or premium answer assistance",
+  "new_capture_auxiliary_freeze": [
+    "native-capture.js",
+    "prospective-capture-v1.json",
+    "native-goal-attempt.json"
+  ],
+  "private_input_preparation_receipt": "ER13_RUNTIME/state/c-private-input-preparation-v1.json",
+  "bodyexposure": "Root model has not read C plaintext bodies; machine-only private reference preparation after full selection. No early candidate plan release or false comparison-point receipt. D/rubrics stay encrypted.",
+  "evaluation_contract": {
+    "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+    "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+  },
+  "monitor": "Notifications/bounded active-only; available RAM >=4GB before each launch; conservative6GB guard allowed; no repeated old tree polling"
+}

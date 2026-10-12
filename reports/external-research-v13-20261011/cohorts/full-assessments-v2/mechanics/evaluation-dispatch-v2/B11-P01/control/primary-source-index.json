@@ -1,0 +1,853 @@
+{
+  "arm_id": "B11-P01-control",
+  "independence": "Reviewer-created primary research, reusable across this matched pair; no candidate assistance. No authors contacted.",
+  "blinding": "IMPERFECT: arm paths, assignments and pivot table reveal technique. Judgments frozen separately before comparison.",
+  "primary_sources": [
+    {
+      "id": "E01",
+      "title": "Zotero linked and stored attachments",
+      "url": "https://www.zotero.org/support/attaching_files",
+      "version_context": "Living page, updated 2025-09-11",
+      "locator": "Stored Files; Linked Files; Adding linked files",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Stored imports copy bytes; linked references retain external originals. Linked originals are neither synchronized nor deleted with the reference. Base-directory mapping is conditional on matching local trees.",
+      "family": "product_link_copy"
+    },
+    {
+      "id": "E02",
+      "title": "Zotero missing linked file",
+      "url": "https://www.zotero.org/support/kb/missing_linked_file",
+      "version_context": "Living support page, older recovery guidance",
+      "locator": "Numbered causes and Locate recovery",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "External moves/deletion, incorrect base-directory mapping and external transfer lag are distinct causes. Locate changes a reference deliberately.",
+      "family": "product_link_copy"
+    },
+    {
+      "id": "E03",
+      "title": "Zotero attachment operations",
+      "url": "https://github.com/zotero/zotero/blob/44fe83d98bcf9b982b74782dcc5f824c8ab9cb43/chrome/content/zotero/xpcom/attachments.js",
+      "version_context": "Exact assigned commit 44fe83d98bcf9b982b74782dcc5f824c8ab9cb43",
+      "locator": "Raw source lines 28-34, 55-150, 187-285; linked/import operations",
+      "coverage": "COMPLETE",
+      "observed_operation": "Read exact public source; no execution",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Separate imported and linked modes; linkFromFile creates a linked record. Relative linking stores attachments: plus the suffix, permits unresolved references, and indexes only with a resolvable base and existing target.",
+      "family": "zotero_code_history",
+      "retrieval_url": "https://raw.githubusercontent.com/zotero/zotero/44fe83d98bcf9b982b74782dcc5f824c8ab9cb43/chrome/content/zotero/xpcom/attachments.js",
+      "retrieved_body_sha256": "d7e669562122a1ea219dd4322d1f54a6eac7255246d9c31ed32a78ddf8bf3f06"
+    },
+    {
+      "id": "E05",
+      "title": "Zotero relocation proposal #2084",
+      "url": "https://github.com/zotero/zotero/issues/2084",
+      "version_context": "Opened 2021-06-11; closed completed 2022-10-08",
+      "locator": "Description and closure activity",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "The issue proposes bounded suffix search under a configured base and confirmation for one or several repairs. Issue closure alone does not establish shipped behavior.",
+      "family": "zotero_code_history"
+    },
+    {
+      "id": "E07",
+      "title": "Zotero 7.0 release history",
+      "url": "https://github.com/zotero/zotero-docs/blob/main/content/7.0_changelog.md",
+      "version_context": "7.0.7, 2024-10-02; 7.0.16, 2025-06-21",
+      "locator": "Nearest release headings around auto-relink and invalid-relative-path entries",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "The potential auto-relink error fix belongs to 7.0.7, not the control map's 7.0.8. The invalid relative-path/base-directory entry belongs to 7.0.16.",
+      "family": "zotero_code_history",
+      "retrieval_url": "https://raw.githubusercontent.com/zotero/zotero-docs/main/content/7.0_changelog.md"
+    },
+    {
+      "id": "E08",
+      "title": "Zotero relink UI",
+      "url": "https://github.com/zotero/zotero/blob/44fe83d98bcf9b982b74782dcc5f824c8ab9cb43/chrome/locale/en-US/zotero/zotero.properties",
+      "version_context": "Exact assigned commit 44fe83d98bcf9b982b74782dcc5f824c8ab9cb43",
+      "locator": "Raw source lines 400-412: autoRelink strings",
+      "coverage": "COMPLETE",
+      "observed_operation": "Read exact public locale source",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "UI discloses old/new paths and gives relink, cancellation and manual-location choices. Strings are corroborated by the caller, rather than treated as the matching algorithm.",
+      "family": "zotero_code_history"
+    },
+    {
+      "id": "E09",
+      "title": "Zotero relink caller",
+      "url": "https://github.com/zotero/zotero/blob/44fe83d98bcf9b982b74782dcc5f824c8ab9cb43/chrome/content/zotero/zoteroPane.js",
+      "version_context": "Exact assigned commit 44fe83d98bcf9b982b74782dcc5f824c8ab9cb43",
+      "locator": "showLinkedFileFoundAutomaticallyDialog; checkForLinkedFilesToRelink, including lines 6916-6948",
+      "coverage": "COMPLETE",
+      "observed_operation": "Inspected adjacent caller; no execution",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Candidate construction and user dialog precede committed relink. The caller corroborates the limited UI-source claim.",
+      "family": "zotero_code_history"
+    },
+    {
+      "id": "E11",
+      "title": "Zotero relative-link tests",
+      "url": "https://github.com/zotero/zotero/blob/44fe83d98bcf9b982b74782dcc5f824c8ab9cb43/test/tests/attachmentsTest.js",
+      "version_context": "Exact assigned commit 44fe83d98bcf9b982b74782dcc5f824c8ab9cb43",
+      "locator": "Raw lines 161-266",
+      "coverage": "COMPLETE",
+      "observed_operation": "Inspected relevant upstream tests; no execution",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Tests cover absent base, existing and missing targets, conditional indexing and absolute-path rejection. Reading tests supplies context; no test was executed or credited as a candidate witness.",
+      "family": "zotero_code_history"
+    },
+    {
+      "id": "E12",
+      "title": "Final Cut Pro relinking",
+      "url": "https://support.apple.com/en-euro/guide/final-cut-pro/ver26f5c8c9/mac",
+      "version_context": "Living guide URL token is not an application release number",
+      "locator": "Procedure steps 5-8; media requirements and non-undoable command",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Filename/proximity candidates undergo media-attribute analysis; users can remove bad matches and commit with Relink Files. Its media constraints and lack of undo are product-specific.",
+      "family": "product_relink"
+    },
+    {
+      "id": "E13",
+      "title": "NSURL bookmarks and security scope",
+      "url": "https://developer.apple.com/documentation/foundation/nsurl",
+      "version_context": "Living Foundation reference; bookmarks from macOS 10.6; security-scoped bookmarks from 10.7.3",
+      "locator": "Bookmarks and Security Scope; Security-Scoped URLs",
+      "coverage": "COMPLETE",
+      "observed_operation": "Retrieved official Markdown after web HTML/Markdown fetch limitations",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Bookmark relocation continuity is usual, not guaranteed. Persistent sandbox access needs resolution and balanced successful start/stop calls. A string path does not carry the URL security scope.",
+      "family": "apple_access_identity",
+      "retrieval_url": "https://developer.apple.com/documentation/foundation/nsurl.md",
+      "retrieved_body_sha256": "6f2b0fb75987c4ccf0221592b023d763cc44f39d83ab7e07d19cdd09ca2495b9"
+    },
+    {
+      "id": "E14",
+      "title": "Apple sandbox access",
+      "url": "https://developer.apple.com/documentation/security/accessing-files-from-the-macos-app-sandbox",
+      "version_context": "Living macOS documentation; application entitlements/distribution remain owner facts",
+      "locator": "Persistent and document-relative bookmark sections",
+      "coverage": "COMPLETE",
+      "observed_operation": "Read official Markdown and surrounding access conditions",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Document-relative bookmarks can be stored with an owning project and resolved by a process able to access it. Scoped bookmarks require access calls and stale-data replacement; ordinary OS permissions can still deny access.",
+      "family": "apple_access_identity",
+      "retrieval_url": "https://developer.apple.com/documentation/security/accessing-files-from-the-macos-app-sandbox.md",
+      "retrieved_body_sha256": "7f39de20b0bad625fbc3baaa9a221f64bbe4571ccc59ed96b1aeadae817bc332"
+    },
+    {
+      "id": "E15",
+      "title": "Apple bookmark resolution",
+      "url": "https://developer.apple.com/documentation/foundation/nsurl/urlbyresolvingbookmarkdata:options:relativetourl:bookmarkdataisstale:error:",
+      "version_context": "macOS method from 10.6; scoped support from 10.7.3",
+      "locator": "relativeURL/isStale; failure discussion; app/document scope",
+      "coverage": "COMPLETE",
+      "observed_operation": "Read official Markdown API discussion",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "App scope uses nil relativeURL; document scope uses the absolute owning-document URL. Unlocated/unmountable targets fail; last-known bookmark metadata may aid recovery.",
+      "family": "apple_access_identity"
+    },
+    {
+      "id": "E16",
+      "title": "Apple file resource identifier",
+      "url": "https://developer.apple.com/documentation/foundation/urlresourcekey/fileresourceidentifierkey",
+      "version_context": "Living API; macOS availability 10.7",
+      "locator": "Discussion",
+      "coverage": "COMPLETE",
+      "observed_operation": "Read official Markdown API definition",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Equality applies to same path or same inode on one filesystem. This value is not persistent across system restart.",
+      "family": "apple_access_identity",
+      "retrieved_body_sha256": "be4891cd50b119f0013e3666356b1c7759bf83597ef1d78de274cc48ddadad55"
+    },
+    {
+      "id": "E20",
+      "title": "Windows FILE_ID_INFO",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-file_id_info",
+      "version_context": "Learn updated 2024-02-22; requirements table lists Server 2012 and no supported client",
+      "locator": "Structure, FileId member, requirements; related BY_HANDLE context",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Volume serial plus 128-bit ID compares open handles on one computer. This neither locates a moved file nor supplies permanent cross-machine identity. Target-client support needs an owner/version check.",
+      "family": "windows_identity"
+    },
+    {
+      "id": "E21",
+      "title": "Windows BY_HANDLE_FILE_INFORMATION",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/ns-fileapi-by_handle_file_information",
+      "version_context": "Learn updated 2021-04-02; older 64-bit interface",
+      "locator": "Members and complete file-ID Remarks",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "IDs are filesystem-dependent and can be reused; FAT rename/defragmentation caveats apply. NTFS replacement has distinct semantics; the 64-bit field is insufficient for ReFS identity. Timestamps have filesystem-specific precision.",
+      "family": "windows_identity"
+    },
+    {
+      "id": "E23",
+      "title": "Linux inode",
+      "url": "https://www.man7.org/linux/man-pages/man7/inode.7.html",
+      "version_context": "man-pages 6.19; inode manual date 2026-02-08",
+      "locator": "st_dev/st_ino, raw release-member lines 29-49",
+      "coverage": "COMPLETE",
+      "observed_operation": "Read indexed primary manual; independently read exact release member after direct HTML timeouts",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Device/inode comparison is filesystem-scoped. Equal inode numbers can occur on different filesystems; no portable attachment identity follows from the number.",
+      "family": "linux_identity"
+    },
+    {
+      "id": "E24",
+      "title": "Linux opaque file handles",
+      "url": "https://www.man7.org/linux/man-pages/man2/open_by_handle_at.2.html",
+      "version_context": "man-pages 6.19; Linux 2.6.39/glibc 2.14 origins",
+      "locator": "Handle flags, permission, errors, notes and example context",
+      "coverage": "COMPLETE",
+      "observed_operation": "Read indexed primary manual and exact release member",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Handle support varies; reopening requires CAP_DAC_READ_SEARCH and can fail ESTALE. Unprivileged handle-generation/comparison and privileged reopening are distinct capabilities.",
+      "family": "linux_identity"
+    },
+    {
+      "id": "E25",
+      "title": "XDG Documents portal",
+      "url": "https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.portal.Documents.html",
+      "version_context": "Interface version 5",
+      "locator": "Overview; Add/AddFull; permissions; Delete; host paths",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Portal IDs name per-user access entries under the document mount. Persistence is explicit; deleting an entry does not delete source bytes. Grants and host-path access have caller restrictions.",
+      "family": "linux_portal"
+    },
+    {
+      "id": "E27",
+      "title": "RFC 8089",
+      "url": "https://www.rfc-editor.org/rfc/rfc8089.html",
+      "version_context": "Standards Track, February 2017; published syntax, not a filesystem identity standard",
+      "locator": "Sections 2-5; Appendix E drive/UNC forms",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "File URIs encode locations with platform/encoding differences. Non-local access and privilege handling require care. The locator-versus-identity conclusion is an engineering inference from the defined representation.",
+      "family": "path_semantics"
+    },
+    {
+      "id": "E28",
+      "title": "SQLite transactions",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_context": "Living page updated 2026-02-18; target library version unspecified",
+      "locator": "Sections 2.1-2.3; read snapshots, write upgrades and errors",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Multiple readers coexist with one simultaneous writer. Historic read snapshots and SQLITE_BUSY require application handling. Atomicity alone does not detect stale-window overwrite.",
+      "family": "storage"
+    },
+    {
+      "id": "E29",
+      "title": "SQLite WAL",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_context": "Living documentation; WAL from 3.7.0; 2026 WAL-reset fix context",
+      "locator": "Overview, concurrency, and complete sections 11-11.2",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "WAL requires same-host access and has one writer. A rare corruption race affects 3.7.0-3.51.2 with concurrent write/checkpoint activity from multiple connections; 3.51.3+ and named backports contain the fix.",
+      "family": "storage_wal"
+    },
+    {
+      "id": "E30",
+      "title": "SQLite WAL-reset fix release",
+      "url": "https://www.sqlite.org/releaselog/3_51_3.html",
+      "version_context": "SQLite 3.51.3, 2026-03-13",
+      "locator": "Patch-release changes",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "The official release records correction of the WAL-reset corruption bug. This corroborates the version gate, without establishing the notebook's selected backend or installed version.",
+      "family": "storage_wal"
+    },
+    {
+      "id": "E31",
+      "title": "Windows naming rules",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file",
+      "version_context": "Living Win32 documentation; filesystem-specific rules",
+      "locator": "File/directory names; roots, namespace, length and case behavior",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Drive and UNC roots, component restrictions and case behavior vary. Lossless native path storage and filesystem-aware comparison are justified.",
+      "family": "path_semantics"
+    },
+    {
+      "id": "E32",
+      "title": "Apple APFS FAQ",
+      "url": "https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/APFS_Guide/FAQ/FAQ.html",
+      "version_context": "Archived High Sierra/iOS 11-era guide, not a current target-matrix guarantee",
+      "locator": "Filename case and normalization FAQ",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "macOS APFS has case-sensitive and case-insensitive variants; archived documentation also describes normalization-insensitivity. A universal case-fold/normalization rule is inappropriate.",
+      "family": "path_semantics"
+    },
+    {
+      "id": "E33",
+      "title": "Apple symlink resolution",
+      "url": "https://developer.apple.com/documentation/foundation/nsurl/resolvingsymlinksinpath",
+      "version_context": "Living Foundation API",
+      "locator": "Complete Discussion",
+      "coverage": "COMPLETE",
+      "observed_operation": "Read official Markdown API definition",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Broken/unresolvable links can remain in the result; file URLs only. This helper alone does not certify containment, alias semantics or race-free traversal.",
+      "family": "containment"
+    },
+    {
+      "id": "E34",
+      "title": "Linux realpath",
+      "url": "https://www.man7.org/linux/man-pages/man3/realpath.3.html",
+      "version_context": "man-pages 6.19; manual date 2026-02-08; POSIX.1-2008 context",
+      "locator": "Description, errors and GNU extension",
+      "coverage": "COMPLETE",
+      "observed_operation": "Read indexed manual and exact release member",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Success expands links/dot components into a canonical absolute path; denied, missing and loop cases can fail. String resolution is not a race-free containment proof.",
+      "family": "containment"
+    },
+    {
+      "id": "E35",
+      "title": "Windows final handle path",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getfinalpathnamebyhandlew",
+      "version_context": "Learn updated 2023-02-09; Vista/Server 2008 minimum",
+      "locator": "Flags, final path, SMB normalized-component caveat",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "The API resolves an open handle's final path. SMB normalized queries can fail when a component is inaccessible; returned volume-name form depends on flags.",
+      "family": "containment"
+    },
+    {
+      "id": "E36",
+      "title": "Windows reparse points",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/reparse-points",
+      "version_context": "Learn updated 2025-07-09",
+      "locator": "Overview and restrictions",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Filters/tags mediate reparse opens; mounted folders and links can redirect a lexical path. Unsupported filters can make open fail.",
+      "family": "containment"
+    },
+    {
+      "id": "E37",
+      "title": "Windows symbolic links",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/symbolic-links",
+      "version_context": "Learn updated 2025-07-08; NTFS from Vista",
+      "locator": "Definition and supported systems",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "A link entry and its target are distinct; transparent traversal motivates explicit target/containment semantics.",
+      "family": "containment"
+    },
+    {
+      "id": "E38",
+      "title": "Apple FSEvents",
+      "url": "https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/FSEvents_ProgGuide/UsingtheFSEventsFramework/UsingtheFSEventsFramework.html",
+      "version_context": "Archived guide, updated 2012-12-13",
+      "locator": "Handling Events; hierarchy snapshots",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Coalesced events need subtree rescans; dropped events need a full monitored-scope rescan; root changes need reconciliation. Current target SDK details remain implementation work.",
+      "family": "watchers"
+    },
+    {
+      "id": "E39",
+      "title": "Windows ReadDirectoryChangesW",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-readdirectorychangesw",
+      "version_context": "Learn updated 2022-09-15",
+      "locator": "bWatchSubtree; overflow/zero bytes; ERROR_NOTIFY_ENUM_DIR; network conditions",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary-document inspection",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Monitoring scope is selected by the caller. Overflow can discard the buffer; enumeration recovers state. Redirector/filesystem support and network buffer size constrain use.",
+      "family": "watchers"
+    },
+    {
+      "id": "E40",
+      "title": "Linux inotify",
+      "url": "https://www.man7.org/linux/man-pages/man7/inotify.7.html",
+      "version_context": "man-pages 6.19; manual date 2026-02-14",
+      "locator": "Limitations, overflow/unmount, rename pairs and historical bugs",
+      "coverage": "COMPLETE",
+      "observed_operation": "Read indexed primary content and exact release member, including surrounding rename/history context",
+      "access_utc_window": [
+        "2026-10-12T02:14:20+00:00",
+        "2026-10-12T02:29:57.032825+00:00"
+      ],
+      "governing_context": "Directory watches are nonrecursive; queues drop events; remote changes are not reported; unmount removes watches; rename pairing is racy and can omit a destination.",
+      "family": "watchers"
+    }
+  ],
+  "candidate_source_records": [
+    {
+      "stage": "investigator",
+      "id": "S01",
+      "url": "https://www.zotero.org/support/attaching_files",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S02",
+      "url": "https://www.zotero.org/support/kb/missing_linked_file",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S03",
+      "url": "https://github.com/zotero/zotero/blob/44fe83d98bcf9b982b74782dcc5f824c8ab9cb43/chrome/content/zotero/xpcom/attachments.js",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S04",
+      "url": "https://github.com/zotero/zotero/issues/2084",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S05",
+      "url": "https://github.com/zotero/zotero-docs/blob/main/content/7.0_changelog.md",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S06",
+      "url": "https://github.com/zotero/zotero/blob/44fe83d98bcf9b982b74782dcc5f824c8ab9cb43/chrome/locale/en-US/zotero/zotero.properties",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S07",
+      "url": "https://support.apple.com/en-euro/guide/final-cut-pro/ver26f5c8c9/mac",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S08",
+      "url": "https://developer.apple.com/documentation/Foundation/NSURL",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S09",
+      "url": "https://developer.apple.com/documentation/foundation/urlresourcekey/fileresourceidentifierkey",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S10",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-file_id_info",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S11",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/ns-fileapi-by_handle_file_information",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S12",
+      "url": "https://www.man7.org/linux/man-pages/man7/inode.7.html",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S13",
+      "url": "https://www.man7.org/linux/man-pages/man2/open_by_handle_at.2.html",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S14",
+      "url": "https://www.rfc-editor.org/info/rfc8089/",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S15",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S16",
+      "url": "https://www.sqlite.org/wal.html",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S17",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "investigator",
+      "id": "S18",
+      "url": "https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/APFS_Guide/FAQ/FAQ.html",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S01",
+      "url": "https://www.zotero.org/support/attaching_files",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S02",
+      "url": "https://www.zotero.org/support/kb/missing_linked_file",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S03",
+      "url": "https://github.com/zotero/zotero/blob/44fe83d98bcf9b982b74782dcc5f824c8ab9cb43/chrome/content/zotero/xpcom/attachments.js",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S04",
+      "url": "https://github.com/zotero/zotero/issues/2084",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S05",
+      "url": "https://github.com/zotero/zotero-docs/blob/main/content/7.0_changelog.md",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S06",
+      "url": "https://github.com/zotero/zotero/blob/44fe83d98bcf9b982b74782dcc5f824c8ab9cb43/chrome/locale/en-US/zotero/zotero.properties",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S07",
+      "url": "https://support.apple.com/en-euro/guide/final-cut-pro/ver26f5c8c9/mac",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S08",
+      "url": "https://developer.apple.com/documentation/Foundation/NSURL",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S09",
+      "url": "https://developer.apple.com/documentation/foundation/urlresourcekey/fileresourceidentifierkey",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S10",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-file_id_info",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S11",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/ns-fileapi-by_handle_file_information",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S12",
+      "url": "https://www.man7.org/linux/man-pages/man7/inode.7.html",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S13",
+      "url": "https://www.man7.org/linux/man-pages/man2/open_by_handle_at.2.html",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S14",
+      "url": "https://www.rfc-editor.org/info/rfc8089/",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S15",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S16",
+      "url": "https://www.sqlite.org/wal.html",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S17",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "critic",
+      "id": "S18",
+      "url": "https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/APFS_Guide/FAQ/FAQ.html",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S01",
+      "url": "https://www.zotero.org/support/attaching_files",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S02",
+      "url": "https://www.zotero.org/support/kb/missing_linked_file",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S03",
+      "url": "https://github.com/zotero/zotero/blob/44fe83d98bcf9b982b74782dcc5f824c8ab9cb43/chrome/content/zotero/xpcom/attachments.js",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S04",
+      "url": "https://github.com/zotero/zotero/issues/2084",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S05",
+      "url": "https://github.com/zotero/zotero-docs/blob/main/content/7.0_changelog.md",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S06",
+      "url": "https://github.com/zotero/zotero/blob/44fe83d98bcf9b982b74782dcc5f824c8ab9cb43/chrome/locale/en-US/zotero/zotero.properties",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S07",
+      "url": "https://support.apple.com/en-euro/guide/final-cut-pro/ver26f5c8c9/mac",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S08",
+      "url": "https://developer.apple.com/documentation/Foundation/NSURL",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S09",
+      "url": "https://developer.apple.com/documentation/foundation/urlresourcekey/fileresourceidentifierkey",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S10",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-file_id_info",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S11",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/ns-fileapi-by_handle_file_information",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S12",
+      "url": "https://www.man7.org/linux/man-pages/man7/inode.7.html",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S13",
+      "url": "https://www.man7.org/linux/man-pages/man2/open_by_handle_at.2.html",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S14",
+      "url": "https://www.rfc-editor.org/info/rfc8089/",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S15",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S16",
+      "url": "https://www.sqlite.org/wal.html",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S17",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S18",
+      "url": "https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/APFS_Guide/FAQ/FAQ.html",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S19",
+      "url": "https://developer.apple.com/documentation/foundation/nsurl/resolvingsymlinksinpath?changes=_1_8",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S20",
+      "url": "https://www.man7.org/linux/man-pages/man3/realpath.3.html",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S21",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getfinalpathnamebyhandlew",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S22",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/reparse-points",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    },
+    {
+      "stage": "reviser",
+      "id": "S23",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/fileio/symbolic-links",
+      "inspection": "Complete record inspected; inherited equal records compared exactly, distinct review fields inspected."
+    }
+  ],
+  "source_coverage": "COMPLETE for every consequential declared family",
+  "license_handling": "No full upstream source/document mirrors or executable code retained. Links preserve original notices. Manual-member summaries acknowledge Linux-man-pages-copyleft; Apple sources remain Copyright 2026 Apple Inc.; Zotero code remains under its upstream license."
+}

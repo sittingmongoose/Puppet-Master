@@ -1,0 +1,3 @@
+# Separate historical mechanics supplements
+
+This directory preserves only the exact eight files named by terminal-mechanics-supplements.json and their six frozen manifests, plus the independently retained verification record. It contains wait/critic-active observations, plan-release receipts, an investigator package-freeze receipt and a syntax diagnostic. It neither edits original science/grades/clocks nor repairs a missing native creation capture. No unlisted config/provisional record or active C/D body was read to fill a gap. Native provenance/session linkage is not certified. Old scoped config/provisional records already retained in earlier cohorts stay there unchanged; original normalized locators resolve through path-resolution.json where selected.

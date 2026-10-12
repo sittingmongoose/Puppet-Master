@@ -1,0 +1,42 @@
+{
+  "schema": "er13.separate-review-cost.v1",
+  "block_id": "B10-P02",
+  "cost_category": "independent_evaluation",
+  "cost_subcategory": "separate_coverage_completion",
+  "first_recorded_review_clock_utc": "2026-10-12T02:17:58.958345+00:00",
+  "actual_review_start_utc": "UNKNOWN; earlier work predates first recorded checkpoint",
+  "artifact_write_checkpoint_utc": "2026-10-12T02:31:31.009584+00:00",
+  "billing": "UNKNOWN",
+  "subscription_consumption": "UNKNOWN",
+  "complete_context_occupancy": "UNKNOWN",
+  "provider_active_time": "UNKNOWN",
+  "not_zero": true,
+  "candidate_or_new_reserve_charge": false,
+  "original_costs_unchanged": true,
+  "original_cost_records": [
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/assessment.json",
+      "sha256": "5d1514db38c4e85a93dae9e09762539cd6e2e3264bb5b26261575f4fe0faa94d"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/assessment.json",
+      "sha256": "0709d645c5b4fea36342f10749e1654827bcce671f578fa6370634c95088dec9"
+    }
+  ],
+  "review_support_failures": [
+    {
+      "kind": "missing optional parser dependency",
+      "result": "one read-only fetch helper import failed; corrected with standard library; no candidate change"
+    },
+    {
+      "kind": "license title assumption",
+      "result": "one notice-format assertion failed; exact upstream MIT terms subsequently inspected and retained; no candidate change"
+    }
+  ],
+  "failed_support_work_remains_part_of_independent_evaluation": true,
+  "no_latency_or_resource_savings_claim": true,
+  "assessment_completed_at_utc": "2026-10-12T02:34:09.694755+00:00",
+  "observed_checkpoint_to_completion_seconds": 970.73641,
+  "observed_interval_is_complete_review_latency": false,
+  "complete_review_latency": "UNKNOWN"
+}

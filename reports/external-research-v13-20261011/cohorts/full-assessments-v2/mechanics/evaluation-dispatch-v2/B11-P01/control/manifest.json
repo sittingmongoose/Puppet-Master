@@ -1,0 +1,50 @@
+{
+  "schema": "er13.original-output-freeze.v1",
+  "arm_id": "B11-P01-control",
+  "frozen_at_utc": "2026-10-12T02:29:57.038621+00:00",
+  "comparison_started": false,
+  "original_judgment": "FAIL",
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/control/assessment.md",
+      "bytes": 3757,
+      "sha256": "2112825c9543ff86bb07b3d8120eb433f96c14abdcc29afe5029fde0765dd2ca"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/control/assessment.json",
+      "bytes": 6239,
+      "sha256": "4ae27b572bd2b40c79f0b4d356efe96d622375118edeed12bdabc809fbcea977"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/control/coverage.json",
+      "bytes": 10300,
+      "sha256": "9f003e4916babf5ceb72147c54772535494921f054301f8ae9b928971c395021"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/control/defects.json",
+      "bytes": 2672,
+      "sha256": "109b68514a8fab4d6e673bde6112c987e94179ca226500814ee12850b9fc11ff"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/control/primary-source-index.json",
+      "bytes": 42632,
+      "sha256": "51df5a4002e4289a0ea037b0b14449e59d035067f624cd6e9f1aa90d9057634f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/control/input-custody.json",
+      "bytes": 4483,
+      "sha256": "283e0f66553d275537136384329b7eeda891cde370d691e370ad49949161554f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/control/evidence.json",
+      "bytes": 1747,
+      "sha256": "ac7852d31c25b731d8ba00872983a44a89453d7730f42523267c24bf2cb71751"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/control/timing-observations.json",
+      "bytes": 4422,
+      "sha256": "8e738864e9223b143a69eeb95ed3ccb9815aade7cf65b90b13f8fe9a1faf45d5"
+    }
+  ],
+  "self_hash": "Reported outside this manifest; self is excluded from its file list."
+}

@@ -1,0 +1,51 @@
+{
+  "block_id": "B11-P01",
+  "request_original_sha256": "10ff1de87851de19b8256e0f68008d88fb5b44aa2a3b0bd7b10ce23a767736ec",
+  "dispatch_original_sha256": "1e43324fe8ca0ad404f7cfa87aaa895bfb1274ee480d824128207aabfc8f0d18",
+  "terminal_original_sha256": "4c3fe2557c72ee8e88b8a803314288e9148e763f459a739e0f6cf1ea889ce2f5",
+  "requested_options": {
+    "reasoningEffort": "xhigh",
+    "serviceTier": "priority"
+  },
+  "dispatch": {
+    "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B11-P01-001",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B11-P01-001",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%253Adelegate-task%253Aer13-original-grader-v2-B11-P01-001:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B11-P01-001",
+    "status": "running",
+    "workState": "working",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": null,
+    "latestTerminalStatus": null,
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6.1-sol",
+    "waitTimedOut": false
+  },
+  "terminal": {
+    "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B11-P01-001",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B11-P01-001",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%253Adelegate-task%253Aer13-original-grader-v2-B11-P01-001:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B11-P01-001",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%253Adelegate-task%253Aer13-original-grader-v2-B11-P01-001:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6.1-sol",
+    "waitTimedOut": false
+  },
+  "backend_options": "UNKNOWN; requested options are not actual backend telemetry",
+  "settled_phase_receipt": {
+    "block_id": "B11-P01",
+    "arm_count": 2,
+    "taskId": "node:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B11-P01-001",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A5b3f2aa7-62db-4a3c-a91a-f93addb184cb%3Adelegate-task%3Aer13-original-grader-v2-B11-P01-001",
+    "output_verification": "ER13_RUNTIME/state/eval-coordinator-v2/B11-P01-output-verification.json",
+    "output_verification_sha256": "34c13fa465369490d1cde77cc35a57bc6780b36b3ab0d84bd9e82b42c0f3b118",
+    "terminal_zero_pending": true,
+    "settled": true,
+    "root_each_original_dual_notified": true
+  },
+  "scope": "Scoped original task/configuration/terminal binding; no full transcript or transfer narrative."
+}

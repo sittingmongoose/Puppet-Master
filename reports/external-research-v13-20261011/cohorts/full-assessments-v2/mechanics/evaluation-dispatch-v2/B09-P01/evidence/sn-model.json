@@ -1,0 +1,592 @@
+{
+  "id": "sn-model",
+  "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Models/Asset.php",
+  "resolved_url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Models/Asset.php",
+  "access_utc": "2026-10-12T02:01:58.284199+00:00",
+  "response_sha256": "91bd009d9569540f2aba59e1a211abc016342a93075f0b5dfa7cb9551b01b5af",
+  "response_bytes": 79330,
+  "operation": "read-only fetch",
+  "evidence": [
+    {
+      "line": 221,
+      "text": "     *"
+    },
+    {
+      "line": 222,
+      "text": "     * @var array"
+    },
+    {
+      "line": 223,
+      "text": "     */"
+    },
+    {
+      "line": 224,
+      "text": "    protected $searchableAttributes = ["
+    },
+    {
+      "line": 225,
+      "text": "        'name',"
+    },
+    {
+      "line": 226,
+      "text": "        'asset_tag',"
+    },
+    {
+      "line": 227,
+      "text": "        'serial',"
+    },
+    {
+      "line": 228,
+      "text": "        'order_number',"
+    },
+    {
+      "line": 229,
+      "text": "        'purchase_cost',"
+    },
+    {
+      "line": 230,
+      "text": "        'notes',"
+    },
+    {
+      "line": 231,
+      "text": "        'created_at',"
+    },
+    {
+      "line": 232,
+      "text": "        'updated_at',"
+    },
+    {
+      "line": 233,
+      "text": "        'purchase_date',"
+    },
+    {
+      "line": 234,
+      "text": "        'expected_checkin',"
+    },
+    {
+      "line": 235,
+      "text": "        'next_audit_date',"
+    },
+    {
+      "line": 236,
+      "text": "        'last_audit_date',"
+    },
+    {
+      "line": 237,
+      "text": "        'last_checkin',"
+    },
+    {
+      "line": 238,
+      "text": "        'last_checkout',"
+    },
+    {
+      "line": 566,
+      "text": "     *"
+    },
+    {
+      "line": 567,
+      "text": "     * @return bool"
+    },
+    {
+      "line": 568,
+      "text": "     */"
+    },
+    {
+      "line": 569,
+      "text": "    public function availableForCheckout()"
+    },
+    {
+      "line": 570,
+      "text": "    {"
+    },
+    {
+      "line": 571,
+      "text": ""
+    },
+    {
+      "line": 572,
+      "text": "        // This asset is not currently assigned to anyone and is not deleted..."
+    },
+    {
+      "line": 573,
+      "text": "        if ((! $this->assigned_to) && (! $this->deleted_at)) {"
+    },
+    {
+      "line": 574,
+      "text": ""
+    },
+    {
+      "line": 575,
+      "text": "            // The asset status is not archived and is deployable"
+    },
+    {
+      "line": 576,
+      "text": "            if (($this->status) && ($this->status->archived == '0')"
+    },
+    {
+      "line": 577,
+      "text": "                && ($this->status->deployable == '1')"
+    },
+    {
+      "line": 578,
+      "text": "            ) {"
+    },
+    {
+      "line": 579,
+      "text": "                return true;"
+    },
+    {
+      "line": 580,
+      "text": ""
+    },
+    {
+      "line": 581,
+      "text": "            }"
+    },
+    {
+      "line": 582,
+      "text": ""
+    },
+    {
+      "line": 583,
+      "text": "            return false;"
+    },
+    {
+      "line": 586,
+      "text": "        return false;"
+    },
+    {
+      "line": 587,
+      "text": "    }"
+    },
+    {
+      "line": 588,
+      "text": ""
+    },
+    {
+      "line": 589,
+      "text": "    public function availableForCheckIn()"
+    },
+    {
+      "line": 590,
+      "text": "    {"
+    },
+    {
+      "line": 591,
+      "text": "        if ($this->assigned_to == '') {"
+    },
+    {
+      "line": 592,
+      "text": "            return false;"
+    },
+    {
+      "line": 593,
+      "text": "        }"
+    },
+    {
+      "line": 594,
+      "text": ""
+    },
+    {
+      "line": 595,
+      "text": "        // Deleted assets that are still checked out should always allow checkin"
+    },
+    {
+      "line": 596,
+      "text": "        if ($this->deleted_at != '') {"
+    },
+    {
+      "line": 597,
+      "text": "            return true;"
+    },
+    {
+      "line": 598,
+      "text": "        }"
+    },
+    {
+      "line": 599,
+      "text": ""
+    },
+    {
+      "line": 600,
+      "text": "        return $this->status"
+    },
+    {
+      "line": 601,
+      "text": "            && ($this->status->archived == '0')"
+    },
+    {
+      "line": 602,
+      "text": "            && ($this->status->deployable == '1');"
+    },
+    {
+      "line": 603,
+      "text": "    }"
+    },
+    {
+      "line": 621,
+      "text": "     *"
+    },
+    {
+      "line": 622,
+      "text": "     * @return bool"
+    },
+    {
+      "line": 623,
+      "text": "     */"
+    },
+    {
+      "line": 624,
+      "text": "    public function checkOut($target, $admin = null, $checkout_at = null, $expected_checkin = null, $note = null, $name = null, $location = null, bool $signInPlace = false)"
+    },
+    {
+      "line": 625,
+      "text": "    {"
+    },
+    {
+      "line": 626,
+      "text": "        if (! $target) {"
+    },
+    {
+      "line": 627,
+      "text": "            return false;"
+    },
+    {
+      "line": 628,
+      "text": "        }"
+    },
+    {
+      "line": 629,
+      "text": "        if ($this->is($target)) {"
+    },
+    {
+      "line": 630,
+      "text": "            throw new CheckoutNotAllowed('You cannot check an asset out to itself.');"
+    },
+    {
+      "line": 631,
+      "text": "        }"
+    },
+    {
+      "line": 632,
+      "text": ""
+    },
+    {
+      "line": 633,
+      "text": "        if ($expected_checkin) {"
+    },
+    {
+      "line": 634,
+      "text": "            $this->expected_checkin = $expected_checkin;"
+    },
+    {
+      "line": 635,
+      "text": "        }"
+    },
+    {
+      "line": 636,
+      "text": ""
+    },
+    {
+      "line": 637,
+      "text": "        $this->last_checkout = $checkout_at;"
+    },
+    {
+      "line": 638,
+      "text": "        $this->name = $name;"
+    },
+    {
+      "line": 639,
+      "text": ""
+    },
+    {
+      "line": 640,
+      "text": "        $this->assignedTo()->associate($target);"
+    },
+    {
+      "line": 641,
+      "text": ""
+    },
+    {
+      "line": 642,
+      "text": "        if ($location != null) {"
+    },
+    {
+      "line": 643,
+      "text": "            $this->location_id = $location;"
+    },
+    {
+      "line": 644,
+      "text": "        } else {"
+    },
+    {
+      "line": 645,
+      "text": "            if (isset($target->location)) {"
+    },
+    {
+      "line": 646,
+      "text": "                $this->location_id = $target->location->id;"
+    },
+    {
+      "line": 647,
+      "text": "            }"
+    },
+    {
+      "line": 648,
+      "text": "            if ($target instanceof Location) {"
+    },
+    {
+      "line": 649,
+      "text": "                $this->location_id = $target->id;"
+    },
+    {
+      "line": 650,
+      "text": "            }"
+    },
+    {
+      "line": 651,
+      "text": "        }"
+    },
+    {
+      "line": 652,
+      "text": ""
+    },
+    {
+      "line": 653,
+      "text": "        $originalValues = $this->getRawOriginal();"
+    },
+    {
+      "line": 654,
+      "text": ""
+    },
+    {
+      "line": 655,
+      "text": "        // attempt to detect change in value if different from today's date"
+    },
+    {
+      "line": 656,
+      "text": "        if ($checkout_at && strpos($checkout_at, date('Y-m-d')) === false) {"
+    },
+    {
+      "line": 657,
+      "text": "            $originalValues['action_date'] = date('Y-m-d H:i:s');"
+    },
+    {
+      "line": 658,
+      "text": "        }"
+    },
+    {
+      "line": 659,
+      "text": ""
+    },
+    {
+      "line": 660,
+      "text": "        if ($this->save()) {"
+    },
+    {
+      "line": 661,
+      "text": "            if (is_int($admin)) {"
+    },
+    {
+      "line": 662,
+      "text": "                $checkedOutBy = User::findOrFail($admin);"
+    },
+    {
+      "line": 663,
+      "text": "            } elseif ($admin && get_class($admin) === User::class) {"
+    },
+    {
+      "line": 664,
+      "text": "                $checkedOutBy = $admin;"
+    },
+    {
+      "line": 665,
+      "text": "            } else {"
+    },
+    {
+      "line": 666,
+      "text": "                $checkedOutBy = auth()->user();"
+    },
+    {
+      "line": 667,
+      "text": "            }"
+    },
+    {
+      "line": 668,
+      "text": "            event(new CheckoutableCheckedOut($this, $target, $checkedOutBy, $note, $originalValues, 1, $signInPlace));"
+    },
+    {
+      "line": 669,
+      "text": ""
+    },
+    {
+      "line": 670,
+      "text": "            $this->increment('checkout_counter', 1);"
+    },
+    {
+      "line": 671,
+      "text": ""
+    },
+    {
+      "line": 672,
+      "text": "            return true;"
+    },
+    {
+      "line": 673,
+      "text": "        }"
+    },
+    {
+      "line": 674,
+      "text": ""
+    },
+    {
+      "line": 675,
+      "text": "        return false;"
+    },
+    {
+      "line": 676,
+      "text": "    }"
+    },
+    {
+      "line": 677,
+      "text": ""
+    },
+    {
+      "line": 678,
+      "text": "    /**"
+    },
+    {
+      "line": 679,
+      "text": "     * Sets the detailedNameAttribute"
+    },
+    {
+      "line": 680,
+      "text": "     *"
+    },
+    {
+      "line": 682,
+      "text": "     *"
+    },
+    {
+      "line": 683,
+      "text": "     * @since  [v3.0]"
+    },
+    {
+      "line": 684,
+      "text": "     *"
+    },
+    {
+      "line": 685,
+      "text": "     * @return string"
+    },
+    {
+      "line": 686,
+      "text": "     */"
+    },
+    {
+      "line": 687,
+      "text": "    public function getDetailedNameAttribute()"
+    },
+    {
+      "line": 688,
+      "text": "    {"
+    },
+    {
+      "line": 689,
+      "text": "        if ($this->assignedto) {"
+    },
+    {
+      "line": 690,
+      "text": "            $user_name = $this->assignedto->present()->name();"
+    },
+    {
+      "line": 691,
+      "text": "        } else {"
+    },
+    {
+      "line": 692,
+      "text": "            $user_name = 'Unassigned';"
+    },
+    {
+      "line": 693,
+      "text": "        }"
+    },
+    {
+      "line": 694,
+      "text": ""
+    },
+    {
+      "line": 695,
+      "text": "        return $this->asset_tag.' - '.$this->name.' ('.$user_name.') '.($this->model) ? $this->model->name : '';"
+    },
+    {
+      "line": 696,
+      "text": "    }"
+    },
+    {
+      "line": 697,
+      "text": ""
+    },
+    {
+      "line": 698,
+      "text": "    /**"
+    },
+    {
+      "line": 699,
+      "text": "     * Pulls in the validation rules"
+    },
+    {
+      "line": 700,
+      "text": "     *"
+    },
+    {
+      "line": 702,
+      "text": "     *"
+    },
+    {
+      "line": 703,
+      "text": "     * @since  [v3.0]"
+    },
+    {
+      "line": 704,
+      "text": "     *"
+    },
+    {
+      "line": 705,
+      "text": "     * @return array"
+    },
+    {
+      "line": 706,
+      "text": "     */"
+    },
+    {
+      "line": 707,
+      "text": "    public function validationRules()"
+    },
+    {
+      "line": 708,
+      "text": "    {"
+    },
+    {
+      "line": 709,
+      "text": "        return $this->rules;"
+    },
+    {
+      "line": 710,
+      "text": "    }"
+    },
+    {
+      "line": 711,
+      "text": ""
+    },
+    {
+      "line": 712,
+      "text": "    public function customFieldsForCheckinCheckout($checkin_checkout)"
+    },
+    {
+      "line": 713,
+      "text": "    {"
+    }
+  ],
+  "license_context": "Public focused source excerpts; upstream license notice remains at https://github.com/grokability/snipe-it. No product code or tests executed."
+}

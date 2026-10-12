@@ -1,0 +1,51 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "B10-P02-control",
+  "defects": [
+    {
+      "id": "C-D1",
+      "severity": "minor_locator",
+      "stage": "critic",
+      "locator": "critique.md Findings table; final.md Independent critique and disposition",
+      "finding": "Critic cites nonexistent C17; map contains C01-C14. Final discloses gap and uses actual C13/R01, so no source rebind or final semantic loss.",
+      "final_status": "Disclosed; nonmaterial",
+      "primary_sources": [
+        "P17"
+      ]
+    },
+    {
+      "id": "C-D2",
+      "severity": "minor_source_identity",
+      "stage": "investigator/critic carried into final map",
+      "locator": "source-map.json S06 and C08",
+      "finding": "Mutable /TR/wcag/ URL labeled 2023-10-05; evaluator observes WCAG22 2024-12-12 context. Cited criterion meanings remain supported; revision label is imprecise.",
+      "final_status": "Nonmaterial identity limitation",
+      "primary_sources": [
+        "P06"
+      ]
+    },
+    {
+      "id": "C-D3",
+      "severity": "minor_context_omission",
+      "stage": "all",
+      "locator": "S12/C12; final.md Quarto alternative and evidence paragraph",
+      "finding": "Dashboard report is narrowly qualified but omits collaborator statement that dashboard is not a website page and enhancement classification. No broad Quarto defect or removal of required handbook feature asserted.",
+      "final_status": "Nonmaterial in this proposal",
+      "primary_sources": [
+        "P12"
+      ]
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "finding": "Only listed minor closing S01-S17 range omission",
+      "independent_disposition": "Accepted; final changes to S01-S18. Underlying MkDocs index supported with full/sections conditions."
+    },
+    {
+      "finding": "Critic no material defects conclusion",
+      "independent_disposition": "No material final defect found within evaluator assessed families; not adopted as authority or full contract grade."
+    }
+  ],
+  "prospective_repairs_provided": false,
+  "limitations": "Original judgments are immutable; missing contract is evaluation infrastructure, not a candidate defect."
+}

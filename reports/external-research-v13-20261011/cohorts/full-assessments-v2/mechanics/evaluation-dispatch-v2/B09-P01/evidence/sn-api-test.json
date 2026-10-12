@@ -1,0 +1,166 @@
+{
+  "id": "sn-api-test",
+  "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/tests/Feature/Checkins/Api/AssetCheckinTest.php",
+  "access_utc": "2026-10-12T02:05:36.097583+00:00",
+  "response_sha256": "e5e95883623a841a2a31d82060be0a06f969f8ee349ce88be6154ff3127b832f",
+  "response_bytes": 8678,
+  "evidence": [
+    {
+      "line": 40,
+      "text": "    {"
+    },
+    {
+      "line": 41,
+      "text": "        Event::fake([CheckoutableCheckedIn::class]);"
+    },
+    {
+      "line": 42,
+      "text": ""
+    },
+    {
+      "line": 43,
+      "text": "        $user = User::factory()->create();"
+    },
+    {
+      "line": 44,
+      "text": "        $location = Location::factory()->create();"
+    },
+    {
+      "line": 45,
+      "text": "        $status = Statuslabel::factory()->create();"
+    },
+    {
+      "line": 46,
+      "text": "        $asset = Asset::factory()->assignedToUser($user)->create(["
+    },
+    {
+      "line": 47,
+      "text": "            'expected_checkin' => now()->addDay(),"
+    },
+    {
+      "line": 48,
+      "text": "            'last_checkin' => null,"
+    },
+    {
+      "line": 49,
+      "text": "            'accepted' => 'accepted',"
+    },
+    {
+      "line": 50,
+      "text": "        ]);"
+    },
+    {
+      "line": 51,
+      "text": ""
+    },
+    {
+      "line": 52,
+      "text": "        $this->assertTrue($asset->assignedTo->is($user));"
+    },
+    {
+      "line": 53,
+      "text": ""
+    },
+    {
+      "line": 54,
+      "text": "        $currentTimestamp = now();"
+    },
+    {
+      "line": 55,
+      "text": ""
+    },
+    {
+      "line": 56,
+      "text": "        $this->actingAsForApi(User::factory()->checkinAssets()->create())"
+    },
+    {
+      "line": 57,
+      "text": "            ->postJson(route('api.asset.checkin', $asset), ["
+    },
+    {
+      "line": 58,
+      "text": "                'name' => 'Changed Name',"
+    },
+    {
+      "line": 59,
+      "text": "                'status_id' => $status->id,"
+    },
+    {
+      "line": 60,
+      "text": "                'location_id' => $location->id,"
+    },
+    {
+      "line": 61,
+      "text": "            ])"
+    },
+    {
+      "line": 62,
+      "text": "            ->assertOk();"
+    },
+    {
+      "line": 63,
+      "text": ""
+    },
+    {
+      "line": 64,
+      "text": "        $this->assertNull($asset->refresh()->assignedTo);"
+    },
+    {
+      "line": 65,
+      "text": "        $this->assertNull($asset->expected_checkin);"
+    },
+    {
+      "line": 66,
+      "text": "        $this->assertNull($asset->assignedTo);"
+    },
+    {
+      "line": 67,
+      "text": "        $this->assertNull($asset->assigned_type);"
+    },
+    {
+      "line": 68,
+      "text": "        $this->assertNull($asset->accepted);"
+    },
+    {
+      "line": 69,
+      "text": "        $this->assertEquals('Changed Name', $asset->name);"
+    },
+    {
+      "line": 70,
+      "text": "        $this->assertEquals($status->id, $asset->status_id);"
+    },
+    {
+      "line": 71,
+      "text": "        $this->assertTrue($asset->location()->is($location));"
+    },
+    {
+      "line": 72,
+      "text": "        $this->assertHasTheseActionLogs($asset, ['create'/* , 'checkout', 'checkin from' */]); // TODO - the Event::fake() is probably getting in the way here"
+    },
+    {
+      "line": 73,
+      "text": ""
+    },
+    {
+      "line": 74,
+      "text": "        Event::assertDispatched(function (CheckoutableCheckedIn $event) use ($currentTimestamp) {"
+    },
+    {
+      "line": 75,
+      "text": "            // this could be better mocked but is ok for now."
+    },
+    {
+      "line": 76,
+      "text": "            return (int) Carbon::parse($event->action_date)->diffInSeconds($currentTimestamp, true) < 2;"
+    },
+    {
+      "line": 77,
+      "text": "        }, 1);"
+    },
+    {
+      "line": 78,
+      "text": "    }"
+    }
+  ],
+  "operation": "read-only test source; not executed"
+}

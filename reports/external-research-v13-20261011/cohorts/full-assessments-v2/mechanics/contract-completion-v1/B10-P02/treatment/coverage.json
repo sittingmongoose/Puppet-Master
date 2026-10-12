@@ -1,0 +1,298 @@
+{
+  "schema": "er13.separate-contract-completion-coverage.v1",
+  "arm_id": "B10-P02-treatment",
+  "original_assessment": false,
+  "assigned_scope": "FULL",
+  "aggregate_coverage": "COMPLETE",
+  "contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+  "contract_axes": [
+    {
+      "contract_axis_ordinal": 1,
+      "contract_axis_name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "basis": "All brief obligations and negative constraints reviewed. Revision-specific progress, retired/versioned search, local data, accessibility, handouts, review and phases are retained. Required paste-input research remains omitted (CC-T02).",
+      "defect_ids": [
+        "CC-T02"
+      ]
+    },
+    {
+      "contract_axis_ordinal": 2,
+      "contract_axis_name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "basis": "Governing source facts and conditions checked with primary docs, pinned code/callers/tests and issue/release context. DOCX-file evidence does not establish clipboard behavior (CC-T02). Material's cited lifecycle warning is omitted (CC-T01).",
+      "defect_ids": [
+        "CC-T02",
+        "CC-T01"
+      ]
+    },
+    {
+      "contract_axis_ordinal": 3,
+      "contract_axis_name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "basis": "Useful authoring/storage and offline/export alternatives, browser/native data, optional backups and consequential history assessed. No winning product inferred. Available paste/normalization mechanism research is missing (CC-T02); owner preferences do not excuse it.",
+      "defect_ids": [
+        "CC-T02"
+      ]
+    },
+    {
+      "contract_axis_ordinal": 4,
+      "contract_axis_name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "basis": "All exact plan clauses and critic C1-C5 dispositions reviewed. H5P issue/download and burden corrections are preserved, with severity caveat for C2. The S20 maintenance-context account remains incomplete (CC-T01).",
+      "defect_ids": [
+        "CC-T01"
+      ]
+    },
+    {
+      "contract_axis_ordinal": 5,
+      "contract_axis_name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "basis": "Complete final meaning checked against discovery, full draft, criticism and source maps. Supported data policies, alternatives, optional local backups, owner questions and validation limits remain. No additional supported-meaning loss found.",
+      "defect_ids": []
+    },
+    {
+      "contract_axis_ordinal": 6,
+      "contract_axis_name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "basis": "Validation proposals have meaningful synthetic offline/search/update/revision/import/accessibility/print/privacy acceptance criteria. Repository tests were inspected, not run; no product validation or deployment is required or falsely claimed. Paste-specific research is the identified source omission, not a retrospective demand for executing tests.",
+      "defect_ids": []
+    }
+  ],
+  "obligations": [
+    {
+      "obligation": "Pages, diagrams, exercises and maintainable authoring/storage alternatives",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "final_locator": "Recommendation/decision summary; alternatives; data boundaries",
+      "basis": "Structured content, version identity, review and alternative costs examined; no product winner. Treatment maintenance context separately fails.",
+      "primary_sources": [
+        "CC22",
+        "CC27",
+        "CC35"
+      ]
+    },
+    {
+      "obligation": "Offline reading and topic search",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "final_locator": "Alternatives; release boundaries; validation tables",
+      "basis": "Cached/app versus local-file/index constraints are distinguished; no automatic offline-readiness claim.",
+      "primary_sources": [
+        "CC19",
+        "CC43"
+      ]
+    },
+    {
+      "obligation": "Local personal progress, no learner account/upload",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "final_locator": "Learner data/content boundaries",
+      "basis": "Origin/device scope, optional local backup, no sync/network progress and storage loss limits retained.",
+      "primary_sources": [
+        "CC10",
+        "CC11",
+        "CC38",
+        "CC39"
+      ]
+    },
+    {
+      "obligation": "Preserve progress through updates; material changed exercise cannot inherit completion",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "final_locator": "Revision policy; plan dispositions; interrupted-update tests",
+      "basis": "Exact exercise revision history and explicit reviewed nonmaterial equivalence are proposals consistent with brief; atomic update/migration is a test target.",
+      "primary_sources": [
+        "CC09",
+        "CC37",
+        "CC39"
+      ]
+    },
+    {
+      "obligation": "Search versions and retired lessons; inspectable history",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "final_locator": "Retirement/search policy and owner decisions",
+      "basis": "Clear status/version/replacement metadata, current-first/filter and owner retention choices retained; generator defaults do not supply policy.",
+      "primary_sources": [
+        "CC21",
+        "CC22"
+      ]
+    },
+    {
+      "obligation": "Keyboard, meaningful sequence, diagrams and no text-image substitution",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "final_locator": "Accessibility and print sections",
+      "basis": "Normative versus informative authority distinguished; equivalent instructions and text remain; no conformance certification.",
+      "primary_sources": [
+        "CC06",
+        "CC07"
+      ]
+    },
+    {
+      "obligation": "Word-processor paste/import limitations",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "final_locator": "Import/disposition and fixture sections",
+      "basis": "DOCX limits are valid but literal paste representation/normalization remains unresearched; decisive required omission CC-T02.",
+      "primary_sources": [
+        "CC04",
+        "CC13",
+        "CC14",
+        "CC15",
+        "CC41",
+        "CC45"
+      ]
+    },
+    {
+      "obligation": "Export fidelity; printable handouts for non-installers; no print/app parity",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "final_locator": "Output/handout sections and proposed validation",
+      "basis": "Separate HTML/PDF/EPUB or print behavior and output/diagram/table/order checks retained. No arbitrary fidelity or interactive paper progress claim.",
+      "primary_sources": [
+        "CC04"
+      ]
+    },
+    {
+      "obligation": "Modest author review and phased adoption",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "final_locator": "Review checklist; phases",
+      "basis": "Preview, reviewed revision/materiality, signoff and synthetic-first adoption are meaningful proposed workflows.",
+      "primary_sources": [
+        "CC27",
+        "CC29"
+      ]
+    },
+    {
+      "obligation": "No publication, volunteer installation or real learner-record processing; distinguish proposed/executed",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "final_locator": "Status; validation/work-performed sections",
+      "basis": "No product deployment or learner-data processing claimed; source reading and test inspection are distinct from execution.",
+      "primary_sources": []
+    },
+    {
+      "obligation": "Exact plan dispositions, all criticism and draft-to-final supported meaning",
+      "coverage": "COMPLETE",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND",
+      "final_locator": "Plan/disposition tables; complete scientific files",
+      "basis": "All clauses and critic dispositions checked; no supported meaning was silently discarded.",
+      "primary_sources": []
+    }
+  ],
+  "source_families": [
+    {
+      "family": "Authoring/storage, search, offline distribution and optional mechanisms",
+      "coverage": "COMPLETE",
+      "sources": [
+        "CC19",
+        "CC20",
+        "CC21",
+        "CC22",
+        "CC27",
+        "CC28",
+        "CC43",
+        "CC46",
+        "CC47"
+      ],
+      "finite_scope": "Consequential claims and comparisons, including local-file/hosted differences; not every CMS/plugin in existence."
+    },
+    {
+      "family": "DOCX import and clipboard/paste boundary",
+      "coverage": "COMPLETE",
+      "sources": [
+        "CC04",
+        "CC13",
+        "CC14",
+        "CC15",
+        "CC16",
+        "CC33",
+        "CC41",
+        "CC45"
+      ],
+      "finite_scope": "Reader, caller/options, focused tests/history and available paste schema mechanisms. Missing candidate research identified, no actual paste result invented."
+    },
+    {
+      "family": "Handout/export fidelity and accessibility",
+      "coverage": "COMPLETE",
+      "sources": [
+        "CC04",
+        "CC06",
+        "CC07"
+      ],
+      "finite_scope": "Documented format/engine distinctions and normative exceptions; no rendered output or full conformance audit required."
+    },
+    {
+      "family": "Local data, storage, persistence and update lifecycle",
+      "coverage": "COMPLETE",
+      "sources": [
+        "CC09",
+        "CC10",
+        "CC11",
+        "CC30",
+        "CC37",
+        "CC38",
+        "CC39",
+        "CC42"
+      ],
+      "finite_scope": "Origin/permission/transaction/worker and filesystem conditions; actual network/privacy/durability behavior remains proposed."
+    },
+    {
+      "family": "Consequential issue-to-fix and release/maintenance context",
+      "coverage": "COMPLETE",
+      "sources": [
+        "CC16",
+        "CC25",
+        "CC31",
+        "CC32",
+        "CC33",
+        "CC34",
+        "CC35",
+        "CC36",
+        "CC44"
+      ],
+      "finite_scope": "Report versus reproduction/fix, source scope, applicable version and dated maintenance evidence; no primary source opinion promoted to unrelated upstream governance."
+    },
+    {
+      "family": "H5P authoring/export/accessibility context and alternatives",
+      "coverage": "COMPLETE",
+      "sources": [
+        "CC23",
+        "CC24",
+        "CC25",
+        "CC26",
+        "CC46",
+        "CC47"
+      ],
+      "finite_scope": "The named guide, issue, formal release absence and available offline alternatives assessed. No installed type or conformance claim exists; unknown host/type/user preferences remain owner data, not a deferred mechanism inquiry."
+    },
+    {
+      "family": "Author preview/review and output ownership",
+      "coverage": "COMPLETE",
+      "sources": [
+        "CC27",
+        "CC28",
+        "CC29"
+      ],
+      "finite_scope": "Documented editor/export/review mechanisms; mandatory release governance is a proposed group policy."
+    }
+  ],
+  "scientific_document_coverage": "COMPLETE: identical hashed brief/plan; both full discovery/draft/critique/final/source maps/indexes and all dispositions. Control unchanged final blocks verified against the completely read draft, with every final delta read.",
+  "early_stop": false,
+  "unassessed_material_remainder": [],
+  "outside_finite_proposal_scope": [
+    "Actual authored sample fidelity and output/UI conformance",
+    "Selected host/browser/type installed behavior and owner preferences",
+    "Product deployment or processing learning records",
+    "Independent complete execution/session/billing provenance"
+  ],
+  "limits": "COMPLETE describes finite source review, not observed runtime implementation or exhaustive universal research."
+}

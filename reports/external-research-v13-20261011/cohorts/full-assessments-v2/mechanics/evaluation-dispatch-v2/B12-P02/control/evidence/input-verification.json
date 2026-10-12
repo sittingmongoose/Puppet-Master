@@ -1,0 +1,177 @@
+{
+  "schema": "er13.original-input-verification.v1",
+  "arm_id": "B12-P02-control",
+  "packet": {
+    "path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B12-P02.json",
+    "sha256": "f5e4550ac3e677c92d000f392ecb3cabccdc33b5326c8699fb8056c58af70359"
+  },
+  "contract": {
+    "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+    "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+  },
+  "coordinator_receipt": {
+    "path": "ER13_RUNTIME/state/eval-coordinator-v2/B12-P02-input-verification.json",
+    "sha256": "b0f0331dca27a39affbabdcf3712e2dbec70027755d4d724ddb873b61099b442"
+  },
+  "workspace_agents": {
+    "path": "ER13_WORKTREE/AGENTS.md",
+    "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810",
+    "read": true
+  },
+  "handoff": {
+    "path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+    "sections_read": [
+      10,
+      12
+    ]
+  },
+  "verification_result": "ALL_EXPECTED_MEMBER_BYTES_AND_SHA256_MATCH",
+  "manifest_member_count": 43,
+  "stage_manifests": [
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-control/run/B12-P02-control/control/terminal-handoffs/investigator/manifest.json",
+      "sha256": "4e5b7f25894573baeb32b44652fba776fb7b3195bf5d5d9da8bc56862ba9cbc0"
+    },
+    {
+      "stage": "critic",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-control/run/B12-P02-control/control/terminal-handoffs/critic/manifest.json",
+      "sha256": "4c4e5a015a82ca025874e632abb6e216b89187b4ff6a631b45b752fbcf750202"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-control/run/B12-P02-control/control/terminal-handoffs/reviser/manifest.json",
+      "sha256": "34739bd283087503378b3728cc2d9bf8d3809f13fc98d17bc739839eb93ec487"
+    }
+  ],
+  "supplement_manifest": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B12-P02-control-eval-inputs/authored-manifest.json",
+    "sha256": "cf95749b23ed4794d9aa64fa76e6322f0c3cc6b3144fea4d382a27ca0f4f8b3c"
+  },
+  "actual_status_receipt_hashes": [
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B12-P02-control/investigator-eval-ready-status.raw.json",
+      "sha256": "1e189fcbbb7e6f91720f1b0089d0b6fb27578bb76e36593a00d62894a876c955"
+    },
+    {
+      "stage": "critic",
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B12-P02-control/critic-eval-ready-status.raw.json",
+      "sha256": "31baf7e15bf107aaa392e31d305aa7c636806f3cf2cc3ab555b2b0709c9ae3ff"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B12-P02-control/reviser-eval-ready-status.raw.json",
+      "sha256": "1cd7c656f6d1dec2f036069c128d44d43c974aef594b028caf5c6161b7260de8"
+    }
+  ],
+  "scientific_read_inventory": [
+    {
+      "stage": "investigator",
+      "relative_path": "discovery.md",
+      "sha256": "0d65aeb649133a05d4a5016c0d58b3cc0bcf36239e05a0050bb30b1e893fb04c"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "draft.md",
+      "sha256": "ebd3277cdf638555c97ba0a2f5e02f80e443c52faa8ccd0ca0688a4c08a4688f"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "source-map.json",
+      "sha256": "cd922d48e996bb60bdb9bd25e060cc1be25c3300bdb028e1f0923e605899ecf2"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "revealed-plan.md",
+      "sha256": "246e56cbd6e35d3d4c150efd760897150d477c2349a987c5c9686606dcbdc008"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "plan-reveal.json",
+      "sha256": "0831597eaaa30d3a52143e9e02ed3265b93078d769e217ebb4d136a14c6e736d"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "assignment.md",
+      "sha256": "3aefe3e74a74b0f1900df4275e9f4100b084eee73984d8c400afd68d4386e99b"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "input-map.json",
+      "sha256": "3f025ad19693c82473f43b1080b15bc382bbed77790b5aa4e1050bf55061e90a"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "freeze.json",
+      "sha256": "86e7dcfe2cd778b7432c5e80f1bf78211dd13de05d1635f13c10b49d6086efd5"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "sources/README.md",
+      "sha256": "2af575588ff5247f0cbe51dfa01f6d9fafefa194181a77fd8a9e6365e2103766"
+    },
+    {
+      "stage": "critic",
+      "relative_path": "critique.md",
+      "sha256": "2616a6bc7395a1752abc1647a7397bded5b8a0c716628041b76c6c718a3f2152"
+    },
+    {
+      "stage": "critic",
+      "relative_path": "source-map.json",
+      "sha256": "9c764015a74c3d8bd9821fea447bd08fc80c282c6f42d8f1afe3a3d4b598ac32"
+    },
+    {
+      "stage": "critic",
+      "relative_path": "assignment.md",
+      "sha256": "59a9c803cbff314b297cea1414881089512ab65df551dacab8880c89928a69b9"
+    },
+    {
+      "stage": "critic",
+      "relative_path": "input-map.json",
+      "sha256": "4b10d7d16c6cb9ec58c8304038314740813aa5b1af5a0d4fef49b5a526f21aee"
+    },
+    {
+      "stage": "critic",
+      "relative_path": "freeze.json",
+      "sha256": "4e6b17ecd0e6ea3026a7a8a8353fa501db165c0265b545c48ff758c473547e5b"
+    },
+    {
+      "stage": "critic",
+      "relative_path": "sources/README.md",
+      "sha256": "911e759424d01f4b6a2ca876e8e86f35edcdb306ee72680e1abebcd25456106d"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "final.md",
+      "sha256": "6f1ddeea893085b2624d0bd2ab8281b3f0ddcd74e261a1cc979596693ea429c5"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "source-map.json",
+      "sha256": "a98a5bbc2b2fe55adff62f4fcfd3ed668885430b22ee0103c8b6ed6096d5e8f8"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "assignment.md",
+      "sha256": "022ec276ea284d85d1c418b2b7ab7fdd92ca3633649fde2c16356227f5889266"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "input-map.json",
+      "sha256": "5cd06e4e3b697c27778f2760d608c9f1ef1bf267d346a1d1440e547b2c43e701"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "freeze.json",
+      "sha256": "8e8a027dcfdfcf69ff960cedd462e8561f06d7cea7db082aee9f4ef53f4cdd9b"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "sources/README.md",
+      "sha256": "c2a44236066ac02ffa693eb34ca8f73877583954174fb3e0a437f1957b7162b6"
+    }
+  ],
+  "forbidden_inputs_read": false,
+  "corridor": "Only exact allowlisted frozen terminal-handoff members and supplements/status receipts; active referenced paths not followed."
+}

@@ -1,0 +1,11 @@
+# Comparison after original assessment freeze — B07-P01
+
+The immutable originals judge **control FAIL** and **treatment PASS** under complete finite proposal assessment. Actual target-app and owner facts remain explicitly unassessed because unavailable. No original judgment was changed after the block manifest was frozen.
+
+The control final loses the requested staged integration proposal and accepts a false physical-line interpretation of DuckDB sampling. The treatment final retains substantive mechanisms/alternatives, staged integration and proposed validations, and addresses pending-row recovery and end-to-end locality with explicit conditions. Its lineage hash/path defect is nonmaterial. This is one observed pair with imperfect blinding; it does not isolate causality or prove general method reliability, discovery recall or universal correctness.
+
+T0-to-reviser-native-terminal proxies are **3251.651s** (control) and **2293.721s** (treatment), a treatment-minus-control difference of **-957.930s**. Their all-assigned proxy-duration sum is **5545.372s**. These are neither actual task-quiet delivery times nor active provider effort. Both completed frozen envelopes precede the unchanged 60-minute deadlines. Different source quality prevents an equal-quality speedup claim.
+
+All six assigned stage attempts and both finals remain in the denominator; one final passes source assessment. Stage-local numeric native counters are reported separately in comparison.json and original records, without summing overlapping counters or claiming billing. Provider input/cache/output/reasoning breakdown, subscription consumption, billing, exact scientific-write/task-quiet times, actual context occupancy and independent native-to-task linkage are unknown. Candidate cost per passing output and complete experiment cost cannot be computed. The grader's observed elapsed envelope and shared source lookup belong to independent_evaluation, separate from candidate product.
+
+No recipe is selected or promoted. No COMPONENT/cold complete-pipeline result is inferred; no held-out cases, new scientific candidates/graders, author feedback, repairs, Git/canon/main/provider/server changes or C/D lock actions occurred. V1 idle is unchanged. Any dispute requires a new separate adjudication; these original files remain immutable.

@@ -1,0 +1,29 @@
+{
+  "block_id": "B09-P01",
+  "role": "independent original evaluator",
+  "scope": "FULL original frozen pair",
+  "contract_path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+  "contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+  "contract_hash_expected_match": true,
+  "governing_handoff_path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+  "sections_read": [
+    "10",
+    "12"
+  ],
+  "selected_sections_sha256": [
+    "8397e9d2b13ad807f728579ca4ed9599ebcbfbad00df0291a0ab1088fc87604f",
+    "b2cd4e9ba6f5d7782bb5a5d0d5ce8175be53189e80b85b91a07b5a9e06bff70a"
+  ],
+  "actual_workspace_AGENTS_path": "ER13_WORKTREE/AGENTS.md",
+  "actual_AGENTS_sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810",
+  "input_verification_receipt_path": "ER13_RUNTIME/state/eval-coordinator-v2/B09-P01-input-verification.json",
+  "receipt_sha256": "64e38d4c2238b75ff69e3a28ebc6706944e1388c844af25b4e8fd9be3fa831e9",
+  "frozen_input_members_verified": 81,
+  "exact_corridor": "Only packet/receipt-listed terminal-handoffs/*/files and supplements/status receipts under admitted were read; no referenced active originals followed.",
+  "original_scientific_documents_read": "COMPLETE; identical brief/plan hash-matched bytes reused",
+  "no_extra_candidate_or_grader_or_goal": true,
+  "blinding": "Imperfect: paths, configs/assignments and text reveal techniques",
+  "privacy": "No private routing identity, token values, complete native transcripts or machine state published",
+  "evaluation_cost_category": "independent_evaluation",
+  "independent_lookup_failure_not_science_execution": "Historical LICENSE locator returned 404; historical license identity remains unknown. Read-only primary inspection only; no product execution."
+}

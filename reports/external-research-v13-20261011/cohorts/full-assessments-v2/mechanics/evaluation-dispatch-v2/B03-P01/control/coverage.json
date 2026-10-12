@@ -1,0 +1,310 @@
+{
+  "arm_id": "B03-P01-control",
+  "scope": "FULL",
+  "definition": "COMPLETE means the finite declared review of this obligation/family was performed, not universal correctness or software execution. PARTIAL/UNASSESSED limits are explicit.",
+  "axes": [
+    {
+      "axis": 1,
+      "contract_axis": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "ASSESSED_WITH_RECORDED_LIMITS",
+      "basis": "All original brief/plan obligations and negative constraints traced; research-proposal boundary respected. Missing user/store facts remain explicit."
+    },
+    {
+      "axis": 2,
+      "contract_axis": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "PARTIAL",
+      "judgment": "MATERIAL_DEFECT_FOUND",
+      "basis": "Governing public engine facts checked including decisive tokenizer code/caller/tests. Target app code/runtime and current reproduction of reported platform defects unavailable/unassessed; no full application source pass implied."
+    },
+    {
+      "axis": 3,
+      "contract_axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "ASSESSED_WITH_RECORDED_LIMITS",
+      "basis": "Scan, conditional FTS5 and Tantivy, query/analysis alternatives, outbox/catch-up and history assessed. Unfamiliarity/recall is not quantified."
+    },
+    {
+      "axis": 4,
+      "contract_axis": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "ASSESSED_WITH_RECORDED_LIMITS",
+      "basis": "Every exact plan disposition and every critic issue reviewed. FIFO rejection, durable deletion/tag path, query versioning and no winner are sound at proposal level. Missed byte error remains."
+    },
+    {
+      "axis": 5,
+      "contract_axis": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "MATERIAL_DEFECT_FOUND",
+      "basis": "All discovery/draft/critique/final and maps/indexes read and consequential meanings traced; supported losses and unsupported retained premise distinguished."
+    },
+    {
+      "axis": 6,
+      "contract_axis": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "ASSESSED_WITH_RECORDED_LIMITS",
+      "basis": "Useful race/crash/rebuild/script/status and responsiveness proposals assessed. No application test, benchmark or deployment demanded or represented as executed."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "obligation": "Text, exact tag filters and exact-note navigation",
+      "coverage": "COMPLETE",
+      "finding": "Stable IDs and canonical lookup; tag mirror/live relation alternatives kept."
+    },
+    {
+      "id": "O02",
+      "obligation": "Rename, repeated edits, late retries and deletion during updates",
+      "coverage": "COMPLETE",
+      "finding": "Latest canonical reads, serialization, durable changes/tombstones and stale-hit handling."
+    },
+    {
+      "id": "O03",
+      "obligation": "Saved-query meaning and query interpretation",
+      "coverage": "COMPLETE",
+      "finding": "Versioned predicate and stable IDs survive renames; title-term matches can change. Title-following/alias and tag Boolean semantics remain owner choices."
+    },
+    {
+      "id": "O04",
+      "obligation": "Scripts/tokenization and negative language constraint",
+      "coverage": "COMPLETE",
+      "finding": "Concrete default semantics researched but material byte/character misstatement found; no universal script promise."
+    },
+    {
+      "id": "O05",
+      "obligation": "20,000 entries and catch-up usefulness",
+      "coverage": "COMPLETE",
+      "finding": "No count-only speed inference; conditional scan/engine comparison with explicit latency/lag/resource budgets."
+    },
+    {
+      "id": "O06",
+      "obligation": "Index layout and viable lexical approaches",
+      "coverage": "COMPLETE",
+      "finding": "Disposable local postings/identity metadata; FTS5 modes, Tantivy and scan compared conditionally."
+    },
+    {
+      "id": "O07",
+      "obligation": "Scheduling and foreground responsiveness",
+      "coverage": "COMPLETE",
+      "finding": "One bounded/coalescing worker, batches/backoff, save contention and resource measurements proposed."
+    },
+    {
+      "id": "O08",
+      "obligation": "Failures and incomplete-results communication",
+      "coverage": "COMPLETE",
+      "finding": "Pending/failed/currentness states, visible errors, retry/rebuild and last-good search."
+    },
+    {
+      "id": "O09",
+      "obligation": "Recovery/outdated index and rebuild with concurrent edits",
+      "coverage": "COMPLETE",
+      "finding": "Generation scan/replay/cutover/retention proposed; source capabilities/implementation proof pending, not fabricated."
+    },
+    {
+      "id": "O10",
+      "obligation": "Canonical authority and stable identity negative constraints",
+      "coverage": "COMPLETE",
+      "finding": "No authoritative index content/open path; no filename identity."
+    },
+    {
+      "id": "O11",
+      "obligation": "No hosted note-text search",
+      "coverage": "COMPLETE",
+      "finding": "Local engines selected as candidates; no transmitted text or hosted benchmark."
+    },
+    {
+      "id": "O12",
+      "obligation": "Optional semantic costs",
+      "coverage": "COMPLETE",
+      "finding": "Deferred; local model/runtime/compute/storage and distinct retrieval behavior noted. No recommended semantic feature needing an unprovided benchmark."
+    },
+    {
+      "id": "O13",
+      "obligation": "Primary research, repository/callers/tests/history",
+      "coverage": "PARTIAL",
+      "finding": "Upstream docs/examples, adjacent tokenizer implementation/caller/tests and selected history reviewed. Target notebook repository unidentified."
+    },
+    {
+      "id": "O14",
+      "obligation": "Truthful proposed versus executed validation",
+      "coverage": "COMPLETE",
+      "finding": "Candidate claims document/source review; all product checks explicitly unrun. Independent evaluator static inspection is separate."
+    },
+    {
+      "id": "O15",
+      "obligation": "Bounded integration, no editor rewrite/private notebook benchmark",
+      "coverage": "COMPLETE",
+      "finding": "Finite phased integration and owner decisions; no product implementation or private data work."
+    }
+  ],
+  "source_families": [
+    {
+      "family": "SQLite FTS5 storage/CRUD/query/tokenizer/recovery",
+      "coverage": "COMPLETE",
+      "sources": [
+        "PS01",
+        "PS04",
+        "PS05",
+        "PS06",
+        "PS07",
+        "PS08",
+        "PS09"
+      ],
+      "boundary": "Declared vendor-level facts/conditions; selected runtime unknown."
+    },
+    {
+      "family": "SQLite WAL, sidecar atomicity and foreground contention",
+      "coverage": "COMPLETE",
+      "sources": [
+        "PS02",
+        "PS03"
+      ],
+      "boundary": "Primary concurrency/atomicity contracts plus proposal reasoning, no app measurements."
+    },
+    {
+      "family": "SQLite integrity-check historical change/test lineage",
+      "coverage": "PARTIAL",
+      "sources": [
+        "PS01",
+        "PS26"
+      ],
+      "boundary": "Current manual and check-in summary/test listing read; historical test body/execution UNASSESSED."
+    },
+    {
+      "family": "Tantivy identity/update/publication/reader lifecycle",
+      "coverage": "COMPLETE",
+      "sources": [
+        "PS10",
+        "PS11",
+        "PS17"
+      ],
+      "boundary": "API and pinned caller/assertions; not application execution."
+    },
+    {
+      "family": "Tantivy tokenizer definition/caller/implementation/tests",
+      "coverage": "COMPLETE",
+      "sources": [
+        "PS12",
+        "PS13",
+        "PS14",
+        "PS15",
+        "PS16",
+        "PS19",
+        "PS27"
+      ],
+      "boundary": "Decisive byte filter source and default registration, existing unit-test source read; tests unrun."
+    },
+    {
+      "family": "Tantivy selected release/compatibility/issue context",
+      "coverage": "COMPLETE",
+      "sources": [
+        "PS18",
+        "PS20",
+        "PS21",
+        "PS22",
+        "PS23",
+        "PS24",
+        "PS25"
+      ],
+      "boundary": "Bounded named records and applicable releases; no exhaustive history/current reproduction inferred."
+    },
+    {
+      "family": "Historical issue current-version reproduction/fix closure",
+      "coverage": "UNASSESSED",
+      "boundary": "Current notebook dependency unknown. Reports used only as conditional investigations."
+    },
+    {
+      "family": "Actual target notebook repository/code/callers/tests/store capabilities",
+      "coverage": "UNASSESSED",
+      "boundary": "No repository identified in brief/plan/input map; user fact may remain unknown."
+    },
+    {
+      "family": "Actual packaged runtime/platforms/scripts/private corpus/budgets/performance",
+      "coverage": "UNASSESSED",
+      "boundary": "Unprovided inputs and future measurements; no obligation to deploy or benchmark private data."
+    }
+  ],
+  "preservation_witnesses": [
+    {
+      "witness": "authority/identity/update/deletion",
+      "coverage": "COMPLETE",
+      "result": "Core supported model retained; no duplicate authoritative content or filename identity."
+    },
+    {
+      "witness": "tags/saved predicates/query versioning",
+      "coverage": "COMPLETE",
+      "result": "Retained with explicit owner semantics; no demand to freeze results through a title rename."
+    },
+    {
+      "witness": "bounded scheduling/status/recovery/rebuild",
+      "coverage": "COMPLETE",
+      "result": "Key invariants, replay/generation handoff and visible incompleteness retained as proposals."
+    },
+    {
+      "witness": "FTS5 modes and synchronization",
+      "coverage": "COMPLETE",
+      "result": "Control C-01 valid correction incorporated; treatment mode/version distinction retained."
+    },
+    {
+      "witness": "Tantivy exact ID/nonstored content/commit/reader",
+      "coverage": "COMPLETE",
+      "result": "Supported identity/commit responsibilities retained; no primary-key guarantee invented."
+    },
+    {
+      "witness": "tokenizer long-token premise",
+      "coverage": "COMPLETE",
+      "result": "Unsupported character premise retained; no preservation credit for false fact. B03-P01-C-D01"
+    },
+    {
+      "witness": "trigram/short-term/index-scan conditions",
+      "coverage": "COMPLETE",
+      "result": "Material lost supported restriction B03-P01-C-D02"
+    },
+    {
+      "witness": "historical language/platform/crash/release details",
+      "coverage": "COMPLETE",
+      "result": "Specific research details lost/initial CJK context weak; limitations recorded."
+    },
+    {
+      "witness": "validation, alternatives and owner unknowns",
+      "coverage": "COMPLETE",
+      "result": "No selected engine/measured winner; supported proposed metrics/fault checks and owner questions retained."
+    },
+    {
+      "witness": "critic issues and exact plan clauses",
+      "coverage": "COMPLETE",
+      "result": "All listed dispositions examined; no criticism omitted or false rejection found."
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "issue": "C-01",
+      "final": "accept/amend",
+      "independent": "Valid: ordinary contentless delete requires original values; contentless-delete floor/CRUD now stated."
+    },
+    {
+      "issue": "C-02",
+      "final": "retain uncertainty",
+      "independent": "Valid external-input gap, not invented absence or a deployment failure."
+    },
+    {
+      "issue": "C-03",
+      "final": "accept wording",
+      "independent": "Valid distinction between plan no-hosted status and brief no-note-text transfer."
+    },
+    {
+      "issue": "C-04",
+      "final": "retain owner decision",
+      "independent": "Tag any/all unspecified; stable-ID membership retained."
+    }
+  ],
+  "plan_clause_coverage": {
+    "coverage": "COMPLETE",
+    "locator": "20 ordered rows in control; all P1.1-P4.2 rows in treatment, matched to the same exact revealed plan",
+    "finding": "No omitted clause found. Technical tokenizer premise and preservation loss separately recorded."
+  },
+  "early_decisive_stop": false,
+  "all_frozen_scientific_documents_read": true,
+  "no_future_execution_required": true
+}

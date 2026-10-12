@@ -1,0 +1,203 @@
+{
+  "schema": "er13.original-assessment.v1",
+  "block_id": "B10-P02",
+  "original": true,
+  "arm_records": [
+    {
+      "arm_id": "B10-P02-treatment",
+      "source_judgment": {
+        "judgment": "FAIL",
+        "review_status": "PARTIAL",
+        "reason": "T-D1 is a decisive required current-lifecycle omission and unsupported context treatment. Remaining unassessed families cannot turn this into a full comparable grade. Exact contract is separately unavailable."
+      },
+      "coverage": {
+        "status": "PARTIAL",
+        "contract_axes": [
+          {
+            "contract_axis_ordinal": 1,
+            "contract_axis_name": null,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED",
+            "reason": "Exact evaluation-contract-v1.json unavailable; ordinal is a missing-contract slot, not an invented axis definition."
+          },
+          {
+            "contract_axis_ordinal": 2,
+            "contract_axis_name": null,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED",
+            "reason": "Exact evaluation-contract-v1.json unavailable; ordinal is a missing-contract slot, not an invented axis definition."
+          },
+          {
+            "contract_axis_ordinal": 3,
+            "contract_axis_name": null,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED",
+            "reason": "Exact evaluation-contract-v1.json unavailable; ordinal is a missing-contract slot, not an invented axis definition."
+          },
+          {
+            "contract_axis_ordinal": 4,
+            "contract_axis_name": null,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED",
+            "reason": "Exact evaluation-contract-v1.json unavailable; ordinal is a missing-contract slot, not an invented axis definition."
+          },
+          {
+            "contract_axis_ordinal": 5,
+            "contract_axis_name": null,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED",
+            "reason": "Exact evaluation-contract-v1.json unavailable; ordinal is a missing-contract slot, not an invented axis definition."
+          },
+          {
+            "contract_axis_ordinal": 6,
+            "contract_axis_name": null,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED",
+            "reason": "Exact evaluation-contract-v1.json unavailable; ordinal is a missing-contract slot, not an invented axis definition."
+          }
+        ],
+        "record": "coverage.json"
+      },
+      "defects": {
+        "material_ids": [
+          "T-D1"
+        ],
+        "record": "defects.json"
+      },
+      "delivery": {
+        "status": "DELIVERED",
+        "required_scientific_outputs_present": true,
+        "hash_verified": true,
+        "complete_frozen_scientific_document_read": true,
+        "is_comparable_full_source_grade": false
+      },
+      "time_eligibility": {
+        "whole_maximum_seconds": 3600,
+        "t0_utc": "2026-10-12T00:37:20.037Z",
+        "whole_deadline_utc": "2026-10-12T01:37:20.037Z",
+        "whole_delivery_eligibility": "ELIGIBLE_BY_FROZEN_CUSTODY_UPPER_BOUND",
+        "packet_frozen_at_utc": "2026-10-12T01:34:21.358083+00:00",
+        "delivery_elapsed_upper_bound_seconds": 3421.321083,
+        "precise_last_scientific_write_time": "UNKNOWN",
+        "precise_request_to_quiet_final_time": "UNKNOWN: terminal status receipts expose no task-finish clock",
+        "t0_to_native_final_terminal_proxy_seconds": 3330.963,
+        "proxy_not_actual_delivery": true,
+        "stage_caps": "All captured native terminals precede frozen stage deadlines; actual stage task-finish boundaries UNKNOWN",
+        "native_time_counter_sum_seconds": 1940,
+        "native_intervals_not_billed_activity": true,
+        "clocks_reset": false
+      },
+      "method_compliance": {
+        "coverage": "PARTIAL",
+        "declared_topology": "investigator -> independent critic -> fresh reviser",
+        "recorded_method": "R0 plus B10 critic prompt delta",
+        "reveal_witness_hash_and_exact_plan": "VERIFIED",
+        "semantic_preservation": "Supported proposal, methods, alternatives, optional backup, owner decisions and validation status preserved; every critic disposition reviewed",
+        "process_order_full_coverage_and_runtime_behavior": "UNKNOWN beyond frozen artifacts; no full transcript inspected",
+        "six_contract_axes": "UNASSESSED: exact governing contract unavailable"
+      },
+      "native_identity_provenance": {
+        "capture_consistency": "COMPLETE",
+        "independent_native_to_actual_task_linkage": "UNKNOWN",
+        "native_response_authenticity_and_preinput_ordering": "UNKNOWN beyond assigned frozen custody and exact birth/objective consistency",
+        "one_goal_per_stage_total_behavior": "UNKNOWN beyond one captured lifecycle for each of three assigned stages",
+        "actual_route_and_service_tier": "UNKNOWN beyond requested and reported model fields; no account identity exported",
+        "manifest_qualification_flags": "Original native_lifecycle_qualified/science_qualified flags are false; not silently promoted by capture checks",
+        "stages": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T00:37:21.696Z",
+            "requested_at_utc": "2026-10-12T00:37:21.696Z",
+            "dispatch_captured_at_utc": "2026-10-12T00:37:23.428Z",
+            "native_created_at_utc": "2026-10-12T00:37:43+00:00",
+            "native_terminal_updated_at_utc": "2026-10-12T00:50:52+00:00",
+            "native_time_used_seconds": 789,
+            "stage_deadline_utc": "2026-10-12T01:07:21.696Z",
+            "native_terminal_within_stage_cap": true,
+            "captured_same_birth_identity_exact_objective": true,
+            "native_active_and_complete_observed": true,
+            "request_dispatch_args_equal": true,
+            "task_receipt_matches_assignment": true,
+            "actual_status": "completed",
+            "has_pending_child_runs": false,
+            "exact_native_receipt_sha256": {
+              "create": "b488430610f6ea42788b0a40baaa8559d96b6776f214c7e051579c5b1da2076a",
+              "active": "b488430610f6ea42788b0a40baaa8559d96b6776f214c7e051579c5b1da2076a",
+              "terminal": "a2a3b71897b5d3d82078b90c9bfccc983717537d74df6f096b386f58ef415004"
+            },
+            "actual_provider_start_or_task_finish_time": "UNKNOWN"
+          },
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T00:56:19.118Z",
+            "requested_at_utc": "2026-10-12T00:56:19.118Z",
+            "dispatch_captured_at_utc": "2026-10-12T00:56:20.298Z",
+            "native_created_at_utc": "2026-10-12T00:56:55+00:00",
+            "native_terminal_updated_at_utc": "2026-10-12T01:06:58+00:00",
+            "native_time_used_seconds": 602,
+            "stage_deadline_utc": "2026-10-12T01:08:19.118Z",
+            "native_terminal_within_stage_cap": true,
+            "captured_same_birth_identity_exact_objective": true,
+            "native_active_and_complete_observed": true,
+            "request_dispatch_args_equal": true,
+            "task_receipt_matches_assignment": true,
+            "actual_status": "completed",
+            "has_pending_child_runs": false,
+            "exact_native_receipt_sha256": {
+              "create": "7d71d45fb251fc5c1bc2955002c867790d7b70eb84c422bcc232bb71b1a87449",
+              "active": "7d71d45fb251fc5c1bc2955002c867790d7b70eb84c422bcc232bb71b1a87449",
+              "terminal": "fcfdb2581d6aab6ca062325ced9d77c9c9de04ad1b88a0a0b7b44315960ec1cf"
+            },
+            "actual_provider_start_or_task_finish_time": "UNKNOWN"
+          },
+          {
+            "stage": "reviser",
+            "prepared_at_utc": "2026-10-12T01:23:27.366Z",
+            "requested_at_utc": "2026-10-12T01:23:27.366Z",
+            "dispatch_captured_at_utc": "2026-10-12T01:23:28.551Z",
+            "native_created_at_utc": "2026-10-12T01:23:42+00:00",
+            "native_terminal_updated_at_utc": "2026-10-12T01:32:51+00:00",
+            "native_time_used_seconds": 549,
+            "stage_deadline_utc": "2026-10-12T01:37:20.037Z",
+            "native_terminal_within_stage_cap": true,
+            "captured_same_birth_identity_exact_objective": true,
+            "native_active_and_complete_observed": true,
+            "request_dispatch_args_equal": true,
+            "task_receipt_matches_assignment": true,
+            "actual_status": "completed",
+            "has_pending_child_runs": false,
+            "exact_native_receipt_sha256": {
+              "create": "5c48b55bd32c1f96408a19d8f4fe8a9f04d80d1f553fb3f53769ab44aede6be2",
+              "active": "5c48b55bd32c1f96408a19d8f4fe8a9f04d80d1f553fb3f53769ab44aede6be2",
+              "terminal": "89e275ebfab609b9e195ac3fe36b862d27bfa3eb7a6868b6bebf16b6192bf251"
+            },
+            "actual_provider_start_or_task_finish_time": "UNKNOWN"
+          }
+        ]
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "cumulative_native_usage_counters": "Present in exact receipts; not exported as token fields in public artifacts; no independent billing decomposition",
+          "input_cached_output_reasoning_breakdown": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "billing": "UNKNOWN",
+          "active_provider_time": "UNKNOWN",
+          "full_context_lifetime_occupancy_overlap": "UNKNOWN; native Goal windows are not full context residency",
+          "failed_attempts": "No failure_records in supplied packet; unlisted attempts UNKNOWN, not zero"
+        },
+        "independent_evaluation": {
+          "cost_category": "independent_evaluation",
+          "started_at_utc": "2026-10-12T01:54:15+00:00",
+          "record_written_at_utc": "2026-10-12T02:05:29.551915+00:00",
+          "billing": "UNKNOWN",
+          "separate_from_candidate_product": true,
+          "shared_primary_lookup": "One evaluator lookup pool for the assigned pair; not candidate assistance"
+        },
+        "preparation_support_publication_root_costs": "UNKNOWN, not charged to candidate product or assigned zero"
+      }
+    }
+  ],
+  "contract_unavailable": true,
+  "scope_limit": "FULL assigned; PARTIAL assessed. No pass, promotion or universal correctness claim. No candidate-author feedback."
+}

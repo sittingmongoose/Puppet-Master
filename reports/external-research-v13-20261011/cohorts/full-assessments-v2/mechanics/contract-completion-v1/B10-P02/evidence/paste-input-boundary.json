@@ -1,0 +1,29 @@
+{
+  "schema": "er13.separate-primary-evidence.v1",
+  "source_ids": [
+    "CC15",
+    "CC41",
+    "CC45"
+  ],
+  "clipboard_primary_url": "https://www.w3.org/TR/clipboard-apis/",
+  "clipboard_locator": "ClipboardEvent clipboardData; 6.4.1 Reading from the clipboard; processing HTML paste events",
+  "clipboard_retrieved_sha256": "64ff9e279103212d7287137569bf593e73c0501fe6ccb6db824d0b1295bd65da",
+  "clipboard_observation": "Where native equivalents exist, paste exposes text/plain, text/html and image/png through clipboardData. HTML paste is a distinct processing path with browser/format and sanitization conditions. The API does not equate a Word-origin paste with a DOCX file.",
+  "pandoc_primary_url": "https://github.com/jgm/pandoc/blob/3.12.1/src/Text/Pandoc/Readers.hs",
+  "pandoc_locator": "readers registry and getReader at tag 3.12.1",
+  "pandoc_retrieved_sha256": "6e4d222d9075da074b257e88c41d9c48d19dec318331d7c6775c9931d95fbe9c",
+  "pandoc_observation": "DOCX is dispatched to ByteStringReader readDocx, while HTML uses TextReader readHtml; format/extension options are applied separately. DOCX custom-style and track-change tests do not establish clipboard HTML/plain-text fidelity.",
+  "candidate_locators": {
+    "control": "final.md 37, 71-75, 168, 180 and 192: pasted Word material and pasted-table validation rely on DOCX file reader evidence; no clipboard processing alternative or explicit file-only substitution is researched.",
+    "treatment": "final.md 29, 98, 116, 128, 133: the word-processor paste obligation is represented as a DOCX fixture/import path; no clipboard processing alternative or explicit file-only substitution is researched."
+  },
+  "materiality_inference": "The brief explicitly describes authors pasting from word processors. Failure to distinguish that input route from file conversion leaves required input limitations unresearched. This is a proposal research omission, not a demonstrated paste failure or demand for executing a converter.",
+  "negative_inference_boundary": "Neither loss in every paste nor incapability of Pandoc, Quarto or WordPress is inferred. Conservative import/preview warnings remain valid.",
+  "copyright_scope": "Evaluator-authored observations only; no upstream code or full standard text reproduced. W3C document license applies to the linked standard; Pandoc upstream GPL license applies to linked code.",
+  "available_named_mechanism": {
+    "url": "https://developer.wordpress.org/block-editor/reference-guides/block-api/block-transforms/",
+    "locator": "Raw; Schemas and Content Models",
+    "retrieved_sha256": "0ad66aa7c016002ae79e651444c4a03481b481c37e5eb58be0378df3503595ee",
+    "observation": "WordPress raw transforms act on pasted/dropped HTML and apply a content schema to remove or normalize elements/attributes before matching blocks. This available mechanism is distinct from DOCX file-reader behavior and does not prove any particular Word sample retains meaning."
+  }
+}

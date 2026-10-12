@@ -1,0 +1,518 @@
+{
+  "scope": "retained frozen independent-evaluator primary evidence and original authored indexes only",
+  "files": [
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P02/control/primary-source-index.json",
+      "original_private_sha256": "6046e0eee6884dd3c5a8de4ba281b66993740759ca0b77ad9f5c0cc958731245",
+      "public_sha256": "6046e0eee6884dd3c5a8de4ba281b66993740759ca0b77ad9f5c0cc958731245",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/evidence/mrbs-context.md",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P02/evidence/mrbs-context.md",
+      "original_private_sha256": "3d920dcaf3c03443a933c665938fc642e1eadeb82d2549e099eaa607f3cd8904",
+      "public_sha256": "3d920dcaf3c03443a933c665938fc642e1eadeb82d2549e099eaa607f3cd8904",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/primary-source-index.json",
+      "original_private_sha256": "6941a7959bd8949ee791d0676018484ff950d754722a35593238bee5ba5b9fea",
+      "public_sha256": "6941a7959bd8949ee791d0676018484ff950d754722a35593238bee5ba5b9fea",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B03-P01/control/primary-source-index.json",
+      "original_private_sha256": "a24b0de27c7232ac7b204e05a99e09c7ad1cb6ef26a845aac8f0282ac1993132",
+      "public_sha256": "37799997191952ffa734f8a8d3e3fb1dd83981d7d187451bf3cecbb7cc662ec1",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/shared/input-integrity.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B03-P01/shared/input-integrity.json",
+      "original_private_sha256": "e272ed858289f84c6b1bf220aff8246eea54a4447421cfa2b7c8da219e0445a9",
+      "public_sha256": "0493296e055a6eaf549098b98d3170df2932f27b840be55c174443a179b0368f",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/shared/primary-observations.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B03-P01/shared/primary-observations.json",
+      "original_private_sha256": "fe4bf836b5cd8f21a6092e2f9648c5932f9fec84340f0865c577e27bbddc6f29",
+      "public_sha256": "fe4bf836b5cd8f21a6092e2f9648c5932f9fec84340f0865c577e27bbddc6f29",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/shared/tantivy-token-boundary.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B03-P01/shared/tantivy-token-boundary.json",
+      "original_private_sha256": "d1cbe46eb6fca25c3a2980d06c68be264091100352ddf0b41be577bf8472b3ef",
+      "public_sha256": "d1cbe46eb6fca25c3a2980d06c68be264091100352ddf0b41be577bf8472b3ef",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/shared/TANTIVY-LICENSE.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B03-P01/shared/TANTIVY-LICENSE.txt",
+      "original_private_sha256": "acacd14bebbffdb30d62443c282fb4da3e81915a9f69c63d5d745a029f44de8a",
+      "public_sha256": "acacd14bebbffdb30d62443c282fb4da3e81915a9f69c63d5d745a029f44de8a",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B03-P01/treatment/primary-source-index.json",
+      "original_private_sha256": "fbc30542fdce4a00633b68ffe31062f008bef3aab77039676f0855109460f881",
+      "public_sha256": "54aa78d93b5d759388ca688608a7d2722148fe53e8eb51ccf88b24303ce86225",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B03-P02/control/primary-source-index.json",
+      "original_private_sha256": "0a089854f29ede70856e1a38a613f502edf57549310b9b1491c24e5af90e6131",
+      "public_sha256": "0a089854f29ede70856e1a38a613f502edf57549310b9b1491c24e5af90e6131",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/control/evidence/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B03-P02/control/evidence/input-verification.json",
+      "original_private_sha256": "2b7b336c7aba38e1441cc79412fbd34edc398e60e875f0319f63a9c6a96cb96f",
+      "public_sha256": "b43a776c7f584b8adfb19fa0b4065e661675ca70f5c855fbffcbb624622a8c12",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B03-P02/treatment/primary-source-index.json",
+      "original_private_sha256": "1510fc7da94eaf8ae0fbafb5dae8702d039be380aae1f525600e87643e8214ad",
+      "public_sha256": "1510fc7da94eaf8ae0fbafb5dae8702d039be380aae1f525600e87643e8214ad",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/treatment/evidence/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B03-P02/treatment/evidence/input-verification.json",
+      "original_private_sha256": "d37ff589f85040ad3dcf1f36ff7d8df41b2b0a285c3220ed6cced49e2bf1ab41",
+      "public_sha256": "fa970beb91e08bfc0735a3cf4d0426a3256aa2fb65dc5c363aabe695bef37e17",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P02/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P02/control/primary-source-index.json",
+      "original_private_sha256": "85605c3fbca817549d9d67f27fa7f5a25dc71156741daf5dbff8f335647f2a4a",
+      "public_sha256": "85605c3fbca817549d9d67f27fa7f5a25dc71156741daf5dbff8f335647f2a4a",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B06-P02/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B06-P02/treatment/primary-source-index.json",
+      "original_private_sha256": "b20e4b554c7f3667145bd7f42de6277e95259e17ac39bf7de6a4536e11f357d4",
+      "public_sha256": "b20e4b554c7f3667145bd7f42de6277e95259e17ac39bf7de6a4536e11f357d4",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B07-P01/control/primary-source-index.json",
+      "original_private_sha256": "402a14e9f8060b9b381232534281a31e42474d661ecd068f52d2b5d5a3277378",
+      "public_sha256": "402a14e9f8060b9b381232534281a31e42474d661ecd068f52d2b5d5a3277378",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/evidence/duckdb-sampling-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B07-P01/control/evidence/duckdb-sampling-context.json",
+      "original_private_sha256": "a3ac9fd306e83a5577f55a6b84906e5b782794bfd34ccc13a4b0daea7c004df3",
+      "public_sha256": "a3ac9fd306e83a5577f55a6b84906e5b782794bfd34ccc13a4b0daea7c004df3",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/primary-observations.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B07-P01/primary-observations.json",
+      "original_private_sha256": "5f4803c5782a6af549ac18994d0eec7ea7de02ad63435c28b02b62193a6fc2ce",
+      "public_sha256": "5f4803c5782a6af549ac18994d0eec7ea7de02ad63435c28b02b62193a6fc2ce",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B07-P01/treatment/primary-source-index.json",
+      "original_private_sha256": "9d129a5f50fbc47ec6b9eabf3e13197785ddb1d708a5144efd0943bfe13623d6",
+      "public_sha256": "9d129a5f50fbc47ec6b9eabf3e13197785ddb1d708a5144efd0943bfe13623d6",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P02/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B07-P02/control/primary-source-index.json",
+      "original_private_sha256": "2754fcbc0ee9b3e4c92391494beab89d659614e1b732c49317d6184017790a83",
+      "public_sha256": "2754fcbc0ee9b3e4c92391494beab89d659614e1b732c49317d6184017790a83",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P02/evidence/primary-source-observations.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B07-P02/evidence/primary-source-observations.json",
+      "original_private_sha256": "1232f9bca4358a7aaed9f358d5c41840fba693dbda69e329cb7633f4db9d7916",
+      "public_sha256": "1232f9bca4358a7aaed9f358d5c41840fba693dbda69e329cb7633f4db9d7916",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P02/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B07-P02/treatment/primary-source-index.json",
+      "original_private_sha256": "f53072d2a514297cab5bea97366b2274a692cba50656c0295d9fc7a4fa419ba8",
+      "public_sha256": "f53072d2a514297cab5bea97366b2274a692cba50656c0295d9fc7a4fa419ba8",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/control/primary-source-index.json",
+      "original_private_sha256": "65656ba03e51fcca01749a7f079c819c3e9457389a5269508ec4bcb8aa0fbd72",
+      "public_sha256": "0b7954c39b7448293d88655dbd4cb36b54be7ce2729b1bcbb044070e64340f9e",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/koha-version.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/koha-version.json",
+      "original_private_sha256": "65bfdb015a8ba096762d43aaa8418db23cd49a4cdace57a3c91b7db77cb58db7",
+      "public_sha256": "65bfdb015a8ba096762d43aaa8418db23cd49a4cdace57a3c91b7db77cb58db7",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/primary-doc-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/primary-doc-context.json",
+      "original_private_sha256": "34cac727827e5aff8e9a1192a1e4aaa287d5c5620b26eb97c1de042d1f1209e4",
+      "public_sha256": "34cac727827e5aff8e9a1192a1e4aaa287d5c5620b26eb97c1de042d1f1209e4",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-api-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-api-context.json",
+      "original_private_sha256": "4d2c09c4155b7096388e5d670b7edda67c0a7ffc050fc5c8e64d0e1ade8a0368",
+      "public_sha256": "4d2c09c4155b7096388e5d670b7edda67c0a7ffc050fc5c8e64d0e1ade8a0368",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-api-test.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-api-test.json",
+      "original_private_sha256": "9f3cb13ae34ceac7c55fdecd113148447c55fb579de164f143c6e3de1785cd77",
+      "public_sha256": "9f3cb13ae34ceac7c55fdecd113148447c55fb579de164f143c6e3de1785cd77",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-checkin-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-checkin-context.json",
+      "original_private_sha256": "0202421ba3ea5ac6926109b1b3e9a767220f592eda56f2727f7ce74757872191",
+      "public_sha256": "0202421ba3ea5ac6926109b1b3e9a767220f592eda56f2727f7ce74757872191",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-checkout-context.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-checkout-context.json",
+      "original_private_sha256": "297329ed0b8fc9b22ed7d1d53bcd6918c640cf0cb3fcf3ab67f2150e64367b56",
+      "public_sha256": "297329ed0b8fc9b22ed7d1d53bcd6918c640cf0cb3fcf3ab67f2150e64367b56",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-deleted-test.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-deleted-test.json",
+      "original_private_sha256": "0bb534c7aacf4d4c3d36c1b7cf9d5c99ab4dae90d359521aded6304e051b22fb",
+      "public_sha256": "0bb534c7aacf4d4c3d36c1b7cf9d5c99ab4dae90d359521aded6304e051b22fb",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-import.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-import.json",
+      "original_private_sha256": "3a18ebd785191b43654dc399da2c39f0684a417004c0337502321b9665fb2879",
+      "public_sha256": "3a18ebd785191b43654dc399da2c39f0684a417004c0337502321b9665fb2879",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-model.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-model.json",
+      "original_private_sha256": "c920c262c20e8853ce622bb71a8168c27bf981c8a9812711f30086e2eccb479f",
+      "public_sha256": "c920c262c20e8853ce622bb71a8168c27bf981c8a9812711f30086e2eccb479f",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-permission.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-permission.json",
+      "original_private_sha256": "8939ce8047252eeda99178a432736130c48cd63f350bf6c44b97c52fc9d46683",
+      "public_sha256": "8939ce8047252eeda99178a432736130c48cd63f350bf6c44b97c52fc9d46683",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-release872.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-release872.json",
+      "original_private_sha256": "41cbfd2d5b343e9d5a8cd56faa7f7ac6c2dc4a7ea4cf88ea874832b66f3f4b58",
+      "public_sha256": "41cbfd2d5b343e9d5a8cd56faa7f7ac6c2dc4a7ea4cf88ea874832b66f3f4b58",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-release880.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-release880.json",
+      "original_private_sha256": "7a543bc8424f45fe2e1b433d740dd15fad1c2c7f4b3c839520d137d9e8979104",
+      "public_sha256": "7a543bc8424f45fe2e1b433d740dd15fad1c2c7f4b3c839520d137d9e8979104",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-ui-test.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-ui-test.json",
+      "original_private_sha256": "ebb3c4d29ea01943148bb50e5d4b48763c6f773aa0f3d90a88412773675a4282",
+      "public_sha256": "ebb3c4d29ea01943148bb50e5d4b48763c6f773aa0f3d90a88412773675a4282",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-broken.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-broken.json",
+      "original_private_sha256": "dcb8b541dc452026c4332c104a979f6f08736cbe6f2aea4c499afef086d65349",
+      "public_sha256": "dcb8b541dc452026c4332c104a979f6f08736cbe6f2aea4c499afef086d65349",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-change.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-change.json",
+      "original_private_sha256": "610688f2b5114a12b9a3768016f95a3161760586b8b0ab20137e88d189233835",
+      "public_sha256": "610688f2b5114a12b9a3768016f95a3161760586b8b0ab20137e88d189233835",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-count.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-count.json",
+      "original_private_sha256": "500c2fd0ec1b7ee3a5afa3a34af089ed4d5f67d6df40f781ae94af910ce4c107",
+      "public_sha256": "500c2fd0ec1b7ee3a5afa3a34af089ed4d5f67d6df40f781ae94af910ce4c107",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-fix.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-fix.json",
+      "original_private_sha256": "63e68bc95fc87f9ec584ced652ba581648d324bde6b1a0b9f4953d81521e5f1b",
+      "public_sha256": "63e68bc95fc87f9ec584ced652ba581648d324bde6b1a0b9f4953d81521e5f1b",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-host.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-host.json",
+      "original_private_sha256": "4003fbba4ebadde16af8d222ac705f085dddb040c00b810f81a8ce91c60dbc27",
+      "public_sha256": "4003fbba4ebadde16af8d222ac705f085dddb040c00b810f81a8ce91c60dbc27",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-modules.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-modules.json",
+      "original_private_sha256": "8b9c756ba02a364cd5cc4ef6ea076604d699f10cbc118965bca01816e23096d9",
+      "public_sha256": "8b9c756ba02a364cd5cc4ef6ea076604d699f10cbc118965bca01816e23096d9",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B09-P01/treatment/primary-source-index.json",
+      "original_private_sha256": "2182559ccc41dbc9ebe929526df85f45f47b71b14917952008ef76d359013cf7",
+      "public_sha256": "edbc202292d3e65b617a79f2de08c4b26817fe5437c35fabe3273e56f4335cfe",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P02/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P02/control/primary-source-index.json",
+      "original_private_sha256": "5b6ab9e54b78e8e608724401f219013a14d3e555c692c6355ecb0c26eb1a4a55",
+      "public_sha256": "5b6ab9e54b78e8e608724401f219013a14d3e555c692c6355ecb0c26eb1a4a55",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P02/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/primary-source-index.json",
+      "original_private_sha256": "d0dabfc1a018fc76a510988c9967a4a8cd80755a2c824a67484c5001b96c3402",
+      "public_sha256": "d0dabfc1a018fc76a510988c9967a4a8cd80755a2c824a67484c5001b96c3402",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B10-P02/treatment/evidence/material-lifecycle.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/evidence/material-lifecycle.json",
+      "original_private_sha256": "d2979d7518b8cf82bf0c9402245992e941a6dae76b8916a0110f4b10d166d639",
+      "public_sha256": "d2979d7518b8cf82bf0c9402245992e941a6dae76b8916a0110f4b10d166d639",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B11-P01/control/primary-source-index.json",
+      "original_private_sha256": "51df5a4002e4289a0ea037b0b14449e59d035067f624cd6e9f1aa90d9057634f",
+      "public_sha256": "51df5a4002e4289a0ea037b0b14449e59d035067f624cd6e9f1aa90d9057634f",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/primary-source-index.json",
+      "original_private_sha256": "ed9f5efde07074f72c7e0b717a3bf3bb7148b01de72cf716f1395358b1d88910",
+      "public_sha256": "ed9f5efde07074f72c7e0b717a3bf3bb7148b01de72cf716f1395358b1d88910",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B11-P02/control/primary-source-index.json",
+      "original_private_sha256": "b5e70460eafc860197b40ad01cf7cbfa4183dca28cc60c4a70f6fb69a41c8966",
+      "public_sha256": "6d08751d3397bfd93e7a57f166a1cda0047f50ae624b83a2518fa32a1d9e8a81",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/control/evidence/loro-1.16.2-context.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B11-P02/control/evidence/loro-1.16.2-context.txt",
+      "original_private_sha256": "e923c327ad092cf00548a9bfe189de6993b85fead949bd6c6add64548ccac349",
+      "public_sha256": "e923c327ad092cf00548a9bfe189de6993b85fead949bd6c6add64548ccac349",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/primary-source-index.json",
+      "original_private_sha256": "a5c92e2f2271c908091979414e1c9db186ecbf5ca684733cf4848aa8663ae1c4",
+      "public_sha256": "0ebc0e136af30e026d089a3af76e935aa1c348964c62805a521ef36571edc693",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/treatment/evidence/automerge-0.12.0-state-context.txt",
+      "public_path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/evidence/automerge-0.12.0-state-context.txt",
+      "original_private_sha256": "b7469db129e964ab178607deb6438672135c3598d333ff1538dde66fd66e4d81",
+      "public_sha256": "b7469db129e964ab178607deb6438672135c3598d333ff1538dde66fd66e4d81",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P01/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B12-P01/control/primary-source-index.json",
+      "original_private_sha256": "57600ff93bde686b6c0a622b84533299eac948b7bc53c0e479bdad71c6ae9261",
+      "public_sha256": "57600ff93bde686b6c0a622b84533299eac948b7bc53c0e479bdad71c6ae9261",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P01/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B12-P01/treatment/primary-source-index.json",
+      "original_private_sha256": "efdf3157c5c3785897701ffe85132aca2cd2664bda59c11ea0b2fa0bae9feed1",
+      "public_sha256": "efdf3157c5c3785897701ffe85132aca2cd2664bda59c11ea0b2fa0bae9feed1",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P02/control/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B12-P02/control/primary-source-index.json",
+      "original_private_sha256": "1e8023a967917498c09932e314f88148f2430643ce0175e748cf8f4c752fb6d6",
+      "public_sha256": "1e8023a967917498c09932e314f88148f2430643ce0175e748cf8f4c752fb6d6",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P02/control/evidence/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B12-P02/control/evidence/input-verification.json",
+      "original_private_sha256": "1b0b7f539893eda300b245d48656804a4294d20ca7d8854526e975c71267c11c",
+      "public_sha256": "2d07fc83cdf2ade2b75b3bac8bea9d9b7449af803c548ad7f9073dbc20c69150",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P02/treatment/primary-source-index.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/primary-source-index.json",
+      "original_private_sha256": "a644dda3b1ed8e888d0169253d413d71bdb074bd0ec9cd521b80ee2fba91097f",
+      "public_sha256": "a644dda3b1ed8e888d0169253d413d71bdb074bd0ec9cd521b80ee2fba91097f",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P02/treatment/evidence/input-verification.json",
+      "public_path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/evidence/input-verification.json",
+      "original_private_sha256": "71db30725cc48b814f0bf7fd7456a6465c13d1cc90d8606fec7a45e8c020a9d0",
+      "public_sha256": "93871ce9f94a3464bc95b29846098f622f6b763b92a2e49ab52b72530ecdf531",
+      "sanitized": true,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/contract-completion-v1/B10-P02/control/primary-source-index.json",
+      "public_path": "mechanics/contract-completion-v1/B10-P02/control/primary-source-index.json",
+      "original_private_sha256": "f5262351eba09a57b2e81c8ff86b9e4331ec609bd5e8b4ded59f393d47895eef",
+      "public_sha256": "f5262351eba09a57b2e81c8ff86b9e4331ec609bd5e8b4ded59f393d47895eef",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/contract-completion-v1/B10-P02/evidence/material-lifecycle.json",
+      "public_path": "mechanics/contract-completion-v1/B10-P02/evidence/material-lifecycle.json",
+      "original_private_sha256": "4f28a7faf1011c4d398dc8ba432a5f67a30cffef0d71871d444f7d9cbf5c0cd3",
+      "public_sha256": "4f28a7faf1011c4d398dc8ba432a5f67a30cffef0d71871d444f7d9cbf5c0cd3",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/contract-completion-v1/B10-P02/evidence/mkdocs-material-LICENSE.txt",
+      "public_path": "mechanics/contract-completion-v1/B10-P02/evidence/mkdocs-material-LICENSE.txt",
+      "original_private_sha256": "e1150f26b4c0f872627b39fda49ae3bd850304f2f7f3171ae0531c1f8f4dd078",
+      "public_sha256": "e1150f26b4c0f872627b39fda49ae3bd850304f2f7f3171ae0531c1f8f4dd078",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/contract-completion-v1/B10-P02/evidence/paste-input-boundary.json",
+      "public_path": "mechanics/contract-completion-v1/B10-P02/evidence/paste-input-boundary.json",
+      "original_private_sha256": "11bf333c22e14542e92c3c7b9a4eb888070fa22d45052f195828e4c2b2da463e",
+      "public_sha256": "11bf333c22e14542e92c3c7b9a4eb888070fa22d45052f195828e4c2b2da463e",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/contract-completion-v1/B10-P02/primary-source-index.json",
+      "public_path": "mechanics/contract-completion-v1/B10-P02/primary-source-index.json",
+      "original_private_sha256": "c8e69595d93411060f2557a08809d35cfa6aadf12da870836bd700ab475edd8d",
+      "public_sha256": "c8e69595d93411060f2557a08809d35cfa6aadf12da870836bd700ab475edd8d",
+      "sanitized": false,
+      "kind": "frozen_original"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/mechanics/contract-completion-v1/B10-P02/treatment/primary-source-index.json",
+      "public_path": "mechanics/contract-completion-v1/B10-P02/treatment/primary-source-index.json",
+      "original_private_sha256": "6598fe3e0cfc5cdbb174f812590fa98db351383886012939bd9986e72929acbc",
+      "public_sha256": "6598fe3e0cfc5cdbb174f812590fa98db351383886012939bd9986e72929acbc",
+      "sanitized": false,
+      "kind": "frozen_original"
+    }
+  ],
+  "not_retained": "Original body_retention/coverage limits remain authoritative; no new retrievals."
+}

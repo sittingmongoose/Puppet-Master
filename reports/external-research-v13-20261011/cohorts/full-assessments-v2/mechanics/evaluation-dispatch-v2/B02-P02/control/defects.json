@@ -1,0 +1,29 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "B02-P02-control",
+  "source_judgment": "PASS",
+  "material_defects": [],
+  "nonmaterial_defects": [
+    {
+      "id": "C-NM01",
+      "severity": "NONMATERIAL",
+      "classification": "underqualified source wording",
+      "axes": [
+        2,
+        3
+      ],
+      "input_locators": [
+        "final.md:18",
+        "final.md:37"
+      ],
+      "finding": "The default-off MRBS simultaneous-booking guard is not identified in final prose as a per-user multi-room policy. It is distinct from ordinary room overlap checking. The record never explicitly claims that same-room overlaps are permitted by default, and MRBS remains an unselected fit candidate, so this is not a material false rejection.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/web/systemdefaults.inc.php",
+        "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/web/mrbs_sql.inc"
+      ],
+      "status": "present in frozen original; no repair supplied"
+    }
+  ],
+  "limitations_record": "coverage.json",
+  "no_repairs_or_candidate_feedback": true
+}

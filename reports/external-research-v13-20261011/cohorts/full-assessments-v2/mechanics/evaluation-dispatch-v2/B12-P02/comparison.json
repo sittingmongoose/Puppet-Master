@@ -1,0 +1,76 @@
+{
+  "schema": "er13.post-freeze-comparison.v1",
+  "assignment_id": "B12-P02",
+  "created_after_original_freeze_utc": "2026-10-12T02:33:55.558558+00:00",
+  "original_block_manifest": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P02/manifest.json",
+    "sha256": "3c76b4be29fda6c8129a3d0ab67953b1043d1b46dd576e5f472b1848bb038391"
+  },
+  "original_arm_manifests": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P02/control/manifest.json",
+      "sha256": "c701ae8348b619e957a7272e2c9e947a56c947adf2f6fe12f04b15907b4aef5f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P02/treatment/manifest.json",
+      "sha256": "c345c851c8757676c3067dce707d601cbf10672bb4d9202da0019bfba98c4510"
+    }
+  ],
+  "arm_count": 2,
+  "factorial": false,
+  "original_grades_modified": false,
+  "observations": [
+    {
+      "arm_id": "B12-P02-control",
+      "source_judgment": "FAIL",
+      "coverage": "PARTIAL",
+      "material_defect_ids": [
+        "C-01"
+      ],
+      "native_final_completion_proxy_seconds": 2502.777,
+      "common_packet_frozen_delivery_observation_seconds": 2534.513712,
+      "sum_captured_goal_open_seconds": 2152.0,
+      "union_captured_goal_open_seconds": 2152.0,
+      "captured_goal_overlap_seconds": 0.0,
+      "interpretation": "Capture-derived Goal-lifetime proxies only; actual created/started context residency, active provider work, science write/quiet timestamps and billing UNKNOWN."
+    },
+    {
+      "arm_id": "B12-P02-treatment",
+      "source_judgment": "FAIL",
+      "coverage": "PARTIAL",
+      "material_defect_ids": [
+        "T-01",
+        "T-02",
+        "T-03",
+        "T-04"
+      ],
+      "native_final_completion_proxy_seconds": 2217.988,
+      "common_packet_frozen_delivery_observation_seconds": 2542.724712,
+      "sum_captured_goal_open_seconds": 1804.0,
+      "union_captured_goal_open_seconds": 1292.0,
+      "captured_goal_overlap_seconds": 512.0,
+      "interpretation": "Capture-derived Goal-lifetime proxies only; actual created/started context residency, active provider work, science write/quiet timestamps and billing UNKNOWN."
+    }
+  ],
+  "quality_signal": "Both original finals fail the declared finite assessment. Distinct defect identities and partial source-family tracing do not establish equal or ranked complete quality.",
+  "mechanism_signal": "The supplied treatment artifacts support concurrent critic/provisional reviser lifecycles and one exact late-critique binding. They do not establish that overlap caused any content defect or that the six-minute provisional segment was met.",
+  "latency_signal": "The native-completion proxy is earlier for treatment in this single pair. Exact user-visible task-quiet/final-write delivery is unavailable; the common frozen-packet timestamp is an observation boundary, not each arm's finish. FAIL/FAIL cannot show equal-quality savings.",
+  "resources": {
+    "assigned_arms": 2,
+    "observed_source_passing_finals": 0,
+    "candidate_consumption_per_passing_final": "UNDEFINED: zero source passes, and candidate consumption/billing unobserved",
+    "provider_activity": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "subscription_consumption": "UNKNOWN",
+    "actual_context_occupancy": "UNKNOWN",
+    "independent_evaluation": "Separate independent_evaluation cost; not candidate assistance or zero product cost",
+    "captured_goal_usage_counters": "Present but not public, not attribution-verified, not summed, and not treated as billing"
+  },
+  "blinding": "Imperfect: technique-bearing paths and instructions visible. Own primary lookup shared; per-arm original judgments frozen first.",
+  "selection": "NONE. Root alone owns campaign selection; no recommendation of a successor recipe or held-out case was made.",
+  "scope_limits": [
+    "One matched pair, not a four-cell factorial or replication reliability claim.",
+    "No causal attribution, universal correctness, source-recall denominator or full-pipeline non-inferiority claim.",
+    "No candidate feedback/repairs, repeated grader, native Goal or additional scientific candidate."
+  ]
+}

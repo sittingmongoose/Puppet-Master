@@ -1,0 +1,496 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "B06-P02-treatment",
+  "scope": "FULL",
+  "overall": "COMPLETE for required proposal-level assessment",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "rationale": "The complete proposal addresses the named workflows and hard negatives; policy values remain explicit decisions."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "rationale": "Available PowerSync #48 closure/fix versions are omitted and carried as unresolved source context (T-D01)."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "rationale": "Useful alternatives and code/caller evidence exist, but selected transaction-history research omits the available issue-to-fix closure (T-D01)."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "rationale": "Plan corrections and all nine critic findings are explicit; business rules are not vendor promises. Truth 6 inherits the separate source-context defect."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "rationale": "Supported core meaning survives; all three embedded upstream registers exactly equal their predecessors. Less visible SDK warnings are a nonmaterial presentation limit, not evidence from ID counts."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "rationale": "Failure scenarios have observable desired outcomes and are consistently proposed; no product test/deployment is asserted as executed."
+    }
+  ],
+  "consequential_obligations": [
+    {
+      "id": "O01",
+      "obligation": "Tasks, location notes, equipment problems and readable change/unresolved handover summary",
+      "coverage": "COMPLETE",
+      "final_locator": "Shift workflow / Start and hand over a shift",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O02",
+      "obligation": "Recent offline handover reads, freshness and browser persistence limits",
+      "coverage": "COMPLETE",
+      "final_locator": "P02 / Read recent notes and acknowledge",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O03",
+      "obligation": "Offline drafts, visible queue outcomes and retry/recovery",
+      "coverage": "COMPLETE",
+      "final_locator": "Shift workflow / Draft and synchronize offline changes",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O04",
+      "obligation": "Competing offline claims with retained attempts and visible reconciliation",
+      "coverage": "COMPLETE",
+      "final_locator": "P03 / Reconcile claims and issue state",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O05",
+      "obligation": "Acknowledgment distinct from resolution; no reading/productivity scoring",
+      "coverage": "COMPLETE",
+      "final_locator": "P01/P06 / Read recent notes and acknowledge",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O06",
+      "obligation": "Stale offline writes cannot silently reopen resolved issues; explicit current reopen",
+      "coverage": "COMPLETE",
+      "final_locator": "P07/P08 / Reconcile claims and issue state",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O07",
+      "obligation": "Older issue search, private contact exclusion, free-text/result/offline access boundary",
+      "coverage": "COMPLETE",
+      "final_locator": "Search and access / Search older issues privately",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O08",
+      "obligation": "Optional sensitive photos, explicit upload, bounded data and interruption states",
+      "coverage": "COMPLETE",
+      "final_locator": "Photo handling and retention / Optional photos and constrained mobile data",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": "Organizational values remain decisions; candidate application validation is proposed, not run."
+    },
+    {
+      "id": "O09",
+      "obligation": "Deletion propagation, downloaded caches, disconnected copies and backups",
+      "coverage": "COMPLETE",
+      "final_locator": "Photo handling and retention / Optional photos and constrained mobile data",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": "Organizational values remain decisions; candidate application validation is proposed, not run."
+    },
+    {
+      "id": "O10",
+      "obligation": "Shared access alternatives and no required personal commercial subscription",
+      "coverage": "COMPLETE",
+      "final_locator": "Search and access / Shared access and volunteer identity",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": "Organizational values remain decisions; candidate application validation is proposed, not run."
+    },
+    {
+      "id": "O11",
+      "obligation": "Unknown organizational role/retention/identity policies remain decisions",
+      "coverage": "COMPLETE",
+      "final_locator": "Owner decisions / Shared access and adoption decisions",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": "Organizational values remain decisions; candidate application validation is proposed, not run."
+    },
+    {
+      "id": "O12",
+      "obligation": "Feasible sync alternatives without assuming a winning product",
+      "coverage": "COMPLETE",
+      "final_locator": "Synchronization alternatives / Synchronization and data model",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O13",
+      "obligation": "Small synthetic adoption sequence and roughly thirty rotating volunteers",
+      "coverage": "COMPLETE",
+      "final_locator": "Adoption sequence and shift-scale validation",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": "Organizational values remain decisions; candidate application validation is proposed, not run."
+    },
+    {
+      "id": "O14",
+      "obligation": "Restored backups, collision/idempotency, departure and current authorization",
+      "coverage": "COMPLETE",
+      "final_locator": "P09–P11 / operation contract and revocation validation",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O15",
+      "obligation": "Complete exact-plan dispositions and explicit critic integration",
+      "coverage": "COMPLETE",
+      "final_locator": "Clause-by-clause table and critic dispositions",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O16",
+      "obligation": "Consequential primary docs/code/callers/tests and issue/fix/release context",
+      "coverage": "COMPLETE",
+      "final_locator": "Evidence registers and bounded repository history",
+      "judgment": "FAIL_T-D01",
+      "limits": null
+    },
+    {
+      "id": "O17",
+      "obligation": "Meaningful failure validation, proposed versus executed; no live actions",
+      "coverage": "COMPLETE",
+      "final_locator": "Validation and work record",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": "Organizational values remain decisions; candidate application validation is proposed, not run."
+    }
+  ],
+  "source_families": [
+    {
+      "family": "CouchDB conflict/database/user boundaries",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E01",
+        "E02",
+        "E04",
+        "E05"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND"
+    },
+    {
+      "family": "PouchDB capability/release/report/proposed patch/adjacent review",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E14",
+        "E16",
+        "E17",
+        "E18",
+        "E19"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND"
+    },
+    {
+      "family": "PowerSync per-client backend contract and RLS integration",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E20",
+        "E39"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND"
+    },
+    {
+      "family": "PowerSync SDK attachment warnings/lifecycle",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E26",
+        "E27"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND"
+    },
+    {
+      "family": "PowerSync selected queue/transaction reports, callers and available fix context",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E28",
+        "E29",
+        "E30"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "DEFECT_FOUND_T-D01"
+    },
+    {
+      "family": "PowerSync sample background callback/caller/platform caveat",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E31"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND"
+    },
+    {
+      "family": "Automerge conflicts/component/demo boundary",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E34",
+        "E35"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND"
+    },
+    {
+      "family": "PostgreSQL invariant/arbiter/predicate conditions",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E32",
+        "E33"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND"
+    },
+    {
+      "family": "Browser storage and background scheduling",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E37",
+        "E38"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND"
+    },
+    {
+      "family": "Supplemental current PowerSync core implementation/full tests",
+      "coverage": "PARTIAL",
+      "evidence": [
+        "E29"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_PRESENT_CORE_TRACE_CERTIFICATION"
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "Breadth-1",
+      "candidate_disposition": "accept",
+      "independent_result": "SUPPORTED",
+      "note": "Added a three-model access comparison with attribution, offboarding, offline-copy and fee tradeoffs.",
+      "evidence": [
+        "E02",
+        "E04"
+      ]
+    },
+    {
+      "id": "Breadth-2",
+      "candidate_disposition": "accept",
+      "independent_result": "SUPPORTED",
+      "note": "Added cross-shift boundary, late arrivals and task/location/issue distinctions plus two-shift scenario.",
+      "evidence": []
+    },
+    {
+      "id": "Breadth-3",
+      "candidate_disposition": "accept",
+      "independent_result": "SUPPORTED",
+      "note": "Photo transforms, Wi-Fi default and deletion choices explicitly remain proposed and platform/policy dependent.",
+      "evidence": [
+        "E26",
+        "E27"
+      ]
+    },
+    {
+      "id": "Truth-1",
+      "candidate_disposition": "accept",
+      "independent_result": "SUPPORTED",
+      "note": "Queue order is per client; canonical claims, dedupe and current authorization remain app contracts.",
+      "evidence": [
+        "E20"
+      ]
+    },
+    {
+      "id": "Truth-2",
+      "candidate_disposition": "accept",
+      "independent_result": "SUPPORTED",
+      "note": "Later assignments clear the current conflict view; app event history is separate.",
+      "evidence": [
+        "E34"
+      ]
+    },
+    {
+      "id": "Truth-3",
+      "candidate_disposition": "accept",
+      "independent_result": "SUPPORTED",
+      "note": "Replicated branches differ from single-node 409; members are database-wide.",
+      "evidence": [
+        "E01",
+        "E02"
+      ]
+    },
+    {
+      "id": "Truth-4",
+      "candidate_disposition": "accept",
+      "independent_result": "SUPPORTED",
+      "note": "PostgreSQL guard is conditioned on schema/index/transaction; offline fairness is separate.",
+      "evidence": [
+        "E32",
+        "E33"
+      ]
+    },
+    {
+      "id": "Truth-5",
+      "candidate_disposition": "accept",
+      "independent_result": "SUPPORTED",
+      "note": "Storage can fail/evict; no post-eviction durability is promised.",
+      "evidence": [
+        "E37"
+      ]
+    },
+    {
+      "id": "Truth-6",
+      "candidate_disposition": "retain_uncertainty",
+      "independent_result": "CONTEXT_OMISSION_T-D01",
+      "note": "At-access reporter caveats are appropriate, but S19 omits the existing explicit fix/version closure.",
+      "evidence": [
+        "E28",
+        "E29"
+      ]
+    }
+  ],
+  "preservation": {
+    "coverage": "COMPLETE",
+    "judgment": "NO_MATERIAL_SUPPORTED_MEANING_LOSS_FOUND",
+    "record_integrity": "All three full embedded source registers equal predecessors; 31 inherited records are retained.",
+    "semantic_review": "Independently traced workflows, hard negatives, current authorization, duplicate/backup cases, alternative tradeoffs, photo/cache/backup limitations, open decisions and proposed validation. Record equality was corroboration, not semantic proof.",
+    "known_limits": [
+      "T-L01",
+      "T-L02",
+      "T-L03",
+      "T-L04"
+    ]
+  },
+  "frozen_scientific_docs_read": [
+    {
+      "stage": "investigator",
+      "relative_path": "discovery.md",
+      "sha256": "80adb1ee7e89410453bd9d432b2e640cef8c6c2d7b6043c782ce5a775c60f3cf",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "draft.md",
+      "sha256": "63407117941142d73c3916098fdeb9549daaf4a2be5f27d3e23631101883084a",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "source-map.json",
+      "sha256": "5409e7b0d3197363f2ce555fc9ef797fe2c9a098214b18e47cb6fbcfdf763454",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "revealed-plan.md",
+      "sha256": "4d4a3d4670c5811c0d5b1d3be02cc22c7326402e0f2d118c6715c1f287cc9881",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "plan-reveal.json",
+      "sha256": "5def93be3ba2e436174a197e869d39d71361f82135024903a9f5374628c9b600",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "sources/README.md",
+      "sha256": "cd1a6a7aba2b7955013c20e327d096f406d63be28faa6ff73a1b624abdca6695",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "critic-breadth",
+      "relative_path": "critique.md",
+      "sha256": "760b88c75b9b332afe694fa682453761a3d2273554d4c7a9a08ef3b6b663a6df",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "critic-breadth",
+      "relative_path": "source-map.json",
+      "sha256": "3c15edd273307ab3003f26e95203bfdb63b2a43c43a0b336ac2a09f4cfa2b625",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "critic-breadth",
+      "relative_path": "sources/README.md",
+      "sha256": "cecc80e7521697ae6eb97d2ef3da93569803869460e61ef1924669a5f57525be",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "critic-truth",
+      "relative_path": "critique.md",
+      "sha256": "0a70df0cd4f184226002c0139b6c4500504b7c861eb6102bb0c4d945abcbbc0a",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "critic-truth",
+      "relative_path": "source-map.json",
+      "sha256": "acdb9e3535542bdce3dd6ded3a603d5da6e06da740ab6d07d4538256fc4affb7",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "final.md",
+      "sha256": "2dd9a6216253d150d4f9f2e1b900bf8983b2fbbfb87a1636e844b9a41f6dbbfa",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "source-map.json",
+      "sha256": "edcc342a8156d2b113c8716e9c7ebc8fb0278a8eaf7a789a0ad65477cd7155b6",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "sources/README.md",
+      "sha256": "92cb10eb6bc4c494a1ebc50514b4e37ae89eb430a6ca859b3ae119b2ac92550d",
+      "read": "COMPLETE"
+    }
+  ],
+  "excluded_or_unassessed": [
+    {
+      "domain": "Actual future app/device/deployment correctness",
+      "coverage": "UNASSESSED",
+      "reason": "Proposal deliverable; no execution required or performed."
+    },
+    {
+      "domain": "Unknown center role/retention/platform/budget facts",
+      "coverage": "UNASSESSED",
+      "reason": "External user decisions; appropriately open."
+    },
+    {
+      "domain": "Campaign recipes/held-out cases/active candidate originals",
+      "coverage": "UNASSESSED",
+      "reason": "Outside permitted assignment; not accessed."
+    }
+  ],
+  "finite_scope": "COMPLETE means each required obligation/axis was assessed in the declared material domain, not every upstream file, all product mechanisms, or universal correctness. Supplemental failed current-core locators are explicit and do not certify that separate domain."
+}

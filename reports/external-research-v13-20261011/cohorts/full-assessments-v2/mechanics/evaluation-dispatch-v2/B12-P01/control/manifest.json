@@ -1,0 +1,44 @@
+{
+  "schema": "er13.original_output_manifest.v1",
+  "block_id": "B12-P01",
+  "arm_id": "B12-P01-control",
+  "scope": "FULL",
+  "frozen_at_utc": "2026-10-12T02:32:10.733093+00:00",
+  "all_original_outputs_and_necessary_evidence_listed": true,
+  "evidence_note": "Independent public-source conditions, locators and any direct response digests are in primary-source-index.json; no source corpus or private transcript reproduced.",
+  "before_any_comparative_analysis": true,
+  "original_judgment_unchanged_after_freeze": true,
+  "entries": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P01/control/assessment.md",
+      "relative_path": "control/assessment.md",
+      "bytes": 5484,
+      "sha256": "bb45dc82d6b3a20aad5f115933e0cf6560ef45a130af222d6a00a193a8ef549d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P01/control/assessment.json",
+      "relative_path": "control/assessment.json",
+      "bytes": 17295,
+      "sha256": "9cf1a07cb5165975c3a6133bf475c5fb150098e637525f98f2b3e26c934ec66e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P01/control/coverage.json",
+      "relative_path": "control/coverage.json",
+      "bytes": 19201,
+      "sha256": "cbc279ba16d8211c33cdef8938ed2993f405f33f3ace48c4769327829065624f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P01/control/defects.json",
+      "relative_path": "control/defects.json",
+      "bytes": 3147,
+      "sha256": "5d467a5fcf5435277d1df8b22cdc6af1200aff4d51e2775ffbfb8674ac581a64"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P01/control/primary-source-index.json",
+      "relative_path": "control/primary-source-index.json",
+      "bytes": 16505,
+      "sha256": "57600ff93bde686b6c0a622b84533299eac948b7bc53c0e479bdad71c6ae9261"
+    }
+  ],
+  "self_digest_policy": "Manifest self SHA256 is reported separately; no circular self entry."
+}

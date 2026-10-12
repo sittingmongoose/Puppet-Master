@@ -1,0 +1,62 @@
+{
+  "run_id": "B09-P02-treatment",
+  "stage": "investigator",
+  "frozen_at_utc": "2026-10-12T00:52:09Z",
+  "stage_deadline_utc": "2026-10-12T01:06:59.682Z",
+  "whole_deadline_utc": "2026-10-12T01:36:58.556Z",
+  "discovery_sha256_frozen_by_reveal": "8dd2137db69171edcfdc7dcaf6b84edfa7b58fc1c2f2b792314cff14cb66d04e",
+  "revealed_plan_sha256": "80356345baad2274724e5dfc67de202b988f3a5a87bec342e6946c35438d70e3",
+  "source_ids": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10",
+    "S11",
+    "S12",
+    "S13"
+  ],
+  "files": [
+    {
+      "path": "discovery.md",
+      "sha256": "8dd2137db69171edcfdc7dcaf6b84edfa7b58fc1c2f2b792314cff14cb66d04e",
+      "bytes": 12805
+    },
+    {
+      "path": "source-map.json",
+      "sha256": "b48d9e899fd20af27113f83b33671d586d39cd0b0772ef43d163b09daf69f0dc",
+      "bytes": 14735
+    },
+    {
+      "path": "draft.md",
+      "sha256": "5954a2612f6ac43b1f0d229f6d9ed5ce833ca9f7f4004eeda980fd65917bc581",
+      "bytes": 24195
+    },
+    {
+      "path": "sources/index.md",
+      "sha256": "692896b5efc2d3af8934631fd99b7c4173a3002a6a7ef009714571a54ea66c80",
+      "bytes": 11501
+    },
+    {
+      "path": "revealed-plan.md",
+      "sha256": "80356345baad2274724e5dfc67de202b988f3a5a87bec342e6946c35438d70e3",
+      "bytes": 2391
+    },
+    {
+      "path": "native-goal-active.json",
+      "sha256": "060eef7f9cb8ca93b3036f44782aacc52fc554f8736419ac0b5321d1fa031967",
+      "bytes": 531
+    },
+    {
+      "path": "native-goal-create.json",
+      "sha256": "060eef7f9cb8ca93b3036f44782aacc52fc554f8736419ac0b5321d1fa031967",
+      "bytes": 531
+    }
+  ],
+  "native_goal_terminal_receipt": "saved separately after completing the same native Goal; not included in this science-package freeze"
+}

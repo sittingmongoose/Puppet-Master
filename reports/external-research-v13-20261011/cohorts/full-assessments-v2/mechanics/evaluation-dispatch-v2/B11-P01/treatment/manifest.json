@@ -1,0 +1,50 @@
+{
+  "schema": "er13.original-output-freeze.v1",
+  "arm_id": "B11-P01-treatment",
+  "frozen_at_utc": "2026-10-12T02:29:57.044788+00:00",
+  "comparison_started": false,
+  "original_judgment": "PASS",
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/treatment/assessment.md",
+      "bytes": 4483,
+      "sha256": "451f9d54db274a5708d27c92ac501997ea1873eb1a5d86dd43a8801f1ddfbba5"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/treatment/assessment.json",
+      "bytes": 6358,
+      "sha256": "37918e1a0e44c8e93407c88bb04a596635d13c1b25bdb887fc06fe3bd7cb0c84"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/treatment/coverage.json",
+      "bytes": 10402,
+      "sha256": "99c51bb84e965c536b3aff626d47f9b6f51b0a7202396d3a324248d3a0a5a756"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/treatment/defects.json",
+      "bytes": 3848,
+      "sha256": "9bbabf8d1ef2d9157954edc57c457fd870d194ee3a987eaa9f03c964c6037586"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/treatment/primary-source-index.json",
+      "bytes": 45265,
+      "sha256": "ed9f5efde07074f72c7e0b717a3bf3bb7148b01de72cf716f1395358b1d88910"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/treatment/input-custody.json",
+      "bytes": 4513,
+      "sha256": "6ad804570f25687cbfe08fdb4289e671cbc0ace0a9590e782891c5899b9e725e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/treatment/evidence.json",
+      "bytes": 2941,
+      "sha256": "730aac73c3cc80a8899c5d42b9c4b43bff59b8a132b1d438cb6cc6b08ec980d3"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/treatment/timing-observations.json",
+      "bytes": 4426,
+      "sha256": "80960b579f46ab689fa0e05aba61765a39bcac63f7edcb7ff779f4c804a6a619"
+    }
+  ],
+  "self_hash": "Reported outside this manifest; self is excluded from its file list."
+}

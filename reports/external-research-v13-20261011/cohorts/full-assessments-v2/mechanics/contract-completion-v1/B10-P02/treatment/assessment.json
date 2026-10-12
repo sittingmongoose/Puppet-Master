@@ -1,0 +1,111 @@
+{
+  "schema": "er13.separate-contract-completion-assessment.v1",
+  "block_id": "B10-P02",
+  "original_assessment": false,
+  "arm_records": [
+    {
+      "arm_id": "B10-P02-treatment",
+      "review_kind": "separate_independent_contract_coverage_completion",
+      "original_assessment": false,
+      "count_in_original_grade_counts": false,
+      "count_as_candidate_or_reserve": false,
+      "delivery": {
+        "status": "DELIVERED",
+        "exact_frozen_final_verified": true,
+        "required_three_stage_scientific_outputs_present": true,
+        "final_sha256": "73417321c2c2b8badb6f10aa9adb6d8f58c860a8e31517570f3851d6940e1e78"
+      },
+      "source_assessment": {
+        "judgment": "FAIL",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [
+          "CC-T01",
+          "CC-T02"
+        ],
+        "basis": "Retained Material lifecycle omission and required paste-input research omission.",
+        "full_source_pass": false,
+        "finite_source_assessment_complete": true
+      },
+      "coverage": {
+        "status": "COMPLETE",
+        "all_six_contract_axes_assessed": true,
+        "record": "coverage.json"
+      },
+      "time_eligibility": {
+        "whole_maximum_seconds": 3600,
+        "t0_utc": "2026-10-12T00:37:20.037Z",
+        "whole_deadline_utc": "2026-10-12T01:37:20.037Z",
+        "packet_frozen_at_utc": "2026-10-12T01:34:21.358083+00:00",
+        "whole_delivery_eligibility": "ELIGIBLE_BY_FROZEN_CUSTODY_UPPER_BOUND",
+        "delivery_elapsed_upper_bound_seconds": 3421.321083,
+        "precise_last_scientific_write_time": "UNKNOWN",
+        "actual_request_to_quiet_final_time": "UNKNOWN",
+        "native_terminal_proxy_seconds": 3330.963,
+        "proxy_is_actual_delivery": false,
+        "stage_native_terminals_inside_original_caps": "Recorded in original immutable assessment; not promoted to complete task-finish provenance",
+        "clocks_reset": false,
+        "maximum_not_minimum": true
+      },
+      "method_compliance": {
+        "coverage": "PARTIAL",
+        "artifact_semantic_preservation": "COMPLETE finite review; supported meaning retained",
+        "exact_plan_and_discovery_reveal_witness": "VERIFIED against immutable files",
+        "declared_topology": "investigator -> independent critic -> fresh reviser",
+        "recorded_method": "R0 plus B10 critic prompt delta",
+        "actual_runtime_order_and_full_method_behavior": "UNKNOWN beyond assigned capture/artifacts; no full transcript inspected",
+        "source_failure_not_rescued_by_hash_or_goal": true
+      },
+      "native_identity_provenance": {
+        "capture_consistency": "Same frozen captures and original recorded identity consistency retained",
+        "private_mapping_verification": "Existing authorized private mapping hash/verified flag checked; not exported",
+        "independent_native_to_actual_task_or_session_linkage": "UNKNOWN",
+        "preinput_ordering_or_response_freshness": "UNKNOWN beyond assigned captured consistency",
+        "actual_route_and_service_tier": "UNKNOWN beyond requested/reported fields",
+        "original_qualification_flags": "false, unchanged; no native/Goal recipe promotion",
+        "new_goal_or_native_loop": false
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product_billing": "UNKNOWN",
+        "usage_breakdown": "UNKNOWN",
+        "active_provider_time_and_full_context_occupancy": "UNKNOWN",
+        "subscription_consumption": "UNKNOWN",
+        "unknown_is_zero": false,
+        "original_evaluator_infrastructure_cost": "Preserved in original immutable assessment.json/resource_billing_coverage; no retrospective reassignment",
+        "this_review_cost_category": "independent_evaluation",
+        "this_review_cost_subcategory": "separate_coverage_completion",
+        "this_review_billing": "UNKNOWN",
+        "candidate_or_reserve_cost_charge": false,
+        "separate_cost_record": "../../../../state/contract-completion-v1/B10-P02-cost.json"
+      },
+      "independence": {
+        "independent_reviewer": true,
+        "review_rounds": 1,
+        "prior_findings_visible": true,
+        "imperfect_blinding": true,
+        "blinding_reason": "The authorization named prior judgments and the treatment finding; exact arm paths, source packages and critic delta reveal method. Fresh primary reads, not agreeing graders, establish each new finding.",
+        "original_changed": false,
+        "replacement_or_regrade": false,
+        "candidate_author_feedback": false,
+        "author_responses_or_repairs": "NONE; none solicited or permitted",
+        "nested_delegation": false,
+        "primary_lookup_shared_only_with_exact_pair": true,
+        "comparison_or_scientific_selection": "NOT_PERFORMED; root owns selection",
+        "locator_issue": "Exact original contract exists and hash matches. The original locator gap was evaluator infrastructure, not missing user input. It is resolved only for this separate review.",
+        "scope_deviation": "At turn start one instruction-only filename probe traversed experiment ancestors before the actual AGENTS read. It returned only the workspace AGENTS.md and no case/held-out names or bodies. This exceeded the requested no broad filename search discipline; all subsequent reads used exact authorized B10-P02 or primary-source paths.",
+        "source_complete_definition": "Finite assessment of all six exact axes, every material brief/plan obligation and consequential source family. Not universal correctness, exhaustive ecosystem recall or deployment proof."
+      },
+      "original_record": {
+        "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/assessment.json",
+        "sha256": "0709d645c5b4fea36342f10749e1654827bcce671f578fa6370634c95088dec9",
+        "source_judgment_unchanged": {
+          "judgment": "FAIL",
+          "review_status": "PARTIAL",
+          "reason": "T-D1 is a decisive required current-lifecycle omission and unsupported context treatment. Remaining unassessed families cannot turn this into a full comparable grade. Exact contract is separately unavailable."
+        },
+        "coverage_unchanged": "PARTIAL"
+      },
+      "written_at_utc": "2026-10-12T02:31:31.009584+00:00"
+    }
+  ]
+}

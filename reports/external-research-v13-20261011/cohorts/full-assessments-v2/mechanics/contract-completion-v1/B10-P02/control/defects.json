@@ -1,0 +1,72 @@
+{
+  "schema": "er13.separate-contract-completion-defects.v1",
+  "arm_id": "B10-P02-control",
+  "original_assessment": false,
+  "defects": [
+    {
+      "severity": "material_required_research_omission",
+      "origin": "NEW separate finding in an original UNASSESSED family",
+      "finding": "Both finals treat the word-processor paste obligation through DOCX-file reader/style/track-change evidence. Neither investigates clipboard formats and their normalization path, compares a supported paste mechanism or explicitly limits the offered workflow to file import. A general loss warning and future DOCX/pasted-table fixture do not complete this required research.",
+      "primary_sources": [
+        "CC15",
+        "CC41",
+        "CC45"
+      ],
+      "evidence": "../evidence/paste-input-boundary.json",
+      "materiality": "The brief expressly describes routine word-processor paste. The input representation affects headings, tables, embedded diagrams, structure and alternatives. The missing mechanism is available to research without owner samples, an installation or a future converter run.",
+      "inference_limit": "Primary evidence proves the file/clipboard distinction and an available schema-based paste mechanism. It does not prove any specific paste loses content or that a named product cannot support it. Severity is this reviewer's finite obligation-based inference.",
+      "executed_validation_required": false,
+      "prospective_repair_or_feedback_provided": false,
+      "id": "CC-C01",
+      "arm_id": "B10-P02-control",
+      "candidate_locator": "final.md 37, 71-75, 168, 180, 192"
+    },
+    {
+      "id": "CC-CN01",
+      "origin": "Prior C-D1 retained",
+      "severity": "nonmaterial",
+      "finding": "Critic cites nonexistent C17; map contains C01-C14. Final discloses gap and uses actual C13/R01, so no source rebind or final semantic loss.",
+      "candidate_locator": "critique.md Findings table; final.md Independent critique and disposition",
+      "final_status": "Disclosed; nonmaterial",
+      "primary_sources": [
+        "CC17",
+        "CC18"
+      ]
+    },
+    {
+      "id": "CC-CN02",
+      "origin": "Prior C-D2 retained",
+      "severity": "nonmaterial",
+      "finding": "Mutable /TR/wcag/ URL labeled 2023-10-05; evaluator observes WCAG22 2024-12-12 context. Cited criterion meanings remain supported; revision label is imprecise.",
+      "candidate_locator": "source-map.json S06 and C08",
+      "final_status": "Nonmaterial identity limitation",
+      "primary_sources": [
+        "CC06"
+      ]
+    },
+    {
+      "id": "CC-CN03",
+      "origin": "Prior C-D3 retained",
+      "severity": "nonmaterial",
+      "finding": "Dashboard report is narrowly qualified but omits collaborator statement that dashboard is not a website page and enhancement classification. No broad Quarto defect or removal of required handbook feature asserted.",
+      "candidate_locator": "S12/C12; final.md Quarto alternative and evidence paragraph",
+      "final_status": "Nonmaterial in this proposal",
+      "primary_sources": [
+        "CC12"
+      ]
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "finding": "Only listed minor closing S01-S17 range omission",
+      "independent_disposition": "Accepted; final changes to S01-S18. Underlying MkDocs index supported with full/sections conditions."
+    },
+    {
+      "finding": "Critic no material defects conclusion",
+      "independent_disposition": "No material final defect found within evaluator assessed families; not adopted as authority or full contract grade."
+    }
+  ],
+  "critic_disposition_basis": "Fresh complete artifact/primary reads substantiate the preserved dispositions. T-D1 is newly reverified; no prior criticism is used as primary authority. C2 severity caveat retained.",
+  "responses": "NONE",
+  "prospective_repairs_provided": false
+}

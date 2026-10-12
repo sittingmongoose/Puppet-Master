@@ -1,0 +1,97 @@
+{
+  "schema": "er13.separate-contract-completion-defects.v1",
+  "arm_id": "B10-P02-treatment",
+  "original_assessment": false,
+  "defects": [
+    {
+      "id": "CC-T01",
+      "arm_id": "B10-P02-treatment",
+      "severity": "material_governing_maintenance_context_omission",
+      "origin": "Original T-D1 preserved and freshly primary-verified",
+      "candidate_locator": "critic critique.md 63; final.md 39 and 164; critic/reviser S20",
+      "finding": "The final treats current Material support/roadmap as a later recheck and carries historical feature-freeze context while its cited 9.7.7 release already specifies near-term EOL and restricted maintenance. This available context materially changes the maintainability comparison.",
+      "primary_sources": [
+        "CC35",
+        "CC36",
+        "CC44"
+      ],
+      "evidence": "../evidence/material-lifecycle.json",
+      "temporal_basis": "Independent API response/body hashes exactly match original evidence; public API update precedes both T0 clocks. It is corroboration, not an independently time-stamped web archive.",
+      "inference_limit": "Does not establish whether every feature resumed, make Material unusable or prove the successor meets the handbook requirements.",
+      "executed_validation_required": false,
+      "prospective_repair_or_feedback_provided": false
+    },
+    {
+      "severity": "material_required_research_omission",
+      "origin": "NEW separate finding in an original UNASSESSED family",
+      "finding": "Both finals treat the word-processor paste obligation through DOCX-file reader/style/track-change evidence. Neither investigates clipboard formats and their normalization path, compares a supported paste mechanism or explicitly limits the offered workflow to file import. A general loss warning and future DOCX/pasted-table fixture do not complete this required research.",
+      "primary_sources": [
+        "CC15",
+        "CC41",
+        "CC45"
+      ],
+      "evidence": "../evidence/paste-input-boundary.json",
+      "materiality": "The brief expressly describes routine word-processor paste. The input representation affects headings, tables, embedded diagrams, structure and alternatives. The missing mechanism is available to research without owner samples, an installation or a future converter run.",
+      "inference_limit": "Primary evidence proves the file/clipboard distinction and an available schema-based paste mechanism. It does not prove any specific paste loses content or that a named product cannot support it. Severity is this reviewer's finite obligation-based inference.",
+      "executed_validation_required": false,
+      "prospective_repair_or_feedback_provided": false,
+      "id": "CC-T02",
+      "arm_id": "B10-P02-treatment",
+      "candidate_locator": "final.md 29, 98, 116, 128, 133"
+    },
+    {
+      "id": "CC-TN02",
+      "origin": "Prior T-D2 retained",
+      "severity": "nonmaterial",
+      "finding": "Says offline plugin explicitly disables its versioning plugin; docs instead instruct the author to disable Fetch-dependent versioning. Tag 9.7.7 code does not do that automatically. Later prose/source map state the condition correctly, limiting consequence.",
+      "candidate_locator": "final.md Decision summary",
+      "final_status": "Nonmaterial inconsistency, independent of T-D1",
+      "primary_sources": [
+        "CC19",
+        "CC20"
+      ]
+    },
+    {
+      "id": "CC-TN03",
+      "origin": "NEW bounded alternative-context observation",
+      "severity": "nonmaterial_breadth_and_scope_limit",
+      "candidate_locator": "final.md 7 and 41; H5P guide S09",
+      "finding": "The H5P site import guide does not establish a universal requirement for a remote site. Lumi offers offline authoring/local preview and standalone HTML output, with type/media/export limits. The final's package-alone caveat is valid; its host-required wording is overbroad if read across the ecosystem. This does not by itself invalidate the compared WordPress/H5P route or prove Lumi supplies revision-aware progress, handbook search or accessible print.",
+      "primary_sources": [
+        "CC23",
+        "CC46",
+        "CC47"
+      ],
+      "executed_validation_required": false
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "finding": "C1 H5P missing later non-reproduction/version context",
+      "independent_disposition": "Supported context correction; final accurately preserves unknown installed version, contributor non-reproduction and absence of confirmed resolution."
+    },
+    {
+      "finding": "C2 export fidelity too abstract",
+      "independent_disposition": "Final matrix is useful and honest. Original already required separate QA; the critic material severity is not conclusively established solely by absence of a matrix. No false capability removal or executed-validation claim results."
+    },
+    {
+      "finding": "C3 H5P download configuration condition",
+      "independent_disposition": "Supported; final explicitly carries critic source and discloses reviser timeout."
+    },
+    {
+      "finding": "C4 lowest installation burden inference",
+      "independent_disposition": "Supported narrowing; final makes it a conditional pilot hypothesis."
+    },
+    {
+      "finding": "C5 unknown audience/governance choices",
+      "independent_disposition": "Legitimate owner input; preserved without fabricating user facts."
+    },
+    {
+      "finding": "S20 does not establish current roadmap",
+      "independent_disposition": "Material source-context omission remains; T-D1 independently contradicts this account of the cited release."
+    }
+  ],
+  "critic_disposition_basis": "Fresh complete artifact/primary reads substantiate the preserved dispositions. T-D1 is newly reverified; no prior criticism is used as primary authority. C2 severity caveat retained.",
+  "responses": "NONE",
+  "prospective_repairs_provided": false
+}

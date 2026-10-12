@@ -1,0 +1,192 @@
+{
+  "schema": "er13.original-input-verification.v1",
+  "arm_id": "B12-P02-treatment",
+  "packet": {
+    "path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B12-P02.json",
+    "sha256": "f5e4550ac3e677c92d000f392ecb3cabccdc33b5326c8699fb8056c58af70359"
+  },
+  "contract": {
+    "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+    "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+  },
+  "coordinator_receipt": {
+    "path": "ER13_RUNTIME/state/eval-coordinator-v2/B12-P02-input-verification.json",
+    "sha256": "b0f0331dca27a39affbabdcf3712e2dbec70027755d4d724ddb873b61099b442"
+  },
+  "workspace_agents": {
+    "path": "ER13_WORKTREE/AGENTS.md",
+    "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810",
+    "read": true
+  },
+  "handoff": {
+    "path": "ER13_RUNTIME/packet/ER13_T3/ER13_T3_EXECUTE_HANDOFF.md",
+    "sections_read": [
+      10,
+      12
+    ]
+  },
+  "verification_result": "ALL_EXPECTED_MEMBER_BYTES_AND_SHA256_MATCH",
+  "manifest_member_count": 47,
+  "stage_manifests": [
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/control/terminal-handoffs/investigator/manifest.json",
+      "sha256": "db58d503404ccc29dd028e6d0759dbc7b96677b5834382906b72f7aba4a19ec5"
+    },
+    {
+      "stage": "critic",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/control/terminal-handoffs/critic/manifest.json",
+      "sha256": "a2a0fdf81f64ce48147d417c447b1e53d965d96037495f8d8dc9571d26fc1b03"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P02-treatment/run/B12-P02-treatment/control/terminal-handoffs/reviser/manifest.json",
+      "sha256": "4e66bc4af390f3999da0e9a88293fd1ea464cdc47e30547fef3cdae29dc594e1"
+    }
+  ],
+  "supplement_manifest": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B12-P02-treatment-eval-inputs/authored-manifest.json",
+    "sha256": "9bff0a3cdf75d724ddcb8894beac5ae98f7626cb15e3d899530f268c33ddf779"
+  },
+  "actual_status_receipt_hashes": [
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B12-P02-treatment/investigator-eval-ready-status.raw.json",
+      "sha256": "8d1e7cd20807cdd8bee35130f51093f6f07af32ae96076f40daea0063307ac3e"
+    },
+    {
+      "stage": "critic",
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B12-P02-treatment/critic-eval-ready-status.raw.json",
+      "sha256": "2715e7188237574a2b9c3874b7b510f1960c856b9c42bc6fe40df80c6455f230"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B12-P02-treatment/reviser-eval-ready-status.raw.json",
+      "sha256": "09bbc5876058fb26bdbfd9e25d6e18ac234a2898fb6d72c116eccc777fe52eb6"
+    }
+  ],
+  "scientific_read_inventory": [
+    {
+      "stage": "investigator",
+      "relative_path": "discovery.md",
+      "sha256": "fdd54c796eac4490185af28ca3c007eddfd86561824f3f526f524f72e25a136f"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "draft.md",
+      "sha256": "888e4b497927d97191220351bda2cc15565918092daba4fa9b67e80061e31c9e"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "source-map.json",
+      "sha256": "656ea81a885467c6be05eaa215600fa1cbb49449946393ff14112c6ad95cc88e"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "revealed-plan.md",
+      "sha256": "246e56cbd6e35d3d4c150efd760897150d477c2349a987c5c9686606dcbdc008"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "plan-reveal.json",
+      "sha256": "60e80cdef31e7ac02bb1244b1600c5a0160c2cc1d53e8ee6d1f5abc093efbd0e"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "assignment.md",
+      "sha256": "3f38f7145c8fbade3ba742427a6227bdeb7fbcb1c33eac88e561faa3556b7dff"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "input-map.json",
+      "sha256": "fa337f1c92536f7ead68b07a6ad64c0cd8922a76a2f6acf66fd79c22353c4242"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "freeze.json",
+      "sha256": "f4eabe2b3ba6badb3f7b5c9452e22f80526189d8dcb26ccf379f5c9c256f5df8"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "sources/index.md",
+      "sha256": "aa88e2b3b0396ae517d4f684ab1c958cdc19c95e7bf8eb8f28cacd7c8b953e62"
+    },
+    {
+      "stage": "critic",
+      "relative_path": "critique.md",
+      "sha256": "d8d1cd72545a2c34d624d75698108915c6878d2c4f6189de81d3c6ecfcc3e58c"
+    },
+    {
+      "stage": "critic",
+      "relative_path": "source-map.json",
+      "sha256": "745985fb2f293b9740d30aa663602c358931d98d14b22b00fe7994c55f03958b"
+    },
+    {
+      "stage": "critic",
+      "relative_path": "assignment.md",
+      "sha256": "0963da95e5eebb1abeec3101b041973074362638c6c3b615dfa3695aee6479f6"
+    },
+    {
+      "stage": "critic",
+      "relative_path": "input-map.json",
+      "sha256": "6504f4686307e50fa7ca0fdc8cae9df889e05db2fd79199d051b707bf97d0cb2"
+    },
+    {
+      "stage": "critic",
+      "relative_path": "freeze.json",
+      "sha256": "6447fc09016de5d515dbf7497e52742dc7239ce3d42f54e6a463674285f3f271"
+    },
+    {
+      "stage": "critic",
+      "relative_path": "sources/index.md",
+      "sha256": "f343f1f8c4f3801e1fe2523823e4a8a3b06e761d71ce88be9162936a365c2f66"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "final.md",
+      "sha256": "b0c23f10675fc666a9d41529945a339c0239606fb16cb4d38ad24b6955598a78"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "provisional-final.md",
+      "sha256": "8d4c8e5683b37ce731d6aaa4b196dfea1d0377904f78aa33c0fb0cbbfe9ae61b"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "source-map.json",
+      "sha256": "6ac8cceffdaf251a6b932d272ddfd6707b8ccd3bb06a8160f796bd168dd93cc5"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "late-critique-binding.json",
+      "sha256": "7834de7ec76a7d27ec9352ff3561ace23e6ab960f6b40d53b7228cb778192e92"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "assignment.md",
+      "sha256": "288aeef6ee6926de3cd6314d3f0cc1652a8516cbd0c406d57057612bde056e5f"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "input-map.json",
+      "sha256": "9d02f444155bed67a31f08cc6a47a639f5e5a279c487567dbf1a0a7dcd6ccaf1"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "freeze.json",
+      "sha256": "7f9e061db71c8928462df14a9d95b0b19d1757b70c8063c0610765416c2c4c73"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "sources/index.md",
+      "sha256": "f05c4b5a110cce1ec6cca6af22a4d9f7f9fbd20dcb561714ae750fb528b381bf"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "supplement/provisional-source-map.json",
+      "sha256": "40f9b40c47e36c848a94b9d25200216504da045a500696c0d2e2b4aa7a670506"
+    }
+  ],
+  "forbidden_inputs_read": false,
+  "corridor": "Only exact allowlisted frozen terminal-handoff members and supplements/status receipts; active referenced paths not followed."
+}

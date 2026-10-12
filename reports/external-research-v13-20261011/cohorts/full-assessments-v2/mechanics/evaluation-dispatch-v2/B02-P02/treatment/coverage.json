@@ -1,0 +1,340 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "B02-P02-treatment",
+  "scope": "FULL",
+  "overall": "COMPLETE",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "summary": "All material original workflows/negative constraints and legitimate unknown owner facts retained."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "summary": "Material MRBS schema-to-capability inference remains unsupported (T-M01); other assessed facts are appropriately qualified."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "summary": "Several useful mechanisms are present, but MRBS is materially narrowed by a missed available native mechanism (T-M01)."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "summary": "Every substantive released clause and four critic findings/dispositions examined; accepted improvements are valid, no material false plan correction found."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "summary": "Complete discovery/draft/critique/final examined; no material supported-meaning loss or source-ID rebinding found. Small depth limits are stated below."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "summary": "Meaningful concurrency, hold, time, lifecycle, outage, privacy and restore oracles are proposals. Source-test inspection is not represented as execution."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "obligation": "Member bookings, staff maintenance holds and daily readiness",
+      "coverage": "COMPLETE",
+      "assessment": "Complete domain and staff/member view proposals; fault state differs from reservation state.",
+      "result": "SATISFIED at research-proposal level"
+    },
+    {
+      "id": "O02",
+      "obligation": "Tools, conditional qualified supervision and shared extraction",
+      "coverage": "COMPLETE",
+      "assessment": "Compound allocation, scarce supervisor capacity and extractor contention modeled; capacities, task matrix and qualifications remain legitimate owner facts.",
+      "result": "SATISFIED at research-proposal level"
+    },
+    {
+      "id": "O03",
+      "obligation": "Fault after accepted booking, readable conflict and preserved change reason",
+      "coverage": "COMPLETE",
+      "assessment": "Protected unavailability/affected list, explicit staff action, old/new state, actor/time/reason and notifications; no silent booking or hold loss.",
+      "result": "SATISFIED at research-proposal level"
+    },
+    {
+      "id": "O04",
+      "obligation": "Simultaneous booking and edits, atomic allocation",
+      "coverage": "COMPLETE",
+      "assessment": "Authoritative transactional checks, exclusive-resource invariants and no partial bundle; quantity-pool enforcement is a separate condition. Software execution is not required for this proposal.",
+      "result": "SATISFIED at research-proposal level"
+    },
+    {
+      "id": "O05",
+      "obligation": "Recurring maintenance, exceptions, horizon and time",
+      "coverage": "COMPLETE",
+      "assessment": "Finite/visible rules, occurrence/series edits and timezone/DST checks. Control explicitly aligns safe projection to booking lead time; treatment separates horizon from rule/end date but leaves a thinner horizon invariant.",
+      "result": "SATISFIED at research-proposal level"
+    },
+    {
+      "id": "O06",
+      "obligation": "Cancellation, interruption and readiness/history",
+      "coverage": "COMPLETE",
+      "assessment": "Lifecycle transitions and future-capacity release retain original explanation; exact no-show/cancellation/displacement policies remain open.",
+      "result": "SATISFIED at research-proposal level"
+    },
+    {
+      "id": "O07",
+      "obligation": "Internet down, local workstation, justified browser and approximately 100 members",
+      "coverage": "COMPLETE",
+      "assessment": "WAN loss distinguished from host/LAN/power loss; local authority, unsubmitted/provisional requests, blocked disconnected confirmation and recovery reconciliation.",
+      "result": "SATISFIED at research-proposal level"
+    },
+    {
+      "id": "O08",
+      "obligation": "Urgent displacement unsettled",
+      "coverage": "COMPLETE",
+      "assessment": "Authority, notice, priority, fairness and safe in-use handling remain owner decisions; no automatic policy selected.",
+      "result": "SATISFIED at research-proposal level"
+    },
+    {
+      "id": "O09",
+      "obligation": "Calendar is not capacity enforcement; member cannot erase holds",
+      "coverage": "COMPLETE",
+      "assessment": "Explicit authoritative service and protected staff hold invariant. Calendar feeds are convenience/interchange, not transactional enforcement.",
+      "result": "SATISFIED at research-proposal level"
+    },
+    {
+      "id": "O10",
+      "obligation": "No payments, identity documents or mandatory hosted accounts",
+      "coverage": "COMPLETE",
+      "assessment": "Preserved throughout; local minimal identity/account/contact decisions remain open.",
+      "result": "SATISFIED at research-proposal level"
+    },
+    {
+      "id": "O11",
+      "obligation": "Dispute explanation without activity surveillance",
+      "coverage": "COMPLETE",
+      "assessment": "Purpose-limited staff history/export, minimal fields, member privacy and retention decisions. No need to invent a jurisdiction or retention duration.",
+      "result": "SATISFIED at research-proposal level"
+    },
+    {
+      "id": "O12",
+      "obligation": "Feasible local/shared alternatives, useful mechanism research",
+      "coverage": "COMPLETE",
+      "assessment": "SQLite/local service, PostgreSQL/LAN, MRBS and LibreBooking discussed with operating/support/version conditions; assess the candidate comparison semantically, not by citations.",
+      "result": "MATERIAL_DEFECT T-M01 in alternative characterization"
+    },
+    {
+      "id": "O13",
+      "obligation": "Staged adoption and concurrency/failure validation",
+      "coverage": "COMPLETE",
+      "assessment": "Synthetic fit checks, staff shadow/pilot and gated member route; meaningful failure/privacy/restore oracles, proposed rather than executed.",
+      "result": "SATISFIED at research-proposal level"
+    },
+    {
+      "id": "O14",
+      "obligation": "Planning proposal; no real installation/data or future execution required",
+      "coverage": "COMPLETE",
+      "assessment": "Both finals are proposals and do not assert application validation passed. Static upstream test inspection is correctly distinct from execution.",
+      "result": "SATISFIED at research-proposal level"
+    },
+    {
+      "id": "O15",
+      "obligation": "Complete exact revealed-plan dispositions and critic preservation",
+      "coverage": "COMPLETE",
+      "assessment": "Every substantive plan clause assessed and every critic finding traced; original brief/plan time envelope retained as mechanics, not a product requirement.",
+      "result": "SATISFIED at research-proposal level"
+    }
+  ],
+  "source_families": [
+    {
+      "family": "SQLITE",
+      "coverage": "COMPLETE",
+      "assessed_scope": "Writer/default/busy/topology and optional WAL conditions checked; runtime/load/restore remains future work.",
+      "primary_source_ids": [
+        "P36",
+        "P37",
+        "P38"
+      ],
+      "result": "No material unsupported final claim found in stated scope"
+    },
+    {
+      "family": "POSTGRESQL",
+      "coverage": "COMPLETE",
+      "assessed_scope": "Range definitions, half-open boundaries, scalar-key exclusion and capacity-one limitation checked; no database deployment or concurrency test required.",
+      "primary_source_ids": [
+        "P34"
+      ],
+      "result": "No material unsupported final claim found in stated scope"
+    },
+    {
+      "family": "CALENDAR",
+      "coverage": "COMPLETE",
+      "assessed_scope": "Interchange/recurrence representation distinguished from capacity enforcement; no new calendar authority assumed.",
+      "primary_source_ids": [
+        "P35"
+      ],
+      "result": "No material unsupported final claim found in stated scope"
+    },
+    {
+      "family": "LIBREBOOKING_MODEL",
+      "coverage": "COMPLETE",
+      "assessed_scope": "Resource/person/accessory relationships and quantity/admin conditions examined against caller and docs; workshop skills and exact account policy remain open.",
+      "primary_source_ids": [
+        "P13"
+      ],
+      "result": "No material unsupported final claim found in stated scope"
+    },
+    {
+      "family": "LIBREBOOKING_CONCURRENCY",
+      "coverage": "COMPLETE",
+      "assessed_scope": "Validation, caller, repository and adjacent command layer plus rule-test oracles examined. Neither runtime race safety nor a race defect is asserted.",
+      "primary_source_ids": [
+        "P16",
+        "P18",
+        "P19",
+        "P21",
+        "P24"
+      ],
+      "result": "No material unsupported final claim found in stated scope"
+    },
+    {
+      "family": "LIBREBOOKING_MAINTENANCE",
+      "coverage": "COMPLETE",
+      "assessed_scope": "Interval/custom termination exceptions, blackout conflict modes, admin update and test limits examined; history retention remains unproved, not presumed lost.",
+      "primary_source_ids": [
+        "P17",
+        "P20"
+      ],
+      "result": "No material unsupported final claim found in stated scope"
+    },
+    {
+      "family": "LIBREBOOKING_HISTORY",
+      "coverage": "COMPLETE",
+      "assessed_scope": "Branch/version-specific recurrence reports, explicit non-runtime reporter caveats, fixed end-date service/UI patches and regression tests examined.",
+      "primary_source_ids": [
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "result": "No material unsupported final claim found in stated scope"
+    },
+    {
+      "family": "LIBREBOOKING_RELEASE",
+      "coverage": "COMPLETE",
+      "assessed_scope": "Pinned/rolling identities, exact support/security dates, advisory prerequisites and fixed migration stub examined; upcoming issue details not invented.",
+      "primary_source_ids": [
+        "P01",
+        "P08",
+        "P09",
+        "P14",
+        "P23"
+      ],
+      "result": "No material unsupported final claim found in stated scope"
+    },
+    {
+      "family": "MRBS_MODEL",
+      "coverage": "COMPLETE",
+      "assessed_scope": "One-room schema distinguished from native multi-room UI/submission; local authentication/private fields and workshop fit limitations examined.",
+      "primary_source_ids": [
+        "P10",
+        "P15",
+        "P25",
+        "P28",
+        "P29"
+      ],
+      "result": "MATERIAL_DEFECT T-M01"
+    },
+    {
+      "family": "MRBS_CONCURRENCY",
+      "coverage": "COMPLETE",
+      "assessed_scope": "Existing multi-room transaction/caller, normal pre-write conflict checks, room permission filtering, recurrence skip and per-user policy conditions examined; no runtime isolation guarantee claimed.",
+      "primary_source_ids": [
+        "P30",
+        "P31",
+        "P32",
+        "P33"
+      ],
+      "result": "MATERIAL_DEFECT T-M01"
+    },
+    {
+      "family": "MRBS_HISTORY",
+      "coverage": "COMPLETE",
+      "assessed_scope": "Released tag vs main, #3965 report/fix/closure and security summaries examined; no universal bug-free release claim.",
+      "primary_source_ids": [
+        "P11",
+        "P12",
+        "P27"
+      ],
+      "result": "No material unsupported final claim found in stated scope"
+    }
+  ],
+  "preservation": [
+    {
+      "subject": "Original workflow/negative constraints and owner decisions",
+      "coverage": "COMPLETE",
+      "result": "Retained with no material loss"
+    },
+    {
+      "subject": "Draft to final text",
+      "coverage": "COMPLETE",
+      "result": "All substantive changes examined by within-arm diff and full text; supported alternatives/conditions/open decisions retained except stated nonmaterial limits"
+    },
+    {
+      "subject": "Source identities and conditions",
+      "coverage": "COMPLETE",
+      "result": "Every prior structured source record retained exactly in succeeding maps; no silent rebind"
+    },
+    {
+      "subject": "Discovery to final",
+      "coverage": "COMPLETE",
+      "result": "Useful mechanisms, applicability, proposals and unknowns traced; no material supported-meaning loss found"
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "C1",
+      "disposition": "AMEND",
+      "review": "Every material change records supplied reason/code; staff safety reasons required and owner free-text policy remains open."
+    },
+    {
+      "id": "C2",
+      "disposition": "AMEND",
+      "review": "Half-open intervals and explicit buffers restored from discovery into final and validation."
+    },
+    {
+      "id": "C3",
+      "disposition": "AMEND",
+      "review": "Delete/notification test is correctly limited; immutable audit history remains unproved, not declared absent."
+    },
+    {
+      "id": "C4",
+      "disposition": "UNCERTAIN / RETAIN OPEN",
+      "review": "Unknown shop/policy inputs are not invented. No criticism was rejected in this original."
+    }
+  ],
+  "rejected_criticisms": [],
+  "limitations": [
+    "COMPLETE denotes finite review of every assigned substantive document, axis, obligation and consequential source family, not exhaustive repository, source, runtime or future-release correctness.",
+    "No product was installed and no software validation was required or executed by this evaluator. Proposed tests are not passing results.",
+    "Real capacity, supervision, urgent displacement, identity/contact scope and retention remain legitimate unknown user facts.",
+    "Candidate source lookup/execution assertions cannot be independently reconstructed from the frozen indexes; native transport linkage and billing remain unknown.",
+    "MRBS transaction creation does not prove parallel-request isolation, required resource selection or unified later booking lifecycle.",
+    "Treatment’s horizon language is thinner than a full materialization/booking-horizon invariant, but the proposal does not promise bookings beyond projected maintenance; this is a nonmaterial planning limit, not proof of a runtime hole."
+  ],
+  "unassessed_required_remainder": [],
+  "outside_requested_delivery": [
+    "Future deployment, actual software concurrency/outage/restore execution, universal source correctness, unavailable private telemetry"
+  ]
+}

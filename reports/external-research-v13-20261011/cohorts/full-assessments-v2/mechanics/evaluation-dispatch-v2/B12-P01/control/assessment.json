@@ -1,0 +1,309 @@
+{
+  "schema": "er13.original_assessment.v1",
+  "block_id": "B12-P01",
+  "scope": "FULL",
+  "assigned_arm_count": 2,
+  "original_written_at_utc": "2026-10-12T02:31:41.663023+00:00",
+  "original_immutable": true,
+  "arms": [
+    {
+      "arm_id": "B12-P01-control",
+      "source_judgment": {
+        "status": "FAIL",
+        "reason": "D-C01 is a confirmed material unsupported governing source claim.",
+        "finite_assessment_not_universal_correctness": true,
+        "not_formal_recipe_qualification": true
+      },
+      "coverage": {
+        "overall": "PARTIAL",
+        "axes": [
+          {
+            "axis": 1,
+            "label": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "NO_MATERIAL_DEFECT_FOUND",
+            "note": "Complete brief and final read. Required fidelity, data hazards, selection/recovery, exports and negative constraints are substantively addressed."
+          },
+          {
+            "axis": 2,
+            "label": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "PARTIAL",
+            "judgment": "FAIL",
+            "note": "Governing sources checked; D-C01 is decisive. Optional H5P package specification remains inaccessible; no full source pass is claimed."
+          },
+          {
+            "axis": 3,
+            "label": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "PARTIAL",
+            "judgment": "MATERIAL_SOURCE_CONTEXT_DEFECT",
+            "note": "Useful alternatives/history present; D-C03 is a bounded opportunity gap. H5P package detail coverage is partial."
+          },
+          {
+            "axis": 4,
+            "label": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "NO_MATERIAL_DEFECT_FOUND",
+            "note": "Every material exact-plan choice and every supplied critic finding reviewed. No rejected critic finding in this final; accepted changes checked independently."
+          },
+          {
+            "axis": 5,
+            "label": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "NO_MATERIAL_DEFECT_FOUND",
+            "note": "Supported draft meaning retained; metadata/no-paid-cloud omissions repaired. D-C01 propagates an unsupported source claim rather than losing supported meaning."
+          },
+          {
+            "axis": 6,
+            "label": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "NO_MATERIAL_DEFECT_FOUND",
+            "note": "Future tests have meaningful preservation, resource/path, recovery and UI oracles. Product execution is not claimed or required; small-check receipts support only their narrow domain."
+          }
+        ],
+        "detailed_record": "coverage.json",
+        "access_and_scope_limits_explicit": true
+      },
+      "defects": {
+        "material_count": 1,
+        "nonmaterial_count": 3,
+        "ids": [
+          "D-C01",
+          "D-C02",
+          "D-C03",
+          "D-C04"
+        ],
+        "detailed_record": "defects.json"
+      },
+      "delivery": {
+        "status": "DELIVERED",
+        "required_final_present": true,
+        "final": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-control/run/B12-P01-control/control/terminal-handoffs/reviser/files/final.md",
+          "bytes": 21593,
+          "sha256": "01b80f47a39609677c8acc823e1080e0e849e70d23fe33bc592ce6d34036b305"
+        },
+        "missing_required_outputs": [],
+        "complete_science_documents_read": true,
+        "delivery_is_not_source_truth_or_product_execution": true
+      },
+      "time_eligibility": {
+        "maximum_elapsed_seconds": 3600,
+        "status": "WITHIN_ORIGINAL_FULL_CEILING_ON_SUPPLIED_FROZEN_OBSERVATIONS",
+        "t0_utc": "2026-10-12T01:01:13.940Z",
+        "whole_deadline_utc": "2026-10-12T02:01:13.940Z",
+        "notification_frozen_at_utc": "2026-10-12T01:39:51.541472+00:00",
+        "frozen_science_present_before_whole_deadline": true,
+        "proxy_name": "T0 to captured final native Goal terminal",
+        "proxy_elapsed_seconds": 2289.06,
+        "proxy_is_not_scientific_last_write_or_request_to_quiet": true,
+        "scientific_last_complete_artifact_at_utc": null,
+        "request_to_quiet_final_seconds": null,
+        "actual_provider_start_finish_at_utc": null,
+        "clock_corrections_applied": false,
+        "stages": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T01:01:14.889Z",
+            "request_at_utc": "2026-10-12T01:01:14.889Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T01:01:15.659Z",
+            "original_deadline_utc": "2026-10-12T01:31:14.889Z",
+            "native_activation_utc": "2026-10-12T01:01:40+00:00",
+            "native_terminal_utc": "2026-10-12T01:14:48+00:00",
+            "native_interval_seconds": 788,
+            "native_reported_elapsed_seconds": 787,
+            "prepare_to_native_terminal_seconds": 813.111,
+            "native_terminal_within_stage_deadline": true,
+            "capture_statuses": [
+              "active",
+              "active",
+              "complete"
+            ],
+            "exact_frozen_objective_matches": true,
+            "same_birth_and_objective_across_captures": true,
+            "actual_task_terminal_status": "completed",
+            "pending_children_reported": false,
+            "manifest_native_lifecycle_qualified": false,
+            "manifest_science_qualified": false,
+            "receipt_hashes": {
+              "native-goal-create.json": "ad2365ba6c2702be4bcaced9c2e6dcc0cfc551c2b52bafd27a47f5e0948e8d70",
+              "native-goal-active.json": "ad2365ba6c2702be4bcaced9c2e6dcc0cfc551c2b52bafd27a47f5e0948e8d70",
+              "native-goal-terminal.json": "540908ae60de85bac75e48b930c146b203915ca88a144e570197eaaffc72336f",
+              "eval_status": "166f18252eb89cb300cf576e842cdb6f534355d2ab0b5520c8dd830173193d9a"
+            },
+            "receipt_locations": {
+              "native-goal-create.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-control/run/B12-P01-control/control/terminal-handoffs/investigator/files/native-goal-create.json",
+              "native-goal-active.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-control/run/B12-P01-control/control/terminal-handoffs/investigator/files/native-goal-active.json",
+              "native-goal-terminal.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-control/run/B12-P01-control/control/terminal-handoffs/investigator/files/native-goal-terminal.json",
+              "eval_status": "ER13_RUNTIME/state/dispatcher-v1/arms/B12-P01-control/investigator-eval-ready-status.raw.json"
+            }
+          },
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T01:23:37.935Z",
+            "request_at_utc": "2026-10-12T01:23:37.935Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T01:23:38.789Z",
+            "original_deadline_utc": "2026-10-12T01:35:37.935Z",
+            "native_activation_utc": "2026-10-12T01:23:48+00:00",
+            "native_terminal_utc": "2026-10-12T01:29:34+00:00",
+            "native_interval_seconds": 346,
+            "native_reported_elapsed_seconds": 346,
+            "prepare_to_native_terminal_seconds": 356.065,
+            "native_terminal_within_stage_deadline": true,
+            "capture_statuses": [
+              "active",
+              "active",
+              "complete"
+            ],
+            "exact_frozen_objective_matches": true,
+            "same_birth_and_objective_across_captures": true,
+            "actual_task_terminal_status": "completed",
+            "pending_children_reported": false,
+            "manifest_native_lifecycle_qualified": false,
+            "manifest_science_qualified": false,
+            "receipt_hashes": {
+              "native-goal-create.json": "72cb37dc4916b03845c4ce3f023ccd8f09bd691a40a11856613ada46aecfd0ce",
+              "native-goal-active.json": "72cb37dc4916b03845c4ce3f023ccd8f09bd691a40a11856613ada46aecfd0ce",
+              "native-goal-terminal.json": "899c927c8a83046f7ba16e420dda6fe2b9a5650a4915e094cefb90797e96a321",
+              "eval_status": "0ef1af654c01ad9c88461ecc84eee6f7a7f224c788326018afa09a7b8eaa1a28"
+            },
+            "receipt_locations": {
+              "native-goal-create.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-control/run/B12-P01-control/control/terminal-handoffs/critic/files/native-goal-create.json",
+              "native-goal-active.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-control/run/B12-P01-control/control/terminal-handoffs/critic/files/native-goal-active.json",
+              "native-goal-terminal.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-control/run/B12-P01-control/control/terminal-handoffs/critic/files/native-goal-terminal.json",
+              "eval_status": "ER13_RUNTIME/state/dispatcher-v1/arms/B12-P01-control/critic-eval-ready-status.raw.json"
+            }
+          },
+          {
+            "stage": "reviser",
+            "prepared_at_utc": "2026-10-12T01:31:50.613Z",
+            "request_at_utc": "2026-10-12T01:31:50.613Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T01:31:51.481Z",
+            "original_deadline_utc": "2026-10-12T01:49:50.613Z",
+            "native_activation_utc": "2026-10-12T01:32:05+00:00",
+            "native_terminal_utc": "2026-10-12T01:39:23+00:00",
+            "native_interval_seconds": 438,
+            "native_reported_elapsed_seconds": 438,
+            "prepare_to_native_terminal_seconds": 452.387,
+            "native_terminal_within_stage_deadline": true,
+            "capture_statuses": [
+              "active",
+              "active",
+              "complete"
+            ],
+            "exact_frozen_objective_matches": true,
+            "same_birth_and_objective_across_captures": true,
+            "actual_task_terminal_status": "completed",
+            "pending_children_reported": false,
+            "manifest_native_lifecycle_qualified": false,
+            "manifest_science_qualified": false,
+            "receipt_hashes": {
+              "native-goal-create.json": "a0439a27563fe9789fb88f69cdab200e63373ab22bc5a62e257521d61d89ec9c",
+              "native-goal-active.json": "a0439a27563fe9789fb88f69cdab200e63373ab22bc5a62e257521d61d89ec9c",
+              "native-goal-terminal.json": "0067630f2d986ff1c0981a162115980813b1cbe32a2907bf11d94aedd74dd765",
+              "eval_status": "8efcb92642b4533a30b9600cc88af017eda37460192a0c000d0fed31771edda9"
+            },
+            "receipt_locations": {
+              "native-goal-create.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-control/run/B12-P01-control/control/terminal-handoffs/reviser/files/native-goal-create.json",
+              "native-goal-active.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-control/run/B12-P01-control/control/terminal-handoffs/reviser/files/native-goal-active.json",
+              "native-goal-terminal.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B12-P01-control/run/B12-P01-control/control/terminal-handoffs/reviser/files/native-goal-terminal.json",
+              "eval_status": "ER13_RUNTIME/state/dispatcher-v1/arms/B12-P01-control/reviser-eval-ready-status.raw.json"
+            }
+          }
+        ]
+      },
+      "method_compliance": {
+        "coverage": "PARTIAL",
+        "status": "CAPTURED_MECHANICS_CONSISTENT_NOT_FULLY_AUTHENTICATED",
+        "recorded_topology": "sequential investigator/critic/reviser",
+        "discovery_reveal_digest_matches": true,
+        "discovery_single_use_reveal_record_present": true,
+        "complete_scientific_inputs_read": true,
+        "source_identity_preservation": "Stable IDs retained; final additions attributed separately. Nonmaterial index limit recorded for treatment.",
+        "pre_input_activation_sequence_independently_proven": null,
+        "one_goal_and_no_unobserved_contexts_independently_proven": null,
+        "no_live_candidate_files_or_held_out_cases_used_by_evaluator": true,
+        "no_extra_grader_subagents_or_goals": true,
+        "candidate_author_feedback_or_repairs": false
+      },
+      "native_identity_provenance": {
+        "coverage": "PARTIAL",
+        "status": "CAPTURE_CONSISTENT_INDEPENDENT_LINKAGE_UNKNOWN",
+        "distinct_stage_capture_identities": 3,
+        "exact_objectives_and_birth_fields_consistent": true,
+        "active_to_complete_captures_present": true,
+        "actual_stage_tasks_terminal_zero_pending": true,
+        "formal_manifest_qualification_flags_unchanged": true,
+        "native_to_task_or_session_linkage": null,
+        "independently_authenticated_native_model_identity": null,
+        "model_recorded_by_assigned_task_status": "gpt-6-luna",
+        "requested_effort_recorded": "max",
+        "effective_model_effort_tier_independently_verified": null,
+        "limitation": "Actual raw receipts are immutable custody evidence, not authenticated scientific truth or native-to-task linkage. No IDs, routing identities or transcripts published."
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL",
+        "assigned_denominator": 1,
+        "candidate_product": {
+          "native_cumulative_usage_counters_present": true,
+          "native_elapsed_counters_present": true,
+          "usage_counts_not_published_or_summed": true,
+          "active_provider_activity_seconds": null,
+          "context_occupancy_seconds": null,
+          "isolated_input_output_cached_reasoning_usage": null,
+          "subscription_consumption": null,
+          "billing": null,
+          "candidate_total_consumption": null,
+          "consumption_per_passing_final": null,
+          "passing_final_quotient_limitation": "Undefined: zero source passes."
+        },
+        "independent_evaluation": {
+          "cost_class": "independent_evaluation",
+          "separate_from_candidate_product": true,
+          "evaluator_harness_declared_model": "gpt-6.1-sol",
+          "evaluator_harness_declared_reasoning_effort": "xhigh",
+          "full_latency_seconds": null,
+          "first_observed_clock_marker_utc": "2026-10-12T02:14:17Z",
+          "marker_is_not_evaluation_start": true,
+          "resource_total": null,
+          "billing": null
+        },
+        "preparation_support_publication_root_costs": null,
+        "unknown_is_not_zero": true,
+        "native_intervals_are_not_provider_activity_or_context_lifetime": true
+      },
+      "input_verification": {
+        "packet": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B12-P01.json",
+        "packet_sha256": "423ea2edfe6590b34091ddfff111c3810b21e4575765e6521022c3e9126ad30b",
+        "contract": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+        "contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+        "verification_receipt": "ER13_RUNTIME/state/eval-coordinator-v2/B12-P01-input-verification.json",
+        "verification_receipt_sha256": "c348bdb6efd562050076028e1118adfcf60e31e111df0955c4e3b9c9b6aeb57d",
+        "exact_allowed_paths_verified_pair": 103,
+        "exact_allowed_paths_verified_this_arm": 50,
+        "initial_and_prewrite_digest_checks_passed": true,
+        "supplement_manifest_sha256": "a21503c4ee7d41b65222c8b63d2e5549c5168336e3fe7fa6a969eeb9cc3daa26",
+        "stage_manifest_sha256": {
+          "investigator": "b9181ed3645456f7222d472ed362cfcea59f16c86701dd29c1a8b18ce1018bef",
+          "critic": "0f604fa2c5e658461e1a3cf676f39f912dd80e7233ef0932bc4ba0ea2bd2bc01",
+          "reviser": "bc2fd30c0696f3cc101442e54838d0b9198f1d951d299661652ac0c80a39f53d"
+        },
+        "brief_sha256": "d2802abfc985d091530324ffbae59109b57f76a25ea725b33b8539fe6981d946",
+        "exact_plan_sha256": "16b9632d851af40d2759e5c686525183f38a1e24989ffc6597cb35aeabaf7247",
+        "workspace_AGENTS_read": true,
+        "handoff_sections_read": [
+          10,
+          12
+        ],
+        "snapshot_corridor_only": true
+      },
+      "independence": {
+        "imperfect_blinding": true,
+        "reason": "Arm paths and frozen method prose disclose technique.",
+        "shared_independent_primary_research_permitted": true,
+        "candidate_author_feedback_received": false,
+        "candidate_repairs_provided": false,
+        "judgment_fixed_before_comparison": true
+      }
+    }
+  ]
+}

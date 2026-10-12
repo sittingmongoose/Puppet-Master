@@ -1,0 +1,40 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "B12-P02-control",
+  "defects": [
+    {
+      "id": "C-01",
+      "severity": "material",
+      "classification": "required omission and supported preservation loss",
+      "axes": [
+        1,
+        5
+      ],
+      "obligations": [
+        "O04",
+        "O14"
+      ],
+      "locator": {
+        "document": "reviser/final.md",
+        "lines": [
+          21,
+          31,
+          58,
+          60
+        ]
+      },
+      "predecessor_locator": {
+        "document": "investigator/discovery.md",
+        "line": 31
+      },
+      "finding": "The final allows a documented weaker metadata policy for mutable linked files while retaining the never-stale current-preview invariant. It does not require that the keyed revision/digest describes the bytes the handler consumed. A read-only capability is not an immutable snapshot. The discovery explicitly proposed rendering an immutable local snapshot and checking currentness; the final reduces that safeguard to an owner cost choice.",
+      "consequence": "An external file can change during parsing and return to its initial content before pre-publication checks. Pre/post digests can match while the rendered bytes depict the intermediate revision; coarse metadata is weaker still. A successful result can then be accepted under the wrong revision. This is a planning-contract counterexample, not an executed product failure.",
+      "independent_primary_ids": [
+        "E04"
+      ],
+      "counterevidence_considered": "Immutable app-owned input, strong trustworthy library revisions, generation gates and metadata collision warnings are present. They do not close the explicitly allowed mutable/weaker-policy branch. Unknown library semantics and snapshot cost may remain open, but cannot weaken the required display invariant.",
+      "confidence": "HIGH"
+    }
+  ],
+  "source_pass_rescued_by_delivery_or_hashes": false
+}

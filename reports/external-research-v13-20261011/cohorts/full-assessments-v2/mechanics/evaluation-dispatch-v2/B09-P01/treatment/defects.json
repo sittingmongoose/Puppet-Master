@@ -1,0 +1,78 @@
+{
+  "arm_id": "B09-P01-treatment",
+  "defects": [
+    {
+      "defect_id": "T-01",
+      "classification": "material incomplete",
+      "axes": [
+        "A2",
+        "A3"
+      ],
+      "confidence": {
+        "primary_facts": "high",
+        "materiality": "medium: explicit research-depth obligation"
+      },
+      "title": "Consequential ordinary checkout/check-in caller and test research deferred to future validation",
+      "primary_evidence_ids": [
+        "sn-api-context",
+        "sn-checkout-context",
+        "sn-checkin-context",
+        "sn-permission",
+        "sn-ui-test",
+        "sn-api-test"
+      ],
+      "primary_urls": [
+        "https://github.com/grokability/snipe-it/blob/v8.8.0/app/Http/Controllers/Api/AssetsController.php",
+        "https://github.com/grokability/snipe-it/blob/v8.8.0/app/Http/Controllers/Assets/AssetCheckoutController.php",
+        "https://github.com/grokability/snipe-it/blob/v8.8.0/app/Http/Controllers/Assets/AssetCheckinController.php",
+        "https://github.com/grokability/snipe-it/blob/v8.8.0/tests/Feature/Checkins/Ui/AssetCheckinTest.php"
+      ],
+      "evidence_context": "API checkout lines 1444–1462 and UI store 172–190 lock and recheck inside transactions. API checkin 1480–1564 and UI store 95–237 disassociate the assignee and accept status_id before saving and emitting a check-in event. The inherited checkin permission policy checks permission, not availableForCheckIn(). UI tests include an already non-deployable check-in page and submission to a non-deployable status.",
+      "why_material": "The brief explicitly requires consequential primary code/caller/test research. These available mechanisms directly affect the two-volunteer and maintenance-hold comparison. Leaving them entirely for later product tests omits obtainable research, even though uncertainty is honestly declared. No installation or future execution is required to inspect them.",
+      "boundary": "This does not prove complete atomic history or return safety, all button paths, race freedom, or executed test success; those remain separate validation questions.",
+      "candidate_locators": [
+        "final Snipe-IT recommendation: maintenance-return behavior not established",
+        "reviser source-map S5 governing condition: complete API/UI transaction behavior requires separate testing",
+        "final concurrency and return validation proposals"
+      ],
+      "arm_specific_context": "Treatment does useful SpaceWorks history research and corrects the bad release attribution, but its Snipe-IT research still ends at the Asset model and leaves ordinary consequential caller/test mechanisms unexamined."
+    }
+  ],
+  "nonmaterial_limits": [
+    {
+      "id": "N-version",
+      "context": "Moving documentation and unresolved code-to-release mapping remain bounded; treatment Koha /24.05/ identity is not independently proven. No claim of absent historical feature fabricated."
+    }
+  ],
+  "original_investigator_or_critic_outcomes": [
+    {
+      "id": "F1",
+      "independent_disposition": "Accept final correction; exact v8.7.2 release evidence supports rejecting the old attribution. Original draft error is preserved as an original outcome, not counted as a surviving final error."
+    },
+    {
+      "id": "F2",
+      "independent_disposition": "Reminder scheduling, reviewed-request box QR/evidence rules, asset_units and repair permissions/tracking conditions corroborated. Mutable docs and unknown commit-to-release mapping remain explicit."
+    },
+    {
+      "id": "F3",
+      "independent_disposition": "Appropriate universal correction-preservation gate; reviewed logs/notes/repair audit do not prove complete correction semantics. Available caller/event research nevertheless remains required where consequential."
+    },
+    {
+      "id": "F4",
+      "independent_disposition": "Search attributes support the narrow model observation; no proof of alias/fuzzy feature absence is claimed. Keeping selected-build acceptance as open is appropriate."
+    },
+    {
+      "id": "F5",
+      "independent_disposition": "Patched SQLite condition is correctly retained, including rare concurrency/checkpoint condition and backports. No test execution is inferred."
+    },
+    {
+      "id": "F6",
+      "independent_disposition": "Identity uniqueness and active-loan uniqueness distinguished correctly; non-null key, partial index and transactional recheck are proposed design, not implemented proof."
+    },
+    {
+      "id": "F7",
+      "independent_disposition": "Owner policy facts remain open appropriately; no invented user policy or product decision."
+    }
+  ],
+  "no_repairs_or_regrade": true
+}

@@ -1,0 +1,182 @@
+{
+  "arm_id": "B07-P02-treatment",
+  "shared_evidence": "../evidence/primary-source-observations.json",
+  "shared_evidence_sha256": "1232f9bca4358a7aaed9f358d5c41840fba693dbda69e329cb7633f4db9d7916",
+  "sources": [
+    {
+      "id": "P01",
+      "exact_url": "https://www.w3.org/TR/media-frags/",
+      "version_context": "REC 2012-09-25",
+      "locator": "4.2.1 and 6.1.1"
+    },
+    {
+      "id": "P02",
+      "exact_url": "https://www.w3.org/TR/annotation-model/",
+      "version_context": "REC 2017-02-23",
+      "locator": "4.2.1, 4.2.4, 4.2.5, State"
+    },
+    {
+      "id": "P03",
+      "exact_url": "https://html.spec.whatwg.org/multipage/media.html",
+      "version_context": "Living Standard",
+      "locator": "Media timeline, currentTime, duration and seeking algorithm"
+    },
+    {
+      "id": "P04",
+      "exact_url": "https://www.w3.org/WAI/ARIA/apg/patterns/slider/",
+      "version_context": "Live informative APG",
+      "locator": "Keyboard Interaction, roles and touch AT warning"
+    },
+    {
+      "id": "P05",
+      "exact_url": "https://www.w3.org/WAI/ARIA/apg/patterns/slider/examples/slider-seek/",
+      "version_context": "Page updated 2026-01-20",
+      "locator": "Accessibility Features and aria-valuetext"
+    },
+    {
+      "id": "P06",
+      "exact_url": "https://www.w3.org/TR/WCAG22/",
+      "version_context": "REC 2024-12-12 at rolling URL",
+      "locator": "1.4.1, 2.1.1, 2.4.3, 2.4.7, 4.1.3"
+    },
+    {
+      "id": "P07",
+      "exact_url": "https://www.w3.org/TR/wai-aria-1.2/",
+      "version_context": "REC WAI-ARIA 1.2",
+      "locator": "status role"
+    },
+    {
+      "id": "P08",
+      "exact_url": "https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA22",
+      "version_context": "Live WAI technique",
+      "locator": "Description and examples"
+    },
+    {
+      "id": "P09",
+      "exact_url": "https://learn.microsoft.com/en-us/windows/win32/api/uiautomationcoreapi/nf-uiautomationcoreapi-uiaraisenotificationevent",
+      "version_context": "Article updated 2024-02-22",
+      "locator": "Parameters, remarks and requirements"
+    },
+    {
+      "id": "P10",
+      "exact_url": "https://learn.microsoft.com/en-us/windows/win32/api/uiautomationcore/ne-uiautomationcore-notificationprocessing",
+      "version_context": "Live Windows API documentation",
+      "locator": "Enumeration values"
+    },
+    {
+      "id": "P11",
+      "exact_url": "https://developer.apple.com/tutorials/data/documentation/appkit/nsaccessibility-swift.struct/notification/announcementrequested.json",
+      "version_context": "AppKit API; macOS introduced 10.7",
+      "locator": "Abstract and Discussion"
+    },
+    {
+      "id": "P16",
+      "exact_url": "https://raw.githubusercontent.com/bbc/peaks.js/v3.4.2/doc/API.md",
+      "version_context": "v3.4.2 / 8144d61",
+      "locator": "Configuration, Player customization and Segments API"
+    },
+    {
+      "id": "P17",
+      "exact_url": "https://raw.githubusercontent.com/bbc/peaks.js/v3.4.2/demo/index.html",
+      "version_context": "v3.4.2 / 8144d61",
+      "locator": "renderSegments and init"
+    },
+    {
+      "id": "P18",
+      "exact_url": "https://raw.githubusercontent.com/bbc/peaks.js/v3.4.2/package.json",
+      "version_context": "v3.4.2 / 8144d61",
+      "locator": "scripts and dependencies"
+    },
+    {
+      "id": "P19",
+      "exact_url": "https://github.com/bbc/peaks.js/releases",
+      "version_context": "Dated GitHub release view",
+      "locator": "v3.4.2 and v4.0.0-beta.2"
+    },
+    {
+      "id": "P20",
+      "exact_url": "https://github.com/bbc/peaks.js",
+      "version_context": "Dated repository view",
+      "locator": "README project status"
+    },
+    {
+      "id": "P21",
+      "exact_url": "https://github.com/bbc/peaks.js/issues/573",
+      "version_context": "Open report dated 2026-07-30",
+      "locator": "Description"
+    },
+    {
+      "id": "P23",
+      "exact_url": "https://raw.githubusercontent.com/katspaugh/wavesurfer.js/8.0.2/src/plugins/regions.ts",
+      "version_context": "8.0.2 / f25d7a1 as candidate pin",
+      "locator": "RegionParams, constructor and pointer streams"
+    },
+    {
+      "id": "P24",
+      "exact_url": "https://raw.githubusercontent.com/katspaugh/wavesurfer.js/8.0.2/cypress/e2e/regions.cy.js",
+      "version_context": "8.0.2 tag",
+      "locator": "Suite setup and individual test definitions"
+    },
+    {
+      "id": "P25",
+      "exact_url": "https://raw.githubusercontent.com/katspaugh/wavesurfer.js/8.0.2/README.md",
+      "version_context": "8.0.2 tag",
+      "locator": "Large-file, VBR and stereo FAQ"
+    },
+    {
+      "id": "P26",
+      "exact_url": "https://raw.githubusercontent.com/katspaugh/wavesurfer.js/8.0.0/src/player.ts",
+      "version_context": "8.0.0 tag",
+      "locator": "applyPendingTime, setTime and getCurrentTime"
+    },
+    {
+      "id": "P29",
+      "exact_url": "https://github.com/katspaugh/wavesurfer.js/discussions/2737",
+      "version_context": "2023 report; 6.6.1",
+      "locator": "Report and maintainer/reporter replies"
+    },
+    {
+      "id": "P30",
+      "exact_url": "https://manual.audacityteam.org/man/label_tracks.html",
+      "version_context": "Rolling development manual",
+      "locator": "Navigation, Label Editor, limits and multiple audio export"
+    },
+    {
+      "id": "P31",
+      "exact_url": "https://manual.audacityteam.org/man/importing_and_exporting_labels.html",
+      "version_context": "Rolling development manual",
+      "locator": "Standard format and Exporting selected label tracks"
+    },
+    {
+      "id": "P32",
+      "exact_url": "https://raw.githubusercontent.com/audacity/audacity-support/main/basics/keyboard-shortcuts.md",
+      "version_context": "Unpinned main snapshot",
+      "locator": "Edit Labels and playback selection boundaries"
+    },
+    {
+      "id": "P33",
+      "exact_url": "https://github.com/audacity/audacity/issues/5690",
+      "version_context": "Open report; 3.4.x / 3.5 alpha",
+      "locator": "Reproduction, versions and related context"
+    },
+    {
+      "id": "P34",
+      "exact_url": "https://www.mpi.nl/tools/elan/docs/manual/Sec_Changing_the_boundaries_of_an_existing_selection.html",
+      "version_context": "Unversioned official manual",
+      "locator": "Typed boundaries and tier-dependent edits"
+    },
+    {
+      "id": "P35",
+      "exact_url": "https://www.mpi.nl/tools/elan/EAF_Annotation_Format_3.0_and_ELAN.pdf",
+      "version_context": "EAF 3.0; 18 pages",
+      "locator": "Printed pages 3 and 11 / PDF indices 2 and 10"
+    }
+  ],
+  "assessment_scope": "See source family coverage; shared index preserves observations, retrieval hashes/access/limits. No candidate source ID rebound.",
+  "retrieval_limits": [
+    "Audacity metadata refetch P30/P31 failed; independent web-tool pages read successfully.",
+    "Apple JS shell did not expose prose; official documentation JSON supplied direct governing text.",
+    "ELAN manual web tool intermittently errored; direct official HTTP text was retrieved."
+  ],
+  "license_notice": "No upstream source corpus/code reproduced; original source license notices remain at linked authoritative locations."
+}

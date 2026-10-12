@@ -1,0 +1,69 @@
+{
+  "arm_id": "B11-P01-treatment",
+  "kind": "Compact independent context and deterministic custody witnesses; not candidate product validation",
+  "manual_release": {
+    "url": "https://mirrors.edge.kernel.org/pub/linux/docs/man-pages/man-pages-6.19.tar.gz",
+    "sha256": "fc0c620f07b4eba8ede128fbc267db5ebb4a67bab1aca3b01e5734956baf5572",
+    "selected_members": {
+      "man/man7/inode.7": "936e9a2597c211f0135427ce8d8e63ca060a55ef95f41e501fd24aa04e70695b",
+      "man/man2/open_by_handle_at.2": "ae863c15f0a1e9f20c31fd73e161f7879b0d999e03b23f751b7cfb86b22b341e",
+      "man/man3/realpath.3": "8bb26a291b0fecca59d06ecbeabbe72991f88fe63e5cd6a5c6ab2378981d767f",
+      "man/man7/inotify.7": "f202ba56f767dad628318bd0a77be861b4f04dea43c00b903396a04b347a7d42"
+    },
+    "inspection": "Only exact relevant member contents read; nothing executed or installed.",
+    "license": "Linux-man-pages-copyleft; copyright respective authors and Linux man-pages project"
+  },
+  "strict_source_map_validation": {
+    "status": "INVALID",
+    "errors": [
+      {
+        "stage": "reviser",
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-treatment/run/B11-P01-treatment/control/terminal-handoffs/reviser/files/source-map.json",
+        "error": "Extra data",
+        "line": 438,
+        "column": 2,
+        "character_offset": 34629,
+        "trailing_hex": "5c6e"
+      }
+    ],
+    "bytes_not_modified": true
+  },
+  "witnesses": [
+    {
+      "id": "W-T-JSON",
+      "input_sha256": "a258c73f63f4e440d38fe21345ae5dfc2b1d040fa9dba3bfd68c665da279d3bf",
+      "strict_error": {
+        "stage": "reviser",
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-treatment/run/B11-P01-treatment/control/terminal-handoffs/reviser/files/source-map.json",
+        "error": "Extra data",
+        "line": 438,
+        "column": 2,
+        "character_offset": 34629,
+        "trailing_hex": "5c6e"
+      },
+      "prefix_records_inspected": 34,
+      "interpretation": "Non-mutating prefix decoding enabled content review only; original format judgment remains failed."
+    },
+    {
+      "id": "W-T-REVEAL",
+      "discovery_sha256": "8ffec565b010559851db9641306940a79e425c011fc9a08f871baad6b9d8e60a",
+      "reveal_utc": "2026-10-12T01:09:41.364Z",
+      "discovery_contains_pivot_table": true,
+      "source_map_later_sources": [
+        "S15",
+        "S16",
+        "S17",
+        "S18",
+        "S19",
+        "S20"
+      ],
+      "interpretation": "Pre-plan discovery custody matches. Detailed execution and pivot duration cannot be reconstructed from the written records."
+    },
+    {
+      "id": "W-T-SAFE-SAVE",
+      "source": "E18",
+      "finding": "T-D03",
+      "context": "The complete primary discussion explicitly distinguishes safe-save logical-document continuity from a copy; carried V02 retains this condition."
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "mechanism": "helpers/mechanics-v1/public_files.py explicit-list scan, private-publication-policy plus reviewed upstream exceptions",
+  "files_checked": 312,
+  "findings": [],
+  "exception_scope": "privacy-exceptions.json binds exact files and hashes",
+  "limits": "Heuristic bounded scan, no exhaustive privacy claim; final edition also rescanned after manifest generation."
+}

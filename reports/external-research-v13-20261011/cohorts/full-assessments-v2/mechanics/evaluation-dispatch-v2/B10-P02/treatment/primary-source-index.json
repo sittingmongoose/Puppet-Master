@@ -1,0 +1,390 @@
+{
+  "schema": "er13.independent-primary-index.v1",
+  "arm_id": "B10-P02-treatment",
+  "research_shared_with_assigned_pair": true,
+  "imperfect_blinding": true,
+  "sources": [
+    {
+      "id": "P04",
+      "title": "Pandoc manual",
+      "url": "https://pandoc.org/MANUAL.html",
+      "locator": "Conversion model; --track-changes; Custom Styles/Input; Accessible PDFs",
+      "version_context": "Living official guide",
+      "observation": "Lossy conversion, option-controlled style metadata, accept/reject ignoring comments, all preserving change spans; LuaLaTeX tagging has toolchain conditions; WeasyPrint support described as experimental. DOCX file import does not itself verify clipboard paste.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416864+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P06",
+      "title": "WCAG 2.2",
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "locator": "SC 1.1.1, 1.3.2, 2.1.1, 2.4.3, 4.1.2, 4.1.3",
+      "version_context": "Fixed W3C Recommendation 2024-12-12",
+      "observation": "Equivalent alternatives with defined exceptions, meaningful sequence, keyboard operation, focus order, accessible controls and status messages. No conformance claim was tested.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416869+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P07",
+      "title": "WAI images",
+      "url": "https://www.w3.org/WAI/tutorials/images/",
+      "locator": "Informative/decorative/text/complex images",
+      "version_context": "Living W3C authoring guidance",
+      "observation": "Complex instructional diagrams need full text equivalents; alternatives depend on purpose/context. Do not replace helpful diagrams by text-only output.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416875+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P10",
+      "title": "IndexedDB terminology",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Basic_Terminology",
+      "locator": "Key characteristics; Limitations",
+      "version_context": "Living developer documentation",
+      "observation": "Transactional origin-local structured data, asynchronous API, no built-in sync/full-text search; clearing can remove data.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416884+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P11",
+      "title": "Storage quotas",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+      "locator": "Origin; Best-effort/persistence; Private browsing; Eviction",
+      "version_context": "Living developer documentation",
+      "observation": "Default best-effort; persist requests differ by browser; user clearing remains possible. Partitioning exceptions exist, beyond this proposed top-level stable-origin workflow.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416887+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P13",
+      "title": "Pandoc DOCX implementation",
+      "url": "https://github.com/jgm/pandoc/blob/3.12.1/src/Text/Pandoc/Readers/Docx.hs",
+      "locator": "runStyleToTransform; resolveDependentRunStyle; parPartToInlines; runToInlines",
+      "version_context": "Release tag 3.12.1",
+      "observation": "Ext_styles controls custom attributes; native style transformations still exist. Insertion/deletion/comment handling depends on readerTrackChanges. Drawing alt/media path inspected.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416892+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P14",
+      "title": "Pandoc DOCX tests",
+      "url": "https://github.com/jgm/pandoc/blob/3.12.1/test/Tests/Readers/Docx.hs",
+      "locator": "custom styles and track changes groups",
+      "version_context": "Release tag 3.12.1",
+      "observation": "Default/+styles goldens and tracked-change cases exist. Inspected only; no converter or upstream test run.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416895+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P19",
+      "title": "Material offline",
+      "url": "https://squidfunk.github.io/mkdocs-material/plugins/offline/",
+      "locator": "How it works; Limitations",
+      "version_context": "Living docs; built-in since 9.0.0",
+      "observation": "JS index and iframe-worker permit local search; directory URLs disabled. Authors are instructed to disable Fetch-dependent versioning/instant loading; not automatic disabling of versioning. Privacy plugin bundles external assets.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416911+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P20",
+      "title": "Material offline implementation",
+      "url": "https://github.com/squidfunk/mkdocs-material/blob/9.7.7/src/plugins/offline/plugin.py",
+      "locator": "on_config; on_post_build",
+      "version_context": "Tag 9.7.7; raw upstream source inspected",
+      "observation": "Enabled plugin sets use_directory_urls false, adds shim URL, and emits JS index if JSON exists. It does not disable versioning itself.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416915+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P21",
+      "title": "Material search",
+      "url": "https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/",
+      "locator": "Configuration; Search exclusion",
+      "version_context": "Living official guide",
+      "observation": "Client-side search; explicit plugins config must re-add search; per-page exclusion supported. No built-in retired-label policy established.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416917+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P22",
+      "title": "Docusaurus versioning",
+      "url": "https://docusaurus.io/docs/versioning",
+      "locator": "Overview; current/latest; deleting versions; archival options",
+      "version_context": "Documentation labeled 3.10.2",
+      "observation": "Version snapshots/routes/labels exist; complexity warning and deletion are explicit. Offline search remains a separate requirement; archived static sites are an option.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416920+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P23",
+      "title": "H5P import/export",
+      "url": "https://h5p.org/documentation/for-authors/import-and-export",
+      "locator": "Download/upload; reuse notes",
+      "version_context": "Living guide; canonical re-open succeeded after paginated timeout",
+      "observation": "Display option gates download; article describes upload to H5P host. Package alone is not an application. Full ecosystem desktop players not exhaustively assessed.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416923+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P24",
+      "title": "H5P accessibility",
+      "url": "https://h5p.org/documentation/installation/content-type-accessibility",
+      "locator": "Content Type Accessibility",
+      "version_context": "Living guide",
+      "observation": "Per-type overview link, not blanket conformance. Linked complete type/version matrix not exhaustively assessed.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416927+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P25",
+      "title": "H5P Multi Choice #186",
+      "url": "https://github.com/h5p/h5p-multi-choice/issues/186",
+      "locator": "Sep 22 non-reproduction; Oct 9 follow-up; status",
+      "version_context": "Mutable issue",
+      "observation": "Contributor cannot reproduce with NVDA, asks browser/reader and content-type version; waits for contributor. Neither confirmed current defect nor proven absence.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416930+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P26",
+      "title": "H5P releases",
+      "url": "https://github.com/h5p/h5p-multi-choice/releases",
+      "locator": "Releases empty state",
+      "version_context": "Live page",
+      "observation": "No formal GitHub releases shown; does not mean no content-type versions/tags exist or identify installed version.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416933+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P27",
+      "title": "WordPress editor",
+      "url": "https://wordpress.org/documentation/article/wordpress-block-editor/",
+      "locator": "Blocks; Save draft; View; Publish",
+      "version_context": "Living official guide",
+      "observation": "Blocks/draft/preview/publish available; rendered fidelity is theme/content dependent and remains untested.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416937+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P28",
+      "title": "WordPress WXR",
+      "url": "https://wordpress.org/documentation/article/tools-export-screen/",
+      "locator": "Export",
+      "version_context": "Living official guide",
+      "observation": "XML exports content for WordPress import, not a standalone offline handbook or full media/theme backup.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416940+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P29",
+      "title": "GitHub review",
+      "url": "https://docs.github.com/en/pull-requests/get-started/reviewing-pull-requests-quickstart",
+      "locator": "Submitting review",
+      "version_context": "Living official guide",
+      "observation": "Comment/approve/request changes exist; mandatory release enforcement is a separate repository-policy choice.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416942+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P30",
+      "title": "SQLite transactions",
+      "url": "https://www.sqlite.org/transactional.html",
+      "locator": "ACID; regression-test statement",
+      "version_context": "Official unversioned page",
+      "observation": "Transaction integrity is distinct from backup, sync or encryption; no native app implemented. Broader durability/filesystem exceptions not exhaustively assessed.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416945+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P31",
+      "title": "Material #8128 and fix",
+      "url": "https://github.com/squidfunk/mkdocs-material/issues/8128",
+      "locator": "Maintainer comments; release 9.6.11",
+      "version_context": "Issue 2025-03-31/04-01",
+      "observation": "Search.enabled=false template mismatch fixed in 64635ba; released in 9.6.11.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416948+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P32",
+      "title": "Material fix patch",
+      "url": "https://github.com/squidfunk/mkdocs-material/commit/64635ba",
+      "locator": "Two header template diffs",
+      "version_context": "Fixed commit 64635ba",
+      "observation": "Both templates condition button and search partial on config enabled flag; no test file in patch. Not evidence of absent tests elsewhere.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416950+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P33",
+      "title": "Pandoc history",
+      "url": "https://pandoc.org/releases.html",
+      "locator": "3.9.0.1; 3.9 WASM; 3.12.1",
+      "version_context": "Official release history, dated entries",
+      "observation": "Textbox/rooted-path fixes and browser WASM restrictions are documented; code not executed. Latest heading 3.12.1 dated 2026-10-07 differs from GitHub publication date context.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416953+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P34",
+      "title": "Material historical discussion",
+      "url": "https://github.com/squidfunk/mkdocs-material/discussions/8461",
+      "locator": "Initial 2025-09-25 post",
+      "version_context": "Mutable discussion with dated post",
+      "observation": "Feature freeze statement is historical; it is insufficient current lifecycle context.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416956+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P35",
+      "title": "Material 9.7.7 lifecycle",
+      "url": "https://github.com/squidfunk/mkdocs-material/releases/tag/9.7.7",
+      "locator": "Warning before Changes; public API metadata",
+      "version_context": "Published 2026-07-17; release updated 2026-07-28",
+      "observation": "Explicit lifecycle warning governs maintainability; see compact independent evidence. Release body can change; API update predates assigned candidate clocks.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416959+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P36",
+      "title": "Material successor announcement",
+      "url": "https://squidfunk.github.io/mkdocs-material/blog/2025/11/05/zensical/",
+      "locator": "Looking Ahead; compatibility",
+      "version_context": "Official dated 2025-11-05 announcement",
+      "observation": "Announces successor and at least twelve months critical/security support; migration feature parity was incomplete. Does not prove successor satisfies offline/progress requirements.",
+      "applies_to": "treatment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416961+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P38",
+      "title": "Storage authority",
+      "url": "https://storage.spec.whatwg.org/",
+      "locator": "Persistence permission; bucket mode",
+      "version_context": "Living Standard",
+      "observation": "Persistent storage requires permission; protection does not override user clearing.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416968+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P39",
+      "title": "IndexedDB authority",
+      "url": "https://w3c.github.io/IndexedDB/",
+      "locator": "Database; connections; database API",
+      "version_context": "API 3.0 living draft",
+      "observation": "Databases belong to storage keys; versioning and transactional access do not imply content/progress cross-store atomicity or synchronization.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416971+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    }
+  ],
+  "failed_lookup_notes": [
+    "H5P paginated guide fetch timed out; canonical re-open succeeded."
+  ],
+  "no_product_execution": true
+}

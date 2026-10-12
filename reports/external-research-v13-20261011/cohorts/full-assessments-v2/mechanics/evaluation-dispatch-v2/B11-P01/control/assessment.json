@@ -1,0 +1,137 @@
+{
+  "schema": "er13.original-independent-assessment.v1",
+  "arm_count": 1,
+  "arms": [
+    {
+      "arm_id": "B11-P01-control",
+      "scope": "FULL",
+      "original": true,
+      "contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+      "frozen_input_final_sha256": "476cd762e51556bae4d5dd92ade23240f4d161fa857f267653ee0f36b253527e",
+      "source_judgment": {
+        "status": "FAIL",
+        "material_source_defects": [
+          "C-D01"
+        ],
+        "basis": "A material governing WAL version/condition omission remains.",
+        "finite_assessment": true,
+        "not_universal_correctness": true,
+        "component_discovery_or_cold_pipeline_claim": "Not made; assignment is FULL. No component result or native receipt is used as proof of source truth."
+      },
+      "coverage": {
+        "overall": "COMPLETE",
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 2,
+            "coverage": "COMPLETE",
+            "judgment": "FAIL"
+          },
+          {
+            "axis": 3,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          }
+        ],
+        "details": "coverage.json"
+      },
+      "defects": {
+        "material_source": [
+          "C-D01"
+        ],
+        "delivery_failure": [],
+        "all_ids": [
+          "C-D01",
+          "C-D02",
+          "C-D03"
+        ],
+        "details": "defects.json"
+      },
+      "delivery": {
+        "status": "PASS_WITH_METADATA_LIMIT",
+        "final_present": true,
+        "all_manifest_required_scientific_outputs_present": true,
+        "all_investigator_critic_reviser_documents_read": true,
+        "additional_parallel_breadth_truth_critics": "NONE LISTED in exact packet/verified manifests; none inferred or sought",
+        "required_final_source_map_strict_json": "VALID",
+        "candidate_files_repaired": false,
+        "output_hash_custody": "MATCHED",
+        "status_is_not_source_quality": true
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_ON_FROZEN_RECORD",
+        "maximum_seconds": 3600,
+        "deadline_unchanged": true,
+        "all_artifacts_frozen_before_whole_deadline": true,
+        "stage_native_captures_on_time": true,
+        "precise_scientific_finish": "UNKNOWN",
+        "details": "timing-observations.json"
+      },
+      "method_compliance": {
+        "status": "PARTIAL_OBSERVABILITY",
+        "written_topology": "Three fresh assigned contexts; no further delegated stage listed",
+        "one_shot_reveal_hash_binding": "MATCHED",
+        "exact_plan_revealed_copy": "MATCHED_COMPLETE_ORIGINAL",
+        "native_capture_objectives_and_births": "MATCHED for all three stages",
+        "five_minute_pivot_duration": "NOT_APPLICABLE",
+        "bounded_pivot_artifact": "NOT_APPLICABLE",
+        "ordering_limit": "Control source map labels discovery pre-plan, but its common 01:14:40 access batch is after the 01:12:37 reveal. This may be later review/annotation; independent first-access ordering is UNKNOWN.",
+        "exactly_one_native_call_preinput_and_save_before_completion": "UNKNOWN beyond supplied capture/custody; no full native transcript imported",
+        "candidate_method_violations_proven_by_full_trace": "UNKNOWN",
+        "grader_compliance": "No extra subagents/Goals, canon/Git changes, held-out cases, live candidate paths, recipe selection or author feedback."
+      },
+      "native_identity_provenance": {
+        "status": "CAPTURE_MATCHED; INDEPENDENT_SESSION_LINKAGE_UNKNOWN",
+        "stages_observed": 3,
+        "same_birth_exact_objective_at_create_active_terminal": true,
+        "distinct_native_births_across_stages": true,
+        "captured_active_and_complete_responses_present": true,
+        "supplied_actual_task_statuses": "All completed; zero pending children",
+        "independent_native_to_task_authentication": "UNKNOWN",
+        "capture_hashes_prove_source_truth": false,
+        "neutral_manifest_qualification_flags": "False in original handoff manifests; these flags alone do not explain qualification or replace this independent dimensional assessment.",
+        "private_ids_or_full_native_transcripts_exported": false
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL",
+        "cost_category": "candidate_product",
+        "native_cumulative_counters": "Observed in terminal captures; values withheld from public scientific artifacts by assignment privacy rule. They are not provider billing or active-work measures.",
+        "elapsed_fields": "Actual supplied request and native epoch/counter fields recorded in timing-observations.json with provenance caveats",
+        "input_cached_output_reasoning_provider_usage": "UNKNOWN independent provider telemetry",
+        "billing_subscription_consumption": "UNKNOWN",
+        "context_occupancy_active_activity_overlap": "UNKNOWN",
+        "preparation_support_publication_costs": "UNKNOWN",
+        "failed_missing_capped_interrupted_attempts": "All assigned arms retained; no zero-time/cost success inferred for missing telemetry",
+        "independent_evaluation": "Separate category, not added to candidate product; reviewer billing and provider activity UNKNOWN",
+        "unknown_is_zero": false
+      },
+      "blinding": "IMPERFECT; technique-bearing paths/instructions/output visible",
+      "independent_evaluation": {
+        "resource_category": "independent_evaluation",
+        "first_clock_observation_utc": "2026-10-12T02:14:20+00:00",
+        "original_assessment_write_utc": "2026-10-12T02:29:57.032825+00:00",
+        "billing": "UNKNOWN"
+      },
+      "immutability": "Original grade; freeze manifest before comparison. Future schema repairs or disputes require separate records and do not rewrite this assessment."
+    }
+  ]
+}

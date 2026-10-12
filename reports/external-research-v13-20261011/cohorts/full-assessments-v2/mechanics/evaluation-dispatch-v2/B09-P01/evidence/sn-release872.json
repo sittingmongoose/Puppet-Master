@@ -1,0 +1,29 @@
+{
+  "id": "sn-release872",
+  "url": "https://api.github.com/repos/grokability/snipe-it/releases/tags/v8.7.2",
+  "resolved_url": "https://api.github.com/repos/grokability/snipe-it/releases/tags/v8.7.2",
+  "access_utc": "2026-10-12T02:01:58.283267+00:00",
+  "response_sha256": "5cf0ac9f87d0f3e51eec67d97ef79283185ba3bc527ba29d9b0d650f6b406445",
+  "response_bytes": 3761,
+  "operation": "read-only fetch",
+  "evidence": {
+    "tag_name": "v8.7.2",
+    "target_commitish": "master",
+    "published_at": "2026-08-19T21:06:58Z",
+    "selected_release_change_titles": [
+      "* API+UI: Use observers to prevent double logging on restores in https://github.com/grokability/snipe-it/pull/19500",
+      "* Custom Consumables Report: Fixed #15586 - Added custom consumables report in https://github.com/grokability/snipe-it/pull/19502",
+      "* Backup/Restore: Fixed #19506 and  #19506 - MariaDB executable/path change in https://github.com/grokability/snipe-it/pull/19507",
+      "* LDAP Wizard: Fixed #19519 - better handle mTLS in https://github.com/grokability/snipe-it/pull/19523",
+      "* Restore SSL database keys within tests in https://github.com/grokability/snipe-it/pull/19522",
+      "* Asset Checkin Notification: [FD-55583] Fix Null location bug in https://github.com/grokability/snipe-it/pull/19520",
+      "* Fixed `--force` not skipping the PHP version prompt in ldap:troubleshoot in https://github.com/grokability/snipe-it/pull/19514",
+      "* Improve Boost settings in https://github.com/grokability/snipe-it/pull/19508",
+      "* Importer: Small UI improvements, send welcome email if user created in https://github.com/grokability/snipe-it/pull/19525",
+      "* Added #10606: support shift-click checkbox range selection in https://github.com/grokability/snipe-it/pull/19509",
+      "* @kratos0718 made their first contribution in https://github.com/grokability/snipe-it/pull/19514",
+      "* @DanielDavis05 made their first contribution in https://github.com/grokability/snipe-it/pull/19509"
+    ]
+  },
+  "extraction_context": "Complete displayed v8.7.2 change list; surrounding greeting/contributors omitted. Original response digest retained."
+}

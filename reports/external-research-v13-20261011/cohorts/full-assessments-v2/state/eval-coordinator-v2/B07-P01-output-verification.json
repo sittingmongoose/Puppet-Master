@@ -1,0 +1,492 @@
+{
+  "block_id": "B07-P01",
+  "scope": "FULL",
+  "originals": [
+    {
+      "arm_id": "B07-P01-control",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/manifest.json",
+      "manifest_sha256": "9e2287d35f9ae32bf8172842b225abc1812b2494fe2bf0ed655a62ff5236079a",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/assessment.json",
+      "assessment_sha256": "5714a2f2d3bc2ccca0e13faa72a5d0fb9ea28a94e2e0ae0d79e0814946c99139",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        {
+          "axis": 1,
+          "name": "Material original obligations and negative constraints",
+          "coverage": "COMPLETE",
+          "judgment": "FAIL",
+          "basis": "Material integration omission CTRL-D01; all negative constraints otherwise present as requirements."
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "COMPLETE",
+          "judgment": "FAIL",
+          "basis": "CTRL-D02 misdefines DuckDB sampling after false source correction. Other declared parser, standards and conditional persistence claims checked."
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "CSVW, Rust/Python/DuckDB and conditional COPY/SQLite remain feasible alternatives. Upstream code/tests and relevant open-issue context checked; none treated as app validation."
+        },
+        {
+          "axis": 4,
+          "name": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "COMPLETE",
+          "judgment": "FAIL",
+          "basis": "All exact plan meanings and F1-F4 dispositions examined. F1 acceptance is a false correction; F2 version-matrix expansion and F3/F4 uncertainty are valid."
+        },
+        {
+          "axis": 5,
+          "name": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "COMPLETE",
+          "judgment": "FAIL",
+          "basis": "CTRL-D01 loses supported staged integration and CTRL-D02 damages supported discovery meaning. Other substantive mechanisms/alternatives preserved."
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "P14 and P13 provide broad proposed safety/recovery/capacity checks with outcomes; executed research remains distinct from unrun validation. Missing integration sequence is recorded on axes 1/5."
+        }
+      ],
+      "delivery": {
+        "judgment": "DELIVERED",
+        "final_present": true,
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/control/terminal-handoffs/reviser/files/final.md",
+        "final_bytes": 26435,
+        "final_sha256": "6fefd1d4364ee5ec2e96b0704f04eef81f7b61e96a9df862a7b7679970aa1a1d",
+        "all_manifest_scientific_documents_read": true,
+        "all_manifest_file_hashes_verified": true,
+        "assigned_actual_stages": 3,
+        "missing_finals": 0,
+        "notified_failure_records": [],
+        "terminal_zero_pending": true,
+        "artifact_last_complete_write_utc": "UNKNOWN; filesystem mtime not used as historical evidence",
+        "delivery_quiet_timestamp": "UNKNOWN; status capture has no actual terminal event timestamp"
+      },
+      "time_eligibility": {
+        "judgment": "ELIGIBLE_FULL_ON_FROZEN_ENVELOPE",
+        "maximum_elapsed_seconds": 3600,
+        "t0_utc": "2026-10-12T00:36:56.349Z",
+        "whole_deadline_utc": "2026-10-12T01:36:56.349Z",
+        "packet_frozen_at_utc": "2026-10-12T01:32:34.302917+00:00",
+        "freeze_upper_bound_elapsed_seconds": 3337.954,
+        "final_native_completion_proxy_utc": "2026-10-12T01:31:08+00:00",
+        "t0_to_final_native_proxy_seconds": 3251.651,
+        "proxy_definition": "T0 to reviser native terminal updatedAt; this is not the request-to-quiet terminal-task or last scientific artifact timestamp. All completed frozen outputs/statuses existed before the whole deadline.",
+        "stage_deadline_observation": "Every native terminal receipt timestamp precedes its unchanged stage deadline. Exact scientific write/actual task quiet by stage deadline remains UNKNOWN.",
+        "stage_boundaries": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T00:36:57.610Z",
+            "requested_at_utc": "2026-10-12T00:36:57.610Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T00:36:58.420Z",
+            "stage_deadline_utc": "2026-10-12T01:06:57.610Z",
+            "native_created_at_utc": "2026-10-12T00:37:13+00:00",
+            "native_terminal_updated_at_utc": "2026-10-12T00:54:45+00:00",
+            "native_time_used_seconds_reported": 1051,
+            "native_cumulative_token_counter_reported": 212089,
+            "token_counter_semantics": "Raw numeric native Goal counter only; not decomposed provider tokens, subscription or billing. Do not add to overlapping provider counters. No authentication token or private route identity retained.",
+            "capture_identity_birth_objective_match": true,
+            "activation_status": "active",
+            "native_terminal_status": "complete",
+            "t3_terminal_status": "completed",
+            "pending_child_runs": false,
+            "stage_artifact_last_write_utc": null,
+            "provider_queue_start_finish_utc": null,
+            "native_capture_evidence": [
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/control/terminal-handoffs/investigator/files/native-goal-create.json",
+                "sha256": "0a583fc0b25d80ba4720943e33ba52465d702fdbc8a47643efb5605688e1e84b"
+              },
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/control/terminal-handoffs/investigator/files/native-goal-active.json",
+                "sha256": "0a583fc0b25d80ba4720943e33ba52465d702fdbc8a47643efb5605688e1e84b"
+              },
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/control/terminal-handoffs/investigator/files/native-goal-terminal.json",
+                "sha256": "07cb2898f42c6cc816595749e506d5384da2283bb43a90e55348b4b817e22eda"
+              }
+            ],
+            "actual_task_status_evidence": {
+              "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B07-P01-control/investigator-eval-ready-status.raw.json",
+              "sha256": "7ac359bde7c35421f65c3089ce8fed2e6d31105fd4d13c90895f3c26fe9f90ef"
+            }
+          },
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T01:07:57.724Z",
+            "requested_at_utc": "2026-10-12T01:07:57.724Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T01:07:58.972Z",
+            "stage_deadline_utc": "2026-10-12T01:19:57.724Z",
+            "native_created_at_utc": "2026-10-12T01:08:17+00:00",
+            "native_terminal_updated_at_utc": "2026-10-12T01:16:35+00:00",
+            "native_time_used_seconds_reported": 498,
+            "native_cumulative_token_counter_reported": 97409,
+            "token_counter_semantics": "Raw numeric native Goal counter only; not decomposed provider tokens, subscription or billing. Do not add to overlapping provider counters. No authentication token or private route identity retained.",
+            "capture_identity_birth_objective_match": true,
+            "activation_status": "active",
+            "native_terminal_status": "complete",
+            "t3_terminal_status": "completed",
+            "pending_child_runs": false,
+            "stage_artifact_last_write_utc": null,
+            "provider_queue_start_finish_utc": null,
+            "native_capture_evidence": [
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/control/terminal-handoffs/critic/files/native-goal-create.json",
+                "sha256": "0ebe18c4abc2e32a2b43004745f2d1eb09b429d8fbfb0bf6a93dda0ff3011350"
+              },
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/control/terminal-handoffs/critic/files/native-goal-active.json",
+                "sha256": "0ebe18c4abc2e32a2b43004745f2d1eb09b429d8fbfb0bf6a93dda0ff3011350"
+              },
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/control/terminal-handoffs/critic/files/native-goal-terminal.json",
+                "sha256": "68e993b06ab349fb9169ab077db0a5adb701d5d2145e0d605a17d7c753e8fdb3"
+              }
+            ],
+            "actual_task_status_evidence": {
+              "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B07-P01-control/critic-eval-ready-status.raw.json",
+              "sha256": "d58f6b2ad856584d15076e3974991847520a1a15053afc18c8aa1b6f1429766f"
+            }
+          },
+          {
+            "stage": "reviser",
+            "prepared_at_utc": "2026-10-12T01:23:16.140Z",
+            "requested_at_utc": "2026-10-12T01:23:16.140Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T01:23:16.958Z",
+            "stage_deadline_utc": "2026-10-12T01:36:56.349Z",
+            "native_created_at_utc": "2026-10-12T01:23:41+00:00",
+            "native_terminal_updated_at_utc": "2026-10-12T01:31:08+00:00",
+            "native_time_used_seconds_reported": 446,
+            "native_cumulative_token_counter_reported": 110246,
+            "token_counter_semantics": "Raw numeric native Goal counter only; not decomposed provider tokens, subscription or billing. Do not add to overlapping provider counters. No authentication token or private route identity retained.",
+            "capture_identity_birth_objective_match": true,
+            "activation_status": "active",
+            "native_terminal_status": "complete",
+            "t3_terminal_status": "completed",
+            "pending_child_runs": false,
+            "stage_artifact_last_write_utc": null,
+            "provider_queue_start_finish_utc": null,
+            "native_capture_evidence": [
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/control/terminal-handoffs/reviser/files/native-goal-create.json",
+                "sha256": "04495c28130fef77d33e0efdba72b8633a45b59ca4446b0d0b72eb0774121150"
+              },
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/control/terminal-handoffs/reviser/files/native-goal-active.json",
+                "sha256": "04495c28130fef77d33e0efdba72b8633a45b59ca4446b0d0b72eb0774121150"
+              },
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-control/run/B07-P01-control/control/terminal-handoffs/reviser/files/native-goal-terminal.json",
+                "sha256": "3fe0f5ffe51ff147e2f458a72d0bb074767484450959c88d0682f1272d726889"
+              }
+            ],
+            "actual_task_status_evidence": {
+              "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B07-P01-control/reviser-eval-ready-status.raw.json",
+              "sha256": "22b1a4675aafb0b2d999f812ac594146ef470ee4cd250085ee955b351cc5d541"
+            }
+          }
+        ],
+        "interstage_proxy_gaps": [
+          {
+            "from_stage": "investigator",
+            "to_stage": "critic",
+            "terminal_native_to_next_request_seconds": 792.724,
+            "interpretation": "Envelope gap only; no inference about root waiting, actual provider activity or billing."
+          },
+          {
+            "from_stage": "critic",
+            "to_stage": "reviser",
+            "terminal_native_to_next_request_seconds": 401.14,
+            "interpretation": "Envelope gap only; no inference about root waiting, actual provider activity or billing."
+          }
+        ],
+        "actual_admission_queue_provider_activity": "UNKNOWN beyond T0/request/dispatch/native capture boundaries; no clock adjustment"
+      },
+      "method_compliance": {
+        "judgment": "OBSERVED_ARTIFACTS_CONSISTENT; UNOBSERVABLE_ORDERING_UNKNOWN",
+        "topology": "Three sequential actual stage tasks, one captured native identity per stage. No extra/parallel critic is listed in this assignment.",
+        "plan_reveal": "Single-use receipt discovery/plan hashes match exact immutable files; frozen brief and plan match supplement hashes. Actual pre-input order/absence of unrecorded reads is not independently proved.",
+        "treatment_behavior": "No breadth delta assigned.",
+        "scope_method_preservation": "Full scientific obligations retained except recorded material final omissions/context defects; source judgment is separate from captured lifecycle consistency."
+      },
+      "native_provenance": {
+        "judgment": "CAPTURE_CONSISTENT; INDEPENDENT_NATIVE_TO_TASK_LINKAGE_UNKNOWN",
+        "same_birth_exact_objective": true,
+        "all_active_to_complete": true,
+        "observation": "Exact frozen raw capture fields agree within each stage and with frozen objective; actual T3 receipts independently report completed/zero-pending. Neither establishes source truth or proves sole fresh native execution/session linkage.",
+        "private_identity_exported": false
+      },
+      "resource_coverage": {
+        "classification": "candidate_product_observations",
+        "native_counters": "Per-stage raw numeric Goal counters recorded above; attribution/semantics limited. No aggregate billing inference or double-counted sum.",
+        "native_interval_occupancy_proxy_seconds": 1997.0,
+        "native_interval_overlap_seconds_within_arm": 0,
+        "occupancy_scope": "Union and sum coincide only for the three disjoint captured native intervals. Context residency before/after these receipts, actual started/created context occupancy and provider activity are UNKNOWN.",
+        "provider_input_cached_output_reasoning_breakdown": null,
+        "subscription_consumption": null,
+        "billing_cost": null,
+        "preparation_support_root_total_cost": null,
+        "complete_experiment_total_cost": null,
+        "unknown_is_zero": false,
+        "attempt_denominator": "Exactly three notified stages and one final in this arm; no hidden failures/extra attempts inferred absent. All-assigned notified stages retained.",
+        "independent_evaluation": "Separate activity; this grader has no Goal and no billing/token/provider activity telemetry. Start clock observed 2026-10-12T01:52:21Z; not added to candidate product cost."
+      },
+      "frozen_files_verified": 8,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    },
+    {
+      "arm_id": "B07-P01-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/treatment/manifest.json",
+      "manifest_sha256": "986bd479c60da21f49b080ff9237cb7aa549a05c3470e87882315168b294071b",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/treatment/assessment.json",
+      "assessment_sha256": "0ae464f83b4b3991cc9de32c3ff2fb885ee4e52716135fbe124bf7f16ced62ce",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        {
+          "axis": 1,
+          "name": "Material original obligations and negative constraints",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "All brief obligations/negative constraints present; local-only end-to-end gate and per-row pending recovery are explicit proposals."
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Declared consequential source facts checked against versions/code/adjacent context. Optional adapter conditions remain unverified, not claimed solved; TRT-L01 lineage error is nonmaterial."
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Rust stream, Polars dataframe, strict encoding/exact decimal, CRLF issue-to-open-fix/tests and optional Calamine release opportunity are preserved with tradeoffs."
+        },
+        {
+          "axis": 4,
+          "name": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Every critique disposition and exact plan meaning examined. C01 is valid conditional completion clarification; it does not disprove atomic whole-file import. C02 is a valid local-only gate; C03/C04/C05 and field bounds are appropriately limited."
+        },
+        {
+          "axis": 5,
+          "name": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Supported raw/normalized data, profiles, alias/reuse, fuzzy suggestions, replay warning, concurrency, staged rollout, alternatives and uncertainty remain substantive in the final. Atomic whole-batch option survives the subset recommendation."
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Proposed tests define coordinates, same-file subset resume, durable marker/write agreement, network boundary, concurrent edits, errors and 80,000-row limits; no tests or deployment claimed executed."
+        }
+      ],
+      "delivery": {
+        "judgment": "DELIVERED",
+        "final_present": true,
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/control/terminal-handoffs/reviser/files/final.md",
+        "final_bytes": 34213,
+        "final_sha256": "5474c5c8958bb5a4ba3b86d595c3954b0d00bcb45dc55cc34eff3377bb4013e5",
+        "all_manifest_scientific_documents_read": true,
+        "all_manifest_file_hashes_verified": true,
+        "assigned_actual_stages": 3,
+        "missing_finals": 0,
+        "notified_failure_records": [],
+        "terminal_zero_pending": true,
+        "artifact_last_complete_write_utc": "UNKNOWN; filesystem mtime not used as historical evidence",
+        "delivery_quiet_timestamp": "UNKNOWN; status capture has no actual terminal event timestamp"
+      },
+      "time_eligibility": {
+        "judgment": "ELIGIBLE_FULL_ON_FROZEN_ENVELOPE",
+        "maximum_elapsed_seconds": 3600,
+        "t0_utc": "2026-10-12T00:37:08.279Z",
+        "whole_deadline_utc": "2026-10-12T01:37:08.279Z",
+        "packet_frozen_at_utc": "2026-10-12T01:32:34.302917+00:00",
+        "freeze_upper_bound_elapsed_seconds": 3326.024,
+        "final_native_completion_proxy_utc": "2026-10-12T01:15:22+00:00",
+        "t0_to_final_native_proxy_seconds": 2293.721,
+        "proxy_definition": "T0 to reviser native terminal updatedAt; this is not the request-to-quiet terminal-task or last scientific artifact timestamp. All completed frozen outputs/statuses existed before the whole deadline.",
+        "stage_deadline_observation": "Every native terminal receipt timestamp precedes its unchanged stage deadline. Exact scientific write/actual task quiet by stage deadline remains UNKNOWN.",
+        "stage_boundaries": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T00:37:09.505Z",
+            "requested_at_utc": "2026-10-12T00:37:09.505Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T00:37:10.562Z",
+            "stage_deadline_utc": "2026-10-12T01:07:09.505Z",
+            "native_created_at_utc": "2026-10-12T00:37:33+00:00",
+            "native_terminal_updated_at_utc": "2026-10-12T00:49:42+00:00",
+            "native_time_used_seconds_reported": 729,
+            "native_cumulative_token_counter_reported": 211669,
+            "token_counter_semantics": "Raw numeric native Goal counter only; not decomposed provider tokens, subscription or billing. Do not add to overlapping provider counters. No authentication token or private route identity retained.",
+            "capture_identity_birth_objective_match": true,
+            "activation_status": "active",
+            "native_terminal_status": "complete",
+            "t3_terminal_status": "completed",
+            "pending_child_runs": false,
+            "stage_artifact_last_write_utc": null,
+            "provider_queue_start_finish_utc": null,
+            "native_capture_evidence": [
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/control/terminal-handoffs/investigator/files/native-goal-create.json",
+                "sha256": "06359e27939a0624bb57e5562be41da1bff17ffbe8cb66839a0b06e3da84c232"
+              },
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/control/terminal-handoffs/investigator/files/native-goal-active.json",
+                "sha256": "06359e27939a0624bb57e5562be41da1bff17ffbe8cb66839a0b06e3da84c232"
+              },
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/control/terminal-handoffs/investigator/files/native-goal-terminal.json",
+                "sha256": "fae085bf08b43a3fb17bed59a1406002dae51ed672022a1b8e5e7ffcf8a06e69"
+              }
+            ],
+            "actual_task_status_evidence": {
+              "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B07-P01-treatment/investigator-eval-ready-status.raw.json",
+              "sha256": "1f0c463ebdf9058baf38230410119360a228d0fdd52792ab7850c8e709ee186c"
+            }
+          },
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T00:56:12.161Z",
+            "requested_at_utc": "2026-10-12T00:56:12.161Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T00:56:13.018Z",
+            "stage_deadline_utc": "2026-10-12T01:08:12.161Z",
+            "native_created_at_utc": "2026-10-12T00:56:26+00:00",
+            "native_terminal_updated_at_utc": "2026-10-12T01:01:59+00:00",
+            "native_time_used_seconds_reported": 332,
+            "native_cumulative_token_counter_reported": 166015,
+            "token_counter_semantics": "Raw numeric native Goal counter only; not decomposed provider tokens, subscription or billing. Do not add to overlapping provider counters. No authentication token or private route identity retained.",
+            "capture_identity_birth_objective_match": true,
+            "activation_status": "active",
+            "native_terminal_status": "complete",
+            "t3_terminal_status": "completed",
+            "pending_child_runs": false,
+            "stage_artifact_last_write_utc": null,
+            "provider_queue_start_finish_utc": null,
+            "native_capture_evidence": [
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/control/terminal-handoffs/critic/files/native-goal-create.json",
+                "sha256": "d3a5f7260901a7cff774163afdb25516a2f7bfa954240aad0fedee5b05cca66e"
+              },
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/control/terminal-handoffs/critic/files/native-goal-active.json",
+                "sha256": "d3a5f7260901a7cff774163afdb25516a2f7bfa954240aad0fedee5b05cca66e"
+              },
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/control/terminal-handoffs/critic/files/native-goal-terminal.json",
+                "sha256": "869c9582dcf29173c706d1eccf40f32b7ff8f98dc0b78a454bf2b8e836c2a814"
+              }
+            ],
+            "actual_task_status_evidence": {
+              "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B07-P01-treatment/critic-eval-ready-status.raw.json",
+              "sha256": "cae4e6ef5486288fd6696b58ad92068acc00b24d55e49e582d5fc24e48ac7dfa"
+            }
+          },
+          {
+            "stage": "reviser",
+            "prepared_at_utc": "2026-10-12T01:07:40.370Z",
+            "requested_at_utc": "2026-10-12T01:07:40.370Z",
+            "dispatch_response_captured_at_utc": "2026-10-12T01:07:41.153Z",
+            "stage_deadline_utc": "2026-10-12T01:25:40.370Z",
+            "native_created_at_utc": "2026-10-12T01:08:12+00:00",
+            "native_terminal_updated_at_utc": "2026-10-12T01:15:22+00:00",
+            "native_time_used_seconds_reported": 429,
+            "native_cumulative_token_counter_reported": 161303,
+            "token_counter_semantics": "Raw numeric native Goal counter only; not decomposed provider tokens, subscription or billing. Do not add to overlapping provider counters. No authentication token or private route identity retained.",
+            "capture_identity_birth_objective_match": true,
+            "activation_status": "active",
+            "native_terminal_status": "complete",
+            "t3_terminal_status": "completed",
+            "pending_child_runs": false,
+            "stage_artifact_last_write_utc": null,
+            "provider_queue_start_finish_utc": null,
+            "native_capture_evidence": [
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/control/terminal-handoffs/reviser/files/native-goal-create.json",
+                "sha256": "18a174bb20f448dc2a7229e5513d49ad536f78f5536b82ae9df09c0b593e14fd"
+              },
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/control/terminal-handoffs/reviser/files/native-goal-active.json",
+                "sha256": "18a174bb20f448dc2a7229e5513d49ad536f78f5536b82ae9df09c0b593e14fd"
+              },
+              {
+                "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B07-P01-treatment/run/B07-P01-treatment/control/terminal-handoffs/reviser/files/native-goal-terminal.json",
+                "sha256": "315cab0319329f71a3ed75aaed513a6e326025ef51374b9a7339b482343aa796"
+              }
+            ],
+            "actual_task_status_evidence": {
+              "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B07-P01-treatment/reviser-eval-ready-status.raw.json",
+              "sha256": "f3f7c0975713c0a1e05578218c711bb94ec1155c04337f47a0843f46f7fd67f1"
+            }
+          }
+        ],
+        "interstage_proxy_gaps": [
+          {
+            "from_stage": "investigator",
+            "to_stage": "critic",
+            "terminal_native_to_next_request_seconds": 390.161,
+            "interpretation": "Envelope gap only; no inference about root waiting, actual provider activity or billing."
+          },
+          {
+            "from_stage": "critic",
+            "to_stage": "reviser",
+            "terminal_native_to_next_request_seconds": 341.37,
+            "interpretation": "Envelope gap only; no inference about root waiting, actual provider activity or billing."
+          }
+        ],
+        "actual_admission_queue_provider_activity": "UNKNOWN beyond T0/request/dispatch/native capture boundaries; no clock adjustment"
+      },
+      "method_compliance": {
+        "judgment": "OBSERVED_ARTIFACTS_CONSISTENT; UNOBSERVABLE_ORDERING_UNKNOWN",
+        "topology": "Three sequential actual stage tasks, one captured native identity per stage. No extra/parallel critic is listed in this assignment.",
+        "plan_reveal": "Single-use receipt discovery/plan hashes match exact immutable files; frozen brief and plan match supplement hashes. Actual pre-input order/absence of unrecorded reads is not independently proved.",
+        "treatment_behavior": "The assigned breadth-first critic delta appears in frozen assignment/config; critique covers required families before micro-detail and reviser disposes every finding. This artifact order does not prove tool/inference ordering.",
+        "scope_method_preservation": "Full scientific obligations retained except recorded material final omissions/context defects; source judgment is separate from captured lifecycle consistency."
+      },
+      "native_provenance": {
+        "judgment": "CAPTURE_CONSISTENT; INDEPENDENT_NATIVE_TO_TASK_LINKAGE_UNKNOWN",
+        "same_birth_exact_objective": true,
+        "all_active_to_complete": true,
+        "observation": "Exact frozen raw capture fields agree within each stage and with frozen objective; actual T3 receipts independently report completed/zero-pending. Neither establishes source truth or proves sole fresh native execution/session linkage.",
+        "private_identity_exported": false
+      },
+      "resource_coverage": {
+        "classification": "candidate_product_observations",
+        "native_counters": "Per-stage raw numeric Goal counters recorded above; attribution/semantics limited. No aggregate billing inference or double-counted sum.",
+        "native_interval_occupancy_proxy_seconds": 1492.0,
+        "native_interval_overlap_seconds_within_arm": 0,
+        "occupancy_scope": "Union and sum coincide only for the three disjoint captured native intervals. Context residency before/after these receipts, actual started/created context occupancy and provider activity are UNKNOWN.",
+        "provider_input_cached_output_reasoning_breakdown": null,
+        "subscription_consumption": null,
+        "billing_cost": null,
+        "preparation_support_root_total_cost": null,
+        "complete_experiment_total_cost": null,
+        "unknown_is_zero": false,
+        "attempt_denominator": "Exactly three notified stages and one final in this arm; no hidden failures/extra attempts inferred absent. All-assigned notified stages retained.",
+        "independent_evaluation": "Separate activity; this grader has no Goal and no billing/token/provider activity telemetry. Start clock observed 2026-10-12T01:52:21Z; not added to candidate product cost."
+      },
+      "frozen_files_verified": 7,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    }
+  ],
+  "grader_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "comparison": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/comparison.json",
+  "comparison_sha256": "4d48a111cf33cd4d19e8fe216df90617a66149e5fbf455bb7056291e2a392f0f",
+  "verified_at_utc": "2026-10-12T02:08:27.150009+00:00",
+  "mechanics_only_not_regrade": true
+}

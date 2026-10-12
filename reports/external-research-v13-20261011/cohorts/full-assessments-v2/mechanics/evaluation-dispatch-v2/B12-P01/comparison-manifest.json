@@ -1,0 +1,20 @@
+{
+  "schema": "er13.post_original_comparison_manifest.v1",
+  "block_id": "B12-P01",
+  "arm_count": 2,
+  "written_after_original_manifests": true,
+  "original_manifest_hashes": {
+    "control": "dc89a3f7d9ae84a89511f4f78db3b825e71b0cfab6bf245d42d5a29d861a6624",
+    "treatment": "3ea0abc07eb5d025977b4f90945d06def027a1c80250396e7f782d2e8ea95bb7"
+  },
+  "originals_modified": false,
+  "selection_performed": false,
+  "frozen_at_utc": "2026-10-12T02:33:24.717728+00:00",
+  "entries": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B12-P01/comparison.md",
+      "bytes": 3936,
+      "sha256": "184571963f8820d7cde9d4645aed23766daf1f8c1da4f7ff505df95b1f5b6efe"
+    }
+  ]
+}

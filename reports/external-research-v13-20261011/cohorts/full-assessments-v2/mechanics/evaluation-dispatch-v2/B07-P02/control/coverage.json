@@ -1,0 +1,248 @@
+{
+  "schema": "er13.original_coverage.v1",
+  "arm_id": "B07-P02-control",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "basis": "Product obligations and all prohibitions examined; D01 is an unresolved required research obligation."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "PARTIAL",
+      "judgment": "FAIL",
+      "basis": "Consequential cited rules and selected code were checked; available announcement mechanism omission found. Current Codeberg release/source behavior remains UNASSESSED."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "PARTIAL",
+      "judgment": "FAIL",
+      "basis": "Useful alternatives and selected caller/test/release/report context assessed; D01 remains. Exhaustive linked fixing patches and broader upstream history are UNASSESSED."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Exact revealed-plan clauses and each critic finding examined. Identity/precision corrections are sound; future mechanism research remains unresolved rather than source-complete."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Supported identity, overlap, time, transcript, constraints, alternatives, uncertainty and validation meaning survive into a self-contained final. No material supported-meaning loss found."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Fidelity and accessibility tests have meaningful proposed cases/oracles; documentary review is separated from unexecuted application/AT/media tests."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "obligation": "Time representation and basis",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Declared origin/timebase; milliseconds distinguished from seek accuracy; high precision conditional where needed."
+    },
+    {
+      "id": "O02",
+      "obligation": "Seeking and interval editing",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Requested versus completed position, readiness/error state, direct fields and keyboard marks. Exact decoder behavior remains an honest future supported-matrix decision."
+    },
+    {
+      "id": "O03",
+      "obligation": "Annotation identity and overlap",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Durable IDs independent of coordinates; overlapping/coincident notes remain independent."
+    },
+    {
+      "id": "O04",
+      "obligation": "Replacement safety",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Changed exact-byte binding becomes unresolved/unmatched; equal name/duration and resampling cannot silently reuse offsets."
+    },
+    {
+      "id": "O05",
+      "obligation": "Transcript association and absence",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Versioned supplied cues versus searchable untimed text; no invented timings; complete review without transcript."
+    },
+    {
+      "id": "O06",
+      "obligation": "Accessible navigation and focus",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Named keyboard list/fields/actions, independent overlapping rows, focus stability and no color-only meaning are specified as requirements."
+    },
+    {
+      "id": "O07",
+      "obligation": "Announcement mechanism research",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "basis": "Desired announcements and proposed tests are present; conditional governing delivery mechanism research is absent (D01)."
+    },
+    {
+      "id": "O08",
+      "obligation": "Long local media and format limits",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Decode/memory/seek limits and supported matrix identified; local peaks or windowed presentation are proposed, not benchmarked."
+    },
+    {
+      "id": "O09",
+      "obligation": "Stereo/channel scope",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Shared time basis; all-channel default or explicit owner scope decision; no invented need for channel-specific notes."
+    },
+    {
+      "id": "O10",
+      "obligation": "Human-readable export",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Stable identity, readable bounds and timing basis, text/escaping, overlap and unresolved status; no audio export needed."
+    },
+    {
+      "id": "O11",
+      "obligation": "Negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "No required mouse drag, color-only distinctions, invented transcript timing, original alteration or remote audio transmission. No transcript blocks no review."
+    },
+    {
+      "id": "O12",
+      "obligation": "Alternatives and integration",
+      "coverage": "PARTIAL",
+      "judgment": "FAIL",
+      "basis": "Feasible component/workflow/interchange alternatives and integration order retained; announcement opportunity absent; exhaustive maintained-upstream/history work not assessed."
+    },
+    {
+      "id": "O13",
+      "obligation": "Validation truth",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Proposed checks separated from source inspection. No deployment, private recording, user recruitment or actual test pass is required or claimed."
+    }
+  ],
+  "source_families": [
+    {
+      "family": "Media Fragments / Web Annotation / timeline definitions",
+      "coverage": "COMPLETE",
+      "evidence_ids": [
+        "P01",
+        "P02",
+        "P03"
+      ],
+      "limit": "Finite temporal/selector rules and applicability; not an entire standards conformance audit."
+    },
+    {
+      "family": "APG and WCAG keyboard/focus/value/status goals",
+      "coverage": "COMPLETE",
+      "evidence_ids": [
+        "P04",
+        "P05",
+        "P06"
+      ],
+      "limit": "Normative requirements versus informative examples distinguished; native equivalence not presumed."
+    },
+    {
+      "family": "Concrete markup/native announcement mechanisms",
+      "coverage": "COMPLETE",
+      "evidence_ids": [
+        "P07",
+        "P08",
+        "P09",
+        "P10",
+        "P11"
+      ],
+      "limit": "Assessed availability and candidate omission; runtime delivery/AT behavior UNASSESSED."
+    },
+    {
+      "family": "Selected waveform API/code/caller/tests",
+      "coverage": "COMPLETE",
+      "evidence_ids": [
+        "P16",
+        "P17",
+        "P18",
+        "P22",
+        "P23",
+        "P24",
+        "P25",
+        "P26",
+        "P27"
+      ],
+      "limit": "Selected claimed defaults, APIs and test domains only; upstream tests not executed."
+    },
+    {
+      "family": "Release and issue/fix history",
+      "coverage": "PARTIAL",
+      "evidence_ids": [
+        "P19",
+        "P20",
+        "P21",
+        "P28",
+        "P29",
+        "P33"
+      ],
+      "limit": "Declared release notes/reports and selected adjacent code/tests checked; every linked fixing patch or complete historical trajectory UNASSESSED after D01."
+    },
+    {
+      "family": "Current maintained Peaks Codeberg source/release",
+      "coverage": "UNASSESSED",
+      "evidence_ids": [
+        "P20"
+      ],
+      "limit": "GitHub move notice assessed; destination implementation and release state not inspected."
+    },
+    {
+      "family": "Audacity keyboard and distinct export modes",
+      "coverage": "COMPLETE",
+      "evidence_ids": [
+        "P30",
+        "P31",
+        "P32"
+      ],
+      "limit": "Manual is rolling development documentation; text label export distinguished from multiple audio export."
+    },
+    {
+      "family": "Native playback and Web Audio precision/memory examples",
+      "coverage": "COMPLETE",
+      "evidence_ids": [
+        "P12",
+        "P13",
+        "P14",
+        "P15"
+      ],
+      "limit": "Backend-specific governing examples, not selected runtime guarantees; actual selected platform/codec behavior UNASSESSED."
+    },
+    {
+      "family": "ELAN/EAF constrained tiers",
+      "coverage": "UNASSESSED",
+      "evidence_ids": [],
+      "limit": "Relevant treatment comparison independently confirmed; not a required specific product for the control or an import compatibility audit."
+    },
+    {
+      "family": "Actual product/assistive technology/media execution",
+      "coverage": "UNASSESSED",
+      "evidence_ids": [],
+      "limit": "No supplied product implementation or executed validation; requested artifact is a proposal."
+    }
+  ],
+  "all_frozen_scientific_documents_read": true,
+  "read_scope": "Complete briefs/revealed plans, both discovery/drafts, every manifest-listed critic/final/source map/index; no extra critic or executable witness exists in these manifests. Inherited treatment maps verified equal to complete predecessor maps.",
+  "remaining_unassessed": "Maintained Codeberg implementation/releases, exhaustive linked fixing history, future runtime/AT behavior, private provider linkage/billing. No universal correctness claim."
+}

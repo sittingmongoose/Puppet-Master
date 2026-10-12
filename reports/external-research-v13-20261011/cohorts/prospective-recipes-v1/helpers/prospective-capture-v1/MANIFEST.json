@@ -1,0 +1,75 @@
+{
+  "schema": "er13.prospective_capture_helper_manifest.v1",
+  "version": "prospective-capture-v1",
+  "created_at_utc": "2026-10-12T02:01:26.179210+00:00",
+  "files": [
+    {
+      "relative_path": "README.md",
+      "bytes": 6671,
+      "sha256": "a02184d514281c7b1d1c9526dd2332006cda09164250e3cfe8e44a4bacd56b3b"
+    },
+    {
+      "relative_path": "activation-template.js",
+      "bytes": 3614,
+      "sha256": "e4c4b1e96308cee17a548a03ed507a3aedd2249c364d83c8b2c6c300bac6f412"
+    },
+    {
+      "relative_path": "captureSpec-shim.js",
+      "bytes": 701,
+      "sha256": "5e22bd87a1f04cad97a936eb1ce99c2062321f6ff6c6f8f2f45ee02ceab31ac9"
+    },
+    {
+      "relative_path": "install.py",
+      "bytes": 11490,
+      "sha256": "d462daa854097de524f019c33a488bc96f9b087e3992ab77fd5b7bf20a45cc75"
+    },
+    {
+      "relative_path": "tests.py",
+      "bytes": 17216,
+      "sha256": "08080ece3d31166c5401995994349058e1613653841f77a131512333758ae14c"
+    }
+  ],
+  "unchanged_dependency_pins": [
+    {
+      "path": "ER13_RUNTIME/helpers/materialize-er13-v1/sealed/full-v1/materialize.py",
+      "sha256": "5ce745901f3ba5a2af2b7c3d4624f4b83ea95f66d74df84e30e41dc4c5bdc3f2",
+      "bytes": 23856
+    },
+    {
+      "path": "ER13_RUNTIME/helpers/materialize-er13-v1/sealed/full-v1/bundle-manifest.json",
+      "sha256": "ee5939ef2f60a70b966e7135ca9afe2771158f6bf062ff47604b81bf16b223d7",
+      "bytes": 10714
+    },
+    {
+      "path": "ER13_RUNTIME/helpers/materialize-er13-v1/sealed/full-v1/SHA256SUMS",
+      "sha256": "801448f7f0d0bcd276bcb4a1c715eaf1a1efbb5a33fcd14252918110ef567ae0",
+      "bytes": 6079
+    },
+    {
+      "path": "ER13_RUNTIME/helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-activation-capture-v2-1/overlay.py",
+      "sha256": "f79d4689649cb520bdd993f228666f72cc60257e5df73b6e7a01c37e7a96380c",
+      "bytes": 10501
+    },
+    {
+      "path": "ER13_RUNTIME/helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-activation-capture-v2-1/activation-snippet-template.js",
+      "sha256": "3eed7edf2cb7d5cd506daecaab89502d45eb07b64d1006f6ab72b3f7afc6e6f5",
+      "bytes": 2355
+    },
+    {
+      "path": "ER13_RUNTIME/helpers/materialize-er13-v1/sealed/full-v1/sources/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+      "sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+      "bytes": 3151
+    }
+  ],
+  "offline_checks": {
+    "path": "ER13_RUNTIME/state/prospective-capture-v1/CHECKS.json",
+    "sha256": "dd687c59aeb02d9e88a17c1871da7fc69efa9ae96e104c2cc386ddfd62c1dfd3",
+    "passed": 154,
+    "actual_native_calls": 0,
+    "actual_candidate_dispatches": 0
+  },
+  "scope": "additive unstarted-stage preparation/candidate loaded activation only; root exact release required",
+  "support_cost_separate": true,
+  "source_protected": true,
+  "no_historical_receipt_reconstruction": true
+}

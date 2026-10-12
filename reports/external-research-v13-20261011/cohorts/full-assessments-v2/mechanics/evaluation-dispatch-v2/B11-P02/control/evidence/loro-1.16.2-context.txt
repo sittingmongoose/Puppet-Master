@@ -1,0 +1,316 @@
+# Independent primary source context: Loro Rust 1.16.2
+
+{
+  "wrapper": {
+    "url": "https://static.crates.io/crates/loro/loro-1.16.2.crate",
+    "sha256": "8e86dea63b66576db244cbc3a40bdb17517263c93f318e2fbe08aca3be1192cb",
+    "version": "1.16.2",
+    "vcs_metadata": {
+      "git": {
+        "sha1": "af130d97d8b110add13283fc5bfc81d97a9a609f"
+      },
+      "path_in_vcs": "crates/loro"
+    }
+  },
+  "internal": {
+    "url": "https://static.crates.io/crates/loro-internal/loro-internal-1.16.2.crate",
+    "sha256": "8d5806b65ee68c3ae7891959dd968898860dab74fbf6498b312de9b548dce5ec",
+    "version": "1.16.2",
+    "vcs_metadata": {
+      "git": {
+        "sha1": "af130d97d8b110add13283fc5bfc81d97a9a609f"
+      },
+      "path_in_vcs": "crates/loro-internal"
+    }
+  }
+}
+Exact selected public source members inspected as data; no downloaded code executed. Wrapper delegates native moves to its handler. The included native tests were read, not run, and cover basic move/update/snapshot sync rather than a rehearsal adapter or all concurrent-intent cases.
+
+SOURCE MEMBER: loro/src/lib.rs; complete member SHA256 e2373b73e459c6dfcfb8a30ce2880a9dc86f5bf7dcb0bba2e001c26826264a8d
+
+ORIGINAL LINE RANGE: 94-106
+94: /// `LoroDoc` is the entry for the whole document.
+95: /// When it's dropped, all the associated [`Container`]s will be invalidated.
+96: ///
+97: /// **Important:** Loro is a pure library and does not handle network protocols.
+98: /// It is the responsibility of the user to manage the storage, loading, and synchronization
+99: /// of the bytes exported by Loro in a manner suitable for their specific environment.
+100: #[derive(Debug)]
+101: pub struct LoroDoc {
+102:     doc: InnerLoroDoc,
+103:     // This field is here to prevent some weird issues in debug mode
+104:     #[cfg(debug_assertions)]
+105:     _temp: u8,
+106: }
+
+ORIGINAL LINE RANGE: 349-360
+349:     ///
+350:     /// The document becomes detached during a `checkout` operation.
+351:     /// Being `detached` implies that the `DocState` is not synchronized with the latest version of the `OpLog`.
+352:     /// In a detached state, the document is not editable, and any `import` operations will be
+353:     /// recorded in the `OpLog` without being applied to the `DocState`.
+354:     ///
+355:     /// You should call `attach` (or `checkout_to_latest`) to reattach the `DocState` to the latest version of `OpLog`.
+356:     /// If you need to edit while detached, enable [`set_detached_editing(true)`], but note it uses a different
+357:     /// PeerID per checkout.
+358:     #[inline]
+359:     pub fn checkout(&self, frontiers: &Frontiers) -> LoroResult<()> {
+360:         self.doc.checkout(frontiers)
+
+ORIGINAL LINE RANGE: 376-394
+376:     /// Compare the frontiers with the current OpLog's version.
+377:     ///
+378:     /// If `other` contains any version that's not contained in the current OpLog, return [Ordering::Less].
+379:     #[inline]
+380:     pub fn cmp_with_frontiers(&self, other: &Frontiers) -> Ordering {
+381:         self.doc.cmp_with_frontiers(other)
+382:     }
+383: 
+384:     /// Compare two frontiers.
+385:     ///
+386:     /// If the frontiers are not included in the document, return [`FrontiersNotIncluded`].
+387:     #[inline]
+388:     pub fn cmp_frontiers(
+389:         &self,
+390:         a: &Frontiers,
+391:         b: &Frontiers,
+392:     ) -> Result<Option<Ordering>, FrontiersNotIncluded> {
+393:         self.doc.cmp_frontiers(a, b)
+394:     }
+
+ORIGINAL LINE RANGE: 402-426
+402:     pub fn detach(&self) {
+403:         self.doc.detach()
+404:     }
+405: 
+406:     /// Import a batch of updates/snapshot.
+407:     ///
+408:     /// The data can be in arbitrary order. The import result will be the same.
+409:     /// Auto-commit: same as [`import`], this finalizes the current transaction first.
+410:     ///
+411:     /// # Example
+412:     /// ```
+413:     /// use loro::{LoroDoc, ExportMode};
+414:     /// let a = LoroDoc::new();
+415:     /// a.get_text("t").insert(0, "A").unwrap();
+416:     /// let u1 = a.export(ExportMode::all_updates()).unwrap();
+417:     /// a.get_text("t").insert(1, "B").unwrap();
+418:     /// let u2 = a.export(ExportMode::all_updates()).unwrap();
+419:     ///
+420:     /// let b = LoroDoc::new();
+421:     /// let status = b.import_batch(&[u2, u1]).unwrap(); // arbitrary order
+422:     /// assert!(status.pending.is_none());
+423:     /// ```
+424:     #[inline]
+425:     pub fn import_batch(&self, bytes: &[Vec<u8>]) -> LoroResult<ImportStatus> {
+426:         self.doc.import_batch(bytes)
+
+ORIGINAL LINE RANGE: 575-595
+575:     /// Commit the cumulative auto commit transaction.
+576:     ///
+577:     /// There is a transaction behind every operation.
+578:     /// The events will be emitted after a transaction is committed. A transaction is committed when:
+579:     ///
+580:     /// - `doc.commit()` is called.
+581:     /// - `doc.export(mode)` is called.
+582:     /// - `doc.import(data)` is called.
+583:     /// - `doc.checkout(version)` is called.
+584:     ///
+585:     /// Note: Loro transactions are not ACID database transactions. There is no rollback or
+586:     /// isolation; they are a grouping mechanism for events/history. For interactive undo/redo,
+587:     /// use [`UndoManager`].
+588:     ///
+589:     /// Empty-commit behavior: this method is an explicit commit. If the pending
+590:     /// transaction is empty, any previously set next-commit options (message/timestamp/origin)
+591:     /// are swallowed and will not carry over.
+592:     #[inline]
+593:     pub fn commit(&self) {
+594:         self.doc.commit_then_renew();
+595:     }
+
+ORIGINAL LINE RANGE: 3413-3442
+3413:     /// ```
+3414:     /// use loro::{LoroDoc, ToJson};
+3415:     /// use serde_json::json;
+3416:     /// let doc = LoroDoc::new();
+3417:     /// let ml = doc.get_movable_list("ml");
+3418:     /// ml.insert(0, "a").unwrap();
+3419:     /// ml.set(0, "b").unwrap();
+3420:     /// assert_eq!(ml.get_deep_value().to_json_value(), json!(["b"]));
+3421:     /// ```
+3422:     pub fn set(&self, pos: usize, value: impl Into<LoroValue>) -> LoroResult<()> {
+3423:         self.handler.set(pos, value.into())
+3424:     }
+3425: 
+3426:     /// Move the value at the given position to the given position.
+3427:     ///
+3428:     /// # Example
+3429:     /// ```
+3430:     /// use loro::{LoroDoc, ToJson};
+3431:     /// use serde_json::json;
+3432:     /// let doc = LoroDoc::new();
+3433:     /// let ml = doc.get_movable_list("ml");
+3434:     /// ml.insert(0, "a").unwrap();
+3435:     /// ml.insert(1, "b").unwrap();
+3436:     /// ml.insert(2, "c").unwrap();
+3437:     /// ml.mov(0, 2).unwrap();
+3438:     /// assert_eq!(ml.get_deep_value().to_json_value(), json!(["b","c","a"]));
+3439:     /// ```
+3440:     pub fn mov(&self, from: usize, to: usize) -> LoroResult<()> {
+3441:         self.handler.mov(from, to)
+3442:     }
+
+SOURCE MEMBER: loro-internal/src/handler.rs; complete member SHA256 2b084ac63706c9e2dce6ebb1e0cceaeaafc5702195078ed2e9ec8e8982fca3c5
+
+ORIGINAL LINE RANGE: 3639-3668
+3639:     #[inline]
+3640:     pub fn mov(&self, from: usize, to: usize) -> LoroResult<()> {
+3641:         match &self.inner {
+3642:             MaybeDetached::Detached(d) => {
+3643:                 let mut d = d.lock();
+3644:                 if from >= d.value.len() {
+3645:                     return Err(LoroError::OutOfBound {
+3646:                         pos: from,
+3647:                         info: format!("Position: {}:{}", file!(), line!()).into_boxed_str(),
+3648:                         len: d.value.len(),
+3649:                     });
+3650:                 }
+3651:                 if to >= d.value.len() {
+3652:                     return Err(LoroError::OutOfBound {
+3653:                         pos: to,
+3654:                         info: format!("Position: {}:{}", file!(), line!()).into_boxed_str(),
+3655:                         len: d.value.len(),
+3656:                     });
+3657:                 }
+3658:                 let v = d.value.remove(from);
+3659:                 d.value.insert(to, v);
+3660:                 Ok(())
+3661:             }
+3662:             MaybeDetached::Attached(a) => a.with_txn(|txn| self.move_with_txn(txn, from, to)),
+3663:         }
+3664:     }
+3665: 
+3666:     /// Move element from `from` to `to`. After this op, elem will be at pos `to`.
+3667:     #[instrument(skip_all)]
+3668:     pub fn move_with_txn(&self, txn: &mut Transaction, from: usize, to: usize) -> LoroResult<()> {
+
+ORIGINAL LINE RANGE: 3689-3720
+3689:         let (op_from, op_to, elem_id, value) = self.with_state(|state| {
+3690:             let list = state.as_movable_list_state().unwrap();
+3691:             let (elem_id, elem) = list
+3692:                 .get_elem_at_given_pos(from, IndexType::ForUser)
+3693:                 .unwrap();
+3694:             Ok((
+3695:                 list.convert_index(from, IndexType::ForUser, IndexType::ForOp)
+3696:                     .unwrap(),
+3697:                 list.convert_index(to, IndexType::ForUser, IndexType::ForOp)
+3698:                     .unwrap(),
+3699:                 elem_id,
+3700:                 elem.value().clone(),
+3701:             ))
+3702:         })?;
+3703: 
+3704:         let inner = self.inner.try_attached_state()?;
+3705:         txn.apply_local_op(
+3706:             inner.container_idx,
+3707:             crate::op::RawOpContent::List(crate::container::list::list_op::ListOp::Move {
+3708:                 from: op_from as u32,
+3709:                 to: op_to as u32,
+3710:                 elem_id: elem_id.to_id(),
+3711:             }),
+3712:             EventHint::Move {
+3713:                 value,
+3714:                 from: from as u32,
+3715:                 to: to as u32,
+3716:             },
+3717:             &inner.doc,
+3718:         )
+3719:     }
+3720: 
+
+SOURCE MEMBER: loro-internal/src/state/movable_list_state.rs; complete member SHA256 4c04d9e276cb52bcdaf89113dfa8388b3eb489b42ab2241c2474447207eb219e
+
+ORIGINAL LINE RANGE: 1940-1966
+1940:     #[test]
+1941:     fn basic_handler_ops() {
+1942:         let doc = LoroDoc::new_auto_commit();
+1943:         let list = doc.get_movable_list("list");
+1944:         list.insert(0, 0).unwrap();
+1945:         list.insert(1, 1).unwrap();
+1946:         list.insert(2, 2).unwrap();
+1947:         assert_eq!(list.get_value().to_json_value(), json!([0, 1, 2]));
+1948:         list.mov(0, 1).unwrap();
+1949:         assert_eq!(list.get_value().to_json_value(), json!([1, 0, 2]));
+1950:         list.mov(2, 0).unwrap();
+1951:         assert_eq!(list.get_value().to_json_value(), json!([2, 1, 0]));
+1952:         list.delete(0, 2).unwrap();
+1953:         assert_eq!(list.get_value().to_json_value(), json!([0]));
+1954:         list.insert(0, 9).unwrap();
+1955:         assert_eq!(list.get_value().to_json_value(), json!([9, 0]));
+1956:         list.delete(0, 2).unwrap();
+1957:         assert_eq!(list.get_value().to_json_value(), json!([]));
+1958:     }
+1959: 
+1960:     #[test]
+1961:     fn basic_sync() {
+1962:         let doc = LoroDoc::new_auto_commit();
+1963:         let list = doc.get_movable_list("list");
+1964:         list.insert(0, 1).unwrap();
+1965:         list.insert(1, 0).unwrap();
+1966:         list.mov(0, 1).unwrap();
+
+ORIGINAL LINE RANGE: 1967-1997
+1967:         {
+1968:             let doc_b = LoroDoc::new_auto_commit();
+1969:             doc_b
+1970:                 .import(&doc.export(ExportMode::all_updates()).unwrap())
+1971:                 .unwrap();
+1972:             assert_eq!(
+1973:                 doc_b.get_deep_value().to_json_value(),
+1974:                 json!({
+1975:                     "list": [0, 1]
+1976:                 })
+1977:             );
+1978:         }
+1979:         list.mov(1, 0).unwrap();
+1980:         assert_eq!(
+1981:             doc.get_deep_value().to_json_value(),
+1982:             json!({
+1983:                 "list": [1, 0]
+1984:             })
+1985:         );
+1986:         {
+1987:             let doc_b = LoroDoc::new_auto_commit();
+1988:             doc_b
+1989:                 .import(&doc.export(ExportMode::all_updates()).unwrap())
+1990:                 .unwrap();
+1991:             assert_eq!(
+1992:                 doc_b.get_deep_value().to_json_value(),
+1993:                 json!({
+1994:                     "list": [1, 0]
+1995:                 })
+1996:             );
+1997:         }
+
+LICENSE NOTICE (pinned upstream; https://github.com/loro-dev/loro/blob/af130d97d8b110add13283fc5bfc81d97a9a609f/LICENSE):
+MIT License
+
+Copyright (c) 2023 Loro
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

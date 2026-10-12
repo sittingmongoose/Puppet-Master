@@ -1,0 +1,98 @@
+{
+  "schema": "er13.post-freeze-comparison.v1",
+  "block_id": "B11-P02",
+  "arm_count": 2,
+  "written_at_utc": "2026-10-12T02:29:08.311762+00:00",
+  "original_freeze_receipt": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/manifest.json",
+    "sha256": "cdf48470c7f03b18909f41c2888000c61ea6678ff4336f355d385b50c0861bfe",
+    "frozen_at_utc": "2026-10-12T02:27:37.407695+00:00"
+  },
+  "original_grades_unchanged": true,
+  "original_findings": [
+    {
+      "arm_id": "B11-P02-control",
+      "source_judgment": "PASS",
+      "six_axis_coverage": "COMPLETE",
+      "delivery": "COMPLETE",
+      "whole_time_eligibility": "ELIGIBLE",
+      "method_capture_failure": "Critic native-goal-create.json missing; actual Goal absence is not inferred."
+    },
+    {
+      "arm_id": "B11-P02-treatment",
+      "source_judgment": "FAIL",
+      "six_axis_coverage": "COMPLETE",
+      "delivery": "COMPLETE",
+      "whole_time_eligibility": "ELIGIBLE",
+      "material_defect_ids": [
+        "T-S01",
+        "T-P01"
+      ]
+    }
+  ],
+  "comparison": {
+    "quality_signal": "One finite matched case: control has no material source defect found, treatment has two. This is not a universal quality claim or causal estimate of the B11 pivot.",
+    "scope": "FULL candidate research pipelines delivering component proposals; no COMPONENT shared-package/discovery/cold-pipeline result is inferred.",
+    "paired_native_final_proxy_seconds": {
+      "control": 2322.2,
+      "treatment": 2294.735,
+      "treatment_minus_control": -27.465,
+      "boundary": "T0 to native Goal final-completion capture, not exact scientific final-write or request-to-task-quiet."
+    },
+    "final_custody_upper_bound_seconds": {
+      "control": 2353.955369,
+      "treatment": 2345.540675,
+      "boundary": "Frozen complete-final custody before the unchanged whole deadlines; largely common freeze boundary, not a delivery-time comparison."
+    },
+    "equal_quality_latency_or_resource_saving_established": false,
+    "reason": "Source quality differs. A slightly shorter completion proxy for a failed source final cannot establish equal-quality savings; one matched case and capture/method gaps do not establish a repeatable optimizer.",
+    "source_pass_counts_in_assigned_denominator": {
+      "control": {
+        "assigned": 1,
+        "passes": 1
+      },
+      "treatment": {
+        "assigned": 1,
+        "passes": 0
+      }
+    },
+    "consumption_per_passing_final": {
+      "control": {
+        "value": null,
+        "status": "UNKNOWN numerator"
+      },
+      "treatment": {
+        "value": null,
+        "status": "UNDEFINED: zero source passes"
+      }
+    },
+    "resource_cost": "Provider activity, context occupancy, billing, subscription use and task-linked metering unknown. Captured native cumulative-counter fields are not published or added as billing. Independent evaluation remains separate.",
+    "recipe_selection": "NONE; campaign selection remains with the root/coordinator."
+  },
+  "evaluator_ordering_deviation": {
+    "observation": "A preliminary internal subtraction of native completion proxies was considered during telemetry planning before the original output manifest was frozen.",
+    "effect": "No comparative artifact or campaign selection existed before freeze, and original semantic judgments were not based on the latency subtraction. Nevertheless strict no-comparison-before-freeze ordering is not claimed without this qualification.",
+    "handling": "Disclosed in this new separate post-freeze record. All original grades and hashes remain unchanged; no replacement, repeat grader, repair or adjudication was performed."
+  },
+  "limitations": [
+    "Technique-bearing paths/prompt labels make blinding imperfect.",
+    "Shared independent primary lookup across arms does not measure candidate discovery effectiveness.",
+    "Native captured tuple/objective custody does not independently prove actual task/session linkage or pre-input activation.",
+    "Candidate authors received no findings or repairs.",
+    "Future software correctness/deployment and owner-specific facts remain outside executed coverage."
+  ],
+  "primary_defect_context": [
+    {
+      "id": "T-S01",
+      "url": "https://docs.rs/automerge/0.12.0/src/automerge/sync/state.rs.html",
+      "locator": "encode108-112; parse132-148; caller context in immutable treatment evidence",
+      "finding": "Native serialization keeps shared_heads, not an exact live frame-State snapshot; the final omits that recovery condition."
+    },
+    {
+      "id": "T-P01",
+      "url": "https://docs.rs/yrs/0.28.0/yrs/",
+      "locator": "Root documentation ClientID uniqueness/corruption warning; investigator S13 and draft55 -> final84",
+      "finding": "The self-contained final loses the supported unique-active-writer condition and identity test for the Yrs fallback."
+    }
+  ]
+}

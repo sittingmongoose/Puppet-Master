@@ -1,0 +1,18 @@
+{
+  "id": "sn-release880",
+  "url": "https://api.github.com/repos/grokability/snipe-it/releases/tags/v8.8.0",
+  "resolved_url": "https://api.github.com/repos/grokability/snipe-it/releases/tags/v8.8.0",
+  "access_utc": "2026-10-12T02:01:58.283854+00:00",
+  "response_sha256": "7f1d766edb5d9b75f7e3752b4fd8cdf469925dc396429ff6470e4d2a4a8b11ea",
+  "response_bytes": 33808,
+  "operation": "read-only fetch",
+  "evidence": {
+    "tag_name": "v8.8.0",
+    "target_commitish": "master",
+    "published_at": "2026-09-30T19:14:30Z",
+    "selected_release_change_titles": [
+      "* Fix double rollbars in https://github.com/grokability/snipe-it/pull/19590"
+    ]
+  },
+  "extraction_context": "Only relevant selected v8.8.0 release changes; not a complete release transcription. Original response digest retained."
+}

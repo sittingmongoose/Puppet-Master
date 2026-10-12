@@ -1,0 +1,63 @@
+{
+  "schema": "er13.separate-post-freeze-comparison.v1",
+  "block_id": "B09-P01",
+  "created_at_utc": "2026-10-12T02:17:08.513128+00:00",
+  "original_manifest_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/manifest.json",
+  "original_manifest_sha256": "82bc97b56c2bb6ea0b4b7e47128a7df7ff50cd8db83dca14d12fad3168b94c1c",
+  "original_freeze_utc": "2026-10-12T02:16:20.631757+00:00",
+  "all_original_hashes_verified_before_comparison": true,
+  "arm_count": 2,
+  "scope": "FULL assigned pair; original primary assessment coverage PARTIAL in each",
+  "source_judgments": {
+    "B09-P01-control": {
+      "status": "FAIL",
+      "qualification": "Original finite assessment with PARTIAL research coverage; not a comparable complete FULL grade",
+      "material_defect_ids": [
+        "C-01",
+        "C-02"
+      ],
+      "criterion": "Required available mechanism research remains incomplete; the version-specific release attribution is also false in final evidence.",
+      "not_required": "Deployment, live borrower processing, outbound messaging, future product execution or resolution of unknowable organization facts."
+    },
+    "B09-P01-treatment": {
+      "status": "FAIL",
+      "qualification": "Original finite assessment with PARTIAL research coverage; not a comparable complete FULL grade",
+      "material_defect_ids": [
+        "T-01"
+      ],
+      "criterion": "Required available mechanism research remains incomplete; honest unknowns do not replace obtainable consequential caller/test research.",
+      "not_required": "Deployment, live borrower processing, outbound messaging, future product execution or resolution of unknowable organization facts."
+    }
+  },
+  "finite_quality_observations": [
+    "Control retains an unsupported v8.7.2 checkout-fix attribution in final source evidence; treatment corrects that original mistake under its own independent critique.",
+    "Both retain a consequential research gap: ordinary Snipe-IT checkout/check-in callers and adjacent tests were not investigated by candidates despite being available and central to concurrency/maintenance fit.",
+    "Control final corrects the Koha child-checkout categorical claim with the adjacent override condition. Treatment adds supported SpaceWorks gates and SQLite patched-runtime qualification.",
+    "Both finals preserve the visible brief/plan constraints and distinguish proposed validation from execution. These narrow observations do not establish full comparable quality, discovery recall or universal correctness."
+  ],
+  "latency_observations": {
+    "proxy": "T0 to captured final native Goal terminal updatedAt; not exact science-save or request-to-quiet task finish",
+    "control_seconds": 3307.696,
+    "treatment_seconds": 3339.282,
+    "treatment_minus_control_seconds": 31.586,
+    "quality_qualified_time_saving": "UNESTABLISHED: both original source FAIL and both research coverages PARTIAL. No equal-quality savings claim.",
+    "frozen_package_whole_deadline": "Both reported frozen packages fall within their unchanged 60 minute envelopes.",
+    "last_complete_scientific_artifact_and_task_quiet_times": "UNKNOWN"
+  },
+  "native_method_observations": {
+    "control": "Critic creation receipt absent; active/terminal fields available. Required capture fails; absence of an actual Goal not proven.",
+    "treatment": "Creation captures present and identity fields consistent; independent linkage, activation order and progressive-writing/edit chronology unknown."
+  },
+  "resource_observations": {
+    "assigned_arms": 2,
+    "complete_final_present": 2,
+    "observed_source_passes": 0,
+    "failure_inclusive_candidate_consumption": "UNKNOWN; not zero",
+    "consumption_per_observed_source_pass": "UNDEFINED: zero original source passes, and complete consumption unavailable",
+    "independent_evaluation": "Separate cost category, numeric usage/billing UNKNOWN; private numeric native counters withheld",
+    "cold_component_or_composite_total": "NOT_INFERRED; these are FULL assigned arms, and shared grader research is independent_evaluation, not candidate preparation or a component discovery success."
+  },
+  "blinding": "Imperfect; technique-bearing paths, configs, assignments and final text were visible. Shared own primary lookup reused.",
+  "selection": "NONE. Evaluator does not choose campaign recipes or operate root/Git/C/D locks.",
+  "adjudication": "Any dispute requires a new separate original-brief/findings/responses/unresolved-objections record; original grades stay frozen. No new adjudication was launched."
+}

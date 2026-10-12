@@ -1,0 +1,287 @@
+{
+  "research_category": "independent_evaluation",
+  "lookup_window_utc": "2026-10-12T02:21Z through 2026-10-12T02:31:36.245079+00:00",
+  "sources": [
+    {
+      "id": "PS01",
+      "title": "SQLite FTS5 manual",
+      "url": "https://www.sqlite.org/fts5.html",
+      "version_or_context": "Living manual, accessed 2026-10-12; actual notebook runtime unknown",
+      "locator": "2.1; 3; 4.3.1-4.3.5; 4.4.1-4.4.4; 6.3; 6.7; 6.12-6.13",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Build-dependent. Unicode61 uses Unicode 6.1 and documented diacritic exceptions. Ordinary contentless CRUD differs from 3.43.0+ contentless-delete; legacy delete needs original values. External content is caller-synchronized. REBUILD reads internal or external content, unavailable without content. External comparison needs rank=1. Trigram MATCH misses substrings under three Unicode characters; LIKE/GLOB optimization is conditional. Tokens truncate at 32768 bytes. Deleted-term retention and secure-delete have distinct cost/version conditions."
+    },
+    {
+      "id": "PS02",
+      "title": "SQLite WAL",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_context": "Living manual; WAL since 3.7.0",
+      "locator": "1; 2.1-2.3; checkpoint/concurrency limitations",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Readers can overlap a writer; one writer remains. Long readers can inhibit checkpoints. Local shared-memory coordination and cross-file atomicity limitations constrain sidecars/rebuilds; actual store is unspecified."
+    },
+    {
+      "id": "PS03",
+      "title": "SQLite ATTACH",
+      "url": "https://www.sqlite.org/lang_attach.html",
+      "version_or_context": "Living official manual",
+      "locator": "multi-database transaction atomicity paragraph",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Cross-file crash atomicity depends on non-memory main and non-WAL journal. Separate persistence domains justify canonical durable change capture and post-index-commit acknowledgement."
+    },
+    {
+      "id": "PS04",
+      "title": "SQLite compile options",
+      "url": "https://www.sqlite.org/compile.html",
+      "version_or_context": "Living official manual",
+      "locator": "SQLITE_ENABLE_FTS5",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "FTS5 inclusion is a build capability, not guaranteed by merely shipping SQLite."
+    },
+    {
+      "id": "PS05",
+      "title": "SQLite 3.43.0 release",
+      "url": "https://www.sqlite.org/releaselog/3_43_0.html",
+      "version_or_context": "3.43.0, 2023-08-24",
+      "locator": "item 1",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Confirms contentless-delete feature floor; not the notebook bundled version."
+    },
+    {
+      "id": "PS06",
+      "title": "SQLite malformed trigram configuration report",
+      "url": "https://sqlite.org/forum/forumpost/171bcc2bcd?t=c",
+      "version_or_context": "2024-08 report against July trunk; fix reported in 3.46.1",
+      "locator": "posts 1, 3, 4",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Missing option values caused a reported crash; corrected behavior is constructor error. Valid configurations are not implicated."
+    },
+    {
+      "id": "PS07",
+      "title": "SQLite 3.46.1 release",
+      "url": "https://www.sqlite.org/releaselog/3_46_1.html",
+      "version_or_context": "3.46.1, 2024-08-13",
+      "locator": "tokenize= argument robustness item",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Corroborates PS06 fix/release linkage; selected runtime remains unknown."
+    },
+    {
+      "id": "PS08",
+      "title": "SQLite Unicode61 Polish letter discussion",
+      "url": "https://sqlite.org/forum/info/e336faf90e60d53f?t=c",
+      "version_or_context": "2020-2021; original reporter 3.30.1",
+      "locator": "posts 1-3",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Ł/ł decomposition does not yield base L/l; maintainer suggests custom tokenizer. Historical equivalence warning, not a broad segmentation guarantee."
+    },
+    {
+      "id": "PS09",
+      "title": "SQLite nested update trigger report",
+      "url": "https://sqlite.org/bugs/info/552f36384c7900ef72448f71118f9c6fe8aa2553e7ef617ef7323c3d0f54b104",
+      "version_or_context": "2026-08-04/05; reported 3.45.1/3.45.3/3.53.2",
+      "locator": "corrected reproducer post 3 and maintainer response post 4",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Initial reproduction lacked insert synchronization. Corrected example combines same-table nested AFTER UPDATE with FTS synchronization and token-superset change. Maintainer explains ordering and suggests folding the mutation into the original write. A report/workaround, not independently executed or a current universal defect.",
+      "equivalent_notified_locator": "https://sqlite.org/bugs/info/d3b14ada9b81056914d0e6f9a6d23b7a804008c82b3481fae225d8a514dbd180?t=c"
+    },
+    {
+      "id": "PS10",
+      "title": "Tantivy IndexWriter",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "version_or_context": "crate 0.26.2",
+      "locator": "prepare_commit; commit; delete_term; add_document; run",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Commit blocks/persists/publishes; delete affects earlier operations and needs commit. Adds may block. Opstamps and commit payloads support app progress alignment; do not make source and index atomic."
+    },
+    {
+      "id": "PS11",
+      "title": "Tantivy IndexReader",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/struct.IndexReader.html",
+      "version_or_context": "crate 0.26.2",
+      "locator": "reload; searcher",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Default reload can lag by tens of milliseconds; use one searcher snapshot per query. Index commit and query visibility are separate."
+    },
+    {
+      "id": "PS12",
+      "title": "Tantivy tokenizer module",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "version_or_context": "crate 0.26.2",
+      "locator": "default; en_stem; RemoveLongFilter entry",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Overview character wording is contradicted by adjacent byte-based filter API and pinned code. Custom analysis and stemming remain conditional, not script coverage proof."
+    },
+    {
+      "id": "PS13",
+      "title": "Tantivy RemoveLongFilter",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/struct.RemoveLongFilter.html",
+      "version_or_context": "crate 0.26.2",
+      "locator": "type description and limit()",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Defines UTF-8 byte limit. Exact strict boundary and default caller checked in PS14-PS15."
+    },
+    {
+      "id": "PS14",
+      "title": "Tantivy length filter source",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/src/tokenizer/remove_long.rs",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "predicate; advance; test_remove_long",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Strict byte predicate rejects lengths >= limit; existing test source read. Decisive independent evidence in tantivy-token-boundary.json."
+    },
+    {
+      "id": "PS15",
+      "title": "Tantivy default tokenizer caller",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/src/tokenizer/tokenizer_manager.rs",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "Default impl, default and en_stem registrations",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Default filter limit is 40 before lowercase; en_stem also uses that limit and depends on the stemmer feature."
+    },
+    {
+      "id": "PS16",
+      "title": "Tantivy SimpleTokenizer",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/src/tokenizer/simple_tokenizer.rs",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "search_token_end; advance; test_simple_tokenizer",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Runs of alphanumeric characters form tokens; caller context makes the CJK byte example applicable. Source tests inspected, not run."
+    },
+    {
+      "id": "PS17",
+      "title": "Tantivy update example",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/examples/deleting_updating_documents.rs",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "schema ID guidance; delete/add; commit/reload; assertions",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Raw exact ID, no uniqueness enforcement; delete-plus-reinsert then commit/reload. Stored illustrative title is not authority for notebook duplication. Example assertions read, not executed."
+    },
+    {
+      "id": "PS18",
+      "title": "Tantivy changelog",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/CHANGELOG.md",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "0.26; 0.24; 0.22; 0.15.3; 0.13; 0.11",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Specific compatible pairs and historical reindex/deletion fixes support explicit migration handling. No blanket compatibility or current reproduced bug inferred."
+    },
+    {
+      "id": "PS19",
+      "title": "Tantivy package VCS identity",
+      "url": "https://docs.rs/crate/tantivy/0.26.2/source/.cargo_vcs_info.json",
+      "version_or_context": "crate 0.26.2 -> 72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "git.sha1",
+      "operation": "Independent direct HTTP fallback after failed web opens",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Confirms package commit. Web open returned an internal error; direct HTTP retrieved and parsed the page successfully."
+    },
+    {
+      "id": "PS20",
+      "title": "Tantivy 0.26.2 release",
+      "url": "https://github.com/quickwit-oss/tantivy/releases/tag/0.26.2",
+      "version_or_context": "0.26.2; tag 72d1ef9",
+      "locator": "release tag heading/commit",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Corroborates version/commit; this is research identity, not dependency approval."
+    },
+    {
+      "id": "PS21",
+      "title": "Tantivy CJK issue 718",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/718",
+      "version_or_context": "2019-11-29, closed",
+      "locator": "entire discussion, especially later diagnosis and maintainer conclusion",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Initial parser accusation was withdrawn. Concrete TinySegmenter document/query token boundaries differed; maintainer removed bug label and suggested other analyzers or pretokenized text. Historical evidence, not proof of current 0.26.2 parser defect."
+    },
+    {
+      "id": "PS22",
+      "title": "Tantivy crash issue 3079",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/3079",
+      "version_or_context": "2026-09 report, open at lookup",
+      "locator": "body and missing commit/meta state",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "User report of orphan files before completed commit. Supports replay/canonical authority caution; does not prove a defect in a selected notebook build."
+    },
+    {
+      "id": "PS23",
+      "title": "Tantivy Windows issue 2847",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/2847",
+      "version_or_context": "reported 0.25.0; Windows 10/11 NTFS",
+      "locator": "body version and managed metadata race",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Reported user commit/merge metadata race; current selected-version applicability unproven. Conditional platform investigation, not universal rejection."
+    },
+    {
+      "id": "PS24",
+      "title": "Tantivy segments issue 2932",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/2932",
+      "version_or_context": "2026-05 downstream report, open",
+      "locator": "body and activity",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Per-record writer creation/commit reportedly produced many small segments and slow cold load. Supports measuring long-lived writer/batching/merge lifecycle, not universal performance numbers."
+    },
+    {
+      "id": "PS25",
+      "title": "Tantivy watcher issue 3100",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/3100",
+      "version_or_context": "reported 0.22.1, macOS downstream evict/reopen churn",
+      "locator": "body mechanism/environment/activity",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Report concerns retained handles and repeated churn. Narrow historical risk; not demonstrated in 0.26.2 or a single persistent notebook index."
+    },
+    {
+      "id": "PS26",
+      "title": "SQLite integrity-check history",
+      "url": "https://sqlite.org/hctree/info/782163693f37aeb6",
+      "version_or_context": "check-in 782163693f37aeb65209bebbaeb6659a36881b8c4b4bec778b366658488bf966, 2020-09-21",
+      "locator": "summary and changed ext/fts5/test/fts5integrity.test listing",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Opt-in external-content comparison corroborates current manual. Changed-test listing read; complete historical test body and execution UNASSESSED."
+    },
+    {
+      "id": "PS27",
+      "title": "Tantivy packaged feature identity",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/Cargo.toml",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "package version/license; features",
+      "operation": "Direct independent public primary-source reading",
+      "coverage": "COMPLETE",
+      "finding_and_applicability": "Version is 0.26.2, MIT; default features include stemmer. Disabled-feature app behavior remains a packaging input."
+    }
+  ],
+  "primary_only": true,
+  "no_source_corpus_rehosted": true,
+  "source_execution": "No downloaded vendor code or target software executed. Source/caller/test inspection and public issue/release context only.",
+  "access_limits": [
+    "Some docs.rs source URLs failed in web tool; pinned raw upstream code and direct HTTP metadata supplied successful alternate primary representations.",
+    "No target notebook repository was identified. No unknown script list, runtime, user data or performance budget was invented.",
+    "No exhaustive upstream repository/history scan. Current reproduction and fix verification of historical platform/watch/crash reports remains UNASSESSED.",
+    "Historical SQLite test body not fetched; current integrity contract independently read."
+  ],
+  "license_notice": "TANTIVY-LICENSE.txt"
+}

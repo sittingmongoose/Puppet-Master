@@ -1,0 +1,42 @@
+{
+  "schema": "er13.original-output-manifest.v1",
+  "block_id": "B03-P02",
+  "arm_id": "B03-P02-control",
+  "scope": "FULL",
+  "frozen_at_utc": "2026-10-12T02:26:30.006175+00:00",
+  "original": true,
+  "comparative_analysis_started": false,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/control/assessment.md",
+      "bytes": 3576,
+      "sha256": "17b241e42b4ed51dead81bfccce7673565ba90e0458835b1e6e0f1bbb9295055"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/control/assessment.json",
+      "bytes": 13130,
+      "sha256": "c557d5dcbe0be2b8f18871694dee8ced0bf4adcff01c1dc39d10574ff2d4b2d8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/control/coverage.json",
+      "bytes": 15468,
+      "sha256": "66356fc4e71e1f303dac7928ce2866b23021af64ab468fdda25989f7cf539815"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/control/defects.json",
+      "bytes": 4142,
+      "sha256": "33982c2f4cae7cbc1050ff28009825a9209b4e3096689c45732078baf4fa2f04"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/control/primary-source-index.json",
+      "bytes": 27775,
+      "sha256": "0a089854f29ede70856e1a38a613f502edf57549310b9b1491c24e5af90e6131"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/control/evidence/input-verification.json",
+      "bytes": 18416,
+      "sha256": "2b7b336c7aba38e1441cc79412fbd34edc398e60e875f0319f63a9c6a96cb96f"
+    }
+  ],
+  "self_hash_convention": "This manifest excludes itself; its SHA-256 is reported in the terminal receipt. Originals are read-only and must not be overwritten for a later dispute."
+}

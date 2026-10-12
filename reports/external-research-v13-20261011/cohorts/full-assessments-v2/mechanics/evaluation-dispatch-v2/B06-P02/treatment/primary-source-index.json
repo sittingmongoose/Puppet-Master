@@ -1,0 +1,432 @@
+{
+  "schema": "er13.independent-primary-index.v1",
+  "arm_id": "B06-P02-treatment",
+  "independent_lookup_reused_with_matched_arm": true,
+  "blindness": "Imperfect: paths and stage roles expose control/treatment topology. Judgments are recorded separately before comparison.",
+  "sources": [
+    {
+      "id": "E01",
+      "title": "CouchDB conflict model",
+      "urls": [
+        "https://docs.couchdb.org/en/stable/replication/conflicts.html"
+      ],
+      "version_or_context": "Stable 3.5 docs; mutable URL, no patch commit inferred",
+      "locator": "2.3.1–2.3.7",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "Single-node stale revisions return 409. Replicas retain branches; ordinary reads/views select a deterministic winner. Application merge is required; compacted non-leaf bodies are not durable event history.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E02",
+      "title": "CouchDB database security",
+      "urls": [
+        "https://docs.couchdb.org/en/stable/api/database/security.html"
+      ],
+      "version_or_context": "Stable 3.5 docs",
+      "locator": "Member/admin rights and empty membership/new DB conditions",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "Membership grants database-wide document reads. Empty membership and new 3.x admin defaults differ. UI field hiding cannot protect returned contact data.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E04",
+      "title": "CouchDB user/role model",
+      "urls": [
+        "https://docs.couchdb.org/en/stable/intro/security.html"
+      ],
+      "version_or_context": "Stable 3.5 docs",
+      "locator": "Users, role assignment, authorization",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "User-defined roles are assigned by administrators. Database membership remains broad; the center’s action/field policy must be designed separately.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E05",
+      "title": "CouchDB replication filters",
+      "urls": [
+        "https://docs.couchdb.org/en/stable/replication/intro.html"
+      ],
+      "version_or_context": "Stable 3.5 docs",
+      "locator": "Directionality and 2.1.5 deletion/filter warning",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "Content filters may omit bodyless deleted documents. The documented retained-body workaround also retains attachment data. This matters only if filtered replication is selected; no such concrete configuration is endorsed.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E14",
+      "title": "PouchDB capability guides",
+      "urls": [
+        "https://pouchdb.apache.org/learn.html",
+        "https://pouchdb.apache.org/guides/conflicts.html",
+        "https://pouchdb.apache.org/guides/replication.html"
+      ],
+      "version_or_context": "Live guides; no invented library pin",
+      "locator": "Local storage, immediate/eventual conflicts, sync and retries",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "Browser-local IndexedDB and Couch-compatible replication support disconnected work. Immediate revision conflicts and eventual branches still require application reconciliation.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E16",
+      "title": "PouchDB 9.0.0 release",
+      "urls": [
+        "https://github.com/apache/pouchdb/releases/tag/9.0.0"
+      ],
+      "version_or_context": "9.0.0; short release commit b2882c1",
+      "locator": "Highlights and linked change #8927",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "Release notes report indexeddb-adapter improvement and a new default find limit of 25. Pagination remains necessary; release wording does not demonstrate this app’s durability.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E17",
+      "title": "PouchDB sequence report",
+      "urls": [
+        "https://github.com/apache/pouchdb/issues/8599"
+      ],
+      "version_or_context": "Open report: PouchDB 8.0, Chrome/indexeddb; February 2023",
+      "locator": "Report, maintainer acknowledgment, link #8495",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "The report concerns post-replication local writes after more than 1000 documents. A maintainer recognized a bug, requested a reproducer, and asked to verify the proposed related change. No current universal failure follows.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E18",
+      "title": "PouchDB proposed patch and critique",
+      "urls": [
+        "https://github.com/apache/pouchdb/pull/9093",
+        "https://github.com/apache/pouchdb/pull/9093/files"
+      ],
+      "version_or_context": "Open; 2a54197; June 2025",
+      "locator": "Description, reviewer comments, full one-file diff",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "The patch tracks transaction maximum sequence. Its claimed integration test file is absent from the one-file diff; the reviewer questions it and links #8495. It is not a shipped fix.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E19",
+      "title": "PouchDB adjacent review context",
+      "urls": [
+        "https://github.com/apache/pouchdb/pull/8495"
+      ],
+      "version_or_context": "Open proposed change; mutable PR head",
+      "locator": "Review discussion linked from #9093/#8599",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "An older multi-tab sequence proposal remains open and contains alternate metadata-refresh discussion. No merger or release applicability is inferred.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E20",
+      "title": "PowerSync conflict contract",
+      "urls": [
+        "https://docs.powersync.com/handling-writes/handling-update-conflicts",
+        "https://github.com/powersync-ja/powersync-docs/blob/main/handling-writes/handling-update-conflicts.mdx"
+      ],
+      "version_or_context": "Live official docs and mutable main source",
+      "locator": "Per-client ordered log, idempotency, backend policy",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "Uploads are ordered per client and sequentially drained by the app connector. The app owns conflict policy; per-field LWW is a simple example, not a mandatory domain rule. Retries require idempotent handling.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E26",
+      "title": "PowerSync legacy attachment integration",
+      "urls": [
+        "https://github.com/powersync-ja/powersync-js/blob/main/packages/attachments/README.md"
+      ],
+      "version_or_context": "Mutable main; deprecated helper",
+      "locator": "Deprecation notice, queue/callback/cache/deletion lifecycle",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "The old helper is deprecated in favor of built-in SDK functionality. Its record-cache default is not a current universal policy; storage integration does not guarantee image privacy or all-copy erasure.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E27",
+      "title": "PowerSync native attachment adapter",
+      "urls": [
+        "https://github.com/powersync-ja/powersync-js/blob/main/packages/attachments-storage-react-native/README.md"
+      ],
+      "version_or_context": "Mutable main; alpha/testing warning",
+      "locator": "Status, platform prerequisites, storage/transport callbacks",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "The adapter is marked alpha and unsuitable for production reliance. Local file and remote transport callbacks are application concerns; platform/version gates must be checked for a future finalist.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E28",
+      "title": "PowerSync transaction issue and explicit closure",
+      "urls": [
+        "https://github.com/powersync-ja/powersync-js/issues/48"
+      ],
+      "version_or_context": "Reporter RN SDK 1.0.1/iOS simulator; maintainer closure February 12, 2024",
+      "locator": "Two-insert writeTransaction/uploadData caller; full Activity, maintainer comment",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "The page explicitly reports a repair in RN SDK 1.2.1 and Web SDK 0.2.1. The candidate’s retained lack-of-closure framing omits available fix/version context. This is upstream testimony, not independently executed repair verification.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E29",
+      "title": "PowerSync release context",
+      "urls": [
+        "https://github.com/powersync-ja/powersync-js/blob/main/packages/react-native/CHANGELOG.md",
+        "https://github.com/powersync-ja/powersync-js/blob/main/packages/web/CHANGELOG.md",
+        "https://github.com/powersync-ja/powersync-js/blob/main/packages/common/CHANGELOG.md"
+      ],
+      "version_or_context": "Mutable changelogs; historical RN 1.2.1/Web 0.2.1/common 1.2.1 entries",
+      "locator": "Historical entries and dependency changes; contemporary API rename notes",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "The named historical releases/dependencies are present. Their summaries are not sufficient to reconstruct the exact #48 fix implementation or certify today’s release; that deeper trace remains a limit.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E30",
+      "title": "PowerSync queue report/caller",
+      "urls": [
+        "https://github.com/powersync-ja/powersync-js/issues/605"
+      ],
+      "version_or_context": "Open report, May 2025; actual RN SDK range ^1.20.1; RN 0.73.6",
+      "locator": "Full report, environment reply, connector/writeTransaction code",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "Three related chat writes and a sequential connector are shown. No established cause/fix appears. The candidate’s 1.25.x-era RN wording is imprecise; the report is not a demonstrated current defect.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E31",
+      "title": "PowerSync background sample/caller",
+      "urls": [
+        "https://github.com/powersync-ja/powersync-js/blob/main/demos/react-native-supabase-background-sync/library/utils.ts",
+        "https://github.com/powersync-ja/powersync-js/blob/main/demos/react-native-supabase-background-sync/README.md"
+      ],
+      "version_or_context": "Mutable main sample",
+      "locator": "Full task callback/status gate, AppState caller, OS caveat",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "The sample inserts mock data, uses a nominal 15-minute interval, and waits for changed lastSyncedAt without transfer in flight. OS scheduling remains conditional; this is not a handover delivery guarantee.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E32",
+      "title": "PostgreSQL atomic arbitration",
+      "urls": [
+        "https://www.postgresql.org/docs/18/sql-insert.html"
+      ],
+      "version_or_context": "PostgreSQL 18 docs",
+      "locator": "ON CONFLICT target/index inference and independent-error condition",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "Atomic insert/update is conditioned on applicable arbiters and absence of independent error. It supplies a canonical schema guard, not offline fairness or human claim review.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E33",
+      "title": "PostgreSQL partial uniqueness",
+      "urls": [
+        "https://www.postgresql.org/docs/18/sql-createindex.html"
+      ],
+      "version_or_context": "PostgreSQL 18 docs",
+      "locator": "WHERE predicate, unique/null and index-build conditions",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "A partial index covers the predicate-selected rows. An active-claim schema must express the desired invariant; NULL/default and index validity conditions cannot be treated as automatic application correctness.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E34",
+      "title": "Automerge merge/conflict semantics",
+      "urls": [
+        "https://automerge.org/docs/reference/documents/conflicts/",
+        "https://automerge.org/docs/hello/"
+      ],
+      "version_or_context": "Live official docs; no library-release pin inferred",
+      "locator": "Concurrent property example, getConflicts lifecycle, counter/actor ordering",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "Concurrent content merges; a deterministic same-property winner has queryable alternatives. A later assignment clears the conflict view. Durable review events, identity and workflow authority require application design.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E35",
+      "title": "Automerge sample server boundary",
+      "urls": [
+        "https://github.com/automerge/automerge-repo-sync-server"
+      ],
+      "version_or_context": "Mutable main README",
+      "locator": "Security description and configuration",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "The sample server is unsecured and partly demonstrative; its public-server suitability is not suitability for sensitive volunteer data. No deployment tested.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "MIT license linked in upstream repository."
+    },
+    {
+      "id": "E37",
+      "title": "Browser storage and eviction",
+      "urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria"
+      ],
+      "version_or_context": "Live browser-specific reference",
+      "locator": "Best-effort/persistent, quota errors, eviction/private browsing",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "Best-effort is default; approval and quota differ by browser. Eviction can remove origin data and private sessions differ. A planned cache is not guaranteed durable after eviction.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E38",
+      "title": "Browser background execution",
+      "urls": [
+        "https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Offline_and_background_operation"
+      ],
+      "version_or_context": "Live browser-specific reference",
+      "locator": "Worker lifetime, waitUntil, retry, periodic scheduling",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "Workers may terminate despite waitUntil; retried handlers can restart from the beginning. Background scheduling cannot replace visible foreground retry.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    },
+    {
+      "id": "E39",
+      "title": "PowerSync/Supabase authorization integration",
+      "urls": [
+        "https://github.com/powersync-ja/powersync-docs/blob/main/integrations/supabase/guide.mdx"
+      ],
+      "version_or_context": "Mutable official docs source",
+      "locator": "Architecture, grants/RLS, independent Sync Streams boundary",
+      "access_utc_window": {
+        "start": "2026-10-12T01:48:20+00:00",
+        "end": "2026-10-12T01:58:53.692866+00:00"
+      },
+      "operation": "Independent public-source reading, surrounding context inspection; no code execution.",
+      "observation": "Grants and row policies perform different checks; downloaded subsets and backend write authorization are distinct. The guide does not establish this center’s identity or role policy.",
+      "applicability": "Proposal-level capability/condition or bounded historical evidence; not future application validation.",
+      "coverage": "COMPLETE",
+      "license_notice": "Linked primary source; no corpus copy retained."
+    }
+  ],
+  "execution": "Independent source reading only; no upstream/app tests run. Full source payloads and native transcripts are not copied.",
+  "limits": "Mutable source views are at-access evidence; unknown pins are not invented. Changelogs do not independently prove #48 implementation correctness. Source count is not a quality measure."
+}

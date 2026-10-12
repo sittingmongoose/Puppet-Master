@@ -1,0 +1,306 @@
+{
+  "arm_id": "B09-P01-treatment",
+  "owner": "Independent original evaluator",
+  "documentation": [
+    {
+      "id": "P-koha-circ",
+      "url": "https://koha-community.org/manual/latest/en/html/circulation.html",
+      "version": "Rendered Manual 20261011; mutable latest documentation",
+      "context": "Barcode circulation, bundles/configuration/child checkout warning and override image, check-in verification/skip/lost handling, automatic_checkin.pl prerequisites, Firefox/Windows offline logs and ordered replay.",
+      "observation": "A native bundle uses existing child item records/barcodes and not-for-loan state; the adjacent illustration offers staff checkout override. Verification can be skipped. Offline logs do not establish live shared availability. Automatic check-in is separately configured.",
+      "limitation": "No release-pinned Koha caller/test implementation was independently verified.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-koha-version",
+      "url": "https://koha-community.org/manual/24.05/en/html/circulation.html",
+      "version": "URL contains 24.05; rendered title is Manual 20261011",
+      "context": "Title and checkout section with a feature explicitly introduced in 25.05; same rendered edition as latest.",
+      "observation": "A version-shaped URL does not alone establish a frozen 24.05 software behavior. Treatment source map records the dated build, but its 24.05 identity still needs qualification.",
+      "limitation": "No historical 24.05 snapshot mapping established. Not graded as proof that a cited bundle behavior is absent in 24.05.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-koha-cat",
+      "url": "https://koha-community.org/manual/latest/en/html/cataloging.html",
+      "version": "Manual 20261011",
+      "context": "952$3 materials specified, 952$4 damaged, 952$5 restricted, 952$7 not-for-loan, withdrawn statuses.",
+      "observation": "Descriptive accompanying-material text is distinct from a child relationship. Damaged search unavailability is not a circulation block. Restricted/not-for-loan controls and override conditions are distinct.",
+      "limitation": "Documentation context checked; runtime/configuration not exercised.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-koha-tools",
+      "url": "https://koha-community.org/manual/latest/en/html/tools.html",
+      "version": "Manual 20261011; treatment /24.05/ URL is not an independently pinned release",
+      "context": "Log viewer; batch patron deletion/anonymization.",
+      "observation": "Logging is preference- and module-dependent. Anonymization keeps circulation facts/counts without patron identity; it is different from permanent patron deletion. No general reasoned immutable correction chain established by these pages.",
+      "limitation": "No release-pinned correction caller or database preservation implementation audited.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-sn-identity",
+      "url": "https://snipe-it.readme.io/docs/managing-assets",
+      "version": "Moving official documentation",
+      "context": "Asset tag uniqueness, barcodes, accountable person and custom fields.",
+      "observation": "Unique tags separate physical units; a non-reuse rule and complete alias behavior are not established by that guidance.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-sn-notes",
+      "url": "https://snipe-it.readme.io/docs/general-settings",
+      "version": "Moving official documentation",
+      "context": "Require Notes on Checkin/Checkout.",
+      "observation": "Configurable required notes do not prove a correction/reversal chain retaining prior events.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-sqlite-use",
+      "url": "https://www.sqlite.org/whentouse.html",
+      "version": "Current official docs",
+      "context": "Application-server mediation versus simultaneous network-file access.",
+      "observation": "Single-server SQLite is different from two hosts opening a shared file; one writer and request serialization matter.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-sqlite-wal",
+      "url": "https://www.sqlite.org/wal.html",
+      "version": "Current official docs; WAL-reset fix 3.51.3, backports 3.44.6/3.50.7",
+      "context": "Same-host WAL requirement, one writer, sections 11/11.1/11.2.",
+      "observation": "Rare reset corruption condition involves two or more connections in separate threads/processes writing or checkpointing concurrently. Treatment correctly preserves patched-runtime condition and proposed test status.",
+      "limitation": "Fix diff and induced race harness execution UNASSESSED.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-pg18-constraints",
+      "url": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+      "version": "PostgreSQL 18",
+      "context": "Non-null/unique keys; partial unique indexes.",
+      "observation": "Item identity and active-loan uniqueness are distinct. A partial unique index can cover a subset; the predicate and transactional workflow remain design responsibilities.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-pg18-lock",
+      "url": "https://www.postgresql.org/docs/18/explicit-locking.html",
+      "version": "PostgreSQL 18",
+      "context": "13.3.2 FOR UPDATE and conflicting lock modes.",
+      "observation": "Same-row writers/lockers wait until transaction end; revalidation, idempotency and deadlock handling remain application duties.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    }
+  ],
+  "focused_source_evidence": [
+    {
+      "id": "koha-version",
+      "url": "https://koha-community.org/manual/24.05/en/html/circulation.html",
+      "access_utc": "2026-10-12T02:01:58.540057+00:00",
+      "version_context": "moving current page or release record; see exact URL",
+      "response_sha256": "b92bd782c86baaa3b97b5dc22db2adf5a34694b186582f5269b5a2df2692bcc2",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/koha-version.json",
+      "evidence_sha256": "65bfdb015a8ba096762d43aaa8418db23cd49a4cdace57a3c91b7db77cb58db7",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sn-api-context",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Http/Controllers/Api/AssetsController.php",
+      "access_utc": "2026-10-12T02:04:23.498200+00:00",
+      "version_context": "v8.8.0 tag",
+      "response_sha256": "a0104d36aa0736063d1aab0333bee284f86c805e44e60f130bd5bf13eb0c7770",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-api-context.json",
+      "evidence_sha256": "4d2c09c4155b7096388e5d670b7edda67c0a7ffc050fc5c8e64d0e1ade8a0368",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sn-api-test",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/tests/Feature/Checkins/Api/AssetCheckinTest.php",
+      "access_utc": "2026-10-12T02:05:36.097583+00:00",
+      "version_context": "v8.8.0 tag",
+      "response_sha256": "e5e95883623a841a2a31d82060be0a06f969f8ee349ce88be6154ff3127b832f",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-api-test.json",
+      "evidence_sha256": "9f3cb13ae34ceac7c55fdecd113148447c55fb579de164f143c6e3de1785cd77",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sn-checkin-context",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Http/Controllers/Assets/AssetCheckinController.php",
+      "access_utc": "2026-10-12T02:04:23.452353+00:00",
+      "version_context": "v8.8.0 tag",
+      "response_sha256": "afe72552af2fe0bef42f4f3c1e5086fbfccd5c1f937c314e514698c8dfb21f43",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-checkin-context.json",
+      "evidence_sha256": "0202421ba3ea5ac6926109b1b3e9a767220f592eda56f2727f7ce74757872191",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sn-checkout-context",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Http/Controllers/Assets/AssetCheckoutController.php",
+      "access_utc": "2026-10-12T02:04:23.544346+00:00",
+      "version_context": "v8.8.0 tag",
+      "response_sha256": "a0f43e1599388b14b6e05cd6aebd0c63ddd3326887658644e6d7a5c9e991c518",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-checkout-context.json",
+      "evidence_sha256": "297329ed0b8fc9b22ed7d1d53bcd6918c640cf0cb3fcf3ab67f2150e64367b56",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sn-deleted-test",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/tests/Feature/Checkouts/Api/CheckoutToSoftDeletedTargetTest.php",
+      "access_utc": "2026-10-12T02:01:58.405970+00:00",
+      "version_context": "v8.8.0 tag",
+      "response_sha256": "9604311d21575b994b6aa31253988cedc7f71b095d6aa2770d831ca63cb1cb4b",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-deleted-test.json",
+      "evidence_sha256": "0bb534c7aacf4d4c3d36c1b7cf9d5c99ab4dae90d359521aded6304e051b22fb",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sn-import",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Importer/AssetImporter.php",
+      "access_utc": "2026-10-12T02:01:58.286585+00:00",
+      "version_context": "v8.8.0 tag",
+      "response_sha256": "1c03c4d92ad44cacc8923d5ea5d48bada62e660a25b630102f7c8a905d2f6254",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-import.json",
+      "evidence_sha256": "3a18ebd785191b43654dc399da2c39f0684a417004c0337502321b9665fb2879",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sn-model",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Models/Asset.php",
+      "access_utc": "2026-10-12T02:01:58.284199+00:00",
+      "version_context": "v8.8.0 tag",
+      "response_sha256": "91bd009d9569540f2aba59e1a211abc016342a93075f0b5dfa7cb9551b01b5af",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-model.json",
+      "evidence_sha256": "c920c262c20e8853ce622bb71a8168c27bf981c8a9812711f30086e2eccb479f",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sn-permission",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Policies/CheckoutablePermissionsPolicy.php",
+      "access_utc": "2026-10-12T02:04:51.704509+00:00",
+      "version_context": "v8.8.0 tag",
+      "response_sha256": "d7a80361092e059edbb337314158b097a0b41f6a2f6bf2c8519dbd4281336267",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-permission.json",
+      "evidence_sha256": "8939ce8047252eeda99178a432736130c48cd63f350bf6c44b97c52fc9d46683",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sn-release872",
+      "url": "https://api.github.com/repos/grokability/snipe-it/releases/tags/v8.7.2",
+      "access_utc": "2026-10-12T02:01:58.283267+00:00",
+      "version_context": "moving current page or release record; see exact URL",
+      "response_sha256": "5cf0ac9f87d0f3e51eec67d97ef79283185ba3bc527ba29d9b0d650f6b406445",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-release872.json",
+      "evidence_sha256": "41cbfd2d5b343e9d5a8cd56faa7f7ac6c2dc4a7ea4cf88ea874832b66f3f4b58",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sn-release880",
+      "url": "https://api.github.com/repos/grokability/snipe-it/releases/tags/v8.8.0",
+      "access_utc": "2026-10-12T02:01:58.283854+00:00",
+      "version_context": "v8.8.0 tag",
+      "response_sha256": "7f1d766edb5d9b75f7e3752b4fd8cdf469925dc396429ff6470e4d2a4a8b11ea",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-release880.json",
+      "evidence_sha256": "7a543bc8424f45fe2e1b433d740dd15fad1c2c7f4b3c839520d137d9e8979104",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sn-ui-test",
+      "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/tests/Feature/Checkins/Ui/AssetCheckinTest.php",
+      "access_utc": "2026-10-12T02:05:35.977912+00:00",
+      "version_context": "v8.8.0 tag",
+      "response_sha256": "7990c81f32bfbb893f5133b8fe3a938cbf57a277ccda8075c9822d4e0130f352",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-ui-test.json",
+      "evidence_sha256": "ebb3c4d29ea01943148bb50e5d4b48763c6f773aa0f3d90a88412773675a4282",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sw-broken",
+      "url": "https://api.github.com/repos/SpaceWorks-HQ/SpaceWorks/commits/c371d6e25f7dc618e3d100ded56fa02a3e84261b",
+      "access_utc": "2026-10-12T02:01:58.502375+00:00",
+      "version_context": "immutable commit",
+      "response_sha256": "782948e52d796d83ccab93598784c59cf018b063c3ee1c6e6e693674d2f40b17",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-broken.json",
+      "evidence_sha256": "dcb8b541dc452026c4332c104a979f6f08736cbe6f2aea4c499afef086d65349",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sw-change",
+      "url": "https://raw.githubusercontent.com/SpaceWorks-HQ/SpaceWorks/main/CHANGELOG.md",
+      "access_utc": "2026-10-12T02:01:58.433990+00:00",
+      "version_context": "moving current page or release record; see exact URL",
+      "response_sha256": "df635bef5fe6bae475edde29cf8d8d6e99eda96a7d3d8c02cd9e5dee1e6c0ad0",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-change.json",
+      "evidence_sha256": "610688f2b5114a12b9a3768016f95a3161760586b8b0ab20137e88d189233835",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sw-count",
+      "url": "https://api.github.com/repos/SpaceWorks-HQ/SpaceWorks/commits/6707d60b2bd680288d45785e94af52bc347f1897",
+      "access_utc": "2026-10-12T02:01:58.457505+00:00",
+      "version_context": "immutable commit",
+      "response_sha256": "80c671d83e552c4a5c3cebbe0f9f1224c135b82b3737f99af1ace73c6033829a",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-count.json",
+      "evidence_sha256": "500c2fd0ec1b7ee3a5afa3a34af089ed4d5f67d6df40f781ae94af910ce4c107",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sw-fix",
+      "url": "https://api.github.com/repos/SpaceWorks-HQ/SpaceWorks/commits/d3cd13cc42d1c2b823b30b57a1fcb3459601eb1a",
+      "access_utc": "2026-10-12T02:01:58.435969+00:00",
+      "version_context": "immutable commit",
+      "response_sha256": "7f6a38327b659e3e513cd627bd514f8c028cd44818ed08098d587099b0a2ae07",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-fix.json",
+      "evidence_sha256": "63e68bc95fc87f9ec584ced652ba581648d324bde6b1a0b9f4953d81521e5f1b",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sw-host",
+      "url": "https://raw.githubusercontent.com/SpaceWorks-HQ/SpaceWorks/d3cd13cc42d1c2b823b30b57a1fcb3459601eb1a/docs/self-hosting.md",
+      "access_utc": "2026-10-12T02:01:58.409394+00:00",
+      "version_context": "immutable commit",
+      "response_sha256": "fb61923dcff48133880fd734e13778e08e6193e16223883c3863509e820e8d2f",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-host.json",
+      "evidence_sha256": "4003fbba4ebadde16af8d222ac705f085dddb040c00b810f81a8ce91c60dbc27",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    },
+    {
+      "id": "sw-modules",
+      "url": "https://raw.githubusercontent.com/SpaceWorks-HQ/SpaceWorks/main/docs/MODULES.md",
+      "access_utc": "2026-10-12T02:01:58.413987+00:00",
+      "version_context": "moving current page or release record; see exact URL",
+      "response_sha256": "5e5de064711b935c590d1224290bd09580225366c47bd3b0733e53c801b44686",
+      "evidence_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-modules.json",
+      "evidence_sha256": "8b9c756ba02a364cd5cc4ef6ea076604d699f10cbc118965bca01816e23096d9",
+      "operation": "Read-only focused primary source/code/test inspection; not execution"
+    }
+  ],
+  "evidence_root": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence",
+  "shared_research_rule": "Own primary lookup may be reused across these assigned matched arms; no source PASS based on candidate agreements. No source ID silently rebound.",
+  "public_license_context": "Necessary focused excerpts only; upstream notices/URLs retained in evidence metadata. Current SpaceWorks GNU AGPL v3 is observed; its historical commit license identity was not resolved."
+}

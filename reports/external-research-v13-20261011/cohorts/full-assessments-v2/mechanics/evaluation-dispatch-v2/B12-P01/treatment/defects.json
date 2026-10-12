@@ -1,0 +1,39 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "B12-P01-treatment",
+  "material_defect_count": 0,
+  "nonmaterial_defect_count": 2,
+  "defects": [
+    {
+      "id": "D-T01",
+      "severity": "NONMATERIAL",
+      "type": "source-index navigation omission",
+      "axes": [
+        2
+      ],
+      "candidate_locator": "sources/index.md; final.md:65; source-map.json SRC-ELAN-MANUAL-TIER-TYPES",
+      "finding": "The final cites the new tier-type source and the JSON map includes its exact URL, but the Markdown source index does not add it.",
+      "consequence": "Navigation is less convenient; identity, source condition and correct substantive claim remain available.",
+      "primary_source_ids": [
+        "P-EAF"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "D-T02",
+      "severity": "NONMATERIAL",
+      "type": "optional alternative boundary not explicit in final",
+      "axes": [
+        3
+      ],
+      "candidate_locator": "final.md:66; SRC-PRAAT-TEXTGRID-FORMAT",
+      "finding": "TextGrid's strong interval invariants are summarized generally. Its nonoverlapping adjacent intervals and distinct point semantics would be consequential for an adopted adapter.",
+      "consequence": "No TextGrid support or lossless-overlap promise is made; compatibility remains conditional and the source record retains invariants.",
+      "primary_source_ids": [
+        "P-PRAAT"
+      ],
+      "status": "CONFIRMED"
+    }
+  ],
+  "unassessed_does_not_mean_no_defect": true
+}

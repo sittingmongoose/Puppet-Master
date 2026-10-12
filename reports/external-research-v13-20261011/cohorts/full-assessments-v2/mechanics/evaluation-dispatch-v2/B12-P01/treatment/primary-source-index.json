@@ -1,0 +1,295 @@
+{
+  "schema": "er13.independent_primary_source_index.v1",
+  "arm_id": "B12-P01-treatment",
+  "independent_research": true,
+  "matched_research_reused": true,
+  "blinding": "Imperfect: exact arm paths and frozen method text disclose the technique. No candidate author's feedback used.",
+  "records": [
+    {
+      "id": "P-VTT",
+      "family": "WebVTT",
+      "urls": [
+        "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/"
+      ],
+      "version": "2026-05-20 Candidate Recommendation Draft",
+      "locator": "Status; §§2.1–2.2, 3.1–3.4, 4.1–4.4, 7–8",
+      "observation": "Checked status, single data kind, ordered starts, positive intervals, permitted overlap, unchanged Unicode, cue spans/settings and region rendering limits.",
+      "condition": "Format support and rendering are profile/processor dependent; malformed preservation cannot be labeled conformant.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-TTML",
+      "family": "TTML2",
+      "urls": [
+        "https://www.w3.org/TR/2018/REC-ttml2-20181108/"
+      ],
+      "version": "2018-11-08 Recommendation, first edition",
+      "locator": "§§5, 7.2, 10, 12, 14; Appendix I",
+      "observation": "Checked processor/content profiles, frame/tick/media clock parameters, local timing, styles, language and scoped foreign metadata.",
+      "condition": "Exact profile and inherited parameters govern interpretation; metadata formal validity does not promise application preservation.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-MKV",
+      "family": "Matroska",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc9559.html",
+        "https://www.matroska.org/technical/elements.html",
+        "https://www.matroska.org/technical/notes.html"
+      ],
+      "version": "RFC 9559 (2024-10), plus living project pages",
+      "locator": "TrackEntry; timestamps; §§18–21 flags, selection and attachments",
+      "observation": "Checked typed tracks, separate identities/language/flags, scale and attached resources; player selection may override default hints.",
+      "condition": "Container/codec/player semantics differ from a multi-clip lesson graph. Notes fetched directly after a browser access error.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-ZIP14",
+      "family": "ZIP/Python 3.14",
+      "urls": [
+        "https://docs.python.org/3.14/library/zipfile.html"
+      ],
+      "version": "Documentation displayed 3.14.8",
+      "locator": "ZipInfo/open; extract/extractall; Path; compression and ZIP64",
+      "observation": "Checked duplicate entry identity, sanitation distinctions, CRC/header checking and reader compatibility conditions.",
+      "condition": "Product limits must apply to actual bytes; declarations and extraction helpers alone are insufficient.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-FF-RELEASE",
+      "family": "FFmpeg release applicability",
+      "urls": [
+        "https://ffmpeg.org/download.html",
+        "https://ffmpeg.org/general.html"
+      ],
+      "version": "Live pages accessed 2026-10-12",
+      "locator": "9.0.2 and 8.1.3 release entries; §2.5 subtitle matrix",
+      "observation": "Current release page names 9.0.2 (2026-09-18) and 8.1.3 (2026-09-21); support rows separate mux/demux/encode/decode.",
+      "condition": "The older n8.1.1 code remains a valid pinned example, but calling it latest in October is unsupported.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-SRT9",
+      "family": "FFmpeg SRT n9.0.2 and governing caller",
+      "urls": [
+        "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/libavformat/srtenc.c",
+        "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/libavformat/mux.h",
+        "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/libavformat/mux.c"
+      ],
+      "version": "n9.0.2",
+      "locator": "ff_srt_muxer; FF_OFMT_FLAG_MAX_ONE_OF_EACH definition; mux initialization validation",
+      "observation": "Read flag definition and actual enforcement, not just its name: SRT's default codec permits one subtitle stream; types without a default codec are disallowed.",
+      "condition": "Implementation-specific sidecar limit; default codec and flag combination govern. Direct source fetch resolved browser find misses.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Web plus direct URL source reading for definitions/caller enforcement."
+    },
+    {
+      "id": "P-FF-VTT",
+      "family": "FFmpeg WebVTT n9.0.2",
+      "urls": [
+        "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/libavformat/webvttdec.c",
+        "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n9.0.2/tests/fate/subtitles.mak"
+      ],
+      "version": "n9.0.2",
+      "locator": "read_ts; webvtt_read_header; read_packet; FATE WebVTT cases",
+      "observation": "Checked millisecond queue, skipped STYLE/REGION/NOTE chunks, side data, invalid timestamp loop exit and queued packet caller. Reviewed existing FATE test declarations.",
+      "condition": "Those tests were read, not run; conversion fixtures do not prove semantic package preservation.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-FF-HISTORY",
+      "family": "FFmpeg history",
+      "urls": [
+        "https://ffmpeg.org/pipermail/ffmpeg-devel/2025-June/344877.html",
+        "https://ffmpeg.org/pipermail/ffmpeg-cvslog/2024-March/141538.html"
+      ],
+      "version": "2025-06-10 discussion; commit f4167842c12ad0e406a2bed4c2bb17084b184710 (2024-03)",
+      "locator": "Discussion body; flag definition and SRT diff",
+      "observation": "Checked strict/permissive parsing disagreement and the one-stream flag's original default-codec restrictions.",
+      "condition": "Discussion is not merge proof; later tagged source supplies behavior evidence.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-FF-CLI",
+      "family": "FFmpeg CLI",
+      "urls": [
+        "https://ffmpeg.org/ffmpeg.html"
+      ],
+      "version": "Living documentation, not pinned to a binary",
+      "locator": "§4 stream selection; map/metadata/disposition options",
+      "observation": "Checked automatic selection, explicit mappings, filtergraph exceptions and metadata/disposition defaults.",
+      "condition": "Named binary/build and target profiles still require future validation.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-JSON",
+      "family": "JSON",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc8259.html"
+      ],
+      "version": "RFC 8259 (2017-12)",
+      "locator": "§4 objects; §8 encoding",
+      "observation": "Checked unique-name interoperability and differing duplicate-name behavior.",
+      "condition": "Rejecting duplicate manifest keys is a proposed product policy stronger than the RFC's SHOULD.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-UTF8",
+      "family": "UTF-8",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc3629.html"
+      ],
+      "version": "RFC 3629 (2003-11)",
+      "locator": "§§3–4 and security",
+      "observation": "Checked legal sequences and invalid-decoding protections.",
+      "condition": "Silent repair is a product preservation problem; the RFC does not prescribe this component's diagnostic UX.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-LANG",
+      "family": "BCP 47",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc5646.html"
+      ],
+      "version": "RFC 5646 (2009-09)",
+      "locator": "§§2.1, 3 and 4.5",
+      "observation": "Checked case-insensitivity, registry validity and preferred/canonical forms.",
+      "condition": "Raw source tag/display label must remain separate from normalized comparison value.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-EPUB",
+      "family": "EPUB package/media overlays",
+      "urls": [
+        "https://www.w3.org/TR/2026/REC-epub-33-20260113/"
+      ],
+      "version": "2026-01-13 Recommendation",
+      "locator": "§4 OCF paths/ZIP; §9 media overlays",
+      "observation": "Checked manifest/container constraints and audio-to-structured-text SMIL overlays.",
+      "condition": "Current overlays synchronize audio, not video; reading-system behavior remains conditional.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-EAF",
+      "family": "ELAN EAF model",
+      "urls": [
+        "https://www.mpi.nl/tools/elan/EAF_Annotation_Format_3.0_and_ELAN.pdf",
+        "https://www.mpi.nl/tools/elan/EAFv3.0.xsd",
+        "https://www.mpi.nl/tools/elan/docs/manual/Sec_Media_Files_and_Annotation_Files.html",
+        "https://www.mpi.nl/tools/elan/docs/manual/Sec_Tier.html",
+        "https://www.mpi.nl/tools/elan/docs/manual/Sec_Basic_Information_Annotations_tiers_and_linguistic_types.html"
+      ],
+      "version": "EAF 3.0 plus living official manual",
+      "locator": "XSD headType/timeType/tierType/alignableType/refAnnoType; manual stereotype table",
+      "observation": "Checked media URIs, shared time slots/optional values, alignable/referring annotations, parent links, millisecond assumption and tier constraints.",
+      "condition": "Manual None tiers disallow overlap; subdivision/association rules differ. PDF browser reopen failed; indexed official text plus directly read XSD/manual corroborate all assessed claims. Whole PDF text review is not claimed.",
+      "coverage": "COMPLETE",
+      "direct_response_hashes": {
+        "pdf": "713cec376a61d85e4edbdd2f876f901bb5053f5067243c422af6d5156f73373f",
+        "xsd": "59e76f90d5840813314b1e635480d044287b811ebd63a40e25cb4e73c6ad72bb"
+      },
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Web primary excerpts/manuals plus direct EAF 3.0 XSD reading; PDF bytes fetched, complete PDF text extraction unavailable."
+    },
+    {
+      "id": "P-PRAAT",
+      "family": "Praat TextGrid",
+      "urls": [
+        "https://praat.org/manual/TextGrid.html",
+        "https://praat.org/manual/TextGrid_file_formats.html"
+      ],
+      "version": "Living official manual",
+      "locator": "Tier definitions; file-format §§6–7",
+      "observation": "Checked interval/point tiers, positive adjacent nonoverlapping intervals, monotonic points, weak bounds and encoding behavior.",
+      "condition": "Importer/exporter restrictions must be profile-specific; no promise of arbitrary overlaps in one interval tier.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-DURABILITY",
+      "family": "Proposed persistence mechanism context",
+      "urls": [
+        "https://www.sqlite.org/atomiccommit.html",
+        "https://man7.org/linux/man-pages/man2/fsync.2.html"
+      ],
+      "version": "Living SQLite explanation; Linux man-page indexed excerpt",
+      "locator": "SQLite commit/journal flush and storage assumptions; directory sync requirement",
+      "observation": "Read durability/order assumptions and crash reconciliation context; manual full open failed, indexed primary excerpt describes directory sync.",
+      "condition": "Illustrative context only: neither arm selects SQLite, and the treatment expressly defers verification of platform/storage primitives.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    }
+  ],
+  "source_access_limits": [
+    {
+      "source": "EAF 3.0 PDF",
+      "document_read_coverage": "PARTIAL",
+      "note": "PDF browser opens failed; original bytes fetched, but no complete text reader available. Related official XSD/manuals and indexed primary text cover the asserted facts."
+    },
+    {
+      "source": "H5P package guide",
+      "document_read_coverage": "UNASSESSED",
+      "note": "Not a source used by this arm."
+    }
+  ],
+  "license_policy": "No source corpus or code redistributed. Governing license notices remain at exact linked sources: W3C document license; FFmpeg LGPL-2.1-or-later headers; Aegisub source BSD-style notices; 1EdTech specification license. Only evaluator paraphrases and locators retained."
+}

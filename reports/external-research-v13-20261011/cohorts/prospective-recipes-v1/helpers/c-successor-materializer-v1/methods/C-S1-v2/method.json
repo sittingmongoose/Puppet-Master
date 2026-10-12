@@ -1,0 +1,24 @@
+{
+  "schema": "er13.prospective-method-fragment.v1",
+  "card_id": "B02",
+  "method_id": "B02",
+  "version": "C-S1-v2",
+  "scope": "FULL",
+  "topology": "investigator -> independent critic/finalizer in same critic Goal; no reviser",
+  "candidate_contexts": 2,
+  "stage_maxima_seconds": {
+    "investigator": 1800,
+    "critic": 1800
+  },
+  "full_obligations_retained": true,
+  "role_deltas": {
+    "investigator": "empty; ordinary investigation unchanged",
+    "critic": "exact generic B10 critic bytes, applied before same-stage finalization",
+    "reviser": "unused empty file; no reviser is dispatched"
+  },
+  "composition": "B02 two-context topology plus exact existing B10 primary-context challenge in critic",
+  "hypothesis": "Existing generic B10 governing primary context and released version exceptions may help challenge consequential unsupported negative/default/limit claims before the same critic finalizes; untested hypothesis, not a successful repair claim.",
+  "authority": "root prospective C composition fixed before admissions/inputs; no case or evaluator facts",
+  "state": "PROSPECTIVE_UNSTARTED_ONLY",
+  "critic_delta_stage": "critic"
+}

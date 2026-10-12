@@ -1,0 +1,300 @@
+{
+  "arm_id": "B03-P01-control",
+  "independent_research": true,
+  "research_shared_across_matched_arms": true,
+  "observations": "../shared/primary-observations.json",
+  "decisive_evidence": "../shared/tantivy-token-boundary.json",
+  "public_source_records": [
+    {
+      "id": "PS01",
+      "title": "SQLite FTS5 manual",
+      "url": "https://www.sqlite.org/fts5.html",
+      "version_or_context": "Living manual, accessed 2026-10-12; actual notebook runtime unknown",
+      "locator": "2.1; 3; 4.3.1-4.3.5; 4.4.1-4.4.4; 6.3; 6.7; 6.12-6.13",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS02",
+      "title": "SQLite WAL",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_context": "Living manual; WAL since 3.7.0",
+      "locator": "1; 2.1-2.3; checkpoint/concurrency limitations",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS03",
+      "title": "SQLite ATTACH",
+      "url": "https://www.sqlite.org/lang_attach.html",
+      "version_or_context": "Living official manual",
+      "locator": "multi-database transaction atomicity paragraph",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS04",
+      "title": "SQLite compile options",
+      "url": "https://www.sqlite.org/compile.html",
+      "version_or_context": "Living official manual",
+      "locator": "SQLITE_ENABLE_FTS5",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS05",
+      "title": "SQLite 3.43.0 release",
+      "url": "https://www.sqlite.org/releaselog/3_43_0.html",
+      "version_or_context": "3.43.0, 2023-08-24",
+      "locator": "item 1",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS06",
+      "title": "SQLite malformed trigram configuration report",
+      "url": "https://sqlite.org/forum/forumpost/171bcc2bcd?t=c",
+      "version_or_context": "2024-08 report against July trunk; fix reported in 3.46.1",
+      "locator": "posts 1, 3, 4",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS07",
+      "title": "SQLite 3.46.1 release",
+      "url": "https://www.sqlite.org/releaselog/3_46_1.html",
+      "version_or_context": "3.46.1, 2024-08-13",
+      "locator": "tokenize= argument robustness item",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS08",
+      "title": "SQLite Unicode61 Polish letter discussion",
+      "url": "https://sqlite.org/forum/info/e336faf90e60d53f?t=c",
+      "version_or_context": "2020-2021; original reporter 3.30.1",
+      "locator": "posts 1-3",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS09",
+      "title": "SQLite nested update trigger report",
+      "url": "https://sqlite.org/bugs/info/552f36384c7900ef72448f71118f9c6fe8aa2553e7ef617ef7323c3d0f54b104",
+      "version_or_context": "2026-08-04/05; reported 3.45.1/3.45.3/3.53.2",
+      "locator": "corrected reproducer post 3 and maintainer response post 4",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS10",
+      "title": "Tantivy IndexWriter",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "version_or_context": "crate 0.26.2",
+      "locator": "prepare_commit; commit; delete_term; add_document; run",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS11",
+      "title": "Tantivy IndexReader",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/struct.IndexReader.html",
+      "version_or_context": "crate 0.26.2",
+      "locator": "reload; searcher",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS12",
+      "title": "Tantivy tokenizer module",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "version_or_context": "crate 0.26.2",
+      "locator": "default; en_stem; RemoveLongFilter entry",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS13",
+      "title": "Tantivy RemoveLongFilter",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/struct.RemoveLongFilter.html",
+      "version_or_context": "crate 0.26.2",
+      "locator": "type description and limit()",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS14",
+      "title": "Tantivy length filter source",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/src/tokenizer/remove_long.rs",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "predicate; advance; test_remove_long",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS15",
+      "title": "Tantivy default tokenizer caller",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/src/tokenizer/tokenizer_manager.rs",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "Default impl, default and en_stem registrations",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS16",
+      "title": "Tantivy SimpleTokenizer",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/src/tokenizer/simple_tokenizer.rs",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "search_token_end; advance; test_simple_tokenizer",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS17",
+      "title": "Tantivy update example",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/examples/deleting_updating_documents.rs",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "schema ID guidance; delete/add; commit/reload; assertions",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS18",
+      "title": "Tantivy changelog",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/CHANGELOG.md",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "0.26; 0.24; 0.22; 0.15.3; 0.13; 0.11",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS19",
+      "title": "Tantivy package VCS identity",
+      "url": "https://docs.rs/crate/tantivy/0.26.2/source/.cargo_vcs_info.json",
+      "version_or_context": "crate 0.26.2 -> 72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "git.sha1",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS20",
+      "title": "Tantivy 0.26.2 release",
+      "url": "https://github.com/quickwit-oss/tantivy/releases/tag/0.26.2",
+      "version_or_context": "0.26.2; tag 72d1ef9",
+      "locator": "release tag heading/commit",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS21",
+      "title": "Tantivy CJK issue 718",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/718",
+      "version_or_context": "2019-11-29, closed",
+      "locator": "entire discussion, especially later diagnosis and maintainer conclusion",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS22",
+      "title": "Tantivy crash issue 3079",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/3079",
+      "version_or_context": "2026-09 report, open at lookup",
+      "locator": "body and missing commit/meta state",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS23",
+      "title": "Tantivy Windows issue 2847",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/2847",
+      "version_or_context": "reported 0.25.0; Windows 10/11 NTFS",
+      "locator": "body version and managed metadata race",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS24",
+      "title": "Tantivy segments issue 2932",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/2932",
+      "version_or_context": "2026-05 downstream report, open",
+      "locator": "body and activity",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS25",
+      "title": "Tantivy watcher issue 3100",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/3100",
+      "version_or_context": "reported 0.22.1, macOS downstream evict/reopen churn",
+      "locator": "body mechanism/environment/activity",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS26",
+      "title": "SQLite integrity-check history",
+      "url": "https://sqlite.org/hctree/info/782163693f37aeb6",
+      "version_or_context": "check-in 782163693f37aeb65209bebbaeb6659a36881b8c4b4bec778b366658488bf966, 2020-09-21",
+      "locator": "summary and changed ext/fts5/test/fts5integrity.test listing",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS27",
+      "title": "Tantivy packaged feature identity",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/Cargo.toml",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "package version/license; features",
+      "coverage": "COMPLETE"
+    }
+  ],
+  "research_limits": [
+    {
+      "family": "Historical issue current-version reproduction/fix closure",
+      "coverage": "UNASSESSED",
+      "boundary": "Current notebook dependency unknown. Reports used only as conditional investigations."
+    },
+    {
+      "family": "Actual target notebook repository/code/callers/tests/store capabilities",
+      "coverage": "UNASSESSED",
+      "boundary": "No repository identified in brief/plan/input map; user fact may remain unknown."
+    },
+    {
+      "family": "Actual packaged runtime/platforms/scripts/private corpus/budgets/performance",
+      "coverage": "UNASSESSED",
+      "boundary": "Unprovided inputs and future measurements; no obligation to deploy or benchmark private data."
+    }
+  ],
+  "input_scientific_documents": {
+    "investigator/discovery.md": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/investigator/files/discovery.md",
+      "bytes": 14449,
+      "sha256": "84d177bf8aad0f5945df85d290825c5be3b0106fb3c4e0b6372433e03f5c558f"
+    },
+    "investigator/draft.md": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/investigator/files/draft.md",
+      "bytes": 20376,
+      "sha256": "34e2df129239568c9a220cb8d99b99f9338d2aab1f2035323675f95349cd3b7e"
+    },
+    "investigator/source-map.json": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/investigator/files/source-map.json",
+      "bytes": 12575,
+      "sha256": "c41a5b24c2fc0d80ec7614ed7a46e112628a8ec42f7da05db1104b72ec4247d6"
+    },
+    "investigator/revealed-plan.md": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/investigator/files/revealed-plan.md",
+      "bytes": 2334,
+      "sha256": "b0efb8261b14a8f968b4ccff9a188ebf1e7ce47309d0c9344d0ccb9f64cba43f"
+    },
+    "investigator/sources/index.md": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/investigator/files/sources/index.md",
+      "bytes": 8264,
+      "sha256": "c1f18924f9ee7af406e4d36effa8387f24d8ed8f7d9827561fa404556982a706"
+    },
+    "critic/critique.md": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/critic/files/critique.md",
+      "bytes": 14851,
+      "sha256": "4930a547570dcb477b52574e3bbe9923574b2358a7645315b7b1ecb69fa02844"
+    },
+    "critic/source-map.json": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/critic/files/source-map.json",
+      "bytes": 11555,
+      "sha256": "07a22fc58cec3dd878ff3d7a50ba0b4c1972029be3fa750e783a4e71b7a107fe"
+    },
+    "reviser/final.md": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/reviser/files/final.md",
+      "bytes": 21492,
+      "sha256": "5b5006cbf9f3b4b85f23e14ba85c45e415a1c55fda3042eb2b1163b7e9529445"
+    },
+    "reviser/source-map.json": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/reviser/files/source-map.json",
+      "bytes": 9974,
+      "sha256": "b1d93b92cbba5f00cffea55eb86f8591fceb3ac3f5b9a210944aa20bd9dd08de"
+    },
+    "brief": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-control-eval-inputs/control-inputs/brief.md",
+      "bytes": 2313,
+      "sha256": "cc638ce3f990b394825cfe1c5a23b24c08dad37ddfeb061317a12d98d5eb1bae"
+    },
+    "plan": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-control-eval-inputs/control-inputs/plan.md",
+      "bytes": 2334,
+      "sha256": "b0efb8261b14a8f968b4ccff9a188ebf1e7ce47309d0c9344d0ccb9f64cba43f"
+    }
+  },
+  "no_candidate_research_as_authority": true
+}

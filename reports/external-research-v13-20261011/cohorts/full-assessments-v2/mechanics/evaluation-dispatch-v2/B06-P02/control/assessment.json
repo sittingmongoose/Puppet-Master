@@ -1,0 +1,179 @@
+{
+  "schema": "er13.original-assessment.v1",
+  "block_id": "B06-P02",
+  "contract_version": "er13-independent-evaluation-v1",
+  "original_recorded_at_utc": "2026-10-12T02:01:57.522484+00:00",
+  "independence": "Technique-bearing paths make blinding imperfect. Separate original arm judgment; no comparison made here.",
+  "arms": [
+    {
+      "arm_id": "B06-P02-control",
+      "scope": "FULL",
+      "source_judgment": {
+        "status": "PASS",
+        "finite_assessment": true,
+        "criterion": "No material unsupported claim, required omission, false rejection or preservation loss under full declared required coverage.",
+        "material_final_defect_ids": [],
+        "not_deployment_certification": true
+      },
+      "coverage": {
+        "required_overall": "COMPLETE",
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 2,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 3,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          }
+        ],
+        "details": "coverage.json",
+        "supplemental_limit": null
+      },
+      "defects": {
+        "material_final_count": 0,
+        "material_final_ids": [],
+        "details": "defects.json"
+      },
+      "delivery": {
+        "status": "COMPLETE",
+        "final_present": true,
+        "frozen_final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-control/run/B06-P02-control/control/terminal-handoffs/reviser/files/final.md",
+        "frozen_final_sha256": "0b1c637935f9fde568e0a54e8d8f28bab578dd4de8d8b7d36aed7e5d9e0bc206",
+        "required_missing_outputs": [],
+        "actual_tasks_terminal_zero_pending": true,
+        "source_truth_implied": false
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_ON_FROZEN_DELIVERY_BOUND",
+        "whole_maximum_seconds": 3600,
+        "t0_utc": "2026-10-12T00:35:33.769Z",
+        "whole_deadline_utc": "2026-10-12T01:35:33.769Z",
+        "frozen_packet_utc": "2026-10-12T01:30:54.239669+00:00",
+        "complete_frozen_delivery_upper_bound_elapsed_seconds": 3320.471,
+        "all_observed_native_terminals_before_stage_deadlines": true,
+        "native_final_terminal_proxy_elapsed_seconds": 3207.231,
+        "proxy_warning": "Native terminal updatedAt is not actual last artifact write or request-to-quiet-final timing. Packet freeze only gives a conservative complete-delivery upper bound.",
+        "last_complete_scientific_artifact_utc": "UNKNOWN",
+        "actual_request_to_quiet_final_seconds": "UNKNOWN",
+        "actual_provider_queue_start_finish": "UNKNOWN",
+        "clocks_changed": false,
+        "stage_observations": [
+          {
+            "stage": "investigator",
+            "request_utc": "2026-10-12T00:35:34.635Z",
+            "dispatch_capture_utc": "2026-10-12T00:35:35.463Z",
+            "stage_deadline_utc": "2026-10-12T01:05:34.635Z",
+            "native_created_utc": "2026-10-12T00:35:59+00:00",
+            "native_terminal_updated_utc": "2026-10-12T00:58:08+00:00",
+            "native_time_used_seconds": 1328,
+            "native_window_seconds": 1329,
+            "terminal_before_stage_deadline": true,
+            "same_birth_exact_objective": true,
+            "actual_task_terminal_observed": "completed",
+            "pending_child_runs_observed": false
+          },
+          {
+            "stage": "critic",
+            "request_utc": "2026-10-12T01:07:54.094Z",
+            "dispatch_capture_utc": "2026-10-12T01:07:55.964Z",
+            "stage_deadline_utc": "2026-10-12T01:19:54.094Z",
+            "native_created_utc": "2026-10-12T01:08:09+00:00",
+            "native_terminal_updated_utc": "2026-10-12T01:12:37+00:00",
+            "native_time_used_seconds": 268,
+            "native_window_seconds": 268,
+            "terminal_before_stage_deadline": true,
+            "same_birth_exact_objective": true,
+            "actual_task_terminal_observed": "completed",
+            "pending_child_runs_observed": false
+          },
+          {
+            "stage": "reviser",
+            "request_utc": "2026-10-12T01:23:14.017Z",
+            "dispatch_capture_utc": "2026-10-12T01:23:14.753Z",
+            "stage_deadline_utc": "2026-10-12T01:35:33.769Z",
+            "native_created_utc": "2026-10-12T01:23:24+00:00",
+            "native_terminal_updated_utc": "2026-10-12T01:29:01+00:00",
+            "native_time_used_seconds": 336,
+            "native_window_seconds": 337,
+            "terminal_before_stage_deadline": true,
+            "same_birth_exact_objective": true,
+            "actual_task_terminal_observed": "completed",
+            "pending_child_runs_observed": false
+          }
+        ]
+      },
+      "method_compliance": {
+        "status": "PARTIAL_PROVENANCE_COVERAGE",
+        "declared_scope": "FULL",
+        "declared_product_contexts": 3,
+        "declared_topology": "investigator → critic → reviser",
+        "snapshot_stages_match_declared_topology": true,
+        "reveal_receipt_hashes_match_science_and_exact_plan": true,
+        "pre_reveal_input_order_and_exactly_one_invocation_independently_proven": "UNKNOWN without permitted full execution trace",
+        "native_receipts_present_consistent": true,
+        "independent_evaluation_role": "Original evaluator only; no Goals, subagents, candidates, author feedback, Git/canon/shared-server/provider changes.",
+        "component_preparation_inference": "NOT_APPLICABLE: FULL frozen proposal; no component-to-full pipeline claim."
+      },
+      "native_identity_provenance": {
+        "coverage": "PARTIAL",
+        "same_birth_objective_terminal_receipts_consistent": true,
+        "captured_native_statuses": "active at birth, complete at terminal",
+        "task_statuses_observed": "completed with no pending children",
+        "independent_native_to_task_session_linkage": "UNKNOWN beyond packet/receipt/objective custody",
+        "actual_model_status_label": "gpt-6-luna",
+        "actual_provider_execution_model_tier": "UNKNOWN beyond returned status/request labels",
+        "native_goal_recipe_qualification": "Not independently certified from raw receipt consistency alone",
+        "private_route_and_native_identifiers_published": false
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "native_cumulative_usage_counters": "Present in frozen terminal receipts; numerical token values omitted from public output under privacy rule. Counters are not independently linked billing.",
+          "native_goal_window_sum_seconds": 1934,
+          "native_goal_window_union_seconds": 1934,
+          "native_goal_window_overlap_seconds": 0,
+          "window_domain": "Native Goal birth-to-terminal windows only; not started context occupancy, active provider activity or billed time.",
+          "actual_created_started_context_occupancy": "UNKNOWN",
+          "actual_active_provider_activity": "UNKNOWN",
+          "input_cached_output_reasoning_usage_breakdown": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "billing_amount": "UNKNOWN",
+          "preparation_support_publication_cost": "UNKNOWN"
+        },
+        "independent_evaluation": {
+          "classification": "independent_evaluation",
+          "observed_start_utc": "2026-10-12T01:48:20+00:00",
+          "observed_original_record_utc": "2026-10-12T02:01:57.522484+00:00",
+          "billing_and_provider_usage": "UNKNOWN",
+          "excluded_from_candidate_product_cost": true
+        },
+        "full_denominator": "This assigned arm remains included regardless of source judgment. No failure records or missing outputs in this packet; no whole-campaign denominator inferred.",
+        "unknown_is_zero": false,
+        "overlapping_counters_added": false
+      }
+    }
+  ]
+}

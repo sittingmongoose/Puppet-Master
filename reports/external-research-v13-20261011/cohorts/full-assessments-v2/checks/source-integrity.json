@@ -1,0 +1,2101 @@
+{
+  "closure_sha256": "e7b5b22e839b82c4bed09a6459d9099bbc30eeb35925b172ca976ce00de51eb1",
+  "verified_entries": [
+    {
+      "path": "state/eval-coordinator-v2/B02-P02-output-verification.json",
+      "sha256": "59e08c7efc79783acd090a00138ee2cd7f8bd5fea7d3d302cfe083121625f3c8"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/manifest.json",
+      "sha256": "42ab3de9f50de2658bf5dbe1afa53e5c442dfb9b24c3b4cac85009a247232f22"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/assessment.md",
+      "sha256": "abe4b14ce825cac2152913c7ed051119df869c69def8c2c8fbde712249070828"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/assessment.json",
+      "sha256": "9bd19835c34268f80ac755a2f7453cdc9ad218a939e47b3594b4164a5bcadf20"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/coverage.json",
+      "sha256": "d5c3e2f8d375c8b9dba97a0bb69ce4b566781fa2ace897471f0f2e8c13c32036"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/defects.json",
+      "sha256": "38a1cf7f2281d3583287948df7491176a1530c31bfac0275c4440b338b8449b1"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/primary-source-index.json",
+      "sha256": "6046e0eee6884dd3c5a8de4ba281b66993740759ca0b77ad9f5c0cc958731245"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/input-integrity.json",
+      "sha256": "7acc8caaf78273d2e0ec6ac0ddb168c7921124d777c616a2819c7096acfa3eac"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/evaluation-context.json",
+      "sha256": "cf1bfad5cd6fba5a47ac5cc80f81164b1b77e39c7999dc7df0cf0a7e7d736a52"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/evidence/mrbs-context.md",
+      "sha256": "3d920dcaf3c03443a933c665938fc642e1eadeb82d2549e099eaa607f3cd8904"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/assessment.json",
+      "sha256": "9bd19835c34268f80ac755a2f7453cdc9ad218a939e47b3594b4164a5bcadf20"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/manifest.json",
+      "sha256": "2085d4886986cded72420510aeda0486038d96642c3f081556b0f0da02f61cfb"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/assessment.md",
+      "sha256": "7ba59801b230b30d0d843e8d9b129d7c08a32a89f53cb8f8804d13ca1b5a113e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/assessment.json",
+      "sha256": "859915d677019b3c561b8c78a5261c94495b3a49b04c50c861f3f2c943a53dcd"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/coverage.json",
+      "sha256": "563dfd21a56fea51d38e9240d19c363aa84734729c6dd02d4a001b4558ef3723"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/defects.json",
+      "sha256": "da47ea48253f04d2c123360de21971700d3fa2600b1a9160ca34aa8340d4cc46"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/primary-source-index.json",
+      "sha256": "6941a7959bd8949ee791d0676018484ff950d754722a35593238bee5ba5b9fea"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/input-integrity.json",
+      "sha256": "7acc8caaf78273d2e0ec6ac0ddb168c7921124d777c616a2819c7096acfa3eac"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/evaluation-context.json",
+      "sha256": "cf1bfad5cd6fba5a47ac5cc80f81164b1b77e39c7999dc7df0cf0a7e7d736a52"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/evidence/mrbs-context.md",
+      "sha256": "3d920dcaf3c03443a933c665938fc642e1eadeb82d2549e099eaa607f3cd8904"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/assessment.json",
+      "sha256": "859915d677019b3c561b8c78a5261c94495b3a49b04c50c861f3f2c943a53dcd"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/input-integrity.json",
+      "sha256": "7acc8caaf78273d2e0ec6ac0ddb168c7921124d777c616a2819c7096acfa3eac"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/evaluation-context.json",
+      "sha256": "cf1bfad5cd6fba5a47ac5cc80f81164b1b77e39c7999dc7df0cf0a7e7d736a52"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/evidence/mrbs-context.md",
+      "sha256": "3d920dcaf3c03443a933c665938fc642e1eadeb82d2549e099eaa607f3cd8904"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/assessment.md",
+      "sha256": "abe4b14ce825cac2152913c7ed051119df869c69def8c2c8fbde712249070828"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/assessment.json",
+      "sha256": "9bd19835c34268f80ac755a2f7453cdc9ad218a939e47b3594b4164a5bcadf20"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/coverage.json",
+      "sha256": "d5c3e2f8d375c8b9dba97a0bb69ce4b566781fa2ace897471f0f2e8c13c32036"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/defects.json",
+      "sha256": "38a1cf7f2281d3583287948df7491176a1530c31bfac0275c4440b338b8449b1"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/primary-source-index.json",
+      "sha256": "6046e0eee6884dd3c5a8de4ba281b66993740759ca0b77ad9f5c0cc958731245"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/manifest.json",
+      "sha256": "42ab3de9f50de2658bf5dbe1afa53e5c442dfb9b24c3b4cac85009a247232f22"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/assessment.md",
+      "sha256": "7ba59801b230b30d0d843e8d9b129d7c08a32a89f53cb8f8804d13ca1b5a113e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/assessment.json",
+      "sha256": "859915d677019b3c561b8c78a5261c94495b3a49b04c50c861f3f2c943a53dcd"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/coverage.json",
+      "sha256": "563dfd21a56fea51d38e9240d19c363aa84734729c6dd02d4a001b4558ef3723"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/defects.json",
+      "sha256": "da47ea48253f04d2c123360de21971700d3fa2600b1a9160ca34aa8340d4cc46"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/primary-source-index.json",
+      "sha256": "6941a7959bd8949ee791d0676018484ff950d754722a35593238bee5ba5b9fea"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/manifest.json",
+      "sha256": "2085d4886986cded72420510aeda0486038d96642c3f081556b0f0da02f61cfb"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/comparison.md",
+      "sha256": "b99a47c15f5556319396bc374d4bba848cdd44450f219bc1fe886c75b18bc9be"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/comparison.json",
+      "sha256": "2154e73aa801a90c8d6f1e5b09dc6b5ca197fd0737b31f0839538bb07d6ae013"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/input-integrity.json",
+      "sha256": "7acc8caaf78273d2e0ec6ac0ddb168c7921124d777c616a2819c7096acfa3eac"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/evaluation-context.json",
+      "sha256": "cf1bfad5cd6fba5a47ac5cc80f81164b1b77e39c7999dc7df0cf0a7e7d736a52"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/evidence/mrbs-context.md",
+      "sha256": "3d920dcaf3c03443a933c665938fc642e1eadeb82d2549e099eaa607f3cd8904"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/assessment.md",
+      "sha256": "abe4b14ce825cac2152913c7ed051119df869c69def8c2c8fbde712249070828"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/assessment.json",
+      "sha256": "9bd19835c34268f80ac755a2f7453cdc9ad218a939e47b3594b4164a5bcadf20"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/coverage.json",
+      "sha256": "d5c3e2f8d375c8b9dba97a0bb69ce4b566781fa2ace897471f0f2e8c13c32036"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/defects.json",
+      "sha256": "38a1cf7f2281d3583287948df7491176a1530c31bfac0275c4440b338b8449b1"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/primary-source-index.json",
+      "sha256": "6046e0eee6884dd3c5a8de4ba281b66993740759ca0b77ad9f5c0cc958731245"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/control/manifest.json",
+      "sha256": "42ab3de9f50de2658bf5dbe1afa53e5c442dfb9b24c3b4cac85009a247232f22"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/assessment.md",
+      "sha256": "7ba59801b230b30d0d843e8d9b129d7c08a32a89f53cb8f8804d13ca1b5a113e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/assessment.json",
+      "sha256": "859915d677019b3c561b8c78a5261c94495b3a49b04c50c861f3f2c943a53dcd"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/coverage.json",
+      "sha256": "563dfd21a56fea51d38e9240d19c363aa84734729c6dd02d4a001b4558ef3723"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/defects.json",
+      "sha256": "da47ea48253f04d2c123360de21971700d3fa2600b1a9160ca34aa8340d4cc46"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/primary-source-index.json",
+      "sha256": "6941a7959bd8949ee791d0676018484ff950d754722a35593238bee5ba5b9fea"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/treatment/manifest.json",
+      "sha256": "2085d4886986cded72420510aeda0486038d96642c3f081556b0f0da02f61cfb"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/manifest.json",
+      "sha256": "bda36031243b2fcb2f526f16c5eda0b74fc48f210dfa58cc53ed637ac923b4c1"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/comparison.md",
+      "sha256": "b99a47c15f5556319396bc374d4bba848cdd44450f219bc1fe886c75b18bc9be"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/comparison.json",
+      "sha256": "2154e73aa801a90c8d6f1e5b09dc6b5ca197fd0737b31f0839538bb07d6ae013"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/comparison-manifest.json",
+      "sha256": "29b77d173a1f7e4e80e15df98398bdc019d3864d5f5063c60b4c5bb57d10022d"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/record-errata.json",
+      "sha256": "50883feba387a8524a694ea37a5cb94231148800a6f45782c55911b9a9a7b7bc"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/comparison.json",
+      "sha256": "2154e73aa801a90c8d6f1e5b09dc6b5ca197fd0737b31f0839538bb07d6ae013"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B02-P02/record-errata.json",
+      "sha256": "50883feba387a8524a694ea37a5cb94231148800a6f45782c55911b9a9a7b7bc"
+    },
+    {
+      "path": "state/eval-coordinator-v2/B03-P01-output-verification.json",
+      "sha256": "8b0777bf3d10db18cc816f7df26c4d262d4e8d3b2b3c8f7a0d2024f36aa75574"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/control/manifest.json",
+      "sha256": "ba5fd8d22ad8b5ac2706ffc9d02065cb60a0b0662f9f88a07c3f703e7273e85c"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/control/assessment.md",
+      "sha256": "41b8b6a911034a97bd173d0425cd1edef32e10af9b316c9b52ad80e545fd5885"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/control/assessment.json",
+      "sha256": "a951573a83a2d14cb8c2900d0d2a84c16134dcc0ebf9c51daf7fca684cd3e108"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/control/coverage.json",
+      "sha256": "d7a52d95ab11ed6cafc72ee5633a0bda7d22ea1d801f76c40c999a32aa123b50"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/control/defects.json",
+      "sha256": "ce3c8c5f952fd26b9fd88da2a15ffa28dd97143a2b3509f93de093e7cc89d2d9"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/control/primary-source-index.json",
+      "sha256": "a24b0de27c7232ac7b204e05a99e09c7ad1cb6ef26a845aac8f0282ac1993132"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/shared/input-integrity.json",
+      "sha256": "e272ed858289f84c6b1bf220aff8246eea54a4447421cfa2b7c8da219e0445a9"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/shared/primary-observations.json",
+      "sha256": "fe4bf836b5cd8f21a6092e2f9648c5932f9fec84340f0865c577e27bbddc6f29"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/shared/tantivy-token-boundary.json",
+      "sha256": "d1cbe46eb6fca25c3a2980d06c68be264091100352ddf0b41be577bf8472b3ef"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/shared/TANTIVY-LICENSE.txt",
+      "sha256": "acacd14bebbffdb30d62443c282fb4da3e81915a9f69c63d5d745a029f44de8a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/control/assessment.md",
+      "sha256": "41b8b6a911034a97bd173d0425cd1edef32e10af9b316c9b52ad80e545fd5885"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/control/assessment.json",
+      "sha256": "a951573a83a2d14cb8c2900d0d2a84c16134dcc0ebf9c51daf7fca684cd3e108"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/treatment/manifest.json",
+      "sha256": "b64e6afae0b16e1dbdf153dda48d9d70d5e2386bad6364d16d9547a56d6091d1"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/treatment/assessment.md",
+      "sha256": "98dedea4ff2c2c7097eda2ef1cd793b1e29ff858da604b97b99f674542690b84"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/treatment/assessment.json",
+      "sha256": "097b663dd202723ac6b3d8daff029ab29c1b116d1d4e216e544fc26715ecabd6"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/treatment/coverage.json",
+      "sha256": "2fdbea78084f67aebe2588cdc8bb0deec98a82d40b49965bedbc72849b5cd4a0"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/treatment/defects.json",
+      "sha256": "0f9f994e3650c659dcb8c0d123e930975dd1a9002327044f8853ee059f5bba4d"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/treatment/primary-source-index.json",
+      "sha256": "fbc30542fdce4a00633b68ffe31062f008bef3aab77039676f0855109460f881"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/shared/input-integrity.json",
+      "sha256": "e272ed858289f84c6b1bf220aff8246eea54a4447421cfa2b7c8da219e0445a9"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/shared/primary-observations.json",
+      "sha256": "fe4bf836b5cd8f21a6092e2f9648c5932f9fec84340f0865c577e27bbddc6f29"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/shared/tantivy-token-boundary.json",
+      "sha256": "d1cbe46eb6fca25c3a2980d06c68be264091100352ddf0b41be577bf8472b3ef"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/shared/TANTIVY-LICENSE.txt",
+      "sha256": "acacd14bebbffdb30d62443c282fb4da3e81915a9f69c63d5d745a029f44de8a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/treatment/assessment.md",
+      "sha256": "98dedea4ff2c2c7097eda2ef1cd793b1e29ff858da604b97b99f674542690b84"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/treatment/assessment.json",
+      "sha256": "097b663dd202723ac6b3d8daff029ab29c1b116d1d4e216e544fc26715ecabd6"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/shared/input-integrity.json",
+      "sha256": "e272ed858289f84c6b1bf220aff8246eea54a4447421cfa2b7c8da219e0445a9"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/shared/primary-observations.json",
+      "sha256": "fe4bf836b5cd8f21a6092e2f9648c5932f9fec84340f0865c577e27bbddc6f29"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/shared/tantivy-token-boundary.json",
+      "sha256": "d1cbe46eb6fca25c3a2980d06c68be264091100352ddf0b41be577bf8472b3ef"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/shared/TANTIVY-LICENSE.txt",
+      "sha256": "acacd14bebbffdb30d62443c282fb4da3e81915a9f69c63d5d745a029f44de8a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/control/assessment.md",
+      "sha256": "41b8b6a911034a97bd173d0425cd1edef32e10af9b316c9b52ad80e545fd5885"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/control/assessment.json",
+      "sha256": "a951573a83a2d14cb8c2900d0d2a84c16134dcc0ebf9c51daf7fca684cd3e108"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/control/coverage.json",
+      "sha256": "d7a52d95ab11ed6cafc72ee5633a0bda7d22ea1d801f76c40c999a32aa123b50"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/control/defects.json",
+      "sha256": "ce3c8c5f952fd26b9fd88da2a15ffa28dd97143a2b3509f93de093e7cc89d2d9"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/control/primary-source-index.json",
+      "sha256": "a24b0de27c7232ac7b204e05a99e09c7ad1cb6ef26a845aac8f0282ac1993132"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/control/manifest.json",
+      "sha256": "ba5fd8d22ad8b5ac2706ffc9d02065cb60a0b0662f9f88a07c3f703e7273e85c"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/treatment/assessment.md",
+      "sha256": "98dedea4ff2c2c7097eda2ef1cd793b1e29ff858da604b97b99f674542690b84"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/treatment/assessment.json",
+      "sha256": "097b663dd202723ac6b3d8daff029ab29c1b116d1d4e216e544fc26715ecabd6"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/treatment/coverage.json",
+      "sha256": "2fdbea78084f67aebe2588cdc8bb0deec98a82d40b49965bedbc72849b5cd4a0"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/treatment/defects.json",
+      "sha256": "0f9f994e3650c659dcb8c0d123e930975dd1a9002327044f8853ee059f5bba4d"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/treatment/primary-source-index.json",
+      "sha256": "fbc30542fdce4a00633b68ffe31062f008bef3aab77039676f0855109460f881"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/treatment/manifest.json",
+      "sha256": "b64e6afae0b16e1dbdf153dda48d9d70d5e2386bad6364d16d9547a56d6091d1"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/manifest.json",
+      "sha256": "81b6b08498b120d63241153c9f2924751daba01070dd1387451140b9be6d740c"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P01/comparison.json",
+      "sha256": "b8d16e32181e568f89c5d51f6e4dbed18ebc713348bf14d1c908fe90fe765d34"
+    },
+    {
+      "path": "state/eval-coordinator-v2/B03-P02-output-verification.json",
+      "sha256": "ff994f1d1f566972ac2cf4b17994c875d6eee09590ab4cafab2802641168a204"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/control/manifest.json",
+      "sha256": "7331ef13af5888dc51c8c1a5da0fccda1ca696d6d763a6533d87a7977386acda"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/control/assessment.md",
+      "sha256": "17b241e42b4ed51dead81bfccce7673565ba90e0458835b1e6e0f1bbb9295055"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/control/assessment.json",
+      "sha256": "c557d5dcbe0be2b8f18871694dee8ced0bf4adcff01c1dc39d10574ff2d4b2d8"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/control/coverage.json",
+      "sha256": "66356fc4e71e1f303dac7928ce2866b23021af64ab468fdda25989f7cf539815"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/control/defects.json",
+      "sha256": "33982c2f4cae7cbc1050ff28009825a9209b4e3096689c45732078baf4fa2f04"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/control/primary-source-index.json",
+      "sha256": "0a089854f29ede70856e1a38a613f502edf57549310b9b1491c24e5af90e6131"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/control/evidence/input-verification.json",
+      "sha256": "2b7b336c7aba38e1441cc79412fbd34edc398e60e875f0319f63a9c6a96cb96f"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/control/assessment.md",
+      "sha256": "17b241e42b4ed51dead81bfccce7673565ba90e0458835b1e6e0f1bbb9295055"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/control/assessment.json",
+      "sha256": "c557d5dcbe0be2b8f18871694dee8ced0bf4adcff01c1dc39d10574ff2d4b2d8"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/treatment/manifest.json",
+      "sha256": "062bc966fedc2a77509b2603d61084a04ac90ad4c7d4ec1199416ccb082d0cf9"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/treatment/assessment.md",
+      "sha256": "d94de8040cb99df0dfb0ea4b4ce75bbeee621bb0e0b5aa178901aecb3f0a21cb"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/treatment/assessment.json",
+      "sha256": "2b17bd47d32c444ee4e59461f13dcd236850c71eed6f7652bf5cfad155c734ab"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/treatment/coverage.json",
+      "sha256": "b02a2d466f05019ce8f6f67c798283fbd5d80868f46ab6766d5fea40ae125943"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/treatment/defects.json",
+      "sha256": "75f91d8feea718fa4975a92fe717f383c7406e0b60f2f69e88a28f1357dcec70"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/treatment/primary-source-index.json",
+      "sha256": "1510fc7da94eaf8ae0fbafb5dae8702d039be380aae1f525600e87643e8214ad"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/treatment/evidence/input-verification.json",
+      "sha256": "d37ff589f85040ad3dcf1f36ff7d8df41b2b0a285c3220ed6cced49e2bf1ab41"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/treatment/assessment.md",
+      "sha256": "d94de8040cb99df0dfb0ea4b4ce75bbeee621bb0e0b5aa178901aecb3f0a21cb"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/treatment/assessment.json",
+      "sha256": "2b17bd47d32c444ee4e59461f13dcd236850c71eed6f7652bf5cfad155c734ab"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B03-P02/comparison.json",
+      "sha256": "da7b17f5db2cb8a55c651d295b041ecfcaeb639252d6fbe945145cfe6c9dbd61"
+    },
+    {
+      "path": "state/eval-coordinator-v2/B06-P02-output-verification.json",
+      "sha256": "107f9d8843a3913d2afd70386f35174ee798e50cd11e8f378cf385f8d25515eb"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/control/manifest.json",
+      "sha256": "ae026a224334668dd68c3c0cc6154fb832e123814edae48b5759347f112546b6"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/control/assessment.json",
+      "sha256": "dbe0a41d5af0c6da9926dcd672dd53ae18e05000faa66e7c9ba970c9104975fa"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/control/assessment.md",
+      "sha256": "70e5d5b092be4890de9e9b49ae52374d2f012ea4cf0ecb20257962e85277e076"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/control/coverage.json",
+      "sha256": "65cc934015f4b69f1e009cb46dae9508eb5f12688b00d5d75351fa2c5c6ea344"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/control/defects.json",
+      "sha256": "731944368d217a458ec280b2c834f03bda76043bdbcf1b03f1b2edbb216f11b1"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/control/primary-source-index.json",
+      "sha256": "85605c3fbca817549d9d67f27fa7f5a25dc71156741daf5dbff8f335647f2a4a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/control/assessment.json",
+      "sha256": "dbe0a41d5af0c6da9926dcd672dd53ae18e05000faa66e7c9ba970c9104975fa"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/treatment/manifest.json",
+      "sha256": "d67abca73969b8987c3eb66ed056ffe06269b2ce10095f7a6969bc1c4d6519c4"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/treatment/assessment.json",
+      "sha256": "017939ac5234bc351749d28aa7ed9174354c21fcc42471617e4698f2bd0d5ad6"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/treatment/assessment.md",
+      "sha256": "9890bbdcc9226a607fa9af73c9c1b6f3ecb3c35459156823257f50a4c2c4459b"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/treatment/coverage.json",
+      "sha256": "97d94b972c183d72db77cb648f51c1e9b81fbcee4a77358467bd08cf01d2ae6d"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/treatment/defects.json",
+      "sha256": "1b2d64133bda32cdacd1132fc9afc5c2f9c531f09514e2701ab36d2a5741e14a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/treatment/primary-source-index.json",
+      "sha256": "b20e4b554c7f3667145bd7f42de6277e95259e17ac39bf7de6a4536e11f357d4"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/treatment/assessment.json",
+      "sha256": "017939ac5234bc351749d28aa7ed9174354c21fcc42471617e4698f2bd0d5ad6"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/assessment.json",
+      "sha256": "b9be66ecde5afcde4da84e983dc4aec2b9dc0811da876f3aa24af718692be7cd"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/control/assessment.json",
+      "sha256": "dbe0a41d5af0c6da9926dcd672dd53ae18e05000faa66e7c9ba970c9104975fa"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/control/assessment.md",
+      "sha256": "70e5d5b092be4890de9e9b49ae52374d2f012ea4cf0ecb20257962e85277e076"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/control/coverage.json",
+      "sha256": "65cc934015f4b69f1e009cb46dae9508eb5f12688b00d5d75351fa2c5c6ea344"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/control/defects.json",
+      "sha256": "731944368d217a458ec280b2c834f03bda76043bdbcf1b03f1b2edbb216f11b1"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/control/manifest.json",
+      "sha256": "ae026a224334668dd68c3c0cc6154fb832e123814edae48b5759347f112546b6"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/control/primary-source-index.json",
+      "sha256": "85605c3fbca817549d9d67f27fa7f5a25dc71156741daf5dbff8f335647f2a4a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/input-verification.json",
+      "sha256": "5fa98a95146b6e99bf157ac400fa24ddd87d3eda717b5a789df2189fa6348cf3"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/treatment/assessment.json",
+      "sha256": "017939ac5234bc351749d28aa7ed9174354c21fcc42471617e4698f2bd0d5ad6"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/treatment/assessment.md",
+      "sha256": "9890bbdcc9226a607fa9af73c9c1b6f3ecb3c35459156823257f50a4c2c4459b"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/treatment/coverage.json",
+      "sha256": "97d94b972c183d72db77cb648f51c1e9b81fbcee4a77358467bd08cf01d2ae6d"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/treatment/defects.json",
+      "sha256": "1b2d64133bda32cdacd1132fc9afc5c2f9c531f09514e2701ab36d2a5741e14a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/treatment/manifest.json",
+      "sha256": "d67abca73969b8987c3eb66ed056ffe06269b2ce10095f7a6969bc1c4d6519c4"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/treatment/primary-source-index.json",
+      "sha256": "b20e4b554c7f3667145bd7f42de6277e95259e17ac39bf7de6a4536e11f357d4"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B06-P02/comparison.md",
+      "sha256": "9fa1016d2c35a5e294dd676b2c3570339b8f097d646366fcc11d8a5363121178"
+    },
+    {
+      "path": "state/eval-coordinator-v2/B07-P01-output-verification.json",
+      "sha256": "ec5c4f15c66bd994dd98e970b8461a3c2be2e3bf571d164229393638c145826e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/control/manifest.json",
+      "sha256": "9e2287d35f9ae32bf8172842b225abc1812b2494fe2bf0ed655a62ff5236079a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/control/assessment.md",
+      "sha256": "e97eaa5ada0b421aea8b822cf8e8bace94995447dfd42e3b0a5e681ceafde29e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/control/assessment.json",
+      "sha256": "5714a2f2d3bc2ccca0e13faa72a5d0fb9ea28a94e2e0ae0d79e0814946c99139"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/control/coverage.json",
+      "sha256": "bdce13b759b2e9fd65dca112ea4da9f605c991edbb181ace8e1885765772b44d"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/control/defects.json",
+      "sha256": "80ad457135e31457cee77dd1287165812e6c582dbd3d4110db0ef151fcfa58c0"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/control/primary-source-index.json",
+      "sha256": "402a14e9f8060b9b381232534281a31e42474d661ecd068f52d2b5d5a3277378"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/control/evidence/duckdb-sampling-context.json",
+      "sha256": "a3ac9fd306e83a5577f55a6b84906e5b782794bfd34ccc13a4b0daea7c004df3"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/input-verification.json",
+      "sha256": "5f9b374bc043dcd3bdf6138ae4e501a39ab8ec4afc7057b3a5f2656da593075e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/primary-observations.json",
+      "sha256": "5f4803c5782a6af549ac18994d0eec7ea7de02ad63435c28b02b62193a6fc2ce"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/control/assessment.json",
+      "sha256": "5714a2f2d3bc2ccca0e13faa72a5d0fb9ea28a94e2e0ae0d79e0814946c99139"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/treatment/manifest.json",
+      "sha256": "986bd479c60da21f49b080ff9237cb7aa549a05c3470e87882315168b294071b"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/treatment/assessment.md",
+      "sha256": "1b4e89763454d4d017289a5ff24505c82487293a7afd02f708fc11498d969143"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/treatment/assessment.json",
+      "sha256": "0ae464f83b4b3991cc9de32c3ff2fb885ee4e52716135fbe124bf7f16ced62ce"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/treatment/coverage.json",
+      "sha256": "49f2ce264315612d13494dd6adb22c54dc635b92aeb905f516fbd6fc03a0a014"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/treatment/defects.json",
+      "sha256": "ff038bf1fe98dd5de60ba71b74970ae198a6cc49836d28f286c6d1bae8edcb6e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/treatment/primary-source-index.json",
+      "sha256": "9d129a5f50fbc47ec6b9eabf3e13197785ddb1d708a5144efd0943bfe13623d6"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/input-verification.json",
+      "sha256": "5f9b374bc043dcd3bdf6138ae4e501a39ab8ec4afc7057b3a5f2656da593075e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/primary-observations.json",
+      "sha256": "5f4803c5782a6af549ac18994d0eec7ea7de02ad63435c28b02b62193a6fc2ce"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/treatment/assessment.json",
+      "sha256": "0ae464f83b4b3991cc9de32c3ff2fb885ee4e52716135fbe124bf7f16ced62ce"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/control/assessment.md",
+      "sha256": "e97eaa5ada0b421aea8b822cf8e8bace94995447dfd42e3b0a5e681ceafde29e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/control/assessment.json",
+      "sha256": "5714a2f2d3bc2ccca0e13faa72a5d0fb9ea28a94e2e0ae0d79e0814946c99139"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/control/coverage.json",
+      "sha256": "bdce13b759b2e9fd65dca112ea4da9f605c991edbb181ace8e1885765772b44d"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/control/defects.json",
+      "sha256": "80ad457135e31457cee77dd1287165812e6c582dbd3d4110db0ef151fcfa58c0"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/control/primary-source-index.json",
+      "sha256": "402a14e9f8060b9b381232534281a31e42474d661ecd068f52d2b5d5a3277378"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/control/evidence/duckdb-sampling-context.json",
+      "sha256": "a3ac9fd306e83a5577f55a6b84906e5b782794bfd34ccc13a4b0daea7c004df3"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/input-verification.json",
+      "sha256": "5f9b374bc043dcd3bdf6138ae4e501a39ab8ec4afc7057b3a5f2656da593075e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/primary-observations.json",
+      "sha256": "5f4803c5782a6af549ac18994d0eec7ea7de02ad63435c28b02b62193a6fc2ce"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/control/manifest.json",
+      "sha256": "9e2287d35f9ae32bf8172842b225abc1812b2494fe2bf0ed655a62ff5236079a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/treatment/assessment.md",
+      "sha256": "1b4e89763454d4d017289a5ff24505c82487293a7afd02f708fc11498d969143"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/treatment/assessment.json",
+      "sha256": "0ae464f83b4b3991cc9de32c3ff2fb885ee4e52716135fbe124bf7f16ced62ce"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/treatment/coverage.json",
+      "sha256": "49f2ce264315612d13494dd6adb22c54dc635b92aeb905f516fbd6fc03a0a014"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/treatment/defects.json",
+      "sha256": "ff038bf1fe98dd5de60ba71b74970ae198a6cc49836d28f286c6d1bae8edcb6e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/treatment/primary-source-index.json",
+      "sha256": "9d129a5f50fbc47ec6b9eabf3e13197785ddb1d708a5144efd0943bfe13623d6"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/treatment/manifest.json",
+      "sha256": "986bd479c60da21f49b080ff9237cb7aa549a05c3470e87882315168b294071b"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/assessment.json",
+      "sha256": "cb79829bd7dc43cd02dfc8c90ee52e647ee43c6ac9f65dc193fd35d403d5c691"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/comparison.md",
+      "sha256": "238e5aaef2faa1f6d3e404f280e0411c19147259ae6c3e7949825e9d0a74e471"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/comparison.json",
+      "sha256": "4d48a111cf33cd4d19e8fe216df90617a66149e5fbf455bb7056291e2a392f0f"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P01/comparison.json",
+      "sha256": "4d48a111cf33cd4d19e8fe216df90617a66149e5fbf455bb7056291e2a392f0f"
+    },
+    {
+      "path": "state/eval-coordinator-v2/B07-P02-output-verification.json",
+      "sha256": "a752076216dc940204e1c8c8bc5429fa6d15ad94d03986677475349b3bd063db"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/control/manifest.json",
+      "sha256": "4677a3af5cc90b1e38825c26a1350f7f6ec640bc8f1edc4cf60b230ba9ffe542"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/control/assessment.md",
+      "sha256": "c29691125505f2ba70017cbdad1b932be3379c208c072d05a2e870174733a5c7"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/control/assessment.json",
+      "sha256": "19c557216216dc4f7cc12864459eb0190b47389796197b19fbe529318885d329"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/control/coverage.json",
+      "sha256": "fc0fd243d21d8b0ef01c4cf06afa322ef9f66f3e8b8b4c1c3b7144a819e7bc1e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/control/defects.json",
+      "sha256": "45d2b8627871b4c9db8f5ff1c351d045337f0ada5c3cee5368a1d457863fee05"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/control/primary-source-index.json",
+      "sha256": "2754fcbc0ee9b3e4c92391494beab89d659614e1b732c49317d6184017790a83"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/input-verification.json",
+      "sha256": "c1b920e458389fb7f096012a5b2e866ba235314ea18d67feb7ed2af91a255902"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/evidence/primary-source-observations.json",
+      "sha256": "1232f9bca4358a7aaed9f358d5c41840fba693dbda69e329cb7633f4db9d7916"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/control/assessment.json",
+      "sha256": "19c557216216dc4f7cc12864459eb0190b47389796197b19fbe529318885d329"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/treatment/manifest.json",
+      "sha256": "593068fad1949f0f875313d48e4d28713cef4d753fa508d191f40ece29836a8c"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/treatment/assessment.md",
+      "sha256": "c738a4f03d2119e0f147faf3d9fdce668b5b178c39ef1daba8edb8075723c173"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/treatment/assessment.json",
+      "sha256": "81f13f9230b65c5228babe04a222b8bd41f6de0e81b90bb85b9b5c95aa614f8d"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/treatment/coverage.json",
+      "sha256": "0879d12144b02339e2f2b2fd92e1564f20cdb6bc61807c3e33d25954ce6a924a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/treatment/defects.json",
+      "sha256": "7020475d1653ad097e4218c13d2bac5a8a83af74b164798dff2820f95c29b6ba"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/treatment/primary-source-index.json",
+      "sha256": "f53072d2a514297cab5bea97366b2274a692cba50656c0295d9fc7a4fa419ba8"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/input-verification.json",
+      "sha256": "c1b920e458389fb7f096012a5b2e866ba235314ea18d67feb7ed2af91a255902"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/evidence/primary-source-observations.json",
+      "sha256": "1232f9bca4358a7aaed9f358d5c41840fba693dbda69e329cb7633f4db9d7916"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/treatment/assessment.json",
+      "sha256": "81f13f9230b65c5228babe04a222b8bd41f6de0e81b90bb85b9b5c95aa614f8d"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/input-verification.json",
+      "sha256": "c1b920e458389fb7f096012a5b2e866ba235314ea18d67feb7ed2af91a255902"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/evidence/primary-source-observations.json",
+      "sha256": "1232f9bca4358a7aaed9f358d5c41840fba693dbda69e329cb7633f4db9d7916"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/assessment.json",
+      "sha256": "768347bb2f6cf602b57520a2a839b65c0367937e5dc99d65544707f462611530"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/control/assessment.md",
+      "sha256": "c29691125505f2ba70017cbdad1b932be3379c208c072d05a2e870174733a5c7"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/control/assessment.json",
+      "sha256": "19c557216216dc4f7cc12864459eb0190b47389796197b19fbe529318885d329"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/control/coverage.json",
+      "sha256": "fc0fd243d21d8b0ef01c4cf06afa322ef9f66f3e8b8b4c1c3b7144a819e7bc1e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/control/defects.json",
+      "sha256": "45d2b8627871b4c9db8f5ff1c351d045337f0ada5c3cee5368a1d457863fee05"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/control/primary-source-index.json",
+      "sha256": "2754fcbc0ee9b3e4c92391494beab89d659614e1b732c49317d6184017790a83"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/control/manifest.json",
+      "sha256": "4677a3af5cc90b1e38825c26a1350f7f6ec640bc8f1edc4cf60b230ba9ffe542"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/treatment/assessment.md",
+      "sha256": "c738a4f03d2119e0f147faf3d9fdce668b5b178c39ef1daba8edb8075723c173"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/treatment/assessment.json",
+      "sha256": "81f13f9230b65c5228babe04a222b8bd41f6de0e81b90bb85b9b5c95aa614f8d"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/treatment/coverage.json",
+      "sha256": "0879d12144b02339e2f2b2fd92e1564f20cdb6bc61807c3e33d25954ce6a924a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/treatment/defects.json",
+      "sha256": "7020475d1653ad097e4218c13d2bac5a8a83af74b164798dff2820f95c29b6ba"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/treatment/primary-source-index.json",
+      "sha256": "f53072d2a514297cab5bea97366b2274a692cba50656c0295d9fc7a4fa419ba8"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/treatment/manifest.json",
+      "sha256": "593068fad1949f0f875313d48e4d28713cef4d753fa508d191f40ece29836a8c"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B07-P02/comparison.json",
+      "sha256": "a351a052f7433b7ff7c1400001623873137833d5678feb45f3a0afd088a12375"
+    },
+    {
+      "path": "state/eval-coordinator-v2/B09-P01-output-verification.json",
+      "sha256": "a8948678456181b57bd137fcc602ded8bb413c21ebd37ce5c66ab37f67250bef"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/control/manifest.json",
+      "sha256": "8d12dbcff4232fe87650b22c8993c21cf6af51c85d081763c74165ec3e283347"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/control/assessment.md",
+      "sha256": "3921510334b140db1323c819568c3762e3c4bef73b9b2a9becac313f9355c437"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/control/assessment.json",
+      "sha256": "47dc889dd098963d566656dbdb3a6eb6434035761af6a99464dd19e70a10d507"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/control/coverage.json",
+      "sha256": "f2f45552172145b33e1fb08ed841d493106f130100a600ee1f1e63b0ac82a161"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/control/defects.json",
+      "sha256": "f3d3d71326ca7a67e608bc9322201c18ab4ba27e32e6b64d348f06528e60f456"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/control/primary-source-index.json",
+      "sha256": "65656ba03e51fcca01749a7f079c819c3e9457389a5269508ec4bcb8aa0fbd72"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/input-integrity.json",
+      "sha256": "d46ad94d287b3a8feeef667ce4351c666606b5b611d8eb014ba982128d57717a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/review-provenance.json",
+      "sha256": "ea4be0a13665a0ddbda2ba66f446b63498692fda026dfbedddcf9ec6a7665095"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/koha-version.json",
+      "sha256": "65bfdb015a8ba096762d43aaa8418db23cd49a4cdace57a3c91b7db77cb58db7"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/primary-doc-context.json",
+      "sha256": "34cac727827e5aff8e9a1192a1e4aaa287d5c5620b26eb97c1de042d1f1209e4"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-api-context.json",
+      "sha256": "4d2c09c4155b7096388e5d670b7edda67c0a7ffc050fc5c8e64d0e1ade8a0368"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-api-test.json",
+      "sha256": "9f3cb13ae34ceac7c55fdecd113148447c55fb579de164f143c6e3de1785cd77"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-checkin-context.json",
+      "sha256": "0202421ba3ea5ac6926109b1b3e9a767220f592eda56f2727f7ce74757872191"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-checkout-context.json",
+      "sha256": "297329ed0b8fc9b22ed7d1d53bcd6918c640cf0cb3fcf3ab67f2150e64367b56"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-deleted-test.json",
+      "sha256": "0bb534c7aacf4d4c3d36c1b7cf9d5c99ab4dae90d359521aded6304e051b22fb"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-import.json",
+      "sha256": "3a18ebd785191b43654dc399da2c39f0684a417004c0337502321b9665fb2879"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-model.json",
+      "sha256": "c920c262c20e8853ce622bb71a8168c27bf981c8a9812711f30086e2eccb479f"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-permission.json",
+      "sha256": "8939ce8047252eeda99178a432736130c48cd63f350bf6c44b97c52fc9d46683"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-release872.json",
+      "sha256": "41cbfd2d5b343e9d5a8cd56faa7f7ac6c2dc4a7ea4cf88ea874832b66f3f4b58"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-release880.json",
+      "sha256": "7a543bc8424f45fe2e1b433d740dd15fad1c2c7f4b3c839520d137d9e8979104"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-ui-test.json",
+      "sha256": "ebb3c4d29ea01943148bb50e5d4b48763c6f773aa0f3d90a88412773675a4282"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-broken.json",
+      "sha256": "dcb8b541dc452026c4332c104a979f6f08736cbe6f2aea4c499afef086d65349"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-change.json",
+      "sha256": "610688f2b5114a12b9a3768016f95a3161760586b8b0ab20137e88d189233835"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-count.json",
+      "sha256": "500c2fd0ec1b7ee3a5afa3a34af089ed4d5f67d6df40f781ae94af910ce4c107"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-fix.json",
+      "sha256": "63e68bc95fc87f9ec584ced652ba581648d324bde6b1a0b9f4953d81521e5f1b"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-host.json",
+      "sha256": "4003fbba4ebadde16af8d222ac705f085dddb040c00b810f81a8ce91c60dbc27"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-modules.json",
+      "sha256": "8b9c756ba02a364cd5cc4ef6ea076604d699f10cbc118965bca01816e23096d9"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/control/assessment.md",
+      "sha256": "3921510334b140db1323c819568c3762e3c4bef73b9b2a9becac313f9355c437"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/control/assessment.json",
+      "sha256": "47dc889dd098963d566656dbdb3a6eb6434035761af6a99464dd19e70a10d507"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/treatment/manifest.json",
+      "sha256": "30cde9501b0c939be99e7021c8527729e72a15e00f679f9cdd374253b065de6b"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/treatment/assessment.md",
+      "sha256": "4d1c3e5d384b0905105b93a660ce69e13dc148f4e6e22e8d5ed57f39854ceccc"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/treatment/assessment.json",
+      "sha256": "6c0773529d1f5953c0057546afe2c70d2222590846b1855a2a0caff59cb4bc0a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/treatment/coverage.json",
+      "sha256": "f489caad7ac549520be66802297b00145bc95634c73e088b6cd1490250c8dc77"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/treatment/defects.json",
+      "sha256": "5826e2d66454a505e690549e096d0895a01d6690f0c251216af5bc0b6178d6a5"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/treatment/primary-source-index.json",
+      "sha256": "2182559ccc41dbc9ebe929526df85f45f47b71b14917952008ef76d359013cf7"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/input-integrity.json",
+      "sha256": "d46ad94d287b3a8feeef667ce4351c666606b5b611d8eb014ba982128d57717a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/review-provenance.json",
+      "sha256": "ea4be0a13665a0ddbda2ba66f446b63498692fda026dfbedddcf9ec6a7665095"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/koha-version.json",
+      "sha256": "65bfdb015a8ba096762d43aaa8418db23cd49a4cdace57a3c91b7db77cb58db7"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/primary-doc-context.json",
+      "sha256": "34cac727827e5aff8e9a1192a1e4aaa287d5c5620b26eb97c1de042d1f1209e4"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-api-context.json",
+      "sha256": "4d2c09c4155b7096388e5d670b7edda67c0a7ffc050fc5c8e64d0e1ade8a0368"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-api-test.json",
+      "sha256": "9f3cb13ae34ceac7c55fdecd113148447c55fb579de164f143c6e3de1785cd77"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-checkin-context.json",
+      "sha256": "0202421ba3ea5ac6926109b1b3e9a767220f592eda56f2727f7ce74757872191"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-checkout-context.json",
+      "sha256": "297329ed0b8fc9b22ed7d1d53bcd6918c640cf0cb3fcf3ab67f2150e64367b56"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-deleted-test.json",
+      "sha256": "0bb534c7aacf4d4c3d36c1b7cf9d5c99ab4dae90d359521aded6304e051b22fb"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-import.json",
+      "sha256": "3a18ebd785191b43654dc399da2c39f0684a417004c0337502321b9665fb2879"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-model.json",
+      "sha256": "c920c262c20e8853ce622bb71a8168c27bf981c8a9812711f30086e2eccb479f"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-permission.json",
+      "sha256": "8939ce8047252eeda99178a432736130c48cd63f350bf6c44b97c52fc9d46683"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-release872.json",
+      "sha256": "41cbfd2d5b343e9d5a8cd56faa7f7ac6c2dc4a7ea4cf88ea874832b66f3f4b58"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-release880.json",
+      "sha256": "7a543bc8424f45fe2e1b433d740dd15fad1c2c7f4b3c839520d137d9e8979104"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-ui-test.json",
+      "sha256": "ebb3c4d29ea01943148bb50e5d4b48763c6f773aa0f3d90a88412773675a4282"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-broken.json",
+      "sha256": "dcb8b541dc452026c4332c104a979f6f08736cbe6f2aea4c499afef086d65349"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-change.json",
+      "sha256": "610688f2b5114a12b9a3768016f95a3161760586b8b0ab20137e88d189233835"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-count.json",
+      "sha256": "500c2fd0ec1b7ee3a5afa3a34af089ed4d5f67d6df40f781ae94af910ce4c107"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-fix.json",
+      "sha256": "63e68bc95fc87f9ec584ced652ba581648d324bde6b1a0b9f4953d81521e5f1b"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-host.json",
+      "sha256": "4003fbba4ebadde16af8d222ac705f085dddb040c00b810f81a8ce91c60dbc27"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-modules.json",
+      "sha256": "8b9c756ba02a364cd5cc4ef6ea076604d699f10cbc118965bca01816e23096d9"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/treatment/assessment.md",
+      "sha256": "4d1c3e5d384b0905105b93a660ce69e13dc148f4e6e22e8d5ed57f39854ceccc"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/treatment/assessment.json",
+      "sha256": "6c0773529d1f5953c0057546afe2c70d2222590846b1855a2a0caff59cb4bc0a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/input-integrity.json",
+      "sha256": "d46ad94d287b3a8feeef667ce4351c666606b5b611d8eb014ba982128d57717a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/review-provenance.json",
+      "sha256": "ea4be0a13665a0ddbda2ba66f446b63498692fda026dfbedddcf9ec6a7665095"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/koha-version.json",
+      "sha256": "65bfdb015a8ba096762d43aaa8418db23cd49a4cdace57a3c91b7db77cb58db7"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/primary-doc-context.json",
+      "sha256": "34cac727827e5aff8e9a1192a1e4aaa287d5c5620b26eb97c1de042d1f1209e4"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-api-context.json",
+      "sha256": "4d2c09c4155b7096388e5d670b7edda67c0a7ffc050fc5c8e64d0e1ade8a0368"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-api-test.json",
+      "sha256": "9f3cb13ae34ceac7c55fdecd113148447c55fb579de164f143c6e3de1785cd77"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-checkin-context.json",
+      "sha256": "0202421ba3ea5ac6926109b1b3e9a767220f592eda56f2727f7ce74757872191"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-checkout-context.json",
+      "sha256": "297329ed0b8fc9b22ed7d1d53bcd6918c640cf0cb3fcf3ab67f2150e64367b56"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-deleted-test.json",
+      "sha256": "0bb534c7aacf4d4c3d36c1b7cf9d5c99ab4dae90d359521aded6304e051b22fb"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-import.json",
+      "sha256": "3a18ebd785191b43654dc399da2c39f0684a417004c0337502321b9665fb2879"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-model.json",
+      "sha256": "c920c262c20e8853ce622bb71a8168c27bf981c8a9812711f30086e2eccb479f"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-permission.json",
+      "sha256": "8939ce8047252eeda99178a432736130c48cd63f350bf6c44b97c52fc9d46683"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-release872.json",
+      "sha256": "41cbfd2d5b343e9d5a8cd56faa7f7ac6c2dc4a7ea4cf88ea874832b66f3f4b58"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-release880.json",
+      "sha256": "7a543bc8424f45fe2e1b433d740dd15fad1c2c7f4b3c839520d137d9e8979104"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-ui-test.json",
+      "sha256": "ebb3c4d29ea01943148bb50e5d4b48763c6f773aa0f3d90a88412773675a4282"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-broken.json",
+      "sha256": "dcb8b541dc452026c4332c104a979f6f08736cbe6f2aea4c499afef086d65349"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-change.json",
+      "sha256": "610688f2b5114a12b9a3768016f95a3161760586b8b0ab20137e88d189233835"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-count.json",
+      "sha256": "500c2fd0ec1b7ee3a5afa3a34af089ed4d5f67d6df40f781ae94af910ce4c107"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-fix.json",
+      "sha256": "63e68bc95fc87f9ec584ced652ba581648d324bde6b1a0b9f4953d81521e5f1b"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-host.json",
+      "sha256": "4003fbba4ebadde16af8d222ac705f085dddb040c00b810f81a8ce91c60dbc27"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-modules.json",
+      "sha256": "8b9c756ba02a364cd5cc4ef6ea076604d699f10cbc118965bca01816e23096d9"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/assessment.json",
+      "sha256": "6a79b9fb9068569d642af28555a143463756a4dfd98234ea616e1cc95fd46aeb"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/control/assessment.md",
+      "sha256": "3921510334b140db1323c819568c3762e3c4bef73b9b2a9becac313f9355c437"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/control/assessment.json",
+      "sha256": "47dc889dd098963d566656dbdb3a6eb6434035761af6a99464dd19e70a10d507"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/control/coverage.json",
+      "sha256": "f2f45552172145b33e1fb08ed841d493106f130100a600ee1f1e63b0ac82a161"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/control/defects.json",
+      "sha256": "f3d3d71326ca7a67e608bc9322201c18ab4ba27e32e6b64d348f06528e60f456"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/control/primary-source-index.json",
+      "sha256": "65656ba03e51fcca01749a7f079c819c3e9457389a5269508ec4bcb8aa0fbd72"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/control/manifest.json",
+      "sha256": "8d12dbcff4232fe87650b22c8993c21cf6af51c85d081763c74165ec3e283347"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/treatment/assessment.md",
+      "sha256": "4d1c3e5d384b0905105b93a660ce69e13dc148f4e6e22e8d5ed57f39854ceccc"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/treatment/assessment.json",
+      "sha256": "6c0773529d1f5953c0057546afe2c70d2222590846b1855a2a0caff59cb4bc0a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/treatment/coverage.json",
+      "sha256": "f489caad7ac549520be66802297b00145bc95634c73e088b6cd1490250c8dc77"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/treatment/defects.json",
+      "sha256": "5826e2d66454a505e690549e096d0895a01d6690f0c251216af5bc0b6178d6a5"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/treatment/primary-source-index.json",
+      "sha256": "2182559ccc41dbc9ebe929526df85f45f47b71b14917952008ef76d359013cf7"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/treatment/manifest.json",
+      "sha256": "30cde9501b0c939be99e7021c8527729e72a15e00f679f9cdd374253b065de6b"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/comparison.md",
+      "sha256": "3e5fe4b2ebb76b6060ae3f40d5f2ebb2d80eaf213401de7b4fd9dc1dff67179c"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/comparison.json",
+      "sha256": "8675902b526f4927b83ab4cfcec48f1d483ec48b2244be4601537c31ec25b503"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/manifest.json",
+      "sha256": "82bc97b56c2bb6ea0b4b7e47128a7df7ff50cd8db83dca14d12fad3168b94c1c"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B09-P01/comparison-manifest.json",
+      "sha256": "87cd187438fef5043539512f1d002802ce1e13c457fe3b20bf89b6819d6da949"
+    },
+    {
+      "path": "state/eval-coordinator-v2/B10-P02-output-verification.json",
+      "sha256": "ce289bbf9d27e41c497afbbe7af73b49607a76d33539ed60783d153af7308400"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/manifest.json",
+      "sha256": "2bc2dce24dd198d9dbb1568c0efe83466ade705d6b387a6d06097dfc6508ff45"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/assessment.md",
+      "sha256": "554d59215810d9f2c86f5a2f5b3e8401de97e74fdf04bf9e7a5e490fe6ce8ef5"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/assessment.json",
+      "sha256": "5d1514db38c4e85a93dae9e09762539cd6e2e3264bb5b26261575f4fe0faa94d"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/coverage.json",
+      "sha256": "069f79b9872b558a66b711f2b135f3e32e0fcc7749b6f236647c8f7ec2d57cac"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/defects.json",
+      "sha256": "9bb7f23141d624746e5d9eebbfdd2014599429e8e42cf93537fb43fda3db4ff5"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/primary-source-index.json",
+      "sha256": "5b6ab9e54b78e8e608724401f219013a14d3e555c692c6355ecb0c26eb1a4a55"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/assessment.json",
+      "sha256": "5d1514db38c4e85a93dae9e09762539cd6e2e3264bb5b26261575f4fe0faa94d"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/manifest.json",
+      "sha256": "dfe7f202cf91e21cb6b461de8ef23b04f60d522cd5c4fc937cf46407a593f951"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/assessment.md",
+      "sha256": "87164ca80f9ea1a01d9f49710faeecd5d71213a479054ef3bbdf3fc59d0796cd"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/assessment.json",
+      "sha256": "0709d645c5b4fea36342f10749e1654827bcce671f578fa6370634c95088dec9"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/coverage.json",
+      "sha256": "eeb96100f2db34af3b93aa7aa92a788ad3210f00cac33569824c6c1a6a6d7e9a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/defects.json",
+      "sha256": "a88f73f8aa007e1ddf02ea8132a414b0850317105d6a92036c1d793725ab6079"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/primary-source-index.json",
+      "sha256": "d0dabfc1a018fc76a510988c9967a4a8cd80755a2c824a67484c5001b96c3402"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/evidence/material-lifecycle.json",
+      "sha256": "d2979d7518b8cf82bf0c9402245992e941a6dae76b8916a0110f4b10d166d639"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/assessment.json",
+      "sha256": "0709d645c5b4fea36342f10749e1654827bcce671f578fa6370634c95088dec9"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/assessment.md",
+      "sha256": "554d59215810d9f2c86f5a2f5b3e8401de97e74fdf04bf9e7a5e490fe6ce8ef5"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/assessment.json",
+      "sha256": "5d1514db38c4e85a93dae9e09762539cd6e2e3264bb5b26261575f4fe0faa94d"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/coverage.json",
+      "sha256": "069f79b9872b558a66b711f2b135f3e32e0fcc7749b6f236647c8f7ec2d57cac"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/defects.json",
+      "sha256": "9bb7f23141d624746e5d9eebbfdd2014599429e8e42cf93537fb43fda3db4ff5"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/primary-source-index.json",
+      "sha256": "5b6ab9e54b78e8e608724401f219013a14d3e555c692c6355ecb0c26eb1a4a55"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/manifest.json",
+      "sha256": "2bc2dce24dd198d9dbb1568c0efe83466ade705d6b387a6d06097dfc6508ff45"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/assessment.md",
+      "sha256": "87164ca80f9ea1a01d9f49710faeecd5d71213a479054ef3bbdf3fc59d0796cd"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/assessment.json",
+      "sha256": "0709d645c5b4fea36342f10749e1654827bcce671f578fa6370634c95088dec9"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/coverage.json",
+      "sha256": "eeb96100f2db34af3b93aa7aa92a788ad3210f00cac33569824c6c1a6a6d7e9a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/defects.json",
+      "sha256": "a88f73f8aa007e1ddf02ea8132a414b0850317105d6a92036c1d793725ab6079"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/primary-source-index.json",
+      "sha256": "d0dabfc1a018fc76a510988c9967a4a8cd80755a2c824a67484c5001b96c3402"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/evidence/material-lifecycle.json",
+      "sha256": "d2979d7518b8cf82bf0c9402245992e941a6dae76b8916a0110f4b10d166d639"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/manifest.json",
+      "sha256": "dfe7f202cf91e21cb6b461de8ef23b04f60d522cd5c4fc937cf46407a593f951"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/input-verification.json",
+      "sha256": "11d888d4bde6a12d794e61355dc376045634ad810c530be5f7329dd64b4e5f26"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/comparison.md",
+      "sha256": "db4fef33976b29a71aea7ee57d25bc4a293f14e8c36804a522546fda955df0b0"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/comparison.json",
+      "sha256": "1e416a02f088749783b33b12ffcef81a4bcc7a68eb3d02a4674f747c25b881d8"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/comparison.json",
+      "sha256": "1e416a02f088749783b33b12ffcef81a4bcc7a68eb3d02a4674f747c25b881d8"
+    },
+    {
+      "path": "state/eval-coordinator-v2/B11-P01-output-verification.json",
+      "sha256": "34c13fa465369490d1cde77cc35a57bc6780b36b3ab0d84bd9e82b42c0f3b118"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/manifest.json",
+      "sha256": "44be7eb501b13f5f9ea30b39ea4b74dfbb443fe673a28559f7926ca625666085"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/assessment.md",
+      "sha256": "2112825c9543ff86bb07b3d8120eb433f96c14abdcc29afe5029fde0765dd2ca"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/assessment.json",
+      "sha256": "4ae27b572bd2b40c79f0b4d356efe96d622375118edeed12bdabc809fbcea977"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/coverage.json",
+      "sha256": "9f003e4916babf5ceb72147c54772535494921f054301f8ae9b928971c395021"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/defects.json",
+      "sha256": "109b68514a8fab4d6e673bde6112c987e94179ca226500814ee12850b9fc11ff"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/primary-source-index.json",
+      "sha256": "51df5a4002e4289a0ea037b0b14449e59d035067f624cd6e9f1aa90d9057634f"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/input-custody.json",
+      "sha256": "283e0f66553d275537136384329b7eeda891cde370d691e370ad49949161554f"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/evidence.json",
+      "sha256": "ac7852d31c25b731d8ba00872983a44a89453d7730f42523267c24bf2cb71751"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/timing-observations.json",
+      "sha256": "8e738864e9223b143a69eeb95ed3ccb9815aade7cf65b90b13f8fe9a1faf45d5"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/assessment.md",
+      "sha256": "2112825c9543ff86bb07b3d8120eb433f96c14abdcc29afe5029fde0765dd2ca"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/assessment.json",
+      "sha256": "4ae27b572bd2b40c79f0b4d356efe96d622375118edeed12bdabc809fbcea977"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/manifest.json",
+      "sha256": "92de442bd40c66cbdf8ac89958aa5fbd13f17590e200c5b9f513711542ca07be"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/assessment.md",
+      "sha256": "451f9d54db274a5708d27c92ac501997ea1873eb1a5d86dd43a8801f1ddfbba5"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/assessment.json",
+      "sha256": "37918e1a0e44c8e93407c88bb04a596635d13c1b25bdb887fc06fe3bd7cb0c84"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/coverage.json",
+      "sha256": "99c51bb84e965c536b3aff626d47f9b6f51b0a7202396d3a324248d3a0a5a756"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/defects.json",
+      "sha256": "9bbabf8d1ef2d9157954edc57c457fd870d194ee3a987eaa9f03c964c6037586"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/primary-source-index.json",
+      "sha256": "ed9f5efde07074f72c7e0b717a3bf3bb7148b01de72cf716f1395358b1d88910"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/input-custody.json",
+      "sha256": "6ad804570f25687cbfe08fdb4289e671cbc0ace0a9590e782891c5899b9e725e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/evidence.json",
+      "sha256": "730aac73c3cc80a8899c5d42b9c4b43bff59b8a132b1d438cb6cc6b08ec980d3"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/timing-observations.json",
+      "sha256": "80960b579f46ab689fa0e05aba61765a39bcac63f7edcb7ff779f4c804a6a619"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/assessment.md",
+      "sha256": "451f9d54db274a5708d27c92ac501997ea1873eb1a5d86dd43a8801f1ddfbba5"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/assessment.json",
+      "sha256": "37918e1a0e44c8e93407c88bb04a596635d13c1b25bdb887fc06fe3bd7cb0c84"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/assessment.md",
+      "sha256": "2112825c9543ff86bb07b3d8120eb433f96c14abdcc29afe5029fde0765dd2ca"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/assessment.json",
+      "sha256": "4ae27b572bd2b40c79f0b4d356efe96d622375118edeed12bdabc809fbcea977"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/coverage.json",
+      "sha256": "9f003e4916babf5ceb72147c54772535494921f054301f8ae9b928971c395021"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/defects.json",
+      "sha256": "109b68514a8fab4d6e673bde6112c987e94179ca226500814ee12850b9fc11ff"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/primary-source-index.json",
+      "sha256": "51df5a4002e4289a0ea037b0b14449e59d035067f624cd6e9f1aa90d9057634f"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/input-custody.json",
+      "sha256": "283e0f66553d275537136384329b7eeda891cde370d691e370ad49949161554f"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/evidence.json",
+      "sha256": "ac7852d31c25b731d8ba00872983a44a89453d7730f42523267c24bf2cb71751"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/timing-observations.json",
+      "sha256": "8e738864e9223b143a69eeb95ed3ccb9815aade7cf65b90b13f8fe9a1faf45d5"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/control/manifest.json",
+      "sha256": "44be7eb501b13f5f9ea30b39ea4b74dfbb443fe673a28559f7926ca625666085"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/assessment.md",
+      "sha256": "451f9d54db274a5708d27c92ac501997ea1873eb1a5d86dd43a8801f1ddfbba5"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/assessment.json",
+      "sha256": "37918e1a0e44c8e93407c88bb04a596635d13c1b25bdb887fc06fe3bd7cb0c84"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/coverage.json",
+      "sha256": "99c51bb84e965c536b3aff626d47f9b6f51b0a7202396d3a324248d3a0a5a756"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/defects.json",
+      "sha256": "9bbabf8d1ef2d9157954edc57c457fd870d194ee3a987eaa9f03c964c6037586"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/primary-source-index.json",
+      "sha256": "ed9f5efde07074f72c7e0b717a3bf3bb7148b01de72cf716f1395358b1d88910"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/input-custody.json",
+      "sha256": "6ad804570f25687cbfe08fdb4289e671cbc0ace0a9590e782891c5899b9e725e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/evidence.json",
+      "sha256": "730aac73c3cc80a8899c5d42b9c4b43bff59b8a132b1d438cb6cc6b08ec980d3"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/timing-observations.json",
+      "sha256": "80960b579f46ab689fa0e05aba61765a39bcac63f7edcb7ff779f4c804a6a619"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/treatment/manifest.json",
+      "sha256": "92de442bd40c66cbdf8ac89958aa5fbd13f17590e200c5b9f513711542ca07be"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/assessment.json",
+      "sha256": "229588118520c33e85d1e441203c2a3681a5ad8428f1535e7e7a8d33082535f4"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/manifest.json",
+      "sha256": "783cf5649e46e89ce89864126e7f9212cfa59e57abe16d10bf7aa70c09167941"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/comparison.md",
+      "sha256": "ab772eadaaf354224c77aa035a97092e13cd10da34c2d21fe6e7051c9329217c"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/manifest.json",
+      "sha256": "783cf5649e46e89ce89864126e7f9212cfa59e57abe16d10bf7aa70c09167941"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P01/comparison-manifest.json",
+      "sha256": "eb53e412a4fadc5425816d18d7aa49e8eb787044a4aa3599e37f932785a4f8dc"
+    },
+    {
+      "path": "state/eval-coordinator-v2/B11-P02-output-verification.json",
+      "sha256": "619c82cdfedd5f218d3f1bf0a12b6b22f374e281ff7d41d5c2dc7f38114d0f93"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/control/manifest.json",
+      "sha256": "9233180acad00a01270f4aad90f1c4c6e69ea3b67f6b444a510957bcbbe7d4e5"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/control/assessment.md",
+      "sha256": "141f124b5230d4449486767400c38d2c065a904ec9a7cfce22a59de37a92e3eb"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/control/assessment.json",
+      "sha256": "163a21a3d44a7e3d5740a2b85df56cd216f2bf6e32f3a94fa0d573ee1f0e191b"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/control/coverage.json",
+      "sha256": "96e488ff5a51ee3253f3fcb37449ce18922bbd7a6a08501a003374c3d4299c38"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/control/defects.json",
+      "sha256": "80ddde9e0639c8014b976285c52e4c7f518094015b0629d6973da4e6f03c1cf2"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/control/primary-source-index.json",
+      "sha256": "b5e70460eafc860197b40ad01cf7cbfa4183dca28cc60c4a70f6fb69a41c8966"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/control/evidence/loro-1.16.2-context.txt",
+      "sha256": "e923c327ad092cf00548a9bfe189de6993b85fead949bd6c6add64548ccac349"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/control/assessment.md",
+      "sha256": "141f124b5230d4449486767400c38d2c065a904ec9a7cfce22a59de37a92e3eb"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/control/assessment.json",
+      "sha256": "163a21a3d44a7e3d5740a2b85df56cd216f2bf6e32f3a94fa0d573ee1f0e191b"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/manifest.json",
+      "sha256": "1eb9eadff5d0bcf8faeee37a97dfd0ea74ebccf35eb59bdfca043721ece2b071"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/assessment.md",
+      "sha256": "7a58cf23dd81db949f1ba13c468df0a3fcc60afcd27ac0e53a0b6464edbd0541"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/assessment.json",
+      "sha256": "14a97c0559328875bd3323cf8522bf65fa1bf4d43bea59c991ecbd99da2e27a7"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/coverage.json",
+      "sha256": "9de02eb9d708a7a9e7ebb3d194a2ff16dcbd5d6da111d4423d55a1855f5cbf13"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/defects.json",
+      "sha256": "6cd7ba114f5bc1443784615dc7eb09a651d5481c60e9f870b0054c0222b4a043"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/primary-source-index.json",
+      "sha256": "a5c92e2f2271c908091979414e1c9db186ecbf5ca684733cf4848aa8663ae1c4"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/evidence/automerge-0.12.0-state-context.txt",
+      "sha256": "b7469db129e964ab178607deb6438672135c3598d333ff1538dde66fd66e4d81"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/assessment.md",
+      "sha256": "7a58cf23dd81db949f1ba13c468df0a3fcc60afcd27ac0e53a0b6464edbd0541"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/assessment.json",
+      "sha256": "14a97c0559328875bd3323cf8522bf65fa1bf4d43bea59c991ecbd99da2e27a7"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/input-verification.json",
+      "sha256": "0740ba0b5242c8a3610fd6eccf519144c05e4efe7c038489d397c2fc33e3e379"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/control/assessment.md",
+      "sha256": "141f124b5230d4449486767400c38d2c065a904ec9a7cfce22a59de37a92e3eb"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/control/assessment.json",
+      "sha256": "163a21a3d44a7e3d5740a2b85df56cd216f2bf6e32f3a94fa0d573ee1f0e191b"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/control/coverage.json",
+      "sha256": "96e488ff5a51ee3253f3fcb37449ce18922bbd7a6a08501a003374c3d4299c38"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/control/defects.json",
+      "sha256": "80ddde9e0639c8014b976285c52e4c7f518094015b0629d6973da4e6f03c1cf2"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/control/primary-source-index.json",
+      "sha256": "b5e70460eafc860197b40ad01cf7cbfa4183dca28cc60c4a70f6fb69a41c8966"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/control/evidence/loro-1.16.2-context.txt",
+      "sha256": "e923c327ad092cf00548a9bfe189de6993b85fead949bd6c6add64548ccac349"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/control/manifest.json",
+      "sha256": "9233180acad00a01270f4aad90f1c4c6e69ea3b67f6b444a510957bcbbe7d4e5"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/assessment.md",
+      "sha256": "7a58cf23dd81db949f1ba13c468df0a3fcc60afcd27ac0e53a0b6464edbd0541"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/assessment.json",
+      "sha256": "14a97c0559328875bd3323cf8522bf65fa1bf4d43bea59c991ecbd99da2e27a7"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/coverage.json",
+      "sha256": "9de02eb9d708a7a9e7ebb3d194a2ff16dcbd5d6da111d4423d55a1855f5cbf13"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/defects.json",
+      "sha256": "6cd7ba114f5bc1443784615dc7eb09a651d5481c60e9f870b0054c0222b4a043"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/primary-source-index.json",
+      "sha256": "a5c92e2f2271c908091979414e1c9db186ecbf5ca684733cf4848aa8663ae1c4"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/evidence/automerge-0.12.0-state-context.txt",
+      "sha256": "b7469db129e964ab178607deb6438672135c3598d333ff1538dde66fd66e4d81"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/treatment/manifest.json",
+      "sha256": "1eb9eadff5d0bcf8faeee37a97dfd0ea74ebccf35eb59bdfca043721ece2b071"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/assessment.json",
+      "sha256": "6e867a7afa4fc20eb30bd4f12556077f75eb99693ef1682234e07f85f4681dec"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/manifest.json",
+      "sha256": "cdf48470c7f03b18909f41c2888000c61ea6678ff4336f355d385b50c0861bfe"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B11-P02/comparison.json",
+      "sha256": "75f35e7fe88dbd88adebf3d8a6522e4641595402672d418b4f0d0abf44fd0550"
+    },
+    {
+      "path": "state/eval-coordinator-v2/B12-P01-output-verification.json",
+      "sha256": "01797d738c16c28018b2dbe8c5aaca9043eef3ec875c0c42048fe0faee1edb60"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/control/manifest.json",
+      "sha256": "dc89a3f7d9ae84a89511f4f78db3b825e71b0cfab6bf245d42d5a29d861a6624"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/control/assessment.md",
+      "sha256": "bb45dc82d6b3a20aad5f115933e0cf6560ef45a130af222d6a00a193a8ef549d"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/control/assessment.json",
+      "sha256": "9cf1a07cb5165975c3a6133bf475c5fb150098e637525f98f2b3e26c934ec66e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/control/coverage.json",
+      "sha256": "cbc279ba16d8211c33cdef8938ed2993f405f33f3ace48c4769327829065624f"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/control/defects.json",
+      "sha256": "5d467a5fcf5435277d1df8b22cdc6af1200aff4d51e2775ffbfb8674ac581a64"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/control/primary-source-index.json",
+      "sha256": "57600ff93bde686b6c0a622b84533299eac948b7bc53c0e479bdad71c6ae9261"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/control/assessment.md",
+      "sha256": "bb45dc82d6b3a20aad5f115933e0cf6560ef45a130af222d6a00a193a8ef549d"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/control/assessment.json",
+      "sha256": "9cf1a07cb5165975c3a6133bf475c5fb150098e637525f98f2b3e26c934ec66e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/treatment/manifest.json",
+      "sha256": "3ea0abc07eb5d025977b4f90945d06def027a1c80250396e7f782d2e8ea95bb7"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/treatment/assessment.md",
+      "sha256": "8576c6318a0d7830f35541143f9b16d42a1d6a00f9c0e9d97bb8c8b31e0f9bd2"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/treatment/assessment.json",
+      "sha256": "d228bc7f2aedd422238ebd888471c8f5deac92c1542f4109b557e52f41fb5592"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/treatment/coverage.json",
+      "sha256": "55798effe4ebceeb11d3bb392d48529afe73884aeb0386eb0c0162415b3ddace"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/treatment/defects.json",
+      "sha256": "9d74cd658178afdf0037373fbeabcfb4ff913f31acf74229c1f1f5bf54e0b7a5"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/treatment/primary-source-index.json",
+      "sha256": "efdf3157c5c3785897701ffe85132aca2cd2664bda59c11ea0b2fa0bae9feed1"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/treatment/assessment.md",
+      "sha256": "8576c6318a0d7830f35541143f9b16d42a1d6a00f9c0e9d97bb8c8b31e0f9bd2"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/treatment/assessment.json",
+      "sha256": "d228bc7f2aedd422238ebd888471c8f5deac92c1542f4109b557e52f41fb5592"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/comparison.md",
+      "sha256": "184571963f8820d7cde9d4645aed23766daf1f8c1da4f7ff505df95b1f5b6efe"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P01/comparison-manifest.json",
+      "sha256": "18d7a170bd62eb42ec0fa37bd53bbfe9e7e70fd5672b870a0aa34d29ebc62955"
+    },
+    {
+      "path": "state/eval-coordinator-v2/B12-P02-output-verification.json",
+      "sha256": "a78dd6259a292f8c1753647215161f095d250241d01d28dfbb32f4d9e6b0af39"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/control/manifest.json",
+      "sha256": "c701ae8348b619e957a7272e2c9e947a56c947adf2f6fe12f04b15907b4aef5f"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/control/assessment.md",
+      "sha256": "59d9704a034aa6bb4fbacfc941678463c3197ef8f29ba5fe1f5586d584c46bee"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/control/assessment.json",
+      "sha256": "52019f866ce3082fbf5a8abdd0684a3383786ce54b8c6159a7101a30d439fc6a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/control/coverage.json",
+      "sha256": "568a11b099c6a529dc060e8d858194050ce7c85396d3baa74f73d345619a81e1"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/control/defects.json",
+      "sha256": "470c44159eaa1f449c3865460a9adbad4870b26c36e1fe2c0aaf98cc72c9f2cd"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/control/primary-source-index.json",
+      "sha256": "1e8023a967917498c09932e314f88148f2430643ce0175e748cf8f4c752fb6d6"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/control/evidence/input-verification.json",
+      "sha256": "1b0b7f539893eda300b245d48656804a4294d20ca7d8854526e975c71267c11c"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/control/assessment.md",
+      "sha256": "59d9704a034aa6bb4fbacfc941678463c3197ef8f29ba5fe1f5586d584c46bee"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/control/assessment.json",
+      "sha256": "52019f866ce3082fbf5a8abdd0684a3383786ce54b8c6159a7101a30d439fc6a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/manifest.json",
+      "sha256": "c345c851c8757676c3067dce707d601cbf10672bb4d9202da0019bfba98c4510"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/assessment.md",
+      "sha256": "d7ddd158c71929c1376f4b6fb1496a033f8dab5ee6c2a017540b8f0a921a932e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/assessment.json",
+      "sha256": "17a20e4fa342d347bf4cc1e858346f01db8f5ccc8aac836e222874d667eb4bf4"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/coverage.json",
+      "sha256": "f58f759073a22608e1ebac725be9af9707a9ff6ab1c71059df8b6938480a0660"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/defects.json",
+      "sha256": "6e2a3b519410ed3e6da0d9f5974ee97d5fbd2232f9ca49ba67f87999242fdf37"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/primary-source-index.json",
+      "sha256": "a644dda3b1ed8e888d0169253d413d71bdb074bd0ec9cd521b80ee2fba91097f"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/evidence/input-verification.json",
+      "sha256": "71db30725cc48b814f0bf7fd7456a6465c13d1cc90d8606fec7a45e8c020a9d0"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/assessment.md",
+      "sha256": "d7ddd158c71929c1376f4b6fb1496a033f8dab5ee6c2a017540b8f0a921a932e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/assessment.json",
+      "sha256": "17a20e4fa342d347bf4cc1e858346f01db8f5ccc8aac836e222874d667eb4bf4"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/control/assessment.md",
+      "sha256": "59d9704a034aa6bb4fbacfc941678463c3197ef8f29ba5fe1f5586d584c46bee"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/control/assessment.json",
+      "sha256": "52019f866ce3082fbf5a8abdd0684a3383786ce54b8c6159a7101a30d439fc6a"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/control/coverage.json",
+      "sha256": "568a11b099c6a529dc060e8d858194050ce7c85396d3baa74f73d345619a81e1"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/control/defects.json",
+      "sha256": "470c44159eaa1f449c3865460a9adbad4870b26c36e1fe2c0aaf98cc72c9f2cd"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/control/primary-source-index.json",
+      "sha256": "1e8023a967917498c09932e314f88148f2430643ce0175e748cf8f4c752fb6d6"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/control/evidence/input-verification.json",
+      "sha256": "1b0b7f539893eda300b245d48656804a4294d20ca7d8854526e975c71267c11c"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/control/manifest.json",
+      "sha256": "c701ae8348b619e957a7272e2c9e947a56c947adf2f6fe12f04b15907b4aef5f"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/assessment.md",
+      "sha256": "d7ddd158c71929c1376f4b6fb1496a033f8dab5ee6c2a017540b8f0a921a932e"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/assessment.json",
+      "sha256": "17a20e4fa342d347bf4cc1e858346f01db8f5ccc8aac836e222874d667eb4bf4"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/coverage.json",
+      "sha256": "f58f759073a22608e1ebac725be9af9707a9ff6ab1c71059df8b6938480a0660"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/defects.json",
+      "sha256": "6e2a3b519410ed3e6da0d9f5974ee97d5fbd2232f9ca49ba67f87999242fdf37"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/primary-source-index.json",
+      "sha256": "a644dda3b1ed8e888d0169253d413d71bdb074bd0ec9cd521b80ee2fba91097f"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/evidence/input-verification.json",
+      "sha256": "71db30725cc48b814f0bf7fd7456a6465c13d1cc90d8606fec7a45e8c020a9d0"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/treatment/manifest.json",
+      "sha256": "c345c851c8757676c3067dce707d601cbf10672bb4d9202da0019bfba98c4510"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/assessment.json",
+      "sha256": "8343e1e3048ba0652d7736d067dee2e376035aba3799aa92fdf6e673ca1cc43b"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/comparison.md",
+      "sha256": "9e96fe8f9aade9de6975c7f572c7d89da38f159252cb9a1dac5f6f15cc24a909"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/comparison.json",
+      "sha256": "2550827c769b8b274a9d38b732456ec895c220eda12f94d2fee4341b33f84d33"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B12-P02/comparison-manifest.json",
+      "sha256": "edff311473be684b1bd88c044283229b0d2835f41059ff4850b43e651991842f"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/manifest.json",
+      "sha256": "d0b2b2371474920c2bd99635c38e60d9c733ddeda9bf83bd02cd595e491d1d23"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/assessment.json",
+      "sha256": "6ca0835ee4c0cf27289f1e95c278da3d3e2784e95b26142a74bf279718d54810"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/assessment.md",
+      "sha256": "e2f25f40b742f0534e3a2b66be89278ea891a732a6e92bc22746b09bb7f4b3de"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/control/assessment.json",
+      "sha256": "e56f8eea1ab06e1c1a4462a468ecaad9c98dee86c80a555828832f631de2876d"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/control/assessment.md",
+      "sha256": "60090058ce203cdb41be36adfd6633cfe84965716edc0afaea02709cf497b339"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/control/coverage.json",
+      "sha256": "22e9336b1c53f3785bfdac7e30896d902dac17d28313e19d93b063394f4408c3"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/control/defects.json",
+      "sha256": "5b7f7c7487149378d3d12a09f46767935b67ea5429ab7fb5cee43b794f393f80"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/control/manifest.json",
+      "sha256": "bb8e50f9ae4aa3a554149712bb994af4ad67586453c78d1c951f3b5ceb740318"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/control/primary-source-index.json",
+      "sha256": "f5262351eba09a57b2e81c8ff86b9e4331ec609bd5e8b4ded59f393d47895eef"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/coverage.json",
+      "sha256": "9ed5b12becf8441a22864727580f5c97c79ca2b4ed4c44a9617c2355d2018e4f"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/defects.json",
+      "sha256": "319aad08caa22177d46c216eca8f9ed106f369a24a1bb6c8c7c6c37a008a1d97"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/evidence/material-lifecycle.json",
+      "sha256": "4f28a7faf1011c4d398dc8ba432a5f67a30cffef0d71871d444f7d9cbf5c0cd3"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/evidence/mkdocs-material-LICENSE.txt",
+      "sha256": "e1150f26b4c0f872627b39fda49ae3bd850304f2f7f3171ae0531c1f8f4dd078"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/evidence/paste-input-boundary.json",
+      "sha256": "11bf333c22e14542e92c3c7b9a4eb888070fa22d45052f195828e4c2b2da463e"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/original-versus-separate-findings-map.json",
+      "sha256": "e6d0237abe6be4fe32fd28f9ca8523f86d5353bbb275e20f1a331e06068f8888"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/primary-source-index.json",
+      "sha256": "c8e69595d93411060f2557a08809d35cfa6aadf12da870836bd700ab475edd8d"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/treatment/assessment.json",
+      "sha256": "92ab9fd5fc4a3b637217857575066f1597c4b161d61745d32c23dc3065643346"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/treatment/assessment.md",
+      "sha256": "fb486c65407489a1d30ea474e8817e377df8f9035b54b80c053a530845b2039f"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/treatment/coverage.json",
+      "sha256": "f9f54914d6596c849285e34d44a92be70cec66d15a96d79e6d01e954222288e7"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/treatment/defects.json",
+      "sha256": "220145946570dc8cac7e194212a6971c0e86af182914af3f4c77cb0b8899989a"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/treatment/manifest.json",
+      "sha256": "c1cfb030a8f720d5ce30efd249d509c06358df87056b34c996015cee98d38a2e"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/treatment/primary-source-index.json",
+      "sha256": "6598fe3e0cfc5cdbb174f812590fa98db351383886012939bd9986e72929acbc"
+    },
+    {
+      "path": "state/contract-completion-v1/B10-P02-cost.json",
+      "sha256": "87b194f6c977ad90f519076f1aeea35a8ba0408b9a9434889c4c46d338b2395d"
+    },
+    {
+      "path": "state/contract-completion-v1/B10-P02-input-custody.json",
+      "sha256": "8cf73b7d5aa3bab3951822b58c2fa8f0a2570ac4964d5ec8cbd64ab8a3121d37"
+    },
+    {
+      "path": "state/contract-completion-v1/B10-P02-output-verification.json",
+      "sha256": "7c35db09c1f91675b4d8fed635486a18228fbd5e2bf7bc8ff939f36cbc853717"
+    },
+    {
+      "path": "state/contract-completion-v1/B10-P02-primary-fetch-receipts.json",
+      "sha256": "3591c315e843114c7e198391b349f956bb0afb2e16915f4f78fc59c7fc679302"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/assessment.json",
+      "sha256": "6ca0835ee4c0cf27289f1e95c278da3d3e2784e95b26142a74bf279718d54810"
+    }
+  ],
+  "original_arms": 24,
+  "separate_completed_reviews": 1,
+  "separate_review_arm_findings": 2,
+  "no_regrades": true
+}

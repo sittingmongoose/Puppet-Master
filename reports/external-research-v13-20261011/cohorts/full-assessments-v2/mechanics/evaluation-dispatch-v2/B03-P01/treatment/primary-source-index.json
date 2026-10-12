@@ -1,0 +1,325 @@
+{
+  "arm_id": "B03-P01-treatment",
+  "independent_research": true,
+  "research_shared_across_matched_arms": true,
+  "observations": "../shared/primary-observations.json",
+  "decisive_evidence": "../shared/tantivy-token-boundary.json",
+  "public_source_records": [
+    {
+      "id": "PS01",
+      "title": "SQLite FTS5 manual",
+      "url": "https://www.sqlite.org/fts5.html",
+      "version_or_context": "Living manual, accessed 2026-10-12; actual notebook runtime unknown",
+      "locator": "2.1; 3; 4.3.1-4.3.5; 4.4.1-4.4.4; 6.3; 6.7; 6.12-6.13",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS02",
+      "title": "SQLite WAL",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_context": "Living manual; WAL since 3.7.0",
+      "locator": "1; 2.1-2.3; checkpoint/concurrency limitations",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS03",
+      "title": "SQLite ATTACH",
+      "url": "https://www.sqlite.org/lang_attach.html",
+      "version_or_context": "Living official manual",
+      "locator": "multi-database transaction atomicity paragraph",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS04",
+      "title": "SQLite compile options",
+      "url": "https://www.sqlite.org/compile.html",
+      "version_or_context": "Living official manual",
+      "locator": "SQLITE_ENABLE_FTS5",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS05",
+      "title": "SQLite 3.43.0 release",
+      "url": "https://www.sqlite.org/releaselog/3_43_0.html",
+      "version_or_context": "3.43.0, 2023-08-24",
+      "locator": "item 1",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS06",
+      "title": "SQLite malformed trigram configuration report",
+      "url": "https://sqlite.org/forum/forumpost/171bcc2bcd?t=c",
+      "version_or_context": "2024-08 report against July trunk; fix reported in 3.46.1",
+      "locator": "posts 1, 3, 4",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS07",
+      "title": "SQLite 3.46.1 release",
+      "url": "https://www.sqlite.org/releaselog/3_46_1.html",
+      "version_or_context": "3.46.1, 2024-08-13",
+      "locator": "tokenize= argument robustness item",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS08",
+      "title": "SQLite Unicode61 Polish letter discussion",
+      "url": "https://sqlite.org/forum/info/e336faf90e60d53f?t=c",
+      "version_or_context": "2020-2021; original reporter 3.30.1",
+      "locator": "posts 1-3",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS09",
+      "title": "SQLite nested update trigger report",
+      "url": "https://sqlite.org/bugs/info/552f36384c7900ef72448f71118f9c6fe8aa2553e7ef617ef7323c3d0f54b104",
+      "version_or_context": "2026-08-04/05; reported 3.45.1/3.45.3/3.53.2",
+      "locator": "corrected reproducer post 3 and maintainer response post 4",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS10",
+      "title": "Tantivy IndexWriter",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "version_or_context": "crate 0.26.2",
+      "locator": "prepare_commit; commit; delete_term; add_document; run",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS11",
+      "title": "Tantivy IndexReader",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/struct.IndexReader.html",
+      "version_or_context": "crate 0.26.2",
+      "locator": "reload; searcher",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS12",
+      "title": "Tantivy tokenizer module",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "version_or_context": "crate 0.26.2",
+      "locator": "default; en_stem; RemoveLongFilter entry",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS13",
+      "title": "Tantivy RemoveLongFilter",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/struct.RemoveLongFilter.html",
+      "version_or_context": "crate 0.26.2",
+      "locator": "type description and limit()",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS14",
+      "title": "Tantivy length filter source",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/src/tokenizer/remove_long.rs",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "predicate; advance; test_remove_long",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS15",
+      "title": "Tantivy default tokenizer caller",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/src/tokenizer/tokenizer_manager.rs",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "Default impl, default and en_stem registrations",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS16",
+      "title": "Tantivy SimpleTokenizer",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/src/tokenizer/simple_tokenizer.rs",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "search_token_end; advance; test_simple_tokenizer",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS17",
+      "title": "Tantivy update example",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/examples/deleting_updating_documents.rs",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "schema ID guidance; delete/add; commit/reload; assertions",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS18",
+      "title": "Tantivy changelog",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/CHANGELOG.md",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "0.26; 0.24; 0.22; 0.15.3; 0.13; 0.11",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS19",
+      "title": "Tantivy package VCS identity",
+      "url": "https://docs.rs/crate/tantivy/0.26.2/source/.cargo_vcs_info.json",
+      "version_or_context": "crate 0.26.2 -> 72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "git.sha1",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS20",
+      "title": "Tantivy 0.26.2 release",
+      "url": "https://github.com/quickwit-oss/tantivy/releases/tag/0.26.2",
+      "version_or_context": "0.26.2; tag 72d1ef9",
+      "locator": "release tag heading/commit",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS21",
+      "title": "Tantivy CJK issue 718",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/718",
+      "version_or_context": "2019-11-29, closed",
+      "locator": "entire discussion, especially later diagnosis and maintainer conclusion",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS22",
+      "title": "Tantivy crash issue 3079",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/3079",
+      "version_or_context": "2026-09 report, open at lookup",
+      "locator": "body and missing commit/meta state",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS23",
+      "title": "Tantivy Windows issue 2847",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/2847",
+      "version_or_context": "reported 0.25.0; Windows 10/11 NTFS",
+      "locator": "body version and managed metadata race",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS24",
+      "title": "Tantivy segments issue 2932",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/2932",
+      "version_or_context": "2026-05 downstream report, open",
+      "locator": "body and activity",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS25",
+      "title": "Tantivy watcher issue 3100",
+      "url": "https://github.com/quickwit-oss/tantivy/issues/3100",
+      "version_or_context": "reported 0.22.1, macOS downstream evict/reopen churn",
+      "locator": "body mechanism/environment/activity",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS26",
+      "title": "SQLite integrity-check history",
+      "url": "https://sqlite.org/hctree/info/782163693f37aeb6",
+      "version_or_context": "check-in 782163693f37aeb65209bebbaeb6659a36881b8c4b4bec778b366658488bf966, 2020-09-21",
+      "locator": "summary and changed ext/fts5/test/fts5integrity.test listing",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "PS27",
+      "title": "Tantivy packaged feature identity",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/Cargo.toml",
+      "version_or_context": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "locator": "package version/license; features",
+      "coverage": "COMPLETE"
+    }
+  ],
+  "research_limits": [
+    {
+      "family": "Historical issue current-version reproduction/fix closure",
+      "coverage": "UNASSESSED",
+      "boundary": "Current notebook dependency unknown. Reports used only as conditional investigations."
+    },
+    {
+      "family": "Actual target notebook repository/code/callers/tests/store capabilities",
+      "coverage": "UNASSESSED",
+      "boundary": "No repository identified in brief/plan/input map; user fact may remain unknown."
+    },
+    {
+      "family": "Actual packaged runtime/platforms/scripts/private corpus/budgets/performance",
+      "coverage": "UNASSESSED",
+      "boundary": "Unprovided inputs and future measurements; no obligation to deploy or benchmark private data."
+    }
+  ],
+  "input_scientific_documents": {
+    "critic/critique.md": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/control/terminal-handoffs/critic/files/critique.md",
+      "bytes": 10495,
+      "sha256": "662ec38b5c80937f7456ba263cde2756dc4cd091feeaef23c7febb210339b1ee"
+    },
+    "critic/source-map.json": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/control/terminal-handoffs/critic/files/source-map.json",
+      "bytes": 10740,
+      "sha256": "6dcb2b9db490267cd71f2cf64ed0a296e76366277a001d7f32583ddd4c2d315a"
+    },
+    "critic/sources/index.md": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/control/terminal-handoffs/critic/files/sources/index.md",
+      "bytes": 2747,
+      "sha256": "902b93f55f87c1a548c31275858e2a4ebf95220d2bcd36f413b15ed6c2be70cd"
+    },
+    "investigator/discovery.md": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-retained-final/run/B03-P01-treatment/stages/investigator/discovery.md",
+      "bytes": 19055,
+      "sha256": "64a0601d9cb4c96bb1e07a4e6dd115f67ac3e06f22f0f999343cded363ef1aa2"
+    },
+    "investigator/draft.md": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-retained-final/run/B03-P01-treatment/stages/investigator/draft.md",
+      "bytes": 18945,
+      "sha256": "6183f837954d770f820f324e6b85d36a8a9c0bf4502ef12910e800c7b09cfd48"
+    },
+    "investigator/source-map.json": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-retained-final/run/B03-P01-treatment/stages/investigator/source-map.json",
+      "bytes": 19049,
+      "sha256": "df5a16c260ca8ff42c7cad5e48087043ffcdefa090b5bd77824356587b04046e"
+    },
+    "investigator/revealed-plan.md": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-retained-final/run/B03-P01-treatment/stages/investigator/revealed-plan.md",
+      "bytes": 2334,
+      "sha256": "b0efb8261b14a8f968b4ccff9a188ebf1e7ce47309d0c9344d0ccb9f64cba43f"
+    },
+    "investigator/sources/index.md": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-retained-final/run/B03-P01-treatment/stages/investigator/sources/index.md",
+      "bytes": 4619,
+      "sha256": "bfa1c1432211ed58efde41fd5fd39cb8f430f25f70fba461e58e2c345f9832fa"
+    },
+    "investigator/final/final.md": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-retained-final/run/B03-P01-treatment/stages/investigator/final/final.md",
+      "bytes": 23369,
+      "sha256": "9340fad59fcaba255c7107f9a1f49292e1e64dbebc07b5028bafa9113fb68421"
+    },
+    "investigator/final/source-map.json": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-retained-final/run/B03-P01-treatment/stages/investigator/final/source-map.json",
+      "bytes": 21722,
+      "sha256": "007f3c61f12f7e7b8d097f669cfd6a712331f74b4e55f5cd9bb6e962fb8b7d69"
+    },
+    "investigator/final/sources/index.md": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-retained-final/run/B03-P01-treatment/stages/investigator/final/sources/index.md",
+      "bytes": 5548,
+      "sha256": "479050718c5eeb536b6ce69c4731b4cca5bda6345a2f3e61e0eec95ec78449a0"
+    },
+    "investigator/run/B03-P01-treatment/control/critic-delivery/critique.md": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-retained-final/run/B03-P01-treatment/control/critic-delivery/critique.md",
+      "bytes": 10495,
+      "sha256": "662ec38b5c80937f7456ba263cde2756dc4cd091feeaef23c7febb210339b1ee"
+    },
+    "investigator/run/B03-P01-treatment/control/critic-delivery/source-map.json": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-retained-final/run/B03-P01-treatment/control/critic-delivery/source-map.json",
+      "bytes": 10740,
+      "sha256": "6dcb2b9db490267cd71f2cf64ed0a296e76366277a001d7f32583ddd4c2d315a"
+    },
+    "investigator/run/B03-P01-treatment/control/critic-delivery/sources/index.md": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-retained-final/run/B03-P01-treatment/control/critic-delivery/sources/index.md",
+      "bytes": 2747,
+      "sha256": "902b93f55f87c1a548c31275858e2a4ebf95220d2bcd36f413b15ed6c2be70cd"
+    },
+    "brief": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-eval-inputs/control-inputs/brief.md",
+      "bytes": 2313,
+      "sha256": "cc638ce3f990b394825cfe1c5a23b24c08dad37ddfeb061317a12d98d5eb1bae"
+    },
+    "plan": {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-eval-inputs/control-inputs/plan.md",
+      "bytes": 2334,
+      "sha256": "b0efb8261b14a8f968b4ccff9a188ebf1e7ce47309d0c9344d0ccb9f64cba43f"
+    }
+  },
+  "no_candidate_research_as_authority": true
+}

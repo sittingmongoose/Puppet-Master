@@ -1,0 +1,530 @@
+{
+  "id": "sn-api-context",
+  "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Http/Controllers/Api/AssetsController.php",
+  "access_utc": "2026-10-12T02:04:23.498200+00:00",
+  "response_sha256": "a0104d36aa0736063d1aab0333bee284f86c805e44e60f130bd5bf13eb0c7770",
+  "response_bytes": 88178,
+  "evidence": [
+    {
+      "line": 1364,
+      "text": "    public function checkout(AssetCheckoutRequest $request, $asset_id): JsonResponse"
+    },
+    {
+      "line": 1365,
+      "text": "    {"
+    },
+    {
+      "line": 1366,
+      "text": "        $this->authorize('checkout', Asset::class);"
+    },
+    {
+      "line": 1367,
+      "text": "        $asset = Asset::findOrFail($asset_id);"
+    },
+    {
+      "line": 1368,
+      "text": ""
+    },
+    {
+      "line": 1369,
+      "text": "        if (! $asset->availableForCheckout()) {"
+    },
+    {
+      "line": 1370,
+      "text": "            return response()->json(Helper::formatStandardApiResponse('error', ['asset' => e($asset->asset_tag)], trans('admin/hardware/message.checkout.not_available')));"
+    },
+    {
+      "line": 1371,
+      "text": "        }"
+    },
+    {
+      "line": 1372,
+      "text": ""
+    },
+    {
+      "line": 1373,
+      "text": "        $this->authorize('checkout', $asset);"
+    },
+    {
+      "line": 1374,
+      "text": ""
+    },
+    {
+      "line": 1375,
+      "text": "        $error_payload = [];"
+    },
+    {
+      "line": 1376,
+      "text": "        $error_payload['asset'] = ["
+    },
+    {
+      "line": 1377,
+      "text": "            'id' => $asset->id,"
+    },
+    {
+      "line": 1378,
+      "text": "            'asset_tag' => $asset->asset_tag,"
+    },
+    {
+      "line": 1379,
+      "text": "        ];"
+    },
+    {
+      "line": 1380,
+      "text": ""
+    },
+    {
+      "line": 1444,
+      "text": "        // Concurrency guard. availableForCheckout() above ran on an"
+    },
+    {
+      "line": 1445,
+      "text": "        // unlocked read, so two simultaneous checkout requests can both"
+    },
+    {
+      "line": 1446,
+      "text": "        // observe the asset as available and both proceed through"
+    },
+    {
+      "line": 1447,
+      "text": "        // checkOut(), producing duplicate checkout-history rows and"
+    },
+    {
+      "line": 1448,
+      "text": "        // double-incrementing checkout_counter on a single-assignment"
+    },
+    {
+      "line": 1449,
+      "text": "        // asset. Re-fetch the row under lockForUpdate INSIDE the"
+    },
+    {
+      "line": 1450,
+      "text": "        // transaction and re-check availability against the locked"
+    },
+    {
+      "line": 1451,
+      "text": "        // snapshot. Any concurrent checkout blocks on the row lock until"
+    },
+    {
+      "line": 1452,
+      "text": "        // this transaction commits, then sees the asset as no longer"
+    },
+    {
+      "line": 1453,
+      "text": "        // available. Mirrors the pattern in ConsumablesController::store"
+    },
+    {
+      "line": 1454,
+      "text": "        // (GHSA-x4g2-87xc-m5jm)."
+    },
+    {
+      "line": 1455,
+      "text": "        $wasCheckedOut = DB::transaction(function () use ($asset, $target, $checkout_at, $expected_checkin, $note, $asset_name): bool {"
+    },
+    {
+      "line": 1456,
+      "text": "            $locked = Asset::whereKey($asset->id)->lockForUpdate()->first();"
+    },
+    {
+      "line": 1457,
+      "text": "            if (! $locked || ! $locked->availableForCheckout()) {"
+    },
+    {
+      "line": 1458,
+      "text": "                return false;"
+    },
+    {
+      "line": 1459,
+      "text": "            }"
+    },
+    {
+      "line": 1460,
+      "text": ""
+    },
+    {
+      "line": 1461,
+      "text": "            return $asset->checkOut($target, auth()->user(), $checkout_at, $expected_checkin, $note, $asset_name, $asset->location_id);"
+    },
+    {
+      "line": 1462,
+      "text": "        });"
+    },
+    {
+      "line": 1463,
+      "text": ""
+    },
+    {
+      "line": 1464,
+      "text": "        if ($wasCheckedOut) {"
+    },
+    {
+      "line": 1465,
+      "text": "            return response()->json(Helper::formatStandardApiResponse('success', ['asset' => e($asset->asset_tag)], trans('admin/hardware/message.checkout.success')));"
+    },
+    {
+      "line": 1466,
+      "text": "        }"
+    },
+    {
+      "line": 1467,
+      "text": ""
+    },
+    {
+      "line": 1468,
+      "text": "        return response()->json(Helper::formatStandardApiResponse('error', ['asset' => e($asset->asset_tag)], trans('admin/hardware/message.checkout.error')));"
+    },
+    {
+      "line": 1480,
+      "text": "    public function checkin(Request $request, $asset_id): JsonResponse"
+    },
+    {
+      "line": 1481,
+      "text": "    {"
+    },
+    {
+      "line": 1482,
+      "text": "        $asset = Asset::with('model')->findOrFail($asset_id);"
+    },
+    {
+      "line": 1483,
+      "text": "        $this->authorize('checkin', $asset);"
+    },
+    {
+      "line": 1484,
+      "text": ""
+    },
+    {
+      "line": 1485,
+      "text": "        $target = $asset->assignedTo;"
+    },
+    {
+      "line": 1486,
+      "text": "        if (is_null($target)) {"
+    },
+    {
+      "line": 1487,
+      "text": "            return response()->json(Helper::formatStandardApiResponse('error', ["
+    },
+    {
+      "line": 1488,
+      "text": "                'asset_tag' => e($asset->asset_tag),"
+    },
+    {
+      "line": 1489,
+      "text": "                'model' => e($asset->model->name),"
+    },
+    {
+      "line": 1490,
+      "text": "                'model_number' => e($asset->model->model_number),"
+    },
+    {
+      "line": 1491,
+      "text": "            ], trans('admin/hardware/message.checkin.already_checked_in')));"
+    },
+    {
+      "line": 1492,
+      "text": "        }"
+    },
+    {
+      "line": 1493,
+      "text": ""
+    },
+    {
+      "line": 1494,
+      "text": "        $asset->expected_checkin = null;"
+    },
+    {
+      "line": 1495,
+      "text": "        // $asset->last_checkout = null;"
+    },
+    {
+      "line": 1496,
+      "text": "        $asset->last_checkin = now();"
+    },
+    {
+      "line": 1497,
+      "text": "        $asset->assignedTo()->disassociate($asset);"
+    },
+    {
+      "line": 1498,
+      "text": "        $asset->accepted = null;"
+    },
+    {
+      "line": 1499,
+      "text": ""
+    },
+    {
+      "line": 1500,
+      "text": "        if ($request->input('clear_name') == '1') {"
+    },
+    {
+      "line": 1501,
+      "text": "            $asset->name = null;"
+    },
+    {
+      "line": 1502,
+      "text": "        } elseif ($request->has('name')) {"
+    },
+    {
+      "line": 1503,
+      "text": "            $asset->name = $request->input('name');"
+    },
+    {
+      "line": 1504,
+      "text": "        }"
+    },
+    {
+      "line": 1505,
+      "text": ""
+    },
+    {
+      "line": 1506,
+      "text": "        $this->migrateLegacyLocations($asset);"
+    },
+    {
+      "line": 1507,
+      "text": ""
+    },
+    {
+      "line": 1508,
+      "text": "        $asset->location_id = $asset->rtd_location_id;"
+    },
+    {
+      "line": 1509,
+      "text": ""
+    },
+    {
+      "line": 1510,
+      "text": "        if ($request->filled('location_id')) {"
+    },
+    {
+      "line": 1511,
+      "text": "            $asset->location_id = $request->input('location_id');"
+    },
+    {
+      "line": 1512,
+      "text": ""
+    },
+    {
+      "line": 1513,
+      "text": "            if ($request->input('update_default_location')) {"
+    },
+    {
+      "line": 1514,
+      "text": "                $asset->rtd_location_id = $request->input('location_id');"
+    },
+    {
+      "line": 1515,
+      "text": "            }"
+    },
+    {
+      "line": 1516,
+      "text": "        }"
+    },
+    {
+      "line": 1517,
+      "text": ""
+    },
+    {
+      "line": 1518,
+      "text": "        if ($request->filled('status_id')) {"
+    },
+    {
+      "line": 1519,
+      "text": "            $asset->status_id = $request->input('status_id');"
+    },
+    {
+      "line": 1520,
+      "text": "        }"
+    },
+    {
+      "line": 1521,
+      "text": ""
+    },
+    {
+      "line": 1522,
+      "text": "        $checkin_at = $request->filled('checkin_at') ? $request->input('checkin_at').' '.date('H:i:s') : date('Y-m-d H:i:s');"
+    },
+    {
+      "line": 1523,
+      "text": "        $originalValues = $asset->getRawOriginal();"
+    },
+    {
+      "line": 1524,
+      "text": ""
+    },
+    {
+      "line": 1525,
+      "text": "        if (($request->filled('checkin_at')) && ($request->input('checkin_at') != date('Y-m-d'))) {"
+    },
+    {
+      "line": 1526,
+      "text": "            $originalValues['action_date'] = $checkin_at;"
+    },
+    {
+      "line": 1527,
+      "text": "        }"
+    },
+    {
+      "line": 1528,
+      "text": ""
+    },
+    {
+      "line": 1529,
+      "text": "        $asset->licenseseats->each(function (LicenseSeat $seat) {"
+    },
+    {
+      "line": 1530,
+      "text": "            $seat->update(['assigned_to' => null]);"
+    },
+    {
+      "line": 1531,
+      "text": "        });"
+    },
+    {
+      "line": 1532,
+      "text": ""
+    },
+    {
+      "line": 1533,
+      "text": "        // Get all pending Acceptances for this asset and delete them"
+    },
+    {
+      "line": 1534,
+      "text": "        CheckoutAcceptance::pending()"
+    },
+    {
+      "line": 1535,
+      "text": "            ->whereHasMorph("
+    },
+    {
+      "line": 1536,
+      "text": "                'checkoutable',"
+    },
+    {
+      "line": 1537,
+      "text": "                [Asset::class],"
+    },
+    {
+      "line": 1538,
+      "text": "                function (Builder $query) use ($asset) {"
+    },
+    {
+      "line": 1539,
+      "text": "                    $query->where('id', $asset->id);"
+    },
+    {
+      "line": 1540,
+      "text": "                }"
+    },
+    {
+      "line": 1541,
+      "text": "            )"
+    },
+    {
+      "line": 1542,
+      "text": "            ->get()"
+    },
+    {
+      "line": 1543,
+      "text": "            ->map(function ($acceptance) {"
+    },
+    {
+      "line": 1544,
+      "text": "                $acceptance->delete();"
+    },
+    {
+      "line": 1545,
+      "text": "            });"
+    },
+    {
+      "line": 1546,
+      "text": ""
+    },
+    {
+      "line": 1547,
+      "text": "        if ($asset->save()) {"
+    },
+    {
+      "line": 1548,
+      "text": ""
+    },
+    {
+      "line": 1549,
+      "text": "            // Update the location of any child assets"
+    },
+    {
+      "line": 1550,
+      "text": "            Asset::where('assigned_type', Asset::class)"
+    },
+    {
+      "line": 1551,
+      "text": "                ->where('assigned_to', $asset->id)"
+    },
+    {
+      "line": 1552,
+      "text": "                ->update(['location_id' => $asset->location_id]);"
+    },
+    {
+      "line": 1553,
+      "text": ""
+    },
+    {
+      "line": 1554,
+      "text": "            event(new CheckoutableCheckedIn($asset, $target, auth()->user(), $request->input('note'), $checkin_at, $originalValues));"
+    },
+    {
+      "line": 1555,
+      "text": ""
+    },
+    {
+      "line": 1556,
+      "text": "            return response()->json(Helper::formatStandardApiResponse('success', ["
+    },
+    {
+      "line": 1557,
+      "text": "                'asset_tag' => e($asset->asset_tag),"
+    },
+    {
+      "line": 1558,
+      "text": "                'model' => e($asset->model->name),"
+    },
+    {
+      "line": 1559,
+      "text": "                'model_number' => e($asset->model->model_number),"
+    },
+    {
+      "line": 1560,
+      "text": "            ], trans('admin/hardware/message.checkin.success')));"
+    },
+    {
+      "line": 1561,
+      "text": "        }"
+    },
+    {
+      "line": 1562,
+      "text": ""
+    },
+    {
+      "line": 1563,
+      "text": "        return response()->json(Helper::formatStandardApiResponse('error', ['asset' => e($asset->asset_tag)], trans('admin/hardware/message.checkin.error')));"
+    },
+    {
+      "line": 1564,
+      "text": "    }"
+    },
+    {
+      "line": 1565,
+      "text": ""
+    },
+    {
+      "line": 1566,
+      "text": "    /**"
+    },
+    {
+      "line": 1567,
+      "text": "     * Checkin an asset by asset tag"
+    }
+  ],
+  "operation": "read-only source; no product execution"
+}

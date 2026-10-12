@@ -1,0 +1,40 @@
+{
+  "arm_id": "B11-P01-control",
+  "kind": "Compact independent context and deterministic custody witnesses; not candidate product validation",
+  "manual_release": {
+    "url": "https://mirrors.edge.kernel.org/pub/linux/docs/man-pages/man-pages-6.19.tar.gz",
+    "sha256": "fc0c620f07b4eba8ede128fbc267db5ebb4a67bab1aca3b01e5734956baf5572",
+    "selected_members": {
+      "man/man7/inode.7": "936e9a2597c211f0135427ce8d8e63ca060a55ef95f41e501fd24aa04e70695b",
+      "man/man2/open_by_handle_at.2": "ae863c15f0a1e9f20c31fd73e161f7879b0d999e03b23f751b7cfb86b22b341e",
+      "man/man3/realpath.3": "8bb26a291b0fecca59d06ecbeabbe72991f88fe63e5cd6a5c6ab2378981d767f",
+      "man/man7/inotify.7": "f202ba56f767dad628318bd0a77be861b4f04dea43c00b903396a04b347a7d42"
+    },
+    "inspection": "Only exact relevant member contents read; nothing executed or installed.",
+    "license": "Linux-man-pages-copyleft; copyright respective authors and Linux man-pages project"
+  },
+  "strict_source_map_validation": {
+    "status": "VALID",
+    "errors": [],
+    "bytes_not_modified": true
+  },
+  "witnesses": [
+    {
+      "id": "W-C-WAL",
+      "sources": [
+        "E29",
+        "E30"
+      ],
+      "finding": "C-D01",
+      "location": "WAL sections 11-11.2 and 3.51.3 patch notes",
+      "context": "The source's rare concurrent-connection corruption restriction and fixed versions are absent from S16 and the final WAL discussion."
+    },
+    {
+      "id": "W-C-RELEASE",
+      "source": "E07",
+      "finding": "C-D02",
+      "location": "Raw changelog line 373 under the 7.0.7 heading; version numbering is determined from the nearest preceding release heading",
+      "context": "The source-map S05 7.0.8 claim does not match that heading."
+    }
+  ]
+}

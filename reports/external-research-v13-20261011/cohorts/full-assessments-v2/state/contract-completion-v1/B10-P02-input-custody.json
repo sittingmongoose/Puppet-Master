@@ -1,0 +1,726 @@
+{
+  "schema": "er13.separate-review-input-custody.v1",
+  "block_id": "B10-P02",
+  "first_cost_clock_recorded_at_utc": "2026-10-12T02:17:58.958345+00:00",
+  "earlier_review_start_utc": "UNKNOWN; review began before this checkpoint",
+  "original_immutability_baseline": true,
+  "files": [
+    {
+      "path": "state/evaluation-contract-v1.json",
+      "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+      "bytes": 3800,
+      "role": "governing_contract"
+    },
+    {
+      "path": "state/dispatcher-v1/eval-ready/B10-P02.json",
+      "sha256": "fb73f96c373db447a4664a6cb803e407578324d3ae68653d51a3b2d971886f07",
+      "bytes": 14131,
+      "role": "frozen_packet"
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B10-P02-control-eval-inputs/authored-manifest.json",
+      "sha256": "44402569662483a9e77551553f606d80d98cd4ff4a63650231f8df6e920f3c51",
+      "bytes": 623,
+      "role": "authored_manifest"
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B10-P02-control-eval-inputs/configs/B10-P02-control.json",
+      "sha256": "f06e418c822f7ba693536265756ddb076d12fd85e6c8ccaa976795be0331b297",
+      "bytes": 1398,
+      "role": "frozen_authored_input"
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B10-P02-control-eval-inputs/control-inputs/brief.md",
+      "sha256": "ad54ba180a1c532f5dec55580fe585fb6cbf2185c67563850c3895b7b1f08b64",
+      "bytes": 2481,
+      "role": "frozen_authored_input"
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B10-P02-control-eval-inputs/control-inputs/plan.md",
+      "sha256": "9dd516db81413121e2bdacf096072668379c7d1d4e1169f0d16489a2f1a10fe6",
+      "bytes": 2424,
+      "role": "frozen_authored_input"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/investigator/manifest.json",
+      "sha256": "5ee18f8066dc49f857d07a1aa283562fee9768d52c879ade918fb0b557346b78",
+      "bytes": 2868,
+      "role": "terminal_manifest"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/investigator/files/discovery.md",
+      "sha256": "c2fc7c6bc8a8f8c67624b5b6d63c5de2e4853867e4dbe19217f6bb8a8a00d01e",
+      "bytes": 5786,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/investigator/files/draft.md",
+      "sha256": "c89e7911dcf5929dd56ebba3c9b4aa0f4dab541aefd1c7136aae2c6767b4ddfe",
+      "bytes": 32842,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/investigator/files/source-map.json",
+      "sha256": "09b45191b093edc1f3f26614e57ebc5436729d67f4d03fe047139675e180750c",
+      "bytes": 14111,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/investigator/files/revealed-plan.md",
+      "sha256": "9dd516db81413121e2bdacf096072668379c7d1d4e1169f0d16489a2f1a10fe6",
+      "bytes": 2424,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/investigator/files/plan-reveal.json",
+      "sha256": "958b56008d9cd0e5a183ab29188857c49ae499a815fa574e3ceef7381b196259",
+      "bytes": 470,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/investigator/files/assignment.md",
+      "sha256": "c7dc4ebd5a1e0eff1485f74e3bc26688bab36aabf88830c8e5ae2f8f851125cb",
+      "bytes": 10339,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/investigator/files/input-map.json",
+      "sha256": "9a8384009cd97dc186fbc56d3feea032e99af4b2f62983845e4990ba98b0c23d",
+      "bytes": 859,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/investigator/files/freeze.json",
+      "sha256": "b8e81f5771de024225e29f5b970b24a2d9bf40026a74078778b672d841ac12ef",
+      "bytes": 1936,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/investigator/files/request.json",
+      "sha256": "d513013c6495ca8f007d05e71d8269988a7e8bf2ebdb9107b9bc33b02ba94477",
+      "bytes": 7324,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/investigator/files/dispatch.json",
+      "sha256": "a442143b55e00da778e211bdc46b5c0350756fb6792e8768a80a6bff1b296967",
+      "bytes": 10654,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/investigator/files/status.json",
+      "sha256": "f72f375de47b3302777636ee180979b9f3bb8acde4cfc85da31d849bf05864a1",
+      "bytes": 5750,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/investigator/files/native-goal-create.json",
+      "sha256": "6b867c009ac92215236d36c49c862e690c3a899bf72943656075dcb97e0600a3",
+      "bytes": 525,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/investigator/files/native-goal-active.json",
+      "sha256": "6b867c009ac92215236d36c49c862e690c3a899bf72943656075dcb97e0600a3",
+      "bytes": 525,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/investigator/files/native-goal-terminal.json",
+      "sha256": "ac8c0872c361d99e571256105b9d0f125a0edf92c793e265bcec09de898f183a",
+      "bytes": 854,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/investigator/files/sources/index.md",
+      "sha256": "f4372375d49b120147e6197e5d23a28201c00375068ecba7a4d064b9c2792c10",
+      "bytes": 2560,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "state/dispatcher-v1/arms/B10-P02-control/investigator-eval-ready-status.raw.json",
+      "sha256": "2e376c2ef80053d845d3ad60001ad9872c0c02eddd5af70818cbd0de40e07f04",
+      "bytes": 11525,
+      "role": "frozen_actual_status"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/critic/manifest.json",
+      "sha256": "e9edd8a31f62e94168a1cc464135a9f3f9fba84f24c5e991a20db92bef901c7b",
+      "bytes": 2384,
+      "role": "terminal_manifest"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/critic/files/critique.md",
+      "sha256": "3bf72b0a3a7bc06311fb6d27c48f1eabd87cb6c5f6c8db485b5b11e4a372480c",
+      "bytes": 10988,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/critic/files/source-map.json",
+      "sha256": "3dfa45b6de7e13dd54394df16c00bcd61ba57639d5df425a348e8934a8e00363",
+      "bytes": 12456,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/critic/files/assignment.md",
+      "sha256": "5f995033de114c63085d9b34132e270ad4b7f8b80db985308597785960507cdb",
+      "bytes": 9747,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/critic/files/input-map.json",
+      "sha256": "c41b3d18a734f5df98e698273e96b9c78b0508c1ed06c6fe913588a40b2fdfb1",
+      "bytes": 1985,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/critic/files/freeze.json",
+      "sha256": "44ff8c9a9fe6f7ba8685a32e26b8168d8b23d60fc1ef00b83919eb407511b9f7",
+      "bytes": 4396,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/critic/files/request.json",
+      "sha256": "f821a15b6c03d775808a37f9427246de15835e2703bfa6791e5674d5e4ae8a23",
+      "bytes": 7258,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/critic/files/dispatch.json",
+      "sha256": "2b1d54db0d65e6424b28206babc8c1ff6f5125dbbf4f1186d64b7ab6be915e35",
+      "bytes": 10516,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/critic/files/status.json",
+      "sha256": "233cb9b10bd8fc2c77f239487c43defc586f2df79f49878d779e153f069635a0",
+      "bytes": 4550,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/critic/files/native-goal-create.json",
+      "sha256": "d3ba5155c16bed77c5558e6decf012360071c3141e83d1167e0ff90a7145fef6",
+      "bytes": 513,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/critic/files/native-goal-active.json",
+      "sha256": "d3ba5155c16bed77c5558e6decf012360071c3141e83d1167e0ff90a7145fef6",
+      "bytes": 513,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/critic/files/native-goal-terminal.json",
+      "sha256": "e74197845e4376a75c7a29e6d5acbec9d7163f753e69fd2e9c9cd9fcf375f333",
+      "bytes": 842,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/critic/files/sources/index.md",
+      "sha256": "b47e8006898dce4be44c4de9642ae3a22180c49079d894a34bbb9a202a185ab8",
+      "bytes": 2096,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "state/dispatcher-v1/arms/B10-P02-control/critic-eval-ready-status.raw.json",
+      "sha256": "c837aab05ba067542fbb3643ebb137fae2e066a9c2b2d883c4e7d30a2918602a",
+      "bytes": 9117,
+      "role": "frozen_actual_status"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/reviser/manifest.json",
+      "sha256": "eaefe1f9818cd79164cfd07e4299ffa29dda02d8086ccb7e9de8ad799602de5e",
+      "bytes": 2383,
+      "role": "terminal_manifest"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/reviser/files/final.md",
+      "sha256": "30555c3b7bbb7ef168e7ba948d6df5e6edc272e805b3b9abc4ecf2ac4240a292",
+      "bytes": 34977,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/reviser/files/source-map.json",
+      "sha256": "ca5c43667e7cdef0214629d9e496c541adfdf63cc27a6009ef721cc1e2aa9bf5",
+      "bytes": 28643,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/reviser/files/assignment.md",
+      "sha256": "de66456f97e1025d16e8a79b96796b3b229d971d6ee42adac277d53912c91a2d",
+      "bytes": 9734,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/reviser/files/input-map.json",
+      "sha256": "b2c7c12fd6c200e886f9be1fe4b8c01ccc2867d7a8e4189faafe996ac39c6d10",
+      "bytes": 2596,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/reviser/files/freeze.json",
+      "sha256": "a3120b17550d5e3d4ea3a2f0b720b200d48f1a270b5b5ca9dff9331f1e1848af",
+      "bytes": 5950,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/reviser/files/request.json",
+      "sha256": "49829d151f8a19ffc64a0f91eeba04ba17938b99cb3d338c76db0ac5470081a0",
+      "bytes": 7269,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/reviser/files/dispatch.json",
+      "sha256": "bf172d0812faa49ce9546cacd95833578062dc696da55f80702e93defb1fd351",
+      "bytes": 10539,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/reviser/files/status.json",
+      "sha256": "a4e88dd5fe98a1220381066ab258dd415a70564368ecea5358f991d43c82d5ef",
+      "bytes": 4507,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/reviser/files/native-goal-create.json",
+      "sha256": "a24f13a05f455ccbcf590e3df8ab0fdb4c891c38d62ea227fec22043838c447d",
+      "bytes": 515,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/reviser/files/native-goal-active.json",
+      "sha256": "a24f13a05f455ccbcf590e3df8ab0fdb4c891c38d62ea227fec22043838c447d",
+      "bytes": 515,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/reviser/files/native-goal-terminal.json",
+      "sha256": "6c3d9f16118ab731a7d6824f3eea2ca002d8edb75fb4dffe28c4e0be4dac81df",
+      "bytes": 843,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-control/run/B10-P02-control/control/terminal-handoffs/reviser/files/sources/index.md",
+      "sha256": "264464cf4d06234a439f2b7601c5a9e379af30fa61b62fd13c2d09be9db9501f",
+      "bytes": 7216,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "state/dispatcher-v1/arms/B10-P02-control/reviser-eval-ready-status.raw.json",
+      "sha256": "7a1c997b3661d7934af58073ec514430650e4ef9b86c5ddd19fed7039a56a978",
+      "bytes": 9031,
+      "role": "frozen_actual_status"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/manifest.json",
+      "sha256": "2bc2dce24dd198d9dbb1568c0efe83466ade705d6b387a6d06097dfc6508ff45",
+      "bytes": 1474,
+      "role": "original_evaluator_manifest"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/assessment.md",
+      "sha256": "554d59215810d9f2c86f5a2f5b3e8401de97e74fdf04bf9e7a5e490fe6ce8ef5",
+      "bytes": 4332,
+      "role": "original_evaluator_member"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/assessment.json",
+      "sha256": "5d1514db38c4e85a93dae9e09762539cd6e2e3264bb5b26261575f4fe0faa94d",
+      "bytes": 10323,
+      "role": "original_evaluator_member"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/coverage.json",
+      "sha256": "069f79b9872b558a66b711f2b135f3e32e0fcc7749b6f236647c8f7ec2d57cac",
+      "bytes": 7859,
+      "role": "original_evaluator_member"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/defects.json",
+      "sha256": "9bb7f23141d624746e5d9eebbfdd2014599429e8e42cf93537fb43fda3db4ff5",
+      "bytes": 2162,
+      "role": "original_evaluator_member"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/control/primary-source-index.json",
+      "sha256": "5b6ab9e54b78e8e608724401f219013a14d3e555c692c6355ecb0c26eb1a4a55",
+      "bytes": 14803,
+      "role": "original_evaluator_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B10-P02-treatment-eval-inputs/authored-manifest.json",
+      "sha256": "cdc9f0c4991f4db79cc2b2cef63280c113f31aad73bf96bab82052c2309edecf",
+      "bytes": 625,
+      "role": "authored_manifest"
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B10-P02-treatment-eval-inputs/configs/B10-P02-treatment.json",
+      "sha256": "df66a87e73abd7d8ccb5512ca75737175b1d6fa2e8c873ece2dd72afb32118d7",
+      "bytes": 2831,
+      "role": "frozen_authored_input"
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B10-P02-treatment-eval-inputs/control-inputs/brief.md",
+      "sha256": "ad54ba180a1c532f5dec55580fe585fb6cbf2185c67563850c3895b7b1f08b64",
+      "bytes": 2481,
+      "role": "frozen_authored_input"
+    },
+    {
+      "path": "mechanics/dispatch-v1/frozen/B10-P02-treatment-eval-inputs/control-inputs/plan.md",
+      "sha256": "9dd516db81413121e2bdacf096072668379c7d1d4e1169f0d16489a2f1a10fe6",
+      "bytes": 2424,
+      "role": "frozen_authored_input"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/investigator/manifest.json",
+      "sha256": "4bcd43ab33e45d3eba6bcc5ca10f88c08632d99044fd333fcb13aa85ae97bc2c",
+      "bytes": 2870,
+      "role": "terminal_manifest"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/investigator/files/discovery.md",
+      "sha256": "2e7bd6697c82f51071d826690f3952eb7fec3adef9f307882dadea1ae5ed3c9a",
+      "bytes": 5361,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/investigator/files/draft.md",
+      "sha256": "1b83bb08f0bd2b36afef03c3b7d829362f18f36f970bed5b47d2975fd646074e",
+      "bytes": 31957,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/investigator/files/source-map.json",
+      "sha256": "24d6612c2d1625ad12699cec6d4edef7711b113c0bca933e62d03aefe2c4c7dc",
+      "bytes": 18272,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/investigator/files/revealed-plan.md",
+      "sha256": "9dd516db81413121e2bdacf096072668379c7d1d4e1169f0d16489a2f1a10fe6",
+      "bytes": 2424,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/investigator/files/plan-reveal.json",
+      "sha256": "4a7080c30a1f2e8e965bff5f5c782eaffee795919dd7c340347ea10ee9285edc",
+      "bytes": 474,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/investigator/files/assignment.md",
+      "sha256": "72d57f2a67a60e9d1beb2e163596c36e2d111f9b168a2df8e77320f864e16695",
+      "bytes": 10383,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/investigator/files/input-map.json",
+      "sha256": "b463fa66ac8ad31ce1535914f0b3a7704f09262b1534ade3f30b011e0f395166",
+      "bytes": 873,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/investigator/files/freeze.json",
+      "sha256": "1e400757c73b04a77e84f3a65b1357ac1be0ac40d7e2a73cb4e6fac3a14de0ef",
+      "bytes": 2792,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/investigator/files/request.json",
+      "sha256": "2029b0b507f4e4531d261df324fc7a75d45c371144c0d768455a4bec0aec01a5",
+      "bytes": 7362,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/investigator/files/dispatch.json",
+      "sha256": "c2c454ee6378ed8d43b1c211baaa1e7db2528cc0e2d772feb3f4878d5296ddf1",
+      "bytes": 10716,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/investigator/files/status.json",
+      "sha256": "fd7f2e677a910143e4ace7865d7ce7bca519e5ef71cb6ead85799440b6aa3c88",
+      "bytes": 5046,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/investigator/files/native-goal-create.json",
+      "sha256": "b488430610f6ea42788b0a40baaa8559d96b6776f214c7e051579c5b1da2076a",
+      "bytes": 531,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/investigator/files/native-goal-active.json",
+      "sha256": "b488430610f6ea42788b0a40baaa8559d96b6776f214c7e051579c5b1da2076a",
+      "bytes": 531,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/investigator/files/native-goal-terminal.json",
+      "sha256": "a2a3b71897b5d3d82078b90c9bfccc983717537d74df6f096b386f58ef415004",
+      "bytes": 860,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/investigator/files/sources/index.md",
+      "sha256": "e6dd2976d05919fa5acc65333efb3f7fdd44e05dd63fdab617c8791e930e4188",
+      "bytes": 2900,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "state/dispatcher-v1/arms/B10-P02-treatment/investigator-eval-ready-status.raw.json",
+      "sha256": "4777a7551b5c3e47bf7bffdb5851745f9e66cbbe69f44f6e020d0d7e23462232",
+      "bytes": 10111,
+      "role": "frozen_actual_status"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/critic/manifest.json",
+      "sha256": "14eb75e0499a8be40b417e5ceda712ec188350b338405fe81940955bfb53d5a0",
+      "bytes": 2387,
+      "role": "terminal_manifest"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/critic/files/critique.md",
+      "sha256": "e04b0353d7cc6aa0e0cbc88985eb49b1a09d2a419704dc4ecf15036f970f2ca2",
+      "bytes": 10787,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/critic/files/source-map.json",
+      "sha256": "53c746dedada15c5f499b576952d97e64afa2cad11c0808293b05e157d61c34c",
+      "bytes": 13632,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/critic/files/assignment.md",
+      "sha256": "47871f6b0881198f6a3bf8c356d04ee9a48cea52281eea37496d144032d257b4",
+      "bytes": 10337,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/critic/files/input-map.json",
+      "sha256": "f69572e4cfd78287acb7e91d4eeb38b53db269467123b1aaa916ade556739c3f",
+      "bytes": 2027,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/critic/files/freeze.json",
+      "sha256": "bd3f188259bf62d81dd3918b8e238c466c771745002317600ec43e3564f7e3f2",
+      "bytes": 5771,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/critic/files/request.json",
+      "sha256": "af2bbe6bd6d9f4f9787a5c3bcc0cb8c3f3ca5c8f1dd6ca2534bcfd9762b59f2c",
+      "bytes": 7296,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/critic/files/dispatch.json",
+      "sha256": "735c2bca7e21c958ed5f946706f20e73ec90bc2396aa5245c1bfc8955040fdd0",
+      "bytes": 10578,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/critic/files/status.json",
+      "sha256": "c9da800486cea544478687b6c86e4f307a4124588bbc899633adc591af7ee83a",
+      "bytes": 5254,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/critic/files/native-goal-create.json",
+      "sha256": "7d71d45fb251fc5c1bc2955002c867790d7b70eb84c422bcc232bb71b1a87449",
+      "bytes": 519,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/critic/files/native-goal-active.json",
+      "sha256": "7d71d45fb251fc5c1bc2955002c867790d7b70eb84c422bcc232bb71b1a87449",
+      "bytes": 519,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/critic/files/native-goal-terminal.json",
+      "sha256": "fcfdb2581d6aab6ca062325ced9d77c9c9de04ad1b88a0a0b7b44315960ec1cf",
+      "bytes": 848,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/critic/files/sources/index.md",
+      "sha256": "e9294a7932863e7b95b6cb1d89a05341c4406bf59386f03bfcbf938e6008a592",
+      "bytes": 2003,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "state/dispatcher-v1/arms/B10-P02-treatment/critic-eval-ready-status.raw.json",
+      "sha256": "35168c74d0fc400f2afb992bae97d911b049f81319a8fde00811751a0a8d677e",
+      "bytes": 10521,
+      "role": "frozen_actual_status"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/reviser/manifest.json",
+      "sha256": "12f8ed160097f4d1a25c6be1e22b1da77283735d70782969eefcd9b39364734f",
+      "bytes": 2385,
+      "role": "terminal_manifest"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/reviser/files/final.md",
+      "sha256": "73417321c2c2b8badb6f10aa9adb6d8f58c860a8e31517570f3851d6940e1e78",
+      "bytes": 42541,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/reviser/files/source-map.json",
+      "sha256": "659636e52916c2b0ae3d53ba52926d880332111cd7305e30909ed7d83bfc2d6a",
+      "bytes": 42699,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/reviser/files/assignment.md",
+      "sha256": "749f2471adee528b52713708281f92fd8b150948c9d638471eaabc17546339bb",
+      "bytes": 9768,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/reviser/files/input-map.json",
+      "sha256": "32564e353f9426b2df04dd2dd012296b45eaa83ce54afdf9db40fc2bd2952831",
+      "bytes": 2654,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/reviser/files/freeze.json",
+      "sha256": "cb1afeac0c1f8735d66407f599004e776be6062d7d684bba0acb8a70a59abdec",
+      "bytes": 6874,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/reviser/files/request.json",
+      "sha256": "2906408585a11f8d3e94e7581761728ef869e888bd4515fcbbed0ccd698e5d9c",
+      "bytes": 7307,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/reviser/files/dispatch.json",
+      "sha256": "cec3bcd66084d1660d06f28c94631a987cc81b88f62786425590a18f1b6abcfe",
+      "bytes": 10601,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/reviser/files/status.json",
+      "sha256": "f45c0f1f4e2372cc951bcef8a45ab72c50b3ee3d1588e52336bacf1dadfc3883",
+      "bytes": 4995,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/reviser/files/native-goal-create.json",
+      "sha256": "5c48b55bd32c1f96408a19d8f4fe8a9f04d80d1f553fb3f53769ab44aede6be2",
+      "bytes": 521,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/reviser/files/native-goal-active.json",
+      "sha256": "5c48b55bd32c1f96408a19d8f4fe8a9f04d80d1f553fb3f53769ab44aede6be2",
+      "bytes": 521,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/reviser/files/native-goal-terminal.json",
+      "sha256": "89e275ebfab609b9e195ac3fe36b862d27bfa3eb7a6868b6bebf16b6192bf251",
+      "bytes": 850,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "mechanics/dispatch-v1/admitted/B10-P02-treatment/run/B10-P02-treatment/control/terminal-handoffs/reviser/files/sources/index.md",
+      "sha256": "9453ee887a3be9e847549ca6a673890d89b573cd0b3105c1a906ddcd0c17159e",
+      "bytes": 3036,
+      "role": "frozen_stage_member"
+    },
+    {
+      "path": "state/dispatcher-v1/arms/B10-P02-treatment/reviser-eval-ready-status.raw.json",
+      "sha256": "ef007328fd177ec1befdfd8255bc6f28d1b16ba081efbf89cb60059654fac2f4",
+      "bytes": 10003,
+      "role": "frozen_actual_status"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/manifest.json",
+      "sha256": "dfe7f202cf91e21cb6b461de8ef23b04f60d522cd5c4fc937cf46407a593f951",
+      "bytes": 1754,
+      "role": "original_evaluator_manifest"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/assessment.md",
+      "sha256": "87164ca80f9ea1a01d9f49710faeecd5d71213a479054ef3bbdf3fc59d0796cd",
+      "bytes": 4586,
+      "role": "original_evaluator_member"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/assessment.json",
+      "sha256": "0709d645c5b4fea36342f10749e1654827bcce671f578fa6370634c95088dec9",
+      "bytes": 10409,
+      "role": "original_evaluator_member"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/coverage.json",
+      "sha256": "eeb96100f2db34af3b93aa7aa92a788ad3210f00cac33569824c6c1a6a6d7e9a",
+      "bytes": 8206,
+      "role": "original_evaluator_member"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/defects.json",
+      "sha256": "a88f73f8aa007e1ddf02ea8132a414b0850317105d6a92036c1d793725ab6079",
+      "bytes": 3046,
+      "role": "original_evaluator_member"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/primary-source-index.json",
+      "sha256": "d0dabfc1a018fc76a510988c9967a4a8cd80755a2c824a67484c5001b96c3402",
+      "bytes": 18866,
+      "role": "original_evaluator_member"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/treatment/evidence/material-lifecycle.json",
+      "sha256": "d2979d7518b8cf82bf0c9402245992e941a6dae76b8916a0110f4b10d166d639",
+      "bytes": 932,
+      "role": "original_evidence"
+    },
+    {
+      "path": "state/eval-coordinator-v2/B10-P02-output-verification.json",
+      "sha256": "ce289bbf9d27e41c497afbbe7af73b49607a76d33539ed60783d153af7308400",
+      "bytes": 21323,
+      "role": "original_coordinator_verification"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/comparison.json",
+      "sha256": "1e416a02f088749783b33b12ffcef81a4bcc7a68eb3d02a4674f747c25b881d8",
+      "bytes": 3023,
+      "role": "original_comparison"
+    },
+    {
+      "path": "provenance/private-current-capabilities-20261012T0041.json",
+      "sha256": "e63d0833e95423a88d4db47cdad9f9fb1e57275ebf6060f2e251461bc1fc9c97",
+      "bytes": 4790,
+      "role": "private_capability_verification"
+    },
+    {
+      "path": "ER13_WORKTREE/AGENTS.md",
+      "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810",
+      "bytes": 20950,
+      "role": "instructions"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/manifest.json",
+      "sha256": "060116080d58d6fc5b33d8976e8f02d7e178c79a20bac09e5e9a65aba2d0bc58",
+      "bytes": 4058,
+      "role": "original_evaluator_block_member"
+    },
+    {
+      "path": "mechanics/evaluation-dispatch-v2/B10-P02/input-verification.json",
+      "sha256": "11d888d4bde6a12d794e61355dc376045634ad810c530be5f7329dd64b4e5f26",
+      "bytes": 31575,
+      "role": "original_evaluator_block_member"
+    }
+  ],
+  "private_mapping_verified": true,
+  "private_routing_exported": false,
+  "scope": "Only exact B10-P02 packet corridor and named original records; no other cases/history/held-out"
+}

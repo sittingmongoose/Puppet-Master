@@ -1,0 +1,610 @@
+{
+  "schema": "er13.original-independent-assessment.v1",
+  "block_id": "B11-P02",
+  "arm_id": "B11-P02-treatment",
+  "scope": "FULL",
+  "original": true,
+  "source_judgment": {
+    "status": "FAIL",
+    "coverage": "COMPLETE",
+    "finite_assessment": true,
+    "material_source_defect_ids": [
+      "T-S01",
+      "T-P01"
+    ],
+    "rationale": "Two material findings: native State persistence context is omitted from the recovery contract, and Yrs writer identity safety meaning is lost from the final."
+  },
+  "coverage": {
+    "arm_id": "B11-P02-treatment",
+    "overall": "COMPLETE",
+    "definition": "Complete finite review of every frozen scientific document, all six axes, every material original obligation and consequential source family at research-proposal level; not exhaustive proof of all library behavior or future software.",
+    "axes": [
+      {
+        "axis": 1,
+        "name": "Material original obligations and negative constraints",
+        "coverage": "COMPLETE",
+        "judgment": "SATISFIED",
+        "assessment": "All product obligations/negative constraints addressed at proposal level; researched condition failures are identified separately rather than hidden as coverage gaps."
+      },
+      {
+        "axis": 2,
+        "name": "Consequential source facts, governing conditions, versions and applicability",
+        "coverage": "COMPLETE",
+        "judgment": "MATERIAL_FINDING",
+        "assessment": "All declared consequential source families examined. T-S01 omits the actual native State persistence boundary; T-P01 loses a fallback writer-identity condition. Other version/context claims are appropriately scoped."
+      },
+      {
+        "axis": 3,
+        "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+        "coverage": "COMPLETE",
+        "judgment": "SATISFIED",
+        "assessment": "Automerge conflict/history APIs, lost-frame incident, move research, Yrs buffering/anchors and JS handshake history are useful mechanisms. Paper is not misrepresented as shipped software."
+      },
+      {
+        "axis": 4,
+        "name": "Valid corrections, rejections and exact plan dispositions",
+        "coverage": "COMPLETE",
+        "judgment": "MATERIAL_FINDING",
+        "assessment": "All material exact-plan choices correctly disposed. M1/M2/M4 receive coherent proposed amendments. M3 is accepted but its claimed full recovery closure is materially incomplete under E13."
+      },
+      {
+        "axis": 5,
+        "name": "Supported meaning retained from draft and criticism into the complete final",
+        "coverage": "COMPLETE",
+        "judgment": "MATERIAL_FINDING",
+        "assessment": "Most supported meanings and critic concerns survive; T-P01 is a consequential investigator-to-final condition/validation loss. Stable text positions remain optional."
+      },
+      {
+        "axis": 6,
+        "name": "Meaningful proposed validation, with executed work distinguished",
+        "coverage": "COMPLETE",
+        "judgment": "SATISFIED",
+        "assessment": "Future tests have meaningful convergence/identity/order/recovery/publication oracles and are accurately unrun. Omitted persistence context is source research, not a demand for future code execution."
+      }
+    ],
+    "obligations": [
+      {
+        "id": "O01",
+        "obligation": "Disconnected editing and local save",
+        "coverage": "COMPLETE",
+        "assessment": "Keep fully local editing; app-owned durable commit before saved feedback.",
+        "final_locator": "reviser/final.md64-72,105,109",
+        "finding_ids": []
+      },
+      {
+        "id": "O02",
+        "obligation": "Ordered cues, insertion and reordering",
+        "coverage": "COMPLETE",
+        "assessment": "Separate cue entities/order; explicit move intent and human review of incompatible placement.",
+        "final_locator": "reviser/final.md43-54,108",
+        "finding_ids": []
+      },
+      {
+        "id": "O03",
+        "obligation": "Collaborative cue text and timing notes",
+        "coverage": "COMPLETE",
+        "assessment": "Granular collaborative text plus semantic conflict review; timing is independently editable.",
+        "final_locator": "reviser/final.md56-62,107",
+        "finding_ids": []
+      },
+      {
+        "id": "O04",
+        "obligation": "Role assignments and scalar conflicts",
+        "coverage": "COMPLETE",
+        "assessment": "Independent fields merge; competing values remain intelligible and resolvable.",
+        "final_locator": "reviser/final.md28,39,58,107",
+        "finding_ids": []
+      },
+      {
+        "id": "O05",
+        "obligation": "Cue/comment stable references and deleted anchors",
+        "coverage": "COMPLETE",
+        "assessment": "Comments use cue IDs, survive reorder, and stay visibly anchored to tombstones after deletion.",
+        "final_locator": "reviser/final.md24,39-41,108,111",
+        "finding_ids": []
+      },
+      {
+        "id": "O06",
+        "obligation": "Human conflict and resolution lifecycle",
+        "coverage": "COMPLETE",
+        "assessment": "Issue-level candidates, explicit decisions, retained context and late-candidate review.",
+        "final_locator": "reviser/final.md28,51-62,107-108",
+        "finding_ids": []
+      },
+      {
+        "id": "O07",
+        "obligation": "Causal revisions and history",
+        "coverage": "COMPLETE",
+        "assessment": "Use causal revision identity rather than device clocks; inspect history/frontier/head semantics.",
+        "final_locator": "reviser/final.md26,47-52,76",
+        "finding_ids": []
+      },
+      {
+        "id": "O08",
+        "obligation": "Explicit approval and publication isolation",
+        "coverage": "COMPLETE",
+        "assessment": "Publish a new immutable selected-state artifact with approval identity; later edits cannot replace it.",
+        "final_locator": "reviser/final.md29,74-80,110",
+        "finding_ids": []
+      },
+      {
+        "id": "O09",
+        "obligation": "Visible version and disconnected stage viewing",
+        "coverage": "COMPLETE",
+        "assessment": "Named published version, offline cache, deliberate refresh/switch; no silent draft replacement.",
+        "final_locator": "reviser/final.md30,78,111",
+        "finding_ids": []
+      },
+      {
+        "id": "O10",
+        "obligation": "Retry, reconnect, restart and recovery",
+        "coverage": "COMPLETE",
+        "assessment": "Application persistence/outbox/ack boundary; core transport conditions and crash cases.",
+        "final_locator": "reviser/final.md64-72,109,122",
+        "finding_ids": [
+          "T-S01"
+        ]
+      },
+      {
+        "id": "O11",
+        "obligation": "Exports preserve comments and roles",
+        "coverage": "COMPLETE",
+        "assessment": "Structured stable-reference round trip; staff visibility/format remain owner decisions.",
+        "final_locator": "reviser/final.md31,80,111",
+        "finding_ids": []
+      },
+      {
+        "id": "O12",
+        "obligation": "Plausible alternatives and real history",
+        "coverage": "COMPLETE",
+        "assessment": "Compare researched mechanisms and relevant release/issue/fix context without assuming adoption.",
+        "final_locator": "reviser/final.md82-88,129",
+        "finding_ids": [
+          "T-P01"
+        ]
+      },
+      {
+        "id": "O13",
+        "obligation": "Negative constraints",
+        "coverage": "COMPLETE",
+        "assessment": "No always-online editor, enterprise account, new chat product, or demanded deployment.",
+        "final_locator": "reviser/final.md9-15,33",
+        "finding_ids": []
+      },
+      {
+        "id": "O14",
+        "obligation": "Unknown user-specific facts",
+        "coverage": "COMPLETE",
+        "assessment": "Counts, crew authority, comment scope, export visibility, relay/retention remain explicit unknowns.",
+        "final_locator": "reviser/final.md90-101",
+        "finding_ids": []
+      },
+      {
+        "id": "O15",
+        "obligation": "Exact released-plan dispositions",
+        "coverage": "COMPLETE",
+        "assessment": "Every material plan choice is retained, changed or rejected with reason; timestamp backup never treated as tested.",
+        "final_locator": "reviser/final.md17-33",
+        "finding_ids": []
+      },
+      {
+        "id": "O16",
+        "obligation": "Validation truth and useful oracles",
+        "coverage": "COMPLETE",
+        "assessment": "Proposed convergence/recovery/anchor/publication/usability checks; executed research distinguished.",
+        "final_locator": "reviser/final.md103-114,125-131",
+        "finding_ids": []
+      }
+    ],
+    "source_families": [
+      {
+        "source_family": "Automerge property conflicts",
+        "primary_source_id": "E09",
+        "coverage": "COMPLETE",
+        "claim_boundary": "Concurrent writes; getConflicts; later assignment; counter/actor tie-break",
+        "finding_ids": []
+      },
+      {
+        "source_family": "Automerge fine-grained modeling",
+        "primary_source_id": "E10",
+        "coverage": "COMPLETE",
+        "claim_boundary": "Entity-map/ID-list example and whole-object replacement caveat",
+        "finding_ids": []
+      },
+      {
+        "source_family": "Automerge native synchronization",
+        "primary_source_id": "E11",
+        "coverage": "COMPLETE",
+        "claim_boundary": "Module protocol requirement and send/receive/generate loop; E13 callers",
+        "finding_ids": []
+      },
+      {
+        "source_family": "Automerge values, history, author/actor and transaction APIs",
+        "primary_source_id": "E12",
+        "coverage": "COMPLETE",
+        "claim_boundary": "get_all/get_all_at/get_cursor; Authors and Actors; apply_changes/save; Transactable and manual_transaction",
+        "finding_ids": []
+      },
+      {
+        "source_family": "Automerge partial State persistence and actual callers",
+        "primary_source_id": "E13",
+        "coverage": "COMPLETE",
+        "claim_boundary": "state.rs 27-78,108-150; sync.rs 238-253,279-287,386-463; inline read-only/in-flight tests inspected",
+        "finding_ids": [
+          "T-S01"
+        ]
+      },
+      {
+        "source_family": "Automerge lost-message report",
+        "primary_source_id": "E14",
+        "coverage": "COMPLETE",
+        "claim_boundary": "Generated-and-lost frame reproducer; maintainer reliable-stream/reset response",
+        "finding_ids": []
+      },
+      {
+        "source_family": "Automerge merge rules",
+        "primary_source_id": "E15",
+        "coverage": "COMPLETE",
+        "claim_boundary": "Map/list/text rules; predecessor IDs; reverse insertion caveat",
+        "finding_ids": []
+      },
+      {
+        "source_family": "Automerge text adapter guidance",
+        "primary_source_id": "E16",
+        "coverage": "COMPLETE",
+        "claim_boundary": "splice/updateText; frequency caveat",
+        "finding_ids": []
+      },
+      {
+        "source_family": "Extending JSON CRDTs with Move Operations",
+        "primary_source_id": "E17",
+        "coverage": "COMPLETE",
+        "claim_boundary": "Version record and abstract",
+        "finding_ids": []
+      },
+      {
+        "source_family": "Yrs release and regression context",
+        "primary_source_id": "E18",
+        "coverage": "COMPLETE",
+        "claim_boundary": "v0.28.0 and v0.27.3 release entries",
+        "finding_ids": []
+      },
+      {
+        "source_family": "Yrs updates, identity and stable positions",
+        "primary_source_id": "E19",
+        "coverage": "COMPLETE",
+        "claim_boundary": "Root ClientID warning/MapRef rules; TransactionMut apply_update/encode_update; StickyIndex description",
+        "finding_ids": [
+          "T-P01"
+        ]
+      },
+      {
+        "source_family": "Yjs shared-type movement",
+        "primary_source_id": "E20",
+        "coverage": "COMPLETE",
+        "claim_boundary": "Caveats",
+        "finding_ids": []
+      },
+      {
+        "source_family": "Automerge Repo adapters and history sizing",
+        "primary_source_id": "E21",
+        "coverage": "COMPLETE",
+        "claim_boundary": "StorageAdapter/NetworkAdapter example; Modeling Data performance; demo network caveat",
+        "finding_ids": []
+      },
+      {
+        "source_family": "Automerge stale JS handshake documentation",
+        "primary_source_id": "E22",
+        "coverage": "COMPLETE",
+        "claim_boundary": "Maintainer receiveSyncMessage/generateSyncMessage explanation",
+        "finding_ids": []
+      }
+    ],
+    "out_of_scope_or_unavailable": [
+      {
+        "area": "Future app execution/deployment, UI adapter, crash correctness and performance",
+        "coverage": "UNASSESSED",
+        "reason": "Proposed validation, not required executed deliverable."
+      },
+      {
+        "area": "Actual cue counts, crew authority, export visibility, relay/retention decisions",
+        "coverage": "UNASSESSED",
+        "reason": "User-specific unknowns explicitly permitted and retained."
+      },
+      {
+        "area": "Native actual task/session linkage, provider activity, context occupancy, billing",
+        "coverage": "UNASSESSED",
+        "reason": "Unavailable independent telemetry; capture custody is weaker evidence."
+      }
+    ],
+    "early_stop": false,
+    "missing_final": false
+  },
+  "defects": [
+    {
+      "defect_id": "T-S01",
+      "classification": "material incomplete governing source condition",
+      "axes": [
+        2,
+        4
+      ],
+      "current_final": true,
+      "locator": "reviser/final.md lines68-72 and122; investigator/source-map.json S04; reviser/source-map.json R05",
+      "finding": "The proposed exact-frame/serialized-State crash recovery contract does not identify the native encoder limitation: State::encode persists only shared_heads and decode reinitializes live session fields. A stored native State is therefore not the exact generated-frame State the final requires on restart. No full-field serializer or unconditional restart epoch-reset boundary is named.",
+      "primary_evidence": [
+        "E13",
+        "E14"
+      ],
+      "materiality": "Restart/reconnect preservation is central to the brief and M3. Reliable in-order transport and identical frame bytes alone do not establish restoration of the claimed matching live State.",
+      "qualification": "An app-owned full serializer or appropriate reset protocol is possible. This finding is an omitted available mechanism condition, not a claim that all implementations fail or that a crash witness was executed. Labeling future validation unrun is correct but does not replace source-context research."
+    },
+    {
+      "defect_id": "T-P01",
+      "classification": "material preservation loss",
+      "axes": [
+        2,
+        5
+      ],
+      "current_final": true,
+      "locator": "investigator/discovery.md16,37; draft.md55; investigator/source-map.json S13 -> reviser/final.md84 and validation105-112",
+      "finding": "The Yrs fallback retains its update and anchor advantages but loses the supported requirement that concurrent active writers have distinct ClientIDs, including the draft's explicit identity test. This remains only in carried S13, not the self-contained final.",
+      "primary_evidence": [
+        "E19"
+      ],
+      "materiality": "Native writer identity differs from stable cue/comment IDs; duplicate active ClientIDs can corrupt the document. This is a consequential adoption condition for the named fallback, not trivia or an unknown crew fact.",
+      "qualification": "No current failure of Yrs is claimed. Default random IDs can satisfy the condition; the finding concerns preservation of researched safety meaning and proposed identity/recovery validation."
+    }
+  ],
+  "delivery": {
+    "status": "COMPLETE_FINAL_DELIVERED",
+    "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P02-treatment/run/B11-P02-treatment/control/terminal-handoffs/reviser/files/final.md",
+    "final_sha256": "4092018d9fd34edcc559b6f274ba3075007896be8068cd636c8737fd054fb4e0",
+    "all_scientific_stage_outputs_present": true,
+    "failure_qualified_packet": true,
+    "original_failure_records": [],
+    "missing_required_capture_outputs": [],
+    "missing_final": false,
+    "no_replacement_or_clock_rescue": true
+  },
+  "time_eligibility": {
+    "status": "ELIGIBLE_WHOLE_ENVELOPE",
+    "maximum_elapsed_seconds": 3600,
+    "frozen_t0_utc": "2026-10-12T01:01:24.265Z",
+    "frozen_whole_deadline_utc": "2026-10-12T02:01:24.265Z",
+    "last_complete_scientific_artifact_time": null,
+    "request_to_quiet_final_proxy": null,
+    "native_final_completion_proxy_utc": "2026-10-12T01:39:39+00:00",
+    "t0_to_native_final_completion_proxy_seconds": 2294.735,
+    "frozen_complete_final_custody_utc": "2026-10-12T01:40:29.805675+00:00",
+    "t0_to_frozen_final_upper_bound_seconds": 2345.540675,
+    "stages": [
+      {
+        "stage": "investigator",
+        "prepared_at_utc": "2026-10-12T01:01:25.194Z",
+        "requested_at_utc": "2026-10-12T01:01:25.194Z",
+        "dispatch_response_captured_at_utc": "2026-10-12T01:01:26.085Z",
+        "native_birth_utc": "2026-10-12T01:01:41+00:00",
+        "active_receipt_observation_utc": "2026-10-12T01:01:41+00:00",
+        "native_terminal_utc": "2026-10-12T01:17:21+00:00",
+        "native_lifetime_seconds": 940.0,
+        "native_reported_elapsed_seconds": 940,
+        "request_to_native_terminal_seconds": 955.806,
+        "stage_deadline_utc": "2026-10-12T01:31:25.194Z",
+        "native_terminal_before_stage_deadline": true,
+        "scientific_artifact_write_time": null,
+        "actual_provider_start_finish": null,
+        "actual_task_terminal_timestamp": null
+      },
+      {
+        "stage": "critic",
+        "prepared_at_utc": "2026-10-12T01:23:35.916Z",
+        "requested_at_utc": "2026-10-12T01:23:35.916Z",
+        "dispatch_response_captured_at_utc": "2026-10-12T01:23:36.784Z",
+        "native_birth_utc": "2026-10-12T01:24:06+00:00",
+        "active_receipt_observation_utc": "2026-10-12T01:24:06+00:00",
+        "native_terminal_utc": "2026-10-12T01:31:14+00:00",
+        "native_lifetime_seconds": 428.0,
+        "native_reported_elapsed_seconds": 428,
+        "request_to_native_terminal_seconds": 458.084,
+        "stage_deadline_utc": "2026-10-12T01:35:35.916Z",
+        "native_terminal_before_stage_deadline": true,
+        "scientific_artifact_write_time": null,
+        "actual_provider_start_finish": null,
+        "actual_task_terminal_timestamp": null
+      },
+      {
+        "stage": "reviser",
+        "prepared_at_utc": "2026-10-12T01:32:28.858Z",
+        "requested_at_utc": "2026-10-12T01:32:28.858Z",
+        "dispatch_response_captured_at_utc": "2026-10-12T01:32:31.248Z",
+        "native_birth_utc": "2026-10-12T01:32:42+00:00",
+        "active_receipt_observation_utc": "2026-10-12T01:32:42+00:00",
+        "native_terminal_utc": "2026-10-12T01:39:39+00:00",
+        "native_lifetime_seconds": 417.0,
+        "native_reported_elapsed_seconds": 417,
+        "request_to_native_terminal_seconds": 430.142,
+        "stage_deadline_utc": "2026-10-12T01:50:28.858Z",
+        "native_terminal_before_stage_deadline": true,
+        "scientific_artifact_write_time": null,
+        "actual_provider_start_finish": null,
+        "actual_task_terminal_timestamp": null
+      }
+    ],
+    "inter_stage_intervals": [
+      {
+        "from_stage": "investigator",
+        "to_stage": "critic",
+        "prior_native_terminal_to_next_request_seconds": 374.916,
+        "meaning": "Observed native-completion-to-next-request interval; not measured idle provider activity or context residency."
+      },
+      {
+        "from_stage": "critic",
+        "to_stage": "reviser",
+        "prior_native_terminal_to_next_request_seconds": 74.858,
+        "meaning": "Observed native-completion-to-next-request interval; not measured idle provider activity or context residency."
+      }
+    ],
+    "limits": [
+      "Complete final exists in an immutable manifest frozen before the unchanged whole deadline.",
+      "All observed native terminal timestamps precede their stage deadlines; exact scientific write/task-quiet times are unavailable.",
+      "Native lifetime is not a measure of provider activity, billing or created/started context occupancy.",
+      "No retrospective clock adjustment or deadline rescue."
+    ]
+  },
+  "method_compliance": {
+    "status": "DOCUMENTARY_COMPLIANCE_PARTIAL",
+    "assigned_method": "B11 investigator bounded pivot; R0 critic/reviser",
+    "scope": "FULL discovery/critique/revision, despite deliverable being a component proposal; not a COMPONENT preparation arm.",
+    "science_topology": "One investigator, one independent critic, one fresh reviser; three terminal stage manifests; no parallel/breadth/truth critic or executable witness is listed.",
+    "brief_and_plan_match": true,
+    "discovery_freeze_hash_matches_reveal": true,
+    "one_shot_plan_receipt": true,
+    "substantive_discovery_before_reveal": "Documentary hash custody supported; private execution and absence of prior access UNKNOWN.",
+    "source_map_pre_reveal_freeze": "UNKNOWN beyond documentary records; reveal does not freeze source-map hash.",
+    "extra_scientific_agents": "None declared in supplied stage package; actual unseen activity UNKNOWN.",
+    "required_capture_missing": [],
+    "bounded_pivot": {
+      "documentary_structure": "One seed/unused-evidence/pivot/follow-up/disposition row; at most two requirement satisfied.",
+      "substance": "Move-JSON research is relevant to cue reordering and is explicitly rejected as evidence of a shipped Automerge API; follow-up merge rules/native API preserve ordinary research.",
+      "actual_unusedness_and_novelty": "UNKNOWN independently; the initial account already mentions move limitations, so causal unfamiliarity is not proven.",
+      "actual_special_operation_elapsed_seconds": null,
+      "five_minute_bound": "UNKNOWN; no pivot start/stop receipt supplied."
+    },
+    "qualification": "No cold/full-pipeline success, method effectiveness or recipe promotion inferred from documentary compliance."
+  },
+  "native_identity_provenance": {
+    "status": "EXACT_CAPTURE_CUSTODY_WITH_LINKAGE_LIMITS",
+    "stages": [
+      {
+        "stage": "investigator",
+        "create_capture_present": true,
+        "active_capture_present": true,
+        "terminal_capture_present": true,
+        "active_status": "active",
+        "terminal_status": "complete",
+        "same_native_identity_birth_objective_tuple": true,
+        "create_active_terminal_tuple_match": true,
+        "objective_matches_frozen_assignment": true,
+        "reported_task_terminal_status": "completed",
+        "pending_child_runs": false,
+        "native_counter_field_present": true,
+        "native_to_actual_task_session_linkage": "UNKNOWN",
+        "freshness_and_pre_input_activation": "UNKNOWN beyond exact frozen capture/objective custody"
+      },
+      {
+        "stage": "critic",
+        "create_capture_present": true,
+        "active_capture_present": true,
+        "terminal_capture_present": true,
+        "active_status": "active",
+        "terminal_status": "complete",
+        "same_native_identity_birth_objective_tuple": true,
+        "create_active_terminal_tuple_match": true,
+        "objective_matches_frozen_assignment": true,
+        "reported_task_terminal_status": "completed",
+        "pending_child_runs": false,
+        "native_counter_field_present": true,
+        "native_to_actual_task_session_linkage": "UNKNOWN",
+        "freshness_and_pre_input_activation": "UNKNOWN beyond exact frozen capture/objective custody"
+      },
+      {
+        "stage": "reviser",
+        "create_capture_present": true,
+        "active_capture_present": true,
+        "terminal_capture_present": true,
+        "active_status": "active",
+        "terminal_status": "complete",
+        "same_native_identity_birth_objective_tuple": true,
+        "create_active_terminal_tuple_match": true,
+        "objective_matches_frozen_assignment": true,
+        "reported_task_terminal_status": "completed",
+        "pending_child_runs": false,
+        "native_counter_field_present": true,
+        "native_to_actual_task_session_linkage": "UNKNOWN",
+        "freshness_and_pre_input_activation": "UNKNOWN beyond exact frozen capture/objective custody"
+      }
+    ],
+    "independent_actual_task_session_linkage": "UNKNOWN",
+    "qualification": "No private native identifiers, full transcripts or routing identities reproduced; same captured tuple is not independent proof of native-to-task provenance."
+  },
+  "resource_billing_coverage": {
+    "candidate_product": {
+      "latency": "Frozen T0 and requests/native captures/custody bound observed; exact final-write/quiet time UNKNOWN.",
+      "native_goal_counter_coverage": "Cumulative counter fields present in all stage terminal captures; values withheld from public artifacts. Custody does not independently establish task-linked metering.",
+      "context_occupancy_created_started_sums_unions_overlap": null,
+      "active_provider_activity": null,
+      "input_cached_output_reasoning_breakdown": null,
+      "subscription_consumption": null,
+      "billing_cost": null,
+      "unknown_not_zero": true,
+      "assigned_denominator": 1,
+      "failed_or_capture_invalid_stages_remain_assigned": true
+    },
+    "independent_evaluation": {
+      "cost_class": "independent_evaluation",
+      "evaluation_start_observed_utc": "2026-10-12T02:12:37Z",
+      "original_write_phase_utc": "2026-10-12T02:27:36.759418+00:00",
+      "shared_primary_lookup": true,
+      "billing_cost": null,
+      "active_provider_activity": null,
+      "context_occupancy": null,
+      "counter_values_public": "Withheld; no tokens or private routing identity published.",
+      "allocation": "One matched-pair evaluation; no justified per-arm cost apportionment."
+    },
+    "candidate_preparation_support_publication_root_observations": "UNKNOWN; not silently counted as zero or charged to product.",
+    "consumption_per_passing_final": null,
+    "cost_claim": "No affordability/equal-quality resource-savings claim."
+  },
+  "critic_dispositions": [
+    {
+      "id": "M1",
+      "disposition": "ACCEPT_AND_AMEND",
+      "evaluation": "Optional author metadata is confirmed; trusted mapping/unverified state proposed without claiming implementation."
+    },
+    {
+      "id": "M2",
+      "disposition": "ACCEPT_AND_AMEND",
+      "evaluation": "Proposed causal order, tie-break, anchor/cycle review and exact candidate decision are substantive; future implementation tests remain unrun."
+    },
+    {
+      "id": "M3",
+      "disposition": "ACCEPT_AND_AMEND",
+      "evaluation": "Durable envelope is substantive but not fully source-conditioned; T-S01 remains."
+    },
+    {
+      "id": "M4",
+      "disposition": "ACCEPT_AND_AMEND",
+      "evaluation": "Exact candidate scope, late concurrent write reopens review and publication block retained."
+    }
+  ],
+  "preservation_families": [
+    {
+      "family": "Stable cues/comments, causal revisions, publication/exports",
+      "judgment": "RETAINED",
+      "locator": "discovery18-27/draft25-51 -> final35-80"
+    },
+    {
+      "family": "Lost message, optional author and explicit resolution scope",
+      "judgment": "RETAINED_BUT_RECOVERY_CONDITION_INCOMPLETE",
+      "locator": "discovery25-26/draft37-43/critic M1,M3,M4 -> final56-72"
+    },
+    {
+      "family": "Yrs alternative writer identity and validation",
+      "judgment": "MATERIAL_LOSS",
+      "locator": "discovery16,37/draft55/S13 -> final84,105-112",
+      "finding_id": "T-P01"
+    },
+    {
+      "family": "Move paper, Yrs/JS release history, optional text anchors",
+      "judgment": "RETAINED_WITH_CARRY_LIMITS",
+      "locator": "discovery20-37 -> final41,43-54,84,129"
+    }
+  ],
+  "limitations": [
+    "Technique-bearing paths, labels and prompt deltas make blinding imperfect.",
+    "Primary research may be shared across matched arms; this arm judgment is separately recorded before comparison.",
+    "Source versioned web-tool failures were followed by direct public HTTPS/immutable crate inspection; inaccessible URLs are not treated as semantic failure.",
+    "No future rehearsal deployment, benchmark or software execution required for proposal grade.",
+    "No finite research assessment establishes universal correctness or recipe reliability."
+  ]
+}

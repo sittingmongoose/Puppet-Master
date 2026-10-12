@@ -1,0 +1,91 @@
+{
+  "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Policies/CheckoutablePermissionsPolicy.php",
+  "access_utc": "2026-10-12T02:04:51.704509+00:00",
+  "response_sha256": "d7a80361092e059edbb337314158b097a0b41f6a2f6bf2c8519dbd4281336267",
+  "evidence": [
+    {
+      "line": 23,
+      "text": "     * @param  \\App\\User  $user"
+    },
+    {
+      "line": 24,
+      "text": "     * @return mixed"
+    },
+    {
+      "line": 25,
+      "text": "     */"
+    },
+    {
+      "line": 26,
+      "text": "    public function checkin(User $user, $item = null)"
+    },
+    {
+      "line": 27,
+      "text": "    {"
+    },
+    {
+      "line": 28,
+      "text": "        return $user->hasAccess($this->columnName().'.checkin');"
+    },
+    {
+      "line": 29,
+      "text": "    }"
+    },
+    {
+      "line": 30,
+      "text": ""
+    },
+    {
+      "line": 31,
+      "text": "    /**"
+    },
+    {
+      "line": 32,
+      "text": "     * Determine whether the user can manage the accessory."
+    },
+    {
+      "line": 33,
+      "text": "     *"
+    },
+    {
+      "line": 34,
+      "text": "     * @param  \\App\\User  $user"
+    },
+    {
+      "line": 35,
+      "text": "     * @return mixed"
+    },
+    {
+      "line": 36,
+      "text": "     */"
+    },
+    {
+      "line": 37,
+      "text": "    public function manage(User $user, $item = null)"
+    },
+    {
+      "line": 38,
+      "text": "    {"
+    },
+    {
+      "line": 39,
+      "text": "        return $user->hasAccess($this->columnName().'.checkin')"
+    },
+    {
+      "line": 40,
+      "text": "             || $user->hasAccess($this->columnName().'.edit')"
+    },
+    {
+      "line": 41,
+      "text": "             || $user->hasAccess($this->columnName().'.checkout');"
+    },
+    {
+      "line": 42,
+      "text": "    }"
+    },
+    {
+      "line": 43,
+      "text": "}"
+    }
+  ]
+}

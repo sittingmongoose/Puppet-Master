@@ -1,0 +1,142 @@
+{
+  "schema": "er13.original-output-manifest.v1",
+  "arm_id": "B09-P01-treatment",
+  "frozen_at_utc": "2026-10-12T02:16:20.631757+00:00",
+  "original_judgment_immutable": true,
+  "before_any_comparative_analysis": true,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/treatment/assessment.md",
+      "bytes": 6205,
+      "sha256": "4d1c3e5d384b0905105b93a660ce69e13dc148f4e6e22e8d5ed57f39854ceccc"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/treatment/assessment.json",
+      "bytes": 14965,
+      "sha256": "6c0773529d1f5953c0057546afe2c70d2222590846b1855a2a0caff59cb4bc0a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/treatment/coverage.json",
+      "bytes": 9030,
+      "sha256": "f489caad7ac549520be66802297b00145bc95634c73e088b6cd1490250c8dc77"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/treatment/defects.json",
+      "bytes": 4681,
+      "sha256": "5826e2d66454a505e690549e096d0895a01d6690f0c251216af5bc0b6178d6a5"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/treatment/primary-source-index.json",
+      "bytes": 20282,
+      "sha256": "2182559ccc41dbc9ebe929526df85f45f47b71b14917952008ef76d359013cf7"
+    }
+  ],
+  "shared_evidence": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/input-integrity.json",
+      "bytes": 26927,
+      "sha256": "d46ad94d287b3a8feeef667ce4351c666606b5b611d8eb014ba982128d57717a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/review-provenance.json",
+      "bytes": 1950,
+      "sha256": "ea4be0a13665a0ddbda2ba66f446b63498692fda026dfbedddcf9ec6a7665095"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/koha-version.json",
+      "bytes": 3016,
+      "sha256": "65bfdb015a8ba096762d43aaa8418db23cd49a4cdace57a3c91b7db77cb58db7"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/primary-doc-context.json",
+      "bytes": 17237,
+      "sha256": "34cac727827e5aff8e9a1192a1e4aaa287d5c5620b26eb97c1de042d1f1209e4"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-api-context.json",
+      "bytes": 12330,
+      "sha256": "4d2c09c4155b7096388e5d670b7edda67c0a7ffc050fc5c8e64d0e1ade8a0368"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-api-test.json",
+      "bytes": 3920,
+      "sha256": "9f3cb13ae34ceac7c55fdecd113148447c55fb579de164f143c6e3de1785cd77"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-checkin-context.json",
+      "bytes": 13392,
+      "sha256": "0202421ba3ea5ac6926109b1b3e9a767220f592eda56f2727f7ce74757872191"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-checkout-context.json",
+      "bytes": 10285,
+      "sha256": "297329ed0b8fc9b22ed7d1d53bcd6918c640cf0cb3fcf3ab67f2150e64367b56"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-deleted-test.json",
+      "bytes": 12869,
+      "sha256": "0bb534c7aacf4d4c3d36c1b7cf9d5c99ab4dae90d359521aded6304e051b22fb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-import.json",
+      "bytes": 3017,
+      "sha256": "3a18ebd785191b43654dc399da2c39f0684a417004c0337502321b9665fb2879"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-model.json",
+      "bytes": 11441,
+      "sha256": "c920c262c20e8853ce622bb71a8168c27bf981c8a9812711f30086e2eccb479f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-permission.json",
+      "bytes": 1865,
+      "sha256": "8939ce8047252eeda99178a432736130c48cd63f350bf6c44b97c52fc9d46683"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-release872.json",
+      "bytes": 2163,
+      "sha256": "41cbfd2d5b343e9d5a8cd56faa7f7ac6c2dc4a7ea4cf88ea874832b66f3f4b58"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-release880.json",
+      "bytes": 807,
+      "sha256": "7a543bc8424f45fe2e1b433d740dd15fad1c2c7f4b3c839520d137d9e8979104"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sn-ui-test.json",
+      "bytes": 6921,
+      "sha256": "ebb3c4d29ea01943148bb50e5d4b48763c6f773aa0f3d90a88412773675a4282"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-broken.json",
+      "bytes": 2795,
+      "sha256": "dcb8b541dc452026c4332c104a979f6f08736cbe6f2aea4c499afef086d65349"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-change.json",
+      "bytes": 2205,
+      "sha256": "610688f2b5114a12b9a3768016f95a3161760586b8b0ab20137e88d189233835"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-count.json",
+      "bytes": 4806,
+      "sha256": "500c2fd0ec1b7ee3a5afa3a34af089ed4d5f67d6df40f781ae94af910ce4c107"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-fix.json",
+      "bytes": 10308,
+      "sha256": "63e68bc95fc87f9ec584ced652ba581648d324bde6b1a0b9f4953d81521e5f1b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-host.json",
+      "bytes": 10954,
+      "sha256": "4003fbba4ebadde16af8d222ac705f085dddb040c00b810f81a8ce91c60dbc27"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/evidence/sw-modules.json",
+      "bytes": 10899,
+      "sha256": "8b9c756ba02a364cd5cc4ef6ea076604d699f10cbc118965bca01816e23096d9"
+    }
+  ],
+  "manifest_self_hash": "Published separately; no recursive self-hash"
+}

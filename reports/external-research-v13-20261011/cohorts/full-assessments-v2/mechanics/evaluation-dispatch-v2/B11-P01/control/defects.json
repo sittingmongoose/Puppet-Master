@@ -1,0 +1,49 @@
+{
+  "arm_id": "B11-P01-control",
+  "defects": [
+    {
+      "id": "C-D01",
+      "dimension": "source_assessment",
+      "classification": "material incomplete",
+      "material": true,
+      "axes": [
+        2
+      ],
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-control/run/B11-P01-control/control/terminal-handoffs/reviser/files/final.md :: Storage, concurrency, and component boundaries; P2.1; source-map S16",
+      "finding": "The conditional WAL option omits the current governing corruption/version restriction for concurrent connections.",
+      "evidence_ids": [
+        "E29",
+        "E30"
+      ],
+      "context": "SQLite documents a rare WAL write/checkpoint race in 3.7.0 through 3.51.2, corrected in 3.51.3 and named backports. The multi-window connection topology remains an owner fact.",
+      "impact": "Available primary mechanism/history research is missing for a persistence option offered for this exact concurrency problem. This is a planning-source omission; no occurrence in the notebook is inferred."
+    },
+    {
+      "id": "C-D02",
+      "dimension": "source_assessment",
+      "classification": "minor version/locator error",
+      "material": false,
+      "axes": [
+        2,
+        3
+      ],
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-control/run/B11-P01-control/control/terminal-handoffs/reviser/files/source-map.json :: S05; sources/index.md :: S05; inherited investigator discovery",
+      "finding": "The potential auto-relink fix is attributed to 7.0.8; its upstream release section is 7.0.7 (2024-10-02).",
+      "evidence_ids": [
+        "E07"
+      ],
+      "impact": "Incorrect precise history preserved through revision. The existence and design relevance of the historical fix are still supported; the proposal does not depend on adopting that Zotero release."
+    },
+    {
+      "id": "C-D03",
+      "dimension": "delivery",
+      "classification": "minor metadata residue",
+      "material": false,
+      "locator": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-control/run/B11-P01-control/control/terminal-handoffs/reviser/files/source-map.json :: stage and source_map_purpose",
+      "finding": "The reviser map retains stage=critic and critic-purpose metadata while adding reviser_review and new sources.",
+      "evidence_ids": [],
+      "impact": "Machine-readable provenance label is ambiguous. Individual inherited and reviser records remain inspectable and distinct."
+    }
+  ],
+  "original_grade_unchanged_by_prospective_repairs": true
+}

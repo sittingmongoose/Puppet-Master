@@ -1,0 +1,69 @@
+{
+  "arm_id": "B07-P01-control",
+  "original": true,
+  "defects": [
+    {
+      "id": "CTRL-D01",
+      "severity": "material",
+      "kind": "required_omission_and_preservation_loss",
+      "axes": [
+        1,
+        5
+      ],
+      "title": "Complete final loses the staged integration proposal",
+      "candidate_locators": [
+        "investigator/discovery.md:58-72 (Stage 0 through Stage 4)",
+        "investigator/draft.md:96-108",
+        "reviser/final.md:18,110-123"
+      ],
+      "basis": "The brief explicitly requests staged integration. Discovery supplies repository/domain inventory, isolated preview, policy, application/recovery and bounded pilot stages. The draft/final retain product processing order and a test list but omit this integration sequence and its gates. Final line 18 refers to a Stage 0 below that does not exist. Reading all 153 final lines confirms the omission; a parse-preview-apply workflow is not the lost integration/pilot sequence.",
+      "consequence": "The final is less complete than its supported discovery and does not independently deliver the requested staged integration recommendation.",
+      "evidence": [
+        "frozen brief paragraph 2",
+        "verified control discovery and final",
+        "P16"
+      ],
+      "status": "present_in_original_final"
+    },
+    {
+      "id": "CTRL-D02",
+      "severity": "material",
+      "kind": "false_correction_and_source_context_error",
+      "axes": [
+        2,
+        4,
+        5
+      ],
+      "title": "Critic/reviser promote ambiguous sample-lines wording into a false physical-line definition",
+      "candidate_locators": [
+        "critic/critique.md:F1",
+        "reviser/final.md:16,86,141",
+        "reviser/source-map.json:reviser_rechecks/S08"
+      ],
+      "basis": "The option table uses sample lines, but the same preview auto-detection family explicitly calls the default 20,480 rows and configures number of rows sampled. Tagged v1.4.2 options convert sample size into vector chunks; RefineTypes processes parsed chunk cardinality; quoted-newline handling is separate from AddRow. The final categorically excludes logical rows and invokes embedded physical newlines to reject the investigator formulation. The excerpt does not support that definition. This is a false rejection of a supported research statement, not merely a choice of quotation style.",
+      "consequence": "The final encodes an incorrect governing definition and preserves a critic-created error while claiming an independent correction. Full-file reconciliation remains sound; this finding does not assert the sampling algorithm never rounds or differs in future releases.",
+      "evidence": [
+        "P09",
+        "P10",
+        "P11",
+        "P12",
+        "P13"
+      ],
+      "status": "present_in_original_final",
+      "independent_evidence": "evidence/duckdb-sampling-context.json"
+    },
+    {
+      "id": "CTRL-L01",
+      "severity": "nonmaterial",
+      "kind": "coverage_limitation",
+      "axes": [
+        2,
+        3
+      ],
+      "title": "Conditional product integration and dependency choice remain unverified",
+      "basis": "No target application inputs exist in the notified packet. The final correctly withholds compatibility, performance and backend claims. Source records are current/moving where disclosed; the issue is an author report, not an executed regression. No defect is inferred merely from absent user facts.",
+      "status": "honestly_unresolved"
+    }
+  ],
+  "no_repairs_or_feedback": true
+}

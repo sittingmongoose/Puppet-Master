@@ -1,0 +1,403 @@
+{
+  "block_id": "B02-P02",
+  "scope": "FULL",
+  "originals": [
+    {
+      "arm_id": "B02-P02-control",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/control/manifest.json",
+      "manifest_sha256": "42ab3de9f50de2658bf5dbe1afa53e5c442dfb9b24c3b4cac85009a247232f22",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/control/assessment.json",
+      "assessment_sha256": "9bd19835c34268f80ac755a2f7453cdc9ad218a939e47b3594b4164a5bcadf20",
+      "source_judgment": "PASS",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        {
+          "axis": 1,
+          "name": "Material original obligations and negative constraints",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "summary": "All material original workflows/negative constraints and legitimate unknown owner facts retained."
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "summary": "Consequential factual/default/version/context claims independently checked."
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "summary": "Useful SQLite/PostgreSQL invariants, accessory/blackout/recurrence mechanisms and configure-and-fit alternatives found. MRBS native multi-room path is an additional nonmaterial missed opportunity without categorical rejection."
+        },
+        {
+          "axis": 4,
+          "name": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "summary": "Every substantive released clause and four critic findings/dispositions examined; accepted improvements are valid, no material false plan correction found."
+        },
+        {
+          "axis": 5,
+          "name": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "summary": "Complete discovery/draft/critique/final examined; no material supported-meaning loss or source-ID rebinding found. Small depth limits are stated below."
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "summary": "Meaningful concurrency, hold, time, lifecycle, outage, privacy and restore oracles are proposals. Source-test inspection is not represented as execution."
+        }
+      ],
+      "delivery": {
+        "status": "COMPLETE",
+        "frozen_final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/reviser/files/final.md",
+        "sha256": "487a1ac5976563bc5d30313731d407d7d969696cc62445ee1566e5f62847ca92",
+        "bytes": 31788,
+        "all_manifest_members_hash_verified": true,
+        "all_assigned_scientific_documents_read": true,
+        "topology": "investigator \u2192 independent critic \u2192 fresh reviser",
+        "assigned_stage_count": 3,
+        "additional_parallel_or_breadth_critics_in_packet": 0,
+        "missing_required_outputs": [],
+        "failure_records": [],
+        "denominator": "one assigned arm; all its notified stages retained; no unlisted attempts inferred"
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_BY_FROZEN_ARTIFACT_BOUND_AND_DECLARED_NATIVE_BOUNDARIES",
+        "FULL_max_elapsed_s": 3600,
+        "frozen_t0_utc": "2026-10-12T00:35:35.684Z",
+        "frozen_whole_deadline_utc": "2026-10-12T01:35:35.684Z",
+        "packet_frozen_at_utc": "2026-10-12T01:30:53.702004+00:00",
+        "t0_to_packet_freeze_upper_bound_s": 3318.018,
+        "t0_to_final_stage_native_terminal_proxy_s": 3015.316,
+        "last_complete_scientific_artifact_write_utc": "UNKNOWN",
+        "request_to_quiet_final_proxy_utc": "UNKNOWN: status snapshots have no genuine terminal-capture timestamp",
+        "setup_admission_queue_boundaries": "T0/preparation/request/capture observed; separate admission, provider queue and actual provider-start times UNKNOWN. Request-to-Goal-active delay is not labelled queue time.",
+        "stages": [
+          {
+            "stage": "investigator",
+            "prepared_utc": "2026-10-12T00:35:36.401Z",
+            "requested_utc": "2026-10-12T00:35:36.401Z",
+            "dispatch_capture_utc": "2026-10-12T00:35:37.187Z",
+            "native_active_created_utc": "2026-10-12T00:35:49+00:00",
+            "native_terminal_updated_utc": "2026-10-12T00:53:12+00:00",
+            "stage_deadline_utc": "2026-10-12T01:05:36.401Z",
+            "native_terminal_within_stage_deadline": true,
+            "request_to_native_active_s": 12.599,
+            "request_to_native_terminal_s": 1055.599,
+            "native_timestamp_window_s": 1043,
+            "native_reported_time_used_s": 1043,
+            "predecessor_native_terminal_to_next_request_s": null,
+            "same_birth_objective_preserved": true,
+            "objective_matches_frozen": true,
+            "create_equals_active_receipt": true,
+            "terminal_status": "complete",
+            "task_status": "completed",
+            "pending_child_runs": false,
+            "receipt_source_paths": {
+              "native-goal-create.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/investigator/files/native-goal-create.json",
+              "native-goal-active.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/investigator/files/native-goal-active.json",
+              "native-goal-terminal.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/investigator/files/native-goal-terminal.json"
+            }
+          },
+          {
+            "stage": "critic",
+            "prepared_utc": "2026-10-12T01:07:52.065Z",
+            "requested_utc": "2026-10-12T01:07:52.065Z",
+            "dispatch_capture_utc": "2026-10-12T01:07:52.983Z",
+            "native_active_created_utc": "2026-10-12T01:08:29+00:00",
+            "native_terminal_updated_utc": "2026-10-12T01:16:40+00:00",
+            "stage_deadline_utc": "2026-10-12T01:19:52.065Z",
+            "native_terminal_within_stage_deadline": true,
+            "request_to_native_active_s": 36.935,
+            "request_to_native_terminal_s": 527.935,
+            "native_timestamp_window_s": 491,
+            "native_reported_time_used_s": 491,
+            "predecessor_native_terminal_to_next_request_s": 880.065,
+            "same_birth_objective_preserved": true,
+            "objective_matches_frozen": true,
+            "create_equals_active_receipt": true,
+            "terminal_status": "complete",
+            "task_status": "completed",
+            "pending_child_runs": false,
+            "receipt_source_paths": {
+              "native-goal-create.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/critic/files/native-goal-create.json",
+              "native-goal-active.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/critic/files/native-goal-active.json",
+              "native-goal-terminal.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/critic/files/native-goal-terminal.json"
+            }
+          },
+          {
+            "stage": "reviser",
+            "prepared_utc": "2026-10-12T01:23:10.173Z",
+            "requested_utc": "2026-10-12T01:23:10.173Z",
+            "dispatch_capture_utc": "2026-10-12T01:23:10.872Z",
+            "native_active_created_utc": "2026-10-12T01:23:20+00:00",
+            "native_terminal_updated_utc": "2026-10-12T01:25:51+00:00",
+            "stage_deadline_utc": "2026-10-12T01:35:35.684Z",
+            "native_terminal_within_stage_deadline": true,
+            "request_to_native_active_s": 9.827,
+            "request_to_native_terminal_s": 160.827,
+            "native_timestamp_window_s": 151,
+            "native_reported_time_used_s": 151,
+            "predecessor_native_terminal_to_next_request_s": 390.173,
+            "same_birth_objective_preserved": true,
+            "objective_matches_frozen": true,
+            "create_equals_active_receipt": true,
+            "terminal_status": "complete",
+            "task_status": "completed",
+            "pending_child_runs": false,
+            "receipt_source_paths": {
+              "native-goal-create.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/reviser/files/native-goal-create.json",
+              "native-goal-active.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/reviser/files/native-goal-active.json",
+              "native-goal-terminal.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-control/run/B02-P02-control/control/terminal-handoffs/reviser/files/native-goal-terminal.json"
+            }
+          }
+        ],
+        "clock_corrections": null
+      },
+      "method_compliance": {
+        "status": "CONSISTENT_WITH_ASSIGNED_METHOD; observational coverage PARTIAL",
+        "observed_topology_stage_count": 3,
+        "single_reveal_hash_integrity": true,
+        "discovery_revealed_at_utc": "2026-10-12T00:49:40.118Z",
+        "one_native_lifecycle_per_notified_stage": "Consistent create/active/complete receipt chains observed; no replacement indicated in assigned packet",
+        "pre_input_order_and_guard": "Reported by candidates; reveal/source timestamps consistent. Full native transcripts and separate live guard execution are unavailable/not consulted, so absolute pre-input order/freshness is not independently proved.",
+        "forbidden_candidate_activity": "No evidence in permitted records; full activity audit UNASSESSED because active files/transcripts/history are prohibited.",
+        "strict_recipe_qualification": "Not independently established beyond captured lifecycle consistency; original stage-manifest qualification flags left unchanged."
+      },
+      "native_provenance": {
+        "coverage": "PARTIAL",
+        "same_birth_exact_objective_receipt_checks": true,
+        "actual_task_terminal_zero_pending_observed": true,
+        "native_receipt_transport_freshness_and_task_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+        "candidate_requested_and_status_reported_model": "gpt-6-luna",
+        "candidate_requested_effort_and_tier": "max / default; actual provider activity/tier binding UNKNOWN",
+        "identifiers": "Private routing identities/native IDs/transcripts omitted from scientific records; exact permitted receipt paths/hashes retained in input-integrity.json.",
+        "source_truth_from_native_receipts": false
+      },
+      "resource_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product_path": {
+          "native_goal_timestamp_windows_s": 1685.0,
+          "native_goal_windows_overlap_s": 0,
+          "meaning": "Sum/union of disjoint native Goal receipt windows only. Not created/started context occupancy, active provider time or billing.",
+          "created_started_context_occupancy_union_overlap": "UNKNOWN",
+          "open_context_lifetime": "UNKNOWN",
+          "provider_active_time": "UNKNOWN",
+          "native_cumulative_counter_presence": "Observed opaque cumulative counters; values intentionally not published and not treated as billing.",
+          "input_cached_output_reasoning_split": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "billing": "UNKNOWN"
+        },
+        "independent_evaluation": {
+          "classification": "independent_evaluation, separate from candidate product",
+          "start_utc": "2026-10-12T01:45:56Z",
+          "shared_primary_lookup": true,
+          "provider_activity_context_cost_tokens_subscription_billing": "UNKNOWN; not zero"
+        },
+        "preparation_support_publication_complete_experiment_totals": "UNKNOWN in assigned packet; not synthesized",
+        "failure_inclusive_denominator": "One arm including all notified stages and waits; no failed/missing assigned stage omitted",
+        "affordability_or_savings_claim": null
+      },
+      "frozen_files_verified": 8,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    },
+    {
+      "arm_id": "B02-P02-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/treatment/manifest.json",
+      "manifest_sha256": "2085d4886986cded72420510aeda0486038d96642c3f081556b0f0da02f61cfb",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/treatment/assessment.json",
+      "assessment_sha256": "859915d677019b3c561b8c78a5261c94495b3a49b04c50c861f3f2c943a53dcd",
+      "source_judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "axis_coverage": [
+        {
+          "axis": 1,
+          "name": "Material original obligations and negative constraints",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "summary": "All material original workflows/negative constraints and legitimate unknown owner facts retained."
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "COMPLETE",
+          "judgment": "FAIL",
+          "summary": "Material MRBS schema-to-capability inference remains unsupported (T-M01); other assessed facts are appropriately qualified."
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "COMPLETE",
+          "judgment": "FAIL",
+          "summary": "Several useful mechanisms are present, but MRBS is materially narrowed by a missed available native mechanism (T-M01)."
+        },
+        {
+          "axis": 4,
+          "name": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "summary": "Every substantive released clause and four critic findings/dispositions examined; accepted improvements are valid, no material false plan correction found."
+        },
+        {
+          "axis": 5,
+          "name": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "summary": "Complete discovery/draft/critique/final examined; no material supported-meaning loss or source-ID rebinding found. Small depth limits are stated below."
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "summary": "Meaningful concurrency, hold, time, lifecycle, outage, privacy and restore oracles are proposals. Source-test inspection is not represented as execution."
+        }
+      ],
+      "delivery": {
+        "status": "COMPLETE",
+        "frozen_final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/critic/files/final.md",
+        "sha256": "fd1a46d5c88381748cb85460b036363026ed0e3dbb15b90fe2741fb795232785",
+        "bytes": 36949,
+        "all_manifest_members_hash_verified": true,
+        "all_assigned_scientific_documents_read": true,
+        "topology": "investigator \u2192 independent critic/finalizer in same critic Goal",
+        "assigned_stage_count": 2,
+        "additional_parallel_or_breadth_critics_in_packet": 0,
+        "missing_required_outputs": [],
+        "failure_records": [],
+        "denominator": "one assigned arm; all its notified stages retained; no unlisted attempts inferred"
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_BY_FROZEN_ARTIFACT_BOUND_AND_DECLARED_NATIVE_BOUNDARIES",
+        "FULL_max_elapsed_s": 3600,
+        "frozen_t0_utc": "2026-10-12T00:35:32.142Z",
+        "frozen_whole_deadline_utc": "2026-10-12T01:35:32.142Z",
+        "packet_frozen_at_utc": "2026-10-12T01:30:53.702004+00:00",
+        "t0_to_packet_freeze_upper_bound_s": 3321.56,
+        "t0_to_final_stage_native_terminal_proxy_s": 1587.858,
+        "last_complete_scientific_artifact_write_utc": "UNKNOWN",
+        "request_to_quiet_final_proxy_utc": "UNKNOWN: status snapshots have no genuine terminal-capture timestamp",
+        "setup_admission_queue_boundaries": "T0/preparation/request/capture observed; separate admission, provider queue and actual provider-start times UNKNOWN. Request-to-Goal-active delay is not labelled queue time.",
+        "stages": [
+          {
+            "stage": "investigator",
+            "prepared_utc": "2026-10-12T00:35:32.896Z",
+            "requested_utc": "2026-10-12T00:35:32.896Z",
+            "dispatch_capture_utc": "2026-10-12T00:35:33.547Z",
+            "native_active_created_utc": "2026-10-12T00:35:42+00:00",
+            "native_terminal_updated_utc": "2026-10-12T00:47:45+00:00",
+            "stage_deadline_utc": "2026-10-12T01:05:32.896Z",
+            "native_terminal_within_stage_deadline": true,
+            "request_to_native_active_s": 9.104,
+            "request_to_native_terminal_s": 732.104,
+            "native_timestamp_window_s": 723,
+            "native_reported_time_used_s": 722,
+            "predecessor_native_terminal_to_next_request_s": null,
+            "same_birth_objective_preserved": true,
+            "objective_matches_frozen": true,
+            "create_equals_active_receipt": true,
+            "terminal_status": "complete",
+            "task_status": "completed",
+            "pending_child_runs": false,
+            "receipt_source_paths": {
+              "native-goal-create.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/investigator/files/native-goal-create.json",
+              "native-goal-active.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/investigator/files/native-goal-active.json",
+              "native-goal-terminal.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/investigator/files/native-goal-terminal.json"
+            }
+          },
+          {
+            "stage": "critic",
+            "prepared_utc": "2026-10-12T00:48:29.948Z",
+            "requested_utc": "2026-10-12T00:48:29.948Z",
+            "dispatch_capture_utc": "2026-10-12T00:48:30.765Z",
+            "native_active_created_utc": "2026-10-12T00:48:54+00:00",
+            "native_terminal_updated_utc": "2026-10-12T01:02:00+00:00",
+            "stage_deadline_utc": "2026-10-12T01:18:29.948Z",
+            "native_terminal_within_stage_deadline": true,
+            "request_to_native_active_s": 24.052,
+            "request_to_native_terminal_s": 810.052,
+            "native_timestamp_window_s": 786,
+            "native_reported_time_used_s": 786,
+            "predecessor_native_terminal_to_next_request_s": 44.948,
+            "same_birth_objective_preserved": true,
+            "objective_matches_frozen": true,
+            "create_equals_active_receipt": true,
+            "terminal_status": "complete",
+            "task_status": "completed",
+            "pending_child_runs": false,
+            "receipt_source_paths": {
+              "native-goal-create.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/critic/files/native-goal-create.json",
+              "native-goal-active.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/critic/files/native-goal-active.json",
+              "native-goal-terminal.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/critic/files/native-goal-terminal.json"
+            }
+          }
+        ],
+        "clock_corrections": null
+      },
+      "method_compliance": {
+        "status": "CONSISTENT_WITH_ASSIGNED_METHOD; observational coverage PARTIAL",
+        "observed_topology_stage_count": 2,
+        "single_reveal_hash_integrity": true,
+        "discovery_revealed_at_utc": "2026-10-12T00:44:54.205Z",
+        "one_native_lifecycle_per_notified_stage": "Consistent create/active/complete receipt chains observed; no replacement indicated in assigned packet",
+        "pre_input_order_and_guard": "Reported by candidates; reveal/source timestamps consistent. Full native transcripts and separate live guard execution are unavailable/not consulted, so absolute pre-input order/freshness is not independently proved.",
+        "forbidden_candidate_activity": "No evidence in permitted records; full activity audit UNASSESSED because active files/transcripts/history are prohibited.",
+        "strict_recipe_qualification": "Not independently established beyond captured lifecycle consistency; original stage-manifest qualification flags left unchanged."
+      },
+      "native_provenance": {
+        "coverage": "PARTIAL",
+        "same_birth_exact_objective_receipt_checks": true,
+        "actual_task_terminal_zero_pending_observed": true,
+        "native_receipt_transport_freshness_and_task_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+        "candidate_requested_and_status_reported_model": "gpt-6-luna",
+        "candidate_requested_effort_and_tier": "max / default; actual provider activity/tier binding UNKNOWN",
+        "identifiers": "Private routing identities/native IDs/transcripts omitted from scientific records; exact permitted receipt paths/hashes retained in input-integrity.json.",
+        "source_truth_from_native_receipts": false
+      },
+      "resource_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product_path": {
+          "native_goal_timestamp_windows_s": 1509.0,
+          "native_goal_windows_overlap_s": 0,
+          "meaning": "Sum/union of disjoint native Goal receipt windows only. Not created/started context occupancy, active provider time or billing.",
+          "created_started_context_occupancy_union_overlap": "UNKNOWN",
+          "open_context_lifetime": "UNKNOWN",
+          "provider_active_time": "UNKNOWN",
+          "native_cumulative_counter_presence": "Observed opaque cumulative counters; values intentionally not published and not treated as billing.",
+          "input_cached_output_reasoning_split": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "billing": "UNKNOWN"
+        },
+        "independent_evaluation": {
+          "classification": "independent_evaluation, separate from candidate product",
+          "start_utc": "2026-10-12T01:45:56Z",
+          "shared_primary_lookup": true,
+          "provider_activity_context_cost_tokens_subscription_billing": "UNKNOWN; not zero"
+        },
+        "preparation_support_publication_complete_experiment_totals": "UNKNOWN in assigned packet; not synthesized",
+        "failure_inclusive_denominator": "One arm including all notified stages and waits; no failed/missing assigned stage omitted",
+        "affordability_or_savings_claim": null
+      },
+      "frozen_files_verified": 8,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    }
+  ],
+  "grader_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "comparison": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/comparison.json",
+  "comparison_sha256": "2154e73aa801a90c8d6f1e5b09dc6b5ca197fd0737b31f0839538bb07d6ae013",
+  "verified_at_utc": "2026-10-12T02:04:19.032893+00:00",
+  "mechanics_only_not_regrade": true,
+  "separate_record_errata": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/record-errata.json",
+  "separate_record_errata_sha256": "50883feba387a8524a694ea37a5cb94231148800a6f45782c55911b9a9a7b7bc",
+  "original_grade_changes": false
+}

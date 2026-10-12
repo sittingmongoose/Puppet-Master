@@ -1,0 +1,376 @@
+{
+  "block_id": "B07-P02",
+  "scope": "FULL",
+  "originals": [
+    {
+      "arm_id": "B07-P02-control",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P02/control/manifest.json",
+      "manifest_sha256": "4677a3af5cc90b1e38825c26a1350f7f6ec640bc8f1edc4cf60b230ba9ffe542",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P02/control/assessment.json",
+      "assessment_sha256": "19c557216216dc4f7cc12864459eb0190b47389796197b19fbe529318885d329",
+      "source_judgment": "FAIL",
+      "coverage": "PARTIAL",
+      "axis_coverage": [
+        {
+          "axis": 1,
+          "name": "Material original obligations and negative constraints",
+          "coverage": "COMPLETE",
+          "judgment": "FAIL",
+          "basis": "Product obligations and all prohibitions examined; D01 is an unresolved required research obligation."
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "PARTIAL",
+          "judgment": "FAIL",
+          "basis": "Consequential cited rules and selected code were checked; available announcement mechanism omission found. Current Codeberg release/source behavior remains UNASSESSED."
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "PARTIAL",
+          "judgment": "FAIL",
+          "basis": "Useful alternatives and selected caller/test/release/report context assessed; D01 remains. Exhaustive linked fixing patches and broader upstream history are UNASSESSED."
+        },
+        {
+          "axis": 4,
+          "name": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Exact revealed-plan clauses and each critic finding examined. Identity/precision corrections are sound; future mechanism research remains unresolved rather than source-complete."
+        },
+        {
+          "axis": 5,
+          "name": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Supported identity, overlap, time, transcript, constraints, alternatives, uncertainty and validation meaning survive into a self-contained final. No material supported-meaning loss found."
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Fidelity and accessibility tests have meaningful proposed cases/oracles; documentary review is separated from unexecuted application/AT/media tests."
+        }
+      ],
+      "delivery": {
+        "status": "DELIVERED",
+        "final_present": true,
+        "final_sha256": "fbf10b411c8d2efaf96bb2afd42778c7ee0b9a4ef032042d6b0b1b81a78eb04e",
+        "required_scientific_outputs_present": true,
+        "frozen_manifest_members_per_arm": 42,
+        "missing_final_grade_fabricated": false,
+        "implementation_required": false
+      },
+      "time_eligibility": {
+        "whole_status": "EVIDENCE_SUPPORTS_ELIGIBLE",
+        "maximum_seconds": 3600,
+        "t0_utc": "2026-10-12T00:37:14.481Z",
+        "frozen_deadline_utc": "2026-10-12T01:37:14.481Z",
+        "notification_frozen_utc": "2026-10-12T01:32:05.369141+00:00",
+        "t0_to_notification_freeze_seconds": 3290.888,
+        "t0_to_native_final_terminal_proxy_seconds": 3018.519,
+        "proxy_label": "Captured native terminal timestamp; not actual last scientific artifact or task-quiet time",
+        "last_complete_scientific_artifact_utc": null,
+        "request_to_quiet_final_seconds": null,
+        "stage_status": "Captured native terminals precede original stage deadlines; exact output-write and task-quiet times unavailable",
+        "clock_corrections": null,
+        "v1_idle_unchanged": true,
+        "stages": [
+          {
+            "stage": "investigator",
+            "prepared_utc": "2026-10-12T00:37:15.504Z",
+            "requested_utc": "2026-10-12T00:37:15.504Z",
+            "dispatch_response_captured_utc": "2026-10-12T00:37:16.568Z",
+            "native_active_utc": "2026-10-12T00:37:43+00:00",
+            "native_terminal_utc": "2026-10-12T00:56:09+00:00",
+            "stage_deadline_utc": "2026-10-12T01:07:15.504Z",
+            "native_terminal_before_deadline": true,
+            "requested_to_native_activation_seconds": 27.496,
+            "native_timeUsedSeconds": 1106,
+            "native_cumulative_token_counter": 162446,
+            "native_identity_and_birth_objective_match": true,
+            "exact_frozen_objective_match": true,
+            "native_active_receipt_equals_create": true,
+            "actual_status_completed_zero_pending": true,
+            "artifact_completion_time": null,
+            "task_quiet_time": null
+          },
+          {
+            "stage": "critic",
+            "prepared_utc": "2026-10-12T01:08:00.696Z",
+            "requested_utc": "2026-10-12T01:08:00.696Z",
+            "dispatch_response_captured_utc": "2026-10-12T01:08:01.914Z",
+            "native_active_utc": "2026-10-12T01:09:41+00:00",
+            "native_terminal_utc": "2026-10-12T01:16:57+00:00",
+            "stage_deadline_utc": "2026-10-12T01:20:00.696Z",
+            "native_terminal_before_deadline": true,
+            "requested_to_native_activation_seconds": 100.304,
+            "native_timeUsedSeconds": 436,
+            "native_cumulative_token_counter": 141322,
+            "native_identity_and_birth_objective_match": true,
+            "exact_frozen_objective_match": true,
+            "native_active_receipt_equals_create": true,
+            "actual_status_completed_zero_pending": true,
+            "artifact_completion_time": null,
+            "task_quiet_time": null
+          },
+          {
+            "stage": "reviser",
+            "prepared_utc": "2026-10-12T01:23:18.305Z",
+            "requested_utc": "2026-10-12T01:23:18.305Z",
+            "dispatch_response_captured_utc": "2026-10-12T01:23:19.091Z",
+            "native_active_utc": "2026-10-12T01:23:36+00:00",
+            "native_terminal_utc": "2026-10-12T01:27:33+00:00",
+            "stage_deadline_utc": "2026-10-12T01:37:14.481Z",
+            "native_terminal_before_deadline": true,
+            "requested_to_native_activation_seconds": 17.695,
+            "native_timeUsedSeconds": 237,
+            "native_cumulative_token_counter": 121384,
+            "native_identity_and_birth_objective_match": true,
+            "exact_frozen_objective_match": true,
+            "native_active_receipt_equals_create": true,
+            "actual_status_completed_zero_pending": true,
+            "artifact_completion_time": null,
+            "task_quiet_time": null
+          }
+        ]
+      },
+      "method_compliance": {
+        "status": "PARTIALLY_OBSERVABLE",
+        "topology": "investigator -> single independent critic -> complete reviser; no extra listed critics",
+        "discovery_reveal_hashes_match": true,
+        "single_use_reveal_receipt": true,
+        "assignment_and_config_consistent": true,
+        "treatment_coverage_first_instruction_present": false,
+        "coverage_first_table_observed": false,
+        "no_pending_children_reported": true,
+        "input_read_order_and_fresh_context_exclusivity": "UNKNOWN beyond frozen declarations/custody",
+        "source_research_compliance": "Incomplete under D01",
+        "no_extra_grader_or_goal_created_by_evaluator": true
+      },
+      "native_provenance": {
+        "status": "CAPTURE_BOUND; INDEPENDENT_SESSION_LINKAGE_UNKNOWN",
+        "three_active_and_complete_receipt_pairs": true,
+        "same_birth_identity_exact_objective": true,
+        "direct_native_activation_from_this_evaluator_observed": false,
+        "native_to_assigned_task_linkage": "UNKNOWN beyond exact captured objective/identity custody; receipts do not independently prove provider session linkage",
+        "single_goal_exclusivity": "UNKNOWN beyond records",
+        "terminal_manifest_qualification_flags": "Original native_lifecycle_qualified and science_qualified remain false; not silently upgraded by this evaluation",
+        "raw_transcripts_redistributed": false
+      },
+      "resource_coverage": {
+        "classification": "candidate_product",
+        "status": "PARTIAL",
+        "observed": "Per-stage native cumulative token and elapsed counters are recorded separately in time_eligibility.stages. They are not billed input/output tokens or independently linked provider consumption.",
+        "candidate_billing": null,
+        "input_output_cached_reasoning_decomposition": null,
+        "subscription_consumption": null,
+        "provider_active_time": null,
+        "actual_context_occupancy_union_overlap": null,
+        "failed_attempts": "No failure records in assigned packet; unlisted hidden attempts UNKNOWN, never assumed zero",
+        "counters_summed_as_billing": false,
+        "complete_experiment_cost": null,
+        "independent_evaluation": {
+          "classification": "independent_evaluation",
+          "shared_between_arms": true,
+          "first_observed_clock_utc": "2026-10-12T01:50:49Z",
+          "actual_provider_token_or_billing_cost": null,
+          "candidate_product_cost_includes_grader": false
+        }
+      },
+      "frozen_files_verified": 7,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    },
+    {
+      "arm_id": "B07-P02-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P02/treatment/manifest.json",
+      "manifest_sha256": "593068fad1949f0f875313d48e4d28713cef4d753fa508d191f40ece29836a8c",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P02/treatment/assessment.json",
+      "assessment_sha256": "81f13f9230b65c5228babe04a222b8bd41f6de0e81b90bb85b9b5c95aa614f8d",
+      "source_judgment": "FAIL",
+      "coverage": "PARTIAL",
+      "axis_coverage": [
+        {
+          "axis": 1,
+          "name": "Material original obligations and negative constraints",
+          "coverage": "COMPLETE",
+          "judgment": "FAIL",
+          "basis": "Product obligations and all prohibitions examined; D01 is an unresolved required research obligation."
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "PARTIAL",
+          "judgment": "FAIL",
+          "basis": "Consequential cited rules and selected code were checked; available announcement mechanism omission found. Current Codeberg release/source behavior remains UNASSESSED."
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "PARTIAL",
+          "judgment": "FAIL",
+          "basis": "Useful alternatives and selected caller/test/release/report context assessed; D01 remains. Exhaustive linked fixing patches and broader upstream history are UNASSESSED."
+        },
+        {
+          "axis": 4,
+          "name": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Exact revealed-plan clauses and each critic finding examined. Identity/precision corrections are sound; future mechanism research remains unresolved rather than source-complete."
+        },
+        {
+          "axis": 5,
+          "name": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Supported identity, overlap, time, transcript, constraints, alternatives, uncertainty and validation meaning survive into a self-contained final. No material supported-meaning loss found."
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "COMPLETE",
+          "judgment": "PASS",
+          "basis": "Fidelity and accessibility tests have meaningful proposed cases/oracles; documentary review is separated from unexecuted application/AT/media tests."
+        }
+      ],
+      "delivery": {
+        "status": "DELIVERED",
+        "final_present": true,
+        "final_sha256": "719f4c5eef224e6cdfa88e79144e46b8b27ebfda27de6aa611efe53873af7120",
+        "required_scientific_outputs_present": true,
+        "frozen_manifest_members_per_arm": 42,
+        "missing_final_grade_fabricated": false,
+        "implementation_required": false
+      },
+      "time_eligibility": {
+        "whole_status": "EVIDENCE_SUPPORTS_ELIGIBLE",
+        "maximum_seconds": 3600,
+        "t0_utc": "2026-10-12T00:37:02.330Z",
+        "frozen_deadline_utc": "2026-10-12T01:37:02.330Z",
+        "notification_frozen_utc": "2026-10-12T01:32:05.369141+00:00",
+        "t0_to_notification_freeze_seconds": 3303.039,
+        "t0_to_native_final_terminal_proxy_seconds": 3212.67,
+        "proxy_label": "Captured native terminal timestamp; not actual last scientific artifact or task-quiet time",
+        "last_complete_scientific_artifact_utc": null,
+        "request_to_quiet_final_seconds": null,
+        "stage_status": "Captured native terminals precede original stage deadlines; exact output-write and task-quiet times unavailable",
+        "clock_corrections": null,
+        "v1_idle_unchanged": true,
+        "stages": [
+          {
+            "stage": "investigator",
+            "prepared_utc": "2026-10-12T00:37:03.258Z",
+            "requested_utc": "2026-10-12T00:37:03.258Z",
+            "dispatch_response_captured_utc": "2026-10-12T00:37:04.138Z",
+            "native_active_utc": "2026-10-12T00:37:20+00:00",
+            "native_terminal_utc": "2026-10-12T00:51:27+00:00",
+            "stage_deadline_utc": "2026-10-12T01:07:03.258Z",
+            "native_terminal_before_deadline": true,
+            "requested_to_native_activation_seconds": 16.742,
+            "native_timeUsedSeconds": 846,
+            "native_cumulative_token_counter": 284408,
+            "native_identity_and_birth_objective_match": true,
+            "exact_frozen_objective_match": true,
+            "native_active_receipt_equals_create": true,
+            "actual_status_completed_zero_pending": true,
+            "artifact_completion_time": null,
+            "task_quiet_time": null
+          },
+          {
+            "stage": "critic",
+            "prepared_utc": "2026-10-12T00:56:06.368Z",
+            "requested_utc": "2026-10-12T00:56:06.368Z",
+            "dispatch_response_captured_utc": "2026-10-12T00:56:08.008Z",
+            "native_active_utc": "2026-10-12T00:56:18+00:00",
+            "native_terminal_utc": "2026-10-12T01:06:19+00:00",
+            "stage_deadline_utc": "2026-10-12T01:08:06.368Z",
+            "native_terminal_before_deadline": true,
+            "requested_to_native_activation_seconds": 11.632,
+            "native_timeUsedSeconds": 600,
+            "native_cumulative_token_counter": 150584,
+            "native_identity_and_birth_objective_match": true,
+            "exact_frozen_objective_match": true,
+            "native_active_receipt_equals_create": true,
+            "actual_status_completed_zero_pending": true,
+            "artifact_completion_time": null,
+            "task_quiet_time": null
+          },
+          {
+            "stage": "reviser",
+            "prepared_utc": "2026-10-12T01:23:20.591Z",
+            "requested_utc": "2026-10-12T01:23:20.591Z",
+            "dispatch_response_captured_utc": "2026-10-12T01:23:21.566Z",
+            "native_active_utc": "2026-10-12T01:23:44+00:00",
+            "native_terminal_utc": "2026-10-12T01:30:35+00:00",
+            "stage_deadline_utc": "2026-10-12T01:37:02.330Z",
+            "native_terminal_before_deadline": true,
+            "requested_to_native_activation_seconds": 23.409,
+            "native_timeUsedSeconds": 410,
+            "native_cumulative_token_counter": 97037,
+            "native_identity_and_birth_objective_match": true,
+            "exact_frozen_objective_match": true,
+            "native_active_receipt_equals_create": true,
+            "actual_status_completed_zero_pending": true,
+            "artifact_completion_time": null,
+            "task_quiet_time": null
+          }
+        ]
+      },
+      "method_compliance": {
+        "status": "PARTIALLY_OBSERVABLE",
+        "topology": "investigator -> single independent critic -> complete reviser; no extra listed critics",
+        "discovery_reveal_hashes_match": true,
+        "single_use_reveal_receipt": true,
+        "assignment_and_config_consistent": true,
+        "treatment_coverage_first_instruction_present": true,
+        "coverage_first_table_observed": true,
+        "no_pending_children_reported": true,
+        "input_read_order_and_fresh_context_exclusivity": "UNKNOWN beyond frozen declarations/custody",
+        "source_research_compliance": "Incomplete under D01",
+        "no_extra_grader_or_goal_created_by_evaluator": true
+      },
+      "native_provenance": {
+        "status": "CAPTURE_BOUND; INDEPENDENT_SESSION_LINKAGE_UNKNOWN",
+        "three_active_and_complete_receipt_pairs": true,
+        "same_birth_identity_exact_objective": true,
+        "direct_native_activation_from_this_evaluator_observed": false,
+        "native_to_assigned_task_linkage": "UNKNOWN beyond exact captured objective/identity custody; receipts do not independently prove provider session linkage",
+        "single_goal_exclusivity": "UNKNOWN beyond records",
+        "terminal_manifest_qualification_flags": "Original native_lifecycle_qualified and science_qualified remain false; not silently upgraded by this evaluation",
+        "raw_transcripts_redistributed": false
+      },
+      "resource_coverage": {
+        "classification": "candidate_product",
+        "status": "PARTIAL",
+        "observed": "Per-stage native cumulative token and elapsed counters are recorded separately in time_eligibility.stages. They are not billed input/output tokens or independently linked provider consumption.",
+        "candidate_billing": null,
+        "input_output_cached_reasoning_decomposition": null,
+        "subscription_consumption": null,
+        "provider_active_time": null,
+        "actual_context_occupancy_union_overlap": null,
+        "failed_attempts": "No failure records in assigned packet; unlisted hidden attempts UNKNOWN, never assumed zero",
+        "counters_summed_as_billing": false,
+        "complete_experiment_cost": null,
+        "independent_evaluation": {
+          "classification": "independent_evaluation",
+          "shared_between_arms": true,
+          "first_observed_clock_utc": "2026-10-12T01:50:49Z",
+          "actual_provider_token_or_billing_cost": null,
+          "candidate_product_cost_includes_grader": false
+        }
+      },
+      "frozen_files_verified": 7,
+      "freeze_before_comparison_verified": true,
+      "originals_unmodified": true
+    }
+  ],
+  "grader_terminal": "completed",
+  "hasPendingChildRuns": false,
+  "comparison": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P02/comparison.json",
+  "comparison_sha256": "a351a052f7433b7ff7c1400001623873137833d5678feb45f3a0afd088a12375",
+  "verified_at_utc": "2026-10-12T02:08:27.147702+00:00",
+  "mechanics_only_not_regrade": true
+}

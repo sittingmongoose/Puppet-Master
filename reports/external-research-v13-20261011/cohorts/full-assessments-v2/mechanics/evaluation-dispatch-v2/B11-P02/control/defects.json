@@ -1,0 +1,54 @@
+{
+  "arm_id": "B11-P02-control",
+  "source_defects": [],
+  "method_defects": [
+    {
+      "defect_id": "C-M01",
+      "dimension": "method_compliance/native_identity_provenance",
+      "classification": "missing required exact activation creation capture",
+      "stage": "critic",
+      "source_quality_effect": "NONE",
+      "evidence": "Terminal manifest lacks native-goal-create.json; packet and verification receipt declare it missing. Active/terminal receipts bind the same birth/objective tuple.",
+      "qualification": "Actual Goal existence is supported by active/terminal captures. The prescribed initial create capture/pre-input exact mechanics are not qualified; do not fabricate it or classify the final as missing."
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "C-01",
+      "disposition": "ACCEPT",
+      "evaluation": "Valid; app durable boundary and crash oracle explicitly added."
+    },
+    {
+      "id": "C-02",
+      "disposition": "ACCEPT",
+      "evaluation": "Valid; deletion/move/edit/comment/revival and late-candidate lifecycle added."
+    },
+    {
+      "id": "C-03",
+      "disposition": "ACCEPT_AND_AMEND",
+      "evaluation": "Correct provisional recommendation; no false rejection of already conditional mechanism."
+    }
+  ],
+  "preservation_review": [
+    {
+      "family": "Stable IDs/order/comment anchors and optional range cursors",
+      "judgment": "RETAINED",
+      "locator": "discovery11-19/draft35-47 -> final31-32,48-67"
+    },
+    {
+      "family": "Sync/pending, writer identity, shallow history, actual durability",
+      "judgment": "RETAINED_AND_CLARIFIED",
+      "locator": "discovery21-25/draft49-58 -> final69-79"
+    },
+    {
+      "family": "Publication, exports, alternatives/history, unknowns, proposed tests",
+      "judgment": "RETAINED",
+      "locator": "discovery27-46/draft60-103 -> final81-122"
+    }
+  ],
+  "nonmaterial_limits": [
+    "Target-app integration/performance and future crash/order/security tests remain proposed; no grade penalty for not executing them.",
+    "Owner-specific facts remain unresolved as authorized.",
+    "Pure source custody does not authenticate process/counter telemetry."
+  ]
+}

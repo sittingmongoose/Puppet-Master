@@ -1,0 +1,27 @@
+{
+  "schema": "er13.separate-primary-evidence.v1",
+  "source_ids": [
+    "CC35",
+    "CC36",
+    "CC44"
+  ],
+  "public_page": "https://github.com/squidfunk/mkdocs-material/releases/tag/9.7.7",
+  "api_url": "https://api.github.com/repos/squidfunk/mkdocs-material/releases/tags/9.7.7",
+  "access_started_utc": "2026-10-12T02:20:21.314303+00:00",
+  "access_finished_utc": "2026-10-12T02:20:21.447556+00:00",
+  "tag": "9.7.7",
+  "published_at": "2026-07-17T16:20:51Z",
+  "updated_at": "2026-07-28T20:28:08Z",
+  "retrieved_response_sha256": "6f49cdc6b3d853853e4925e0cbc1570b6d0a781a883fb6a62a01fe5285ab6721",
+  "body_sha256": "b19a6f4a4dd068879446e317fbc27012e8b8fb4799d53d2b51aec0a5c1f2c81f",
+  "same_body_as_original_independent_evidence": true,
+  "short_exact_excerpt": "Material for MkDocs is scheduled to reach end of life on November 5, 2026.",
+  "context_summary": "Before EOL, critical bug/security maintenance only. Afterward, no planned maintenance except exceptional circumstances; extended support discussion is invited. The release links the successor announcement and lists a search-suggestions XSS fix. This is material support context for a new long-lived workflow, without proving successor capability or declaring Material unusable.",
+  "license": {
+    "url": "https://raw.githubusercontent.com/squidfunk/mkdocs-material/9.7.7/LICENSE",
+    "notice_path": "mkdocs-material-LICENSE.txt",
+    "notice_sha256": "e1150f26b4c0f872627b39fda49ae3bd850304f2f7f3171ae0531c1f8f4dd078"
+  },
+  "raw_response_retained": false,
+  "temporal_inference": "API updated_at and unchanged body hash corroborate availability before candidate T0 clocks; not an independently time-stamped historical web archive."
+}

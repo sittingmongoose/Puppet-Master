@@ -1,0 +1,54 @@
+{
+  "version": "ER13-C-selection-intent-v1",
+  "locked_scientific_choice_utc": "2026-10-12T01:55:48.268492+00:00",
+  "case_bodies_read": false,
+  "track_C_label": "EXPLORATORY_FRESH_INTEGRATION; no optimizer or confirmation claim",
+  "source_evidence_available": [
+    "B02-P01 both sourcePASS sixaxesCOMPLETE",
+    "B06-P01 both sourcePASS sixaxesCOMPLETE",
+    "B09-P02 both sourcePASS but treatment later",
+    "B10-P01 both sourcePASS but treatment later",
+    "A-F01 A1FAIL, comboMETHODFAIL, A8later, R0exactT0unknown",
+    "16COMPONENT originals 4PASS10FAIL2complete-finalUNASSESSED; no robustfullintegrationqualification"
+  ],
+  "remaining_AB_screen_assessments": "UNKNOWN at scientificchoice lock, including B02-P02/B06-P02. They continue unchanged and cannot retroactively validate this lock.",
+  "choices": [
+    {
+      "recipe": "C-S1-v1",
+      "cases": [
+        "C-P01",
+        "C-P02"
+      ],
+      "scientific_composition": "R0-ER13 common full brief-discovery obligations/time/native guards + B02 critic also finalizes",
+      "method": "B02",
+      "stage_maxima_seconds": [
+        1800,
+        1800
+      ],
+      "candidate_contexts": 2,
+      "rationale": "Best currently demonstrated complete quality with reduced declared handoffs/contextcount; firstpair nativefinalproxy17.96% earlier but native residence1957 vs1977s, so resource savings not demonstrated. Tests efficiency hypothesis and anchoring/preservation failure risk on2freshcases."
+    },
+    {
+      "recipe": "C-S2-v1",
+      "cases": [
+        "C-P03",
+        "C-P04"
+      ],
+      "scientific_composition": "R0-ER13 common full brief-discovery obligations/time/native guards + B06 two complementarycritics with explicit fullintegration",
+      "method": "B06",
+      "stage_maxima_seconds": [
+        1800,
+        360,
+        360,
+        1080
+      ],
+      "candidate_contexts": 4,
+      "rationale": "Available firstpair complete sourcequality and nativefinalproxy14.30% earlier with native residence1739 vs1961s. Explicit latency/resource tradeoff diagnostic, not jointimprovement or freeparallelism; freshcase integration needed."
+    }
+  ],
+  "reference": "R0-ER13 investigator1800 critic720 reviser1080, maximum whole3600, no minimum",
+  "route": "Luna Max Standard/default matched allarms",
+  "common_prospective_capture": "Pending exact separatelyverified loadedcapture seal; no C admissions until exact finalmechanics config frozen",
+  "selection_intent": "Scientific choices fixed before C body reveal; final release pins actual mechanics+inputs+methodversion. No new case-specific prompts or candidate feedback.",
+  "D_rule": "After C original assessments and available A/Bscreen outcomes, freeze entire testedrecipe and relevant Dallocation beforeDbodyreveal. If no jointoptimizer warranted, prospectively label diagnostic replications ofleastdominated complete recipe(s), notconfirmation. No requirealready20percentgain. All8Dpairslotsused usefully, no forcedmaterialincorrectpromotion."
+}

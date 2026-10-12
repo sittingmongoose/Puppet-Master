@@ -1,0 +1,90 @@
+{
+  "arm_id": "B09-P01-control",
+  "defects": [
+    {
+      "defect_id": "C-01",
+      "classification": "material wrong / unsupported source attribution",
+      "axes": [
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "confidence": "high",
+      "title": "False attribution of checkout duplicate-row fix to Snipe-IT v8.7.2 remains in final evidence",
+      "candidate_locators": [
+        "investigator discovery: Snipe-IT version-history paragraph",
+        "investigator source-map S01 observed_operation",
+        "reviser source-map S01 observed_operation and locator",
+        "reviser sources/index.md S01 v8.7.2 duplicate-checkout note"
+      ],
+      "primary_evidence_ids": [
+        "sn-release872"
+      ],
+      "primary_urls": [
+        "https://github.com/grokability/snipe-it/releases/tag/v8.7.2",
+        "https://api.github.com/repos/grokability/snipe-it/releases/tags/v8.7.2"
+      ],
+      "evidence_context": "Complete exact v8.7.2 change list concerns restore double logging, MariaDB, SCIM/importer and other changes. The duplicate logging fix is PR 19500; it is not a duplicate checkout-row fix.",
+      "why_material": "A version-specific repair is consequential to the stated concurrency comparison. The critic overlooks it and the final source map/index continues to state it as fact. Generic retry tests remain reasonable; a different release might contain a fix, but this exact attribution is unsupported.",
+      "boundary": "Not a finding that duplicate checkout fixes never existed, that v8.8.0 is unsafe, or that unrun tests should have been executed."
+    },
+    {
+      "defect_id": "C-02",
+      "classification": "material incomplete",
+      "axes": [
+        "A2",
+        "A3"
+      ],
+      "confidence": {
+        "primary_facts": "high",
+        "materiality": "medium: explicit research-depth obligation"
+      },
+      "title": "Consequential ordinary checkout/check-in caller and test research deferred to future validation",
+      "primary_evidence_ids": [
+        "sn-api-context",
+        "sn-checkout-context",
+        "sn-checkin-context",
+        "sn-permission",
+        "sn-ui-test",
+        "sn-api-test"
+      ],
+      "primary_urls": [
+        "https://github.com/grokability/snipe-it/blob/v8.8.0/app/Http/Controllers/Api/AssetsController.php",
+        "https://github.com/grokability/snipe-it/blob/v8.8.0/app/Http/Controllers/Assets/AssetCheckoutController.php",
+        "https://github.com/grokability/snipe-it/blob/v8.8.0/app/Http/Controllers/Assets/AssetCheckinController.php",
+        "https://github.com/grokability/snipe-it/blob/v8.8.0/tests/Feature/Checkins/Ui/AssetCheckinTest.php"
+      ],
+      "evidence_context": "API checkout lines 1444–1462 and UI store 172–190 lock and recheck inside transactions. API checkin 1480–1564 and UI store 95–237 disassociate the assignee and accept status_id before saving and emitting a check-in event. The inherited checkin permission policy checks permission, not availableForCheckIn(). UI tests include an already non-deployable check-in page and submission to a non-deployable status.",
+      "why_material": "The brief explicitly requires consequential primary code/caller/test research. These available mechanisms directly affect the two-volunteer and maintenance-hold comparison. Leaving them entirely for later product tests omits obtainable research, even though uncertainty is honestly declared. No installation or future execution is required to inspect them.",
+      "boundary": "This does not prove complete atomic history or return safety, all button paths, race freedom, or executed test success; those remain separate validation questions.",
+      "candidate_locators": [
+        "final exact-plan damaged-return row",
+        "final M-02 disposition",
+        "final Snipe-IT comparison",
+        "final Executed work and limits: check-in caller/order not traced"
+      ],
+      "arm_specific_context": "Control researches an importer lock and a model predicate, then explicitly declines to trace ordinary return callers. Correct caveats do not satisfy the available mechanism research obligation."
+    }
+  ],
+  "nonmaterial_limits": [
+    {
+      "id": "N-version",
+      "context": "Moving documentation and unresolved code-to-release mapping remain bounded; treatment Koha /24.05/ identity is not independently proven. No claim of absent historical feature fabricated."
+    }
+  ],
+  "original_investigator_or_critic_outcomes": [
+    {
+      "id": "M-01",
+      "independent_disposition": "Final amendment is supported: child record/barcode burden retained; categorical individual-loan prohibition narrowed correctly by adjacent override illustration."
+    },
+    {
+      "id": "M-02",
+      "independent_disposition": "Predicate statement is accurate and does not prove a defect. Honest uncertainty retained; C-02 identifies the separate omitted available caller/test research."
+    },
+    {
+      "id": "critic overall no materially wrong claims",
+      "independent_disposition": "Not accepted as authority; C-01 contradicts this assessment on release attribution."
+    }
+  ],
+  "no_repairs_or_regrade": true
+}

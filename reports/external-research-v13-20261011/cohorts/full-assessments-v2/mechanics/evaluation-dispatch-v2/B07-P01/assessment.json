@@ -1,0 +1,157 @@
+{
+  "block_id": "B07-P01",
+  "scope": "FULL",
+  "original": true,
+  "arm_count": 2,
+  "records": [
+    {
+      "arm_id": "B07-P01-control",
+      "source_judgment": {
+        "judgment": "FAIL",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [
+          "CTRL-D01",
+          "CTRL-D02"
+        ],
+        "nonmaterial_records": [
+          "CTRL-L01"
+        ],
+        "finite_assessment": true,
+        "meaning": "Research planning proposal against complete frozen brief/plan and available governing evidence. No claim of universal correctness or executed product validation."
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE",
+            "judgment": "FAIL"
+          },
+          {
+            "axis": 2,
+            "coverage": "COMPLETE",
+            "judgment": "FAIL"
+          },
+          {
+            "axis": 3,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE",
+            "judgment": "FAIL"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE",
+            "judgment": "FAIL"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          }
+        ],
+        "unavailable_product_owner_facts": "UNASSESSED; conditional proposal assessment COMPLETE"
+      },
+      "defects": {
+        "record": "defects.json",
+        "material_count": 2,
+        "nonmaterial_count": 1
+      },
+      "delivery": {
+        "judgment": "DELIVERED",
+        "final_sha256": "6fefd1d4364ee5ec2e96b0704f04eef81f7b61e96a9df862a7b7679970aa1a1d"
+      },
+      "time_eligibility": {
+        "judgment": "ELIGIBLE_FULL_ON_FROZEN_ENVELOPE",
+        "t0_to_final_native_proxy_seconds": 3251.651,
+        "exact_task_quiet": "UNKNOWN"
+      },
+      "method_compliance": "OBSERVED_ARTIFACTS_CONSISTENT; UNOBSERVABLE_ORDERING_UNKNOWN",
+      "native_identity_provenance": "CAPTURE_CONSISTENT; INDEPENDENT_NATIVE_TO_TASK_LINKAGE_UNKNOWN",
+      "resource_billing_coverage": {
+        "billing": "UNKNOWN",
+        "classification": "candidate_product_observations; grader independent_evaluation separately",
+        "unknown_is_zero": false
+      },
+      "details": "control/assessment.json"
+    },
+    {
+      "arm_id": "B07-P01-treatment",
+      "source_judgment": {
+        "judgment": "PASS",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [],
+        "nonmaterial_records": [
+          "TRT-L01",
+          "TRT-L02",
+          "TRT-L03"
+        ],
+        "finite_assessment": true,
+        "meaning": "Research planning proposal against complete frozen brief/plan and available governing evidence. No claim of universal correctness or executed product validation."
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 2,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 3,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          }
+        ],
+        "unavailable_product_owner_facts": "UNASSESSED; conditional proposal assessment COMPLETE"
+      },
+      "defects": {
+        "record": "defects.json",
+        "material_count": 0,
+        "nonmaterial_count": 3
+      },
+      "delivery": {
+        "judgment": "DELIVERED",
+        "final_sha256": "5474c5c8958bb5a4ba3b86d595c3954b0d00bcb45dc55cc34eff3377bb4013e5"
+      },
+      "time_eligibility": {
+        "judgment": "ELIGIBLE_FULL_ON_FROZEN_ENVELOPE",
+        "t0_to_final_native_proxy_seconds": 2293.721,
+        "exact_task_quiet": "UNKNOWN"
+      },
+      "method_compliance": "OBSERVED_ARTIFACTS_CONSISTENT; UNOBSERVABLE_ORDERING_UNKNOWN",
+      "native_identity_provenance": "CAPTURE_CONSISTENT; INDEPENDENT_NATIVE_TO_TASK_LINKAGE_UNKNOWN",
+      "resource_billing_coverage": {
+        "billing": "UNKNOWN",
+        "classification": "candidate_product_observations; grader independent_evaluation separately",
+        "unknown_is_zero": false
+      },
+      "details": "treatment/assessment.json"
+    }
+  ],
+  "comparison_performed": false,
+  "contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+  "packet_sha256": "e36fe094fdf42db8273829411535cccd5dcc9e15856487bc4992124cbc244eae",
+  "written_at_utc": "2026-10-12T02:02:54.781425+00:00"
+}

@@ -1,0 +1,293 @@
+{
+  "schema": "er13.independent_primary_source_index.v1",
+  "arm_id": "B12-P01-control",
+  "independent_research": true,
+  "matched_research_reused": true,
+  "blinding": "Imperfect: exact arm paths and frozen method text disclose the technique. No candidate author's feedback used.",
+  "records": [
+    {
+      "id": "P-VTT",
+      "family": "WebVTT",
+      "urls": [
+        "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/"
+      ],
+      "version": "2026-05-20 Candidate Recommendation Draft",
+      "locator": "Status; §§2.1–2.2, 3.1–3.4, 4.1–4.4, 7–8",
+      "observation": "Checked status, single data kind, ordered starts, positive intervals, permitted overlap, unchanged Unicode, cue spans/settings and region rendering limits.",
+      "condition": "Format support and rendering are profile/processor dependent; malformed preservation cannot be labeled conformant.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-TTML",
+      "family": "TTML2",
+      "urls": [
+        "https://www.w3.org/TR/2018/REC-ttml2-20181108/"
+      ],
+      "version": "2018-11-08 Recommendation, first edition",
+      "locator": "§§5, 7.2, 10, 12, 14; Appendix I",
+      "observation": "Checked processor/content profiles, frame/tick/media clock parameters, local timing, styles, language and scoped foreign metadata.",
+      "condition": "Exact profile and inherited parameters govern interpretation; metadata formal validity does not promise application preservation.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-MKV",
+      "family": "Matroska",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc9559.html",
+        "https://www.matroska.org/technical/elements.html",
+        "https://www.matroska.org/technical/notes.html"
+      ],
+      "version": "RFC 9559 (2024-10), plus living project pages",
+      "locator": "TrackEntry; timestamps; §§18–21 flags, selection and attachments",
+      "observation": "Checked typed tracks, separate identities/language/flags, scale and attached resources; player selection may override default hints.",
+      "condition": "Container/codec/player semantics differ from a multi-clip lesson graph. Notes fetched directly after a browser access error.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-ZIP13",
+      "family": "ZIP/Python 3.13",
+      "urls": [
+        "https://docs.python.org/3.13/library/zipfile.html"
+      ],
+      "version": "Documentation displayed 3.13.16",
+      "locator": "ZipFile.open; Path; Decompression pitfalls; member metadata encoding",
+      "observation": "Checked entry-object addressing for duplicates, Path sanitation caveat, expansion/overwrite pitfalls and conditional compression support.",
+      "condition": "Library convenience functions do not establish this proposal's quotas, collision or no-follow policy.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-FF-RELEASE",
+      "family": "FFmpeg release applicability",
+      "urls": [
+        "https://ffmpeg.org/download.html",
+        "https://ffmpeg.org/general.html"
+      ],
+      "version": "Live pages accessed 2026-10-12",
+      "locator": "9.0.2 and 8.1.3 release entries; §2.5 subtitle matrix",
+      "observation": "Current release page names 9.0.2 (2026-09-18) and 8.1.3 (2026-09-21); support rows separate mux/demux/encode/decode.",
+      "condition": "The older n8.1.1 code remains a valid pinned example, but calling it latest in October is unsupported.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-SRT8",
+      "family": "FFmpeg SRT n8.1.1",
+      "urls": [
+        "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n8.1.1/libavformat/srtenc.c"
+      ],
+      "version": "n8.1.1",
+      "locator": "srt_write_header; srt_write_packet; file TODOs",
+      "observation": "Checked millisecond timebase, supported codecs, warning/skip on absent PTS or negative duration and encoding/newline/BOM TODOs.",
+      "condition": "Writer-specific behavior, not an SRT standard or a fidelity guarantee.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-AEG-EXPORT",
+      "family": "Aegisub SRT eligibility/export context",
+      "urls": [
+        "https://raw.githubusercontent.com/TypesettingTools/Aegisub/43af875ea01e80052cc6c44f24fc8c5258261c6d/src/subtitle_format_srt.cpp",
+        "https://raw.githubusercontent.com/TypesettingTools/Aegisub/43af875ea01e80052cc6c44f24fc8c5258261c6d/src/subtitle_format.h",
+        "https://raw.githubusercontent.com/TypesettingTools/Aegisub/43af875ea01e80052cc6c44f24fc8c5258261c6d/src/subtitle_format.cpp",
+        "https://raw.githubusercontent.com/TypesettingTools/Aegisub/43af875ea01e80052cc6c44f24fc8c5258261c6d/src/ass_exporter.cpp",
+        "https://raw.githubusercontent.com/TypesettingTools/Aegisub/43af875ea01e80052cc6c44f24fc8c5258261c6d/src/dialog_export.cpp",
+        "https://raw.githubusercontent.com/TypesettingTools/Aegisub/43af875ea01e80052cc6c44f24fc8c5258261c6d/src/subs_controller.cpp",
+        "https://raw.githubusercontent.com/TypesettingTools/Aegisub/43af875ea01e80052cc6c44f24fc8c5258261c6d/src/command/subtitle.cpp"
+      ],
+      "version": "v3.5.0 commit 43af875ea01e80052cc6c44f24fc8c5258261c6d",
+      "locator": "CanSave; WriteFile; ExportFile; AssExporter::Export; RecombineOverlaps; Save callers",
+      "observation": "Eligibility is distinct from export. ExportFile delegates to WriteFile; the SRT writer sorts, splits/merges overlaps and converts tags.",
+      "condition": "A false eligibility result does not universally forbid lossy export.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-AEG-HISTORY",
+      "family": "Aegisub release and issue history",
+      "urls": [
+        "https://github.com/TypesettingTools/Aegisub/releases/tag/v3.5.0",
+        "https://github.com/TypesettingTools/Aegisub/issues/614"
+      ],
+      "version": "v3.5.0 released 2026-10-05; issue opened 2026-06-20",
+      "locator": "Release security note; issue body and BOM exception",
+      "observation": "Checked crafted-file Automation execution fix and the reporter's uncertain invisible-prefix example, including its BOM exception.",
+      "condition": "Issue report was not reproduced and is not a universal parser rule.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-ASS-FIXTURE",
+      "family": "ASS fixture",
+      "urls": [
+        "https://raw.githubusercontent.com/TypesettingTools/Aegisub/43af875ea01e80052cc6c44f24fc8c5258261c6d/docs/specs/ass-format-tests.ass"
+      ],
+      "version": "Pinned in v3.5.0; fixture header names an older generating Aegisub version",
+      "locator": "Script Info; styles; events",
+      "observation": "Read resolution, style/font, overlap/layers, positioning, rotation, animation and drawing examples.",
+      "condition": "Project fixture establishes examples, not a universal ASS standard or attachment support test.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-ZIP-FIX",
+      "family": "zip-rs extraction history",
+      "urls": [
+        "https://github.com/advisories/GHSA-94vh-gphv-8pm8",
+        "https://github.com/zip-rs/zip2/releases/tag/v2.3.0",
+        "https://github.com/zip-rs/zip2/commit/a2e062f"
+      ],
+      "version": "Affected >=1.3.0,<2.3.0; patched 2.3.0; linked remediation a2e062f",
+      "locator": "Advisory range; release fixes; safe_prepare_path/extract diff",
+      "observation": "Checked symlink redirection, canonical destination/target checks and the non-atomic extraction note.",
+      "condition": "Patched library behavior does not supply application resource limits or a complete hostile-archive policy.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-OTIO",
+      "family": "OpenTimelineIO model and bundle adapters",
+      "urls": [
+        "https://raw.githubusercontent.com/AcademySoftwareFoundation/OpenTimelineIO/v0.18.1/docs/index.rst",
+        "https://raw.githubusercontent.com/AcademySoftwareFoundation/OpenTimelineIO/v0.18.1/docs/tutorials/otio-timeline-structure.md",
+        "https://raw.githubusercontent.com/AcademySoftwareFoundation/OpenTimelineIO/v0.18.1/docs/tutorials/otio-filebundles.md"
+      ],
+      "version": "v0.18.1",
+      "locator": "Overview; timeline transitions/ranges; File Bundles",
+      "observation": "Core model references media; same-release OTIOZ/OTIOD adapters package timeline plus media. OTIOZ uses ZIP and unique media basenames.",
+      "condition": "Bundle adapters add asset carriage but do not supply subtitle language/style semantics; external core references do not imply absence of bundling.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-H5P",
+      "family": "H5P package and video tracks",
+      "urls": [
+        "https://h5p.org/documentation/developers/h5p-specification",
+        "https://help.h5p.com/hc/en-us/articles/25322748576669-Subtitles-Captions-and-Descriptions"
+      ],
+      "version": "Unversioned official guide; H5P.com help updated 2026-03-10",
+      "locator": "Package components (unavailable); direct-video upload instructions",
+      "observation": "Help confirms VTT for uploaded/direct-media-URL video and exception for external platforms. Package guide timed out in browser and returned HTTP 403 directly.",
+      "condition": "Package-structure details remain unverified by this evaluator; no support promise is justified by an access failure.",
+      "coverage": "PARTIAL",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Web documentation; direct retry of package guide returned HTTP 403."
+    },
+    {
+      "id": "P-CC",
+      "family": "Common Cartridge",
+      "urls": [
+        "https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html"
+      ],
+      "version": "v1.3 final release, 2014-05-30",
+      "locator": "Introduction, resource/content packaging and metadata",
+      "observation": "Checked course/web-content packaging and profile-specific resource semantics.",
+      "condition": "Optional LMS exchange, not evidence for a universal clip-package model.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-BAG",
+      "family": "BagIt",
+      "urls": [
+        "https://datatracker.ietf.org/doc/html/rfc8493"
+      ],
+      "version": "RFC 8493 / BagIt 1.0 (2018-10)",
+      "locator": "§§2–3 completeness/checksums; §5 path/fetch/security",
+      "observation": "Checked payload/manifests, complete versus valid, required hash support and fetch/path risks.",
+      "condition": "Integrity packaging has no timed-text model; remote fetch remains forbidden by the brief.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-LANG",
+      "family": "BCP 47",
+      "urls": [
+        "https://www.rfc-editor.org/rfc/rfc5646.html"
+      ],
+      "version": "RFC 5646 (2009-09)",
+      "locator": "§§2.1, 3 and 4.5",
+      "observation": "Checked case-insensitivity, registry validity and preferred/canonical forms.",
+      "condition": "Raw source tag/display label must remain separate from normalized comparison value.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    },
+    {
+      "id": "P-HTML",
+      "family": "HTML media-track binding",
+      "urls": [
+        "https://html.spec.whatwg.org/multipage/media.html#the-track-element"
+      ],
+      "version": "Living Standard accessed 2026-10-12",
+      "locator": "Track kind/srclang/label/default constraints",
+      "observation": "Checked language versus labels and separate default-track limits.",
+      "condition": "At most one default subtitles/captions track per media element; source container flags and user preferences remain separate.",
+      "coverage": "COMPLETE",
+      "access_utc_date": "2026-10-12",
+      "exact_access_utc": null,
+      "access_precision": "UTC date; per-page timestamp unavailable. Research precedes this original freeze.",
+      "operation": "Primary page/code read through web tools; no downloaded source executed."
+    }
+  ],
+  "source_access_limits": [
+    {
+      "source": "EAF 3.0 PDF",
+      "document_read_coverage": "UNASSESSED",
+      "note": "Not needed for this arm."
+    },
+    {
+      "source": "H5P package guide",
+      "document_read_coverage": "UNASSESSED",
+      "note": "Attempted access failed; family remains PARTIAL."
+    }
+  ],
+  "license_policy": "No source corpus or code redistributed. Governing license notices remain at exact linked sources: W3C document license; FFmpeg LGPL-2.1-or-later headers; Aegisub source BSD-style notices; 1EdTech specification license. Only evaluator paraphrases and locators retained."
+}

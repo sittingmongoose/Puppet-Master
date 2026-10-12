@@ -1,0 +1,162 @@
+{
+  "schema": "er13.separate-contract-completion-output-manifest.v1",
+  "block_id": "B10-P02",
+  "frozen_at_utc": "2026-10-12T02:34:09.694755+00:00",
+  "original_assessment": false,
+  "single_completed_review": true,
+  "arm_judgments_individually_frozen": true,
+  "comparison_or_selection_performed": false,
+  "contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+  "original_packet_sha256": "fb73f96c373db447a4664a6cb803e407578324d3ae68653d51a3b2d971886f07",
+  "files": [
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/assessment.json",
+      "bytes": 12536,
+      "sha256": "6ca0835ee4c0cf27289f1e95c278da3d3e2784e95b26142a74bf279718d54810"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/assessment.md",
+      "bytes": 2620,
+      "sha256": "e2f25f40b742f0534e3a2b66be89278ea891a732a6e92bc22746b09bb7f4b3de"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/control/assessment.json",
+      "bytes": 6138,
+      "sha256": "e56f8eea1ab06e1c1a4462a468ecaad9c98dee86c80a555828832f631de2876d"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/control/assessment.md",
+      "bytes": 4357,
+      "sha256": "60090058ce203cdb41be36adfd6633cfe84965716edc0afaea02709cf497b339"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/control/coverage.json",
+      "bytes": 11474,
+      "sha256": "22e9336b1c53f3785bfdac7e30896d902dac17d28313e19d93b063394f4408c3"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/control/defects.json",
+      "bytes": 3852,
+      "sha256": "5b7f7c7487149378d3d12a09f46767935b67ea5429ab7fb5cee43b794f393f80"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/control/manifest.json",
+      "bytes": 1365,
+      "sha256": "bb8e50f9ae4aa3a554149712bb994af4ad67586453c78d1c951f3b5ceb740318"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/control/primary-source-index.json",
+      "bytes": 848,
+      "sha256": "f5262351eba09a57b2e81c8ff86b9e4331ec609bd5e8b4ded59f393d47895eef"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/coverage.json",
+      "bytes": 26058,
+      "sha256": "9ed5b12becf8441a22864727580f5c97c79ca2b4ed4c44a9617c2355d2018e4f"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/defects.json",
+      "bytes": 7760,
+      "sha256": "319aad08caa22177d46c216eca8f9ed106f369a24a1bb6c8c7c6c37a008a1d97"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/evidence/material-lifecycle.json",
+      "bytes": 1706,
+      "sha256": "4f28a7faf1011c4d398dc8ba432a5f67a30cffef0d71871d444f7d9cbf5c0cd3"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/evidence/mkdocs-material-LICENSE.txt",
+      "bytes": 1093,
+      "sha256": "e1150f26b4c0f872627b39fda49ae3bd850304f2f7f3171ae0531c1f8f4dd078"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/evidence/paste-input-boundary.json",
+      "bytes": 2969,
+      "sha256": "11bf333c22e14542e92c3c7b9a4eb888070fa22d45052f195828e4c2b2da463e"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/original-versus-separate-findings-map.json",
+      "bytes": 3201,
+      "sha256": "e6d0237abe6be4fe32fd28f9ca8523f86d5353bbb275e20f1a331e06068f8888"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/primary-source-index.json",
+      "bytes": 50846,
+      "sha256": "c8e69595d93411060f2557a08809d35cfa6aadf12da870836bd700ab475edd8d"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/treatment/assessment.json",
+      "bytes": 6261,
+      "sha256": "92ab9fd5fc4a3b637217857575066f1597c4b161d61745d32c23dc3065643346"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/treatment/assessment.md",
+      "bytes": 4880,
+      "sha256": "fb486c65407489a1d30ea474e8817e377df8f9035b54b80c053a530845b2039f"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/treatment/coverage.json",
+      "bytes": 12198,
+      "sha256": "f9f54914d6596c849285e34d44a92be70cec66d15a96d79e6d01e954222288e7"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/treatment/defects.json",
+      "bytes": 5906,
+      "sha256": "220145946570dc8cac7e194212a6971c0e86af182914af3f4c77cb0b8899989a"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/treatment/manifest.json",
+      "bytes": 1368,
+      "sha256": "c1cfb030a8f720d5ce30efd249d509c06358df87056b34c996015cee98d38a2e"
+    },
+    {
+      "path": "mechanics/contract-completion-v1/B10-P02/treatment/primary-source-index.json",
+      "bytes": 1006,
+      "sha256": "6598fe3e0cfc5cdbb174f812590fa98db351383886012939bd9986e72929acbc"
+    },
+    {
+      "path": "state/contract-completion-v1/B10-P02-cost.json",
+      "bytes": 1786,
+      "sha256": "87b194f6c977ad90f519076f1aeea35a8ba0408b9a9434889c4c46d338b2395d",
+      "audience": "private review support; no routing identity values exported"
+    },
+    {
+      "path": "state/contract-completion-v1/B10-P02-input-custody.json",
+      "bytes": 34013,
+      "sha256": "8cf73b7d5aa3bab3951822b58c2fa8f0a2570ac4964d5ec8cbd64ab8a3121d37",
+      "audience": "private review support; no routing identity values exported"
+    },
+    {
+      "path": "state/contract-completion-v1/B10-P02-output-verification.json",
+      "bytes": 1016,
+      "sha256": "7c35db09c1f91675b4d8fed635486a18228fbd5e2bf7bc8ff939f36cbc853717",
+      "audience": "private review support; no routing identity values exported"
+    },
+    {
+      "path": "state/contract-completion-v1/B10-P02-primary-fetch-receipts.json",
+      "bytes": 36685,
+      "sha256": "3591c315e843114c7e198391b349f956bb0afb2e16915f4f78fc59c7fc679302",
+      "audience": "private review support; no routing identity values exported"
+    }
+  ],
+  "source_assessment": {
+    "B10-P02-control": {
+      "judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "material_ids": [
+        "CC-C01"
+      ]
+    },
+    "B10-P02-treatment": {
+      "judgment": "FAIL",
+      "coverage": "COMPLETE",
+      "material_ids": [
+        "CC-T01",
+        "CC-T02"
+      ]
+    }
+  },
+  "original_judgments_and_counts_changed": false,
+  "root_owns_Git_and_scientific_selection": true,
+  "immutable_policy": "No repeat review or editing these judgments to obtain PASS. Any later root-authorized dispute is separate; originals and this frozen result stay unchanged."
+}

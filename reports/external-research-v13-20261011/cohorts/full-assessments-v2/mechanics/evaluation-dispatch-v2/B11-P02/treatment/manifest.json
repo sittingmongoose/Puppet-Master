@@ -1,0 +1,41 @@
+{
+  "schema": "er13.original-output-manifest.v1",
+  "arm_id": "B11-P02-treatment",
+  "frozen_at_utc": "2026-10-12T02:27:37.407297+00:00",
+  "immutable_original": true,
+  "comparison_performed": false,
+  "hash_algorithm": "SHA-256",
+  "entries": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/treatment/assessment.md",
+      "bytes": 5646,
+      "sha256": "7a58cf23dd81db949f1ba13c468df0a3fcc60afcd27ac0e53a0b6464edbd0541"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/treatment/assessment.json",
+      "bytes": 28510,
+      "sha256": "14a97c0559328875bd3323cf8522bf65fa1bf4d43bea59c991ecbd99da2e27a7"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/treatment/coverage.json",
+      "bytes": 12219,
+      "sha256": "9de02eb9d708a7a9e7ebb3d194a2ff16dcbd5d6da111d4423d55a1855f5cbf13"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/treatment/defects.json",
+      "bytes": 4487,
+      "sha256": "6cd7ba114f5bc1443784615dc7eb09a651d5481c60e9f870b0054c0222b4a043"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/treatment/primary-source-index.json",
+      "bytes": 23416,
+      "sha256": "a5c92e2f2271c908091979414e1c9db186ecbf5ca684733cf4848aa8663ae1c4"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P02/treatment/evidence/automerge-0.12.0-state-context.txt",
+      "bytes": 10848,
+      "sha256": "b7469db129e964ab178607deb6438672135c3598d333ff1538dde66fd66e4d81"
+    }
+  ],
+  "self_hash": "Excluded to avoid recursive self-hash; exact manifest hash returned and included by root manifest."
+}

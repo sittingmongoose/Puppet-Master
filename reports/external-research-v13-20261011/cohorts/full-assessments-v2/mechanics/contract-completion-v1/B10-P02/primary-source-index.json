@@ -1,0 +1,778 @@
+{
+  "schema": "er13.separate-contract-completion-primary-index.v1",
+  "block_id": "B10-P02",
+  "original_assessment": false,
+  "research_shared_between_exact_assigned_pair": true,
+  "prior_findings_known": true,
+  "imperfect_blinding": true,
+  "sources": [
+    {
+      "id": "CC01",
+      "title": "Quarto books",
+      "url": "https://quarto.org/docs/books/",
+      "retrieved_url": "https://quarto.org/docs/books/",
+      "retrieved_sha256": "e44b6d825bc7b278bc52f81221c86be60ad851b6b6ed788185cd544b3b8c0efb",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:18.358947+00:00",
+        "end": "2026-10-12T02:20:18.561918+00:00"
+      },
+      "locator": "Overview; workflow/config; complete render before publishing",
+      "observation": "Quarto books provide multiple chapter-based output formats and HTML website search. A complete render is distinct from individual preview updates. No built-in revision-aware learner progress or offline readiness is established.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC02",
+      "title": "Quarto website search",
+      "url": "https://quarto.org/docs/websites/website-search.html",
+      "retrieved_url": "https://quarto.org/docs/websites/website-search.html",
+      "retrieved_sha256": "38ef225810a113d170bdad66950fe7514e3dd2e61846fe3ba01cf3bcafd97c49",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:18.359477+00:00",
+        "end": "2026-10-12T02:20:18.741268+00:00"
+      },
+      "locator": "Overview; search configuration; per-page exclusion",
+      "observation": "Website/book search normally builds a local index; hosted Algolia is optional. Per-page exclusion exists. Version status/ranking and complete offline assets remain application/release requirements.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC03",
+      "title": "MkDocs local files",
+      "url": "https://www.mkdocs.org/user-guide/deploying-your-docs/",
+      "retrieved_url": "https://www.mkdocs.org/user-guide/deploying-your-docs/",
+      "retrieved_sha256": "a6370fef9595100074c65f20010b5710bb643dbd1237db4b402392d03f946803",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:18.359832+00:00",
+        "end": "2026-10-12T02:20:18.471483+00:00"
+      },
+      "locator": "Local Files",
+      "observation": "Local-file distribution requires empty site_url, directory URLs disabled, relative links, compatible or disabled search and local theme assets. These restrictions do not prohibit a hosted HTTPS app.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC04",
+      "title": "Pandoc manual",
+      "url": "https://pandoc.org/MANUAL.html",
+      "retrieved_url": "https://pandoc.org/MANUAL.html",
+      "retrieved_sha256": "f31e6f195937e3fcd0a43c32f8ecf62e487429b7db7dad9a2f9147d0982dcc26",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:18.360201+00:00",
+        "end": "2026-10-12T02:20:19.092933+00:00"
+      },
+      "locator": "Conversion model; DOCX styles; track changes; accessible PDF engines",
+      "observation": "DOCX conversion can lose layout and complex structures; custom-style retention is option dependent. Accept/reject modes omit comments; all preserves change markers. PDF engines have distinct tagging prerequisites; shared source does not certify conformance.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC05",
+      "title": "Quarto PDF",
+      "url": "https://quarto.org/docs/output-formats/pdf-basics.html",
+      "retrieved_url": "https://quarto.org/docs/output-formats/pdf-basics.html",
+      "retrieved_sha256": "4aeed5f6097500892d50d8ef7d78b0e42e18a58978e1f705351c47edf2dec883",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:18.471612+00:00",
+        "end": "2026-10-12T02:20:18.706252+00:00"
+      },
+      "locator": "PDF Accessibility & Standards; Accessibility Requirements; veraPDF",
+      "observation": "Quarto supports PDF-standard settings, structure tagging and fig-alt propagation. Its guide disclaims automatic accessibility; human inspection and validator checks remain necessary for output claims. These are proposed here.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC06",
+      "title": "WCAG 2.2",
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "retrieved_url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "retrieved_sha256": "6e3c5fe397257cae509a2fb4752b73062cf8cbeb92c2cec618989b17e4cf7057",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:18.562243+00:00",
+        "end": "2026-10-12T02:20:18.688597+00:00"
+      },
+      "locator": "Fixed WCAG 2.2 Recommendation 2024-12-12: SC 1.1.1, 1.3.2, 2.1.1, 2.4.3, 4.1.2, 4.1.3",
+      "observation": "Normative criteria support equivalent-purpose alternatives with defined exceptions, meaningful sequence, keyboard operation, focus order, accessible component semantics and status messages. No nonexistent product is assessed for full WCAG conformance.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Fixed Recommendation",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC07",
+      "title": "WAI images",
+      "url": "https://www.w3.org/WAI/tutorials/images/",
+      "retrieved_url": "https://www.w3.org/WAI/tutorials/images/",
+      "retrieved_sha256": "4b4c51f3bada692a82394f20c0c26a896d17dd7a88128af0a70b73927780b35f",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:18.700195+00:00",
+        "end": "2026-10-12T02:20:18.767272+00:00"
+      },
+      "locator": "Images of text; complex images",
+      "observation": "Instructional diagrams conveying detailed information need complete text equivalents; decorative and functional images have different alternative requirements. Neither final replaces useful diagrams with text-only instructions.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC08",
+      "title": "WAI keyboard interface",
+      "url": "https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/",
+      "retrieved_url": "https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/",
+      "retrieved_sha256": "ab72cd7fe1d45d0b489f402b5dc7c96da37b24542e06cb666cdc2ebfedc56cc7",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:18.706712+00:00",
+        "end": "2026-10-12T02:20:18.758215+00:00"
+      },
+      "locator": "Tab sequence; focus predictability; tabindex",
+      "observation": "Informative APG guidance supports predictable visible focus and aligning DOM, tab and reading order. Positive tabindex should not be used to invent a conflicting order.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC09",
+      "title": "MDN service workers",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers",
+      "retrieved_url": "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers",
+      "retrieved_sha256": "6d2b9ad08f512faa14a0427e3a3f7fe711b908e7791550d7ec525b6d5612cdfd",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:18.741598+00:00",
+        "end": "2026-10-12T02:20:18.936967+00:00"
+      },
+      "locator": "Secure context; install cache; replacement worker",
+      "observation": "HTTPS or a development localhost exception, explicit selected-resource caching and controlled-client waiting govern service workers. skipWaiting changes activation behavior; a local index alone does not prove offline operation.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC10",
+      "title": "IndexedDB terminology",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Basic_Terminology",
+      "retrieved_url": "https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Basic_Terminology",
+      "retrieved_sha256": "f9963c5ee60cdbe2ec6b1e19f7f3b71217de427f4b6d15625989fff105261f2a",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:18.758511+00:00",
+        "end": "2026-10-12T02:20:19.066411+00:00"
+      },
+      "locator": "Key characteristics; limitations",
+      "observation": "IndexedDB provides asynchronous origin-local structured transactional data. It supplies neither built-in synchronization nor SQL-style full-text search. User clearing, browser settings and private sessions can remove records.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC11",
+      "title": "Storage quotas",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+      "retrieved_url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+      "retrieved_sha256": "7de8ae7c614d884cd00116f4564233a1e6cc6b2c61bf0dcf912ccf9c6574f678",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:18.767391+00:00",
+        "end": "2026-10-12T02:20:18.953705+00:00"
+      },
+      "locator": "Best-effort/persistent storage; private browsing; eviction",
+      "observation": "Best-effort storage is default; persistence approval and quota behavior vary by browser. Persistence is not protection from user deletion or a backup. Both finals preserve that boundary.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC12",
+      "title": "Quarto dashboard report",
+      "url": "https://github.com/quarto-dev/quarto-cli/issues/14756",
+      "retrieved_url": "https://github.com/quarto-dev/quarto-cli/issues/14756",
+      "retrieved_sha256": "e9b7c5c1580a05cd712b70441a9d46e50f9d2a74189f74093ea300d8fc57723c",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:18.937401+00:00",
+        "end": "2026-10-12T02:20:19.503358+00:00"
+      },
+      "locator": "Reporter reproduction; Aug 9 collaborator response; enhancement classification",
+      "observation": "Dashboard search omission is a scoped report. A collaborator calls a dashboard distinct from a website page and labels the issue an enhancement. It does not demonstrate a defect in ordinary lesson HTML.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC13",
+      "title": "Pandoc DOCX implementation",
+      "url": "https://github.com/jgm/pandoc/blob/3.12.1/src/Text/Pandoc/Readers/Docx.hs",
+      "retrieved_url": "https://raw.githubusercontent.com/jgm/pandoc/3.12.1/src/Text/Pandoc/Readers/Docx.hs",
+      "retrieved_sha256": "c85e731cb7fba0c4edf9aa27ef44877b66e2a90594c4cc744d0d5d6ee9a472c9",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:18.954079+00:00",
+        "end": "2026-10-12T02:20:19.036380+00:00"
+      },
+      "locator": "Pandoc 3.12.1 runStyleToTransform; readerTrackChanges branches",
+      "observation": "Ext_styles controls preservation of custom attributes, with other semantic style transforms still present. Tracked insertions/deletions/comments are option dependent. This is file-reader evidence, not clipboard handling.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Pinned release-tag/commit source; exact retrieved digest retained",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC14",
+      "title": "Pandoc DOCX tests",
+      "url": "https://github.com/jgm/pandoc/blob/3.12.1/test/Tests/Readers/Docx.hs",
+      "retrieved_url": "https://raw.githubusercontent.com/jgm/pandoc/3.12.1/test/Tests/Readers/Docx.hs",
+      "retrieved_sha256": "affaa9e4f4352985e527de565b2915639e42fd91fcbecbf5bb4e41dcd05805a7",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.066478+00:00",
+        "end": "2026-10-12T02:20:19.205862+00:00"
+      },
+      "locator": "Pandoc 3.12.1 custom styles and track changes test groups",
+      "observation": "Separate default/+styles fixtures and accept/reject/all tracked-change cases are present. These focused upstream tests were inspected, never executed, and do not prove arbitrary Word or clipboard fidelity.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Pinned release-tag/commit source; exact retrieved digest retained",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC15",
+      "title": "Pandoc DOCX caller",
+      "url": "https://github.com/jgm/pandoc/blob/3.12.1/src/Text/Pandoc/Readers.hs",
+      "retrieved_url": "https://raw.githubusercontent.com/jgm/pandoc/3.12.1/src/Text/Pandoc/Readers.hs",
+      "retrieved_sha256": "6e4d222d9075da074b257e88c41d9c48d19dec318331d7c6775c9931d95fbe9c",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.082252+00:00",
+        "end": "2026-10-12T02:20:19.165739+00:00"
+      },
+      "locator": "Pandoc 3.12.1 readers registry; getReader",
+      "observation": "DOCX uses ByteStringReader readDocx; HTML uses TextReader readHtml. Format lookup and extension application are separate. The binary-file reader path cannot establish a rich-text clipboard ingestion path.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Pinned release-tag/commit source; exact retrieved digest retained",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC16",
+      "title": "Pandoc 3.12.1 release",
+      "url": "https://github.com/jgm/pandoc/releases/tag/3.12.1",
+      "retrieved_url": "https://github.com/jgm/pandoc/releases/tag/3.12.1",
+      "retrieved_sha256": "18ce13d28f8599776ebc1187a451160823fba81c2547458b84a2c8288c52d4c5",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.094855+00:00",
+        "end": "2026-10-12T02:20:19.460853+00:00"
+      },
+      "locator": "Pandoc 3.12.1 release: notable changes and #11942",
+      "observation": "Release notes record a data-URI escaping regression fix affecting embed-resources and DOCX performance improvements. This supports upgrade fixture checks; it is not a handbook failure or executed test.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC17",
+      "title": "MkDocs index",
+      "url": "https://github.com/mkdocs/mkdocs/blob/1.6.1/mkdocs/contrib/search/search_index.py",
+      "retrieved_url": "https://raw.githubusercontent.com/mkdocs/mkdocs/1.6.1/mkdocs/contrib/search/search_index.py",
+      "retrieved_sha256": "4a8ec7e19d707e90dc9b07c20144458e7b3cfdb4a0f7e2620d4c03e6ad2a763c",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.165803+00:00",
+        "end": "2026-10-12T02:20:19.250412+00:00"
+      },
+      "locator": "MkDocs 1.6.1 add_entry_from_context; create_entry_for_section; generate_search_index",
+      "observation": "Page entries are added; full text appears only in full mode; section entries require full or sections mode. Serialized docs/config and optional prebuild do not establish local-file search.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Pinned release-tag/commit source; exact retrieved digest retained",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC18",
+      "title": "MkDocs index caller",
+      "url": "https://github.com/mkdocs/mkdocs/blob/1.6.1/mkdocs/contrib/search/__init__.py",
+      "retrieved_url": "https://raw.githubusercontent.com/mkdocs/mkdocs/1.6.1/mkdocs/contrib/search/__init__.py",
+      "retrieved_sha256": "bacd6dea5f4de9646fddbd9f073b82faa8296ef2e7299469ac537546f4546062",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.205978+00:00",
+        "end": "2026-10-12T02:20:19.288369+00:00"
+      },
+      "locator": "MkDocs 1.6.1 plugin configuration; on_page_context; on_post_build",
+      "observation": "Default indexing is full; page callbacks populate the index and post-build emits search_index.json. Configuration-sensitive index construction is distinct from the browser search execution path.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Pinned release-tag/commit source; exact retrieved digest retained",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC19",
+      "title": "Material offline",
+      "url": "https://squidfunk.github.io/mkdocs-material/plugins/offline/",
+      "retrieved_url": "https://squidfunk.github.io/mkdocs-material/plugins/offline/",
+      "retrieved_sha256": "9dc0cb584538d8f077be7bdcb5d4384708e612113ba9dffdb0d95286c4343b62",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.250473+00:00",
+        "end": "2026-10-12T02:20:19.370297+00:00"
+      },
+      "locator": "Material offline: how it works; privacy plugin; limitations",
+      "observation": "The plugin provides a JS search index and iframe-worker shim and disables directory URLs. Authors must separately disable Fetch-dependent features including versioning. Privacy asset packaging addresses external dependencies.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC20",
+      "title": "Material offline implementation",
+      "url": "https://github.com/squidfunk/mkdocs-material/blob/9.7.7/src/plugins/offline/plugin.py",
+      "retrieved_url": "https://raw.githubusercontent.com/squidfunk/mkdocs-material/9.7.7/src/plugins/offline/plugin.py",
+      "retrieved_sha256": "16dab5040fb2ac843ce86627099b2cf099318dd285faf77c5ce53c45a0f26d61",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.288423+00:00",
+        "end": "2026-10-12T02:20:19.370088+00:00"
+      },
+      "locator": "Material 9.7.7 OfflinePlugin.on_config and on_post_build",
+      "observation": "The enabled plugin sets directory URLs false, adds the shim and emits JS index data when JSON exists. It does not automatically disable versioning. The treatment summary wording is imprecise.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Pinned release-tag/commit source; exact retrieved digest retained",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC21",
+      "title": "Material search",
+      "url": "https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/",
+      "retrieved_url": "https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/",
+      "retrieved_sha256": "54b29dea67d4b553a725d494a25934f2cd4a6a45efee29cdea654d561de6f268",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.370132+00:00",
+        "end": "2026-10-12T02:20:19.460934+00:00"
+      },
+      "locator": "Material search configuration and exclusion",
+      "observation": "Client-side search and per-page exclusion are documented. Explicit plugin configuration must include search. These features do not provide the proposed retired-label/ranking policy automatically.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC22",
+      "title": "Docusaurus versioning",
+      "url": "https://docusaurus.io/docs/versioning",
+      "retrieved_url": "https://docusaurus.io/docs/versioning",
+      "retrieved_sha256": "1864f7490634e135d8f928ef393944e153dad0884ad964dd79fd107bc01b0d8a",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.370582+00:00",
+        "end": "2026-10-12T02:20:19.528670+00:00"
+      },
+      "locator": "Docusaurus 3.10.2 versioning: current/latest; deletion; archive alternatives",
+      "observation": "Snapshots, routes, labels and banners are available; versioning increases build/maintenance burden and versions can be deleted. Owner retention policy and offline search remain distinct requirements.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC23",
+      "title": "H5P import/export",
+      "url": "https://h5p.org/documentation/for-authors/import-and-export",
+      "retrieved_url": "https://h5p.org/documentation/for-authors/import-and-export",
+      "retrieved_sha256": "f1d7c9bf56a534647f18977b57e3c2989f89b6763e71c000ed38e8910c7e3a57",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.461230+00:00",
+        "end": "2026-10-12T02:20:19.624591+00:00"
+      },
+      "locator": "H5P download/upload and reuse conditions",
+      "observation": "The described site workflow gates download in Display options and reimports packages into an H5P-capable site. That guide describes one route, not all compatible offline players or converters; a package alone is not a complete handbook.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC24",
+      "title": "H5P accessibility",
+      "url": "https://h5p.org/documentation/installation/content-type-accessibility",
+      "retrieved_url": "https://h5p.org/documentation/installation/content-type-accessibility",
+      "retrieved_sha256": "6ecc3204605b151b90baeff77c80efeab67c04d583a82a54aa05774e53de7d6c",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.461602+00:00",
+        "end": "2026-10-12T02:20:19.600534+00:00"
+      },
+      "locator": "Content Type Accessibility overview pointer",
+      "observation": "The guide points to individual content-type accessibility information and supplies no blanket conformance. Neither final selects or certifies an installed content type; exact type/version/host/AT behavior remains a proposed check.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC25",
+      "title": "H5P Multi Choice #186",
+      "url": "https://github.com/h5p/h5p-multi-choice/issues/186",
+      "retrieved_url": "https://github.com/h5p/h5p-multi-choice/issues/186",
+      "retrieved_sha256": "b4b53e572cb37d05d29d7d3bc0d96858b49c148f8920751333eae1369c54cb9e",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.504010+00:00",
+        "end": "2026-10-12T02:20:20.140617+00:00"
+      },
+      "locator": "H5P Multi Choice #186: Sep 22 non-reproduction; Oct 9 follow-up; project status",
+      "observation": "Contributor non-reproduction with NVDA is one environment and does not resolve the report. Installed version/browser details remain unidentified; Waiting for Contributor and no linked fix establish neither a universal defect nor universal absence.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC26",
+      "title": "H5P releases",
+      "url": "https://github.com/h5p/h5p-multi-choice/releases",
+      "retrieved_url": "https://github.com/h5p/h5p-multi-choice/releases",
+      "retrieved_sha256": "f2069e755a19ae825f4c0934b869a9e8cec88d23c3b32dc291ef5dfc1ed7332a",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.528917+00:00",
+        "end": "2026-10-12T02:20:19.827319+00:00"
+      },
+      "locator": "Repository Releases empty state",
+      "observation": "No formal GitHub releases are displayed. This does not mean no tags/content versions exist and cannot identify a learner host installation.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC27",
+      "title": "WordPress editor",
+      "url": "https://wordpress.org/documentation/article/wordpress-block-editor/",
+      "retrieved_url": "https://wordpress.org/documentation/article/wordpress-block-editor/",
+      "retrieved_sha256": "da0e813482cadf84423d569abc7b86080a12b131a8f7a5a43db0f4fdb8c2b143",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.600602+00:00",
+        "end": "2026-10-12T02:20:19.923368+00:00"
+      },
+      "locator": "WordPress blocks; saved draft; preview; publish",
+      "observation": "Visual blocks, separate draft/preview/publish operations and theme-dependent rendering are documented. They support an authoring alternative, without establishing the handbook output or review enforcement.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC28",
+      "title": "WordPress WXR",
+      "url": "https://wordpress.org/documentation/article/tools-export-screen/",
+      "retrieved_url": "https://wordpress.org/documentation/article/tools-export-screen/",
+      "retrieved_sha256": "525361b90bba9f3d1da5e816ca601d5fc83fc4d1a8d55e59de1f1570e4f2dd4e",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.624893+00:00",
+        "end": "2026-10-12T02:20:19.878705+00:00"
+      },
+      "locator": "WXR export content and import destination",
+      "observation": "WXR contains content and metadata for WordPress import. It is not by itself a standalone offline reader, printed handout or complete theme/media/runtime backup.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC29",
+      "title": "GitHub review",
+      "url": "https://docs.github.com/en/pull-requests/get-started/reviewing-pull-requests-quickstart",
+      "retrieved_url": "https://docs.github.com/en/pull-requests/get-started/reviewing-pull-requests-quickstart",
+      "retrieved_sha256": "2bd050bbe732fea7f188b46b5699449445bb37dc70b236c7ecf422ca658951e3",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.827686+00:00",
+        "end": "2026-10-12T02:20:19.992892+00:00"
+      },
+      "locator": "Review comments; approve; request changes",
+      "observation": "GitHub supports review decisions. Required approvals and release gating depend on repository policy rather than the presence of a review button.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC30",
+      "title": "SQLite transactions",
+      "url": "https://www.sqlite.org/transactional.html",
+      "retrieved_url": "https://www.sqlite.org/transactional.html",
+      "retrieved_sha256": "3d6a66c925d32e66fb28872c0e0c32b1936d46f996995c1a30fe591173bc6266",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.879061+00:00",
+        "end": "2026-10-12T02:20:19.971190+00:00"
+      },
+      "locator": "SQLite ACID and regression-harness statement",
+      "observation": "SQLite documents all-or-nothing serializable transactions and crash/power-failure testing. This is not a backup, encryption or synchronization guarantee, nor an executed test by a candidate.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC31",
+      "title": "Material #8128 and fix",
+      "url": "https://github.com/squidfunk/mkdocs-material/issues/8128",
+      "retrieved_url": "https://github.com/squidfunk/mkdocs-material/issues/8128",
+      "retrieved_sha256": "084deec08507b1d1d5e5d41545581678d004c84c65385f2d43a35df115d1f219",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.923791+00:00",
+        "end": "2026-10-12T02:20:20.690584+00:00"
+      },
+      "locator": "Material #8128 maintainer fix and 9.6.11 release statement",
+      "observation": "The search-disabled configuration/template mismatch was fixed in 64635ba and released in 9.6.11. This is concrete issue-to-fix history, not a current defect in the proposed handbook.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC32",
+      "title": "Material fix patch",
+      "url": "https://github.com/squidfunk/mkdocs-material/commit/64635ba",
+      "retrieved_url": "https://github.com/squidfunk/mkdocs-material/commit/64635ba",
+      "retrieved_sha256": "cbc1fc2233e6e788bfbff86f4c8c583179d89cd09cbd9e074b65161d7541b738",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.971289+00:00",
+        "end": "2026-10-12T02:20:20.665286+00:00"
+      },
+      "locator": "64635ba two template diffs",
+      "observation": "Both header template versions check search.enabled before rendering search controls. No tests appear in that patch; this does not imply absent tests throughout the project.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Pinned release-tag/commit source; exact retrieved digest retained",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC33",
+      "title": "Pandoc history",
+      "url": "https://pandoc.org/releases.html",
+      "retrieved_url": "https://pandoc.org/releases.html",
+      "retrieved_sha256": "5bd71513b18a1ab4a9838fb443eaeb41b33fa34481a4d1186003bbe346e4da60",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:19.993180+00:00",
+        "end": "2026-10-12T02:20:20.630399+00:00"
+      },
+      "locator": "Pandoc 3.9.0.1 DOCX fixes; WASM restrictions; later releases",
+      "observation": "Textboxes, media paths and retained content changed across releases. Browser WASM has external-command/resource/PDF limits. Version-sensitive fixture research is useful without a converter execution requirement.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC34",
+      "title": "Material historical discussion",
+      "url": "https://github.com/squidfunk/mkdocs-material/discussions/8461",
+      "retrieved_url": "https://github.com/squidfunk/mkdocs-material/discussions/8461",
+      "retrieved_sha256": "749ccd18273e7a9cdd2d7a72f835c45568e9ec70892b19df9991c8853793871d",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:20.141223+00:00",
+        "end": "2026-10-12T02:20:20.719251+00:00"
+      },
+      "locator": "Dated Material discussion 2025-09-25",
+      "observation": "The feature-freeze discussion is historical context. It does not override the explicit later release support warning. Upstream-maintenance statements here are the Material maintainer perspective, not independently established MkDocs governance.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC35",
+      "title": "Material 9.7.7 lifecycle",
+      "url": "https://github.com/squidfunk/mkdocs-material/releases/tag/9.7.7",
+      "retrieved_url": "https://github.com/squidfunk/mkdocs-material/releases/tag/9.7.7",
+      "retrieved_sha256": "96699570ea23be72833dadc7017d9798013767e7a5813442305c9f5b1d297057",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:20.638283+00:00",
+        "end": "2026-10-12T02:20:21.060787+00:00"
+      },
+      "locator": "Material 9.7.7 warning before Changes",
+      "observation": "The cited release explicitly sets 2026-11-05 EOL with restricted pre-EOL maintenance and only exceptional maintenance thereafter. This materially affects a new maintainable workflow comparison.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC36",
+      "title": "Material successor announcement",
+      "url": "https://squidfunk.github.io/mkdocs-material/blog/2025/11/05/zensical/",
+      "retrieved_url": "https://squidfunk.github.io/mkdocs-material/blog/2025/11/05/zensical/",
+      "retrieved_sha256": "5357c4a4878a24dc3be298af40dc9345a03cab4f5f87f89a2e818758ff0c8138",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:20.665949+00:00",
+        "end": "2026-10-12T02:20:20.790457+00:00"
+      },
+      "locator": "Dated successor announcement: Looking Ahead; compatibility",
+      "observation": "The announcement corroborates transition and restricted support and describes incomplete successor parity. It neither proves the successor satisfies this brief nor makes Material categorically unusable.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC37",
+      "title": "Service Worker authority",
+      "url": "https://w3c.github.io/ServiceWorker/",
+      "retrieved_url": "https://w3c.github.io/ServiceWorker/",
+      "retrieved_sha256": "eafd5978cb0ea5f56ae7c9f57d88048065d816154abafce4bc2c475b6d48c0ec",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:20.696364+00:00",
+        "end": "2026-10-12T02:20:21.027856+00:00"
+      },
+      "locator": "Service Worker lifecycle; waiting/activation; skipWaiting",
+      "observation": "Active clients and pending lifecycle events condition activation; skipWaiting is an explicit exception. These mechanisms support proposed interrupted-update/stale-client tests, not demonstrated cross-store atomicity.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC38",
+      "title": "Storage authority",
+      "url": "https://storage.spec.whatwg.org/",
+      "retrieved_url": "https://storage.spec.whatwg.org/",
+      "retrieved_sha256": "badb2b604b270b9afc212d986fcbe08c636e7b86bed2c1507230edf7d4fdd846",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:20.720165+00:00",
+        "end": "2026-10-12T02:20:20.933932+00:00"
+      },
+      "locator": "Storage Standard: buckets; persistence permission",
+      "observation": "Persistence requires permission and does not defeat user clearing. Local storage separation alone is not a permanent learner-history guarantee.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC39",
+      "title": "IndexedDB authority",
+      "url": "https://w3c.github.io/IndexedDB/",
+      "retrieved_url": "https://w3c.github.io/IndexedDB/",
+      "retrieved_sha256": "a63ab4f3bad56a3600d8e55df22c2144023aa795f4796acf7fc16a705503769d",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:20.790703+00:00",
+        "end": "2026-10-12T02:20:21.210529+00:00"
+      },
+      "locator": "IndexedDB: database storage key; versionchange/blocked; transactions",
+      "observation": "Databases belong to storage keys, upgrades interact with open connections, and transactions have their own boundaries. They do not make content Cache API changes and learner records one automatic atomic transaction.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC40",
+      "title": "Quarto visual content editing",
+      "url": "https://quarto.org/docs/visual-editor/content.html",
+      "retrieved_url": "https://quarto.org/docs/visual-editor/content.html",
+      "retrieved_sha256": "8c2990760d24bdd1ddee7098bf761ba733f9ed568346811bdc23fda7b9bbf5e6",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:20.944462+00:00",
+        "end": "2026-10-12T02:20:21.316691+00:00"
+      },
+      "locator": "Quarto visual content editing; CSS output scope",
+      "observation": "The visual editor supports structured Pandoc authoring. CSS styles apply to HTML and do not establish PDF or Word formatting; rendered preview differs from editor appearance. This page does not prove Word clipboard ingestion.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC41",
+      "title": "Clipboard API primary",
+      "url": "https://www.w3.org/TR/clipboard-apis/",
+      "retrieved_url": "https://www.w3.org/TR/clipboard-apis/",
+      "retrieved_sha256": "64ff9e279103212d7287137569bf593e73c0501fe6ccb6db824d0b1295bd65da",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:21.032442+00:00",
+        "end": "2026-10-12T02:20:21.302735+00:00"
+      },
+      "locator": "ClipboardEvent clipboardData; 6.4.1 mandatory paste types; HTML paste processing",
+      "observation": "Word-origin clipboard content may expose HTML/plain text/images rather than a DOCX archive. Format selection, normalization and browser conditions must be examined separately from the DOCX reader; no sample paste failure is inferred.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC42",
+      "title": "SQLite atomic commit conditions",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "retrieved_url": "https://www.sqlite.org/atomiccommit.html",
+      "retrieved_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:21.071330+00:00",
+        "end": "2026-10-12T02:20:21.302444+00:00"
+      },
+      "locator": "SQLite atomic commit hardware assumptions; failure exceptions",
+      "observation": "Locking, flush correctness and journal/filesystem assumptions qualify durability. The treatment proposes native-app/backup/update validation and does not promise immunity from defective storage hardware.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC43",
+      "title": "Docusaurus optional PWA",
+      "url": "https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-pwa",
+      "retrieved_url": "https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-pwa",
+      "retrieved_sha256": "503ddbaa26b177ad9be05c053af6f139c214a76bacb2c64440c25cb69ab21692",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:21.214554+00:00",
+        "end": "2026-10-12T02:20:21.521259+00:00"
+      },
+      "locator": "Docusaurus optional PWA plugin: precaching; activation strategy; waiting update",
+      "observation": "An official optional PWA mechanism exists with precaching and explicit offline activation strategies. It does not establish offline search-provider behavior or revision-aware local progress; neither final falsely rejects PWA feasibility.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC44",
+      "title": "Material 9.7.7 API temporal metadata",
+      "url": "https://api.github.com/repos/squidfunk/mkdocs-material/releases/tags/9.7.7",
+      "retrieved_url": "https://api.github.com/repos/squidfunk/mkdocs-material/releases/tags/9.7.7",
+      "retrieved_sha256": "6f49cdc6b3d853853e4925e0cbc1570b6d0a781a883fb6a62a01fe5285ab6721",
+      "access_utc_window": {
+        "start": "2026-10-12T02:20:21.314303+00:00",
+        "end": "2026-10-12T02:20:21.447556+00:00"
+      },
+      "locator": "Public release API: published_at, updated_at, body",
+      "observation": "The exact API response/body hashes match the prior independent evidence; July publication/update precede candidate T0. This corroborates availability of the lifecycle warning while preserving the historical-archive limitation.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC45",
+      "title": "WordPress raw/paste transforms",
+      "url": "https://developer.wordpress.org/block-editor/reference-guides/block-api/block-transforms/",
+      "retrieved_url": "https://developer.wordpress.org/block-editor/reference-guides/block-api/block-transforms/",
+      "retrieved_sha256": "0ad66aa7c016002ae79e651444c4a03481b481c37e5eb58be0378df3503595ee",
+      "access_utc_window": {
+        "start": "2026-10-12T02:26:45.563926+00:00",
+        "end": "2026-10-12T02:26:46.052682+00:00"
+      },
+      "locator": "WordPress raw transforms; schemas and content models",
+      "observation": "Pasted/dropped HTML undergoes raw transforms and schema cleanup before block matching. This is an available named mechanism; it is not validated by DOCX file-reader tests and cannot guarantee a particular Word paste retains meaning.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC46",
+      "title": "Lumi offline H5P editor",
+      "url": "https://lumi.education/en/lumi-h5p-offline-desktop-editor/",
+      "retrieved_url": "https://lumi.education/en/lumi-h5p-offline-desktop-editor/",
+      "retrieved_sha256": "488988b67bd12435679762afcc746fcbb06db730919798544a322e39caf7c12d",
+      "access_utc_window": {
+        "start": "2026-10-12T02:26:46.053326+00:00",
+        "end": "2026-10-12T02:26:46.757685+00:00"
+      },
+      "locator": "Lumi Desktop Editor offline authoring/local preview",
+      "observation": "An existing desktop authoring/player route can create, edit and preview H5P locally. No installation, account or real record is used by this review. This is a bounded ecosystem alternative, not a complete handbook solution.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    },
+    {
+      "id": "CC47",
+      "title": "Lumi HTML/SCORM output conditions",
+      "url": "https://feedback.lumi.education/en/help/articles/9460373-html-and-scorm-export",
+      "retrieved_url": "https://feedback.lumi.education/en/help/articles/9460373-html-and-scorm-export",
+      "retrieved_sha256": "9520f6b935220bbf269aec0372efd61c3cbf3b9deed2ff1d53ef47cca9520846",
+      "access_utc_window": {
+        "start": "2026-10-12T02:26:46.758366+00:00",
+        "end": "2026-10-12T02:26:47.425868+00:00"
+      },
+      "locator": "Lumi HTML/SCORM export and documented limitations",
+      "observation": "HTML export can run locally with bundled resources. SCORM adds LMS communication and currently only 1.2 is described; timelines need a backend and large-media packaging has limits. No local progress, accessible output or handbook update semantics are proved.",
+      "operation": "Fresh independent targeted primary-source read, including the stated adjacent conditions; no product execution",
+      "version_context": "Dated release/announcement/issue where stated; otherwise living documentation as accessed",
+      "raw_body_retained": false
+    }
+  ],
+  "evidence_records": [
+    "evidence/material-lifecycle.json",
+    "evidence/paste-input-boundary.json"
+  ],
+  "copyright_scope": "Compact evaluator-authored observations; no primary corpus or code copied. One short release excerpt accompanies its upstream MIT notice. Source bodies were inspected transiently and are not retained.",
+  "failed_or_limited_lookups": [
+    {
+      "url": "https://h5p.com/content-types/",
+      "result": "web Internal Error; no fact inferred"
+    },
+    {
+      "url": "https://documentation.h5p.com/content/1290410474004879128",
+      "result": "dynamic wrapper did not expose the full embedded matrix; no per-type conformance verdict inferred; no final selected/certified a content type"
+    }
+  ],
+  "finite_scope": "All consequential proposal assertions and required obligations assessed; no exhaustive ecosystem census, full standards conformance audit or future runtime proof is claimed."
+}

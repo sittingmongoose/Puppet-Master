@@ -1,0 +1,830 @@
+{
+  "schema": "er13.independent-primary-source-index.v1",
+  "arm_id": "B02-P02-treatment",
+  "shared_independent_lookup": true,
+  "sources": [
+    {
+      "id": "P01",
+      "url": "https://github.com/LibreBooking/librebooking",
+      "family": "LIBREBOOKING_RELEASE",
+      "locator_and_version_context": "Rolling default repository page at independent access",
+      "independent_observation": "The dated notice and previous security threshold match the pinned develop README. Rolling page commit identity remains unpinned.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.113709+00:00",
+        "complete": "2026-10-12T01:48:03.512476+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 468699,
+      "retrieved_sha256": "81b504ef110df8ad1f48dcc5b18e9d08deada893cf5aa1738dd87ed19ccbed59",
+      "candidate_source_ids": [
+        "LB-README"
+      ],
+      "candidate_declared_versions": [
+        "Official repository README on the live default page; exact branch HEAD commit not captured, so commit identity is UNKNOWN. It names v7.0.0 as the security threshold."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P02",
+      "url": "https://github.com/LibreBooking/librebooking/blob/develop/CHANGELOG.md",
+      "family": "LIBREBOOKING_HISTORY",
+      "locator_and_version_context": "Rolling changelog, v4.3.0 entries 8840ec0 and 4cda32d",
+      "independent_observation": "The UI and service fixes are corroborated by their exact patches and tagged service. No whole-history correctness assertion is made.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.398464+00:00",
+        "complete": "2026-10-12T01:48:03.951408+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 1219361,
+      "retrieved_sha256": "80f08643f37f3063ecb9476eb5b5b3847410a59fe9f38a7d3bce4fde77ef1e4f",
+      "candidate_source_ids": [
+        "LB-CHANGELOG"
+      ],
+      "candidate_declared_versions": [
+        "LibreBooking develop changelog, unpinned page; relevant v4.3.0 entries identify commits 4cda32d and 8840ec0."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P03",
+      "url": "https://github.com/LibreBooking/librebooking/commit/4cda32d33c8c27aa825129a9c086358a7321f3e3.patch",
+      "family": "LIBREBOOKING_HISTORY",
+      "locator_and_version_context": "Patch service and BlackoutsServiceTest hunks",
+      "independent_observation": "Service adds termination checks to Add/Update. Regression tests reject missing interval-repeat termination and permit custom explicit dates. The motivating failure was missing recurrence instances, not necessarily unlimited expansion. Tests were not executed.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:53:44.212873+00:00",
+        "complete": "2026-10-12T01:53:44.536010+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 45512,
+      "retrieved_sha256": "8f006d88e5c83a6c98364791be193c352e62eb5633f89cfd2976ae6dd9b39824",
+      "candidate_source_ids": [],
+      "candidate_declared_versions": [],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P04",
+      "url": "https://github.com/LibreBooking/librebooking/commit/8840ec0ad38a7be9f98c452101345ece3188aa7f.patch",
+      "family": "LIBREBOOKING_HISTORY",
+      "locator_and_version_context": "Recurrence UI, flatpickr alt-input validation and template hunks",
+      "independent_observation": "Makes repeat-until required for interval types and validates the visible input; custom/none types differ. This is fix-context evidence, not a browser test performed here.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:53:44.213314+00:00",
+        "complete": "2026-10-12T01:53:44.448241+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 4491,
+      "retrieved_sha256": "9a85439542511c6a1b3ba2d6d1aa6ce9dde42d69b3c5715320fa21fb1c752dc4",
+      "candidate_source_ids": [],
+      "candidate_declared_versions": [],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P05",
+      "url": "https://github.com/LibreBooking/librebooking/issues/1416",
+      "family": "LIBREBOOKING_HISTORY",
+      "locator_and_version_context": "Version 3.0.3 report and closure comment",
+      "independent_observation": "Historical single-instance deletion error; closed for old version/no reporter response. Not imported as a v7.0.0 defect.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.372706+00:00",
+        "complete": "2026-10-12T01:48:03.934565+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 307577,
+      "retrieved_sha256": "4266ed78d6ec423bd7cd517ff4e8ef538046abf1b2b85d41717f326d3d68dca2",
+      "candidate_source_ids": [
+        "LB-ISSUE-1416"
+      ],
+      "candidate_declared_versions": [
+        "Issue reports version 3.0.3; closed status displayed at access."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P06",
+      "url": "https://github.com/LibreBooking/librebooking/issues/1535",
+      "family": "LIBREBOOKING_HISTORY",
+      "locator_and_version_context": "Issue body/status/version and related #1533/#1536 context",
+      "independent_observation": "Open develop add7ebfbe report about shared widget state; reporter says derived from code and not verified on a running instance. Not a demonstrated v7.0.0 defect.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.340470+00:00",
+        "complete": "2026-10-12T01:48:03.857070+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 294541,
+      "retrieved_sha256": "1cb0a3c0b47567d6df085c0c669eef6da0e405a101326069e1d9a568dce51b2a",
+      "candidate_source_ids": [
+        "LB-ISSUE-1535"
+      ],
+      "candidate_declared_versions": [
+        "Issue reports LibreBooking develop at commit add7ebfbe; not pinned to v7.0.0."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P07",
+      "url": "https://github.com/LibreBooking/librebooking/issues/1536",
+      "family": "LIBREBOOKING_HISTORY",
+      "locator_and_version_context": "Issue body/status/version and reproduction",
+      "independent_observation": "Open develop add7ebfbe report describes date-only UTC parsing plus local arithmetic and fallback drift; reporter says not runtime verified. Pinned current develop still has the relevant code; no workshop/browser reproduction was performed.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:02.851038+00:00",
+        "complete": "2026-10-12T01:48:03.407040+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 299741,
+      "retrieved_sha256": "471f35b77584f3df268eeec9ff28d9212efedc42be5d7167bd85e3661a5486f3",
+      "candidate_source_ids": [
+        "LB-ISSUE-1536"
+      ],
+      "candidate_declared_versions": [
+        "LibreBooking develop issue; exact affected source commit not captured in this record."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P08",
+      "url": "https://github.com/LibreBooking/librebooking/releases/tag/v7.0.0",
+      "family": "LIBREBOOKING_RELEASE",
+      "locator_and_version_context": "Official v7.0.0 release page, 2026-10-06, 422b4b0",
+      "independent_observation": "Release removes web-based phpScheduleIt migration and clarifies support policy. Release identity supports pinning, not workshop suitability.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.075984+00:00",
+        "complete": "2026-10-12T01:48:03.475406+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 197916,
+      "retrieved_sha256": "dbd779b37af75aff848832c1e83e2a9ee1ad610194c72fa7703f03b8d3a28770",
+      "candidate_source_ids": [
+        "LB-RELEASE"
+      ],
+      "candidate_declared_versions": [
+        "LibreBooking v7.0.0, released 2026-10-06, tag commit 422b4b0."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P09",
+      "url": "https://github.com/LibreBooking/librebooking/security/advisories/GHSA-3356-vjx2-5pg8",
+      "family": "LIBREBOOKING_RELEASE",
+      "locator_and_version_context": "Affected/patched versions, prerequisites and Patches",
+      "independent_observation": "Pre-7.0.0 versions shipping the vulnerable migration endpoint are affected; exploitation requires endpoint access and server connectivity to an attacker-controlled database. v7 removes migration functionality, retaining a 410 stub to overwrite old files. This does not supply any future undisclosed vulnerability details.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:53:23.253554+00:00",
+        "complete": "2026-10-12T01:53:23.644322+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 198544,
+      "retrieved_sha256": "a2315379d13cdeb9fdad9dc3fb6717b843d60ef6d3ea2b99cad81e0a6f5514ab",
+      "candidate_source_ids": [],
+      "candidate_declared_versions": [],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P10",
+      "url": "https://github.com/meeting-room-booking-system/mrbs-code/blob/v1.12.2/AUTHENTICATION",
+      "family": "MRBS_MODEL",
+      "locator_and_version_context": "Principles and Which authentication scheme to choose",
+      "independent_observation": "Level 0 read-only, level 1 own bookings, level 2 others/admin operations; default db auth stores local user records. Exact workshop privacy/maintenance authorization requires configuration and checks.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.526423+00:00",
+        "complete": "2026-10-12T01:48:04.030954+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 655083,
+      "retrieved_sha256": "4aa56e5165f0dd3ec0b8cd7e9cdd9bd1a3bfe99ec3c31e2f254f9c7a5e3f654f",
+      "candidate_source_ids": [
+        "MRBS-AUTH"
+      ],
+      "candidate_declared_versions": [
+        "MRBS 1.12.2 tag, commit 38d51e0."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P11",
+      "url": "https://github.com/meeting-room-booking-system/mrbs-code/commit/9586b7a.patch",
+      "family": "MRBS_HISTORY",
+      "locator_and_version_context": "9586b7a9324fb0d362d4aa5821efb3a0f09b9208, mrbs_sql.inc hunks",
+      "independent_observation": "Adds ignored repeat ID to check_simultaneous and its caller. The patch does not add a parallel-request test or prove room-capacity race safety.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:52:27.328934+00:00",
+        "complete": "2026-10-12T01:52:27.559955+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 2208,
+      "retrieved_sha256": "ae034eb314c6373a1ef2fc0db84ff3bec27802830fe9555cafd517b29ced8d65",
+      "candidate_source_ids": [],
+      "candidate_declared_versions": [],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P12",
+      "url": "https://github.com/meeting-room-booking-system/mrbs-code/releases/tag/v1.12.2",
+      "family": "MRBS_HISTORY",
+      "locator_and_version_context": "Official release v1.12.2, Latest at access, 38d51e0",
+      "independent_observation": "2026-05-26 release corroborates #3965 and the two security-fix summaries. Release is not a workshop validation.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.418707+00:00",
+        "complete": "2026-10-12T01:48:03.892072+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 211450,
+      "retrieved_sha256": "f4bb856ccedcd0c4c2d5b8113447c71b48d406136d3ea84f68a318d20c453235",
+      "candidate_source_ids": [
+        "MRBS-RELEASE"
+      ],
+      "candidate_declared_versions": [
+        "MRBS 1.12.2, tag commit 38d51e0, released 2026-05-26."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P13",
+      "url": "https://librebooking.readthedocs.io/en/latest/ADMINISTRATION.html",
+      "family": "LIBREBOOKING_MODEL",
+      "locator_and_version_context": "Rolling 7.0.0-labelled Administration; schedules, resources, relationships, accessories, blackouts and reporting",
+      "independent_observation": "Resources may be people/equipment. Relationships apply to non-admin users; accessories are unlimited unless bounded. Blackouts block admins too, whereas Unavailable resource status allows admins and several usage rules exempt them. Reporting/CSV and tablet/monitor views exist. These mechanisms do not establish qualification enforcement, safe fault displacement or suitable dispute retention.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.014011+00:00",
+        "complete": "2026-10-12T01:48:03.113687+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 56758,
+      "retrieved_sha256": "163bc4ae14723fa9711de5ea9f27c820817e8bbf89f407e4b854e98ac4bb6d13",
+      "candidate_source_ids": [
+        "LB-ADMIN"
+      ],
+      "candidate_declared_versions": [
+        "LibreBooking documentation identifying as 7.0.0 at access; latest page is not tied to a source commit."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P14",
+      "url": "https://librebooking.readthedocs.io/en/latest/INSTALLATION.html",
+      "family": "LIBREBOOKING_RELEASE",
+      "locator_and_version_context": "Rolling 7.0.0-labelled installation page; server configuration, jobs and deployment",
+      "independent_observation": "Local hosting is feasible; LAN/WAN-independent operation remains a proposed configuration/test. Jobs and email are conditional, and self-registration need not be required.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.045271+00:00",
+        "complete": "2026-10-12T01:48:03.241428+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 77350,
+      "retrieved_sha256": "30c39d9036ddf9eb5dd8a8480006bc73442093f45e22bb0afe3904fda58486fb",
+      "candidate_source_ids": [
+        "LB-INSTALL"
+      ],
+      "candidate_declared_versions": [
+        "LibreBooking documentation identifying as 7.0.0 at access; latest page is not tied to a source commit."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P15",
+      "url": "https://mrbs.sourceforge.io/",
+      "family": "MRBS_MODEL",
+      "locator_and_version_context": "Official project introduction/features",
+      "independent_observation": "Web/intranet room/resource scheduler with repeating bookings, reporting and conflict rejection. Feature descriptions do not by themselves guarantee workshop compound lifecycle semantics.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.407065+00:00",
+        "complete": "2026-10-12T01:48:03.526401+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 5556,
+      "retrieved_sha256": "9c508eddff3bed0d7dcb17850f681352abaddc22f723a23b9f0b40b829a8273d",
+      "candidate_source_ids": [
+        "MRBS-HOME"
+      ],
+      "candidate_declared_versions": [
+        "Official MRBS project page, rolling; latest inspected release separately pinned as 1.12.2."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P16",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0/Domain/Access/ReservationRepository.php",
+      "family": "LIBREBOOKING_CONCURRENCY",
+      "locator_and_version_context": "Add and InsertSeries, lines 43–57 and 134–215",
+      "independent_observation": "Series, primary/additional resource and accessory rows are separate database commands. Whole booking atomicity is not established by these snippets.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.325698+00:00",
+        "complete": "2026-10-12T01:48:03.418689+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 38517,
+      "retrieved_sha256": "8ba242c346488c07af0d9a59bdc26fd89e0004b94e73fc8c291881a17809cb36",
+      "candidate_source_ids": [
+        "LB-REPO"
+      ],
+      "candidate_declared_versions": [
+        "LibreBooking v7.0.0 tag commit 422b4b0."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P17",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0/lib/Application/Reservation/ManageBlackoutsService.php",
+      "family": "LIBREBOOKING_MAINTENANCE",
+      "locator_and_version_context": "Add, GetConflictingReservations, HasMissingRequiredTerminationDate, LoadBlackout and Update",
+      "independent_observation": "Interval repeat types require termination dates; custom explicit-date repeats are excepted. Conflict handlers may mutate bookings/blackouts. Update checks resource-admin authority through LoadBlackout; Add itself is not a complete authorization proof.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.253745+00:00",
+        "complete": "2026-10-12T01:48:03.340452+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 9613,
+      "retrieved_sha256": "3db18667c109d0351698b43e97978c1f287314c387edb8d87543f41b7731008c",
+      "candidate_source_ids": [
+        "LB-BLACKOUT-SVC"
+      ],
+      "candidate_declared_versions": [
+        "LibreBooking v7.0.0 tag commit 422b4b0."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P18",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0/lib/Application/Reservation/ReservationHandler.php",
+      "family": "LIBREBOOKING_CONCURRENCY",
+      "locator_and_version_context": "Handle, lines 89–121",
+      "independent_observation": "Retry adjustment then validation precede Persist; notification follows successful persistence. This establishes caller order, not whole-stack transactional isolation.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.315207+00:00",
+        "complete": "2026-10-12T01:48:03.398441+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 4688,
+      "retrieved_sha256": "17949c46543b6d77ad6bf960f24c79ad0a7dca2939ece68e1e9fdc505f390fff",
+      "candidate_source_ids": [
+        "LB-RES-HANDLER"
+      ],
+      "candidate_declared_versions": [
+        "LibreBooking v7.0.0 tag commit 422b4b0."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P19",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0/lib/Application/Reservation/Validation/ResourceAvailabilityRule.php",
+      "family": "LIBREBOOKING_CONCURRENCY",
+      "locator_and_version_context": "Validate and GetErrorString",
+      "independent_observation": "Explicit skipconflicts retry removes conflicting recurring instances and exposes retry/error information. It is not evidence that arbitrary resource claims can be omitted safely. It does not alone prove database race prevention.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.191178+00:00",
+        "complete": "2026-10-12T01:48:03.278196+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 4112,
+      "retrieved_sha256": "89c693b6f813b24d4f6a5b1d9eeedb3bbb495666b7e588cc6c04c70cfa2ce355",
+      "candidate_source_ids": [
+        "LB-AVAIL"
+      ],
+      "candidate_declared_versions": [
+        "LibreBooking v7.0.0 tag commit 422b4b0."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P20",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0/tests/Application/Reservation/ReservationConflictResolutionTest.php",
+      "family": "LIBREBOOKING_MAINTENANCE",
+      "locator_and_version_context": "testDeletesReservation and split/fully-covered blackout tests",
+      "independent_observation": "Mock repository/fake notifier tests confirm selected branches. A fully covered one-off blackout is not handled; a recurring covered occurrence can be deleted. No concurrency, end-to-end authorization or immutable audit-history oracle is present.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.278217+00:00",
+        "complete": "2026-10-12T01:48:03.372684+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 4452,
+      "retrieved_sha256": "ea07ebf0a262fb3ac3be528a18c040acbeee7b28af124454c3e702523b5b6966",
+      "candidate_source_ids": [
+        "LB-BLACKOUT-TEST"
+      ],
+      "candidate_declared_versions": [
+        "LibreBooking v7.0.0 tag commit 422b4b0."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P21",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0/tests/Application/Reservation/ResourceAvailabilityRuleTest.php",
+      "family": "LIBREBOOKING_CONCURRENCY",
+      "locator_and_version_context": "Multi-resource, buffer/admin, recurrence and skipconflicts test methods",
+      "independent_observation": "Mocks/fake repositories exercise rule outputs, including explicit recurring retry. The named concurrent cases concern overlapping intervals, not parallel database submissions. Tests were read, not run.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.241453+00:00",
+        "complete": "2026-10-12T01:48:03.315186+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 24313,
+      "retrieved_sha256": "d7ce1fc9430954fcb20c5a3fbb9e997d4ddb641102cc84e3f0236baa004529b5",
+      "candidate_source_ids": [
+        "LB-AVAIL-TEST"
+      ],
+      "candidate_declared_versions": [
+        "LibreBooking v7.0.0 tag commit 422b4b0."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P22",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/LICENSE.md",
+      "family": "LICENSE",
+      "locator_and_version_context": "LibreBooking upstream LICENSE.md",
+      "independent_observation": "GNU GPL version 3 text; this assessment uses paraphrased semantic notes rather than redistributing the code corpus.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:52:27.329737+00:00",
+        "complete": "2026-10-12T01:52:27.456622+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 34877,
+      "retrieved_sha256": "d9780785ac422532f97caab5f6bba425260a0666597d61f95de9e182fc4aa23b",
+      "candidate_source_ids": [],
+      "candidate_declared_versions": [],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P23",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/Web/install/migrate.php",
+      "family": "LIBREBOOKING_RELEASE",
+      "locator_and_version_context": "v7.0.0 inert migration stub",
+      "independent_observation": "Returns HTTP 410 without loading application code, matching the advisory. Static read only.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:53:44.213634+00:00",
+        "complete": "2026-10-12T01:53:44.337648+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 563,
+      "retrieved_sha256": "27fd1ec84650e4edfdd75a757a5ab9ab8370dbecb16da8aac23466f4111aa798",
+      "candidate_source_ids": [],
+      "candidate_declared_versions": [],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P24",
+      "url": "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/lib/Database/Database.php",
+      "family": "LIBREBOOKING_CONCURRENCY",
+      "locator_and_version_context": "Query, Execute and ExecuteInsert",
+      "independent_observation": "Commands connect/execute/disconnect through the connection object. This adjacent layer does not justify asserting either universal race safety or a runtime race defect.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.690833+00:00",
+        "complete": "2026-10-12T01:48:03.784615+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 2755,
+      "retrieved_sha256": "9e9516f56d7701046565579ca1cbe043ef6354808c5d579651626c3bca43b978",
+      "candidate_source_ids": [],
+      "candidate_declared_versions": [],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P25",
+      "url": "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/AUTHENTICATION",
+      "family": "MRBS_MODEL",
+      "locator_and_version_context": "Principles and Which authentication scheme to choose",
+      "independent_observation": "Level 0 read-only, level 1 own bookings, level 2 others/admin operations; default db auth stores local user records. Exact workshop privacy/maintenance authorization requires configuration and checks.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:53:23.004490+00:00",
+        "complete": "2026-10-12T01:53:23.135048+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 51914,
+      "retrieved_sha256": "76ddee8c152b10f43f179e80968dc5540672bd91fb495242807b5b4c11bb2729",
+      "candidate_source_ids": [],
+      "candidate_declared_versions": [],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P26",
+      "url": "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/COPYING",
+      "family": "LICENSE",
+      "locator_and_version_context": "MRBS upstream COPYING",
+      "independent_observation": "GNU GPL version 2 text retained by source link; any small code quotation below is attributed to this upstream source.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:52:27.329347+00:00",
+        "complete": "2026-10-12T01:52:27.459749+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 17982,
+      "retrieved_sha256": "91df39d1816bfb17a4dda2d3d2c83b1f6f2d38d53e53e41e8f97ad5ac46a0cad",
+      "candidate_source_ids": [],
+      "candidate_declared_versions": [],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P27",
+      "url": "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/NEWS",
+      "family": "MRBS_HISTORY",
+      "locator_and_version_context": "v1.12.2 release entries and applicable recent repeat/cancellation context",
+      "independent_observation": "Release fixes kiosk open redirect and import SSRF and records #3965 series-edit fix. No universal security or cancellation correctness follows.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.512501+00:00",
+        "complete": "2026-10-12T01:48:03.636989+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 189299,
+      "retrieved_sha256": "1ee2ed04d9f4336cccf58a622711996d9d38786274e5ad80b02bddf096b6124e",
+      "candidate_source_ids": [
+        "MRBS-NEWS"
+      ],
+      "candidate_declared_versions": [
+        "MRBS 1.12.2 tag, commit 38d51e0."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P28",
+      "url": "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/tables.pg.sql",
+      "family": "MRBS_MODEL",
+      "locator_and_version_context": "Room, repeat and entry table definitions",
+      "independent_observation": "Each entry/repeat has one room_id and room capacity metadata. Scalar room_id is a row-level fact; it does not establish a one-resource-only submission capability.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.475431+00:00",
+        "complete": "2026-10-12T01:48:03.568295+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 10311,
+      "retrieved_sha256": "a2743abe92e95060423c9da96e51f2d7bcd6e1ea1c2055b9d8d4bca4dbd36f1d",
+      "candidate_source_ids": [
+        "MRBS-SCHEMA"
+      ],
+      "candidate_declared_versions": [
+        "MRBS 1.12.2 tag, commit 38d51e0."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P29",
+      "url": "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/web/edit_entry.php",
+      "family": "MRBS_MODEL",
+      "locator_and_version_context": "get_field_rooms lines 432–456; multiroom_allowed lines 1154–1155",
+      "independent_observation": "Form supports rooms[] multi-select subject to policy and room write permissions. This directly refutes inferring single-resource-only submission from scalar schema rows.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:49:27.596767+00:00",
+        "complete": "2026-10-12T01:49:27.726475+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 61284,
+      "retrieved_sha256": "f1d3f04ebf6fc73c3ead754c386c2aa35018bdd051e61b67184726697bf954be",
+      "candidate_source_ids": [],
+      "candidate_declared_versions": [],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P30",
+      "url": "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/web/edit_entry_handler.php",
+      "family": "MRBS_CONCURRENCY",
+      "locator_and_version_context": "Booking assembly lines 761–815 and transaction wrapper lines 821–847",
+      "independent_observation": "Builds an array for selected writable rooms; one transaction calls mrbsMakeBookings then commits/rolls back. Unauthorized selected rooms are filtered, so this is not a universal every-requested-resource guarantee. It is an existing multi-room transactional path; complete compound lifecycle and race safety remain unproved.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:49:27.596344+00:00",
+        "complete": "2026-10-12T01:49:27.713095+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 31021,
+      "retrieved_sha256": "0ef4591b06e5c185b95c119ccd5ca3f2a38006c420c0ac2d9c8dfaa5d4c715ab",
+      "candidate_source_ids": [],
+      "candidate_declared_versions": [],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P31",
+      "url": "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/web/lib/MRBS/DB/DB.php",
+      "family": "MRBS_CONCURRENCY",
+      "locator_and_version_context": "begin/commit/rollback lines 268–310; destructor and mutex interface",
+      "independent_observation": "Wrapper delegates to real PDO transactions, and destructor rolls back outstanding transactions. This supports the existing path but is not an isolation/concurrent-request witness.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:50:02.259068+00:00",
+        "complete": "2026-10-12T01:50:02.377766+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 21773,
+      "retrieved_sha256": "2151fef4368b74a742a6848bcf5d1a0e4395cc479fd823b65ab5e1033396bba2",
+      "candidate_source_ids": [],
+      "candidate_declared_versions": [],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P32",
+      "url": "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/web/mrbs_sql.inc",
+      "family": "MRBS_CONCURRENCY",
+      "locator_and_version_context": "mrbsCheckFree, check_simultaneous, mrbsMakeBookings lines 2666–2860 and save loop",
+      "independent_observation": "Room overlap query is distinct from per-user simultaneous-room policy. The normal non-skip path checks all booking entries before writes and returns before writes on invalid booking. Recurring skip policy can vary by room, and lifecycle grouping is not proved by a create transaction.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.701762+00:00",
+        "complete": "2026-10-12T01:48:03.831830+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 97134,
+      "retrieved_sha256": "803c6e2ea90b9f923ebaac7e41de26a1f598c1f56d60e3957aa2f2fbf555bdb9",
+      "candidate_source_ids": [],
+      "candidate_declared_versions": [],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P33",
+      "url": "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/web/systemdefaults.inc.php",
+      "family": "MRBS_CONCURRENCY",
+      "locator_and_version_context": "Simultaneous policy lines 384–395; only_admin_can_select_multiroom at 1617",
+      "independent_observation": "prevent_simultaneous_bookings defaults false and limits a user across rooms when enabled. Multiroom selection restriction also defaults false. The per-user policy is not ordinary room overlap enforcement or database race serialization.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:52:27.330133+00:00",
+        "complete": "2026-10-12T01:52:27.459906+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 97292,
+      "retrieved_sha256": "c40c8bc61362b9c825ac16ea2af708411c19dc3876f8850840e1ec046c54b304",
+      "candidate_source_ids": [],
+      "candidate_declared_versions": [],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P34",
+      "url": "https://www.postgresql.org/docs/18/rangetypes.html",
+      "family": "POSTGRESQL",
+      "locator_and_version_context": "Version 18, §8.17.2 and §8.17.10",
+      "independent_observation": "A GiST exclusion constraint can reject range overlaps for equal resource keys using btree_gist. The example uses half-open bounds. Capacity-one invariants differ from quantity pools; all allocations still need one transaction and appropriate active-state/buffer handling.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:02.650223+00:00",
+        "complete": "2026-10-12T01:48:03.253721+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 39092,
+      "retrieved_sha256": "7a919b423e1365f95d37b7f0edbb918f59944b464503e5a63d50291acd8e0e18",
+      "candidate_source_ids": [
+        "PG-RANGE"
+      ],
+      "candidate_declared_versions": [
+        "PostgreSQL official version 18 documentation."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P35",
+      "url": "https://www.rfc-editor.org/rfc/rfc5545",
+      "family": "CALENDAR",
+      "locator_and_version_context": "RFC 5545 abstract, recurrence definitions and RFC Editor update metadata",
+      "independent_observation": "Calendaring interchange and recurrence representation do not enforce workshop resource capacity or atomic booking. No claim of calendar-service execution is supported.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:02.650702+00:00",
+        "complete": "2026-10-12T01:48:03.191000+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 1410036,
+      "retrieved_sha256": "ffb8b9f2663690651db73bd5d70533d575a3901a4d91328248b42b229ee669e3",
+      "candidate_source_ids": [],
+      "candidate_declared_versions": [],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P36",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "family": "SQLITE",
+      "locator_and_version_context": "Living official transaction documentation, §§2.1–2.3 and §3",
+      "independent_observation": "One simultaneous writer; DEFERRED is the default; IMMEDIATE obtains a write transaction before the availability read and may return SQLITE_BUSY. A failed statement does not universally roll back preceding statements: complete bundle rollback remains an application requirement.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:02.649271+00:00",
+        "complete": "2026-10-12T01:48:02.851011+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 27068,
+      "retrieved_sha256": "b65dc308fd9e0ce471844c97366a4f5ad3a1f42833a3b19486ad7d6555a8e24e",
+      "candidate_source_ids": [
+        "SQLITE-TXN"
+      ],
+      "candidate_declared_versions": [
+        "SQLite official living transaction documentation; page does not identify a pinned SQLite release."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P37",
+      "url": "https://www.sqlite.org/useovernet.html",
+      "family": "SQLITE",
+      "locator_and_version_context": "Official network-file guidance, Recommendations and Summary",
+      "independent_observation": "Network locking/sync risks differ from an application server opening its own local file. No evidence here demonstrates the workshop LAN or host reliability.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.579561+00:00",
+        "complete": "2026-10-12T01:48:03.701741+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 15812,
+      "retrieved_sha256": "71794d2eee1e20d3a04b7bae4b3467c33431f674c9fd9b0818a608fbc0eb54b1",
+      "candidate_source_ids": [
+        "SQLITE-NET"
+      ],
+      "candidate_declared_versions": [
+        "SQLite official living network-filesystem guidance; page does not identify a pinned SQLite release."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    },
+    {
+      "id": "P38",
+      "url": "https://www.sqlite.org/whentouse.html",
+      "family": "SQLITE",
+      "locator_and_version_context": "Official Appropriate Uses, Server-side database and High Concurrency",
+      "independent_observation": "Distinguishes SQL-emitting application from end user. Browser-to-local-server SQLite is a valid topology; direct multi-machine file access and writers that cannot take turns favor client/server databases. Member count alone does not select the database.",
+      "operation": "Independent read-only public GET plus static inspection of governing context; no source/test execution.",
+      "access_utc": {
+        "start": "2026-10-12T01:48:03.568325+00:00",
+        "complete": "2026-10-12T01:48:03.690809+00:00"
+      },
+      "http_status": 200,
+      "retrieved_bytes": 21223,
+      "retrieved_sha256": "d0850096c26e9c888acaf2d6e2ac029e86f66f51a87461b77b94f1639d309b79",
+      "candidate_source_ids": [
+        "SQLITE-WHEN"
+      ],
+      "candidate_declared_versions": [
+        "SQLite official living guidance; page does not identify a pinned SQLite release."
+      ],
+      "coverage": "COMPLETE for the stated observation, not whole repository/runtime correctness",
+      "raw_body_retention": "Temporary source body deleted after review; fingerprint and public source locator retained."
+    }
+  ],
+  "retrieval_limitations": [
+    "Eight guessed adjacent file URLs returned 404; no truth claim was inferred from their absence. Correct MRBS caller/DB paths were subsequently resolved and inspected.",
+    "Rolling documentation/issue pages may change; independently retrieved hashes/access windows identify this observation. Candidate reported source operations are not independently authenticated by link agreement."
+  ],
+  "licenses": [
+    "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/COPYING",
+    "https://raw.githubusercontent.com/LibreBooking/librebooking/422b4b0223335d18c7d5f005ffcdd93719575c20/LICENSE.md"
+  ],
+  "necessary_evidence": "../evidence/mrbs-context.md"
+}

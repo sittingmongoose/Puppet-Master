@@ -1,0 +1,197 @@
+{
+  "schema": "er13.original-assessment.v1",
+  "block_id": "B06-P02",
+  "contract_version": "er13-independent-evaluation-v1",
+  "original_recorded_at_utc": "2026-10-12T02:01:57.522484+00:00",
+  "independence": "Technique-bearing paths make blinding imperfect. Separate original arm judgment; no comparison made here.",
+  "arms": [
+    {
+      "arm_id": "B06-P02-treatment",
+      "scope": "FULL",
+      "source_judgment": {
+        "status": "FAIL",
+        "finite_assessment": true,
+        "criterion": "No material unsupported claim, required omission, false rejection or preservation loss under full declared required coverage.",
+        "material_final_defect_ids": [
+          "T-D01"
+        ],
+        "not_deployment_certification": true
+      },
+      "coverage": {
+        "required_overall": "COMPLETE",
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 2,
+            "coverage": "COMPLETE",
+            "judgment": "FAIL"
+          },
+          {
+            "axis": 3,
+            "coverage": "COMPLETE",
+            "judgment": "FAIL"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE",
+            "judgment": "PASS"
+          }
+        ],
+        "details": "coverage.json",
+        "supplemental_limit": "Current PowerSync core trace PARTIAL"
+      },
+      "defects": {
+        "material_final_count": 1,
+        "material_final_ids": [
+          "T-D01"
+        ],
+        "details": "defects.json"
+      },
+      "delivery": {
+        "status": "COMPLETE",
+        "final_present": true,
+        "frozen_final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B06-P02-treatment/run/B06-P02-treatment/control/terminal-handoffs/reviser/files/final.md",
+        "frozen_final_sha256": "2dd9a6216253d150d4f9f2e1b900bf8983b2fbbfb87a1636e844b9a41f6dbbfa",
+        "required_missing_outputs": [],
+        "actual_tasks_terminal_zero_pending": true,
+        "source_truth_implied": false
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_ON_FROZEN_DELIVERY_BOUND",
+        "whole_maximum_seconds": 3600,
+        "t0_utc": "2026-10-12T00:35:37.398Z",
+        "whole_deadline_utc": "2026-10-12T01:35:37.398Z",
+        "frozen_packet_utc": "2026-10-12T01:30:54.239669+00:00",
+        "complete_frozen_delivery_upper_bound_elapsed_seconds": 3316.842,
+        "all_observed_native_terminals_before_stage_deadlines": true,
+        "native_final_terminal_proxy_elapsed_seconds": 2569.602,
+        "proxy_warning": "Native terminal updatedAt is not actual last artifact write or request-to-quiet-final timing. Packet freeze only gives a conservative complete-delivery upper bound.",
+        "last_complete_scientific_artifact_utc": "UNKNOWN",
+        "actual_request_to_quiet_final_seconds": "UNKNOWN",
+        "actual_provider_queue_start_finish": "UNKNOWN",
+        "clocks_changed": false,
+        "stage_observations": [
+          {
+            "stage": "investigator",
+            "request_utc": "2026-10-12T00:35:37.989Z",
+            "dispatch_capture_utc": "2026-10-12T00:35:38.698Z",
+            "stage_deadline_utc": "2026-10-12T01:05:37.989Z",
+            "native_created_utc": "2026-10-12T00:35:58+00:00",
+            "native_terminal_updated_utc": "2026-10-12T00:52:24+00:00",
+            "native_time_used_seconds": 985,
+            "native_window_seconds": 986,
+            "terminal_before_stage_deadline": true,
+            "same_birth_exact_objective": true,
+            "actual_task_terminal_observed": "completed",
+            "pending_child_runs_observed": false
+          },
+          {
+            "stage": "critic-breadth",
+            "request_utc": "2026-10-12T00:55:57.842Z",
+            "dispatch_capture_utc": "2026-10-12T00:55:58.551Z",
+            "stage_deadline_utc": "2026-10-12T01:01:57.842Z",
+            "native_created_utc": "2026-10-12T00:56:26+00:00",
+            "native_terminal_updated_utc": "2026-10-12T00:58:32+00:00",
+            "native_time_used_seconds": 126,
+            "native_window_seconds": 126,
+            "terminal_before_stage_deadline": true,
+            "same_birth_exact_objective": true,
+            "actual_task_terminal_observed": "completed",
+            "pending_child_runs_observed": false
+          },
+          {
+            "stage": "critic-truth",
+            "request_utc": "2026-10-12T00:55:59.766Z",
+            "dispatch_capture_utc": "2026-10-12T00:56:00.614Z",
+            "stage_deadline_utc": "2026-10-12T01:01:59.766Z",
+            "native_created_utc": "2026-10-12T00:56:11+00:00",
+            "native_terminal_updated_utc": "2026-10-12T00:59:17+00:00",
+            "native_time_used_seconds": 185,
+            "native_window_seconds": 186,
+            "terminal_before_stage_deadline": true,
+            "same_birth_exact_objective": true,
+            "actual_task_terminal_observed": "completed",
+            "pending_child_runs_observed": false
+          },
+          {
+            "stage": "reviser",
+            "request_utc": "2026-10-12T01:07:38.017Z",
+            "dispatch_capture_utc": "2026-10-12T01:07:38.944Z",
+            "stage_deadline_utc": "2026-10-12T01:25:38.017Z",
+            "native_created_utc": "2026-10-12T01:07:47+00:00",
+            "native_terminal_updated_utc": "2026-10-12T01:18:27+00:00",
+            "native_time_used_seconds": 640,
+            "native_window_seconds": 640,
+            "terminal_before_stage_deadline": true,
+            "same_birth_exact_objective": true,
+            "actual_task_terminal_observed": "completed",
+            "pending_child_runs_observed": false
+          }
+        ]
+      },
+      "method_compliance": {
+        "status": "PARTIAL_PROVENANCE_COVERAGE",
+        "declared_scope": "FULL",
+        "declared_product_contexts": 4,
+        "declared_topology": "investigator → parallel breadth/truth critics → reviser",
+        "snapshot_stages_match_declared_topology": true,
+        "reveal_receipt_hashes_match_science_and_exact_plan": true,
+        "pre_reveal_input_order_and_exactly_one_invocation_independently_proven": "UNKNOWN without permitted full execution trace",
+        "native_receipts_present_consistent": true,
+        "independent_evaluation_role": "Original evaluator only; no Goals, subagents, candidates, author feedback, Git/canon/shared-server/provider changes.",
+        "component_preparation_inference": "NOT_APPLICABLE: FULL frozen proposal; no component-to-full pipeline claim."
+      },
+      "native_identity_provenance": {
+        "coverage": "PARTIAL",
+        "same_birth_objective_terminal_receipts_consistent": true,
+        "captured_native_statuses": "active at birth, complete at terminal",
+        "task_statuses_observed": "completed with no pending children",
+        "independent_native_to_task_session_linkage": "UNKNOWN beyond packet/receipt/objective custody",
+        "actual_model_status_label": "gpt-6-luna",
+        "actual_provider_execution_model_tier": "UNKNOWN beyond returned status/request labels",
+        "native_goal_recipe_qualification": "Not independently certified from raw receipt consistency alone",
+        "private_route_and_native_identifiers_published": false
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL",
+        "candidate_product": {
+          "native_cumulative_usage_counters": "Present in frozen terminal receipts; numerical token values omitted from public output under privacy rule. Counters are not independently linked billing.",
+          "native_goal_window_sum_seconds": 1938,
+          "native_goal_window_union_seconds": 1812,
+          "native_goal_window_overlap_seconds": 126,
+          "window_domain": "Native Goal birth-to-terminal windows only; not started context occupancy, active provider activity or billed time.",
+          "actual_created_started_context_occupancy": "UNKNOWN",
+          "actual_active_provider_activity": "UNKNOWN",
+          "input_cached_output_reasoning_usage_breakdown": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "billing_amount": "UNKNOWN",
+          "preparation_support_publication_cost": "UNKNOWN"
+        },
+        "independent_evaluation": {
+          "classification": "independent_evaluation",
+          "observed_start_utc": "2026-10-12T01:48:20+00:00",
+          "observed_original_record_utc": "2026-10-12T02:01:57.522484+00:00",
+          "billing_and_provider_usage": "UNKNOWN",
+          "excluded_from_candidate_product_cost": true
+        },
+        "full_denominator": "This assigned arm remains included regardless of source judgment. No failure records or missing outputs in this packet; no whole-campaign denominator inferred.",
+        "unknown_is_zero": false,
+        "overlapping_counters_added": false
+      }
+    }
+  ]
+}

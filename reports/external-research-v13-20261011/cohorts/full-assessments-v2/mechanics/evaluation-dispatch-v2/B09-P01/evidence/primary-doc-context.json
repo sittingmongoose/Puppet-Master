@@ -1,0 +1,294 @@
+{
+  "kind": "independent_evaluation",
+  "sources": [
+    {
+      "id": "P-koha-circ",
+      "url": "https://koha-community.org/manual/latest/en/html/circulation.html",
+      "version": "Rendered Manual 20261011; mutable latest documentation",
+      "context": "Barcode circulation, bundles/configuration/child checkout warning and override image, check-in verification/skip/lost handling, automatic_checkin.pl prerequisites, Firefox/Windows offline logs and ordered replay.",
+      "observation": "A native bundle uses existing child item records/barcodes and not-for-loan state; the adjacent illustration offers staff checkout override. Verification can be skipped. Offline logs do not establish live shared availability. Automatic check-in is separately configured.",
+      "limitation": "No release-pinned Koha caller/test implementation was independently verified.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-koha-version",
+      "url": "https://koha-community.org/manual/24.05/en/html/circulation.html",
+      "version": "URL contains 24.05; rendered title is Manual 20261011",
+      "context": "Title and checkout section with a feature explicitly introduced in 25.05; same rendered edition as latest.",
+      "observation": "A version-shaped URL does not alone establish a frozen 24.05 software behavior. Treatment source map records the dated build, but its 24.05 identity still needs qualification.",
+      "limitation": "No historical 24.05 snapshot mapping established. Not graded as proof that a cited bundle behavior is absent in 24.05.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-koha-cat",
+      "url": "https://koha-community.org/manual/latest/en/html/cataloging.html",
+      "version": "Manual 20261011",
+      "context": "952$3 materials specified, 952$4 damaged, 952$5 restricted, 952$7 not-for-loan, withdrawn statuses.",
+      "observation": "Descriptive accompanying-material text is distinct from a child relationship. Damaged search unavailability is not a circulation block. Restricted/not-for-loan controls and override conditions are distinct.",
+      "limitation": "Documentation context checked; runtime/configuration not exercised.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-koha-tools",
+      "url": "https://koha-community.org/manual/latest/en/html/tools.html",
+      "version": "Manual 20261011; treatment /24.05/ URL is not an independently pinned release",
+      "context": "Log viewer; batch patron deletion/anonymization.",
+      "observation": "Logging is preference- and module-dependent. Anonymization keeps circulation facts/counts without patron identity; it is different from permanent patron deletion. No general reasoned immutable correction chain established by these pages.",
+      "limitation": "No release-pinned correction caller or database preservation implementation audited.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-koha-pref",
+      "url": "https://koha-community.org/manual/latest/en/html/circulationpreferences.html",
+      "version": "Manual 20261011",
+      "context": "StoreLastBorrower, AllowNotForLoanOverride, UpdateNotForLoanStatusOnCheckin, HidePersonalPatronDetailOnCirculation.",
+      "observation": "Not-for-loan override defaults to Allow. Last-borrower preference default zero does not eliminate the manual caveat about recent checkout history; anonymization matters. Check-in mapping applies to existing status.",
+      "limitation": "Selected installation behavior and full message-generation paths unexecuted.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-koha-history",
+      "url": "https://koha-community.org/koha-23-05-02-released/",
+      "version": "23.05.02 release notice",
+      "context": "Bugs 33817 and 33961 in circulation notes.",
+      "observation": "Historical bundle composition and removed built-in offline path motivate regressions. Removal explicitly excludes the Firefox/Windows tools.",
+      "limitation": "Issue discussion, fix diff and release-tag regressions beyond notice remain UNASSESSED.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-koha-deploy",
+      "url": "https://koha-community.org/manual/latest/en/html/installation.html",
+      "version": "Rendered edition 20261011 at evaluator access",
+      "context": "GNU/Linux server, administration skill requirements, Docker warning.",
+      "observation": "Self-hosting is a feasible direction with operations burden; manual says no production-ready Docker container at its current edition.",
+      "limitation": "No host installed or deployment proven.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-koha-news",
+      "url": "https://koha-community.org/news/",
+      "version": "Current news index",
+      "context": "26.05.04 notice and maintained-series listings.",
+      "observation": "Current release notice provides comparison context, not complete support lifecycle proof.",
+      "limitation": "Full selected release package/support policy UNASSESSED.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-sn-identity",
+      "url": "https://snipe-it.readme.io/docs/managing-assets",
+      "version": "Moving official documentation",
+      "context": "Asset tag uniqueness, barcodes, accountable person and custom fields.",
+      "observation": "Unique tags separate physical units; a non-reuse rule and complete alias behavior are not established by that guidance.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-sn-models",
+      "url": "https://snipe-it.readme.io/docs/overview",
+      "version": "Moving official documentation",
+      "context": "Assets/components/accessories/consumables and statuses.",
+      "observation": "Component taxonomy is not evidence of a complete removable lending-kit workflow.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-sn-notes",
+      "url": "https://snipe-it.readme.io/docs/general-settings",
+      "version": "Moving official documentation",
+      "context": "Require Notes on Checkin/Checkout.",
+      "observation": "Configurable required notes do not prove a correction/reversal chain retaining prior events.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-sn-notify",
+      "url": "https://snipe-it.readme.io/docs/notifications",
+      "version": "Moving official documentation",
+      "context": "Email alerts, check-in/check-out category settings and CC channels.",
+      "observation": "No-send operation needs explicit transport/category/job control; a general staff reminder proposal is not evidence of tested suppression.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-sn-backup",
+      "url": "https://snipe-it.readme.io/docs/backups",
+      "version": "Moving official documentation",
+      "context": "SQL plus uploads/attachments, restore and environment settings.",
+      "observation": "Product backup covers database and files. Configuration remains a separate restore concern; creating an archive does not prove recovery.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-sn-history",
+      "url": "https://snipe-it.readme.io/docs/importing-history",
+      "version": "Moving official documentation; importer available since 3.3",
+      "context": "Existing asset/user prerequisites and chronological import instructions.",
+      "observation": "History migration requires identity resolution first and ordered data; unresolved old physical-unit matches cannot be invented.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-sn-install",
+      "url": "https://snipe-it.readme.io/docs/installation",
+      "version": "Moving official documentation",
+      "context": "Self-host database/configuration/dependencies/webserver; optional hosted offering.",
+      "observation": "Self-hosting does not require choosing the paid hosted service.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-sn-advisory",
+      "url": "https://github.com/grokability/snipe-it/security/advisories/GHSA-qffp-xpqv-gqr4",
+      "version": "Published advisory, affected and fixed version table",
+      "context": "API checkout targets and soft-deleted lifecycle handling.",
+      "observation": "The advisory scope is lifecycle validation, not proof of every checkout race. Tagged regression file was separately inspected.",
+      "limitation": "Complete advisory fix history and all endpoints UNASSESSED.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-inv-release",
+      "url": "https://github.com/inventree/InvenTree/releases/tag/1.5.7",
+      "version": "1.5.7 release",
+      "context": "Tagged release entry.",
+      "observation": "Release identity is separate from lending suitability; no workload benchmark was executed.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-inv-tracking",
+      "url": "https://docs.inventree.org/en/stable/stock/tracking/",
+      "version": "Moving stable docs, page date 2026-08-23",
+      "context": "Stock/part tracking history and Delete Old Stock Tracking Entries (default false), deletion interval (365 days).",
+      "observation": "Stock history is not a borrower ledger; retention controls affect preserving history.",
+      "limitation": "Serialized/BOM definitions and deletion callers beyond this page UNASSESSED.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-inv-deploy",
+      "url": "https://docs.inventree.org/en/stable/start/docker/",
+      "version": "Moving stable docs",
+      "context": "Local Docker service stack and persistent storage.",
+      "observation": "Self-host path has operational and backup responsibilities.",
+      "limitation": "No deployment, complete backup implementation or release mapping verified.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-inv-fix",
+      "url": "https://github.com/inventree/InvenTree/pull/12719",
+      "version": "Merged 1.5.x take_stock backport PR",
+      "context": "PR scope and merge summary.",
+      "observation": "Stock-taking race history is relevant regression context, not lending concurrency evidence.",
+      "limitation": "Full adjacent method, original issue and executable regression UNASSESSED.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-sqlite-use",
+      "url": "https://www.sqlite.org/whentouse.html",
+      "version": "Current official docs",
+      "context": "Application-server mediation versus simultaneous network-file access.",
+      "observation": "Single-server SQLite is different from two hosts opening a shared file; one writer and request serialization matter.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-sqlite-wal",
+      "url": "https://www.sqlite.org/wal.html",
+      "version": "Current official docs; WAL-reset fix 3.51.3, backports 3.44.6/3.50.7",
+      "context": "Same-host WAL requirement, one writer, sections 11/11.1/11.2.",
+      "observation": "Rare reset corruption condition involves two or more connections in separate threads/processes writing or checkpointing concurrently. Treatment correctly preserves patched-runtime condition and proposed test status.",
+      "limitation": "Fix diff and induced race harness execution UNASSESSED.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-pg18-constraints",
+      "url": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+      "version": "PostgreSQL 18",
+      "context": "Non-null/unique keys; partial unique indexes.",
+      "observation": "Item identity and active-loan uniqueness are distinct. A partial unique index can cover a subset; the predicate and transactional workflow remain design responsibilities.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-pg18-lock",
+      "url": "https://www.postgresql.org/docs/18/explicit-locking.html",
+      "version": "PostgreSQL 18",
+      "context": "13.3.2 FOR UPDATE and conflicting lock modes.",
+      "observation": "Same-row writers/lockers wait until transaction end; revalidation, idempotency and deadlock handling remain application duties.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    },
+    {
+      "id": "P-pg17-lock",
+      "url": "https://www.postgresql.org/docs/17/explicit-locking.html",
+      "version": "PostgreSQL 17",
+      "context": "13.3.2 FOR UPDATE.",
+      "observation": "Control cites the versioned primitive appropriately, without treating it as completed product validation.",
+      "access_utc_precision": {
+        "bounded_evaluator_lookup_window": "2026-10-12T01:58:53Z to 2026-10-12T02:15:13.182062+00:00",
+        "per_request_timestamp": "UNKNOWN for web lookups; not synthesized"
+      }
+    }
+  ],
+  "scope": "Focused primary documentation context; no candidate repairs, deployments or software execution."
+}

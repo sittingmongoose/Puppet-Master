@@ -1,0 +1,306 @@
+{
+  "id": "sn-ui-test",
+  "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/tests/Feature/Checkins/Ui/AssetCheckinTest.php",
+  "access_utc": "2026-10-12T02:05:35.977912+00:00",
+  "response_sha256": "7990c81f32bfbb893f5133b8fe3a938cbf57a277ccda8075c9822d4e0130f352",
+  "response_bytes": 20373,
+  "evidence": [
+    {
+      "line": 72,
+      "text": "    public function test_requestable_toggle_is_hidden_on_checkin_page_for_non_deployable_status()"
+    },
+    {
+      "line": 73,
+      "text": "    {"
+    },
+    {
+      "line": 74,
+      "text": "        $nonDeployableStatus = Statuslabel::factory()->create(['deployable' => 0]);"
+    },
+    {
+      "line": 75,
+      "text": "        $asset = Asset::factory()->assignedToUser()->create(["
+    },
+    {
+      "line": 76,
+      "text": "            'status_id' => $nonDeployableStatus->id,"
+    },
+    {
+      "line": 77,
+      "text": "        ]);"
+    },
+    {
+      "line": 78,
+      "text": ""
+    },
+    {
+      "line": 79,
+      "text": "        $response = $this->actingAs(User::factory()->checkinAssets()->create())"
+    },
+    {
+      "line": 80,
+      "text": "            ->get(route('hardware.checkin.create', $asset))"
+    },
+    {
+      "line": 81,
+      "text": "            ->assertOk();"
+    },
+    {
+      "line": 82,
+      "text": ""
+    },
+    {
+      "line": 83,
+      "text": "        $content = $response->getContent();"
+    },
+    {
+      "line": 84,
+      "text": ""
+    },
+    {
+      "line": 85,
+      "text": "        $this->assertMatchesRegularExpression("
+    },
+    {
+      "line": 86,
+      "text": "            '/id=\"requestable-wrapper\"(?:(?!>).)*style=\"display:\\s*none;\"/s',"
+    },
+    {
+      "line": 87,
+      "text": "            $content"
+    },
+    {
+      "line": 88,
+      "text": "        );"
+    },
+    {
+      "line": 125,
+      "text": "    public function test_asset_can_be_checked_in()"
+    },
+    {
+      "line": 126,
+      "text": "    {"
+    },
+    {
+      "line": 127,
+      "text": "        Event::fake([CheckoutableCheckedIn::class]);"
+    },
+    {
+      "line": 128,
+      "text": ""
+    },
+    {
+      "line": 129,
+      "text": "        $user = User::factory()->create();"
+    },
+    {
+      "line": 130,
+      "text": "        $location = Location::factory()->create();"
+    },
+    {
+      "line": 131,
+      "text": "        $status = Statuslabel::first() ?? Statuslabel::factory()->create();"
+    },
+    {
+      "line": 132,
+      "text": "        $asset = Asset::factory()->assignedToUser($user)->create(["
+    },
+    {
+      "line": 133,
+      "text": "            'expected_checkin' => now()->addDay(),"
+    },
+    {
+      "line": 134,
+      "text": "            'last_checkin' => null,"
+    },
+    {
+      "line": 135,
+      "text": "            'accepted' => 'accepted',"
+    },
+    {
+      "line": 136,
+      "text": "        ]);"
+    },
+    {
+      "line": 137,
+      "text": ""
+    },
+    {
+      "line": 138,
+      "text": "        $this->assertTrue($asset->assignedTo->is($user));"
+    },
+    {
+      "line": 139,
+      "text": ""
+    },
+    {
+      "line": 140,
+      "text": "        $currentTimestamp = now();"
+    },
+    {
+      "line": 141,
+      "text": ""
+    },
+    {
+      "line": 142,
+      "text": "        $this->actingAs(User::factory()->checkinAssets()->create())"
+    },
+    {
+      "line": 143,
+      "text": "            ->post("
+    },
+    {
+      "line": 144,
+      "text": "                route('hardware.checkin.store', [$asset]),"
+    },
+    {
+      "line": 145,
+      "text": "                ["
+    },
+    {
+      "line": 146,
+      "text": "                    'name' => 'Changed Name',"
+    },
+    {
+      "line": 147,
+      "text": "                    'status_id' => $status->id,"
+    },
+    {
+      "line": 148,
+      "text": "                    'location_id' => $location->id,"
+    },
+    {
+      "line": 149,
+      "text": "                ],"
+    },
+    {
+      "line": 150,
+      "text": "            );"
+    },
+    {
+      "line": 151,
+      "text": ""
+    },
+    {
+      "line": 152,
+      "text": "        $this->assertNull($asset->refresh()->assignedTo);"
+    },
+    {
+      "line": 153,
+      "text": "        $this->assertNull($asset->expected_checkin);"
+    },
+    {
+      "line": 154,
+      "text": "        $this->assertNotNull($asset->last_checkin);"
+    },
+    {
+      "line": 155,
+      "text": "        $this->assertNull($asset->assignedTo);"
+    },
+    {
+      "line": 156,
+      "text": "        $this->assertNull($asset->assigned_type);"
+    },
+    {
+      "line": 157,
+      "text": "        $this->assertNull($asset->accepted);"
+    },
+    {
+      "line": 158,
+      "text": "        $this->assertEquals('Changed Name', $asset->name);"
+    },
+    {
+      "line": 159,
+      "text": "        $this->assertEquals($status->id, $asset->status_id);"
+    },
+    {
+      "line": 160,
+      "text": "        $this->assertTrue($asset->location()->is($location));"
+    },
+    {
+      "line": 161,
+      "text": ""
+    },
+    {
+      "line": 162,
+      "text": "        Event::assertDispatched(function (CheckoutableCheckedIn $event) use ($currentTimestamp) {"
+    },
+    {
+      "line": 163,
+      "text": "            // this could be better mocked but is ok for now."
+    },
+    {
+      "line": 164,
+      "text": "            return (int) Carbon::parse($event->action_date)->diffInSeconds($currentTimestamp, true) < 2;"
+    },
+    {
+      "line": 165,
+      "text": "        }, 1);"
+    },
+    {
+      "line": 166,
+      "text": "    }"
+    },
+    {
+      "line": 411,
+      "text": "    public function test_checkin_does_not_set_asset_to_requestable_when_status_is_not_deployable()"
+    },
+    {
+      "line": 412,
+      "text": "    {"
+    },
+    {
+      "line": 413,
+      "text": "        $undeployableStatus = Statuslabel::factory()->create(['deployable' => 0]);"
+    },
+    {
+      "line": 414,
+      "text": "        $asset = Asset::factory()->assignedToUser()->create(["
+    },
+    {
+      "line": 415,
+      "text": "            'requestable' => 0,"
+    },
+    {
+      "line": 416,
+      "text": "        ]);"
+    },
+    {
+      "line": 417,
+      "text": ""
+    },
+    {
+      "line": 418,
+      "text": "        $this->actingAs(User::factory()->checkinAssets()->create())"
+    },
+    {
+      "line": 419,
+      "text": "            ->post(route('hardware.checkin.store', [$asset]), ["
+    },
+    {
+      "line": 420,
+      "text": "                'status_id' => $undeployableStatus->id,"
+    },
+    {
+      "line": 421,
+      "text": "                'requestable' => 1,"
+    },
+    {
+      "line": 422,
+      "text": "            ]);"
+    },
+    {
+      "line": 423,
+      "text": ""
+    },
+    {
+      "line": 424,
+      "text": "        $this->assertFalse((bool) $asset->fresh()->requestable);"
+    },
+    {
+      "line": 425,
+      "text": "    }"
+    }
+  ],
+  "operation": "read-only test source; not executed"
+}

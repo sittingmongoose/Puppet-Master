@@ -1,0 +1,19 @@
+{
+  "schema": "er13.comparison-output-manifest.v1",
+  "original_manifest_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/manifest.json",
+  "original_manifest_sha256": "82bc97b56c2bb6ea0b4b7e47128a7df7ff50cd8db83dca14d12fad3168b94c1c",
+  "comparison_created_after_original_freeze": true,
+  "frozen_at_utc": "2026-10-12T02:17:08.513435+00:00",
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/comparison.md",
+      "bytes": 1791,
+      "sha256": "3e5fe4b2ebb76b6060ae3f40d5f2ebb2d80eaf213401de7b4fd9dc1dff67179c"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B09-P01/comparison.json",
+      "bytes": 4607,
+      "sha256": "8675902b526f4927b83ab4cfcec48f1d483ec48b2244be4601537c31ec25b503"
+    }
+  ]
+}

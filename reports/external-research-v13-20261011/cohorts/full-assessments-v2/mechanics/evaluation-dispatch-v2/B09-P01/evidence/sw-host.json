@@ -1,0 +1,488 @@
+{
+  "id": "sw-host",
+  "url": "https://raw.githubusercontent.com/SpaceWorks-HQ/SpaceWorks/d3cd13cc42d1c2b823b30b57a1fcb3459601eb1a/docs/self-hosting.md",
+  "resolved_url": "https://raw.githubusercontent.com/SpaceWorks-HQ/SpaceWorks/d3cd13cc42d1c2b823b30b57a1fcb3459601eb1a/docs/self-hosting.md",
+  "access_utc": "2026-10-12T02:01:58.409394+00:00",
+  "response_sha256": "fb61923dcff48133880fd734e13778e08e6193e16223883c3863509e820e8d2f",
+  "response_bytes": 12088,
+  "operation": "read-only fetch",
+  "evidence": [
+    {
+      "line": 4,
+      "text": ""
+    },
+    {
+      "line": 5,
+      "text": "## Production Compose"
+    },
+    {
+      "line": 6,
+      "text": ""
+    },
+    {
+      "line": 7,
+      "text": "Use the production Compose file when deploying published images:"
+    },
+    {
+      "line": 8,
+      "text": ""
+    },
+    {
+      "line": 9,
+      "text": "```powershell"
+    },
+    {
+      "line": 10,
+      "text": "Copy-Item .env.example .env"
+    },
+    {
+      "line": 11,
+      "text": "docker compose -f docker-compose.prod.yml up -d"
+    },
+    {
+      "line": 12,
+      "text": "```"
+    },
+    {
+      "line": 13,
+      "text": ""
+    },
+    {
+      "line": 14,
+      "text": "Set these values before first boot:"
+    },
+    {
+      "line": 15,
+      "text": ""
+    },
+    {
+      "line": 16,
+      "text": "```env"
+    },
+    {
+      "line": 17,
+      "text": "POSTGRES_PASSWORD=replace-with-a-strong-password"
+    },
+    {
+      "line": 18,
+      "text": "SECRET_KEY=replace-with-a-long-random-secret"
+    },
+    {
+      "line": 19,
+      "text": "ALLOWED_HOSTS=inventory.example.org"
+    },
+    {
+      "line": 20,
+      "text": "CORS_ALLOWED_ORIGINS=https://inventory.example.org"
+    },
+    {
+      "line": 21,
+      "text": "MINIO_ROOT_USER=replace-with-a-random-access-key"
+    },
+    {
+      "line": 32,
+      "text": "MAKERSPACE_FRONTEND_IMAGE=ghcr.io/shaan-shoukath/osmm-frontend"
+    },
+    {
+      "line": 33,
+      "text": "```"
+    },
+    {
+      "line": 34,
+      "text": ""
+    },
+    {
+      "line": 35,
+      "text": "### Build from source (no published images)"
+    },
+    {
+      "line": 36,
+      "text": ""
+    },
+    {
+      "line": 37,
+      "text": "Until the GHCR images are published publicly, build locally with the build overlay:"
+    },
+    {
+      "line": 38,
+      "text": ""
+    },
+    {
+      "line": 39,
+      "text": "```bash"
+    },
+    {
+      "line": 40,
+      "text": "docker compose -f docker-compose.prod.yml -f docker-compose.build.yml up -d --build"
+    },
+    {
+      "line": 41,
+      "text": "```"
+    },
+    {
+      "line": 42,
+      "text": ""
+    },
+    {
+      "line": 43,
+      "text": "For a guided first run that generates secrets and `.env` for you, use the `setup.sh` / `setup.ps1`"
+    },
+    {
+      "line": 44,
+      "text": "scripts at the repo root (see [setup-for-makerspaces.md](setup-for-makerspaces.md))."
+    },
+    {
+      "line": 45,
+      "text": ""
+    },
+    {
+      "line": 46,
+      "text": "> The frontend container's nginx proxies `/api/`, `/static/`, and the docs routes to the backend."
+    },
+    {
+      "line": 47,
+      "text": "> The **single published port (80)** serves the public app, the React staff console at `/admin`,"
+    },
+    {
+      "line": 48,
+      "text": "> and Swagger. The Django control plane is mounted at `/control/` on the backend and is"
+    },
+    {
+      "line": 49,
+      "text": "> intentionally **not exposed** on the public frontend port; access it only through direct backend"
+    },
+    {
+      "line": 50,
+      "text": "> access."
+    },
+    {
+      "line": 51,
+      "text": ""
+    },
+    {
+      "line": 52,
+      "text": "## First Run"
+    },
+    {
+      "line": 53,
+      "text": ""
+    },
+    {
+      "line": 54,
+      "text": "Create the first superadmin and makerspace:"
+    },
+    {
+      "line": 55,
+      "text": ""
+    },
+    {
+      "line": 56,
+      "text": "```powershell"
+    },
+    {
+      "line": 57,
+      "text": "docker compose -f docker-compose.prod.yml exec backend python manage.py setup_instance `"
+    },
+    {
+      "line": 58,
+      "text": "  --username admin `"
+    },
+    {
+      "line": 59,
+      "text": "  --email admin@example.org `"
+    },
+    {
+      "line": 60,
+      "text": "  --password \"replace-with-a-strong-password\" `"
+    },
+    {
+      "line": 61,
+      "text": "  --makerspace-name \"My Makerspace\""
+    },
+    {
+      "line": 79,
+      "text": "Return reminder emails are sent by a management command. Schedule it every 15-60 minutes with cron, systemd timers, Windows Task Scheduler, or your hosting platform's scheduler:"
+    },
+    {
+      "line": 80,
+      "text": ""
+    },
+    {
+      "line": 81,
+      "text": "```powershell"
+    },
+    {
+      "line": 82,
+      "text": "docker compose -f docker-compose.prod.yml exec backend python manage.py send_return_reminders"
+    },
+    {
+      "line": 83,
+      "text": "```"
+    },
+    {
+      "line": 84,
+      "text": ""
+    },
+    {
+      "line": 85,
+      "text": "The command is idempotent. It only sends reminders for issued or partially returned requests whose `return_due_at` is in the past and whose reminder has not already been sent. Requests returned before the due time are skipped."
+    },
+    {
+      "line": 86,
+      "text": ""
+    },
+    {
+      "line": 87,
+      "text": "## Upgrades"
+    },
+    {
+      "line": 88,
+      "text": ""
+    },
+    {
+      "line": 89,
+      "text": "Pin a release tag for stable deployments:"
+    },
+    {
+      "line": 90,
+      "text": ""
+    },
+    {
+      "line": 91,
+      "text": "```env"
+    },
+    {
+      "line": 92,
+      "text": "MAKERSPACE_IMAGE_TAG=v0.2.0"
+    },
+    {
+      "line": 93,
+      "text": "```"
+    },
+    {
+      "line": 94,
+      "text": ""
+    },
+    {
+      "line": 95,
+      "text": "Then run:"
+    },
+    {
+      "line": 96,
+      "text": ""
+    },
+    {
+      "line": 99,
+      "text": "docker compose -f docker-compose.prod.yml up -d"
+    },
+    {
+      "line": 100,
+      "text": "```"
+    },
+    {
+      "line": 101,
+      "text": ""
+    },
+    {
+      "line": 102,
+      "text": "The backend container runs migrations on startup. Keep a database backup before changing versions."
+    },
+    {
+      "line": 103,
+      "text": ""
+    },
+    {
+      "line": 104,
+      "text": "Manual dependency audit: `pip install pip-audit && pip-audit -r backend/requirements.txt`."
+    },
+    {
+      "line": 105,
+      "text": ""
+    },
+    {
+      "line": 106,
+      "text": "## HTTPS & security hardening"
+    },
+    {
+      "line": 107,
+      "text": ""
+    },
+    {
+      "line": 108,
+      "text": "TLS-dependent settings are **env-gated, not `DEBUG`-gated**, so the default HTTP stack works out of"
+    },
+    {
+      "line": 109,
+      "text": "the box. The default frontend nginx does **not** trust inbound `X-Forwarded-Proto`; it forwards only"
+    },
+    {
+      "line": 110,
+      "text": "its own scheme to Django."
+    },
+    {
+      "line": 111,
+      "text": ""
+    },
+    {
+      "line": 112,
+      "text": "For a real domain with automatic TLS, use the Caddy overlay:"
+    },
+    {
+      "line": 113,
+      "text": ""
+    },
+    {
+      "line": 114,
+      "text": "```env"
+    },
+    {
+      "line": 115,
+      "text": "PUBLIC_DOMAIN=inventory.example.org"
+    },
+    {
+      "line": 116,
+      "text": "CSRF_TRUSTED_ORIGINS=https://inventory.example.org"
+    },
+    {
+      "line": 201,
+      "text": "console binds to `127.0.0.1:9001` by default; keep it private or put it behind authenticated VPN/admin"
+    },
+    {
+      "line": 202,
+      "text": "access."
+    },
+    {
+      "line": 203,
+      "text": ""
+    },
+    {
+      "line": 204,
+      "text": "## Backups"
+    },
+    {
+      "line": 205,
+      "text": ""
+    },
+    {
+      "line": 206,
+      "text": "Operational data lives in Postgres and object files live in the `minio_data` Docker volume. Back up"
+    },
+    {
+      "line": 207,
+      "text": "both before upgrades:"
+    },
+    {
+      "line": 208,
+      "text": ""
+    },
+    {
+      "line": 209,
+      "text": "```bash"
+    },
+    {
+      "line": 210,
+      "text": "docker compose -f docker-compose.prod.yml exec -T db \\"
+    },
+    {
+      "line": 211,
+      "text": "  pg_dump -U makerspace makerspace_manager > backup-$(date +%F).sql"
+    },
+    {
+      "line": 212,
+      "text": ""
+    },
+    {
+      "line": 213,
+      "text": "mkdir -p backups"
+    },
+    {
+      "line": 214,
+      "text": "docker compose -f docker-compose.prod.yml run --rm --entrypoint sh \\"
+    },
+    {
+      "line": 215,
+      "text": "  -v \"$PWD/backups:/backup\" \\"
+    },
+    {
+      "line": 216,
+      "text": "  minio \\"
+    },
+    {
+      "line": 217,
+      "text": "  -c 'tar -czf /backup/minio-$(date +%F).tgz -C /data .'"
+    },
+    {
+      "line": 218,
+      "text": "```"
+    },
+    {
+      "line": 219,
+      "text": ""
+    },
+    {
+      "line": 220,
+      "text": "Also keep a copy of your `.env` (it holds `API_CLIENT_ENC_KEY`, without which encrypted integration"
+    },
+    {
+      "line": 221,
+      "text": "secrets are unrecoverable, and the MinIO credentials needed to read object backups)."
+    },
+    {
+      "line": 222,
+      "text": ""
+    },
+    {
+      "line": 223,
+      "text": "Restore order is database first, then object files. Stop the stack, restore the Postgres dump into the"
+    },
+    {
+      "line": 224,
+      "text": "`db` service, unpack the MinIO archive into the `minio_data` volume, then start the stack and check"
+    },
+    {
+      "line": 225,
+      "text": "`/api/v1/health/readiness/`."
+    },
+    {
+      "line": 226,
+      "text": ""
+    },
+    {
+      "line": 227,
+      "text": "## Tenant Frontends"
+    },
+    {
+      "line": 228,
+      "text": ""
+    },
+    {
+      "line": 229,
+      "text": "One backend can serve **many makerspaces**. A makerspace without its own server can be hosted as an"
+    },
+    {
+      "line": 230,
+      "text": "additional tenant on another makerspace's instance — each tenant gets its own makerspace record,"
+    },
+    {
+      "line": 231,
+      "text": "public URL/slug, branding, and (optionally) its own branded domain, all isolated by makerspace"
+    },
+    {
+      "line": 232,
+      "text": "scoping. To give a tenant its own branded site, set its **Custom domain**"
+    },
+    {
+      "line": 233,
+      "text": "(`Makerspace.frontend_domain`) in the staff console Settings tab; that single field drives CORS,"
+    },
+    {
+      "line": 234,
+      "text": "bootstrap resolution, and the staff-auth allowlist. See `docs/single-tenant-frontend.md`."
+    },
+    {
+      "line": 235,
+      "text": ""
+    }
+  ],
+  "license_context": "Public focused source excerpts; current upstream LICENSE identifies GNU AGPL v3: https://github.com/SpaceWorks-HQ/SpaceWorks/blob/main/LICENSE. LICENSE at the specific historical commit was not resolved (404). No execution; do not infer historical license identity from moving main."
+}

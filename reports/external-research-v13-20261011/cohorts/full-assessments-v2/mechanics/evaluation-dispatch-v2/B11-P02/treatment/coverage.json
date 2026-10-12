@@ -1,0 +1,306 @@
+{
+  "arm_id": "B11-P02-treatment",
+  "overall": "COMPLETE",
+  "definition": "Complete finite review of every frozen scientific document, all six axes, every material original obligation and consequential source family at research-proposal level; not exhaustive proof of all library behavior or future software.",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED",
+      "assessment": "All product obligations/negative constraints addressed at proposal level; researched condition failures are identified separately rather than hidden as coverage gaps."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "MATERIAL_FINDING",
+      "assessment": "All declared consequential source families examined. T-S01 omits the actual native State persistence boundary; T-P01 loses a fallback writer-identity condition. Other version/context claims are appropriately scoped."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED",
+      "assessment": "Automerge conflict/history APIs, lost-frame incident, move research, Yrs buffering/anchors and JS handshake history are useful mechanisms. Paper is not misrepresented as shipped software."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "MATERIAL_FINDING",
+      "assessment": "All material exact-plan choices correctly disposed. M1/M2/M4 receive coherent proposed amendments. M3 is accepted but its claimed full recovery closure is materially incomplete under E13."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "MATERIAL_FINDING",
+      "assessment": "Most supported meanings and critic concerns survive; T-P01 is a consequential investigator-to-final condition/validation loss. Stable text positions remain optional."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED",
+      "assessment": "Future tests have meaningful convergence/identity/order/recovery/publication oracles and are accurately unrun. Omitted persistence context is source research, not a demand for future code execution."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "obligation": "Disconnected editing and local save",
+      "coverage": "COMPLETE",
+      "assessment": "Keep fully local editing; app-owned durable commit before saved feedback.",
+      "final_locator": "reviser/final.md64-72,105,109",
+      "finding_ids": []
+    },
+    {
+      "id": "O02",
+      "obligation": "Ordered cues, insertion and reordering",
+      "coverage": "COMPLETE",
+      "assessment": "Separate cue entities/order; explicit move intent and human review of incompatible placement.",
+      "final_locator": "reviser/final.md43-54,108",
+      "finding_ids": []
+    },
+    {
+      "id": "O03",
+      "obligation": "Collaborative cue text and timing notes",
+      "coverage": "COMPLETE",
+      "assessment": "Granular collaborative text plus semantic conflict review; timing is independently editable.",
+      "final_locator": "reviser/final.md56-62,107",
+      "finding_ids": []
+    },
+    {
+      "id": "O04",
+      "obligation": "Role assignments and scalar conflicts",
+      "coverage": "COMPLETE",
+      "assessment": "Independent fields merge; competing values remain intelligible and resolvable.",
+      "final_locator": "reviser/final.md28,39,58,107",
+      "finding_ids": []
+    },
+    {
+      "id": "O05",
+      "obligation": "Cue/comment stable references and deleted anchors",
+      "coverage": "COMPLETE",
+      "assessment": "Comments use cue IDs, survive reorder, and stay visibly anchored to tombstones after deletion.",
+      "final_locator": "reviser/final.md24,39-41,108,111",
+      "finding_ids": []
+    },
+    {
+      "id": "O06",
+      "obligation": "Human conflict and resolution lifecycle",
+      "coverage": "COMPLETE",
+      "assessment": "Issue-level candidates, explicit decisions, retained context and late-candidate review.",
+      "final_locator": "reviser/final.md28,51-62,107-108",
+      "finding_ids": []
+    },
+    {
+      "id": "O07",
+      "obligation": "Causal revisions and history",
+      "coverage": "COMPLETE",
+      "assessment": "Use causal revision identity rather than device clocks; inspect history/frontier/head semantics.",
+      "final_locator": "reviser/final.md26,47-52,76",
+      "finding_ids": []
+    },
+    {
+      "id": "O08",
+      "obligation": "Explicit approval and publication isolation",
+      "coverage": "COMPLETE",
+      "assessment": "Publish a new immutable selected-state artifact with approval identity; later edits cannot replace it.",
+      "final_locator": "reviser/final.md29,74-80,110",
+      "finding_ids": []
+    },
+    {
+      "id": "O09",
+      "obligation": "Visible version and disconnected stage viewing",
+      "coverage": "COMPLETE",
+      "assessment": "Named published version, offline cache, deliberate refresh/switch; no silent draft replacement.",
+      "final_locator": "reviser/final.md30,78,111",
+      "finding_ids": []
+    },
+    {
+      "id": "O10",
+      "obligation": "Retry, reconnect, restart and recovery",
+      "coverage": "COMPLETE",
+      "assessment": "Application persistence/outbox/ack boundary; core transport conditions and crash cases.",
+      "final_locator": "reviser/final.md64-72,109,122",
+      "finding_ids": [
+        "T-S01"
+      ]
+    },
+    {
+      "id": "O11",
+      "obligation": "Exports preserve comments and roles",
+      "coverage": "COMPLETE",
+      "assessment": "Structured stable-reference round trip; staff visibility/format remain owner decisions.",
+      "final_locator": "reviser/final.md31,80,111",
+      "finding_ids": []
+    },
+    {
+      "id": "O12",
+      "obligation": "Plausible alternatives and real history",
+      "coverage": "COMPLETE",
+      "assessment": "Compare researched mechanisms and relevant release/issue/fix context without assuming adoption.",
+      "final_locator": "reviser/final.md82-88,129",
+      "finding_ids": [
+        "T-P01"
+      ]
+    },
+    {
+      "id": "O13",
+      "obligation": "Negative constraints",
+      "coverage": "COMPLETE",
+      "assessment": "No always-online editor, enterprise account, new chat product, or demanded deployment.",
+      "final_locator": "reviser/final.md9-15,33",
+      "finding_ids": []
+    },
+    {
+      "id": "O14",
+      "obligation": "Unknown user-specific facts",
+      "coverage": "COMPLETE",
+      "assessment": "Counts, crew authority, comment scope, export visibility, relay/retention remain explicit unknowns.",
+      "final_locator": "reviser/final.md90-101",
+      "finding_ids": []
+    },
+    {
+      "id": "O15",
+      "obligation": "Exact released-plan dispositions",
+      "coverage": "COMPLETE",
+      "assessment": "Every material plan choice is retained, changed or rejected with reason; timestamp backup never treated as tested.",
+      "final_locator": "reviser/final.md17-33",
+      "finding_ids": []
+    },
+    {
+      "id": "O16",
+      "obligation": "Validation truth and useful oracles",
+      "coverage": "COMPLETE",
+      "assessment": "Proposed convergence/recovery/anchor/publication/usability checks; executed research distinguished.",
+      "final_locator": "reviser/final.md103-114,125-131",
+      "finding_ids": []
+    }
+  ],
+  "source_families": [
+    {
+      "source_family": "Automerge property conflicts",
+      "primary_source_id": "E09",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Concurrent writes; getConflicts; later assignment; counter/actor tie-break",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Automerge fine-grained modeling",
+      "primary_source_id": "E10",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Entity-map/ID-list example and whole-object replacement caveat",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Automerge native synchronization",
+      "primary_source_id": "E11",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Module protocol requirement and send/receive/generate loop; E13 callers",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Automerge values, history, author/actor and transaction APIs",
+      "primary_source_id": "E12",
+      "coverage": "COMPLETE",
+      "claim_boundary": "get_all/get_all_at/get_cursor; Authors and Actors; apply_changes/save; Transactable and manual_transaction",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Automerge partial State persistence and actual callers",
+      "primary_source_id": "E13",
+      "coverage": "COMPLETE",
+      "claim_boundary": "state.rs 27-78,108-150; sync.rs 238-253,279-287,386-463; inline read-only/in-flight tests inspected",
+      "finding_ids": [
+        "T-S01"
+      ]
+    },
+    {
+      "source_family": "Automerge lost-message report",
+      "primary_source_id": "E14",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Generated-and-lost frame reproducer; maintainer reliable-stream/reset response",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Automerge merge rules",
+      "primary_source_id": "E15",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Map/list/text rules; predecessor IDs; reverse insertion caveat",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Automerge text adapter guidance",
+      "primary_source_id": "E16",
+      "coverage": "COMPLETE",
+      "claim_boundary": "splice/updateText; frequency caveat",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Extending JSON CRDTs with Move Operations",
+      "primary_source_id": "E17",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Version record and abstract",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Yrs release and regression context",
+      "primary_source_id": "E18",
+      "coverage": "COMPLETE",
+      "claim_boundary": "v0.28.0 and v0.27.3 release entries",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Yrs updates, identity and stable positions",
+      "primary_source_id": "E19",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Root ClientID warning/MapRef rules; TransactionMut apply_update/encode_update; StickyIndex description",
+      "finding_ids": [
+        "T-P01"
+      ]
+    },
+    {
+      "source_family": "Yjs shared-type movement",
+      "primary_source_id": "E20",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Caveats",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Automerge Repo adapters and history sizing",
+      "primary_source_id": "E21",
+      "coverage": "COMPLETE",
+      "claim_boundary": "StorageAdapter/NetworkAdapter example; Modeling Data performance; demo network caveat",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Automerge stale JS handshake documentation",
+      "primary_source_id": "E22",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Maintainer receiveSyncMessage/generateSyncMessage explanation",
+      "finding_ids": []
+    }
+  ],
+  "out_of_scope_or_unavailable": [
+    {
+      "area": "Future app execution/deployment, UI adapter, crash correctness and performance",
+      "coverage": "UNASSESSED",
+      "reason": "Proposed validation, not required executed deliverable."
+    },
+    {
+      "area": "Actual cue counts, crew authority, export visibility, relay/retention decisions",
+      "coverage": "UNASSESSED",
+      "reason": "User-specific unknowns explicitly permitted and retained."
+    },
+    {
+      "area": "Native actual task/session linkage, provider activity, context occupancy, billing",
+      "coverage": "UNASSESSED",
+      "reason": "Unavailable independent telemetry; capture custody is weaker evidence."
+    }
+  ],
+  "early_stop": false,
+  "missing_final": false
+}

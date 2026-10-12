@@ -1,0 +1,42 @@
+{
+  "schema": "er13.separate-arm-contract-completion-manifest.v1",
+  "arm_id": "B10-P02-control",
+  "frozen_at_utc": "2026-10-12T02:34:09.694755+00:00",
+  "original_assessment": false,
+  "one_review_only": true,
+  "scientific_selection_performed": false,
+  "files": [
+    {
+      "path": "assessment.md",
+      "bytes": 4357,
+      "sha256": "60090058ce203cdb41be36adfd6633cfe84965716edc0afaea02709cf497b339"
+    },
+    {
+      "path": "assessment.json",
+      "bytes": 6138,
+      "sha256": "e56f8eea1ab06e1c1a4462a468ecaad9c98dee86c80a555828832f631de2876d"
+    },
+    {
+      "path": "coverage.json",
+      "bytes": 11474,
+      "sha256": "22e9336b1c53f3785bfdac7e30896d902dac17d28313e19d93b063394f4408c3"
+    },
+    {
+      "path": "defects.json",
+      "bytes": 3852,
+      "sha256": "5b7f7c7487149378d3d12a09f46767935b67ea5429ab7fb5cee43b794f393f80"
+    },
+    {
+      "path": "primary-source-index.json",
+      "bytes": 848,
+      "sha256": "f5262351eba09a57b2e81c8ff86b9e4331ec609bd5e8b4ded59f393d47895eef"
+    }
+  ],
+  "shared_primary_index": {
+    "path": "../primary-source-index.json",
+    "sha256": "c8e69595d93411060f2557a08809d35cfa6aadf12da870836bd700ab475edd8d"
+  },
+  "originals_unchanged": true,
+  "not_original_grade_counts": true,
+  "immutable_policy": "Separate review result frozen once; no author repair, replacement grade or grader loop."
+}

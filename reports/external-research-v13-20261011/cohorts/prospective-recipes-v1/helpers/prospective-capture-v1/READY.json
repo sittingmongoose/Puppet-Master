@@ -1,0 +1,16 @@
+{
+  "schema": "er13.prospective_capture_ready.v1",
+  "ready_domain": "MOCK-qualified source/API only; unstarted existing materializer fresh native Goal stages",
+  "manifest_sha256": "24ff3ed714c7108a49a2614d0afbda003fdac0bed50044a9952c3f77860d29ba",
+  "install_sha256": "d462daa854097de524f019c33a488bc96f9b087e3992ab77fd5b7bf20a45cc75",
+  "template_sha256": "e4c4b1e96308cee17a548a03ed507a3aedd2249c364d83c8b2c6c300bac6f412",
+  "shim_sha256": "5e22bd87a1f04cad97a936eb1ce99c2062321f6ff6c6f8f2f45ee02ceab31ac9",
+  "checks_sha256": "dd687c59aeb02d9e88a17c1871da7fc69efa9ae96e104c2cc386ddfd62c1dfd3",
+  "checks_passed": 154,
+  "actual_native_calls": 0,
+  "actual_candidate_dispatches": 0,
+  "native_qualified": false,
+  "root_dispatch_release_required": true,
+  "prospective_only": true,
+  "publication_scope": "Public normalized materialization of original pinned helper; source/API only"
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "er13.immutable-original-output-manifest.v1",
+  "arm_id": "B02-P02-control",
+  "scope": "FULL",
+  "frozen_at_utc": "2026-10-12T02:00:37.364191+00:00",
+  "comparison_started": false,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/control/assessment.md",
+      "bytes": 5476,
+      "sha256": "abe4b14ce825cac2152913c7ed051119df869c69def8c2c8fbde712249070828"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/control/assessment.json",
+      "bytes": 12792,
+      "sha256": "9bd19835c34268f80ac755a2f7453cdc9ad218a939e47b3594b4164a5bcadf20"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/control/coverage.json",
+      "bytes": 15417,
+      "sha256": "d5c3e2f8d375c8b9dba97a0bb69ce4b566781fa2ace897471f0f2e8c13c32036"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/control/defects.json",
+      "bytes": 1182,
+      "sha256": "38a1cf7f2281d3583287948df7491176a1530c31bfac0275c4440b338b8449b1"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/control/primary-source-index.json",
+      "bytes": 58871,
+      "sha256": "6046e0eee6884dd3c5a8de4ba281b66993740759ca0b77ad9f5c0cc958731245"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/input-integrity.json",
+      "bytes": 28194,
+      "sha256": "7acc8caaf78273d2e0ec6ac0ddb168c7921124d777c616a2819c7096acfa3eac"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/evaluation-context.json",
+      "bytes": 1962,
+      "sha256": "cf1bfad5cd6fba5a47ac5cc80f81164b1b77e39c7999dc7df0cf0a7e7d736a52"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/evidence/mrbs-context.md",
+      "bytes": 2536,
+      "sha256": "3d920dcaf3c03443a933c665938fc642e1eadeb82d2549e099eaa607f3cd8904"
+    }
+  ],
+  "self_excluded": "Manifest cannot contain its own digest; root manifest and terminal receipt identify it.",
+  "immutability": "Original judgments/evidence are closed; any dispute requires a new separate adjudication."
+}

@@ -1,0 +1,171 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "B06-P02-treatment",
+  "final_material_defects": [
+    {
+      "id": "T-D01",
+      "severity": "material",
+      "type": "required_consequential_source_context_omission",
+      "axes": [
+        2,
+        3
+      ],
+      "status": "PRESENT_IN_FROZEN_FINAL",
+      "finding": "The selected PowerSync transaction-grouping history is retained as a closed report without a visible closure explanation, although the same primary issue contains a February 12, 2024 maintainer explanation naming fixed RN SDK 1.2.1 and Web SDK 0.2.1.",
+      "candidate_locators": [
+        "investigator/source-map.json S19",
+        "investigator/draft.md Alternatives and selection criteria",
+        "critic-truth/critique.md finding 6",
+        "reviser/final.md:76",
+        "reviser/final.md:127",
+        "reviser/source-map.json embedded S19"
+      ],
+      "evidence": [
+        "E28",
+        "E29"
+      ],
+      "governing_obligation": "Complete consequential issue/fix/release history and available mechanism research; unknown inspected source context must not substitute for an available governing explanation.",
+      "materiality": "Transaction grouping directly concerns reliable multi-operation upload/replay, a selected first-comparison architecture. Leaving the available repair/version applicability unresolved weakens the required historical research and final interpretation.",
+      "qualification": "The final does not assert a current general PowerSync defect, and the omission does not prove the proposed domain design would fail. No future execution or deployment is required. The original captured view itself is unavailable; the historical maintainer comment predates the frozen run.",
+      "confidence": "HIGH for omitted source context; no claim of reproduced fix correctness"
+    }
+  ],
+  "resolved_or_rejected_stage_findings": [
+    {
+      "id": "T-R01",
+      "stage": "draft_to_final",
+      "kind": "breadth clarification",
+      "finding": "Shared-access comparison and cross-shift continuity are strengthened without selecting user policies.",
+      "final_status": "RESOLVED"
+    },
+    {
+      "id": "T-R02",
+      "stage": "draft_to_final",
+      "kind": "source applicability clarification",
+      "finding": "Per-client ordering, Automerge conflict lifetime, PostgreSQL conditions and conditional browser storage are made explicit.",
+      "final_status": "RESOLVED"
+    }
+  ],
+  "nonmaterial_findings_and_limits": [
+    {
+      "id": "T-L01",
+      "severity": "nonmaterial",
+      "finding": "S16 calls the report’s React Native packages 1.25.x-era; the source’s actual package range is ^1.20.1 with RN 0.73.6. No current defect conclusion depends on this wording.",
+      "evidence": [
+        "E30"
+      ]
+    },
+    {
+      "id": "T-L02",
+      "severity": "nonmaterial",
+      "finding": "The photo contact-text/metadata rules are proposed controls, not demonstrated guarantees; review/sanitization details and platform policy are still to be chosen.",
+      "evidence": [
+        "E26",
+        "E27"
+      ]
+    },
+    {
+      "id": "T-L03",
+      "severity": "nonmaterial",
+      "finding": "Deprecated/alpha attachment-helper and unsecured demo-server warnings are preserved in full source records but less visible in final prose. No helper or server is selected; the final requires independent application authorization and future platform checks.",
+      "evidence": [
+        "E26",
+        "E27",
+        "E35"
+      ]
+    },
+    {
+      "id": "T-L04",
+      "severity": "assessment_limit",
+      "finding": "Current SDK core implementation/test guesses could not be fetched (404/restricted/API 403); the evaluator inspected supplied sample code/callers, issue context and changelogs instead. No reconstruction or present-release correctness is certified.",
+      "coverage": "PARTIAL supplemental current-core trace"
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "Breadth-1",
+      "candidate_disposition": "accept",
+      "independent_result": "SUPPORTED",
+      "note": "Added a three-model access comparison with attribution, offboarding, offline-copy and fee tradeoffs.",
+      "evidence": [
+        "E02",
+        "E04"
+      ]
+    },
+    {
+      "id": "Breadth-2",
+      "candidate_disposition": "accept",
+      "independent_result": "SUPPORTED",
+      "note": "Added cross-shift boundary, late arrivals and task/location/issue distinctions plus two-shift scenario.",
+      "evidence": []
+    },
+    {
+      "id": "Breadth-3",
+      "candidate_disposition": "accept",
+      "independent_result": "SUPPORTED",
+      "note": "Photo transforms, Wi-Fi default and deletion choices explicitly remain proposed and platform/policy dependent.",
+      "evidence": [
+        "E26",
+        "E27"
+      ]
+    },
+    {
+      "id": "Truth-1",
+      "candidate_disposition": "accept",
+      "independent_result": "SUPPORTED",
+      "note": "Queue order is per client; canonical claims, dedupe and current authorization remain app contracts.",
+      "evidence": [
+        "E20"
+      ]
+    },
+    {
+      "id": "Truth-2",
+      "candidate_disposition": "accept",
+      "independent_result": "SUPPORTED",
+      "note": "Later assignments clear the current conflict view; app event history is separate.",
+      "evidence": [
+        "E34"
+      ]
+    },
+    {
+      "id": "Truth-3",
+      "candidate_disposition": "accept",
+      "independent_result": "SUPPORTED",
+      "note": "Replicated branches differ from single-node 409; members are database-wide.",
+      "evidence": [
+        "E01",
+        "E02"
+      ]
+    },
+    {
+      "id": "Truth-4",
+      "candidate_disposition": "accept",
+      "independent_result": "SUPPORTED",
+      "note": "PostgreSQL guard is conditioned on schema/index/transaction; offline fairness is separate.",
+      "evidence": [
+        "E32",
+        "E33"
+      ]
+    },
+    {
+      "id": "Truth-5",
+      "candidate_disposition": "accept",
+      "independent_result": "SUPPORTED",
+      "note": "Storage can fail/evict; no post-eviction durability is promised.",
+      "evidence": [
+        "E37"
+      ]
+    },
+    {
+      "id": "Truth-6",
+      "candidate_disposition": "retain_uncertainty",
+      "independent_result": "CONTEXT_OMISSION_T-D01",
+      "note": "At-access reporter caveats are appropriate, but S19 omits the existing explicit fix/version closure.",
+      "evidence": [
+        "E28",
+        "E29"
+      ]
+    }
+  ],
+  "repair_or_candidate_feedback_provided": false
+}

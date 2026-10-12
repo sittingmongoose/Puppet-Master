@@ -1,0 +1,112 @@
+{
+  "arm_id": "B03-P01-control",
+  "source_judgment": "FAIL",
+  "material_defect_ids": [
+    "B03-P01-C-D01",
+    "B03-P01-C-D02"
+  ],
+  "findings": [
+    {
+      "defect_id": "B03-P01-C-D01",
+      "classification": "material wrong",
+      "severity": "MATERIAL",
+      "axes": [
+        2
+      ],
+      "location": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/reviser/files/final.md",
+        "line": 50,
+        "section": "Tokenization and language coverage"
+      },
+      "claim": "Tantivy 0.26.2 default removes tokens longer than 40 characters.",
+      "governing_sources": [
+        "PS12",
+        "PS13",
+        "PS14",
+        "PS15",
+        "PS16",
+        "PS19"
+      ],
+      "independent_evidence": "../shared/tantivy-token-boundary.json",
+      "finding": "Actual default accepts only UTF-8 token lengths <40 bytes. It rejects a 14-character CJK run (42 bytes) and exactly 40 ASCII bytes. The overview is imprecise; adjacent API, caller and implementation govern.",
+      "materiality": "Copied excerpts in different scripts are an explicit brief obligation. The wrong unit/boundary hides a concrete source of missing multilingual results and misstates the candidate comparison/fixture premise. Generic future language testing does not make this present source fact true.",
+      "lineage": "Present in discovery/draft/source maps, repeated or affirmed by critic, retained in final. No supported criticism was falsely rejected; this error escaped review.",
+      "validation_boundary": "Static primary-source finding and byte arithmetic; not an engine execution, private-notebook benchmark or deployment requirement."
+    },
+    {
+      "defect_id": "B03-P01-C-D02",
+      "classification": "material preservation loss",
+      "severity": "MATERIAL",
+      "axes": [
+        3,
+        5
+      ],
+      "location": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/reviser/files/final.md",
+        "line": 52,
+        "section": "Tokenization and language coverage; accompanying final source map"
+      },
+      "predecessor_witnesses": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/investigator/files/discovery.md",
+          "line": 26
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/investigator/files/draft.md",
+          "line": 35
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/critic/files/source-map.json",
+          "source_id": "S-SQLITE-FTS5"
+        }
+      ],
+      "governing_sources": [
+        "PS01"
+      ],
+      "finding": "The final retains optional FTS5 trigram but drops the known under-three-Unicode-character MATCH no-hit condition and conditional LIKE/GLOB scan behavior. They are absent from its final source-map conditions as well. Calling semantics different and proposing short-term fixtures does not preserve the supported restriction.",
+      "materiality": "The rewrite weakens a concrete multilingual/query and responsiveness caveat attached to an offered alternative. Finalization explicitly required supported conditions/optional capabilities to remain self-contained. This is a preservation defect; it does not claim the final promises short trigram matches."
+    },
+    {
+      "defect_id": "B03-P01-C-N01",
+      "classification": "minor contextual limitation",
+      "severity": "NONMATERIAL",
+      "axes": [
+        2,
+        3,
+        5
+      ],
+      "location": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/investigator/files/source-map.json",
+        "source_id": "S-TANTIVY-CJK-ISSUE-718"
+      },
+      "governing_sources": [
+        "PS21"
+      ],
+      "finding": "Initial CJK parser accusation is recorded without the discussion’s later boundary-mismatch diagnosis and withdrawn bug label. Final does not carry a current parser-defect claim; current-version non-generalization is retained. This contextual weakness is not a second material final error."
+    },
+    {
+      "defect_id": "B03-P01-C-N02",
+      "classification": "nonmaterial preservation limitation",
+      "severity": "NONMATERIAL",
+      "axes": [
+        3,
+        5
+      ],
+      "governing_sources": [
+        "PS06",
+        "PS07",
+        "PS08",
+        "PS22",
+        "PS23"
+      ],
+      "finding": "Specific malformed-trigram fix/release, Polish example, and conditional crash/Windows issue locators disappear from final package. Generic runtime, language, commit/crash and platform investigations remain. Reported as losses of research detail, not proof of present engine defects or a new deployment obligation."
+    }
+  ],
+  "unresolved_external_inputs": [
+    "target repository and store capabilities",
+    "packaged runtime/platforms",
+    "required scripts, query/tag/title semantics and performance/resource budgets"
+  ],
+  "no_feedback_to_candidate_authors": true,
+  "prospective_repairs_or_regrades": false
+}

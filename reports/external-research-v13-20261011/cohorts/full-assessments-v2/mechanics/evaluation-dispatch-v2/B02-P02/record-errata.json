@@ -1,0 +1,24 @@
+{
+  "schema": "er13.post-freeze-record-errata.v1",
+  "written_utc": "2026-10-12T02:02:53.258938+00:00",
+  "grade_changes": false,
+  "new_source_adjudication": false,
+  "original_manifest_sha256": "bda36031243b2fcb2f526f16c5eda0b74fc48f210dfa58cc53ed637ac923b4c1",
+  "entries": [
+    {
+      "record": "treatment/defects.json",
+      "finding_id": "T-M01",
+      "kind": "locator typo only",
+      "original_locator": "investigator/discovery.md:15 (MRBS comparison)",
+      "correct_locator": "investigator/discovery.md:18 (MRBS comparison)",
+      "effect": "The identified MRBS comparison text and all original findings/grades remain unchanged. Final locators 62/90/113 are accurate."
+    },
+    {
+      "record": "comparison.json",
+      "field": "original_judgments[*].material_defects",
+      "kind": "comparison field-label error only",
+      "clarification": "That field contains all original defect IDs, including nonmaterial IDs. Material counts are control 0 and treatment 1; exact classification remains in frozen original defects.json/assessment.json.",
+      "effect": "No scientific or comparative judgment changed."
+    }
+  ]
+}

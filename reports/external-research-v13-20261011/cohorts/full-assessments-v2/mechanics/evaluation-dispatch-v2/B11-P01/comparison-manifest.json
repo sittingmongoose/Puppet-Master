@@ -1,0 +1,19 @@
+{
+  "schema": "er13.separate-comparison-freeze.v1",
+  "block_id": "B11-P01",
+  "arm_count": 2,
+  "created_after_original_freeze_utc": "2026-10-12T02:31:13.363197+00:00",
+  "original_manifest": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/manifest.json",
+    "sha256": "783cf5649e46e89ce89864126e7f9212cfa59e57abe16d10bf7aa70c09167941"
+  },
+  "original_manifest_entries_verified_unchanged": true,
+  "comparison": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B11-P01/comparison.md",
+    "bytes": 3771,
+    "sha256": "ab772eadaaf354224c77aa035a97092e13cd10da34c2d21fe6e7051c9329217c"
+  },
+  "original_judgments_changed": false,
+  "recipe_selection": "NONE",
+  "self_excluded": true
+}

@@ -1,0 +1,72 @@
+{
+  "id": "sw-change",
+  "url": "https://raw.githubusercontent.com/SpaceWorks-HQ/SpaceWorks/main/CHANGELOG.md",
+  "resolved_url": "https://raw.githubusercontent.com/SpaceWorks-HQ/SpaceWorks/main/CHANGELOG.md",
+  "access_utc": "2026-10-12T02:01:58.433990+00:00",
+  "response_sha256": "df635bef5fe6bae475edde29cf8d8d6e99eda96a7d3d8c02cd9e5dee1e6c0ad0",
+  "response_bytes": 34149,
+  "operation": "read-only fetch",
+  "evidence": [
+    {
+      "line": 1,
+      "text": "# Changelog"
+    },
+    {
+      "line": 2,
+      "text": ""
+    },
+    {
+      "line": 3,
+      "text": "Releases are published from `main` and titled **`SpaceWorks <version>`**. The root `VERSION`"
+    },
+    {
+      "line": 4,
+      "text": "file selects the series; each build is tagged `v<series>-main.<run>.<sha>`, which is what a"
+    },
+    {
+      "line": 5,
+      "text": "deployment pins to. Bumping `VERSION` also requires bumping"
+    },
+    {
+      "line": 6,
+      "text": "`SPECTACULAR_SETTINGS[\"VERSION\"]` (`backend/tests/test_version_consistency.py` enforces it) and"
+    },
+    {
+      "line": 7,
+      "text": "regenerating `frontend/openapi-schema.json` and `frontend/src/generated/api.ts`."
+    },
+    {
+      "line": 8,
+      "text": ""
+    },
+    {
+      "line": 9,
+      "text": "Entries up to 0.2.0 below were generated automatically from conventional commits. That"
+    },
+    {
+      "line": 10,
+      "text": "generation stopped afterwards, so **0.3.0 through 0.5.1 were never recorded here** — for that"
+    },
+    {
+      "line": 11,
+      "text": "window see `git log` and the condensed changelog in `CLAUDE.md`, which also carries the design"
+    },
+    {
+      "line": 12,
+      "text": "rule each change introduced."
+    },
+    {
+      "line": 13,
+      "text": ""
+    },
+    {
+      "line": 14,
+      "text": "## 0.7.5 (2026-08-11)"
+    },
+    {
+      "line": 15,
+      "text": ""
+    }
+  ],
+  "license_context": "Public focused source excerpts; current upstream LICENSE identifies GNU AGPL v3: https://github.com/SpaceWorks-HQ/SpaceWorks/blob/main/LICENSE. LICENSE at the specific historical commit was not resolved (404). No execution; do not infer historical license identity from moving main."
+}

@@ -1,0 +1,108 @@
+{
+  "schema": "er13.original-block-output-freeze.v1",
+  "block_id": "B07-P01",
+  "scope": "FULL",
+  "arm_count": 2,
+  "frozen_at_utc": "2026-10-12T02:04:34.053145+00:00",
+  "original_judgments_frozen_before_comparison": true,
+  "comparison_included": false,
+  "entries": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/assessment.md",
+      "relative_to_output_root": "control/assessment.md",
+      "bytes": 3805,
+      "sha256": "e97eaa5ada0b421aea8b822cf8e8bace94995447dfd42e3b0a5e681ceafde29e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/assessment.json",
+      "relative_to_output_root": "control/assessment.json",
+      "bytes": 16755,
+      "sha256": "5714a2f2d3bc2ccca0e13faa72a5d0fb9ea28a94e2e0ae0d79e0814946c99139"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/coverage.json",
+      "relative_to_output_root": "control/coverage.json",
+      "bytes": 16585,
+      "sha256": "bdce13b759b2e9fd65dca112ea4da9f605c991edbb181ace8e1885765772b44d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/defects.json",
+      "relative_to_output_root": "control/defects.json",
+      "bytes": 3532,
+      "sha256": "80ad457135e31457cee77dd1287165812e6c582dbd3d4110db0ef151fcfa58c0"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/primary-source-index.json",
+      "relative_to_output_root": "control/primary-source-index.json",
+      "bytes": 18151,
+      "sha256": "402a14e9f8060b9b381232534281a31e42474d661ecd068f52d2b5d5a3277378"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/evidence/duckdb-sampling-context.json",
+      "relative_to_output_root": "control/evidence/duckdb-sampling-context.json",
+      "bytes": 3101,
+      "sha256": "a3ac9fd306e83a5577f55a6b84906e5b782794bfd34ccc13a4b0daea7c004df3"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/input-verification.json",
+      "relative_to_output_root": "input-verification.json",
+      "bytes": 30132,
+      "sha256": "5f9b374bc043dcd3bdf6138ae4e501a39ab8ec4afc7057b3a5f2656da593075e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/primary-observations.json",
+      "relative_to_output_root": "primary-observations.json",
+      "bytes": 25391,
+      "sha256": "5f4803c5782a6af549ac18994d0eec7ea7de02ad63435c28b02b62193a6fc2ce"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/manifest.json",
+      "relative_to_output_root": "control/manifest.json",
+      "bytes": 2887,
+      "sha256": "9e2287d35f9ae32bf8172842b225abc1812b2494fe2bf0ed655a62ff5236079a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/treatment/assessment.md",
+      "relative_to_output_root": "treatment/assessment.md",
+      "bytes": 4024,
+      "sha256": "1b4e89763454d4d017289a5ff24505c82487293a7afd02f708fc11498d969143"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/treatment/assessment.json",
+      "relative_to_output_root": "treatment/assessment.json",
+      "bytes": 17251,
+      "sha256": "0ae464f83b4b3991cc9de32c3ff2fb885ee4e52716135fbe124bf7f16ced62ce"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/treatment/coverage.json",
+      "relative_to_output_root": "treatment/coverage.json",
+      "bytes": 15313,
+      "sha256": "49f2ce264315612d13494dd6adb22c54dc635b92aeb905f516fbd6fc03a0a014"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/treatment/defects.json",
+      "relative_to_output_root": "treatment/defects.json",
+      "bytes": 2709,
+      "sha256": "ff038bf1fe98dd5de60ba71b74970ae198a6cc49836d28f286c6d1bae8edcb6e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/treatment/primary-source-index.json",
+      "relative_to_output_root": "treatment/primary-source-index.json",
+      "bytes": 14421,
+      "sha256": "9d129a5f50fbc47ec6b9eabf3e13197785ddb1d708a5144efd0943bfe13623d6"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/treatment/manifest.json",
+      "relative_to_output_root": "treatment/manifest.json",
+      "bytes": 2555,
+      "sha256": "986bd479c60da21f49b080ff9237cb7aa549a05c3470e87882315168b294071b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/assessment.json",
+      "relative_to_output_root": "assessment.json",
+      "bytes": 4894,
+      "sha256": "cb79829bd7dc43cd02dfc8c90ee52e647ee43c6ac9f65dc193fd35d403d5c691"
+    }
+  ],
+  "manifest_self_hash": "Excluded to avoid recursion; terminal response supplies this file hash."
+}

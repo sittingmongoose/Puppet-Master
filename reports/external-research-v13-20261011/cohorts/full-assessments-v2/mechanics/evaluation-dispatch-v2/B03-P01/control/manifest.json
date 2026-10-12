@@ -1,0 +1,55 @@
+{
+  "schema": "er13.original-output-manifest.v1",
+  "arm_id": "B03-P01-control",
+  "frozen_at_utc": "2026-10-12T02:31:36.247505+00:00",
+  "comparison_started": false,
+  "original_outputs_and_evidence": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/control/assessment.md",
+      "bytes": 4542,
+      "sha256": "41b8b6a911034a97bd173d0425cd1edef32e10af9b316c9b52ad80e545fd5885"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/control/assessment.json",
+      "bytes": 8463,
+      "sha256": "a951573a83a2d14cb8c2900d0d2a84c16134dcc0ebf9c51daf7fca684cd3e108"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/control/coverage.json",
+      "bytes": 12427,
+      "sha256": "d7a52d95ab11ed6cafc72ee5633a0bda7d22ea1d801f76c40c999a32aa123b50"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/control/defects.json",
+      "bytes": 5527,
+      "sha256": "ce3c8c5f952fd26b9fd88da2a15ffa28dd97143a2b3509f93de093e7cc89d2d9"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/control/primary-source-index.json",
+      "bytes": 13159,
+      "sha256": "a24b0de27c7232ac7b204e05a99e09c7ad1cb6ef26a845aac8f0282ac1993132"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/shared/input-integrity.json",
+      "bytes": 4244,
+      "sha256": "e272ed858289f84c6b1bf220aff8246eea54a4447421cfa2b7c8da219e0445a9"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/shared/primary-observations.json",
+      "bytes": 17012,
+      "sha256": "fe4bf836b5cd8f21a6092e2f9648c5932f9fec84340f0865c577e27bbddc6f29"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/shared/tantivy-token-boundary.json",
+      "bytes": 3825,
+      "sha256": "d1cbe46eb6fca25c3a2980d06c68be264091100352ddf0b41be577bf8472b3ef"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/shared/TANTIVY-LICENSE.txt",
+      "bytes": 1099,
+      "sha256": "acacd14bebbffdb30d62443c282fb4da3e81915a9f69c63d5d745a029f44de8a"
+    }
+  ],
+  "self_excluded": true,
+  "immutability": "Original files mode 0444 and exclusive-create. Never regrade these bytes; any adjudication must be separate."
+}

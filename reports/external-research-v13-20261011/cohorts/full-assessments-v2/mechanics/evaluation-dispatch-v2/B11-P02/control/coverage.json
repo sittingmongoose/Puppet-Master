@@ -1,0 +1,298 @@
+{
+  "arm_id": "B11-P02-control",
+  "overall": "COMPLETE",
+  "definition": "Complete finite review of every frozen scientific document, all six axes, every material original obligation and consequential source family at research-proposal level; not exhaustive proof of all library behavior or future software.",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED",
+      "assessment": "All original obligations and negative constraints retained; local editing, comments/roles, approval and visible cached release are explicit."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED",
+      "assessment": "Consequential Loro and alternative facts checked with versions, package distinctions, defaults and exceptions; native source/callers/selected tests inspected."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED",
+      "assessment": "Native move, stable cursor, mergeable-child identity, causal pending ranges, writer identity and shallow-history limits are useful discoveries; Rust and server/web alternatives remain plausible."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED",
+      "assessment": "All12 material plan rows correct. C-01/C-02 valid and addressed; C-03 appropriately clarifies an already provisional hypothesis. No false rejection found."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED",
+      "assessment": "Supported discovery/draft meanings, conditions, alternatives, unknowns and validation status survive. Deletion-race/durable-boundary additions improve specificity without weakening scope."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED",
+      "assessment": "Proposed checks have relevant failure triggers/oracles; no application execution or deployment claimed. Artifact/hash checks are not presented as software correctness."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "obligation": "Disconnected editing and local save",
+      "coverage": "COMPLETE",
+      "assessment": "Keep fully local editing; app-owned durable commit before saved feedback.",
+      "final_locator": "reviser/final.md69-79,114",
+      "finding_ids": []
+    },
+    {
+      "id": "O02",
+      "obligation": "Ordered cues, insertion and reordering",
+      "coverage": "COMPLETE",
+      "assessment": "Separate cue entities/order; explicit move intent and human review of incompatible placement.",
+      "final_locator": "reviser/final.md31,48,55-67,115-116",
+      "finding_ids": []
+    },
+    {
+      "id": "O03",
+      "obligation": "Collaborative cue text and timing notes",
+      "coverage": "COMPLETE",
+      "assessment": "Granular collaborative text plus semantic conflict review; timing is independently editable.",
+      "final_locator": "reviser/final.md49,55,115",
+      "finding_ids": []
+    },
+    {
+      "id": "O04",
+      "obligation": "Role assignments and scalar conflicts",
+      "coverage": "COMPLETE",
+      "assessment": "Independent fields merge; competing values remain intelligible and resolvable.",
+      "final_locator": "reviser/final.md36,49,55,115",
+      "finding_ids": []
+    },
+    {
+      "id": "O05",
+      "obligation": "Cue/comment stable references and deleted anchors",
+      "coverage": "COMPLETE",
+      "assessment": "Comments use cue IDs, survive reorder, and stay visibly anchored to tombstones after deletion.",
+      "final_locator": "reviser/final.md32,50-51,57-64,117",
+      "finding_ids": []
+    },
+    {
+      "id": "O06",
+      "obligation": "Human conflict and resolution lifecycle",
+      "coverage": "COMPLETE",
+      "assessment": "Issue-level candidates, explicit decisions, retained context and late-candidate review.",
+      "final_locator": "reviser/final.md36,52-65,116,120",
+      "finding_ids": []
+    },
+    {
+      "id": "O07",
+      "obligation": "Causal revisions and history",
+      "coverage": "COMPLETE",
+      "assessment": "Use causal revision identity rather than device clocks; inspect history/frontier/head semantics.",
+      "final_locator": "reviser/final.md34,52-55,83",
+      "finding_ids": []
+    },
+    {
+      "id": "O08",
+      "obligation": "Explicit approval and publication isolation",
+      "coverage": "COMPLETE",
+      "assessment": "Publish a new immutable selected-state artifact with approval identity; later edits cannot replace it.",
+      "final_locator": "reviser/final.md37,83-85,118",
+      "finding_ids": []
+    },
+    {
+      "id": "O09",
+      "obligation": "Visible version and disconnected stage viewing",
+      "coverage": "COMPLETE",
+      "assessment": "Named published version, offline cache, deliberate refresh/switch; no silent draft replacement.",
+      "final_locator": "reviser/final.md37,85,118",
+      "finding_ids": []
+    },
+    {
+      "id": "O10",
+      "obligation": "Retry, reconnect, restart and recovery",
+      "coverage": "COMPLETE",
+      "assessment": "Application persistence/outbox/ack boundary; core transport conditions and crash cases.",
+      "final_locator": "reviser/final.md69-79,114-116,119",
+      "finding_ids": []
+    },
+    {
+      "id": "O11",
+      "obligation": "Exports preserve comments and roles",
+      "coverage": "COMPLETE",
+      "assessment": "Structured stable-reference round trip; staff visibility/format remain owner decisions.",
+      "final_locator": "reviser/final.md38,85,103,117",
+      "finding_ids": []
+    },
+    {
+      "id": "O12",
+      "obligation": "Plausible alternatives and real history",
+      "coverage": "COMPLETE",
+      "assessment": "Compare researched mechanisms and relevant release/issue/fix context without assuming adoption.",
+      "final_locator": "reviser/final.md87-94,119",
+      "finding_ids": []
+    },
+    {
+      "id": "O13",
+      "obligation": "Negative constraints",
+      "coverage": "COMPLETE",
+      "assessment": "No always-online editor, enterprise account, new chat product, or demanded deployment.",
+      "final_locator": "reviser/final.md13-15,41",
+      "finding_ids": []
+    },
+    {
+      "id": "O14",
+      "obligation": "Unknown user-specific facts",
+      "coverage": "COMPLETE",
+      "assessment": "Counts, crew authority, comment scope, export visibility, relay/retention remain explicit unknowns.",
+      "final_locator": "reviser/final.md96-110",
+      "finding_ids": []
+    },
+    {
+      "id": "O15",
+      "obligation": "Exact released-plan dispositions",
+      "coverage": "COMPLETE",
+      "assessment": "Every material plan choice is retained, changed or rejected with reason; timestamp backup never treated as tested.",
+      "final_locator": "reviser/final.md27-42",
+      "finding_ids": []
+    },
+    {
+      "id": "O16",
+      "obligation": "Validation truth and useful oracles",
+      "coverage": "COMPLETE",
+      "assessment": "Proposed convergence/recovery/anchor/publication/usability checks; executed research distinguished.",
+      "final_locator": "reviser/final.md112-122",
+      "finding_ids": []
+    }
+  ],
+  "source_families": [
+    {
+      "source_family": "Loro list and movable list",
+      "primary_source_id": "E01",
+      "coverage": "COMPLETE",
+      "claim_boundary": "List and MovableList, concurrent examples, overhead statement",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Loro cursor",
+      "primary_source_id": "E02",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Motivation, Updating Cursors, UTF-16 note",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Loro sync and container identity",
+      "primary_source_id": "E03",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Real-time Collaboration; import success/pending explanation",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Loro Rust API, implementation and adjacent native tests",
+      "primary_source_id": "E04",
+      "coverage": "COMPLETE",
+      "claim_boundary": "LoroDoc description/commit/import_batch/checkout/cmp_frontiers; LoroMovableList::mov -> native handler; native basic_handler_ops/basic_sync",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Loro peer identity",
+      "primary_source_id": "E05",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Automatic assignment; manual reuse warning",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Loro shallow history boundary",
+      "primary_source_id": "E06",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Synchronization Limitations; Archive and Trim; Best Practices",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Loro release history",
+      "primary_source_id": "E07",
+      "coverage": "COMPLETE",
+      "claim_boundary": "1.16.4 patch notes; 1.16.2 older-snapshot notes",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Loro import incident and fix",
+      "primary_source_id": "E08",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Issue environment/lock trace; PR summary and testing",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Automerge property conflicts",
+      "primary_source_id": "E09",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Concurrent writes; getConflicts; later assignment; counter/actor tie-break",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Automerge fine-grained modeling",
+      "primary_source_id": "E10",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Entity-map/ID-list example and whole-object replacement caveat",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Automerge native synchronization",
+      "primary_source_id": "E11",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Module protocol requirement and send/receive/generate loop; E13 callers",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Yjs offline persistence",
+      "primary_source_id": "E23",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Offline Support and native-provider paragraph",
+      "finding_ids": []
+    },
+    {
+      "source_family": "Yjs relative position semantics",
+      "primary_source_id": "E24",
+      "coverage": "COMPLETE",
+      "claim_boundary": "RelativePosition motivation/API and null condition",
+      "finding_ids": []
+    },
+    {
+      "source_family": "ShareDB OT/server model and reconnect example",
+      "primary_source_id": "E25",
+      "coverage": "COMPLETE",
+      "claim_boundary": "Introduction/features; Getting Started client socket config",
+      "finding_ids": []
+    }
+  ],
+  "out_of_scope_or_unavailable": [
+    {
+      "area": "Future app execution/deployment, UI adapter, crash correctness and performance",
+      "coverage": "UNASSESSED",
+      "reason": "Proposed validation, not required executed deliverable."
+    },
+    {
+      "area": "Actual cue counts, crew authority, export visibility, relay/retention decisions",
+      "coverage": "UNASSESSED",
+      "reason": "User-specific unknowns explicitly permitted and retained."
+    },
+    {
+      "area": "Native actual task/session linkage, provider activity, context occupancy, billing",
+      "coverage": "UNASSESSED",
+      "reason": "Unavailable independent telemetry; capture custody is weaker evidence."
+    }
+  ],
+  "early_stop": false,
+  "missing_final": false
+}

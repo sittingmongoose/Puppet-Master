@@ -1,0 +1,94 @@
+{
+  "scope": "Separate mechanical provenance/failure enrichment ONLY",
+  "index": "ER13_RUNTIME/state/dispatcher-v1/terminal-mechanics-supplements.json",
+  "index_sha256": "aaefb7ee455391fa1e1b766707e7f31466c4addab5ae735271acb1998626d202",
+  "verified_at_utc": "2026-10-12T01:46:30.742555+00:00",
+  "items": [
+    {
+      "arm_id": "B03-P01-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-terminal-mechanics-supplement/authored-manifest.json",
+      "manifest_sha256": "7188430928091345dad4c75e88be23a6f5036296a97c31ef79871fc49a1c0fb0",
+      "files": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-terminal-mechanics-supplement/run/B03-P01-treatment/stages/critic/native-critic-complete-active.json",
+          "bytes": 511,
+          "sha256": "0be7fd926191225d5e18cc1372be6e8d446b3f3a181bc503a1caaeba83720ab1"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-terminal-mechanics-supplement/run/B03-P01-treatment/stages/investigator/native-wait-active.json",
+          "bytes": 656,
+          "sha256": "67114d704f363c33d388e6d0cba8370310d9801246c99020d1fa735e673374ce"
+        }
+      ]
+    },
+    {
+      "arm_id": "B03-P02-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P02-treatment-terminal-mechanics-supplement/authored-manifest.json",
+      "manifest_sha256": "9a2ed9874e7b1a92754ea648eede112015e23a52de56184f7696676e82302eef",
+      "files": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P02-treatment-terminal-mechanics-supplement/run/B03-P02-treatment/stages/critic/native-critic-complete-active.json",
+          "bytes": 511,
+          "sha256": "708770c69a14ce58d57654d31825c03a19fbd091d50e1dfae2c811f37471a89a"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P02-treatment-terminal-mechanics-supplement/run/B03-P02-treatment/stages/investigator/native-wait-active.json",
+          "bytes": 656,
+          "sha256": "ffafd3d4fe0d1a91cc1cbdf511cce447149c2c8332772f346164838d12d75ffc"
+        }
+      ]
+    },
+    {
+      "arm_id": "B06-P01-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B06-P01-treatment-terminal-mechanics-supplement/authored-manifest.json",
+      "manifest_sha256": "ed21cca89f62242e980b585341117e897cf841524d5aaeee5e5e4521906c3930",
+      "files": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B06-P01-treatment-terminal-mechanics-supplement/run/B06-P01-treatment/stages/investigator/plan-release.json",
+          "bytes": 456,
+          "sha256": "db76aff91abab34ed2cd40b560f60ae529d9830718418afdf23f30f4e7f5a206"
+        }
+      ]
+    },
+    {
+      "arm_id": "B09-P02-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B09-P02-treatment-terminal-mechanics-supplement/authored-manifest.json",
+      "manifest_sha256": "72c887d3e61fb9d530f0ae1844e4da44f22477015fac184bd77b5edba92c2191",
+      "files": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B09-P02-treatment-terminal-mechanics-supplement/run/B09-P02-treatment/stages/investigator/investigator-package-freeze.json",
+          "bytes": 1790,
+          "sha256": "c7cec6ba4fc05812c74b9886a48058402742c3d02a342fa172ca995ad6e56a6e"
+        }
+      ]
+    },
+    {
+      "arm_id": "B10-P02-control",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B10-P02-control-terminal-mechanics-supplement/authored-manifest.json",
+      "manifest_sha256": "4f79e18d0c116eb969fc9bac781f40cd1dc06822bbd3dfb1bd5ca8e6360b7210",
+      "files": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B10-P02-control-terminal-mechanics-supplement/run/B10-P02-control/stages/investigator/plan-release.json",
+          "bytes": 451,
+          "sha256": "c08311eaaa2d38eacbe9f5aaec31dc980d3fd403d503178a0cbbb1686088451d"
+        }
+      ]
+    },
+    {
+      "arm_id": "B11-P02-control",
+      "manifest": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P02-control-terminal-mechanics-supplement/authored-manifest.json",
+      "manifest_sha256": "dedaad957567598c9ca5494b4f0265542ab178ce9f9c9bcdbc6065f72c0fc10b",
+      "files": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P02-control-terminal-mechanics-supplement/run/B11-P02-control/stages/critic/native-goal-binding-diagnostic.txt",
+          "bytes": 1097,
+          "sha256": "590778925375259d5a07a25c5c44d2da37ff92b23c652129c0757aab46dc617a"
+        }
+      ]
+    }
+  ],
+  "original_science_or_grades_changed": false,
+  "source_regrade": false,
+  "candidate_feedback": false,
+  "native_linkage_not_certified": true
+}

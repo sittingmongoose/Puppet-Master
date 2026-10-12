@@ -1,0 +1,243 @@
+{
+  "arm_id": "B07-P01-treatment",
+  "scope": "FULL",
+  "assessment_coverage": "COMPLETE",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "All brief obligations/negative constraints present; local-only end-to-end gate and per-row pending recovery are explicit proposals."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Declared consequential source facts checked against versions/code/adjacent context. Optional adapter conditions remain unverified, not claimed solved; TRT-L01 lineage error is nonmaterial."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Rust stream, Polars dataframe, strict encoding/exact decimal, CRLF issue-to-open-fix/tests and optional Calamine release opportunity are preserved with tradeoffs."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Every critique disposition and exact plan meaning examined. C01 is valid conditional completion clarification; it does not disprove atomic whole-file import. C02 is a valid local-only gate; C03/C04/C05 and field bounds are appropriately limited."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Supported raw/normalized data, profiles, alias/reuse, fuzzy suggestions, replay warning, concurrency, staged rollout, alternatives and uncertainty remain substantive in the final. Atomic whole-batch option survives the subset recommendation."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Proposed tests define coordinates, same-file subset resume, durable marker/write agreement, network boundary, concurrent edits, errors and 80,000-row limits; no tests or deployment claimed executed."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "parsing_and_mapping",
+      "coverage": "COMPLETE",
+      "obligation": "Delimited dialects, explicit profile, header/shape drift, raw strings and source locations",
+      "evidence_families": "P01/P02/P03/P04/P05/P06/P07/P08/P15 (control); P03/P04/P05/P19/P20/P21/P24/P25-P28 (treatment)",
+      "finding": "Assessed in the complete original proposal and exact predecessors; requirements/proposals distinguished from execution."
+    },
+    {
+      "id": "numbers_and_codes",
+      "coverage": "COMPLETE",
+      "obligation": "Ambiguity is not coerced; preserve codes/zeros and quantities; snapshot/delta semantics remain explicit",
+      "evidence_families": "P03/P06/P23/P24; business meaning is a brief/owner constraint",
+      "finding": "Assessed in the complete original proposal and exact predecessors; requirements/proposals distinguished from execution."
+    },
+    {
+      "id": "identity_and_duplicates",
+      "coverage": "COMPLETE",
+      "obligation": "Supplier namespace/internal target, alias history/reuse, all duplicate source locations and explicit dispositions",
+      "evidence_families": "Brief/revealed plan; P22 for Serde-specific ambiguity",
+      "finding": "Assessed in the complete original proposal and exact predecessors; requirements/proposals distinguished from execution."
+    },
+    {
+      "id": "preview_and_cancel",
+      "coverage": "COMPLETE",
+      "obligation": "New/update/no-op/invalid/conflict categories, current/proposed differences, explicit apply and no preview stock writes",
+      "evidence_families": "Brief; proposed workflow, no executed UI claim",
+      "finding": "Assessed in the complete original proposal and exact predecessors; requirements/proposals distinguished from execution."
+    },
+    {
+      "id": "replay_and_recovery",
+      "coverage": "COMPLETE",
+      "obligation": "Same-byte no-double application, atomic mutation/receipt, interruption and conditional partial outcomes",
+      "evidence_families": "P16/P17/P18/P29; logical state analysis",
+      "finding": "Assessed in the complete original proposal and exact predecessors; requirements/proposals distinguished from execution."
+    },
+    {
+      "id": "negative_constraints",
+      "coverage": "COMPLETE",
+      "obligation": "No formula execution, global supplier-key assumption, ambiguous coercion or unmapped-note overwrite; supplier data stays local",
+      "evidence_families": "Brief; P30; P18 network/file boundary",
+      "finding": "Assessed in the complete original proposal and exact predecessors; requirements/proposals distinguished from execution."
+    },
+    {
+      "id": "scale_and_owner_decisions",
+      "coverage": "COMPLETE",
+      "obligation": "80,000-row streaming/staging/paged review; performance/precision/retention/backend thresholds remain owner facts",
+      "evidence_families": "P03/P06/P25-P28; no measured throughput claim",
+      "finding": "Assessed in the complete original proposal and exact predecessors; requirements/proposals distinguished from execution."
+    },
+    {
+      "id": "staged_integration",
+      "coverage": "COMPLETE",
+      "obligation": "Repository/domain inventory through isolated preview/policy/apply validation and bounded pilot",
+      "evidence_families": "Frozen discovery and final; absence assessed separately from product workflow",
+      "finding": "Assessed in the complete original proposal and exact predecessors; requirements/proposals distinguished from execution."
+    },
+    {
+      "id": "success_partial_failure",
+      "coverage": "COMPLETE",
+      "obligation": "Explicit applied/rejected/pending or rollback semantics, traces and retry; success within the chosen transaction domain",
+      "evidence_families": "P16/P17/P29 and proposed state model",
+      "finding": "Assessed in the complete original proposal and exact predecessors; requirements/proposals distinguished from execution."
+    },
+    {
+      "id": "plan_dispositions_and_criticism",
+      "coverage": "COMPLETE",
+      "obligation": "Complete revealed plan including provisional status and maximum-time constraint; every supplied critic finding adjudicated",
+      "evidence_families": "Verified plan; control P01-P18/F1-F4, treatment clause table/C01-C05 plus field-limit opportunity",
+      "finding": "Assessed in the complete original proposal and exact predecessors; requirements/proposals distinguished from execution."
+    },
+    {
+      "id": "preservation_and_opportunities",
+      "coverage": "COMPLETE",
+      "obligation": "Retain substantive supported findings, alternatives/conditions, owner uncertainty and validation status",
+      "evidence_families": "Complete discovery/draft/critic/final/maps, not counts",
+      "finding": "Assessed in the complete original proposal and exact predecessors; requirements/proposals distinguished from execution."
+    },
+    {
+      "id": "validation_truth",
+      "coverage": "COMPLETE",
+      "obligation": "Meaningful fixture/failure/oracle/capacity/usability proposals; no execution/deployment requirement",
+      "evidence_families": "Frozen science disclosures; source code/tests inspected only",
+      "finding": "Assessed in the complete original proposal and exact predecessors; requirements/proposals distinguished from execution."
+    }
+  ],
+  "source_families": [
+    {
+      "family": "P03 csv 1.4.0, ReaderBuilder::default; read_byte_record_impl; ReaderState::add_record; positions_headers/no_headers and unequal-width tests",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "P04 csv 1.4.0, Position::byte/record/line",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "P05 csv 1.4.0, RFC4180 differences; read_record/read_field; CRLF state machine and tests",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "P16 current documentation, sections 2.1,2.2,3",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "P19 open report, reproduction and subsequent comments",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "P20 open PR, contributor commit 815ddab; summary and review status",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "P21 815ddab patch, csv-core/src/reader.rs and src/reader.rs tests",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "P22 open duplicate-field Serde discussion and maintainer response",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "P23 1.43.0, Decimal::from_str_exact",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "P24 0.8.42, strict decode and decoder/BOM distinctions",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "P25 0.55.2, with_schema/infer_schema_length/ignore_errors",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "P26 0.55.2, Default for CsvReadOptions/CsvParseOptions",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "P27 0.55.2, read_chunk and cast_columns callers",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "P28 0.55.2, parse_lines field conversion and missing-field handling",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "P29 current documentation, sections 1,2,3,4,9",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "P30 current guidance, formula initiators and mitigation/reopen tradeoffs",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "P31 2026-07-06 release, tag 2872ac1, Added/Changed/Fixed",
+      "coverage": "COMPLETE",
+      "scope": "Declared claim and relevant adjacent definitions/defaults/exceptions/history, bounded to this proposal; no full repository history or universal version guarantee."
+    },
+    {
+      "family": "Actual stock application code/callers/tests/schema/backend",
+      "coverage": "UNASSESSED",
+      "reason": "Not supplied in the permitted frozen inputs. Honest deferral/conditional compatibility was fully assessed; no such product facts or future software execution required for proposal quality."
+    },
+    {
+      "family": "Actual supplier semantics, thresholds and staff decisions",
+      "coverage": "UNASSESSED",
+      "reason": "Unprovided owner facts; final explicitly retains decisions and gates. These are allowed unknowns, not available mechanism research omitted."
+    }
+  ],
+  "source_pass_scope": "All six axes and all available consequential obligations/source families assessed. Unavailable user/product facts remain explicitly UNASSESSED without being fabricated or treated as required executed software validation.",
+  "expensive_early_stop": false,
+  "remaining_available_obligations_unassessed": [],
+  "limitations": [
+    "Blinding imperfect: arm names, paths and the treatment critic prompt reveal the technique. This evaluator read only the notified frozen pair and shared its own independent public-source lookup.",
+    "Finite research-proposal assessment. COMPLETE means all declared available obligations/claims were assessed; it is not universal correctness, deployment success, discovery recall, or executed importer validation.",
+    "Actual target-app code/callers/tests/schema/backend and supplier business facts are unavailable. Their facts are UNASSESSED; the adequacy and honesty of the conditional proposal are assessed completely. Unknown facts do not require invented answers.",
+    "Only exact allowlisted terminal snapshots, supplements/status receipts, workspace AGENTS.md, contract and handoff sections 10/12 were read locally. No active original references were followed, no full tree/history scan, Git/canon/WorkNodes/server/provider changes, Goals, additional agents/candidates, or feedback to candidate authors.",
+    "No full native transcript or independent native-to-T3 session linkage was available. Receipt consistency is custody evidence, not proof of source truth, one-Goal-only execution, pre-input order or scientific delivery time.",
+    "No candidate implementation, validation, benchmark, or supplied reproduction was executed by this evaluator. Public code/tests/patches were inspected only."
+  ]
+}

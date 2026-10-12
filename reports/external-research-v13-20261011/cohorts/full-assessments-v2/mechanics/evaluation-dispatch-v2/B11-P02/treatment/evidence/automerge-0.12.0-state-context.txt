@@ -1,0 +1,238 @@
+# Independent primary source context: Automerge Rust 0.12.0
+
+{
+  "url": "https://static.crates.io/crates/automerge/automerge-0.12.0.crate",
+  "sha256": "2fb849130973a7808a167887f56b1e8bdc36b9b541542602dcb337f34aecf47b",
+  "version": "0.12.0",
+  "vcs_metadata": {
+    "git": {
+      "sha1": "37545d0d72b50f52084a2eca2cadf2eb1a5a512a"
+    },
+    "path_in_vcs": "rust/automerge"
+  }
+}
+Archive inspected as data in memory; no downloaded library code compiled or executed. Package VCS metadata is not independently verified upstream: exact-commit license URL returned 404. Crate Cargo.toml declares MIT; current upstream MIT notice retained below. The versioned crate and docs.rs source independently agree on the relevant encoder/parser behavior.
+
+SOURCE MEMBER: src/sync/state.rs; complete member SHA256 25f8848201174942df2a1103c0e00bcb68801c90d3babfd1d746e504e1d973b4
+
+ORIGINAL LINE RANGE: 27-78
+27: /// The state of synchronisation with a peer.
+28: ///
+29: /// This should be persisted using [`Self::encode()`] when you know you will be interacting with the
+30: /// same peer in multiple sessions. [`Self::encode()`] only encodes state which should be reused
+31: /// across connections.
+32: #[derive(Debug, Clone, Default, PartialEq, Eq, Hash)]
+33: pub struct State {
+34:     /// The hashes which we know both peers have
+35:     pub shared_heads: Vec<ChangeHash>,
+36:     /// The heads we last sent
+37:     pub last_sent_heads: Vec<ChangeHash>,
+38:     /// The heads we last received from them
+39:     pub their_heads: Option<Vec<ChangeHash>>,
+40:     /// Any specific changes they last said they needed
+41:     pub their_need: Option<Vec<ChangeHash>>,
+42:     /// The bloom filters summarising what they said they have
+43:     pub their_have: Option<Vec<Have>>,
+44:     /// The hashes we have sent in this session
+45:     pub sent_hashes: BTreeSet<ChangeHash>,
+46: 
+47:     /// [`SyncDoc::generate_sync_message()`] should return [`None`] if there are no new changes
+48:     /// to send. In particular, if there are changes in flight which the other end has not yet
+49:     /// acknowledged we do not wish to generate duplicate sync messages. This field tracks whether
+50:     /// the changes we expect to send to the peer based on this sync state have been sent or not. If
+51:     /// [`Self::in_flight`] is [`false`] then [`SyncDoc::generate_sync_message()`] will return a new
+52:     /// message (provided there are in fact changes to send). If it is [`true`] then we don't. This
+53:     /// flag is cleared in [`SyncDoc::receive_sync_message()`].
+54:     pub in_flight: bool,
+55: 
+56:     /// Whether we have ever responded to the other end. This is used to ensure that we always send
+57:     /// at least on sync message to the other end, even if we have no changes to send, which is
+58:     /// necessary because we want the other end to know what our heads are.
+59:     pub have_responded: bool,
+60: 
+61:     /// The persistent capabilities the other side has advertised (e.g. message
+62:     /// format support). Derived from [`super::MessageFlags`]s on incoming messages.
+63:     pub their_capabilities: Option<Vec<Capability>>,
+64: 
+65:     /// If true, incoming changes from the peer will not be applied to the document.
+66:     /// The peer will still receive our changes. This is useful for publish-only peers.
+67:     pub read_only: bool,
+68: 
+69:     /// Whether the remote peer is in read-only mode, as advertised by the
+70:     /// [`super::MessageFlags::READ_ONLY`] flag on their most recent message.
+71:     pub peer_read_only: bool,
+72: 
+73:     /// If true, the next generated sync message will include a
+74:     /// [`super::MessageFlags::SYNC_RESET`] flag, signaling the remote peer to
+75:     /// clear its `sent_hashes`. Set by [`Self::set_read_only()`] when switching
+76:     /// from read-only to read-write.
+77:     pub needs_reset: bool,
+78: }
+
+ORIGINAL LINE RANGE: 108-150
+108:     pub fn encode(&self) -> Vec<u8> {
+109:         let mut buf = vec![SYNC_STATE_TYPE];
+110:         encode_hashes(&mut buf, &self.shared_heads);
+111:         buf
+112:     }
+113: 
+114:     pub fn decode(input: &[u8]) -> Result<Self, DecodeError> {
+115:         let input = parse::Input::new(input);
+116:         match Self::parse(input) {
+117:             Ok((_, state)) => Ok(state),
+118:             Err(parse::ParseError::Incomplete(_)) => Err(DecodeError::NotEnoughInput),
+119:             Err(parse::ParseError::Error(e)) => Err(e),
+120:         }
+121:     }
+122: 
+123:     pub(crate) fn parse(input: parse::Input<'_>) -> parse::ParseResult<'_, Self, DecodeError> {
+124:         let (i, record_type) = parse::take1(input)?;
+125:         if record_type != SYNC_STATE_TYPE {
+126:             return Err(parse::ParseError::Error(DecodeError::WrongType {
+127:                 expected_one_of: vec![SYNC_STATE_TYPE],
+128:                 found: record_type,
+129:             }));
+130:         }
+131: 
+132:         let (i, shared_heads) = parse::length_prefixed(parse::change_hash)(i)?;
+133:         Ok((
+134:             i,
+135:             Self {
+136:                 shared_heads,
+137:                 last_sent_heads: Vec::new(),
+138:                 their_heads: None,
+139:                 their_need: None,
+140:                 their_have: Some(Vec::new()),
+141:                 sent_hashes: BTreeSet::new(),
+142:                 in_flight: false,
+143:                 have_responded: false,
+144:                 their_capabilities: None,
+145:                 read_only: false,
+146:                 peer_read_only: false,
+147:                 needs_reset: false,
+148:             },
+149:         ))
+150:     }
+
+SOURCE MEMBER: src/sync.rs; complete member SHA256 9e25151c3db399245b2623ca2466a499ef307af2303a87ed14c710d4bc6c8f8a
+
+ORIGINAL LINE RANGE: 238-253
+238:         let heads_unchanged = sync_state.last_sent_heads == our_heads;
+239: 
+240:         let heads_equal = sync_state.their_heads.as_ref() == Some(&our_heads);
+241: 
+242:         if heads_unchanged && sync_state.have_responded {
+243:             if (heads_equal || sync_state.read_only) && message_builder.is_empty() {
+244:                 return None;
+245:             }
+246:             if sync_state.in_flight {
+247:                 return None;
+248:             }
+249:         }
+250: 
+251:         sync_state.have_responded = true;
+252:         sync_state.last_sent_heads.clone_from(&our_heads);
+253:         sync_state.sent_hashes.extend(message_builder.hashes());
+
+ORIGINAL LINE RANGE: 279-287
+279:         let sync_message = message_builder
+280:             .heads(heads_to_send)
+281:             .have(our_have)
+282:             .need(our_need)
+283:             .flags(Some(flags))
+284:             .build();
+285: 
+286:         sync_state.in_flight = true;
+287:         Some(sync_message)
+
+ORIGINAL LINE RANGE: 386-418
+386:     pub(crate) fn receive_sync_message_inner(
+387:         &mut self,
+388:         sync_state: &mut State,
+389:         message: Message,
+390:         patch_log: &mut PatchLog,
+391:     ) -> Result<(), AutomergeError> {
+392:         sync_state.in_flight = false;
+393:         let before_heads = self.get_heads();
+394: 
+395:         let Message {
+396:             heads: message_heads,
+397:             changes: message_changes,
+398:             need: message_need,
+399:             have: message_have,
+400:             flags: message_flags,
+401:             ..
+402:         } = message;
+403: 
+404:         if let Some(flags) = message_flags {
+405:             // Any peer that sends the flags section supports V2 messages —
+406:             // the flags section was introduced alongside V2 support.
+407:             let mut caps = vec![Capability::MessageV2];
+408:             if flags.contains(MessageFlags::SUPPORTS_SYNC_RESET) {
+409:                 caps.push(Capability::SyncReset);
+410:             }
+411:             sync_state.their_capabilities = Some(caps);
+412: 
+413:             // Process transient per-message signals
+414:             if flags.contains(MessageFlags::SYNC_RESET) {
+415:                 sync_state.sent_hashes.clear();
+416:             }
+417:             sync_state.peer_read_only = flags.contains(MessageFlags::READ_ONLY);
+418:         }
+
+ORIGINAL LINE RANGE: 430-463
+430:         // trim down the sent hashes to those that we know they haven't seen
+431:         self.filter_changes(&message_heads, &mut sync_state.sent_hashes)?;
+432: 
+433:         if changes_is_empty && message_heads == before_heads {
+434:             sync_state.last_sent_heads.clone_from(&message_heads);
+435:         }
+436: 
+437:         let known_heads = message_heads
+438:             .iter()
+439:             .filter(|head| self.has_change(head))
+440:             .collect::<Vec<_>>();
+441:         if known_heads.len() == message_heads.len() {
+442:             sync_state.shared_heads.clone_from(&message_heads);
+443:             // If the remote peer has lost all its data, reset our state to perform a full resync
+444:             if message_heads.is_empty() {
+445:                 sync_state.last_sent_heads = Default::default();
+446:                 sync_state.sent_hashes = Default::default();
+447:             }
+448:         } else {
+449:             sync_state.shared_heads = sync_state
+450:                 .shared_heads
+451:                 .iter()
+452:                 .chain(known_heads)
+453:                 .copied()
+454:                 .unique()
+455:                 .sorted()
+456:                 .collect::<Vec<_>>();
+457:         }
+458: 
+459:         sync_state.their_have = Some(message_have);
+460:         sync_state.their_heads = Some(message_heads);
+461:         sync_state.their_need = Some(message_need);
+462: 
+463:         Ok(())
+
+LICENSE NOTICE (current upstream; https://raw.githubusercontent.com/automerge/automerge/main/LICENSE):
+Copyright (c) 2019-2021 the Automerge contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

@@ -1,0 +1,60 @@
+{
+  "version": "ER13-C-selection-intent-v3",
+  "locked_scientific_choice_utc": "2026-10-12T02:11:06.027906+00:00",
+  "case_bodies_read": false,
+  "track_C_label": "EXPLORATORY_FRESH_INTEGRATION; no optimizer or confirmation claim",
+  "source_evidence_available": [
+    "B02-P01 both sourcePASS sixaxesCOMPLETE",
+    "B06-P01 both sourcePASS sixaxesCOMPLETE",
+    "B09-P02 both sourcePASS but treatment later",
+    "B10-P01 both sourcePASS but treatment later",
+    "A-F01 A1FAIL, comboMETHODFAIL, A8later, R0exactT0unknown",
+    "16COMPONENT originals 4PASS10FAIL2complete-finalUNASSESSED; no robustfullintegrationqualification",
+    "B02-P02 controlPASS/treatmentFAIL materialunsupported capability-absence claim; allsixaxesCOMPLETE; fasterFAIL no equalqualitysaving",
+    "B06-P02 controlPASS/treatmentFAIL materialavailablefix/version-context omission, allsixrequiredaxesCOMPLETE, supplementalSDKtracePARTIAL; fasterFAIL notsaving"
+  ],
+  "remaining_AB_screen_assessments": "Other pending original assessments remainUNKNOWN at this intentlock; continue unchanged. No later evidence changes the stored originalintent.",
+  "choices": [
+    {
+      "recipe": "C-S1-v2",
+      "cases": [
+        "C-P01",
+        "C-P02"
+      ],
+      "scientific_composition": "R0-ER13 common full obligations/time + B02 critic/finalizer + exact generic B10 critic delta",
+      "method": "B02 with root frozen method-directory",
+      "stage_maxima_seconds": [
+        1800,
+        1800
+      ],
+      "candidate_contexts": 2,
+      "rationale": "Original B02 controls2PASS/treatments1PASS1FAIL; one latency proxy lead with near-neutral firstpair native residence is insufficient. B10 available fullfirstpair bothPASS but slower. New combination is unproven exploratory successor, not repaired original or qualified optimizer. Same2contexts30/30, all six source axes retained."
+    },
+    {
+      "recipe": "C-S2-v2",
+      "cases": [
+        "C-P03",
+        "C-P04"
+      ],
+      "scientific_composition": "R0-ER13 common fullscope/time + B06 complementarycritics + exact generic B10delta on truthcritic only",
+      "method": "B06 with rootfrozen method-directory",
+      "stage_maxima_seconds": [
+        1800,
+        360,
+        360,
+        1080
+      ],
+      "candidate_contexts": 4,
+      "rationale": "B06 controls2PASS/treatments1PASS1FAIL. Firstpair timing/residence tradeoff not repeatableoptimizer. NewgenericB10integrated successor targets consequential negative/default/version-exception review using governingprimarycontext, keeps4contexts30/6/6/18 and all ordinary fullscope/disagreement duties. No case-specific answers or corrected historicalscore."
+    }
+  ],
+  "reference": "R0-ER13 investigator1800 critic720 reviser1080, maximum whole3600, no minimum",
+  "route": "Luna Max Standard/default matched allarms",
+  "common_prospective_capture": "prospective-capture-v1 manifest30b992fad9649a5a1607d329b66eae9c9af6ef453b874348c2b7e1662ebd8a24, sourceAPI MOCK154checks only, unchangedguard. New small scientificcomposition materializer seal pending.",
+  "selection_intent": "Scientific choices fixed before C body reveal; final release pins actual mechanics+inputs+methodversion. No new case-specific prompts or candidate feedback.",
+  "D_rule": "After C original assessments and available A/Bscreen outcomes, freeze entire testedrecipe and relevant Dallocation beforeDbodyreveal. If no jointoptimizer warranted, prospectively label diagnostic replications ofleastdominated complete recipe(s), notconfirmation. No requirealready20percentgain. All8Dpairslotsused usefully, no forcedmaterialincorrectpromotion.",
+  "predecessor_intent_sha256": "26323eebf81f8681884e2a2cad14e8e6167addcf19f38759a4eb38d5a8dd359e",
+  "predecessor_unadmitted": true,
+  "supersession_reason": "B06-P02 originaltreatment sourceFAIL before any C admission/bodyreveal, following B02P02FAIL. Preserve originals; test two explicit newB10-integrated successors, no purefailedmethod promotion.",
+  "scientific_composition_now_final": "Two prospective B10-integrated recipes fixed before C bodyreveal; laterA/Bjudgments separate, no retuning between C cases or D replications."
+}

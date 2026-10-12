@@ -1,0 +1,31 @@
+{
+  "schema": "er13.separate-review-output-verification.v1",
+  "block_id": "B10-P02",
+  "checked_at_utc": "2026-10-12T02:33:01.947111+00:00",
+  "contract_and_packet_exact": true,
+  "protected_input_members_verified_unchanged": 119,
+  "original_evaluator_and_coordinator_records_unchanged": true,
+  "exactly_two_FULL_arms": true,
+  "three_stages_each_present_and_hash_verified": true,
+  "all_six_exact_axes_COMPLETE_each": true,
+  "seven_dimensions_separate": true,
+  "source_judgments": {
+    "B10-P02-control": "FAIL",
+    "B10-P02-treatment": "FAIL"
+  },
+  "material_ids": {
+    "B10-P02-control": [
+      "CC-C01"
+    ],
+    "B10-P02-treatment": [
+      "CC-T01",
+      "CC-T02"
+    ]
+  },
+  "new_counts_not_original_grade_counts": true,
+  "links_json_and_primary_id_integrity": "PASS",
+  "public_routing_secret_scan": "PASS; exact upstream MIT notice retained",
+  "not_product_or_runtime_validation": true,
+  "review_deviation_disclosed": true,
+  "billing_and_final_write_session_linkage_remain_unknown": true
+}

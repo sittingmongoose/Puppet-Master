@@ -1,0 +1,58 @@
+{
+  "schema": "er13.original-output-freeze.v1",
+  "arm_id": "B07-P01-control",
+  "original": true,
+  "frozen_at_utc": "2026-10-12T02:04:34.052430+00:00",
+  "comparison_started": false,
+  "entries": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/assessment.md",
+      "relative_to_output_root": "control/assessment.md",
+      "bytes": 3805,
+      "sha256": "e97eaa5ada0b421aea8b822cf8e8bace94995447dfd42e3b0a5e681ceafde29e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/assessment.json",
+      "relative_to_output_root": "control/assessment.json",
+      "bytes": 16755,
+      "sha256": "5714a2f2d3bc2ccca0e13faa72a5d0fb9ea28a94e2e0ae0d79e0814946c99139"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/coverage.json",
+      "relative_to_output_root": "control/coverage.json",
+      "bytes": 16585,
+      "sha256": "bdce13b759b2e9fd65dca112ea4da9f605c991edbb181ace8e1885765772b44d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/defects.json",
+      "relative_to_output_root": "control/defects.json",
+      "bytes": 3532,
+      "sha256": "80ad457135e31457cee77dd1287165812e6c582dbd3d4110db0ef151fcfa58c0"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/primary-source-index.json",
+      "relative_to_output_root": "control/primary-source-index.json",
+      "bytes": 18151,
+      "sha256": "402a14e9f8060b9b381232534281a31e42474d661ecd068f52d2b5d5a3277378"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/control/evidence/duckdb-sampling-context.json",
+      "relative_to_output_root": "control/evidence/duckdb-sampling-context.json",
+      "bytes": 3101,
+      "sha256": "a3ac9fd306e83a5577f55a6b84906e5b782794bfd34ccc13a4b0daea7c004df3"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/input-verification.json",
+      "relative_to_output_root": "input-verification.json",
+      "bytes": 30132,
+      "sha256": "5f9b374bc043dcd3bdf6138ae4e501a39ab8ec4afc7057b3a5f2656da593075e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B07-P01/primary-observations.json",
+      "relative_to_output_root": "primary-observations.json",
+      "bytes": 25391,
+      "sha256": "5f4803c5782a6af549ac18994d0eec7ea7de02ad63435c28b02b62193a6fc2ce"
+    }
+  ],
+  "immutable_rule": "Original grades and evidence are frozen. Disputes require new separate adjudication; no overwrite or repeat-until-pass."
+}

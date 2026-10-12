@@ -1,0 +1,306 @@
+{
+  "schema": "er13.independent-primary-index.v1",
+  "arm_id": "B10-P02-control",
+  "research_shared_with_assigned_pair": true,
+  "imperfect_blinding": true,
+  "sources": [
+    {
+      "id": "P01",
+      "title": "Quarto books",
+      "url": "https://quarto.org/docs/books/",
+      "locator": "Overview; Config File",
+      "version_context": "Living official guide",
+      "observation": "HTML/PDF/Word/EPUB outputs and HTML website search; capabilities do not establish offline readiness or output conformance.",
+      "applies_to": "control",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416848+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P02",
+      "title": "Quarto website search",
+      "url": "https://quarto.org/docs/websites/website-search.html",
+      "locator": "Overview; Disabling/Forcing Search",
+      "version_context": "Living official guide",
+      "observation": "Local index is default; hosted Algolia optional; page exclusion configurable. Version labels/ranking remain custom proposal.",
+      "applies_to": "control",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416858+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P03",
+      "title": "MkDocs local files",
+      "url": "https://www.mkdocs.org/user-guide/deploying-your-docs/",
+      "locator": "Local Files",
+      "version_context": "Living official guide",
+      "observation": "file scheme needs empty site_url, directory URLs disabled, relative links, compatible search and locally bundled assets. Hosted PWA is a distinct route.",
+      "applies_to": "control",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416861+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P04",
+      "title": "Pandoc manual",
+      "url": "https://pandoc.org/MANUAL.html",
+      "locator": "Conversion model; --track-changes; Custom Styles/Input; Accessible PDFs",
+      "version_context": "Living official guide",
+      "observation": "Lossy conversion, option-controlled style metadata, accept/reject ignoring comments, all preserving change spans; LuaLaTeX tagging has toolchain conditions; WeasyPrint support described as experimental. DOCX file import does not itself verify clipboard paste.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416864+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P05",
+      "title": "Quarto PDF",
+      "url": "https://quarto.org/docs/output-formats/pdf-basics.html",
+      "locator": "PDF Accessibility & Standards; Validation with veraPDF",
+      "version_context": "Living official guide",
+      "observation": "PDF/UA configuration and fig-alt propagation exist; no automatic accessibility guarantee; validator and manual review remain required for claimed conformance.",
+      "applies_to": "control",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416866+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P06",
+      "title": "WCAG 2.2",
+      "url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "locator": "SC 1.1.1, 1.3.2, 2.1.1, 2.4.3, 4.1.2, 4.1.3",
+      "version_context": "Fixed W3C Recommendation 2024-12-12",
+      "observation": "Equivalent alternatives with defined exceptions, meaningful sequence, keyboard operation, focus order, accessible controls and status messages. No conformance claim was tested.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416869+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P07",
+      "title": "WAI images",
+      "url": "https://www.w3.org/WAI/tutorials/images/",
+      "locator": "Informative/decorative/text/complex images",
+      "version_context": "Living W3C authoring guidance",
+      "observation": "Complex instructional diagrams need full text equivalents; alternatives depend on purpose/context. Do not replace helpful diagrams by text-only output.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416875+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P08",
+      "title": "WAI keyboard interface",
+      "url": "https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/",
+      "locator": "Tab Sequence; Discernible and Predictable Keyboard Focus",
+      "version_context": "Living informative APG",
+      "observation": "DOM/tab/reading sequence alignment and visible logical focus are recommended; guidance is not a product conformance result.",
+      "applies_to": "control",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416878+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P09",
+      "title": "MDN service workers",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers",
+      "locator": "Secure context; Initial installation; Replacing existing worker",
+      "version_context": "Living developer documentation",
+      "observation": "HTTPS/localhost condition, selected asset caching, controlled-client waiting and skipWaiting exception; first installation does not immediately control existing documents by default.",
+      "applies_to": "control",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416881+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P10",
+      "title": "IndexedDB terminology",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Basic_Terminology",
+      "locator": "Key characteristics; Limitations",
+      "version_context": "Living developer documentation",
+      "observation": "Transactional origin-local structured data, asynchronous API, no built-in sync/full-text search; clearing can remove data.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416884+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P11",
+      "title": "Storage quotas",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+      "locator": "Origin; Best-effort/persistence; Private browsing; Eviction",
+      "version_context": "Living developer documentation",
+      "observation": "Default best-effort; persist requests differ by browser; user clearing remains possible. Partitioning exceptions exist, beyond this proposed top-level stable-origin workflow.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416887+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P12",
+      "title": "Quarto dashboard report",
+      "url": "https://github.com/quarto-dev/quarto-cli/issues/14756",
+      "locator": "Report; collaborator comment 2026-08-09",
+      "version_context": "Mutable issue; reporter Quarto 1.10.18",
+      "observation": "Reported omission concerns dashboards; collaborator says a dashboard is not a website page and labels it enhancement. No independent reproduction or general HTML defect established.",
+      "applies_to": "control",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416890+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P13",
+      "title": "Pandoc DOCX implementation",
+      "url": "https://github.com/jgm/pandoc/blob/3.12.1/src/Text/Pandoc/Readers/Docx.hs",
+      "locator": "runStyleToTransform; resolveDependentRunStyle; parPartToInlines; runToInlines",
+      "version_context": "Release tag 3.12.1",
+      "observation": "Ext_styles controls custom attributes; native style transformations still exist. Insertion/deletion/comment handling depends on readerTrackChanges. Drawing alt/media path inspected.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416892+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P14",
+      "title": "Pandoc DOCX tests",
+      "url": "https://github.com/jgm/pandoc/blob/3.12.1/test/Tests/Readers/Docx.hs",
+      "locator": "custom styles and track changes groups",
+      "version_context": "Release tag 3.12.1",
+      "observation": "Default/+styles goldens and tracked-change cases exist. Inspected only; no converter or upstream test run.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416895+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P15",
+      "title": "Pandoc DOCX caller",
+      "url": "https://github.com/jgm/pandoc/blob/3.12.1/src/Text/Pandoc/Readers.hs",
+      "locator": "readers registry; getReader",
+      "version_context": "Release tag 3.12.1",
+      "observation": "DOCX is ByteStringReader readDocx; getReader dispatches by flavored format and applies extension differences.",
+      "applies_to": "control",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416898+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P16",
+      "title": "Pandoc 3.12.1 release",
+      "url": "https://github.com/jgm/pandoc/releases/tag/3.12.1",
+      "locator": "Notable changes; #11942",
+      "version_context": "Tag 3.12.1; e51c9c6 shown",
+      "observation": "Data-URI escaping regression affecting embed-resources fixed; DOCX performance changes. This is an upgrade-fixture reason, not proof of handbook conversion.",
+      "applies_to": "control",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416901+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P17",
+      "title": "MkDocs index",
+      "url": "https://github.com/mkdocs/mkdocs/blob/1.6.1/mkdocs/contrib/search/search_index.py",
+      "locator": "add_entry_from_context; create_entry_for_section; generate_search_index",
+      "version_context": "Release tag 1.6.1",
+      "observation": "Page entry always; sections only for full/sections; text only for full; JSON docs/config plus optional prebuild.",
+      "applies_to": "control",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416904+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P18",
+      "title": "MkDocs index caller",
+      "url": "https://github.com/mkdocs/mkdocs/blob/1.6.1/mkdocs/contrib/search/__init__.py",
+      "locator": "_PluginConfig; on_page_context; on_post_build",
+      "version_context": "Release tag 1.6.1",
+      "observation": "Default indexing full; page callback populates index; post-build writes search_index.json. No runtime browser behavior tested.",
+      "applies_to": "control",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416908+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P37",
+      "title": "Service Worker authority",
+      "url": "https://w3c.github.io/ServiceWorker/",
+      "locator": "Install; Try Activate; skipWaiting",
+      "version_context": "Editors Draft 2026-09-17",
+      "observation": "Activation waiting has controlled-client and pending-event conditions. No app execution required to assess proposal.",
+      "applies_to": "control",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416964+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P38",
+      "title": "Storage authority",
+      "url": "https://storage.spec.whatwg.org/",
+      "locator": "Persistence permission; bucket mode",
+      "version_context": "Living Standard",
+      "observation": "Persistent storage requires permission; protection does not override user clearing.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416968+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    },
+    {
+      "id": "P39",
+      "title": "IndexedDB authority",
+      "url": "https://w3c.github.io/IndexedDB/",
+      "locator": "Database; connections; database API",
+      "version_context": "API 3.0 living draft",
+      "observation": "Databases belong to storage keys; versioning and transactional access do not imply content/progress cross-store atomicity or synchronization.",
+      "applies_to": "both",
+      "access_utc_window": {
+        "start": "2026-10-12T01:54:15+00:00",
+        "end": "2026-10-12T02:05:29.416971+00:00"
+      },
+      "operation": "Independent official-page or targeted upstream source read; not execution"
+    }
+  ],
+  "failed_lookup_notes": [
+    "Independent guessed MkDocs upstream test-file URL returned 404; not evidence tests do not exist."
+  ],
+  "no_product_execution": true
+}

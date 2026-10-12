@@ -1,0 +1,293 @@
+{
+  "arm_id": "B11-P01-treatment",
+  "overall": "COMPLETE",
+  "meaning": "Evaluator coverage of the assigned planning obligations; COMPLETE does not mean the candidate passed or software was executed.",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "All product obligations and hard negative constraints addressed; proposal scope is preserved."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "Declared platform/access/identity/history conditions corroborated; safe-save and containment limits recorded separately."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "Portable paths plus document-relative bookmarks, document IDs, DLT and portals are useful conditional mechanisms; genuine relink regression/history corroborated."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "All C1-C11 substantive plan dispositions and M1/m2/m3 criticism examined; no false rejection found. The operational timing paragraph is not repeated as a separate final clause; on-time evidence is assessed separately."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "Supported mechanisms and user constraints retained; M1 mismatch/unverified semantics and export/archived-source corrections are visible. V02 safe-save detail remains in the carried source map."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "assessment": "Adversarial proposed checks have meaningful oracles. No product execution credited; reported research and proposed validation remain distinct."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "obligation": "Distinct stable record, replaceable locator and scoped identity evidence",
+      "coverage": "COMPLETE",
+      "judgment": "PASS within declared proposal boundaries"
+    },
+    {
+      "id": "O02",
+      "obligation": "Link existing originals without silent copying or source mutation",
+      "coverage": "COMPLETE",
+      "judgment": "PASS within declared proposal boundaries"
+    },
+    {
+      "id": "O03",
+      "obligation": "Project relocation and honest external/removable-volume behavior",
+      "coverage": "COMPLETE",
+      "judgment": "PASS within declared proposal boundaries"
+    },
+    {
+      "id": "O04",
+      "obligation": "Candidate finding/verification, duplicates, ambiguity and deliberate relink",
+      "coverage": "COMPLETE",
+      "judgment": "PASS within declared proposal boundaries"
+    },
+    {
+      "id": "O05",
+      "obligation": "Understandable missing, offline and access-denied states",
+      "coverage": "COMPLETE",
+      "judgment": "PASS within declared proposal boundaries"
+    },
+    {
+      "id": "O06",
+      "obligation": "Cross-platform/filesystem/path/sandbox conditions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS within declared proposal boundaries"
+    },
+    {
+      "id": "O07",
+      "obligation": "Simple portable baseline compared with stronger useful alternatives",
+      "coverage": "COMPLETE",
+      "judgment": "PASS within declared proposal boundaries"
+    },
+    {
+      "id": "O08",
+      "obligation": "Two-window atomic mutation and stale-edit conflict control",
+      "coverage": "COMPLETE",
+      "judgment": "PASS within declared proposal boundaries"
+    },
+    {
+      "id": "O09",
+      "obligation": "Export/move disclosure, preserved record IDs and explicit optional packaging",
+      "coverage": "COMPLETE",
+      "judgment": "PASS within declared proposal boundaries"
+    },
+    {
+      "id": "O10",
+      "obligation": "No elevation, persistent whole-disk index, cloud-account requirement or automatic upload",
+      "coverage": "COMPLETE",
+      "judgment": "PASS within declared proposal boundaries"
+    },
+    {
+      "id": "O11",
+      "obligation": "Narrow realistic integration boundaries and unresolved owner facts",
+      "coverage": "COMPLETE",
+      "judgment": "PASS within declared proposal boundaries"
+    },
+    {
+      "id": "O12",
+      "obligation": "All substantive exact-plan choices retained/changed/rejected with reasons",
+      "coverage": "COMPLETE",
+      "judgment": "PASS within declared proposal boundaries"
+    },
+    {
+      "id": "O13",
+      "obligation": "Every supplied critic finding and supported predecessor meaning examined",
+      "coverage": "COMPLETE",
+      "judgment": "PASS within declared proposal boundaries"
+    },
+    {
+      "id": "O14",
+      "obligation": "Meaningful proposed validation distinguished from reported executed research",
+      "coverage": "COMPLETE",
+      "judgment": "PASS within declared proposal boundaries"
+    }
+  ],
+  "source_families": [
+    {
+      "family": "record_locator_and_local_linking",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "E01",
+        "E02",
+        "E04"
+      ],
+      "finding_ids": [],
+      "scope": "Consequential claims and proposal conditions, not every upstream routine or all future OS/filesystem implementations."
+    },
+    {
+      "family": "reviewed_relink_and_real_implementation_history",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "E04",
+        "E05",
+        "E06",
+        "E10",
+        "E11"
+      ],
+      "finding_ids": [],
+      "scope": "Consequential claims and proposal conditions, not every upstream routine or all future OS/filesystem implementations."
+    },
+    {
+      "family": "macos_bookmarks_access_and_identity",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "E13",
+        "E14",
+        "E15",
+        "E16",
+        "E17",
+        "E18",
+        "E19"
+      ],
+      "finding_ids": [
+        "T-D03"
+      ],
+      "scope": "Consequential claims and proposal conditions, not every upstream routine or all future OS/filesystem implementations."
+    },
+    {
+      "family": "windows_file_and_volume_identity",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "E20",
+        "E21"
+      ],
+      "finding_ids": [],
+      "scope": "Consequential claims and proposal conditions, not every upstream routine or all future OS/filesystem implementations."
+    },
+    {
+      "family": "linux_identity_and_privilege_boundaries",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "E23"
+      ],
+      "finding_ids": [],
+      "scope": "Consequential claims and proposal conditions, not every upstream routine or all future OS/filesystem implementations."
+    },
+    {
+      "family": "path_encoding_case_and_containment",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "E27",
+        "E31",
+        "E32",
+        "E33",
+        "E34",
+        "E35",
+        "E36",
+        "E37"
+      ],
+      "finding_ids": [
+        "T-D04"
+      ],
+      "scope": "Consequential claims and proposal conditions, not every upstream routine or all future OS/filesystem implementations."
+    },
+    {
+      "family": "persistence_and_two_window_conflicts",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "E28"
+      ],
+      "finding_ids": [],
+      "scope": "Consequential claims and proposal conditions, not every upstream routine or all future OS/filesystem implementations."
+    },
+    {
+      "family": "watcher_semantics_and_optional_scope",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "E38",
+        "E39",
+        "E40"
+      ],
+      "finding_ids": [],
+      "scope": "Consequential claims and proposal conditions, not every upstream routine or all future OS/filesystem implementations."
+    },
+    {
+      "family": "export_privacy_inclusion_and_explicit_copy",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "E01",
+        "E13",
+        "E14",
+        "E25"
+      ],
+      "finding_ids": [],
+      "scope": "Consequential claims and proposal conditions, not every upstream routine or all future OS/filesystem implementations."
+    },
+    {
+      "family": "unfamiliar_conditional_tracking_or_access_alternatives",
+      "coverage": "COMPLETE",
+      "primary_source_ids": [
+        "E22",
+        "E25",
+        "E26"
+      ],
+      "finding_ids": [],
+      "scope": "Consequential claims and proposal conditions, not every upstream routine or all future OS/filesystem implementations."
+    }
+  ],
+  "every_critic_disposition": {
+    "coverage": "COMPLETE",
+    "ids": [
+      "M1",
+      "m2",
+      "m3"
+    ],
+    "material_false_rejections_found": false
+  },
+  "preservation": {
+    "coverage": "COMPLETE",
+    "discovery_draft_final_and_all_source_maps_read": true,
+    "material_supported_meaning_loss_found": false,
+    "limitations": [
+      "Source-map provenance and prose-specificity defects remain as listed in defects.json."
+    ]
+  },
+  "unassessed_outside_deliverable": [
+    {
+      "domain": "Future application deployment, runtime performance and physical OS/filesystem matrix execution",
+      "coverage": "UNASSESSED",
+      "reason": "Not the requested research-planning deliverable."
+    },
+    {
+      "domain": "Exhaustive upstream repository/history and unrelated mechanisms",
+      "coverage": "UNASSESSED",
+      "reason": "Targeted governing context only; no full-tree/history scan."
+    },
+    {
+      "domain": "Candidate tool chronology, precise five-minute pivot timing, provider context occupancy and account billing",
+      "coverage": "UNASSESSED",
+      "reason": "No independent complete telemetry supplied; input confinement and privacy maintained."
+    }
+  ],
+  "access_limits": "Direct man7 HTML retrieval timed out; full relevant release-member context from kernel.org man-pages 6.19 and indexed primary text were used. Apple Markdown was retrieved directly after web-wrapper errors."
+}

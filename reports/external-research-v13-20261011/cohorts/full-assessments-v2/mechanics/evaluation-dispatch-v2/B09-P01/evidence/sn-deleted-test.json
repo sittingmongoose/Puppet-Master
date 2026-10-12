@@ -1,0 +1,580 @@
+{
+  "id": "sn-deleted-test",
+  "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/tests/Feature/Checkouts/Api/CheckoutToSoftDeletedTargetTest.php",
+  "resolved_url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/tests/Feature/Checkouts/Api/CheckoutToSoftDeletedTargetTest.php",
+  "access_utc": "2026-10-12T02:01:58.405970+00:00",
+  "response_sha256": "9604311d21575b994b6aa31253988cedc7f71b095d6aa2770d831ca63cb1cb4b",
+  "response_bytes": 7778,
+  "operation": "read-only fetch",
+  "evidence": [
+    {
+      "line": 31,
+      "text": "    // Asset checkout"
+    },
+    {
+      "line": 32,
+      "text": "    // -------------------------------------------------------------------------"
+    },
+    {
+      "line": 33,
+      "text": ""
+    },
+    {
+      "line": 34,
+      "text": "    public function test_asset_checkout_rejects_soft_deleted_user_target()"
+    },
+    {
+      "line": 35,
+      "text": "    {"
+    },
+    {
+      "line": 36,
+      "text": "        $asset = Asset::factory()->create();"
+    },
+    {
+      "line": 37,
+      "text": "        $targetUser = User::factory()->create();"
+    },
+    {
+      "line": 38,
+      "text": "        $targetUser->delete();"
+    },
+    {
+      "line": 39,
+      "text": ""
+    },
+    {
+      "line": 40,
+      "text": "        $this->actingAsForApi(User::factory()->superuser()->create())"
+    },
+    {
+      "line": 41,
+      "text": "            ->postJson(route('api.asset.checkout', $asset), ["
+    },
+    {
+      "line": 42,
+      "text": "                'checkout_to_type' => 'user',"
+    },
+    {
+      "line": 43,
+      "text": "                'assigned_user' => $targetUser->id,"
+    },
+    {
+      "line": 44,
+      "text": "            ])"
+    },
+    {
+      "line": 45,
+      "text": "            ->assertStatusMessageIs('error');"
+    },
+    {
+      "line": 46,
+      "text": ""
+    },
+    {
+      "line": 47,
+      "text": "        $this->assertDatabaseMissing('assets', ["
+    },
+    {
+      "line": 48,
+      "text": "            'id' => $asset->id,"
+    },
+    {
+      "line": 50,
+      "text": "        ]);"
+    },
+    {
+      "line": 51,
+      "text": "    }"
+    },
+    {
+      "line": 52,
+      "text": ""
+    },
+    {
+      "line": 53,
+      "text": "    public function test_asset_checkout_rejects_soft_deleted_asset_target()"
+    },
+    {
+      "line": 54,
+      "text": "    {"
+    },
+    {
+      "line": 55,
+      "text": "        $asset = Asset::factory()->create();"
+    },
+    {
+      "line": 56,
+      "text": "        $targetAsset = Asset::factory()->create();"
+    },
+    {
+      "line": 57,
+      "text": "        $targetAsset->delete();"
+    },
+    {
+      "line": 58,
+      "text": ""
+    },
+    {
+      "line": 59,
+      "text": "        $this->actingAsForApi(User::factory()->superuser()->create())"
+    },
+    {
+      "line": 60,
+      "text": "            ->postJson(route('api.asset.checkout', $asset), ["
+    },
+    {
+      "line": 61,
+      "text": "                'checkout_to_type' => 'asset',"
+    },
+    {
+      "line": 62,
+      "text": "                'assigned_asset' => $targetAsset->id,"
+    },
+    {
+      "line": 63,
+      "text": "            ])"
+    },
+    {
+      "line": 64,
+      "text": "            ->assertStatusMessageIs('error');"
+    },
+    {
+      "line": 65,
+      "text": ""
+    },
+    {
+      "line": 66,
+      "text": "        $this->assertDatabaseMissing('assets', ["
+    },
+    {
+      "line": 67,
+      "text": "            'id' => $asset->id,"
+    },
+    {
+      "line": 70,
+      "text": "        ]);"
+    },
+    {
+      "line": 71,
+      "text": "    }"
+    },
+    {
+      "line": 72,
+      "text": ""
+    },
+    {
+      "line": 73,
+      "text": "    public function test_asset_checkout_rejects_soft_deleted_location_target()"
+    },
+    {
+      "line": 74,
+      "text": "    {"
+    },
+    {
+      "line": 75,
+      "text": "        // Reporter flagged this case as \"unverified due to FMCS mismatch\" but"
+    },
+    {
+      "line": 76,
+      "text": "        // the code path is identical to the other two, so the fix must cover it."
+    },
+    {
+      "line": 77,
+      "text": "        $asset = Asset::factory()->create();"
+    },
+    {
+      "line": 78,
+      "text": "        $targetLocation = Location::factory()->create();"
+    },
+    {
+      "line": 79,
+      "text": "        $targetLocation->delete();"
+    },
+    {
+      "line": 80,
+      "text": ""
+    },
+    {
+      "line": 81,
+      "text": "        $this->actingAsForApi(User::factory()->superuser()->create())"
+    },
+    {
+      "line": 82,
+      "text": "            ->postJson(route('api.asset.checkout', $asset), ["
+    },
+    {
+      "line": 83,
+      "text": "                'checkout_to_type' => 'location',"
+    },
+    {
+      "line": 84,
+      "text": "                'assigned_location' => $targetLocation->id,"
+    },
+    {
+      "line": 85,
+      "text": "            ])"
+    },
+    {
+      "line": 86,
+      "text": "            ->assertStatusMessageIs('error');"
+    },
+    {
+      "line": 87,
+      "text": ""
+    },
+    {
+      "line": 96,
+      "text": "    // Consumable checkout"
+    },
+    {
+      "line": 97,
+      "text": "    // -------------------------------------------------------------------------"
+    },
+    {
+      "line": 98,
+      "text": ""
+    },
+    {
+      "line": 99,
+      "text": "    public function test_consumable_checkout_rejects_soft_deleted_user_target()"
+    },
+    {
+      "line": 100,
+      "text": "    {"
+    },
+    {
+      "line": 101,
+      "text": "        $consumable = Consumable::factory()->create();"
+    },
+    {
+      "line": 102,
+      "text": "        $target = User::factory()->create();"
+    },
+    {
+      "line": 103,
+      "text": "        $target->delete();"
+    },
+    {
+      "line": 104,
+      "text": ""
+    },
+    {
+      "line": 105,
+      "text": "        $this->actingAsForApi(User::factory()->checkoutConsumables()->create())"
+    },
+    {
+      "line": 106,
+      "text": "            ->postJson(route('api.consumables.checkout', $consumable), ["
+    },
+    {
+      "line": 107,
+      "text": "                'assigned_to' => $target->id,"
+    },
+    {
+      "line": 108,
+      "text": "                'checkout_qty' => 1,"
+    },
+    {
+      "line": 109,
+      "text": "            ])"
+    },
+    {
+      "line": 110,
+      "text": "            ->assertStatusMessageIs('error');"
+    },
+    {
+      "line": 111,
+      "text": ""
+    },
+    {
+      "line": 112,
+      "text": "        $this->assertDatabaseMissing('consumables_users', ["
+    },
+    {
+      "line": 113,
+      "text": "            'consumable_id' => $consumable->id,"
+    },
+    {
+      "line": 119,
+      "text": "    // Component checkout"
+    },
+    {
+      "line": 120,
+      "text": "    // -------------------------------------------------------------------------"
+    },
+    {
+      "line": 121,
+      "text": ""
+    },
+    {
+      "line": 122,
+      "text": "    public function test_component_checkout_rejects_soft_deleted_asset_target()"
+    },
+    {
+      "line": 123,
+      "text": "    {"
+    },
+    {
+      "line": 124,
+      "text": "        $component = Component::factory()->create();"
+    },
+    {
+      "line": 125,
+      "text": "        $target = Asset::factory()->create();"
+    },
+    {
+      "line": 126,
+      "text": "        $target->delete();"
+    },
+    {
+      "line": 127,
+      "text": ""
+    },
+    {
+      "line": 128,
+      "text": "        $this->actingAsForApi(User::factory()->superuser()->create())"
+    },
+    {
+      "line": 129,
+      "text": "            ->postJson(route('api.components.checkout', $component->id), ["
+    },
+    {
+      "line": 130,
+      "text": "                'assigned_to' => $target->id,"
+    },
+    {
+      "line": 131,
+      "text": "                'assigned_qty' => 1,"
+    },
+    {
+      "line": 132,
+      "text": "            ])"
+    },
+    {
+      "line": 133,
+      "text": "            ->assertStatusMessageIs('error');"
+    },
+    {
+      "line": 134,
+      "text": ""
+    },
+    {
+      "line": 135,
+      "text": "        $this->assertDatabaseMissing('components_assets', ["
+    },
+    {
+      "line": 136,
+      "text": "            'component_id' => $component->id,"
+    },
+    {
+      "line": 146,
+      "text": "    // validation time regardless)."
+    },
+    {
+      "line": 147,
+      "text": "    // -------------------------------------------------------------------------"
+    },
+    {
+      "line": 148,
+      "text": ""
+    },
+    {
+      "line": 149,
+      "text": "    public function test_accessory_checkout_rejects_soft_deleted_user_target()"
+    },
+    {
+      "line": 150,
+      "text": "    {"
+    },
+    {
+      "line": 151,
+      "text": "        $accessory = Accessory::factory()->create();"
+    },
+    {
+      "line": 152,
+      "text": "        $target = User::factory()->create();"
+    },
+    {
+      "line": 153,
+      "text": "        $target->delete();"
+    },
+    {
+      "line": 154,
+      "text": ""
+    },
+    {
+      "line": 155,
+      "text": "        $this->actingAsForApi(User::factory()->superuser()->create())"
+    },
+    {
+      "line": 156,
+      "text": "            ->postJson(route('api.accessories.checkout', $accessory), ["
+    },
+    {
+      "line": 157,
+      "text": "                'assigned_user' => $target->id,"
+    },
+    {
+      "line": 158,
+      "text": "                'checkout_to_type' => 'user',"
+    },
+    {
+      "line": 159,
+      "text": "                'checkout_qty' => 1,"
+    },
+    {
+      "line": 160,
+      "text": "            ])"
+    },
+    {
+      "line": 161,
+      "text": "            ->assertStatusMessageIs('error');"
+    },
+    {
+      "line": 162,
+      "text": ""
+    },
+    {
+      "line": 163,
+      "text": "        $this->assertDatabaseMissing('accessories_checkout', ["
+    },
+    {
+      "line": 171,
+      "text": "    // Happy paths (make sure the fix doesn't over-block)"
+    },
+    {
+      "line": 172,
+      "text": "    // -------------------------------------------------------------------------"
+    },
+    {
+      "line": 173,
+      "text": ""
+    },
+    {
+      "line": 174,
+      "text": "    public function test_asset_checkout_still_works_with_live_user_target()"
+    },
+    {
+      "line": 175,
+      "text": "    {"
+    },
+    {
+      "line": 176,
+      "text": "        $asset = Asset::factory()->create();"
+    },
+    {
+      "line": 177,
+      "text": "        $target = User::factory()->create();"
+    },
+    {
+      "line": 178,
+      "text": ""
+    },
+    {
+      "line": 179,
+      "text": "        $this->actingAsForApi(User::factory()->superuser()->create())"
+    },
+    {
+      "line": 180,
+      "text": "            ->postJson(route('api.asset.checkout', $asset), ["
+    },
+    {
+      "line": 181,
+      "text": "                'checkout_to_type' => 'user',"
+    },
+    {
+      "line": 182,
+      "text": "                'assigned_user' => $target->id,"
+    },
+    {
+      "line": 183,
+      "text": "            ])"
+    },
+    {
+      "line": 184,
+      "text": "            ->assertStatusMessageIs('success');"
+    },
+    {
+      "line": 185,
+      "text": ""
+    },
+    {
+      "line": 186,
+      "text": "        $this->assertDatabaseHas('assets', ["
+    },
+    {
+      "line": 187,
+      "text": "            'id' => $asset->id,"
+    },
+    {
+      "line": 188,
+      "text": "            'assigned_to' => $target->id,"
+    },
+    {
+      "line": 190,
+      "text": "        ]);"
+    },
+    {
+      "line": 191,
+      "text": "    }"
+    },
+    {
+      "line": 192,
+      "text": ""
+    },
+    {
+      "line": 193,
+      "text": "    public function test_consumable_checkout_still_works_with_live_user_target()"
+    },
+    {
+      "line": 194,
+      "text": "    {"
+    },
+    {
+      "line": 195,
+      "text": "        $consumable = Consumable::factory()->create();"
+    },
+    {
+      "line": 196,
+      "text": "        $target = User::factory()->create();"
+    },
+    {
+      "line": 197,
+      "text": ""
+    },
+    {
+      "line": 198,
+      "text": "        $this->actingAsForApi(User::factory()->checkoutConsumables()->create())"
+    },
+    {
+      "line": 199,
+      "text": "            ->postJson(route('api.consumables.checkout', $consumable), ["
+    },
+    {
+      "line": 200,
+      "text": "                'assigned_to' => $target->id,"
+    },
+    {
+      "line": 201,
+      "text": "                'checkout_qty' => 1,"
+    },
+    {
+      "line": 202,
+      "text": "            ])"
+    },
+    {
+      "line": 203,
+      "text": "            ->assertStatusMessageIs('success');"
+    },
+    {
+      "line": 204,
+      "text": "    }"
+    },
+    {
+      "line": 205,
+      "text": "}"
+    }
+  ],
+  "license_context": "Public focused source excerpts; upstream license notice remains at https://github.com/grokability/snipe-it. No product code or tests executed."
+}

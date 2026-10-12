@@ -1,0 +1,85 @@
+{
+  "schema": "er13.independent.input-custody.v1",
+  "arm_id": "B11-P01-control",
+  "verification": "ALL_DECLARED_HASHES_AND_BYTE_SIZES_MATCH",
+  "packet": {
+    "path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B11-P01.json",
+    "sha256": "6eac2abf0393bad21fed175d86e818b7083e3cc9e89641b65c185a462876d641"
+  },
+  "contract": {
+    "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+    "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+  },
+  "coordinator_receipt": {
+    "path": "ER13_RUNTIME/state/eval-coordinator-v2/B11-P01-input-verification.json",
+    "sha256": "e9f61e77006e5d6a5dfd47e5234c8dc0cd2411eeead3a63de2979de9e43b42ad"
+  },
+  "workspace_agents": {
+    "path": "ER13_WORKTREE/AGENTS.md",
+    "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810"
+  },
+  "handoff_scope": "Only sections 10 and 12 exposed to and used by the evaluator",
+  "brief": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P01-control-eval-inputs/control-inputs/brief.md",
+    "sha256": "f5abfc028dab466137df21a8405f1db38baec8713b440f353e64f7e179b90373",
+    "bytes": 2226
+  },
+  "plan": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P01-control-eval-inputs/control-inputs/plan.md",
+    "sha256": "8fb50111ed44f6ff62a1041cfb9f2fb39d9787599ad24efcadaa3d45e02e8353",
+    "bytes": 1683
+  },
+  "final": {
+    "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-control/run/B11-P01-control/control/terminal-handoffs/reviser/files/final.md",
+    "sha256": "476cd762e51556bae4d5dd92ade23240f4d161fa857f267653ee0f36b253527e",
+    "bytes": 24740
+  },
+  "manifest_verifications": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B11-P01-control-eval-inputs/authored-manifest.json",
+      "sha256": "b890519e2af965e91ce358ba23dd6c9c65fbcc9a8a71dda1313c9b27cd60f4f5",
+      "members_verified": 4
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-control/run/B11-P01-control/control/terminal-handoffs/investigator/manifest.json",
+      "sha256": "d77e56dea6ea719ea8a71fc9d902533c5dbc8743f7311018f0d01441845a503a",
+      "members_verified": 15
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-control/run/B11-P01-control/control/terminal-handoffs/critic/manifest.json",
+      "sha256": "938cbfd5fb0db8d404df3f9d58553f40a8773c0585210b27c4b777738ada34f0",
+      "members_verified": 12
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B11-P01-control/run/B11-P01-control/control/terminal-handoffs/reviser/manifest.json",
+      "sha256": "e6ce91ed6b279e586e020b6f0a0c881a1b29253633dc59070ac2aca1e91b3bf9",
+      "members_verified": 12
+    }
+  ],
+  "status_receipts": [
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B11-P01-control/investigator-eval-ready-status.raw.json",
+      "sha256": "7745281c56ab9bd7f3715f9addf422c961b6735e0218c679b250b3d26915dd67"
+    },
+    {
+      "stage": "critic",
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B11-P01-control/critic-eval-ready-status.raw.json",
+      "sha256": "e265d949d7e1df16fbdc476f0c56de456f0ebe99145fa6961a05581430e9ec78"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/B11-P01-control/reviser-eval-ready-status.raw.json",
+      "sha256": "0ea456aa20ad54d98ea1f0f5dacc078c9636c439197395e74b959a29fe60f59b"
+    }
+  ],
+  "corridor": "Exact receipt-listed terminal-handoffs/*/files members only; referenced live input/source paths were not followed.",
+  "reveal_binding": {
+    "discovery_sha256": "b5d476680217eb19318ab7d983bbabbd99c4d838e8db07b55cf7107b26e182c7",
+    "released_plan_sha256": "8fb50111ed44f6ff62a1041cfb9f2fb39d9787599ad24efcadaa3d45e02e8353",
+    "revealed_at_utc": "2026-10-12T01:12:37.690Z",
+    "exact_hash_match": true,
+    "single_use_receipt": true,
+    "independent_full_execution_trace": "UNKNOWN"
+  }
+}

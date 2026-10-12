@@ -1,0 +1,64 @@
+{
+  "schema": "er13.post-freeze-finite-comparison.v1",
+  "block_id": "B03-P02",
+  "arm_count": 2,
+  "written_after_original_freezes_at_utc": "2026-10-12T02:27:10.773076+00:00",
+  "originals": [
+    {
+      "arm_id": "B03-P02-control",
+      "manifest_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/control/manifest.json",
+      "manifest_sha256": "7331ef13af5888dc51c8c1a5da0fccda1ca696d6d763a6533d87a7977386acda",
+      "frozen_at_utc": "2026-10-12T02:26:30.006175+00:00"
+    },
+    {
+      "arm_id": "B03-P02-treatment",
+      "manifest_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/treatment/manifest.json",
+      "manifest_sha256": "062bc966fedc2a77509b2603d61084a04ac90ad4c7d4ec1199416ccb082d0cf9",
+      "frozen_at_utc": "2026-10-12T02:26:30.006673+00:00"
+    }
+  ],
+  "original_grades_unchanged": true,
+  "source_judgments": {
+    "control": "FAIL",
+    "control_decisive_defect": "C01: obsolete RFC 3339 offset distinction despite RFC 9557 update",
+    "treatment": "PASS within declared finite planning-proposal assessment"
+  },
+  "comparison_scope": "Single matched FULL pair, not a component, campaign selection, replication or universal correctness assessment",
+  "quality_signal": "The treatment is the only observed source pass in this pair. The control failure is a supported consequential semantic error; it is not inferred from citation counts or receipt hashes. This single pair does not establish optimizer effectiveness or general non-inferiority.",
+  "coverage": "All six axes and available consequential obligation/source families assessed; actual unknown tracker integration, future product execution and unavailable telemetry are explicitly unassessed.",
+  "latency_observations": {
+    "common_native_terminal_proxy_seconds_from_frozen_t0": {
+      "control": 2460.635,
+      "treatment": 2171.608
+    },
+    "treatment_minus_control_proxy_seconds": -289.027,
+    "limits": "Native finalizer/author terminal timestamps are receipt proxies, not independently measured last artifact writes or user-visible task quiet times. Whole clocks and caps are unchanged. A FAIL/PASS pair cannot establish equal-quality latency savings."
+  },
+  "occupancy_observations": {
+    "control": {
+      "summed_seconds": 1231.0,
+      "union_seconds": 1231.0,
+      "overlap_seconds": 0,
+      "scope": "three nonoverlapping receipt birth-to-terminal intervals, excludes setup/queue and final task-delivery tail"
+    },
+    "treatment": {
+      "summed_seconds": 2545,
+      "union_seconds": 2149,
+      "overlap_seconds": 396,
+      "scope": "author birth-to-terminal interval plus contained critic interval; excludes setup/queue and task-delivery tail"
+    },
+    "treatment_open_wait_seconds": 1017.184738,
+    "limits": "Retained author and critic intervals overlap. Summed occupancy, union and waiting are distinct from active inference, cumulative tokens and billing. No resource savings or cold full-experiment total is established."
+  },
+  "billing_and_provider_activity": "UNKNOWN; native cumulative counter receipts are present but are not per-request billing and were not republished. Independent evaluator costs remain separate from candidate product.",
+  "denominators": {
+    "assigned_arms": 2,
+    "delivered_finals": 2,
+    "source_passes": 1,
+    "source_failures": 1,
+    "cost_per_passing_final": "UNDEFINED for control with zero source passes; UNKNOWN for treatment and pair because consumption/billing totals are unavailable"
+  },
+  "method_and_provenance": "Receipt-supported topology and native birth/objective consistency; independent native-to-task/session linkage, full return provenance and actual service tier remain unknown. Technique-bearing paths made blinding imperfect.",
+  "selection_or_recipe_recommendation": "NONE; reserved to the root campaign authority. No held-out material was read.",
+  "adjudication": "NONE; any later dispute requires a new separate review preserving these originals and all responses/unresolved objections."
+}

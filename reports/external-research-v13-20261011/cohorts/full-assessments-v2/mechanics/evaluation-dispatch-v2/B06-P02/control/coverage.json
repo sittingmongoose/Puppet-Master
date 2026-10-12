@@ -1,0 +1,405 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "B06-P02-control",
+  "scope": "FULL",
+  "overall": "COMPLETE for required proposal-level assessment",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "rationale": "The complete proposal addresses the named workflows and hard negatives; policy values remain explicit decisions."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "rationale": "Governing facts/conditions are supported in the finite domains reviewed."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "rationale": "Four useful architecture alternatives and directly applicable CouchDB attachment repair/code/test/release evidence are retained."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "rationale": "All exact plan clauses and both critic findings have defensible dispositions; the rejected CI-count criticism is independently disproved."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "rationale": "Core workflows, constraints, conditional mechanisms and owner decisions survive; complete predecessor source records are preserved without rebinding."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "rationale": "Failure scenarios have observable desired outcomes and are consistently proposed; no product test/deployment is asserted as executed."
+    }
+  ],
+  "consequential_obligations": [
+    {
+      "id": "O01",
+      "obligation": "Tasks, location notes, equipment problems and readable change/unresolved handover summary",
+      "coverage": "COMPLETE",
+      "final_locator": "Shift workflow / Start and hand over a shift",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O02",
+      "obligation": "Recent offline handover reads, freshness and browser persistence limits",
+      "coverage": "COMPLETE",
+      "final_locator": "P02 / Read recent notes and acknowledge",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O03",
+      "obligation": "Offline drafts, visible queue outcomes and retry/recovery",
+      "coverage": "COMPLETE",
+      "final_locator": "Shift workflow / Draft and synchronize offline changes",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O04",
+      "obligation": "Competing offline claims with retained attempts and visible reconciliation",
+      "coverage": "COMPLETE",
+      "final_locator": "P03 / Reconcile claims and issue state",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O05",
+      "obligation": "Acknowledgment distinct from resolution; no reading/productivity scoring",
+      "coverage": "COMPLETE",
+      "final_locator": "P01/P06 / Read recent notes and acknowledge",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O06",
+      "obligation": "Stale offline writes cannot silently reopen resolved issues; explicit current reopen",
+      "coverage": "COMPLETE",
+      "final_locator": "P07/P08 / Reconcile claims and issue state",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O07",
+      "obligation": "Older issue search, private contact exclusion, free-text/result/offline access boundary",
+      "coverage": "COMPLETE",
+      "final_locator": "Search and access / Search older issues privately",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O08",
+      "obligation": "Optional sensitive photos, explicit upload, bounded data and interruption states",
+      "coverage": "COMPLETE",
+      "final_locator": "Photo handling and retention / Optional photos and constrained mobile data",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": "Organizational values remain decisions; candidate application validation is proposed, not run."
+    },
+    {
+      "id": "O09",
+      "obligation": "Deletion propagation, downloaded caches, disconnected copies and backups",
+      "coverage": "COMPLETE",
+      "final_locator": "Photo handling and retention / Optional photos and constrained mobile data",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": "Organizational values remain decisions; candidate application validation is proposed, not run."
+    },
+    {
+      "id": "O10",
+      "obligation": "Shared access alternatives and no required personal commercial subscription",
+      "coverage": "COMPLETE",
+      "final_locator": "Search and access / Shared access and volunteer identity",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": "Organizational values remain decisions; candidate application validation is proposed, not run."
+    },
+    {
+      "id": "O11",
+      "obligation": "Unknown organizational role/retention/identity policies remain decisions",
+      "coverage": "COMPLETE",
+      "final_locator": "Owner decisions / Shared access and adoption decisions",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": "Organizational values remain decisions; candidate application validation is proposed, not run."
+    },
+    {
+      "id": "O12",
+      "obligation": "Feasible sync alternatives without assuming a winning product",
+      "coverage": "COMPLETE",
+      "final_locator": "Synchronization alternatives / Synchronization and data model",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O13",
+      "obligation": "Small synthetic adoption sequence and roughly thirty rotating volunteers",
+      "coverage": "COMPLETE",
+      "final_locator": "Adoption sequence and shift-scale validation",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": "Organizational values remain decisions; candidate application validation is proposed, not run."
+    },
+    {
+      "id": "O14",
+      "obligation": "Restored backups, collision/idempotency, departure and current authorization",
+      "coverage": "COMPLETE",
+      "final_locator": "P09–P11 / operation contract and revocation validation",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O15",
+      "obligation": "Complete exact-plan dispositions and explicit critic integration",
+      "coverage": "COMPLETE",
+      "final_locator": "Clause-by-clause table and critic dispositions",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O16",
+      "obligation": "Consequential primary docs/code/callers/tests and issue/fix/release context",
+      "coverage": "COMPLETE",
+      "final_locator": "Evidence registers and bounded repository history",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": null
+    },
+    {
+      "id": "O17",
+      "obligation": "Meaningful failure validation, proposed versus executed; no live actions",
+      "coverage": "COMPLETE",
+      "final_locator": "Validation and work record",
+      "judgment": "SATISFIED_AT_PROPOSAL_LEVEL",
+      "limits": "Organizational values remain decisions; candidate application validation is proposed, not run."
+    }
+  ],
+  "source_families": [
+    {
+      "family": "CouchDB conflict/security/auth",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E01",
+        "E02",
+        "E03"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND"
+    },
+    {
+      "family": "CouchDB replication/changes/attachments/deletion",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E05",
+        "E06",
+        "E07",
+        "E08"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND"
+    },
+    {
+      "family": "CouchDB issue→implementation/caller→EUnit oracles→release",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND"
+    },
+    {
+      "family": "PouchDB local/conflict/API/release",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E14",
+        "E15",
+        "E16"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND"
+    },
+    {
+      "family": "PowerSync backend policy/selective sync",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E20",
+        "E21",
+        "E22"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND"
+    },
+    {
+      "family": "PowerSync editions/hosting/checkpoint opportunity",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E23",
+        "E24",
+        "E25"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND"
+    },
+    {
+      "family": "Automerge component capability and limits",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E34"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND"
+    },
+    {
+      "family": "Chrome storage/platform limits",
+      "coverage": "COMPLETE",
+      "evidence": [
+        "E36"
+      ],
+      "scope": "Consequential claims made in this arm; finite primary-context review.",
+      "judgment": "NO_MATERIAL_DEFECT_FOUND"
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "F-01",
+      "candidate_disposition": "accept_and_amend",
+      "independent_result": "SUPPORTED",
+      "evidence": [
+        "E02"
+      ],
+      "final_locator": "final.md:132 and Search and access",
+      "note": "Unreviewed free text is excluded; uncertain screening omits text and raw snippets are not returned."
+    },
+    {
+      "id": "F-02",
+      "candidate_disposition": "reject_specific_unsupported_count_conclusion",
+      "independent_result": "SUPPORTED",
+      "evidence": [
+        "E11",
+        "E12",
+        "E13"
+      ],
+      "final_locator": "final.md:134",
+      "note": "Historical merge record and current Checks tab are different observations; no local test execution is claimed."
+    }
+  ],
+  "preservation": {
+    "coverage": "COMPLETE",
+    "judgment": "NO_MATERIAL_SUPPORTED_MEANING_LOSS_FOUND",
+    "record_integrity": "All 38 inherited control source records equal predecessors.",
+    "semantic_review": "Independently traced workflows, hard negatives, current authorization, duplicate/backup cases, alternative tradeoffs, photo/cache/backup limitations, open decisions and proposed validation. Record equality was corroboration, not semantic proof.",
+    "known_limits": [
+      "C-L01",
+      "C-L02",
+      "C-L03",
+      "C-L04"
+    ]
+  },
+  "frozen_scientific_docs_read": [
+    {
+      "stage": "investigator",
+      "relative_path": "discovery.md",
+      "sha256": "0b17bc77b40e2cb202a4b5fb4b5b1e51df34d105cc8c3781ac10eb338eb53a11",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "draft.md",
+      "sha256": "b4a0ccf50a10a66f97e5f5474cddaa2873172759943200db848684f9723ab7f2",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "source-map.json",
+      "sha256": "28e3c6f605ec51d3541ade7b29cedbc91d75ca5058dcf30c73ae8a3632907753",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "revealed-plan.md",
+      "sha256": "4d4a3d4670c5811c0d5b1d3be02cc22c7326402e0f2d118c6715c1f287cc9881",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "plan-reveal.json",
+      "sha256": "b3c0d58a0fe02e312034af570569a408e91d04b46b700a856d31660f7084cd55",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "investigator",
+      "relative_path": "sources/index.md",
+      "sha256": "2f0d2d5bd9926b71b3925e9368d335f52067dc2af7b7e47a435079260ef559f5",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "critic",
+      "relative_path": "critique.md",
+      "sha256": "3fefc4f8a2a46d8d563d3e7b439801ade2114e46df0e6637042f58bd98efd37f",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "critic",
+      "relative_path": "source-map.json",
+      "sha256": "bdc8fb9e6f598226f5419b03faa60fad9213df89c196ada069c348d369c1020e",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "critic",
+      "relative_path": "sources/index.md",
+      "sha256": "579dec09b94d208c72fbf6730eabfb5ba20d5adaddabd5dc7c8434a6265c0e2f",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "final.md",
+      "sha256": "0b1c637935f9fde568e0a54e8d8f28bab578dd4de8d8b7d36aed7e5d9e0bc206",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "source-map.json",
+      "sha256": "e09a404151fdec87c085a43562f8cee2355494458d8f09184d5cbc37a279b287",
+      "read": "COMPLETE"
+    },
+    {
+      "stage": "reviser",
+      "relative_path": "sources/index.md",
+      "sha256": "e3cc22c6992d010900dd4f7ed23f5d316f639ea12f18a14b5db99dd870df5a23",
+      "read": "COMPLETE"
+    }
+  ],
+  "excluded_or_unassessed": [
+    {
+      "domain": "Actual future app/device/deployment correctness",
+      "coverage": "UNASSESSED",
+      "reason": "Proposal deliverable; no execution required or performed."
+    },
+    {
+      "domain": "Unknown center role/retention/platform/budget facts",
+      "coverage": "UNASSESSED",
+      "reason": "External user decisions; appropriately open."
+    },
+    {
+      "domain": "Campaign recipes/held-out cases/active candidate originals",
+      "coverage": "UNASSESSED",
+      "reason": "Outside permitted assignment; not accessed."
+    }
+  ],
+  "finite_scope": "COMPLETE means each required obligation/axis was assessed in the declared material domain, not every upstream file, all product mechanisms, or universal correctness. Supplemental failed current-core locators are explicit and do not certify that separate domain."
+}

@@ -1,0 +1,196 @@
+{
+  "schema": "er13.original-assessment.v1",
+  "arm_id": "B02-P02-treatment",
+  "block_id": "B02-P02",
+  "scope": "FULL",
+  "original": true,
+  "written_utc": "2026-10-12T02:00:37.360881+00:00",
+  "source_judgment": "FAIL",
+  "source_judgment_definition": "Material unsupported comparative restriction/omitted governing mechanism found; other content is still independently assessed.",
+  "coverage": {
+    "overall": "COMPLETE",
+    "axes": {
+      "1": "COMPLETE",
+      "2": "COMPLETE",
+      "3": "COMPLETE",
+      "4": "COMPLETE",
+      "5": "COMPLETE",
+      "6": "COMPLETE"
+    },
+    "record": "coverage.json",
+    "limitations": [
+      "COMPLETE denotes finite review of every assigned substantive document, axis, obligation and consequential source family, not exhaustive repository, source, runtime or future-release correctness.",
+      "No product was installed and no software validation was required or executed by this evaluator. Proposed tests are not passing results.",
+      "Real capacity, supervision, urgent displacement, identity/contact scope and retention remain legitimate unknown user facts.",
+      "Candidate source lookup/execution assertions cannot be independently reconstructed from the frozen indexes; native transport linkage and billing remain unknown.",
+      "MRBS transaction creation does not prove parallel-request isolation, required resource selection or unified later booking lifecycle.",
+      "Treatment’s horizon language is thinner than a full materialization/booking-horizon invariant, but the proposal does not promise bookings beyond projected maintenance; this is a nonmaterial planning limit, not proof of a runtime hole."
+    ]
+  },
+  "defects": {
+    "material_count": 1,
+    "nonmaterial_count": 2,
+    "ids": [
+      "T-M01",
+      "T-NM01",
+      "T-NM02"
+    ],
+    "record": "defects.json"
+  },
+  "delivery": {
+    "status": "COMPLETE",
+    "frozen_final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/critic/files/final.md",
+    "sha256": "fd1a46d5c88381748cb85460b036363026ed0e3dbb15b90fe2741fb795232785",
+    "bytes": 36949,
+    "all_manifest_members_hash_verified": true,
+    "all_assigned_scientific_documents_read": true,
+    "topology": "investigator → independent critic/finalizer in same critic Goal",
+    "assigned_stage_count": 2,
+    "additional_parallel_or_breadth_critics_in_packet": 0,
+    "missing_required_outputs": [],
+    "failure_records": [],
+    "denominator": "one assigned arm; all its notified stages retained; no unlisted attempts inferred"
+  },
+  "time_eligibility": {
+    "status": "ELIGIBLE_BY_FROZEN_ARTIFACT_BOUND_AND_DECLARED_NATIVE_BOUNDARIES",
+    "FULL_max_elapsed_s": 3600,
+    "frozen_t0_utc": "2026-10-12T00:35:32.142Z",
+    "frozen_whole_deadline_utc": "2026-10-12T01:35:32.142Z",
+    "packet_frozen_at_utc": "2026-10-12T01:30:53.702004+00:00",
+    "t0_to_packet_freeze_upper_bound_s": 3321.56,
+    "t0_to_final_stage_native_terminal_proxy_s": 1587.858,
+    "last_complete_scientific_artifact_write_utc": "UNKNOWN",
+    "request_to_quiet_final_proxy_utc": "UNKNOWN: status snapshots have no genuine terminal-capture timestamp",
+    "setup_admission_queue_boundaries": "T0/preparation/request/capture observed; separate admission, provider queue and actual provider-start times UNKNOWN. Request-to-Goal-active delay is not labelled queue time.",
+    "stages": [
+      {
+        "stage": "investigator",
+        "prepared_utc": "2026-10-12T00:35:32.896Z",
+        "requested_utc": "2026-10-12T00:35:32.896Z",
+        "dispatch_capture_utc": "2026-10-12T00:35:33.547Z",
+        "native_active_created_utc": "2026-10-12T00:35:42+00:00",
+        "native_terminal_updated_utc": "2026-10-12T00:47:45+00:00",
+        "stage_deadline_utc": "2026-10-12T01:05:32.896Z",
+        "native_terminal_within_stage_deadline": true,
+        "request_to_native_active_s": 9.104,
+        "request_to_native_terminal_s": 732.104,
+        "native_timestamp_window_s": 723,
+        "native_reported_time_used_s": 722,
+        "predecessor_native_terminal_to_next_request_s": null,
+        "same_birth_objective_preserved": true,
+        "objective_matches_frozen": true,
+        "create_equals_active_receipt": true,
+        "terminal_status": "complete",
+        "task_status": "completed",
+        "pending_child_runs": false,
+        "receipt_source_paths": {
+          "native-goal-create.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/investigator/files/native-goal-create.json",
+          "native-goal-active.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/investigator/files/native-goal-active.json",
+          "native-goal-terminal.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/investigator/files/native-goal-terminal.json"
+        }
+      },
+      {
+        "stage": "critic",
+        "prepared_utc": "2026-10-12T00:48:29.948Z",
+        "requested_utc": "2026-10-12T00:48:29.948Z",
+        "dispatch_capture_utc": "2026-10-12T00:48:30.765Z",
+        "native_active_created_utc": "2026-10-12T00:48:54+00:00",
+        "native_terminal_updated_utc": "2026-10-12T01:02:00+00:00",
+        "stage_deadline_utc": "2026-10-12T01:18:29.948Z",
+        "native_terminal_within_stage_deadline": true,
+        "request_to_native_active_s": 24.052,
+        "request_to_native_terminal_s": 810.052,
+        "native_timestamp_window_s": 786,
+        "native_reported_time_used_s": 786,
+        "predecessor_native_terminal_to_next_request_s": 44.948,
+        "same_birth_objective_preserved": true,
+        "objective_matches_frozen": true,
+        "create_equals_active_receipt": true,
+        "terminal_status": "complete",
+        "task_status": "completed",
+        "pending_child_runs": false,
+        "receipt_source_paths": {
+          "native-goal-create.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/critic/files/native-goal-create.json",
+          "native-goal-active.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/critic/files/native-goal-active.json",
+          "native-goal-terminal.json": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B02-P02-treatment/run/B02-P02-treatment/control/terminal-handoffs/critic/files/native-goal-terminal.json"
+        }
+      }
+    ],
+    "clock_corrections": null
+  },
+  "method_compliance": {
+    "status": "CONSISTENT_WITH_ASSIGNED_METHOD; observational coverage PARTIAL",
+    "observed_topology_stage_count": 2,
+    "single_reveal_hash_integrity": true,
+    "discovery_revealed_at_utc": "2026-10-12T00:44:54.205Z",
+    "one_native_lifecycle_per_notified_stage": "Consistent create/active/complete receipt chains observed; no replacement indicated in assigned packet",
+    "pre_input_order_and_guard": "Reported by candidates; reveal/source timestamps consistent. Full native transcripts and separate live guard execution are unavailable/not consulted, so absolute pre-input order/freshness is not independently proved.",
+    "forbidden_candidate_activity": "No evidence in permitted records; full activity audit UNASSESSED because active files/transcripts/history are prohibited.",
+    "strict_recipe_qualification": "Not independently established beyond captured lifecycle consistency; original stage-manifest qualification flags left unchanged."
+  },
+  "native_identity_provenance": {
+    "coverage": "PARTIAL",
+    "same_birth_exact_objective_receipt_checks": true,
+    "actual_task_terminal_zero_pending_observed": true,
+    "native_receipt_transport_freshness_and_task_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+    "candidate_requested_and_status_reported_model": "gpt-6-luna",
+    "candidate_requested_effort_and_tier": "max / default; actual provider activity/tier binding UNKNOWN",
+    "identifiers": "Private routing identities/native IDs/transcripts omitted from scientific records; exact permitted receipt paths/hashes retained in input-integrity.json.",
+    "source_truth_from_native_receipts": false
+  },
+  "resource_billing_coverage": {
+    "coverage": "PARTIAL",
+    "candidate_product_path": {
+      "native_goal_timestamp_windows_s": 1509.0,
+      "native_goal_windows_overlap_s": 0,
+      "meaning": "Sum/union of disjoint native Goal receipt windows only. Not created/started context occupancy, active provider time or billing.",
+      "created_started_context_occupancy_union_overlap": "UNKNOWN",
+      "open_context_lifetime": "UNKNOWN",
+      "provider_active_time": "UNKNOWN",
+      "native_cumulative_counter_presence": "Observed opaque cumulative counters; values intentionally not published and not treated as billing.",
+      "input_cached_output_reasoning_split": "UNKNOWN",
+      "subscription_consumption": "UNKNOWN",
+      "billing": "UNKNOWN"
+    },
+    "independent_evaluation": {
+      "classification": "independent_evaluation, separate from candidate product",
+      "start_utc": "2026-10-12T01:45:56Z",
+      "shared_primary_lookup": true,
+      "provider_activity_context_cost_tokens_subscription_billing": "UNKNOWN; not zero"
+    },
+    "preparation_support_publication_complete_experiment_totals": "UNKNOWN in assigned packet; not synthesized",
+    "failure_inclusive_denominator": "One arm including all notified stages and waits; no failed/missing assigned stage omitted",
+    "affordability_or_savings_claim": null
+  },
+  "blinding": "Technique-bearing paths, topology and headers reveal assignment; imperfect blinding disclosed. No comparative grade edits allowed.",
+  "critic_dispositions": [
+    {
+      "id": "C1",
+      "disposition": "AMEND",
+      "review": "Every material change records supplied reason/code; staff safety reasons required and owner free-text policy remains open."
+    },
+    {
+      "id": "C2",
+      "disposition": "AMEND",
+      "review": "Half-open intervals and explicit buffers restored from discovery into final and validation."
+    },
+    {
+      "id": "C3",
+      "disposition": "AMEND",
+      "review": "Delete/notification test is correctly limited; immutable audit history remains unproved, not declared absent."
+    },
+    {
+      "id": "C4",
+      "disposition": "UNCERTAIN / RETAIN OPEN",
+      "review": "Unknown shop/policy inputs are not invented. No criticism was rejected in this original."
+    }
+  ],
+  "output_records": [
+    "assessment.md",
+    "assessment.json",
+    "coverage.json",
+    "defects.json",
+    "primary-source-index.json"
+  ],
+  "evaluator_limits": "No subagents, repeated graders, candidate repairs/feedback, recipe selection, held-out data or extra Goals."
+}

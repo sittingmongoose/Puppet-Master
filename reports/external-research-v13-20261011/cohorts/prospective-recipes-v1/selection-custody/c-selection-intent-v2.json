@@ -1,0 +1,58 @@
+{
+  "version": "ER13-C-selection-intent-v2",
+  "locked_scientific_choice_utc": "2026-10-12T02:07:53.393507+00:00",
+  "case_bodies_read": false,
+  "track_C_label": "EXPLORATORY_FRESH_INTEGRATION; no optimizer or confirmation claim",
+  "source_evidence_available": [
+    "B02-P01 both sourcePASS sixaxesCOMPLETE",
+    "B06-P01 both sourcePASS sixaxesCOMPLETE",
+    "B09-P02 both sourcePASS but treatment later",
+    "B10-P01 both sourcePASS but treatment later",
+    "A-F01 A1FAIL, comboMETHODFAIL, A8later, R0exactT0unknown",
+    "16COMPONENT originals 4PASS10FAIL2complete-finalUNASSESSED; no robustfullintegrationqualification",
+    "B02-P02 controlPASS/treatmentFAIL materialunsupported capability-absence claim; allsixaxesCOMPLETE; fasterFAIL no equalqualitysaving"
+  ],
+  "remaining_AB_screen_assessments": "Other pending original assessments remainUNKNOWN at this intentlock; continue unchanged. No later evidence changes the stored originalintent.",
+  "choices": [
+    {
+      "recipe": "C-S1-v2",
+      "cases": [
+        "C-P01",
+        "C-P02"
+      ],
+      "scientific_composition": "R0-ER13 common full obligations/time + B02 critic/finalizer + exact generic B10 critic delta",
+      "method": "B02 with root frozen method-directory",
+      "stage_maxima_seconds": [
+        1800,
+        1800
+      ],
+      "candidate_contexts": 2,
+      "rationale": "Original B02 controls2PASS/treatments1PASS1FAIL; one latency proxy lead with near-neutral firstpair native residence is insufficient. B10 available fullfirstpair bothPASS but slower. New combination is unproven exploratory successor, not repaired original or qualified optimizer. Same2contexts30/30, all six source axes retained."
+    },
+    {
+      "recipe": "C-S2-v1",
+      "cases": [
+        "C-P03",
+        "C-P04"
+      ],
+      "scientific_composition": "R0-ER13 common full brief-discovery obligations/time/native guards + B06 two complementarycritics with explicit fullintegration",
+      "method": "B06",
+      "stage_maxima_seconds": [
+        1800,
+        360,
+        360,
+        1080
+      ],
+      "candidate_contexts": 4,
+      "rationale": "Available firstpair complete sourcequality and nativefinalproxy14.30% earlier with native residence1739 vs1961s. Explicit latency/resource tradeoff diagnostic, not jointimprovement or freeparallelism; freshcase integration needed."
+    }
+  ],
+  "reference": "R0-ER13 investigator1800 critic720 reviser1080, maximum whole3600, no minimum",
+  "route": "Luna Max Standard/default matched allarms",
+  "common_prospective_capture": "prospective-capture-v1 manifest30b992fad9649a5a1607d329b66eae9c9af6ef453b874348c2b7e1662ebd8a24, sourceAPI MOCK154checks only, unchangedguard. New small scientificcomposition materializer seal pending.",
+  "selection_intent": "Scientific choices fixed before C body reveal; final release pins actual mechanics+inputs+methodversion. No new case-specific prompts or candidate feedback.",
+  "D_rule": "After C original assessments and available A/Bscreen outcomes, freeze entire testedrecipe and relevant Dallocation beforeDbodyreveal. If no jointoptimizer warranted, prospectively label diagnostic replications ofleastdominated complete recipe(s), notconfirmation. No requirealready20percentgain. All8Dpairslotsused usefully, no forcedmaterialincorrectpromotion.",
+  "predecessor_intent_sha256": "c8072b5de10d739c851736d5aad38c3d6b608bcb38365d03feb9ed5787a00647",
+  "predecessor_unadmitted": true,
+  "supersession_reason": "B02-P02 original treatment independently sourceFAIL before any C admission/bodyreveal. Preserve and charge that original; do not promote unmodified B02. Test a generic prospective B02+B10 combination in unstarted C development cells; no case-specific answers."
+}

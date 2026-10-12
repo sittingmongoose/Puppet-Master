@@ -1,0 +1,431 @@
+{
+  "block_id": "B03-P02",
+  "verified_at_utc": "2026-10-12T02:28:46.212038+00:00",
+  "status": "completed",
+  "hasPendingChildRuns": false,
+  "verified_unique_files": 12,
+  "independently_frozen_before_comparison": true,
+  "records": [
+    {
+      "arm_id": "B03-P02-control",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/control/manifest.json",
+      "manifest_sha256": "7331ef13af5888dc51c8c1a5da0fccda1ca696d6d763a6533d87a7977386acda",
+      "assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/control/assessment.md",
+      "assessment_md_sha256": "17b241e42b4ed51dead81bfccce7673565ba90e0458835b1e6e0f1bbb9295055",
+      "assessment_json": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/control/assessment.json",
+      "assessment_json_sha256": "c557d5dcbe0be2b8f18871694dee8ced0bf4adcff01c1dc39d10574ff2d4b2d8",
+      "source_judgment": {
+        "grade": "FAIL",
+        "scope": "Finite complete assessment of the frozen research planning proposal and available governing evidence",
+        "material_final_defect_ids": [
+          "C01"
+        ],
+        "universal_correctness_claimed": false,
+        "explanation": "C01 materially misstates the governing timestamp update; good delivery, hashes and clocks cannot rescue it."
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis": 1,
+            "contract_axis": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "result": "ASSESSED",
+            "notes": "All original substantive obligations and negative constraints checked in complete discovery, draft, critique, final and source maps."
+          },
+          {
+            "axis": 2,
+            "contract_axis": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "result": "MATERIAL_FAILURE_C01",
+            "notes": "Available governing primary authorities, versions, definitions and relevant adjacent code/history checked; conditional target applicability examined."
+          },
+          {
+            "axis": 3,
+            "contract_axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "result": "ASSESSED",
+            "notes": "Alternative mechanisms and useful opportunities assessed for relevance and truth, not citation count."
+          },
+          {
+            "axis": 4,
+            "contract_axis": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "result": "ASSESSED",
+            "notes": "Every critic disposition and revealed-plan technical/process obligation checked; observations below."
+          },
+          {
+            "axis": 5,
+            "contract_axis": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "result": "ASSESSED",
+            "notes": "Supported snapshot/permission/identity/type/packaging/verification/alternative/import/uncertainty meaning traced into final. No material supported-meaning loss established; C01 repeats an incorrect premise."
+          },
+          {
+            "axis": 6,
+            "contract_axis": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "result": "ASSESSED",
+            "notes": "Proposed cases and expected oracles checked; no deployment or future software execution required. Research/reveal checks are not product tests."
+          }
+        ],
+        "obligations_coverage": "COMPLETE",
+        "source_families_coverage": "COMPLETE for stated available governing claims; actual tracker integration UNASSESSED because not supplied",
+        "unassessed_domains": [
+          {
+            "coverage": "UNASSESSED",
+            "domain": "Actual tracker application integration and user policy facts",
+            "reason": "Absent from authorized frozen inputs; the proposals explicitly retain these as unknown."
+          },
+          {
+            "coverage": "UNASSESSED",
+            "domain": "Execution of product/export/import/performance/security tests",
+            "reason": "Deliverable is a planning proposal; no such execution was claimed or required."
+          },
+          {
+            "coverage": "UNASSESSED",
+            "domain": "Complete native transcript, provider activity/billing, independent task/session mapping",
+            "reason": "Unavailable telemetry; hashes and receipts do not prove it."
+          }
+        ],
+        "early_stop": false
+      },
+      "delivery": {
+        "status": "DELIVERED",
+        "complete_frozen_final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P02-control/run/B03-P02-control/control/terminal-handoffs/reviser/files/final.md",
+        "final_bytes": 30104,
+        "final_sha256": "3f11770b4beca644187c6e74b1b5d093b450270126197161afc91f7ba2601d4f",
+        "required_outputs_missing": false,
+        "assigned_task_statuses": "all completed, zero pending in supplied actual status receipts",
+        "science_qualification_flags": "Mechanics placeholders, not evaluator truth; independently evaluated here."
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_AS_OBSERVED",
+        "maximum_full_elapsed_seconds": 3600,
+        "frozen_t0_utc": "2026-10-12T00:58:16.365Z",
+        "frozen_whole_deadline_utc": "2026-10-12T01:58:16.365Z",
+        "clock_correction_applied": false,
+        "stages": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T00:58:17.382Z",
+            "dispatch_receipt_at_utc": "2026-10-12T00:58:18.240Z",
+            "native_created_at_utc": "2026-10-12T00:58:33+00:00",
+            "native_terminal_at_utc": "2026-10-12T01:06:20+00:00",
+            "native_elapsed_counter_seconds": 466,
+            "whole_deadline_utc": "2026-10-12T01:58:16.365Z",
+            "stage_deadline_utc": "2026-10-12T01:28:17.382Z",
+            "created_to_terminal_wall_seconds": 467,
+            "native_counters_are_not_active_provider_seconds": true
+          },
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T01:23:11.901Z",
+            "dispatch_receipt_at_utc": "2026-10-12T01:23:12.598Z",
+            "native_created_at_utc": "2026-10-12T01:23:23+00:00",
+            "native_terminal_at_utc": "2026-10-12T01:27:14+00:00",
+            "native_elapsed_counter_seconds": 231,
+            "whole_deadline_utc": "2026-10-12T01:58:16.365Z",
+            "stage_deadline_utc": "2026-10-12T01:35:11.901Z",
+            "created_to_terminal_wall_seconds": 231,
+            "native_counters_are_not_active_provider_seconds": true
+          },
+          {
+            "stage": "reviser",
+            "prepared_at_utc": "2026-10-12T01:30:12.266Z",
+            "dispatch_receipt_at_utc": "2026-10-12T01:30:13.590Z",
+            "native_created_at_utc": "2026-10-12T01:30:24+00:00",
+            "native_terminal_at_utc": "2026-10-12T01:39:17+00:00",
+            "native_elapsed_counter_seconds": 532,
+            "whole_deadline_utc": "2026-10-12T01:58:16.365Z",
+            "stage_deadline_utc": "2026-10-12T01:48:12.266Z",
+            "created_to_terminal_wall_seconds": 533,
+            "native_counters_are_not_active_provider_seconds": true
+          }
+        ],
+        "final_artifact_exact_write_time": "UNKNOWN",
+        "final_completion_proxy": {
+          "name": "native reviser terminal timestamp (receipt proxy, not artifact write time)",
+          "utc": "2026-10-12T01:39:17+00:00",
+          "elapsed_from_t0_seconds": 2460.635
+        },
+        "complete_frozen_artifacts_observed_by_utc": "2026-10-12T01:39:38.186981+00:00",
+        "complete_frozen_artifacts_upper_bound_from_t0_seconds": 2481.821981,
+        "native_created_context_occupancy": {
+          "summed_seconds": 1231.0,
+          "union_seconds": 1231.0,
+          "overlap_seconds": 0,
+          "scope": "three nonoverlapping receipt birth-to-terminal intervals, excludes setup/queue and final task-delivery tail"
+        },
+        "interstage_native_terminal_to_next_prepare_seconds": [
+          1011.901,
+          178.266
+        ],
+        "limitations": [
+          "Dispatch capture is an acceptance/observation boundary, not an independently timed provider queue or inference start.",
+          "Original final task quiet time is not supplied. Candidate native timestamp consistency and frozen-delivery bounds do not prove external clock synchronization.",
+          "Source judgment is separate from time eligibility."
+        ]
+      },
+      "method_compliance": {
+        "status": "COMPLIANT_AS_OBSERVED_WITH_PROVENANCE_LIMITS",
+        "topology": "fresh investigator -> fresh independent critic -> fresh reviser",
+        "discovery_and_revealed_plan_hashes_verified": true,
+        "single_use_reveal_receipt_present": true,
+        "complete_scientific_documents_and_source_maps_read": true,
+        "critic_delivery_hashes_match": true,
+        "same_author_goal_resume_and_terminal_consistent": null,
+        "observed_model_labels": [
+          "gpt-6-luna",
+          "gpt-6-luna",
+          "gpt-6-luna"
+        ],
+        "actual_service_tier": "UNKNOWN beyond requested route",
+        "limits": [
+          "Frozen artifacts and receipts support the specified sequence; they do not prove every unobserved read, absence of unauthorized inference, continuous context retention, or native-to-task linkage.",
+          "Technique-bearing paths and B03 retention instructions make blinding imperfect. Shared independent primary lookup was reused, not supplied to candidate authors."
+        ]
+      },
+      "native_identity_provenance": {
+        "status": "CAPTURE_CONSISTENCY_VERIFIED_INDEPENDENT_LINKAGE_UNKNOWN",
+        "distinct_native_identities_observed": 3,
+        "created_active_to_terminal_complete": true,
+        "birth_objective_identity_consistent": true,
+        "exact_objective_matches_frozen_assignment_objective": true,
+        "independent_provider_session_task_linkage": "UNKNOWN",
+        "actual_native_return_provenance_beyond_frozen_custody": "UNKNOWN",
+        "raw_native_transcripts_or_private_routing_identity_republished": false,
+        "receipt_hashes": "See evidence/input-verification.json. Native identity values are deliberately not republished."
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL",
+        "cost_role": "candidate_product",
+        "created_context_occupancy_observations": {
+          "summed_seconds": 1231.0,
+          "union_seconds": 1231.0,
+          "overlap_seconds": 0,
+          "scope": "three nonoverlapping receipt birth-to-terminal intervals, excludes setup/queue and final task-delivery tail"
+        },
+        "open_context_wait_seconds": null,
+        "observable_native_cumulative_counters": "PRESENT in exact native terminal receipts; scopes identified, not added to provider totals or publicly republished",
+        "provider_active_seconds": null,
+        "input_cached_output_reasoning_breakdown": "UNKNOWN",
+        "billing_or_subscription_consumption": null,
+        "tokens_or_account_identity_in_public_artifacts": false,
+        "unknown_is_zero": false,
+        "failure_inclusive_denominator": 1,
+        "limits": [
+          "Native cumulative counters are not independently verified per-request billing or proof of active provider work.",
+          "Setup, root observation, support, preparation and experiment-total costs are not fully supplied.",
+          "No cost per passing final is asserted; zero observed source passes makes that quotient undefined."
+        ]
+      }
+    },
+    {
+      "arm_id": "B03-P02-treatment",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/treatment/manifest.json",
+      "manifest_sha256": "062bc966fedc2a77509b2603d61084a04ac90ad4c7d4ec1199416ccb082d0cf9",
+      "assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/treatment/assessment.md",
+      "assessment_md_sha256": "d94de8040cb99df0dfb0ea4b4ce75bbeee621bb0e0b5aa178901aecb3f0a21cb",
+      "assessment_json": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/treatment/assessment.json",
+      "assessment_json_sha256": "2b17bd47d32c444ee4e59461f13dcd236850c71eed6f7652bf5cfad155c734ab",
+      "source_judgment": {
+        "grade": "PASS",
+        "scope": "Finite complete assessment of the frozen research planning proposal and available governing evidence",
+        "material_final_defect_ids": [],
+        "universal_correctness_claimed": false,
+        "explanation": "No material unsupported final claim, required omission, false rejection or supported-meaning loss found in the declared finite proposal assessment. Reported minor wording limits and absent product facts remain explicit."
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis": 1,
+            "contract_axis": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "result": "ASSESSED",
+            "notes": "All original substantive obligations and negative constraints checked in complete discovery, draft, critique, final and source maps."
+          },
+          {
+            "axis": 2,
+            "contract_axis": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "result": "ASSESSED",
+            "notes": "Available governing primary authorities, versions, definitions and relevant adjacent code/history checked; conditional target applicability examined."
+          },
+          {
+            "axis": 3,
+            "contract_axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "result": "ASSESSED",
+            "notes": "Alternative mechanisms and useful opportunities assessed for relevance and truth, not citation count."
+          },
+          {
+            "axis": 4,
+            "contract_axis": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "result": "ASSESSED",
+            "notes": "Every critic disposition and revealed-plan technical/process obligation checked; observations below."
+          },
+          {
+            "axis": 5,
+            "contract_axis": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "result": "ASSESSED",
+            "notes": "Supported snapshot/permission/identity/type/packaging/verification/alternative/import/uncertainty meaning traced into final. No material supported-meaning loss established; C01 repeats an incorrect premise."
+          },
+          {
+            "axis": 6,
+            "contract_axis": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "result": "ASSESSED",
+            "notes": "Proposed cases and expected oracles checked; no deployment or future software execution required. Research/reveal checks are not product tests."
+          }
+        ],
+        "obligations_coverage": "COMPLETE",
+        "source_families_coverage": "COMPLETE for stated available governing claims; actual tracker integration UNASSESSED because not supplied",
+        "unassessed_domains": [
+          {
+            "coverage": "UNASSESSED",
+            "domain": "Actual tracker application integration and user policy facts",
+            "reason": "Absent from authorized frozen inputs; the proposals explicitly retain these as unknown."
+          },
+          {
+            "coverage": "UNASSESSED",
+            "domain": "Execution of product/export/import/performance/security tests",
+            "reason": "Deliverable is a planning proposal; no such execution was claimed or required."
+          },
+          {
+            "coverage": "UNASSESSED",
+            "domain": "Complete native transcript, provider activity/billing, independent task/session mapping",
+            "reason": "Unavailable telemetry; hashes and receipts do not prove it."
+          }
+        ],
+        "early_stop": false
+      },
+      "delivery": {
+        "status": "DELIVERED",
+        "complete_frozen_final_path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P02-treatment-retained-final/run/B03-P02-treatment/stages/investigator/final/final.md",
+        "final_bytes": 37463,
+        "final_sha256": "516bd37e366548b427e3473b6186b2e3015195cfe92e0f293ea98ca79536d33a",
+        "required_outputs_missing": false,
+        "assigned_task_statuses": "all completed, zero pending in supplied actual status receipts",
+        "science_qualification_flags": "Mechanics placeholders, not evaluator truth; independently evaluated here."
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_AS_OBSERVED",
+        "maximum_full_elapsed_seconds": 3600,
+        "frozen_t0_utc": "2026-10-12T00:58:18.392Z",
+        "frozen_whole_deadline_utc": "2026-10-12T01:58:18.392Z",
+        "clock_correction_applied": false,
+        "stages": [
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T01:18:47.254475+00:00",
+            "dispatch_receipt_at_utc": "2026-10-12T01:18:47.872Z",
+            "native_created_at_utc": "2026-10-12T01:19:01+00:00",
+            "native_terminal_at_utc": "2026-10-12T01:25:37+00:00",
+            "native_elapsed_counter_seconds": 395,
+            "whole_deadline_utc": "2026-10-12T01:58:18.392Z",
+            "stage_deadline_utc": "2026-10-12T01:30:47.254475+00:00",
+            "created_to_terminal_wall_seconds": 396,
+            "native_counters_are_not_active_provider_seconds": true
+          },
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T00:58:18.588Z",
+            "dispatch_receipt_at_utc": "2026-10-12T00:58:19.536Z",
+            "native_created_at_utc": "2026-10-12T00:58:41+00:00",
+            "native_terminal_at_utc": "2026-10-12T01:34:30+00:00",
+            "native_elapsed_counter_seconds": 2149,
+            "whole_deadline_utc": "2026-10-12T01:58:18.392Z",
+            "stage_deadline_utc": "2026-10-12T01:28:18.588Z",
+            "created_to_terminal_wall_seconds": 2149,
+            "native_counters_are_not_active_provider_seconds": true
+          }
+        ],
+        "draft_frozen_at_utc": "2026-10-12T01:12:27.581067+00:00",
+        "draft_t0_to_freeze_seconds": 849.189067,
+        "wait_started_at_utc": "2026-10-12T01:12:27.683503+00:00",
+        "wait_ended_at_utc": "2026-10-12T01:29:24.868241+00:00",
+        "open_context_wait_seconds": 1017.184738,
+        "critic_release_prepared_at_utc": "2026-10-12T01:29:24.048088+00:00",
+        "critic_release_published_at_utc": "2026-10-12T01:29:24.067181+00:00",
+        "author_resumed_observed_at_utc": "2026-10-12T01:29:41.359838+00:00",
+        "finalization_deadline_utc": "2026-10-12T01:47:24.048088+00:00",
+        "full_artifact_observed_at_utc": "2026-10-12T01:34:30.813132+00:00",
+        "full_artifact_observed_elapsed_from_t0_seconds": 2172.421132,
+        "artifact_last_write_time": "UNKNOWN; final-ready observes complete matching artifact hashes, not last write syscall",
+        "root_terminal_observed_at_utc": "2026-10-12T01:34:30.960262+00:00",
+        "finalization_release_to_full_artifact_observation_seconds": 306.765044,
+        "native_created_context_occupancy": {
+          "summed_seconds": 2545,
+          "union_seconds": 2149,
+          "overlap_seconds": 396,
+          "scope": "author birth-to-terminal interval plus contained critic interval; excludes setup/queue and task-delivery tail"
+        },
+        "actual_activity_seconds": null,
+        "limitations": [
+          "Dispatch capture is an acceptance/observation boundary, not an independently timed provider queue or inference start.",
+          "Original final task quiet time is not supplied. Candidate native timestamp consistency and frozen-delivery bounds do not prove external clock synchronization.",
+          "Source judgment is separate from time eligibility."
+        ]
+      },
+      "method_compliance": {
+        "status": "COMPLIANT_AS_OBSERVED_WITH_PROVENANCE_LIMITS",
+        "topology": "retained investigator/author, fresh independent critic, same author finalization",
+        "discovery_and_revealed_plan_hashes_verified": true,
+        "single_use_reveal_receipt_present": true,
+        "complete_scientific_documents_and_source_maps_read": true,
+        "critic_delivery_hashes_match": true,
+        "same_author_goal_resume_and_terminal_consistent": true,
+        "observed_model_labels": [
+          "gpt-6-luna",
+          "gpt-6-luna"
+        ],
+        "actual_service_tier": "UNKNOWN beyond requested route",
+        "limits": [
+          "Frozen artifacts and receipts support the specified sequence; they do not prove every unobserved read, absence of unauthorized inference, continuous context retention, or native-to-task linkage.",
+          "Technique-bearing paths and B03 retention instructions make blinding imperfect. Shared independent primary lookup was reused, not supplied to candidate authors."
+        ]
+      },
+      "native_identity_provenance": {
+        "status": "CAPTURE_CONSISTENCY_VERIFIED_INDEPENDENT_LINKAGE_UNKNOWN",
+        "distinct_native_identities_observed": 2,
+        "created_active_to_terminal_complete": true,
+        "birth_objective_identity_consistent": true,
+        "exact_objective_matches_frozen_assignment_objective": true,
+        "independent_provider_session_task_linkage": "UNKNOWN",
+        "actual_native_return_provenance_beyond_frozen_custody": "UNKNOWN",
+        "raw_native_transcripts_or_private_routing_identity_republished": false,
+        "receipt_hashes": "See evidence/input-verification.json. Native identity values are deliberately not republished."
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL",
+        "cost_role": "candidate_product",
+        "created_context_occupancy_observations": {
+          "summed_seconds": 2545,
+          "union_seconds": 2149,
+          "overlap_seconds": 396,
+          "scope": "author birth-to-terminal interval plus contained critic interval; excludes setup/queue and task-delivery tail"
+        },
+        "open_context_wait_seconds": 1017.184738,
+        "observable_native_cumulative_counters": "PRESENT in exact native terminal receipts; scopes identified, not added to provider totals or publicly republished",
+        "provider_active_seconds": null,
+        "input_cached_output_reasoning_breakdown": "UNKNOWN",
+        "billing_or_subscription_consumption": null,
+        "tokens_or_account_identity_in_public_artifacts": false,
+        "unknown_is_zero": false,
+        "failure_inclusive_denominator": 1,
+        "limits": [
+          "Native cumulative counters are not independently verified per-request billing or proof of active provider work.",
+          "Setup, root observation, support, preparation and experiment-total costs are not fully supplied.",
+          "No cost per passing final is asserted; zero observed source passes makes that quotient undefined."
+        ]
+      }
+    }
+  ],
+  "originals_unchanged": true,
+  "comparison": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P02/comparison.json",
+  "comparison_sha256": "da7b17f5db2cb8a55c651d295b041ecfcaeb639252d6fbe945145cfe6c9dbd61",
+  "scope": "Mechanical output integrity and coverage checks; no coordinator source regrade",
+  "summary": "ControlFAIL/treatmentPASS, all6axes COMPLETE in finite proposal scope. Control C01 retained obsolete RFC3339 Z versus -00:00 distinction despite RFC9557 update (Z and -00:00 same unknown-localoffset convention, +00:00 distinct). Treatment supported GitLabbackup-warning rejection, SQLiteboundedrestart and manifestself-exclusion; no materialfinaldefectfound. No deployment/futureexecution required. Native terminalproxies2460.635/2171.608s; FAIL/PASS cannot establish equalqualitysaving. Treatment contextsum2545/union2149/overlap396s +openwait1017.185s versus controlsum/union1231s; notactiveinference/billing. Independentnative-tasklinkage/billing UNKNOWN."
+}

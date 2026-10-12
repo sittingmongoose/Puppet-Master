@@ -1,0 +1,1 @@
+Separate existing root-authorized coverage-completion review: one review, two FAIL findings with all six axes COMPLETE. Original assessments and original80 denominator/counts remain unchanged. Full original-versus-separate findings map and independent_evaluation cost are retained in this edition. No new review, repair or candidate was started for publication.

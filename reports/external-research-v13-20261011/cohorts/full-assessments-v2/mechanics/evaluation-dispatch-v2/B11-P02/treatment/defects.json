@@ -1,0 +1,89 @@
+{
+  "arm_id": "B11-P02-treatment",
+  "source_defects": [
+    {
+      "defect_id": "T-S01",
+      "classification": "material incomplete governing source condition",
+      "axes": [
+        2,
+        4
+      ],
+      "current_final": true,
+      "locator": "reviser/final.md lines68-72 and122; investigator/source-map.json S04; reviser/source-map.json R05",
+      "finding": "The proposed exact-frame/serialized-State crash recovery contract does not identify the native encoder limitation: State::encode persists only shared_heads and decode reinitializes live session fields. A stored native State is therefore not the exact generated-frame State the final requires on restart. No full-field serializer or unconditional restart epoch-reset boundary is named.",
+      "primary_evidence": [
+        "E13",
+        "E14"
+      ],
+      "materiality": "Restart/reconnect preservation is central to the brief and M3. Reliable in-order transport and identical frame bytes alone do not establish restoration of the claimed matching live State.",
+      "qualification": "An app-owned full serializer or appropriate reset protocol is possible. This finding is an omitted available mechanism condition, not a claim that all implementations fail or that a crash witness was executed. Labeling future validation unrun is correct but does not replace source-context research."
+    },
+    {
+      "defect_id": "T-P01",
+      "classification": "material preservation loss",
+      "axes": [
+        2,
+        5
+      ],
+      "current_final": true,
+      "locator": "investigator/discovery.md16,37; draft.md55; investigator/source-map.json S13 -> reviser/final.md84 and validation105-112",
+      "finding": "The Yrs fallback retains its update and anchor advantages but loses the supported requirement that concurrent active writers have distinct ClientIDs, including the draft's explicit identity test. This remains only in carried S13, not the self-contained final.",
+      "primary_evidence": [
+        "E19"
+      ],
+      "materiality": "Native writer identity differs from stable cue/comment IDs; duplicate active ClientIDs can corrupt the document. This is a consequential adoption condition for the named fallback, not trivia or an unknown crew fact.",
+      "qualification": "No current failure of Yrs is claimed. Default random IDs can satisfy the condition; the finding concerns preservation of researched safety meaning and proposed identity/recovery validation."
+    }
+  ],
+  "method_defects": [],
+  "critic_dispositions": [
+    {
+      "id": "M1",
+      "disposition": "ACCEPT_AND_AMEND",
+      "evaluation": "Optional author metadata is confirmed; trusted mapping/unverified state proposed without claiming implementation."
+    },
+    {
+      "id": "M2",
+      "disposition": "ACCEPT_AND_AMEND",
+      "evaluation": "Proposed causal order, tie-break, anchor/cycle review and exact candidate decision are substantive; future implementation tests remain unrun."
+    },
+    {
+      "id": "M3",
+      "disposition": "ACCEPT_AND_AMEND",
+      "evaluation": "Durable envelope is substantive but not fully source-conditioned; T-S01 remains."
+    },
+    {
+      "id": "M4",
+      "disposition": "ACCEPT_AND_AMEND",
+      "evaluation": "Exact candidate scope, late concurrent write reopens review and publication block retained."
+    }
+  ],
+  "preservation_review": [
+    {
+      "family": "Stable cues/comments, causal revisions, publication/exports",
+      "judgment": "RETAINED",
+      "locator": "discovery18-27/draft25-51 -> final35-80"
+    },
+    {
+      "family": "Lost message, optional author and explicit resolution scope",
+      "judgment": "RETAINED_BUT_RECOVERY_CONDITION_INCOMPLETE",
+      "locator": "discovery25-26/draft37-43/critic M1,M3,M4 -> final56-72"
+    },
+    {
+      "family": "Yrs alternative writer identity and validation",
+      "judgment": "MATERIAL_LOSS",
+      "locator": "discovery16,37/draft55/S13 -> final84,105-112",
+      "finding_id": "T-P01"
+    },
+    {
+      "family": "Move paper, Yrs/JS release history, optional text anchors",
+      "judgment": "RETAINED_WITH_CARRY_LIMITS",
+      "locator": "discovery20-37 -> final41,43-54,84,129"
+    }
+  ],
+  "nonmaterial_limits": [
+    "Target-app integration/performance and future crash/order/security tests remain proposed; no grade penalty for not executing them.",
+    "Owner-specific facts remain unresolved as authorized.",
+    "Pure source custody does not authenticate process/counter telemetry."
+  ]
+}

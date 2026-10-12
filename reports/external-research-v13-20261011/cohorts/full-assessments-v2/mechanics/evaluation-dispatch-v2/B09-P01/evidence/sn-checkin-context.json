@@ -1,0 +1,582 @@
+{
+  "id": "sn-checkin-context",
+  "url": "https://raw.githubusercontent.com/grokability/snipe-it/v8.8.0/app/Http/Controllers/Assets/AssetCheckinController.php",
+  "access_utc": "2026-10-12T02:04:23.452353+00:00",
+  "response_sha256": "afe72552af2fe0bef42f4f3c1e5086fbfccd5c1f937c314e514698c8dfb21f43",
+  "response_bytes": 10960,
+  "evidence": [
+    {
+      "line": 95,
+      "text": "    public function store(AssetCheckinRequest $request, $assetId = null, $backto = null): RedirectResponse"
+    },
+    {
+      "line": 96,
+      "text": "    {"
+    },
+    {
+      "line": 97,
+      "text": "        // Check if the asset exists"
+    },
+    {
+      "line": 98,
+      "text": "        if (is_null($asset = Asset::withTrashed()->find($assetId))) {"
+    },
+    {
+      "line": 99,
+      "text": "            // Redirect to the asset management page with error"
+    },
+    {
+      "line": 100,
+      "text": "            return redirect()->route('hardware.index')->with('error', trans('admin/hardware/message.does_not_exist'));"
+    },
+    {
+      "line": 101,
+      "text": "        }"
+    },
+    {
+      "line": 102,
+      "text": ""
+    },
+    {
+      "line": 103,
+      "text": "        if (is_null($target = $asset->assignedTo)) {"
+    },
+    {
+      "line": 104,
+      "text": "            return redirect()->route('hardware.index')->with('error', trans('admin/hardware/message.checkin.already_checked_in'));"
+    },
+    {
+      "line": 105,
+      "text": "        }"
+    },
+    {
+      "line": 106,
+      "text": ""
+    },
+    {
+      "line": 107,
+      "text": "        if (! $asset->model) {"
+    },
+    {
+      "line": 108,
+      "text": "            return redirect()->route('hardware.show', $asset->id)->with('error', trans('admin/hardware/general.model_invalid_fix'));"
+    },
+    {
+      "line": 109,
+      "text": "        }"
+    },
+    {
+      "line": 110,
+      "text": ""
+    },
+    {
+      "line": 111,
+      "text": "        $this->authorize('checkin', $asset);"
+    },
+    {
+      "line": 112,
+      "text": ""
+    },
+    {
+      "line": 113,
+      "text": "        session()->put('checkedInFrom', $asset->assignedTo->id);"
+    },
+    {
+      "line": 114,
+      "text": "        session()->put('checkout_to_type', match ($asset->assigned_type) {"
+    },
+    {
+      "line": 115,
+      "text": "            'App\\Models\\User' => 'user',"
+    },
+    {
+      "line": 116,
+      "text": "            'App\\Models\\Location' => 'location',"
+    },
+    {
+      "line": 117,
+      "text": "            'App\\Models\\Asset' => 'asset',"
+    },
+    {
+      "line": 118,
+      "text": "            default => null,"
+    },
+    {
+      "line": 119,
+      "text": "        });"
+    },
+    {
+      "line": 120,
+      "text": ""
+    },
+    {
+      "line": 121,
+      "text": "        $asset->expected_checkin = null;"
+    },
+    {
+      "line": 122,
+      "text": "        $asset->assignedTo()->disassociate($asset);"
+    },
+    {
+      "line": 123,
+      "text": "        $asset->accepted = null;"
+    },
+    {
+      "line": 124,
+      "text": "        $asset->name = $request->input('name');"
+    },
+    {
+      "line": 125,
+      "text": ""
+    },
+    {
+      "line": 126,
+      "text": "        if ($request->filled('status_id')) {"
+    },
+    {
+      "line": 127,
+      "text": "            $asset->status_id = e($request->input('status_id'));"
+    },
+    {
+      "line": 128,
+      "text": "        }"
+    },
+    {
+      "line": 129,
+      "text": ""
+    },
+    {
+      "line": 130,
+      "text": "        $selectedStatusId = $request->filled('status_id')"
+    },
+    {
+      "line": 131,
+      "text": "            ? (int) $request->input('status_id')"
+    },
+    {
+      "line": 132,
+      "text": "            : (int) $asset->status_id;"
+    },
+    {
+      "line": 133,
+      "text": ""
+    },
+    {
+      "line": 134,
+      "text": "        $isDeployableStatus = Statuslabel::query()"
+    },
+    {
+      "line": 135,
+      "text": "            ->whereKey($selectedStatusId)"
+    },
+    {
+      "line": 136,
+      "text": "            ->where('deployable', 1)"
+    },
+    {
+      "line": 137,
+      "text": "            ->exists();"
+    },
+    {
+      "line": 138,
+      "text": ""
+    },
+    {
+      "line": 139,
+      "text": "        // Requestable is only meaningful when the selected status is deployable"
+    },
+    {
+      "line": 140,
+      "text": "        // (the view hides the wrapper otherwise). Under a deployable status,"
+    },
+    {
+      "line": 141,
+      "text": "        // apply the checkbox value: checked = true, unchecked (or absent) ="
+    },
+    {
+      "line": 142,
+      "text": "        // false, per Laravel's boolean() default."
+    },
+    {
+      "line": 143,
+      "text": "        if ($isDeployableStatus) {"
+    },
+    {
+      "line": 144,
+      "text": "            $asset->requestable = $request->boolean('requestable');"
+    },
+    {
+      "line": 145,
+      "text": "        }"
+    },
+    {
+      "line": 146,
+      "text": ""
+    },
+    {
+      "line": 147,
+      "text": "        // Add any custom fields that should be included in the checkout"
+    },
+    {
+      "line": 148,
+      "text": "        $asset->customFieldsForCheckinCheckout('display_checkin');"
+    },
+    {
+      "line": 149,
+      "text": ""
+    },
+    {
+      "line": 150,
+      "text": "        $this->migrateLegacyLocations($asset);"
+    },
+    {
+      "line": 151,
+      "text": ""
+    },
+    {
+      "line": 152,
+      "text": "        // The checkin form ships two location pickers (location_id and"
+    },
+    {
+      "line": 153,
+      "text": "        // rtd_location_id), both pre-populated with the asset's existing"
+    },
+    {
+      "line": 154,
+      "text": "        // rtd_location_id. The common case (submit without touching either"
+    },
+    {
+      "line": 155,
+      "text": "        // field) reproduces the codebase-wide checkin convention: current"
+    },
+    {
+      "line": 156,
+      "text": "        // location resets to rtd, default stays put. Fixes #19401."
+    },
+    {
+      "line": 157,
+      "text": "        //"
+    },
+    {
+      "line": 158,
+      "text": "        // Both are resolved through the scoped Location query so"
+    },
+    {
+      "line": 159,
+      "text": "        // non-existent IDs and IDs the actor cannot see under FMCS are"
+    },
+    {
+      "line": 160,
+      "text": "        // rejected before we write them."
+    },
+    {
+      "line": 161,
+      "text": "        foreach (['location_id', 'rtd_location_id'] as $field) {"
+    },
+    {
+      "line": 162,
+      "text": "            if (! $request->has($field)) {"
+    },
+    {
+      "line": 163,
+      "text": "                // Field wasn't in the submitted form at all (test / API"
+    },
+    {
+      "line": 164,
+      "text": "                // caller). Fall back to the pre-fix \"reset location to rtd\""
+    },
+    {
+      "line": 165,
+      "text": "                // convention for location_id; leave rtd untouched."
+    },
+    {
+      "line": 166,
+      "text": "                if ($field === 'location_id') {"
+    },
+    {
+      "line": 167,
+      "text": "                    $asset->location_id = $asset->rtd_location_id;"
+    },
+    {
+      "line": 168,
+      "text": "                }"
+    },
+    {
+      "line": 169,
+      "text": ""
+    },
+    {
+      "line": 170,
+      "text": "                continue;"
+    },
+    {
+      "line": 171,
+      "text": "            }"
+    },
+    {
+      "line": 172,
+      "text": ""
+    },
+    {
+      "line": 173,
+      "text": "            if (! $request->filled($field)) {"
+    },
+    {
+      "line": 174,
+      "text": "                // User cleared the picker via select2's X button."
+    },
+    {
+      "line": 175,
+      "text": "                $asset->{$field} = null;"
+    },
+    {
+      "line": 176,
+      "text": ""
+    },
+    {
+      "line": 177,
+      "text": "                continue;"
+    },
+    {
+      "line": 178,
+      "text": "            }"
+    },
+    {
+      "line": 179,
+      "text": ""
+    },
+    {
+      "line": 180,
+      "text": "            $submittedLocation = Location::find($request->input($field));"
+    },
+    {
+      "line": 181,
+      "text": "            if (! $submittedLocation) {"
+    },
+    {
+      "line": 182,
+      "text": "                return redirect()->back()->withInput()"
+    },
+    {
+      "line": 183,
+      "text": "                    ->with('error', trans('admin/hardware/message.create.target_not_found.location'));"
+    },
+    {
+      "line": 184,
+      "text": "            }"
+    },
+    {
+      "line": 185,
+      "text": "            $asset->{$field} = $submittedLocation->id;"
+    },
+    {
+      "line": 186,
+      "text": "        }"
+    },
+    {
+      "line": 187,
+      "text": ""
+    },
+    {
+      "line": 188,
+      "text": "        $originalValues = $asset->getRawOriginal();"
+    },
+    {
+      "line": 189,
+      "text": ""
+    },
+    {
+      "line": 190,
+      "text": "        // Handle last checkin date"
+    },
+    {
+      "line": 191,
+      "text": "        $checkin_at = date('Y-m-d H:i:s');"
+    },
+    {
+      "line": 192,
+      "text": "        if (($request->filled('checkin_at')) && ($request->input('checkin_at') != date('Y-m-d'))) {"
+    },
+    {
+      "line": 193,
+      "text": "            $originalValues['action_date'] = $checkin_at;"
+    },
+    {
+      "line": 194,
+      "text": "            $checkin_at = $request->input('checkin_at');"
+    },
+    {
+      "line": 195,
+      "text": ""
+    },
+    {
+      "line": 196,
+      "text": "        }"
+    },
+    {
+      "line": 197,
+      "text": "        $asset->last_checkin = $checkin_at;"
+    },
+    {
+      "line": 198,
+      "text": ""
+    },
+    {
+      "line": 199,
+      "text": "        $asset->licenseseats->each(function (LicenseSeat $seat) {"
+    },
+    {
+      "line": 200,
+      "text": "            $seat->update(['assigned_to' => null]);"
+    },
+    {
+      "line": 201,
+      "text": "        });"
+    },
+    {
+      "line": 202,
+      "text": ""
+    },
+    {
+      "line": 203,
+      "text": "        // Get all pending Acceptances for this asset and delete them"
+    },
+    {
+      "line": 204,
+      "text": "        $acceptances = CheckoutAcceptance::pending()->whereHasMorph('checkoutable',"
+    },
+    {
+      "line": 205,
+      "text": "            [Asset::class],"
+    },
+    {
+      "line": 206,
+      "text": "            function (Builder $query) use ($asset) {"
+    },
+    {
+      "line": 207,
+      "text": "                $query->where('id', $asset->id);"
+    },
+    {
+      "line": 208,
+      "text": "            })->get();"
+    },
+    {
+      "line": 209,
+      "text": "        $acceptances->map(function ($acceptance) {"
+    },
+    {
+      "line": 210,
+      "text": "            $acceptance->delete();"
+    },
+    {
+      "line": 211,
+      "text": "        });"
+    },
+    {
+      "line": 212,
+      "text": ""
+    },
+    {
+      "line": 213,
+      "text": "        session()->put('redirect_option', $request->input('redirect_option'));"
+    },
+    {
+      "line": 214,
+      "text": ""
+    },
+    {
+      "line": 215,
+      "text": "        // Add any custom fields that should be included in the checkout"
+    },
+    {
+      "line": 216,
+      "text": "        $asset->customFieldsForCheckinCheckout('display_checkin');"
+    },
+    {
+      "line": 217,
+      "text": ""
+    },
+    {
+      "line": 218,
+      "text": "        if ($asset->save()) {"
+    },
+    {
+      "line": 219,
+      "text": "            // Update the location of any child assets"
+    },
+    {
+      "line": 220,
+      "text": "            Asset::where('assigned_type', Asset::class)"
+    },
+    {
+      "line": 221,
+      "text": "                ->where('assigned_to', $asset->id)"
+    },
+    {
+      "line": 222,
+      "text": "                ->update(['location_id' => $asset->location_id]);"
+    },
+    {
+      "line": 223,
+      "text": ""
+    },
+    {
+      "line": 224,
+      "text": "            event(new CheckoutableCheckedIn($asset, $target, auth()->user(), $request->input('note'), $checkin_at, $originalValues));"
+    },
+    {
+      "line": 225,
+      "text": ""
+    },
+    {
+      "line": 226,
+      "text": "            return Helper::getRedirectOption($request, $asset->id, 'Assets')"
+    },
+    {
+      "line": 227,
+      "text": "                ->with('success', trans('admin/hardware/message.checkin.success'));"
+    },
+    {
+      "line": 228,
+      "text": "        }"
+    },
+    {
+      "line": 229,
+      "text": ""
+    },
+    {
+      "line": 230,
+      "text": "        // Redirect to the asset management page with error. Flash the"
+    },
+    {
+      "line": 231,
+      "text": "        // specific validation messages via multi_error_messages so the"
+    },
+    {
+      "line": 232,
+      "text": "        // user sees WHAT failed instead of the previous stringified"
+    },
+    {
+      "line": 233,
+      "text": "        // MessageBag concatenation."
+    },
+    {
+      "line": 234,
+      "text": "        return redirect()->route('hardware.index')"
+    },
+    {
+      "line": 235,
+      "text": "            ->with('error', trans('admin/hardware/message.checkin.error'))"
+    },
+    {
+      "line": 236,
+      "text": "            ->with('multi_error_messages', $asset->getErrors()->all());"
+    },
+    {
+      "line": 237,
+      "text": "    }"
+    }
+  ],
+  "operation": "read-only source; no product execution"
+}

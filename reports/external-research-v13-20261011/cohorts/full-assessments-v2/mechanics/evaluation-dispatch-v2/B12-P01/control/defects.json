@@ -1,0 +1,72 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "B12-P01-control",
+  "material_defect_count": 1,
+  "nonmaterial_defect_count": 3,
+  "defects": [
+    {
+      "id": "D-C01",
+      "severity": "MATERIAL",
+      "type": "unsupported/false governing implementation claim",
+      "axes": [
+        2,
+        3
+      ],
+      "candidate_locator": "final.md:33; investigator discovery/draft S08; all S08 source-map records",
+      "claim": "Aegisub v3.5.0 rejects SRT export when attachments, non-default styles, or unsupported override tags are present.",
+      "finding": "CanSave is a lossless-save eligibility predicate. The separate export route reaches WriteFile without this predicate; WriteFile also recombines overlapping events. The cited check therefore does not establish the claimed export loss guard.",
+      "consequence": "A preservation safeguard is attributed to the wrong code path; this is material to the proposal's compatibility/loss argument.",
+      "primary_source_ids": [
+        "P-AEG-EXPORT"
+      ],
+      "status": "CONFIRMED",
+      "executed_validation": "Static source/caller inspection only; no Aegisub execution."
+    },
+    {
+      "id": "D-C02",
+      "severity": "NONMATERIAL",
+      "type": "stale release metadata",
+      "axes": [
+        2
+      ],
+      "candidate_locator": "source-map.json S06; sources/README.md S06",
+      "finding": "Carried metadata calls n8.1.1 latest. The release page lists 9.0.2 and 8.1.3, released before the candidate's October research.",
+      "consequence": "Latest-version assertion is unsupported, but the pinned old writer observation remains valid and the final disclaims latest-release verification.",
+      "primary_source_ids": [
+        "P-FF-RELEASE"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "D-C03",
+      "severity": "NONMATERIAL",
+      "type": "missed optional mechanism/context",
+      "axes": [
+        3
+      ],
+      "candidate_locator": "final.md:38; discovery/draft OTIO alternative; S13–S14",
+      "finding": "The core OTIO model uses external media, but the same v0.18.1 documentation also provides OTIOZ/OTIOD media bundles. The alternative description omits that distinction.",
+      "consequence": "Useful ZIP/media interchange opportunity is understated; it still does not supply caption language/style semantics or become a required adapter.",
+      "primary_source_ids": [
+        "P-OTIO"
+      ],
+      "status": "CONFIRMED"
+    },
+    {
+      "id": "D-C04",
+      "severity": "NONMATERIAL",
+      "type": "overbroad fixture provenance",
+      "axes": [
+        2
+      ],
+      "candidate_locator": "source-map.json S20 governing_condition_default_exception",
+      "finding": "The pinned ASS fixture exercises styles/events and script metadata, but no attachment section. The carried record's attachment characterization exceeds this fixture.",
+      "consequence": "Final text narrows its fixture claim; Matroska attachment support has separate primary authority.",
+      "primary_source_ids": [
+        "P-ASS-FIXTURE"
+      ],
+      "status": "CONFIRMED"
+    }
+  ],
+  "unassessed_does_not_mean_no_defect": true
+}

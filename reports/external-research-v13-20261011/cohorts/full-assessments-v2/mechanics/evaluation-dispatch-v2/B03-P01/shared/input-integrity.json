@@ -1,0 +1,79 @@
+{
+  "block_id": "B03-P01",
+  "scope": "FULL",
+  "verified_at_utc": "2026-10-12T02:31:35.887980+00:00",
+  "packet": {
+    "path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/B03-P01.json",
+    "bytes": 13631,
+    "sha256": "2b250282601e9f9ccbb228fe2d7edbc6f50741e30f8493020886fbece6382386"
+  },
+  "contract": {
+    "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+    "bytes": 3800,
+    "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+  },
+  "coordinator_allowlist_receipt": {
+    "path": "ER13_RUNTIME/state/eval-coordinator-v2/B03-P01-input-verification.json",
+    "bytes": 22919,
+    "sha256": "9b228c96b0ead9103fce4a7573a96729ae493492f820b4daa8be6ef29a77fb97"
+  },
+  "workspace_instructions": {
+    "path": "ER13_WORKTREE/AGENTS.md",
+    "bytes": 20950,
+    "sha256": "24a657c185d234a791e4c4ffdbfa8a77b8698b22696a8ddbda5caee1aa08b810"
+  },
+  "handoff_read_sections": [
+    10,
+    12
+  ],
+  "input_manifests": [
+    {
+      "arm_id": "B03-P01-control",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-control-eval-inputs/authored-manifest.json",
+      "bytes": 793,
+      "sha256": "9ce3e1aaef205fe28fbdee27086c13e539bd3af1fc5f03d453eea115cf24bdbe"
+    },
+    {
+      "arm_id": "B03-P01-control",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/investigator/manifest.json",
+      "bytes": 2869,
+      "sha256": "91a9178d6508fd503c7e5b788e7a1ece4477f90b4925395c4a28ac8e059d80dd"
+    },
+    {
+      "arm_id": "B03-P01-control",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/critic/manifest.json",
+      "bytes": 2198,
+      "sha256": "722b6a6303a6b751cd9ea08111be38cd39f000f312273b7bd265b8aa36ca64f6"
+    },
+    {
+      "arm_id": "B03-P01-control",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-control/run/B03-P01-control/control/terminal-handoffs/reviser/manifest.json",
+      "bytes": 2196,
+      "sha256": "c79ff38d56df41be67d0f868c696fed352c3eba9ce1da1eebf2ee36d0e2aa3ce"
+    },
+    {
+      "arm_id": "B03-P01-treatment",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-eval-inputs/authored-manifest.json",
+      "bytes": 1200,
+      "sha256": "fbddd6faa162b6882cf13410200962086cc5fe13ef1cd7ad0774948eade668bb"
+    },
+    {
+      "arm_id": "B03-P01-treatment",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/B03-P01-treatment/run/B03-P01-treatment/control/terminal-handoffs/critic/manifest.json",
+      "bytes": 2220,
+      "sha256": "74668f55f0bc09bc74f615d090da4f4bdd44ae85c3dd7c49c8fe809a8632728d"
+    },
+    {
+      "arm_id": "B03-P01-treatment",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/B03-P01-treatment-retained-final/authored-manifest.json",
+      "bytes": 7132,
+      "sha256": "2d254ea2e69811460727b28ed37cc43a7317795aeae38a9c82c3b0e81b434bee"
+    }
+  ],
+  "unique_verified_members_and_status_receipts": 100,
+  "allowed_paths": 107,
+  "all_declared_hashes_and_sizes_match": true,
+  "read_boundary": "Only exact allowlisted frozen snapshots, supplements and receipts. Referenced active locations were not followed. No tree/history scan, held-out case, candidate contact, Git/canon, Goal or delegation.",
+  "scientific_documents": "Both complete briefs/plans; both discovery/draft/final and source maps/indexes; every listed critic and disposition; complete assignments, reveal records and consequential custody/lifecycle witnesses. Repeated identical objects checked structurally rather than reprinted. No additional parallel/breadth/truth critic appears in the exact manifests.",
+  "blinding": "Imperfect: control/treatment paths and retention instructions disclose techniques. No candidate authorship or repair role."
+}

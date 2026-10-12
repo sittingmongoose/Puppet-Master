@@ -1,0 +1,58 @@
+{
+  "arm_id": "B07-P01-treatment",
+  "original": true,
+  "defects": [
+    {
+      "id": "TRT-L01",
+      "severity": "nonmaterial",
+      "kind": "source_lineage_locator_hash_error",
+      "axes": [
+        2,
+        5
+      ],
+      "title": "Investigator-index lineage hash points to a different frozen file",
+      "candidate_locators": [
+        "reviser/source-map.json:source_lineage.investigator_index",
+        "reviser/source-map.json:source_lineage.critic_index"
+      ],
+      "basis": "The investigator index is SHA256 416dcb3e85cda055d592baaa8253479297252b8f7174f6f6181f246109d9b9e3; the final labels it with 17a822f8dfb0267515988cfb40f4d8dece97b5b929a1751b7962225f44c7cfe5, which belongs to investigator/sources/source-map.json. The critic-index path also omits the actual run/<arm>/control snapshot mapping. Exact frozen manifests and the correct source URLs still identify the scientific inputs. No semantic finding is rescued or changed by a prospective locator/schema fix.",
+      "consequence": "Lineage metadata needs care; this does not materially alter the retained proposal or its source bindings.",
+      "status": "present_in_original_final"
+    },
+    {
+      "id": "TRT-L02",
+      "severity": "nonmaterial",
+      "kind": "implementation_condition_unresolved",
+      "axes": [
+        2,
+        3,
+        6
+      ],
+      "title": "Optional parser adapters still need the declared raw-field/coordinate validation",
+      "basis": "Polars source defaults missing_is_null=true; text schema alone does not preserve every blank/null distinction. Transcoding can change parser-stream byte coordinates; strict decoder/BOM and coordinate mapping require adapter tests. The final conditions Polars on auditable raw fields, retains original bytes and proposes encoding/location/empty-field fixtures. It does not claim those behaviors executed or guaranteed. No material unsupported claim found.",
+      "evidence": [
+        "P24",
+        "P25",
+        "P26",
+        "P27",
+        "P28"
+      ],
+      "status": "honestly_unresolved"
+    },
+    {
+      "id": "TRT-L03",
+      "severity": "nonmaterial",
+      "kind": "external_input_limitation",
+      "axes": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "title": "Actual stock system, owner policies and performance remain unknown",
+      "basis": "All are explicitly integration prerequisites. The local-only gate is a proposed requirement, not observed network compliance. Row-aware subset application is a proposal with whole-batch atomic application still a feasible alternative and partial permission still an owner decision.",
+      "status": "honestly_unresolved"
+    }
+  ],
+  "no_repairs_or_feedback": true
+}

@@ -1,0 +1,20 @@
+{
+  "id": "sw-broken",
+  "url": "https://api.github.com/repos/SpaceWorks-HQ/SpaceWorks/commits/c371d6e25f7dc618e3d100ded56fa02a3e84261b",
+  "resolved_url": "https://api.github.com/repos/SpaceWorks-HQ/SpaceWorks/commits/c371d6e25f7dc618e3d100ded56fa02a3e84261b",
+  "access_utc": "2026-10-12T02:01:58.502375+00:00",
+  "response_sha256": "782948e52d796d83ccab93598784c59cf018b063c3ee1c6e6e693674d2f40b17",
+  "response_bytes": 96946,
+  "operation": "read-only fetch",
+  "evidence": {
+    "sha": "c371d6e25f7dc618e3d100ded56fa02a3e84261b",
+    "message": "feat: reject-broken at handover + to-be-fixed shelf, email print status, dark-mode fix",
+    "files": [
+      {
+        "filename": "backend/tests/test_handover_broken_reject.py",
+        "patch": "@@ -0,0 +1,171 @@\n+\"\"\"Per-item broken-reject at handover + the to-be-fixed shelf (repair/scrap).\"\"\"\n+from unittest.mock import Mock\n+\n+import pytest\n+\n+from apps.hardware_requests.models import HardwareRequest\n+from apps.inventory.models import TrackingMode\n+from tests.test_issue import (\n+    active_loans_url,  # noqa: F401  (kept for parity / future use)\n+    assign_scanned_box,\n+    authenticated_client,\n+    issue_url,\n+    make_box,\n+    make_accepted_request,\n+    make_issue_evidence,\n+    make_member,\n+    make_product,\n+    make_space,\n+)\n+\n+pytestmark = pytest.mark.django_db\n+    product.refresh_from_db()\n+    assert product.issued_quantity == 2\n+    assert product.needs_fix_quantity == 0\n+    assert product.total_quantity == 2  # scrapped unit left inventory entirely\n+\n+\n+def test_broken_reject_on_individual_item_returns_400(monkeypatch):\n+    makerspace = make_space(\"reject-individual\")\n+    admin = make_member(\"reject-individual-admin\", makerspace)\n+    product, request = _ready_request(\n+        makerspace, admin, 2, tracking_mode=TrackingMode.INDIVIDUAL\n+    )\n+    evidence = make_issue_evidence(makerspace, admin)\n+    monkeypatch.setattr(\"apps.evidence.storage.object_exists\", Mock(return_value=True))\n+\n+    item = request.items.get()\n+    response = authenticated_client(admin).post(\n+        issue_url(request),\n+        {\n+            \"evidence_id\": evidence.id,\n+            \"rejects\": [{\"item_id\": item.id, \"broken\": 1}],\n+        },\n+        format=\"json\",\n+    )\n+\n+    assert response.status_code == 400\n+    product.refresh_from_db()\n+    assert product.needs_fix_quantity == 0\n+\n+\n+def _shelf_url():"
+      }
+    ]
+  },
+  "license_context": "Public focused source excerpts; current upstream LICENSE identifies GNU AGPL v3: https://github.com/SpaceWorks-HQ/SpaceWorks/blob/main/LICENSE. LICENSE at the specific historical commit was not resolved (404). No execution; do not infer historical license identity from moving main."
+}

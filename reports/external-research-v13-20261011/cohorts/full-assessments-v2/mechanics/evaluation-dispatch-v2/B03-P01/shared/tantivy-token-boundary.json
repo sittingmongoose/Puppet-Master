@@ -1,0 +1,85 @@
+{
+  "evidence_type": "Independent static source/caller/test inspection plus UTF-8 length arithmetic; not a Tantivy execution or application test",
+  "accessed_at_utc": "2026-10-12T02:31:36.244949+00:00",
+  "source_identity": {
+    "crate": "tantivy",
+    "version": "0.26.2",
+    "commit": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d"
+  },
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/src/tokenizer/remove_long.rs",
+      "version_or_commit": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "access_utc": "2026-10-12T02:31:35.982362+00:00",
+      "raw_source_bytes": 3366,
+      "raw_source_sha256": "d36c4183a9df3a512ec40c64b993b5ada656c018b588f18341ffec0aa2384d9c",
+      "locators": "predicate lines 32-34; advance lines 68-75; unit test lines 91-109",
+      "exact_decisive_excerpt": [
+        {
+          "line": 34,
+          "text": "impl<T> RemoveLongFilterStream<T> {"
+        }
+      ],
+      "operation": "Read source, caller and existing tests; no downloaded code executed."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/src/tokenizer/tokenizer_manager.rs",
+      "version_or_commit": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "access_utc": "2026-10-12T02:31:36.071282+00:00",
+      "raw_source_bytes": 2894,
+      "raw_source_sha256": "ff6db7e786c141b5f62f31a6b9624cfd80b49fe74575a36520bab106e0eb6109",
+      "locators": "default registration lines 53-59; stemmer registration lines 61-71",
+      "exact_decisive_excerpt": [
+        {
+          "line": 57,
+          "text": "        let manager = TokenizerManager::new();"
+        }
+      ],
+      "operation": "Read source, caller and existing tests; no downloaded code executed."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d/src/tokenizer/simple_tokenizer.rs",
+      "version_or_commit": "72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "access_utc": "2026-10-12T02:31:36.155068+00:00",
+      "raw_source_bytes": 2641,
+      "raw_source_sha256": "0c9d5fcf250ae4879c25a155133ec0baa947cf03e76db63523c004b6e28a0a34",
+      "locators": "token boundary lines 29-35; advance lines 38-51; unit test lines 65-84",
+      "exact_decisive_excerpt": [
+        {
+          "line": 32,
+          "text": "    fn search_token_end(&mut self) -> usize {"
+        }
+      ],
+      "operation": "Read source, caller and existing tests; no downloaded code executed."
+    }
+  ],
+  "governing_result": "The registered default and en_stem use RemoveLongFilter::limit(40). Its predicate is strict byte length <40, before lowercasing. SimpleTokenizer forms runs of alphanumeric Unicode characters. A 14-scalar CJK run occupies 42 UTF-8 bytes and is rejected; a 40-byte ASCII run is also rejected. The module overview says characters, but adjacent type/API and implementation govern.",
+  "examples": [
+    {
+      "synthetic_label": "ASCII39",
+      "unicode_scalar_count": 39,
+      "utf8_bytes": 39,
+      "predicate_inferred_acceptance": true
+    },
+    {
+      "synthetic_label": "ASCII40",
+      "unicode_scalar_count": 40,
+      "utf8_bytes": 40,
+      "predicate_inferred_acceptance": false
+    },
+    {
+      "synthetic_label": "CJK13",
+      "unicode_scalar_count": 13,
+      "utf8_bytes": 39,
+      "predicate_inferred_acceptance": true
+    },
+    {
+      "synthetic_label": "CJK14",
+      "unicode_scalar_count": 14,
+      "utf8_bytes": 42,
+      "predicate_inferred_acceptance": false
+    }
+  ],
+  "validation_domain": "Static inference and length arithmetic only; no performance, full engine, target notebook or deployment result. Existing unit-test source was read, not run.",
+  "license_notice": "TANTIVY-LICENSE.txt"
+}

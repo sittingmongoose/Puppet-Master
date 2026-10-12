@@ -1,0 +1,65 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "B02-P02-treatment",
+  "source_judgment": "FAIL",
+  "material_defects": [
+    {
+      "id": "T-M01",
+      "severity": "MATERIAL",
+      "classification": "unsupported comparative restriction and omitted existing mechanism",
+      "axes": [
+        2,
+        3
+      ],
+      "input_locators": [
+        "investigator/discovery.md:15 (MRBS comparison)",
+        "investigator/draft.md:60",
+        "critic/final.md:62",
+        "critic/final.md:90",
+        "critic/final.md:113"
+      ],
+      "finding": "The package infers a single-resource/manual-or-custom-extension MRBS path from one room_id per entry/series. The final preserves this characterization and its narrower candidate evaluation. That scalar schema fact does not establish submission capability: v1.12.2 already has a policy-controlled rooms[] multi-select, assembles multiple bookings in one request and executes the normal validation/write path inside a PDO transaction. Available governing callers were omitted from the candidate inference.",
+      "materiality": "This changes the feasible alternative comparison and support/build burden for the brief’s central tool + supervisor + extractor requirement. A planned later fit test does not support the current schema-to-capability inference.",
+      "primary_sources": [
+        "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/web/edit_entry.php",
+        "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/web/edit_entry_handler.php",
+        "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/web/mrbs_sql.inc",
+        "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/web/lib/MRBS/DB/DB.php",
+        "https://raw.githubusercontent.com/meeting-room-booking-system/mrbs-code/v1.12.2/web/systemdefaults.inc.php"
+      ],
+      "evidence": "../evidence/mrbs-context.md",
+      "qualification": "Static evidence establishes an existing multi-room transactional path only. It does not prove required-resource enforcement, qualified supervision, unified edits/cancels/displacements, maintenance/reason retention, or runtime race safety. No product winner is selected.",
+      "status": "present in frozen original; no candidate feedback/repair"
+    }
+  ],
+  "nonmaterial_defects": [
+    {
+      "id": "T-NM01",
+      "severity": "NONMATERIAL",
+      "classification": "stage-attribution wording",
+      "axes": [
+        6
+      ],
+      "input_locators": [
+        "critic/final.md §6 Actually executed in this stage"
+      ],
+      "finding": "The critic/finalizer final carries forward investigator discovery/reveal actions under a heading saying they were executed in this stage. The frozen reveal receipt and separate critic_review source record identify the actual stage split. It does not falsely claim a product or concurrency test was executed.",
+      "status": "present in frozen original"
+    },
+    {
+      "id": "T-NM02",
+      "severity": "NONMATERIAL",
+      "classification": "exact quotation mismatch",
+      "axes": [
+        4
+      ],
+      "input_locators": [
+        "critic/final.md P5"
+      ],
+      "finding": "The row labelled an exact released quote omits the phrase after admission from the queueing sentence. The actual frozen assignment keeps the absolute deadlines, and no retrospective clock adjustment is made.",
+      "status": "present in frozen original"
+    }
+  ],
+  "limitations_record": "coverage.json",
+  "no_repairs_or_candidate_feedback": true
+}

@@ -1,0 +1,460 @@
+{
+  "schema": "er13.independent-coverage.v1",
+  "arm_id": "B03-P02-control",
+  "scope": "FULL research planning proposal",
+  "assessment_scope_note": "COMPLETE means the finite assessment covered the identified obligations and available governing evidence. It does not mean future execution, universal correctness, or knowledge of absent user facts.",
+  "axes": [
+    {
+      "axis": 1,
+      "contract_axis": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED",
+      "notes": "All original substantive obligations and negative constraints checked in complete discovery, draft, critique, final and source maps."
+    },
+    {
+      "axis": 2,
+      "contract_axis": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "result": "MATERIAL_FAILURE_C01",
+      "notes": "Available governing primary authorities, versions, definitions and relevant adjacent code/history checked; conditional target applicability examined."
+    },
+    {
+      "axis": 3,
+      "contract_axis": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED",
+      "notes": "Alternative mechanisms and useful opportunities assessed for relevance and truth, not citation count."
+    },
+    {
+      "axis": 4,
+      "contract_axis": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED",
+      "notes": "Every critic disposition and revealed-plan technical/process obligation checked; observations below."
+    },
+    {
+      "axis": 5,
+      "contract_axis": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED",
+      "notes": "Supported snapshot/permission/identity/type/packaging/verification/alternative/import/uncertainty meaning traced into final. No material supported-meaning loss established; C01 repeats an incorrect premise."
+    },
+    {
+      "axis": 6,
+      "contract_axis": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED",
+      "notes": "Proposed cases and expected oracles checked; no deployment or future software execution required. Research/reveal checks are not product tests."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "obligation": "Snapshot across rows and relations; external attachment version boundary",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O02",
+      "obligation": "Stable source/entity identity and attachment relationship identity",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O03",
+      "obligation": "Attachment paths, exact bytes, metadata and omissions",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O04",
+      "obligation": "Text, dates, custom-field types and unknown/null semantics",
+      "coverage": "COMPLETE",
+      "result": "DATE_SEMANTICS_FAILURE_C01"
+    },
+    {
+      "id": "O05",
+      "obligation": "Versioned schema and bounded future importer/fidelity claim",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O06",
+      "obligation": "Offline human reading without original app or required network",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O07",
+      "obligation": "Permissions, inaccessible projects and safe omission disclosure",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O08",
+      "obligation": "50/50,000 scale, payload buffers, growing metadata and final/scratch capacity",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O09",
+      "obligation": "Cancellation/failures, source unchanged and incomplete/completed publication",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O10",
+      "obligation": "Safe structural/semantic/member verification and integrity/authenticity boundary",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O11",
+      "obligation": "Feasible packaging/streaming alternatives and unresolved product choices",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O12",
+      "obligation": "Primary code/callers/tests and consequential failure/fix/release context",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    },
+    {
+      "id": "O13",
+      "obligation": "Research proposal only; no real-team export, implementation or false executed result",
+      "coverage": "COMPLETE",
+      "result": "ASSESSED"
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "P01",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT",
+      "independent_assessment": "Valid clarification: RFC 8259 does not mandate NDJSON; a proposed JSONL choice alone is not a defect."
+    },
+    {
+      "id": "P02",
+      "coverage": "COMPLETE",
+      "final_disposition": "RETAIN_UNCERTAINTY",
+      "independent_assessment": "Correctly keeps safe pointer fields a product decision."
+    },
+    {
+      "id": "P03",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT",
+      "independent_assessment": "Offline-local requirement retained."
+    },
+    {
+      "id": "P04",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT_AND_AMEND",
+      "independent_assessment": "Broader proposed source checks retained; no demanded deployment proof."
+    },
+    {
+      "id": "P05",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT",
+      "independent_assessment": "Container and deterministic traversal conditions retained."
+    },
+    {
+      "id": "P06",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT",
+      "independent_assessment": "Revision marker without actual snapshot is correctly rejected."
+    },
+    {
+      "id": "P07",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT",
+      "independent_assessment": "Safe opaque paths are valid; critique overstates any inherent identity loss from content addressing. Distinct record identity is retained."
+    },
+    {
+      "id": "P08",
+      "coverage": "COMPLETE",
+      "final_disposition": "RETAIN_UNCERTAINTY",
+      "independent_assessment": "No fabricated bytes; failed versus declared-omissions policy remains open."
+    },
+    {
+      "id": "P09",
+      "coverage": "COMPLETE",
+      "final_disposition": "RETAIN_UNCERTAINTY",
+      "independent_assessment": "Actual backend and snapshot operational cost remain unknown."
+    },
+    {
+      "id": "P10",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT_AND_AMEND",
+      "independent_assessment": "Mode-specific publication strengthened."
+    },
+    {
+      "id": "P11",
+      "coverage": "COMPLETE",
+      "final_disposition": "RETAIN_UNCERTAINTY",
+      "independent_assessment": "Destination capacity and monitoring preserved."
+    },
+    {
+      "id": "P12",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT",
+      "independent_assessment": "Broad date/type separation is sound; the unchallenged obsolete Z semantics remains C01."
+    },
+    {
+      "id": "P13",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT",
+      "independent_assessment": "Fidelity matrix and importer boundaries retained."
+    },
+    {
+      "id": "P14",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT_AND_AMEND",
+      "independent_assessment": "Total constant memory assertion refined into buffer/batch/metadata budgets."
+    },
+    {
+      "id": "P15",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT",
+      "independent_assessment": "No product execution claimed."
+    },
+    {
+      "id": "P16",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT_AND_AMEND",
+      "independent_assessment": "In-place verification versus extraction threats kept distinct."
+    },
+    {
+      "id": "P17",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT",
+      "independent_assessment": "Proposal/approval distinction retained."
+    },
+    {
+      "id": "P18",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT_AND_RETAIN_UNCERTAINTY",
+      "independent_assessment": "Source facts not substituted for missing product facts."
+    },
+    {
+      "id": "P19",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT",
+      "independent_assessment": "The prior stage note was accurate for that historical investigator draft; calling it materially wrong was overstated. Final states its own correct cutoff; see C04."
+    },
+    {
+      "id": "P20",
+      "coverage": "COMPLETE",
+      "final_disposition": "ACCEPT",
+      "independent_assessment": "No deployment or actual export authorized."
+    }
+  ],
+  "plan_dispositions": {
+    "coverage": "COMPLETE",
+    "scope": "All substantive clauses of the exact revealed plan plus provisional status, unknown-product-fact boundary, no-deployment and maximum-time process clauses",
+    "result": "Snapshot assumption corrected; remaining technical intents retained/amended. Control timing wording correction overstates an earlier-stage note but changes no deadline."
+  },
+  "preservation": [
+    {
+      "family": "database-versus-blob consistency",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "source identities and relations",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "privacy/omissions/no fabricated bytes",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "text/date/custom-field distinctions",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "format-independent records and schema evolution",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "folder/staged/streaming alternatives",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "source immutability and incomplete publication",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "capacity/buffer/metadata distinctions",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "fixity versus authenticity",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "finite fidelity and importer trust",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "reference code/test/history applicability",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "proposed versus executed work",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    },
+    {
+      "family": "owner decisions and uncertainty",
+      "coverage": "COMPLETE",
+      "result": "RETAINED_OR_SUPPORTED_AMENDMENT"
+    }
+  ],
+  "source_families": [
+    {
+      "family": "S01",
+      "coverage": "COMPLETE",
+      "scope": "Separate-connection isolation; WAL read transactions; rollback mode; shared-cache/read_uncommitted exception"
+    },
+    {
+      "family": "S02",
+      "coverage": "COMPLETE",
+      "scope": "Overview and section 3.1, checked against C interface"
+    },
+    {
+      "family": "S03",
+      "coverage": "COMPLETE",
+      "scope": "13.2.2 Repeatable Read, including read-only/retry distinctions"
+    },
+    {
+      "family": "S04",
+      "coverage": "COMPLETE",
+      "scope": "Sections 4, 6, 8.1, 9"
+    },
+    {
+      "family": "S05",
+      "coverage": "COMPLETE",
+      "scope": "3339 4.3/5.6 and 9557 2.1-2.3/3.4"
+    },
+    {
+      "family": "S06",
+      "coverage": "COMPLETE",
+      "scope": "4.3.5, 4.3.9, 4.3.12-16, 4.5.3"
+    },
+    {
+      "family": "S07",
+      "coverage": "COMPLETE",
+      "scope": "8.3.4-8.3.7 and format definitions"
+    },
+    {
+      "family": "S08",
+      "coverage": "COMPLETE",
+      "scope": "Backup warning; user mapping; NDJSON; compatibility; version-dependent item inventory"
+    },
+    {
+      "family": "S09",
+      "coverage": "COMPLETE",
+      "scope": "CE/EE relation tree, included/excluded attributes, custom_attributes, issues, import_only_tree"
+    },
+    {
+      "family": "S10",
+      "coverage": "COMPLETE",
+      "scope": "TreeSaver initialize/save/stream_export/exportable/json_writer"
+    },
+    {
+      "family": "S11",
+      "coverage": "COMPLETE",
+      "scope": "StreamingSerializer execute, batching, authorization, rescue and callbacks"
+    },
+    {
+      "family": "S12",
+      "coverage": "COMPLETE",
+      "scope": "ExportService authorization, component savers, archive saver, error path and ensure cleanup"
+    },
+    {
+      "family": "S13",
+      "coverage": "COMPLETE",
+      "scope": "ExportTask export/file_path_exists?/with_export"
+    },
+    {
+      "family": "S14",
+      "coverage": "COMPLETE",
+      "scope": "NdjsonWriter attributes/single relation/relation array/with_file"
+    },
+    {
+      "family": "S15",
+      "coverage": "COMPLETE",
+      "scope": "TreeSaver test setup and root/issue/merge-request/comment/author/relation assertions"
+    },
+    {
+      "family": "S16",
+      "coverage": "COMPLETE",
+      "scope": "Entire NDJSON writer test file"
+    },
+    {
+      "family": "S17",
+      "coverage": "COMPLETE",
+      "scope": "EE TreeSaver tests: epic unreadability and denied note association"
+    },
+    {
+      "family": "S18",
+      "coverage": "COMPLETE",
+      "scope": "NIST publication abstract and planning note"
+    },
+    {
+      "family": "S19",
+      "coverage": "COMPLETE",
+      "scope": "Archive traversal, symlinks, decompression bombs"
+    },
+    {
+      "family": "S20",
+      "coverage": "COMPLETE",
+      "scope": "Issue body, reported export status, upload/destination symptoms and environment version"
+    },
+    {
+      "family": "S21",
+      "coverage": "COMPLETE",
+      "scope": "Overview, relation service/worker/saver, validation instructions"
+    },
+    {
+      "family": "S22",
+      "coverage": "COMPLETE",
+      "scope": "Direct-transfer timeouts and relation batching"
+    },
+    {
+      "family": "S23",
+      "coverage": "COMPLETE",
+      "scope": "Git bundle duplicate-reference loop, benchmark and 18.0 availability"
+    }
+  ],
+  "unassessed_domains": [
+    {
+      "coverage": "UNASSESSED",
+      "domain": "Actual tracker application integration and user policy facts",
+      "reason": "Absent from authorized frozen inputs; the proposals explicitly retain these as unknown."
+    },
+    {
+      "coverage": "UNASSESSED",
+      "domain": "Execution of product/export/import/performance/security tests",
+      "reason": "Deliverable is a planning proposal; no such execution was claimed or required."
+    },
+    {
+      "coverage": "UNASSESSED",
+      "domain": "Complete native transcript, provider activity/billing, independent task/session mapping",
+      "reason": "Unavailable telemetry; hashes and receipts do not prove it."
+    }
+  ],
+  "early_stop": false,
+  "held_out_cases_read": false
+}

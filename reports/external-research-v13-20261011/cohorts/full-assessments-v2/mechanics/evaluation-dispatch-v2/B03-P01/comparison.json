@@ -1,0 +1,137 @@
+{
+  "schema": "er13.post-freeze-finite-comparison.v1",
+  "block_id": "B03-P01",
+  "arm_count": 2,
+  "scope": "FULL",
+  "written_at_utc": "2026-10-12T02:32:39.180654+00:00",
+  "originals_manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B03-P01/manifest.json",
+  "originals_manifest_sha256": "81b6b08498b120d63241153c9f2924751daba01070dd1387451140b9be6d740c",
+  "original_grades_changed": false,
+  "assigned_denominator": 2,
+  "source_passing_finals": 0,
+  "original_results": [
+    {
+      "arm_id": "B03-P01-control",
+      "source_judgment": {
+        "value": "FAIL",
+        "material_defect_ids": [
+          "B03-P01-C-D01",
+          "B03-P01-C-D02"
+        ],
+        "finite_not_universal": true,
+        "rationale": "Material tokenizer unit/boundary falsehood remains in complete final. Supported trigram conditions also lost in final package.",
+        "no_deployment_or_future_execution_demand": true
+      },
+      "coverage": {
+        "overall": "PARTIAL",
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE",
+            "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+          },
+          {
+            "axis": 2,
+            "coverage": "PARTIAL",
+            "judgment": "MATERIAL_DEFECT_FOUND"
+          },
+          {
+            "axis": 3,
+            "coverage": "COMPLETE",
+            "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE",
+            "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE",
+            "judgment": "MATERIAL_DEFECT_FOUND"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE",
+            "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+          }
+        ],
+        "details": "coverage.json",
+        "limits": "Unidentified target app, actual user/runtime facts, historical current reproduction and complete historical SQLite test body are UNASSESSED."
+      },
+      "delivery": "FINAL_PRESENT",
+      "time_eligibility": "ELIGIBLE_ON_FROZEN_WHOLE_RUN_OBSERVATIONS"
+    },
+    {
+      "arm_id": "B03-P01-treatment",
+      "source_judgment": {
+        "value": "FAIL",
+        "material_defect_ids": [
+          "B03-P01-T-D01"
+        ],
+        "finite_not_universal": true,
+        "rationale": "Material tokenizer unit/boundary falsehood remains in complete final.",
+        "no_deployment_or_future_execution_demand": true
+      },
+      "coverage": {
+        "overall": "PARTIAL",
+        "axes": [
+          {
+            "axis": 1,
+            "coverage": "COMPLETE",
+            "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+          },
+          {
+            "axis": 2,
+            "coverage": "PARTIAL",
+            "judgment": "MATERIAL_DEFECT_FOUND"
+          },
+          {
+            "axis": 3,
+            "coverage": "COMPLETE",
+            "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+          },
+          {
+            "axis": 4,
+            "coverage": "COMPLETE",
+            "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+          },
+          {
+            "axis": 5,
+            "coverage": "COMPLETE",
+            "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+          },
+          {
+            "axis": 6,
+            "coverage": "COMPLETE",
+            "judgment": "ASSESSED_WITH_RECORDED_LIMITS"
+          }
+        ],
+        "details": "coverage.json",
+        "limits": "Unidentified target app, actual user/runtime facts, historical current reproduction and complete historical SQLite test body are UNASSESSED."
+      },
+      "delivery": "FINAL_PRESENT",
+      "time_eligibility": "ELIGIBLE_ON_FROZEN_WHOLE_RUN_OBSERVATIONS"
+    }
+  ],
+  "matched_inputs": "Exact brief and revealed-plan hashes identical; public requested model/tier match. Technique paths imperfectly blind. Actual session/billing linkage unknown.",
+  "quality_signal": "Both finals retain material Tantivy byte/character cutoff error. Control additionally loses supported trigram conditions; treatment carries those core conditions in final map. This is a finite paired observation, not proof of universal quality or non-inferiority.",
+  "timing_observations": {
+    "common_metric": "T0 -> frozen last-stage native complete.updatedAt proxy; second-resolution receipt data, not exact last-artifact or user-visible completion",
+    "control_seconds": 2721.728,
+    "treatment_seconds": 2035.701,
+    "treatment_minus_control_seconds": -686.027,
+    "root_treatment_final_artifact_witness_elapsed_seconds": 2036.65498,
+    "control_comparable_exact_artifact_witness": "UNKNOWN",
+    "retained_wait_seconds": 974.179024,
+    "provider_active_seconds": "UNKNOWN"
+  },
+  "resource_observations": "Native boundary sums and retained wait/residence are observations, not paid activity or authenticated T3 occupancy. Granular usage/billing/cold preparation/full experiment cost unknown; independent evaluation separate.",
+  "consumption_per_passing_final": "UNDEFINED: zero source passes.",
+  "equal_quality_savings_claim": false,
+  "recipe_selection": null,
+  "selection_authority": "Root/coordinator only; this evaluator selects no successor or held-out recipe.",
+  "scope_limits": "Axis 2 PARTIAL in each; target app/runtime/user facts, current reproduction and historical SQLite test body UNASSESSED. All six axes explicitly recorded; no decisive-stop shortcut.",
+  "no_component_claim": "These are FULL frozen arms; no shared-package preparation or cache result is interpreted as discovery effectiveness/cold pipeline success.",
+  "no_authors_contacted": true
+}

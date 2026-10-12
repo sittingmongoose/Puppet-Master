@@ -1,0 +1,67 @@
+{
+  "schema": "er13.post-freeze-pair-comparison.v1",
+  "block_id": "B02-P02",
+  "scope": "FULL",
+  "arm_count": 2,
+  "comparison_started_utc": "2026-10-12T02:01:38.695475+00:00",
+  "original_manifest": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-v2/B02-P02/manifest.json",
+    "sha256": "bda36031243b2fcb2f526f16c5eda0b74fc48f210dfa58cc53ed637ac923b4c1",
+    "frozen_at_utc": "2026-10-12T02:00:37.365168+00:00"
+  },
+  "original_judgments": [
+    {
+      "arm_id": "B02-P02-control",
+      "source_judgment": "PASS",
+      "assessment_sha256": "9bd19835c34268f80ac755a2f7453cdc9ad218a939e47b3594b4164a5bcadf20",
+      "coverage": "COMPLETE",
+      "material_defects": [
+        "C-NM01"
+      ]
+    },
+    {
+      "arm_id": "B02-P02-treatment",
+      "source_judgment": "FAIL",
+      "assessment_sha256": "859915d677019b3c561b8c78a5261c94495b3a49b04c50c861f3f2c943a53dcd",
+      "coverage": "COMPLETE",
+      "material_defects": [
+        "T-M01",
+        "T-NM01",
+        "T-NM02"
+      ]
+    }
+  ],
+  "finite_quality_signal": "Control has no material defect under complete finite coverage; treatment has a material MRBS alternative-characterization defect. This is one original paired assessment, not universal correctness, a recall estimate or method non-inferiority.",
+  "differences": [
+    "Treatment explores resource relationships/admin exceptions and qualification-pool options in more explicit prose; control keeps MRBS fit conditional without the same schema-based manual/custom-extension inference. Neither feature count nor citation volume decides semantic quality.",
+    "Both preserve the core brief, all hard negative constraints, owner questions, meaningful proposed checks and no-execution status. Both finalizers incorporate their critics’ changes without material source-ID/meaning loss.",
+    "Same independent governing primary lookup used; technique topology/path disclosure made blinding imperfect. No repeat grader, candidate repair or disputed-finding adjudication occurred."
+  ],
+  "timing": {
+    "control_t0_to_final_native_terminal_proxy_s": 3015.316,
+    "treatment_t0_to_final_native_terminal_proxy_s": 1587.858,
+    "proxy_difference_treatment_minus_control_s": -1427.458,
+    "eligibility": "Both present frozen finals before unchanged 60-minute deadline; declared native stage boundaries are within deadlines.",
+    "boundaries": "Final artifact-write/request-to-quiet times, provider queue and active provider activity UNKNOWN. Proxy difference includes native-observed stages and intervening gaps; no clock correction or provider-causal attribution.",
+    "equal_quality_savings_established": false
+  },
+  "resources": {
+    "candidate_billing_subscription_active_provider_input_cached_output_reasoning": "UNKNOWN",
+    "native_counters": "Opaque cumulative counters observed; not billing or active time, values not published.",
+    "context_occupancy": "UNKNOWN; native Goal windows are not substituted for context residency.",
+    "independent_evaluation": "Separate grader cost category; shared lookup not free candidate assistance. Billing UNKNOWN.",
+    "passing_final_consumption_quotient": "UNASSESSED/undefined from unavailable consumption; no affordability claim."
+  },
+  "matched_stratum": "Same brief/plan, requested gpt-6-luna max/default and common 60-minute contract. Actual provider/native-to-task binding remains UNKNOWN beyond captures.",
+  "denominator": {
+    "assigned_arms": 2,
+    "present_finals": 2,
+    "original_source_passes": 1,
+    "original_source_failures": 1,
+    "unassessed_finals": 0,
+    "discarded_assigned_attempts": 0,
+    "unlisted_attempts": "UNKNOWN; not searched or inferred"
+  },
+  "selection": "NONE. Root-only campaign selection/lock remains outside evaluator authority.",
+  "original_grades_unchanged": true
+}
