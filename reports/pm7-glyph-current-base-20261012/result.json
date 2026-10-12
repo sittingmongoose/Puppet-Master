@@ -1,221 +1,68 @@
 {
-  "status": "IN_PROGRESS",
-  "checkpoint": "Old-artifact partial evidence sealed; owned sessions stopped. Exact6d source transport/publication authorized next; no source imported yet.",
-  "tested_candidate_source_head": "559aabc7ccd0cda41038f813ae9075b3e5b01c15",
-  "actual_admission_worktree_head": "559aabc7ccd0cda41038f813ae9075b3e5b01c15",
-  "environment": {
-    "renderer": "ANGLE (NVIDIA Corporation, Quadro P1000/PCIe/SSE2, OpenGL 4.5.0)",
-    "viewport": {
-      "width": 1920,
-      "height": 1080
-    },
-    "DPR": 1,
-    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36"
-  },
-  "recording": {
-    "codec": "h264",
-    "resolution": "1920x1080",
-    "fps": 60,
-    "encoder": "h264_nvenc",
-    "status": "complete"
-  },
-  "input_custody": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/input-custody.json",
-    "sha256": "f3c9d9104cfa72b01cfdea4a178e4111963a6f28d330020508bd39032394d68b"
-  },
-  "admission_manifest": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/admission/SHA256SUMS",
-    "sha256": "4768d61863587f4b73c5d201cd32ca0da87ee72302e463a1aacc534176adb26d"
-  },
-  "immutable_original_raw_manifest_sha256": "defde16dd3b2a5a271b41ad9864dbcfb47c5b9e4c775ecffd4d92491bb817d9e",
-  "sealed_review_manifest_sha256": "d20508c4ca8cc92cdda076af5dc004d3b885ac378ad0a2979392345087b74c51",
-  "N1": "UNVERIFIED/HOLD",
-  "N2": "MEASURED_PENDING_FRAME_REVIEW",
-  "N3": {
-    "original_resume_spark": "UNVERIFIED/HOLD",
-    "corrected_N3_resume_history": "HOLD BasicDark hover1.81; remaining labels/focus/looks/RM stopped pending new bytes",
-    "tourchip": "HOLD BasicDark hover1.81; remaining affected acceptance stopped",
-    "wide_demo": "20 rest/hover contrast poses all10 measured, min3.14; hardware act/frame review pending",
-    "narrow_demo": "HOLD GlassLight rest worst2.39 stable; first5 looks10 poses measured; remaining narrow cases blocked",
-    "original_floaters_and_supplementary_tourchip_pills": "PASS all20 populated-state collector fixtures across10looks, original collector gap retained",
-    "narrow_floaters_pills": "PASS first5 actual narrow states; remaining cases blocked",
-    "old_manifest": {
-      "n3": "7707b5cbe1b34ea165783f2ddda4500d8e1acf66573f2ca6c828824e9aebffac",
-      "n3_reference": "15edbc264f3dd0f79ed8149634b6a1e732a85e779f6d98c1a3756173f6d37c5f",
-      "narrow_initial_guard_error": "7b11cfba279345ce2db5e20a1c43fc0da59a407a68c00d44d0adcf4a0f11ef71",
-      "narrow_actual_ui": "6a3072e05d31172e442f6580a9e2a769f0f17e0b87a4cbb9ecf1a727383a7041"
-    },
-    "source_clarification_manifest": "99ba2187619803cfefa868cbbfe8dcf782a9451fb5ea1bb1ce261cfe8f3453a0"
-  },
-  "N4": {
-    "status": "UNVERIFIED/HOLD",
-    "driven_cases": [
-      "Testing Run",
-      "SourceControl Stage",
-      "Search query typing"
-    ],
-    "eligible_numeric_changes": 0,
-    "count_rolls": 0,
-    "mark_swaps": 0,
-    "console_errors": 0,
-    "unverified_unstage_fixture": "Second click on active Source icon closed the rail; no unstage input was driven. Initial error retained; only missing input needs corrected fixture guard.",
-    "manifest": "cb19a7ee40aec5b20ac00fbeb59a24c9c491db62480b5b2c0eb7ab7654fd2d29"
-  },
-  "original_collector_coverage_limitation": "#o55-tourchip excluded by frozen gate; original gate is unchanged. Same-channel amendment authorizes a separate exact-two-site supplemental collector.",
-  "supplemental_criteria": "Add only #o55-tourchip to scopeOf and floaters roots; inverse projection must recover original bytes.",
-  "production_changes": "Only the root-authorized separate classA6 transport; original 559 report/raw packet and all four app pages unchanged.",
-  "no_look_or_landing_acceptance": true,
-  "accidental_direct_Chromium": "Failed SSH diagnostic invocation aborted with No usable sandbox; retained as diagnostic only, corrected census found no surviving browser; no direct retry/configuration override.",
-  "remaining": [
-    "Transport exact6d at clean checkpoint and regenerate only4parents; prove page/source and selector custody before carryover.",
-    "New-byte chip BasicDark failures/focus first, then missing corrected history/tourchip rows, bothlabels, RM and exact affected floaters collectors.",
-    "Complete/review R1 and missing N4 Unstage input; N4 zero-change criterion remains UNVERIFIED.",
-    "Review N2 and wide/narrow hardware frames; original owner reviews new dark chip bloom.",
-    "N1, original mistaken resume-spark row, separate GlassLight narrow-rest, Windows rail and GLY4/Jared holds remain external."
+  "schema_version": 2,
+  "status": "HOLD",
+  "updated_utc": "2026-10-12T12:49:31.955346+00:00",
+  "worker": "codex-pm7-glyph-compose",
+  "task": "Existing run2 scoped current-base N1-N4 and separately authorized R1; recovery/closure only",
+  "branch": "fix/pm7-glyphs-compose-20261012",
+  "report_checkpoint_parent": "4dc88c6a33532cb244730099d53c07ad84affdda",
+  "actual_final_report_commit": "Bound separately by completion/receipt.json and completion/SHA256SUMS; final commit changes only own two report paths",
+  "final_report_paths": [
+    "reports/pm7-glyph-current-base-20261012/NOTES.md",
+    "reports/pm7-glyph-current-base-20261012/result.json"
   ],
-  "N1_scope": {
-    "visible_enrolled_hosts": 33,
-    "exact_bridge_eligible_hosts": 0,
-    "pointer": [
-      896.9921875,
-      265
-    ],
-    "actual_PMH_hover": "article.pmu-card.pmh-on, ov-skyline, Glass",
-    "remaining": "All a-c/four looks/RM remain UNVERIFIED/HOLD; final source confirms no exact existing published target.",
-    "raw_manifest": {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/n1-discovery/SHA256SUMS",
-      "sha256": "0543c423d4a2b0d62d971d6064d366cf5867bb3597fce556b825032aee15e14f"
-    }
+  "own_test_only_paths": [
+    "Concepts/glyph-system/opus-5.5/tools/check_current_parent_glyphs.mjs",
+    "reports/pm7-glyph-current-base-20261012/NOTES.md",
+    "reports/pm7-glyph-current-base-20261012/result.json"
+  ],
+  "inputs": {
+    "main": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
+    "glyph26e": "26e5fb31d899334a9d89a6d79d21407474ef2d4d",
+    "common_base": "2f91e7a6228e5d3b50be997a562eb263bef059bc",
+    "original_composition": "559aabc7ccd0cda41038f813ae9075b3e5b01c15",
+    "classA_source": "68e329027e7b1e1d53f853f75cdf094fd4a056c2",
+    "chip_source": "6d9bfdfaee71a019283e7fffb8433f16d415f60e",
+    "final_source": "81617137658b89ace8af7eeac2baf8c5918364f8"
   },
-  "format_transport": {
-    "head": "6cd9a808cf1d4d8938bc3c40e593ea5c47ee11a8",
-    "parents": [
-      "55c3c8e8db19960579eb745905a912c4ea3e7f9e",
-      "68e329027e7b1e1d53f853f75cdf094fd4a056c2"
+  "custody": {
+    "status": "PASS_MECHANICAL_CUSTODY_ONLY; root accepted transport/publication, no source/look/landing acceptance",
+    "original_composition_parents": [
+      "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
+      "26e5fb31d899334a9d89a6d79d21407474ef2d4d"
     ],
-    "exact_six_only": true,
-    "all_other_blobs_modes_unchanged": true,
-    "four_page_bytes_equal559": true,
-    "Settings_drivers_and_original_reports_unchanged": true,
-    "build_map_AST_unchanged": true,
-    "residual_whitespace": {
-      "exit_code": 2,
-      "findings": 2272,
-      "paths": 15,
-      "all_trailing_whitespace_CRLF": true
+    "format_transport": {
+      "head": "6cd9a808cf1d4d8938bc3c40e593ea5c47ee11a8",
+      "parents": [
+        "55c3c8e8db19960579eb745905a912c4ea3e7f9e",
+        "68e329027e7b1e1d53f853f75cdf094fd4a056c2"
+      ],
+      "paths": [
+        "Concepts/glyph-system/opus-5.5/docs/rollout/ONBOARDING-RECORD.md",
+        "Concepts/glyph-system/opus-5.5/docs/rollout/ONBOARDING.md",
+        "Concepts/glyph-system/opus-5.5/docs/rollout/TOASTS-RECORD.md",
+        "Concepts/glyph-system/opus-5.5/docs/rollout/TOASTS.md",
+        "Concepts/glyph-system/opus-5.5/tools/build_map.py",
+        "reports/pm7-glyphs-20261010/inventory/runtime-status-conflicts.md"
+      ],
+      "exact6one_line_deltas": true,
+      "modes_build_map_AST_unchanged": true
     },
-    "manifest": {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/format-transport/SHA256SUMS",
-      "sha256": "71a310d1385570c943887a3646401f2d5fc542acbeed28db892f63c1a9b05bb5"
-    }
-  },
-  "updated_utc": "2026-10-12T10:43:22.906716+00:00",
-  "R1": {
-    "label": "native-control-hover-under-PMH-rests",
-    "status": "PARTIAL/UNVERIFIED",
-    "measured_cases": [
-      "R1-glass-dark-own-tool-hover"
-    ],
-    "remaining": "Menu check/click/Escape, page rests, drag/resize, remaining4 look/motion poses; actual Gear follow-board check used next because Size menu current custom size has no selected preset. No forced geometry or replacement N1 claim.",
-    "manifest": "1fc2f386d1372d5384923c1667a0ade104482228a87b1584fe867431b46281d3",
-    "retained_initial_tool_reveal_error_manifest": "c7db499cc2ef6652993eb91c456d101a750d7e0589ce1d5fd1d8b3962cd3885a"
-  },
-  "N1_final_source_disposition": {
-    "manifest_path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-n1-source-clarification/SHA256SUMS",
-    "sha256": "13d88a25f2f0a02acf1c2a8b785eaeb4c9e5dc9e15718b7de1f4499b4e100407",
-    "status": "UNVERIFIED/HOLD",
-    "exact_published_target_available": false,
-    "no_more_target_search": true
-  },
-  "N2_measurements": {
-    "valid_unique_cases": 68,
-    "minimum_worst_contrast": 3.14,
-    "hidden_without_layout_shift": true,
-    "source_owner_contrast_function_verbatim": true,
-    "retained_unverified_captures": [
-      {
-        "run": "n2",
-        "case": "N2-friendly-light-stage-warn-hover",
-        "status": "UNVERIFIED"
-      },
-      {
-        "run": "n2-resume",
-        "case": "N2-friendly-light-stage-success-hover",
-        "status": "UNVERIFIED"
-      },
-      {
-        "run": "n2-remainder",
-        "case": "N2-friendly-dark-stage-warn-rest",
-        "status": "UNVERIFIED"
-      }
-    ],
-    "runs": [
-      {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/n2",
-        "manifest_sha256": "e98930167fc143f23dffce90d2fca292e49ba6075036e939863491190009028e",
-        "session": "0c4487f3ed4c",
-        "tested_worktree_head": "2a912f8cb0117ee4f49c7d53e4788a65b67693fe",
-        "helper_sha256": "18b380b3aa3a81606573c3c3c5996c2d8888685b0e607dd55905a79528f1d485",
-        "page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
-        "stop": "complete",
-        "encoder": "h264_nvenc",
-        "cases": 7,
-        "console_or_page_errors": 0
-      },
-      {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/n2-resume",
-        "manifest_sha256": "77b47f47648797ed99e4e6138dd5922a8e6a7b2d691cf12e5d5ab396fb84fb84",
-        "session": "4cd1fc289cd9",
-        "tested_worktree_head": "2a912f8cb0117ee4f49c7d53e4788a65b67693fe",
-        "helper_sha256": "20d01a87a6509c3fde5ae785fa7ae920a196a0544cb4e5604bc914d83048f267",
-        "page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
-        "stop": "complete",
-        "encoder": "h264_nvenc",
-        "cases": 9,
-        "console_or_page_errors": 0
-      },
-      {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/n2-remainder",
-        "manifest_sha256": "0edab94f0208c0dc36695cfec3a7386d21d08031786e4253f16ee6c69d839c38",
-        "session": "d78432c97f35",
-        "tested_worktree_head": "2a912f8cb0117ee4f49c7d53e4788a65b67693fe",
-        "helper_sha256": "1212b90fba9273537cdf6f9df2239686f0e5e05138d25a4975f1547474cba206",
-        "page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
-        "stop": "complete",
-        "encoder": "h264_nvenc",
-        "cases": 9,
-        "console_or_page_errors": 0
-      },
-      {
-        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/n2-remainder-final",
-        "manifest_sha256": "d3239723ffae7c66566a5ff8d5e897d7c0ee9ca470f851861776818dbdc704fb",
-        "session": "3971db7d3e28",
-        "tested_worktree_head": "2a912f8cb0117ee4f49c7d53e4788a65b67693fe",
-        "helper_sha256": "8bb5a208279705c4befe211df876fb2529ed81ee33cfb2a50517919cd141036f",
-        "page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
-        "stop": "complete",
-        "encoder": "h264_nvenc",
-        "cases": 46,
-        "console_or_page_errors": 0
-      }
-    ],
-    "frame_clipping_review": "PENDING",
-    "pill_gate": "PASS original shell,floaters across10looks with stage AND stack populated in both actual chip fixtures; exact collector and supplementary two-site inverse proof in n3/result.json.",
-    "explanation": "Initial full-frame pair caught natural stage motion/expiry; later last-child selector caught an unrelated appended demo notice. Immutable raw captures retained. Only unverified/remaining poses ran after faster crop capture, normal prior-stage lifecycle wait, and fixed actual first-stage title/glyph custody; no source, threshold, timer or geometry changed."
-  },
-  "approved_next_source": {
-    "head": "6d9bfdfaee71a019283e7fffb8433f16d415f60e",
-    "parent": "68e329027e7b1e1d53f853f75cdf094fd4a056c2",
-    "path": "Concepts/onboarding/opus-5.5/src/css/25-glyphs.css",
-    "sha256": "27b283b8604950ae80d250559d25ccaa198d526d439ba0c487ddd6771f618384",
-    "bytes": 4178,
-    "manifest": "0943d725bc08f4e7a3a0da8a3959a2b4fec9d2e40fdad3fb1c74cf0bc99499e2",
-    "authorized": "Separate exact source merge; generator-only four-page publication, exact inverse-block proof; new-byte chip checks. Not yet imported at this checkpoint."
-  },
-  "source816_publication": {
-    "source_head": "81617137658b89ace8af7eeac2baf8c5918364f8",
-    "old_checkpoint": "98db897087e2954e2bf14cece424e1c4a8ad818a",
-    "transport_head": "52e03a11e351128644c7799ac9f4ca9e7db93fcc",
+    "source_transport": {
+      "head": "52e03a11e351128644c7799ac9f4ca9e7db93fcc",
+      "parents": [
+        "98db897087e2954e2bf14cece424e1c4a8ad818a",
+        "81617137658b89ace8af7eeac2baf8c5918364f8"
+      ],
+      "paths": [
+        "Concepts/onboarding/opus-5.5/src/css/25-glyphs.css"
+      ],
+      "source_bytes": 4752,
+      "source_blob": "2cf9de94cc2da10ae97e46ca2ce25262a82bde1d",
+      "source_sha256": "37a7c6b2e3552141647ca0b2a57995064e79debdcf42426629b9c0c9d7c03b87"
+    },
+    "publication_head": "0a8f57d69b8778c1d9d207a59313aceb56ae1dca",
+    "publication_parent": "52e03a11e351128644c7799ac9f4ca9e7db93fcc",
     "pages": [
       {
         "path": "Concepts/PMConcept7.html",
@@ -274,404 +121,1318 @@
         "inverse_sha256": "f61e8a6bfb52c3c947b40c0e617029a9d04219578983dc78b95ac2f1306a6838"
       }
     ],
-    "approved_block_sha256": "68e5b5784781375352ea09561fa16e44035c667949e324cac9c6dc3f4a84a77f",
-    "frozen_files": [
+    "approved_append_bytes": 1425,
+    "approved_append_lines": 15,
+    "append_once_each_page": true,
+    "3generator_3check_exits": 0,
+    "no_generator_rerun_at_closure": true,
+    "unique_main_paths": 159,
+    "unique_glyph_paths": 110,
+    "all269_union_owned_blobs_modes_exact_with_only_sealed_source_exceptions": true,
+    "outside_authorized_rows_exact559": 16090,
+    "ancestors": {
+      "main": true,
+      "glyph": true,
+      "composition": true,
+      "classA": true,
+      "source816": true,
+      "publication": true
+    },
+    "builder_path": "Concepts/onboarding/opus-5.5/tools/build.py",
+    "builder_blob": "caac0ff83aefacf4dffe9ed8f1f4ac17be52b86c",
+    "builder_sha256": "6b0d3c3f526c54f3e592c8c1834422a02383f0f3442c6d6b8100174cf07dc1bc",
+    "builder_disjoint_delta_union_exact": true,
+    "layer_order": [
+      "rail",
+      "glyph",
+      "Home"
+    ],
+    "main_PATCHES_count": 47,
+    "main_PATCHES_sha256": "d761499eeb91bba56f33296eb5ef8afdcf52ae365cd4d86c84d5db06f646e317",
+    "frozen_drivers_legacy_original_reports": [
       {
         "path": "Concepts/Onboarding concepts/TestOpusPMConcpet.html",
+        "frozen_ref": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
         "bytes": 6986659,
         "sha256": "6691bd47bb80582a6baef98bbb713492fa61db095f28b4f26fbfc20a4c15225f",
-        "old_byte_identity": true
+        "exact": true,
+        "mode": "100644"
       },
       {
         "path": "Concepts/onboarding/opus-5.5/tools/pill_check.mjs",
+        "frozen_ref": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
         "bytes": 35036,
         "sha256": "2d2ed65deadf51b2d4ff1e53551cc37b9b77c85100319f14c9b0a56100180041",
-        "old_byte_identity": true
+        "exact": true,
+        "mode": "100644"
       },
       {
         "path": "Concepts/onboarding/opus-5.5/tools/settings_nopills_accept.mjs",
+        "frozen_ref": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
         "bytes": 16737,
         "sha256": "f0f9293cc82498e866c1eadac5a8c5eb70b62ca76da102a9bc9bb5e3cc3c2728",
-        "old_byte_identity": true
+        "exact": true,
+        "mode": "100644"
       },
       {
         "path": "reports/pm7-glyph-compose-20261012/NOTES.md",
+        "frozen_ref": "559aabc7ccd0cda41038f813ae9075b3e5b01c15",
         "bytes": 5045,
         "sha256": "c8faa9a55c52abe5cbec2a32bedc14ce278cd10c7c4307dcf536023e5f807a77",
-        "old_byte_identity": true
+        "exact": true,
+        "mode": "100644"
       },
       {
         "path": "reports/pm7-glyph-compose-20261012/result.json",
+        "frozen_ref": "559aabc7ccd0cda41038f813ae9075b3e5b01c15",
         "bytes": 69403,
         "sha256": "872c3d6dac0975273047cd1707b0ca264a4fdf0531041a871e029b9062a26011",
-        "old_byte_identity": true
+        "exact": true,
+        "mode": "100644"
       }
     ],
-    "builder_sha256": "6b0d3c3f526c54f3e592c8c1834422a02383f0f3442c6d6b8100174cf07dc1bc",
-    "main_PATCHES_count": 47,
-    "legacy_preserved": true,
-    "only_four_generated_outputs_changed": true,
-    "raw_manifest_sha256": "1b92b49d1679ccb891e7c2d700d69e372f0b7178b542ca64d2837b36151a500a",
-    "generator_checks": [
-      {
-        "path": "Concepts/onboarding/opus-5.5/tools/build.py",
-        "generate_exit": 0,
-        "check_exit": 0
-      },
-      {
-        "path": "Concepts/home-redesign/tools/build_home.py",
-        "generate_exit": 0,
-        "check_exit": 0
-      },
-      {
-        "path": "Concepts/leftrail-redesign/tools/build_rail.py",
-        "generate_exit": 0,
-        "check_exit": 0
-      }
-    ],
-    "selector_scope_proof": "PENDING; no unaffected result carried over yet",
-    "affected_revalidation": "PENDING",
-    "publication_head": "0a8f57d69b8778c1d9d207a59313aceb56ae1dca",
-    "publication_commit_paths": [
-      "Concepts/PMConcept7.html",
-      "Concepts/HomeTestPMConcept7.html",
-      "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html",
-      "Concepts/LeftRailPMConcept7.html"
-    ]
-  },
-  "source816_narrow_first_checkpoint": {
-    "head": "90264c85f4c21454e741e8b6cc15cd63fef1b8d4",
-    "manifest_sha256": "be62a512ce9b56c8c29ddd33c808bed9d366af3a4f109a6de8be7705afde44dc",
-    "rest_ratio": 3.44,
-    "rest_worst": 3.3,
-    "hover_ratio": 7.71,
-    "hover_worst": 7.39,
-    "exact_zero_layout_shift": true,
-    "run_status": "HOLD own-probe diagnostic",
-    "diagnostic": {
-      "original_run_status": "HOLD",
-      "source_native_rule": "neon-icons.css:120-125 control-role visibility only; concept halo rests visible at stroke-opacity0",
-      "paint_keys": [
-        "ink",
-        "halo_alpha",
-        "halo_visibility",
-        "halo_stroke_opacity",
-        "halo_opacity",
-        "moving_parts"
-      ],
-      "all_before_left_exact": true,
-      "source_or_collector_changes": false,
-      "original_manifest_sha256": "be62a512ce9b56c8c29ddd33c808bed9d366af3a4f109a6de8be7705afde44dc",
-      "frame_review": "PENDING"
+    "original42_and_two_reports": {
+      "original_manifest_sha256": "defde16dd3b2a5a271b41ad9864dbcfb47c5b9e4c775ecffd4d92491bb817d9e",
+      "all42entries_unchanged": true,
+      "original_reports_unchanged": [
+        {
+          "path": "reports/pm7-glyph-compose-20261012/NOTES.md",
+          "bytes": 5045,
+          "sha256": "c8faa9a55c52abe5cbec2a32bedc14ce278cd10c7c4307dcf536023e5f807a77"
+        },
+        {
+          "path": "reports/pm7-glyph-compose-20261012/result.json",
+          "bytes": 69403,
+          "sha256": "872c3d6dac0975273047cd1707b0ca264a4fdf0531041a871e029b9062a26011"
+        }
+      ]
     },
-    "remaining": "GLfocus/RM/pill,4RetroNieRlooks, allscopeproofs andframes"
-  },
-  "source816_chip_failure": {
-    "actual_head": "e6f1a823f7f4b2f6e3fca2c69f446c47ff1a50b8",
-    "manifest_sha256": "7b7700e58459fbe7260a9a075d7d7b9288f0dd2c26827ad1cd678e9fd4a3779b",
-    "case": {
-      "id": "NEW-CHIP-basic-light-resume-not-done-rest",
-      "requirement": "N3-resume-history",
-      "look": "basic-light",
-      "state": {
-        "theme": "basic-light",
-        "nier": null,
-        "reduced_media": false,
-        "motion": null
-      },
-      "host": "resume",
-      "resume_label": "not-done",
-      "pose": "rest",
-      "began": {
-        "utc_ms": 1791800887615,
-        "at": 45559.29999999702
-      },
-      "ended": {
-        "utc_ms": 1791800888303,
-        "at": 46247.29999999702
-      },
-      "actual_glyphs": [
-        {
-          "index": 0,
-          "x": 882.9921875,
-          "y": 55,
-          "w": 14,
-          "h": 14,
-          "ink": "rgb(11, 26, 43)",
-          "op": 1,
-          "glyph": "history",
-          "key": "history",
-          "title": null,
-          "where": "o55-resume",
-          "halo_alpha": "0",
-          "halo_width": "3.4px",
-          "button": {
-            "x": 868.9921875,
-            "y": 46,
-            "w": 153.203125,
-            "h": 32
-          },
-          "card": {
-            "x": 868.9921875,
-            "y": 46,
-            "w": 182.015625,
-            "h": 32,
-            "radius": "4px"
-          },
-          "clips": []
-        }
-      ],
-      "after_glyphs": [
-        {
-          "index": 0,
-          "x": 882.9921875,
-          "y": 55,
-          "w": 14,
-          "h": 14,
-          "ink": "rgb(11, 26, 43)",
-          "op": 1,
-          "glyph": "history",
-          "key": "history",
-          "title": null,
-          "where": "o55-resume",
-          "halo_alpha": "0",
-          "halo_width": "3.4px",
-          "button": {
-            "x": 868.9921875,
-            "y": 46,
-            "w": 153.203125,
-            "h": 32
-          },
-          "card": {
-            "x": 868.9921875,
-            "y": 46,
-            "w": 182.015625,
-            "h": 32,
-            "radius": "4px"
-          },
-          "clips": []
-        }
-      ],
-      "pixel_capture_clip": {
-        "x": 874,
-        "y": 47,
-        "width": 31,
-        "height": 30
-      },
-      "pixel_capture_viewport": {
-        "w": 1920,
-        "h": 1080,
-        "dpr": 1
-      },
-      "hidden_without_layout_shift": true,
-      "measured": [
-        {
-          "index": 0,
-          "x": 882.9921875,
-          "y": 55,
-          "w": 14,
-          "h": 14,
-          "ink": "rgb(11, 26, 43)",
-          "op": 1,
-          "glyph": "history",
-          "key": "history",
-          "title": null,
-          "where": "o55-resume",
-          "halo_alpha": "0",
-          "halo_width": "3.4px",
-          "button": {
-            "x": 868.9921875,
-            "y": 46,
-            "w": 153.203125,
-            "h": 32
-          },
-          "card": {
-            "x": 868.9921875,
-            "y": 46,
-            "w": 182.015625,
-            "h": 32,
-            "radius": "4px"
-          },
-          "clips": [],
-          "bg": [
-            0,
-            86,
-            179
-          ],
-          "ratio": 2.49,
-          "worst": 2.49
-        }
-      ],
-      "foreground_pixel_support": [
-        {
-          "glyph": "history",
-          "changed_pixels": 94,
-          "observed_pixel_max_contrast": 2.4915386654975604,
-          "observed_pixel_p90_contrast": 2.4915386654975604,
-          "five_largest_delta_samples": [
-            {
-              "delta": 136,
-              "ratio": 2.4915386654975604,
-              "fg": [
-                11,
-                26,
-                43
-              ],
-              "behind": [
-                0,
-                86,
-                179
-              ]
-            },
-            {
-              "delta": 136,
-              "ratio": 2.4915386654975604,
-              "fg": [
-                11,
-                26,
-                43
-              ],
-              "behind": [
-                0,
-                86,
-                179
-              ]
-            },
-            {
-              "delta": 136,
-              "ratio": 2.4915386654975604,
-              "fg": [
-                11,
-                26,
-                43
-              ],
-              "behind": [
-                0,
-                86,
-                179
-              ]
-            },
-            {
-              "delta": 136,
-              "ratio": 2.4915386654975604,
-              "fg": [
-                11,
-                26,
-                43
-              ],
-              "behind": [
-                0,
-                86,
-                179
-              ]
-            },
-            {
-              "delta": 136,
-              "ratio": 2.4915386654975604,
-              "fg": [
-                11,
-                26,
-                43
-              ],
-              "behind": [
-                0,
-                86,
-                179
-              ]
-            }
-          ],
-          "note": "Foreground pairs include antialiasing and halos; observed peak supports, and does not replace, the source-owner effective-core contrast gate."
-        }
-      ],
-      "contrast_status": "HOLD",
-      "visual_status": "PENDING_FRAME_REVIEW",
-      "exact_zero_hide_layout_shift": true
-    },
-    "session": "a908228e3f39",
-    "recording": "f7efe33242e8",
-    "remaining": "Affected chip acceptance stopped for owner; both done label and other9look poses/pill gates incomplete; no repair or waiver"
-  },
-  "source816_narrow_checkpoint": {
-    "head": "e6f1a823f7f4b2f6e3fca2c69f446c47ff1a50b8",
-    "page_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
-    "manifest": "8554c577647845369e7fb0d08c2c0fe28c8d365349f5271fac6d90d261c601ca",
-    "session": "bccf248bcd89",
-    "recording": "00b268f3dab6",
-    "status": "MEASURED_PENDING_FRAME_REVIEW",
-    "contrast_cases": 13,
-    "min_worst": 3.14,
-    "all_exact_zero_hide_layout_shift": true,
-    "scope_proofs": 10,
-    "scope_all_pass": true,
-    "fresh_narrow_pill_cases": 5,
-    "pills_zero_findings": true,
-    "RM": [
-      {
-        "id": "NEW-NARROW-glass-light-RM",
-        "probe_lit": true,
-        "probe_still": true,
-        "status": "MEASURED_PENDING_FRAME_REVIEW"
+    "selector_scope": {
+      "actual_supported_wide_rows": 30,
+      "actual_supported_narrow_rows": 10,
+      "first": "Present non-toned resume/tourchip glyphs only",
+      "second": "Exactly GlassLight+narrow demoSVG; zero wide/otherlooks/otherUI",
+      "proof": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/artifact-selector-unaffected-reuse-proof.json",
+        "sha256": "2bf4437cec31a0649010189f5bfa1ec6d5e9ab8844bf7f0b3b48d57a048c71f5"
       }
-    ]
+    },
+    "carryover": "Only explicitly unaffected N2/shell, wide demo/five old narrow looks, N4/R1 rows with both inverse-page and actual-state scope proofs. Original tested heads/statuses/failures/gaps never relabelled or promoted. Affected floaters rerun separately."
   },
-  "N4_static_diagnosis": {
-    "manifest_sha256": "7b86a8bb765cff3ea93334ee821a9a814b6d9cf1ffd80bb916c6d24366082679",
-    "disposition": "UNVERIFIED/HOLD; required producers absent; only missingUnstage authorized, no extra transition attempts"
-  },
-  "fresh_floaters_not_done": {
-    "new_rows": 18,
-    "previous_basic_dark_rows": 2,
-    "all10looks_original_floaters_and_supplementary_pass": true,
-    "manifest_sha256": "8a69bea607272ef65c4a99ce1d3cfea050b928a2b0f2cad43e48e59e03b0094d",
-    "actual_head": "d837d1bd36dac33a55faeca2af9625870d600c23",
-    "run_status": "HOLD at done-label fixture mount race after allnotdone collector rows passed",
-    "scope_proofs": 20,
-    "done_remaining": true
-  },
-  "N4_missing_unstage": {
-    "actual_head": "d837d1bd36dac33a55faeca2af9625870d600c23",
-    "page_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
-    "manifest_sha256": "5ddff3819cac35b7800592f2776b5a765fac07e9f596ecb8a2f8e4879c696b2d",
-    "actual_trusted_input": true,
-    "eligible_numeric_changes": 0,
-    "rolls": 0,
-    "mark_swaps": 0,
-    "console_errors": 0,
-    "status": "UNVERIFIED/HOLD; no further stub attempts authorized"
-  },
-  "source64_final": {
-    "manifest_sha256": "b4a313434c08e59e205272f1ffe892edb79ec8670c08fa95bd804955ce8ccd9b",
-    "status": "HOST/Jared HOLD; no approved repair; remaining chip acceptance STOPPED",
-    "computed_predictions_not_measurements": [
-      "RetroLight2.08",
-      "NieRLight1.07"
-    ]
-  },
-  "fresh_done_label_collectors": {
-    "actual_head": "50af867fd34867cd0e3756f62df28ae0a46473d0",
-    "manifest_sha256": "a3f746ad35208f8b9e965625464513285596a05b386612740daf1ad3ac608233",
-    "rows": 10,
-    "all10looks_pass_original_and_supplementary": true,
-    "fixture_commit_state": "done via actual published Review/Create/Close",
-    "contrast_native_acceptance": "STOPPED/HOLD unchanged"
-  },
-  "R1_flat_probe_diagnostic": {
-    "original_run_status": "HOLD",
-    "original_manifest_sha256": "7a7757e37a56e2007f877de45a810e6afc0084e87955e1d11f73c2b702bb563c",
-    "actual_published_class": "nx nx-r-control nx-a-none nx-z1 pmg-flat",
-    "halo_path_absent": true,
-    "actual_paint_return_matches_old_exact_baseline": true,
-    "baseline_head": "7f7cb1491e1e81783482e2dc19b9f9d14230f889",
-    "actual_head": "50af867fd34867cd0e3756f62df28ae0a46473d0",
-    "paint_keys": [
-      "ink",
-      "halo_alpha",
-      "halo_visibility",
-      "halo_stroke_opacity",
-      "halo_opacity",
-      "moving_parts"
+  "verdict_rows": [
+    {
+      "name": "N1-original-a-c/fourlooks/RM",
+      "status": "NOELIGIBLE / UNVERIFIED / HOLD",
+      "eligible_targets": 0,
+      "source_disposition": "All17bridge selectors reach only child/grandchild SVG; Usage depth3+, other PMH hosts lack adopted glyphs. No substitute/N-A/expanded target.",
+      "looks": [
+        "GlassDark",
+        "RetroDark",
+        "NieRDark",
+        "BasicDark",
+        "GlassDark ReducedMotion"
+      ]
+    },
+    {
+      "name": "N2-toast-stage-stack-contrast-and-clipping",
+      "status": "PASS_ORIGINAL_MEASURED_GATES; STRICT_ZERO_PARTLY_UNVERIFIED",
+      "valid_unique_contrast_rows": 68,
+      "minimum_worst_contrast": 3.14,
+      "looks": [
+        "FriendlyLight",
+        "FriendlyDark",
+        "GlassLight",
+        "GlassDark"
+      ],
+      "states": "stage/front stack, info-paused/warning/failed/done, dismiss rest/hover, emptybell",
+      "clipping_review": "PASS recorded visible states; actual14px SVG, Friendly22x18/Glass24x20 host,10pxcorner cards, flat-dismiss no halo path",
+      "original_predicates": ">=3 and sameRects<0.1; flags/audit unchanged",
+      "strict_zero_geometry": {
+        "exact": 53,
+        "after_arrays_missing": 6,
+        "nonzero_clientRects": 9,
+        "all9_WH_also_nonzero": true,
+        "unverified": 15,
+        "max_abs_px": {
+          "x": 0.0234375,
+          "y": 0.0138397216796875,
+          "w": 0.0018310546875,
+          "h": 0.0018768310546875
+        }
+      },
+      "description_correction": "Earlier own mailbox/STATUS all W/H exact description was incorrect for rendered clientRects. Source audit bytes remain unchanged.",
+      "causality": "These small changes do not prove hide-induced movement, a source bug or a contrast failure.",
+      "no_measured_CSS_layout_equality_claim": true,
+      "old_unstable_capture_diagnostics_retained": 3
+    },
+    {
+      "name": "N2-populated-shell-original-pill-gate",
+      "status": "PASS",
+      "looks": 10,
+      "findings": 0,
+      "applicability": "Original populated-toast shell gate; current-byte applicability only by whole-page and selector-scope proof"
+    },
+    {
+      "name": "N3-original-resume-spark-wording",
+      "status": "UNVERIFIED / HOLD",
+      "actual_approved_binding": "95-boot.js:68 \u2192 C.small \u2192 ART.history \u2192 U.nx \u2192 PMG.icon; HISTORY14px/concept/WAVE, smallArt fallback only without PMG",
+      "original_claim_not_relabelled": true
+    },
+    {
+      "name": "N3-resume-history-corrected-and-tourchip-sparkles",
+      "status": "HOLD; REMAINING_AFFECTED_ACCEPTANCE_STOPPED",
+      "fresh_BasicDark": {
+        "notdone_poses": 6,
+        "hosts": [
+          "resume-history",
+          "tourchip-sparkles"
+        ],
+        "poses": [
+          "rest",
+          "hover",
+          "focus-visible"
+        ],
+        "ratio_and_worst": 7.92,
+        "exact_zero_paired_geometry": true,
+        "rest_foreground_pixels_equal_available_old_captures": true,
+        "available_act_frames": "Ignite and one visible native WAVE/sparkles act observed; no apparent clipping",
+        "continuous_visual_criterion": "UNVERIFIED/HOLD hardware capture gaps",
+        "original_owner_dark_same_ink_bloom_review": "REQUIRED"
+      },
+      "BasicLight_failure": {
+        "pose": "resume-history not-done REST",
+        "ratio": 2.49,
+        "worst": 2.49,
+        "effective_core_ratio": 2.4915386655,
+        "opacity": 1,
+        "exact_zero_paired_geometry": true,
+        "ink_rgb": [
+          11,
+          26,
+          43
+        ],
+        "behind_field_rgb": [
+          0,
+          86,
+          179
+        ],
+        "actual_head": "e6f1a823f7f4b2f6e3fca2c69f446c47ff1a50b8",
+        "page_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd"
+      },
+      "remaining": "83of90requested chip label/look/pose measurements stopped/unverified; both done-label contrast/native poses, other looks/poses and chipRM unverified",
+      "owner_diagnosis": "Inherited host ink/fill10-window.css:280, no host/glyph repair approved; Jared/NoPills choice pending",
+      "owner_predictions_not_measured_rows": {
+        "RetroLight": 2.08,
+        "NieRLight": 1.07
+      },
+      "old_failures": "BasicDark2hover1.81 and single original26e two-pose reference retained; no main exemption"
+    },
+    {
+      "name": "N3-wide-demo-sparkles",
+      "status": "PASS_RECORDED_GATES",
+      "rest_hover_measurements": 20,
+      "looks": 10,
+      "minimum_worst": 3.14,
+      "native_hover_recordings": 10,
+      "hardware_review": "Ignite/act once, return and no apparent clipping in available recorded frames",
+      "actual_old_head": "7f7cb1491e1e81783482e2dc19b9f9d14230f889",
+      "old_page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
+      "reuse": "Exact artifact and selector-scope proof only; old binding retained; two-magenta-mark notes evidence only"
+    },
+    {
+      "name": "N3-supported20px-narrow-demo",
+      "status": "PASS_MEASURED_CONTRAST_GATES / VISUAL_UNVERIFIED_HOLD",
+      "viewport_before_recording": {
+        "CSSwidth": 700,
+        "CSSheight": 900,
+        "DPR": 1
+      },
+      "actual_tab": {
+        "width": 20,
+        "height": 44,
+        "glyph_px": 14
+      },
+      "measured_poses": 25,
+      "all10looks_rest_hover": 20,
+      "fresh_focus": 5,
+      "other5_focus_unrun": true,
+      "fresh_GlassLight": {
+        "rest": 3.44,
+        "rest_worst": 3.3,
+        "hover": 7.71,
+        "hover_worst": 7.39
+      },
+      "fresh_missing_poses": 13,
+      "fresh_missing_minimum_worst": 3.14,
+      "fresh_exact_zero_paired_geometry": true,
+      "hardware_review": "Available native ignite/act/return observed; no apparent clipping in visible states",
+      "capture_gap": "White/background-only intervals; cause unestablished. Uninterrupted visual criterion UNVERIFIED/HOLD; probes/screenshots do not substitute",
+      "RM": "GlassLight lit/still probes and available frames retained; continuous visual coverage limited",
+      "focus_route": "Actual published demo menu and trusted ShiftTab from real firstrow; setup focus labelled programmatic, actual measured pose menu-open; trapTab diagnostic immutable",
+      "old_GlassLight_failure": "REST2.49/worst2.39 at old7f/890 retained; no extra26e baseline"
+    },
+    {
+      "name": "original-floaters-and-supplementary-floaters-tourchip",
+      "status": "PASS",
+      "fresh_wide_states": 30,
+      "wide_groups": [
+        "10notdone resume",
+        "10tourchip",
+        "10done resume"
+      ],
+      "narrow_states": 10,
+      "original_findings": 0,
+      "supplementary_findings": 0,
+      "original_coverage_limitation": "Frozen collector excludes #o55-tourchip; authorized exact2site companion labelled separately"
+    },
+    {
+      "name": "N4-count-roll-mark-swap",
+      "status": "UNVERIFIED / HOLD",
+      "real_inputs": [
+        "Testing Run",
+        "SourceControl Stage",
+        "Search query",
+        "SourceControl Unstage once with corrected open guard"
+      ],
+      "eligible_numeric_changes": 0,
+      "count_rolls": 0,
+      "mark_swaps": 0,
+      "console_errors": 0,
+      "source_diagnosis": "Run/stage/unstage cozy toast stubs; Search mirrors Find/Replace only. No required producer/root-realm omission. Zero observations not positive-criterion PASS; supplementary inventory not substitute. No more replay/audit/fixture.",
+      "Windows_review": "Mandatory external gate"
+    },
+    {
+      "name": "R1-native-control-hover-under-PMH-rests",
+      "status": "PARTIAL / HOLD",
+      "recorded_native_conditions_reviewed_PASS": 24,
+      "same_target_baseline_paint_comparisons": 19,
+      "outgoing_visibility_checks": 5,
+      "looks": [
+        "GlassDark",
+        "RetroDark",
+        "NieRDark",
+        "BasicDark",
+        "GlassDark ReducedMotion"
+      ],
+      "probe_method": "Same target/source/role/tool and actual pre-input baseline ink/alpha/stroke-opacity/opacity/parts/animations with SAME halo-field presence/absence; own hover/focus cleared. No blanket flat-glyph waiver. Original failed probe immutable.",
+      "held_RM_menu": {
+        "status": "UNVERIFIED / HOLD",
+        "cause": "UNDETERMINED",
+        "actual_head": "0117da429ae1a1c78aa85049129c10ed6b116e45",
+        "target": ".pmu-card[data-widget=\"ov-skyline\"] button[data-tool=\"gear\"]",
+        "awaited": ".pmu-menu visible",
+        "trusted_input": "Second gear anchor click after first actual selected Follow page menu/click closure;30000ms wait timeout",
+        "precondition_motion": "GlassDark ReducedMotion, prior own-tool rest trace retained",
+        "published_binding": "42-cards.js840/931/1103\u219245-menu.js toggle384/open284; exact source proof in read-only diagnosis",
+        "trace_limits": "First-menu frames/full error/video retained; exception did not serialize partial menu/input trace, no invented post-click state/cause",
+        "no_replay": true
+      },
+      "cannot_discharge_N1": true,
+      "recorded_case_bindings": [
+        {
+          "id": "R1-glass-dark-own-tool-hover",
+          "folder": "r1-native-ui",
+          "actual_tested_head": "7f7cb1491e1e81783482e2dc19b9f9d14230f889"
+        },
+        {
+          "id": "R1-glass-dark-menu-click-Escape-focus-blur",
+          "folder": "r1-native-source816",
+          "actual_tested_head": "50af867fd34867cd0e3756f62df28ae0a46473d0"
+        },
+        {
+          "id": "R1-glass-dark-keyboard-page-rests",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-glass-dark-drag",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-glass-dark-resize",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-retro-dark-own-tool-hover",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-retro-dark-menu-click-Escape-focus-blur",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-retro-dark-keyboard-page-rests",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-retro-dark-drag",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-retro-dark-resize",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-nier-dark-own-tool-hover",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-nier-dark-menu-click-Escape-focus-blur",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-nier-dark-keyboard-page-rests",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-nier-dark-drag",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-nier-dark-resize",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-basic-dark-own-tool-hover",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-basic-dark-menu-click-Escape-focus-blur",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-basic-dark-keyboard-page-rests",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-basic-dark-drag",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-basic-dark-resize",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-glass-dark-RM-own-tool-hover",
+          "folder": "r1-native-source816-remainder",
+          "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45"
+        },
+        {
+          "id": "R1-glass-dark-RM-keyboard-page-rests",
+          "folder": "r1-native-source816-RM-missing",
+          "actual_tested_head": "4dc88c6a33532cb244730099d53c07ad84affdda"
+        },
+        {
+          "id": "R1-glass-dark-RM-drag",
+          "folder": "r1-native-source816-RM-missing",
+          "actual_tested_head": "4dc88c6a33532cb244730099d53c07ad84affdda"
+        },
+        {
+          "id": "R1-glass-dark-RM-resize",
+          "folder": "r1-native-source816-RM-missing",
+          "actual_tested_head": "4dc88c6a33532cb244730099d53c07ad84affdda"
+        }
+      ]
+    }
+  ],
+  "collector": {
+    "frozen_driver_sha256": "2d2ed65deadf51b2d4ff1e53551cc37b9b77c85100319f14c9b0a56100180041",
+    "original_sha256": "d91173b82c518001322177e27cf930516d3f2ac901e37f925e39c4dc21b78da2",
+    "original_bytes": 9310,
+    "supplementary_label": "supplementary floaters/tourchip",
+    "supplementary_sha256": "d1f8c82fe0ff96fbe7beb3364b3c395cff9df8433338ff2cc90a169f202391ae",
+    "supplementary_bytes": 9341,
+    "exact_two_sites": [
+      {
+        "original": "el.closest('#o55-resume,.o55-demo')",
+        "supplementary": "el.closest('#o55-resume,.o55-demo,#o55-tourchip')"
+      },
+      {
+        "original": "['#o55-resume', '.o55-demo']",
+        "supplementary": "['#o55-resume', '.o55-demo', '#o55-tourchip']"
+      }
     ],
-    "frame_review": "PENDING",
-    "no_source_or_collector_change": true
-  }
+    "inverse_projection_sha256": "d91173b82c518001322177e27cf930516d3f2ac901e37f925e39c4dc21b78da2",
+    "all_other_classification_eligibility_threshold_predicate_exemption_bytes_preserved": true,
+    "original_tourchip_gap_retained": true,
+    "frozen_default_and_fresh_context_behavior_unchanged": true
+  },
+  "hardware": {
+    "renderer": "ANGLE (NVIDIA Corporation, Quadro P1000/PCIe/SSE2, OpenGL 4.5.0)",
+    "hardware_codec": "H264/h264_nvenc",
+    "resolution": "1920x1080",
+    "nominal_FPS": 60,
+    "DPR": 1,
+    "normal_installed_GLOBAL_helper_only": true,
+    "one_owned_session_at_a_time": true,
+    "all23_sessions_stopped": true,
+    "bindings": [
+      {
+        "folder": "admission",
+        "actual_tested_head": "559aabc7ccd0cda41038f813ae9075b3e5b01c15",
+        "page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
+        "page_bytes": 18864603,
+        "helper_sha256": "30f74d77b253d9f6857fa212a48a89a74c91490a5cadec102add57733cd24e9d",
+        "session": "ecfd680dd341",
+        "recording": "96fccc33fa89",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "ADMISSION_VERIFIED",
+        "result_sha256": "0ac2bee5c9465150de4ead0a408ba33ff85f78413691e5dc8ab1cef8dd8c33ed",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "n1-discovery",
+        "actual_tested_head": "6cd9a808cf1d4d8938bc3c40e593ea5c47ee11a8",
+        "page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
+        "page_bytes": 18864603,
+        "helper_sha256": "0ef5e97ae6ba2e6f68ac0b7b9caf753e241f83ccff62cb76eccbb69f17cb010e",
+        "session": "7ceda79f48e7",
+        "recording": "c2a2be899743",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "UNVERIFIED",
+        "result_sha256": "6490236581fd7ed4b31cb697ff2cbd83dfb8b8ce8550736e73c9f7128434671f",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "n2",
+        "actual_tested_head": "2a912f8cb0117ee4f49c7d53e4788a65b67693fe",
+        "page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
+        "page_bytes": 18864603,
+        "helper_sha256": "18b380b3aa3a81606573c3c3c5996c2d8888685b0e607dd55905a79528f1d485",
+        "session": "0c4487f3ed4c",
+        "recording": "671d6f7668fe",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "HOLD",
+        "result_sha256": "5f7945ce055d5bb7fd8934af49fb20e84534b8765f0c64c2c6ec2bd48f257ca5",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "n2-remainder",
+        "actual_tested_head": "2a912f8cb0117ee4f49c7d53e4788a65b67693fe",
+        "page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
+        "page_bytes": 18864603,
+        "helper_sha256": "1212b90fba9273537cdf6f9df2239686f0e5e05138d25a4975f1547474cba206",
+        "session": "d78432c97f35",
+        "recording": "de8f5c1264c1",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "HOLD",
+        "result_sha256": "055f29d509a890378fab30832de317338590a0e13227dece76de1978b2987ea1",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "n2-remainder-final",
+        "actual_tested_head": "2a912f8cb0117ee4f49c7d53e4788a65b67693fe",
+        "page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
+        "page_bytes": 18864603,
+        "helper_sha256": "8bb5a208279705c4befe211df876fb2529ed81ee33cfb2a50517919cd141036f",
+        "session": "3971db7d3e28",
+        "recording": "a1dd1a0d3e61",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "MEASURED_PENDING_FRAME_REVIEW",
+        "result_sha256": "24c4d13e6ac415c3835d1f6b460fbbff66d65823141b6740c0c4f8d123e1dbdf",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "n2-resume",
+        "actual_tested_head": "2a912f8cb0117ee4f49c7d53e4788a65b67693fe",
+        "page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
+        "page_bytes": 18864603,
+        "helper_sha256": "20d01a87a6509c3fde5ae785fa7ae920a196a0544cb4e5604bc914d83048f267",
+        "session": "4cd1fc289cd9",
+        "recording": "0b2dc9771720",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "HOLD",
+        "result_sha256": "1a98780d2e64d9b40f7e7e7fbbb712d89960c9e594eae5c11210934bf3ba0acb",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "n3",
+        "actual_tested_head": "7f7cb1491e1e81783482e2dc19b9f9d14230f889",
+        "page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
+        "page_bytes": 18864603,
+        "helper_sha256": "4b9b298aa08370932758123d00af7babf15950ffa9a7a71eb99377c8f174685b",
+        "session": "787a9ab3e6c0",
+        "recording": "2c292e4bdba6",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "HOLD",
+        "result_sha256": "dee421231d6e8cdfa6daccdc9e15ba2e238e7d49efe2285ded00d6e190eb7ff5",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "n3-baseline",
+        "actual_tested_head": "7f7cb1491e1e81783482e2dc19b9f9d14230f889",
+        "page_sha256": "9bcf096f35cebc9e71a84c54f4c6f55c0b47f6703e4f7d328214ee2f632dc2c8",
+        "page_bytes": 18826095,
+        "helper_sha256": "c9d78abf3de02d35e89f57d8cffbbf16234672adb5a45410cb3266128aca22a2",
+        "session": "625593044254",
+        "recording": "78891d8090a2",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "BASELINE_REPRODUCTION_ONLY",
+        "result_sha256": "b3120b0adf5c8acc6d233b0ec0f6cc4075e70f9b7ad5cd6271d7216164e08fcb",
+        "fixture_candidate_binding_as_recorded": "26e5fb31d899334a9d89a6d79d21407474ef2d4d",
+        "served_reference_head": "26e5fb31d899334a9d89a6d79d21407474ef2d4d",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "n3-chips-source816",
+        "actual_tested_head": "e6f1a823f7f4b2f6e3fca2c69f446c47ff1a50b8",
+        "page_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+        "page_bytes": 18866028,
+        "helper_sha256": "2694f969617718f1146372d4601fd4aa4ec14ed860738b22e95c52f442bf9c93",
+        "session": "a908228e3f39",
+        "recording": "f7efe33242e8",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "HOLD",
+        "result_sha256": "f2df1a626be73ac7a9c1f3e169c51a2d01369b33d1c53c85281076e39a009a20",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "n3-narrow",
+        "actual_tested_head": "7f7cb1491e1e81783482e2dc19b9f9d14230f889",
+        "page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
+        "page_bytes": 18864603,
+        "helper_sha256": "889e148988885938b6e5340d7f6c630085e0f3dfd04261506d9ef8ec177d8320",
+        "session": "92e1e45b59f5",
+        "recording": "c8f14ae32f13",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "HOLD",
+        "result_sha256": "350c70850a3963e13bd27239b675515697d69985006596da8e8739f75f20e421",
+        "css_viewport": {
+          "width": 700,
+          "height": 900,
+          "DPR": 1,
+          "layout": "narrow",
+          "tab_width": 20
+        }
+      },
+      {
+        "folder": "n3-narrow-source816",
+        "actual_tested_head": "90264c85f4c21454e741e8b6cc15cd63fef1b8d4",
+        "page_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+        "page_bytes": 18866028,
+        "helper_sha256": "1f378b0855a2516d48bb09f8df289c3664a4cdcb2840fa52d302ad82c0e2f3f6",
+        "session": "705bd93c9e50",
+        "recording": "e82fa1b82901",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "HOLD",
+        "result_sha256": "4ee53e2eb1413742aba6735e6d0647278d7c7d382402d4d032631ed9e6282c16",
+        "css_viewport": {
+          "width": 700,
+          "height": 900,
+          "DPR": 1,
+          "layout": "narrow",
+          "tab_width": 20
+        }
+      },
+      {
+        "folder": "n3-narrow-source816-focus-route",
+        "actual_tested_head": "e6f1a823f7f4b2f6e3fca2c69f446c47ff1a50b8",
+        "page_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+        "page_bytes": 18866028,
+        "helper_sha256": "2694f969617718f1146372d4601fd4aa4ec14ed860738b22e95c52f442bf9c93",
+        "session": "bccf248bcd89",
+        "recording": "00b268f3dab6",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "MEASURED_PENDING_FRAME_REVIEW",
+        "result_sha256": "c03b24a148a3b6a616158c34a36780de1413ae2422c41571c3c71dba71c74aca",
+        "css_viewport": {
+          "width": 700,
+          "height": 900,
+          "DPR": 1,
+          "layout": "narrow",
+          "tab_width": 20
+        }
+      },
+      {
+        "folder": "n3-narrow-source816-remainder",
+        "actual_tested_head": "764bf07677898cd542f2abf6e7fa1d0aabd599a0",
+        "page_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+        "page_bytes": 18866028,
+        "helper_sha256": "26a12ccb7d3349cc262494f5febcccc28dc3784a5e1e5dbec03be8507d2ecd90",
+        "session": "7911515c6fb1",
+        "recording": "154a434fd33a",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "HOLD",
+        "result_sha256": "0b3391984a0c9f6f09831af862b2f6e144fda9b06af6b6f9b5e2ed3d7e9da11c",
+        "css_viewport": {
+          "width": 700,
+          "height": 900,
+          "DPR": 1,
+          "layout": "narrow",
+          "tab_width": 20
+        }
+      },
+      {
+        "folder": "n3-narrow-ui",
+        "actual_tested_head": "7f7cb1491e1e81783482e2dc19b9f9d14230f889",
+        "page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
+        "page_bytes": 18864603,
+        "helper_sha256": "cc852091e16fd986e783c515e240a69755f81cee8c5bdeb837050c70331e8ae1",
+        "session": "f46816e41869",
+        "recording": "30e50a121dd9",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "HOLD",
+        "result_sha256": "f267869c0f86a835799a080df925609a97fa326a5196c1a82865aabf38f6c7d5",
+        "css_viewport": {
+          "width": 700,
+          "height": 900,
+          "DPR": 1,
+          "layout": "narrow",
+          "tab_width": 20
+        }
+      },
+      {
+        "folder": "n3-pills-source816",
+        "actual_tested_head": "d837d1bd36dac33a55faeca2af9625870d600c23",
+        "page_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+        "page_bytes": 18866028,
+        "helper_sha256": "097b35b0dce55488d599e9b8db5eefdba31a48ee0feb95bd1ecb47ed36cf0e8f",
+        "session": "c2ef26f8a4af",
+        "recording": "920635c88270",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "HOLD",
+        "result_sha256": "247d5af0129ba20074434bc295eeb4dfa6f221c4ad78e540c3e1baa9a9543176",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "n3-pills-source816-done",
+        "actual_tested_head": "50af867fd34867cd0e3756f62df28ae0a46473d0",
+        "page_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+        "page_bytes": 18866028,
+        "helper_sha256": "6dacb6fd8215db7342d61d883f8c7ce02aaaa159c1d37835dcb50004c9e92505",
+        "session": "99f15d206420",
+        "recording": "29b0ee771a0e",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "PILL_SCOPES_PASS; CHIP_CONTRAST_HOLD_UNCHANGED",
+        "result_sha256": "3bc596c76655595c4a39d2ab7e38b7edbeaeaffe57998226bce7975e470de5e9",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "n4",
+        "actual_tested_head": "7f7cb1491e1e81783482e2dc19b9f9d14230f889",
+        "page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
+        "page_bytes": 18864603,
+        "helper_sha256": "cc852091e16fd986e783c515e240a69755f81cee8c5bdeb837050c70331e8ae1",
+        "session": "9f621d7e4a04",
+        "recording": "f2f5ca5fb865",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "UNVERIFIED",
+        "result_sha256": "c886cc7c7135ef45ea124fc6135c81fa1bafc04c8d12512eb688fbf02195cc1e",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "n4-missing-unstage-source816",
+        "actual_tested_head": "d837d1bd36dac33a55faeca2af9625870d600c23",
+        "page_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+        "page_bytes": 18866028,
+        "helper_sha256": "097b35b0dce55488d599e9b8db5eefdba31a48ee0feb95bd1ecb47ed36cf0e8f",
+        "session": "ac9441ff870e",
+        "recording": "7f728259db3d",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "UNVERIFIED",
+        "result_sha256": "80ada3f48cf61f7c32a988c691fe482f2113eeab8b8f50072c2299728b09ff69",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "r1",
+        "actual_tested_head": "7f7cb1491e1e81783482e2dc19b9f9d14230f889",
+        "page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
+        "page_bytes": 18864603,
+        "helper_sha256": "cc852091e16fd986e783c515e240a69755f81cee8c5bdeb837050c70331e8ae1",
+        "session": "057cae45a1cc",
+        "recording": "a0413be07ef9",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "HOLD",
+        "result_sha256": "be894cc57aab29d690c75d21cc22031f517c596781e182d658207feb17701c4b",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "r1-native-source816",
+        "actual_tested_head": "50af867fd34867cd0e3756f62df28ae0a46473d0",
+        "page_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+        "page_bytes": 18866028,
+        "helper_sha256": "6dacb6fd8215db7342d61d883f8c7ce02aaaa159c1d37835dcb50004c9e92505",
+        "session": "15e0e3b989b6",
+        "recording": "9fc9ceba9140",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "HOLD",
+        "result_sha256": "5f9c95373dbd5dc0691ee5b77d70417973b8eab6bf3cd373d15b3524db2c6a09",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "r1-native-source816-RM-missing",
+        "actual_tested_head": "4dc88c6a33532cb244730099d53c07ad84affdda",
+        "page_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+        "page_bytes": 18866028,
+        "helper_sha256": "ad916adb29443565fd9db613e568cec06584b0d70f716088d83b9c94307371bf",
+        "session": "004b7929657a",
+        "recording": "965d495c4b1b",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "HOLD",
+        "result_sha256": "04ca46d85a5429086ac18142d0cf3e8fd4ee02ab56f0a10bb76ebee26a79326f",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "r1-native-source816-remainder",
+        "actual_tested_head": "0117da429ae1a1c78aa85049129c10ed6b116e45",
+        "page_sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+        "page_bytes": 18866028,
+        "helper_sha256": "5a1eab618e2352ea355d8231114284626a93c3c7da578834406896391647e10f",
+        "session": "25a7dc7a38cd",
+        "recording": "dcfaa5db249c",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "HOLD",
+        "result_sha256": "d2247937aace9c613495941a572b77705d9c39051813db99f28b602a918b3ada",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      },
+      {
+        "folder": "r1-native-ui",
+        "actual_tested_head": "7f7cb1491e1e81783482e2dc19b9f9d14230f889",
+        "page_sha256": "890c2f5ec86bfccb69294d17e62fb3c61ba580e94fbc21619953e2cce52e68b0",
+        "page_bytes": 18864603,
+        "helper_sha256": "0f76651115046497cf7940e50a70c77ba28cd1df72ac369fe205d16c92e30eeb",
+        "session": "3eb14e509852",
+        "recording": "cca44395dbec",
+        "codec": "h264",
+        "encoder": "h264_nvenc",
+        "fps": 60,
+        "resolution": "1920x1080",
+        "stopped_status": "complete",
+        "recording_status": "complete",
+        "original_status": "HOLD",
+        "result_sha256": "b3f7a7ab9fdc31e17235f8fade9b38334cd10df36b8440bbcdf4e4c475e9243f",
+        "css_viewport": {
+          "width": 1920,
+          "height": 1080,
+          "DPR": 1
+        }
+      }
+    ],
+    "sampling_limits": [
+      "Original hardware H264_nvenc1920x1080 nominal60fps/DPR1 retained; actual QuadroP1000 renderer bound per session.",
+      "Selected act sheets24fps; broad menu/page/grip sequences4fps plus12fps settled windows; static frames single samples.",
+      "UTC/frame-zero mapping is approximate +/-500ms; visibly match state instead of claiming exact frame-perfect alignment.",
+      "14px strokes and chroma subsampling constrain subtle motion/halo inspection. No exclusive FPS/performance or unsampled continuous-paint certification.",
+      "All blank/capture intervals, original false-premise diagnostics and failed contrasts remain immutable evidence."
+    ],
+    "direct_Chromium_No_usable_sandbox_error": "Retained diagnostic with corrected census; no direct retry/override, never acceptance",
+    "two_magenta_mark_note": "Evidence only, no source/look decision",
+    "all23_frozen_driver_hash_matches_collector_binding": true,
+    "binding_result_paths": "evidence.raw_root/<folder>/result.json; result_sha256 is bound per row"
+  },
+  "whitespace": {
+    "status": "FAILED / HOLD",
+    "original_exit": 2,
+    "original_total": 2278,
+    "original_trailing": 2273,
+    "original_EOF_blank": 5,
+    "residual_exit": 2,
+    "residual_total": 2272,
+    "frozen_CRLF_paths": 15,
+    "removed": 6,
+    "new": 0,
+    "full_logs_unchanged": true,
+    "no_normalization_main_exemption_or_hook_bypass": true
+  },
+  "remaining_gates": [
+    "OriginalN1 noeligible published PMH glyph/Jared assumption",
+    "Original mistaken resume-spark wording",
+    "BasicLight2.49 host pairing/Jared-NoPills choice; bothlabels/remainingchipposes/RM stopped/unverified",
+    "Hardware capture gaps/uninterrupted visual criterion",
+    "R1RMmenu second-reopen timeout causeUNDETERMINED",
+    "N4 no required count/status producer/positive observations",
+    "Whitespace2272findings15frozenfiles full diagnostic FAILEDexit2",
+    "Original source-owner final frame/look review including dark same-ink bloom",
+    "Mandatory Windows rail source review",
+    "GLY4/Jared art ownership",
+    "Full source/root and landing review; no landing GO"
+  ],
+  "evidence": {
+    "immutable_aggregate": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/SHA256SUMS",
+      "sha256": "4422721dbad92787c4c41ee364a4a7958628532e384245af99f20f443420bc30",
+      "entries": 969
+    },
+    "visual_review": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/SHA256SUMS",
+      "sha256": "62dbd5c34d67a59974b0d5309ff1ed42deaa265bed3b49628afa37b9cbd84692",
+      "entries": 305
+    },
+    "last3_RM": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/r1-native-source816-RM-missing/SHA256SUMS",
+      "sha256": "9b33cb0256763da4849f6958c25fa0f604ad01c002b602059379cf93a240789f",
+      "entries": 9
+    },
+    "proofs": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/final-source-union-custody.json",
+        "sha256": "937035cce5f484ef235e6d0163fe93d381200f130b49cdd4ef87d69eb7fcef34"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/final-collector-byte-identity.json",
+        "sha256": "9f6cbc92a1f102de3d6594d14b757ada031e47c0eb1b5c0b08b35d8aa6b372e4"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/artifact-selector-unaffected-reuse-proof.json",
+        "sha256": "2bf4437cec31a0649010189f5bfa1ec6d5e9ab8844bf7f0b3b48d57a048c71f5"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/final-session-artifact-bindings.json",
+        "sha256": "dd94a16082415d00021974afb8f62568d7aa8d1af31518d5eeae823529813014"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/visual-review/frame-review.json",
+        "sha256": "d8745c3bbcbc0e4b465918232ac06dde5f0596f83e0f492c35b81ab47f14083f"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/R1-final-recorded-method-proof.json",
+        "sha256": "f79e9c1fde30b6c4f7ade74f8d467176d6b6d5311bc8a2b2cb4eadf85e774ce5"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/R1-RM-menu-readonly-diagnosis.json",
+        "sha256": "db663e67f8146da0911c2780f4dbb4bbf4f07eb44774ed8cc403b9d480d9bc26"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/original559-packet-final-custody.json",
+        "sha256": "9a260879cd49ea98b356fe800c120f7f66674a925f2fc240ac560e5ddc2b191c"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/N3-BasicDark-rest-pixel-identity.json",
+        "sha256": "a59de604407221a60fb0dbfccb515485fb7ed68c652c78c0a211231c5f5daae5"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/N2-retained-capture-geometry-audit.json",
+        "sha256": "b54fdb04aa94159d295908b77f93044cb8f462b48bd72f035842a00dd1a7195b"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/N2-geometry-description-correction.json",
+        "sha256": "96664785264fc02ae373b96652aeab488443fe49530c103d07cb9f511092921c"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/n2-dismiss-geometry-proof.json",
+        "sha256": "86827c4b7dd14406e2ec995e13c83a7127d466845c9d14802eb5aabcefcebd49"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/owned-runtime-before-cleanup.json",
+        "sha256": "536d7f958ccbfe18bc3164e7bb5cb017c633dd795395d85a6183745f9a63d7ce"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/owned-GPU-runtime-cleanup.json",
+        "sha256": "fb2bebc149745a4f4177d998755e0f7e4c149beb7c6e637aecd652244d6e2600"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/final-owned-resource-declaration.json",
+        "sha256": "f74dc4f02358351fcc572081d2790150bb110c5c12ec586ce1160ed3c6a93ffb"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/final-evidence-index.json",
+        "sha256": "b4441401fa510e7abefe2fb33451ab17bee75cb96345e5b141a9614e41594623"
+      }
+    ],
+    "phase_manifests": [
+      {
+        "relative_path": "admission/SHA256SUMS",
+        "sha256": "4768d61863587f4b73c5d201cd32ca0da87ee72302e463a1aacc534176adb26d",
+        "entries": 5
+      },
+      {
+        "relative_path": "format-transport/SHA256SUMS",
+        "sha256": "71a310d1385570c943887a3646401f2d5fc542acbeed28db892f63c1a9b05bb5",
+        "entries": 9
+      },
+      {
+        "relative_path": "n1-discovery/SHA256SUMS",
+        "sha256": "0543c423d4a2b0d62d971d6064d366cf5867bb3597fce556b825032aee15e14f",
+        "entries": 7
+      },
+      {
+        "relative_path": "n2/SHA256SUMS",
+        "sha256": "e98930167fc143f23dffce90d2fca292e49ba6075036e939863491190009028e",
+        "entries": 22
+      },
+      {
+        "relative_path": "n2-pixel-review/SHA256SUMS",
+        "sha256": "f56949a3f979f140d84599f545431046ff402cd4bb14a909d5b6a044ed458f18",
+        "entries": 6
+      },
+      {
+        "relative_path": "n2-remainder/SHA256SUMS",
+        "sha256": "0edab94f0208c0dc36695cfec3a7386d21d08031786e4253f16ee6c69d839c38",
+        "entries": 26
+      },
+      {
+        "relative_path": "n2-remainder-final/SHA256SUMS",
+        "sha256": "d3239723ffae7c66566a5ff8d5e897d7c0ee9ca470f851861776818dbdc704fb",
+        "entries": 100
+      },
+      {
+        "relative_path": "n2-resume/SHA256SUMS",
+        "sha256": "77b47f47648797ed99e4e6138dd5922a8e6a7b2d691cf12e5d5ab396fb84fb84",
+        "entries": 26
+      },
+      {
+        "relative_path": "n3/SHA256SUMS",
+        "sha256": "7707b5cbe1b34ea165783f2ddda4500d8e1acf66573f2ca6c828824e9aebffac",
+        "entries": 89
+      },
+      {
+        "relative_path": "n3-baseline/SHA256SUMS",
+        "sha256": "15edbc264f3dd0f79ed8149634b6a1e732a85e779f6d98c1a3756173f6d37c5f",
+        "entries": 12
+      },
+      {
+        "relative_path": "n3-chips-source816/SHA256SUMS",
+        "sha256": "7b7700e58459fbe7260a9a075d7d7b9288f0dd2c26827ad1cd678e9fd4a3779b",
+        "entries": 27
+      },
+      {
+        "relative_path": "n3-narrow/SHA256SUMS",
+        "sha256": "7b11cfba279345ce2db5e20a1c43fc0da59a407a68c00d44d0adcf4a0f11ef71",
+        "entries": 7
+      },
+      {
+        "relative_path": "n3-narrow-source816/SHA256SUMS",
+        "sha256": "be62a512ce9b56c8c29ddd33c808bed9d366af3a4f109a6de8be7705afde44dc",
+        "entries": 12
+      },
+      {
+        "relative_path": "n3-narrow-source816-focus-route/SHA256SUMS",
+        "sha256": "8554c577647845369e7fb0d08c2c0fe28c8d365349f5271fac6d90d261c601ca",
+        "entries": 43
+      },
+      {
+        "relative_path": "n3-narrow-source816-remainder/SHA256SUMS",
+        "sha256": "ffc3232e8e32e0fdd3d809c69cafcbd870db4707c960d937f9ab45d5ae5a8392",
+        "entries": 7
+      },
+      {
+        "relative_path": "n3-narrow-ui/SHA256SUMS",
+        "sha256": "6a3072e05d31172e442f6580a9e2a769f0f17e0b87a4cbb9ecf1a727383a7041",
+        "entries": 29
+      },
+      {
+        "relative_path": "n3-pills-source816/SHA256SUMS",
+        "sha256": "8a69bea607272ef65c4a99ce1d3cfea050b928a2b0f2cad43e48e59e03b0094d",
+        "entries": 24
+      },
+      {
+        "relative_path": "n3-pills-source816-done/SHA256SUMS",
+        "sha256": "a3f746ad35208f8b9e965625464513285596a05b386612740daf1ad3ac608233",
+        "entries": 16
+      },
+      {
+        "relative_path": "n4/SHA256SUMS",
+        "sha256": "cb19a7ee40aec5b20ac00fbeb59a24c9c491db62480b5b2c0eb7ab7654fd2d29",
+        "entries": 9
+      },
+      {
+        "relative_path": "n4-missing-unstage-source816/SHA256SUMS",
+        "sha256": "5ddff3819cac35b7800592f2776b5a765fac07e9f596ecb8a2f8e4879c696b2d",
+        "entries": 7
+      },
+      {
+        "relative_path": "r1/SHA256SUMS",
+        "sha256": "c7db499cc2ef6652993eb91c456d101a750d7e0589ce1d5fd1d8b3962cd3885a",
+        "entries": 7
+      },
+      {
+        "relative_path": "r1-native-source816/SHA256SUMS",
+        "sha256": "7a7757e37a56e2007f877de45a810e6afc0084e87955e1d11f73c2b702bb563c",
+        "entries": 8
+      },
+      {
+        "relative_path": "r1-native-source816-RM-missing/SHA256SUMS",
+        "sha256": "9b33cb0256763da4849f6958c25fa0f604ad01c002b602059379cf93a240789f",
+        "entries": 9
+      },
+      {
+        "relative_path": "r1-native-source816-remainder/SHA256SUMS",
+        "sha256": "d6012610c4ae74d66e5e9edfb35df52c598a47612a1c9331981d034d7123c1e8",
+        "entries": 23
+      },
+      {
+        "relative_path": "r1-native-ui/SHA256SUMS",
+        "sha256": "1fc2f386d1372d5384923c1667a0ade104482228a87b1584fe867431b46281d3",
+        "entries": 8
+      },
+      {
+        "relative_path": "source816-publication/SHA256SUMS",
+        "sha256": "1b92b49d1679ccb891e7c2d700d69e372f0b7178b542ca64d2837b36151a500a",
+        "entries": 9
+      },
+      {
+        "relative_path": "source816-transport/SHA256SUMS",
+        "sha256": "28cf9e2a441ae188d47c3e573dcfe9ce0d83fcea1014fd89514f2f51723df21a",
+        "entries": 4
+      },
+      {
+        "relative_path": "visual-review/SHA256SUMS",
+        "sha256": "62dbd5c34d67a59974b0d5309ff1ed42deaa265bed3b49628afa37b9cbd84692",
+        "entries": 305
+      }
+    ],
+    "completion_directory": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012/completion",
+    "completion_separate_from_immutable_aggregate": true,
+    "raw_root": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-current-base-20261012"
+  },
+  "checks": {
+    "closure_only": "New own JSON parse and git diff --check on exact two reports; receipts in completion/",
+    "new_helper_changes": false,
+    "old_passed_checks_and_matrices_rerun": false,
+    "3generate3check_publication_receipts_preserved": true
+  },
+  "cleanup": {
+    "owned_runtime_profiles_removed": true,
+    "meaningful_exported_files_verified_exact": 522,
+    "stopped_owned_admissions": 23,
+    "owned_resources_after_return": {
+      "jobs": 0,
+      "browsers": 0,
+      "recorders": 0,
+      "servers": 0,
+      "forwarders": 0,
+      "running_commands": 0,
+      "waiters": 0,
+      "autowakes": 0,
+      "children": 0
+    },
+    "no_final_waiter": true,
+    "retained": "Unlanded own branch/worktree, compact reports, meaningful immutable posted evidence; original glyph branch/worktree and other owners untouched"
+  },
+  "authority": {
+    "no_main_shared_checkout_lock_landing_push": true,
+    "no_Plans_canon_reseal_baseline_edit": true,
+    "no_extra_worker_model_account_platform_change": true,
+    "no_Code_source_art_look_ink_geometry_predicate_choice": true,
+    "no_look_source_full_acceptance_landing_or_performance_certification": true
+  },
+  "owner_receipt_manifests": [
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-composition-owner-review/SHA256SUMS",
+      "sha256": "d20508c4ca8cc92cdda076af5dc004d3b885ac378ad0a2979392345087b74c51"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-format-a/SHA256SUMS",
+      "sha256": "0c4fa95c2d3abbe8e9d4d377558951e2be06edd87353ddae141cbf963f3569df"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-n1-source-clarification/SHA256SUMS",
+      "sha256": "13d88a25f2f0a02acf1c2a8b785eaeb4c9e5dc9e15718b7de1f4499b4e100407"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-n3-source-clarification/SHA256SUMS",
+      "sha256": "99ba2187619803cfefa868cbbfe8dcf782a9451fb5ea1bb1ce261cfe8f3453a0"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-n3-contrast-source-fix/SHA256SUMS",
+      "sha256": "0943d725bc08f4e7a3a0da8a3959a2b4fec9d2e40fdad3fb1c74cf0bc99499e2"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-n3-narrow-source-fix/SHA256SUMS",
+      "sha256": "c04bab1059fb572ae99310c79949549ee718f0302dc3531d187ae9d724a150af"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-n3-basic-light-proposal/SHA256SUMS",
+      "sha256": "b4a313434c08e59e205272f1ffe892edb79ec8670c08fa95bd804955ce8ccd9b"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-pm7-n4-fixture-diagnosis/SHA256SUMS",
+      "sha256": "7b86a8bb765cff3ea93334ee821a9a814b6d9cf1ffd80bb916c6d24366082679"
+    }
+  ]
 }
