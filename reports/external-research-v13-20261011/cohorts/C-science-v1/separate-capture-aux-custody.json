@@ -1,0 +1,218 @@
+[
+  {
+    "arm_id": "C-R1-P02-control",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "debdb5751575bd1104aa7e91c12d9799c64d0f0d9128e4ecb95e05dc9680564d",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R1-P02-control",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "72ac7cab91abe71fa970df7c59fe73c6c291d1e7b5a824f011e9990fa73c1dcd",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R1-P02-control",
+    "stage": "reviser",
+    "capture_aux_manifest_private_sha256": "fbc209c1afbd512b23b8f055bc8aa0abd9297ee184a3e4d7a748dc908f5e6245",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R1-P02-treatment",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "335191220aa7d842a122586581919bceae0ca9ce57a3306f5bad2d2080d81f76",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R1-P02-treatment",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "c6885e9c22328d3e5968cae0a7143ecd768176dc2488c020071f74a38c7a071a",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R1-P01-control",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "1beeefa58779627eed89261a4f7a48d82b7545c84c3146a645a2ed8b6c2a44d8",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R1-P01-control",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "491f7c04f475fee9a8360ac811aed5835569d34545d79e5f1d79a55311434331",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R1-P01-control",
+    "stage": "reviser",
+    "capture_aux_manifest_private_sha256": "fec822c82fa98122360d7e5132d809e684128a7cbb88b430ffccc6bef14d92e5",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R1-P01-treatment",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "ba540cb6d8a687f3fc3df6b3e4671b154bd2bb9615f5f2c9f0a90f2c9f5f605c",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R1-P01-treatment",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "e839ca2cd928286159d161bf89c5d9528590ed34cea08fe3f5297a6813f7b0fb",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R2-P01-control",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "211a126bc9e6eb76e2d3e5b0523a6f722cd379b6d1d2c0895c963887e21d7716",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R2-P01-control",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "690deb1472e710768c578dc28b390a0fe243c913bd3294447fb7b24ae56b3f31",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R2-P01-control",
+    "stage": "reviser",
+    "capture_aux_manifest_private_sha256": "25dc35ed2b25adc9f5d31852af3de18ecf4ded1abe83c56da349a755f909283e",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R2-P01-treatment",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "5e1654ede4e598f6ffc1924c80123c770b3dc5e225b75105e443bb1a3a93a379",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R2-P01-treatment",
+    "stage": "critic-truth",
+    "capture_aux_manifest_private_sha256": "a8c9eeeb5e53685b900dcae9514933b6256a3c1eef5ba06196d03c5f221457d1",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R2-P01-treatment",
+    "stage": "critic-breadth",
+    "capture_aux_manifest_private_sha256": "7f5e2387e98c5b8582c2fb2430e86b15244477a1625e0253a2d8501e6a1dab90",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R2-P01-treatment",
+    "stage": "reviser",
+    "capture_aux_manifest_private_sha256": "f16c271f83895cf46f897405a1f58058baed844a6fd34dcce2cb7db670d36d0c",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R2-P02-control",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "0f8100841f26e2a0650bcbf5fb38bca14a03c35a744120cbcb9e0c1fa99c2388",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R2-P02-control",
+    "stage": "critic",
+    "capture_aux_manifest_private_sha256": "5d9ccb4530a0af7fcc307e427ed31b4000266ede45a386da86eb91ba1063557a",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R2-P02-control",
+    "stage": "reviser",
+    "capture_aux_manifest_private_sha256": "387407ee9fed5a53f72cd225041c55a24a4ad054f939509191bbd4f5eb9fba98",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R2-P02-treatment",
+    "stage": "investigator",
+    "capture_aux_manifest_private_sha256": "c80926fd3d1dc28c1a9c7bbac4d8dd5b0861195bf245369d503d55287e78929d",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R2-P02-treatment",
+    "stage": "critic-truth",
+    "capture_aux_manifest_private_sha256": "bc61a9ae4cceefaa7affc23d99c00a4cf21fb40b826d0ae43a9ecf3be69f81bf",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R2-P02-treatment",
+    "stage": "critic-breadth",
+    "capture_aux_manifest_private_sha256": "7e4e9952c6377d6365f9c845b5470955b705b6e3f7557df1fb9c25a3c8e2066f",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  },
+  {
+    "arm_id": "C-R2-P02-treatment",
+    "stage": "reviser",
+    "capture_aux_manifest_private_sha256": "5b32218859cd88d8e22a39ea17241e9b3f0ecb150f673d9c7b85af09e9c2e732",
+    "capture_auxiliary_members": 3,
+    "missing_auxiliary_files": [],
+    "attempt_marker_is_receipt": false,
+    "original_science_modified": false
+  }
+]

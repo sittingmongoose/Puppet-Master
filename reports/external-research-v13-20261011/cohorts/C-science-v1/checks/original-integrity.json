@@ -1,0 +1,185 @@
+{
+  "exact_packet_pins": {
+    "C-R1-P02": "dbaedb1441483b3cd54ff9bf7d47667a7cbe7734f985670c8a7de1c71850368f",
+    "C-R1-P01": "53797fba6f4fac2effdf0c46caca4ea6866f6f1eca5ffae550fb98978e108e96",
+    "C-R2-P01": "9fc6b90c60ee3a7b7b7479ccd5fd24a1d40340f64b49ed054f6daf194cd5d273",
+    "C-R2-P02": "77bcaa06618f5c67b4e26a8c86536d46d36bb446d573f959754da1be9e9ff1fb"
+  },
+  "stage_manifests": [
+    {
+      "arm_id": "C-R1-P02-control",
+      "stage": "investigator",
+      "original_manifest_sha256": "d1b48f2ffe0bd1b372ba77ab80551de851237b937fd73fc82c0bbfb354c93f5a",
+      "verified_members": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R1-P02-control",
+      "stage": "critic",
+      "original_manifest_sha256": "c5961976d795332db69152549b44ce9697ff989a0111d5d9e5d56e1416815683",
+      "verified_members": 11,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R1-P02-control",
+      "stage": "reviser",
+      "original_manifest_sha256": "bbac677c0f5851b150395e9084b4861a749cd7215d07f1794c270a57bec844d4",
+      "verified_members": 11,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R1-P02-treatment",
+      "stage": "investigator",
+      "original_manifest_sha256": "06813af59c1f58bf8751532b9d6cb08761cfae78d245ef90b8e8a22efbf62ac8",
+      "verified_members": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R1-P02-treatment",
+      "stage": "critic",
+      "original_manifest_sha256": "d169e9a911fabdcff72234d3c927860ed65bbc07a3f43dc99fda3f759744e3ae",
+      "verified_members": 13,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R1-P01-control",
+      "stage": "investigator",
+      "original_manifest_sha256": "24e2be6f6d4cab5c94a40eb0710895fe25fb7b330704507aac381ff79dbbf07f",
+      "verified_members": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R1-P01-control",
+      "stage": "critic",
+      "original_manifest_sha256": "ca08544f348caad90b717e16bbd38e39d7d016b7b5717b881753e9f4af047f25",
+      "verified_members": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R1-P01-control",
+      "stage": "reviser",
+      "original_manifest_sha256": "76973fc7c1f33572cc6501fd847ebce3fe21c58fee7a684933976e924020c6f2",
+      "verified_members": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R1-P01-treatment",
+      "stage": "investigator",
+      "original_manifest_sha256": "622fedfcf68f98ab8120a084f6652179fd92db7bc7533dd016de0f7f72d5ea91",
+      "verified_members": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R1-P01-treatment",
+      "stage": "critic",
+      "original_manifest_sha256": "635236a7d8d7575d61ce2339a859fbc57988bb5eb987ee0ebb07d0bcb33612d7",
+      "verified_members": 13,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R2-P01-control",
+      "stage": "investigator",
+      "original_manifest_sha256": "15efe1bc054e7f4de8d87d1972584148d84092b177be9028fce841da9a0c8d10",
+      "verified_members": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R2-P01-control",
+      "stage": "critic",
+      "original_manifest_sha256": "f27abdb53d3b665bca4fb92afbe05396204d962dd6bd98e1566e8bb468b44990",
+      "verified_members": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R2-P01-control",
+      "stage": "reviser",
+      "original_manifest_sha256": "323ca9629decafc589f005254e9cf440179cc8f0259f43977c831a386213dea8",
+      "verified_members": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R2-P01-treatment",
+      "stage": "investigator",
+      "original_manifest_sha256": "d8c235d158280f60c4df732ce946f5c1c900eeebe0bdda0cae2ffbd5e0c1e349",
+      "verified_members": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R2-P01-treatment",
+      "stage": "critic-truth",
+      "original_manifest_sha256": "e5ea32bc0d259e72aa2caf4f39933d8d64af753079f3cb825205dd0e0d63f507",
+      "verified_members": 11,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R2-P01-treatment",
+      "stage": "critic-breadth",
+      "original_manifest_sha256": "3d3ca9b52e220533efc20ffa4f06d090c6857f5fd4e644975ee2513bac72263f",
+      "verified_members": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R2-P01-treatment",
+      "stage": "reviser",
+      "original_manifest_sha256": "2b064480fa296e94f4bcc98246d41ba9eba776e8578122f6bcb01fd9ac22a254",
+      "verified_members": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R2-P02-control",
+      "stage": "investigator",
+      "original_manifest_sha256": "5e2ac48b3c41d991a80d63206e4f9aa198132e1a478437f35ef11a025b3b4f84",
+      "verified_members": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R2-P02-control",
+      "stage": "critic",
+      "original_manifest_sha256": "8d8cae438539b552ccf6391cec4b4168ee5ba08a3c977621ea02a4f4a39eae6a",
+      "verified_members": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R2-P02-control",
+      "stage": "reviser",
+      "original_manifest_sha256": "d057cd28bddebd719da09d1c2eeabd9ca917d5b20ad15ea659ddf24ddfdd9e12",
+      "verified_members": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R2-P02-treatment",
+      "stage": "investigator",
+      "original_manifest_sha256": "15ca4c387ea16e5d7cb472fb6948c9265d209f0af7c85573788ede68871a630e",
+      "verified_members": 15,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R2-P02-treatment",
+      "stage": "critic-truth",
+      "original_manifest_sha256": "f0b58fc1f738d2f8c250835d7d51f6f6213b63b2334be62588e984a75f6558ef",
+      "verified_members": 12,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R2-P02-treatment",
+      "stage": "critic-breadth",
+      "original_manifest_sha256": "10765f700a18e9de957eb6c15ec033293f747cd4989c694a3021ec56f9c23e31",
+      "verified_members": 11,
+      "all_hashes_match": true
+    },
+    {
+      "arm_id": "C-R2-P02-treatment",
+      "stage": "reviser",
+      "original_manifest_sha256": "1b13abd8ef9fb5d07bf5eed642100b12ce5361456e457ffbf6f58285f708fcc6",
+      "verified_members": 12,
+      "all_hashes_match": true
+    }
+  ],
+  "all_selected_source_hashes_match": true,
+  "selected_files": 498,
+  "capture_auxiliary_member_total": 72,
+  "helper_copies_or_synthetic_reruns": 0,
+  "scientific_review": false,
+  "grades_read": false,
+  "other_C_D_heldout_bodies_or_rubrics_read": false
+}

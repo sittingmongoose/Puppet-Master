@@ -1,0 +1,21 @@
+{
+  "run_id": "C-R1-P01-treatment",
+  "initialized_at_utc": "2026-10-12T02:38:06.649Z",
+  "whole_deadline_utc": "2026-10-12T03:38:06.649Z",
+  "brief_sha256": "2fa255df39e8ae5d6fb794931111f411acbc954261f582359c3ff7cd6e075273",
+  "brief_bytes": 2337,
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_deltas": {
+    "critic": "Explicitly challenge consequential negative/default/limit claims and proposed criticism that removes a capability or forces an architectural choice using governing primary context and release/version exceptions, where these can change the decision. Retain full ordinary review elsewhere. Record uncertainty honestly; undetermined cannot replace feasible required research. Do not refresh every source merely to extend the audit trail, and do not weaken material review coverage.\n"
+  }
+}

@@ -1,0 +1,11 @@
+# C-P03 — Provisional design for review
+
+The draft proposes streaming records through a configurable parser into a temporary staging table. A small initial sample would infer delimiters, date formats, units, and missing values; the preview would show that inferred mapping for confirmation. The parser would then apply the same mapping to every row. Investigate how much authority inference can safely receive and how later contradictions should affect the preview and acceptance boundary.
+
+Observation identity would initially be logger identifier plus timestamp. A second import with that identity would be treated as a revision, retaining the earlier value in an audit table. Rows without a logger identifier would inherit one from the filename. These rules simplify overlap handling, but they are provisional and require alternatives for repeated readings, renamed files, mixed clocks, and corrected metadata.
+
+The storage writer would make the staged import visible in one transaction after parsing completes. Cancellation would remove staging rows, and an interrupted import would restart from the beginning. The draft assumes staging on disk solves the memory problem and that one final transaction is enough for crash safety. Inspect governing storage behavior, visibility, restart cost, and cleanup rather than assuming these properties follow from the word transaction.
+
+The final proposal should retain or revise each material decision and describe what users see when an interpretation changes after an earlier import. Compare identity and reconciliation strategies, and identify where manual confirmation is necessary. Propose tests for late malformed rows, conflicting units, overlaps, daylight changes, cancellation, and interrupted commits. Distinguish executed synthetic checks from future application validation, preserving original-file lineage throughout.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.

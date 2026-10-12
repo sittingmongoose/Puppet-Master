@@ -1,0 +1,46 @@
+{
+  "prepared_at_utc": "2026-10-12T02:38:18.083Z",
+  "stage": "investigator",
+  "stage_deadline_utc": "2026-10-12T03:08:18.083Z",
+  "whole_deadline_utc": "2026-10-12T03:38:17.385Z",
+  "stage_budget_s": 1800,
+  "predecessors": [],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/inputs/brief.md",
+      "sha256": "b94bb075dcf8f4217efb6edbd4ce62f8cf149b969da555bbd169e730632f64f9",
+      "bytes": 2386
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/investigator/assignment.md",
+      "sha256": "68a36d3e6565d23816869eda85d5e5a997bcd08ed4341a9f17472fb354efb9fd",
+      "bytes": 9260
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/investigator/input-map.json",
+      "sha256": "342e0cb982c7e8283bd2beced98d572893924d8b7a7cae207a35a96fa1897194",
+      "bytes": 880
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/control-inputs/method/critic_prompt_delta.txt",
+      "sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "bytes": 479
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 investigator stage, run C-R2-P02-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_delta": null,
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 1800.0,
+  "request_sha256": "88a01e9234d057247e239078d5fde1ca3f8e253e4bfd4a68842aa78f2c6b848a"
+}

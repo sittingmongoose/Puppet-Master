@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "run_id": "C-R2-P01-treatment",
+  "stage": "critic-breadth",
+  "basis": "Independent breadth review of the frozen investigator package, released plan, and the same primary-source identities.",
+  "reviewed_through_utc": "2026-10-12T02:58:20Z",
+  "source_id_policy": "S01-S20 are preserved unchanged from the investigator source-map.json; S21 is new and does not rebind any existing ID.",
+  "inherited_source_map": "../investigator/source-map.json",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "ReaderBuilder in csv - Rust",
+      "url": "https://docs.rs/csv/latest/csv/struct.ReaderBuilder.html",
+      "version_or_commit": "csv 1.4.0 displayed on docs.rs page; latest URL is rolling; no source commit shown.",
+      "locator": "ReaderBuilder; has_headers and flexible methods.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened official crate API documentation.",
+      "governing_condition_default_exception": "First record is treated as header by default; unequal record field counts error by default; flexible(true) disables that arity check.",
+      "applicability": "Explicit parser profile and no unreviewed header/arity assumptions; parser choice remains open."
+    },
+    {
+      "id": "S02",
+      "title": "Reader in csv 1.4.0 - Rust",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.Reader.html",
+      "version_or_commit": "csv crate 1.4.0.",
+      "locator": "read_record/read_byte_record at lines 597-633; configuration/error notes at lines 95-103.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened version-pinned API docs and inspected incremental record and encoding notes.",
+      "governing_condition_default_exception": "Reusable record reads return Result and provide positions; StringRecord strictly requires UTF-8; byte APIs allow retaining undecoded bytes.",
+      "applicability": "Streaming, bounded record allocation, accurate error location and explicit encoding handling."
+    },
+    {
+      "id": "S03",
+      "title": "Rust csv tutorial",
+      "url": "https://docs.rs/csv/latest/csv/tutorial/",
+      "version_or_commit": "csv 1.4.0 companion docs; rolling URL; no commit shown.",
+      "locator": "Unequal-length record example and header-detection note (page lines 146-153 and 342).",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened official crate tutorial.",
+      "governing_condition_default_exception": "The shown parser reports an unequal-length record; it explicitly does not heuristically decide whether the first row is a header.",
+      "applicability": "Tests must pin header behavior and confirm late structural errors reach the caller."
+    },
+    {
+      "id": "S04",
+      "title": "RFC 4180: Common Format and MIME Type for Comma-Separated Values (CSV) Files",
+      "url": "https://www.rfc-editor.org/info/rfc4180/",
+      "version_or_commit": "RFC 4180, October 2005, Informational.",
+      "locator": "Sections 2-3, including field-count, quoting and interoperability notes.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened RFC Editor record and text.",
+      "governing_condition_default_exception": "Comma-separated profile; equal field counts are recommended; quotes permit embedded commas/line breaks; RFC notes implementations differ and it is not a complete universal CSV specification.",
+      "applicability": "Useful parser baseline, not authority for every logger's dialect, nulls, types or units."
+    },
+    {
+      "id": "S05",
+      "title": "W3C Metadata Vocabulary for Tabular Data",
+      "url": "https://www.w3.org/TR/tabular-metadata/",
+      "version_or_commit": "W3C Recommendation, 17 December 2015.",
+      "locator": "Column properties datatype/null/required and dialect vocabulary; security considerations.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened W3C recommendation and inspected metadata vocabulary.",
+      "governing_condition_default_exception": "Column null markers are configurable; absent a null property, empty string is the default marker; metadata may rename/ignore columns, and transformation definitions can execute code.",
+      "applicability": "Profile structure inspiration only; logger semantics must be confirmed and imported metadata/code must be treated as untrusted."
+    },
+    {
+      "id": "S06",
+      "title": "DuckDB CSV Auto Detection",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "version_or_commit": "Rolling current documentation; exact engine/docs build version is not displayed.",
+      "locator": "Sample Size and Detection Steps.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened DuckDB Foundation docs and inspected sample/default/inference options.",
+      "governing_condition_default_exception": "Type inference samples 20,480 rows by default; sample_size=-1 scans all rows for sampling; dialect candidates include comma, pipe, semicolon, tab; all_varchar disables type inference.",
+      "applicability": "Compare as alternate parser; sample-based inference is provisional and should not govern stored meaning."
+    },
+    {
+      "id": "S07",
+      "title": "DuckDB Reading Faulty CSV Files",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "version_or_commit": "Rolling current documentation; exact engine/docs build version is not displayed.",
+      "locator": "Structural Errors and Anatomy of a CSV Error.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened DuckDB Foundation parser error-handling docs.",
+      "governing_condition_default_exception": "Structural errors stop scanning and error by default; docs also support skip and reject-table options; default maximum line size is 2,097,152 bytes.",
+      "applicability": "A tolerant skip mode cannot be the silent commit path; line-size and reject handling must be explicit."
+    },
+    {
+      "id": "S08",
+      "title": "DuckDB issue 13660: Conversion Error of a DATE column when reading a file to insert in table",
+      "url": "https://github.com/duckdb/duckdb/issues/13660",
+      "version_or_commit": "Upstream DuckDB issue; report/conversation includes 2024 date; executable version not established in inspected excerpt.",
+      "locator": "Issue reproduction and suggested explicit type/sample_size adjustments.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened upstream issue and read reproduction and maintainer/user discussion.",
+      "governing_condition_default_exception": "Reported date conversion problem with auto-detected type/date format; suggested setting a type or scanning more rows; format list limitations also discussed.",
+      "applicability": "Keep mixed date strings visible, pin parsing rules and include late-format samples; an issue report is not proof of current behavior."
+    },
+    {
+      "id": "S09",
+      "title": "DuckDB issue 12338: read_csv behavior across versions",
+      "url": "https://github.com/duckdb/duckdb/issues/12338",
+      "version_or_commit": "Issue reports v0.10.1 working versus v0.10.3 and v1.0.0 failures in one StringIO/encoding/CSV path; later closed by PR 13597; first fixed release not established here.",
+      "locator": "Issue reproduction and version comparison; see linked closing PR 13597.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened upstream issue and inspected versioned report.",
+      "governing_condition_default_exception": "A specific API/input encoding/newline path changed across releases; issue was later closed, but the inspected issue does not name a released first-fixed version.",
+      "applicability": "Pin exact parser build and preserve versioned regression fixtures; do not generalize a historical report to current builds."
+    },
+    {
+      "id": "S10",
+      "title": "DuckDB Transaction Management",
+      "url": "https://duckdb.org/docs/current/sql/statements/transactions",
+      "version_or_commit": "Rolling current documentation; exact engine/docs build version is not displayed.",
+      "locator": "Starting, committing, rolling back and multi-statement transaction sections.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened DuckDB Foundation transaction docs.",
+      "governing_condition_default_exception": "Explicit begin/commit/rollback supported; a failing statement in an implicit multi-statement transaction rolls preceding statements back; transaction claims are ACID/snapshot-isolated in docs.",
+      "applicability": "Candidate local transaction engine; test the exact embedded release and database workload."
+    },
+    {
+      "id": "S11",
+      "title": "DuckDB Concurrency",
+      "url": "https://duckdb.org/docs/current/connect/concurrency",
+      "version_or_commit": "Rolling current documentation; exact engine/docs build version is not displayed.",
+      "locator": "Optimistic Concurrency Control and Troubleshooting.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened DuckDB Foundation concurrency docs.",
+      "governing_condition_default_exception": "Concurrent writes to same rows can conflict and must be retried; file-lock warning for shared/network directories.",
+      "applicability": "Relevant to concurrent preview/apply and local-file placement; retry must not change user decisions."
+    },
+    {
+      "id": "S12",
+      "title": "SQLite Transaction",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_or_commit": "SQLite language documentation; rolling page, no version-specific snapshot shown.",
+      "locator": "Read transactions versus write transactions.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened SQLite official transaction docs.",
+      "governing_condition_default_exception": "Multiple readers can coexist; only one simultaneous write transaction; a read-to-write upgrade can fail SQLITE_BUSY.",
+      "applicability": "Database work belongs after parsing/preview; define busy, retry and concurrent preview invalidation behavior."
+    },
+    {
+      "id": "S13",
+      "title": "SQLite Savepoints",
+      "url": "https://www.sqlite.org/lang_savepoint.html",
+      "version_or_commit": "SQLite language documentation; rolling page, no version-specific snapshot shown.",
+      "locator": "Savepoint release and nesting semantics.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened SQLite official savepoint docs.",
+      "governing_condition_default_exception": "Releasing an inner savepoint merges into its parent and does not write/commit independently; outer rollback still undoes it.",
+      "applicability": "Keep one outer transaction for whole-file atomicity; chunk savepoints do not make partial commits safe."
+    },
+    {
+      "id": "S14",
+      "title": "SQLite ON CONFLICT Clause",
+      "url": "https://www.sqlite.org/lang_conflict.html",
+      "version_or_commit": "SQLite language documentation; UPSERT separately available since 3.24.0 (2018-06-04).",
+      "locator": "ROLLBACK, ABORT, FAIL, IGNORE and REPLACE algorithms.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened SQLite official conflict documentation.",
+      "governing_condition_default_exception": "ABORT is default; FAIL preserves earlier changes in a failing statement; IGNORE skips conflicting rows; REPLACE deletes prior conflicting rows before insert.",
+      "applicability": "Do not silently skip or delete prior observations; wrap accepted apply in an outer rollback-capable transaction."
+    },
+    {
+      "id": "S15",
+      "title": "SQLite Write-Ahead Logging and WAL-reset bug history",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_commit": "Official page states defect likely in SQLite 3.7.0 through 3.51.2; fixed in 3.51.3 (2026-03-13) and later, with backports.",
+      "locator": "Section 11, WAL-Reset Bug.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened SQLite official WAL page and read failure history.",
+      "governing_condition_default_exception": "Corruption race requires WAL mode, at least two connections to the same DB and concurrent write/checkpoint timing; rare but serious.",
+      "applicability": "If WAL is chosen, pin a fixed release and test the supported concurrency pattern."
+    },
+    {
+      "id": "S16",
+      "title": "Chrono LocalResult",
+      "url": "https://docs.rs/chrono/latest/chrono/offset/enum.LocalResult.html",
+      "version_or_commit": "Chrono 0.4.45 displayed on docs.rs page; latest URL is rolling.",
+      "locator": "Single, Ambiguous and None variants.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened Chrono API docs.",
+      "governing_condition_default_exception": "Ambiguous means a fold with earliest/latest possibilities; None means a gap or resolution error.",
+      "applicability": "Show explicit zone ambiguity/gap and require a user/source rule before creating an instant."
+    },
+    {
+      "id": "S17",
+      "title": "UCUM Specification",
+      "url": "https://ucum.org/ucum",
+      "version_or_commit": "UCUM 2.2, dated 2024-06-17.",
+      "locator": "Version header; unit symbols and canonical form notes; Example Unit Terms.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened UCUM Organization specification.",
+      "governing_condition_default_exception": "Machine code system for units; symbols can be case-sensitive; some canonical conversions require functions; not every possible term is exhaustively enumerated.",
+      "applicability": "Use as a validation/conversion vocabulary only after the measured quantity and logger symbol are confirmed."
+    },
+    {
+      "id": "S18",
+      "title": "OGC SensorThings API Part 1: Sensing Version 1.1",
+      "url": "https://docs.ogc.org/is/18-088/18-088.pdf",
+      "version_or_commit": "OGC 18-088, SensorThings API Part 1: Sensing, Version 1.1.",
+      "locator": "Chapter 7.3, PDF pages 26-27; observation/event-time/model discussion.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened official OGC specification PDF.",
+      "governing_condition_default_exception": "Observation context includes event time, FeatureOfInterest, ObservedProperty and procedure/sensor; standard permits proprietary sensor interfaces.",
+      "applicability": "Candidate vocabulary for semantic identity fields; not proof that logger files expose these fields or use standard IDs."
+    },
+    {
+      "id": "S19",
+      "title": "RFC 3339: Date and Time on the Internet: Timestamps",
+      "url": "https://www.rfc-editor.org/rfc/rfc3339.html",
+      "version_or_commit": "RFC 3339, July 2002, Standards Track.",
+      "locator": "Sections 4.2-4.4 and 5.6.",
+      "access_utc": "2026-10-12T02:44:56Z",
+      "observed_operation": "Opened RFC Editor full text.",
+      "governing_condition_default_exception": "Defined full Internet date-times carry Z or numeric offset; unqualified local time is not an unambiguous instant; -00:00 specifically records unknown local offset.",
+      "applicability": "Preserve ambiguous local wall times and obtain an explicit source timezone rather than defaulting to OS local time."
+    },
+    {
+      "id": "S20",
+      "title": "Rust csv maintainer response: malformed whitespace/quote case",
+      "url": "https://github.com/BurntSushi/rust-csv/discussions/327",
+      "version_or_commit": "Maintainer discussion dated 2023-06-29; crate release/commit not given.",
+      "locator": "Accepted answer, lines 194-197.",
+      "access_utc": "2026-10-12T02:42:42Z",
+      "observed_operation": "Opened upstream maintainer Q&A discussion.",
+      "governing_condition_default_exception": "Maintainer says the example input is invalid and csv attempts to salvage it; recommends fixing source data or bespoke handling.",
+      "applicability": "Late malformed syntax must be validated against intended grammar; successful parser output can still be wrong."
+    },
+    {
+      "id": "S21",
+      "title": "Atomic Commit In SQLite",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "version_or_commit": "Official SQLite documentation; rolling page, no release-specific snapshot shown. This article explicitly describes rollback-journal mode; WAL uses a different commit mechanism.",
+      "locator": "Introduction and Hardware Assumptions, rendered lines 117-146; rollback-mode applicability, filesystem and fsync assumptions, and sync caveats.",
+      "access_utc": "2026-10-12T02:56:06Z",
+      "observed_operation": "Opened the official SQLite atomic-commit page and reviewed its stated mode scope, hardware assumptions, and flush/fsync caveats.",
+      "governing_condition_default_exception": "The page describes apparent atomic commit for a single transaction in rollback mode, under stated operating-system/storage assumptions. It says WAL uses a different mechanism and notes broken flush/fsync can undermine power-loss guarantees.",
+      "applicability": "Supports narrowing crash/durability claims and testing the pinned journal mode, filesystem and supported platform combination."
+    }
+  ]
+}

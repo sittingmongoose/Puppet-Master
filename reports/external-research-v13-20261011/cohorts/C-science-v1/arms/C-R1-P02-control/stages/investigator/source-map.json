@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "stage": "investigator",
+  "run_id": "C-R1-P02-control",
+  "created_utc": "2026-10-12T02:44:31Z",
+  "access_utc_window": {
+    "start": "2026-10-12T02:38:54Z",
+    "end": "2026-10-12T02:44:31Z",
+    "note": "Exact per-request fetch timestamps are not surfaced by the browser tool; this window bounds the observed research session. Source pages/results were captured into sources/index.md during this session."
+  },
+  "sources": [
+    {
+      "id": "S001",
+      "title": "FFprobe Documentation",
+      "url": "https://ffmpeg.org/ffprobe.html",
+      "version_or_commit": "Live official documentation; page does not expose FFmpeg commit/version, UNKNOWN",
+      "locator": "Description; Options (-show_packets, -show_frames, -show_streams, -show_entries); stream specifiers; Timecode",
+      "access_utc": "2026-10-12T02:40:44Z (session capture time; exact fetch time unavailable)",
+      "observed_operation": "Read official documentation result excerpts for probe output behavior, per-stream selectors and timecode extraction.",
+      "governing_condition_default_exception": "Reports format/streams and can output packets or frames; selectors distinguish e.g. second audio stream; timecode fields vary by container. Shallow inventory does not prove full decode correctness.",
+      "applicability": "Support metadata/stream inspection and explicit track selection; verify whether an operation invokes decode."
+    },
+    {
+      "id": "S002",
+      "title": "FFmpeg Documentation",
+      "url": "https://www.ffmpeg.org/ffmpeg.html",
+      "version_or_commit": "Live generated official documentation; exact source commit/version not surfaced, UNKNOWN",
+      "locator": "Input seeking (-ss); fps_mode; -copyts; -copytb; -enc_time_base; timestamp processing",
+      "access_utc": "2026-10-12T02:40:44Z (session capture time; exact fetch time unavailable)",
+      "observed_operation": "Read official result excerpts on seeking, stream copy and timestamp modes.",
+      "governing_condition_default_exception": "Input seek commonly lands at nearest earlier seek point; accurate seek decodes/discards preroll when transcoding but stream copy preserves it. Timestamp transformations and muxer/fps options can alter timestamps.",
+      "applicability": "A reference boundary is not an exact rendered-media guarantee; choose/decode and verify output."
+    },
+    {
+      "id": "S003",
+      "title": "FFmpeg Formats Documentation",
+      "url": "https://www.ffmpeg.org/ffmpeg-formats.html",
+      "version_or_commit": "Live generated official documentation; exact source commit/version not surfaced, UNKNOWN",
+      "locator": "Generic options: use_wallclock_as_timestamps, avoid_negative_ts; muxer timescales",
+      "access_utc": "2026-10-12T02:40:44Z (session capture time; exact fetch time unavailable)",
+      "observed_operation": "Read official result excerpts on defaults and timestamp handling.",
+      "governing_condition_default_exception": "use_wallclock_as_timestamps defaults to 0; avoid_negative_ts auto may shift leading timestamps as required by a target format; output shift preserves relative stream differences.",
+      "applicability": "Do not use wall clock as a hidden alignment default; persist explicit transforms."
+    },
+    {
+      "id": "S004",
+      "title": "MLT Releases",
+      "url": "https://github.com/mltframework/mlt/releases",
+      "version_or_commit": "v7.30.0 (d6eaddc) and v7.40.0 (bef9d89)",
+      "locator": "v7.30.0 notes: AVCHD frame-rate fix, xml-clip mixed parent/child rate, XML in/out serialization; v7.40.0 notes",
+      "access_utc": "2026-10-12T02:40:44Z (session capture time; exact fetch time unavailable)",
+      "observed_operation": "Read official GitHub release notes.",
+      "governing_condition_default_exception": "v7.30.0 records fixes/additions; v7.40.0 is marked latest and includes further media/plugin fixes. Notes do not state all inputs are correct.",
+      "applicability": "Frame-rate and serialization bugs occur across layers; pin and test versions, do not rely on nominal fps."
+    },
+    {
+      "id": "S005",
+      "title": "MLT XML",
+      "url": "https://mltframework.org/docs/mltxml/",
+      "version_or_commit": "Live official docs; exact commit/version not surfaced, UNKNOWN",
+      "locator": "Introduction; producer, playlist and multitrack structure",
+      "access_utc": "2026-10-12T02:40:44Z (session capture time; exact fetch time unavailable)",
+      "observed_operation": "Read official documentation result excerpt.",
+      "governing_condition_default_exception": "MLT XML mirrors internal MLT API serialization; records producers/playlists/multitracks; parser is documented as non-validating.",
+      "applicability": "An editor project is implementation-specific; package validation must go beyond parse success."
+    },
+    {
+      "id": "S006",
+      "title": "Kdenlive Project File Details",
+      "url": "https://docs.kdenlive.org/en/project_and_asset_management/file_management/project_files.html",
+      "version_or_commit": "Kdenlive documentation 26.08",
+      "locator": "Project format, source refs, proxy refs, document-version upgrade behavior",
+      "access_utc": "2026-10-12T02:40:44Z (session capture time; exact fetch time unavailable)",
+      "observed_operation": "Read official 26.08 manual page.",
+      "governing_condition_default_exception": "Most media are referenced; project tracks sources, proxies and edits. Opening older document upgrades and backs it up. Newer versions may not open in older Kdenlive; v23.04 changed format 1.04 to 1.1 for sequences.",
+      "applicability": "Kdenlive is a useful prototype/editor, but project schema and compatibility must be explicit."
+    },
+    {
+      "id": "S007",
+      "title": "Kdenlive Proxy Settings",
+      "url": "https://docs.kdenlive.org/en/project_and_asset_management/project_settings/proxy_settings.html",
+      "version_or_commit": "Kdenlive documentation 26.08",
+      "locator": "Optional project/per-clip proxies, 640px default, render behavior",
+      "access_utc": "2026-10-12T02:40:44Z (session capture time; exact fetch time unavailable)",
+      "observed_operation": "Read official 26.08 manual page.",
+      "governing_condition_default_exception": "Proxies are optional per project/clip; reduced media are used for editing and originals for full-resolution render; documented default width is 640 px.",
+      "applicability": "Supports optional storage-conscious previews; label generated media and retain original refs."
+    },
+    {
+      "id": "S008",
+      "title": "ELAN Synchronizing Video Files",
+      "url": "https://www.mpi.nl/tools/elan/docs/manual/Sec_Synchronizing_video_files.html",
+      "version_or_commit": "Official web manual; exact binary version not exposed, UNKNOWN",
+      "locator": "Relative/absolute offsets; linked-files dialog; anchor workflow; shift annotations",
+      "access_utc": "2026-10-12T02:40:44Z (session capture time; exact fetch time unavailable)",
+      "observed_operation": "Read official manual result excerpt.",
+      "governing_condition_default_exception": "User enters offsets in milliseconds or manually aligns a clear anchor; Player 1 is master in relative mode. If sync changes after annotations exist, ELAN offers annotation shifting; left shift is bounded by earliest annotation.",
+      "applicability": "Manual-sync precedent; offset edits need explicit impact behavior."
+    },
+    {
+      "id": "S009",
+      "title": "ELAN Changing Linked Media Files",
+      "url": "https://www.mpi.nl/tools/elan/docs/manual/Sec_Changing_the_links_to_media_files.html",
+      "version_or_commit": "Official web manual; exact binary version not exposed, UNKNOWN",
+      "locator": "Linked Files: update moved/renamed media, master file and first-file audio default",
+      "access_utc": "2026-10-12T02:40:44Z (session capture time; exact fetch time unavailable)",
+      "observed_operation": "Read official manual result excerpt.",
+      "governing_condition_default_exception": "Relinking is explicit Update when moved media is not found; first linked media is master/top item and default audible source unless changed.",
+      "applicability": "Useful relink precedent; default audio selection must be visible."
+    },
+    {
+      "id": "S010",
+      "title": "ELAN Media and Annotation Files",
+      "url": "https://www.mpi.nl/tools/elan/docs/manual/Sec_Media_Files_and_Annotation_Files.html",
+      "version_or_commit": "Official web manual; exact binary version not exposed, UNKNOWN",
+      "locator": "EAF owns tiers, time alignment and annotations",
+      "access_utc": "2026-10-12T02:40:44Z (session capture time; exact fetch time unavailable)",
+      "observed_operation": "Read official manual result excerpt.",
+      "governing_condition_default_exception": "ELAN stores annotations/tier/time alignment in annotation file, not media; manual advises resynchronizing if media is edited.",
+      "applicability": "Supports sidecar annotations and immutable source media."
+    },
+    {
+      "id": "S011",
+      "title": "ELAN Media Player Options",
+      "url": "https://www.mpi.nl/tools/elan/docs/manual/Sec_The_Media_Player_options.html",
+      "version_or_commit": "Official web manual; exact binary version not exposed, UNKNOWN",
+      "locator": "Time display formats and frame stepping",
+      "access_utc": "2026-10-12T02:40:44Z (session capture time; exact fetch time unavailable)",
+      "observed_operation": "Read official manual result excerpt.",
+      "governing_condition_default_exception": "UI can show hh:mm:ss:ms, PAL/NTSC frame labels, or milliseconds; standard only converts time values to frame numbers, independently of media standard.",
+      "applicability": "Display code is not the same as exact source-native VFR time or frame/sample identity."
+    },
+    {
+      "id": "S012",
+      "title": "OpenTimelineIO Releases",
+      "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/releases",
+      "version_or_commit": "v0.18.0 (209d723), v0.18.1 (4423671)",
+      "locator": "v0.18.0 schema changes incl. Clip.2 multi-media refs/downgrade; v0.18.1 Linux wheel fix",
+      "access_utc": "2026-10-12T02:40:44Z (session capture time; exact fetch time unavailable)",
+      "observed_operation": "Read official GitHub release notes.",
+      "governing_condition_default_exception": "Schema changes may require compatibility handling; v0.18.0 offers downgrade schemas; v0.18.1 fixes packaging.",
+      "applicability": "Active interchange with schema concerns; persist schema/version and test round trips."
+    },
+    {
+      "id": "S013",
+      "title": "OpenTimelineIO File Bundles",
+      "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/blob/main/docs/tutorials/otio-filebundles.md",
+      "version_or_commit": "Repository main docs snapshot; commit not surfaced, UNKNOWN",
+      "locator": "Overview and lines 229-304: bundle layout; relative references; decode/extract behavior; flat unique basenames; absolute/relative target_url formats; media reference policies.",
+      "access_utc": "2026-10-12T02:44:31Z (direct page opened; exact fetch time unavailable)",
+      "observed_operation": "Opened and read the official repository page, including its layout, package copy, basename collision and path-policy sections.",
+      "governing_condition_default_exception": "Bundle holds content.otio and media; refs point to relative flat-folder paths; basenames unique; reading timeline does not decode/unzip media; writing copies media; AllMissing allows timeline-only export.",
+      "applicability": "Portable/interchange model but copying originals has storage cost; label package mode."
+    },
+    {
+      "id": "S014",
+      "title": "OpenTimelineIO issue #1985: Clarity requested on Media Reference target_url format",
+      "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/issues/1985",
+      "version_or_commit": "Opened 2025-12-11; page showed open in 1.0 Release milestone during direct review",
+      "locator": "Issue description and maintainer reply; open status; conflicting docs/tests, POSIX URL interpretation, Windows-style path uncertainty.",
+      "access_utc": "2026-10-12T02:44:31Z (direct page opened; exact fetch time unavailable)",
+      "observed_operation": "Opened and read the exact official issue. The author reports docs/tests disagree on file:// prefixes and cites Premiere Beta 26.1 exports and DaVinci Resolve 20.2 import behavior; a maintainer describes POSIX examples and explicitly says Windows path behavior is not well recalled.",
+      "governing_condition_default_exception": "The reporter's interoperability observation is not an independently reproduced test. Issue remains open. Maintainer says OTIO URL references may be absolute or relative and may use various schemes; a malformed file:// path can be ambiguous. Windows behavior is not resolved in that comment.",
+      "applicability": "Use an app-defined package-relative path rule and cross-platform moved-package tests; do not treat one interoperable URL spelling as settled across tools."
+    },
+    {
+      "id": "S015",
+      "title": "BagIt RFC 8493",
+      "url": "https://datatracker.ietf.org/doc/html/rfc8493",
+      "version_or_commit": "RFC 8493, BagIt 1.0, October 2018",
+      "locator": "Sections 1.3, 2.1.2-2.1.3, 2.2.1, 3 and 5.1",
+      "access_utc": "2026-10-12T02:40:44Z (session capture time; exact fetch time unavailable)",
+      "observed_operation": "Read IETF RFC page excerpts.",
+      "governing_condition_default_exception": "Payload opaque; manifests have relative paths and checksums; complete requires all listed files and valid requires checksums; paths must not escape the bag.",
+      "applicability": "Transfer integrity/path safety, with application manifest needed for timeline semantics."
+    },
+    {
+      "id": "S016",
+      "title": "FFmpeg Automated Testing Environment",
+      "url": "https://www.ffmpeg.org/fate.html",
+      "version_or_commit": "Live official test documentation; exact commit/version not surfaced, UNKNOWN",
+      "locator": "FATE overview; sample sync and test subset",
+      "access_utc": "2026-10-12T02:40:44Z (session capture time; exact fetch time unavailable)",
+      "observed_operation": "Read official FATE documentation result.",
+      "governing_condition_default_exception": "FATE is an FFmpeg regression suite; sample files can be synchronized and individual tests selected. It does not test proposed app semantics.",
+      "applicability": "Potential fixtures after recording license/version/hash; synthetic media remains deterministic oracle."
+    },
+    {
+      "id": "S017",
+      "title": "OpenTimelineIO issue #1990: Make release automation should update the version matrix too",
+      "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/issues/1990",
+      "version_or_commit": "Opened 2026-01-15; page showed open during direct review",
+      "locator": "Issue title, opened date, status, description",
+      "access_utc": "2026-10-12T02:44:31Z (direct page opened; exact fetch time unavailable)",
+      "observed_operation": "Opened and read the exact official issue page to verify the mismatch in the preceding issue-list result.",
+      "governing_condition_default_exception": "This issue concerns release automation updating a VFX reference platform version matrix; it is not the target_url-format issue.",
+      "applicability": "Evidence for correcting the frozen discovery's mistaken #1990 identifier; not product behavior."
+    }
+  ],
+  "audit_corrections": [
+    {
+      "source_id": "S014",
+      "discovery_frozen_text": "Independent discovery names issue #1990 and date 2026-01-15.",
+      "correction": "Direct open showed #1990 is the version-matrix automation issue. The target_url-format issue is #1985, opened 2025-12-11. The discovery file was not edited after the reveal helper recorded its SHA-256; this source-map entry and the final draft supersede that mistaken issue identifier.",
+      "verified_at_utc": "2026-10-12T02:44:31Z",
+      "verification_source_id": "S017",
+      "correct_source_id": "S014"
+    }
+  ]
+}

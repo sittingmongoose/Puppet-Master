@@ -1,0 +1,89 @@
+{
+  "version": "er13.immutable-stage-handoff.v1",
+  "stage": "investigator",
+  "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-C-R1-P02-treatment-investigator-v1",
+  "status": "completed",
+  "native_lifecycle_qualified": false,
+  "science_qualified": false,
+  "files": [
+    {
+      "relative_path": "discovery.md",
+      "sha256": "740385ed87e40bcd4d53e74ec311516d8b411c04d15b3298eeac09fa850662fd",
+      "bytes": 8895
+    },
+    {
+      "relative_path": "draft.md",
+      "sha256": "7d5b2d5d6592a9d42ac5e23b9a0c1988c228df3bec957a12c727c6aa4e4a6e9d",
+      "bytes": 21624
+    },
+    {
+      "relative_path": "source-map.json",
+      "sha256": "2897a97d754396dc07f96f3ae1c5d40595d0b17169f60c7130a50ecde6c4b007",
+      "bytes": 11765
+    },
+    {
+      "relative_path": "revealed-plan.md",
+      "sha256": "51e0f5e5cc9489d1c7614948da0b04e1f1c14fa070b6d8fc1eabe6c64ab574c7",
+      "bytes": 2415
+    },
+    {
+      "relative_path": "plan-reveal.json",
+      "sha256": "c2c5d73355307f11375a1a5b0aa8853aacee55f4a6605063e0d709d31d907b31",
+      "bytes": 476
+    },
+    {
+      "relative_path": "assignment.md",
+      "sha256": "13062b16f36fd6455b0c29e24f9bbffc50a473c9e7df9ecf8d0da46fe3049b29",
+      "bytes": 9150
+    },
+    {
+      "relative_path": "input-map.json",
+      "sha256": "aff3b2642535c4f44e4f58067e122d448561c7f2d12f4f42388dc88e37158023",
+      "bytes": 880
+    },
+    {
+      "relative_path": "freeze.json",
+      "sha256": "60c6dbc24b709bbacd08c940b89d6c273fa7ee78772ed3b79c418dc0e9fd2155",
+      "bytes": 2242
+    },
+    {
+      "relative_path": "request.json",
+      "sha256": "055bc2da91157aa08182d21202553b664d3377dd2f1956cba0b269266e2df769",
+      "bytes": 5886
+    },
+    {
+      "relative_path": "dispatch.json",
+      "sha256": "e00ebdfe1cc6ce39e7e8efaac28f2fe12e7243eccceedac1d6fd1529db7d8e7a",
+      "bytes": 9252
+    },
+    {
+      "relative_path": "status.json",
+      "sha256": "e98a735ea2c25e5a1f9e5b389f44b86274449ca1bc9b689ab02cc19f46baa44b",
+      "bytes": 4967
+    },
+    {
+      "relative_path": "native-goal-create.json",
+      "sha256": "019d0bc643cd9fc0fa8ace0ba87dcbc6d0b82a97ffb97276e459c0fd2d7df948",
+      "bytes": 534
+    },
+    {
+      "relative_path": "native-goal-active.json",
+      "sha256": "019d0bc643cd9fc0fa8ace0ba87dcbc6d0b82a97ffb97276e459c0fd2d7df948",
+      "bytes": 534
+    },
+    {
+      "relative_path": "native-goal-terminal.json",
+      "sha256": "cf06ddab50243e8d8f41f777c60379229fccb17b0ea6ab995e06cc0993c60cf2",
+      "bytes": 922
+    },
+    {
+      "relative_path": "sources/00-index.md",
+      "sha256": "edcb31d7b232a52792cc967beb56dfa8ce1efccf0a1bde0da2c6323775b1ccc6",
+      "bytes": 10996
+    }
+  ],
+  "source_inventory": [
+    "sources/00-index.md"
+  ],
+  "enrichment": "Separate records only; never edit this terminal manifest or frozen members"
+}

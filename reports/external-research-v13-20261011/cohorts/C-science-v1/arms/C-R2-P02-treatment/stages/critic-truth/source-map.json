@@ -1,0 +1,22 @@
+{
+  "run_id": "C-R2-P02-treatment",
+  "stage": "critic-truth",
+  "source_ids_are_stable": true,
+  "sources": [
+    {
+      "id": "S22",
+      "title": "Linux setsid(2) manual page",
+      "url": "https://man7.org/linux/man-pages/man2/setsid.2.html",
+      "version_or_commit": "Linux man-pages page; exact page release could not be confirmed because the direct open timed out. The retrieved page states POSIX.1-2024 conformance; no commit SHA was observed.",
+      "locator": "DESCRIPTION: a caller that is not a process-group leader can create a new session and process group and becomes their sole initial member. NOTES: forked children inherit the session ID. Direct open was attempted but timed out; the search result exposed these sections.",
+      "access_utc": "2026-10-12T02:54:23Z",
+      "observed_operation": [
+        "web.search",
+        "web.open (timed out; no page body returned)"
+      ],
+      "observed_behavior": "setsid() succeeds for a caller that is not already a process-group leader, creating a new session and process group; the caller is initially the only member. A child normally inherits its parent's session ID, but a non-group-leader child can create a separate session/group. Thus signalling only the worker's original process group does not prove all descendants were terminated.",
+      "governing_condition_default_exception": "setsid() fails when the caller is already a process-group leader. A forked child whose PID differs from the inherited process-group ID can meet the non-leader condition. This describes Linux/POSIX process/session semantics; cgroup membership and Windows Job Object behavior are separate mechanisms.",
+      "applicability": "Directly qualifies the proposal to treat process-group termination as sufficient teardown for an untrusted converter. Use cgroup/job membership or another verified per-platform mechanism for a whole-job guarantee; do not generalize this Linux finding to other platforms."
+    }
+  ]
+}

@@ -1,0 +1,244 @@
+{
+  "stage": "investigator",
+  "run_id": "C-R2-P01-control",
+  "index": "sources/index.md",
+  "access_utc_window": {
+    "start": "2026-10-12T02:38:50Z",
+    "end": "2026-10-12T02:42:13Z",
+    "note": "Browser did not expose per-page fetch timestamps; each listed source was opened or inspected during this bounded UTC window."
+  },
+  "source_id_policy": "IDs S01-S21 are stable references. Do not silently rebind an ID; append new IDs if later research is needed.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "RFC 4180: Common Format and MIME Type for Comma-Separated Values (CSV) Files",
+      "url": "https://datatracker.ietf.org/doc/rfc4180/",
+      "released_version_or_commit": "RFC 4180, October 2005, Informational; updated by RFC 7111",
+      "locator": "Sections 1-3; especially section 2 (CSV syntax) and section 3 (MIME parameters / interoperability)",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Opened the IETF Datatracker RFC page and read format rules and status.",
+      "governing_condition_default_exception": "Describes a common comma-separated format, optional first-row header, equal field counts, quoted fields and doubled quote escaping; expressly informational and not a universal CSV standard. Other implementations may vary.",
+      "applicability": "Baseline for ordinary CSV syntax and a reason to configure dialect explicitly; it does not define spreadsheet/logger variants or measurement meaning."
+    },
+    {
+      "id": "S02",
+      "title": "W3C Metadata Vocabulary for Tabular Data",
+      "url": "https://www.w3.org/TR/tabular-metadata/",
+      "released_version_or_commit": "W3C Recommendation, 17 December 2015",
+      "locator": "Sections 5.1 and 5.5; dialect description examples and tableSchema/primaryKey properties",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Opened the W3C Recommendation and read dialect and column-reference/schema examples.",
+      "governing_condition_default_exception": "Dialect metadata can explicitly carry delimiter, encoding, quote and header choices; schemas can name columns and primary-key fields. The metadata describes declared choices, not inferred device truth.",
+      "applicability": "Supports saving an interpretation profile and validating headers/identity fields; logger-specific mappings still require confirmation."
+    },
+    {
+      "id": "S03",
+      "title": "W3C Model for Tabular Data and Metadata on the Web",
+      "url": "https://www.w3.org/TR/tabular-data-model/",
+      "released_version_or_commit": "W3C Recommendation, 17 December 2015",
+      "locator": "Section 4.3 for null/default annotations; section 7 for best-practice CSV; section 8 for parser variation and dialect defaults",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Opened the W3C Recommendation and read default dialect, null/default annotations and parsing scope.",
+      "governing_condition_default_exception": "Its general CSVW parser model has configurable dialect settings; defaults include comma, UTF-8 and one header row, while the document acknowledges many variants and that CSV parsing standardization is out of scope.",
+      "applicability": "Supports explicit dialect, null and header-profile fields. Defaults are a starting point, not proof of any logger's conventions."
+    },
+    {
+      "id": "S04",
+      "title": "csv crate ReaderBuilder",
+      "url": "https://docs.rs/csv/1.4.0/csv/struct.ReaderBuilder.html",
+      "released_version_or_commit": "csv crate 1.4.0; tag commit 4a3997e91d668ea1d8595bdef15625a77cf2308a",
+      "locator": "ReaderBuilder::flexible and delimiter/header options; flexible-record examples",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Read docs.rs ReaderBuilder documentation reporting csv 1.4.0 and inspected flexible record defaults/examples; cross-checked release tag on GitHub.",
+      "governing_condition_default_exception": "Unequal record lengths error by default; flexible(true) disables that check. The reader builder exposes delimiter and header configuration.",
+      "applicability": "Row-oriented maintained Rust parser candidate; every permissive-width mode still needs an application schema check."
+    },
+    {
+      "id": "S05",
+      "title": "csv crate tutorial",
+      "url": "https://docs.rs/csv/1.4.0/csv/tutorial/",
+      "released_version_or_commit": "csv crate 1.4.0; tag commit 4a3997e91d668ea1d8595bdef15625a77cf2308a",
+      "locator": "Record errors and iteration; Reading headers; byte_records for invalid UTF-8",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Read official caller examples showing Result-based record iteration, late unequal-width failure, non-heuristic header behavior, and byte-oriented records.",
+      "governing_condition_default_exception": "Iterator yields Result; first record is treated as header unless configured otherwise, without header heuristics; StringRecord requires UTF-8 while ByteRecord supports bytes.",
+      "applicability": "Caller pattern and parser behavior for incremental preflight; examples were inspected but not executed."
+    },
+    {
+      "id": "S06",
+      "title": "rust-csv issue 427: An overflow panic in Reader::read_byte_record",
+      "url": "https://github.com/BurntSushi/rust-csv/issues/427",
+      "released_version_or_commit": "Issue reports crate version 1.4.0; opened 16 March 2026; open at access",
+      "locator": "Description, reproducer, version, and activity through 7 August 2026",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Opened the upstream issue and inspected the reproducer, current status, scope and comments.",
+      "governing_condition_default_exception": "Reported panic/wrap occurs when public seek_raw/read_byte_record is given an extreme byte position near u64::MAX; no resolution or merged fix was shown. This is not an ordinary sequential-read reproducer.",
+      "applicability": "If seek_raw is used, validate offsets and test boundary errors. Treat as an open report, not a confirmed general parser defect."
+    },
+    {
+      "id": "S07",
+      "title": "rust-csv issue 422: Miscounting lines with mismatched columns",
+      "url": "https://github.com/BurntSushi/rust-csv/issues/422",
+      "released_version_or_commit": "Issue opened 27 January 2026; open with no activity at access",
+      "locator": "Issue example and expected-versus-observed line numbers",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Opened the upstream report and inspected its reproducer and issue state.",
+      "governing_condition_default_exception": "Reporter observes a line-position mismatch after a row with mismatched columns; no maintainer confirmation or fix was present.",
+      "applicability": "Validate reported row/line/byte locators for malformed or ragged input; do not overstate as a confirmed regression."
+    },
+    {
+      "id": "S08",
+      "title": "rust-csv discussion 402: Trying to use different sized headers for malformed CSV",
+      "url": "https://github.com/BurntSushi/rust-csv/discussions/402",
+      "released_version_or_commit": "Maintainer answer posted 13 September 2025",
+      "locator": "Maintainer answer explaining flexible parsing and unequal widths",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Read the malformed-file example and the crate maintainer's answer.",
+      "governing_condition_default_exception": "Maintainer says flexible mode is the way to allow rows whose field count differs; it suppresses the default unequal-length error.",
+      "applicability": "Useful caller/support history; do not enable permissive parsing without explicit width and mapping validation."
+    },
+    {
+      "id": "S09",
+      "title": "Apache Arrow CSV reader",
+      "url": "https://docs.rs/arrow-csv/59.3.0/arrow_csv/reader/index.html",
+      "released_version_or_commit": "arrow-csv 59.3.0",
+      "locator": "Basic Usage, ReaderBuilder example and Reader iterator description",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Read official crate docs showing an explicit Arrow schema and records loaded in batches.",
+      "governing_condition_default_exception": "CSV rows are converted into Arrow columnar batches under the provided schema; the inspected page does not establish a workload benchmark or optimal batch size.",
+      "applicability": "Alternative for bounded-batch/columnar processing; application still needs explicit environmental semantics and error policy."
+    },
+    {
+      "id": "S10",
+      "title": "DuckDB CSV Auto Detection",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "released_version_or_commit": "Current documentation path; page did not state engine release version",
+      "locator": "Sample Size, Type Detection, Overriding Type Detection, Header Detection, Dates and Timestamps",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Read official docs on dialect/type/header sniffing and explicit overrides.",
+      "governing_condition_default_exception": "Inference is sample-based; current docs state default sample size 20,480 rows, a prioritized type candidate list with VARCHAR fallback, and a header heuristic that can fail when all columns are VARCHAR. Explicit type/header overrides are available.",
+      "applicability": "Integrated scanner alternative; detection can suggest but must not silently decide ambiguous mapping or measurement semantics. Runtime version must be pinned."
+    },
+    {
+      "id": "S11",
+      "title": "DuckDB Reading Faulty CSV Files",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "released_version_or_commit": "Current documentation path; page did not state engine release version",
+      "locator": "Anatomy of a CSV Error; Reject Scans/Errors and Parameters",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Read official handling of structural/conversion failures and reject-table settings.",
+      "governing_condition_default_exception": "Normal scanner stops and reports errors; store_rejects defaults false, and when true faulty lines are skipped and recorded in temporary reject tables.",
+      "applicability": "Error locators and explicit correction are useful; skip/reject mode cannot constitute accepted all-or-nothing import."
+    },
+    {
+      "id": "S12",
+      "title": "SQLite Transaction",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "released_version_or_commit": "Official rolling documentation; page does not state a single SQLite library release",
+      "locator": "Sections 2.1-2.3 and 3, including DEFERRED default, SQLITE_BUSY, and error response",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Read official transaction semantics, concurrency limits, busy behavior and automatic rollback caveats.",
+      "governing_condition_default_exception": "Only one simultaneous writer; default transaction is DEFERRED. COMMIT may return SQLITE_BUSY while leaving a transaction active. Disk-full, I/O, interrupt and memory failures may undo only a statement or the full transaction; documentation suggests explicit rollback for consistent state.",
+      "applicability": "Design explicit begin/commit/rollback and state checks; model busy retry and storage failures before declaring atomic apply."
+    },
+    {
+      "id": "S13",
+      "title": "Atomic Commit In SQLite",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "released_version_or_commit": "Official rolling documentation; section explicitly describes rollback-journal mode, not WAL",
+      "locator": "Introduction and sections 3-4, single-file commit and rollback",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Read official atomic commit/recovery explanation and its stated journal-mode scope.",
+      "governing_condition_default_exception": "Atomicity covers single database file commit in rollback mode; page says this article does not describe WAL behavior.",
+      "applicability": "Supports rollback-mode reasoning only; pin/test the actual journal mode and consult its applicable durability rules."
+    },
+    {
+      "id": "S14",
+      "title": "rusqlite Transaction",
+      "url": "https://docs.rs/rusqlite/0.40.2/rusqlite/struct.Transaction.html",
+      "released_version_or_commit": "rusqlite 0.40.2",
+      "locator": "Struct Transaction Note, commit, rollback, finish, and savepoint API",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Read the versioned Rust wrapper docs and its transaction usage example.",
+      "governing_condition_default_exception": "Drop behavior defaults to rollback; commit is explicit. Drop behavior can be changed, so application must keep the rollback default or set it deliberately.",
+      "applicability": "Concrete Rust wrapper candidate for transaction scope; test exact wrapper and bundled/system SQLite versions."
+    },
+    {
+      "id": "S15",
+      "title": "SQLite UPSERT",
+      "url": "https://www.sqlite.org/lang_UPSERT.html",
+      "released_version_or_commit": "UPSERT added in SQLite 3.24.0 (4 June 2018); official rolling documentation",
+      "locator": "Syntax, conflict target requirements and limitations",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Read official UPSERT rules and examples.",
+      "governing_condition_default_exception": "DO UPDATE requires a conflict target; decisions trigger on declared UNIQUE or PRIMARY KEY constraints, per inserted row. UPSERT does not apply to failed NOT NULL/foreign-key constraints or virtual tables.",
+      "applicability": "Enforces a caller-chosen identity key, but is not a duplicate/revision policy by itself."
+    },
+    {
+      "id": "S16",
+      "title": "DuckDB Transaction Management",
+      "url": "https://duckdb.org/docs/current/sql/statements/transactions",
+      "released_version_or_commit": "Current documentation path; page did not state engine release version",
+      "locator": "Transaction statements, multi-statement transactions and isolation level",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Read official transaction and rollback behavior.",
+      "governing_condition_default_exception": "Docs describe ACID transactions, commit/rollback, implicit transaction rollback on a failing multi-statement batch, and snapshot isolation.",
+      "applicability": "Storage alternative to compare; current docs do not establish desktop integration, memory use or local workload performance."
+    },
+    {
+      "id": "S17",
+      "title": "RFC 3339: Date and Time on the Internet: Timestamps",
+      "url": "https://datatracker.ietf.org/doc/html/RFC3339",
+      "released_version_or_commit": "RFC 3339, July 2002, Standards Track; updated by RFC 9557",
+      "locator": "Sections 4.2-4.4 for offsets and unqualified local time; section 5 for syntax",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Read IETF text on numeric offset timestamps and unqualified local time.",
+      "governing_condition_default_exception": "Numeric offsets identify a UTC relationship; unqualified local timestamps are not globally interoperable. RFC 9557 updates the treatment of the unknown offset convention, so use the updated specification.",
+      "applicability": "Do not convert local time to an instant without a confirmed zone/offset rule; preserve original token."
+    },
+    {
+      "id": "S18",
+      "title": "RFC 9557: Date and Time on the Internet: Timestamps with Additional Information",
+      "url": "https://datatracker.ietf.org/doc/rfc9557/",
+      "released_version_or_commit": "RFC 9557, April 2024",
+      "locator": "Sections 2-4; local-time reverse mapping and IANA time-zone definitions",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Read IETF definitions for timestamps, UTC offsets, zones, and zero/multiple local-time mappings.",
+      "governing_condition_default_exception": "A local time can map to zero or multiple timestamps near offset transitions; named IANA zone rules can change over time.",
+      "applicability": "Require explicit zone/fold/gap interpretation and retain timezone evidence/version where conversion occurs."
+    },
+    {
+      "id": "S19",
+      "title": "Chrono LocalResult",
+      "url": "https://docs.rs/chrono/0.4.45/chrono/offset/enum.LocalResult.html",
+      "released_version_or_commit": "chrono 0.4.45",
+      "locator": "Single, Ambiguous and None variants; chrono crate timezone-data note",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Read current versioned API and crate feature/timezone-data notes.",
+      "governing_condition_default_exception": "Single is unique; Ambiguous contains earliest/latest for a fold; None covers a gap or resolution error. Chrono does not ship timezone data by default; its Local implementation has a documented wasm exception.",
+      "applicability": "Rust API candidate for explicit ambiguity reporting, not a source of logger timezone conventions."
+    },
+    {
+      "id": "S20",
+      "title": "Unified Code for Units of Measure Specification",
+      "url": "https://ucum.org/ucum",
+      "released_version_or_commit": "UCUM version 2.2, 17 June 2024",
+      "locator": "Introduction and sections 2-3, 16, 24-26; arbitrary units and conversion semantics",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Read the official unit-code specification, dimensional semantics and arbitrary-unit limits.",
+      "governing_condition_default_exception": "Codes have defined semantics based on dimensional analysis; arbitrary/procedure-defined units are not commensurable with proper units or other arbitrary units. Some unit conversions require more than a scalar factor.",
+      "applicability": "Use only after confirmed mapping from a logger label; preserve source unit/value and do not assume every changed label is convertible."
+    },
+    {
+      "id": "S21",
+      "title": "Fellegi and Sunter, A Theory for Record Linkage",
+      "url": "https://doi.org/10.1080/01621459.1969.10501049",
+      "released_version_or_commit": "Ivan P. Fellegi and Alan B. Sunter, Journal of the American Statistical Association 64(328), 1969, pp. 1183-1210",
+      "locator": "Abstract and decision framework: link, non-link and possible link",
+      "access_utc": "2026-10-12T02:38:50Z–2026-10-12T02:42:13Z (bounded batch window; exact page time unavailable)",
+      "observed_operation": "Read the publisher's abstract and bibliographic metadata for the primary paper.",
+      "governing_condition_default_exception": "Compares record characteristics and allows a third possible-link outcome when evidence is insufficient; actual thresholds depend on attributes and error levels.",
+      "applicability": "Supports surfacing candidate overlaps for human resolution; does not supply logger fields or justify automatic merge."
+    }
+  ]
+}

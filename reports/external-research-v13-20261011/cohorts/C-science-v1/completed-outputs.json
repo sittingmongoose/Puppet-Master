@@ -1,0 +1,394 @@
+{
+  "schema": "er13.C_scientific_delivery_cut.v1",
+  "allocated_original_arms": 8,
+  "exact_notified_pairs": 4,
+  "delivered_finals": 8,
+  "final_missing": 0,
+  "grades": "SIX_AXES_SOURCE_GRADES_PENDING_SEPARATE_EVALUATION",
+  "arms": [
+    {
+      "arm_id": "C-R1-P02-control",
+      "declared_stages": [
+        "investigator",
+        "critic",
+        "reviser"
+      ],
+      "delivered_final": true,
+      "final": "arms/C-R1-P02-control/stages/reviser/final.md",
+      "t0_utc": "2026-10-12T02:38:08.366Z",
+      "whole_deadline_utc": "2026-10-12T03:38:08.366Z",
+      "timing_caveat": null,
+      "unlaunched_stages": [],
+      "requested_options": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "default"
+        }
+      },
+      "observed_provider_options": "UNKNOWN unless explicitly present in retained scoped returned objects; requests are not observations",
+      "public_recipe_choice": "R0",
+      "method_card_file": null,
+      "internal_method_id": "R0",
+      "internal_method_id_scope": "Inherited config identifier retained; topology/card/declared stage budgets govern actual selected recipe",
+      "stage_budgets_s": {
+        "investigator": 1800,
+        "critic": 720,
+        "reviser": 1080
+      },
+      "brief_plan_gates": [
+        {
+          "arm_id": "C-R1-P02-control",
+          "initial_input_map": "arms/C-R1-P02-control/stages/investigator/input-map.json",
+          "initial_BRIEF_ONLY_contract_observed": true,
+          "gate_scope": "Frozen input/receipt custody, not independent provider session proof",
+          "single_use_receipt": true,
+          "receipt_discovery_matches_frozen": true,
+          "receipt_plan_matches_frozen": true
+        }
+      ],
+      "grades_six_axes": "PENDING_SEPARATE_EVALUATION",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody"
+    },
+    {
+      "arm_id": "C-R1-P02-treatment",
+      "declared_stages": [
+        "investigator",
+        "critic"
+      ],
+      "delivered_final": true,
+      "final": "arms/C-R1-P02-treatment/stages/critic/final.md",
+      "t0_utc": "2026-10-12T02:38:10.241Z",
+      "whole_deadline_utc": "2026-10-12T03:38:10.241Z",
+      "timing_caveat": null,
+      "unlaunched_stages": [],
+      "requested_options": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "default"
+        }
+      },
+      "observed_provider_options": "UNKNOWN unless explicitly present in retained scoped returned objects; requests are not observations",
+      "public_recipe_choice": "B02",
+      "method_card_file": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P02-treatment/control-inputs/method/method.json",
+        "sha256": "402701f257e2574ba88d5817245939daae622d829eabd4c959a79fa686da18c0",
+        "bytes": 1158
+      },
+      "internal_method_id": "R0",
+      "internal_method_id_scope": "Inherited config identifier retained; topology/card/declared stage budgets govern actual selected recipe",
+      "stage_budgets_s": {
+        "investigator": 1800,
+        "critic": 1800
+      },
+      "brief_plan_gates": [
+        {
+          "arm_id": "C-R1-P02-treatment",
+          "initial_input_map": "arms/C-R1-P02-treatment/stages/investigator/input-map.json",
+          "initial_BRIEF_ONLY_contract_observed": true,
+          "gate_scope": "Frozen input/receipt custody, not independent provider session proof",
+          "single_use_receipt": true,
+          "receipt_discovery_matches_frozen": true,
+          "receipt_plan_matches_frozen": true
+        }
+      ],
+      "grades_six_axes": "PENDING_SEPARATE_EVALUATION",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody"
+    },
+    {
+      "arm_id": "C-R1-P01-control",
+      "declared_stages": [
+        "investigator",
+        "critic",
+        "reviser"
+      ],
+      "delivered_final": true,
+      "final": "arms/C-R1-P01-control/stages/reviser/final.md",
+      "t0_utc": "2026-10-12T02:37:02.191Z",
+      "whole_deadline_utc": "2026-10-12T03:37:02.191Z",
+      "timing_caveat": null,
+      "unlaunched_stages": [],
+      "requested_options": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "default"
+        }
+      },
+      "observed_provider_options": "UNKNOWN unless explicitly present in retained scoped returned objects; requests are not observations",
+      "public_recipe_choice": "R0",
+      "method_card_file": null,
+      "internal_method_id": "R0",
+      "internal_method_id_scope": "Inherited config identifier retained; topology/card/declared stage budgets govern actual selected recipe",
+      "stage_budgets_s": {
+        "investigator": 1800,
+        "critic": 720,
+        "reviser": 1080
+      },
+      "brief_plan_gates": [
+        {
+          "arm_id": "C-R1-P01-control",
+          "initial_input_map": "arms/C-R1-P01-control/stages/investigator/input-map.json",
+          "initial_BRIEF_ONLY_contract_observed": true,
+          "gate_scope": "Frozen input/receipt custody, not independent provider session proof",
+          "single_use_receipt": true,
+          "receipt_discovery_matches_frozen": true,
+          "receipt_plan_matches_frozen": true
+        }
+      ],
+      "grades_six_axes": "PENDING_SEPARATE_EVALUATION",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody"
+    },
+    {
+      "arm_id": "C-R1-P01-treatment",
+      "declared_stages": [
+        "investigator",
+        "critic"
+      ],
+      "delivered_final": true,
+      "final": "arms/C-R1-P01-treatment/stages/critic/final.md",
+      "t0_utc": "2026-10-12T02:38:06.649Z",
+      "whole_deadline_utc": "2026-10-12T03:38:06.649Z",
+      "timing_caveat": null,
+      "unlaunched_stages": [],
+      "requested_options": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "default"
+        }
+      },
+      "observed_provider_options": "UNKNOWN unless explicitly present in retained scoped returned objects; requests are not observations",
+      "public_recipe_choice": "B02",
+      "method_card_file": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R1-P01-treatment/control-inputs/method/method.json",
+        "sha256": "402701f257e2574ba88d5817245939daae622d829eabd4c959a79fa686da18c0",
+        "bytes": 1158
+      },
+      "internal_method_id": "R0",
+      "internal_method_id_scope": "Inherited config identifier retained; topology/card/declared stage budgets govern actual selected recipe",
+      "stage_budgets_s": {
+        "investigator": 1800,
+        "critic": 1800
+      },
+      "brief_plan_gates": [
+        {
+          "arm_id": "C-R1-P01-treatment",
+          "initial_input_map": "arms/C-R1-P01-treatment/stages/investigator/input-map.json",
+          "initial_BRIEF_ONLY_contract_observed": true,
+          "gate_scope": "Frozen input/receipt custody, not independent provider session proof",
+          "single_use_receipt": true,
+          "receipt_discovery_matches_frozen": true,
+          "receipt_plan_matches_frozen": true
+        }
+      ],
+      "grades_six_axes": "PENDING_SEPARATE_EVALUATION",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody"
+    },
+    {
+      "arm_id": "C-R2-P01-control",
+      "declared_stages": [
+        "investigator",
+        "critic",
+        "reviser"
+      ],
+      "delivered_final": true,
+      "final": "arms/C-R2-P01-control/stages/reviser/final.md",
+      "t0_utc": "2026-10-12T02:38:12.050Z",
+      "whole_deadline_utc": "2026-10-12T03:38:12.050Z",
+      "timing_caveat": null,
+      "unlaunched_stages": [],
+      "requested_options": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "default"
+        }
+      },
+      "observed_provider_options": "UNKNOWN unless explicitly present in retained scoped returned objects; requests are not observations",
+      "public_recipe_choice": "R0",
+      "method_card_file": null,
+      "internal_method_id": "R0",
+      "internal_method_id_scope": "Inherited config identifier retained; topology/card/declared stage budgets govern actual selected recipe",
+      "stage_budgets_s": {
+        "investigator": 1800,
+        "critic": 720,
+        "reviser": 1080
+      },
+      "brief_plan_gates": [
+        {
+          "arm_id": "C-R2-P01-control",
+          "initial_input_map": "arms/C-R2-P01-control/stages/investigator/input-map.json",
+          "initial_BRIEF_ONLY_contract_observed": true,
+          "gate_scope": "Frozen input/receipt custody, not independent provider session proof",
+          "single_use_receipt": true,
+          "receipt_discovery_matches_frozen": true,
+          "receipt_plan_matches_frozen": true
+        }
+      ],
+      "grades_six_axes": "PENDING_SEPARATE_EVALUATION",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody"
+    },
+    {
+      "arm_id": "C-R2-P01-treatment",
+      "declared_stages": [
+        "investigator",
+        "critic-truth",
+        "critic-breadth",
+        "reviser"
+      ],
+      "delivered_final": true,
+      "final": "arms/C-R2-P01-treatment/stages/reviser/final.md",
+      "t0_utc": "2026-10-12T02:38:13.852Z",
+      "whole_deadline_utc": "2026-10-12T03:38:13.852Z",
+      "timing_caveat": null,
+      "unlaunched_stages": [],
+      "requested_options": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "default"
+        }
+      },
+      "observed_provider_options": "UNKNOWN unless explicitly present in retained scoped returned objects; requests are not observations",
+      "public_recipe_choice": "B06",
+      "method_card_file": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P01-treatment/control-inputs/method/method.json",
+        "sha256": "0c32141a99f640d767301b000d6d75aa373f7b48bbf9119ba6e571450352916d",
+        "bytes": 1393
+      },
+      "internal_method_id": "R0",
+      "internal_method_id_scope": "Inherited config identifier retained; topology/card/declared stage budgets govern actual selected recipe",
+      "stage_budgets_s": {
+        "investigator": 1800,
+        "critic-breadth": 360,
+        "critic-truth": 360,
+        "reviser": 1080
+      },
+      "brief_plan_gates": [
+        {
+          "arm_id": "C-R2-P01-treatment",
+          "initial_input_map": "arms/C-R2-P01-treatment/stages/investigator/input-map.json",
+          "initial_BRIEF_ONLY_contract_observed": true,
+          "gate_scope": "Frozen input/receipt custody, not independent provider session proof",
+          "single_use_receipt": true,
+          "receipt_discovery_matches_frozen": true,
+          "receipt_plan_matches_frozen": true
+        }
+      ],
+      "grades_six_axes": "PENDING_SEPARATE_EVALUATION",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody"
+    },
+    {
+      "arm_id": "C-R2-P02-control",
+      "declared_stages": [
+        "investigator",
+        "critic",
+        "reviser"
+      ],
+      "delivered_final": true,
+      "final": "arms/C-R2-P02-control/stages/reviser/final.md",
+      "t0_utc": "2026-10-12T02:38:15.634Z",
+      "whole_deadline_utc": "2026-10-12T03:38:15.634Z",
+      "timing_caveat": null,
+      "unlaunched_stages": [],
+      "requested_options": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "default"
+        }
+      },
+      "observed_provider_options": "UNKNOWN unless explicitly present in retained scoped returned objects; requests are not observations",
+      "public_recipe_choice": "R0",
+      "method_card_file": null,
+      "internal_method_id": "R0",
+      "internal_method_id_scope": "Inherited config identifier retained; topology/card/declared stage budgets govern actual selected recipe",
+      "stage_budgets_s": {
+        "investigator": 1800,
+        "critic": 720,
+        "reviser": 1080
+      },
+      "brief_plan_gates": [
+        {
+          "arm_id": "C-R2-P02-control",
+          "initial_input_map": "arms/C-R2-P02-control/stages/investigator/input-map.json",
+          "initial_BRIEF_ONLY_contract_observed": true,
+          "gate_scope": "Frozen input/receipt custody, not independent provider session proof",
+          "single_use_receipt": true,
+          "receipt_discovery_matches_frozen": true,
+          "receipt_plan_matches_frozen": true
+        }
+      ],
+      "grades_six_axes": "PENDING_SEPARATE_EVALUATION",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody"
+    },
+    {
+      "arm_id": "C-R2-P02-treatment",
+      "declared_stages": [
+        "investigator",
+        "critic-truth",
+        "critic-breadth",
+        "reviser"
+      ],
+      "delivered_final": true,
+      "final": "arms/C-R2-P02-treatment/stages/reviser/final.md",
+      "t0_utc": "2026-10-12T02:38:17.385Z",
+      "whole_deadline_utc": "2026-10-12T03:38:17.385Z",
+      "timing_caveat": null,
+      "unlaunched_stages": [],
+      "requested_options": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "default"
+        }
+      },
+      "observed_provider_options": "UNKNOWN unless explicitly present in retained scoped returned objects; requests are not observations",
+      "public_recipe_choice": "B06",
+      "method_card_file": {
+        "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/control-inputs/method/method.json",
+        "sha256": "0c32141a99f640d767301b000d6d75aa373f7b48bbf9119ba6e571450352916d",
+        "bytes": 1393
+      },
+      "internal_method_id": "R0",
+      "internal_method_id_scope": "Inherited config identifier retained; topology/card/declared stage budgets govern actual selected recipe",
+      "stage_budgets_s": {
+        "investigator": 1800,
+        "critic-breadth": 360,
+        "critic-truth": 360,
+        "reviser": 1080
+      },
+      "brief_plan_gates": [
+        {
+          "arm_id": "C-R2-P02-treatment",
+          "initial_input_map": "arms/C-R2-P02-treatment/stages/investigator/input-map.json",
+          "initial_BRIEF_ONLY_contract_observed": true,
+          "gate_scope": "Frozen input/receipt custody, not independent provider session proof",
+          "single_use_receipt": true,
+          "receipt_discovery_matches_frozen": true,
+          "receipt_plan_matches_frozen": true
+        }
+      ],
+      "grades_six_axes": "PENDING_SEPARATE_EVALUATION",
+      "scientific_qualification": "NOT_INFERRED",
+      "independent_session_linkage": "UNKNOWN beyond exact assigned capture/objective custody"
+    }
+  ]
+}

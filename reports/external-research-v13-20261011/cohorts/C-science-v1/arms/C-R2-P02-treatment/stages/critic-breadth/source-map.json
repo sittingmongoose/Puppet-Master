@@ -1,0 +1,70 @@
+{
+  "run_id": "C-R2-P02-treatment",
+  "stage": "critic-breadth",
+  "source_ids_are_stable": true,
+  "source_id_policy": "S02 is preserved from the investigator source-map without rebinding. B01-B03 are IDs introduced only for this critique. Access times for the reviewer web batch are recorded to minute precision in UTC.",
+  "sources": [
+    {
+      "id": "S02",
+      "title": "Linux kernel Control Group v2 documentation",
+      "url": "https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html",
+      "version_or_commit": "Latest kernel documentation alias; exact documentation revision not surfaced. Original investigator record access: 2026-10-12T02:39:41Z; independently reopened for this critique at 2026-10-12T02:54Z.",
+      "locator": "Resource Distribution Models lines 210-242 (overcommit and weights); io.max lines 1388-1402 (BPS/IOPS throttling); original map also records cpu.weight/cpu.max and memory.max.",
+      "access_utc": "2026-10-12T02:54Z",
+      "observed_operation": [
+        "web.search",
+        "web.open"
+      ],
+      "observed_behavior": "The documentation permits child limits to be overcommitted. cpu.weight proportionally distributes CPU among active children. io.max limits BPS and/or IOPS and delays IO when a limit is reached; it does not cap accumulated disk-space consumption.",
+      "governing_condition_default_exception": "cgroup v2 controller availability, hierarchy and delegation remain conditional as recorded in the investigator source map. Limit overcommit is allowed; weights and IO rate limits are not app admission or disk-capacity quotas.",
+      "applicability": "Supports the two resource-accounting breadth findings only; not a cross-platform policy guarantee."
+    },
+    {
+      "id": "B01",
+      "title": "The SGI XFS Filesystem — Linux Kernel documentation",
+      "url": "https://docs.kernel.org/admin-guide/xfs.html",
+      "version_or_commit": "Current kernel documentation alias; exact kernel documentation revision not surfaced.",
+      "locator": "Mount options `uquota`/`usrquota` lines 109-112 and `pquota`/`prjquota` lines 119-122.",
+      "access_utc": "2026-10-12T02:54Z",
+      "observed_operation": [
+        "web.search",
+        "web.open"
+      ],
+      "observed_behavior": "The documentation says user and project disk-quota accounting may be enabled, and limits may be enforced; project quota uses the pquota/prjquota mount option.",
+      "governing_condition_default_exception": "Quota accounting/enforcement is filesystem- and mount-configuration-dependent; the documentation explicitly describes enforcement as optional. This is an example mechanism, not a portable default.",
+      "applicability": "Illustrates a Linux scratch-capacity option that could back a per-job scratch area, while reinforcing the need for host-specific support and configuration."
+    },
+    {
+      "id": "B02",
+      "title": "XPC — Apple Developer Documentation",
+      "url": "https://developer.apple.com/documentation/xpc?language=_11",
+      "version_or_commit": "Current Apple Developer documentation; no semantic version or commit shown.",
+      "locator": "Overview and service-type table in the indexed page result: launchd-managed helper services, privilege isolation, and XPC Service process-per-client/lifetime description.",
+      "access_utc": "2026-10-12T02:54Z",
+      "observed_operation": [
+        "web.search",
+        "web.open",
+        "web.click"
+      ],
+      "observed_behavior": "The indexed official page summary describes XPC as lightweight IPC for helper tools and privilege isolation, with an XPC Service process per client tied to the client lifetime. Opening the page rendered a JavaScript-only shell; following its Markdown link failed with an unsupported-content-type error, so the indexed summary was the readable evidence.",
+      "governing_condition_default_exception": "Service lifecycle and isolation depend on the selected XPC service type and configuration. The documentation does not establish per-converter resource quotas or show that arbitrary separately installed converters can be bundled as XPC services.",
+      "applicability": "A macOS privilege-separation alternative to assess as a host-owned broker; it is not itself evidence of hard CPU, memory or disk limits."
+    },
+    {
+      "id": "B03",
+      "title": "Process — Apple Developer Documentation",
+      "url": "https://developer.apple.com/documentation/foundation/process?changes=_8",
+      "version_or_commit": "Current Apple Developer documentation; no semantic version or commit shown.",
+      "locator": "Creating and initializing a process; sandboxed-app helper behavior, as exposed in the indexed result.",
+      "access_utc": "2026-10-12T02:54Z",
+      "observed_operation": [
+        "web.search",
+        "web.open",
+        "web.click"
+      ],
+      "observed_behavior": "The indexed official page summary states that a child process launched from a sandboxed app inherits the parent app sandbox and points to XPC services for helpers that need different sandbox entitlements. Opening the page rendered a JavaScript-only shell; following its Markdown link failed with an unsupported-content-type error, so the indexed summary was the readable evidence.",
+      "governing_condition_default_exception": "Applies to Process-launched children from a sandboxed macOS app as described by Apple. It does not imply that all macOS subprocesses share an identical configuration or that XPC provides resource quotas.",
+      "applicability": "Supports evaluating the actual per-export helper entitlement boundary and avoids assuming process separation alone yields a narrower macOS sandbox."
+    }
+  ]
+}

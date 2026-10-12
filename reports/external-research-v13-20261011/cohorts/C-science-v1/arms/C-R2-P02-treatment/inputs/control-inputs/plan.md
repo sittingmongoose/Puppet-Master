@@ -1,0 +1,11 @@
+# C-P04 — Provisional design for review
+
+The provisional interface lets a converter declare supported inputs, output types, and a preset schema before admission. A worker receives a read-only document snapshot and a writable temporary directory. It returns a completion manifest listing generated paths and a status code. The draft would promote those paths to the destination when the converter exits successfully; inspect whether status and a path list establish the requested completeness and transfer properties.
+
+Each converter would run in a separate process with a wall-clock timeout and a configurable memory allowance. The host would accept progress messages on a bounded channel and keep editing responsive by limiting concurrent workers. Cancellation would first request cooperation and then terminate a worker after a short grace period. The implementation must distinguish requested policy from actual enforcement, including child processes, partial files, and platform differences.
+
+Presets would store the converter identifier, version, and configuration. The draft assumes a compatible version range can safely reuse an old preset. Research capability negotiation, schema migration, and explicit user review as alternatives to silent reinterpretation. Compare isolation architectures without selecting one from branding or convenience alone.
+
+Recommend fair admission and promotion rules, with evidence-backed dispositions for the proposed completion protocol, cancellation path, and resource accounting. Propose witnesses for a hanging converter, excess output, failed destination transfer, concurrent small and large exports, and converter upgrades. Label any witnesses executed during research and their actual enforcement domain; do not claim tests of our future host.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.

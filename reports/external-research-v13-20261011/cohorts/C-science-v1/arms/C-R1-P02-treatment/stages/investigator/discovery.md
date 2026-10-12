@@ -1,0 +1,44 @@
+# Independent discovery — C-R1-P02-treatment / investigator
+
+**Basis and boundary.** Developed from the released brief alone before plan release. The task is a source-backed architecture proposal for an offline, non-destructive interview-preparation workspace. No private recordings were requested, uploaded, inspected or processed. Exact citations C01–C14 are preserved in source-map.json and sources/00-index.md.
+
+## Recommended architecture direction
+
+Use a small canonical project model that composes specialized tools rather than making one existing editor project file the sole source of truth.
+
+1. **Immutable asset layer.** Preserve each original byte-for-byte in a managed collection, or explicitly reference it in place under a read-only policy when storage rules require that. Assign a stable asset ID; record path hints, byte size, SHA-256, container/stream inventory and probe version. Each project references one asset once regardless of excerpt count. Hash at import and verify on relink/export; a changed hash is a user decision, never silent replacement. Explicit stream IDs matter because files can contain multiple video, audio and subtitle streams (C01, C11).
+
+2. **Separate source and session clocks.** A source coordinate is a signed integer tick plus exact rational time base, or audio sample index plus exact sample rate, with stream ID, PTS/DTS where available and provenance. A session clock is project-wide. Store a versioned per-source mapping from source to session, initially affine: session = offset + scale × source, backed by anchors and residuals. Preserve rational values such as 24000/1001; do not infer frame n by dividing by advertised average FPS. For VFR, boundaries follow observed presentation timestamps and retained frame duration/order. Keep timecode, PTS, wall-clock tags and manual anchors as distinct observations. Use an affine map only while anchors support it; flag weak timestamps or nonlinear drift and permit manual anchors (C01, C05–C08).
+
+3. **Visible uncertainty.** Persist each anchor's source/session positions, method (timecode/BWF metadata, manually placed clap/slate, waveform correlation), author, time and uncertainty. Show an uncertainty band or unresolved state and residual/drift diagnostics. Embedded dates and BWF TimeReference are clues, not truth about two device clocks (C08).
+
+4. **Inspection separate from decode.** Use ffprobe for format/stream/tag inventory and selected packet/frame timestamps. Its interval seeking is documented as inaccurate; confirm exact boundaries against decoded presentation timestamps (C01). Record FFmpeg and library build (C02). MediaInfo is a useful independent parser, but its field page says “as known” for 23.10 and warns its pivot format has no compatibility guarantee (C11).
+
+5. **Traceable derived previews.** Generate lower-resolution previews, waveforms and thumbnails as derived assets with separate IDs, parent original hash, explicit stream map, tool/build, complete recipe/profile, output hash and timestamp transform. Never replace or mutate the original. Allow lazy generation and deletable cache to control storage. Kdenlive documents a maintained proxy workflow and is an existing-editor alternative; its profiles are configurable and do not solve synchronization/provenance (C12).
+
+6. **Linked excerpts, transcripts and comments.** Each named excerpt has stable identity, exact half-open source range, asset/stream ID and mapping revision used to show its session position. Make source-relative versus session-relative basis explicit. An offset edit previews affected positions and asks before changing any range; retain mapping revisions. Comments default to source-time anchors, with optional transcript cue/text anchors and source-time fallback. Transcript edits create revisions; retain cue IDs when possible and surface orphaned anchors. WebVTT is suitable for transcript/caption export, but has millisecond media-relative cue times, overlaps and file-local IDs. Keep richer internal timing, revisions and comments (C07).
+
+7. **Timeline interop, not timeline truth.** OpenTimelineIO (OTIO) provides editorial cut interchange, external media references, time ranges, adapters and Media Linkers; it is not a media container. Unknown ranges and clip/parent coordinate frames are explicit. Its rate-related fix/regression history means the product should preserve source ticks, stream IDs, provenance and uncertainty in an app-owned versioned model and export OTIO where representable (C03–C06). Kdenlive is a viable narrower workflow only if its project semantics, media relinking and annotation limits meet the team's needs.
+
+8. **Two honest export modes.** A link-only package contains review/timeline/transcript/comments, asset manifest with stable IDs, SHA-256, sizes and safe relative path hints, plus optional previews. Resolve by relative package/media path, then offer hash-based relinking and verify the match; a link-only package cannot restore absent originals. A self-contained mode includes each selected unique original once plus metadata in an attached RO-Crate and/or BagIt payload with SHA-256 manifests. RO-Crate relative file IDs resolve under an attached crate root; detached files require absolute URIs. BagIt manifests checksum files inside the payload (C09–C10). Explain the difference during export.
+
+## Alternatives and trade-offs
+
+- **FFmpeg + ffprobe + app-owned model:** broad codec/container ecosystem, inspection/decode/proxy layers, scriptable and offline; integration, unsupported formats, timestamp edge cases and UI/state remain product-owned (C01–C02).
+- **OTIO-centered timeline/interchange:** useful mature clip/range model and adapters; risky as sole model where exact source clocks, immutable media, uncertainty and versioned comments are first-class (C03–C06).
+- **Kdenlive or another full NLE:** fast route to preview/proxy/timeline behavior; check project portability and transcript/comment integration, and verify review cannot rewrite originals. Proxy settings alone do not guarantee provenance (C12).
+- **WebVTT sidecars:** interoperable cue exchange with millisecond media-relative time and file-local identity. Use as an adapter, not the whole annotation database (C07).
+- **BagIt/RO-Crate:** conventions for included payload integrity and package-root-relative references; neither avoids storage cost when full originals are included (C09–C10).
+
+## Unresolved assumptions for product owner
+
+Decide target OS/filesystem, asset count/size, whether originals are copied once into a managed vault or referenced in place, hash latency, retention/backup, and what “offline” covers (media, libraries, waveforms/transcription assets, licensing). Define supported containers/codecs, VFR cases, audio layouts/sample rates, missing/corrupt timestamp behavior, maximum alignment error, drift model, and allowed automatic anchors. Specify transcript formats, word-level times/speakers/comments, access control, and whether exports may include originals or default to link-only. Clarify import metadata preservation and how confidence, relink conflicts and unsupported inputs are shown. Any audio correlation must be local and user-triggered; the brief does not authorize uploads or automatic speech recognition.
+
+## Validation proposals (not executed)
+
+- Build deterministic synthetic files with visually numbered frames, deliberate VFR PTS gaps/reordering, two rate/timebase variants, multiple audio streams with known offsets/sample rates, missing or contradictory clock tags, and controlled drift. Record generation recipe, tool version, expected timestamps and fixture hashes. Test stream selection, exact PTS/sample-boundary mapping, offset/drift, uncertainty, manual correction, and unchanged source hashes.
+- Create excerpts at non-frame-aligned session times, then change offset and scale. Verify previewed effects, explicit conversion to valid frame/sample boundaries, and unchanged source comments until a user approves remapping. Revise transcript text/times; verify old revisions, stable anchors and orphan reporting.
+- Move a package root and move originals independently. Verify attached relative references, SHA-256, hash-assisted relinking, collisions/mismatches, missing-media states and no duplicate source payload per excerpt. Validate BagIt manifests and RO-Crate metadata.
+- Exercise public FFmpeg FATE and Matroska fixtures, especially multiple tracks, non-default timecode scale, seeking, damaged files and audio gaps (C13–C14). Cross-check selected metadata with MediaInfo (C11). These are future tests; no fixtures or integrations were executed.
+
+**Execution record.** Documentary research only: official specs/docs and upstream issue/release history were read. No software was installed, no downloaded code was run, no tests executed, no recordings accessed and no content uploaded.

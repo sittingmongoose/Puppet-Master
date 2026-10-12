@@ -1,0 +1,135 @@
+{
+  "prepared_at_utc": "2026-10-12T02:59:35.588Z",
+  "stage": "reviser",
+  "stage_deadline_utc": "2026-10-12T03:17:35.588Z",
+  "whole_deadline_utc": "2026-10-12T03:38:17.385Z",
+  "stage_budget_s": 1080,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-C-R2-P02-treatment-investigator-v1",
+      "statusPath": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/investigator/status.json"
+    },
+    {
+      "stage": "critic-breadth",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-C-R2-P02-treatment-critic-breadth-v1",
+      "statusPath": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/critic-breadth/status.json"
+    },
+    {
+      "stage": "critic-truth",
+      "taskId": "node:delegated-task:command%3Amcp%3Af2323c6d-0bbb-4fec-8eed-f6dcd13683fb%3Adelegate-task%3Aer12ref-C-R2-P02-treatment-critic-truth-v1",
+      "statusPath": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/critic-truth/status.json"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/inputs/brief.md",
+      "sha256": "b94bb075dcf8f4217efb6edbd4ce62f8cf149b969da555bbd169e730632f64f9",
+      "bytes": 2386
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/reviser/assignment.md",
+      "sha256": "0b04f3012a3ac8e3f3a7597591bfe8ec68660eb35af96ab5db05fc14e9e703c5",
+      "bytes": 8980
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/reviser/input-map.json",
+      "sha256": "78a456ef692ea0618a92e8855fc0409b45ecda4e462af9401b6d67ec96663298",
+      "bytes": 3204
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/investigator/discovery.md",
+      "sha256": "fca2c3962786ae9c44b81e14ee1b2af4852f5888792742409acd4cbc85cd3692",
+      "bytes": 14272
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/investigator/draft.md",
+      "sha256": "1f6f0a7e8a46feec553687202b1d26a3273705133c5c5e2e1e85df0778e941cb",
+      "bytes": 23244
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/investigator/source-map.json",
+      "sha256": "3c96f8558f39619daa8e46db6844413ff18dea47a261e7a9336e45d86d09b467",
+      "bytes": 24634
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/investigator/revealed-plan.md",
+      "sha256": "4272bc763dfb1c1f9373b33f7749cb9ee0422f6b3377bd9761ba1b5d37ebb48e",
+      "bytes": 2239
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/investigator/plan-reveal.json",
+      "sha256": "b55ce686be5143585c0809c306b9574d52c7231564745912e9b89183a6b5046b",
+      "bytes": 477
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/critic-breadth/critique.md",
+      "sha256": "d159455305458f12806defa794df146be3a5543c2fe7d1e9e4bcb3f4fa6774b6",
+      "bytes": 9012
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/critic-breadth/source-map.json",
+      "sha256": "b524e191b3551df225d08319b191c52cc830149359efa3bceaa828e5a979ead7",
+      "bytes": 5699
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/critic-truth/critique.md",
+      "sha256": "f8622199576f909f48910688fb524e46fe39972f3679c0fb45cc1dde7630e00c",
+      "bytes": 6984
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/critic-truth/source-map.json",
+      "sha256": "ed01116246345786a27d5b743d95198ea1ef84c4c6d32ec81c3ac053d219eaee",
+      "bytes": 1974
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/investigator/sources/README.md",
+      "sha256": "d4d4c4c01108eb525cfbc8ef4d24a4c72a060087f3315d0d54f6f7bec6afff4b",
+      "bytes": 4283
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/critic-truth/sources/README.md",
+      "sha256": "430e07ba654825f133c74fb4e843a46fb20779d7b3803d8d6ae96a00ccafeb5c",
+      "bytes": 817
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/control-inputs/method/critic_prompt_delta.txt",
+      "sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+      "bytes": 479
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER13 reviser stage, run C-R2-P02-treatment: execute ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_delta": null,
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 1080.0,
+  "carried_source_inventory": [
+    {
+      "root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/investigator/sources",
+      "paths": [
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/investigator/sources/README.md"
+      ]
+    },
+    {
+      "root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/critic-breadth/sources",
+      "paths": []
+    },
+    {
+      "root": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/critic-truth/sources",
+      "paths": [
+        "ER13_RUNTIME/mechanics/dispatch-v1/admitted/C-R2-P02-treatment/run/C-R2-P02-treatment/stages/critic-truth/sources/README.md"
+      ]
+    }
+  ],
+  "request_sha256": "9768b85230edf6b6a8319fe99b0ae1e860f175201b8de076819f1e4ca36d755d"
+}

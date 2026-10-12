@@ -1,0 +1,11 @@
+# C-P01 — Provisional design for review
+
+The provisional design uses a windowed results grid with stable record keys and a single logical focus position independent of the rendered row objects. A keyboard controller would move that position, scroll its target into view, and then hand focus to the visible cell. Accessibility metadata would describe the complete logical table while the view renders only a small region. These are hypotheses to inspect against real platform behavior, not accepted compatibility claims.
+
+Editing would happen in an inline cell with a local draft keyed to the record and field. Sorting or filtering could proceed while the draft remains open. If the record vanishes, the view would move focus to the next visible row and keep the draft in a recovery list. Validation errors would appear beside the field and in a navigable summary. The draft assumes the recovery list can explain the original record without exposing a detached or duplicate accessibility node; research whether this assumption needs revision.
+
+The initial approach reserves one polite announcement channel for validation and explicit selection changes, and suppresses routine background-update announcements. Compare windowing with pagination or other bounded rendering designs, including their consequences for navigation, edit persistence, and result-set orientation. Investigate whether logical row counts and indices are sufficient across relevant implementations rather than treating semantic attributes as proof.
+
+Return a disposition for each significant proposal: retain, revise, reject, or unresolved, with its reason and governing evidence. Propose targeted tests for focus after deletion, editing during sort, error-summary return, and long or missing labels. Report any executed checks separately, without claiming our console or a physical assistive-technology matrix has been tested.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.

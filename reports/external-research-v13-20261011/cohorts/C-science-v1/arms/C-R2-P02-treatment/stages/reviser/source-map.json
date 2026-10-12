@@ -1,0 +1,457 @@
+{
+  "run_id": "C-R2-P02-treatment",
+  "stage": "reviser",
+  "basis": "Frozen brief and released plan; independent rechecks are appended without changing prior source-ID bindings.",
+  "source_ids_are_stable": true,
+  "source_id_lineage": {
+    "S01-S21": "stages/investigator/source-map.json",
+    "S22": "stages/critic-truth/source-map.json",
+    "B01-B03": "stages/critic-breadth/source-map.json"
+  },
+  "reviser_retrieval_batch_utc": "2026-10-12T03:00:52Z",
+  "reviser_access_precision_note": "The web tool does not expose a per-page fetch timestamp; the UTC value is a contemporaneous clock sample for the batch.",
+  "source_id_policy": "S01-S21 retain the investigator identities and bindings; S22 retains the critic-truth URL and binding; B01-B03 retain critic-breadth bindings. Reviser observations are explicitly supplemental and do not silently rebind source IDs. S02 is one identity with separate investigator, breadth-critic, and reviser observations.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Language Server Protocol 3.17 specification",
+      "url": "https://raw.githubusercontent.com/microsoft/language-server-protocol/gh-pages/_specifications/lsp/3.17/specification.md",
+      "version_or_commit": "LSP 3.17 specification path; source branch is named gh-pages; no commit SHA observed.",
+      "locator": "Base protocol, lines 301-348 (cancellation, progress); line 374 (capability exchange during initialize); change log lines 766-768.",
+      "access_utc": "2026-10-12T02:39:41Z",
+      "observed_operation": [
+        "web.open",
+        "web.find"
+      ],
+      "observed_behavior": "Capabilities are exchanged during initialize. Progress uses a token separate from request IDs. Cancellation is a notification; implementation-dependent messages may be ignored, and a synchronous peer may be unable to react.",
+      "governing_condition_default_exception": "LSP 3.17 base-protocol conditions; cancellation support does not promise preemption or termination.",
+      "applicability": "Protocol design pattern only; this is not an export-worker standard and must not be presented as one."
+    },
+    {
+      "id": "S02",
+      "title": "Linux kernel Control Group v2 documentation",
+      "url": "https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html",
+      "version_or_commit": "latest documentation alias; exact kernel documentation revision was not surfaced. Accessed 2026-10-12.",
+      "locator": "Basic Operations/Availability and Enabling (lines 145-173); Resource Distribution Models (210-242); cpu.weight/cpu.max (568-601); memory.max (711-722); io.max (1388-1416); pids.max (1560-1595). Core Interface Files cgroup.kill (lines 480-489).",
+      "access_utc": "2026-10-12T02:39:41Z",
+      "observed_operation": [
+        "web.open",
+        "web.find"
+      ],
+      "observed_behavior": "Controllers are not enabled by default; availability is conditional on kernel support and no v1 binding. Controllers are enabled top-down. CPU weights distribute to active eligible work; cpu.weight defaults to 100. cpu.max defaults to unlimited. memory.max defaults to max and can invoke the OOM killer; usage may temporarily exceed it. io.max is per device; pids.max is a process count hard limit. cgroup.kill kills the cgroup and descendants via SIGKILL and handles concurrent forks; it exists on non-root cgroups and fails for threaded cgroups.",
+      "governing_condition_default_exception": "Host must expose cgroup v2 controllers, enable them in the hierarchy, and delegate configuration rights; weights are not a queue-aging guarantee. Resource controls are hierarchical.",
+      "applicability": "Linux process-tree resource controls where the editor/service has the required delegation. Not a cross-platform sandbox or an unconditional guarantee.",
+      "reviser_independent_check": {
+        "access_utc": "2026-10-12T03:00:52Z",
+        "observed_operation": [
+          "web.open"
+        ],
+        "observed_behavior": "Reopened the official current kernel cgroup v2 documentation. It says every process belongs to one cgroup, children are born into their parent cgroup, controllers are conditional on support and top-down enablement, limits may be overcommitted, cpu.weight distributes among active children, and io.max is a device throughput limit.",
+        "governing_condition_default_exception": "The check confirms the original applicability conditions: host support, hierarchy, delegation, and process membership still matter. No target host was inspected.",
+        "applicability": "Independent source recheck only; no runtime or host enforcement test."
+      },
+      "critic_breadth_recheck": {
+        "id": "S02",
+        "title": "Linux kernel Control Group v2 documentation",
+        "url": "https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html",
+        "version_or_commit": "Latest kernel documentation alias; exact documentation revision not surfaced. Original investigator record access: 2026-10-12T02:39:41Z; independently reopened for this critique at 2026-10-12T02:54Z.",
+        "locator": "Resource Distribution Models lines 210-242 (overcommit and weights); io.max lines 1388-1402 (BPS/IOPS throttling); original map also records cpu.weight/cpu.max and memory.max.",
+        "access_utc": "2026-10-12T02:54Z",
+        "observed_operation": [
+          "web.search",
+          "web.open"
+        ],
+        "observed_behavior": "The documentation permits child limits to be overcommitted. cpu.weight proportionally distributes CPU among active children. io.max limits BPS and/or IOPS and delays IO when a limit is reached; it does not cap accumulated disk-space consumption.",
+        "governing_condition_default_exception": "cgroup v2 controller availability, hierarchy and delegation remain conditional as recorded in the investigator source map. Limit overcommit is allowed; weights and IO rate limits are not app admission or disk-capacity quotas.",
+        "applicability": "Supports the two resource-accounting breadth findings only; not a cross-platform policy guarantee."
+      }
+    },
+    {
+      "id": "S03",
+      "title": "Windows Job Objects",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+      "version_or_commit": "Microsoft Learn Win32 documentation; page last updated 2025-07-14 in retrieved rendering.",
+      "locator": "Managing Processes in Jobs; Job Limits and Notifications; managing a process tree; JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE.",
+      "access_utc": "2026-10-12T02:39:41Z",
+      "observed_operation": [
+        "web.search",
+        "web.open",
+        "web.find"
+      ],
+      "observed_behavior": "Jobs manage associated processes as a unit and can terminate all associated processes. CreateProcess children are included by default, except documented creation paths; breakaway flags can detach descendants. Closing the last handle with KILL_ON_JOB_CLOSE terminates associated processes.",
+      "governing_condition_default_exception": "Nested jobs require Windows 8/Server 2012 or newer; older systems have different constraints. Win32_Process.Create children and configured breakaway are exceptions to default descendant association.",
+      "applicability": "Windows per-export process-tree lifecycle and containment. Pair with access-control mechanisms; job membership alone does not restrict filesystem access."
+    },
+    {
+      "id": "S04",
+      "title": "JOBOBJECT_EXTENDED_LIMIT_INFORMATION",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_extended_limit_information",
+      "version_or_commit": "Win32 API documentation; supported client lists Windows XP desktop apps.",
+      "locator": "ProcessMemoryLimit and JobMemoryLimit members; Remarks; LimitFlags condition.",
+      "access_utc": "2026-10-12T02:41:16Z",
+      "observed_operation": [
+        "web.search",
+        "web.open"
+      ],
+      "observed_behavior": "With the corresponding JOB_OBJECT_LIMIT flags, a per-process or job-wide limit constrains committed virtual memory; the limits are independent and may be combined. Peak accounting is exposed.",
+      "governing_condition_default_exception": "Fields are ignored unless the corresponding limit flag is set. This is committed virtual memory, not a blanket promise about resident set size or every host resource.",
+      "applicability": "Windows memory budgeting for an assigned job object; verify policy and process assignment on supported versions."
+    },
+    {
+      "id": "S05",
+      "title": "JOBOBJECT_CPU_RATE_CONTROL_INFORMATION",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_cpu_rate_control_information",
+      "version_or_commit": "Win32 API documentation, last updated 2021-04-02; minimum supported client Windows 8 desktop apps.",
+      "locator": "ControlFlags; hard cap, weight, minimum/maximum rate; Remote Desktop Services caveat.",
+      "access_utc": "2026-10-12T02:43:17Z",
+      "observed_operation": [
+        "web.open"
+      ],
+      "observed_behavior": "The enabled policy may use a relative weight (1-9, default 5), a hard cap, or min/max rates. A hard cap pauses job threads for the rest of a scheduling interval once reached.",
+      "governing_condition_default_exception": "CPU rate control is unavailable under Remote Desktop Services when Dynamic Fair Share Scheduling is in effect; minimum-rate sums cannot exceed 100%.",
+      "applicability": "Windows host CPU distribution/budget primitive; it does not provide application queue fairness or prevent starvation by itself."
+    },
+    {
+      "id": "S06",
+      "title": "Wasmtime StoreLimitsBuilder",
+      "url": "https://docs.rs/wasmtime/latest/wasmtime/struct.StoreLimitsBuilder.html",
+      "version_or_commit": "docs.rs latest resolved to wasmtime 49.0.2 during access.",
+      "locator": "memory_size and related StoreLimitsBuilder methods.",
+      "access_utc": "2026-10-12T02:41:16Z",
+      "observed_operation": [
+        "web.search",
+        "web.open",
+        "web.find"
+      ],
+      "observed_behavior": "A configured memory_size limits each wasm linear memory individually; it defaults to unlimited. Separate limits exist for memories, tables, elements, and instances.",
+      "governing_condition_default_exception": "Limit must be installed in the Store's resource limiter; each linear memory gets its own allowance. Does not cap the full Wasmtime process or native host allocations.",
+      "applicability": "Optional Wasmtime adapter only; not evidence that an OS sandbox label enforces process memory."
+    },
+    {
+      "id": "S07",
+      "title": "Wasmtime Config fuel and epoch interruption",
+      "url": "https://docs.rs/wasmtime/latest/wasmtime/struct.Config.html",
+      "version_or_commit": "docs.rs latest resolved to wasmtime 49.0.2 during access.",
+      "locator": "consume_fuel (lines 286-303); epoch_interruption (305-319).",
+      "access_utc": "2026-10-12T02:43:17Z",
+      "observed_operation": [
+        "web.open",
+        "web.find"
+      ],
+      "observed_behavior": "Fuel can trap when the configured instruction budget is exhausted; fuel starts empty and consume_fuel defaults false. Epoch interruption can yield/trap at checked points; trap is the default deadline behavior, while yielding requires configuration.",
+      "governing_condition_default_exception": "Controls are opt-in and apply to WebAssembly execution; fuel is not wall-clock or total-process CPU accounting, and host calls/native code require separate controls.",
+      "applicability": "Optional compatible-Wasm runtime for deterministic execution budgeting, with OS supervision still needed."
+    },
+    {
+      "id": "S08",
+      "title": "Wasmtime WASI WasiCtxBuilder filesystem preopens",
+      "url": "https://docs.rs/wasmtime-wasi/latest/wasmtime_wasi/struct.WasiCtxBuilder.html",
+      "version_or_commit": "docs.rs latest resolved to wasmtime-wasi 49.0.2 during access.",
+      "locator": "preopened_dir method and examples; default filesystem access; FsPerms behavior.",
+      "access_utc": "2026-10-12T02:43:17Z",
+      "observed_operation": [
+        "web.search",
+        "web.open",
+        "web.find"
+      ],
+      "observed_behavior": "WASI has no filesystem access by default when there are no preopened directories. A host directory can be exposed under a guest path with explicit read-only or read-write permissions; traversal above a preopen is prevented.",
+      "governing_condition_default_exception": "Builder defaults include no preopens, but TCP/UDP socket APIs are allowed with all addresses denied. The embedder chooses host paths/permissions; exact behavior must be checked against the selected release.",
+      "applicability": "Capability-shaped filesystem option for WASI-compatible converters, not native converters in general."
+    },
+    {
+      "id": "S09",
+      "title": "Apple: Accessing files from the macOS App Sandbox",
+      "url": "https://developer.apple.com/documentation/security/accessing-files-from-the-macos-app-sandbox",
+      "version_or_commit": "Current Apple Developer documentation; no semantic version or commit shown.",
+      "locator": "Overview; selected-file access; security-scoped URLs; limitations and permissions.",
+      "access_utc": "2026-10-12T02:41:16Z",
+      "observed_operation": [
+        "web.search",
+        "web.open"
+      ],
+      "observed_behavior": "App Sandbox restricts access to protected resources; open/save panels extend access to selected URLs, with scoped access lifetime. The app's container is writable, but access outside needs capability/authorization and can still be denied by POSIX ACLs or other policy.",
+      "governing_condition_default_exception": "Folder selection can extend access recursively; selected executable paths have distinct restrictions. Not all operations are guaranteed by an entitlement.",
+      "applicability": "macOS file-access policy for editor/sandboxed helper design; reviewed source specifies capabilities rather than per-converter memory quotas."
+    },
+    {
+      "id": "S10",
+      "title": "Apple archived App Sandbox child inheritance guidance",
+      "url": "https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html",
+      "version_or_commit": "Archived Apple documentation; page predates current OS releases, accessed 2026-10-12.",
+      "locator": "Enabling App Sandbox Inheritance, lines 338-354; child rights and dynamic file access.",
+      "access_utc": "2026-10-12T02:41:16Z",
+      "observed_operation": [
+        "web.search",
+        "web.open"
+      ],
+      "observed_behavior": "A child may inherit the parent App Sandbox using the specified entitlements; Apple says XPC is preferred for privilege separation and child-process inheritance does not provide XPC's security. Inherited rights are static; files opened after launch must be passed as data or by bookmark.",
+      "governing_condition_default_exception": "The child must use exactly the app-sandbox and inherit entitlements for this configuration; user-selected file access acquired dynamically is not inherited automatically.",
+      "applicability": "macOS helper process trade-off; because page is archived, revalidate against supported deployment OS and current Apple guidance."
+    },
+    {
+      "id": "S11",
+      "title": "Pandoc filters documentation",
+      "url": "https://pandoc.org/filters.html",
+      "version_or_commit": "Current Pandoc documentation alias; exact release/commit not fixed on the page.",
+      "locator": "Pandoc filters overview and JSON executable pipeline (lines 20-44); technical invocation details (275 onward). Security caveat is in separate user manual source S21.",
+      "access_utc": "2026-10-12T02:41:16Z",
+      "observed_operation": [
+        "web.search",
+        "web.open"
+      ],
+      "observed_behavior": "A JSON filter is an executable pipe that reads/writes JSON AST; embedded Lua is another option and is described as usually faster. The CLI invokes a filter between parsing and writing.",
+      "governing_condition_default_exception": "This is Pandoc's interface, not a general converter protocol. External filters are executable programs and inherit filesystem risks described by Pandoc's own security note.",
+      "applicability": "Useful unfamiliar product pattern and performance/compatibility alternative; not a security guarantee."
+    },
+    {
+      "id": "S12",
+      "title": "Pandoc 3.8.3 release",
+      "url": "https://github.com/jgm/pandoc/releases/tag/3.8.3",
+      "version_or_commit": "Release 3.8.3; commit 568dab1; retrieved release UI showed '01 Dec 10:30' without a year. The year is not independently inferred.",
+      "locator": "Release body and API changes; regressions fixed from 3.8, including PDF/WeasyPrint and Typst smart quotes; linked issues #11275 and #11256.",
+      "access_utc": "2026-10-12T02:41:16Z",
+      "observed_operation": [
+        "web.open",
+        "web.find"
+      ],
+      "observed_behavior": "Release notes describe fixes for regressions in 3.8 affecting SVG/WeasyPrint PDF output and Typst smart quotes.",
+      "governing_condition_default_exception": "The release UI omitted a year for its displayed Dec 1 time; use the immutable tag/commit as identity and do not infer chronology from the incomplete date.",
+      "applicability": "Primary implementation-history evidence that version updates can change output behavior; pin/revalidate converter behavior rather than assuming semantic stability."
+    },
+    {
+      "id": "S13",
+      "title": "Pandoc issue 11275: SVG and WeasyPrint regression",
+      "url": "https://github.com/jgm/pandoc/issues/11275",
+      "version_or_commit": "Pandoc issue #11275; closed; labelled bug, priority:high, regression in retrieved source.",
+      "locator": "Issue title, status, labels, linked fix in 3.8.3 release notes.",
+      "access_utc": "2026-10-12T02:41:16Z",
+      "observed_operation": [
+        "web.open",
+        "web.click"
+      ],
+      "observed_behavior": "Closed issue records a regression affecting SVG to PDF with WeasyPrint; release 3.8.3 points to its fix.",
+      "governing_condition_default_exception": "Specific to the Pandoc version/path and WeasyPrint PDF engine noted by the issue; it is not evidence of all converter output failures.",
+      "applicability": "Concrete versioned failure/fix history for output regression tests."
+    },
+    {
+      "id": "S14",
+      "title": "Pandoc issue 11256: Typst smart quotes regression",
+      "url": "https://github.com/jgm/pandoc/issues/11256",
+      "version_or_commit": "Pandoc issue #11256; closed, opened against behavior after Pandoc 3.8.",
+      "locator": "Issue title/status and release 3.8.3 fix reference.",
+      "access_utc": "2026-10-12T02:41:16Z",
+      "observed_operation": [
+        "web.open",
+        "web.click"
+      ],
+      "observed_behavior": "Closed report concerns locale-sensitive smart quotes in PDF via Typst after the 3.8 change; the 3.8.3 release notes say prior default behavior was restored.",
+      "governing_condition_default_exception": "Applies to the Typst PDF engine and language-specific smart-quote behavior described by the release/issue.",
+      "applicability": "Supports explicit converter-version/preset compatibility and golden-output upgrade checks."
+    },
+    {
+      "id": "S15",
+      "title": "LibreOffice file conversion filter table",
+      "url": "https://help.libreoffice.org/latest/en-US/text/shared/guide/convertfilters.html",
+      "version_or_commit": "latest Help alias; exact LibreOffice release not exposed in retrieved page.",
+      "locator": "Usage lines 17-30; columns for API filter name, media type and extension around line 160; PDF/graphic filter entries.",
+      "access_utc": "2026-10-12T02:39:41Z",
+      "observed_operation": [
+        "web.open",
+        "web.find"
+      ],
+      "observed_behavior": "CLI syntax separates output extension, API filter name, and parameters; filters are identified by names and media types. Last repeated --convert-to option is effective.",
+      "governing_condition_default_exception": "Current Help alias can change; filter names and supported parameters depend on the installed LibreOffice release.",
+      "applicability": "Example of an installed converter's explicit format/filter surface; demonstrates why negotiation must use exact versioned IDs and schemas."
+    },
+    {
+      "id": "S16",
+      "title": "Linux rename(2) manual page",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "version_or_commit": "Linux man-pages 6.19, dated 2026-02-08; rename is also specified by POSIX.1-2024.",
+      "locator": "DESCRIPTION (atomic replacement); ERRORS (EXDEV); BUGS (NFS failure/retry ambiguity).",
+      "access_utc": "2026-10-12T02:41:16Z",
+      "observed_operation": [
+        "web.search",
+        "web.open"
+      ],
+      "observed_behavior": "Replacing an existing target is atomic for pathname visibility; cross-mounted-filesystem rename fails with EXDEV. NFS may report failure after the server performed the rename.",
+      "governing_condition_default_exception": "Linux/POSIX pathname semantics and underlying filesystem; atomic visibility is not the same as crash durability or a transaction over a multi-file bundle.",
+      "applicability": "Linux same-filesystem local publish primitive; destination adapters must account for cross-volume and network semantics."
+    },
+    {
+      "id": "S17",
+      "title": "Windows ReplaceFileW",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-replacefilew",
+      "version_or_commit": "Microsoft Learn Win32 API page; path rules include Windows 10 version 1607 behavior.",
+      "locator": "Remarks lines 120-143; error codes for partial replacement; REPLACEFILE_WRITE_THROUGH unsupported; same-volume requirement.",
+      "access_utc": "2026-10-12T02:41:16Z",
+      "observed_operation": [
+        "web.open",
+        "web.find"
+      ],
+      "observed_behavior": "The function combines replacement steps, preserves attributes/ACLs in supported conditions, and may have partial-failure states; all relevant files must be on the same volume.",
+      "governing_condition_default_exception": "Path length behavior depends on Windows version/opt-in. Write-through is unsupported; check return code and GetLastError and do not assume failure means no rename occurred.",
+      "applicability": "Windows same-volume replacement primitive; destination commit and error recovery still belong to the coordinator."
+    },
+    {
+      "id": "S18",
+      "title": "Linux fsync(2) manual page",
+      "url": "https://www.man7.org/linux/man-pages/man2/fsync.2.html",
+      "version_or_commit": "Linux man-pages 6.19, dated 2026-02-08; POSIX.1-2024.",
+      "locator": "DESCRIPTION and ERRORS (file data/metadata flush, directory entry caveat, late NFS/ENOSPC/EDQUOT).",
+      "access_utc": "2026-10-12T02:41:16Z",
+      "observed_operation": [
+        "web.search",
+        "web.open"
+      ],
+      "observed_behavior": "fsync on a file does not necessarily persist the containing directory entry; a separate directory fsync may be required. Some network filesystems may report storage quota/space failures after a write.",
+      "governing_condition_default_exception": "Filesystem and device implement durability semantics; sync success is not a universal guarantee across network/object-storage destinations.",
+      "applicability": "Linux crash-durability guidance for local file commit; do not confuse durability with successful transfer or artifact verification."
+    },
+    {
+      "id": "S19",
+      "title": "Windows AppContainer isolation",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/secauthz/appcontainer-isolation",
+      "version_or_commit": "Microsoft Learn Win32 documentation, last updated 2025-07-08.",
+      "locator": "File isolation, network isolation and process isolation, lines 31-47.",
+      "access_utc": "2026-10-12T02:45:35Z",
+      "observed_operation": [
+        "web.open",
+        "web.find"
+      ],
+      "observed_behavior": "AppContainer isolation is based on least privilege; access to files/registry can be granted narrowly, network access is granular, and process-object isolation limits cross-process influence.",
+      "governing_condition_default_exception": "Access is only to granted resources; exact compatibility depends on app type and supported Windows versions. It is an access-control sandbox, not the Job Object resource budget.",
+      "applicability": "Windows sandbox access-control layer to pair with per-job Job Objects."
+    },
+    {
+      "id": "S20",
+      "title": "Linux kernel Landlock: unprivileged access control",
+      "url": "https://www.kernel.org/doc/html/latest/userspace-api/landlock.html",
+      "version_or_commit": "latest kernel documentation alias; exact kernel documentation revision not surfaced. Landlock first introduced in Linux 5.13.",
+      "locator": "Ruleset enforcement and no_new_privs (lines 205-228); file-descriptor rights (279-282); compatibility/ABI check (283-307); build/boot support (877-883); network access-right ABI introductions (438-468, 843-870).",
+      "access_utc": "2026-10-12T02:45:35Z",
+      "observed_operation": [
+        "web.open",
+        "web.find"
+      ],
+      "observed_behavior": "Landlock lets a process add an irreversible, additive access policy for itself and subsequent children; per-directory filesystem rules and network rights are explicit. The current thread and inherited file descriptors have conditions that affect coverage.",
+      "governing_condition_default_exception": "Linux 5.13+ with CONFIG_SECURITY_LANDLOCK built and LSM enabled at boot. Check ABI at runtime; unprivileged enforcement requires no_new_privs. Some rights, network controls and thread synchronization appeared only in later ABIs. Existing file descriptors can retain access granted before enforcement; start in a fresh single-thread worker and close unneeded inherited handles.",
+      "applicability": "Linux filesystem/network confinement option to pair with cgroup resources; cannot be promised on every kernel/boot configuration."
+    },
+    {
+      "id": "S21",
+      "title": "Pandoc User Guide security note",
+      "url": "https://pandoc.org/MANUAL.html#a-note-on-security",
+      "version_or_commit": "Current Pandoc User Guide alias; exact release/commit not fixed on the page.",
+      "locator": "A note on security, lines 4867-4883; filter/custom-writer filesystem capability and --sandbox scope.",
+      "access_utc": "2026-10-12T02:41:16Z",
+      "observed_operation": [
+        "web.open",
+        "web.find"
+      ],
+      "observed_behavior": "The manual warns filters/custom writers can perform arbitrary filesystem operations; --sandbox affects readers/writers only, and combining it with filters or PDF engines leaves security risks.",
+      "governing_condition_default_exception": "Claim is specific to Pandoc sandbox behavior and cited filter/custom-writer extension points; it is not a general sandbox API guarantee.",
+      "applicability": "Evidence for why an external converter/filter must be treated as executable code and separately contained."
+    },
+    {
+      "id": "S22",
+      "title": "Linux setsid(2) manual page",
+      "url": "https://man7.org/linux/man-pages/man2/setsid.2.html",
+      "version_or_commit": "Linux man-pages page; exact page release could not be confirmed because the direct open timed out. The retrieved page states POSIX.1-2024 conformance; no commit SHA was observed.",
+      "locator": "DESCRIPTION: a caller that is not a process-group leader can create a new session and process group and becomes their sole initial member. NOTES: forked children inherit the session ID. Direct open was attempted but timed out; the search result exposed these sections.",
+      "access_utc": "2026-10-12T02:54:23Z",
+      "observed_operation": [
+        "web.search",
+        "web.open (timed out; no page body returned)"
+      ],
+      "observed_behavior": "setsid() succeeds for a caller that is not already a process-group leader, creating a new session and process group; the caller is initially the only member. A child normally inherits its parent's session ID, but a non-group-leader child can create a separate session/group. Thus signalling only the worker's original process group does not prove all descendants were terminated.",
+      "governing_condition_default_exception": "setsid() fails when the caller is already a process-group leader. A forked child whose PID differs from the inherited process-group ID can meet the non-leader condition. This describes Linux/POSIX process/session semantics; cgroup membership and Windows Job Object behavior are separate mechanisms.",
+      "applicability": "Directly qualifies the proposal to treat process-group termination as sufficient teardown for an untrusted converter. Use cgroup/job membership or another verified per-platform mechanism for a whole-job guarantee; do not generalize this Linux finding to other platforms.",
+      "reviser_independent_check": {
+        "access_utc": "2026-10-12T03:00:52Z",
+        "observed_operation": [
+          "web.open (timed out)",
+          "web.search"
+        ],
+        "retrieved_url": "https://www.man7.org/linux/man-pages/man2/setsid.2.html",
+        "observed_behavior": "The search result returned the manual text: setsid() creates a session/process group only for a caller that is not already a process-group leader; a forked child inherits the session ID. A non-group-leader child can call setsid and leave the original process group.",
+        "governing_condition_default_exception": "Direct open of the original S22 URL timed out. The search result was the same Linux manual page on the www.man7.org host alias; the original S22 URL and source identity are preserved.",
+        "applicability": "Confirms that signaling the worker original process group alone does not prove Linux descendant teardown; it does not establish cgroup, Windows, or macOS behavior."
+      }
+    },
+    {
+      "id": "B01",
+      "title": "The SGI XFS Filesystem — Linux Kernel documentation",
+      "url": "https://docs.kernel.org/admin-guide/xfs.html",
+      "version_or_commit": "Current kernel documentation alias; exact kernel documentation revision not surfaced.",
+      "locator": "Mount options `uquota`/`usrquota` lines 109-112 and `pquota`/`prjquota` lines 119-122.",
+      "access_utc": "2026-10-12T02:54Z",
+      "observed_operation": [
+        "web.search",
+        "web.open"
+      ],
+      "observed_behavior": "The documentation says user and project disk-quota accounting may be enabled, and limits may be enforced; project quota uses the pquota/prjquota mount option.",
+      "governing_condition_default_exception": "Quota accounting/enforcement is filesystem- and mount-configuration-dependent; the documentation explicitly describes enforcement as optional. This is an example mechanism, not a portable default.",
+      "applicability": "Illustrates a Linux scratch-capacity option that could back a per-job scratch area, while reinforcing the need for host-specific support and configuration.",
+      "reviser_independent_check": {
+        "access_utc": "2026-10-12T03:00:52Z",
+        "observed_operation": [
+          "web.open (page title returned; body incomplete)",
+          "web.search"
+        ],
+        "observed_behavior": "The official kernel documentation search result identifies uquota/usrquota and pquota/prjquota as enabling quota accounting with limits optionally enforced; no portable default is implied.",
+        "applicability": "Supports XFS as a conditional example only; no filesystem quota was configured or tested."
+      }
+    },
+    {
+      "id": "B02",
+      "title": "XPC — Apple Developer Documentation",
+      "url": "https://developer.apple.com/documentation/xpc?language=_11",
+      "version_or_commit": "Current Apple Developer documentation; no semantic version or commit shown.",
+      "locator": "Overview and service-type table in the indexed page result: launchd-managed helper services, privilege isolation, and XPC Service process-per-client/lifetime description.",
+      "access_utc": "2026-10-12T02:54Z",
+      "observed_operation": [
+        "web.search",
+        "web.open",
+        "web.click"
+      ],
+      "observed_behavior": "The indexed official page summary describes XPC as lightweight IPC for helper tools and privilege isolation, with an XPC Service process per client tied to the client lifetime. Opening the page rendered a JavaScript-only shell; following its Markdown link failed with an unsupported-content-type error, so the indexed summary was the readable evidence.",
+      "governing_condition_default_exception": "Service lifecycle and isolation depend on the selected XPC service type and configuration. The documentation does not establish per-converter resource quotas or show that arbitrary separately installed converters can be bundled as XPC services.",
+      "applicability": "A macOS privilege-separation alternative to assess as a host-owned broker; it is not itself evidence of hard CPU, memory or disk limits.",
+      "reviser_independent_check": {
+        "access_utc": "2026-10-12T03:00:52Z",
+        "observed_operation": [
+          "web.open (unreadable shell)",
+          "web.search"
+        ],
+        "observed_behavior": "The current official Apple result describes XPC helper IPC, privilege isolation, launchd management, and an XPC Service process per client tied to client lifetime; it says this service type is bundled in an app/framework.",
+        "applicability": "Supports a macOS helper/broker alternative, not arbitrary dynamic converter entitlements, per-export teardown, or hard resource quotas."
+      }
+    },
+    {
+      "id": "B03",
+      "title": "Process — Apple Developer Documentation",
+      "url": "https://developer.apple.com/documentation/foundation/process?changes=_8",
+      "version_or_commit": "Current Apple Developer documentation; no semantic version or commit shown.",
+      "locator": "Creating and initializing a process; sandboxed-app helper behavior, as exposed in the indexed result.",
+      "access_utc": "2026-10-12T02:54Z",
+      "observed_operation": [
+        "web.search",
+        "web.open",
+        "web.click"
+      ],
+      "observed_behavior": "The indexed official page summary states that a child process launched from a sandboxed app inherits the parent app sandbox and points to XPC services for helpers that need different sandbox entitlements. Opening the page rendered a JavaScript-only shell; following its Markdown link failed with an unsupported-content-type error, so the indexed summary was the readable evidence.",
+      "governing_condition_default_exception": "Applies to Process-launched children from a sandboxed macOS app as described by Apple. It does not imply that all macOS subprocesses share an identical configuration or that XPC provides resource quotas.",
+      "applicability": "Supports evaluating the actual per-export helper entitlement boundary and avoids assuming process separation alone yields a narrower macOS sandbox.",
+      "reviser_independent_check": {
+        "access_utc": "2026-10-12T03:00:52Z",
+        "observed_operation": [
+          "web.open (incomplete page)",
+          "web.search"
+        ],
+        "observed_behavior": "The current official Apple result says a Process-launched child of a sandboxed app inherits its sandbox and points to XPC services when a helper needs different entitlements.",
+        "applicability": "Supports comparing helper entitlement boundaries; it does not establish a process-tree termination or resource-quota guarantee."
+      }
+    }
+  ]
+}

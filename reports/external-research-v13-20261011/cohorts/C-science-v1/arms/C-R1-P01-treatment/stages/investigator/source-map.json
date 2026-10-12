@@ -1,0 +1,230 @@
+{
+  "run_id": "C-R1-P01-treatment",
+  "stage": "investigator",
+  "discovery_phase": "pre-release; exact plan not read",
+  "access_record_utc": "2026-10-12T02:51:19Z",
+  "method": "Public web search/open/find against primary standards, maintained vendor or project documentation, and project issue/PR records. No downloaded code was run. No public demo or synthetic fixture was executed.",
+  "source_index": "sources/index.md",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Accessible Rich Internet Applications (WAI-ARIA) 1.2",
+      "exact_url": "https://www.w3.org/TR/wai-aria-1.2/",
+      "released_version_or_commit": "WAI-ARIA 1.2 Recommendation; version-pinned W3C TR URL",
+      "locator": "Sections 4.3.1-4.3.2: author focus guidance lines 547-551 and aria-activedescendant lines 564-586; aria-colcount/index lines 5835-5885; aria-rowcount/index lines 6873-6924; aria-errormessage lines 6185-6194; aria-invalid lines 6379-6385; aria-live politeness lines 6505-6511",
+      "access_utc": "2026-10-12T02:51:19Z",
+      "observed_operation": "Opened the W3C recommendation and used focused find/open operations on aria-activedescendant, aria-rowcount, aria-rowindex, aria-colcount, aria-errormessage, aria-invalid, and aria-live; reviewed returned normative text and examples.",
+      "governing_condition_default_exception": "For a known table total, aria-rowcount/aria-colcount must equal the full logical table count; APG guidance clarifies row totals include headers. Use -1 only when a total is unknown. Row/column indices must be positive, ordered, complete for the rendered slice, and represent logical positions; sparse DOM examples are supported but inconsistent indices may disrupt screen-reader table navigation. aria-errormessage must be used with aria-invalid; when pertinent the message must be available, and when not pertinent it must be hidden or the reference removed. Do not mark a required field aria-invalid merely because it is empty before the user has attempted submission. A focused aria-activedescendant owner must reference a valid owned target. Polite live updates are deferred to a graceful opportunity; assertive updates may interrupt and should be reserved for imperative cases.",
+      "applicability": "Governs WAI-ARIA markup in web-hosted grids. Does not guarantee that a chosen desktop toolkit or every AT exposes the semantics identically; target platform measurement remains required."
+    },
+    {
+      "id": "S02",
+      "title": "ARIA Authoring Practices Guide: Grid Pattern",
+      "exact_url": "https://www.w3.org/WAI/ARIA/apg/patterns/grid/",
+      "released_version_or_commit": "Living APG guidance; no numbered release on page",
+      "locator": "About and data-grid pattern; keyboard interaction; setting focus inside cells; editing and navigating inside a cell; grid and table properties practice; lines 24-152",
+      "access_utc": "2026-10-12T02:40:31Z",
+      "observed_operation": "Opened the pattern and used find/open around editing, selection, aria-selected, and keyboard boundary behavior.",
+      "governing_condition_default_exception": "A grid is a composite only when its custom keyboard behavior is implemented. Arrow/Home/End and optional paging/navigation keys are defined; Enter/F2 can enter edit/widget mode, Escape can restore grid mode, and cell editors need their arrow-key behavior. Nonfunctional header cells need not be focusable. Selection uses aria-selected. Dynamically loaded rows can make Ctrl+End stop at the last DOM row rather than the last backend row.",
+      "applicability": "Direct model for an editable, interactive web data grid; a static table with focusable controls is an alternative. APG is implementation guidance, not a claim of cross-platform support."
+    },
+    {
+      "id": "S03",
+      "title": "ARIA Authoring Practices Guide: Developing a Keyboard Interface",
+      "exact_url": "https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/",
+      "released_version_or_commit": "Living APG guidance; no numbered release on page",
+      "locator": "Focus versus selection lines 74-85; roving tabindex and aria-activedescendant methods lines 117-139",
+      "access_utc": "2026-10-12T02:41:26Z",
+      "observed_operation": "Opened the guidance from the W3C APG search result and used find on Focus vs. Selection and Focus and Selection; reviewed the focus persistence and two focus-management methods.",
+      "governing_condition_default_exception": "Focus is one moving point; selection can persist separately and may be multiple. APG says the selected state should be visually distinct from focus. Roving tabindex moves DOM focus and ordinarily scrolls the target into view; active-descendant keeps DOM focus on the container and requires the author to update the active reference, visible indicator, and scroll position while respecting DOM ownership constraints.",
+      "applicability": "Supports the brief's separate focus/selection requirement and the focus strategy tradeoff. APG methods target web composites and must be adapted/measured for a native accessibility API."
+    },
+    {
+      "id": "S04",
+      "title": "AG Grid JavaScript Data Grid Accessibility",
+      "exact_url": "https://www.ag-grid.com/javascript-data-grid/accessibility/",
+      "released_version_or_commit": "Documentation banner Version 36.2.0",
+      "locator": "Customising the Grid for Accessibility; Ensure DOM Element order; Disable Group Sticky Rows; Ensure all grid elements are always rendered; Known Limitations, including server-side row model; lines 359-498",
+      "access_utc": "2026-10-12T02:40:31Z",
+      "observed_operation": "Searched official AG Grid documentation, opened the page, and used find for DOM rendering and accessibility limitation sections.",
+      "governing_condition_default_exception": "AG Grid virtualizes rows and columns by default. Its guidance says disabling both virtualization or using pagination can make all page grid elements available; disabling virtualization increases DOM/memory and can slow many rows. It warns of inconsistent AT interpretation, focused-state changes not always being announced, complex grouped-column naming limits, and unsupported row-count announcements in some SSRM situations.",
+      "applicability": "Vendor-specific evidence and a useful risk benchmark. Does not prove all virtual grids need full rendering or that all screen readers behave alike."
+    },
+    {
+      "id": "S05",
+      "title": "AG Grid JavaScript Data Grid Keyboard Interaction",
+      "exact_url": "https://www.ag-grid.com/javascript-data-grid/keyboard-navigation/",
+      "released_version_or_commit": "Documentation banner Version 36.2.0",
+      "locator": "Navigation and keyboard interaction; custom cell focus/keyboard handling around the custom navigation sections",
+      "access_utc": "2026-10-12T02:40:31Z",
+      "observed_operation": "Opened the official AG Grid keyboard navigation page and inspected the documented arrow navigation and custom keyboard event hooks.",
+      "governing_condition_default_exception": "Grid-level keyboard behavior can be customized through documented callbacks; custom interactive cell content may require suppressing grid keyboard handling to let that content receive keys.",
+      "applicability": "Maintained implementation example for deciding how grid navigation and editor/widget keys interact; custom behavior must be tested against the actual editor controls."
+    },
+    {
+      "id": "S06",
+      "title": "AG Grid JavaScript Data Grid Row IDs",
+      "exact_url": "https://www.ag-grid.com/javascript-data-grid/row-ids/",
+      "released_version_or_commit": "Current documentation page; no release banner observed; checked 2026-10-12",
+      "locator": "Row IDs section and getRowId callback definition",
+      "access_utc": "2026-10-12T02:40:31Z",
+      "observed_operation": "Search result opened from the official AG Grid documentation; inspected recommendation and callback contract.",
+      "governing_condition_default_exception": "Provide a unique ID function that always returns the same string for a given record and never collides; this is strongly recommended for data-changing features.",
+      "applicability": "Supports domain-keyed row state rather than sort/filter indices. The docs describe AG Grid behavior, while the application still owns choosing a safe domain key."
+    },
+    {
+      "id": "S07",
+      "title": "AG Grid JavaScript Data Grid Updating Row Data",
+      "exact_url": "https://www.ag-grid.com/javascript-data-grid/data-update-row-data/",
+      "released_version_or_commit": "Documentation banner Version 36.1.0",
+      "locator": "Row IDs comparison, How It Works, and immutable store behavior",
+      "access_utc": "2026-10-12T02:40:31Z",
+      "observed_operation": "Opened official update documentation and inspected the row-selection behavior comparison and data identity rules.",
+      "governing_condition_default_exception": "Without row IDs selection is lost when replacing row data. With stable IDs, selection can be preserved for rows existing in both snapshots. IDs absent from the new snapshot are removed; rows may reorder to match the new list.",
+      "applicability": "Shows stable IDs help state follow an updated/reordered record but do not define unsaved-draft/conflict recovery for removed rows."
+    },
+    {
+      "id": "S08",
+      "title": "TanStack Table React Guide: Virtualization",
+      "exact_url": "https://tanstack.com/table/latest/docs/framework/react/guide/virtualization",
+      "released_version_or_commit": "Latest docs alias, not release-pinned; exact package version unavailable from page",
+      "locator": "Virtualization Setup and When To Use Virtualization, lines 198-216",
+      "access_utc": "2026-10-12T02:40:31Z",
+      "observed_operation": "Searched official TanStack Table docs and opened the guide; reviewed the division between table and virtualizer and client-data constraints.",
+      "governing_condition_default_exception": "TanStack Table supplies no built-in virtualization; its table model owns rows, columns and table state while a virtualizer owns scroll indexes and measurements. Client virtualization still requires client data; use server data operations/infinite loading when data cannot fit client-side. Ordinary rendering is simpler for small tables.",
+      "applicability": "Headless/composable architecture alternative; accessibility and cell focus remain application work. Pin a concrete release before implementation."
+    },
+    {
+      "id": "S09",
+      "title": "MUI X Data Grid Accessibility",
+      "exact_url": "https://mui.com/x/react-data-grid/accessibility/",
+      "released_version_or_commit": "Current MUI X docs alias; exact version not shown on page",
+      "locator": "Guidelines, row headers, tab sequence, keyboard navigation and selection sections",
+      "access_utc": "2026-10-12T02:41:00Z",
+      "observed_operation": "Searched and inspected MUI's official documentation for its tab stop/focus behavior, custom cell responsibilities, selection and keyboard bindings.",
+      "governing_condition_default_exception": "One element in the composite enters the tab sequence. For custom renderCell content, application authors must use the passed tabIndex so inner focusables do not become extra tab stops. The default Tab behavior leaves the grid; alternate tabNavigation modes are optional configuration.",
+      "applicability": "Current packaged-grid behavior reference, but the page is unversioned and product/platform/AT fit is unverified."
+    },
+    {
+      "id": "S10",
+      "title": "MUI X Data Grid Virtualization v8",
+      "exact_url": "https://v8.mui.com/x/react-data-grid/virtualization",
+      "released_version_or_commit": "MUI X documentation branch v8",
+      "locator": "Row virtualization, column virtualization and disable virtualization sections",
+      "access_utc": "2026-10-12T02:41:00Z",
+      "observed_operation": "Searched and opened the versioned MUI v8 virtualization guide; inspected overscan, buffer and virtualizer limits.",
+      "governing_condition_default_exception": "Row virtualization inserts/removes rows and is limited to 100 rows in the Data Grid component; rowBufferPx is only a hint and may be ignored during high-speed scroll. At least one column of overscan supports arrow focus to the next offscreen item; excessive overscan harms performance. Full virtualization disable is described as a testing or small-data option because it increases DOM size and drastically reduces performance.",
+      "applicability": "Version-scoped implementation evidence for overscan/focus edge cases. Limits are MUI v8-specific, not universal browser limits."
+    },
+    {
+      "id": "S11",
+      "title": "MUI X Data Grid Editing Persistence",
+      "exact_url": "https://mui.com/x/react-data-grid/editing/persistence/",
+      "released_version_or_commit": "Current MUI X docs alias; exact version not shown on page",
+      "locator": "processRowUpdate callback and server-side validation sections",
+      "access_utc": "2026-10-12T02:41:00Z",
+      "observed_operation": "Searched and inspected the official editing persistence page; reviewed save rejection and error callback behavior.",
+      "governing_condition_default_exception": "The callback must return the row used to update internal state. Rejecting its promise prevents the internal state update and keeps the cell editing; resolving with the original row rejects the draft and exits edit mode. An error callback can report failures.",
+      "applicability": "Illustrates a save/validation lifecycle, not a solution for retaining a draft after row unmount/filter/deletion. Verify exact API on the chosen release."
+    },
+    {
+      "id": "S12",
+      "title": "MUI X Data Grid Row Definition",
+      "exact_url": "https://mui.com/x/react-data-grid/row-definition/",
+      "released_version_or_commit": "Current MUI X docs alias; exact version not shown on page",
+      "locator": "Row identifier section and getRowId prop behavior",
+      "access_utc": "2026-10-12T02:41:00Z",
+      "observed_operation": "Searched and read official row definition docs for ID uniqueness and state-tracking behavior.",
+      "governing_condition_default_exception": "Each row needs a unique identifier used by internal models and tracking across updates; the default property is id, otherwise supply getRowId. A missing stable identifier causes issues with other grid features.",
+      "applicability": "Confirms the stable-ID requirement as a common implementation concern; does not establish a privacy-safe visible identifier."
+    },
+    {
+      "id": "S13",
+      "title": "MUI X issue 8119: DataGrid Filter loses focus after updating rows",
+      "exact_url": "https://github.com/mui/mui-x/issues/8119",
+      "released_version_or_commit": "Issue opened 2023-03-03; reporter selected latest version but did not name an exact package version; linked completed PR 8603 not independently inspected",
+      "locator": "Issue steps/expected behavior lines 173-197; maintainer root-cause and closure activity lines 238-308",
+      "access_utc": "2026-10-12T02:43:56Z",
+      "observed_operation": "Opened GitHub issue and inspected report, maintainer diagnosis, and status/activity. The reproduction demo was not run.",
+      "governing_condition_default_exception": "Incoming row refresh lost focus from a focused filter. Maintainer attributed it to a default filter item receiving a different ID each render; the issue was closed as completed in linked PR 8603 on 2023-04-17.",
+      "applicability": "Historical failure case supporting stable identity for active UI state through rerenders. It is not evidence of a current MUI defect or a row-focus bug."
+    },
+    {
+      "id": "S14",
+      "title": "MUI X issue 1291: DataGrid Roving tabindex is wrong",
+      "exact_url": "https://github.com/mui/mui-x/issues/1291",
+      "released_version_or_commit": "Issue opened 2021-03-25; reporter environment v4.0.0-alpha.23; issue linked to PR 1575",
+      "locator": "Issue reproduction and expected/current behavior lines 162-198",
+      "access_utc": "2026-10-12T02:43:56Z",
+      "observed_operation": "Opened the project issue and inspected reported tab entry, focus-visible styling, and environment version. The external reproduction was not run.",
+      "governing_condition_default_exception": "Reporter described a root that remained focusable without visible focus and a first data cell not set to tabIndex 0, leaving keyboard-only users unable to enter cell navigation; report was later closed through PR 1575.",
+      "applicability": "Historical alpha-version regression class for roving tab stops and visible focus; not evidence of current MUI behavior."
+    },
+    {
+      "id": "S15",
+      "title": "MUI X PR 1575: Fix column cell and row cell focus style",
+      "exact_url": "https://github.com/mui/mui-x/pull/1575",
+      "released_version_or_commit": "Merged 2021-05-10; five commits shown on pull request; no commit SHA captured",
+      "locator": "Pull request title, merged status and merge date lines 131-149; linked from issue 1291",
+      "access_utc": "2026-10-12T02:43:56Z",
+      "observed_operation": "Opened the GitHub pull request linked by issue 1291; inspected title, merge status/date, and commit count, not code diffs.",
+      "governing_condition_default_exception": "PR title addresses cell and row cell focus styling; its merge closed the historical issue. The exact code change and release version were not inspected.",
+      "applicability": "Evidence that focus styling and keyboard-entry issues have had to be corrected in a maintained grid. No claim about current implementation is made."
+    },
+    {
+      "id": "S16",
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+      "exact_url": "https://www.w3.org/TR/WCAG22/",
+      "released_version_or_commit": "W3C WCAG 2.2 Recommendation; version-pinned W3C TR URL",
+      "locator": "SC 2.1.1 Keyboard; SC 3.3.1 Error Identification lines 1304-1311; SC 3.3.3 Error Suggestion lines 1320-1327; SC 3.3.4 Error Prevention (Legal, Financial, Data) lines 1328-1341",
+      "access_utc": "2026-10-12T02:44:01Z",
+      "observed_operation": "Opened the W3C Recommendation and inspected the normative criteria in sections 2.1 and 3.3.",
+      "governing_condition_default_exception": "SC 3.3.1 applies when an input error is automatically detected and requires identifying the item and describing the error in text. SC 3.3.3 applies when correction suggestions are known, except where doing so jeopardizes security or purpose. SC 3.3.4 is conditional on legal/financial commitments, user-controllable stored data, or test responses and allows reversible, checked, or reviewed/confirmed submission routes.",
+      "applicability": "Normative web content requirements if the target console is web content in scope; regulatory obligations for a native desktop application remain unassessed. Supports conditional validation design, not grid-library selection."
+    },
+    {
+      "id": "S17",
+      "title": "ARIA Authoring Practices Guide: Grid and Table Properties",
+      "exact_url": "https://www.w3.org/WAI/ARIA/apg/practices/grid-and-table-properties/",
+      "released_version_or_commit": "Living APG guidance; page last-updated date not captured",
+      "locator": "Introduction and Using aria-rowcount/aria-rowindex, lines 21-62; column-index caveats lines 113-122",
+      "access_utc": "2026-10-12T02:48:33Z",
+      "observed_operation": "Opened the official W3C APG page and inspected requirements for full versus rendered row/column counts, indexing, and consistency warnings.",
+      "governing_condition_default_exception": "When DOM rows/columns are only a subset, expose total count and indices. Count includes header rows. Unknown count may be -1. Every row with rowcount needs a valid, ordered rowindex; missing/inconsistent values can cause AT table reading to skip rows or stop. Noncontiguous virtual columns need per-cell colindex.",
+      "applicability": "Shows the intended metadata mechanism and a strict consistency hazard; does not establish that attributes ensure correct announcements across all AT/browser platforms."
+    },
+    {
+      "id": "S18",
+      "title": "ARIA Authoring Practices Guide: Data Grid Examples",
+      "exact_url": "https://www.w3.org/WAI/ARIA/apg/patterns/grid/examples/data-grids/",
+      "released_version_or_commit": "Living APG example; page last updated 2024-10-22",
+      "locator": "Read This First lines 29-36; scrollable example notes lines 75-100; role/attribute notes lines 131-159",
+      "access_utc": "2026-10-12T02:48:33Z",
+      "observed_operation": "Opened the W3C example page and read its production-use warning, support-gap notice, scrolling/index demo behavior, and keyboard descriptions. Demo was not executed.",
+      "governing_condition_default_exception": "The page says examples are illustrative and not production-ready; browser/AT gaps may exist and testing is essential. Its scroll example sets rowindex and colindex as rows/columns move out of the rendered set.",
+      "applicability": "Strong plan-context evidence that the row/column metadata pattern is a starting point requiring target AT tests, not proof of compatibility."
+    },
+    {
+      "id": "S19",
+      "title": "ARIA-AT Assistive Technology Interoperability Reports landing page",
+      "exact_url": "https://aria-at.w3.org/",
+      "released_version_or_commit": "Public testing snapshot shown as of 2026-10-02; test plan listed as Candidate; report page itself is a live unversioned index",
+      "locator": "Search result extract for Today’s Testing Snapshot, Test Plan Support Levels, and Minimal Data Grid Candidate row",
+      "access_utc": "2026-10-12T02:48:46Z",
+      "observed_operation": "Web search returned the official ARIA-AT index excerpt with snapshot date and grid-plan percentages. Opening the landing page produced no extractable lines. No underlying report/test was run or inspected.",
+      "governing_condition_default_exception": "Index defines support levels as percentages of Must+Should assertions passing for given AT/browser combinations. The listed Minimal Data Grid Candidate row reported 75% JAWS+Chrome, 83% NVDA+Chrome, and 69% VoiceOver macOS+Safari in the snapshot. These are scores for the candidate APG example plan, not arbitrary data grids.",
+      "applicability": "Indicates material platform variance in a W3C ARIA-AT candidate example and supports measurement. Because the detail report could not be opened and the page labels the plan Candidate, use the values as a discovery signal, not a current conformance or app result."
+    },
+    {
+      "id": "S20",
+      "title": "W3C ARIA Practices issue 3208: Data grid keyboard navigation gets stuck on links",
+      "exact_url": "https://github.com/w3c/aria-practices/issues/3208",
+      "released_version_or_commit": "Issue opened 2025-01-03; discussion excerpt through 2025-01-14; no linked fix or release captured",
+      "locator": "Issue report and discussion lines 149-159 and 214-255",
+      "access_utc": "2026-10-12T02:48:33Z",
+      "observed_operation": "Opened the public W3C APG issue and read the report/discussion about link-containing grid cells, screen-reader mode behavior, and expected AT testing. No reported CodePen was run.",
+      "governing_condition_default_exception": "Discussion describes confusion in an NVDA grid containing form elements; a contributor states screen-reader automatic mode behavior varies and VoiceOver users need manual control. The issue discussion planned ARIA-AT tests; it is not itself a normative rule or completed interoperability verdict.",
+      "applicability": "Supports testing the editing/navigation handoff for mixed cell content on the actual AT matrix; reported experience is not universal or a verified current defect."
+    }
+  ]
+}

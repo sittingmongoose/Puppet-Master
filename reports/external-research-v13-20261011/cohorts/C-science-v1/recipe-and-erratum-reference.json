@@ -1,0 +1,15 @@
+{
+  "published_prospective_recipes_commit": "0693412f6d7855c194d3fb5753a95f88b5e77759",
+  "cohort": "cohorts/prospective-recipes-v1",
+  "C_locked_versions": {
+    "C-R1-treatment": "C-S1-v2 B02+B10 critic/finalizer",
+    "C-R2-treatment": "C-S2-v2 B06+B10 critic-truth"
+  },
+  "controls": "R0 full pipeline common capture",
+  "frozen_config_compatibility": "Inherited internal method_id may remain R0; original public_recipe_choice/card locator/delta/stage budgets and selected topology are retained unchanged",
+  "separately_published_root_rationale_erratum": "state/c-selection-rationale-errata-v1.json",
+  "erratum_original_sha256": "d1f9885ed25f60238ed99f7059bd22098d5ee6970d0cbaa3766754a7c787dfac",
+  "erratum_scope": "Root reports corrected historical residence labels; selection/recipes/clocks/grades unchanged. No optimizer or two-case gain claim. Erratum source evaluation is not read here.",
+  "helper_closure_copies": 0,
+  "synthetic_helper_tests_rerun": 0
+}

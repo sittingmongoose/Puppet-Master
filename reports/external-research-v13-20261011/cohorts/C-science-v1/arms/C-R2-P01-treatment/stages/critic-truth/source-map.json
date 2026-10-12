@@ -1,0 +1,51 @@
+{
+  "stage": "critic-truth",
+  "run_id": "C-R2-P01-treatment",
+  "note": "Preserves investigator source IDs and URLs; records this critic's direct primary-page review. These are not replacements for the investigator map.",
+  "sources": [
+    {
+      "id": "S06",
+      "title": "DuckDB CSV Auto Detection",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "version_or_commit": "Rolling current documentation; exact DuckDB engine/documentation build is not displayed.",
+      "locator": "Sample Size; Detection Steps; default sample-size and file-seekability behavior.",
+      "access_utc": "2026-10-12T02:55Z",
+      "observed_operation": "Opened the official DuckDB documentation; inspected sample_size default, sample_size=-1, seekable versus non-seekable sampling, and detected dialect options.",
+      "governing_condition_default_exception": "Type detection defaults to 20,480 rows; sample_size=-1 reads the entire file for sampling. Seekable regular files can be sampled at different locations; non-seekable inputs such as gzip/stdin are sampled from the beginning.",
+      "applicability": "Supports provisional detection only. A full-file sampling setting is distinct from applying and validating the confirmed profile against every row."
+    },
+    {
+      "id": "S12",
+      "title": "SQLite Transaction",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_or_commit": "SQLite official language documentation; rolling page, no version-specific snapshot shown.",
+      "locator": "Read transactions versus write transactions; DEFERRED/IMMEDIATE; Implicit versus explicit transactions, COMMIT behavior.",
+      "access_utc": "2026-10-12T02:55Z",
+      "observed_operation": "Opened the official SQLite documentation; inspected writer concurrency, transaction upgrade behavior, and SQLITE_BUSY at COMMIT.",
+      "governing_condition_default_exception": "Only one simultaneous write transaction is supported. A DEFERRED read transaction may fail to upgrade to a writer with SQLITE_BUSY; COMMIT may return SQLITE_BUSY and leave the transaction active.",
+      "applicability": "The import must define a bounded busy/retry or explicit rollback path and confirm commit/rollback state; concurrent changes require recomputing preview decisions."
+    },
+    {
+      "id": "S14",
+      "title": "SQLite ON CONFLICT Clause",
+      "url": "https://www.sqlite.org/lang_conflict.html",
+      "version_or_commit": "SQLite official language documentation; page states last updated 2025-11-22; no engine build is specified.",
+      "locator": "ABORT, FAIL, IGNORE, and REPLACE conflict-resolution algorithms.",
+      "access_utc": "2026-10-12T02:55Z",
+      "observed_operation": "Opened the official SQLite documentation; compared statement-level effects of each conflict algorithm.",
+      "governing_condition_default_exception": "ABORT is default and backs out only the current statement while preserving prior transaction statements; FAIL can preserve earlier row changes in the failing statement; IGNORE skips affected rows; REPLACE deletes conflicting rows before insert.",
+      "applicability": "All-or-nothing import requires the application to explicitly roll back the outer transaction after an apply failure; the default statement conflict behavior alone is insufficient."
+    },
+    {
+      "id": "S15",
+      "title": "SQLite Write-Ahead Logging and WAL-reset bug history",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_commit": "Official page last updated 2026-08-25; identifies fix in SQLite 3.51.3 and later, with backports 3.44.6 and 3.50.7.",
+      "locator": "Overview, transaction atomicity across ATTACHed databases; Section 11, WAL-Reset Bug and its conditions/fixed versions.",
+      "access_utc": "2026-10-12T02:55Z",
+      "observed_operation": "Opened the official SQLite WAL page; inspected journal-mode scope, multi-database atomicity exception, affected versions, fixed releases, and required concurrency conditions.",
+      "governing_condition_default_exception": "WAL-reset defect affects WAL databases through 3.51.2 and requires at least two connections to the same database plus coincident write/checkpoint activity. WAL transactions across multiple ATTACHed databases are not atomic as a set. Rollback-journal mode is SQLite default.",
+      "applicability": "Keep the release floor conditional on WAL and the supported connection pattern; if WAL is selected, pin a fixed version/backport and test. Keep all accepted rows and provenance in one database file if the design promises atomicity."
+    }
+  ]
+}
