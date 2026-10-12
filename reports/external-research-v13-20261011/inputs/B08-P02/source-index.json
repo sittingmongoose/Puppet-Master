@@ -1,0 +1,265 @@
+{
+  "case": "B08-P02",
+  "primary_only": true,
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/unicodedata.rst",
+      "sha256": "6ee133763805a5c4ee062f24787bee8460310e75579f008b9a5129cf64e3d67d",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "function:: normalize",
+          "matching_lines_1based": [
+            157
+          ],
+          "range_1based": [
+            145,
+            216
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "data:: unidata_version",
+          "matching_lines_1based": [
+            200
+          ],
+          "range_1based": [
+            188,
+            216
+          ]
+        }
+      ],
+      "cached_body": "source-cache/cpython/Doc/library/unicodedata.rst",
+      "neighborhoods": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "function:: normalize",
+          "matching_lines_1based": [
+            157
+          ],
+          "range_1based": [
+            145,
+            216
+          ],
+          "path": "source-cache/neighborhoods/S1-N1.txt",
+          "sha256": "13e218be07cc028662f49b2901b353a82532f6bcdaacdb9c6c91fddd0a358393",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "data:: unidata_version",
+          "matching_lines_1based": [
+            200
+          ],
+          "range_1based": [
+            188,
+            216
+          ],
+          "path": "source-cache/neighborhoods/S1-N2.txt",
+          "sha256": "14ff4c347daf6c16158d13d79de93d9e552cd34e8480510aab052075ba475b63",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/stdtypes.rst",
+      "sha256": "de17cc87c19a676a668967f83c6be45499d5de05bd3d039d606d9affad8e248b",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "method:: str.casefold",
+          "matching_lines_1based": [
+            1699
+          ],
+          "range_1based": [
+            1687,
+            1798
+          ]
+        }
+      ],
+      "cached_body": "source-cache/cpython/Doc/library/stdtypes.rst",
+      "neighborhoods": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "method:: str.casefold",
+          "matching_lines_1based": [
+            1699
+          ],
+          "range_1based": [
+            1687,
+            1798
+          ],
+          "path": "source-cache/neighborhoods/S2-N1.txt",
+          "sha256": "d524c76d3d6e370e734c20f4dcbb9b7999ccae7209763d9cf26b364cd7d3e152",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_str.py",
+      "sha256": "f5417b5b30eaf393032a59a4cbde3e70731a93f74e7c7709ec8939fa796a10e2",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "def test_casefold(",
+          "matching_lines_1based": [
+            914
+          ],
+          "range_1based": [
+            902,
+            1013
+          ]
+        }
+      ],
+      "cached_body": "source-cache/cpython/Lib/test/test_str.py",
+      "neighborhoods": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "def test_casefold(",
+          "matching_lines_1based": [
+            914
+          ],
+          "range_1based": [
+            902,
+            1013
+          ],
+          "path": "source-cache/neighborhoods/S3-N1.txt",
+          "sha256": "24ae3283478149822b06bb40042daafd2a190b19133cd5b63b5f38bde1fb6b5b",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_unicodedata.py",
+      "sha256": "ea5d43dfffa361eab1c61528096bb064afdf2e6666c4ba971cc3cf3d297e6c4f",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S4-N1",
+          "literal_needle": "def run_normalization_tests(",
+          "matching_lines_1based": [
+            402
+          ],
+          "range_1based": [
+            390,
+            472
+          ]
+        },
+        {
+          "id": "S4-N2",
+          "literal_needle": "def NFKC(",
+          "matching_lines_1based": [
+            409
+          ],
+          "range_1based": [
+            397,
+            472
+          ]
+        }
+      ],
+      "cached_body": "source-cache/cpython/Lib/test/test_unicodedata.py",
+      "neighborhoods": [
+        {
+          "id": "S4-N1",
+          "literal_needle": "def run_normalization_tests(",
+          "matching_lines_1based": [
+            402
+          ],
+          "range_1based": [
+            390,
+            472
+          ],
+          "path": "source-cache/neighborhoods/S4-N1.txt",
+          "sha256": "2be75884952cb34e871661d1401b81df2a509c3799d48f7dc9d43d848b2346d6",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S4-N2",
+          "literal_needle": "def NFKC(",
+          "matching_lines_1based": [
+            409
+          ],
+          "range_1based": [
+            397,
+            472
+          ],
+          "path": "source-cache/neighborhoods/S4-N2.txt",
+          "sha256": "f37589a51970bfc7f00b3c57fa07df1e1cd9e157235700e3d69bae3bfd725898",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S5",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Objects/unicodeobject.c",
+      "sha256": "77ffa6c7c7407207a531890f95e474c812fa1066bb0f22cd92887cf5717e83c7",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S5-N1",
+          "literal_needle": "do_casefold",
+          "matching_lines_1based": [
+            9715,
+            10687
+          ],
+          "range_1based": [
+            9703,
+            9814
+          ]
+        },
+        {
+          "id": "S5-N2",
+          "literal_needle": "unicode_casefold_impl",
+          "matching_lines_1based": [
+            10682
+          ],
+          "range_1based": [
+            10670,
+            10781
+          ]
+        }
+      ],
+      "cached_body": "source-cache/cpython/Objects/unicodeobject.c",
+      "neighborhoods": [
+        {
+          "id": "S5-N1",
+          "literal_needle": "do_casefold",
+          "matching_lines_1based": [
+            9715,
+            10687
+          ],
+          "range_1based": [
+            9703,
+            9814
+          ],
+          "path": "source-cache/neighborhoods/S5-N1.txt",
+          "sha256": "a5eff26639754a14ea663e195dc3c8207c72007037cbb5c8162c69216b268d30",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S5-N2",
+          "literal_needle": "unicode_casefold_impl",
+          "matching_lines_1based": [
+            10682
+          ],
+          "range_1based": [
+            10670,
+            10781
+          ],
+          "path": "source-cache/neighborhoods/S5-N2.txt",
+          "sha256": "0c5bb8567aef6d8127822eb12d43f447fb5866c9a8a400760eaf91946d2ae0ec",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    }
+  ],
+  "access": "Identical cache, full bodies and adjacent source expansion available to both arms.",
+  "semantic_conclusions_shared": false
+}

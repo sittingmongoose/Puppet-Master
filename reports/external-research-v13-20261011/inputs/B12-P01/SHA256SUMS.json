@@ -1,0 +1,32 @@
+{
+  "schema": "er13.input_freeze.v1",
+  "case_id": "B12-P01",
+  "frozen_at_utc": "2026-10-12T00:28:34.949114+00:00",
+  "files": [
+    {
+      "path": "VALIDATION.json",
+      "sha256": "0e01e1c241ee8480b092ed8396574a93d25e016a74d7cf30a8cb68464b6ee588",
+      "bytes": 884
+    },
+    {
+      "path": "brief.md",
+      "sha256": "d2802abfc985d091530324ffbae59109b57f76a25ea725b33b8539fe6981d946",
+      "bytes": 2262
+    },
+    {
+      "path": "case.json",
+      "sha256": "b50bdc840f4baecbdf6ac51b53643f10d599b76b9b107284f33f90f8f68002dd",
+      "bytes": 1406
+    },
+    {
+      "path": "plan.md",
+      "sha256": "16b9632d851af40d2759e5c686525183f38a1e24989ffc6597cb35aeabaf7247",
+      "bytes": 1722
+    },
+    {
+      "path": "rubric.json",
+      "sha256": "2d8ecaf69ed6b3b2821a706b130c8c540d043ceac3ed78fc6933e29c61cb33d1",
+      "bytes": 3720
+    }
+  ]
+}

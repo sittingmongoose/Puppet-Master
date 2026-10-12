@@ -1,0 +1,112 @@
+    if (PyUnicode_GET_LENGTH(self) == 0)
+        return unicode_result_unchanged(self);
+    return case_operation(self, do_capitalize);
+}
+
+/*[clinic input]
+str.casefold as unicode_casefold
+
+Return a version of the string suitable for caseless comparisons.
+[clinic start generated code]*/
+
+static PyObject *
+unicode_casefold_impl(PyObject *self)
+/*[clinic end generated code: output=0120daf657ca40af input=384d66cc2ae30daf]*/
+{
+    if (PyUnicode_IS_ASCII(self))
+        return ascii_upper_or_lower(self, 1);
+    return case_operation(self, do_casefold);
+}
+
+
+/* Argument converter. Accepts a single Unicode character. */
+
+static int
+convert_uc(PyObject *obj, void *addr)
+{
+    Py_UCS4 *fillcharloc = (Py_UCS4 *)addr;
+
+    if (!PyUnicode_Check(obj)) {
+        PyErr_Format(PyExc_TypeError,
+                     "The fill character must be a unicode character, "
+                     "not %.100s", Py_TYPE(obj)->tp_name);
+        return 0;
+    }
+    if (PyUnicode_GET_LENGTH(obj) != 1) {
+        PyErr_SetString(PyExc_TypeError,
+                        "The fill character must be exactly one character long");
+        return 0;
+    }
+    *fillcharloc = PyUnicode_READ_CHAR(obj, 0);
+    return 1;
+}
+
+/*[clinic input]
+str.center as unicode_center
+
+    width: Py_ssize_t
+    fillchar: Py_UCS4 = ' '
+    /
+
+Return a centered string of length width.
+
+Padding is done using the specified fill character (default is a space).
+[clinic start generated code]*/
+
+static PyObject *
+unicode_center_impl(PyObject *self, Py_ssize_t width, Py_UCS4 fillchar)
+/*[clinic end generated code: output=420c8859effc7c0c input=b42b247eb26e6519]*/
+{
+    Py_ssize_t marg, left;
+
+    if (PyUnicode_GET_LENGTH(self) >= width)
+        return unicode_result_unchanged(self);
+
+    marg = width - PyUnicode_GET_LENGTH(self);
+    left = marg / 2 + (marg & width & 1);
+
+    return pad(self, left, marg - left, fillchar);
+}
+
+/* This function assumes that str1 and str2 are readied by the caller. */
+
+static int
+unicode_compare(PyObject *str1, PyObject *str2)
+{
+#define COMPARE(TYPE1, TYPE2) \
+    do { \
+        TYPE1* p1 = (TYPE1 *)data1; \
+        TYPE2* p2 = (TYPE2 *)data2; \
+        TYPE1* end = p1 + len; \
+        Py_UCS4 c1, c2; \
+        for (; p1 != end; p1++, p2++) { \
+            c1 = *p1; \
+            c2 = *p2; \
+            if (c1 != c2) \
+                return (c1 < c2) ? -1 : 1; \
+        } \
+    } \
+    while (0)
+
+    int kind1, kind2;
+    const void *data1, *data2;
+    Py_ssize_t len1, len2, len;
+
+    kind1 = PyUnicode_KIND(str1);
+    kind2 = PyUnicode_KIND(str2);
+    data1 = PyUnicode_DATA(str1);
+    data2 = PyUnicode_DATA(str2);
+    len1 = PyUnicode_GET_LENGTH(str1);
+    len2 = PyUnicode_GET_LENGTH(str2);
+    len = Py_MIN(len1, len2);
+
+    switch(kind1) {
+    case PyUnicode_1BYTE_KIND:
+    {
+        switch(kind2) {
+        case PyUnicode_1BYTE_KIND:
+        {
+            int cmp = memcmp(data1, data2, len);
+            /* normalize result of memcmp() into the range [-1; 1] */
+            if (cmp < 0)
+                return -1;

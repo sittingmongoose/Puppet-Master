@@ -1,0 +1,66 @@
+{
+  "schema": "er13.public_preparation_readiness.v1",
+  "campaign_status": "ACTIVE",
+  "track_A_investigations": 8,
+  "track_B": "cohort underway",
+  "primary_scope": {
+    "total": 80,
+    "FULL": 64,
+    "COMPONENT": 16
+  },
+  "reserve": {
+    "limit_candidate_stage_starts": 16,
+    "charged_route_diagnostic_starts_snapshot": 2,
+    "separate_from_primary": true
+  },
+  "input_cases": [
+    "A-F01",
+    "A-F02",
+    "B01-P01",
+    "B01-P02",
+    "B02-P01",
+    "B02-P02",
+    "B03-P01",
+    "B03-P02",
+    "B04-P01",
+    "B04-P02",
+    "B05-P01",
+    "B05-P02",
+    "B06-P01",
+    "B06-P02",
+    "B07-P01",
+    "B07-P02",
+    "B08-P01",
+    "B08-P02",
+    "B09-P01",
+    "B09-P02",
+    "B10-P01",
+    "B10-P02",
+    "B11-P01",
+    "B11-P02",
+    "B12-P01",
+    "B12-P02"
+  ],
+  "input_c_d_included": false,
+  "evidence": [
+    "helpers/cases-early-v1/READINESS.json",
+    "helpers/component-fixtures-v1/PREPARATION.json",
+    "helpers/component-fixtures-v1/VERIFICATION.json",
+    "helpers/component-fixtures-v1/MANIFEST.json",
+    "helpers/component-admit-v1/READY.json",
+    "helpers/materialize-er13-v1/sealed/full-v1/READY.json"
+  ],
+  "recipe_scope": "existing sealed/full-v1 and component-admit-v1; separately normalized and repinned copy",
+  "B03_snapshot": "recognized but refused; retained resume not supported by full-v1",
+  "B11_B12_snapshot": "supplied exact delta API ready; any method version requires independent ready root selection",
+  "quality_grades": null,
+  "winner": null,
+  "native_qualification": false,
+  "actual_task_config_cohort_owner": "root, later completed cohort only",
+  "public_access_boundary": "Review package is not candidate-access authority; hidden provisional plans/rubrics/findings retain declared restrictions.",
+  "method_cards_publication_boundary": {
+    "B11": "Final card/deltas pending owner readiness manifest; directory not selected",
+    "B12": "Earlier proposal withdrawn before admission; replacement mutable and not selected",
+    "inputs": "All four B11/B12 case inputs retain their separately frozen exact bytes"
+  }
+}

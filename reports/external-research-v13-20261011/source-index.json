@@ -1,0 +1,1091 @@
+{
+  "schema": "er13.public_exact_source_index.v1",
+  "resolution": "Every declared path resolves to complete unchanged retained bytes; restore_source_layout.py recreates the original relative layout. No semantic deduplication, summaries or symlinks.",
+  "files": [
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S4-N2.txt",
+      "sha256": "06afbc47b8c1a46f8c442739ba1de2fa8a9310df072d453be6a2f2126ea9d8f9",
+      "bytes": 3049,
+      "retained_path": "inputs/B04-P01/source-cache/neighborhoods/S4-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/neighborhoods/S2-N2.txt",
+      "sha256": "0a496034dc5e4c6e86cd346cef6041c5f7f223010839e74d16f7bf1583c5250b",
+      "bytes": 3608,
+      "retained_path": "inputs/B01-P01/source-cache/neighborhoods/S2-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/neighborhoods/S5-N2.txt",
+      "sha256": "0c5bb8567aef6d8127822eb12d43f447fb5866c9a8a400760eaf91946d2ae0ec",
+      "bytes": 3026,
+      "retained_path": "inputs/B08-P02/source-cache/neighborhoods/S5-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/neighborhoods/S1-N5.txt",
+      "sha256": "0e1e779b09104412d05f03c78513ecebc480c705a6115ac41cb130b8bca6151f",
+      "bytes": 3999,
+      "retained_path": "inputs/B05-P01/treatment-cache/neighborhoods/S1-N5.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/neighborhoods/S1-N1.txt",
+      "sha256": "13e218be07cc028662f49b2901b353a82532f6bcdaacdb9c6c91fddd0a358393",
+      "bytes": 2797,
+      "retained_path": "inputs/B08-P02/source-cache/neighborhoods/S1-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/neighborhoods/S1-N2.txt",
+      "sha256": "14ff4c347daf6c16158d13d79de93d9e552cd34e8480510aab052075ba475b63",
+      "bytes": 758,
+      "retained_path": "inputs/B08-P02/source-cache/neighborhoods/S1-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/neighborhoods/S2-N4.txt",
+      "sha256": "1534cab2f36dda74dd1ddc5197a48ec76863b87028b19561aef821d18946b0d1",
+      "bytes": 3746,
+      "retained_path": "inputs/B05-P01/treatment-cache/neighborhoods/S2-N4.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S2-N1.txt",
+      "sha256": "17f4a1f0715ac1c3237069fd6378a646c4a5f1e629c2e6ec9c9b822d2358257e",
+      "bytes": 3829,
+      "retained_path": "inputs/B04-P01/source-cache/neighborhoods/S2-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/neighborhoods/S1-N1.txt",
+      "sha256": "1898c35528896713ed261fd471f776f49b9b94eb1fbc0a61d00396c246999113",
+      "bytes": 4767,
+      "retained_path": "inputs/B05-P02/treatment-cache/neighborhoods/S1-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P02/source-cache/neighborhoods/S1-N4.txt",
+      "sha256": "1af5c9e7c814212d120c2c669ea002f8fbfe88832e00d505b1f58ac685666961",
+      "bytes": 4891,
+      "retained_path": "inputs/B04-P02/source-cache/neighborhoods/S1-N4.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S3-N2.txt",
+      "sha256": "1bb4b3d74c1aee0064216898df4666e8a3ce41943aef83781ed8552936c228b8",
+      "bytes": 4250,
+      "retained_path": "inputs/B01-P02/source-cache/neighborhoods/S3-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/neighborhoods/S2-N2.txt",
+      "sha256": "1bf173555d3e953443466c408e077537477e8ca3513154344b30eca4c6655565",
+      "bytes": 3829,
+      "retained_path": "inputs/B05-P02/treatment-cache/neighborhoods/S2-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/csv.rst",
+      "sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+      "bytes": 23749,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/csv.rst",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/cpython/Doc/library/csv.rst",
+      "sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+      "bytes": 23749,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/csv.rst",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/neighborhoods/S1-N3.txt",
+      "sha256": "1e62e0b525b53e1efd1073813dade1cd3cc545866a03357aee853cc623cca590",
+      "bytes": 4436,
+      "retained_path": "inputs/B05-P02/treatment-cache/neighborhoods/S1-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/neighborhoods/S3-N3.txt",
+      "sha256": "208ed70cb74ce9aadb3fd475c995d11f45b87b03fedba83616806426fbee3abe",
+      "bytes": 4465,
+      "retained_path": "inputs/B05-P01/treatment-cache/neighborhoods/S3-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/rfc/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941,
+      "retained_path": "helpers/component-fixtures-v1/sources/rfc/rfc9110.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P02/source-cache/rfc/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941,
+      "retained_path": "helpers/component-fixtures-v1/sources/rfc/rfc9110.txt",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/neighborhoods/S3-N1.txt",
+      "sha256": "24ae3283478149822b06bb40042daafd2a190b19133cd5b63b5f38bde1fb6b5b",
+      "bytes": 5931,
+      "retained_path": "inputs/B08-P02/source-cache/neighborhoods/S3-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/asyncio-queue.rst",
+      "sha256": "26c21d8ad906a2da711d5cbee4c91a3833fd66c2ac4d62074d48e247657d7fc9",
+      "bytes": 7477,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/asyncio-queue.rst",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P01/source-cache/cpython/Doc/library/asyncio-queue.rst",
+      "sha256": "26c21d8ad906a2da711d5cbee4c91a3833fd66c2ac4d62074d48e247657d7fc9",
+      "bytes": 7477,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/asyncio-queue.rst",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/neighborhoods/S3-N1.txt",
+      "sha256": "28bc78b225a661d4653f14eb92f8fadb038ee7eeeee89fbcc4d029d067f392df",
+      "bytes": 3825,
+      "retained_path": "inputs/B01-P01/source-cache/neighborhoods/S3-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/neighborhoods/S1-N3.txt",
+      "sha256": "2aa135aae02fbb2d9c06fab8e3d3c0b575b99c97455e62e3f72ba6e856ef298d",
+      "bytes": 4445,
+      "retained_path": "inputs/B01-P01/source-cache/neighborhoods/S1-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P01/source-cache/neighborhoods/S1-N3.txt",
+      "sha256": "2af9c71feb268f7caa6bf180d0787ba28d1e73ad7fdd83305ffe93fb2b82c85b",
+      "bytes": 3038,
+      "retained_path": "inputs/B08-P01/source-cache/neighborhoods/S1-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/neighborhoods/S4-N1.txt",
+      "sha256": "2be75884952cb34e871661d1401b81df2a509c3799d48f7dc9d43d848b2346d6",
+      "bytes": 3035,
+      "retained_path": "inputs/B08-P02/source-cache/neighborhoods/S4-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/neighborhoods/S1-N2.txt",
+      "sha256": "2cd8930f2feefcdfa3c3ed55f4d7655691234e93e4b374d75392bbb9dc9f1a5c",
+      "bytes": 3397,
+      "retained_path": "inputs/B01-P01/source-cache/neighborhoods/S1-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P01/source-cache/neighborhoods/S2-N4.txt",
+      "sha256": "2f0803f83e8167247aab0dae6542bb6f614b3f1a4646dc3b26374f7c2131e286",
+      "bytes": 2398,
+      "retained_path": "inputs/B08-P01/source-cache/neighborhoods/S2-N4.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/sqlite/backup.html",
+      "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+      "bytes": 28195,
+      "retained_path": "helpers/component-fixtures-v1/sources/sqlite/backup.html",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/sqlite/backup.html",
+      "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+      "bytes": 28195,
+      "retained_path": "helpers/component-fixtures-v1/sources/sqlite/backup.html",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/neighborhoods/S3-N3.txt",
+      "sha256": "31e4ca98cbb1801e1d274a72490417ba3cfd19ee149feec515c007a8fffce937",
+      "bytes": 1642,
+      "retained_path": "inputs/B01-P01/source-cache/neighborhoods/S3-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P01/source-cache/neighborhoods/S3-N3.txt",
+      "sha256": "349efe42faf4a77ba5fc3f837598d8055bc0c52ea3f6c17aab5650d562f90792",
+      "bytes": 3378,
+      "retained_path": "inputs/B08-P01/source-cache/neighborhoods/S3-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/neighborhoods/S5-N2.txt",
+      "sha256": "36524ddf2c9928eb392aee825a09dfeba0cc89eba2412f647997e865a381b22b",
+      "bytes": 6352,
+      "retained_path": "inputs/B01-P01/source-cache/neighborhoods/S5-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/neighborhoods/S1-N4.txt",
+      "sha256": "37035108fd84ec8c36432be6512059a3fbe28bcdc861b35950d047f4206c2c61",
+      "bytes": 3252,
+      "retained_path": "inputs/B05-P01/treatment-cache/neighborhoods/S1-N4.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_csv.py",
+      "sha256": "37be9144ab9838f7b385172571a26dadaed0b1cd45d6a8f731003ac7e9883939",
+      "bytes": 65633,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_csv.py",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/cpython/Lib/test/test_csv.py",
+      "sha256": "37be9144ab9838f7b385172571a26dadaed0b1cd45d6a8f731003ac7e9883939",
+      "bytes": 65633,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_csv.py",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/neighborhoods/S2-N1.txt",
+      "sha256": "3a09dd7e122dfa13bef18a0fced526a6893d67deb73b7bbf3135541c5bfbe7fb",
+      "bytes": 2784,
+      "retained_path": "inputs/B05-P02/treatment-cache/neighborhoods/S2-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P01/source-cache/neighborhoods/S1-N2.txt",
+      "sha256": "3b03852499bc4843568cccaa46ad3bd4bfa76de677b0bebf5f8123d90bf53010",
+      "bytes": 3325,
+      "retained_path": "inputs/B08-P01/source-cache/neighborhoods/S1-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S2-N2.txt",
+      "sha256": "4b5211392461ae8c647e65f8bcd586172995c29679f045cf7b3ca116f60059b6",
+      "bytes": 4532,
+      "retained_path": "inputs/B01-P02/source-cache/neighborhoods/S2-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Modules/_csv.c",
+      "sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45",
+      "bytes": 51448,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Modules/_csv.c",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/cpython/Modules/_csv.c",
+      "sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45",
+      "bytes": 51448,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Modules/_csv.c",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S3-N3.txt",
+      "sha256": "4ccd510a3c81917eec3be38dcb5dda63eb75fecb3a9a2ea9da8854098193e955",
+      "bytes": 4709,
+      "retained_path": "inputs/B04-P01/source-cache/neighborhoods/S3-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S2-N3.txt",
+      "sha256": "4cd746169e202a2c4210be3e16afaed31d5e42a72e2e72692303ecbd998671a9",
+      "bytes": 4522,
+      "retained_path": "inputs/B01-P02/source-cache/neighborhoods/S2-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P01/source-cache/neighborhoods/S2-N2.txt",
+      "sha256": "4d393554e330cb82c69f9b86d4ff2bd3ce684bce91c81daee94036799aab3f04",
+      "bytes": 3558,
+      "retained_path": "inputs/B08-P01/source-cache/neighborhoods/S2-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S1-N4.txt",
+      "sha256": "535e8fb625902ad80037bc9dce949e91537ef34c32b6428cf8eff8773af4adca",
+      "bytes": 3752,
+      "retained_path": "inputs/B04-P01/source-cache/neighborhoods/S1-N4.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S2-N3.txt",
+      "sha256": "552341dc4bc9aeaaaa9da1106e0e21beb0d778abcf24ff3ab5b96e2b5f3192fe",
+      "bytes": 3839,
+      "retained_path": "inputs/B04-P01/source-cache/neighborhoods/S2-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Lib/asyncio/queues.py",
+      "sha256": "559dd0b597af27d60f0ea75a0ee4eff19d9337d685d13e0685d13045ee7b7cdf",
+      "bytes": 10152,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/asyncio/queues.py",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P01/source-cache/cpython/Lib/asyncio/queues.py",
+      "sha256": "559dd0b597af27d60f0ea75a0ee4eff19d9337d685d13e0685d13045ee7b7cdf",
+      "bytes": 10152,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/asyncio/queues.py",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B04-P02/source-cache/neighborhoods/S1-N7.txt",
+      "sha256": "55bdf8b662d54ba31cc725764405e0744ec2916d6ec45653949d82131e1702bf",
+      "bytes": 4934,
+      "retained_path": "inputs/B04-P02/source-cache/neighborhoods/S1-N7.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/neighborhoods/S1-N5.txt",
+      "sha256": "583200e923f47b863826c691ff8094b85fec1eb9ea5dc630d23b69b4c6ec54c3",
+      "bytes": 3898,
+      "retained_path": "inputs/B05-P02/treatment-cache/neighborhoods/S1-N5.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/neighborhoods/S2-N2.txt",
+      "sha256": "58e53ffe0409b5ca7c7a70504da084f91fc678925bbf42bff2c928331d404a6b",
+      "bytes": 2114,
+      "retained_path": "inputs/B05-P01/treatment-cache/neighborhoods/S2-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S1-N1.txt",
+      "sha256": "58ee8bc4b9ef5e855affde503c232945b01e380ab6124918ff622aa791855ffb",
+      "bytes": 4553,
+      "retained_path": "inputs/B01-P02/source-cache/neighborhoods/S1-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P02/source-cache/neighborhoods/S2-N3.txt",
+      "sha256": "59852ba12d056880e9e4689f5c3d7aa81f6aceaf7c295574d9f0aa238fa7469b",
+      "bytes": 5353,
+      "retained_path": "inputs/B04-P02/source-cache/neighborhoods/S2-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S3-N1.txt",
+      "sha256": "599f1e8e30e97a2f8134fbcded6b6a07b226affb0465ff43d1406d037678bb84",
+      "bytes": 4638,
+      "retained_path": "inputs/B04-P01/source-cache/neighborhoods/S3-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P01/source-cache/neighborhoods/S3-N1.txt",
+      "sha256": "63a203eee10ec6c1a99ad08c11cadc6f2356cae6dd4bfc7e597e25190258a006",
+      "bytes": 3437,
+      "retained_path": "inputs/B08-P01/source-cache/neighborhoods/S3-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P01/source-cache/neighborhoods/S2-N3.txt",
+      "sha256": "650b1bce9587de2d20d9d9ad9f2a14812637791fe89fa31a263cfd5db76a24d4",
+      "bytes": 2853,
+      "retained_path": "inputs/B08-P01/source-cache/neighborhoods/S2-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/asyncio-task.rst",
+      "sha256": "6603ce6fdcb36380b1e22eb26bd7f60c919bdae62958448ec56c71783f499b79",
+      "bytes": 48620,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/asyncio-task.rst",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/cpython/Doc/library/asyncio-task.rst",
+      "sha256": "6603ce6fdcb36380b1e22eb26bd7f60c919bdae62958448ec56c71783f499b79",
+      "bytes": 48620,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/asyncio-task.rst",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B04-P02/source-cache/neighborhoods/S1-N1.txt",
+      "sha256": "67a36d1dc6d5bec67ddfb705a53f2c1993cfbadc7f9d18a0ef85a92404dafbe5",
+      "bytes": 5327,
+      "retained_path": "inputs/B04-P02/source-cache/neighborhoods/S1-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/neighborhoods/S2-N1.txt",
+      "sha256": "68865ccea3e45eb42654b18644fae6175d9e2f682aa31ff88683d18847d37ceb",
+      "bytes": 2669,
+      "retained_path": "inputs/B05-P01/treatment-cache/neighborhoods/S2-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/neighborhoods/S3-N3.txt",
+      "sha256": "68add7a014ce8bdec759632646180a7c5ba1468fd636ca877c5ee0d242b4ece3",
+      "bytes": 3149,
+      "retained_path": "inputs/B05-P02/treatment-cache/neighborhoods/S3-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P02/source-cache/neighborhoods/S2-N2.txt",
+      "sha256": "6aeb381d3801a1907c25d0adadfbe4513a411ffde77c21e4c114c6344dadaa49",
+      "bytes": 5042,
+      "retained_path": "inputs/B04-P02/source-cache/neighborhoods/S2-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/neighborhoods/S3-N2.txt",
+      "sha256": "6b58ec01f076144de8de80292156ce6cb61a1a0671f97813c09410dd5f36c4a4",
+      "bytes": 3438,
+      "retained_path": "inputs/B05-P02/treatment-cache/neighborhoods/S3-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Lib/zipfile/__init__.py",
+      "sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+      "bytes": 89132,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/zipfile/__init__.py",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/cpython/Lib/zipfile/__init__.py",
+      "sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+      "bytes": 89132,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/zipfile/__init__.py",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/neighborhoods/S3-N2.txt",
+      "sha256": "6d106afc71e910fc9830c24652cf01603c9818538783ba697290287face6ce38",
+      "bytes": 2498,
+      "retained_path": "inputs/B01-P01/source-cache/neighborhoods/S3-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/unicodedata.rst",
+      "sha256": "6ee133763805a5c4ee062f24787bee8460310e75579f008b9a5129cf64e3d67d",
+      "bytes": 7508,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/unicodedata.rst",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/cpython/Doc/library/unicodedata.rst",
+      "sha256": "6ee133763805a5c4ee062f24787bee8460310e75579f008b9a5129cf64e3d67d",
+      "bytes": 7508,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/unicodedata.rst",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/neighborhoods/S1-N1.txt",
+      "sha256": "6ee34f291fb2fa3b14a648ea8fe38909a390993f87400f7c179bffa2a4fc9b15",
+      "bytes": 3229,
+      "retained_path": "inputs/B01-P01/source-cache/neighborhoods/S1-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/neighborhoods/S3-N1.txt",
+      "sha256": "6f05b99018cff5a6092e9a9c71b93f1e5bff031ea0ec643a6f2f383388c41709",
+      "bytes": 4059,
+      "retained_path": "inputs/B05-P01/treatment-cache/neighborhoods/S3-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/neighborhoods/S1-N3.txt",
+      "sha256": "6fe9888158e62085aabdf6144e3ff1437b46a3319e09357cc9dfeb3b87b70040",
+      "bytes": 3670,
+      "retained_path": "inputs/B05-P01/treatment-cache/neighborhoods/S1-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S1-N3.txt",
+      "sha256": "7174a416cc467151095da1c37f1632e43e8808e6688616d06004b67200672c74",
+      "bytes": 1647,
+      "retained_path": "inputs/B01-P02/source-cache/neighborhoods/S1-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S3-N1.txt",
+      "sha256": "7399725744a3f6aedc2d51246bdc7795079a5075dfbd85a9192147e871b192eb",
+      "bytes": 4293,
+      "retained_path": "inputs/B01-P02/source-cache/neighborhoods/S3-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P02/source-cache/neighborhoods/S1-N2.txt",
+      "sha256": "7554c1336db7c93582fc81ae3748560ce51f1fe53c501042e6e4d4a69a9750ec",
+      "bytes": 5115,
+      "retained_path": "inputs/B04-P02/source-cache/neighborhoods/S1-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/zipfile.rst",
+      "sha256": "75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd",
+      "bytes": 35432,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/zipfile.rst",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/cpython/Doc/library/zipfile.rst",
+      "sha256": "75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd",
+      "bytes": 35432,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/zipfile.rst",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S1-N1.txt",
+      "sha256": "77594c0700d6bc222e371b1ffe52530078b6cec1414efd74e5a3d26b3eb8c340",
+      "bytes": 4499,
+      "retained_path": "inputs/B04-P01/source-cache/neighborhoods/S1-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Objects/unicodeobject.c",
+      "sha256": "77ffa6c7c7407207a531890f95e474c812fa1066bb0f22cd92887cf5717e83c7",
+      "bytes": 474671,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Objects/unicodeobject.c",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/cpython/Objects/unicodeobject.c",
+      "sha256": "77ffa6c7c7407207a531890f95e474c812fa1066bb0f22cd92887cf5717e83c7",
+      "bytes": 474671,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Objects/unicodeobject.c",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/neighborhoods/S2-N1.txt",
+      "sha256": "781a44bdce2c64d6e41d91a96d4dc15202a4e40e6441d1bab16463eab1b08c0d",
+      "bytes": 3309,
+      "retained_path": "inputs/B01-P01/source-cache/neighborhoods/S2-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/LICENSE",
+      "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "bytes": 13809,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/LICENSE",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Lib/asyncio/subprocess.py",
+      "sha256": "7b70605716334f63cc482123b2aaa3b7c5bb7138eeab63a037bd8068d43307c1",
+      "bytes": 7737,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/asyncio/subprocess.py",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/cpython/Lib/asyncio/subprocess.py",
+      "sha256": "7b70605716334f63cc482123b2aaa3b7c5bb7138eeab63a037bd8068d43307c1",
+      "bytes": 7737,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/asyncio/subprocess.py",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/neighborhoods/S5-N1.txt",
+      "sha256": "7d48acc55e2cbf3326b430abf8aff9ff49df154e3a7458331eaa3b3022b1bf78",
+      "bytes": 3170,
+      "retained_path": "inputs/B05-P01/treatment-cache/neighborhoods/S5-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/neighborhoods/S4-N2.txt",
+      "sha256": "7e9d9401bbdaa4b2e8acca0a62cb17db3fc0e04b5d84956ef1cb858e9e348858",
+      "bytes": 7906,
+      "retained_path": "inputs/B01-P01/source-cache/neighborhoods/S4-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/neighborhoods/S1-N2.txt",
+      "sha256": "7f1010baebaab9dedb54a1ec928f32ff0fb8565141c52c1c453f9cc388848fba",
+      "bytes": 3697,
+      "retained_path": "inputs/B05-P01/treatment-cache/neighborhoods/S1-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P02/source-cache/neighborhoods/S1-N5.txt",
+      "sha256": "80737f8ff1a55761691083d327fec953bee6aa1eab945b4ab4f2b40bc887f833",
+      "bytes": 5003,
+      "retained_path": "inputs/B04-P02/source-cache/neighborhoods/S1-N5.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P02/source-cache/neighborhoods/S1-N6.txt",
+      "sha256": "80bcfb49907a97dbbfc600f4b3b4a82554194381186f54f7bb8911a78791e013",
+      "bytes": 5016,
+      "retained_path": "inputs/B04-P02/source-cache/neighborhoods/S1-N6.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/neighborhoods/S4-N1.txt",
+      "sha256": "81f799f66846d575ebb9ebbda6d64ba533ac05f0a8d22e6879215d587daa7da0",
+      "bytes": 5571,
+      "retained_path": "inputs/B01-P01/source-cache/neighborhoods/S4-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Lib/asyncio/tasks.py",
+      "sha256": "821f2e08c8c33160250db98defbd5dc193b292ec057ae0565f372fbe6cfc5b5e",
+      "bytes": 39757,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/asyncio/tasks.py",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/cpython/Lib/asyncio/tasks.py",
+      "sha256": "821f2e08c8c33160250db98defbd5dc193b292ec057ae0565f372fbe6cfc5b5e",
+      "bytes": 39757,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/asyncio/tasks.py",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S4-N1.txt",
+      "sha256": "86009607e7abf077b2bbe17b7ac9dcfbafb779984c1e245f61e15e18d7ea8a5c",
+      "bytes": 4527,
+      "retained_path": "inputs/B04-P01/source-cache/neighborhoods/S4-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/neighborhoods/S1-N7.txt",
+      "sha256": "86a6950f794df70d62822ea98d39afe29e3f54a4a2fbcb656022222c1406e1f5",
+      "bytes": 679,
+      "retained_path": "inputs/B05-P02/treatment-cache/neighborhoods/S1-N7.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_asyncio/test_queues.py",
+      "sha256": "8997747f29c7e39f5c42cfb21258c08ad7d5fcf965b799af151491cc0aaab984",
+      "bytes": 21060,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_asyncio/test_queues.py",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P01/source-cache/cpython/Lib/test/test_asyncio/test_queues.py",
+      "sha256": "8997747f29c7e39f5c42cfb21258c08ad7d5fcf965b799af151491cc0aaab984",
+      "bytes": 21060,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_asyncio/test_queues.py",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B04-P02/source-cache/neighborhoods/S2-N1.txt",
+      "sha256": "8cd4c830065674b063da815b9b04127655fc1dc9c2a399df6dec8caa3adb39fa",
+      "bytes": 6060,
+      "retained_path": "inputs/B04-P02/source-cache/neighborhoods/S2-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_shutil.py",
+      "sha256": "91e76e46cc6246955743648bf8779a8f8f50192745f7124c9a4f83565c479b75",
+      "bytes": 143522,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_shutil.py",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/cpython/Lib/test/test_shutil.py",
+      "sha256": "91e76e46cc6246955743648bf8779a8f8f50192745f7124c9a4f83565c479b75",
+      "bytes": 143522,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_shutil.py",
+      "exact_alias": true
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Modules/_sqlite/connection.c",
+      "sha256": "97decbb60d78cb3be32beea51236502c9d339b6b44c2e359b2349d72d1254078",
+      "bytes": 79296,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Modules/_sqlite/connection.c",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/cpython/Modules/_sqlite/connection.c",
+      "sha256": "97decbb60d78cb3be32beea51236502c9d339b6b44c2e359b2349d72d1254078",
+      "bytes": 79296,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Modules/_sqlite/connection.c",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B08-P01/source-cache/neighborhoods/S1-N1.txt",
+      "sha256": "9cf1a36361536feb163f5d1401dac89c4807ce6df126279f6b447e11826f6163",
+      "bytes": 3633,
+      "retained_path": "inputs/B08-P01/source-cache/neighborhoods/S1-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/neighborhoods/S4-N1.txt",
+      "sha256": "9d8e10fcac65452132c5e57abfa7ca64ca8341ea95089539c364a8510823d65d",
+      "bytes": 5135,
+      "retained_path": "inputs/B05-P02/treatment-cache/neighborhoods/S4-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_asyncio/test_subprocess.py",
+      "sha256": "a052fda324bc9d006a43f8b1b660ddc97f317d975a73f86f72e83ff81e31e982",
+      "bytes": 38293,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_asyncio/test_subprocess.py",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/cpython/Lib/test/test_asyncio/test_subprocess.py",
+      "sha256": "a052fda324bc9d006a43f8b1b660ddc97f317d975a73f86f72e83ff81e31e982",
+      "bytes": 38293,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_asyncio/test_subprocess.py",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S2-N1.txt",
+      "sha256": "a33fdbb8a0d62d7ce125a552cc1706406bbf9c96eabeddf3b97783e345964980",
+      "bytes": 4576,
+      "retained_path": "inputs/B01-P02/source-cache/neighborhoods/S2-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/neighborhoods/S5-N1.txt",
+      "sha256": "a5eff26639754a14ea663e195dc3c8207c72007037cbb5c8162c69216b268d30",
+      "bytes": 3162,
+      "retained_path": "inputs/B08-P02/source-cache/neighborhoods/S5-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/neighborhoods/S3-N1.txt",
+      "sha256": "a60c64dc91be0f7ac3b8afe4562557b4f806e31b994d0caafb2349277954d18f",
+      "bytes": 3770,
+      "retained_path": "inputs/B05-P02/treatment-cache/neighborhoods/S3-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/neighborhoods/S5-N1.txt",
+      "sha256": "a6bc2be54d95089de8c714f8f1136f98f41f6241b826772ce82ad072ce29b0b1",
+      "bytes": 6679,
+      "retained_path": "inputs/B01-P01/source-cache/neighborhoods/S5-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/shutil.rst",
+      "sha256": "ab35dd724e5d9d3c9f25ce79714758e10ca3a530d083977ae8ee43417b43a7f4",
+      "bytes": 35285,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/shutil.rst",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/cpython/Doc/library/shutil.rst",
+      "sha256": "ab35dd724e5d9d3c9f25ce79714758e10ca3a530d083977ae8ee43417b43a7f4",
+      "bytes": 35285,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/shutil.rst",
+      "exact_alias": true
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/rfc/rfc9111.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477,
+      "retained_path": "helpers/component-fixtures-v1/sources/rfc/rfc9111.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P02/source-cache/rfc/rfc9111.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "bytes": 84477,
+      "retained_path": "helpers/component-fixtures-v1/sources/rfc/rfc9111.txt",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B04-P02/source-cache/neighborhoods/S1-N3.txt",
+      "sha256": "afa73af08ecb2dfef9e0aa1ae61cf2e23d6b7697ac596239ad434751ba3937de",
+      "bytes": 5686,
+      "retained_path": "inputs/B04-P02/source-cache/neighborhoods/S1-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_zipfile/test_core.py",
+      "sha256": "b0f623e9d85806fd18ca9ce3e1cfdba3d6479a7e360641fe92577a3140744802",
+      "bytes": 154639,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_zipfile/test_core.py",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/cpython/Lib/test/test_zipfile/test_core.py",
+      "sha256": "b0f623e9d85806fd18ca9ce3e1cfdba3d6479a7e360641fe92577a3140744802",
+      "bytes": 154639,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_zipfile/test_core.py",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S1-N2.txt",
+      "sha256": "b50697b05f95b0823ea9922d8f100260c30507d3d492c8725395a84cfde6e46f",
+      "bytes": 3659,
+      "retained_path": "inputs/B01-P02/source-cache/neighborhoods/S1-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S1-N3.txt",
+      "sha256": "ba057ccaec4dbf119d346a76e4fdd9faf61c1af115a5fb65d6a89ba45a175515",
+      "bytes": 4349,
+      "retained_path": "inputs/B04-P01/source-cache/neighborhoods/S1-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Lib/csv.py",
+      "sha256": "bd242c88ac4fd905cc64121e6fc9714c32b9e6031f52a03296aa8d28b32903df",
+      "bytes": 19178,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/csv.py",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/cpython/Lib/csv.py",
+      "sha256": "bd242c88ac4fd905cc64121e6fc9714c32b9e6031f52a03296aa8d28b32903df",
+      "bytes": 19178,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/csv.py",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S1-N2.txt",
+      "sha256": "bf38b682b8ec75b623dd9e621e7facf9dcda3a646517eabc6551289537eb4133",
+      "bytes": 5177,
+      "retained_path": "inputs/B04-P01/source-cache/neighborhoods/S1-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S2-N2.txt",
+      "sha256": "c3c467adea0cc46120cbf2a4fe604ae8d465fc48c5f09e3631c6689ce5ea07fb",
+      "bytes": 4467,
+      "retained_path": "inputs/B04-P01/source-cache/neighborhoods/S2-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/neighborhoods/S4-N2.txt",
+      "sha256": "c8998925c3f608f946ef4e761b0c21a4fadb9546dd0bf488167fe2885d62c0ac",
+      "bytes": 4949,
+      "retained_path": "inputs/B05-P02/treatment-cache/neighborhoods/S4-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/neighborhoods/S1-N4.txt",
+      "sha256": "c9f26a381bfd64df8b095c376a026c9298a7f6a7db9f44c716be2571917dd2f2",
+      "bytes": 4565,
+      "retained_path": "inputs/B05-P02/treatment-cache/neighborhoods/S1-N4.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_sqlite3/test_backup.py",
+      "sha256": "cb53e2011fff0f320731acd04880d6fd4e183ebaf4030e2961a21ffe95827b24",
+      "bytes": 5605,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_sqlite3/test_backup.py",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/cpython/Lib/test/test_sqlite3/test_backup.py",
+      "sha256": "cb53e2011fff0f320731acd04880d6fd4e183ebaf4030e2961a21ffe95827b24",
+      "bytes": 5605,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_sqlite3/test_backup.py",
+      "exact_alias": true
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Lib/shutil.py",
+      "sha256": "ce110d23884b9bdc75f7b1654dbd2d7cf5d6762046a4cf8c316b96fd937d1e0b",
+      "bytes": 57463,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/shutil.py",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/cpython/Lib/shutil.py",
+      "sha256": "ce110d23884b9bdc75f7b1654dbd2d7cf5d6762046a4cf8c316b96fd937d1e0b",
+      "bytes": 57463,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/shutil.py",
+      "exact_alias": true
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/sqlite3.rst",
+      "sha256": "d2ee6e3a5ad9c719fe6523fac3c5cc971faadf839e06e082000652cbe0da806d",
+      "bytes": 94329,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/sqlite3.rst",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/cpython/Doc/library/sqlite3.rst",
+      "sha256": "d2ee6e3a5ad9c719fe6523fac3c5cc971faadf839e06e082000652cbe0da806d",
+      "bytes": 94329,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/sqlite3.rst",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/neighborhoods/S3-N2.txt",
+      "sha256": "d50408ff51d1bdf0428f770b3abf27c990c4c466a332de8d1333f0b9a1235b89",
+      "bytes": 4491,
+      "retained_path": "inputs/B04-P01/source-cache/neighborhoods/S3-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/neighborhoods/S2-N1.txt",
+      "sha256": "d524c76d3d6e370e734c20f4dcbb9b7999ccae7209763d9cf26b364cd7d3e152",
+      "bytes": 3866,
+      "retained_path": "inputs/B08-P02/source-cache/neighborhoods/S2-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/neighborhoods/S1-N2.txt",
+      "sha256": "d53cf7525e7007c9e212c1821cc476f3f941fc2473b51539a0f2604b1119b57b",
+      "bytes": 4734,
+      "retained_path": "inputs/B05-P02/treatment-cache/neighborhoods/S1-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/os.rst",
+      "sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15",
+      "bytes": 202500,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/os.rst",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P01/source-cache/cpython/Doc/library/os.rst",
+      "sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15",
+      "bytes": 202500,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/os.rst",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B01-P02/source-cache/neighborhoods/S3-N3.txt",
+      "sha256": "d73704e300c98048450d62e50f35adfe4a03c5b5dc63ddfa3c3de02c422bbb08",
+      "bytes": 4754,
+      "retained_path": "inputs/B01-P02/source-cache/neighborhoods/S3-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/neighborhoods/S3-N2.txt",
+      "sha256": "d9ceae2e253b18007e8916fdaf8d73b1d969728b752548ac235cc9dac9f724f8",
+      "bytes": 3863,
+      "retained_path": "inputs/B05-P01/treatment-cache/neighborhoods/S3-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B04-P02/source-cache/neighborhoods/S1-N8.txt",
+      "sha256": "da294c4495ca9b91ce98283e13cbb935d6d648d4618bbd566ab861e47793466c",
+      "bytes": 4931,
+      "retained_path": "inputs/B04-P02/source-cache/neighborhoods/S1-N8.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/neighborhoods/S1-N1.txt",
+      "sha256": "ddbda50a17b29657a3f3d57b53f6bae8cba0ec2350f63a84333db68368aab034",
+      "bytes": 3825,
+      "retained_path": "inputs/B05-P01/treatment-cache/neighborhoods/S1-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/stdtypes.rst",
+      "sha256": "de17cc87c19a676a668967f83c6be45499d5de05bd3d039d606d9affad8e248b",
+      "bytes": 222836,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/stdtypes.rst",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/cpython/Doc/library/stdtypes.rst",
+      "sha256": "de17cc87c19a676a668967f83c6be45499d5de05bd3d039d606d9affad8e248b",
+      "bytes": 222836,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/stdtypes.rst",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B08-P01/source-cache/neighborhoods/S2-N1.txt",
+      "sha256": "de455934fe90b738328bdca06bf927e2933c3da18b77b78edb058dc1abba6344",
+      "bytes": 4390,
+      "retained_path": "inputs/B08-P01/source-cache/neighborhoods/S2-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/neighborhoods/S2-N3.txt",
+      "sha256": "e2146e13c1d5e6c086f0c1de697ae1e1c24211aef53d2f99c160d1f8f77c9978",
+      "bytes": 3513,
+      "retained_path": "inputs/B05-P01/treatment-cache/neighborhoods/S2-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/neighborhoods/S2-N3.txt",
+      "sha256": "e21d23883fa2feb6c30da911099dddc769f377b1a400186bb078b6e11f5d0e50",
+      "bytes": 3998,
+      "retained_path": "inputs/B05-P02/treatment-cache/neighborhoods/S2-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/neighborhoods/S4-N3.txt",
+      "sha256": "e40cfa7b7d4474bab32ff85baf16c95ef52cd1796be08a1904ac39e6bf9bc98e",
+      "bytes": 4990,
+      "retained_path": "inputs/B05-P02/treatment-cache/neighborhoods/S4-N3.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_unicodedata.py",
+      "sha256": "ea5d43dfffa361eab1c61528096bb064afdf2e6666c4ba971cc3cf3d297e6c4f",
+      "bytes": 18125,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_unicodedata.py",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/cpython/Lib/test/test_unicodedata.py",
+      "sha256": "ea5d43dfffa361eab1c61528096bb064afdf2e6666c4ba971cc3cf3d297e6c4f",
+      "bytes": 18125,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_unicodedata.py",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B08-P01/source-cache/neighborhoods/S3-N2.txt",
+      "sha256": "ec6036060b64d1cceff3a71a76105c3a3839716b94fb3faad6698f7d015e0076",
+      "bytes": 3173,
+      "retained_path": "inputs/B08-P01/source-cache/neighborhoods/S3-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/neighborhoods/S4-N1.txt",
+      "sha256": "eefa6da8c6ed8059fc85258f0d1e080953e26617e27af5fd9f86dbbd8e931862",
+      "bytes": 3255,
+      "retained_path": "inputs/B05-P01/treatment-cache/neighborhoods/S4-N1.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/sqlite/wal.html",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "bytes": 42143,
+      "retained_path": "helpers/component-fixtures-v1/sources/sqlite/wal.html",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B01-P01/source-cache/sqlite/wal.html",
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "bytes": 42143,
+      "retained_path": "helpers/component-fixtures-v1/sources/sqlite/wal.html",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/neighborhoods/S4-N2.txt",
+      "sha256": "f37589a51970bfc7f00b3c57fa07df1e1cd9e157235700e3d69bae3bfd725898",
+      "bytes": 2668,
+      "retained_path": "inputs/B08-P02/source-cache/neighborhoods/S4-N2.txt",
+      "exact_alias": false
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_str.py",
+      "sha256": "f5417b5b30eaf393032a59a4cbde3e70731a93f74e7c7709ec8939fa796a10e2",
+      "bytes": 129386,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_str.py",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B08-P02/source-cache/cpython/Lib/test/test_str.py",
+      "sha256": "f5417b5b30eaf393032a59a4cbde3e70731a93f74e7c7709ec8939fa796a10e2",
+      "bytes": 129386,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Lib/test/test_str.py",
+      "exact_alias": true
+    },
+    {
+      "path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/asyncio-subprocess.rst",
+      "sha256": "f79a45c54d29bad97db6c9a6f786e8f2852fab610ec6f29dce0e2366a09e27d4",
+      "bytes": 11955,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/asyncio-subprocess.rst",
+      "exact_alias": false
+    },
+    {
+      "path": "inputs/B05-P01/treatment-cache/cpython/Doc/library/asyncio-subprocess.rst",
+      "sha256": "f79a45c54d29bad97db6c9a6f786e8f2852fab610ec6f29dce0e2366a09e27d4",
+      "bytes": 11955,
+      "retained_path": "helpers/component-fixtures-v1/sources/cpython/Doc/library/asyncio-subprocess.rst",
+      "exact_alias": true
+    },
+    {
+      "path": "inputs/B05-P02/treatment-cache/neighborhoods/S1-N6.txt",
+      "sha256": "f9a221ba1f9d5cd0c7feb939931a864dc7eacce0b0b9cfb4f797eb03bbfcc280",
+      "bytes": 4136,
+      "retained_path": "inputs/B05-P02/treatment-cache/neighborhoods/S1-N6.txt",
+      "exact_alias": false
+    }
+  ]
+}

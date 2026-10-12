@@ -1,0 +1,112 @@
+    resembles GNU's "cp -P src dst".
+
+    If source and destination are the same file, a SameFileError will be
+    raised.
+
+    """
+    if os.path.isdir(dst):
+        dst = os.path.join(dst, os.path.basename(src))
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+    copymode(src, dst, follow_symlinks=follow_symlinks)
+    return dst
+
+def copy2(src, dst, *, follow_symlinks=True):
+    """Copy data and metadata. Return the file's destination.
+
+    Metadata is copied with copystat(). Please see the copystat function
+    for more information.
+
+    The destination may be a directory.
+
+    If follow_symlinks is false, symlinks won't be followed. This
+    resembles GNU's "cp -P src dst".
+    """
+    if os.path.isdir(dst):
+        dst = os.path.join(dst, os.path.basename(src))
+
+    if hasattr(_winapi, "CopyFile2"):
+        src_ = os.fsdecode(src)
+        dst_ = os.fsdecode(dst)
+        flags = _winapi.COPY_FILE_ALLOW_DECRYPTED_DESTINATION # for compat
+        if not follow_symlinks:
+            flags |= _winapi.COPY_FILE_COPY_SYMLINK
+        try:
+            _winapi.CopyFile2(src_, dst_, flags)
+            return dst
+        except OSError as exc:
+            if (exc.winerror == _winapi.ERROR_PRIVILEGE_NOT_HELD
+                and not follow_symlinks):
+                # Likely encountered a symlink we aren't allowed to create.
+                # Fall back on the old code
+                pass
+            elif exc.winerror == _winapi.ERROR_ACCESS_DENIED:
+                # Possibly encountered a hidden or readonly file we can't
+                # overwrite. Fall back on old code
+                pass
+            else:
+                raise
+
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+    copystat(src, dst, follow_symlinks=follow_symlinks)
+    return dst
+
+def ignore_patterns(*patterns):
+    """Function that can be used as copytree() ignore parameter.
+
+    Patterns is a sequence of glob-style patterns
+    that are used to exclude files"""
+    def _ignore_patterns(path, names):
+        ignored_names = []
+        for pattern in patterns:
+            ignored_names.extend(fnmatch.filter(names, pattern))
+        return set(ignored_names)
+    return _ignore_patterns
+
+def _copytree(entries, src, dst, symlinks, ignore, copy_function,
+              ignore_dangling_symlinks, dirs_exist_ok=False):
+    if ignore is not None:
+        ignored_names = ignore(os.fspath(src), [x.name for x in entries])
+    else:
+        ignored_names = ()
+
+    os.makedirs(dst, exist_ok=dirs_exist_ok)
+    errors = []
+    use_srcentry = copy_function is copy2 or copy_function is copy
+
+    for srcentry in entries:
+        if srcentry.name in ignored_names:
+            continue
+        srcname = os.path.join(src, srcentry.name)
+        dstname = os.path.join(dst, srcentry.name)
+        srcobj = srcentry if use_srcentry else srcname
+        try:
+            is_symlink = srcentry.is_symlink()
+            if is_symlink and os.name == 'nt':
+                # Special check for directory junctions, which appear as
+                # symlinks but we want to recurse.
+                lstat = srcentry.stat(follow_symlinks=False)
+                if lstat.st_reparse_tag == stat.IO_REPARSE_TAG_MOUNT_POINT:
+                    is_symlink = False
+            if is_symlink:
+                linkto = os.readlink(srcname)
+                if symlinks:
+                    # We can't just leave it to `copy_function` because legacy
+                    # code with a custom `copy_function` may rely on copytree
+                    # doing the right thing.
+                    os.symlink(linkto, dstname)
+                    copystat(srcobj, dstname, follow_symlinks=not symlinks)
+                else:
+                    # ignore dangling symlink if the flag is on
+                    if not os.path.exists(linkto) and ignore_dangling_symlinks:
+                        continue
+                    # otherwise let the copy occur. copy2 will raise an error
+                    if srcentry.is_dir():
+                        copytree(srcobj, dstname, symlinks, ignore,
+                                 copy_function, ignore_dangling_symlinks,
+                                 dirs_exist_ok)
+                    else:
+                        copy_function(srcobj, dstname)
+            elif srcentry.is_dir():
+                copytree(srcobj, dstname, symlinks, ignore, copy_function,
+                         ignore_dangling_symlinks, dirs_exist_ok)
+            else:

@@ -1,0 +1,83 @@
+{
+  "schema_version": "er13-obligation-rubric-v1",
+  "case_id": "B06-P01",
+  "visibility": "hidden_until_declared_plan_reveal",
+  "scoring_policy": "Judge supported meaning and applicability, not length, citation counts, agreement, or token copying. Unknown user data may remain unknown; available mechanism research must still be done.",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "material_original_obligations",
+      "criteria": [
+        "Read-selected-object transformation boundary, patch validation and concurrent-host-edit protection.",
+        "Loop/crash/invalid-result containment, responsive host and independent built-in commands.",
+        "Capability/permission UX, optional selected-file access, update workflow and Windows/Linux applicability."
+      ],
+      "negative_constraints": [
+        "No blanket filesystem/network grants by default.",
+        "Separate process alone is not a full security guarantee.",
+        "No partial unvalidated live patches.",
+        "No execution of custom extension installers.",
+        "No untrusted-extension installation or production-audit claim."
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "consequential_source_facts_and_applicability",
+      "criteria": [
+        "Check consequential mechanisms against relevant primary context, including platform/version and caller or integration boundaries.",
+        "Separate documented guarantees from assumptions and limits."
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "useful_unfamiliar_discovery_alternatives_history",
+      "criteria": [
+        "Compare execution/isolation and data-exchange mechanisms with actual OS limits.",
+        "Compare worker lifetime/update permission strategies and developer burden."
+      ],
+      "record": [
+        "Useful supported opportunities",
+        "Material missing mechanism families"
+      ],
+      "recall_limit": "Observed finite comparison set only; no universal recall claim."
+    },
+    {
+      "axis": 4,
+      "name": "valid_corrections_rejections_plan_dispositions",
+      "criteria": [
+        "After reveal, disposition each material draft choice as retained, changed, rejected, or unresolved with consequential support.",
+        "Do not silently discard requested behavior when correcting a draft assumption."
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "supported_meaning_retained_to_complete_final",
+      "criteria": [
+        "Preserve all material requirements and justified findings from discovery, draft and criticism in the complete final.",
+        "Keep alternatives, exceptions, negative constraints and uncertainty visible where they affect decisions."
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "meaningful_validation_with_execution_distinguished",
+      "criteria": [
+        "Propose looping/crashing workers, malformed/stale patches, unauthorized file/network and upgrade-grant checks.",
+        "Distinguish responsiveness measurements from enforceable isolation evidence; no production security certification required.",
+        "Identify which checks were executed, what they observed and their limits; label all unexecuted checks as proposed.",
+        "Research-proposal scope does not require deployment, physical intervention or proof of all possible behavior."
+      ]
+    }
+  ],
+  "time_contract": {
+    "maximum_elapsed_minutes": 60,
+    "minimum_duration": null,
+    "quality_independent_of_elapsed": true,
+    "wording": "Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time."
+  },
+  "global_negative_constraints": [
+    "Do not deploy the future product.",
+    "Do not write canonical product specifications.",
+    "Do not preselect a winning product.",
+    "Do not expose this rubric or exact draft plan during brief-only discovery."
+  ]
+}

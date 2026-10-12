@@ -1,0 +1,112 @@
+
+   .. audit-event:: shutil.copymode src,dst shutil.copy
+
+   .. versionchanged:: 3.3
+      Added *follow_symlinks* argument.
+      Now returns path to the newly created file.
+
+   .. versionchanged:: 3.8
+      Platform-specific fast-copy syscalls may be used internally in order to
+      copy the file more efficiently. See
+      :ref:`shutil-platform-dependent-efficient-copy-operations` section.
+
+.. function:: copy2(src, dst, *, follow_symlinks=True)
+
+   Identical to :func:`~shutil.copy` except that :func:`copy2`
+   also attempts to preserve file metadata.
+
+   When *follow_symlinks* is false, and *src* is a symbolic
+   link, :func:`copy2` attempts to copy all metadata from the
+   *src* symbolic link to the newly created *dst* symbolic link.
+   However, this functionality is not available on all platforms.
+   On platforms where some or all of this functionality is
+   unavailable, :func:`copy2` will preserve all the metadata
+   it can; :func:`copy2` never raises an exception because it
+   cannot preserve file metadata.
+
+   :func:`copy2` uses :func:`copystat` to copy the file metadata.
+   Please see :func:`copystat` for more information
+   about platform support for modifying symbolic link metadata.
+
+   .. audit-event:: shutil.copyfile src,dst shutil.copy2
+
+   .. audit-event:: shutil.copystat src,dst shutil.copy2
+
+   .. versionchanged:: 3.3
+      Added *follow_symlinks* argument, try to copy extended
+      file system attributes too (currently Linux only).
+      Now returns path to the newly created file.
+
+   .. versionchanged:: 3.8
+      Platform-specific fast-copy syscalls may be used internally in order to
+      copy the file more efficiently. See
+      :ref:`shutil-platform-dependent-efficient-copy-operations` section.
+
+.. function:: ignore_patterns(*patterns)
+
+   This factory function creates a function that can be used as a callable for
+   :func:`copytree`\'s *ignore* argument, ignoring files and directories that
+   match one of the glob-style *patterns* provided.  See the example below.
+
+
+.. function:: copytree(src, dst, symlinks=False, ignore=None, \
+              copy_function=copy2, ignore_dangling_symlinks=False, \
+              dirs_exist_ok=False)
+
+   Recursively copy an entire directory tree rooted at *src* to a directory
+   named *dst* and return the destination directory.  All intermediate
+   directories needed to contain *dst* will also be created by default.
+
+   Permissions and times of directories are copied with :func:`copystat`,
+   individual files are copied using :func:`~shutil.copy2`.
+
+   If *symlinks* is true, symbolic links in the source tree are represented as
+   symbolic links in the new tree and the metadata of the original links will
+   be copied as far as the platform allows; if false or omitted, the contents
+   and metadata of the linked files are copied to the new tree.
+
+   When *symlinks* is false, if the file pointed to by the symlink doesn't
+   exist, an exception will be added in the list of errors raised in
+   an :exc:`Error` exception at the end of the copy process.
+   You can set the optional *ignore_dangling_symlinks* flag to true if you
+   want to silence this exception. Notice that this option has no effect
+   on platforms that don't support :func:`os.symlink`.
+
+   If *ignore* is given, it must be a callable that will receive as its
+   arguments the directory being visited by :func:`copytree`, and a list of its
+   contents, as returned by :func:`os.listdir`.  Since :func:`copytree` is
+   called recursively, the *ignore* callable will be called once for each
+   directory that is copied.  The callable must return a sequence of directory
+   and file names relative to the current directory (i.e. a subset of the items
+   in its second argument); these names will then be ignored in the copy
+   process.  :func:`ignore_patterns` can be used to create such a callable that
+   ignores names based on glob-style patterns.
+
+   If exception(s) occur, an :exc:`Error` is raised with a list of reasons.
+
+   If *copy_function* is given, it must be a callable that will be used to copy
+   each file. It will be called with the source path and the destination path
+   as arguments. By default, :func:`~shutil.copy2` is used, but any function
+   that supports the same signature (like :func:`~shutil.copy`) can be used.
+
+   If *dirs_exist_ok* is false (the default) and *dst* already exists, a
+   :exc:`FileExistsError` is raised. If *dirs_exist_ok* is true, the copying
+   operation will continue if it encounters existing directories, and files
+   within the *dst* tree will be overwritten by corresponding files from the
+   *src* tree.
+
+   .. audit-event:: shutil.copytree src,dst shutil.copytree
+
+   .. versionchanged:: 3.2
+      Added the *copy_function* argument to be able to provide a custom copy
+      function.
+      Added the *ignore_dangling_symlinks* argument to silence dangling symlinks
+      errors when *symlinks* is false.
+
+   .. versionchanged:: 3.3
+      Copy metadata when *symlinks* is false.
+      Now returns *dst*.
+
+   .. versionchanged:: 3.8
+      Platform-specific fast-copy syscalls may be used internally in order to
+      copy the file more efficiently. See

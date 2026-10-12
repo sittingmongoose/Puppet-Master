@@ -1,0 +1,25 @@
+{
+  "observed_utc": "2026-10-12T00:26:03.839460+00:00",
+  "tests": [
+    {
+      "operation": "B05-P01 cached S2 lines171\u2013180",
+      "arm": "treatment",
+      "exit_code": 0,
+      "expect": "exact primary interval",
+      "passed": true,
+      "stdout_sha256": "b25b003b467d08b3be9c9495a2d2d2f69f6a2086e7f760292194b87c4d37756e",
+      "stderr": ""
+    },
+    {
+      "operation": "B05-P01 cached S2 lines171\u2013180",
+      "arm": "control",
+      "exit_code": 1,
+      "expect": "cache denial",
+      "passed": true,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "B05 control has ordinary independent primary lookup; shared cache expansion is treatment-only."
+    }
+  ],
+  "passed": true,
+  "scope": "mechanical reader/access checks, not product validation"
+}

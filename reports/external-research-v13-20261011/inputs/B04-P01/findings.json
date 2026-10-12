@@ -1,0 +1,72 @@
+{
+  "schema": "immutable-findings-v1",
+  "findings": [
+    {
+      "id": "F1",
+      "disposition": "CHANGE+KEEP",
+      "scope": "copy2 metadata fidelity",
+      "evidence": [
+        "S1 warning/copy2",
+        "S3 test_copy2"
+      ],
+      "request": "Correct all-metadata claim; preserve bytes/useful timestamps/reporting and conditional archival alternative."
+    },
+    {
+      "id": "F2",
+      "disposition": "CHANGE+KEEP",
+      "scope": "cross-volume atomicity and replace authorization",
+      "evidence": [
+        "S2 move fallback",
+        "S4 replace"
+      ],
+      "request": "Destination-local staging; publication matching replace/no-replace policy with explicit race model; retain cross-volume and intact source."
+    },
+    {
+      "id": "F3",
+      "disposition": "CHANGE+UNCERTAIN",
+      "scope": "atomicity versus durable storage",
+      "evidence": [
+        "S4 replace/fsync"
+      ],
+      "request": "Separate visibility and crash durability; define policy/limits and proposed platform interruption tests without claiming execution."
+    },
+    {
+      "id": "F4",
+      "disposition": "KEEP+CONDITION+UNCERTAIN",
+      "scope": "all remaining obligations/alternatives/history/validation",
+      "evidence": [
+        "S1 fast-copy",
+        "brief.md",
+        "plan.md"
+      ],
+      "request": "Retain immutable-source, memory, progress/cancel, owned cleanup, authorization, streaming and conditional platform alternatives; no universal speed or executed-test claim."
+    }
+  ],
+  "coverage": {
+    "O1": [
+      "F2",
+      "F4"
+    ],
+    "O2": [
+      "F2",
+      "F4"
+    ],
+    "O3": [
+      "F2"
+    ],
+    "O4": [
+      "F1"
+    ],
+    "O5": [
+      "F3",
+      "F4"
+    ],
+    "O6": [
+      "F1",
+      "F4"
+    ]
+  },
+  "conventional": "critique.md",
+  "compact": "critique-compact.md",
+  "not_candidate_extra_answer": "Only the assigned critique rendering is released; findings file is preparation/evaluator equivalence evidence."
+}

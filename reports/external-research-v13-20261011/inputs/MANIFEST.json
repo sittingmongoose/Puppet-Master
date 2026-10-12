@@ -1,0 +1,501 @@
+{
+  "schema_version": "er13-design-manifest-v1",
+  "case_author": "codex-er13-design",
+  "cases": [
+    {
+      "case_id": "A-F01",
+      "scope": "component",
+      "mechanism_families": [
+        "local_data",
+        "synchronization"
+      ],
+      "pipeline": "FULL",
+      "files": {
+        "brief.md": {
+          "path": "A-F01/brief.md",
+          "sha256": "a988b5f9e03d7c408c8d7115e5d67b3a74f0af52b470c653b3a988565d087c72",
+          "bytes": 2247,
+          "visibility": "brief_only_discovery"
+        },
+        "plan.md": {
+          "path": "A-F01/plan.md",
+          "sha256": "9415bac7a1feba432895879eaa283f75facac34896039a869facf5b620c1f8d4",
+          "bytes": 2368,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "rubric.json": {
+          "path": "A-F01/rubric.json",
+          "sha256": "79b99b91e488196ec1624c62d9c415cc2851315b61dcfe8b373fb7fc172f9f10",
+          "bytes": 4136,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "metadata.json": {
+          "path": "A-F01/metadata.json",
+          "sha256": "88940a71bd58390d7fd0c1732bf1a35b604895e45f0d45be4020543163d18046",
+          "bytes": 880,
+          "visibility": "dispatcher_only_metadata"
+        }
+      }
+    },
+    {
+      "case_id": "A-F02",
+      "scope": "component",
+      "mechanism_families": [
+        "import_export_media",
+        "accessibility"
+      ],
+      "pipeline": "FULL",
+      "files": {
+        "brief.md": {
+          "path": "A-F02/brief.md",
+          "sha256": "68639f295fd38c006ff1b359ee59dbf32720b14b58f8f34984d557cda6941d67",
+          "bytes": 2340,
+          "visibility": "brief_only_discovery"
+        },
+        "plan.md": {
+          "path": "A-F02/plan.md",
+          "sha256": "5f7ff916807818307634a6a4b42dea7ed030547adae267d936cce489384d6ab2",
+          "bytes": 2449,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "rubric.json": {
+          "path": "A-F02/rubric.json",
+          "sha256": "870e4d51021a87e72c1e5c2d5d9f10e8af85ea80bf0c541c34941cfaecd4caee",
+          "bytes": 4251,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "metadata.json": {
+          "path": "A-F02/metadata.json",
+          "sha256": "6dbb25f7a4baaedf315fafd90336060c35c6f48e6edbaeb1bcd82e34706e543a",
+          "bytes": 891,
+          "visibility": "dispatcher_only_metadata"
+        }
+      }
+    },
+    {
+      "case_id": "B02-P01",
+      "scope": "component",
+      "mechanism_families": [
+        "accessibility",
+        "search_knowledge"
+      ],
+      "pipeline": "FULL",
+      "files": {
+        "brief.md": {
+          "path": "B02-P01/brief.md",
+          "sha256": "bf831ed54f01519ae8ffdd958258d0597826449128a5fc0865e94864bf985fc0",
+          "bytes": 2405,
+          "visibility": "brief_only_discovery"
+        },
+        "plan.md": {
+          "path": "B02-P01/plan.md",
+          "sha256": "5f7209870cdd7e5062b0c571bad89728eb5563c319118e78d65763d1127185b0",
+          "bytes": 2438,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "rubric.json": {
+          "path": "B02-P01/rubric.json",
+          "sha256": "ba2b67b4ca0ec60fcb6526a81a3dc11490140448962a963267493726e16d6c2f",
+          "bytes": 4210,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "metadata.json": {
+          "path": "B02-P01/metadata.json",
+          "sha256": "8f7d26eaf5082da023af6692bd6209209298422b29732b0092479672157fec0d",
+          "bytes": 896,
+          "visibility": "dispatcher_only_metadata"
+        }
+      }
+    },
+    {
+      "case_id": "B02-P02",
+      "scope": "project",
+      "mechanism_families": [
+        "plugin_isolation_scheduling",
+        "local_data"
+      ],
+      "pipeline": "FULL",
+      "files": {
+        "brief.md": {
+          "path": "B02-P02/brief.md",
+          "sha256": "43126aa1ece6faea6819a103a3c8decc797d3fcbebd6f6b4487584297d850e00",
+          "bytes": 2363,
+          "visibility": "brief_only_discovery"
+        },
+        "plan.md": {
+          "path": "B02-P02/plan.md",
+          "sha256": "4b51c824e823a867e2c9d3737a355726e166d7d8c57a3fcb2c9dcf75d7f95824",
+          "bytes": 2363,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "rubric.json": {
+          "path": "B02-P02/rubric.json",
+          "sha256": "3a8d76494d8bfbd262be15ac65fbe6dc179ae7e641b53ba17e8f289b809b226a",
+          "bytes": 4351,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "metadata.json": {
+          "path": "B02-P02/metadata.json",
+          "sha256": "c2c308f9d9dea6d5a734343917d6918bcdd754282b02a4dedc3624d9a49f12a5",
+          "bytes": 901,
+          "visibility": "dispatcher_only_metadata"
+        }
+      }
+    },
+    {
+      "case_id": "B03-P01",
+      "scope": "component",
+      "mechanism_families": [
+        "search_knowledge",
+        "local_data"
+      ],
+      "pipeline": "FULL",
+      "files": {
+        "brief.md": {
+          "path": "B03-P01/brief.md",
+          "sha256": "cc638ce3f990b394825cfe1c5a23b24c08dad37ddfeb061317a12d98d5eb1bae",
+          "bytes": 2313,
+          "visibility": "brief_only_discovery"
+        },
+        "plan.md": {
+          "path": "B03-P01/plan.md",
+          "sha256": "b0efb8261b14a8f968b4ccff9a188ebf1e7ce47309d0c9344d0ccb9f64cba43f",
+          "bytes": 2334,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "rubric.json": {
+          "path": "B03-P01/rubric.json",
+          "sha256": "acc632cf1dba1fd83b4ff750228ab30155d673162b94c399ce1e7e174a26bd9b",
+          "bytes": 4131,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "metadata.json": {
+          "path": "B03-P01/metadata.json",
+          "sha256": "38db061f14d873855e644858560f163b8e00b9384ce752eef2c5372acccdce3f",
+          "bytes": 887,
+          "visibility": "dispatcher_only_metadata"
+        }
+      }
+    },
+    {
+      "case_id": "B03-P02",
+      "scope": "component",
+      "mechanism_families": [
+        "import_export_media",
+        "local_data"
+      ],
+      "pipeline": "FULL",
+      "files": {
+        "brief.md": {
+          "path": "B03-P02/brief.md",
+          "sha256": "a8ba5a417262ebfd75bd75d3d540d63e6457ed2bda078d7fe88172f60b3d5ec7",
+          "bytes": 2274,
+          "visibility": "brief_only_discovery"
+        },
+        "plan.md": {
+          "path": "B03-P02/plan.md",
+          "sha256": "e5275189d516b10c2c700e04fae2df35e229bb7afd3fc3b364d22778f6e461dc",
+          "bytes": 2354,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "rubric.json": {
+          "path": "B03-P02/rubric.json",
+          "sha256": "7d1d734b208ddea6d4a3b815e86f431f587fc5d84d8604c879b50a362bf92794",
+          "bytes": 4279,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "metadata.json": {
+          "path": "B03-P02/metadata.json",
+          "sha256": "b30b266b727574e5fa5418b656c20e5b1d009ecd6ad6d22afe6e335b5a8aeb86",
+          "bytes": 879,
+          "visibility": "dispatcher_only_metadata"
+        }
+      }
+    },
+    {
+      "case_id": "B06-P01",
+      "scope": "component",
+      "mechanism_families": [
+        "plugin_isolation_scheduling"
+      ],
+      "pipeline": "FULL",
+      "files": {
+        "brief.md": {
+          "path": "B06-P01/brief.md",
+          "sha256": "7f2127a0ddebeba5db713bcdca882cc1ac526ceada3e8f27969342e5497a4f99",
+          "bytes": 2301,
+          "visibility": "brief_only_discovery"
+        },
+        "plan.md": {
+          "path": "B06-P01/plan.md",
+          "sha256": "5badf409ba991d9e23aa2b3fb221a4b4fb6e038b5c87cc39477ff68794fc78ed",
+          "bytes": 2389,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "rubric.json": {
+          "path": "B06-P01/rubric.json",
+          "sha256": "5a429a77af3c234b94f03e8454350cc7a09fb44a554d2085efc99becb96649ad",
+          "bytes": 4169,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "metadata.json": {
+          "path": "B06-P01/metadata.json",
+          "sha256": "a26e52781f04f4115a735aeb25588889d0fe38f1814e6545e27457e567f230f5",
+          "bytes": 878,
+          "visibility": "dispatcher_only_metadata"
+        }
+      }
+    },
+    {
+      "case_id": "B06-P02",
+      "scope": "project",
+      "mechanism_families": [
+        "synchronization",
+        "search_knowledge"
+      ],
+      "pipeline": "FULL",
+      "files": {
+        "brief.md": {
+          "path": "B06-P02/brief.md",
+          "sha256": "0c31c92a6b8fc79d1bad8d22831d827e946fdd9dbdf5665b28233125e73932bf",
+          "bytes": 2362,
+          "visibility": "brief_only_discovery"
+        },
+        "plan.md": {
+          "path": "B06-P02/plan.md",
+          "sha256": "4d4a3d4670c5811c0d5b1d3be02cc22c7326402e0f2d118c6715c1f287cc9881",
+          "bytes": 2349,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "rubric.json": {
+          "path": "B06-P02/rubric.json",
+          "sha256": "c194c7f29f8932f5481f97cd36720a4200c7db6b0f8e39a4a2cc7b2012e90db5",
+          "bytes": 4179,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "metadata.json": {
+          "path": "B06-P02/metadata.json",
+          "sha256": "b949a2818b8920c284f108184099a8ff949c748f2ed4b7b5bb1668c7ac76cf2f",
+          "bytes": 902,
+          "visibility": "dispatcher_only_metadata"
+        }
+      }
+    },
+    {
+      "case_id": "B07-P01",
+      "scope": "component",
+      "mechanism_families": [
+        "import_export_media",
+        "local_data"
+      ],
+      "pipeline": "FULL",
+      "files": {
+        "brief.md": {
+          "path": "B07-P01/brief.md",
+          "sha256": "464dc31042b3c3b817dab87a37f16a2f5f2afb975c9c6e6df83745b2f7ac9f3b",
+          "bytes": 2311,
+          "visibility": "brief_only_discovery"
+        },
+        "plan.md": {
+          "path": "B07-P01/plan.md",
+          "sha256": "0bc254bf2a6a44977ac7037923782331552ecee5afdcc79df4264e6452b2c7fa",
+          "bytes": 2391,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "rubric.json": {
+          "path": "B07-P01/rubric.json",
+          "sha256": "74748f30847a3266ec24cea182c8d8658ac4ec82b30bc30e468b6c950322d028",
+          "bytes": 4126,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "metadata.json": {
+          "path": "B07-P01/metadata.json",
+          "sha256": "76912f9d83326bfb82879c1ced1b76ceac8dce31fdef535d04604f51a1027b88",
+          "bytes": 883,
+          "visibility": "dispatcher_only_metadata"
+        }
+      }
+    },
+    {
+      "case_id": "B07-P02",
+      "scope": "component",
+      "mechanism_families": [
+        "accessibility",
+        "import_export_media"
+      ],
+      "pipeline": "FULL",
+      "files": {
+        "brief.md": {
+          "path": "B07-P02/brief.md",
+          "sha256": "35f7b4e31d11d22e539032e83288c48e1a2d7afcd8a25c445c0f1d4ee56ab83e",
+          "bytes": 2340,
+          "visibility": "brief_only_discovery"
+        },
+        "plan.md": {
+          "path": "B07-P02/plan.md",
+          "sha256": "df26ccbc1e544569abb46ab7e4ee0af8426c6bcab1ea3eb645eb69e946f3748b",
+          "bytes": 2420,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "rubric.json": {
+          "path": "B07-P02/rubric.json",
+          "sha256": "b7916952331d1dc831ca0e960ff109f14c3c1e5d5ce362493e309331ef61124a",
+          "bytes": 4143,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "metadata.json": {
+          "path": "B07-P02/metadata.json",
+          "sha256": "7c27ae4fb8c12308e61adacd9e2f6c82aef48e821e813f39f0e370647b82045b",
+          "bytes": 890,
+          "visibility": "dispatcher_only_metadata"
+        }
+      }
+    },
+    {
+      "case_id": "B09-P01",
+      "scope": "project",
+      "mechanism_families": [
+        "local_data",
+        "synchronization",
+        "search_knowledge"
+      ],
+      "pipeline": "FULL",
+      "files": {
+        "brief.md": {
+          "path": "B09-P01/brief.md",
+          "sha256": "38b97542db84680933501648395ce6bf7a03c6cbb191aca8d122e24cb8386d50",
+          "bytes": 2263,
+          "visibility": "brief_only_discovery"
+        },
+        "plan.md": {
+          "path": "B09-P01/plan.md",
+          "sha256": "42c359b02876f8ba1620ebdd8fcfb1813194047145111d5443c58510e6ebe9b4",
+          "bytes": 2278,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "rubric.json": {
+          "path": "B09-P01/rubric.json",
+          "sha256": "25e3033980f4d23ae33ebeaef4358fa650dbd428f56f2e6a6f9917d0dbfd620c",
+          "bytes": 4266,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "metadata.json": {
+          "path": "B09-P01/metadata.json",
+          "sha256": "7bdbbffb63c078a16fb79eed792fa734add38146b357f276c9e647e0e7d24b34",
+          "bytes": 908,
+          "visibility": "dispatcher_only_metadata"
+        }
+      }
+    },
+    {
+      "case_id": "B09-P02",
+      "scope": "component",
+      "mechanism_families": [
+        "plugin_isolation_scheduling"
+      ],
+      "pipeline": "FULL",
+      "files": {
+        "brief.md": {
+          "path": "B09-P02/brief.md",
+          "sha256": "24de7b9093dfa2d349000db9d6c39880adfe588dbb5a7644cb92a3e849b19934",
+          "bytes": 2296,
+          "visibility": "brief_only_discovery"
+        },
+        "plan.md": {
+          "path": "B09-P02/plan.md",
+          "sha256": "80356345baad2274724e5dfc67de202b988f3a5a87bec342e6946c35438d70e3",
+          "bytes": 2391,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "rubric.json": {
+          "path": "B09-P02/rubric.json",
+          "sha256": "7629dc944163454bd36c48a47ccc0019b169f965086a0e31ebf0fb9ba3744868",
+          "bytes": 4186,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "metadata.json": {
+          "path": "B09-P02/metadata.json",
+          "sha256": "b9f2fa6207deebe211ec562f5a9c4a008318429f0f472b579aa4cb0eae8732bd",
+          "bytes": 886,
+          "visibility": "dispatcher_only_metadata"
+        }
+      }
+    },
+    {
+      "case_id": "B10-P01",
+      "scope": "component",
+      "mechanism_families": [
+        "search_knowledge",
+        "local_data"
+      ],
+      "pipeline": "FULL",
+      "files": {
+        "brief.md": {
+          "path": "B10-P01/brief.md",
+          "sha256": "634643274eb2e70cef310bc4c1f017650e63acbb81d5540f6ee33e152142592c",
+          "bytes": 2304,
+          "visibility": "brief_only_discovery"
+        },
+        "plan.md": {
+          "path": "B10-P01/plan.md",
+          "sha256": "acb36080380afebc5669cf45ac5ffd78c7bf760d9593263537903df66dea0957",
+          "bytes": 2309,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "rubric.json": {
+          "path": "B10-P01/rubric.json",
+          "sha256": "a3d1699e1bfa3aa7820ed37d37a0e054ecd849d9ad2500e55605b4dd65cb806f",
+          "bytes": 4230,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "metadata.json": {
+          "path": "B10-P01/metadata.json",
+          "sha256": "2cf3e4d77ec7e15eda51b60243d2b72b3379b9acea48072adb6a991f6d6dee4a",
+          "bytes": 893,
+          "visibility": "dispatcher_only_metadata"
+        }
+      }
+    },
+    {
+      "case_id": "B10-P02",
+      "scope": "project",
+      "mechanism_families": [
+        "accessibility",
+        "import_export_media",
+        "search_knowledge"
+      ],
+      "pipeline": "FULL",
+      "files": {
+        "brief.md": {
+          "path": "B10-P02/brief.md",
+          "sha256": "ad54ba180a1c532f5dec55580fe585fb6cbf2185c67563850c3895b7b1f08b64",
+          "bytes": 2481,
+          "visibility": "brief_only_discovery"
+        },
+        "plan.md": {
+          "path": "B10-P02/plan.md",
+          "sha256": "9dd516db81413121e2bdacf096072668379c7d1d4e1169f0d16489a2f1a10fe6",
+          "bytes": 2424,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "rubric.json": {
+          "path": "B10-P02/rubric.json",
+          "sha256": "e0f7b7414f487b71da6f4021ecb5786badd579e9f4f8715cfd2b2f05ae7b5641",
+          "bytes": 4379,
+          "visibility": "hidden_until_declared_reveal"
+        },
+        "metadata.json": {
+          "path": "B10-P02/metadata.json",
+          "sha256": "ac560eeed8c3e828227536c7b3194d6acbd7952fc64400a50a9a4183409e4d2c",
+          "bytes": 925,
+          "visibility": "dispatcher_only_metadata"
+        }
+      }
+    }
+  ],
+  "software_cases": 14,
+  "component_level_software_cases": 10,
+  "hidden_boundary": "Only brief.md enters discovery; exact plan.md released once by root at declared comparison point; rubric remains evaluation-only unless root explicitly declares a later boundary.",
+  "time_contract": "Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.",
+  "dispatch_and_git_owner": "codex-er13-root"
+}

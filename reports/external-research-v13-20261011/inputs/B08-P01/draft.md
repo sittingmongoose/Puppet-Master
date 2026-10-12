@@ -1,0 +1,17 @@
+# Converter queue proposal — investigator draft
+
+## Queue and workers
+Use `asyncio.Queue(maxsize=20)` with four workers. `put` backpressure bounds waiting jobs [S1,S2]. Job payloads carry IDs and paths rather than full documents. With four workers that each hold one retrieved job and a producer that releases its local job after enqueueing, the queue plus workers owns at most 24 jobs; other retained producer inputs and completed-output records are outside that arithmetic. Queue methods are for the event loop rather than arbitrary threads. The interface distinguishes queued, running, succeeded, failed and abandoned items; update a job outcome before acknowledging it.
+
+For each retrieved item, place `task_done` in a finally path exactly once, including failures, so `join` can terminate. Exceptions do not mean conversion success: success requires a validated output and a recorded successful outcome. A worker cancellation before obtaining an item must not call task_done. Cancellation after obtaining one must record its outcome and release its owned resources. Use temporary output names and publish only successful outputs; leave completed results accessible after stopping.
+
+## Stop contract
+Graceful stop closes admissions, calls `queue.shutdown(immediate=False)`, lets workers drain accepted jobs and awaits both the queue join and worker termination. The shutdown feature is new in Python 3.13 [S1]. A sentinel protocol is an alternative for older runtimes, but it requires ordering and one termination token per worker. Do not silently use 3.13 shutdown on older targets.
+
+Force-stop calls `queue.shutdown(immediate=True)`, cancels active workers, and then awaits queue.join and their termination. Since join means every accepted item has been processed, its return proves all accepted conversions succeeded even after immediate shutdown. We can therefore summarize a force-stop with no remaining queue entries as Completed; recording abandoned waiting jobs would double-count completed work. S2's shutdown implementation removes waiting items and adjusts unfinished task counts. This supports prompt shutdown but needs an application-level outcome policy.
+
+## Estimates and alternatives
+If exactly 12 jobs are available at time zero, every conversion takes exactly 2 seconds, four workers start together, and overhead/retries are absent, three equal waves take 6 seconds; ideal sustained capacity is 2 jobs/second. These are scheduling-model estimates, not measured performance. For arbitrary workloads, the number of queue entries alone is not a latency prediction. A sequential worker is simplest but underuses independent I/O work; a larger concurrency pool may increase resource contention. CPU-bound conversion should use a process-based execution layer rather than assuming asyncio makes Python CPU code parallel.
+
+## Validation and evidence status
+The docs, implementation and tests [S3] were read; no actual conversion pipeline or throughput benchmark ran. Propose a bounded witness of shutdown/join behavior, including nonempty waiting work and an in-flight item, plus application tests for admission blocked during stop, worker exceptions/cancel, duplicate acknowledgment, zero jobs, slow jobs and output cleanup. Observe per-ID outcomes independently of qsize and join. Do not conclude real-world throughput from a self-computed formula. Unknown converter service times remain a workload measurement obligation, not a reason to omit available queue-mechanism research.

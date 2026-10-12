@@ -1,0 +1,14 @@
+{
+  "schema": "er13.public_privacy_check.v1",
+  "scope": "Exact retained FILELIST + FILELIST.json + SHA256SUMS, filenames and UTF-8 bytes; separate prospective metadata check",
+  "scanner": "existing mechanics-v1/public_files.py",
+  "findings": [],
+  "residual_privacy_flags": [
+    "Bounded heuristic; root semantic review required.",
+    "Public primary-source author contacts and two upstream CPython path examples retained unchanged; narrow private policy approvals verified from source provenance.",
+    "Raw private route receipts and original policy/selection excluded.",
+    "Actual publication commit metadata must be checked separately by immutable full commit hash."
+  ],
+  "private_policy_in_public": false,
+  "scanner_reserved_manifest_handling": "Existing scanner reserves public-manifest.json as target even in scan mode. Its actual content is scanned via an explicit source entry with harmless manifest-scan-label.json diagnostic target; other files use actual names. No helper source was changed."
+}

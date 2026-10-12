@@ -1,0 +1,31 @@
+{
+  "schema": "er13.fresh_case.v1",
+  "case_id": "B11-P02",
+  "version": 1,
+  "title": "Rehearsal cue-sheet revision synchronization",
+  "software": true,
+  "component_level_brief": true,
+  "comparison_scope": "FULL_PIPELINE",
+  "domain_family": "collaboration / synchronization / ordered documents",
+  "planned_provider_family": "Muse",
+  "provider_status": "PLANNED_LABEL_NOT_OBSERVED_ROUTE",
+  "control": "R0-ER13",
+  "files": {
+    "brief": "brief.md",
+    "hidden_plan": "plan.md",
+    "rubric": "rubric.json"
+  },
+  "candidate_initial_input": "brief.md only; rubric and exact plan withheld",
+  "exact_plan_release": "one-shot pinned reveal after discovery.md and source-map.json; reveal receipt freezes prior discovery SHA",
+  "maximum_seconds": 3600,
+  "stage_maxima_seconds": {
+    "investigator": 1800,
+    "critic": 720,
+    "reviser": 1080
+  },
+  "topology": "investigator -> independent critic -> fresh reviser",
+  "freshness": "New authored user problem; no historical case output, golden source pack or product winner supplied.",
+  "case_design_independence": "New neutral software obligations, no winning products or case-specific source research. Unadmitted equipment-checkout draft replaced prospectively before freeze after sibling disclosed overlap with frozen B09-P01. Final cue-sheet case has distinct list/reference/approved-publication behavior.",
+  "prepared_at_utc": "2026-10-12T00:25:17.570957+00:00",
+  "execution_status": "NOT_ADMITTED_NOT_EXECUTED"
+}

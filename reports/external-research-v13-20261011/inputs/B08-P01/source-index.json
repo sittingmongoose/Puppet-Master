@@ -1,0 +1,299 @@
+{
+  "case": "B08-P01",
+  "primary_only": true,
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-queue.rst",
+      "sha256": "26c21d8ad906a2da711d5cbee4c91a3833fd66c2ac4d62074d48e247657d7fc9",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "class:: Queue",
+          "matching_lines_1based": [
+            26
+          ],
+          "range_1based": [
+            14,
+            125
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "method:: shutdown",
+          "matching_lines_1based": [
+            103
+          ],
+          "range_1based": [
+            91,
+            202
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "method:: task_done",
+          "matching_lines_1based": [
+            136
+          ],
+          "range_1based": [
+            124,
+            235
+          ]
+        }
+      ],
+      "cached_body": "source-cache/cpython/Doc/library/asyncio-queue.rst",
+      "neighborhoods": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "class:: Queue",
+          "matching_lines_1based": [
+            26
+          ],
+          "range_1based": [
+            14,
+            125
+          ],
+          "path": "source-cache/neighborhoods/S1-N1.txt",
+          "sha256": "9cf1a36361536feb163f5d1401dac89c4807ce6df126279f6b447e11826f6163",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "method:: shutdown",
+          "matching_lines_1based": [
+            103
+          ],
+          "range_1based": [
+            91,
+            202
+          ],
+          "path": "source-cache/neighborhoods/S1-N2.txt",
+          "sha256": "3b03852499bc4843568cccaa46ad3bd4bfa76de677b0bebf5f8123d90bf53010",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "method:: task_done",
+          "matching_lines_1based": [
+            136
+          ],
+          "range_1based": [
+            124,
+            235
+          ],
+          "path": "source-cache/neighborhoods/S1-N3.txt",
+          "sha256": "2af9c71feb268f7caa6bf180d0787ba28d1e73ad7fdd83305ffe93fb2b82c85b",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/queues.py",
+      "sha256": "559dd0b597af27d60f0ea75a0ee4eff19d9337d685d13e0685d13045ee7b7cdf",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def put_nowait(",
+          "matching_lines_1based": [
+            156
+          ],
+          "range_1based": [
+            144,
+            255
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "def task_done(",
+          "matching_lines_1based": [
+            219
+          ],
+          "range_1based": [
+            207,
+            307
+          ]
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "async def join(",
+          "matching_lines_1based": [
+            239
+          ],
+          "range_1based": [
+            227,
+            307
+          ]
+        },
+        {
+          "id": "S2-N4",
+          "literal_needle": "def shutdown(",
+          "matching_lines_1based": [
+            250
+          ],
+          "range_1based": [
+            238,
+            307
+          ]
+        }
+      ],
+      "cached_body": "source-cache/cpython/Lib/asyncio/queues.py",
+      "neighborhoods": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "def put_nowait(",
+          "matching_lines_1based": [
+            156
+          ],
+          "range_1based": [
+            144,
+            255
+          ],
+          "path": "source-cache/neighborhoods/S2-N1.txt",
+          "sha256": "de455934fe90b738328bdca06bf927e2933c3da18b77b78edb058dc1abba6344",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "def task_done(",
+          "matching_lines_1based": [
+            219
+          ],
+          "range_1based": [
+            207,
+            307
+          ],
+          "path": "source-cache/neighborhoods/S2-N2.txt",
+          "sha256": "4d393554e330cb82c69f9b86d4ff2bd3ce684bce91c81daee94036799aab3f04",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "async def join(",
+          "matching_lines_1based": [
+            239
+          ],
+          "range_1based": [
+            227,
+            307
+          ],
+          "path": "source-cache/neighborhoods/S2-N3.txt",
+          "sha256": "650b1bce9587de2d20d9d9ad9f2a14812637791fe89fa31a263cfd5db76a24d4",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S2-N4",
+          "literal_needle": "def shutdown(",
+          "matching_lines_1based": [
+            250
+          ],
+          "range_1based": [
+            238,
+            307
+          ],
+          "path": "source-cache/neighborhoods/S2-N4.txt",
+          "sha256": "2f0803f83e8167247aab0dae6542bb6f614b3f1a4646dc3b26374f7c2131e286",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_queues.py",
+      "sha256": "8997747f29c7e39f5c42cfb21258c08ad7d5fcf965b799af151491cc0aaab984",
+      "version_or_pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+      "locators": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "test_shutdown",
+          "matching_lines_1based": [
+            536,
+            570,
+            626,
+            662
+          ],
+          "range_1based": [
+            524,
+            635
+          ]
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "test_task_done",
+          "matching_lines_1based": [
+            461,
+            465
+          ],
+          "range_1based": [
+            449,
+            560
+          ]
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "test_join",
+          "matching_lines_1based": [
+            496
+          ],
+          "range_1based": [
+            484,
+            595
+          ]
+        }
+      ],
+      "cached_body": "source-cache/cpython/Lib/test/test_asyncio/test_queues.py",
+      "neighborhoods": [
+        {
+          "id": "S3-N1",
+          "literal_needle": "test_shutdown",
+          "matching_lines_1based": [
+            536,
+            570,
+            626,
+            662
+          ],
+          "range_1based": [
+            524,
+            635
+          ],
+          "path": "source-cache/neighborhoods/S3-N1.txt",
+          "sha256": "63a203eee10ec6c1a99ad08c11cadc6f2356cae6dd4bfc7e597e25190258a006",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S3-N2",
+          "literal_needle": "test_task_done",
+          "matching_lines_1based": [
+            461,
+            465
+          ],
+          "range_1based": [
+            449,
+            560
+          ],
+          "path": "source-cache/neighborhoods/S3-N2.txt",
+          "sha256": "ec6036060b64d1cceff3a71a76105c3a3839716b94fb3faad6698f7d015e0076",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S3-N3",
+          "literal_needle": "test_join",
+          "matching_lines_1based": [
+            496
+          ],
+          "range_1based": [
+            484,
+            595
+          ],
+          "path": "source-cache/neighborhoods/S3-N3.txt",
+          "sha256": "349efe42faf4a77ba5fc3f837598d8055bc0c52ea3f6c17aab5650d562f90792",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    }
+  ],
+  "access": "Identical cache, full bodies and adjacent source expansion available to both arms.",
+  "semantic_conclusions_shared": false
+}

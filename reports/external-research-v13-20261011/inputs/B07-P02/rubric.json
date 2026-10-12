@@ -1,0 +1,85 @@
+{
+  "schema_version": "er13-obligation-rubric-v1",
+  "case_id": "B07-P02",
+  "visibility": "hidden_until_declared_plan_reveal",
+  "scoring_policy": "Judge supported meaning and applicability, not length, citation counts, agreement, or token copying. Unknown user data may remain unknown; available mechanism research must still be done.",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "material_original_obligations",
+      "criteria": [
+        "Keyboard seeking/interval editing, stable overlapping annotations and accessible comment navigation.",
+        "Optional transcript route without inferred timings; no-transcript workflow.",
+        "Replacement-media identity/timing safety, local/stereo limits and readable timing-context export."
+      ],
+      "negative_constraints": [
+        "No required mouse dragging.",
+        "No color-only interval distinctions.",
+        "Do not invent transcript timings.",
+        "Do not alter original media.",
+        "No remote audio transmission.",
+        "Missing transcript cannot block keyboard review.",
+        "No real-subject recruitment, player deployment or private annotations."
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "consequential_source_facts_and_applicability",
+      "criteria": [
+        "Check consequential mechanisms against relevant primary context, including platform/version and caller or integration boundaries.",
+        "Separate documented guarantees from assumptions and limits."
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "useful_unfamiliar_discovery_alternatives_history",
+      "criteria": [
+        "Compare interval/time representations and accessible interaction patterns.",
+        "Investigate seeking/format boundaries and media identity/replacement alternatives."
+      ],
+      "record": [
+        "Useful supported opportunities",
+        "Material missing mechanism families"
+      ],
+      "recall_limit": "Observed finite comparison set only; no universal recall claim."
+    },
+    {
+      "axis": 4,
+      "name": "valid_corrections_rejections_plan_dispositions",
+      "criteria": [
+        "After reveal, disposition each material draft choice as retained, changed, rejected, or unresolved with consequential support.",
+        "Do not silently discard requested behavior when correcting a draft assumption."
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "supported_meaning_retained_to_complete_final",
+      "criteria": [
+        "Preserve all material requirements and justified findings from discovery, draft and criticism in the complete final.",
+        "Keep alternatives, exceptions, negative constraints and uncertainty visible where they affect decisions."
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "meaningful_validation_with_execution_distinguished",
+      "criteria": [
+        "Propose overlap/boundary seek, sample-rate and same-duration replacement checks.",
+        "Propose keyboard/screen-reader, absent/untimed transcript and export fidelity checks separately.",
+        "Identify which checks were executed, what they observed and their limits; label all unexecuted checks as proposed.",
+        "Research-proposal scope does not require deployment, physical intervention or proof of all possible behavior."
+      ]
+    }
+  ],
+  "time_contract": {
+    "maximum_elapsed_minutes": 60,
+    "minimum_duration": null,
+    "quality_independent_of_elapsed": true,
+    "wording": "Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time."
+  },
+  "global_negative_constraints": [
+    "Do not deploy the future product.",
+    "Do not write canonical product specifications.",
+    "Do not preselect a winning product.",
+    "Do not expose this rubric or exact draft plan during brief-only discovery."
+  ]
+}

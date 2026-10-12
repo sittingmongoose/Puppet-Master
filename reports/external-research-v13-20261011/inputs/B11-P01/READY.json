@@ -1,0 +1,14 @@
+{
+  "schema": "er13.fresh_case_readiness.v1",
+  "case_id": "B11-P01",
+  "status": "FROZEN_CASE_READY_FOR_ROOT_ADMISSION_BINDING",
+  "candidate_execution": "NOT_ADMITTED_NOT_EXECUTED",
+  "manifest_path": "ER13_RUNTIME/inputs/B11-P01/SHA256SUMS.json",
+  "manifest_sha256": "a85639bb3565c3e822f05c305da367a883c0d7ba54de84caae8a368a776161bc",
+  "initial_candidate_path": "ER13_RUNTIME/inputs/B11-P01/brief.md",
+  "hidden_plan_path": "ER13_RUNTIME/inputs/B11-P01/plan.md",
+  "evaluator_only_rubric_path": "ER13_RUNTIME/inputs/B11-P01/rubric.json",
+  "paired_arms_same_bytes": true,
+  "owner": "root owns all admission/dispatch/Git",
+  "freeze_exclusions": "SHA256SUMS.json and this READY.json are receipts, not scientific input bodies."
+}

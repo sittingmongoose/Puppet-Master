@@ -1,0 +1,42 @@
+{
+  "version": "component-admit-v1",
+  "checked_utc": "2026-10-12T00:31:39.155682+00:00",
+  "kind": "offline-only",
+  "native_candidate_starts": 0,
+  "reserve_used": 0,
+  "delegate_requests_submitted": 0,
+  "test_cases": 6,
+  "component_requests_exercised": 16,
+  "status": "PASS",
+  "final_run": {
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "elapsed_seconds": 0.945
+  },
+  "history": [
+    {
+      "run": 1,
+      "tests": 6,
+      "passed": 5,
+      "failed": 1,
+      "cause": "Expiry test selected T0 earlier than recently frozen fixture; readiness preflight correctly rejected before intended clock assertion. Test clock simulation corrected."
+    },
+    {
+      "run": 2,
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "elapsed_seconds": 0.992
+    },
+    {
+      "run": 3,
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "elapsed_seconds": 0.945,
+      "change": "Required critique and deterministic-assembly artifact names added to frozen output selection/docs."
+    }
+  ],
+  "claims": "Mechanical preparation, identity/capture mocks, clock and immutable-input behavior only. No actual native route/lifecycle/science/discovery effectiveness claim."
+}

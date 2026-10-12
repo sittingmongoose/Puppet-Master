@@ -1,0 +1,11 @@
+# Draft plan: Search provenance for a local technical handbook
+
+The draft stores a source URL, retrieval time, supplied product version, byte hash and local document identifier for each cache entry. Notes can link to a document identifier plus a passage selector. Search results display the source revision and whether a later copy has been observed. Older versions remain available when a user filters by product version, and offline reading uses the retained copy.
+
+An optional checker sends conditional requests for known public source URLs. It initially treats a not-modified response as confirmation that all selectors remain valid, while a changed hash marks the document for review. The plan has not established how server validators relate to content or how selector behavior survives different extraction versions. A moved URL records its replacement but does not erase old retrieval history.
+
+Notes are never rewritten automatically, and private note content is not sent to source servers. A changed document should identify affected links, although the proposed passage-diff method remains undecided. Manually imported documents retain their supplied provenance without pretending a network check was possible. Proposed validation covers unchanged response metadata with altered representations, moved URLs, unavailable sources, old-version searches, extraction changes and missing passages. No handbook or crawler has been run. The integration proposal should distinguish retained-document identity from optional network checks and state which failures require user action.
+
+This is a provisional draft for review after the declared reveal, not an endorsed answer. Resolve material assumptions through applicable primary evidence; retain open user-data questions when they cannot be answered from sources. No future product deployment is requested.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.

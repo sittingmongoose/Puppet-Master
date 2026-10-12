@@ -1,0 +1,33 @@
+{
+  "case": "B08-P01",
+  "title": "Bounded worker queue completion accounting",
+  "track": "B",
+  "scope": "COMPONENT",
+  "fixture_version": "component-fixtures-v1",
+  "prepared_by": "research preparer; source-inspected authored draft, not a separately executed investigator pipeline",
+  "fresh_case": true,
+  "source_scope": {
+    "repository": "https://github.com/python/cpython",
+    "tag": "v3.13.9",
+    "commit": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+    "scope": "CPython 3.13.9, explicit historical target, not latest Python",
+    "observed_at": "2026-10-12T00:17:37.443225+00:00"
+  },
+  "frozen_utc": "2026-10-12T00:20:45.618207+00:00",
+  "matched_raw_base": {
+    "brief.md": "6d3b9a6bf0ef2c464c2e108814067c0f152b7786b645f29dbd58cf42b4023e74",
+    "plan.md": "ccf414ec30be2d320e98c9ac6bbe7b5456cb678c0ec0d485e44c00f08e7abf35",
+    "draft.md": "9ba7809eb846568ec302427294de35649218074be3bc86f94ae8940ec88c6019",
+    "source-index.json": "94d988a59467f2583a56c89df29c7077e077c3d7c7e9c8a3ad9d5a2e7ff7f227"
+  },
+  "pair_raw_identity_required": true,
+  "component_max_minutes": 25,
+  "component_min_minutes": 0,
+  "prep_cost_category": "shared_campaign_preparation; standalone cold cost separately reportable",
+  "method": "B08",
+  "critique_contract": "both independently inspect; treatment proposition/oracle binding",
+  "candidate_injected_answer": false,
+  "validation_executed": "Source retrieval, locator/body/hash checks only. Upstream tests read, not executed. No product witness/benchmark executed.",
+  "cache_gate": false,
+  "freeze_rule": "No edits after root admission. Frozen source body hashes are exact; source_reader only expands raw context."
+}

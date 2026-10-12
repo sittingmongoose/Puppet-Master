@@ -1,0 +1,112 @@
+    def test_read_linenum(self):
+        r = csv.reader(['line,1', 'line,2', 'line,3'])
+        self.assertEqual(r.line_num, 0)
+        next(r)
+        self.assertEqual(r.line_num, 1)
+        next(r)
+        self.assertEqual(r.line_num, 2)
+        next(r)
+        self.assertEqual(r.line_num, 3)
+        self.assertRaises(StopIteration, next, r)
+        self.assertEqual(r.line_num, 3)
+
+    def test_roundtrip_quoteed_newlines(self):
+        rows = [
+            ['\na', 'b\nc', 'd\n'],
+            ['\re', 'f\rg', 'h\r'],
+            ['\r\ni', 'j\r\nk', 'l\r\n'],
+            ['\n\rm', 'n\n\ro', 'p\n\r'],
+            ['\r\rq', 'r\r\rs', 't\r\r'],
+            ['\n\nu', 'v\n\nw', 'x\n\n'],
+        ]
+        for lineterminator in '\r\n', '\n', '\r':
+            with self.subTest(lineterminator=lineterminator):
+                with TemporaryFile("w+", encoding="utf-8", newline='') as fileobj:
+                    writer = csv.writer(fileobj, lineterminator=lineterminator)
+                    writer.writerows(rows)
+                    fileobj.seek(0)
+                    for i, row in enumerate(csv.reader(fileobj)):
+                        self.assertEqual(row, rows[i])
+
+    def test_roundtrip_escaped_unquoted_newlines(self):
+        rows = [
+            ['\na', 'b\nc', 'd\n'],
+            ['\re', 'f\rg', 'h\r'],
+            ['\r\ni', 'j\r\nk', 'l\r\n'],
+            ['\n\rm', 'n\n\ro', 'p\n\r'],
+            ['\r\rq', 'r\r\rs', 't\r\r'],
+            ['\n\nu', 'v\n\nw', 'x\n\n'],
+        ]
+        for lineterminator in '\r\n', '\n', '\r':
+            with self.subTest(lineterminator=lineterminator):
+                with TemporaryFile("w+", encoding="utf-8", newline='') as fileobj:
+                    writer = csv.writer(fileobj, lineterminator=lineterminator,
+                                        quoting=csv.QUOTE_NONE, escapechar="\\")
+                    writer.writerows(rows)
+                    fileobj.seek(0)
+                    for i, row in enumerate(csv.reader(fileobj,
+                                                       quoting=csv.QUOTE_NONE,
+                                                       escapechar="\\")):
+                        self.assertEqual(row, rows[i])
+
+
+class TestDialectRegistry(unittest.TestCase):
+    def test_registry_badargs(self):
+        self.assertRaises(TypeError, csv.list_dialects, None)
+        self.assertRaises(TypeError, csv.get_dialect)
+        self.assertRaises(csv.Error, csv.get_dialect, None)
+        self.assertRaises(csv.Error, csv.get_dialect, "nonesuch")
+        self.assertRaises(TypeError, csv.unregister_dialect)
+        self.assertRaises(csv.Error, csv.unregister_dialect, None)
+        self.assertRaises(csv.Error, csv.unregister_dialect, "nonesuch")
+        self.assertRaises(TypeError, csv.register_dialect, None)
+        self.assertRaises(TypeError, csv.register_dialect, None, None)
+        self.assertRaises(TypeError, csv.register_dialect, "nonesuch", 0, 0)
+        self.assertRaises(TypeError, csv.register_dialect, "nonesuch",
+                          badargument=None)
+        self.assertRaises(TypeError, csv.register_dialect, "nonesuch",
+                          quoting=None)
+        self.assertRaises(TypeError, csv.register_dialect, [])
+
+    def test_registry(self):
+        class myexceltsv(csv.excel):
+            delimiter = "\t"
+        name = "myexceltsv"
+        expected_dialects = csv.list_dialects() + [name]
+        expected_dialects.sort()
+        csv.register_dialect(name, myexceltsv)
+        self.addCleanup(csv.unregister_dialect, name)
+        self.assertEqual(csv.get_dialect(name).delimiter, '\t')
+        got_dialects = sorted(csv.list_dialects())
+        self.assertEqual(expected_dialects, got_dialects)
+
+    def test_register_kwargs(self):
+        name = 'fedcba'
+        csv.register_dialect(name, delimiter=';')
+        self.addCleanup(csv.unregister_dialect, name)
+        self.assertEqual(csv.get_dialect(name).delimiter, ';')
+        self.assertEqual([['X', 'Y', 'Z']], list(csv.reader(['X;Y;Z'], name)))
+
+    def test_register_kwargs_override(self):
+        class mydialect(csv.Dialect):
+            delimiter = "\t"
+            quotechar = '"'
+            doublequote = True
+            skipinitialspace = False
+            lineterminator = '\r\n'
+            quoting = csv.QUOTE_MINIMAL
+
+        name = 'test_dialect'
+        csv.register_dialect(name, mydialect,
+                             delimiter=';',
+                             quotechar="'",
+                             doublequote=False,
+                             skipinitialspace=True,
+                             lineterminator='\n',
+                             quoting=csv.QUOTE_ALL)
+        self.addCleanup(csv.unregister_dialect, name)
+
+        # Ensure that kwargs do override attributes of a dialect class:
+        dialect = csv.get_dialect(name)
+        self.assertEqual(dialect.delimiter, ';')
+        self.assertEqual(dialect.quotechar, "'")

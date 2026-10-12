@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:er13:dispatch-terminal:v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "record_kind",
+    "attempt_id",
+    "capture_utc",
+    "native_receipt_ref",
+    "native_receipt_sha256"
+  ],
+  "properties": {
+    "schema": {
+      "const": "er13.dispatch_terminal.v1"
+    },
+    "record_kind": {
+      "enum": [
+        "dispatch_request",
+        "dispatch_acceptance",
+        "provider_start",
+        "native_terminal",
+        "delivery_observation",
+        "root_terminal"
+      ]
+    },
+    "attempt_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "arm_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "stage": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "capture_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "event_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "t0_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "client_request_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "task_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "goal_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "requested_provider_alias": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "requested_model": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "requested_effort": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "requested_tier": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "actual_provider_alias": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "actual_model": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "actual_effort": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "actual_tier": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "native_status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "has_pending_child_runs": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "native_receipt_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "native_receipt_sha256": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "authored_manifest_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "authored_manifest_sha256": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "failure_kind": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "limitation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

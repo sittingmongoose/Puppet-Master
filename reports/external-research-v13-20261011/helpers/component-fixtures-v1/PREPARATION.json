@@ -1,0 +1,105 @@
+{
+  "version": "component-fixtures-v1",
+  "role": "shared research preparation only",
+  "first_observed_clock_utc": "2026-10-12T00:17:23+00:00",
+  "support_completion_clock_utc": "2026-10-12T00:26:46.417481+00:00",
+  "measured_wall_seconds": 563.417481,
+  "clock_scope": "Continuous first-observed prep clock through package/helper documentation/checks. Earlier AGENTS/handoff/mail reads unmeasured, so this is not claimed as a complete cold task total. Includes thinking, source acquisition, authorship and repair; not active inference time.",
+  "pre_clock_duration_seconds": null,
+  "provider_tokens": null,
+  "billing": null,
+  "candidate_product_seconds": null,
+  "allocation": "Charge once as campaign shared prep; include appropriate declared cold standalone source acquisition cost without inventing unrelated median sums.",
+  "case_clocks": [
+    {
+      "case": "B01-P01",
+      "frozen_ready_utc": "2026-10-12T00:20:45.604112+00:00",
+      "manifest_sha256": "76e04935abce7e46e19747af2721298ae722a5ff9e1e9a35e390a9d59b133676",
+      "raw_pair_sha256": "8c4fae30e944a75e55f995dcd6a1dcb8e6eb43d5353d1ba4f06c04a6242c6326"
+    },
+    {
+      "case": "B01-P02",
+      "frozen_ready_utc": "2026-10-12T00:20:45.612820+00:00",
+      "manifest_sha256": "f3a1cb3c82b7cc1df76a718428b5419b38714c6936978d2f328737f3c8af90fa",
+      "raw_pair_sha256": "70567f65708653964b5a306da344da2160df6e8e3ef957eeb09af272c0f50679"
+    },
+    {
+      "case": "B04-P01",
+      "frozen_ready_utc": "2026-10-12T00:23:16.029879+00:00",
+      "manifest_sha256": "049668ec02a21bd22965a7ce3012e4905ad1f1f682e7c84854232e6a5c09c4f2",
+      "raw_pair_sha256": "21cfc810e8f5c6cccecfbb5dbf435c83d1d65baec9ab8a194ff465feb06ac495"
+    },
+    {
+      "case": "B04-P02",
+      "frozen_ready_utc": "2026-10-12T00:23:26.630505+00:00",
+      "manifest_sha256": "197706b917cb53a56ff4418d4d825b7ac8a0832c2d9a5dc322b531614128c8ec",
+      "raw_pair_sha256": "717d2ea736bc6a4249c7718360b656a55c0891d0ca9f7f1db99f884070c20764"
+    },
+    {
+      "case": "B05-P01",
+      "frozen_ready_utc": "2026-10-12T00:24:29.304194+00:00",
+      "manifest_sha256": "21f66af3cad92f467ffefb3da20af19e22e51c89e9b60f5f39a8fa315d3402c3",
+      "raw_pair_sha256": "03c23ccd1b0762159533c4d6862f99c5ebb2d643508b4584bafda5de8297e7e7"
+    },
+    {
+      "case": "B05-P02",
+      "frozen_ready_utc": "2026-10-12T00:24:29.312801+00:00",
+      "manifest_sha256": "7013c960bde3ced29b6555f51deb03886201dc9e5660961b897a30023e6a1ec7",
+      "raw_pair_sha256": "6b0630581166ff1914b7e0d6bc8f3f3103944b52e87ef08d66c3ed34659df6be"
+    },
+    {
+      "case": "B08-P01",
+      "frozen_ready_utc": "2026-10-12T00:20:45.618207+00:00",
+      "manifest_sha256": "31b9deb8797f208e2c00ef33283ae7608da4aace0e33605ba98b08aec5389797",
+      "raw_pair_sha256": "d520136ba7d676ea383c99c83f27402ce9d6b565f9c791b04d44cd40f6df344e"
+    },
+    {
+      "case": "B08-P02",
+      "frozen_ready_utc": "2026-10-12T00:21:05.649216+00:00",
+      "manifest_sha256": "b1fa9385935c9b9e93e9424156fbc1ff3b892914e6dc13a2f421832606caaff6",
+      "raw_pair_sha256": "85f7387511003a21dd43407b25369d459a95bc434de979f48e2836465ac537b6"
+    }
+  ],
+  "source_bodies_acquired": 32,
+  "actual_inspections": "Primary documentation, governing implementations and upstream test text; all-eight obligations; source-backed B01 critique; full/compact B04 semantic review by preparer; cache gating and B08 supported/challengeable propositions.",
+  "executed_checks": [
+    "Pinned/live source retrieval with SHA-256",
+    "All-eight MANIFEST/raw-base/neighborhood byte/locator verification",
+    "B04 immutable finding IDs and complete obligation-reference checks",
+    "B05 source_reader treatment exact context and control denial"
+  ],
+  "not_executed": [
+    "candidate or evaluator launches",
+    "native candidate Goal",
+    "product witnesses or throughput benchmarks",
+    "upstream suite execution",
+    "application build/deployment",
+    "Windows/filesystem crash intervention"
+  ],
+  "recoveries": [
+    {
+      "phase": "initial source acquisition",
+      "error": "HTTP404 Lib/test/test_unicode.py",
+      "repair": "Pinned tree inspection; replaced nonexistent path with test_str.py and test_unicodedata.py plus governing unicodeobject.c",
+      "duration_seconds": null
+    },
+    {
+      "phase": "B08-P02 locator resolution before freeze",
+      "error": "No literal def test_normalize / def test_main in pinned test_unicodedata.py",
+      "repair": "Located actual run_normalization_tests and NFKC definitions",
+      "duration_seconds": null
+    },
+    {
+      "phase": "B04-P02 locator resolution before freeze",
+      "error": "No literal RFC9110 8.8.1 Validators heading",
+      "repair": "Located actual Weak versus Strong heading",
+      "duration_seconds": null
+    }
+  ],
+  "limitations": [
+    "No independent scientific evaluation of authored fixtures/critique equivalence yet",
+    "B05 filesystem boundary is a declared contract; reader denial is not a general sandbox",
+    "Historical Python target explicit, not latest-version recommendation",
+    "No candidate consumption or scientific outcome available during preparation"
+  ]
+}

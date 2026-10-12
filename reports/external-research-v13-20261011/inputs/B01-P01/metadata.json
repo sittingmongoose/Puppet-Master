@@ -1,0 +1,33 @@
+{
+  "case": "B01-P01",
+  "title": "Live notebook backup component",
+  "track": "B",
+  "scope": "COMPONENT",
+  "fixture_version": "component-fixtures-v1",
+  "prepared_by": "research preparer; source-inspected authored draft, not a separately executed investigator pipeline",
+  "fresh_case": true,
+  "source_scope": {
+    "repository": "https://github.com/python/cpython",
+    "tag": "v3.13.9",
+    "commit": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+    "scope": "CPython 3.13.9, explicit historical target, not latest Python",
+    "observed_at": "2026-10-12T00:17:37.443225+00:00"
+  },
+  "frozen_utc": "2026-10-12T00:20:45.604112+00:00",
+  "matched_raw_base": {
+    "brief.md": "7af29b8952a52e801685699e93b688081af406b0fa714b7179e502d6fa830ce4",
+    "plan.md": "5082e38855f438d4a7ec9b67305410cb0e690e7df47c00b19042dcd20b0ab0e3",
+    "draft.md": "a725702332c681e6ae90869d65fec7acf2172894d363b134252af9973524a968",
+    "source-index.json": "34168d422e1e6477dfde5809e60381329cef84d0b0270b204faa329d4c7b5843"
+  },
+  "pair_raw_identity_required": true,
+  "component_max_minutes": 25,
+  "component_min_minutes": 0,
+  "prep_cost_category": "shared_campaign_preparation; standalone cold cost separately reportable",
+  "method": "B01",
+  "critique_contract": "common critique.md for both arms",
+  "candidate_injected_answer": false,
+  "validation_executed": "Source retrieval, locator/body/hash checks only. Upstream tests read, not executed. No product witness/benchmark executed.",
+  "cache_gate": false,
+  "freeze_rule": "No edits after root admission. Frozen source body hashes are exact; source_reader only expands raw context."
+}

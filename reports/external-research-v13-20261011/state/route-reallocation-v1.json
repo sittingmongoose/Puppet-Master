@@ -1,0 +1,474 @@
+{
+  "schema": "er13.prospective-route-allocation.v1",
+  "frozen_utc": "2026-10-12T00:35:08.870454+00:00",
+  "primary_program_counts_unchanged": {
+    "primary": 80,
+    "full": 64,
+    "component": 16
+  },
+  "reserve_starts_used": 2,
+  "probe_muse": "probes/route-muse-v1/OBSERVATIONS.md",
+  "probe_glm": "probes/route-glm-v1/OBSERVATIONS.md",
+  "probe_limits": "Muse native Goal API is present but lacks machine-file composition/direct response capture; GLM native backend exists in installed interface but not exposed as lifecycle tools in this context. No claim providers lack Goals generally. Muse copied read receipt is explicitly model-transcribed and not direct-capture proof.",
+  "reallocations": [
+    {
+      "arm_id": "B01-P02-control",
+      "block_id": "B01-P02",
+      "scope": "COMPONENT",
+      "original_requested_family": "Muse",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B01-P02-treatment",
+      "block_id": "B01-P02",
+      "scope": "COMPONENT",
+      "original_requested_family": "Muse",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B02-P02-control",
+      "block_id": "B02-P02",
+      "scope": "FULL",
+      "original_requested_family": "Muse",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B02-P02-treatment",
+      "block_id": "B02-P02",
+      "scope": "FULL",
+      "original_requested_family": "Muse",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B03-P02-control",
+      "block_id": "B03-P02",
+      "scope": "FULL",
+      "original_requested_family": "GLM",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B03-P02-treatment",
+      "block_id": "B03-P02",
+      "scope": "FULL",
+      "original_requested_family": "GLM",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B04-P02-control",
+      "block_id": "B04-P02",
+      "scope": "COMPONENT",
+      "original_requested_family": "GLM",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B04-P02-treatment",
+      "block_id": "B04-P02",
+      "scope": "COMPONENT",
+      "original_requested_family": "GLM",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B05-P02-control",
+      "block_id": "B05-P02",
+      "scope": "COMPONENT",
+      "original_requested_family": "Muse",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B05-P02-treatment",
+      "block_id": "B05-P02",
+      "scope": "COMPONENT",
+      "original_requested_family": "Muse",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B06-P02-control",
+      "block_id": "B06-P02",
+      "scope": "FULL",
+      "original_requested_family": "Muse",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B06-P02-treatment",
+      "block_id": "B06-P02",
+      "scope": "FULL",
+      "original_requested_family": "Muse",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B07-P02-control",
+      "block_id": "B07-P02",
+      "scope": "FULL",
+      "original_requested_family": "GLM",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B07-P02-treatment",
+      "block_id": "B07-P02",
+      "scope": "FULL",
+      "original_requested_family": "GLM",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B08-P02-control",
+      "block_id": "B08-P02",
+      "scope": "COMPONENT",
+      "original_requested_family": "GLM",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B08-P02-treatment",
+      "block_id": "B08-P02",
+      "scope": "COMPONENT",
+      "original_requested_family": "GLM",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B09-P02-control",
+      "block_id": "B09-P02",
+      "scope": "FULL",
+      "original_requested_family": "Muse",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B09-P02-treatment",
+      "block_id": "B09-P02",
+      "scope": "FULL",
+      "original_requested_family": "Muse",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B10-P02-control",
+      "block_id": "B10-P02",
+      "scope": "FULL",
+      "original_requested_family": "GLM",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B10-P02-treatment",
+      "block_id": "B10-P02",
+      "scope": "FULL",
+      "original_requested_family": "GLM",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B11-P02-control",
+      "block_id": "B11-P02",
+      "scope": "FULL",
+      "original_requested_family": "Muse",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B11-P02-treatment",
+      "block_id": "B11-P02",
+      "scope": "FULL",
+      "original_requested_family": "Muse",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B12-P02-control",
+      "block_id": "B12-P02",
+      "scope": "FULL",
+      "original_requested_family": "GLM",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    },
+    {
+      "arm_id": "B12-P02-treatment",
+      "block_id": "B12-P02",
+      "scope": "FULL",
+      "original_requested_family": "GLM",
+      "original_route_status": "UNAVAILABLE_REQUIRED_SUPPORTED_NATIVE_GOAL_CAPTURE_T3_CONTEXT",
+      "scientific_input_started": false,
+      "new_actual_family": "Luna",
+      "new_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      },
+      "paired_control_reassigned_symmetrically": true,
+      "version": "er13-route-reallocation-v1",
+      "reason": "actual bounded provider diagnostics found no compliant direct native objective/create/receipt transport; provider-native Goal existence and requested catalog support are separate; no server/reconfiguration/framework substitute",
+      "classification": "prospective_unstarted_development_allocation_not_provider_ranking"
+    }
+  ],
+  "science_failures_do_not_justify_route_change": true,
+  "no_provider_ranking": true,
+  "alternate_native_transport": "No supported exposed fresh T3-owned context/native-capture fallback established without changing shared server/provider state. No unowned native session, backend emulation, API/OMP replacement or provider switch inside admitted original."
+}

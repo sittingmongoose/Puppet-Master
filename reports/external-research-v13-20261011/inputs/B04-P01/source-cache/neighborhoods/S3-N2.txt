@@ -1,0 +1,112 @@
+
+    def test_move_file_to_dir_pathlike_src(self):
+        # Move a pathlike file to another location on the same filesystem.
+        src = FakePath(self.src_file)
+        self._check_move_file(src, self.dst_dir, self.dst_file)
+
+    def test_move_file_to_dir_pathlike_dst(self):
+        # Move a file to another pathlike location on the same filesystem.
+        dst = FakePath(self.dst_dir)
+        self._check_move_file(self.src_file, dst, self.dst_file)
+
+    @mock_rename
+    def test_move_file_other_fs(self):
+        # Move a file to an existing dir on another filesystem.
+        self.test_move_file()
+
+    @mock_rename
+    def test_move_file_to_dir_other_fs(self):
+        # Move a file to another location on another filesystem.
+        self.test_move_file_to_dir()
+
+    def test_move_dir(self):
+        # Move a dir to another location on the same filesystem.
+        dst_dir = tempfile.mktemp(dir=self.mkdtemp())
+        try:
+            self._check_move_dir(self.src_dir, dst_dir, dst_dir)
+        finally:
+            os_helper.rmtree(dst_dir)
+
+    @mock_rename
+    def test_move_dir_other_fs(self):
+        # Move a dir to another location on another filesystem.
+        self.test_move_dir()
+
+    def test_move_dir_to_dir(self):
+        # Move a dir inside an existing dir on the same filesystem.
+        self._check_move_dir(self.src_dir, self.dst_dir,
+            os.path.join(self.dst_dir, os.path.basename(self.src_dir)))
+
+    @mock_rename
+    def test_move_dir_to_dir_other_fs(self):
+        # Move a dir inside an existing dir on another filesystem.
+        self.test_move_dir_to_dir()
+
+    def test_move_dir_sep_to_dir(self):
+        self._check_move_dir(self.src_dir + os.path.sep, self.dst_dir,
+            os.path.join(self.dst_dir, os.path.basename(self.src_dir)))
+
+    @unittest.skipUnless(os.path.altsep, 'requires os.path.altsep')
+    def test_move_dir_altsep_to_dir(self):
+        self._check_move_dir(self.src_dir + os.path.altsep, self.dst_dir,
+            os.path.join(self.dst_dir, os.path.basename(self.src_dir)))
+
+    def test_existing_file_inside_dest_dir(self):
+        # A file with the same name inside the destination dir already exists.
+        create_file(self.dst_file)
+        self.assertRaises(shutil.Error, shutil.move, self.src_file, self.dst_dir)
+
+    def test_dont_move_dir_in_itself(self):
+        # Moving a dir inside itself raises an Error.
+        dst = os.path.join(self.src_dir, "bar")
+        self.assertRaises(shutil.Error, shutil.move, self.src_dir, dst)
+
+    def test_destinsrc_false_negative(self):
+        os.mkdir(TESTFN)
+        try:
+            for src, dst in [('srcdir', 'srcdir/dest')]:
+                src = os.path.join(TESTFN, src)
+                dst = os.path.join(TESTFN, dst)
+                self.assertTrue(shutil._destinsrc(src, dst),
+                             msg='_destinsrc() wrongly concluded that '
+                             'dst (%s) is not in src (%s)' % (dst, src))
+        finally:
+            os_helper.rmtree(TESTFN)
+
+    def test_destinsrc_false_positive(self):
+        os.mkdir(TESTFN)
+        try:
+            for src, dst in [('srcdir', 'src/dest'), ('srcdir', 'srcdir.new')]:
+                src = os.path.join(TESTFN, src)
+                dst = os.path.join(TESTFN, dst)
+                self.assertFalse(shutil._destinsrc(src, dst),
+                            msg='_destinsrc() wrongly concluded that '
+                            'dst (%s) is in src (%s)' % (dst, src))
+        finally:
+            os_helper.rmtree(TESTFN)
+
+    @os_helper.skip_unless_symlink
+    @mock_rename
+    def test_move_file_symlink(self):
+        dst = os.path.join(self.src_dir, 'bar')
+        os.symlink(self.src_file, dst)
+        shutil.move(dst, self.dst_file)
+        self.assertTrue(os.path.islink(self.dst_file))
+        self.assertTrue(os.path.samefile(self.src_file, self.dst_file))
+
+    @os_helper.skip_unless_symlink
+    @mock_rename
+    def test_move_file_symlink_to_dir(self):
+        filename = "bar"
+        dst = os.path.join(self.src_dir, filename)
+        os.symlink(self.src_file, dst)
+        shutil.move(dst, self.dst_dir)
+        final_link = os.path.join(self.dst_dir, filename)
+        self.assertTrue(os.path.islink(final_link))
+        self.assertTrue(os.path.samefile(self.src_file, final_link))
+
+    @os_helper.skip_unless_symlink
+    @mock_rename
+    def test_move_dangling_symlink(self):
+        src = os.path.join(self.src_dir, 'baz')
+        dst = os.path.join(self.src_dir, 'bar')

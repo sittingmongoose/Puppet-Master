@@ -1,0 +1,327 @@
+{
+  "case": "B04-P02",
+  "primary_only": true,
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+      "version_or_pin": "exact retrieved body hash; live SQLite docs / stable numbered RFC",
+      "locators": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "4.1.  Calculating Cache Keys with the Vary Header Field",
+          "matching_lines_1based": [
+            82,
+            526
+          ],
+          "range_1based": [
+            514,
+            625
+          ]
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "4.2.3.  Calculating Age",
+          "matching_lines_1based": [
+            86,
+            719
+          ],
+          "range_1based": [
+            707,
+            818
+          ]
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "4.3.4.  Freshening Stored Responses upon Validation",
+          "matching_lines_1based": [
+            92,
+            951
+          ],
+          "range_1based": [
+            939,
+            1050
+          ]
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "5.2.2.2.  must-revalidate",
+          "matching_lines_1based": [
+            108,
+            1222
+          ],
+          "range_1based": [
+            1210,
+            1321
+          ]
+        },
+        {
+          "id": "S1-N5",
+          "literal_needle": "5.2.2.3.  must-understand",
+          "matching_lines_1based": [
+            109,
+            1246
+          ],
+          "range_1based": [
+            1234,
+            1345
+          ]
+        },
+        {
+          "id": "S1-N6",
+          "literal_needle": "5.2.2.4.  no-cache",
+          "matching_lines_1based": [
+            110,
+            1258
+          ],
+          "range_1based": [
+            1246,
+            1357
+          ]
+        },
+        {
+          "id": "S1-N7",
+          "literal_needle": "5.2.2.5.  no-store",
+          "matching_lines_1based": [
+            111,
+            1295
+          ],
+          "range_1based": [
+            1283,
+            1394
+          ]
+        },
+        {
+          "id": "S1-N8",
+          "literal_needle": "5.2.2.7.  private",
+          "matching_lines_1based": [
+            113,
+            1321
+          ],
+          "range_1based": [
+            1309,
+            1420
+          ]
+        }
+      ],
+      "cached_body": "source-cache/rfc/rfc9111.txt",
+      "neighborhoods": [
+        {
+          "id": "S1-N1",
+          "literal_needle": "4.1.  Calculating Cache Keys with the Vary Header Field",
+          "matching_lines_1based": [
+            82,
+            526
+          ],
+          "range_1based": [
+            514,
+            625
+          ],
+          "path": "source-cache/neighborhoods/S1-N1.txt",
+          "sha256": "67a36d1dc6d5bec67ddfb705a53f2c1993cfbadc7f9d18a0ef85a92404dafbe5",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N2",
+          "literal_needle": "4.2.3.  Calculating Age",
+          "matching_lines_1based": [
+            86,
+            719
+          ],
+          "range_1based": [
+            707,
+            818
+          ],
+          "path": "source-cache/neighborhoods/S1-N2.txt",
+          "sha256": "7554c1336db7c93582fc81ae3748560ce51f1fe53c501042e6e4d4a69a9750ec",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N3",
+          "literal_needle": "4.3.4.  Freshening Stored Responses upon Validation",
+          "matching_lines_1based": [
+            92,
+            951
+          ],
+          "range_1based": [
+            939,
+            1050
+          ],
+          "path": "source-cache/neighborhoods/S1-N3.txt",
+          "sha256": "afa73af08ecb2dfef9e0aa1ae61cf2e23d6b7697ac596239ad434751ba3937de",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N4",
+          "literal_needle": "5.2.2.2.  must-revalidate",
+          "matching_lines_1based": [
+            108,
+            1222
+          ],
+          "range_1based": [
+            1210,
+            1321
+          ],
+          "path": "source-cache/neighborhoods/S1-N4.txt",
+          "sha256": "1af5c9e7c814212d120c2c669ea002f8fbfe88832e00d505b1f58ac685666961",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N5",
+          "literal_needle": "5.2.2.3.  must-understand",
+          "matching_lines_1based": [
+            109,
+            1246
+          ],
+          "range_1based": [
+            1234,
+            1345
+          ],
+          "path": "source-cache/neighborhoods/S1-N5.txt",
+          "sha256": "80737f8ff1a55761691083d327fec953bee6aa1eab945b4ab4f2b40bc887f833",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N6",
+          "literal_needle": "5.2.2.4.  no-cache",
+          "matching_lines_1based": [
+            110,
+            1258
+          ],
+          "range_1based": [
+            1246,
+            1357
+          ],
+          "path": "source-cache/neighborhoods/S1-N6.txt",
+          "sha256": "80bcfb49907a97dbbfc600f4b3b4a82554194381186f54f7bb8911a78791e013",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N7",
+          "literal_needle": "5.2.2.5.  no-store",
+          "matching_lines_1based": [
+            111,
+            1295
+          ],
+          "range_1based": [
+            1283,
+            1394
+          ],
+          "path": "source-cache/neighborhoods/S1-N7.txt",
+          "sha256": "55bdf8b662d54ba31cc725764405e0744ec2916d6ec45653949d82131e1702bf",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S1-N8",
+          "literal_needle": "5.2.2.7.  private",
+          "matching_lines_1based": [
+            113,
+            1321
+          ],
+          "range_1based": [
+            1309,
+            1420
+          ],
+          "path": "source-cache/neighborhoods/S1-N8.txt",
+          "sha256": "da294c4495ca9b91ce98283e13cbb935d6d648d4618bbd566ab861e47793466c",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "version_or_pin": "exact retrieved body hash; live SQLite docs / stable numbered RFC",
+      "locators": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "8.8.1.  Weak versus Strong",
+          "matching_lines_1based": [
+            169,
+            3393
+          ],
+          "range_1based": [
+            3381,
+            3492
+          ]
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "13.1.2.  If-None-Match",
+          "matching_lines_1based": [
+            236,
+            5872
+          ],
+          "range_1based": [
+            5860,
+            5971
+          ]
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "15.4.5.  304 Not Modified",
+          "matching_lines_1based": [
+            273,
+            7444
+          ],
+          "range_1based": [
+            7432,
+            7543
+          ]
+        }
+      ],
+      "cached_body": "source-cache/rfc/rfc9110.txt",
+      "neighborhoods": [
+        {
+          "id": "S2-N1",
+          "literal_needle": "8.8.1.  Weak versus Strong",
+          "matching_lines_1based": [
+            169,
+            3393
+          ],
+          "range_1based": [
+            3381,
+            3492
+          ],
+          "path": "source-cache/neighborhoods/S2-N1.txt",
+          "sha256": "8cd4c830065674b063da815b9b04127655fc1dc9c2a399df6dec8caa3adb39fa",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S2-N2",
+          "literal_needle": "13.1.2.  If-None-Match",
+          "matching_lines_1based": [
+            236,
+            5872
+          ],
+          "range_1based": [
+            5860,
+            5971
+          ],
+          "path": "source-cache/neighborhoods/S2-N2.txt",
+          "sha256": "6aeb381d3801a1907c25d0adadfbe4513a411ffde77c21e4c114c6344dadaa49",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        },
+        {
+          "id": "S2-N3",
+          "literal_needle": "15.4.5.  304 Not Modified",
+          "matching_lines_1based": [
+            273,
+            7444
+          ],
+          "range_1based": [
+            7432,
+            7543
+          ],
+          "path": "source-cache/neighborhoods/S2-N3.txt",
+          "sha256": "59852ba12d056880e9e4689f5c3d7aa81f6aceaf7c295574d9f0aa238fa7469b",
+          "expansion": "full body available; adjacent lines via source_reader.py"
+        }
+      ]
+    }
+  ],
+  "access": "Identical cache, full bodies and adjacent source expansion available to both arms.",
+  "semantic_conclusions_shared": false
+}

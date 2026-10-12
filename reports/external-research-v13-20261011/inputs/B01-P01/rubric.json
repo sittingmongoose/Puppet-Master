@@ -1,0 +1,39 @@
+{
+  "case": "B01-P01",
+  "derived_from": "brief.md and plan.md only",
+  "axes": [
+    "material obligations",
+    "consequential source facts/applicability",
+    "useful mechanisms/alternatives/history",
+    "valid criticism and plan dispositions",
+    "supported draft-to-final preservation",
+    "meaningful proposed/executed validation"
+  ],
+  "obligations": [
+    {
+      "id": "O1",
+      "requirement": "Uninterrupted editing and bounded-memory backup"
+    },
+    {
+      "id": "O2",
+      "requirement": "Restorable DB plus external attachment consistency"
+    },
+    {
+      "id": "O3",
+      "requirement": "Truthful progress and cancellation with connection/thread ownership"
+    },
+    {
+      "id": "O4",
+      "requirement": "No overwrite, failure cleanup and restore safety"
+    },
+    {
+      "id": "O5",
+      "requirement": "Alternatives, retained history and privacy"
+    },
+    {
+      "id": "O6",
+      "requirement": "Evidence applicability and proposed-versus-executed validation"
+    }
+  ],
+  "scoring_boundary": "No hidden solution supplied to candidates. Evaluator independently checks governing context; no app deployment requirement."
+}

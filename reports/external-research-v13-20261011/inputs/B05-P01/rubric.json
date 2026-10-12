@@ -1,0 +1,39 @@
+{
+  "case": "B05-P01",
+  "derived_from": "brief.md and plan.md only",
+  "axes": [
+    "material obligations",
+    "consequential source facts/applicability",
+    "useful mechanisms/alternatives/history",
+    "valid criticism and plan dispositions",
+    "supported draft-to-final preservation",
+    "meaningful proposed/executed validation"
+  ],
+  "obligations": [
+    {
+      "id": "O1",
+      "requirement": "Separate argv launch with platform/direct-child boundary"
+    },
+    {
+      "id": "O2",
+      "requirement": "Both pipes drained without deadlock and live output"
+    },
+    {
+      "id": "O3",
+      "requirement": "1MiB tail plus disk quota under arbitrary output"
+    },
+    {
+      "id": "O4",
+      "requirement": "Timeout/cancel with truthful terminal outcome and owned-child cleanup"
+    },
+    {
+      "id": "O5",
+      "requirement": "Nonzero exit/input/encoding/failure lifecycle"
+    },
+    {
+      "id": "O6",
+      "requirement": "Alternatives/history and independently grounded validation"
+    }
+  ],
+  "scoring_boundary": "No hidden solution supplied to candidates. Evaluator independently checks governing context; no app deployment requirement."
+}

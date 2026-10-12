@@ -1,0 +1,112 @@
+    if any(coroutines.iscoroutine(f) for f in fs):
+        raise TypeError("Passing coroutines is forbidden, use tasks explicitly.")
+
+    loop = events.get_running_loop()
+    return await _wait(fs, timeout, return_when, loop)
+
+
+def _release_waiter(waiter, *args):
+    if not waiter.done():
+        waiter.set_result(None)
+
+
+async def wait_for(fut, timeout):
+    """Wait for the single Future or coroutine to complete, with timeout.
+
+    Coroutine will be wrapped in Task.
+
+    Returns result of the Future or coroutine.  When a timeout occurs,
+    it cancels the task and raises TimeoutError.  To avoid the task
+    cancellation, wrap it in shield().
+
+    If the wait is cancelled, the task is also cancelled.
+
+    If the task suppresses the cancellation and returns a value instead,
+    that value is returned.
+
+    This function is a coroutine.
+    """
+    # The special case for timeout <= 0 is for the following case:
+    #
+    # async def test_waitfor():
+    #     func_started = False
+    #
+    #     async def func():
+    #         nonlocal func_started
+    #         func_started = True
+    #
+    #     try:
+    #         await asyncio.wait_for(func(), 0)
+    #     except asyncio.TimeoutError:
+    #         assert not func_started
+    #     else:
+    #         assert False
+    #
+    # asyncio.run(test_waitfor())
+
+
+    if timeout is not None and timeout <= 0:
+        fut = ensure_future(fut)
+
+        if fut.done():
+            return fut.result()
+
+        await _cancel_and_wait(fut)
+        try:
+            return fut.result()
+        except exceptions.CancelledError as exc:
+            raise TimeoutError from exc
+
+    async with timeouts.timeout(timeout):
+        return await fut
+
+async def _wait(fs, timeout, return_when, loop):
+    """Internal helper for wait().
+
+    The fs argument must be a collection of Futures.
+    """
+    assert fs, 'Set of Futures is empty.'
+    waiter = loop.create_future()
+    timeout_handle = None
+    if timeout is not None:
+        timeout_handle = loop.call_later(timeout, _release_waiter, waiter)
+    counter = len(fs)
+
+    def _on_completion(f):
+        nonlocal counter
+        counter -= 1
+        if (counter <= 0 or
+            return_when == FIRST_COMPLETED or
+            return_when == FIRST_EXCEPTION and (not f.cancelled() and
+                                                f.exception() is not None)):
+            if timeout_handle is not None:
+                timeout_handle.cancel()
+            if not waiter.done():
+                waiter.set_result(None)
+
+    for f in fs:
+        f.add_done_callback(_on_completion)
+
+    try:
+        await waiter
+    finally:
+        if timeout_handle is not None:
+            timeout_handle.cancel()
+        for f in fs:
+            f.remove_done_callback(_on_completion)
+
+    done, pending = set(), set()
+    for f in fs:
+        if f.done():
+            done.add(f)
+        else:
+            pending.add(f)
+    return done, pending
+
+
+async def _cancel_and_wait(fut):
+    """Cancel the *fut* future or task and wait until it completes."""
+
+    loop = events.get_running_loop()
+    waiter = loop.create_future()
+    cb = functools.partial(_release_waiter, waiter)

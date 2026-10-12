@@ -1,0 +1,31 @@
+{
+  "schema": "er13.fresh_case.v1",
+  "case_id": "B11-P01",
+  "version": 1,
+  "title": "Durable references to local project attachments",
+  "software": true,
+  "component_level_brief": true,
+  "comparison_scope": "FULL_PIPELINE",
+  "domain_family": "local file workflows / reference identity",
+  "planned_provider_family": "Luna",
+  "provider_status": "PLANNED_LABEL_NOT_OBSERVED_ROUTE",
+  "control": "R0-ER13",
+  "files": {
+    "brief": "brief.md",
+    "hidden_plan": "plan.md",
+    "rubric": "rubric.json"
+  },
+  "candidate_initial_input": "brief.md only; rubric and exact plan withheld",
+  "exact_plan_release": "one-shot pinned reveal after discovery.md and source-map.json; reveal receipt freezes prior discovery SHA",
+  "maximum_seconds": 3600,
+  "stage_maxima_seconds": {
+    "investigator": 1800,
+    "critic": 720,
+    "reviser": 1080
+  },
+  "topology": "investigator -> independent critic -> fresh reviser",
+  "freshness": "New authored user problem; no historical case output, golden source pack or product winner supplied.",
+  "case_design_independence": "Domains reserved by mailbox before method freeze; designed from neutral software obligations. No case-specific governing-source research or candidate answer authored. B11-P02 changed prospectively to avoid sibling A-F01 overlap.",
+  "prepared_at_utc": "2026-10-12T00:22:26.330977+00:00",
+  "execution_status": "NOT_ADMITTED_NOT_EXECUTED"
+}

@@ -1,0 +1,112 @@
+        self._read_test([' , , '],
+                        [[None, None, None]],
+                        skipinitialspace=True, quoting=csv.QUOTE_STRINGS)
+
+    def test_read_space_delimiter(self):
+        self._read_test(['a   b', '  a  ', '  ', ''],
+                        [['a', '', '', 'b'], ['', '', 'a', '', ''], ['', '', ''], []],
+                        delimiter=' ', skipinitialspace=False)
+        self._read_test(['a   b', '  a  ', '  ', ''],
+                        [['a', 'b'], ['a', ''], [''], []],
+                        delimiter=' ', skipinitialspace=True)
+
+    def test_read_bigfield(self):
+        # This exercises the buffer realloc functionality and field size
+        # limits.
+        limit = csv.field_size_limit()
+        try:
+            size = 50000
+            bigstring = 'X' * size
+            bigline = '%s,%s' % (bigstring, bigstring)
+            self._read_test([bigline], [[bigstring, bigstring]])
+            csv.field_size_limit(size)
+            self._read_test([bigline], [[bigstring, bigstring]])
+            self.assertEqual(csv.field_size_limit(), size)
+            csv.field_size_limit(size-1)
+            self.assertRaises(csv.Error, self._read_test, [bigline], [])
+            self.assertRaises(TypeError, csv.field_size_limit, None)
+            self.assertRaises(TypeError, csv.field_size_limit, 1, None)
+        finally:
+            csv.field_size_limit(limit)
+
+    def test_read_linenum(self):
+        r = csv.reader(['line,1', 'line,2', 'line,3'])
+        self.assertEqual(r.line_num, 0)
+        next(r)
+        self.assertEqual(r.line_num, 1)
+        next(r)
+        self.assertEqual(r.line_num, 2)
+        next(r)
+        self.assertEqual(r.line_num, 3)
+        self.assertRaises(StopIteration, next, r)
+        self.assertEqual(r.line_num, 3)
+
+    def test_roundtrip_quoteed_newlines(self):
+        rows = [
+            ['\na', 'b\nc', 'd\n'],
+            ['\re', 'f\rg', 'h\r'],
+            ['\r\ni', 'j\r\nk', 'l\r\n'],
+            ['\n\rm', 'n\n\ro', 'p\n\r'],
+            ['\r\rq', 'r\r\rs', 't\r\r'],
+            ['\n\nu', 'v\n\nw', 'x\n\n'],
+        ]
+        for lineterminator in '\r\n', '\n', '\r':
+            with self.subTest(lineterminator=lineterminator):
+                with TemporaryFile("w+", encoding="utf-8", newline='') as fileobj:
+                    writer = csv.writer(fileobj, lineterminator=lineterminator)
+                    writer.writerows(rows)
+                    fileobj.seek(0)
+                    for i, row in enumerate(csv.reader(fileobj)):
+                        self.assertEqual(row, rows[i])
+
+    def test_roundtrip_escaped_unquoted_newlines(self):
+        rows = [
+            ['\na', 'b\nc', 'd\n'],
+            ['\re', 'f\rg', 'h\r'],
+            ['\r\ni', 'j\r\nk', 'l\r\n'],
+            ['\n\rm', 'n\n\ro', 'p\n\r'],
+            ['\r\rq', 'r\r\rs', 't\r\r'],
+            ['\n\nu', 'v\n\nw', 'x\n\n'],
+        ]
+        for lineterminator in '\r\n', '\n', '\r':
+            with self.subTest(lineterminator=lineterminator):
+                with TemporaryFile("w+", encoding="utf-8", newline='') as fileobj:
+                    writer = csv.writer(fileobj, lineterminator=lineterminator,
+                                        quoting=csv.QUOTE_NONE, escapechar="\\")
+                    writer.writerows(rows)
+                    fileobj.seek(0)
+                    for i, row in enumerate(csv.reader(fileobj,
+                                                       quoting=csv.QUOTE_NONE,
+                                                       escapechar="\\")):
+                        self.assertEqual(row, rows[i])
+
+
+class TestDialectRegistry(unittest.TestCase):
+    def test_registry_badargs(self):
+        self.assertRaises(TypeError, csv.list_dialects, None)
+        self.assertRaises(TypeError, csv.get_dialect)
+        self.assertRaises(csv.Error, csv.get_dialect, None)
+        self.assertRaises(csv.Error, csv.get_dialect, "nonesuch")
+        self.assertRaises(TypeError, csv.unregister_dialect)
+        self.assertRaises(csv.Error, csv.unregister_dialect, None)
+        self.assertRaises(csv.Error, csv.unregister_dialect, "nonesuch")
+        self.assertRaises(TypeError, csv.register_dialect, None)
+        self.assertRaises(TypeError, csv.register_dialect, None, None)
+        self.assertRaises(TypeError, csv.register_dialect, "nonesuch", 0, 0)
+        self.assertRaises(TypeError, csv.register_dialect, "nonesuch",
+                          badargument=None)
+        self.assertRaises(TypeError, csv.register_dialect, "nonesuch",
+                          quoting=None)
+        self.assertRaises(TypeError, csv.register_dialect, [])
+
+    def test_registry(self):
+        class myexceltsv(csv.excel):
+            delimiter = "\t"
+        name = "myexceltsv"
+        expected_dialects = csv.list_dialects() + [name]
+        expected_dialects.sort()
+        csv.register_dialect(name, myexceltsv)
+        self.addCleanup(csv.unregister_dialect, name)
+        self.assertEqual(csv.get_dialect(name).delimiter, '\t')
+        got_dialects = sorted(csv.list_dialects())
+        self.assertEqual(expected_dialects, got_dialects)

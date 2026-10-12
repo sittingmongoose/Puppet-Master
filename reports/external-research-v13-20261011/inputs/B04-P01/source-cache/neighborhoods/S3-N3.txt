@@ -1,0 +1,112 @@
+            err = PermissionError
+        else:
+            err = IsADirectoryError
+        self.assertRaises(err, copy_func, dir2, src_dir)
+
+        # raise *err* because of src rather than FileNotFoundError because of dst
+        self.assertRaises(err, copy_func, dir2, dst)
+        copy_func(src_file, dir2)     # should not raise exceptions
+
+    ### shutil.copyfile
+
+    @os_helper.skip_unless_symlink
+    def test_copyfile_symlinks(self):
+        tmp_dir = self.mkdtemp()
+        src = os.path.join(tmp_dir, 'src')
+        dst = os.path.join(tmp_dir, 'dst')
+        dst_link = os.path.join(tmp_dir, 'dst_link')
+        link = os.path.join(tmp_dir, 'link')
+        create_file(src, 'foo')
+        os.symlink(src, link)
+        # don't follow
+        shutil.copyfile(link, dst_link, follow_symlinks=False)
+        self.assertTrue(os.path.islink(dst_link))
+        self.assertEqual(os.readlink(link), os.readlink(dst_link))
+        # follow
+        shutil.copyfile(link, dst)
+        self.assertFalse(os.path.islink(dst))
+
+    @unittest.skipUnless(hasattr(os, 'link'), 'requires os.link')
+    def test_dont_copy_file_onto_link_to_itself(self):
+        # bug 851123.
+        os.mkdir(TESTFN)
+        src = os.path.join(TESTFN, 'cheese')
+        dst = os.path.join(TESTFN, 'shop')
+        try:
+            create_file(src, 'cheddar')
+            try:
+                os.link(src, dst)
+            except PermissionError as e:
+                self.skipTest('os.link(): %s' % e)
+            self.assertRaises(shutil.SameFileError, shutil.copyfile, src, dst)
+            with open(src, 'r', encoding='utf-8') as f:
+                self.assertEqual(f.read(), 'cheddar')
+            os.remove(dst)
+        finally:
+            shutil.rmtree(TESTFN, ignore_errors=True)
+
+    @os_helper.skip_unless_symlink
+    def test_dont_copy_file_onto_symlink_to_itself(self):
+        # bug 851123.
+        os.mkdir(TESTFN)
+        src = os.path.join(TESTFN, 'cheese')
+        dst = os.path.join(TESTFN, 'shop')
+        try:
+            create_file(src, 'cheddar')
+            # Using `src` here would mean we end up with a symlink pointing
+            # to TESTFN/TESTFN/cheese, while it should point at
+            # TESTFN/cheese.
+            os.symlink('cheese', dst)
+            self.assertRaises(shutil.SameFileError, shutil.copyfile, src, dst)
+            with open(src, 'r', encoding='utf-8') as f:
+                self.assertEqual(f.read(), 'cheddar')
+            os.remove(dst)
+        finally:
+            shutil.rmtree(TESTFN, ignore_errors=True)
+
+    # Issue #3002: copyfile and copytree block indefinitely on named pipes
+    @unittest.skipUnless(hasattr(os, "mkfifo"), 'requires os.mkfifo()')
+    @unittest.skipIf(sys.platform == "vxworks",
+                    "fifo requires special path on VxWorks")
+    def test_copyfile_named_pipe(self):
+        try:
+            os.mkfifo(TESTFN)
+        except PermissionError as e:
+            self.skipTest('os.mkfifo(): %s' % e)
+        try:
+            self.assertRaises(shutil.SpecialFileError,
+                                shutil.copyfile, TESTFN, TESTFN2)
+            self.assertRaises(shutil.SpecialFileError,
+                                shutil.copyfile, __file__, TESTFN)
+        finally:
+            os.remove(TESTFN)
+
+    def test_copyfile_return_value(self):
+        # copytree returns its destination path.
+        src_dir = self.mkdtemp()
+        dst_dir = self.mkdtemp()
+        dst_file = os.path.join(dst_dir, 'bar')
+        src_file = os.path.join(src_dir, 'foo')
+        create_file(src_file, 'foo')
+        rv = shutil.copyfile(src_file, dst_file)
+        self.assertTrue(os.path.exists(rv))
+        self.assertEqual(read_file(src_file), read_file(dst_file))
+
+    def test_copyfile_same_file(self):
+        # copyfile() should raise SameFileError if the source and destination
+        # are the same.
+        src_dir = self.mkdtemp()
+        src_file = os.path.join(src_dir, 'foo')
+        create_file(src_file, 'foo')
+        self.assertRaises(SameFileError, shutil.copyfile, src_file, src_file)
+        # But Error should work too, to stay backward compatible.
+        self.assertRaises(Error, shutil.copyfile, src_file, src_file)
+        # Make sure file is not corrupted.
+        self.assertEqual(read_file(src_file), 'foo')
+
+    @unittest.skipIf(MACOS or SOLARIS or _winapi, 'On MACOS, Solaris and Windows the errors are not confusing (though different)')
+    # gh-92670: The test uses a trailing slash to force the OS consider
+    # the path as a directory, but on AIX the trailing slash has no effect
+    # and is considered as a file.
+    @unittest.skipIf(AIX, 'Not valid on AIX, see gh-92670')
+    def test_copyfile_nonexistent_dir(self):

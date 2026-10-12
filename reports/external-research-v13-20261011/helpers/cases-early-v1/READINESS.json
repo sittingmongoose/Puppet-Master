@@ -1,0 +1,81 @@
+{
+  "case_count": 14,
+  "software_case_count": 14,
+  "component_level_software_count": 10,
+  "mechanism_family_count": 6,
+  "file_count": 56,
+  "word_counts": {
+    "A-F01": {
+      "brief": 308,
+      "plan": 332
+    },
+    "A-F02": {
+      "brief": 326,
+      "plan": 332
+    },
+    "B02-P01": {
+      "brief": 336,
+      "plan": 337
+    },
+    "B02-P02": {
+      "brief": 328,
+      "plan": 346
+    },
+    "B03-P01": {
+      "brief": 333,
+      "plan": 345
+    },
+    "B03-P02": {
+      "brief": 315,
+      "plan": 342
+    },
+    "B06-P01": {
+      "brief": 316,
+      "plan": 339
+    },
+    "B06-P02": {
+      "brief": 324,
+      "plan": 337
+    },
+    "B07-P01": {
+      "brief": 322,
+      "plan": 337
+    },
+    "B07-P02": {
+      "brief": 327,
+      "plan": 331
+    },
+    "B09-P01": {
+      "brief": 328,
+      "plan": 328
+    },
+    "B09-P02": {
+      "brief": 321,
+      "plan": 326
+    },
+    "B10-P01": {
+      "brief": 325,
+      "plan": 329
+    },
+    "B10-P02": {
+      "brief": 330,
+      "plan": 332
+    }
+  },
+  "manifest_sha256": "380f99e9928d96a11093288eae27a103c53333bcbcc258ed4241adaec4d53173",
+  "checks": [
+    "Exact requested IDs",
+    "Four files per case and valid JSON",
+    "All brief/plan lengths 200-400 words",
+    "Exact 60 elapsed-minute maximum/no-minimum wording in every brief and plan",
+    "All manifest hashes/sizes verified",
+    "Six rubric axes and case-specific negative constraints",
+    "10/14 component-level SOFTWARE briefs; six mechanism families"
+  ],
+  "candidate_runs": 0,
+  "candidate_answers": 0,
+  "provider_changes": 0,
+  "git_operations": 0,
+  "future_product_validation_executed": false,
+  "boundary": "Candidate discovery receives brief.md only. Root releases plan.md once at declared comparison point. rubric.json remains evaluator-only and never enters candidate closure."
+}

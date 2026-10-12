@@ -1,0 +1,484 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:er13:attempt:v1",
+  "title": "Flat ER13 attempt observation; missing metrics are null",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "attempt_id",
+    "arm_id",
+    "primary",
+    "status"
+  ],
+  "properties": {
+    "attempt_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "arm_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "primary": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "parent_attempt_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "charged_extra": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "cost_category": {
+      "enum": [
+        "product",
+        "evaluation",
+        "preparation",
+        "support",
+        "publication",
+        "root_observation"
+      ]
+    },
+    "scope": {
+      "enum": [
+        "FULL",
+        "COMPONENT",
+        null
+      ]
+    },
+    "track": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "block_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "cell": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "method_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "method_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "case_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "requested_family": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "actual_provider": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "actual_model": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "actual_effort": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "actual_tier": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "time_contract_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "PLANNED_NOT_EXECUTED",
+        "ACCEPTED",
+        "STARTED",
+        "COMPLETED",
+        "FAILED",
+        "CAPPED",
+        "INVALID",
+        "INTERRUPTED",
+        "MISSING",
+        "UNKNOWN"
+      ]
+    },
+    "assessment": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "UNKNOWN",
+        "NOT_ASSESSED",
+        null
+      ]
+    },
+    "full_scope_assessed": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "final_present": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "delivery_basis": {
+      "enum": [
+        "last_complete_artifact",
+        "request_to_quiet_proxy",
+        null
+      ]
+    },
+    "billing_currency": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "subscription_unit": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "counter_basis": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "extra_start_count": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "evidence_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "authored_manifest_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "authored_manifest_sha256": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "frozen_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "evaluation_start_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "dispatch_record_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "terminal_record_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "t0_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "accepted_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "start_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "terminal_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "delivery_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "created_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "closed_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "input_tokens": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "cached_input_tokens": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "output_tokens": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "reasoning_tokens": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "goal_tokens": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "subscription_consumption": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "billing_amount": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "active_provider_seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "created_context_seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "started_context_seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "context_union_seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "context_overlap_seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "request_to_accept_seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "accept_to_start_seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "start_to_terminal_seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "request_to_terminal_seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "delivery_seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "open_context_seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "setup_start_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "setup_end_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "admitted_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "queued_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "finish_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "last_artifact_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "quiet_utc": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "setup_seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "start_to_finish_seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    }
+  }
+}

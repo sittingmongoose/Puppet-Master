@@ -1,0 +1,113 @@
+{
+  "schema": "er13.public_portable_check.v1",
+  "checked_at_utc": "2026-10-12T00:40:26.410103+00:00",
+  "mode": "MOCK_ONLY_INDEPENDENT_NEW_SCRATCH_CALLER",
+  "passed": true,
+  "native_calls": 0,
+  "candidate_dispatches": 0,
+  "science_grades": false,
+  "scratch_removed": true,
+  "initial_publication_check_failure": {
+    "phase": "independent additional caller only; preceding MOCK package suites returned exit 0",
+    "error": "Additional MOCK caller supplied the forbidden AUTHORIZED_PROVIDER_INSTANCE sentinel; materializer refused before creating destination",
+    "repair": "Corrected checker-only synthetic identifier to MOCK_AUTHORIZED_ROUTE; recipe unchanged",
+    "native_calls": 0,
+    "original_stdout_retained": false
+  },
+  "checks": [
+    {
+      "command": [
+        "sha256sum",
+        "-c",
+        "SHA256SUMS"
+      ],
+      "exit_code": 0,
+      "output": "CHANGELOG.md: OK\nREADME.md: OK\nREADY.json: OK\nROUTES.md: OK\nb-check-results.json: OK\nb-checks.py: OK\ncheck-results.json: OK\nchecks.py: OK\ndelta-checks.py: OK\ner13-checks.py: OK\nextra-checks.py: OK\nmaterialize.py: OK\npreservation-check.json: OK\nprior-v2-README.md: OK\nprior-v2-bundle-manifest.json: OK\nprior-v2-check-results.json: OK\nprior-v3-README.md: OK\nprior-v3-READY.json: OK\nprior-v3-bundle-manifest.json: OK\nprior-v3-check-results.json: OK\nprior-v3-source-lineage.json: OK\npublic-input-dependency-manifest.json: OK\nrepin.py: OK\nroutes.py: OK\nsource-lineage.json: OK\nsources/helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json: OK\nsources/helpers/er12-composite-A1-A8-v1/prepare.py: OK\nsources/helpers/er12-screen-v1/bootstrap.js: OK\nsources/helpers/er12-screen-v1/handoff.py: OK\nsources/helpers/er12-screen-v1/prepare.py: OK\nsources/helpers/er12-screen-v1/reveal.py: OK\nsources/mechanics/exact-activation-capture-v2-1/README.md: OK\nsources/mechanics/exact-activation-capture-v2-1/ROOT_VERIFICATION.json: OK\nsources/mechanics/exact-activation-capture-v2-1/activation-snippet-template.js: OK\nsources/mechanics/exact-activation-capture-v2-1/dependency-sha256.json: OK\nsources/mechanics/exact-activation-capture-v2-1/overlay.py: OK\nsources/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py: OK\nsources/mechanics/exact-goal-binding-guard-v1/overlay.py: OK\nsources/mechanics/invocation-clarification-v1/helper-pins.json: OK\nsources/mechanics/invocation-clarification-v1/transform.py: OK\nsources/mechanics/native-root-code-mode/captureSpecJS.js: OK\nsources/mechanics/native-root-code-mode/clarifySpecJS.js: OK\nsources/mechanics/native-root-code-mode/exactSpecJS.js: OK\nsources/mechanics/native-root-code-mode/standardSpecJS.js: OK\nsources/methods/A8/critic_prompt_delta.txt: OK\nsources/methods/A8/reviser_prompt_delta.txt: OK\nsources/methods/B07/critic_prompt_delta.txt: OK\nsources/methods/B07/investigator_prompt_delta.txt: OK\nsources/methods/B07/method.json: OK\nsources/methods/B07/reviser_prompt_delta.txt: OK\nsources/methods/B09/critic_prompt_delta.txt: OK\nsources/methods/B09/investigator_prompt_delta.txt: OK\nsources/methods/B09/method.json: OK\nsources/methods/B09/reviser_prompt_delta.txt: OK\nsources/methods/B10/critic_prompt_delta.txt: OK\nsources/methods/B10/investigator_prompt_delta.txt: OK\nsources/methods/B10/method.json: OK\nsources/methods/B10/reviser_prompt_delta.txt: OK\nbundle-manifest.json: OK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "MOCK_CALLER/package/helpers/materialize-er13-v1/sealed/full-v1/er13-checks.py"
+      ],
+      "exit_code": 0,
+      "output": "{\"passed\": true, \"checks\": 265, \"prior_v2_checks\": 236, \"prior_v2_rerun\": false, \"mode\": \"SYNTHETIC_OFFLINE_DELTA_ONLY\", \"native_candidate_calls\": 0, \"dispatches\": 0, \"reveal_executions\": 0, \"science_qualified\": false, \"provenance_qualified\": false, \"scratch_removed\": true}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "MOCK_CALLER/package/helpers/materialize-er13-v1/sealed/full-v1/b-checks.py"
+      ],
+      "exit_code": 0,
+      "output": "{\"passed\": true, \"checks\": 218, \"mode\": \"SYNTHETIC_OFFLINE_B_DELTAS_ONLY\", \"native_candidate_calls\": 0, \"dispatches\": 0, \"reserve_starts\": 0, \"scratch_removed\": true}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "MOCK_CALLER/package/helpers/component-admit-v1/tests.py"
+      ],
+      "exit_code": 0,
+      "output": "test_all_components_full_outputs_and_access_delta (__main__.AdmissionTests.test_all_components_full_outputs_and_access_delta) ... ok\ntest_capture_body_offline_mock_one_native_call_raw_save (__main__.AdmissionTests.test_capture_body_offline_mock_one_native_call_raw_save) ... ok\ntest_final_preparation_clock_rejects_late_emit (__main__.AdmissionTests.test_final_preparation_clock_rejects_late_emit) ... ok\ntest_guard_exact_response_and_reject_transcription_or_partial (__main__.AdmissionTests.test_guard_exact_response_and_reject_transcription_or_partial) ... ok\ntest_max_clock_prep_and_queue_no_reset (__main__.AdmissionTests.test_max_clock_prep_and_queue_no_reset) ... ok\ntest_request_and_inputs_are_hash_bound (__main__.AdmissionTests.test_request_and_inputs_are_hash_bound) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 1.067s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "MOCK_CALLER/package/helpers/component-fixtures-v1/verify.py"
+      ],
+      "exit_code": 0,
+      "output": "{\n  \"checked_utc\": \"2026-10-12T00:40:25.621770+00:00\",\n  \"status\": \"PASS\",\n  \"checks\": \"Exact manifests/raw identity/time contracts/cache gate/primary bytes/line neighborhoods/immutable finding ID and obligation coverage. Does not independently grade scientific truth or prove critique semantic equivalence.\",\n  \"cases\": [\n    {\n      \"case\": \"B01-P01\",\n      \"files\": 24,\n      \"source_bodies\": 5,\n      \"shared_raw_identity_sha256\": \"8c4fae30e944a75e55f995dcd6a1dcb8e6eb43d5353d1ba4f06c04a6242c6326\",\n      \"frozen_utc\": \"2026-10-12T00:20:45.604112+00:00\"\n    },\n    {\n      \"case\": \"B01-P02\",\n      \"files\": 19,\n      \"source_bodies\": 3,\n      \"shared_raw_identity_sha256\": \"70567f65708653964b5a306da344da2160df6e8e3ef957eeb09af272c0f50679\",\n      \"frozen_utc\": \"2026-10-12T00:20:45.612820+00:00\"\n    },\n    {\n      \"case\": \"B04-P01\",\n      \"files\": 25,\n      \"source_bodies\": 4,\n      \"shared_raw_identity_sha256\": \"21cfc810e8f5c6cccecfbb5dbf435c83d1d65baec9ab8a194ff465feb06ac495\",\n      \"frozen_utc\": \"2026-10-12T00:23:16.029879+00:00\"\n    },\n    {\n      \"case\": \"B04-P02\",\n      \"files\": 22,\n      \"source_bodies\": 2,\n      \"shared_raw_identity_sha256\": \"717d2ea736bc6a4249c7718360b656a55c0891d0ca9f7f1db99f884070c20764\",\n      \"frozen_utc\": \"2026-10-12T00:23:26.630505+00:00\"\n    },\n    {\n      \"case\": \"B05-P01\",\n      \"files\": 26,\n      \"source_bodies\": 5,\n      \"shared_raw_identity_sha256\": \"03c23ccd1b0762159533c4d6862f99c5ebb2d643508b4584bafda5de8297e7e7\",\n      \"frozen_utc\": \"2026-10-12T00:24:29.304194+00:00\"\n    },\n    {\n      \"case\": \"B05-P02\",\n      \"files\": 27,\n      \"source_bodies\": 4,\n      \"shared_raw_identity_sha256\": \"6b0630581166ff1914b7e0d6bc8f3f3103944b52e87ef08d66c3ed34659df6be\",\n      \"frozen_utc\": \"2026-10-12T00:24:29.312801+00:00\"\n    },\n    {\n      \"case\": \"B08-P01\",\n      \"files\": 19,\n      \"source_bodies\": 3,\n      \"shared_raw_identity_sha256\": \"d520136ba7d676ea383c99c83f27402ce9d6b565f9c791b04d44cd40f6df344e\",\n      \"frozen_utc\": \"2026-10-12T00:20:45.618207+00:00\"\n    },\n    {\n      \"case\": \"B08-P02\",\n      \"files\": 19,\n      \"source_bodies\": 5,\n      \"shared_raw_identity_sha256\": \"85f7387511003a21dd43407b25369d459a95bc434de979f48e2836465ac537b6\",\n      \"frozen_utc\": \"2026-10-12T00:21:05.649216+00:00\"\n    }\n  ],\n  \"errors\": []\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "MOCK_CALLER/package/helpers/mechanics-v1/checks.py"
+      ],
+      "exit_code": 0,
+      "output": "{\"synthetic_checks_passed\": 40, \"scientific_runs\": 0, \"native_execution_qualified\": false, \"scratch_removed\": true}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "MOCK_CALLER/package/helpers/materialize-er13-v1/sealed/full-v1/materialize.py",
+        "--destination",
+        "MOCK_CALLER/caller-admitted",
+        "--authorized-provider-instance",
+        "MOCK_AUTHORIZED_ROUTE",
+        "--brief",
+        "MOCK_CALLER/caller-brief.md",
+        "--plan",
+        "MOCK_CALLER/caller-plan.md",
+        "--run-id",
+        "PUBLIC_MOCK_CALLER",
+        "--method",
+        "A8",
+        "--t0-utc",
+        "2026-10-12T00:40:26.284049+00:00",
+        "--whole-deadline-utc",
+        "2026-10-12T01:40:26.284049+00:00",
+        "--stage-budgets-s",
+        "1800,720,1080",
+        "--whole-budget-s",
+        "3600"
+      ],
+      "exit_code": 0,
+      "output": "{\"materialized\": true, \"method\": \"A8\", \"stage_budgets_s\": {\"investigator\": 1800, \"critic\": 720, \"reviser\": 1080}, \"deadline_minutes\": 60, \"dispatch_performed\": false}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "MOCK_CALLER/package/helpers/materialize-er13-v1/sealed/full-v1/materialize.py",
+        "--verify",
+        "MOCK_CALLER/caller-admitted"
+      ],
+      "exit_code": 0,
+      "output": "{\"verified\": true, \"files\": 39, \"scope\": [\"R0\", \"A1\", \"A8\", \"A1+A8\", \"B02\", \"B06\", \"B07\", \"B09\", \"B10\", \"B11\", \"B12\"]}\n"
+    }
+  ]
+}

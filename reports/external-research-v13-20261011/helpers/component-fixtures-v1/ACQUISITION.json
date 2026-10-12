@@ -1,0 +1,290 @@
+[
+  {
+    "path": "sources/cpython/Doc/library/sqlite3.rst",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/sqlite3.rst",
+    "sha256": "d2ee6e3a5ad9c719fe6523fac3c5cc971faadf839e06e082000652cbe0da806d",
+    "bytes": 94329,
+    "retrieved_utc": "2026-10-12T00:18:13.692335+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Modules/_sqlite/connection.c",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_sqlite/connection.c",
+    "sha256": "97decbb60d78cb3be32beea51236502c9d339b6b44c2e359b2349d72d1254078",
+    "bytes": 79296,
+    "retrieved_utc": "2026-10-12T00:18:13.709431+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Lib/test/test_sqlite3/test_backup.py",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_sqlite3/test_backup.py",
+    "sha256": "cb53e2011fff0f320731acd04880d6fd4e183ebaf4030e2961a21ffe95827b24",
+    "bytes": 5605,
+    "retrieved_utc": "2026-10-12T00:18:13.688306+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Doc/library/zipfile.rst",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/zipfile.rst",
+    "sha256": "75d8bd854ff81d2badaa7ba6875c8ad22ec8860fada75c76af3eb7e0e6a6a9cd",
+    "bytes": 35432,
+    "retrieved_utc": "2026-10-12T00:18:13.697865+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Lib/zipfile/__init__.py",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/zipfile/__init__.py",
+    "sha256": "6c4dc603a4e63d262a3ddb8671dd68eeacfe26ab868bd8898ca52e85885fca44",
+    "bytes": 89132,
+    "retrieved_utc": "2026-10-12T00:18:13.692181+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Lib/test/test_zipfile/test_core.py",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_zipfile/test_core.py",
+    "sha256": "b0f623e9d85806fd18ca9ce3e1cfdba3d6479a7e360641fe92577a3140744802",
+    "bytes": 154639,
+    "retrieved_utc": "2026-10-12T00:18:13.695846+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Doc/library/asyncio-queue.rst",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-queue.rst",
+    "sha256": "26c21d8ad906a2da711d5cbee4c91a3833fd66c2ac4d62074d48e247657d7fc9",
+    "bytes": 7477,
+    "retrieved_utc": "2026-10-12T00:18:14.004205+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Lib/asyncio/queues.py",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/queues.py",
+    "sha256": "559dd0b597af27d60f0ea75a0ee4eff19d9337d685d13e0685d13045ee7b7cdf",
+    "bytes": 10152,
+    "retrieved_utc": "2026-10-12T00:18:13.687134+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Lib/test/test_asyncio/test_queues.py",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_queues.py",
+    "sha256": "8997747f29c7e39f5c42cfb21258c08ad7d5fcf965b799af151491cc0aaab984",
+    "bytes": 21060,
+    "retrieved_utc": "2026-10-12T00:18:13.721207+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Doc/library/stdtypes.rst",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/stdtypes.rst",
+    "sha256": "de17cc87c19a676a668967f83c6be45499d5de05bd3d039d606d9affad8e248b",
+    "bytes": 222836,
+    "retrieved_utc": "2026-10-12T00:18:14.079915+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Doc/library/unicodedata.rst",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/unicodedata.rst",
+    "sha256": "6ee133763805a5c4ee062f24787bee8460310e75579f008b9a5129cf64e3d67d",
+    "bytes": 7508,
+    "retrieved_utc": "2026-10-12T00:18:13.929239+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Lib/test/test_str.py",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_str.py",
+    "sha256": "f5417b5b30eaf393032a59a4cbde3e70731a93f74e7c7709ec8939fa796a10e2",
+    "bytes": 129386,
+    "retrieved_utc": "2026-10-12T00:18:13.816766+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Lib/test/test_unicodedata.py",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_unicodedata.py",
+    "sha256": "ea5d43dfffa361eab1c61528096bb064afdf2e6666c4ba971cc3cf3d297e6c4f",
+    "bytes": 18125,
+    "retrieved_utc": "2026-10-12T00:18:13.801175+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Objects/unicodeobject.c",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Objects/unicodeobject.c",
+    "sha256": "77ffa6c7c7407207a531890f95e474c812fa1066bb0f22cd92887cf5717e83c7",
+    "bytes": 474671,
+    "retrieved_utc": "2026-10-12T00:18:14.143827+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Doc/library/shutil.rst",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/shutil.rst",
+    "sha256": "ab35dd724e5d9d3c9f25ce79714758e10ca3a530d083977ae8ee43417b43a7f4",
+    "bytes": 35285,
+    "retrieved_utc": "2026-10-12T00:18:13.755340+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Lib/shutil.py",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/shutil.py",
+    "sha256": "ce110d23884b9bdc75f7b1654dbd2d7cf5d6762046a4cf8c316b96fd937d1e0b",
+    "bytes": 57463,
+    "retrieved_utc": "2026-10-12T00:18:13.760633+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Lib/test/test_shutil.py",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_shutil.py",
+    "sha256": "91e76e46cc6246955743648bf8779a8f8f50192745f7124c9a4f83565c479b75",
+    "bytes": 143522,
+    "retrieved_utc": "2026-10-12T00:18:14.176781+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Doc/library/os.rst",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/os.rst",
+    "sha256": "d5fc5ab62c60830533aa17ea91f9b16f9b6aa2e37c6aaac4aefef0e9609e1b15",
+    "bytes": 202500,
+    "retrieved_utc": "2026-10-12T00:18:14.100875+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Doc/library/asyncio-subprocess.rst",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-subprocess.rst",
+    "sha256": "f79a45c54d29bad97db6c9a6f786e8f2852fab610ec6f29dce0e2366a09e27d4",
+    "bytes": 11955,
+    "retrieved_utc": "2026-10-12T00:18:13.832484+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Lib/asyncio/subprocess.py",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/subprocess.py",
+    "sha256": "7b70605716334f63cc482123b2aaa3b7c5bb7138eeab63a037bd8068d43307c1",
+    "bytes": 7737,
+    "retrieved_utc": "2026-10-12T00:18:14.009697+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Lib/test/test_asyncio/test_subprocess.py",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_asyncio/test_subprocess.py",
+    "sha256": "a052fda324bc9d006a43f8b1b660ddc97f317d975a73f86f72e83ff81e31e982",
+    "bytes": 38293,
+    "retrieved_utc": "2026-10-12T00:18:13.871772+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Doc/library/csv.rst",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/csv.rst",
+    "sha256": "1e4446b58fb97c743a7afbc4eb8521e4021257cda18487db6c64f64e84b0d737",
+    "bytes": 23749,
+    "retrieved_utc": "2026-10-12T00:18:14.426073+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Lib/test/test_csv.py",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/test/test_csv.py",
+    "sha256": "37be9144ab9838f7b385172571a26dadaed0b1cd45d6a8f731003ac7e9883939",
+    "bytes": 65633,
+    "retrieved_utc": "2026-10-12T00:18:13.972361+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Modules/_csv.c",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Modules/_csv.c",
+    "sha256": "4c4bc41590c8f95a138614260d00d6e15078d32e0f177e924c265874777e6f45",
+    "bytes": 51448,
+    "retrieved_utc": "2026-10-12T00:18:14.032800+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/rfc/rfc9111.txt",
+    "url": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+    "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e",
+    "bytes": 84477,
+    "retrieved_utc": "2026-10-12T00:18:14.209420+00:00",
+    "license": "IETF Trust legal provisions; retained primary text for evidence",
+    "pin": "exact retrieved body hash; live SQLite docs / stable numbered RFC"
+  },
+  {
+    "path": "sources/rfc/rfc9110.txt",
+    "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+    "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+    "bytes": 502941,
+    "retrieved_utc": "2026-10-12T00:18:14.185272+00:00",
+    "license": "IETF Trust legal provisions; retained primary text for evidence",
+    "pin": "exact retrieved body hash; live SQLite docs / stable numbered RFC"
+  },
+  {
+    "path": "sources/sqlite/backup.html",
+    "url": "https://www.sqlite.org/backup.html",
+    "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+    "bytes": 28195,
+    "retrieved_utc": "2026-10-12T00:18:14.164386+00:00",
+    "license": "SQLite public-domain documentation",
+    "pin": "exact retrieved body hash; live SQLite docs / stable numbered RFC"
+  },
+  {
+    "path": "sources/sqlite/wal.html",
+    "url": "https://www.sqlite.org/wal.html",
+    "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+    "bytes": 42143,
+    "retrieved_utc": "2026-10-12T00:18:14.223045+00:00",
+    "license": "SQLite public-domain documentation",
+    "pin": "exact retrieved body hash; live SQLite docs / stable numbered RFC"
+  },
+  {
+    "path": "sources/cpython/Lib/csv.py",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/csv.py",
+    "sha256": "bd242c88ac4fd905cc64121e6fc9714c32b9e6031f52a03296aa8d28b32903df",
+    "bytes": 19178,
+    "retrieved_utc": "2026-10-12T00:24:28.923965+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/LICENSE",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/LICENSE",
+    "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+    "bytes": 13809,
+    "retrieved_utc": "2026-10-12T00:24:29.030416+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Doc/library/asyncio-task.rst",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Doc/library/asyncio-task.rst",
+    "sha256": "6603ce6fdcb36380b1e22eb26bd7f60c919bdae62958448ec56c71783f499b79",
+    "bytes": 48620,
+    "retrieved_utc": "2026-10-12T00:24:29.152706+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  },
+  {
+    "path": "sources/cpython/Lib/asyncio/tasks.py",
+    "url": "https://raw.githubusercontent.com/python/cpython/8183fa5e3f78ca6ab862de7fb8b14f3d929421e0/Lib/asyncio/tasks.py",
+    "sha256": "821f2e08c8c33160250db98defbd5dc193b292ec057ae0565f372fbe6cfc5b5e",
+    "bytes": 39757,
+    "retrieved_utc": "2026-10-12T00:24:29.267444+00:00",
+    "license": "PSF-2.0 and bundled notices",
+    "pin": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0"
+  }
+]

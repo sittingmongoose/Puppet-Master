@@ -1,0 +1,39 @@
+{
+  "case": "B08-P02",
+  "derived_from": "brief.md and plan.md only",
+  "axes": [
+    "material obligations",
+    "consequential source facts/applicability",
+    "useful mechanisms/alternatives/history",
+    "valid criticism and plan dispositions",
+    "supported draft-to-final preservation",
+    "meaningful proposed/executed validation"
+  ],
+  "obligations": [
+    {
+      "id": "O1",
+      "requirement": "Preserve originals, explicit modes and versioned index migration"
+    },
+    {
+      "id": "O2",
+      "requirement": "Meaning/applicability of normalization/casefold versus locale/confusables"
+    },
+    {
+      "id": "O3",
+      "requirement": "4096-byte key budget with honest overflow behavior"
+    },
+    {
+      "id": "O4",
+      "requirement": "Display highlight offsets and units"
+    },
+    {
+      "id": "O5",
+      "requirement": "Useful supported derivations and examined generalizations"
+    },
+    {
+      "id": "O6",
+      "requirement": "Alternative mechanisms and independent validation limits"
+    }
+  ],
+  "scoring_boundary": "No hidden solution supplied to candidates. Evaluator independently checks governing context; no app deployment requirement."
+}

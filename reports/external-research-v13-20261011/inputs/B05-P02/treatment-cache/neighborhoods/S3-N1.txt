@@ -1,0 +1,112 @@
+
+Return the dialect instance associated with name.
+[clinic start generated code]*/
+
+static PyObject *
+_csv_get_dialect_impl(PyObject *module, PyObject *name)
+/*[clinic end generated code: output=aa988cd573bebebb input=74865c659dcb441f]*/
+{
+    return get_dialect_from_registry(name, get_csv_state(module));
+}
+
+/*[clinic input]
+_csv.field_size_limit
+
+    new_limit: object = NULL
+
+Sets an upper limit on parsed fields.
+
+Returns old limit. If limit is not given, no new limit is set and
+the old limit is returned
+[clinic start generated code]*/
+
+static PyObject *
+_csv_field_size_limit_impl(PyObject *module, PyObject *new_limit)
+/*[clinic end generated code: output=f2799ecd908e250b input=77db7485ee3ae90a]*/
+{
+    _csvstate *module_state = get_csv_state(module);
+    Py_ssize_t old_limit = FT_ATOMIC_LOAD_SSIZE_RELAXED(module_state->field_limit);
+    if (new_limit != NULL) {
+        if (!PyLong_CheckExact(new_limit)) {
+            PyErr_Format(PyExc_TypeError,
+                         "limit must be an integer");
+            return NULL;
+        }
+        Py_ssize_t new_limit_value = PyLong_AsSsize_t(new_limit);
+        if (new_limit_value == -1 && PyErr_Occurred()) {
+            return NULL;
+        }
+        FT_ATOMIC_STORE_SSIZE_RELAXED(module_state->field_limit, new_limit_value);
+    }
+    return PyLong_FromSsize_t(old_limit);
+}
+
+static PyType_Slot error_slots[] = {
+    {0, NULL},
+};
+
+PyType_Spec error_spec = {
+    .name = "_csv.Error",
+    .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
+    .slots = error_slots,
+};
+
+/*
+ * MODULE
+ */
+
+PyDoc_STRVAR(csv_module_doc, "CSV parsing and writing.\n");
+
+PyDoc_STRVAR(csv_reader_doc,
+"reader($module, iterable, /, dialect='excel', **fmtparams)\n"
+"--\n\n"
+"Return a reader object that will process lines from the given iterable.\n"
+"\n"
+"The \"iterable\" argument can be any object that returns a line\n"
+"of input for each iteration, such as a file object or a list.  The\n"
+"optional \"dialect\" argument defines a CSV dialect.  The function\n"
+"also accepts optional keyword arguments which override settings\n"
+"provided by the dialect.\n"
+"\n"
+"The returned object is an iterator.  Each iteration returns a row\n"
+"of the CSV file (which can span multiple input lines).\n");
+
+PyDoc_STRVAR(csv_writer_doc,
+"writer($module, fileobj, /, dialect='excel', **fmtparams)\n"
+"--\n\n"
+"Return a writer object that will write user data on the given file object.\n"
+"\n"
+"The \"fileobj\" argument can be any object that supports the file API.\n"
+"The optional \"dialect\" argument defines a CSV dialect.  The function\n"
+"also accepts optional keyword arguments which override settings\n"
+"provided by the dialect.\n");
+
+PyDoc_STRVAR(csv_register_dialect_doc,
+"register_dialect($module, name, /, dialect='excel', **fmtparams)\n"
+"--\n\n"
+"Create a mapping from a string name to a CVS dialect.\n"
+"\n"
+"The optional \"dialect\" argument specifies the base dialect instance\n"
+"or the name of the registered dialect.  The function also accepts\n"
+"optional keyword arguments which override settings provided by the\n"
+"dialect.\n");
+
+static struct PyMethodDef csv_methods[] = {
+    { "reader", _PyCFunction_CAST(csv_reader),
+        METH_VARARGS | METH_KEYWORDS, csv_reader_doc},
+    { "writer", _PyCFunction_CAST(csv_writer),
+        METH_VARARGS | METH_KEYWORDS, csv_writer_doc},
+    { "register_dialect", _PyCFunction_CAST(csv_register_dialect),
+        METH_VARARGS | METH_KEYWORDS, csv_register_dialect_doc},
+    _CSV_LIST_DIALECTS_METHODDEF
+    _CSV_UNREGISTER_DIALECT_METHODDEF
+    _CSV_GET_DIALECT_METHODDEF
+    _CSV_FIELD_SIZE_LIMIT_METHODDEF
+    { NULL, NULL }
+};
+
+static int
+csv_exec(PyObject *module) {
+    const StyleDesc *style;
+    PyObject *temp;
+    _csvstate *module_state = get_csv_state(module);

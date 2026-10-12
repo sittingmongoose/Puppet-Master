@@ -1,0 +1,112 @@
+
+.. _csv-contents:
+
+Module Contents
+---------------
+
+The :mod:`csv` module defines the following functions:
+
+
+.. index::
+   single: universal newlines; csv.reader function
+
+.. function:: reader(csvfile, /, dialect='excel', **fmtparams)
+
+   Return a :ref:`reader object <reader-objects>` that will process
+   lines from the given *csvfile*.  A csvfile must be an iterable of
+   strings, each in the reader's defined csv format.
+   A csvfile is most commonly a file-like object or list.
+   If *csvfile* is a file object,
+   it should be opened with ``newline=''``. [1]_  An optional
+   *dialect* parameter can be given which is used to define a set of parameters
+   specific to a particular CSV dialect.  It may be an instance of a subclass of
+   the :class:`Dialect` class or one of the strings returned by the
+   :func:`list_dialects` function.  The other optional *fmtparams* keyword arguments
+   can be given to override individual formatting parameters in the current
+   dialect.  For full details about the dialect and formatting parameters, see
+   section :ref:`csv-fmt-params`.
+
+   Each row read from the csv file is returned as a list of strings.  No
+   automatic data type conversion is performed unless the :data:`QUOTE_NONNUMERIC` format
+   option is specified (in which case unquoted fields are transformed into floats).
+
+   A short usage example::
+
+      >>> import csv
+      >>> with open('eggs.csv', newline='') as csvfile:
+      ...     spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+      ...     for row in spamreader:
+      ...         print(', '.join(row))
+      Spam, Spam, Spam, Spam, Spam, Baked Beans
+      Spam, Lovely Spam, Wonderful Spam
+
+
+.. function:: writer(csvfile, /, dialect='excel', **fmtparams)
+
+   Return a writer object responsible for converting the user's data into delimited
+   strings on the given file-like object.  *csvfile* can be any object with a
+   :meth:`~io.TextIOBase.write` method.  If *csvfile* is a file object, it should be opened with
+   ``newline=''`` [1]_.  An optional *dialect*
+   parameter can be given which is used to define a set of parameters specific to a
+   particular CSV dialect.  It may be an instance of a subclass of the
+   :class:`Dialect` class or one of the strings returned by the
+   :func:`list_dialects` function.  The other optional *fmtparams* keyword arguments
+   can be given to override individual formatting parameters in the current
+   dialect.  For full details about dialects and formatting parameters, see
+   the :ref:`csv-fmt-params` section. To make it
+   as easy as possible to interface with modules which implement the DB API, the
+   value :const:`None` is written as the empty string.  While this isn't a
+   reversible transformation, it makes it easier to dump SQL NULL data values to
+   CSV files without preprocessing the data returned from a ``cursor.fetch*`` call.
+   All other non-string data are stringified with :func:`str` before being written.
+
+   A short usage example::
+
+      import csv
+      with open('eggs.csv', 'w', newline='') as csvfile:
+          spamwriter = csv.writer(csvfile, delimiter=' ',
+                                  quotechar='|', quoting=csv.QUOTE_MINIMAL)
+          spamwriter.writerow(['Spam'] * 5 + ['Baked Beans'])
+          spamwriter.writerow(['Spam', 'Lovely Spam', 'Wonderful Spam'])
+
+
+.. function:: register_dialect(name, /, dialect='excel', **fmtparams)
+
+   Associate *dialect* with *name*.  *name* must be a string. The
+   dialect can be specified either by passing a sub-class of :class:`Dialect`, or
+   by *fmtparams* keyword arguments, or both, with keyword arguments overriding
+   parameters of the dialect. For full details about dialects and formatting
+   parameters, see section :ref:`csv-fmt-params`.
+
+
+.. function:: unregister_dialect(name)
+
+   Delete the dialect associated with *name* from the dialect registry.  An
+   :exc:`Error` is raised if *name* is not a registered dialect name.
+
+
+.. function:: get_dialect(name)
+
+   Return the dialect associated with *name*.  An :exc:`Error` is raised if
+   *name* is not a registered dialect name.  This function returns an immutable
+   :class:`Dialect`.
+
+.. function:: list_dialects()
+
+   Return the names of all registered dialects.
+
+
+.. function:: field_size_limit()
+              field_size_limit(new_limit)
+
+   Returns the current maximum field size allowed by the parser. If *new_limit* is
+   given, this becomes the new limit.
+
+
+The :mod:`csv` module defines the following classes:
+
+.. class:: DictReader(f, fieldnames=None, restkey=None, restval=None, \
+                      dialect='excel', *args, **kwds)
+
+   Create an object that operates like a regular reader but maps the
+   information in each row to a :class:`dict` whose keys are given by the

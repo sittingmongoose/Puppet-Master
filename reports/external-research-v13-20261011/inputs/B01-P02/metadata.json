@@ -1,0 +1,33 @@
+{
+  "case": "B01-P02",
+  "title": "Untrusted ZIP project importer",
+  "track": "B",
+  "scope": "COMPONENT",
+  "fixture_version": "component-fixtures-v1",
+  "prepared_by": "research preparer; source-inspected authored draft, not a separately executed investigator pipeline",
+  "fresh_case": true,
+  "source_scope": {
+    "repository": "https://github.com/python/cpython",
+    "tag": "v3.13.9",
+    "commit": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+    "scope": "CPython 3.13.9, explicit historical target, not latest Python",
+    "observed_at": "2026-10-12T00:17:37.443225+00:00"
+  },
+  "frozen_utc": "2026-10-12T00:20:45.612820+00:00",
+  "matched_raw_base": {
+    "brief.md": "883b99337e998c7287f3af33924d26d1d9eb17fa69e9fe02b14dc4fd750dca08",
+    "plan.md": "94871c66604ae09060afb4fa53bf5ef55e30d872a72ee8f1dd319d8bbef315ba",
+    "draft.md": "ecf0fd43dd4d9d3d63dfec2ae8042c4981e83ad3fb53a453c99be8cb28a9a7f3",
+    "source-index.json": "5251efd8d6423bddd7432194935753cda611b4c77b992e96467bb89cd9966f56"
+  },
+  "pair_raw_identity_required": true,
+  "component_max_minutes": 25,
+  "component_min_minutes": 0,
+  "prep_cost_category": "shared_campaign_preparation; standalone cold cost separately reportable",
+  "method": "B01",
+  "critique_contract": "common critique.md for both arms",
+  "candidate_injected_answer": false,
+  "validation_executed": "Source retrieval, locator/body/hash checks only. Upstream tests read, not executed. No product witness/benchmark executed.",
+  "cache_gate": false,
+  "freeze_rule": "No edits after root admission. Frozen source body hashes are exact; source_reader only expands raw context."
+}

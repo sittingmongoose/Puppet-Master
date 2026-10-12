@@ -1,0 +1,86 @@
+{
+  "schema": "immutable-findings-v1",
+  "findings": [
+    {
+      "id": "F1",
+      "disposition": "CHANGE+KEEP+CONDITION",
+      "scope": "directive meaning/private cache exceptions",
+      "evidence": [
+        "S1 5.2.2.3–5.2.2.7"
+      ],
+      "request": "Separate no-cache/no-store/private; qualified directives and must-understand exception; conservative explicit implementation policy; keep account isolation."
+    },
+    {
+      "id": "F2",
+      "disposition": "CHANGE+KEEP+UNCERTAIN",
+      "scope": "Vary wildcard and full response age",
+      "evidence": [
+        "S1 4.1",
+        "S1 4.2.3"
+      ],
+      "request": "Vary * never matches; include RFC upstream/response/resident age; retain supported variants/absence handling; define bad-field/clock policy."
+    },
+    {
+      "id": "F3",
+      "disposition": "CHANGE+KEEP",
+      "scope": "offline constrained reuse",
+      "evidence": [
+        "S1 5.2.2.2",
+        "S1 5.2.2.4"
+      ],
+      "request": "Stale must-revalidate and unqualified no-cache require validation; otherwise error; preserve permitted offline reuse and separate export scope."
+    },
+    {
+      "id": "F4",
+      "disposition": "CHANGE+KEEP",
+      "scope": "304 response selection/header updates",
+      "evidence": [
+        "S1 4.3.4",
+        "S1 3.2",
+        "S2 15.4.5"
+      ],
+      "request": "Validator-qualified stored-response selection; update supplied headers/eligibility, retain applicable stored body and missing-body full GET."
+    },
+    {
+      "id": "F5",
+      "disposition": "KEEP+UNCERTAIN",
+      "scope": "remaining material obligations/history/validation",
+      "evidence": [
+        "brief.md",
+        "plan.md",
+        "S1"
+      ],
+      "request": "Keep account/sign-out, GET-only, redaction, bytes/encoding, quota, generation ownership, library/custom/live alternatives, history and full test matrix; no executed-client/benchmark claim."
+    }
+  ],
+  "coverage": {
+    "O1": [
+      "F1",
+      "F5"
+    ],
+    "O2": [
+      "F2",
+      "F5"
+    ],
+    "O3": [
+      "F1",
+      "F2",
+      "F4"
+    ],
+    "O4": [
+      "F1",
+      "F3"
+    ],
+    "O5": [
+      "F4",
+      "F5"
+    ],
+    "O6": [
+      "F1",
+      "F5"
+    ]
+  },
+  "conventional": "critique.md",
+  "compact": "critique-compact.md",
+  "not_candidate_extra_answer": "Only the assigned critique rendering is released; findings file is preparation/evaluator equivalence evidence."
+}

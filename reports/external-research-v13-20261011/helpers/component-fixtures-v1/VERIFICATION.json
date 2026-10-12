@@ -1,0 +1,64 @@
+{
+  "checked_utc": "2026-10-12T00:25:06.109787+00:00",
+  "status": "PASS",
+  "checks": "Exact manifests/raw identity/time contracts/cache gate/primary bytes/line neighborhoods/immutable finding ID and obligation coverage. Does not independently grade scientific truth or prove critique semantic equivalence.",
+  "cases": [
+    {
+      "case": "B01-P01",
+      "files": 24,
+      "source_bodies": 5,
+      "shared_raw_identity_sha256": "8c4fae30e944a75e55f995dcd6a1dcb8e6eb43d5353d1ba4f06c04a6242c6326",
+      "frozen_utc": "2026-10-12T00:20:45.604112+00:00"
+    },
+    {
+      "case": "B01-P02",
+      "files": 19,
+      "source_bodies": 3,
+      "shared_raw_identity_sha256": "70567f65708653964b5a306da344da2160df6e8e3ef957eeb09af272c0f50679",
+      "frozen_utc": "2026-10-12T00:20:45.612820+00:00"
+    },
+    {
+      "case": "B04-P01",
+      "files": 25,
+      "source_bodies": 4,
+      "shared_raw_identity_sha256": "21cfc810e8f5c6cccecfbb5dbf435c83d1d65baec9ab8a194ff465feb06ac495",
+      "frozen_utc": "2026-10-12T00:23:16.029879+00:00"
+    },
+    {
+      "case": "B04-P02",
+      "files": 22,
+      "source_bodies": 2,
+      "shared_raw_identity_sha256": "717d2ea736bc6a4249c7718360b656a55c0891d0ca9f7f1db99f884070c20764",
+      "frozen_utc": "2026-10-12T00:23:26.630505+00:00"
+    },
+    {
+      "case": "B05-P01",
+      "files": 26,
+      "source_bodies": 5,
+      "shared_raw_identity_sha256": "03c23ccd1b0762159533c4d6862f99c5ebb2d643508b4584bafda5de8297e7e7",
+      "frozen_utc": "2026-10-12T00:24:29.304194+00:00"
+    },
+    {
+      "case": "B05-P02",
+      "files": 27,
+      "source_bodies": 4,
+      "shared_raw_identity_sha256": "6b0630581166ff1914b7e0d6bc8f3f3103944b52e87ef08d66c3ed34659df6be",
+      "frozen_utc": "2026-10-12T00:24:29.312801+00:00"
+    },
+    {
+      "case": "B08-P01",
+      "files": 19,
+      "source_bodies": 3,
+      "shared_raw_identity_sha256": "d520136ba7d676ea383c99c83f27402ce9d6b565f9c791b04d44cd40f6df344e",
+      "frozen_utc": "2026-10-12T00:20:45.618207+00:00"
+    },
+    {
+      "case": "B08-P02",
+      "files": 19,
+      "source_bodies": 5,
+      "shared_raw_identity_sha256": "85f7387511003a21dd43407b25369d459a95bc434de979f48e2836465ac537b6",
+      "frozen_utc": "2026-10-12T00:21:05.649216+00:00"
+    }
+  ],
+  "errors": []
+}

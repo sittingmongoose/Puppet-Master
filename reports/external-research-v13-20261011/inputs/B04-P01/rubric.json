@@ -1,0 +1,39 @@
+{
+  "case": "B04-P01",
+  "derived_from": "brief.md and plan.md only",
+  "axes": [
+    "material obligations",
+    "consequential source facts/applicability",
+    "useful mechanisms/alternatives/history",
+    "valid criticism and plan dispositions",
+    "supported draft-to-final preservation",
+    "meaningful proposed/executed validation"
+  ],
+  "obligations": [
+    {
+      "id": "O1",
+      "requirement": "GiB bounded-memory export with progress/cancel and intact source"
+    },
+    {
+      "id": "O2",
+      "requirement": "Explicit replacement policy and destination races"
+    },
+    {
+      "id": "O3",
+      "requirement": "Cross-volume support with safe staged publication"
+    },
+    {
+      "id": "O4",
+      "requirement": "Bytes/useful timestamps and disclosed metadata limits"
+    },
+    {
+      "id": "O5",
+      "requirement": "Atomicity versus durability with honest test scope"
+    },
+    {
+      "id": "O6",
+      "requirement": "Performance alternatives and retained investigation history"
+    }
+  ],
+  "scoring_boundary": "No hidden solution supplied to candidates. Evaluator independently checks governing context; no app deployment requirement."
+}

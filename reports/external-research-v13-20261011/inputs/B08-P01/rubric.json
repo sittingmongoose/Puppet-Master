@@ -1,0 +1,39 @@
+{
+  "case": "B08-P01",
+  "derived_from": "brief.md and plan.md only",
+  "axes": [
+    "material obligations",
+    "consequential source facts/applicability",
+    "useful mechanisms/alternatives/history",
+    "valid criticism and plan dispositions",
+    "supported draft-to-final preservation",
+    "meaningful proposed/executed validation"
+  ],
+  "obligations": [
+    {
+      "id": "O1",
+      "requirement": "Waiting bound and four-worker accepted/running accounting"
+    },
+    {
+      "id": "O2",
+      "requirement": "Graceful and forced stop with truthful per-ID outcomes"
+    },
+    {
+      "id": "O3",
+      "requirement": "No failure/cancel reported as successful conversion"
+    },
+    {
+      "id": "O4",
+      "requirement": "Supported conditional capacity/time estimates and applicability"
+    },
+    {
+      "id": "O5",
+      "requirement": "Lifecycle/cleanup and viable version-aware alternatives"
+    },
+    {
+      "id": "O6",
+      "requirement": "Independent meaningful validation versus formula replay"
+    }
+  ],
+  "scoring_boundary": "No hidden solution supplied to candidates. Evaluator independently checks governing context; no app deployment requirement."
+}

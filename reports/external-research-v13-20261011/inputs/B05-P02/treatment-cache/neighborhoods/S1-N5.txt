@@ -1,0 +1,112 @@
+   The :class:`Sniffer` class is used to deduce the format of a CSV file.
+
+   The :class:`Sniffer` class provides two methods:
+
+   .. method:: sniff(sample, delimiters=None)
+
+      Analyze the given *sample* and return a :class:`Dialect` subclass
+      reflecting the parameters found.  If the optional *delimiters* parameter
+      is given, it is interpreted as a string containing possible valid
+      delimiter characters.
+
+
+   .. method:: has_header(sample)
+
+      Analyze the sample text (presumed to be in CSV format) and return
+      :const:`True` if the first row appears to be a series of column headers.
+      Inspecting each column, one of two key criteria will be considered to
+      estimate if the sample contains a header:
+
+      - the second through n-th rows contain numeric values
+      - the second through n-th rows contain strings where at least one value's
+        length differs from that of the putative header of that column.
+
+      Twenty rows after the first row are sampled; if more than half of columns +
+      rows meet the criteria, :const:`True` is returned.
+
+   .. note::
+
+      This method is a rough heuristic and may produce both false positives and
+      negatives.
+
+An example for :class:`Sniffer` use::
+
+   with open('example.csv', newline='') as csvfile:
+       dialect = csv.Sniffer().sniff(csvfile.read(1024))
+       csvfile.seek(0)
+       reader = csv.reader(csvfile, dialect)
+       # ... process CSV file contents here ...
+
+
+.. _csv-constants:
+
+The :mod:`csv` module defines the following constants:
+
+.. data:: QUOTE_ALL
+
+   Instructs :class:`writer` objects to quote all fields.
+
+
+.. data:: QUOTE_MINIMAL
+
+   Instructs :class:`writer` objects to only quote those fields which contain
+   special characters such as *delimiter*, *quotechar*, ``'\r'``, ``'\n'``
+   or any of the characters in *lineterminator*.
+
+
+.. data:: QUOTE_NONNUMERIC
+
+   Instructs :class:`writer` objects to quote all non-numeric fields.
+
+   Instructs :class:`reader` objects to convert all non-quoted fields to type :class:`float`.
+
+   .. note::
+      Some numeric types, such as :class:`bool`, :class:`~fractions.Fraction`,
+      or :class:`~enum.IntEnum`, have a string representation that cannot be
+      converted to :class:`float`.
+      They cannot be read in the :data:`QUOTE_NONNUMERIC` and
+      :data:`QUOTE_STRINGS` modes.
+
+.. data:: QUOTE_NONE
+
+   Instructs :class:`writer` objects to never quote fields.
+   When the current *delimiter*, *quotechar*, *escapechar*, ``'\r'``, ``'\n'``
+   or any of the characters in *lineterminator* occurs in output data
+   it is preceded by the current *escapechar* character.
+   If *escapechar* is not set, the writer will raise :exc:`Error` if
+   any characters that require escaping are encountered.
+   Set *quotechar* to ``None`` to prevent its escaping.
+
+   Instructs :class:`reader` objects to perform no special processing of quote characters.
+
+.. data:: QUOTE_NOTNULL
+
+   Instructs :class:`writer` objects to quote all fields which are not
+   ``None``.  This is similar to :data:`QUOTE_ALL`, except that if a
+   field value is ``None`` an empty (unquoted) string is written.
+
+   Instructs :class:`reader` objects to interpret an empty (unquoted) field
+   as ``None`` and to otherwise behave as :data:`QUOTE_ALL`.
+
+   .. versionadded:: 3.12
+
+.. data:: QUOTE_STRINGS
+
+   Instructs :class:`writer` objects to always place quotes around fields
+   which are strings.  This is similar to :data:`QUOTE_NONNUMERIC`, except that if a
+   field value is ``None`` an empty (unquoted) string is written.
+
+   Instructs :class:`reader` objects to interpret an empty (unquoted) string as ``None`` and
+   to otherwise behave as :data:`QUOTE_NONNUMERIC`.
+
+   .. versionadded:: 3.12
+
+The :mod:`csv` module defines the following exception:
+
+
+.. exception:: Error
+
+   Raised by any of the functions when an error is detected.
+
+.. _csv-fmt-params:
+

@@ -1,0 +1,37 @@
+{
+  "schema_version": "er13-case-metadata-v1",
+  "case_id": "B09-P01",
+  "title": "Neighborhood lending inventory and returns",
+  "pipeline": "FULL",
+  "mission": "SOFTWARE",
+  "brief_scope": "project",
+  "mechanism_families": [
+    "local_data",
+    "synchronization",
+    "search_knowledge"
+  ],
+  "fresh": true,
+  "treatment_specific": false,
+  "maximum_elapsed_minutes": 60,
+  "minimum_duration": null,
+  "discovery_inputs": [
+    "brief.md"
+  ],
+  "reveal_inputs": [
+    "plan.md"
+  ],
+  "evaluation_inputs": [
+    "rubric.json"
+  ],
+  "plan_reveal": "once_at_declared_comparison_point_after_brief_only_discovery",
+  "validation_status": "No candidate research, product implementation, deployment, or validation execution performed by case author.",
+  "files": {
+    "brief": "brief.md",
+    "plan": "plan.md",
+    "rubric": "rubric.json"
+  },
+  "word_counts": {
+    "brief": 328,
+    "plan": 328
+  }
+}

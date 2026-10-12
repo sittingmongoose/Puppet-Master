@@ -1,0 +1,112 @@
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+                close_fds=False,
+            )
+            stdout, stderr = await proc.communicate(message)
+            exitcode = await proc.wait()
+            return (stdout, exitcode)
+
+        output, exitcode = self.loop.run_until_complete(devstdin_input(b'abc'))
+        self.assertEqual(output.rstrip(), b'3')
+        self.assertEqual(exitcode, 0)
+
+    def test_cancel_process_wait(self):
+        # Issue #23140: cancel Process.wait()
+
+        async def cancel_wait():
+            proc = await asyncio.create_subprocess_exec(*PROGRAM_BLOCKED)
+
+            # Create an internal future waiting on the process exit
+            task = self.loop.create_task(proc.wait())
+            self.loop.call_soon(task.cancel)
+            try:
+                await task
+            except asyncio.CancelledError:
+                pass
+
+            # Cancel the future
+            task.cancel()
+
+            # Kill the process and wait until it is done
+            proc.kill()
+            await proc.wait()
+
+        self.loop.run_until_complete(cancel_wait())
+
+    def test_cancel_make_subprocess_transport_exec(self):
+
+        async def cancel_make_transport():
+            coro = asyncio.create_subprocess_exec(*PROGRAM_BLOCKED)
+            task = self.loop.create_task(coro)
+
+            self.loop.call_soon(task.cancel)
+            try:
+                await task
+            except asyncio.CancelledError:
+                pass
+
+        # ignore the log:
+        # "Exception during subprocess creation, kill the subprocess"
+        with test_utils.disable_logger():
+            self.loop.run_until_complete(cancel_make_transport())
+
+    def test_cancel_post_init(self):
+
+        async def cancel_make_transport():
+            coro = self.loop.subprocess_exec(asyncio.SubprocessProtocol,
+                                             *PROGRAM_BLOCKED)
+            task = self.loop.create_task(coro)
+
+            self.loop.call_soon(task.cancel)
+            try:
+                await task
+            except asyncio.CancelledError:
+                pass
+
+        # ignore the log:
+        # "Exception during subprocess creation, kill the subprocess"
+        with test_utils.disable_logger():
+            self.loop.run_until_complete(cancel_make_transport())
+            test_utils.run_briefly(self.loop)
+
+    def test_close_kill_running(self):
+
+        async def kill_running():
+            create = self.loop.subprocess_exec(asyncio.SubprocessProtocol,
+                                               *PROGRAM_BLOCKED)
+            transport, protocol = await create
+
+            kill_called = False
+            def kill():
+                nonlocal kill_called
+                kill_called = True
+                orig_kill()
+
+            proc = transport.get_extra_info('subprocess')
+            orig_kill = proc.kill
+            proc.kill = kill
+            returncode = transport.get_returncode()
+            transport.close()
+            await asyncio.wait_for(transport._wait(), 5)
+            return (returncode, kill_called)
+
+        # Ignore "Close running child process: kill ..." log
+        with test_utils.disable_logger():
+            try:
+                returncode, killed = self.loop.run_until_complete(
+                    kill_running()
+                )
+            except asyncio.TimeoutError:
+                self.skipTest(
+                    "Timeout failure on waiting for subprocess stopping"
+                )
+        self.assertIsNone(returncode)
+
+        # transport.close() must kill the process if it is still running
+        self.assertTrue(killed)
+        test_utils.run_briefly(self.loop)
+
+    def test_close_dont_kill_finished(self):
+
+        async def kill_running():
+            create = self.loop.subprocess_exec(asyncio.SubprocessProtocol,

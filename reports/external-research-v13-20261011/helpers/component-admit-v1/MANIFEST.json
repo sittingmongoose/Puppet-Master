@@ -1,0 +1,53 @@
+{
+  "version": "component-admit-v1",
+  "frozen_utc": "2026-10-12T00:31:39.155682+00:00",
+  "owner_scope": "helpers/component-admit-v1 ONLY",
+  "dispatch_owner": "root",
+  "supported_cases": [
+    "B01-P01",
+    "B01-P02",
+    "B04-P01",
+    "B04-P02",
+    "B05-P01",
+    "B05-P02",
+    "B08-P01",
+    "B08-P02"
+  ],
+  "arms": [
+    "control",
+    "treatment"
+  ],
+  "requested_model": "gpt-6-luna",
+  "requested_options": {
+    "reasoningEffort": "max",
+    "serviceTier": "default"
+  },
+  "provider_instance": "resolved and supplied by root; observed identity unknown",
+  "max_elapsed_seconds": 1500,
+  "minimum_seconds": 0,
+  "files": {
+    "CHECKS.json": "6874b4d7f24fda2a826d5e950e1e94034436982ae61a51435a1b94dd31137b3a",
+    "README.md": "18b635f0c2138e13fd4025cb625ec9676a92e81103ce0c28a0359ea92d3e03cb",
+    "native/activation-snippet-template.js": "3eed7edf2cb7d5cd506daecaab89502d45eb07b64d1006f6ab72b3f7afc6e6f5",
+    "native/assert-active-goal.py": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+    "prepare.py": "e875bf2bc1ac0e74efb1c868cb0f63011bd93724d16036345888c8f2b095c026",
+    "tests.py": "9162b448601c6ac6e62a1c552cbb775a417222a7f6e1e13dc4e1ac43c52cbcde"
+  },
+  "dependencies": [
+    {
+      "path": "ER13_RUNTIME/reference/recipes/materialize-v3/bundle-manifest.json",
+      "sha256": "1049fcdd18a49d1f6b773ce6d997b75617f3346dad7fa143104463fd4854774b"
+    },
+    {
+      "path": "ER13_RUNTIME/helpers/component-fixtures-v1/MANIFEST.json",
+      "sha256": "a05f80194b4df7f73877bc55daf65a37fe12b4dc8c2af9b660455d210afa2c2c"
+    },
+    {
+      "path": "ER13_RUNTIME/helpers/component-fixtures-v1/VERIFICATION.json",
+      "sha256": "947a9df3afc800e8c978b7fe0eff4357080f831c972549f956327cb11a6dd7fa"
+    }
+  ],
+  "native_reuse": "byte-identical guard/template; generated snippet runtime substitutions plus clock/hash preflight",
+  "actual_candidate_starts": 0,
+  "scientific_result": false
+}

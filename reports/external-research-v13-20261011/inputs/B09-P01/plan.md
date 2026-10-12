@@ -1,0 +1,11 @@
+# Draft plan: Neighborhood lending inventory and returns
+
+The draft assigns internal item identifiers and printable labels, then records loans and returns as events referencing those identifiers. Item names and aliases are search fields, not keys. A kit is a parent item with a parts checklist; an incomplete or damaged return keeps it in maintenance review. Due dates can flag overdue loans but never imply a return. Retired items remain in history.
+
+A local coordinator is initially the authority for accepted loans. Both laptops read availability from it, and a transaction should prevent simultaneous checkout of the same item. During a disconnected session each laptop can record a provisional loan for later reconciliation. The draft assumes staff will notice those provisional labels and avoid lending a conflicting item, but it has not established an operational rule when the item has physically left before reconnection. Whether offline checkout should be permitted is open.
+
+Borrower contact details are stored separately and only exposed to staff. Reminders are proposed as a staff-reviewed list; nothing sends automatically. Retention and deletion policy, backup ownership and kit-part identity remain unresolved. Proposed validation covers duplicate names, competing checkout, coordinator loss, corrections, incomplete kits, damaged returns and restoration of retired-item history. No borrower records or messages have been accessed. Adoption starts with synthetic inventory and a shadow lending session before replacing the existing lists.
+
+This is a provisional draft for review after the declared reveal, not an endorsed answer. Resolve material assumptions through applicable primary evidence; retain open user-data questions when they cannot be answered from sources. No future product deployment is requested.
+
+Complete all substantive research and planning obligations within a maximum of 60 elapsed minutes. Finish earlier when the complete output is ready. There is no minimum research duration, no requirement to consume the allowance, and no credit for waiting. The deadline includes arm-specific setup, provider queueing after admission, tools, native retries, handoffs, revision and delivery. Output quality is assessed independently of elapsed time.

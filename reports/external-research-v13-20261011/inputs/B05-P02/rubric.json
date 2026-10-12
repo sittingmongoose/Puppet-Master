@@ -1,0 +1,39 @@
+{
+  "case": "B05-P02",
+  "derived_from": "brief.md and plan.md only",
+  "axes": [
+    "material obligations",
+    "consequential source facts/applicability",
+    "useful mechanisms/alternatives/history",
+    "valid criticism and plan dispositions",
+    "supported draft-to-final preservation",
+    "meaningful proposed/executed validation"
+  ],
+  "obligations": [
+    {
+      "id": "O1",
+      "requirement": "Bounded preview with encoding/dialect/header confirmation"
+    },
+    {
+      "id": "O2",
+      "requirement": "Exact text/leading zeros and explicit null/empty policy"
+    },
+    {
+      "id": "O3",
+      "requirement": "Quoted newlines/ragged rows/mapping and honest diagnostics"
+    },
+    {
+      "id": "O4",
+      "requirement": "Correct resource-limit domains and streaming cancellation"
+    },
+    {
+      "id": "O5",
+      "requirement": "Staged commit/no partial prior-inventory mutation"
+    },
+    {
+      "id": "O6",
+      "requirement": "Alternatives/history and source-supported validation honesty"
+    }
+  ],
+  "scoring_boundary": "No hidden solution supplied to candidates. Evaluator independently checks governing context; no app deployment requirement."
+}

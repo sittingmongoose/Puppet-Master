@@ -1,0 +1,9 @@
+{
+  "checker": "public_files.py metadata",
+  "mode": "prospective per-command approved no-reply author/committer overrides; no config or commit mutation",
+  "exit_code": 0,
+  "result": {
+    "findings": []
+  },
+  "boundary": "Root must repeat on exact actual publication commit; arbitrary Git history is not audited."
+}

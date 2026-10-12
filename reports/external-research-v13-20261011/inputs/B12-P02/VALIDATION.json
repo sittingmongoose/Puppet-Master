@@ -1,0 +1,15 @@
+{
+  "schema": "er13.fixture_validation.v1",
+  "case_id": "B12-P02",
+  "at_utc": "2026-10-12T00:28:34.949601+00:00",
+  "status": "PASS_MECHANICAL_AND_BOUNDED_AUTHOR_REVIEW",
+  "checks": [
+    "Exact maximum-time/early-finish wording in brief and hidden plan.",
+    "R0 three-stage 30/12/18 sum and whole 60-minute clipping metadata.",
+    "Six material obligation groups, six distinct evaluation axes and evaluator-only rubric.",
+    "Brief-only boundary and hidden plan one-shot declared; no methodology/case source pack in brief.",
+    "Software/component-level classification; no deployment or physical intervention required.",
+    "All obligations trace to actual neutral brief/plan text; no golden products or source answer imposed."
+  ],
+  "limits": "Static artifact check and author review only; no independent scientific assessment, plan reveal test or candidate execution."
+}

@@ -1,0 +1,33 @@
+{
+  "case": "B04-P01",
+  "title": "Publish a large media export safely",
+  "track": "B",
+  "scope": "COMPONENT",
+  "fixture_version": "component-fixtures-v1",
+  "prepared_by": "research preparer; source-inspected authored draft, not a separately executed investigator pipeline",
+  "fresh_case": true,
+  "source_scope": {
+    "repository": "https://github.com/python/cpython",
+    "tag": "v3.13.9",
+    "commit": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+    "scope": "CPython 3.13.9, explicit historical target, not latest Python",
+    "observed_at": "2026-10-12T00:17:37.443225+00:00"
+  },
+  "frozen_utc": "2026-10-12T00:23:16.029879+00:00",
+  "matched_raw_base": {
+    "brief.md": "8c8b7a9ee9f5d4c409f6f33cb33db26a5fcd2cce6e8f68864d3d952d5cff71c5",
+    "plan.md": "19d508bdaa4d1fec47c8986e939fefe1c1481afa151f59435b31773b7ff3958f",
+    "draft.md": "24c04fc3bdbf8276622b00860513ad64aef90fbd9a62f5c534e29dc06f2d70a4",
+    "source-index.json": "b2b35225fa3a0e7b74d352a9005fd0fad924a142acd5d6dccb2d29fdcd1177e6"
+  },
+  "pair_raw_identity_required": true,
+  "component_max_minutes": 25,
+  "component_min_minutes": 0,
+  "prep_cost_category": "shared_campaign_preparation; standalone cold cost separately reportable",
+  "method": "B04",
+  "critique_contract": "full and compact derived from immutable same findings; candidate revises",
+  "candidate_injected_answer": false,
+  "validation_executed": "Source retrieval, locator/body/hash checks only. Upstream tests read, not executed. No product witness/benchmark executed.",
+  "cache_gate": false,
+  "freeze_rule": "No edits after root admission. Frozen source body hashes are exact; source_reader only expands raw context."
+}

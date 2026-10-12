@@ -1,0 +1,33 @@
+{
+  "case": "B05-P02",
+  "title": "Loss-conscious CSV import preview",
+  "track": "B",
+  "scope": "COMPONENT",
+  "fixture_version": "component-fixtures-v1",
+  "prepared_by": "research preparer; source-inspected authored draft, not a separately executed investigator pipeline",
+  "fresh_case": true,
+  "source_scope": {
+    "repository": "https://github.com/python/cpython",
+    "tag": "v3.13.9",
+    "commit": "8183fa5e3f78ca6ab862de7fb8b14f3d929421e0",
+    "scope": "CPython 3.13.9, explicit historical target, not latest Python",
+    "observed_at": "2026-10-12T00:17:37.443225+00:00"
+  },
+  "frozen_utc": "2026-10-12T00:24:29.312801+00:00",
+  "matched_raw_base": {
+    "brief.md": "023c692eb8cd4eb0ed02045d7b178d7236639ca3a67a42f5db76e6ed038d2c15",
+    "plan.md": "9c04fe91aca1382827527caf5412b301670d1c7476651991e2bd13c54efb07a0",
+    "draft.md": "6b045ed1bfb5009bc403c5456cfb0c43d25012d55b5d4d4f7ec6f9f1b67dbf68",
+    "source-index.json": "cba24687b6152f83a7909b13ab54268b60b9655c7a9e894ac74903c646dbcc17"
+  },
+  "pair_raw_identity_required": true,
+  "component_max_minutes": 25,
+  "component_min_minutes": 0,
+  "prep_cost_category": "shared_campaign_preparation; standalone cold cost separately reportable",
+  "method": "B05",
+  "critique_contract": "both independently review+finalize; treatment cache only",
+  "candidate_injected_answer": false,
+  "validation_executed": "Source retrieval, locator/body/hash checks only. Upstream tests read, not executed. No product witness/benchmark executed.",
+  "cache_gate": true,
+  "freeze_rule": "No edits after root admission. Frozen source body hashes are exact; source_reader only expands raw context."
+}

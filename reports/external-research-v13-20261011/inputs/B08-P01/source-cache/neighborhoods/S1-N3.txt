@@ -1,0 +1,112 @@
+      of unfinished tasks is reduced by the number of tasks drained.
+      If unfinished tasks is zero, callers of :meth:`~Queue.join`
+      are unblocked.  Also, blocked callers of :meth:`~Queue.get`
+      are unblocked and will raise :exc:`QueueShutDown` because the
+      queue is empty.
+
+      Use caution when using :meth:`~Queue.join` with *immediate* set
+      to true. This unblocks the join even when no work has been done
+      on the tasks, violating the usual invariant for joining a queue.
+
+      .. versionadded:: 3.13
+
+   .. method:: task_done()
+
+      Indicate that a formerly enqueued work item is complete.
+
+      Used by queue consumers. For each :meth:`~Queue.get` used to
+      fetch a work item, a subsequent call to :meth:`task_done` tells the
+      queue that the processing on the work item is complete.
+
+      If a :meth:`join` is currently blocking, it will resume when all
+      items have been processed (meaning that a :meth:`task_done`
+      call was received for every item that had been :meth:`~Queue.put`
+      into the queue).
+
+      Raises :exc:`ValueError` if called more times than there were
+      items placed in the queue.
+
+
+Priority Queue
+==============
+
+.. class:: PriorityQueue
+
+   A variant of :class:`Queue`; retrieves entries in priority order
+   (lowest first).
+
+   Entries are typically tuples of the form
+   ``(priority_number, data)``.
+
+
+LIFO Queue
+==========
+
+.. class:: LifoQueue
+
+   A variant of :class:`Queue` that retrieves most recently added
+   entries first (last in, first out).
+
+
+Exceptions
+==========
+
+.. exception:: QueueEmpty
+
+   This exception is raised when the :meth:`~Queue.get_nowait` method
+   is called on an empty queue.
+
+
+.. exception:: QueueFull
+
+   Exception raised when the :meth:`~Queue.put_nowait` method is called
+   on a queue that has reached its *maxsize*.
+
+
+.. exception:: QueueShutDown
+
+   Exception raised when :meth:`~Queue.put` or :meth:`~Queue.get` is
+   called on a queue which has been shut down.
+
+   .. versionadded:: 3.13
+
+
+Examples
+========
+
+.. _asyncio_example_queue_dist:
+
+Queues can be used to distribute workload between several
+concurrent tasks::
+
+   import asyncio
+   import random
+   import time
+
+
+   async def worker(name, queue):
+       while True:
+           # Get a "work item" out of the queue.
+           sleep_for = await queue.get()
+
+           # Sleep for the "sleep_for" seconds.
+           await asyncio.sleep(sleep_for)
+
+           # Notify the queue that the "work item" has been processed.
+           queue.task_done()
+
+           print(f'{name} has slept for {sleep_for:.2f} seconds')
+
+
+   async def main():
+       # Create a queue that we will use to store our "workload".
+       queue = asyncio.Queue()
+
+       # Generate random timings and put them into the queue.
+       total_sleep_time = 0
+       for _ in range(20):
+           sleep_for = random.uniform(0.05, 1.0)
+           total_sleep_time += sleep_for
+           queue.put_nowait(sleep_for)
+
+       # Create three worker tasks to process the queue concurrently.
