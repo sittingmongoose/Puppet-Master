@@ -338,5 +338,32 @@
       "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html",
       "Concepts/LeftRailPMConcept7.html"
     ]
+  },
+  "source816_narrow_first_checkpoint": {
+    "head": "90264c85f4c21454e741e8b6cc15cd63fef1b8d4",
+    "manifest_sha256": "be62a512ce9b56c8c29ddd33c808bed9d366af3a4f109a6de8be7705afde44dc",
+    "rest_ratio": 3.44,
+    "rest_worst": 3.3,
+    "hover_ratio": 7.71,
+    "hover_worst": 7.39,
+    "exact_zero_layout_shift": true,
+    "run_status": "HOLD own-probe diagnostic",
+    "diagnostic": {
+      "original_run_status": "HOLD",
+      "source_native_rule": "neon-icons.css:120-125 control-role visibility only; concept halo rests visible at stroke-opacity0",
+      "paint_keys": [
+        "ink",
+        "halo_alpha",
+        "halo_visibility",
+        "halo_stroke_opacity",
+        "halo_opacity",
+        "moving_parts"
+      ],
+      "all_before_left_exact": true,
+      "source_or_collector_changes": false,
+      "original_manifest_sha256": "be62a512ce9b56c8c29ddd33c808bed9d366af3a4f109a6de8be7705afde44dc",
+      "frame_review": "PENDING"
+    },
+    "remaining": "GLfocus/RM/pill,4RetroNieRlooks, allscopeproofs andframes"
   }
 }

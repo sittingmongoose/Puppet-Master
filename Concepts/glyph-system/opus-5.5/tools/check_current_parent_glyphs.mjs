@@ -546,8 +546,11 @@ async function newBytePose(page, measure, id, host, selector, pose, fields, outs
   if (pose === 'focus-visible') await page.keyboard.press('Tab');
   await page.mouse.move(outside.x, outside.y); await sleep(1000);
   const left = await page.evaluate(nativeSample, selector), trace = await endNativeTrace(page);
-  const noStuck = left.glyphs.every((g) => !g.host?.hover && !g.host?.focus_visible &&
-    g.halo_alpha === '0' && g.halo_visibility === 'hidden');
+  // Concepts keep the halo element visible with zero stroke opacity at rest (neon-icons.css:120-125).
+  // Compare the actual resting paint; the control-role visibility switch is not a concept-role criterion.
+  const noStuck = left.glyphs.every((g, i) => !g.host?.hover && !g.host?.focus_visible &&
+    ['ink', 'halo_alpha', 'halo_visibility', 'halo_stroke_opacity', 'halo_opacity'].every((k) => g[k] === before.glyphs[i]?.[k]) &&
+    JSON.stringify(g.moving_parts) === JSON.stringify(before.glyphs[i]?.moving_parts));
   result.cases.push({ id: id + '-native-act', ...fields, pose, before, active, left, trace,
     focus_route: pose === 'focus-visible' ? 'existing own-button setup focus, trusted Tab, trace, trusted Shift+Tab return, trusted Tab leave' : null,
     no_stuck_native_paint_after_leave_and_blur: noStuck,
@@ -695,6 +698,9 @@ async function n3Narrow(page) {
 }
 async function n3NarrowNew(page) {
   const measure = contrastMethod(); await trustedInputs(page);
+  const completedPath = arg('--completed-new-narrow');
+  const completed = new Set(completedPath ? JSON.parse(readFileSync(completedPath, 'utf8')).measured_case_ids : []);
+  result.previous_measured_new_narrow_case_ids = [...completed];
   const order = ['glass-light', 'retro-dark', 'retro-light', 'nier-dark', 'nier-light', 'basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark'];
   const carryover = ['basic-dark', 'basic-light', 'friendly-dark', 'friendly-light', 'glass-dark'];
   result.old_narrow_rows_retained = { actual_head: '7f7cb1491e1e81783482e2dc19b9f9d14230f889',
@@ -709,8 +715,11 @@ async function n3NarrowNew(page) {
       narrow: document.querySelector('#o55-demo')?.hasAttribute('data-o55-narrow'),
       button: document.querySelector('.o55-demopill').getBoundingClientRect().toJSON() }));
     if (actual.layout !== 'narrow' || !actual.narrow || actual.button.width !== 20 || actual.button.height !== 44) throw new Error('HOLD: supported narrow geometry drift');
-    for (const pose of ['rest', 'hover', 'focus-visible']) await newBytePose(page, measure, 'NEW-NARROW-' + look + '-' + pose,
-      '.o55-demopill', '.o55-demopill > svg.nx', pose, { requirement: 'N3-narrow-demo', look, state, actual }, { x: 680, y: 870 });
+    for (const pose of ['rest', 'hover', 'focus-visible']) {
+      const id = 'NEW-NARROW-' + look + '-' + pose;
+      if (!completed.has(id)) await newBytePose(page, measure, id, '.o55-demopill', '.o55-demopill > svg.nx', pose,
+        { requirement: 'N3-narrow-demo', look, state, actual }, { x: 680, y: 870 });
+    }
     if (look === 'glass-light') await reducedNative(page, 'NEW-NARROW-glass-light-RM', '.o55-demopill', '.o55-demopill > svg.nx',
       { requirement: 'N3-narrow-demo', look, actual }, { x: 680, y: 870 });
     const pill = await collectPills(page, 'NEW-PILL-NARROW-' + look, { requirement: 'N3-narrow-pill', look, state, actual }, ['floaters']);
