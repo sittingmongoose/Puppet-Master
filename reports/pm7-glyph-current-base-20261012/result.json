@@ -1,6 +1,6 @@
 {
   "status": "IN_PROGRESS",
-  "checkpoint": "N2 all68 paired contrast poses measured; frame/clipping review pending. N1 final source disposition HOLD, independent N3/N4/R1 continue.",
+  "checkpoint": "Old-artifact partial evidence sealed; owned sessions stopped. Exact6d source transport/publication authorized next; no source imported yet.",
   "tested_candidate_source_head": "559aabc7ccd0cda41038f813ae9075b3e5b01c15",
   "actual_admission_worktree_head": "559aabc7ccd0cda41038f813ae9075b3e5b01c15",
   "environment": {
@@ -31,19 +31,47 @@
   "sealed_review_manifest_sha256": "d20508c4ca8cc92cdda076af5dc004d3b885ac378ad0a2979392345087b74c51",
   "N1": "UNVERIFIED/HOLD",
   "N2": "MEASURED_PENDING_FRAME_REVIEW",
-  "N3": "UNVERIFIED/HOLD resume-spark identity; independent hosts pending",
-  "N4": "NOT_RUN",
+  "N3": {
+    "original_resume_spark": "UNVERIFIED/HOLD",
+    "corrected_N3_resume_history": "HOLD BasicDark hover1.81; remaining labels/focus/looks/RM stopped pending new bytes",
+    "tourchip": "HOLD BasicDark hover1.81; remaining affected acceptance stopped",
+    "wide_demo": "20 rest/hover contrast poses all10 measured, min3.14; hardware act/frame review pending",
+    "narrow_demo": "HOLD GlassLight rest worst2.39 stable; first5 looks10 poses measured; remaining narrow cases blocked",
+    "original_floaters_and_supplementary_tourchip_pills": "PASS all20 populated-state collector fixtures across10looks, original collector gap retained",
+    "narrow_floaters_pills": "PASS first5 actual narrow states; remaining cases blocked",
+    "old_manifest": {
+      "n3": "7707b5cbe1b34ea165783f2ddda4500d8e1acf66573f2ca6c828824e9aebffac",
+      "n3_reference": "15edbc264f3dd0f79ed8149634b6a1e732a85e779f6d98c1a3756173f6d37c5f",
+      "narrow_initial_guard_error": "7b11cfba279345ce2db5e20a1c43fc0da59a407a68c00d44d0adcf4a0f11ef71",
+      "narrow_actual_ui": "6a3072e05d31172e442f6580a9e2a769f0f17e0b87a4cbb9ecf1a727383a7041"
+    },
+    "source_clarification_manifest": "99ba2187619803cfefa868cbbfe8dcf782a9451fb5ea1bb1ce261cfe8f3453a0"
+  },
+  "N4": {
+    "status": "UNVERIFIED/HOLD",
+    "driven_cases": [
+      "Testing Run",
+      "SourceControl Stage",
+      "Search query typing"
+    ],
+    "eligible_numeric_changes": 0,
+    "count_rolls": 0,
+    "mark_swaps": 0,
+    "console_errors": 0,
+    "unverified_unstage_fixture": "Second click on active Source icon closed the rail; no unstage input was driven. Initial error retained; only missing input needs corrected fixture guard.",
+    "manifest": "cb19a7ee40aec5b20ac00fbeb59a24c9c491db62480b5b2c0eb7ab7654fd2d29"
+  },
   "original_collector_coverage_limitation": "#o55-tourchip excluded by frozen gate; original gate is unchanged. Same-channel amendment authorizes a separate exact-two-site supplemental collector.",
   "supplemental_criteria": "Add only #o55-tourchip to scopeOf and floaters roots; inverse projection must recover original bytes.",
   "production_changes": "Only the root-authorized separate classA6 transport; original 559 report/raw packet and all four app pages unchanged.",
   "no_look_or_landing_acceptance": true,
   "accidental_direct_Chromium": "Failed SSH diagnostic invocation aborted with No usable sandbox; retained as diagnostic only, corrected census found no surviving browser; no direct retry/configuration override.",
   "remaining": [
-    "N1 all a-c/four looks/RM held; source/design disposition belongs to root/Jared.",
-    "Review N2 hardware frames and clipping; execute populated collectors.",
-    "N3 resume identity HOLD; actual published history-glyph measurements separate; other hosts/narrow pending.",
-    "N4 and separate R1 native-control-hover-under-PMH-rests pending.",
-    "Windows rail review and GLY4/Jared gates remain external."
+    "Transport exact6d at clean checkpoint and regenerate only4parents; prove page/source and selector custody before carryover.",
+    "New-byte chip BasicDark failures/focus first, then missing corrected history/tourchip rows, bothlabels, RM and exact affected floaters collectors.",
+    "Complete/review R1 and missing N4 Unstage input; N4 zero-change criterion remains UNVERIFIED.",
+    "Review N2 and wide/narrow hardware frames; original owner reviews new dark chip bloom.",
+    "N1, original mistaken resume-spark row, separate GlassLight narrow-rest, Windows rail and GLY4/Jared holds remain external."
   ],
   "N1_scope": {
     "visible_enrolled_hosts": 33,
@@ -81,8 +109,17 @@
       "sha256": "71a310d1385570c943887a3646401f2d5fc542acbeed28db892f63c1a9b05bb5"
     }
   },
-  "updated_utc": "2026-10-12T08:42:28.825999+00:00",
-  "R1": "AUTHORIZED_NOT_RUN",
+  "updated_utc": "2026-10-12T09:33:20.815678+00:00",
+  "R1": {
+    "label": "native-control-hover-under-PMH-rests",
+    "status": "PARTIAL/UNVERIFIED",
+    "measured_cases": [
+      "R1-glass-dark-own-tool-hover"
+    ],
+    "remaining": "Menu check/click/Escape, page rests, drag/resize, remaining4 look/motion poses; actual Gear follow-board check used next because Size menu current custom size has no selected preset. No forced geometry or replacement N1 claim.",
+    "manifest": "1fc2f386d1372d5384923c1667a0ade104482228a87b1584fe867431b46281d3",
+    "retained_initial_tool_reveal_error_manifest": "c7db499cc2ef6652993eb91c456d101a750d7e0589ce1d5fd1d8b3962cd3885a"
+  },
   "N1_final_source_disposition": {
     "manifest_path": "/mnt/Cursor/share/puppet-master/2026-10-12-glyph-n1-source-clarification/SHA256SUMS",
     "sha256": "13d88a25f2f0a02acf1c2a8b785eaeb4c9e5dc9e15718b7de1f4499b4e100407",
@@ -163,7 +200,16 @@
       }
     ],
     "frame_clipping_review": "PENDING",
-    "pill_gate": "PENDING",
+    "pill_gate": "PASS original shell,floaters across10looks with stage AND stack populated in both actual chip fixtures; exact collector and supplementary two-site inverse proof in n3/result.json.",
     "explanation": "Initial full-frame pair caught natural stage motion/expiry; later last-child selector caught an unrelated appended demo notice. Immutable raw captures retained. Only unverified/remaining poses ran after faster crop capture, normal prior-stage lifecycle wait, and fixed actual first-stage title/glyph custody; no source, threshold, timer or geometry changed."
+  },
+  "approved_next_source": {
+    "head": "6d9bfdfaee71a019283e7fffb8433f16d415f60e",
+    "parent": "68e329027e7b1e1d53f853f75cdf094fd4a056c2",
+    "path": "Concepts/onboarding/opus-5.5/src/css/25-glyphs.css",
+    "sha256": "27b283b8604950ae80d250559d25ccaa198d526d439ba0c487ddd6771f618384",
+    "bytes": 4178,
+    "manifest": "0943d725bc08f4e7a3a0da8a3959a2b4fec9d2e40fdad3fb1c74cf0bc99499e2",
+    "authorized": "Separate exact source merge; generator-only four-page publication, exact inverse-block proof; new-byte chip checks. Not yet imported at this checkpoint."
   }
 }

@@ -58,15 +58,19 @@ const result = {
   sampling_limitations: 'Functional sampling only. Hardware video is not frame-perfect and this is not exclusive FPS/performance certification.',
 };
 const save = () => writeFileSync(join(out, 'result.json'), JSON.stringify(result, null, 2) + '\n');
-function command(args) {
-  const r = spawnSync('agent-browser', args, { encoding: 'utf8', timeout: 60000, maxBuffer: 4 * 1024 * 1024 });
-  const record = { argv: ['agent-browser', ...args], exit_code: r.status, stdout: r.stdout || '', stderr: r.stderr || '', error: r.error?.message || null };
+function command(args, tool = 'agent-browser') {
+  const r = spawnSync(tool, args, { encoding: 'utf8', timeout: 60000, maxBuffer: 4 * 1024 * 1024 });
+  const record = { argv: [tool, ...args], exit_code: r.status, stdout: r.stdout || '', stderr: r.stderr || '', error: r.error?.message || null };
   result.helper_commands ||= []; result.helper_commands.push(record); save();
   if (r.status !== 0 || r.error) throw new Error('HOLD: normal helper failed: ' + JSON.stringify(record));
   return JSON.parse(r.stdout);
 }
-let session = null, browser = null;
+let session = null, browser = null, extraRecording = null;
 function stopOwned() {
+  if (extraRecording) {
+    result.extra_recording_stop_receipt = command(['stop', extraRecording.id], 'agent-record');
+    extraRecording = null;
+  }
   if (!session) return;
   const id = session.id;
   result.stop_receipt = command(['stop', id]);
@@ -93,7 +97,7 @@ async function setLook(page, look, reduced = false) {
   return page.evaluate(() => ({ theme: document.documentElement.dataset.theme, nier: document.documentElement.getAttribute('data-o55-nier'),
     reduced_media: matchMedia('(prefers-reduced-motion: reduce)').matches, motion: document.documentElement.getAttribute('data-motion') }));
 }
-async function admission(page) {
+async function admission(page, narrow = false) {
   result.environment = await page.evaluate(() => {
     const g = document.createElement('canvas').getContext('webgl');
     const x = g?.getExtension('WEBGL_debug_renderer_info');
@@ -104,7 +108,7 @@ async function admission(page) {
   if (!/Quadro P1000/.test(result.environment.renderer) || /SwiftShader|llvmpipe/i.test(result.environment.renderer)) {
     throw new Error('HOLD: hardware renderer unavailable: ' + result.environment.renderer);
   }
-  if (result.environment.viewport.width !== 1920 || result.environment.viewport.height !== 1080 || result.environment.DPR !== 1) {
+  if (result.environment.viewport.width !== (narrow ? 700 : 1920) || result.environment.viewport.height !== (narrow ? 900 : 1080) || result.environment.DPR !== 1) {
     throw new Error('HOLD: unexpected normal recording viewport/DPR: ' + JSON.stringify(result.environment));
   }
   await page.goto(pathToFileURL(pagePath).href + '?o55=off', { waitUntil: 'load', timeout: 120000 });
@@ -112,11 +116,13 @@ async function admission(page) {
     null, { timeout: 120000 });
   await setLook(page, 'glass-dark');
   await page.screenshot({ path: join(out, 'admission-glass-dark.png') });
+  if (narrow) return;
   result.visible_state = await page.evaluate(() => ({
     pages: [...document.querySelectorAll('[data-page]')].slice(0, 20).map((e) => ({ tag: e.tagName, page: e.dataset.page, text: e.textContent.trim().slice(0, 70), role: e.getAttribute('role'), tabIndex: e.tabIndex })),
     toast_methods: Object.keys(window.toast),
     floater_glyphs: [...document.querySelectorAll('#o55-resume svg.nx,#o55-tourchip svg.nx,.o55-demopill svg.nx')].map((e) => ({ host: e.closest('[id]')?.id, glyph: e.dataset.nx })),
   }));
+  if (mode !== 'admission' && mode !== 'n1') return;
   await page.evaluate(() => window.PM_PAGES.go('usage'));
   await sleep(3000);
   result.bridge_targets = await page.evaluate(() => [...document.querySelectorAll('[data-pmh-kind]')].flatMap((e) => {
@@ -306,10 +312,10 @@ async function measureGlyphs(page, measure, id, selector, fields = {}) {
   console.log(JSON.stringify({ id, contrast_status: row.contrast_status, glyphs: measured.map((r) => ({ key: r.key, ratio: r.ratio, worst: r.worst })) }));
   return row;
 }
-async function collectPills(page, id, fields) {
-  const original = await page.evaluate(collector, { scopes: ['shell', 'floaters'] });
+async function collectPills(page, id, fields, scopes = ['shell', 'floaters']) {
+  const original = await page.evaluate(collector, { scopes });
   const supplementary = await page.evaluate(companion, { scopes: ['floaters'] });
-  const row = { id, ...fields, original_gate: { label: 'original shell,floaters', ...original },
+  const row = { id, ...fields, original_gate: { label: 'original ' + scopes.join(','), ...original },
     supplementary_gate: { label: 'supplementary floaters/tourchip', ...supplementary },
     original_coverage_limitation_retained: true,
     status: original.findings.length || supplementary.findings.length ? 'HOLD' : 'PASS' };
@@ -344,6 +350,7 @@ function nativeSample(selectors) {
         host: host && { tag: host.tagName, cls: host.className, tool: host.dataset.tool, hover: host.matches(':hover'), focus_visible: host.matches(':focus-visible'), focus: document.activeElement === host },
         card: svg.closest('.pmu-card')?.className, ink: cs.stroke, halo_alpha: cs.getPropertyValue('--nx-hi-a').trim(), halo_visibility: hc?.visibility,
         halo_stroke_opacity: hc?.strokeOpacity, halo_opacity: hc?.opacity, act: cs.getPropertyValue('--nx-1').trim(), flick: cs.getPropertyValue('--nx-fl').trim(),
+        moving_parts: [...svg.querySelectorAll('.nx-p')].map((p) => ({ cls: p.getAttribute('class'), transform: getComputedStyle(p).transform, opacity: getComputedStyle(p).opacity })),
         animations: svg.getAnimations({ subtree: true }).map((a) => ({ name: a.animationName || a.id, play_state: a.playState, current_time: a.currentTime, duration: a.effect?.getComputedTiming().duration })) };
     }) };
 }
@@ -362,6 +369,10 @@ async function nativeHover(page, id, host, selectors, fields) {
   await page.mouse.move(1850, 1000); await sleep(600);
   const rest = await page.evaluate(nativeSample, selectors);
   await beginNativeTrace(page, selectors, id);
+  if (fields.requirement === 'R1-native-control-hover-under-PMH-rests') {
+    const header = await page.locator(host).evaluate((e) => e.closest('.pmu-card').querySelector('.pmu-cardhead').getBoundingClientRect().toJSON());
+    await page.mouse.move(header.x + header.width / 2, header.y + header.height / 2); await sleep(500);
+  }
   await page.locator(host).hover(); await sleep(900);
   const hover = await page.evaluate(nativeSample, selectors);
   await page.screenshot({ path: join(out, id + '--hover.png') });
@@ -463,6 +474,269 @@ async function n3(page) {
   result.inputs = await page.evaluate(() => window.__pmgInputs || []);
   result.status = 'HOLD';
 }
+async function n3Baseline(page) {
+  const measure = contrastMethod(); await floaterFixture(page);
+  const state = await setLook(page, 'basic-dark');
+  result.baseline_scope = 'Only the two failed Basic Dark hover poses; original glyph26e page, no passed matrix or acceptance exemption.';
+  for (const which of ['resume', 'tourchip']) {
+    await showFloater(page, which);
+    const host = '#o55-' + which + ' button[data-o55-chip="resume"]';
+    await page.locator(host).hover(); await sleep(800);
+    await measureGlyphs(page, measure, 'BASELINE-basic-dark-' + which + '-hover', host + ' > svg.nx',
+      { requirement: 'minimal-original-glyph-baseline', host: which, look: 'basic-dark', state, pose: 'hover' });
+    await page.mouse.move(1850, 1000);
+  }
+  result.status = 'BASELINE_REPRODUCTION_ONLY';
+}
+async function setOnboardingLook(page, look) {
+  const [family, themeMode] = look.split('-'), wantedFamily = family === 'nier' ? 'basic' : family;
+  const root = '#pm-o55-onboarding';
+  const openMenu = async () => {
+    if (!await page.locator(root + ' .o55-lookmenu').isVisible()) await page.locator(root + ' .o55-lookbtn').click();
+  };
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await openMenu();
+  if (await page.evaluate(() => window.O55.nierLook.state().on)) {
+    await page.locator(root + ' [data-o55-do="lookNier"]').click();
+    await page.waitForFunction(() => !document.documentElement.hasAttribute('data-o55-nier'), null, { timeout: 15000 });
+    await sleep(1500); await openMenu();
+  }
+  await page.locator(root + ' [data-o55-do="lookFamily"][data-arg="' + wantedFamily + '"]').click();
+  await openMenu();
+  await page.locator(root + ' [data-o55-do="lookMode"][data-arg="' + themeMode + '"]').click();
+  if (family === 'nier') {
+    await openMenu(); await page.locator(root + ' [data-o55-do="lookNier"]').click();
+  }
+  await page.waitForFunction(([f, m, nier]) => document.documentElement.dataset.theme === f + '-' + m &&
+    (document.documentElement.getAttribute('data-o55-nier') === 'on') === nier, [wantedFamily, themeMode, family === 'nier'], { timeout: 15000 });
+  await sleep(family === 'nier' ? 2200 : 800);
+  if (await page.locator(root + ' .o55-lookmenu').isVisible()) await page.locator(root + ' .o55-lookbtn').click();
+  return page.evaluate(() => ({ theme: document.documentElement.dataset.theme, nier: document.documentElement.getAttribute('data-o55-nier'),
+    reduced_media: matchMedia('(prefers-reduced-motion: reduce)').matches, route: 'trusted clicks through the published O55 header look menu' }));
+}
+async function n3Narrow(page) {
+  const measure = contrastMethod(); await trustedInputs(page);
+  let hold = false;
+  for (const look of TEN_LOOKS) {
+    const state = await setOnboardingLook(page, look);
+    const actual = await page.evaluate(() => {
+      const b = document.querySelector('.o55-demopill'), r = b.getBoundingClientRect(), s = b.querySelector('svg.nx');
+      return { window_layout: document.querySelector('#pm-o55-onboarding')?.getAttribute('data-o55-layout'),
+        narrow: document.querySelector('#o55-demo')?.hasAttribute('data-o55-narrow'),
+        button: { x: r.x, y: r.y, w: r.width, h: r.height }, glyph: s?.dataset.nx, classes: s?.getAttribute('class') };
+    });
+    if (!actual.narrow || actual.window_layout !== 'narrow' || actual.button.w !== 20 || actual.button.h !== 44 || actual.glyph !== 'sparkles') {
+      throw new Error('UNVERIFIED: supported O55 narrow route does not render the exact actual 20x44 sparkles tab: ' + JSON.stringify(actual));
+    }
+    await page.mouse.move(680, 870); await sleep(700);
+    const rest = await measureGlyphs(page, measure, 'N3-NARROW-' + look + '-rest', '.o55-demopill > svg.nx',
+      { requirement: 'N3-narrow', look, state, actual, pose: 'rest' });
+    if (rest.contrast_status !== 'MEASURED') { hold = true; break; }
+    // The leave coordinate is outside this separately admitted 700x900 viewport's tab, without resizing the recording.
+    await beginNativeTrace(page, '.o55-demopill > svg.nx', 'N3-NARROW-' + look + '-native-hover');
+    const before = await page.evaluate(nativeSample, '.o55-demopill > svg.nx');
+    await page.locator('.o55-demopill').hover(); await sleep(900);
+    const hovered = await page.evaluate(nativeSample, '.o55-demopill > svg.nx');
+    const contrast = await measureGlyphs(page, measure, 'N3-NARROW-' + look + '-hover', '.o55-demopill > svg.nx',
+      { requirement: 'N3-narrow', look, state, actual, pose: 'hover' });
+    await page.mouse.move(680, 870); await sleep(900);
+    const left = await page.evaluate(nativeSample, '.o55-demopill > svg.nx');
+    const trace = await endNativeTrace(page);
+    const noStuck = left.glyphs.every((g, i) => !g.host?.hover && !g.host?.focus_visible && g.halo_alpha === before.glyphs[i]?.halo_alpha && g.ink === before.glyphs[i]?.ink);
+    result.cases.push({ id: 'N3-NARROW-' + look + '-native-hover', requirement: 'N3-narrow', look, state, actual, before, hover: hovered, left, trace,
+      no_stuck_native_paint_after_leave: noStuck, status: noStuck ? 'MEASURED_PENDING_FRAME_REVIEW' : 'HOLD' }); save();
+    if (!noStuck || contrast.contrast_status !== 'MEASURED') { hold = true; break; }
+    const pill = await collectPills(page, 'PILL-NARROW-' + look, { requirement: 'N3-narrow-pill', look, state, actual }, ['floaters']);
+    if (pill.status === 'HOLD') { hold = true; break; }
+  }
+  result.status = hold ? 'HOLD' : 'MEASURED_PENDING_FRAME_REVIEW';
+  result.inputs = await page.evaluate(() => window.__pmgInputs || []);
+}
+async function r1(page) {
+  await trustedInputs(page);
+  const published = readFileSync(pagePath, 'utf8');
+  const start = published.indexOf('/* ------------------------------------------------------------------ 8. hover ignite */');
+  const end = published.indexOf('/* ------------------------------------------------------------------ 9.', start);
+  if (start < 0 || end < start) throw new Error('UNVERIFIED: exact published native section8 rule not found');
+  const rules = published.slice(start, end);
+  writeFileSync(join(out, 'published-native-section8.css'), rules);
+  result.R1_binding = { label: 'native-control-hover-under-PMH-rests', original_N1: 'UNVERIFIED/HOLD; this supplement cannot discharge N1',
+    native_rule_sha256: sha(rules), host_selector: 'button,summary,[role="button"],[data-action] :hover/:focus-visible; direct/grandchild control/concept SVG, excluding the frozen self-lit hosts',
+    unchanged_rule: 'Published neon-icons.css section8; Retro native phosphor rules and NieR native cut remain unchanged. No PMH card class is expected to ignite a deep glyph.' };
+  let hold = false;
+  const completedPath = arg('--completed-r1');
+  const completed = new Set(completedPath ? JSON.parse(readFileSync(completedPath, 'utf8')).measured_case_ids : []);
+  result.previous_measured_R1_case_ids = [...completed];
+  const revealTools = async (card) => { const head = await page.locator(card + ' > .pmu-cardhead').boundingBox();
+    await page.mouse.move(head.x + head.width / 2, head.y + head.height / 2); await sleep(500); };
+  for (const [look, reduced] of [['glass-dark', false], ['retro-dark', false], ['nier-dark', false], ['basic-dark', false], ['glass-dark', true]]) {
+    const state = await setLook(page, look, reduced), label = look + (reduced ? '-RM' : '');
+    await page.evaluate(() => window.PM_PAGES.go('usage')); await sleep(2600);
+    await page.locator('.page-tab[data-page="usage"]').click();
+    const card = '.pmu-card[data-widget="ov-skyline"]';
+    await page.locator(card).waitFor({ state: 'visible' });
+    const controls = card + ' .pmu-cardtools button > svg.nx';
+    const tool = card + ' button[data-tool="gear"]';
+    const hoverId = 'R1-' + label + '-own-tool-hover';
+    if (!completed.has(hoverId)) {
+      const hover = await nativeHover(page, hoverId, tool, tool + ' > svg.nx',
+        { requirement: 'R1-native-control-hover-under-PMH-rests', look, reduced, state, own_host: 'existing ov-skyline gear button' });
+      if (hover.status === 'HOLD') { hold = true; break; }
+    }
+    await beginNativeTrace(page, controls + ',.pmu-menu .pmu-mcheck svg.nx', 'R1-' + label + '-menu-click-and-Escape');
+    await revealTools(card);
+    await page.locator(tool).click();
+    const checked = '.pmu-menu .pmu-mitem:has(.pmu-mcheck svg.nx)';
+    await page.locator(checked).first().waitFor({ state: 'visible', timeout: 10000 });
+    await page.locator(checked).first().hover(); await sleep(800);
+    const checkedHost = await page.locator(checked).first().evaluate((e) => ({ tag: e.tagName, cls: e.className, role: e.getAttribute('role'),
+      exempt: e.getAttribute('data-pm-hover-exempt'), text: e.textContent.trim(), rect: e.getBoundingClientRect().toJSON(),
+      glyphs: [...e.querySelectorAll('svg.nx')].map((g) => ({ glyph: g.dataset.nx, cls: g.getAttribute('class'), parent: g.parentElement.tagName })) }));
+    await page.screenshot({ path: join(out, 'R1-' + label + '--menu-row-own-hover.png') });
+    // The published gear menu has the selected follow-board radio check and keepOpen=true.
+    // A real click on its own anchor closes it; selecting its row correctly keeps it open.
+    await page.locator(tool).click(); await sleep(1100);
+    const afterClick = await page.evaluate(nativeSample, controls + ',.pmu-menu .pmu-mcheck svg.nx');
+    await revealTools(card);
+    await page.locator(tool).click();
+    await page.locator('.pmu-menu').waitFor({ state: 'visible' });
+    const box = await page.locator(card).boundingBox();
+    const pointer = { x: box.x + box.width / 2, y: box.y + Math.min(box.height / 2, 90) };
+    await page.mouse.move(pointer.x, pointer.y); await sleep(600);
+    await page.keyboard.press('Escape'); await sleep(1100);
+    const afterEscape = await page.evaluate(nativeSample, controls);
+    // Tab blurs the restored gear anchor through the actual browser focus route; any newly focused control keeps
+    // its own native paint. The gear anchor's paint is then checked separately.
+    await page.keyboard.press('Tab'); await sleep(900);
+    const blurredAnchor = await page.evaluate(nativeSample, tool + ' > svg.nx');
+    const menuTrace = await endNativeTrace(page);
+    const noStuckAnchor = blurredAnchor.glyphs.every((g) => g.host?.hover || g.host?.focus_visible || (g.halo_alpha === '0' && g.halo_visibility === 'hidden'));
+    result.cases.push({ id: 'R1-' + label + '-menu-click-Escape-focus-blur', requirement: 'R1-native-control-hover-under-PMH-rests', look, reduced, state,
+      checkedHost, pointer_at_Escape: pointer, pointer_movement_after_Escape: [0, 0], afterClick, afterEscape, blurredAnchor, trace: menuTrace,
+      no_stuck_blurred_anchor: noStuckAnchor, status: noStuckAnchor ? 'MEASURED_PENDING_FRAME_REVIEW' : 'HOLD' }); save();
+    if (!noStuckAnchor) { hold = true; break; }
+    // Existing page tabs are focusable published controls. The setup focus is recorded honestly; page activation
+    // itself is a real trusted Enter while the mouse stays at the existing gear button's coordinates.
+    await revealTools(card); await page.locator(tool).hover();
+    const toolBox = await page.locator(tool).boundingBox(), stationary = { x: toolBox.x + toolBox.width / 2, y: toolBox.y + toolBox.height / 2 };
+    await beginNativeTrace(page, controls, 'R1-' + label + '-keyboard-page-rests');
+    await page.locator('.page-tab[data-page="dashboard"]').focus(); await page.keyboard.press('Enter'); await sleep(1800);
+    const outgoing = await page.evaluate(nativeSample, controls);
+    await page.locator('.page-tab[data-page="usage"]').focus(); await page.keyboard.press('Enter'); await sleep(3000);
+    const incoming = await page.evaluate(nativeSample, controls);
+    const pageTrace = await endNativeTrace(page);
+    const noVisibleOutgoing = outgoing.glyphs.every((g) => !g.visible);
+    result.cases.push({ id: 'R1-' + label + '-keyboard-page-rests', requirement: 'R1-native-control-hover-under-PMH-rests', look, reduced, state,
+      focus_setup: 'locator.focus on the unchanged existing page tab; actual activation by trusted Enter', stationary_pointer: stationary,
+      pointer_delta_during_switch: [0, 0], outgoing, incoming, trace: pageTrace, no_visible_outgoing_glyph: noVisibleOutgoing,
+      status: noVisibleOutgoing ? 'MEASURED_PENDING_FRAME_REVIEW' : 'HOLD' }); save();
+    if (!noVisibleOutgoing) { hold = true; break; }
+    await page.locator('.page-tab[data-page="usage"]').click();
+    for (const gesture of ['drag', 'resize']) {
+      await revealTools(card);
+      const locator = page.locator(gesture === 'drag' ? card + ' button[data-tool="grip"]' : card + ' .pmu-h[data-edge="se"]');
+      const handle = await locator.boundingBox(), before = await page.locator(card).boundingBox();
+      if (!handle || handle.y < 0 || handle.y + handle.height > 1080) throw new Error('UNVERIFIED: actual ' + gesture + ' control not visible');
+      const x = handle.x + handle.width / 2, y = handle.y + handle.height / 2, dx = gesture === 'drag' ? -72 : (look === 'retro-dark' || look === 'basic-dark' ? -48 : 48), dy = gesture === 'drag' ? 24 : 24;
+      await beginNativeTrace(page, controls, 'R1-' + label + '-' + gesture);
+      await page.mouse.move(x, y); await page.mouse.down(); await page.mouse.move(x + dx, y + dy, { steps: 12 }); await sleep(450);
+      await page.screenshot({ path: join(out, 'R1-' + label + '--' + gesture + '-held.png') });
+      await page.mouse.up(); await sleep(1800); await page.mouse.move(1850, 1000);
+      await page.locator('.page-tab[data-page="usage"]').click(); await sleep(900);
+      const after = await page.locator(card).boundingBox(), settled = await page.evaluate(nativeSample, controls), trace = await endNativeTrace(page);
+      const noStuck = settled.glyphs.every((g) => !g.host?.hover && !g.host?.focus_visible && g.halo_alpha === '0' && g.halo_visibility === 'hidden');
+      result.cases.push({ id: 'R1-' + label + '-' + gesture, requirement: 'R1-native-control-hover-under-PMH-rests', look, reduced, state,
+        trusted_pointer_route: { start: { x, y }, delta: { x: dx, y: dy }, steps: 12 }, before, after, settled, trace,
+        no_stuck_native_paint_after_leave_and_blur: noStuck, status: noStuck ? 'MEASURED_PENDING_FRAME_REVIEW' : 'HOLD' }); save();
+      if (!noStuck) { hold = true; break; }
+    }
+    if (hold) break;
+  }
+  result.inputs = await page.evaluate(() => window.__pmgInputs || []);
+  result.status = hold ? 'HOLD' : 'MEASURED_PENDING_FRAME_REVIEW';
+}
+async function countTraceStart(page, label) {
+  await page.evaluate((name) => {
+    const selector = '.sh-hcount,.fm-count,.pm-sumcard-h .c,#fmHintCount,#fmSelCount,#fmSelChipN';
+    const roots = '#panel-testing,#panel-source,#panel-search';
+    const ids = new WeakMap(), anims = new WeakMap(), previous = new Map(); let serial = 0, aSerial = 0;
+    const id = (e) => { if (!ids.has(e)) ids.set(e, ++serial); return ids.get(e); };
+    const path = (e) => { if (e.id) return '#' + e.id; const out = []; for (let p = e; p && !p.matches(roots); p = p.parentElement) {
+      out.unshift(p.tagName.toLowerCase() + ':' + [...p.parentElement.children].indexOf(p)); } return e.closest(roots)?.id + '>' + out.join('>'); };
+    const trace = window.__pmgCounts = { label: name, selector, rows: [], swaps: [], stopped: false };
+    const sample = () => {
+      for (const e of document.querySelectorAll(selector)) {
+        if (!e.closest(roots)) continue;
+        const key = path(e), text = e.textContent.trim(), n = parseFloat(text), prev = previous.get(key), node = id(e);
+        if (!prev || prev.text !== text || prev.node !== node) {
+          trace.rows.push({ type: prev ? 'text-change' : 'initial', at: performance.now(), utc_ms: Date.now(), key, node,
+            text, numeric: Number.isNaN(n) ? null : n, previous_text: prev?.text ?? null, previous_numeric: prev?.numeric ?? null,
+            previous_node: prev?.node ?? null, real_numeric_change: !!prev && !Number.isNaN(n) && prev.numeric != null && n !== prev.numeric,
+            source_dCount: e._dCount, source_dCountN: Number.isNaN(e._dCountN) ? null : e._dCountN, visible: e.offsetParent !== null });
+          previous.set(key, { text, numeric: Number.isNaN(n) ? null : n, node });
+        }
+        for (const a of e.getAnimations()) {
+          if (anims.has(a)) continue; anims.set(a, ++aSerial);
+          const frames = a.effect?.getKeyframes() || [], timing = a.effect?.getComputedTiming();
+          const isRoll = /translateY\(-?60%\)/.test(frames[0]?.transform || '') && frames.at(-1)?.transform === 'none' && Number(frames[0]?.opacity) === 0 && Number(frames.at(-1)?.opacity) === 1;
+          trace.rows.push({ type: 'animation', at: performance.now(), utc_ms: Date.now(), key, node, animation: aSerial, is_count_roll: isRoll,
+            name: a.animationName || a.id, frames, duration: timing?.duration, easing: timing?.easing, start_time: a.startTime, play_state: a.playState });
+        }
+      }
+      if (!trace.stopped) trace.raf = requestAnimationFrame(sample);
+    };
+    trace.observer = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        const e = m.target.nodeType === 1 ? m.target : m.target.parentElement;
+        if (!e?.closest(roots)) continue;
+        const g = e.closest('[data-gl]');
+        if (g && (m.type === 'childList' || m.attributeName === 'data-gl')) trace.swaps.push({ at: performance.now(), utc_ms: Date.now(), panel: e.closest(roots).id,
+          glyph: g.getAttribute('data-gl'), status: g.getAttribute('data-d-st'), mark_contains_text: !!g.textContent.trim(), mutation: m.type });
+      }
+    });
+    trace.observer.observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['data-gl'] }); sample();
+  }, label);
+}
+async function countTraceEnd(page) {
+  return page.evaluate(() => { const t = window.__pmgCounts; t.stopped = true; cancelAnimationFrame(t.raf); t.observer.disconnect();
+    delete window.__pmgCounts; return { label: t.label, selector: t.selector, rows: t.rows, swaps: t.swaps }; });
+}
+async function n4(page) {
+  await trustedInputs(page); const state = await setLook(page, 'glass-dark');
+  if (await page.evaluate(() => window.PMR?.concepts.current() !== 'd')) throw new Error('UNVERIFIED: actual published rail is not D');
+  await page.evaluate(() => window.PM_PAGES.go('dashboard'));
+  for (const action of ['testing-run', 'source-stage', 'source-unstage', 'search-filter']) {
+    if (arg('--only-n4') && arg('--only-n4') !== action) continue;
+    const panel = action.startsWith('testing') ? 'testing' : action.startsWith('source') ? 'source' : 'search';
+    if (!await page.locator('#panel-' + panel).isVisible()) await page.locator('[data-ab-id="' + panel + '"][data-target="panel-' + panel + '"]').click();
+    await sleep(1800);
+    const before = await page.evaluate((p) => ({ panel: p, theme: document.documentElement.dataset.theme,
+      visible_controls: [...document.querySelectorAll('#panel-' + p + ' button,#panel-' + p + ' input')].filter((e) => e.offsetParent !== null).map((e) => ({ tag: e.tagName, text: e.textContent.trim(),
+        action: e.dataset.demoAction, title: e.title, label: e.getAttribute('aria-label') })) }), panel);
+    const selector = action === 'testing-run' ? '#panel-testing [data-demo-action="cmd.testing.run"]' : action === 'source-stage' ? '#panel-source [data-demo-action="cmd.git.stage_hunks"]' :
+      action === 'source-unstage' ? '#panel-source [data-demo-action="cmd.git.unstage_hunks"]' : '#panel-search input[aria-label="Search in files"]';
+    let target = null;
+    for (const e of await page.locator(selector).all()) if (await e.isVisible() && await e.isEnabled()) { target = e; break; }
+    if (!target) { result.cases.push({ id: 'N4-' + action, requirement: 'N4', state, before, selector, status: 'UNVERIFIED', reason: 'No actual visible supported control matches the requested published action; no alternate state invented.' }); save(); continue; }
+    await countTraceStart(page, 'N4-' + action);
+    if (action === 'search-filter') {
+      await target.click(); await page.keyboard.press('Control+a'); await page.keyboard.type('no-such-glyph-current-case', { delay: 35 });
+    } else await target.click();
+    await sleep(4000);
+    await page.screenshot({ path: join(out, 'N4-' + action + '--actual-after.png') });
+    const trace = await countTraceEnd(page), changes = trace.rows.filter((r) => r.real_numeric_change), rolls = trace.rows.filter((r) => r.is_count_roll);
+    const matches = changes.map((c) => ({ ...c, rolls: rolls.filter((a) => a.key === c.key && a.at >= c.at - 100 && a.at <= c.at + 500).length }));
+    const noExtraRoll = rolls.every((a) => changes.some((c) => c.key === a.key && a.at >= c.at - 100 && a.at <= c.at + 500));
+    const unexpected = matches.some((c) => c.rolls !== 1) || !noExtraRoll;
+    result.cases.push({ id: 'N4-' + action, requirement: 'N4', look: 'glass-dark', state, before, actual_control_selector: selector, trace,
+      actual_numeric_changes: changes.length, actual_count_rolls: rolls.length, changed_count_bindings: matches,
+      mark_swaps: trace.swaps.length, no_roll_without_numeric_change: noExtraRoll,
+      status: unexpected ? 'HOLD' : !changes.length ? 'UNVERIFIED' : 'MEASURED_PENDING_FRAME_REVIEW',
+      reason: !changes.length ? 'The real published interaction produced no eligible numeric change; once-per-change acceptance cannot be inferred from zero observations.' : null }); save();
+  }
+  result.inputs = await page.evaluate(() => window.__pmgInputs || []);
+  result.status = result.cases.some((c) => c.status === 'HOLD') || result.errors.length ? 'HOLD' : result.cases.some((c) => c.status === 'UNVERIFIED') ? 'UNVERIFIED' : 'MEASURED_PENDING_FRAME_REVIEW';
+}
 async function n2(page) {
   const measure = contrastMethod();
   await page.evaluate(() => window.PM_PAGES.go('dashboard'));
@@ -519,7 +793,9 @@ async function n2(page) {
 }
 try {
   result.global_helper_sessions_before = command(['list']);
-  session = command(['start', '--record', join(out, mode + '.mp4'), '--codec', 'h264']);
+  result.recording_request_utc_ms = Date.now();
+  session = mode === 'n3-narrow' ? command(['start', '--headed']) : command(['start', '--record', join(out, mode + '.mp4'), '--codec', 'h264']);
+  result.browser_ready_utc_ms = Date.now();
   result.admitted_session = session; save();
   const spec = arg('--playwright-module', 'playwright-core');
   const { chromium } = await import(spec.startsWith('/') ? pathToFileURL(spec).href : spec);
@@ -529,11 +805,29 @@ try {
   const page = pages[0];
   page.on('pageerror', (error) => { result.errors.push({ kind: 'pageerror', message: error.message }); save(); });
   page.on('console', (message) => { if (message.type() === 'error') { result.errors.push({ kind: 'console', message: message.text() }); save(); } });
-  await admission(page);
+  if (mode === 'n3-narrow') {
+    const viewportSession = await page.context().newCDPSession(page);
+    await viewportSession.send('Emulation.setDeviceMetricsOverride', { width: 700, height: 900, deviceScaleFactor: 1, mobile: false });
+    // CSS viewport established before recording; the ordinary helper's 1920x1080 capture window is not resized.
+    await admission(page, true);
+    await page.evaluate(() => window.PM_O55_ONBOARDING.open({ screen: 'welcome' }));
+    await page.waitForFunction(() => document.querySelector('#pm-o55-onboarding')?.getAttribute('data-o55-layout') === 'narrow' &&
+      document.querySelector('#o55-demo')?.hasAttribute('data-o55-narrow'), null, { timeout: 15000 });
+    await sleep(1800);
+    result.before_recording_viewport = { utc_ms: Date.now(), ...await page.evaluate(() => ({ width: innerWidth, height: innerHeight, DPR: devicePixelRatio,
+      layout: document.querySelector('#pm-o55-onboarding').getAttribute('data-o55-layout'), tab_width: document.querySelector('.o55-demopill').getBoundingClientRect().width })) };
+    result.recording_request_utc_ms = Date.now();
+    extraRecording = command(['start', '--source', 'window', '--window-id', session.window_id, '--output', join(out, mode + '.mp4'), '--codec', 'h264'], 'agent-record');
+    result.extra_recording_admission = extraRecording; result.recording_ready_utc_ms = Date.now(); save();
+  } else await admission(page);
   if (mode === 'admission') result.status = 'ADMISSION_VERIFIED';
   else if (mode === 'n1') await n1(page);
   else if (mode === 'n2') await n2(page);
   else if (mode === 'n3') await n3(page);
+  else if (mode === 'n3-baseline') await n3Baseline(page);
+  else if (mode === 'n3-narrow') await n3Narrow(page);
+  else if (mode === 'r1') await r1(page);
+  else if (mode === 'n4') await n4(page);
   else throw new Error('HOLD: case mode not implemented: ' + mode);
 } catch (error) {
   result.status = 'HOLD'; result.errors.push({ kind: 'harness', message: String(error), stack: error.stack }); process.exitCode = 2;
