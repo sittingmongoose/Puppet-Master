@@ -1,0 +1,411 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "D-R2-P04-treatment",
+  "complete_final": {
+    "coverage": "UNASSESSED",
+    "reason": "Final missing; required breadth critique/map and reviser synthesis absent.",
+    "axes": [
+      {
+        "axis": 1,
+        "name": "Material original obligations and negative constraints",
+        "coverage": "UNASSESSED",
+        "judgment": "UNASSESSED",
+        "reason": "No frozen final."
+      },
+      {
+        "axis": 2,
+        "name": "Consequential source facts, governing conditions, versions and applicability",
+        "coverage": "UNASSESSED",
+        "judgment": "UNASSESSED",
+        "reason": "No frozen final."
+      },
+      {
+        "axis": 3,
+        "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+        "coverage": "UNASSESSED",
+        "judgment": "UNASSESSED",
+        "reason": "No frozen final."
+      },
+      {
+        "axis": 4,
+        "name": "Valid corrections, rejections and exact plan dispositions",
+        "coverage": "UNASSESSED",
+        "judgment": "UNASSESSED",
+        "reason": "No frozen final."
+      },
+      {
+        "axis": 5,
+        "name": "Supported meaning retained from draft and criticism into the complete final",
+        "coverage": "UNASSESSED",
+        "judgment": "UNASSESSED",
+        "reason": "No frozen final."
+      },
+      {
+        "axis": 6,
+        "name": "Meaningful proposed validation, with executed work distinguished",
+        "coverage": "UNASSESSED",
+        "judgment": "UNASSESSED",
+        "reason": "No frozen final."
+      }
+    ],
+    "obligations_and_negative_constraints": [
+      {
+        "id": "O01",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "id": "O02",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "id": "O03",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "id": "O04",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "id": "O05",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "id": "N01",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "id": "N02",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "id": "N03",
+        "coverage": "UNASSESSED"
+      }
+    ],
+    "source_families": [
+      {
+        "family": "retrieval_language_lexical",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "family": "publication_identity_membership",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "family": "pdf_extraction_limits",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "family": "ocr_origin_geometry",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "family": "sidecar_and_ocr_regressions",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "family": "slides_xml_zip",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "family": "transcripts_media_association",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "family": "background_work_isolation_errors",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "family": "semantic_vector_alternative",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "family": "versions_licenses_applicability",
+        "coverage": "UNASSESSED"
+      }
+    ],
+    "critic_dispositions_and_final_preservation": "UNASSESSED; not inferred from draft or lifecycle receipts."
+  },
+  "available_partial_science": {
+    "coverage": "PARTIAL",
+    "documents_read": [
+      "Complete investigator discovery/draft/map/revealed plan/index",
+      "Complete truth critique/map",
+      "All listed assignments/native/status/auxiliary members and retained original failure report; breadth terminal status summary is not an authored critique."
+    ],
+    "axes": [
+      {
+        "axis": 1,
+        "name": "Material original obligations and negative constraints",
+        "coverage": "PARTIAL",
+        "judgment": "DEFECT_FOUND",
+        "basis": "Substantial scope and negative constraints; exact audio/transcript association missing D-T01."
+      },
+      {
+        "axis": 2,
+        "name": "Consequential source facts, governing conditions, versions and applicability",
+        "coverage": "PARTIAL",
+        "judgment": "SUPPORTED_CONTEXT_WITH_GAP",
+        "basis": "Tika/PDFBox/FTS5/Tantivy/vector context independently checked; generic media timing lacks exact association."
+      },
+      {
+        "axis": 3,
+        "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+        "coverage": "PARTIAL",
+        "judgment": "USEFUL_DISCOVERIES_FOUND",
+        "basis": "Broad parser/local alternatives, external-content sync, AUTO fallback/isolation and vector-delete fix useful. Breadth critic/final missing."
+      },
+      {
+        "axis": 4,
+        "name": "Valid corrections, rejections and exact plan dispositions",
+        "coverage": "PARTIAL",
+        "judgment": "DRAFT_CORRECTIONS_AND_CRITIC_SUPPORTED",
+        "basis": "Draft plan dispositions and all six truth findings inspected; no reviser dispositions exist."
+      },
+      {
+        "axis": 5,
+        "name": "Supported meaning retained from draft and criticism into the complete final",
+        "coverage": "PARTIAL",
+        "judgment": "DRAFT_PRESERVATION_ONLY",
+        "basis": "Supported discovery meaning substantially remains in draft. Criticism-to-final preservation UNASSESSED."
+      },
+      {
+        "axis": 6,
+        "name": "Meaningful proposed validation, with executed work distinguished",
+        "coverage": "PARTIAL",
+        "judgment": "HONEST_PROPOSALS_WITH_GAP",
+        "basis": "Domains/oracles and no-execution distinction sound; independent audio/transcript replacement oracle absent D-T01."
+      }
+    ],
+    "obligations_and_negative_constraints": [
+      {
+        "id": "O01",
+        "coverage": "PARTIAL",
+        "judgment": "SUBSTANTIALLY_SUPPORTED",
+        "basis": "Available draft covers initial PDF/slide/optional transcript scope, script tests and unsupported states; complete synthesis missing."
+      },
+      {
+        "id": "O02",
+        "coverage": "PARTIAL",
+        "judgment": "PARTIAL_DEFECT",
+        "basis": "Embedded origin is explicitly unverified and originals are version-checked; exact audio/transcript association remains missing (D-T01)."
+      },
+      {
+        "id": "O03",
+        "coverage": "PARTIAL",
+        "judgment": "PARTIAL_DEFECT",
+        "basis": "Typed precision and transcript-offset versus audio-time distinction are sound; independent audio revision association is incomplete."
+      },
+      {
+        "id": "O04",
+        "coverage": "PARTIAL",
+        "judgment": "SUBSTANTIALLY_SUPPORTED_WITH_GAP",
+        "basis": "Version-fenced generations, shared links and tombstones address races; D-T01 remains for independent audio replacement."
+      },
+      {
+        "id": "O05",
+        "coverage": "PARTIAL",
+        "judgment": "SUBSTANTIALLY_SUPPORTED",
+        "basis": "FTS5/Tantivy, substring and local vector alternatives plus Tika/per-format and worker limits are meaningful; breadth/final absent."
+      },
+      {
+        "id": "N01",
+        "coverage": "PARTIAL",
+        "judgment": "SUPPORTED_IN_AVAILABLE_TEXT",
+        "basis": "Local recognizers/no remote embedding uploads and explicit embedded-origin uncertainty; actual network/privacy execution unknown."
+      },
+      {
+        "id": "N02",
+        "coverage": "PARTIAL",
+        "judgment": "SUPPORTED_IN_AVAILABLE_TEXT",
+        "basis": "No invented source precision; explicit stale/tombstone/live-owner search gating."
+      },
+      {
+        "id": "N03",
+        "coverage": "PARTIAL",
+        "judgment": "SUPPORTED_IN_AVAILABLE_TEXT",
+        "basis": "No transcription or unavailable-corpus accuracy requirement; tests are proposals."
+      }
+    ],
+    "source_families": [
+      {
+        "family": "retrieval_language_lexical",
+        "coverage": "PARTIAL",
+        "primary_sources": [
+          "PS01",
+          "PS02",
+          "PS04",
+          "PS06",
+          "PS07"
+        ],
+        "limit": "Available investigator/truth material assessed; no complete final or breadth synthesis."
+      },
+      {
+        "family": "publication_identity_membership",
+        "coverage": "PARTIAL",
+        "primary_sources": [
+          "PS03",
+          "PS05"
+        ],
+        "limit": "Available investigator/truth material assessed; no complete final or breadth synthesis."
+      },
+      {
+        "family": "pdf_extraction_limits",
+        "coverage": "PARTIAL",
+        "primary_sources": [
+          "PS08",
+          "PS18"
+        ],
+        "limit": "Available investigator/truth material assessed; no complete final or breadth synthesis."
+      },
+      {
+        "family": "ocr_origin_geometry",
+        "coverage": "PARTIAL",
+        "primary_sources": [
+          "PS09",
+          "PS10",
+          "PS11"
+        ],
+        "limit": "Available investigator/truth material assessed; no complete final or breadth synthesis."
+      },
+      {
+        "family": "sidecar_and_ocr_regressions",
+        "coverage": "PARTIAL",
+        "primary_sources": [
+          "PS11",
+          "PS12"
+        ],
+        "limit": "Available investigator/truth material assessed; no complete final or breadth synthesis."
+      },
+      {
+        "family": "slides_xml_zip",
+        "coverage": "PARTIAL",
+        "primary_sources": [
+          "PS13",
+          "PS14",
+          "PS16"
+        ],
+        "limit": "Available investigator/truth material assessed; no complete final or breadth synthesis."
+      },
+      {
+        "family": "transcripts_media_association",
+        "coverage": "PARTIAL",
+        "primary_sources": [
+          "PS15"
+        ],
+        "limit": "Available investigator/truth material assessed; no complete final or breadth synthesis."
+      },
+      {
+        "family": "background_work_isolation_errors",
+        "coverage": "PARTIAL",
+        "primary_sources": [
+          "PS08",
+          "PS14",
+          "PS17",
+          "PS18"
+        ],
+        "limit": "Available investigator/truth material assessed; no complete final or breadth synthesis."
+      },
+      {
+        "family": "semantic_vector_alternative",
+        "coverage": "PARTIAL",
+        "primary_sources": [
+          "PS19",
+          "PS20"
+        ],
+        "limit": "Available investigator/truth material assessed; no complete final or breadth synthesis."
+      },
+      {
+        "family": "versions_licenses_applicability",
+        "coverage": "PARTIAL",
+        "primary_sources": [
+          "PS06",
+          "PS07",
+          "PS08",
+          "PS09",
+          "PS11",
+          "PS16",
+          "PS19"
+        ],
+        "limit": "Available investigator/truth material assessed; no complete final or breadth synthesis."
+      }
+    ],
+    "plan_dispositions": [
+      {
+        "clause_group": "P1 identity/rename/replacement",
+        "coverage": "PARTIAL",
+        "draft_locator": "draft lines 7–17, 52–64",
+        "assessment": "Identity/version/membership separation is justified."
+      },
+      {
+        "clause_group": "P2 scope/provenance/retrieval",
+        "coverage": "PARTIAL",
+        "draft_locator": "draft lines 19–32",
+        "assessment": "Unknown embedded origin and typed precision sound; D-T01 remains."
+      },
+      {
+        "clause_group": "P3 scheduling/cancel/delete/races",
+        "coverage": "PARTIAL",
+        "draft_locator": "draft lines 34–44",
+        "assessment": "Coalescing, budgets, live ownership and fencing are sensible proposed rules."
+      },
+      {
+        "clause_group": "P4/P5 dispositions/validation",
+        "coverage": "PARTIAL",
+        "draft_locator": "draft lines 46–90",
+        "assessment": "Requested families addressed as proposals; no final endorsement inferred."
+      }
+    ],
+    "truth_critic_findings": [
+      {
+        "finding": "Same-version cancellation",
+        "coverage": "PARTIAL",
+        "independent_assessment": "Valid clarification: already-valid same-tuple generation need not be invalidated solely by a cancelled retry; advanced revision differs.",
+        "final_disposition": "UNASSESSED"
+      },
+      {
+        "finding": "Tika AUTO defaults/fallback/provenance",
+        "coverage": "PARTIAL",
+        "independent_assessment": "Supported by PS17 definitions/callers/tests, including unlimited default OCR page budget and actual-output requirement.",
+        "final_disposition": "UNASSESSED"
+      },
+      {
+        "finding": "Conditional process isolation",
+        "coverage": "PARTIAL",
+        "independent_assessment": "Supported by PS18; direct calls/locality do not supply fork limits.",
+        "final_disposition": "UNASSESSED"
+      },
+      {
+        "finding": "FTS5 availability/language/synchronization",
+        "coverage": "PARTIAL",
+        "independent_assessment": "Supported by PS01/PS02; no all-language relevance guarantee.",
+        "final_disposition": "UNASSESSED"
+      },
+      {
+        "finding": "PDF order/location",
+        "coverage": "PARTIAL",
+        "independent_assessment": "Supported by PS18; geometry/content-stream order is not semantic truth.",
+        "final_disposition": "UNASSESSED"
+      },
+      {
+        "finding": "Configured work bounds",
+        "coverage": "PARTIAL",
+        "independent_assessment": "Sound scope-preserving requirement; numeric product limits may remain owner choices.",
+        "final_disposition": "UNASSESSED"
+      }
+    ],
+    "breadth_status_summary": {
+      "coverage": "PARTIAL",
+      "observation": "Terminal status mentions accepted slide formats, partial new-version policy and initial multilingual promise. No critique/source map was frozen; independent authored reasons cannot be reconstructed."
+    },
+    "supported_discovery_to_draft_meaning": [
+      "Logical identity/version and live ownership",
+      "Unverified origin of existing PDF text versus app OCR, honest locator certainty",
+      "Staged/version-fenced replacement, tombstones and bounded coalescing",
+      "Conditional retrieval/parser alternatives and scoped regression history",
+      "Optional supplied transcripts and proposed-versus-executed validation"
+    ],
+    "executed_validation": "No parser/index/OCR/public-fixture/application tests claimed. Helper-format/hash observations and primary/upstream source inspection only."
+  },
+  "boundary": "Partial findings cannot be promoted to a comparable complete-final grade; missing final all six axes remain UNASSESSED."
+}

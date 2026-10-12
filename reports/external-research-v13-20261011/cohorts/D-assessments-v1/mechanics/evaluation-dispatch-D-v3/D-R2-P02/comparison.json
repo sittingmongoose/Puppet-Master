@@ -1,0 +1,103 @@
+{
+  "schema": "er13.postfreeze_original_comparison.v1",
+  "block_id": "D-R2-P02",
+  "case_id": "D-P06",
+  "arm_count": 2,
+  "analysis_started_utc": "2026-10-12T05:22:33.102995+00:00",
+  "original_manifest_refs": [
+    {
+      "arm_id": "D-R2-P02-control",
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/control/manifest.json",
+      "bytes": 2185,
+      "sha256": "4aa5541501689779c2fc446635882dfb1c6436e5733eda8beb94fba413f5b141",
+      "frozen_at_utc": "2026-10-12T05:21:31.176473+00:00"
+    },
+    {
+      "arm_id": "D-R2-P02-treatment",
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/treatment/manifest.json",
+      "bytes": 2201,
+      "sha256": "11cf16b8aab6679aac954fe170e27eab4413bec83d8b08b96ec82d7069ab545d",
+      "frozen_at_utc": "2026-10-12T05:21:31.178993+00:00"
+    }
+  ],
+  "original_judgments_unchanged": true,
+  "same_input_hashes": {
+    "brief": true,
+    "plan": true
+  },
+  "outcomes": [
+    {
+      "arm_id": "D-R2-P02-control",
+      "source_judgment": "FAIL",
+      "complete_final_axis_coverage": [
+        "COMPLETE",
+        "PARTIAL",
+        "PARTIAL",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "delivery": "DELIVERED",
+      "timing_status": "WITHIN_RECORDED_STAGE_AND_FULL_CAPS",
+      "method_status": "CUSTODY_CONSISTENT_WITH_METHOD"
+    },
+    {
+      "arm_id": "D-R2-P02-treatment",
+      "source_judgment": "UNASSESSED",
+      "complete_final_axis_coverage": [
+        "UNASSESSED",
+        "UNASSESSED",
+        "UNASSESSED",
+        "UNASSESSED",
+        "UNASSESSED",
+        "UNASSESSED"
+      ],
+      "delivery": "MISSING_FINAL",
+      "timing_status": "INELIGIBLE_COMPLETE_DELIVERY_MISSING",
+      "method_status": "INCOMPLETE"
+    }
+  ],
+  "all_assigned_denominator": {
+    "arms": 2,
+    "delivered_frozen_finals": 1,
+    "missing_finals": 1,
+    "known_original_source_failures": 1,
+    "complete_final_source_unassessed": 1,
+    "observed_source_passes": 0,
+    "failed_or_interrupted_stages_retained": true
+  },
+  "timing_observations": {
+    "control_t0_to_native_reviser_terminal_receipt_seconds": 2778.809,
+    "control_t0_to_packet_freeze_seconds": 2801.015512,
+    "proxy_scope": "Native receipt/custody endpoints only. Neither is actual provider/task finish, scientific-artifact completion or request-to-quiet final. Original T0 and all caps unchanged.",
+    "treatment_complete_delivery_seconds": null,
+    "treatment_missing_duration_is_not_zero": true,
+    "actual_task_start_finish_and_provider_activity": null,
+    "paired_complete_delivery_difference_seconds": null
+  },
+  "resource_observations": {
+    "billing": null,
+    "provider_activity": null,
+    "context_occupancy_union_overlap": null,
+    "candidate_product_total_consumption": null,
+    "independent_evaluation_consumption": null,
+    "cost_per_passing_final": "UNDEFINED: zero observed source passes; consumption also unavailable",
+    "native_counters_not_summed": true,
+    "unknown_is_not_zero": true
+  },
+  "finite_quality_observations": [
+    "Control supplies the complete proposal and real pinned upstream test-source oracles, but retains a material Deno governing-scope omission. Its source/breadth coverage is partial.",
+    "Treatment supplies useful partial native-platform and FTS5 mechanisms and a supported no-stdio truth correction; concrete test-source discovery remains incomplete and preservation/correction into a final cannot be observed.",
+    "Different source coverage and absent treatment final prohibit interpreting FAIL/UNASSESSED_MISSING as equal quality. No discovery recall or full-pipeline effectiveness score is established."
+  ],
+  "confounds": [
+    "Technique-bearing paths/prompts prevent complete blinding.",
+    "Prospective private routing epoch change applies to control reviser; physical identity/cache/service effects unavailable. No account identity disclosed.",
+    "Candidate actual finish, provider activity and billing unavailable; no affordability or repeatable latency effect can be estimated.",
+    "Single original matched pair with one missing final is a diagnostic finite observation, not non-inferiority/reliability or a treatment-effect estimate."
+  ],
+  "comparative_conclusion": "No equal-quality latency/resource saving or confirmed full-pipeline optimizer is established by this pair. No campaign recipe selected.",
+  "selection_performed": false,
+  "repairs_replacements_regrades": false,
+  "scope": "FULL original failure-qualified pair; preparation/component effects not substituted for full science."
+}

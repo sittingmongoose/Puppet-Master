@@ -1,0 +1,262 @@
+{
+  "arm_id": "D-R1-P03-treatment",
+  "scope": "FULL original complete final",
+  "axes": [
+    {
+      "id": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "All five obligations and three negatives addressed with coherent staging and explicit choices."
+    },
+    {
+      "id": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Consequential mechanisms, definitions, versions, exceptions and repair conditions verified under finite scope."
+    },
+    {
+      "id": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "WAL-reset qualification, ZIP symlink-order repair, authenticated final chunks, VACUUM interruption and repository check costs are useful supported discoveries."
+    },
+    {
+      "id": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "All plan clauses and CR-01 through CR-05 accounted for; severity overstatement recorded T-L01 without a false final rejection."
+    },
+    {
+      "id": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Supported capture, inventory, IDs/references, alternatives, owner choices and proposed validation meanings retained; discovery locator corrected."
+    },
+    {
+      "id": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Specific proposed domains/oracles cover interruption, damage, migration, merge, secrets and usability; no invented execution."
+    }
+  ],
+  "obligations_and_negative_constraints": [
+    {
+      "id": "O01",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Final 5-11, 28-30, 36-54: coherent capture, private candidate, preview, verification and deliberate apply."
+    },
+    {
+      "id": "O02",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Final 13-22, 28-30, 46: all three data categories, positive/negative inventory and omission reasons; required omissions never promoted."
+    },
+    {
+      "id": "O03",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Final 7, 38-44, 66-69: complete members, bytes, extraction, engine checks, relationships and usability separated."
+    },
+    {
+      "id": "O04",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Final 44-54, 117-119: clean restore and explicit merge, separate entity IDs, full remapping, staged migration and unknown-schema blocker."
+    },
+    {
+      "id": "O05",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Final 24, 54-75: packaging, staged/direct, full/delta repository tradeoffs, passphrase costs/leakage/failure and recovery limits."
+    },
+    {
+      "id": "N01",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Final 52-54: retain prior workspace through staged verification and promotion with rollback."
+    },
+    {
+      "id": "N02",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Final 48, 60: no silent same-name overwrite and no archive upload/recovery upload route."
+    },
+    {
+      "id": "N03",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Final 60, 120: no forgotten sole-passphrase recovery promise."
+    }
+  ],
+  "consequential_source_families": [
+    {
+      "family": "archive",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Python editions, implementation and bad-CRC tests checked; duplicate/path/compression duties examined.",
+      "primary_source_ids": [
+        "P10",
+        "P11",
+        "P12"
+      ]
+    },
+    {
+      "family": "archive_history",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Advisory, fixed extractor/caller and symlink-order regression plus release examined.",
+      "primary_source_ids": [
+        "P13",
+        "P14",
+        "P15"
+      ]
+    },
+    {
+      "family": "atomicity",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Database-versus-files and rename-versus-durability boundaries checked; exact target filesystem remains open.",
+      "primary_source_ids": [
+        "P16"
+      ]
+    },
+    {
+      "family": "crypto",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Pinned/current specs, header MAC, wrapping, payload reader/tests and digest definition examined; no selected-library security audit claimed.",
+      "primary_source_ids": [
+        "P17",
+        "P18",
+        "P20",
+        "P21",
+        "P22",
+        "P23"
+      ]
+    },
+    {
+      "family": "incremental",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Repository/snapshot dependencies, read errors, overwrite/interruption and full-data check cost examined.",
+      "primary_source_ids": [
+        "P24",
+        "P26"
+      ]
+    },
+    {
+      "family": "inventory",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Expected source inventory versus member/hash validity checked independently with opaque-payload definitions; neither proves usability.",
+      "primary_source_ids": [
+        "P40"
+      ]
+    },
+    {
+      "family": "migration",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "PRAGMA meanings/defaults and version/config-sensitive ALTER TABLE examined; actual future schema registry unknown.",
+      "primary_source_ids": [
+        "P04",
+        "P07"
+      ]
+    },
+    {
+      "family": "snapshot",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "SQLite snapshot API, fatal/retry/finish semantics and WAL sidecars checked; claims conditional on choosing SQLite.",
+      "primary_source_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P08"
+      ]
+    },
+    {
+      "family": "snapshot_history",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "WAL-reset versions/condition and fixed release checked; source chronology is conditional.",
+      "primary_source_ids": [
+        "P41"
+      ]
+    }
+  ],
+  "plan_dispositions": {
+    "coverage": "COMPLETE",
+    "clauses_assessed": 14,
+    "basis": "Exact export, marker, concurrent snapshot, staged extraction/preview, empty target, merge, references/migration, encryption/header, generic error, diagnosis, evidence dispositions, strategy comparisons, witnesses and execution clauses individually traced."
+  },
+  "critic_dispositions": {
+    "coverage": "COMPLETE",
+    "records": [
+      {
+        "id": "CR-01",
+        "assessment": "Final adds correct integrity/authorship qualifier; severity overstatement T-L01."
+      },
+      {
+        "id": "CR-02",
+        "assessment": "Visible header trust qualifier incorporated; parser recognition remains possible."
+      },
+      {
+        "id": "CR-03",
+        "assessment": "Old spec retained, current spec separately added; no silent version rebind."
+      },
+      {
+        "id": "CR-04",
+        "assessment": "VACUUM INTO completion/interruption witness incorporated as conditional."
+      },
+      {
+        "id": "CR-05",
+        "assessment": "Separate companion pages represented by additional IDs."
+      }
+    ]
+  },
+  "preservation": {
+    "coverage": "COMPLETE",
+    "meaning_groups": [
+      "coherent cross-resource capture",
+      "expected inventory and source omissions",
+      "publication and previous good backup",
+      "member integrity versus usability",
+      "stable IDs/content and reference remapping",
+      "empty restore and deliberate merge",
+      "staged supported migration and unknown newer schema",
+      "passphrase metadata/diagnostic/loss limits",
+      "packaging and full/incremental/direct/staged alternatives",
+      "owner choices and applicability",
+      "all proposed validation domains and execution limits"
+    ],
+    "material_supported_losses_found": false
+  },
+  "outside_required_planning_assessment": [
+    {
+      "family": "future_application_execution_and_user_data",
+      "coverage": "UNASSESSED",
+      "reason": "No future software or real data supplied; execution is not required for this proposal."
+    },
+    {
+      "family": "chosen_dependency_security_license_platform_integration",
+      "coverage": "UNASSESSED",
+      "reason": "No dependency is selected; inspected source license links retained, full integration qualification remains future work."
+    }
+  ],
+  "limits": [
+    "Technique-bearing paths/assignments disclose topology; reviewer was imperfectly blinded.",
+    "COMPLETE means every declared consequential claim/obligation was assessed; it is not universal discovery recall or proof of all software behavior.",
+    "No future application/schema/user-data execution, deployment, security audit or selected-platform durability test was required or performed.",
+    "Source docs and some issue pages are mutable; pinned code corroborates only the stated releases. Joplin release containing c27d542 and Unicode fix shipment remain unestablished where candidate says so.",
+    "Exact user data, chosen stores/container/crypto library, filesystem and semantic-usability policy remain honestly unresolved.",
+    "Private native identities, routing, detailed consumption counters and transcripts are not republished. No independent native-to-task transport proof, actual provider activity or billing observation is available."
+  ]
+}

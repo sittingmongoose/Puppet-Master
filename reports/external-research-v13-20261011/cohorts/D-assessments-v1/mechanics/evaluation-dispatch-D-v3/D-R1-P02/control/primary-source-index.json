@@ -1,0 +1,361 @@
+{
+  "schema": "er13.independent_primary_source_index.v1",
+  "arm_id": "D-R1-P02-control",
+  "lookup_owner": "independent_evaluation",
+  "lookup_shared_across_matched_arms": true,
+  "sources": [
+    {
+      "id": "E01",
+      "url": "https://www.w3.org/TR/png-3/",
+      "version_context": "Recommendation, 2025-06-24",
+      "locator": "4.3; 6.2; 11.3.2–11.3.5; 13.4",
+      "independent_observation": "Understood color signals have precedence; alpha is unassociated and linear opacity. eXIf, text, time and hidden pixel data require separate policy. No resize algorithm is mandated.",
+      "rights_notice": "© W3C 1996–2025; permissive document license: https://www.w3.org/copyright/document-license/",
+      "related_primary_urls": [],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E02",
+      "url": "https://archive.color.org/specifications/ICC.1-2022-05.pdf",
+      "version_context": "ICC.1:2022, profile 4.4",
+      "locator": "6; 8.3–8.5; 9.2.35",
+      "independent_observation": "Profile class and direction matter; source import does not imply output-transform support. Profiles can contain descriptive metadata. CMM, intent and sample compatibility remain application choices.",
+      "rights_notice": "© ICC 2022, all rights reserved; only compact independent notes retained.",
+      "related_primary_urls": [
+        "https://www.color.org/icc-1_specification/"
+      ],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E03",
+      "url": "https://www.cipa.jp/e/std/std-sec.html",
+      "version_context": "DC-008 Translation-2026; DC-007 Translation-2026 index",
+      "locator": "Exif and MPF cards/announcements",
+      "independent_observation": "Exif 3.1 date is confirmed. MPF announcement/card dates disagree. Index facts do not establish detailed serialization or decoder behavior.",
+      "rights_notice": "CIPA standards disclaimer; no standard corpus retained.",
+      "related_primary_urls": [],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E04",
+      "url": "https://www.itu.int/rec/dologin_pub.asp?id=T-REC-T.86-202402-I!!PDF-E&lang=e&type=items",
+      "version_context": "T.86 V2, approved 2024-02-13",
+      "locator": "6–7; Annex A, Table A.1",
+      "independent_observation": "APPn identifiers distinguish ICC, EXIF, XMP, MPF and previews. Cross-domain removal is recommended, not required; unknown-marker preservation concerns updates, not a privacy guarantee.",
+      "rights_notice": "© ITU 2024, all rights reserved; no PDF corpus retained.",
+      "related_primary_urls": [],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E05",
+      "url": "https://developers.google.com/speed/webp/docs/riff_container",
+      "version_context": "Rolling official container specification",
+      "locator": "ICCP; Metadata; Unknown Chunks; RIFF termination",
+      "independent_observation": "Absent ICCP has an sRGB SHOULD assumption. Extended RIFF can carry metadata, animation, duplicates and unknown chunks; writer/audit coverage is format-specific.",
+      "rights_notice": "Google Developers page licensing notice; only independent notes retained.",
+      "related_primary_urls": [],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "independent adjacent context"
+    },
+    {
+      "id": "E06",
+      "url": "https://aomediacodec.github.io/av1-avif/v1.2.0.html",
+      "version_context": "AVIF 1.2.0",
+      "locator": "2.2; 4.1; 4.2.2; item references",
+      "independent_observation": "AVIF has linked auxiliary/derived images and transform/color properties. Gain-map hiding is recommended. HEIF/MIAF dependencies remain relevant to implementation.",
+      "rights_notice": "Copyright 2025 AOM; licensing: http://aomedia.org/license/",
+      "related_primary_urls": [],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "independent adjacent context"
+    },
+    {
+      "id": "E07",
+      "url": "https://sharp.pixelplumbing.com/api-input/",
+      "version_context": "Rolling API; v0.35.5 release anchor",
+      "locator": "metadata()",
+      "independent_observation": "Header inspection avoids pixel decode; raw dimensions ignore EXIF orientation. New autoOrient dimensions are separately exposed.",
+      "rights_notice": "Sharp project documentation; Apache-2.0 implementation license.",
+      "related_primary_urls": [],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E08",
+      "url": "https://sharp.pixelplumbing.com/api-constructor/",
+      "version_context": "Rolling API; v0.35.5 anchor",
+      "locator": "failOn; limitInputPixels; channel limits",
+      "independent_observation": "Default failOn is warning, and invalid metadata aborts. Pixel guard trusts header dimensions and is not a whole-process memory bound.",
+      "rights_notice": "Sharp, Apache-2.0.",
+      "related_primary_urls": [],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E09",
+      "url": "https://sharp.pixelplumbing.com/api-operation/",
+      "version_context": "Rolling API; v0.35.5 anchor",
+      "locator": "autoOrient; rotate ordering",
+      "independent_observation": "autoOrient handles EXIF mirrors/rotations and removes EXIF Orientation; XMP orientation remains consumer-owned. Crop/rotation order needs a declared contract.",
+      "rights_notice": "Sharp, Apache-2.0.",
+      "related_primary_urls": [],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E10",
+      "url": "https://sharp.pixelplumbing.com/api-output/",
+      "version_context": "Rolling API; v0.35.5 anchor",
+      "locator": "keepMetadata; keepIccProfile; withIccProfile",
+      "independent_observation": "Default output converts to sRGB and strips metadata. Profile-only and all-metadata APIs differ. withIccProfile transforms and attaches a target profile.",
+      "rights_notice": "Sharp, Apache-2.0.",
+      "related_primary_urls": [],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E11",
+      "url": "https://www.libvips.org/API/8.17/ctor.Image.thumbnail.html",
+      "version_context": "API 8.17; not an installed-build claim",
+      "locator": "Description and optional arguments",
+      "independent_observation": "Shrink-on-load, block/Lanczos reduction and logical orientation can be integrated. Default first-frame, relative intent and permissive failure behavior are consequential; linear mode can lose JPEG shrink-on-load.",
+      "rights_notice": "libvips implementation: LGPL-2.0-or-later.",
+      "related_primary_urls": [],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E12",
+      "url": "https://www.libvips.org/API/current/developer-checklist.html",
+      "version_context": "Rolling current checklist",
+      "locator": "thumbnail; progressive images; sequential access",
+      "independent_observation": "Thumbnail automatically premultiplies. Progressive JPEG can defeat streaming. Example resource improvements are not component guarantees.",
+      "rights_notice": "libvips implementation: LGPL-2.0-or-later.",
+      "related_primary_urls": [],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E13",
+      "url": "https://pillow.readthedocs.io/en/stable/reference/ImageOps.html",
+      "version_context": "Pillow 12.3.0 docs",
+      "locator": "exif_transpose; contain/cover/fit; linked source",
+      "independent_observation": "EXIF transpose copies by default and removes active orientation after a nonidentity transform; source code also cleans selected XMP forms. Geometry APIs differ.",
+      "rights_notice": "Pillow MIT-CMU; PIL/Pillow copyright notices retained by reference.",
+      "related_primary_urls": [
+        "https://pillow.readthedocs.io/en/stable/_modules/PIL/ImageOps.html"
+      ],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E14",
+      "url": "https://pillow.readthedocs.io/en/stable/reference/ImageCms.html",
+      "version_context": "Pillow 12.3.0; LittleCMS interface",
+      "locator": "profileToProfile; transform building; flags",
+      "independent_observation": "Default intent is perceptual. Modes, profiles and transform direction constrain support. Reusable transforms avoid repeated table construction; no installed behavior was tested.",
+      "rights_notice": "Pillow MIT-CMU.",
+      "related_primary_urls": [],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E15",
+      "url": "https://pillow.readthedocs.io/en/stable/handbook/security.html",
+      "version_context": "Pillow 12.3.0",
+      "locator": "I-1; D-1–D-3; Recommendations",
+      "independent_observation": "Pixel warnings/errors, text/parser expansion, CPU-heavy legal images and external process ceilings are distinct. ICC can contribute disclosure; preserving arbitrary source profiles is unsafe as a blanket policy.",
+      "rights_notice": "Pillow MIT-CMU.",
+      "related_primary_urls": [
+        "https://pillow.readthedocs.io/en/stable/reference/Image.html"
+      ],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E16",
+      "url": "https://imagemagick.org/command-line-options/",
+      "version_context": "Rolling docs; 7.1.2-33 changelog anchor",
+      "locator": "auto-orient; profile; strip; limit",
+      "independent_observation": "Profile/operator order matters. Strip can remove color signaling. Memory/area pressure can spill to disk; disk, dimensions and time require independent limits.",
+      "rights_notice": "ImageMagick License: https://imagemagick.org/license/",
+      "related_primary_urls": [
+        "https://imagemagick.org/security-policy/"
+      ],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E17",
+      "url": "https://docs.rs/image/0.25.10/image/struct.Limits.html",
+      "version_context": "image 0.25.10",
+      "locator": "strict limits; max_alloc; decoder/orientation definitions",
+      "independent_observation": "Dimensions are strict; allocation cap is non-strict and decoder-dependent. Metadata defaults do not ensure concrete format support. Orientation reset prevents a second application.",
+      "rights_notice": "MIT OR Apache-2.0, confirmed in versioned Cargo.toml.",
+      "related_primary_urls": [
+        "https://docs.rs/image/0.25.10/image/trait.ImageDecoder.html",
+        "https://docs.rs/image/0.25.10/image/metadata/enum.Orientation.html"
+      ],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "independent adjacent context"
+    },
+    {
+      "id": "E18",
+      "url": "https://exiftool.org/faq.html",
+      "version_context": "Maintainer FAQ, retrieved 2026-10-12",
+      "locator": "duplicates/GPS; FAQ 32",
+      "independent_observation": "Ordinary listings can suppress duplicates; GPS can occur beyond EXIF. Deletion can remove color interpretation. JPEG-specific examples do not prove universal sanitization.",
+      "rights_notice": "ExifTool documentation, Phil Harvey; only compact independent notes.",
+      "related_primary_urls": [],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E19",
+      "url": "https://github.com/libvips/libvips/issues/1523",
+      "version_context": "8.8.4/8.9.0 report; 8.9.1 fix context",
+      "locator": "maintainer/caller discussion; commit/test",
+      "independent_observation": "Caller routing and thumbnail orientation interact. Fix takes a private copy before metadata changes and adds an orientation regression. Full-raster rotation is not universally necessary.",
+      "rights_notice": "libvips code LGPL-2.0-or-later; issue comments attributed by links.",
+      "related_primary_urls": [
+        "https://github.com/libvips/libvips/commit/34fcd1fe69e3ea48e8e10cfa5bae8b388a49ffb4"
+      ],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E20",
+      "url": "https://github.com/python-pillow/Pillow/pull/8556",
+      "version_context": "Merged 2025-03-29, 93cdfeb48879064314af70faf98726e09fb06ab0",
+      "locator": "TiffDecode.c; Tests/test_file_libtiff.py; issue 8554",
+      "independent_observation": "Fix sets libtiff orientation to TOPLEFT so Pillow owns transpose. Added test uses old-style JPEG TIFF with mirror orientation. Tag cleanup alone is not the new fix.",
+      "rights_notice": "Pillow MIT-CMU.",
+      "related_primary_urls": [
+        "https://github.com/python-pillow/Pillow/issues/8554"
+      ],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E21",
+      "url": "https://github.com/python-pillow/Pillow/issues/5580",
+      "version_context": "8.3.0 regression; 8.3.1 release",
+      "locator": "issue and maintainer release comment",
+      "independent_observation": "Alternate EXIF representation produced KeyError. Maintainer confirms released repair; this does not test the selected future build.",
+      "rights_notice": "Pillow MIT-CMU.",
+      "related_primary_urls": [
+        "https://github.com/python-pillow/Pillow/pull/5584"
+      ],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E22",
+      "url": "https://github.com/ImageMagick/ImageMagick/issues/7147",
+      "version_context": "7.1.1-29 report; March 2024 patch/revert",
+      "locator": "reporter and maintainer comments; 9892ad7 diff",
+      "independent_observation": "Reporter describes TIFF compression-specific regressions; maintainer confirms reverting the incorrect patch. Closure is not independent validation of present builds.",
+      "rights_notice": "ImageMagick License.",
+      "related_primary_urls": [
+        "https://github.com/ImageMagick/ImageMagick/commit/9892ad7a778ec31abe118585aaafb1a42bd5ff01"
+      ],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E23",
+      "url": "https://github.com/libvips/libvips/issues/4343",
+      "version_context": "April 2025 diagnosis and merged repair",
+      "locator": "Apr 12–16 comments; PR 4467; versioned colour.c",
+      "independent_observation": "Later context identifies one-way profile export and alpha-range scaling, then reports a merged repair. Finite historical evidence contradicts describing all resolution as unknown.",
+      "rights_notice": "libvips LGPL-2.0-or-later.",
+      "related_primary_urls": [
+        "https://github.com/libvips/libvips/pull/4467",
+        "https://github.com/libvips/libvips/commit/a7e8f464e3dec9b1efcc0c81f2978b1e0646b2fb",
+        "https://raw.githubusercontent.com/libvips/libvips/v8.18.7/libvips/colour/colour.c"
+      ],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E24",
+      "url": "https://github.com/libvips/libvips/issues/5195",
+      "version_context": "8.18.5 report; master fix 2026-10-02",
+      "locator": "reproducer; PR 5235 diff; release boundary",
+      "independent_observation": "Buffer/source paths omitted fail_on forwarding. PR adds forwarding, including a file fallback, after 8.18.7. A master merge does not prove downstream binary inclusion.",
+      "rights_notice": "libvips LGPL-2.0-or-later.",
+      "related_primary_urls": [
+        "https://github.com/libvips/libvips/pull/5235",
+        "https://github.com/libvips/libvips/releases/tag/v8.18.7"
+      ],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "independent adjacent context"
+    },
+    {
+      "id": "E25",
+      "url": "https://github.com/libvips/libvips/issues/3159",
+      "version_context": "CMYK/LAB historical issue",
+      "locator": "maintainer comments and conversion-route discussion",
+      "independent_observation": "ICC-aware conversion and interpretation-only colourspace conversion differ. Historical profile/PCS bugs and later fixes do not establish universal present behavior.",
+      "rights_notice": "libvips LGPL-2.0-or-later.",
+      "related_primary_urls": [],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "independent adjacent context"
+    },
+    {
+      "id": "E26",
+      "url": "https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html",
+      "version_context": "POSIX.1-2024 Issue 8",
+      "locator": "DESCRIPTION; EXDEV; rationale",
+      "independent_observation": "Rename is atomic within its applicable filesystem semantics; replacement is not a no-clobber primitive, and atomic visibility is not durability. Direct HTTP succeeded after web-tool 403.",
+      "rights_notice": "The Open Group/IEEE specification copyright; no page corpus retained.",
+      "related_primary_urls": [],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E27",
+      "url": "https://www.w3.org/TR/css-color-5/",
+      "version_context": "Working Draft, 2026-09-13",
+      "locator": "3.5; document status",
+      "independent_observation": "Non-unity alpha mixing uses premultiply/interpolate/unpremultiply. This is a draft color-mixing context, not image-resize conformance.",
+      "rights_notice": "© W3C 2026; permissive document license.",
+      "related_primary_urls": [],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    },
+    {
+      "id": "E28",
+      "url": "https://github.com/lovell/sharp/releases/tag/v0.35.5",
+      "version_context": "51a990f, 2026-09-27",
+      "locator": "release notes and dependency link",
+      "independent_observation": "Release/dependency identities are supported; gain-map and operation hardening notes reinforce version sensitivity without proving an installed build.",
+      "rights_notice": "Sharp Apache-2.0.",
+      "related_primary_urls": [
+        "https://github.com/lovell/sharp-libvips/releases/tag/v1.3.4",
+        "https://pillow.readthedocs.io/en/stable/releasenotes/12.3.0.html",
+        "https://imagemagick.org/changelog/"
+      ],
+      "coverage": "COMPLETE",
+      "applicability_to_this_arm": "core or cited lineage"
+    }
+  ],
+  "context_only_shared_sources": [
+    "E05",
+    "E06",
+    "E17",
+    "E24",
+    "E25"
+  ],
+  "retrieval_window_utc": "2026-10-12T04:44:23Z/2026-10-12T04:58:15.833162+00:00",
+  "execution": "Primary docs/code/diffs/tests read only; no image pipeline or public fixture executed.",
+  "limitations": [
+    "Rolling docs do not prove installed build behavior.",
+    "No full standard corpus, raw native transcript or account identity published.",
+    "Full Exif PDF extraction unavailable; detailed normative tag schema not treated as established."
+  ],
+  "public_notices": "Rights notices and primary license links preserved; no substantial source corpus copied."
+}

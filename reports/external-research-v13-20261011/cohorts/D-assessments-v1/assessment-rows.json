@@ -1,0 +1,2404 @@
+{
+  "scope": "D-v3 original verification entries; partial science and complete-final grades stay distinct; no sixteen complete-quality claim",
+  "records": [
+    {
+      "arm_id": "D-R2-P03-control",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/control/assessment.json",
+      "assessment_sha256": "4e518d2e3532b8c483df07a4468ec5f05a7b54be58d9b56a64fa961abacdaa9b",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/control/assessment.md",
+      "authored_assessment_md_sha256": "e5615de93ca5a1e477dfb9148ff38672aed663b5b089371802b29250a48bb4e2",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/control/manifest.json",
+      "manifest_sha256": "d19f0194d12e9ee7c9fad3cac5f97cc3da16c0df09ff3cf98223d83fe8f6b1fa",
+      "source_judgment": "UNASSESSED",
+      "source_assessment": {
+        "complete_final_judgment": "UNASSESSED",
+        "available_partial_science_judgment": "UNASSESSED_NO_SCIENCE",
+        "available_partial_coverage": "UNASSESSED",
+        "no_fabricated_comparable_complete_grade": true,
+        "finite_scope": "All available frozen authored science read; bounded independent public context and omissions recorded. No final means no final source grade.",
+        "source_pass_status": "NOT_ASSESSED_MISSING_FINAL"
+      },
+      "coverage": {
+        "artifact": "coverage.json",
+        "complete_final_axes": [
+          {
+            "axis": 1,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 2,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 3,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 4,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 5,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 6,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          }
+        ],
+        "available_partial_science_axes": [
+          {
+            "axis": 1,
+            "coverage": "UNASSESSED"
+          },
+          {
+            "axis": 2,
+            "coverage": "UNASSESSED"
+          },
+          {
+            "axis": 3,
+            "coverage": "UNASSESSED"
+          },
+          {
+            "axis": 4,
+            "coverage": "UNASSESSED"
+          },
+          {
+            "axis": 5,
+            "coverage": "UNASSESSED"
+          },
+          {
+            "axis": 6,
+            "coverage": "UNASSESSED"
+          }
+        ],
+        "obligation_and_family_details": "coverage.json; every obligation, negative constraint and consequential family explicitly classified",
+        "complete_final_preservation": "UNASSESSED"
+      },
+      "primary_source_index_sha256": "f6d7645e318786e62a38a57ebab6b7f41bee6e2d0b1eef5d297703a7de604c13",
+      "primary_sources": 7,
+      "seven_dimensions_present": true,
+      "manifest_frozen_at": "2026-10-12T04:49:53.729824+00:00"
+    },
+    {
+      "arm_id": "D-R2-P03-treatment",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/treatment/assessment.json",
+      "assessment_sha256": "ce950af608ddd0870a934c582ccc8651c00c633c7d3c5c98e1a3cab61d29c18c",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/treatment/assessment.md",
+      "authored_assessment_md_sha256": "4632f24c47b1c70263f2bf5f8574556bfcc8f7525f53880b7a8cd3a3ec375596",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/treatment/manifest.json",
+      "manifest_sha256": "27c23761bf5b2cd1497db144b8a41f94ce683a4f6853e8505ad4113db71684a8",
+      "source_judgment": "UNASSESSED",
+      "source_assessment": {
+        "complete_final_judgment": "UNASSESSED",
+        "available_partial_science_judgment": "MATERIAL_RESEARCH_OMISSIONS_FOUND",
+        "available_partial_coverage": "PARTIAL",
+        "no_fabricated_comparable_complete_grade": true,
+        "finite_scope": "All available frozen authored science read; bounded independent public context and omissions recorded. No final means no final source grade.",
+        "source_pass_status": "NOT_ASSESSED_MISSING_FINAL"
+      },
+      "coverage": {
+        "artifact": "coverage.json",
+        "complete_final_axes": [
+          {
+            "axis": 1,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 2,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 3,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 4,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 5,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 6,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          }
+        ],
+        "available_partial_science_axes": [
+          {
+            "axis": 1,
+            "coverage": "PARTIAL"
+          },
+          {
+            "axis": 2,
+            "coverage": "PARTIAL"
+          },
+          {
+            "axis": 3,
+            "coverage": "PARTIAL"
+          },
+          {
+            "axis": 4,
+            "coverage": "PARTIAL"
+          },
+          {
+            "axis": 5,
+            "coverage": "UNASSESSED"
+          },
+          {
+            "axis": 6,
+            "coverage": "PARTIAL"
+          }
+        ],
+        "obligation_and_family_details": "coverage.json; every obligation, negative constraint and consequential family explicitly classified",
+        "complete_final_preservation": "UNASSESSED"
+      },
+      "primary_source_index_sha256": "0a9177e3a72fe06cdce94f28ccbb33b30370cb9e657e31aa6bc0bf87775c07a6",
+      "primary_sources": 43,
+      "seven_dimensions_present": true,
+      "manifest_frozen_at": "2026-10-12T04:49:53.731533+00:00"
+    },
+    {
+      "arm_id": "D-R1-P02-control",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/assessment.json",
+      "assessment_sha256": "0c0a629763f0d44a4e48ab4166eca39169773730480d553d30296cab8932850e",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/assessment.md",
+      "authored_assessment_md_sha256": "cab9a0c6497450a709f1bd6fdeffd6a81f5d0266c55f078f5d1b96759ffd4cdd",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/manifest.json",
+      "manifest_sha256": "9cbbeea6bf35c4f9694dcb1161d7e552d17314dd5a7946f838f83732d3b55fca",
+      "source_judgment": "FAIL",
+      "source_assessment": {
+        "judgment": "FAIL",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [
+          "D01"
+        ],
+        "finite_not_universal": true,
+        "rationale": "Material unsupported historical resolution and missed fixing mechanism."
+      },
+      "source_dimension_field": "source_assessment",
+      "coverage": {
+        "axes": {
+          "1": "COMPLETE",
+          "2": "COMPLETE",
+          "3": "COMPLETE",
+          "4": "COMPLETE",
+          "5": "COMPLETE",
+          "6": "COMPLETE"
+        },
+        "detail_file": "coverage.json"
+      },
+      "primary_source_index_sha256": "503b06377c8f4fb2408238a658331a58daab6d6b017eed3e1cdb277a8de07d97",
+      "manifest_frozen_at": "2026-10-12T04:58:15.834853+00:00"
+    },
+    {
+      "arm_id": "D-R1-P02-treatment",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/assessment.json",
+      "assessment_sha256": "d869a811eaf1d61fd269a408a3e40be81055f5a3314c7c8b86f9f4255ed35966",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/assessment.md",
+      "authored_assessment_md_sha256": "ceaea0f7f86a608f08acce7c03e0b01ff36777a4667dd2bc0552ed9cce3190dc",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/manifest.json",
+      "manifest_sha256": "a4e453f5a2797666b76c8482052f5009e25dde40b0b1373fe9f9fafa4f37d19f",
+      "source_judgment": "PASS",
+      "source_assessment": {
+        "judgment": "PASS",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [],
+        "finite_not_universal": true,
+        "rationale": "No material unsupported final claim, required omission, false rejection or supported-meaning loss found in the complete assessed planning proposal."
+      },
+      "source_dimension_field": "source_assessment",
+      "coverage": {
+        "axes": {
+          "1": "COMPLETE",
+          "2": "COMPLETE",
+          "3": "COMPLETE",
+          "4": "COMPLETE",
+          "5": "COMPLETE",
+          "6": "COMPLETE"
+        },
+        "detail_file": "coverage.json"
+      },
+      "primary_source_index_sha256": "5b9f9044c06b23f23f268eb34347145da2d2b55ac4b0fae7840a7692f4e56d9b",
+      "manifest_frozen_at": "2026-10-12T04:58:15.844567+00:00"
+    },
+    {
+      "arm_id": "D-R1-P03-control",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/assessment.json",
+      "assessment_sha256": "e9db49431db742d30ca26fd4e16afddfd8e07af805389daba53dd813eeac0668",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/assessment.md",
+      "authored_assessment_md_sha256": "eb30cac4ec47792a6b5780e2d2b5f22883c2c7f648a041626415adb75b6e2829",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/manifest.json",
+      "manifest_sha256": "52b3da0f68016829247d3ae0ff2d7f04524fdabbca325c8b9abcea2c48807deb",
+      "source_judgment": {
+        "status": "FAIL",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [
+          "C-D01"
+        ],
+        "finite_assessment": true,
+        "universal_correctness_claim": false,
+        "basis": "Material causal repair-history error; otherwise coherent proposal."
+      },
+      "source_assessment": {
+        "status": "FAIL",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [
+          "C-D01"
+        ],
+        "finite_assessment": true,
+        "universal_correctness_claim": false,
+        "basis": "Material causal repair-history error; otherwise coherent proposal."
+      },
+      "source_dimension_field": "source_judgment (authored structured source dimension; original unchanged)",
+      "coverage": {
+        "axes": [
+          {
+            "id": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "All five obligations and three negatives addressed; planning-level unresolved choices retained."
+          },
+          {
+            "id": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "basis": "Consequential repair-history account C-D01 conflicts with final code and rejected revision context."
+          },
+          {
+            "id": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "basis": "Useful breadth present, but one purported implemented repair is incorrectly understood; C-D01."
+          },
+          {
+            "id": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Every exact provisional clause and all three critic findings have defensible dispositions; no unsafe original assumption restored."
+          },
+          {
+            "id": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Supported investigator meaning, alternatives, negative constraints and proposed-status boundaries retained. Wrong historical premise is a source error, not supported-meaning loss."
+          },
+          {
+            "id": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Domain-specific proposed faults have outcome oracles; no product checks claimed executed. Deployment is not required."
+          }
+        ],
+        "obligations": "COMPLETE",
+        "source_families": [
+          {
+            "family": "archive",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Python editions, implementation and bad-CRC tests checked; duplicate/path/compression duties examined.",
+            "primary_source_ids": [
+              "P09",
+              "P11",
+              "P12"
+            ]
+          },
+          {
+            "family": "atomicity",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Database-versus-files and rename-versus-durability boundaries checked; exact target filesystem remains open.",
+            "primary_source_ids": [
+              "P05"
+            ]
+          },
+          {
+            "family": "crypto",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Pinned/current specs, header MAC, wrapping, payload reader/tests and digest definition examined; no selected-library security audit claimed.",
+            "primary_source_ids": [
+              "P17",
+              "P18",
+              "P19",
+              "P20",
+              "P21",
+              "P22"
+            ]
+          },
+          {
+            "family": "identity_history",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "basis": "Import/link definitions, incident versions, narrow clipboard fix, merged caller/test, withdrawn helper proposal and review chronology inspected.",
+            "primary_source_ids": [
+              "P29",
+              "P30",
+              "P31",
+              "P32",
+              "P33",
+              "P34",
+              "P35",
+              "P36",
+              "P37",
+              "P38",
+              "P39"
+            ]
+          },
+          {
+            "family": "incremental",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Repository/snapshot dependencies, read errors, overwrite/interruption and full-data check cost examined.",
+            "primary_source_ids": [
+              "P24",
+              "P25",
+              "P26",
+              "P27"
+            ]
+          },
+          {
+            "family": "incremental_history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Historical SIGINT report and later comment distinguished from current implemented feature.",
+            "primary_source_ids": [
+              "P28"
+            ]
+          },
+          {
+            "family": "inventory",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Expected source inventory versus member/hash validity checked independently with opaque-payload definitions; neither proves usability.",
+            "primary_source_ids": [
+              "P40"
+            ]
+          },
+          {
+            "family": "migration",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "PRAGMA meanings/defaults and version/config-sensitive ALTER TABLE examined; actual future schema registry unknown.",
+            "primary_source_ids": [
+              "P04",
+              "P06"
+            ]
+          },
+          {
+            "family": "snapshot",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "SQLite snapshot API, fatal/retry/finish semantics and WAL sidecars checked; claims conditional on choosing SQLite.",
+            "primary_source_ids": [
+              "P01",
+              "P02",
+              "P03"
+            ]
+          },
+          {
+            "family": "snapshot_history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "WAL-reset versions/condition and fixed release checked; source chronology is conditional.",
+            "primary_source_ids": [
+              "P41"
+            ]
+          }
+        ],
+        "full_details": "coverage.json"
+      },
+      "primary_source_index_sha256": "718a292ad76a5ba9af7bc852a1405d248cf951cf51204e870a7062a1474fb732",
+      "manifest_frozen_at": "2026-10-12T04:58:59.703475+00:00"
+    },
+    {
+      "arm_id": "D-R1-P03-treatment",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/treatment/assessment.json",
+      "assessment_sha256": "6b78e1dcc354837957a31511fbaa731a46c3610b24bd2730f5d02e54dc901455",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/treatment/assessment.md",
+      "authored_assessment_md_sha256": "9140e98af1a3aab6c956f7c69e9477a83cdae06b9683930c2ab83a9a030e6507",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/treatment/manifest.json",
+      "manifest_sha256": "7ce62a002e8dac4c5361ef34819f5cb0a413110453dd8b33bb107cfc996c51c2",
+      "source_judgment": {
+        "status": "PASS",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [],
+        "finite_assessment": true,
+        "universal_correctness_claim": false,
+        "basis": "No material unsupported claim, required omission, false rejection or supported-meaning loss found under declared complete planning coverage."
+      },
+      "source_assessment": {
+        "status": "PASS",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [],
+        "finite_assessment": true,
+        "universal_correctness_claim": false,
+        "basis": "No material unsupported claim, required omission, false rejection or supported-meaning loss found under declared complete planning coverage."
+      },
+      "source_dimension_field": "source_judgment (authored structured source dimension; original unchanged)",
+      "coverage": {
+        "axes": [
+          {
+            "id": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "All five obligations and three negatives addressed with coherent staging and explicit choices."
+          },
+          {
+            "id": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Consequential mechanisms, definitions, versions, exceptions and repair conditions verified under finite scope."
+          },
+          {
+            "id": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "WAL-reset qualification, ZIP symlink-order repair, authenticated final chunks, VACUUM interruption and repository check costs are useful supported discoveries."
+          },
+          {
+            "id": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "All plan clauses and CR-01 through CR-05 accounted for; severity overstatement recorded T-L01 without a false final rejection."
+          },
+          {
+            "id": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Supported capture, inventory, IDs/references, alternatives, owner choices and proposed validation meanings retained; discovery locator corrected."
+          },
+          {
+            "id": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Specific proposed domains/oracles cover interruption, damage, migration, merge, secrets and usability; no invented execution."
+          }
+        ],
+        "obligations": "COMPLETE",
+        "source_families": [
+          {
+            "family": "archive",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Python editions, implementation and bad-CRC tests checked; duplicate/path/compression duties examined.",
+            "primary_source_ids": [
+              "P10",
+              "P11",
+              "P12"
+            ]
+          },
+          {
+            "family": "archive_history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Advisory, fixed extractor/caller and symlink-order regression plus release examined.",
+            "primary_source_ids": [
+              "P13",
+              "P14",
+              "P15"
+            ]
+          },
+          {
+            "family": "atomicity",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Database-versus-files and rename-versus-durability boundaries checked; exact target filesystem remains open.",
+            "primary_source_ids": [
+              "P16"
+            ]
+          },
+          {
+            "family": "crypto",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Pinned/current specs, header MAC, wrapping, payload reader/tests and digest definition examined; no selected-library security audit claimed.",
+            "primary_source_ids": [
+              "P17",
+              "P18",
+              "P20",
+              "P21",
+              "P22",
+              "P23"
+            ]
+          },
+          {
+            "family": "incremental",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Repository/snapshot dependencies, read errors, overwrite/interruption and full-data check cost examined.",
+            "primary_source_ids": [
+              "P24",
+              "P26"
+            ]
+          },
+          {
+            "family": "inventory",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Expected source inventory versus member/hash validity checked independently with opaque-payload definitions; neither proves usability.",
+            "primary_source_ids": [
+              "P40"
+            ]
+          },
+          {
+            "family": "migration",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "PRAGMA meanings/defaults and version/config-sensitive ALTER TABLE examined; actual future schema registry unknown.",
+            "primary_source_ids": [
+              "P04",
+              "P07"
+            ]
+          },
+          {
+            "family": "snapshot",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "SQLite snapshot API, fatal/retry/finish semantics and WAL sidecars checked; claims conditional on choosing SQLite.",
+            "primary_source_ids": [
+              "P01",
+              "P02",
+              "P03",
+              "P08"
+            ]
+          },
+          {
+            "family": "snapshot_history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "WAL-reset versions/condition and fixed release checked; source chronology is conditional.",
+            "primary_source_ids": [
+              "P41"
+            ]
+          }
+        ],
+        "full_details": "coverage.json"
+      },
+      "primary_source_index_sha256": "e6c85fb60bf097860c89ec486ece0fe260939552f81217539e95de35e7eebdcb",
+      "manifest_frozen_at": "2026-10-12T04:58:59.705472+00:00"
+    },
+    {
+      "arm_id": "D-R2-P01-control",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/control/assessment.json",
+      "assessment_sha256": "456278178c5492b87870926a27a64f0f1ce762b315945d0c4f85e206169ae33d",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/control/assessment.md",
+      "authored_assessment_md_sha256": "7881106e900edc3381216651fc04cdc62abb03115b593e47e6bc2182e4472e8d",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/control/manifest.json",
+      "manifest_sha256": "867bc987ab4878e4fd74c0013603016c8da549ba29c113f8a06544e19be4fd02",
+      "source_judgment": {
+        "judgment": "PASS",
+        "assessment_scope": "complete frozen final package",
+        "coverage": "COMPLETE",
+        "rationale": "No material unsupported consequential claim, required omission, false rejection or supported-meaning loss was found under this finite declared assessment. Two source-index navigation defects are nonmaterial because the complete carried JSON identities and final substance remain assessable.",
+        "universal_correctness": false
+      },
+      "source_assessment": {
+        "judgment": "PASS",
+        "assessment_scope": "complete frozen final package",
+        "coverage": "COMPLETE",
+        "rationale": "No material unsupported consequential claim, required omission, false rejection or supported-meaning loss was found under this finite declared assessment. Two source-index navigation defects are nonmaterial because the complete carried JSON identities and final substance remain assessable.",
+        "universal_correctness": false
+      },
+      "coverage": {
+        "overall": "COMPLETE",
+        "axes": [
+          {
+            "axis": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "finding": "All O01–O05 and N01–N03 assessed in the complete final. Edition identity, current visibility, changed headings, removed passages, index states, owners and alternatives are substantively addressed."
+          },
+          {
+            "axis": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "finding": "All consequential declared source families checked against primary definitions, versions, exceptions and relevant code/callers/test/history. Vendor controls remain scoped examples rather than integration guarantees."
+          },
+          {
+            "axis": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "finding": "Useful discoveries include filtered ANN underfill and bounded iterative modes, rank-only fusion, analyzer/role hazards, representation-bound selectors and conditional atomic publication. No mandatory product winner or universal recall is inferred."
+          },
+          {
+            "axis": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "finding": "All significant plan clauses and all four critic findings independently assessed. The final accepts the supported role detail and upgrade follow-up; keeps revocation semantics honestly unresolved; clarifies authorization before tombstones. No false substantive rejection found."
+          },
+          {
+            "axis": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "finding": "Discovery-to-draft-to-final trace covers retrieval, locator alternatives, privacy, authorization/cache uncertainty, archived access, rebuild state, failure history and owner boundaries. Critic corrections are retained. No material supported-meaning loss found."
+          },
+          {
+            "axis": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "finding": "Proposed synthetic domains and oracles cover edits, repeated text, ranking conflicts, revoked memberships/caches, archived access, policy failure and rebuild faults. No corpus or integration tests are claimed executed; read-only research/custody checks are distinct."
+          }
+        ],
+        "obligations": [
+          {
+            "id": "O01",
+            "name": "Useful retrieval and durable passage references across changing editions",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_AT_PLANNING_LEVEL",
+            "finding": "Final retrieval and identity sections keep index chunks separate from pinned editions/passages; representation hashes/versions supplement stable IDs."
+          },
+          {
+            "id": "O02",
+            "name": "Cited edition versus newer policy and removed-passage fallback",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_AT_PLANNING_LEVEL",
+            "finding": "Resolver distinguishes original and current editions, authorizes tombstones and offers a related passage separately without equivalence."
+          },
+          {
+            "id": "O03",
+            "name": "No restricted title/snippet/cache disclosure after permission changes",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_AT_PLANNING_LEVEL",
+            "finding": "Current per-edition checks precede metadata/content; stale identity/ACL information fails closed; cache/open/copy and side channels are included. Revocation commit point/races are explicit owner inputs."
+          },
+          {
+            "id": "O04",
+            "name": "Defined freshness/rebuild/prior-edition states and owner boundaries",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_AT_PLANNING_LEVEL",
+            "finding": "Queued/extracting/segmenting/optional embedding/indexing/validating/current/stale/failed/withdrawn states separate source and ACL generations; six owner roles are identified."
+          },
+          {
+            "id": "O05",
+            "name": "Lexical/semantic/hybrid and passage-identity alternatives with applicability",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_AT_PLANNING_LEVEL",
+            "finding": "Conditional lexical, dense and fusion choices plus stable blocks, immutable snapshot/digest, quote and position locators have meaningful trade-offs."
+          },
+          {
+            "id": "N01",
+            "name": "No search-rank inference of policy authority",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_AT_PLANNING_LEVEL",
+            "finding": "Status/effective dates come from content/policy owners; rank is neither authority, currency nor access."
+          },
+          {
+            "id": "N02",
+            "name": "No live-URL-only immutable citation or private-document upload",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_AT_PLANNING_LEVEL",
+            "finding": "Live URL remains only a navigation hint; protected quote fields are kept out of exposed URLs; local embeddings or deferral preserve the private-data boundary."
+          },
+          {
+            "id": "N03",
+            "name": "No promise to revoke already-exported copies",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_AT_PLANNING_LEVEL",
+            "finding": "Exported work-note copies are explicitly outside revocation promises."
+          }
+        ],
+        "plan_dispositions": [
+          {
+            "id": "chunk_identity",
+            "coverage": "COMPLETE",
+            "finding": "Reject ordinal sufficiency; retain edition-bound block IDs or snapshot/representation-bound locator alternatives."
+          },
+          {
+            "id": "citations",
+            "coverage": "COMPLETE",
+            "finding": "Reject live URL sufficiency; bind the displayed edition/passage and reauthorize resolution."
+          },
+          {
+            "id": "permissions_and_caches",
+            "coverage": "COMPLETE",
+            "finding": "Reject reindex-only labels and still-servable snippets; establish fresh authorization before disclosure."
+          },
+          {
+            "id": "ranking",
+            "coverage": "COMPLETE",
+            "finding": "Retain lexical+dense fusion as evaluated hypothesis; relevance never defines authority."
+          },
+          {
+            "id": "edition_replacement",
+            "coverage": "COMPLETE",
+            "finding": "Condition current default search and historical retention on policy status, current exact-edition access and explicit state."
+          },
+          {
+            "id": "missing_passage",
+            "coverage": "COMPLETE",
+            "finding": "Reject silent related-heading fulfillment; retain original or authorized unavailable outcome with separate navigation."
+          },
+          {
+            "id": "indexing_and_validation",
+            "coverage": "COMPLETE",
+            "finding": "Add source/index/ACL generations and failure states; tests remain proposed."
+          }
+        ],
+        "source_family_scope": "Every consequential source family present in the complete final and preserved maps, as bounded in primary-source-index.json; no claim to every possible source/history.",
+        "unassessed_consequential_remainder": [],
+        "source_families": [
+          {
+            "id": "P01",
+            "family": "PostgreSQL lexical retrieval / GIN",
+            "coverage": "COMPLETE",
+            "scope": "Consequential final/preserved claims and conditions"
+          },
+          {
+            "id": "P02",
+            "family": "PostgreSQL row security",
+            "coverage": "COMPLETE",
+            "scope": "Consequential final/preserved claims and conditions"
+          },
+          {
+            "id": "P03",
+            "family": "pgvector filtered retrieval and implementation",
+            "coverage": "COMPLETE",
+            "scope": "Consequential final/preserved claims and conditions"
+          },
+          {
+            "id": "P04",
+            "family": "pgvector release and issue history",
+            "coverage": "COMPLETE",
+            "scope": "Consequential final/preserved claims and conditions"
+          },
+          {
+            "id": "P05",
+            "family": "OpenSearch lexical / semantic / hybrid fusion",
+            "coverage": "COMPLETE",
+            "scope": "Consequential final/preserved claims and conditions"
+          },
+          {
+            "id": "P06",
+            "family": "OpenSearch DLS / role composition / exact identity mapping",
+            "coverage": "COMPLETE",
+            "scope": "Consequential final/preserved claims and conditions"
+          },
+          {
+            "id": "P07",
+            "family": "OpenSearch vector filtering / engine alternatives",
+            "coverage": "COMPLETE",
+            "scope": "Consequential final/preserved claims and conditions"
+          },
+          {
+            "id": "P08",
+            "family": "OpenSearch index publication",
+            "coverage": "COMPLETE",
+            "scope": "Consequential final/preserved claims and conditions"
+          },
+          {
+            "id": "P09",
+            "family": "W3C passage selectors / representation state",
+            "coverage": "COMPLETE",
+            "scope": "Consequential final/preserved claims and conditions"
+          },
+          {
+            "id": "P10",
+            "family": "Elastic DLS / cache boundaries",
+            "coverage": "COMPLETE",
+            "scope": "Consequential final/preserved claims and conditions"
+          },
+          {
+            "id": "P11",
+            "family": "License and deployment applicability",
+            "coverage": "COMPLETE",
+            "scope": "Consequential final/preserved claims and conditions"
+          }
+        ]
+      },
+      "primary_source_index_sha256": "195580618cab5f6f3de8ebcce70ca6289397201abcaac902ef964cd62d18d5dd",
+      "manifest_frozen_at": "2026-10-12T05:05:24.906317+00:00",
+      "all_seven_dimensions_preserved": true,
+      "source_dimension_field": "source_judgment (authored structured source assessment; no original edit)"
+    },
+    {
+      "arm_id": "D-R2-P01-treatment",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/treatment/assessment.json",
+      "assessment_sha256": "93189b08a859351ff62da8cc6ab875e26ec6a99e1d9f743262f8fb08e97cce5c",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/treatment/assessment.md",
+      "authored_assessment_md_sha256": "c61eb1936ec2592c6ff870d59e961ef2bf5e13bf4de17c78a81458246442071e",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/treatment/manifest.json",
+      "manifest_sha256": "d2253114e67edca36e319651571e7276770565cdd70aba044d7ddeb16f78a09f",
+      "source_judgment": {
+        "judgment": "UNASSESSED",
+        "assessment_scope": "complete final missing",
+        "coverage": "UNASSESSED",
+        "rationale": "The notified frozen arm has no reviser/final. All six complete-final axes are UNASSESSED. Available investigator and both critic science is separately PARTIAL with three consequential draft conditions/tensions recorded; this is not a fabricated complete source FAIL or PASS.",
+        "available_science_judgment": "PARTIAL_MATERIAL_ISSUES_FOUND",
+        "universal_correctness": false
+      },
+      "source_assessment": {
+        "judgment": "UNASSESSED",
+        "assessment_scope": "complete final missing",
+        "coverage": "UNASSESSED",
+        "rationale": "The notified frozen arm has no reviser/final. All six complete-final axes are UNASSESSED. Available investigator and both critic science is separately PARTIAL with three consequential draft conditions/tensions recorded; this is not a fabricated complete source FAIL or PASS.",
+        "available_science_judgment": "PARTIAL_MATERIAL_ISSUES_FOUND",
+        "universal_correctness": false
+      },
+      "coverage": {
+        "overall": "UNASSESSED_COMPLETE_FINAL",
+        "axes": [
+          {
+            "axis": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "UNASSESSED",
+            "reason": "No frozen final/reviser; complete-final judgment unavailable."
+          },
+          {
+            "axis": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "UNASSESSED",
+            "reason": "No frozen final/reviser; complete-final judgment unavailable."
+          },
+          {
+            "axis": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "UNASSESSED",
+            "reason": "No frozen final/reviser; complete-final judgment unavailable."
+          },
+          {
+            "axis": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "UNASSESSED",
+            "reason": "No frozen final/reviser; complete-final judgment unavailable."
+          },
+          {
+            "axis": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "UNASSESSED",
+            "reason": "No frozen final/reviser; complete-final judgment unavailable."
+          },
+          {
+            "axis": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "UNASSESSED",
+            "reason": "No frozen final/reviser; complete-final judgment unavailable."
+          }
+        ],
+        "obligations": [
+          {
+            "id": "O01",
+            "name": "Useful retrieval and durable passage references across changing editions",
+            "coverage": "UNASSESSED",
+            "reason": "No complete final."
+          },
+          {
+            "id": "O02",
+            "name": "Cited edition versus newer policy and removed-passage fallback",
+            "coverage": "UNASSESSED",
+            "reason": "No complete final."
+          },
+          {
+            "id": "O03",
+            "name": "No restricted title/snippet/cache disclosure after permission changes",
+            "coverage": "UNASSESSED",
+            "reason": "No complete final."
+          },
+          {
+            "id": "O04",
+            "name": "Defined freshness/rebuild/prior-edition states and owner boundaries",
+            "coverage": "UNASSESSED",
+            "reason": "No complete final."
+          },
+          {
+            "id": "O05",
+            "name": "Lexical/semantic/hybrid and passage-identity alternatives with applicability",
+            "coverage": "UNASSESSED",
+            "reason": "No complete final."
+          },
+          {
+            "id": "N01",
+            "name": "No search-rank inference of policy authority",
+            "coverage": "UNASSESSED",
+            "reason": "No complete final."
+          },
+          {
+            "id": "N02",
+            "name": "No live-URL-only immutable citation or private-document upload",
+            "coverage": "UNASSESSED",
+            "reason": "No complete final."
+          },
+          {
+            "id": "N03",
+            "name": "No promise to revoke already-exported copies",
+            "coverage": "UNASSESSED",
+            "reason": "No complete final."
+          }
+        ],
+        "available_science": {
+          "overall": "PARTIAL",
+          "axes": [
+            {
+              "axis": 1,
+              "name": "Material original obligations and negative constraints",
+              "coverage": "PARTIAL",
+              "finding": "Available draft addresses all obligations, but its historical-ACL owner option conflicts with its current-access invariant. Complete-final obligations are UNASSESSED."
+            },
+            {
+              "axis": 2,
+              "name": "Consequential source facts, governing conditions, versions and applicability",
+              "coverage": "PARTIAL",
+              "finding": "Available science has supported governing research plus omissions in alias action outcomes and explicit DLS role conditions. Full final source quality is UNASSESSED."
+            },
+            {
+              "axis": 3,
+              "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+              "coverage": "PARTIAL",
+              "finding": "Supported useful discoveries include scoped-key revocation, preview ACL failure/freshness behavior, temporary version URLs, finite retention/purge and an unsupported-query guard. Discovery effectiveness for a completed pipeline is UNASSESSED."
+            },
+            {
+              "axis": 4,
+              "name": "Valid corrections, rejections and exact plan dispositions",
+              "coverage": "PARTIAL",
+              "finding": "Draft dispositions are present; both critics' seven findings were independently examined. No reviser disposition exists, so resolution and complete-final corrections/rejections are UNASSESSED."
+            },
+            {
+              "axis": 5,
+              "name": "Supported meaning retained from draft and criticism into the complete final",
+              "coverage": "PARTIAL",
+              "finding": "Investigator discovery-to-draft meaning is inspectable. No final exists: investigator/critic-to-final preservation is UNASSESSED; critic proposals are not treated as adopted changes."
+            },
+            {
+              "axis": 6,
+              "name": "Meaningful proposed validation, with executed work distinguished",
+              "coverage": "PARTIAL",
+              "finding": "Available documents honestly propose synthetic/production checks without claiming execution. The final validation proposal and final execution-status preservation are UNASSESSED."
+            }
+          ],
+          "obligations": [
+            {
+              "id": "O01",
+              "name": "Useful retrieval and durable passage references across changing editions",
+              "coverage": "PARTIAL",
+              "finding": "Edition-bound IDs, hashes and alternate selectors are proposed; no final."
+            },
+            {
+              "id": "O02",
+              "name": "Cited edition versus newer policy and removed-passage fallback",
+              "coverage": "PARTIAL",
+              "finding": "Current versus cited edition and a stop/separate-link fallback are proposed; no final."
+            },
+            {
+              "id": "O03",
+              "name": "No restricted title/snippet/cache disclosure after permission changes",
+              "coverage": "PARTIAL",
+              "finding": "Strong serve-time checks exist, but the historical-ACL option is insufficiently constrained (T03). No executed authorization proof or final."
+            },
+            {
+              "id": "O04",
+              "name": "Defined freshness/rebuild/prior-edition states and owner boundaries",
+              "coverage": "PARTIAL",
+              "finding": "Explicit current/indexing/ACL-unknown/removed/failed states and owners are proposed; alias action success caveat remains open (T01)."
+            },
+            {
+              "id": "O05",
+              "name": "Lexical/semantic/hybrid and passage-identity alternatives with applicability",
+              "coverage": "PARTIAL",
+              "finding": "Multiple retrieval and locator alternatives are researched; role configuration detail remains incomplete (T02)."
+            },
+            {
+              "id": "N01",
+              "name": "No search-rank inference of policy authority",
+              "coverage": "PARTIAL",
+              "finding": "Draft separates relevance from authority; no final preservation witness."
+            },
+            {
+              "id": "N02",
+              "name": "No live-URL-only immutable citation or private-document upload",
+              "coverage": "PARTIAL",
+              "finding": "Draft rejects live-only and unauthenticated temporary URLs and external uploads; no final preservation witness."
+            },
+            {
+              "id": "N03",
+              "name": "No promise to revoke already-exported copies",
+              "coverage": "PARTIAL",
+              "finding": "Draft explicitly limits revocation of exports; no final preservation witness."
+            }
+          ],
+          "plan_dispositions": [
+            {
+              "id": "chunk_identity",
+              "coverage": "PARTIAL",
+              "finding": "Draft examined: Reject ordinal sufficiency; retain edition-bound block IDs or snapshot/representation-bound locator alternatives. Final disposition UNASSESSED."
+            },
+            {
+              "id": "citations",
+              "coverage": "PARTIAL",
+              "finding": "Draft examined: Reject live URL sufficiency; bind the displayed edition/passage and reauthorize resolution. Final disposition UNASSESSED."
+            },
+            {
+              "id": "permissions_and_caches",
+              "coverage": "PARTIAL",
+              "finding": "Draft examined: Reject reindex-only labels and still-servable snippets; establish fresh authorization before disclosure. Final disposition UNASSESSED."
+            },
+            {
+              "id": "ranking",
+              "coverage": "PARTIAL",
+              "finding": "Draft examined: Retain lexical+dense fusion as evaluated hypothesis; relevance never defines authority. Final disposition UNASSESSED."
+            },
+            {
+              "id": "edition_replacement",
+              "coverage": "PARTIAL",
+              "finding": "Draft examined: Condition current default search and historical retention on policy status, current exact-edition access and explicit state. Final disposition UNASSESSED."
+            },
+            {
+              "id": "missing_passage",
+              "coverage": "PARTIAL",
+              "finding": "Draft examined: Reject silent related-heading fulfillment; retain original or authorized unavailable outcome with separate navigation. Final disposition UNASSESSED."
+            },
+            {
+              "id": "indexing_and_validation",
+              "coverage": "PARTIAL",
+              "finding": "Draft examined: Add source/index/ACL generations and failure states; tests remain proposed. Final disposition UNASSESSED."
+            }
+          ]
+        },
+        "unassessed_consequential_remainder": [
+          "All complete-final obligations and six axes",
+          "Every critic-to-final disposition",
+          "Investigator/critic-to-final semantic preservation",
+          "Final validation proposal and execution-status preservation"
+        ],
+        "source_families": [
+          {
+            "id": "P01",
+            "family": "PostgreSQL lexical retrieval / GIN",
+            "coverage": "UNASSESSED",
+            "available_science_research_coverage": "COMPLETE",
+            "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+          },
+          {
+            "id": "P05",
+            "family": "OpenSearch lexical / semantic / hybrid fusion",
+            "coverage": "UNASSESSED",
+            "available_science_research_coverage": "COMPLETE",
+            "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+          },
+          {
+            "id": "P06",
+            "family": "OpenSearch DLS / role composition / exact identity mapping",
+            "coverage": "UNASSESSED",
+            "available_science_research_coverage": "COMPLETE",
+            "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+          },
+          {
+            "id": "P09",
+            "family": "W3C passage selectors / representation state",
+            "coverage": "UNASSESSED",
+            "available_science_research_coverage": "COMPLETE",
+            "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+          },
+          {
+            "id": "P10",
+            "family": "Elastic DLS / cache boundaries",
+            "coverage": "UNASSESSED",
+            "available_science_research_coverage": "COMPLETE",
+            "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+          },
+          {
+            "id": "P11",
+            "family": "License and deployment applicability",
+            "coverage": "UNASSESSED",
+            "available_science_research_coverage": "COMPLETE",
+            "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+          },
+          {
+            "id": "P12",
+            "family": "Elastic alias action outcomes",
+            "coverage": "UNASSESSED",
+            "available_science_research_coverage": "COMPLETE",
+            "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+          },
+          {
+            "id": "P13",
+            "family": "Typesense scoped search capabilities",
+            "coverage": "UNASSESSED",
+            "available_science_research_coverage": "COMPLETE",
+            "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+          },
+          {
+            "id": "P14",
+            "family": "Azure ACL enforcement / freshness / preview history",
+            "coverage": "UNASSESSED",
+            "available_science_research_coverage": "COMPLETE",
+            "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+          },
+          {
+            "id": "P15",
+            "family": "Graph version retrieval / retention and SharePoint purge",
+            "coverage": "UNASSESSED",
+            "available_science_research_coverage": "COMPLETE",
+            "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+          },
+          {
+            "id": "P16",
+            "family": "Hybrid issue / fix / release / unshipped resolver",
+            "coverage": "UNASSESSED",
+            "available_science_research_coverage": "COMPLETE",
+            "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+          },
+          {
+            "id": "P17",
+            "family": "Relevance evaluation / hybrid alternative",
+            "coverage": "UNASSESSED",
+            "available_science_research_coverage": "COMPLETE",
+            "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+          },
+          {
+            "id": "P18",
+            "family": "Repository object locator alternative",
+            "coverage": "UNASSESSED",
+            "available_science_research_coverage": "COMPLETE",
+            "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+          }
+        ]
+      },
+      "primary_source_index_sha256": "2ce8113f5dea549a14d4cb33e33a25b044d7f7ae9e1c9c47b2ffcace3a812915",
+      "manifest_frozen_at": "2026-10-12T05:05:24.906914+00:00",
+      "all_seven_dimensions_preserved": true,
+      "source_dimension_field": "source_judgment (authored structured source assessment; no original edit)"
+    },
+    {
+      "arm_id": "D-R1-P04-control",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/assessment.json",
+      "assessment_sha256": "09e1aa8faca169bb8bb280483d837d91b7a9aa806f02d433c61a35ab0d96e18c",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/assessment.md",
+      "authored_assessment_md_sha256": "7eb41945b581af19dfb6e93355a2ccd162d2168641360b678d44728ce8f931d9",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/manifest.json",
+      "manifest_sha256": "91f8b0e015b09dd1222aa66a236fb1fb2e3542f6fb3a76cefa5fe8c56ebeb2fd",
+      "source_judgment": {
+        "complete_final": "PASS",
+        "finite_assessed_quality": true,
+        "basis": "Full declared coverage; no material unsupported claim, required omission, material false rejection or material preservation loss found in the complete frozen final.",
+        "nonmaterial_limits": [
+          "C-N1",
+          "C-N2",
+          "C-N3"
+        ],
+        "earlier_stage_science": "Investigator repository-test omission identified and repaired in frozen final; complete predecessor/critic/final chain assessed."
+      },
+      "source_assessment": {
+        "complete_final": "PASS",
+        "finite_assessed_quality": true,
+        "basis": "Full declared coverage; no material unsupported claim, required omission, material false rejection or material preservation loss found in the complete frozen final.",
+        "nonmaterial_limits": [
+          "C-N1",
+          "C-N2",
+          "C-N3"
+        ],
+        "earlier_stage_science": "Investigator repository-test omission identified and repaired in frozen final; complete predecessor/critic/final chain assessed."
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis_id": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "All required targets, edit/reconnect cases, durable identity, original/unresolved context, retention and read-only export are addressed; all three negative constraints are explicit."
+          },
+          {
+            "axis_id": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_WITH_NONMATERIAL_LIMITS",
+            "basis": "Governing documentation, definitions, relevant implementation/caller/tests, editions and historical exceptions were checked. C-N1/C-N2/C-N3 bound nonmaterial wording and locator limits."
+          },
+          {
+            "axis_id": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "Useful tree/history, deletion-metadata, conflict, reconciliation and annotation mechanisms have relevant alternatives and failure history. Discovery is finite, with no universal recall claim."
+          },
+          {
+            "axis_id": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "All significant plan decisions and C1-C3 are examined. C1 is a valid predecessor omission and is repaired; owner decisions and mutable editions remain qualified."
+          },
+          {
+            "axis_id": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "Supported identity, transform, connector/region, deletion, ordering, alternatives, privacy, export and validation meaning survive into the self-contained final. No material loss found."
+          },
+          {
+            "axis_id": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_WITH_NONMATERIAL_LIMITS",
+            "basis": "Synthetic histories specify domains and expected semantic invariants separately from convergence. Proposed tests, permission/usability work and measurements remain unexecuted; deployment is not required."
+          }
+        ],
+        "obligations": "COMPLETE",
+        "consequential_source_families": "COMPLETE",
+        "detail_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/coverage.json",
+        "outside_scope": "Explicitly UNASSESSED in coverage.json"
+      },
+      "method_compliance": {
+        "status": "OBSERVABLE_TOPOLOGY_AND_OUTPUT_COMPLIANCE_WITH_PROVENANCE_LIMITS",
+        "observed_stage_topology": [
+          "investigator",
+          "critic",
+          "reviser"
+        ],
+        "configured_final_stage": "reviser",
+        "configured_stage_maximums_seconds": {
+          "investigator": 1800,
+          "critic": 720,
+          "reviser": 1080
+        },
+        "stored_method_id": "R0",
+        "stored_public_recipe_choice": "R0",
+        "discovery_hash_and_revealed_plan_receipt_match": true,
+        "source_ids_preserved_without_rebinding": true,
+        "treatment_adversarial_check_observed": "Not an added requirement for this arm.",
+        "metadata_issue": null,
+        "unobservable": [
+          "pre-input execution order and absence of unseen actions",
+          "direct native call freshness/task linkage",
+          "complete transcript routing history"
+        ],
+        "no_evaluator_execution_of_candidate_helpers": true
+      },
+      "primary_source_index_sha256": "3faaa9dd67e548f93da9754e5a3e7a75d50fc6c982cf8277fdbfa08a4a6037cb",
+      "manifest_frozen_at": "2026-10-12T05:08:47.224665+00:00",
+      "all_seven_dimensions_preserved": true,
+      "source_dimension_field": "source_judgment (authored structured source assessment; no original edit)"
+    },
+    {
+      "arm_id": "D-R1-P04-treatment",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/assessment.json",
+      "assessment_sha256": "e727096c310be72069d2fbd92a529fe94f0fe34817fd58be651e98a20f55fd5a",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/assessment.md",
+      "authored_assessment_md_sha256": "2357ad5bead4eb835f541145e08a0c8a3313f253f586973286641973d3f28f79",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/manifest.json",
+      "manifest_sha256": "c2d767522303293eb8781f8f0fed4898b8af938afa049887e5b02a9f5286f058",
+      "source_judgment": {
+        "complete_final": "PASS",
+        "finite_assessed_quality": true,
+        "basis": "Full declared coverage; no material unsupported claim, required omission, material false rejection or material preservation loss found in the complete frozen final.",
+        "nonmaterial_limits": [
+          "T-N1",
+          "T-N2",
+          "T-N3",
+          "T-M1"
+        ],
+        "earlier_stage_science": "All investigator and critic-finalizer science assessed; T-N3 qualifies severity of two criticisms without rejecting the final design policy."
+      },
+      "source_assessment": {
+        "complete_final": "PASS",
+        "finite_assessed_quality": true,
+        "basis": "Full declared coverage; no material unsupported claim, required omission, material false rejection or material preservation loss found in the complete frozen final.",
+        "nonmaterial_limits": [
+          "T-N1",
+          "T-N2",
+          "T-N3",
+          "T-M1"
+        ],
+        "earlier_stage_science": "All investigator and critic-finalizer science assessed; T-N3 qualifies severity of two criticisms without rejecting the final design policy."
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis_id": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "All required target/edit/reconnect cases, identity versus appearance, original context, unresolved threads, retention and export are addressed; no forbidden automatic fallback, silent resurrection or invisible-thread loss is proposed."
+          },
+          {
+            "axis_id": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_WITH_NONMATERIAL_LIMITS",
+            "basis": "Pinned Rust API/defaults, shared-type context, bindings, code/test/fix history and applicability were checked. T-N1/T-N2 are nonmaterial optional-mechanism/history qualifications."
+          },
+          {
+            "axis_id": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "Tree visibility/moves, sequence anchoring/defaults, nested deletion/GC regression and map conflicts are useful discoveries. Sequencing and event/snapshot alternatives are materially different; no engine is selected."
+          },
+          {
+            "axis_id": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_WITH_NONMATERIAL_LIMITS",
+            "basis": "All sixteen plan clauses and CR-01 through CR-05 are examined. Critic severity is sometimes overstated (T-N3); the final choices are disclosed design policies, not uniquely mandated library truths."
+          },
+          {
+            "axis_id": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "Original identity/context, stale-edit recovery, supported mechanisms and alternatives, privacy/export policy and validation status survive. Incarnation-on-restore replaces a predecessor schema choice while retaining explicit restoration and historical linkage."
+          },
+          {
+            "axis_id": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_WITH_NONMATERIAL_LIMITS",
+            "basis": "The proposed matrix separates convergence, semantic attachment, stale-peer recovery, export and privacy oracles. No executed merge/test/deployment claim is made. Optional sequence tests have the T-N1 qualification."
+          }
+        ],
+        "obligations": "COMPLETE",
+        "consequential_source_families": "COMPLETE",
+        "detail_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/coverage.json",
+        "outside_scope": "Explicitly UNASSESSED in coverage.json"
+      },
+      "method_compliance": {
+        "status": "OBSERVABLE_TOPOLOGY_AND_OUTPUT_COMPLIANCE_WITH_PROVENANCE_LIMITS",
+        "observed_stage_topology": [
+          "investigator",
+          "critic"
+        ],
+        "configured_final_stage": "critic",
+        "configured_stage_maximums_seconds": {
+          "investigator": 1800,
+          "critic": 1800
+        },
+        "stored_method_id": "R0",
+        "stored_public_recipe_choice": "B02",
+        "discovery_hash_and_revealed_plan_receipt_match": true,
+        "source_ids_preserved_without_rebinding": true,
+        "treatment_adversarial_check_observed": "Negative/default/limit and capability/architecture audit present in frozen critique.",
+        "metadata_issue": "T-M1: method_id R0 conflicts with public B02 labeling and two-context topology.",
+        "unobservable": [
+          "pre-input execution order and absence of unseen actions",
+          "direct native call freshness/task linkage",
+          "complete transcript routing history"
+        ],
+        "no_evaluator_execution_of_candidate_helpers": true
+      },
+      "primary_source_index_sha256": "6497f051a41e304fe98b4cd8762eac6b49d2d6a66670537d018954e39e0becfe",
+      "manifest_frozen_at": "2026-10-12T05:08:47.226779+00:00",
+      "all_seven_dimensions_preserved": true,
+      "source_dimension_field": "source_judgment (authored structured source assessment; no original edit)"
+    },
+    {
+      "arm_id": "D-R2-P04-control",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/control/assessment.json",
+      "assessment_sha256": "656b158d863806a8093d585b0340613e53dfb90ae00605fc3d2cfbb227f0f889",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/control/assessment.md",
+      "authored_assessment_md_sha256": "661e808f6120c98e305751ed0db38dc7091d042f73c6b3a5aba19f9ab37bc1bb",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/control/manifest.json",
+      "manifest_sha256": "11f23de57977e21a95d724ccc4b630db09765e1d9bb7b999dcd3f90667b648fd",
+      "source_judgment": {
+        "grade": "FAIL",
+        "coverage": "COMPLETE",
+        "target": "exact_complete_frozen_final_and_carried_evidence",
+        "material_source_defects": [
+          "D-C01",
+          "D-C02"
+        ],
+        "finite_quality_only": true
+      },
+      "source_assessment": {
+        "grade": "FAIL",
+        "coverage": "COMPLETE",
+        "target": "exact_complete_frozen_final_and_carried_evidence",
+        "material_source_defects": [
+          "D-C01",
+          "D-C02"
+        ],
+        "finite_quality_only": true
+      },
+      "coverage": {
+        "complete_final": "COMPLETE",
+        "axes": {
+          "1": "COMPLETE",
+          "2": "COMPLETE",
+          "3": "COMPLETE",
+          "4": "COMPLETE",
+          "5": "COMPLETE",
+          "6": "COMPLETE"
+        },
+        "available_science": "COMPLETE",
+        "detail": {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/control/coverage.json",
+          "sha256": "1a6236fbb8254827d0226a89a5c76f3fd282e65004211942de76a2fd9450d15f"
+        }
+      },
+      "primary_source_index_sha256": "289661d2002e4bdf6b3b945cd270814d8cc0f08e26f76bcc50f422259ceb52d9",
+      "manifest_frozen_at": "2026-10-12T05:13:47.978645+00:00",
+      "all_seven_dimensions_preserved": true,
+      "source_dimension_field": "source_judgment (authored source dimension; no edit)"
+    },
+    {
+      "arm_id": "D-R2-P04-treatment",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/assessment.json",
+      "assessment_sha256": "e5ee1365b42f43f4984ef09f9cbb24cf88949991063f2446b9f954f5083daffc",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/assessment.md",
+      "authored_assessment_md_sha256": "9ecb644139b013d80c7a732b3a7bb1a1a82f0bfa8a4c2d4d818b0e41d2d1ba05",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/manifest.json",
+      "manifest_sha256": "b3958f76252077f28faca78a5c56bd274827be01ec800a77648787bf23a9c619",
+      "source_judgment": {
+        "grade": "UNASSESSED",
+        "target": "missing_complete_final",
+        "all_six_complete_final_axes": "UNASSESSED",
+        "available_partial_science": {
+          "coverage": "PARTIAL",
+          "judgment": "DEFECT_FOUND_WITH_USEFUL_SUPPORTED_SCIENCE",
+          "material_source_defects": [
+            "D-T01"
+          ],
+          "comparable_complete_grade": false
+        }
+      },
+      "source_assessment": {
+        "grade": "UNASSESSED",
+        "target": "missing_complete_final",
+        "all_six_complete_final_axes": "UNASSESSED",
+        "available_partial_science": {
+          "coverage": "PARTIAL",
+          "judgment": "DEFECT_FOUND_WITH_USEFUL_SUPPORTED_SCIENCE",
+          "material_source_defects": [
+            "D-T01"
+          ],
+          "comparable_complete_grade": false
+        }
+      },
+      "coverage": {
+        "complete_final": "UNASSESSED",
+        "axes": {
+          "1": "UNASSESSED",
+          "2": "UNASSESSED",
+          "3": "UNASSESSED",
+          "4": "UNASSESSED",
+          "5": "UNASSESSED",
+          "6": "UNASSESSED"
+        },
+        "available_science": "PARTIAL",
+        "detail": {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/coverage.json",
+          "sha256": "639838b87316e7465638321f7bb1655842d4890a9312d3b04d00e7a23e9626ca"
+        }
+      },
+      "primary_source_index_sha256": "d285e474bb8349c5ddca04c392bdc018469211f78e81049322e6c4be45822e84",
+      "manifest_frozen_at": "2026-10-12T05:13:47.978645+00:00",
+      "all_seven_dimensions_preserved": true,
+      "source_dimension_field": "source_judgment (authored source dimension; no edit)"
+    },
+    {
+      "arm_id": "D-R1-P01-control",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/control/assessment.json",
+      "assessment_sha256": "1b98c9abcd9569ecfaf4ecabbfbc5920c79fdeaeeb788ea56c9b955c70d70930",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/control/assessment.md",
+      "authored_assessment_md_sha256": "2f587b006841bfa435499ac2e2696eebbf1e5c8c79d75b04ee780ead570ce1c4",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/control/manifest.json",
+      "manifest_sha256": "a89a27750fc17c2f34bb807f178223f25b58ccfe35a17f2054e255cb0f55f141",
+      "source_judgment": {
+        "judgment": "PASS",
+        "coverage": "COMPLETE",
+        "scope": "Exact frozen final and complete available investigator/critic lineage; FULL research-planning deliverable",
+        "material_defects": [],
+        "nonmaterial_defects": [
+          "C-N01"
+        ],
+        "finite_assessment": true,
+        "universal_correctness_claimed": false,
+        "rationale": "No material unsupported claim, required omission, false rejection or preservation loss found under declared finite coverage."
+      },
+      "source_assessment": {
+        "judgment": "PASS",
+        "coverage": "COMPLETE",
+        "scope": "Exact frozen final and complete available investigator/critic lineage; FULL research-planning deliverable",
+        "material_defects": [],
+        "nonmaterial_defects": [
+          "C-N01"
+        ],
+        "finite_assessment": true,
+        "universal_correctness_claimed": false,
+        "rationale": "No material unsupported claim, required omission, false rejection or preservation loss found under declared finite coverage."
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis_id": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "rationale": "All O01-O05 and N01-N03 are addressed in the complete final; API, locale and privacy choices are explicit owner inputs.",
+            "defect_ids": []
+          },
+          {
+            "axis_id": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "rationale": "Consequential standards, HTTP exceptions, source lifecycle and bounded history checked independently. C-N01 is nonmaterial.",
+            "defect_ids": [
+              "C-N01"
+            ]
+          },
+          {
+            "axis_id": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "rationale": "Useful alternatives include native/custom recovery, inline-summary/status vs checklist, early conflict notice vs save-time discovery, and conditional writes. USWDS history is properly cautioned.",
+            "defect_ids": [
+              "C-N01"
+            ]
+          },
+          {
+            "axis_id": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "rationale": "All released clauses and C-01-C-07 adjudicated. Current-result invalidation, visible pending and presentation comparisons are strengthened; uncertainty is preserved rather than fabricated.",
+            "defect_ids": []
+          },
+          {
+            "axis_id": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "rationale": "Snapshot correlation, authority, dirty text, focus, layout/direction, alternatives, conditions, owner choices and execution limits survive discovery/draft/criticism into final.",
+            "defect_ids": []
+          },
+          {
+            "axis_id": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "rationale": "Proposed state/focus/link/race/save/layout/AT-language checks have meaningful domains and oracles. Artifact mechanics are distinguished from unrun product tests.",
+            "defect_ids": []
+          }
+        ],
+        "axis_count": 6,
+        "all_axes_complete": true,
+        "obligations_and_source_families": "See coverage.json",
+        "independent_lookup_shared": true,
+        "blinding": "Imperfect: control/treatment and technique-bearing config/assignment paths and topology are visible. No recipe selection performed."
+      },
+      "primary_source_index_sha256": "023b6fc65dae628bbb109daf2b3c2067a08608c452b2ae67e10546b6da42657a",
+      "manifest_frozen_at": "2026-10-12T05:20:28.524395+00:00",
+      "all_seven_dimensions_preserved": true
+    },
+    {
+      "arm_id": "D-R1-P01-treatment",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/assessment.json",
+      "assessment_sha256": "531fad41b7150e51235f9341b4f048bc58131815e318ba6a259fcf3df2c95f78",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/assessment.md",
+      "authored_assessment_md_sha256": "9ece89d4898608ce5864096cdb6e9d82b2c0448e71fb326ce35870a859ec13b5",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/manifest.json",
+      "manifest_sha256": "f7a52db90e7e6899998377298271a6bea9f21347d0121711315d2f64e301d774",
+      "source_judgment": {
+        "judgment": "FAIL",
+        "coverage": "COMPLETE",
+        "scope": "Exact frozen final and complete available investigator/critic lineage; FULL research-planning deliverable",
+        "material_defects": [
+          "T-S01"
+        ],
+        "nonmaterial_defects": [
+          "T-N02"
+        ],
+        "finite_assessment": true,
+        "universal_correctness_claimed": false,
+        "rationale": "A material false source correction is accepted in the focus-policy disposition (T-S01). Functional alternatives remain; the source failure is independent of delivery and timing."
+      },
+      "source_assessment": {
+        "judgment": "FAIL",
+        "coverage": "COMPLETE",
+        "scope": "Exact frozen final and complete available investigator/critic lineage; FULL research-planning deliverable",
+        "material_defects": [
+          "T-S01"
+        ],
+        "nonmaterial_defects": [
+          "T-N02"
+        ],
+        "finite_assessment": true,
+        "universal_correctness_claimed": false,
+        "rationale": "A material false source correction is accepted in the focus-policy disposition (T-S01). Functional alternatives remain; the source failure is independent of delivery and timing."
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis_id": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "rationale": "All functional obligations and negative constraints are represented. Source grounding for the focus disposition fails separately under T-S01.",
+            "defect_ids": []
+          },
+          {
+            "axis_id": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "rationale": "Most source facts and applicability are supported, including HTTP exceptions and reset history. T-S01 is material; T-N02 is a nonmaterial false attribution correction.",
+            "defect_ids": [
+              "T-S01",
+              "T-N02"
+            ]
+          },
+          {
+            "axis_id": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "rationale": "Maintained React Aria/GOV.UK mechanisms, reset lifecycle, native/aria and timing alternatives, and record-vs-field conflict choices are useful and bounded. No toolkit winner or universal recall score is required.",
+            "defect_ids": []
+          },
+          {
+            "axis_id": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "rationale": "C1, C3 and C4 produce justified qualifications/additions. C2 rejects correct primary guidance; C5 also rejects a real caution. Every criticism and significant plan decision was examined.",
+            "defect_ids": [
+              "T-S01",
+              "T-N02"
+            ]
+          },
+          {
+            "axis_id": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "rationale": "Behavioral alternatives and draft/save/race/locale/owner/test meaning are retained. T-S01 removes valid focus-source grounding; the first-invalid functional option itself remains.",
+            "defect_ids": [
+              "T-S01"
+            ]
+          },
+          {
+            "axis_id": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "rationale": "State and interaction fixtures have concrete oracles, including current hidden issues and old form identity. All portal, synthetic, AT and translation behavior checks remain explicitly proposed.",
+            "defect_ids": []
+          }
+        ],
+        "axis_count": 6,
+        "all_axes_complete": true,
+        "obligations_and_source_families": "See coverage.json",
+        "independent_lookup_shared": true,
+        "blinding": "Imperfect: control/treatment and technique-bearing config/assignment paths and topology are visible. No recipe selection performed."
+      },
+      "primary_source_index_sha256": "90a8161eb210ba0f5e270dedf88fef88f1ab70c729ec1db8778c765ce0d035f4",
+      "manifest_frozen_at": "2026-10-12T05:20:28.524395+00:00",
+      "all_seven_dimensions_preserved": true
+    },
+    {
+      "arm_id": "D-R2-P02-control",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/control/assessment.json",
+      "assessment_sha256": "70cb9274317d9d969edae9ddc07b6d027ac346c32a7b07e7953f0d474f8714f4",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/control/assessment.md",
+      "authored_assessment_md_sha256": "c3f640ff57cd9cfa91ead8295f699bc10f23ac945dbdbd884213ca13386a0abb",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/control/manifest.json",
+      "manifest_sha256": "4aa5541501689779c2fc446635882dfb1c6436e5733eda8beb94fba413f5b141",
+      "source_judgment": {
+        "status": "FAIL",
+        "domain": "complete_final",
+        "material_defect_ids": [
+          "C-D01"
+        ],
+        "reason": "Required governing permission-scope research incomplete for the offered Deno mechanism.",
+        "coverage_qualification": "Axes 1/4/5/6 COMPLETE, 2/3 PARTIAL; no comparable exhaustive final grade or universal correctness claim."
+      },
+      "source_assessment": {
+        "status": "FAIL",
+        "domain": "complete_final",
+        "material_defect_ids": [
+          "C-D01"
+        ],
+        "reason": "Required governing permission-scope research incomplete for the offered Deno mechanism.",
+        "coverage_qualification": "Axes 1/4/5/6 COMPLETE, 2/3 PARTIAL; no comparable exhaustive final grade or universal correctness claim."
+      },
+      "coverage": {
+        "schema": "er13.original_coverage.v1",
+        "arm_id": "D-R2-P02-control",
+        "complete_final": {
+          "axes": [
+            {
+              "axis": 1,
+              "name": "Material original obligations and negative constraints",
+              "coverage": "COMPLETE",
+              "judgment": "FAIL",
+              "reason": "Every rubric obligation/negative constraint examined; O04 has C-D01. Editing, malformed input, lifecycle, provenance and owned cleanup otherwise concretely addressed."
+            },
+            {
+              "axis": 2,
+              "name": "Consequential source facts, governing conditions, versions and applicability",
+              "coverage": "PARTIAL",
+              "judgment": "FAIL",
+              "reason": "Consequential runtime/browser/storage facts independently checked; C-D01 is a governing-condition omission. Native OS deep code/test/history and Deno release/fix context remain UNASSESSED."
+            },
+            {
+              "axis": 3,
+              "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+              "coverage": "PARTIAL",
+              "judgment": "FAIL",
+              "reason": "Declarative output, Wasm, browser/native workers and Deno offer useful different mechanisms. History and concrete tests are useful. Scope exceptions limit full breadth qualification."
+            },
+            {
+              "axis": 4,
+              "name": "Valid corrections, rejections and exact plan dispositions",
+              "coverage": "COMPLETE",
+              "judgment": "NO_MATERIAL_DEFECT_FOUND",
+              "reason": "All P1-P4 clauses and six required design dispositions examined; all C-01 through C-04 dispositions traced and supported."
+            },
+            {
+              "axis": 5,
+              "name": "Supported meaning retained from draft and criticism into the complete final",
+              "coverage": "COMPLETE",
+              "judgment": "NO_MATERIAL_DEFECT_FOUND",
+              "reason": "Complete discovery/draft/criticism/final/maps compared by supported meaning. No material loss found; C-L02 records narrative compression."
+            },
+            {
+              "axis": 6,
+              "name": "Meaningful proposed validation, with executed work distinguished",
+              "coverage": "COMPLETE",
+              "judgment": "NO_MATERIAL_DEFECT_FOUND",
+              "reason": "The six requested synthetic/disposable witness families specify meaningful denial/state/resource/deletion oracles. All application/adversarial/cross-platform checks remain proposed, not executed."
+            }
+          ],
+          "obligations_and_negative_constraints": [
+            {
+              "id": "O01",
+              "coverage": "COMPLETE",
+              "observation": "Opaque job-scoped read capability, validated declarative output, isolated richer option, unrelated-notebook denial.",
+              "result": "NO_MATERIAL_DEFECT_FOUND"
+            },
+            {
+              "id": "O02",
+              "coverage": "COMPLETE",
+              "observation": "Editable original plus failed/timed-out/stale/disabled/unavailable/version state; upgrade/re-enable/uninstall behavior.",
+              "result": "NO_MATERIAL_DEFECT_FOUND"
+            },
+            {
+              "id": "O03",
+              "coverage": "COMPLETE",
+              "observation": "Separate derived search namespace/record, source and producer identity, no partial-current publication.",
+              "result": "NO_MATERIAL_DEFECT_FOUND"
+            },
+            {
+              "id": "O04",
+              "coverage": "COMPLETE",
+              "observation": "Permission/resource/nested-worker/host limitation comparisons; C-D01 in control, partial source/test gaps in treatment.",
+              "result": "MATERIAL_RESEARCH_OMISSION"
+            },
+            {
+              "id": "O05",
+              "coverage": "COMPLETE",
+              "observation": "Host ownership registry, private job roots, references/leases/generations, no-follow identity, crash reconciliation.",
+              "result": "NO_MATERIAL_DEFECT_FOUND"
+            },
+            {
+              "id": "N01",
+              "coverage": "COMPLETE",
+              "observation": "No broad notebook grant or ambient-privilege markup; proposal invariant distinguished from actual enforcement.",
+              "result": "NO_MATERIAL_DEFECT_FOUND"
+            },
+            {
+              "id": "N02",
+              "coverage": "COMPLETE",
+              "observation": "Path suffix or child exit rejected as cleanup ownership proof.",
+              "result": "NO_MATERIAL_DEFECT_FOUND"
+            },
+            {
+              "id": "N03",
+              "coverage": "COMPLETE",
+              "observation": "Extracted text never substituted for authored note content.",
+              "result": "NO_MATERIAL_DEFECT_FOUND"
+            }
+          ],
+          "additional_obligations": [
+            {
+              "id": "editing_responsiveness",
+              "coverage": "COMPLETE"
+            },
+            {
+              "id": "malformed_inputs_output",
+              "coverage": "COMPLETE"
+            },
+            {
+              "id": "all_six_named_plan_dispositions",
+              "coverage": "COMPLETE"
+            },
+            {
+              "id": "all_required_validation_families",
+              "coverage": "COMPLETE"
+            },
+            {
+              "id": "actual_product_deployment",
+              "coverage": "UNASSESSED",
+              "required": false,
+              "reason": "Outside the planning deliverable; neither demanded nor inferred."
+            }
+          ],
+          "source_families": [
+            {
+              "family": "extension_interfaces",
+              "coverage": "COMPLETE",
+              "primary_ids": "P11/P27-P31",
+              "scope": "complete_final",
+              "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+            },
+            {
+              "family": "browser_rendering",
+              "coverage": "COMPLETE",
+              "primary_ids": "P21/P23/P25/P26/P29",
+              "scope": "complete_final",
+              "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+            },
+            {
+              "family": "wasmtime_controls",
+              "coverage": "COMPLETE",
+              "primary_ids": "P01-P03",
+              "scope": "complete_final",
+              "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+            },
+            {
+              "family": "runtime_history",
+              "coverage": "COMPLETE",
+              "primary_ids": "P13-P20",
+              "scope": "complete_final",
+              "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+            },
+            {
+              "family": "wasi_filesystem_capabilities",
+              "coverage": "COMPLETE",
+              "primary_ids": "P08-P10",
+              "scope": "complete_final",
+              "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+            },
+            {
+              "family": "nested_workers_native_os",
+              "coverage": "PARTIAL",
+              "primary_ids": "P12/P22/P24/P37-P42",
+              "scope": "complete_final",
+              "limit": "Full code/callers/test/release history UNASSESSED after decisive C-D01; documented conditions checked."
+            },
+            {
+              "family": "deno_permissions",
+              "coverage": "PARTIAL",
+              "primary_ids": "P33",
+              "scope": "complete_final",
+              "limit": "Full code/callers/test/release history UNASSESSED after decisive C-D01; documented conditions checked."
+            },
+            {
+              "family": "storage_search",
+              "coverage": "COMPLETE",
+              "primary_ids": "P34-P36",
+              "scope": "complete_final",
+              "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+            },
+            {
+              "family": "upstream_tests",
+              "coverage": "COMPLETE",
+              "primary_ids": "P04-P09/P43",
+              "scope": "complete_final",
+              "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+            },
+            {
+              "family": "licenses",
+              "coverage": "COMPLETE",
+              "primary_ids": "P44/P45",
+              "scope": "complete_final",
+              "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+            }
+          ]
+        },
+        "assessment_is_finite": true,
+        "unassessed_remainder": [
+          "Native OS launch implementation/callers, complete tests and release/fix histories",
+          "Deno implementation/callers/tests and issue/fix/release history beyond governing docs",
+          "Any product execution/deployment; not required"
+        ]
+      },
+      "primary_source_index_sha256": "521f58ff46e73ef29705d33f7034496ac736e2ac9d3424f16f06bab19e4d4112",
+      "manifest_frozen_at": "2026-10-12T05:21:31.176473+00:00",
+      "all_seven_dimensions_preserved": true
+    },
+    {
+      "arm_id": "D-R2-P02-treatment",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/treatment/assessment.json",
+      "assessment_sha256": "cf637f68e41ed2bc735be495253b60304933c0d3b6838f5c6b54b28703321cb2",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/treatment/assessment.md",
+      "authored_assessment_md_sha256": "0ffe1202c4ef8210f3ff1e8fc9987596fbead6815242cbcaababbc209e550677",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/treatment/manifest.json",
+      "manifest_sha256": "11cf16b8aab6679aac954fe170e27eab4413bec83d8b08b96ec82d7069ab545d",
+      "source_judgment": {
+        "status": "UNASSESSED",
+        "domain": "complete_final",
+        "material_defect_ids": [],
+        "reason": "No frozen final exists; available science assessed separately.",
+        "coverage_qualification": "All six complete-final axes UNASSESSED."
+      },
+      "source_assessment": {
+        "status": "UNASSESSED",
+        "domain": "complete_final",
+        "material_defect_ids": [],
+        "reason": "No frozen final exists; available science assessed separately.",
+        "coverage_qualification": "All six complete-final axes UNASSESSED."
+      },
+      "coverage": {
+        "schema": "er13.original_coverage.v1",
+        "arm_id": "D-R2-P02-treatment",
+        "complete_final": {
+          "axes": [
+            {
+              "axis": 1,
+              "name": "Material original obligations and negative constraints",
+              "coverage": "UNASSESSED",
+              "judgment": "UNASSESSED",
+              "reason": "Final absent; no complete-final judgment can be supplied."
+            },
+            {
+              "axis": 2,
+              "name": "Consequential source facts, governing conditions, versions and applicability",
+              "coverage": "UNASSESSED",
+              "judgment": "UNASSESSED",
+              "reason": "Final absent; no complete-final judgment can be supplied."
+            },
+            {
+              "axis": 3,
+              "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+              "coverage": "UNASSESSED",
+              "judgment": "UNASSESSED",
+              "reason": "Final absent; no complete-final judgment can be supplied."
+            },
+            {
+              "axis": 4,
+              "name": "Valid corrections, rejections and exact plan dispositions",
+              "coverage": "UNASSESSED",
+              "judgment": "UNASSESSED",
+              "reason": "Final absent; no complete-final judgment can be supplied."
+            },
+            {
+              "axis": 5,
+              "name": "Supported meaning retained from draft and criticism into the complete final",
+              "coverage": "UNASSESSED",
+              "judgment": "UNASSESSED",
+              "reason": "Final absent; no complete-final judgment can be supplied."
+            },
+            {
+              "axis": 6,
+              "name": "Meaningful proposed validation, with executed work distinguished",
+              "coverage": "UNASSESSED",
+              "judgment": "UNASSESSED",
+              "reason": "Final absent; no complete-final judgment can be supplied."
+            }
+          ],
+          "obligations_and_negative_constraints": [
+            {
+              "id": "O01",
+              "coverage": "UNASSESSED",
+              "observation": "Missing final.",
+              "result": "UNASSESSED"
+            },
+            {
+              "id": "O02",
+              "coverage": "UNASSESSED",
+              "observation": "Missing final.",
+              "result": "UNASSESSED"
+            },
+            {
+              "id": "O03",
+              "coverage": "UNASSESSED",
+              "observation": "Missing final.",
+              "result": "UNASSESSED"
+            },
+            {
+              "id": "O04",
+              "coverage": "UNASSESSED",
+              "observation": "Missing final.",
+              "result": "UNASSESSED"
+            },
+            {
+              "id": "O05",
+              "coverage": "UNASSESSED",
+              "observation": "Missing final.",
+              "result": "UNASSESSED"
+            },
+            {
+              "id": "N01",
+              "coverage": "UNASSESSED",
+              "observation": "Missing final.",
+              "result": "UNASSESSED"
+            },
+            {
+              "id": "N02",
+              "coverage": "UNASSESSED",
+              "observation": "Missing final.",
+              "result": "UNASSESSED"
+            },
+            {
+              "id": "N03",
+              "coverage": "UNASSESSED",
+              "observation": "Missing final.",
+              "result": "UNASSESSED"
+            }
+          ],
+          "additional_obligations": [
+            {
+              "id": "editing_responsiveness",
+              "coverage": "UNASSESSED"
+            },
+            {
+              "id": "malformed_inputs_output",
+              "coverage": "UNASSESSED"
+            },
+            {
+              "id": "all_six_named_plan_dispositions",
+              "coverage": "UNASSESSED"
+            },
+            {
+              "id": "all_required_validation_families",
+              "coverage": "UNASSESSED"
+            },
+            {
+              "id": "actual_product_deployment",
+              "coverage": "UNASSESSED",
+              "required": false,
+              "reason": "Outside the planning deliverable; neither demanded nor inferred."
+            }
+          ],
+          "source_families": [
+            {
+              "family": "extension_interfaces",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P27",
+                "P28",
+                "P29",
+                "P30",
+                "P31"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "browser_rendering",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P21",
+                "P29"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "wasmtime_controls",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P01",
+                "P02",
+                "P03"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "runtime_history",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P13",
+                "P14",
+                "P15",
+                "P16",
+                "P17",
+                "P18",
+                "P19",
+                "P20"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "wasi_filesystem_capabilities",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P08",
+                "P17"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "nested_workers_native_os",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P22",
+                "P24",
+                "P37",
+                "P38",
+                "P39",
+                "P40",
+                "P41",
+                "P42"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "deno_permissions",
+              "coverage": "UNASSESSED",
+              "primary_ids": [],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "storage_search",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P34",
+                "P35",
+                "P36"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "upstream_tests",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P04",
+                "P05",
+                "P06",
+                "P07",
+                "P43"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "licenses",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P44",
+                "P45"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            }
+          ]
+        },
+        "assessment_is_finite": true,
+        "available_partial_science": {
+          "axes": [
+            {
+              "axis": 1,
+              "coverage": "PARTIAL",
+              "reason": "Available proposal meets core boundary/state/provenance/cleanup intent; repository/test research gap remains."
+            },
+            {
+              "axis": 2,
+              "coverage": "PARTIAL",
+              "reason": "Principal runtime/history/storage/rendering facts checked; no-stdio correction supported; OS/Apple depth limited."
+            },
+            {
+              "axis": 3,
+              "coverage": "PARTIAL",
+              "reason": "Useful platform and search mechanisms; concrete test-case discovery missing."
+            },
+            {
+              "axis": 4,
+              "coverage": "PARTIAL",
+              "reason": "All available plan dispositions and all six truth-critic findings examined; no reviser disposition exists."
+            },
+            {
+              "axis": 5,
+              "coverage": "UNASSESSED",
+              "reason": "No final; no investigator/critic-to-final preservation possible."
+            },
+            {
+              "axis": 6,
+              "coverage": "PARTIAL",
+              "reason": "Eight proposed witness groups meaningful; helper/JSON observations distinct from product execution."
+            }
+          ],
+          "obligations_and_negative_constraints": [
+            {
+              "id": "O01",
+              "coverage": "PARTIAL",
+              "observation": "Opaque job-scoped read capability, validated declarative output, isolated richer option, unrelated-notebook denial."
+            },
+            {
+              "id": "O02",
+              "coverage": "PARTIAL",
+              "observation": "Editable original plus failed/timed-out/stale/disabled/unavailable/version state; upgrade/re-enable/uninstall behavior."
+            },
+            {
+              "id": "O03",
+              "coverage": "PARTIAL",
+              "observation": "Separate derived search namespace/record, source and producer identity, no partial-current publication."
+            },
+            {
+              "id": "O04",
+              "coverage": "PARTIAL",
+              "observation": "Permission/resource/nested-worker/host limitation comparisons; C-D01 in control, partial source/test gaps in treatment."
+            },
+            {
+              "id": "O05",
+              "coverage": "PARTIAL",
+              "observation": "Host ownership registry, private job roots, references/leases/generations, no-follow identity, crash reconciliation."
+            },
+            {
+              "id": "N01",
+              "coverage": "PARTIAL",
+              "observation": "No broad notebook grant or ambient-privilege markup; proposal invariant distinguished from actual enforcement."
+            },
+            {
+              "id": "N02",
+              "coverage": "PARTIAL",
+              "observation": "Path suffix or child exit rejected as cleanup ownership proof."
+            },
+            {
+              "id": "N03",
+              "coverage": "PARTIAL",
+              "observation": "Extracted text never substituted for authored note content."
+            }
+          ],
+          "source_families": [
+            {
+              "family": "extension_interfaces",
+              "coverage": "COMPLETE",
+              "primary_ids": [
+                "P27",
+                "P28",
+                "P29",
+                "P30",
+                "P31"
+              ],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "browser_rendering",
+              "coverage": "COMPLETE",
+              "primary_ids": [
+                "P21",
+                "P29"
+              ],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "wasmtime_controls",
+              "coverage": "COMPLETE",
+              "primary_ids": [
+                "P01",
+                "P02",
+                "P03"
+              ],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "runtime_history",
+              "coverage": "COMPLETE",
+              "primary_ids": [
+                "P13",
+                "P14",
+                "P15",
+                "P16",
+                "P17",
+                "P18",
+                "P19",
+                "P20"
+              ],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "wasi_filesystem_capabilities",
+              "coverage": "COMPLETE",
+              "primary_ids": [
+                "P08",
+                "P17"
+              ],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "nested_workers_native_os",
+              "coverage": "PARTIAL",
+              "primary_ids": [
+                "P22",
+                "P24",
+                "P37",
+                "P38",
+                "P39",
+                "P40",
+                "P41",
+                "P42"
+              ],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "deno_permissions",
+              "coverage": "UNASSESSED",
+              "primary_ids": [],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "storage_search",
+              "coverage": "COMPLETE",
+              "primary_ids": [
+                "P34",
+                "P35",
+                "P36"
+              ],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "upstream_tests",
+              "coverage": "PARTIAL",
+              "primary_ids": [
+                "P04",
+                "P05",
+                "P06",
+                "P07",
+                "P43"
+              ],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "licenses",
+              "coverage": "COMPLETE",
+              "primary_ids": [
+                "P44",
+                "P45"
+              ],
+              "scope": "available_partial_science"
+            }
+          ],
+          "critic_dispositions_to_final": "UNASSESSED",
+          "discovery_to_draft_preservation": "PARTIAL; no material loss found in available prose, full final chain absent"
+        }
+      },
+      "primary_source_index_sha256": "e8d48bf2a647a38a16c41a2759f95021ff318383797731b7b80b90a00ede6d10",
+      "manifest_frozen_at": "2026-10-12T05:21:31.178993+00:00",
+      "all_seven_dimensions_preserved": true
+    }
+  ]
+}

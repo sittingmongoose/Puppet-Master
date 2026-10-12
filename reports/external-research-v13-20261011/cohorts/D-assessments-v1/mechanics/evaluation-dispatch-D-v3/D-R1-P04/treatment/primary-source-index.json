@@ -1,0 +1,291 @@
+{
+  "arm_id": "D-R1-P04-treatment",
+  "research_owner": "independent_evaluator",
+  "shared_context_evidence": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json",
+  "sources": [
+    {
+      "url": "https://automerge.org/docs/cookbook/modeling-data/",
+      "candidate_source_ids": [
+        "AUTOMERGE-HISTORY-MODEL-CURRENT"
+      ],
+      "candidate_version_statements": [
+        "Rolling current docs; copyright 2026; no tag/commit exposed"
+      ],
+      "independent_context_id": "E13",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.020755+00:00",
+      "retrieval_response_sha256": "a7bf513a80a99dc43149cb29f2f391fb05bd09b1bc8ecbf45215775a9e9ec93a",
+      "retrieval_url": "https://automerge.org/docs/cookbook/modeling-data/",
+      "resolved_url": "https://automerge.org/docs/cookbook/modeling-data/"
+    },
+    {
+      "url": "https://automerge.org/docs/reference/documents/",
+      "candidate_source_ids": [
+        "AUTOMERGE-DATA-CURRENT"
+      ],
+      "candidate_version_statements": [
+        "Rolling current docs; copyright 2026; no tag/commit exposed"
+      ],
+      "independent_context_id": "E12",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.125482+00:00",
+      "retrieval_response_sha256": "a837c9fd3dc5b9db46ffe6b22783221a46ecd6f52c73cb49f1d6b471bc4f213b",
+      "retrieval_url": "https://automerge.org/docs/reference/documents/",
+      "resolved_url": "https://automerge.org/docs/reference/documents/"
+    },
+    {
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "candidate_source_ids": [
+        "AUTOMERGE-CONFLICT-CURRENT"
+      ],
+      "candidate_version_statements": [
+        "Rolling current docs; copyright 2026; no tag/commit exposed"
+      ],
+      "independent_context_id": "E12",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.100632+00:00",
+      "retrieval_response_sha256": "28612ef6b87e734290784f212926a360f1946c4114494b75179fdce2f8557746",
+      "retrieval_url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "resolved_url": "https://automerge.org/docs/reference/documents/conflicts/"
+    },
+    {
+      "url": "https://automerge.org/docs/reference/under-the-hood/merge-rules/",
+      "candidate_source_ids": [
+        "AUTOMERGE-MAP-MERGE-CURRENT"
+      ],
+      "candidate_version_statements": [
+        "Rolling current docs; copyright 2026; no tag/commit exposed"
+      ],
+      "independent_context_id": "E12",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.198916+00:00",
+      "retrieval_response_sha256": "8b5f1faf73fcd01f82e570288afae8964d28a7977ce18d3375126e43f311262e",
+      "retrieval_url": "https://automerge.org/docs/reference/under-the-hood/merge-rules/",
+      "resolved_url": "https://automerge.org/docs/reference/under-the-hood/merge-rules/"
+    },
+    {
+      "url": "https://docs.rs/automerge/latest/automerge/",
+      "candidate_source_ids": [
+        "AUTOMERGE-RUST-0.12"
+      ],
+      "candidate_version_statements": [
+        "automerge crate 0.12.0 (version displayed by docs.rs during this review)"
+      ],
+      "independent_context_id": "E12",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.345292+00:00",
+      "retrieval_response_sha256": "6ed2b8483a290d8317f319057cdcd1a69501ac7b5dbed09f8405c3453da2f6b2",
+      "retrieval_url": "https://docs.rs/automerge/latest/automerge/",
+      "resolved_url": "https://docs.rs/automerge/latest/automerge/"
+    },
+    {
+      "url": "https://docs.rs/loro/1.16.2/loro/struct.LoroTree.html",
+      "candidate_source_ids": [
+        "LORO-RUST-TREE-1.16.2"
+      ],
+      "candidate_version_statements": [
+        "loro crate 1.16.2 (version displayed by docs.rs; not asserted as latest Rust release)"
+      ],
+      "independent_context_id": "E02",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.508289+00:00",
+      "retrieval_response_sha256": "dec0ee752c29f9e4a8eab17b7518671aa0bbca5b115a7e2be5d43cce688dee9a",
+      "retrieval_url": "https://docs.rs/loro/1.16.2/loro/struct.LoroTree.html",
+      "resolved_url": "https://docs.rs/loro/1.16.2/loro/struct.LoroTree.html"
+    },
+    {
+      "url": "https://docs.rs/yrs/latest/yrs/doc/struct.Options.html",
+      "candidate_source_ids": [
+        "YRS-DOC-OPTIONS-0.28"
+      ],
+      "candidate_version_statements": [
+        "yrs crate 0.28.0 (version displayed by docs.rs)"
+      ],
+      "independent_context_id": "E09",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.538069+00:00",
+      "retrieval_response_sha256": "6e2ec54bc4bb6a09a4efbbcc95105b0530be69057e0b66ec3d752855beebbec2",
+      "retrieval_url": "https://docs.rs/yrs/latest/yrs/doc/struct.Options.html",
+      "resolved_url": "https://docs.rs/yrs/latest/yrs/doc/struct.Options.html"
+    },
+    {
+      "url": "https://docs.rs/yrs/latest/yrs/struct.StickyIndex.html",
+      "candidate_source_ids": [
+        "YRS-STICKY-INDEX-0.28"
+      ],
+      "candidate_version_statements": [
+        "yrs crate 0.28.0 (version displayed by docs.rs)"
+      ],
+      "independent_context_id": "E09",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.656134+00:00",
+      "retrieval_response_sha256": "7926803ab838eaee9fa9ca06cf1830e154f069d30abd07f8da60451d3c5e6ee5",
+      "retrieval_url": "https://docs.rs/yrs/latest/yrs/struct.StickyIndex.html",
+      "resolved_url": "https://docs.rs/yrs/latest/yrs/struct.StickyIndex.html"
+    },
+    {
+      "url": "https://docs.yjs.dev/api/relative-positions",
+      "candidate_source_ids": [
+        "YJS-RELATIVE-POSITION-CURRENT"
+      ],
+      "candidate_version_statements": [
+        "Rolling current docs; no package version in page"
+      ],
+      "independent_context_id": "E08",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.734330+00:00",
+      "retrieval_response_sha256": "76a3cb38f7a59044003a4c9aaadb1d24349aff94bcd7fa0693c3ef2e7634a12a",
+      "retrieval_url": "https://docs.yjs.dev/api/relative-positions",
+      "resolved_url": "https://docs.yjs.dev/api/relative-positions"
+    },
+    {
+      "url": "https://github.com/loro-dev/loro/releases",
+      "candidate_source_ids": [
+        "LORO-RELEASE-JS-1.16.4"
+      ],
+      "candidate_version_statements": [
+        "loro-crdt JavaScript package 1.16.4, release 2026-09-30, commit 45708d0; JavaScript package, not a Rust crate pin"
+      ],
+      "independent_context_id": "E05",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:08.405498+00:00",
+      "retrieval_response_sha256": "af53f269d2e363125a8be82cc20e358852e998e2d078c6ee8be9f408a86f1881",
+      "retrieval_url": "https://github.com/loro-dev/loro/releases",
+      "resolved_url": "https://github.com/loro-dev/loro/releases"
+    },
+    {
+      "url": "https://github.com/y-crdt/pycrdt/issues/382",
+      "candidate_source_ids": [
+        "PYCRDT-STICKY-UTF16-ISSUE-382"
+      ],
+      "candidate_version_statements": [
+        "Open issue opened 2026-04-17; pycrdt wrapper; no fix release observed"
+      ],
+      "independent_context_id": "E11",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:09.212485+00:00",
+      "retrieval_response_sha256": "e9163ae539f8684ba927d35e166121f5e53ceb5410937153febb9fe936f7de1c",
+      "retrieval_url": "https://github.com/y-crdt/pycrdt/issues/382",
+      "resolved_url": "https://github.com/y-crdt/pycrdt/issues/382"
+    },
+    {
+      "url": "https://github.com/y-crdt/y-crdt",
+      "candidate_source_ids": [
+        "YCRDT-REPO-CALLERS-MAIN"
+      ],
+      "candidate_version_statements": [
+        "main branch as served 2026-10-12; commit hash unavailable on rendered overview"
+      ],
+      "independent_context_id": "E11",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:08.509050+00:00",
+      "retrieval_response_sha256": "4fee94d8f0134468aff1241dc37b307e2ef8e780779552df37e8f9032a130e77",
+      "retrieval_url": "https://raw.githubusercontent.com/y-crdt/y-crdt/main/README.md",
+      "resolved_url": "https://raw.githubusercontent.com/y-crdt/y-crdt/main/README.md"
+    },
+    {
+      "url": "https://github.com/y-crdt/y-crdt/issues/607",
+      "candidate_source_ids": [
+        "YRS-DELETE-SET-ISSUE-607"
+      ],
+      "candidate_version_statements": [
+        "Reported against yrs 0.25.0 (Cargo reproduction); issue closed 2026-06-30 by PR #614"
+      ],
+      "independent_context_id": "E10",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:09.943047+00:00",
+      "retrieval_response_sha256": "c95488196f5c321a06f7fd4b031de666f3c2b600187f812ba80b70d61935a3b7",
+      "retrieval_url": "https://github.com/y-crdt/y-crdt/issues/607",
+      "resolved_url": "https://github.com/y-crdt/y-crdt/issues/607"
+    },
+    {
+      "url": "https://github.com/y-crdt/y-crdt/pull/614/files",
+      "candidate_source_ids": [
+        "YRS-DELETE-SET-PR-614"
+      ],
+      "candidate_version_statements": [
+        "Merged 2026-05-04; merge commit 48b1a7b; includes commit 6d7dc62; release v0.26 also linked"
+      ],
+      "independent_context_id": "E10",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:09.417807+00:00",
+      "retrieval_response_sha256": "47c38bd0bf4afb66294c6af452dcd54489f465cc0d4fc0869d44f2d488436cb7",
+      "retrieval_url": "https://github.com/y-crdt/y-crdt/pull/614/files",
+      "resolved_url": "https://github.com/y-crdt/y-crdt/pull/614/files"
+    },
+    {
+      "url": "https://github.com/yjs/yjs/blob/main/INTERNALS.md",
+      "candidate_source_ids": [
+        "YJS-GC-INTERNALS-MAIN"
+      ],
+      "candidate_version_statements": [
+        "main branch as served 2026-10-12; commit hash unavailable on rendered page"
+      ],
+      "independent_context_id": "E06",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:09.321479+00:00",
+      "retrieval_response_sha256": "8e9324eaa08c834ef8b8d93d7d8e2413820ae1d0edaf7ea5517eb3ce7df08924",
+      "retrieval_url": "https://raw.githubusercontent.com/yjs/yjs/main/INTERNALS.md",
+      "resolved_url": "https://raw.githubusercontent.com/yjs/yjs/main/INTERNALS.md"
+    },
+    {
+      "url": "https://github.com/yjs/yjs/issues/657",
+      "candidate_source_ids": [
+        "YJS-RELATIVE-UNDO-ISSUE-657"
+      ],
+      "candidate_version_statements": [
+        "Yjs 13.6.18 reproduction; maintainer marked fixed in 13.6.21 on 2024-12-20; fix commit f583d2a"
+      ],
+      "independent_context_id": "E08",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:09.985436+00:00",
+      "retrieval_response_sha256": "1359ce7c3581ebc1418e52dee5910838f20813a46bd9d99df5255df0bab6e87f",
+      "retrieval_url": "https://github.com/yjs/yjs/issues/657",
+      "resolved_url": "https://github.com/yjs/yjs/issues/657"
+    },
+    {
+      "url": "https://www.loro.dev/blog/movable-tree",
+      "candidate_source_ids": [
+        "LORO-MOVABLE-TREE-ARTICLE-2024"
+      ],
+      "candidate_version_statements": [
+        "Published 2024-07-18; page is not a release tag"
+      ],
+      "independent_context_id": "E03",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:11.408713+00:00",
+      "retrieval_response_sha256": "a320584f59cd574439c5aeb0ab07dfda384c5cef97eddcce68e60029db34ced5",
+      "retrieval_url": "https://www.loro.dev/blog/movable-tree",
+      "resolved_url": "https://www.loro.dev/blog/movable-tree"
+    },
+    {
+      "url": "https://www.loro.dev/docs/tutorial/tree",
+      "candidate_source_ids": [
+        "LORO-TREE-DOC-CURRENT"
+      ],
+      "candidate_version_statements": [
+        "Rolling current docs; no tag/commit exposed on the page"
+      ],
+      "independent_context_id": "E02",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:10.928934+00:00",
+      "retrieval_response_sha256": "625c2fa522839d29b882331a2f54cd57295d33eaba0a724fccb27b256f88cc29",
+      "retrieval_url": "https://www.loro.dev/docs/tutorial/tree",
+      "resolved_url": "https://www.loro.dev/docs/tutorial/tree"
+    }
+  ],
+  "additional_governing_context_ids": [
+    "E02",
+    "E03",
+    "E05",
+    "E06",
+    "E08",
+    "E09",
+    "E10",
+    "E11",
+    "E12",
+    "E13",
+    "E18"
+  ],
+  "source_versions_boundary": "Reported candidate edition labels are retained as labels, not silently updated. Independent pinned/rolling context and code/test/fix conditions appear in shared evidence. Mutable sources remain point-in-time. No citation count is a truth score."
+}

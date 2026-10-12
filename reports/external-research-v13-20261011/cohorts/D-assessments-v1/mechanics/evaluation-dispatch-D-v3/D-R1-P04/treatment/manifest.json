@@ -1,0 +1,50 @@
+{
+  "schema_version": "er13.original-output-freeze.v1",
+  "arm_id": "D-R1-P04-treatment",
+  "frozen_at_utc": "2026-10-12T05:08:47.226779+00:00",
+  "comparison_not_started": true,
+  "entries": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/assessment.md",
+      "bytes": 7437,
+      "sha256": "2357ad5bead4eb835f541145e08a0c8a3313f253f586973286641973d3f28f79"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/assessment.json",
+      "bytes": 15237,
+      "sha256": "e727096c310be72069d2fbd92a529fe94f0fe34817fd58be651e98a20f55fd5a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/coverage.json",
+      "bytes": 13723,
+      "sha256": "bb048eccbd8baa8001b96a6b63285991102c8c8a27baa1769337015dc7f771d6"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/defects.json",
+      "bytes": 3099,
+      "sha256": "92f980a768fe864e9f9c90b0f9cbd517357b4ceb0981324da0ccb5504757192d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/primary-source-index.json",
+      "bytes": 12603,
+      "sha256": "6497f051a41e304fe98b4cd8762eac6b49d2d6a66670537d018954e39e0becfe"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/input-verification.json",
+      "bytes": 4300,
+      "sha256": "c73a16b976f429e34aa95d69694ae260d086dd1e3e593ea469f6c90790deb48a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json",
+      "bytes": 48267,
+      "sha256": "d2d9ab25c75e36a6caaeec25adb3c7670f1d87c79f3e075a2a0e477d450b6f92"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/evaluation-process.json",
+      "bytes": 13234,
+      "sha256": "93623c485bc6d8c1e008566fe846bdeeebb262e9628aac5210187b20e1769117"
+    }
+  ],
+  "manifest_self_hash": "Excluded to avoid self-reference; reported by enclosing original manifest and terminal reply.",
+  "original_grades_immutable": true
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "er13.comparison_manifest.v1",
+  "block_id": "D-R2-P03",
+  "frozen_at_utc": "2026-10-12T04:50:44.702701+00:00",
+  "original_manifest_bindings": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/control/manifest.json",
+      "bytes": 2331,
+      "sha256": "d19f0194d12e9ee7c9fad3cac5f97cc3da16c0df09ff3cf98223d83fe8f6b1fa"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/treatment/manifest.json",
+      "bytes": 2348,
+      "sha256": "27c23761bf5b2cd1497db144b8a41f94ce683a4f6853e8505ad4113db71684a8"
+    }
+  ],
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/comparison.md",
+      "bytes": 3754,
+      "sha256": "88b084ec4102cc256ef52aba31c2b0eac93d652215320dfd8aaa0665625c9a87"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/comparison.json",
+      "bytes": 4716,
+      "sha256": "b681aea5ab76e65abda03a8e1348812e10b4180135f2b8232ee99cf6770b6492"
+    }
+  ],
+  "self_hash_policy": "This manifest excludes itself; its size/hash is reported externally.",
+  "original_grades_unchanged": true
+}

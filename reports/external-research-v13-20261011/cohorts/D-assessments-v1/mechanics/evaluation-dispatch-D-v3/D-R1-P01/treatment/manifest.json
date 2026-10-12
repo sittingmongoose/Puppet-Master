@@ -1,0 +1,54 @@
+{
+  "schema": "er13.immutable-original-output-manifest.v1",
+  "block_id": "D-R1-P01",
+  "arm_id": "D-R1-P01-treatment",
+  "scope": "FULL",
+  "frozen_at_utc": "2026-10-12T05:20:28.524395+00:00",
+  "original_grade_immutable": true,
+  "comparison_not_started": true,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/assessment.md",
+      "bytes": 6684,
+      "sha256": "9ece89d4898608ce5864096cdb6e9d82b2c0448e71fb326ce35870a859ec13b5"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/assessment.json",
+      "bytes": 12624,
+      "sha256": "531fad41b7150e51235f9341b4f048bc58131815e318ba6a259fcf3df2c95f78"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/coverage.json",
+      "bytes": 19920,
+      "sha256": "45f43c8dc50920886b7c852a0da6008ff392fcd94e2105b8bd98364d367820b8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/defects.json",
+      "bytes": 2550,
+      "sha256": "2dfe6d6cf656b1fe4ed4c409d2926a86f47eae17d2d734c538d28740f59be7fa"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/primary-source-index.json",
+      "bytes": 18870,
+      "sha256": "90a8161eb210ba0f5e270dedf88fef88f1ab70c729ec1db8778c765ce0d035f4"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/evidence/source-checks.json",
+      "bytes": 2522,
+      "sha256": "89e845c8ee288593c263c8b24f8319287f8540e27059b6a82d0fb3c44395e58b"
+    }
+  ],
+  "shared_evaluator_records": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/input-verification.json",
+      "bytes": 41199,
+      "sha256": "7264f589c742bee7ff04d0635c8d6f106735c5ae9392a16f22b0d389a3b2f7f2"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/evaluation-observations.json",
+      "bytes": 1328,
+      "sha256": "7542b040be29844ef4a2f3b3b69e4bb96a3b52ae59245e939441966afe148e65"
+    }
+  ],
+  "manifest_self_hash": "Excluded; exact manifest hash is bound by the root original manifest and terminal report."
+}

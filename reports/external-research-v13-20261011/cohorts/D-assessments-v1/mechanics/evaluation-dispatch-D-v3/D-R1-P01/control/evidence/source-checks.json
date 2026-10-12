@@ -1,0 +1,27 @@
+{
+  "schema": "er13.independent-source-checks.v1",
+  "arm_id": "D-R1-P01-control",
+  "checks": [
+    {
+      "source": "PS04",
+      "context": "After submit",
+      "observation": "The first-invalid submit example is present; the control keeps the focus policy contextual and guards late responses."
+    },
+    {
+      "source": "PS20",
+      "context": "July prototype clarification and August closure",
+      "observation": "Prototype mismatch and closure caution are supported. Closure does not erase the original regression example."
+    },
+    {
+      "source": "PS23",
+      "context": "Observations and Research method",
+      "observation": "Four confused participants are a subset of a five-participant study. The final correctly reports confusion, while carried investigator wording can imply four total participants; nonmaterial precision finding C-N01."
+    },
+    {
+      "source": "PS28",
+      "context": "v6.5.1 constructor/template/tests",
+      "observation": "Autofocus can be disabled. Nested alert and focus/link test assertions are specific library mechanisms, not proof of portal or AT behavior."
+    }
+  ],
+  "retained_material": "Authored compact observations only; public pages/code linked in primary-source-index.json; no downloaded code run."
+}

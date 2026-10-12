@@ -1,0 +1,96 @@
+{
+  "schema": "er13.original-block-output-manifest.v1",
+  "block_id": "D-R2-P04",
+  "arm_count": 2,
+  "frozen_at_utc": "2026-10-12T05:13:47.978645+00:00",
+  "original_grades_immutable": true,
+  "comparison_started": false,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/evidence/input-audit.json",
+      "bytes": 48469,
+      "sha256": "d44a60bf56cd10c46c7b8c71d65b5f3e0bb5a1f3178a5a6a66f3db2e71790a27"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/evidence/custody-observations.json",
+      "bytes": 23013,
+      "sha256": "85fe95bd6be67873b40a656aec0ff01a95eaf0a470b5ac041123fd9466dcadbf"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/evidence/public-source-observations.json",
+      "bytes": 35171,
+      "sha256": "144f0204bb534bda8c67f16173f5d1681d656e2a209e7fb2d1f36d00719bfc87"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/evidence/tantivy-cutoff.md",
+      "bytes": 2173,
+      "sha256": "d0edf330855f2eeee9c3a0131a6ec2a2478d4aab089cf2c4faf0ecb8934a0765"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/evidence/tantivy-MIT-LICENSE.txt",
+      "bytes": 1099,
+      "sha256": "acacd14bebbffdb30d62443c282fb4da3e81915a9f69c63d5d745a029f44de8a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/control/assessment.md",
+      "bytes": 4898,
+      "sha256": "661e808f6120c98e305751ed0db38dc7091d042f73c6b3a5aba19f9ab37bc1bb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/control/assessment.json",
+      "bytes": 12352,
+      "sha256": "656b158d863806a8093d585b0340613e53dfb90ae00605fc3d2cfbb227f0f889"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/control/coverage.json",
+      "bytes": 16720,
+      "sha256": "1a6236fbb8254827d0226a89a5c76f3fd282e65004211942de76a2fd9450d15f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/control/defects.json",
+      "bytes": 5169,
+      "sha256": "f4765f39fa0115b3715528ed0c40f530310e39171e891194115dc3b90be53d62"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/control/primary-source-index.json",
+      "bytes": 13089,
+      "sha256": "289661d2002e4bdf6b3b945cd270814d8cc0f08e26f76bcc50f422259ceb52d9"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/assessment.md",
+      "bytes": 5096,
+      "sha256": "9ecb644139b013d80c7a732b3a7bb1a1a82f0bfa8a4c2d4d818b0e41d2d1ba05"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/assessment.json",
+      "bytes": 12898,
+      "sha256": "e5ee1365b42f43f4984ef09f9cbb24cf88949991063f2446b9f954f5083daffc"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/coverage.json",
+      "bytes": 14518,
+      "sha256": "639838b87316e7465638321f7bb1655842d4890a9312d3b04d00e7a23e9626ca"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/defects.json",
+      "bytes": 3708,
+      "sha256": "8314ef209dde13d5918049103c995f77ed2930a68b1613164040826c13857ef8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/primary-source-index.json",
+      "bytes": 11735,
+      "sha256": "d285e474bb8349c5ddca04c392bdc018469211f78e81049322e6c4be45822e84"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/control/manifest.json",
+      "bytes": 2945,
+      "sha256": "11f23de57977e21a95d724ccc4b630db09765e1d9bb7b999dcd3f90667b648fd"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/manifest.json",
+      "bytes": 2957,
+      "sha256": "b3958f76252077f28faca78a5c56bd274827be01ec800a77648787bf23a9c619"
+    }
+  ],
+  "self_hash_boundary": "Manifest cannot contain its own byte hash; terminal report identifies it."
+}

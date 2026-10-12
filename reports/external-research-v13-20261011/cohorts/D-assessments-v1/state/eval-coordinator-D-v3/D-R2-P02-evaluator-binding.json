@@ -1,0 +1,16 @@
+{
+  "block_id": "D-R2-P02",
+  "arm_count": 2,
+  "taskId": "node:delegated-task:command%3Amcp%3A3d6006ae-6c98-4fc0-9848-576b3ba21dcd%3Adelegate-task%3Aer13-original-grader-D-v3-D-R2-P02-001",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A3d6006ae-6c98-4fc0-9848-576b3ba21dcd%3Adelegate-task%3Aer13-original-grader-D-v3-D-R2-P02-001",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A3d6006ae-6c98-4fc0-9848-576b3ba21dcd%253Adelegate-task%253Aer13-original-grader-D-v3-D-R2-P02-001:ordinal:1",
+  "status": "running",
+  "clientRequestId": "er13-original-grader-D-v3-D-R2-P02-001",
+  "dispatch_response": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R2-P02-dispatch.raw.json",
+  "config_response": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R2-P02-config.raw.json",
+  "cost_category": "independent_evaluation",
+  "public_epoch": "private_account_epoch_2",
+  "original": true,
+  "rubric_path": "ER13_RUNTIME/state/eval-coordinator-D-v3/evaluator-custody/D-R2-P02/rubric.json",
+  "rubric_sha256": "0e37e2ba43aea4ac6dad6788c0bac5dc5634add4f31e40d03e99478b8afc2cc5"
+}

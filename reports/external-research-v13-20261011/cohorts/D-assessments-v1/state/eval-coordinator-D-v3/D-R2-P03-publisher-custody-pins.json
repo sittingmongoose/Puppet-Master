@@ -1,0 +1,57 @@
+{
+  "block_id": "D-R2-P03",
+  "pins": [
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/evaluator-custody/D-R2-P03/rubric.json",
+      "sha256": "821eadae11fc81eadaf34edc3f7b48c4c034dd25de3000378566dd989848e058",
+      "bytes": 4207
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/evaluator-custody/D-R2-P03/rubric.json.release.json",
+      "sha256": "d425614fb01d20fac32b5cebd06f7975ee45443878f288e7e7123a77e166363f",
+      "bytes": 417
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R2-P03-rubric-release.json",
+      "sha256": "a9a2ce83c40bb5b3880073c692a264bfd8fc7e0f5ff8d5890d833585eec6e879",
+      "bytes": 670
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R2-P03-evaluator-binding.json",
+      "sha256": "1d622fee69e6ee1349055a6fda83ffcb27f22447e18cf8b9c20d93ad5e6b0c34",
+      "bytes": 1038
+    },
+    {
+      "path": "ER13_RUNTIME/state/d-rubric-mechanical-authorization-v1.json",
+      "sha256": "760e907ca7028ce6a2e21a6225e409a2c151ba6bfdd9d7d1f45e1167ed73e675",
+      "bytes": 1983
+    },
+    {
+      "path": "ER13_RUNTIME/state/d-selection-lock-v1.json",
+      "sha256": "440170c9bc813a76de2622837863c6531cf320f8767e8fab7eb34ed5e4cef9b6",
+      "bytes": 14095
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R2-P03-output-verification.json",
+      "sha256": "2285d9d1402e0392dc0ce9879d5ecc5bb70cdc731663d8bec31015be8d3c4644",
+      "bytes": 11207
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R2-P03-independent-evaluation-cost.json",
+      "sha256": "7f36824bdfa1d741f811b6336199fe4a25767ada0aa58b0cbbe0fc3ad3967af6",
+      "bytes": 847
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R1-P02-routing-condition.json",
+      "sha256": "8829b0323d4b2701ec8fd4f15436b797aee6a86437c9088f5b4372ab826bde7b",
+      "bytes": 738
+    },
+    {
+      "path": "ER13_RUNTIME/state/account-routing-amendment-v1.json",
+      "sha256": "7094c3ee0b12087616f70226b9f00906b41ccfdd2f5747e6ef869c37627ccb18",
+      "bytes": 1884
+    }
+  ],
+  "scope": "Exact D7 dedicated rubric/release custody pins; no new science or grading. Privacy-normalize private route metadata before public copy. D2 routing condition is separate prospective condition, original unchanged. Root owns all80 consolidation.",
+  "collector_prep_sha256": "e151f142bbfb2dec2cbf5d410e8249c30f89f06f869a38f701536eae3449c7e1"
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "er13.independent_public_context.v1",
+  "primary": "P33",
+  "url": "https://docs.deno.com/runtime/reference/permissions/",
+  "version": "Rolling documentation at independent 2026-10-12 access; no selected candidate Deno release",
+  "locators": [
+    "File system access/module loading",
+    "Symbolic links",
+    "Network access/module loading",
+    "Subprocesses"
+  ],
+  "observation": "Static module imports differ from runtime reads. Existing-link permissions follow the link location with specified exceptions. Spawned processes do not inherit Deno permissions.",
+  "permitted_short_quote": "Deno checks permissions based on the symlink's location, not the target it points to.",
+  "status": "Documentation inspection only; no exploit, runtime execution or notebook access",
+  "finding_ref": "C-D01"
+}

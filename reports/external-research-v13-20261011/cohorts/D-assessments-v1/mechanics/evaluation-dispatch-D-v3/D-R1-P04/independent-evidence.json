@@ -1,0 +1,741 @@
+{
+  "schema_version": "er13.independent-primary-context.v1",
+  "assignment": "D-R1-P04",
+  "cost_class": "independent_evaluation",
+  "contexts": [
+    {
+      "id": "E01",
+      "family": "Annotation interchange",
+      "coverage": "COMPLETE",
+      "locator": "W3C Recommendation, 23 February 2017; sections 1.1, 3, 4.2 and 4.3",
+      "independent_observation": "Body/target, selectors and states describe portable annotations. Media-specific selectors need applicable representations. Transport and mutable-layout intent are separate; the proposal treats the standard as an export vocabulary.",
+      "sources": [
+        {
+          "url": "https://www.w3.org/TR/annotation-model/",
+          "retrieval_url": "https://www.w3.org/TR/annotation-model/",
+          "resolved_url": "https://www.w3.org/TR/annotation-model/",
+          "retrieved_utc": "2026-10-12T04:52:10.996848+00:00",
+          "response_bytes": 284185,
+          "response_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E02",
+      "family": "Loro hierarchy and visibility",
+      "coverage": "COMPLETE",
+      "locator": "Rolling JS tree API/events; Rust 1.16.2 methods delete, contains, nodes, get_nodes, get_meta",
+      "independent_observation": "Move addresses an existing node. Rust deletion hides descendants without individually deleting them; enumeration can include deleted nodes. JS subtree events do not provide per-child explanations. Neither supplies product restoration or comment intent.",
+      "sources": [
+        {
+          "url": "https://loro.dev/docs/api/js",
+          "retrieval_url": "https://loro.dev/docs/api/js",
+          "resolved_url": "https://loro.dev/docs/api/js",
+          "retrieved_utc": "2026-10-12T04:52:10.645217+00:00",
+          "response_bytes": 1743837,
+          "response_sha256": "19f7b8ad24cea8c052b706751685cc6f5a11c638264357d48891258bdcdb1a2f"
+        },
+        {
+          "url": "https://loro.dev/docs/tutorial/tree",
+          "retrieval_url": "https://loro.dev/docs/tutorial/tree",
+          "resolved_url": "https://loro.dev/docs/tutorial/tree",
+          "retrieved_utc": "2026-10-12T04:52:10.321649+00:00",
+          "response_bytes": 122135,
+          "response_sha256": "4cb20592383323794f3ccc5231f2f982e903131901170d6ff8e973c3dc2496e8"
+        },
+        {
+          "url": "https://www.loro.dev/docs/tutorial/tree",
+          "retrieval_url": "https://www.loro.dev/docs/tutorial/tree",
+          "resolved_url": "https://www.loro.dev/docs/tutorial/tree",
+          "retrieved_utc": "2026-10-12T04:52:10.928934+00:00",
+          "response_bytes": 122135,
+          "response_sha256": "625c2fa522839d29b882331a2f54cd57295d33eaba0a724fccb27b256f88cc29"
+        },
+        {
+          "url": "https://docs.rs/loro/1.16.2/loro/struct.LoroTree.html",
+          "retrieval_url": "https://docs.rs/loro/1.16.2/loro/struct.LoroTree.html",
+          "resolved_url": "https://docs.rs/loro/1.16.2/loro/struct.LoroTree.html",
+          "retrieved_utc": "2026-10-12T04:52:07.508289+00:00",
+          "response_bytes": 183978,
+          "response_sha256": "dec0ee752c29f9e4a8eab17b7518671aa0bbca5b115a7e2be5d43cce688dee9a"
+        },
+        {
+          "url": "https://docs.rs/loro/1.16.2/src/loro/lib.rs.html",
+          "retrieval_url": "https://docs.rs/loro/1.16.2/src/loro/lib.rs.html",
+          "resolved_url": "https://docs.rs/loro/1.16.2/src/loro/lib.rs.html",
+          "retrieved_utc": "2026-10-12T04:55:06.925721+00:00",
+          "response_bytes": 405138,
+          "response_sha256": "247d2cf395a29326f9be5d67368206c370ac1e90f82fa46f3a35a2bdd988473b"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E03",
+      "family": "Loro structural ordering",
+      "coverage": "COMPLETE",
+      "locator": "Maintainer article, 18 July 2024; move conflicts, cycle handling and fractional indexing",
+      "independent_observation": "The algorithm discusses competing parents, cycles and ancestor deletion with descendant movement. Logical ordering and undo-do-redo concern structural convergence. Fractional collisions/interleaving, jitter and index growth remain distinct from review intent.",
+      "sources": [
+        {
+          "url": "https://www.loro.dev/blog/movable-tree",
+          "retrieval_url": "https://www.loro.dev/blog/movable-tree",
+          "resolved_url": "https://www.loro.dev/blog/movable-tree",
+          "retrieved_utc": "2026-10-12T04:52:11.408713+00:00",
+          "response_bytes": 117985,
+          "response_sha256": "a320584f59cd574439c5aeb0ab07dfda384c5cef97eddcce68e60029db34ced5"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E04",
+      "family": "Loro history cutoff",
+      "coverage": "COMPLETE",
+      "locator": "Shallow snapshots: synchronization limitations, redaction, archive-and-trim; v1.0 release",
+      "independent_observation": "Trimming at a frontier changes peer compatibility. Old archives still contain old data. The size example is documentation, not a workload result; neither final claims measured savings or deployed privacy compliance.",
+      "sources": [
+        {
+          "url": "https://loro.dev/docs/concepts/shallow_snapshots",
+          "retrieval_url": "https://loro.dev/docs/concepts/shallow_snapshots",
+          "resolved_url": "https://loro.dev/docs/concepts/shallow_snapshots",
+          "retrieved_utc": "2026-10-12T04:52:10.251144+00:00",
+          "response_bytes": 112964,
+          "response_sha256": "081dcb4dcc6adf3149234fdeca42c8404a598b29a3d453ffed939fd282cbbc78"
+        },
+        {
+          "url": "https://loro.dev/changelog/v1.0.0-beta",
+          "retrieval_url": "https://loro.dev/changelog/v1.0.0-beta",
+          "resolved_url": "https://loro.dev/changelog/v1.0.0-beta",
+          "retrieved_utc": "2026-10-12T04:52:10.600641+00:00",
+          "response_bytes": 44136,
+          "response_sha256": "e199c672f0237825c9e4f76e9d4dbb20ee5c9e47a1b0ce957938a4882a1242b8"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E05",
+      "family": "Loro snapshot regression",
+      "coverage": "COMPLETE",
+      "locator": "Issue 1088 controls; commit be0e1ac34a1ec8dada270575939e2ce1d7b97222, 21 September 2026; release package distinctions",
+      "independent_observation": "The failing producer was pure TypeScript loro.js 0.2.0; affected WASM importers included 1.15 and 1.16.1. The fix changes producer ordering and Rust decoder tolerance and adds interop tests. A JavaScript package number alone does not identify a Rust defect.",
+      "sources": [
+        {
+          "url": "https://github.com/loro-dev/loro/releases",
+          "retrieval_url": "https://github.com/loro-dev/loro/releases",
+          "resolved_url": "https://github.com/loro-dev/loro/releases",
+          "retrieved_utc": "2026-10-12T04:52:08.405498+00:00",
+          "response_bytes": 464010,
+          "response_sha256": "af53f269d2e363125a8be82cc20e358852e998e2d078c6ee8be9f408a86f1881"
+        },
+        {
+          "url": "https://api.github.com/repos/loro-dev/loro/releases/tags/loro-crdt%401.16.4",
+          "retrieval_url": "https://api.github.com/repos/loro-dev/loro/releases/tags/loro-crdt%401.16.4",
+          "resolved_url": "https://api.github.com/repos/loro-dev/loro/releases/tags/loro-crdt%401.16.4",
+          "retrieved_utc": "2026-10-12T04:55:06.479000+00:00",
+          "response_bytes": 16856,
+          "response_sha256": "3a58d0c44825e5cc395b8b8252b9c84ccc4fae1c7071fa4785f5cf381a795490"
+        },
+        {
+          "url": "https://github.com/loro-dev/loro/issues/1088",
+          "retrieval_url": "https://github.com/loro-dev/loro/issues/1088",
+          "resolved_url": "https://github.com/loro-dev/loro/issues/1088",
+          "retrieved_utc": "2026-10-12T04:57:36.874451+00:00",
+          "response_bytes": 377573,
+          "response_sha256": "91afcf7a83a34a7d81a9132556880eea0d5f7019c5ba0289727d22cd7ff70992"
+        },
+        {
+          "url": "https://github.com/loro-dev/loro/commit/be0e1ac.patch",
+          "retrieval_url": "https://github.com/loro-dev/loro/commit/be0e1ac.patch",
+          "resolved_url": "https://github.com/loro-dev/loro/commit/be0e1ac.patch",
+          "retrieved_utc": "2026-10-12T04:57:36.431029+00:00",
+          "response_bytes": 50290,
+          "response_sha256": "166990fe84ac1d22242568fec79277919fde035f17648b4b27f58277c55ae921"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E06",
+      "family": "Yjs deletion and GC",
+      "coverage": "COMPLETE",
+      "locator": "Y.Doc gc; INTERNALS Deletions, Transactions, Network protocol, Snapshots; stable 13.6.33 and v14 RC",
+      "independent_observation": "Deletion metadata lacks actor/time. Conditional GC can discard content while deletion identifiers remain. Updates/state vectors and snapshot delete sets serve synchronization, not product audit. Stable and prerelease versions are distinguished.",
+      "sources": [
+        {
+          "url": "https://docs.yjs.dev/api/y.doc",
+          "retrieval_url": "https://docs.yjs.dev/api/y.doc",
+          "resolved_url": "https://docs.yjs.dev/api/y.doc",
+          "retrieved_utc": "2026-10-12T04:52:07.734362+00:00",
+          "response_bytes": 504253,
+          "response_sha256": "5400e8f8f9d57982e78978a08f945b540eb77f52b90082e7ef684200c7c449b3"
+        },
+        {
+          "url": "https://github.com/yjs/yjs/blob/main/INTERNALS.md",
+          "retrieval_url": "https://raw.githubusercontent.com/yjs/yjs/main/INTERNALS.md",
+          "resolved_url": "https://raw.githubusercontent.com/yjs/yjs/main/INTERNALS.md",
+          "retrieved_utc": "2026-10-12T04:52:09.321479+00:00",
+          "response_bytes": 9202,
+          "response_sha256": "8e9324eaa08c834ef8b8d93d7d8e2413820ae1d0edaf7ea5517eb3ce7df08924"
+        },
+        {
+          "url": "https://github.com/yjs/yjs/releases",
+          "retrieval_url": "https://github.com/yjs/yjs/releases",
+          "resolved_url": "https://github.com/yjs/yjs/releases",
+          "retrieved_utc": "2026-10-12T04:52:10.918492+00:00",
+          "response_bytes": 378957,
+          "response_sha256": "3e08d5b56b1dd8d19afe6ee6198414256bb074869dbf72a055e3bf1db8b31699"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E07",
+      "family": "Yjs memory report context",
+      "coverage": "COMPLETE",
+      "locator": "Reporter version 13.6.27; initial workload and 11 July 2026 comment",
+      "independent_observation": "The open report concerns a deletion-heavy workload. The reporter later identifies an application endless-loop cause of that workload and a copy-without-history workaround. It does not establish normal-workload memory behavior or a current universal Yjs defect.",
+      "sources": [
+        {
+          "url": "https://github.com/yjs/yjs/issues/741",
+          "retrieval_url": "https://github.com/yjs/yjs/issues/741",
+          "resolved_url": "https://github.com/yjs/yjs/issues/741",
+          "retrieved_utc": "2026-10-12T04:52:10.181753+00:00",
+          "response_bytes": 318774,
+          "response_sha256": "68aa4431dbc7b95b9671dd8cb97c1710d3b6868bc879caf1cd0ddbb0eb569bc8"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E08",
+      "family": "Yjs sequence anchors and undo",
+      "coverage": "COMPLETE",
+      "locator": "Relative positions; issue 657/638; fix f583d2a; v13.6.33 source and tests",
+      "independent_observation": "Issue 657 also reproduces without undo and was marked fixed in 13.6.21. Separately, default followUndoneDeletions=true can use local redo knowledge; false provides shared resolution semantics. Current tests distinguish these. This nuance limits optional text-anchor discussion, not application shape IDs.",
+      "sources": [
+        {
+          "url": "https://docs.yjs.dev/api/relative-positions",
+          "retrieval_url": "https://docs.yjs.dev/api/relative-positions",
+          "resolved_url": "https://docs.yjs.dev/api/relative-positions",
+          "retrieved_utc": "2026-10-12T04:52:07.734330+00:00",
+          "response_bytes": 528416,
+          "response_sha256": "76a3cb38f7a59044003a4c9aaadb1d24349aff94bcd7fa0693c3ef2e7634a12a"
+        },
+        {
+          "url": "https://github.com/yjs/yjs/issues/657",
+          "retrieval_url": "https://github.com/yjs/yjs/issues/657",
+          "resolved_url": "https://github.com/yjs/yjs/issues/657",
+          "retrieved_utc": "2026-10-12T04:52:09.985436+00:00",
+          "response_bytes": 299501,
+          "response_sha256": "1359ce7c3581ebc1418e52dee5910838f20813a46bd9d99df5255df0bab6e87f"
+        },
+        {
+          "url": "https://github.com/yjs/yjs/issues/638",
+          "retrieval_url": "https://github.com/yjs/yjs/issues/638",
+          "resolved_url": "https://github.com/yjs/yjs/issues/638",
+          "retrieved_utc": "2026-10-12T04:57:36.928010+00:00",
+          "response_bytes": 371679,
+          "response_sha256": "83c41ff6cc07831b27a3943b039619ba298a41e8a9edbc0b19ff39148ca5d0bc"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/yjs/yjs/v13.6.33/src/utils/RelativePosition.js",
+          "retrieval_url": "https://raw.githubusercontent.com/yjs/yjs/v13.6.33/src/utils/RelativePosition.js",
+          "resolved_url": "https://raw.githubusercontent.com/yjs/yjs/v13.6.33/src/utils/RelativePosition.js",
+          "retrieved_utc": "2026-10-12T04:57:36.207368+00:00",
+          "response_bytes": 10094,
+          "response_sha256": "91991efa46cb5f52bbaa07f48cd1009826b2947e2d46be14311a3c52555a43b3"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/yjs/yjs/v13.6.33/tests/relativePositions.tests.js",
+          "retrieval_url": "https://raw.githubusercontent.com/yjs/yjs/v13.6.33/tests/relativePositions.tests.js",
+          "resolved_url": "https://raw.githubusercontent.com/yjs/yjs/v13.6.33/tests/relativePositions.tests.js",
+          "retrieved_utc": "2026-10-12T04:57:36.213202+00:00",
+          "response_bytes": 4471,
+          "response_sha256": "bf2ff01815f58646d2ef557a1e6e4e450baa973cc89042e848042e0e8f31338b"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/yjs/yjs/f583d2a/tests/relativePositions.tests.js",
+          "retrieval_url": "https://raw.githubusercontent.com/yjs/yjs/f583d2a/tests/relativePositions.tests.js",
+          "resolved_url": "https://raw.githubusercontent.com/yjs/yjs/f583d2a/tests/relativePositions.tests.js",
+          "retrieved_utc": "2026-10-12T04:55:06.338243+00:00",
+          "response_bytes": 4471,
+          "response_sha256": "bf2ff01815f58646d2ef557a1e6e4e450baa973cc89042e848042e0e8f31338b"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/yjs/yjs/f583d2a/src/utils/RelativePosition.js",
+          "retrieval_url": "https://raw.githubusercontent.com/yjs/yjs/f583d2a/src/utils/RelativePosition.js",
+          "resolved_url": "https://raw.githubusercontent.com/yjs/yjs/f583d2a/src/utils/RelativePosition.js",
+          "retrieved_utc": "2026-10-12T04:55:06.331248+00:00",
+          "response_bytes": 10095,
+          "response_sha256": "b0f6d0f8c9ca223d67954b0e7373d67fd11242b28ada56d83173a5e72e7d9e71"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E09",
+      "family": "Yrs offsets, GC and sticky positions",
+      "coverage": "COMPLETE",
+      "locator": "Rust 0.28.0; StickyIndex id/get_offset, Options and source definitions",
+      "independent_observation": "Byte offsets and attempted commit-time GC are defaults. An empty marker need not have a block ID, while its collection-relative position can still resolve. A current numeric offset is not the persistent marker. Redo following is not geometric identity.",
+      "sources": [
+        {
+          "url": "https://docs.rs/yrs/latest/yrs/struct.StickyIndex.html",
+          "retrieval_url": "https://docs.rs/yrs/latest/yrs/struct.StickyIndex.html",
+          "resolved_url": "https://docs.rs/yrs/latest/yrs/struct.StickyIndex.html",
+          "retrieved_utc": "2026-10-12T04:52:07.656134+00:00",
+          "response_bytes": 94662,
+          "response_sha256": "7926803ab838eaee9fa9ca06cf1830e154f069d30abd07f8da60451d3c5e6ee5"
+        },
+        {
+          "url": "https://docs.rs/yrs/latest/yrs/doc/struct.Options.html",
+          "retrieval_url": "https://docs.rs/yrs/latest/yrs/doc/struct.Options.html",
+          "resolved_url": "https://docs.rs/yrs/latest/yrs/doc/struct.Options.html",
+          "retrieved_utc": "2026-10-12T04:52:07.538069+00:00",
+          "response_bytes": 67993,
+          "response_sha256": "6e2ec54bc4bb6a09a4efbbcc95105b0530be69057e0b66ec3d752855beebbec2"
+        },
+        {
+          "url": "https://docs.rs/yrs/0.28.0/yrs/struct.StickyIndex.html",
+          "retrieval_url": "https://docs.rs/yrs/0.28.0/yrs/struct.StickyIndex.html",
+          "resolved_url": "https://docs.rs/yrs/0.28.0/yrs/struct.StickyIndex.html",
+          "retrieved_utc": "2026-10-12T04:52:07.525652+00:00",
+          "response_bytes": 94340,
+          "response_sha256": "abfb68efd8cff4b22f1c7ed58338ef79bde5f4a8af291d588079c551022a3198"
+        },
+        {
+          "url": "https://docs.rs/yrs/0.28.0/yrs/doc/struct.Options.html",
+          "retrieval_url": "https://docs.rs/yrs/0.28.0/yrs/doc/struct.Options.html",
+          "resolved_url": "https://docs.rs/yrs/0.28.0/yrs/doc/struct.Options.html",
+          "retrieved_utc": "2026-10-12T04:52:07.416312+00:00",
+          "response_bytes": 67671,
+          "response_sha256": "5fd24ac96d3284892c848c2b06f7bc677f00d3412640eb6ed181056c24b68a1d"
+        },
+        {
+          "url": "https://docs.rs/yrs/0.28.0/src/yrs/sticky_index.rs.html",
+          "retrieval_url": "https://docs.rs/yrs/0.28.0/src/yrs/sticky_index.rs.html",
+          "resolved_url": "https://docs.rs/yrs/0.28.0/src/yrs/sticky_index.rs.html",
+          "retrieved_utc": "2026-10-12T04:55:06.802233+00:00",
+          "response_bytes": 108703,
+          "response_sha256": "cfd04ff8becd1433ed5ba5e1aa266c181b11e03e4063f193722c4ff11e721582"
+        },
+        {
+          "url": "https://docs.rs/yrs/0.28.0/src/yrs/doc.rs.html",
+          "retrieval_url": "https://docs.rs/yrs/0.28.0/src/yrs/doc.rs.html",
+          "resolved_url": "https://docs.rs/yrs/0.28.0/src/yrs/doc.rs.html",
+          "retrieved_utc": "2026-10-12T04:55:06.989901+00:00",
+          "response_bytes": 322821,
+          "response_sha256": "433f46303cc6bf8f31c18b891fd3465fdc66d0acd658026a080f0a7d652036d8"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E10",
+      "family": "Yrs delete-set fix and tests",
+      "coverage": "COMPLETE",
+      "locator": "0.25.0 reproducer; merged fix 48b1a7b975885fdf6d460516b913fd2060cb82c1; Map/XML tests; 0.28.0 apply_delete",
+      "independent_observation": "A GC-prefixed deletion schedule could leave a ghost key. The merged fix advances over blocks; tests include nested Map convergence and XML replacement. Current pinned code retains that loop structure. Inspection does not execute these tests.",
+      "sources": [
+        {
+          "url": "https://github.com/y-crdt/y-crdt/issues/607",
+          "retrieval_url": "https://github.com/y-crdt/y-crdt/issues/607",
+          "resolved_url": "https://github.com/y-crdt/y-crdt/issues/607",
+          "retrieved_utc": "2026-10-12T04:52:09.943047+00:00",
+          "response_bytes": 544122,
+          "response_sha256": "c95488196f5c321a06f7fd4b031de666f3c2b600187f812ba80b70d61935a3b7"
+        },
+        {
+          "url": "https://github.com/y-crdt/y-crdt/pull/614/files",
+          "retrieval_url": "https://github.com/y-crdt/y-crdt/pull/614/files",
+          "resolved_url": "https://github.com/y-crdt/y-crdt/pull/614/files",
+          "retrieved_utc": "2026-10-12T04:52:09.417807+00:00",
+          "response_bytes": 449949,
+          "response_sha256": "47c38bd0bf4afb66294c6af452dcd54489f465cc0d4fc0869d44f2d488436cb7"
+        },
+        {
+          "url": "https://api.github.com/repos/y-crdt/y-crdt/pulls/614",
+          "retrieval_url": "https://api.github.com/repos/y-crdt/y-crdt/pulls/614",
+          "resolved_url": "https://api.github.com/repos/y-crdt/y-crdt/pulls/614",
+          "retrieved_utc": "2026-10-12T04:52:07.126026+00:00",
+          "response_bytes": 16335,
+          "response_sha256": "edf10ec2024f0beb110724d86639418bf398ff849a14cb9d8bda4dd7a441a15a"
+        },
+        {
+          "url": "https://patch-diff.githubusercontent.com/raw/y-crdt/y-crdt/pull/614.patch",
+          "retrieval_url": "https://patch-diff.githubusercontent.com/raw/y-crdt/y-crdt/pull/614.patch",
+          "resolved_url": "https://patch-diff.githubusercontent.com/raw/y-crdt/y-crdt/pull/614.patch",
+          "retrieved_utc": "2026-10-12T04:52:10.846334+00:00",
+          "response_bytes": 14462,
+          "response_sha256": "8ba4079cfb34452244497866870a7b087052068c6f07b77de05b138e3700c3cd"
+        },
+        {
+          "url": "https://docs.rs/yrs/0.28.0/src/yrs/transaction.rs.html",
+          "retrieval_url": "https://docs.rs/yrs/0.28.0/src/yrs/transaction.rs.html",
+          "resolved_url": "https://docs.rs/yrs/0.28.0/src/yrs/transaction.rs.html",
+          "retrieved_utc": "2026-10-12T04:57:36.602826+00:00",
+          "response_bytes": 193212,
+          "response_sha256": "e3ad295d69dbd9a82a70cc2ebc2b958bf514338ee2728204afe88d8656f7b025"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E11",
+      "family": "Yrs downstream callers",
+      "coverage": "COMPLETE",
+      "locator": "README bindings/test inventory; Python Sequence.sticky_index and StickyIndex get_index/new; issue 382",
+      "independent_observation": "The binding passes marker offsets through its caller chain. The open issue scopes conversion concerns to UTF-16 Text/XmlText with non-BMP characters, excluding Array indices. This is not a demonstrated native Rust failure.",
+      "sources": [
+        {
+          "url": "https://github.com/y-crdt/y-crdt",
+          "retrieval_url": "https://raw.githubusercontent.com/y-crdt/y-crdt/main/README.md",
+          "resolved_url": "https://raw.githubusercontent.com/y-crdt/y-crdt/main/README.md",
+          "retrieved_utc": "2026-10-12T04:52:08.509050+00:00",
+          "response_bytes": 10050,
+          "response_sha256": "4fee94d8f0134468aff1241dc37b307e2ef8e780779552df37e8f9032a130e77"
+        },
+        {
+          "url": "https://github.com/y-crdt/pycrdt/issues/382",
+          "retrieval_url": "https://github.com/y-crdt/pycrdt/issues/382",
+          "resolved_url": "https://github.com/y-crdt/pycrdt/issues/382",
+          "retrieved_utc": "2026-10-12T04:52:09.212485+00:00",
+          "response_bytes": 267434,
+          "response_sha256": "e9163ae539f8684ba927d35e166121f5e53ceb5410937153febb9fe936f7de1c"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/y-crdt/pycrdt/main/python/pycrdt/_sticky_index.py",
+          "retrieval_url": "https://raw.githubusercontent.com/y-crdt/pycrdt/main/python/pycrdt/_sticky_index.py",
+          "resolved_url": "https://raw.githubusercontent.com/y-crdt/pycrdt/main/python/pycrdt/_sticky_index.py",
+          "retrieved_utc": "2026-10-12T04:57:36.539981+00:00",
+          "response_bytes": 4467,
+          "response_sha256": "dfe2a8158ddf0874eb42b1c7b4f2640e34ce097dc018af5f9d93673a0d2aaaf1"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/y-crdt/pycrdt/main/python/pycrdt/_base.py",
+          "retrieval_url": "https://raw.githubusercontent.com/y-crdt/pycrdt/main/python/pycrdt/_base.py",
+          "resolved_url": "https://raw.githubusercontent.com/y-crdt/pycrdt/main/python/pycrdt/_base.py",
+          "retrieved_utc": "2026-10-12T04:57:36.635382+00:00",
+          "response_bytes": 13419,
+          "response_sha256": "e064925ec50c8b9c938dfa19bfb10e9198f76da841efb8410ef451218da3b84e"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E12",
+      "family": "Automerge data and conflicts",
+      "coverage": "COMPLETE",
+      "locator": "Rolling reference; Rust 0.12.0; maps/lists, conflicts and operation identity",
+      "independent_observation": "Concurrent map set/delete can retain the set. getConflicts exposes alternatives; a later assignment changes the current conflict view. Operation ordering is not wall-clock intent. Fine-grained records are proposals, not authenticated product identity.",
+      "sources": [
+        {
+          "url": "https://automerge.org/docs/reference/documents/",
+          "retrieval_url": "https://automerge.org/docs/reference/documents/",
+          "resolved_url": "https://automerge.org/docs/reference/documents/",
+          "retrieved_utc": "2026-10-12T04:52:07.125482+00:00",
+          "response_bytes": 24583,
+          "response_sha256": "a837c9fd3dc5b9db46ffe6b22783221a46ecd6f52c73cb49f1d6b471bc4f213b"
+        },
+        {
+          "url": "https://automerge.org/docs/reference/documents/conflicts/",
+          "retrieval_url": "https://automerge.org/docs/reference/documents/conflicts/",
+          "resolved_url": "https://automerge.org/docs/reference/documents/conflicts/",
+          "retrieved_utc": "2026-10-12T04:52:07.100632+00:00",
+          "response_bytes": 17063,
+          "response_sha256": "28612ef6b87e734290784f212926a360f1946c4114494b75179fdce2f8557746"
+        },
+        {
+          "url": "https://automerge.org/docs/reference/under-the-hood/merge-rules/",
+          "retrieval_url": "https://automerge.org/docs/reference/under-the-hood/merge-rules/",
+          "resolved_url": "https://automerge.org/docs/reference/under-the-hood/merge-rules/",
+          "retrieved_utc": "2026-10-12T04:52:07.198916+00:00",
+          "response_bytes": 16070,
+          "response_sha256": "8b5f1faf73fcd01f82e570288afae8964d28a7977ce18d3375126e43f311262e"
+        },
+        {
+          "url": "https://docs.rs/automerge/latest/automerge/",
+          "retrieval_url": "https://docs.rs/automerge/latest/automerge/",
+          "resolved_url": "https://docs.rs/automerge/latest/automerge/",
+          "retrieved_utc": "2026-10-12T04:52:07.345292+00:00",
+          "response_bytes": 55750,
+          "response_sha256": "6ed2b8483a290d8317f319057cdcd1a69501ac7b5dbed09f8405c3453da2f6b2"
+        },
+        {
+          "url": "https://docs.rs/automerge/0.12.0/automerge/",
+          "retrieval_url": "https://docs.rs/automerge/0.12.0/automerge/",
+          "resolved_url": "https://docs.rs/automerge/0.12.0/automerge/",
+          "retrieved_utc": "2026-10-12T04:52:07.354668+00:00",
+          "response_bytes": 55439,
+          "response_sha256": "545df5663a1925a66363422a4d5bbf137ac0e8545b460c437bbe829d0fd3aadc"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E13",
+      "family": "Automerge history and storage",
+      "coverage": "COMPLETE",
+      "locator": "Modeling Data initialization/versioning/performance; glossary Compaction; Repo storage; release context",
+      "independent_observation": "Full history, conceptual history truncation and Repo storage compaction differ. Repo removes only incorporated storage chunks; that is not sensitive-history erasure. Ancestry and stale-peer conditions matter. Neither proposal supplies a tested truncation implementation.",
+      "sources": [
+        {
+          "url": "https://automerge.org/docs/cookbook/modeling-data/",
+          "retrieval_url": "https://automerge.org/docs/cookbook/modeling-data/",
+          "resolved_url": "https://automerge.org/docs/cookbook/modeling-data/",
+          "retrieved_utc": "2026-10-12T04:52:07.020755+00:00",
+          "response_bytes": 26536,
+          "response_sha256": "a7bf513a80a99dc43149cb29f2f391fb05bd09b1bc8ecbf45215775a9e9ec93a"
+        },
+        {
+          "url": "https://automerge.org/docs/reference/glossary/",
+          "retrieval_url": "https://automerge.org/docs/reference/glossary/",
+          "resolved_url": "https://automerge.org/docs/reference/glossary/",
+          "retrieved_utc": "2026-10-12T04:52:07.190652+00:00",
+          "response_bytes": 14729,
+          "response_sha256": "8034031b485449a307cf0b83d758db50dce44ddb0b8d7ab3fe4f6633e2fa76ff"
+        },
+        {
+          "url": "https://automerge.org/docs/reference/under-the-hood/storage/",
+          "retrieval_url": "https://automerge.org/docs/reference/under-the-hood/storage/",
+          "resolved_url": "https://automerge.org/docs/reference/under-the-hood/storage/",
+          "retrieved_utc": "2026-10-12T04:52:07.194866+00:00",
+          "response_bytes": 22042,
+          "response_sha256": "00f8b834aaf8805fd1ce8c5650d262f62d6cf9f5985c35ce9792ef4e7aa89f81"
+        },
+        {
+          "url": "https://automerge.org/blog/",
+          "retrieval_url": "https://automerge.org/blog/",
+          "resolved_url": "https://automerge.org/blog/",
+          "retrieved_utc": "2026-10-12T04:52:07.022760+00:00",
+          "response_bytes": 7852,
+          "response_sha256": "2bd287f79b0adc5d4110ee2afce313fd14b2bb07463b99e006fe34749b3ef50b"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E14",
+      "family": "Excalidraw reconciliation and caller",
+      "coverage": "COMPLETE",
+      "locator": "Mutable master; shouldDiscardRemoteElement, reconcileElements, _reconcileElements, syncInvalidIndices, mutateElement",
+      "independent_observation": "ID/version/nonce rules select records, append unmatched locals and repair indices. The caller includes deleted records. Index mutation can change version metadata. Current code supports the described integration boundary without proving the open report universally.",
+      "sources": [
+        {
+          "url": "https://github.com/excalidraw/excalidraw/blob/master/packages/excalidraw/data/reconcile.ts",
+          "retrieval_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/excalidraw/data/reconcile.ts",
+          "resolved_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/excalidraw/data/reconcile.ts",
+          "retrieved_utc": "2026-10-12T04:52:07.734752+00:00",
+          "response_bytes": 3608,
+          "response_sha256": "07ee09fe90a94db2cf44e5a4c0c838a7c7005ffc3a03c9c8e227de4bdcbf4db0"
+        },
+        {
+          "url": "https://github.com/excalidraw/excalidraw/blob/master/excalidraw-app/collab/Collab.tsx",
+          "retrieval_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/excalidraw-app/collab/Collab.tsx",
+          "resolved_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/excalidraw-app/collab/Collab.tsx",
+          "retrieved_utc": "2026-10-12T04:52:07.635177+00:00",
+          "response_bytes": 33107,
+          "response_sha256": "5b29df5568e154cf919b68c2f1c71982008f22aec3833afbdd65f856cf80a53b"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/element/src/fractionalIndex.ts",
+          "retrieval_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/element/src/fractionalIndex.ts",
+          "resolved_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/element/src/fractionalIndex.ts",
+          "retrieved_utc": "2026-10-12T04:55:06.319404+00:00",
+          "response_bytes": 15093,
+          "response_sha256": "c1d65ed45dac1c7d0ed8b5a28b13c03e9412c6cb10b74c4ac156834e7441e9aa"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/element/src/mutateElement.ts",
+          "retrieval_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/element/src/mutateElement.ts",
+          "resolved_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/element/src/mutateElement.ts",
+          "retrieved_utc": "2026-10-12T04:55:06.318282+00:00",
+          "response_bytes": 5556,
+          "response_sha256": "fe0a157b339a128b8e049f57a1c726b053aa91b0e415971dc5983e4e6f806a70"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E15",
+      "family": "Excalidraw test oracle",
+      "coverage": "COMPLETE",
+      "locator": "Mutable master; test helper and identical-elements cases",
+      "independent_observation": "The helper asserts IDs/order, unique indices, swapped-input ID sequences and repeat reconciliation. It does not directly assert every winning payload/version or comment semantics. Characterizing it as full record equality would overstate its oracle.",
+      "sources": [
+        {
+          "url": "https://github.com/excalidraw/excalidraw/blob/master/packages/excalidraw/tests/data/reconcile.test.ts",
+          "retrieval_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/excalidraw/tests/data/reconcile.test.ts",
+          "resolved_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/excalidraw/tests/data/reconcile.test.ts",
+          "retrieved_utc": "2026-10-12T04:52:07.758412+00:00",
+          "response_bytes": 11078,
+          "response_sha256": "2dc053c6212ffc52579b946f73aeecebc01af154239e1a59e226c3929a9b984c"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E16",
+      "family": "Excalidraw import and ordering history",
+      "coverage": "COMPLETE",
+      "locator": "Issue 3795; merged fix 097362662dd33eef96cd7c5b3b4c9d2ad7ff6712; open 11933 report",
+      "independent_observation": "The old import regression is closed; its fix passes local elements into restore and advances stale duplicate versions. The index-healing report remains an unexecuted report for its stated relay/version conditions. The control does not claim its linked patch was reviewed.",
+      "sources": [
+        {
+          "url": "https://github.com/excalidraw/excalidraw/issues/3795",
+          "retrieval_url": "https://github.com/excalidraw/excalidraw/issues/3795",
+          "resolved_url": "https://github.com/excalidraw/excalidraw/issues/3795",
+          "retrieved_utc": "2026-10-12T04:52:09.471341+00:00",
+          "response_bytes": 325612,
+          "response_sha256": "62add06098f67532f36927eb3860077e00d451f18aa20f9dcf488c1607b013ce"
+        },
+        {
+          "url": "https://api.github.com/repos/excalidraw/excalidraw/pulls/3797",
+          "retrieval_url": "https://api.github.com/repos/excalidraw/excalidraw/pulls/3797",
+          "resolved_url": "https://api.github.com/repos/excalidraw/excalidraw/pulls/3797",
+          "retrieved_utc": "2026-10-12T04:52:07.096245+00:00",
+          "response_bytes": 17644,
+          "response_sha256": "0e74856542effc0b73b57869b37f5864d3b4e25547f409701616d8e908a3616d"
+        },
+        {
+          "url": "https://patch-diff.githubusercontent.com/raw/excalidraw/excalidraw/pull/3797.patch",
+          "retrieval_url": "https://patch-diff.githubusercontent.com/raw/excalidraw/excalidraw/pull/3797.patch",
+          "resolved_url": "https://patch-diff.githubusercontent.com/raw/excalidraw/excalidraw/pull/3797.patch",
+          "retrieved_utc": "2026-10-12T04:52:10.645671+00:00",
+          "response_bytes": 45607,
+          "response_sha256": "f4c09b09f9afb56662076e0c3ed18340ec3a8c0876e082c6189204f7ecc1c17f"
+        },
+        {
+          "url": "https://github.com/excalidraw/excalidraw/issues/11933",
+          "retrieval_url": "https://github.com/excalidraw/excalidraw/issues/11933",
+          "resolved_url": "https://github.com/excalidraw/excalidraw/issues/11933",
+          "retrieved_utc": "2026-10-12T04:52:08.458917+00:00",
+          "response_bytes": 269099,
+          "response_sha256": "d7e883ccf5489e5576cb27c180ef4eeb9f3702ed45ef52bba50980a25c042978"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E17",
+      "family": "Loro redo report",
+      "coverage": "COMPLETE",
+      "locator": "Open report; environment loro-crdt ^1.10.6; tree creation/text in separate undo items",
+      "independent_observation": "The report describes a recreated TreeID and separately addressed text containers across redo steps. Its stated version is available even though the carried control map omits it. No reproducer was executed and no current general defect is established.",
+      "sources": [
+        {
+          "url": "https://github.com/loro-dev/loro/issues/938",
+          "retrieval_url": "https://github.com/loro-dev/loro/issues/938",
+          "resolved_url": "https://github.com/loro-dev/loro/issues/938",
+          "retrieved_utc": "2026-10-12T04:52:08.299900+00:00",
+          "response_bytes": 314327,
+          "response_sha256": "130b98db74607a82066d772b153b667008376de62fac3bd9fbe7a49749089187"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    },
+    {
+      "id": "E18",
+      "family": "Central sequencing alternative",
+      "coverage": "COMPLETE",
+      "locator": "Historical maintainer architecture account, 16 October 2019; offline reapply, parent identity and cycles",
+      "independent_observation": "The historical design uses server authority, preserves object identity through reparenting and may hide tentative client cycles. Its comment synchronization is a separate system. This corroborates an architectural alternative, not current Figma behavior or a selected service.",
+      "sources": [
+        {
+          "url": "https://www.figma.com/blog/how-figmas-multiplayer-technology-works/",
+          "retrieval_url": "https://www.figma.com/blog/how-figmas-multiplayer-technology-works/",
+          "resolved_url": "https://www.figma.com/blog/how-figmas-multiplayer-technology-works/",
+          "retrieved_utc": "2026-10-12T04:55:06.671661+00:00",
+          "response_bytes": 1712524,
+          "response_sha256": "83f677c23c8230f4b78260a106c138a9eda44e900b0fcd253866c05f2ce92757"
+        }
+      ],
+      "execution": "Read only; no downloaded code or upstream tests executed."
+    }
+  ],
+  "public_license_notices": [
+    {
+      "url": "https://raw.githubusercontent.com/yjs/yjs/main/LICENSE",
+      "retrieved_utc": "2026-10-12T04:55:06.416620+00:00",
+      "source_sha256": "341baa53605ed85d6f95782322854cca56c655ebc7fd4712649b8e7afc6020ff",
+      "notice": "The MIT License (MIT)\n\nCopyright (c) 2023\n  - Kevin Jahns <kevin.jahns@protonmail.com>.\n  - Chair of Computer Science 5 (Databases & Information Systems), RWTH Aachen University, Germany\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/y-crdt/y-crdt/main/LICENSE",
+      "retrieved_utc": "2026-10-12T04:55:06.510102+00:00",
+      "source_sha256": "b6d81564e9c46473907bd3c09d4d5ab0f21cfbe6ac35d46daf1bdb0423182a5b",
+      "notice": "The MIT License (MIT)\n\nCopyright (c) 2020\n  - Bartosz Sypytkowski <b.sypytkowski@gmail.com>\n  - Kevin Jahns <kevin.jahns@pm.me>.\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/loro-dev/loro/main/LICENSE",
+      "retrieved_utc": "2026-10-12T04:55:06.518634+00:00",
+      "source_sha256": "b8f4ce0898a20a1610b25df6b60099c7088960ee31fae5f099caf1ae8265a33d",
+      "notice": "MIT License\n\nCopyright (c) 2023 Loro\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/automerge/automerge/main/LICENSE",
+      "retrieved_utc": "2026-10-12T04:55:06.554902+00:00",
+      "source_sha256": "7a06f577e39ec132eb8657abc3471f81f668ff3810a160db79b9b18a9568242b",
+      "notice": "Copyright (c) 2019-2021 the Automerge contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/LICENSE",
+      "retrieved_utc": "2026-10-12T04:55:06.558897+00:00",
+      "source_sha256": "1352d204fdb90d5e482c13139d848bc2c9300a9a7de358a0a558a23e72d0d8be",
+      "notice": "MIT License\n\nCopyright (c) 2020 Excalidraw\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "source_lookup_failures_retained": [
+    {
+      "url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/excalidraw/element/fractionalIndex.ts",
+      "retrieval_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/excalidraw/element/fractionalIndex.ts",
+      "status": "ERROR",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/excalidraw/element/mutateElement.ts",
+      "retrieval_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/excalidraw/element/mutateElement.ts",
+      "status": "ERROR",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/y-crdt/y-crdt/main/yrs/src/moving.rs",
+      "retrieval_url": "https://raw.githubusercontent.com/y-crdt/y-crdt/main/yrs/src/moving.rs",
+      "status": "ERROR",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://api.github.com/repos/y-crdt/y-crdt/releases/tags/v0.26.0",
+      "retrieval_url": "https://api.github.com/repos/y-crdt/y-crdt/releases/tags/v0.26.0",
+      "status": "ERROR",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://api.github.com/repos/y-crdt/y-crdt/releases/tags/v0.26",
+      "retrieval_url": "https://api.github.com/repos/y-crdt/y-crdt/releases/tags/v0.26",
+      "status": "ERROR",
+      "error": "HTTP Error 404: Not Found"
+    }
+  ],
+  "additional_web_only_checks": [
+    {
+      "url": "https://github.com/y-crdt/y-crdt/pull/614",
+      "coverage": "COMPLETE",
+      "observation": "Conversation links merged release PR 615 titled release v0.26; a missing GitHub Releases API tag is not evidence of no release."
+    },
+    {
+      "url": "https://docs.rs/yrs/0.26.0/yrs/",
+      "coverage": "UNASSESSED",
+      "observation": "Web tool reported inaccessible; no release-specific execution or shipment assertion inferred."
+    },
+    {
+      "url": "https://docs.rs/loro-internal/1.16.2/src/loro_internal/state/tree_state.rs.html",
+      "coverage": "UNASSESSED",
+      "observation": "Web tool reported inaccessible; fixed commit and Rust wrapper/API were independently inspected instead."
+    }
+  ],
+  "scope_boundary": "Compact independent notes and public licenses only. Raw source caches are deleted before freezing. Complete source repositories/history, application deployments, legal compliance, universal discovery recall and unseen workloads are outside this finite assessment."
+}

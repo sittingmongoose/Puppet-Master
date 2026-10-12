@@ -1,0 +1,146 @@
+{
+  "schema": "er13.independent_input_custody.v1",
+  "arm_id": "D-R2-P01-control",
+  "verified_at_output_utc": "2026-10-12T05:04:42.481080+00:00",
+  "governing_inputs": [
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/D-R2-P01.json",
+      "bytes": 22651,
+      "sha256": "bc39b6b581c596e2b7211babf909fb8841b0a1f376f92502ed12832fff9f8ed0"
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R2-P01-input-verification.json",
+      "bytes": 38652,
+      "sha256": "6224e213f661c0e4df6d1d9d16d22ecdbd0f40a544f148d6af3f5e2357b29478"
+    },
+    {
+      "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+      "bytes": 3800,
+      "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/evaluator-custody/D-R2-P01/rubric.json",
+      "bytes": 4086,
+      "sha256": "88531782b5148b76294f721f8f1f557ec99aef0fba14e1b7d2e8a8a86dadf374"
+    }
+  ],
+  "manifests_and_status_receipts": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R2-P01-control-eval-inputs/authored-manifest.json",
+      "bytes": 795,
+      "sha256": "8c6374013fb768901adfd8f013c95eec34f5d534a296242a7ff951c8b2f69fc9"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/investigator/manifest.json",
+      "bytes": 2870,
+      "sha256": "437faca42cddff4286af6e51666cb94e952fb1ec65446cd3b85dd6a951da21ac"
+    },
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/D-R2-P01-control/investigator-eval-ready-status.raw.json",
+      "bytes": 12771,
+      "sha256": "dd07f61c5fd54a58f483af4acaa4eb738aff5ff18e18965be071a59532fdea10"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R2-P01-control-investigator-capture-aux/authored-manifest.json",
+      "bytes": 1616,
+      "sha256": "949d56a0b6f84e1617e74653da97664ab1eb3d3b9e010cd9b7a54ffa601165e6"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/critic/manifest.json",
+      "bytes": 2384,
+      "sha256": "9ea7b76dc04ad8641343015b3a3f28d0a52b8a2ba78ad1a7a5ae9ac20bca4847"
+    },
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/D-R2-P01-control/critic-eval-ready-status.raw.json",
+      "bytes": 9103,
+      "sha256": "a39c73c63afe89d3ee1c729127a3aabebfcb107c88b6e9a05c76404b8c88748f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R2-P01-control-critic-capture-aux/authored-manifest.json",
+      "bytes": 1615,
+      "sha256": "a0a834beabab3b7e9a1f84958ecb3d534e656b146e01e8e7cafc62ebb003a9fa"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/reviser/manifest.json",
+      "bytes": 2384,
+      "sha256": "9cb8e2a1c43da7efefcb071f9a0d4f52736c8601bef6103f9ec34d769981114a"
+    },
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/arms/D-R2-P01-control/reviser-eval-ready-status.raw.json",
+      "bytes": 8825,
+      "sha256": "dff12975a4286c99e84765a3d7ef66260a2b8a8511c6110cbb7a5bf3b8c058e2"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R2-P01-control-reviser-capture-aux/authored-manifest.json",
+      "bytes": 1615,
+      "sha256": "4f00717dedc42c46091a4ce3f2426d74e41d3cb775458262f241a022dceba9cc"
+    }
+  ],
+  "packet_allowlist_member_count": 158,
+  "all_allowlisted_hashes_and_sizes_independently_verified": true,
+  "science_members": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/investigator/files/discovery.md",
+      "bytes": 15578,
+      "sha256": "b9c5c944e0eadfacf8d4255d1afb290fd97b15b975dd96b2bfe0cdc2b7d27bac"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/investigator/files/draft.md",
+      "bytes": 22379,
+      "sha256": "6c3a170101b24d32faaad04dc8dcdcc806a74010c97bb5d46c0d9a527d81f95e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/investigator/files/source-map.json",
+      "bytes": 21469,
+      "sha256": "a9b0d90a236929c8236a9b89074b6641c74829bd34f6e4f1c2433fc69efeb6e5"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/investigator/files/revealed-plan.md",
+      "bytes": 2186,
+      "sha256": "c036fb29c9b1ffb4c0179c9919eee7484ba71bf2fbe1c9be8167bb2e25db2d00"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/investigator/files/plan-reveal.json",
+      "bytes": 473,
+      "sha256": "6cecdaec94105249c19c7981c142b4ffefc522a11544cd7e131a7990c0cddcd9"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/investigator/files/sources/index.md",
+      "bytes": 4287,
+      "sha256": "47325441f8834d85f3858754de750d25ee66fee90f571b3129d620d9a7080378"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/critic/files/critique.md",
+      "bytes": 8433,
+      "sha256": "424bdc3ed7b028b66a447f08f1490e7a27b0c5bc552a0a897b04f8cc75937ac5"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/critic/files/source-map.json",
+      "bytes": 15619,
+      "sha256": "fa8f9f604f41c25ae0e79a8f1c865f5d9c6857aeff60c24e2f31c79ac59e0338"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/critic/files/sources/index.md",
+      "bytes": 3179,
+      "sha256": "6fe5ba1afa4891da46879c96d7d2437c52246b6d1539caffba521fdd6c833c5f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/reviser/files/final.md",
+      "bytes": 28761,
+      "sha256": "d708644343129fe1780332681ed841c5dd959f281589366643099841d6e705a2"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/reviser/files/source-map.json",
+      "bytes": 42476,
+      "sha256": "8fb8263100d0a577679f6780a16687e78ecbc6f9e98f2ccdeb949b1133389c1c"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-control/run/D-R2-P01-control/control/terminal-handoffs/reviser/files/sources/index.md",
+      "bytes": 2548,
+      "sha256": "8b2db3ba2c4e48306f16cb39710ae3a77de41189989e7a46bc66124acb875f3e"
+    }
+  ],
+  "boundary": "Only exact notified immutable members; referenced active sources are not locators to follow.",
+  "workspace_instructions_read": "Actual workspace AGENTS.md; handoff sections 10 and 12 only.",
+  "whole_packet_verification_total_bytes": 810761
+}

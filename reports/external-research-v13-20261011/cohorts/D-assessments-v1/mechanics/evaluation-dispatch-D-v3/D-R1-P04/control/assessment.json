@@ -1,0 +1,308 @@
+{
+  "schema_version": "er13.original-assessment.v1",
+  "assignment": "D-R1-P04",
+  "original": true,
+  "arms": [
+    {
+      "arm_id": "D-R1-P04-control",
+      "scope": "FULL",
+      "source_judgment": {
+        "complete_final": "PASS",
+        "finite_assessed_quality": true,
+        "basis": "Full declared coverage; no material unsupported claim, required omission, material false rejection or material preservation loss found in the complete frozen final.",
+        "nonmaterial_limits": [
+          "C-N1",
+          "C-N2",
+          "C-N3"
+        ],
+        "earlier_stage_science": "Investigator repository-test omission identified and repaired in frozen final; complete predecessor/critic/final chain assessed."
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis_id": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "All required targets, edit/reconnect cases, durable identity, original/unresolved context, retention and read-only export are addressed; all three negative constraints are explicit."
+          },
+          {
+            "axis_id": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_WITH_NONMATERIAL_LIMITS",
+            "basis": "Governing documentation, definitions, relevant implementation/caller/tests, editions and historical exceptions were checked. C-N1/C-N2/C-N3 bound nonmaterial wording and locator limits."
+          },
+          {
+            "axis_id": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "Useful tree/history, deletion-metadata, conflict, reconciliation and annotation mechanisms have relevant alternatives and failure history. Discovery is finite, with no universal recall claim."
+          },
+          {
+            "axis_id": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "All significant plan decisions and C1-C3 are examined. C1 is a valid predecessor omission and is repaired; owner decisions and mutable editions remain qualified."
+          },
+          {
+            "axis_id": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "Supported identity, transform, connector/region, deletion, ordering, alternatives, privacy, export and validation meaning survive into the self-contained final. No material loss found."
+          },
+          {
+            "axis_id": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_WITH_NONMATERIAL_LIMITS",
+            "basis": "Synthetic histories specify domains and expected semantic invariants separately from convergence. Proposed tests, permission/usability work and measurements remain unexecuted; deployment is not required."
+          }
+        ],
+        "obligations": "COMPLETE",
+        "consequential_source_families": "COMPLETE",
+        "detail_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/coverage.json",
+        "outside_scope": "Explicitly UNASSESSED in coverage.json"
+      },
+      "defects": {
+        "unresolved_material_final": [],
+        "findings": [
+          {
+            "id": "C-I1",
+            "severity": "material_incomplete",
+            "scope": "investigator_draft_only",
+            "status": "REPAIRED_IN_FROZEN_FINAL",
+            "axis_ids": [
+              3,
+              4,
+              5
+            ],
+            "locator": "investigator draft: executed research/brief coverage; critic C1; final Repository mechanisms, callers, tests",
+            "finding": "The investigator omitted an identified repository test surface. Critic C1 independently adds it and the complete final describes the suite and its limits. This is not an unresolved final omission.",
+            "evidence_context_ids": [
+              "E15"
+            ]
+          },
+          {
+            "id": "C-N1",
+            "severity": "nonmaterial_precision",
+            "scope": "complete_final_and_carried_test_descriptions",
+            "status": "ORIGINAL_LIMIT_RECORDED",
+            "axis_ids": [
+              2,
+              6
+            ],
+            "locator": "final: repository-test helper characterization; reviser source-map C01 recheck",
+            "finding": "The helper checks IDs/order and unique indices, not direct equality of every selected record payload/version. The final wording about selection/result equality is broader than that direct oracle. It explicitly disclaims component validation, so this does not undermine the proposed component contract.",
+            "evidence_context_ids": [
+              "E15"
+            ]
+          },
+          {
+            "id": "C-N2",
+            "severity": "nonmaterial_locator_context",
+            "scope": "source_maps_and_final",
+            "status": "ORIGINAL_LIMIT_RECORDED",
+            "axis_ids": [
+              2,
+              3
+            ],
+            "locator": "R15/R16/C01 mutable master; C02 issue 938 version field",
+            "finding": "Mutable upstream references are already disclosed. C02 says no package version was identified, although the report specifies loro-crdt ^1.10.6. The final treats the report as unverified rather than a current-version defect.",
+            "evidence_context_ids": [
+              "E14",
+              "E15",
+              "E17"
+            ]
+          },
+          {
+            "id": "C-N3",
+            "severity": "nonmaterial_history_context",
+            "scope": "R09 and final memory-report discussion",
+            "status": "ORIGINAL_LIMIT_RECORDED",
+            "axis_ids": [
+              2,
+              3
+            ],
+            "locator": "R09 / Yjs #741",
+            "finding": "The later application-loop/workaround context is not carried. The final already limits the report to its workload and does not claim a general benchmark or confirmed Yjs leak, so the omitted detail does not change its storage-measurement proposal.",
+            "evidence_context_ids": [
+              "E07"
+            ]
+          }
+        ],
+        "detail_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/defects.json"
+      },
+      "delivery": {
+        "status": "PRESENT_COMPLETE_FINAL",
+        "final": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P04-control/run/D-R1-P04-control/control/terminal-handoffs/reviser/files/final.md",
+          "bytes": 26041,
+          "sha256": "1796e4eb2d3bcdc21c9ec9deeb6ddcfede19e668befc293b85f3c38003b0c640"
+        },
+        "frozen_stages": [
+          "investigator",
+          "critic",
+          "reviser"
+        ],
+        "missing_required_outputs": [],
+        "failure_records_in_assigned_packet": [],
+        "scientific_delivery_is_not_native_provenance": true
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_BY_FROZEN_DELIVERY_AND_CLOCK_RECORDS",
+        "scope": "FULL",
+        "maximum_elapsed_seconds": 3600,
+        "t0_utc": "2026-10-12T04:17:57.084Z",
+        "whole_deadline_utc": "2026-10-12T05:17:57.084Z",
+        "notification_frozen_at_utc": "2026-10-12T04:48:19.517478+00:00",
+        "native_stage_records": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T04:17:58.048Z",
+            "requested_at_utc": "2026-10-12T04:17:58.048Z",
+            "dispatch_return_captured_at_utc": "2026-10-12T04:17:59.089Z",
+            "native_created_at_record_utc": "2026-10-12T04:18:12+00:00",
+            "native_terminal_updated_at_record_utc": "2026-10-12T04:28:24+00:00",
+            "native_reported_elapsed_seconds": 612,
+            "native_timestamp_span_seconds": 612,
+            "frozen_stage_deadline_utc": "2026-10-12T04:47:58.048Z",
+            "within_frozen_stage_deadline_by_record": true,
+            "task_terminal_status_observed_in_receipt": "completed",
+            "has_pending_children_in_receipt": false,
+            "same_birth_and_exact_objective_custody_consistent": true,
+            "precompletion_science_hashes_match_terminal_snapshot": true,
+            "native_terminal_capture_checked_in_auxiliary": true,
+            "actual_provider_start_finish": "UNKNOWN",
+            "actual_task_finish_utc": "UNKNOWN",
+            "last_scientific_write_utc": "UNKNOWN",
+            "active_provider_seconds": "UNKNOWN",
+            "billing": "UNKNOWN",
+            "cumulative_native_usage_counters_present": "tokensUsed and timeUsedSeconds are present; counter values are not published and do not establish billing or task linkage."
+          },
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T04:29:19.521Z",
+            "requested_at_utc": "2026-10-12T04:29:19.521Z",
+            "dispatch_return_captured_at_utc": "2026-10-12T04:29:20.779Z",
+            "native_created_at_record_utc": "2026-10-12T04:29:33+00:00",
+            "native_terminal_updated_at_record_utc": "2026-10-12T04:39:41+00:00",
+            "native_reported_elapsed_seconds": 607,
+            "native_timestamp_span_seconds": 608,
+            "frozen_stage_deadline_utc": "2026-10-12T04:41:19.521Z",
+            "within_frozen_stage_deadline_by_record": true,
+            "task_terminal_status_observed_in_receipt": "completed",
+            "has_pending_children_in_receipt": false,
+            "same_birth_and_exact_objective_custody_consistent": true,
+            "precompletion_science_hashes_match_terminal_snapshot": true,
+            "native_terminal_capture_checked_in_auxiliary": true,
+            "actual_provider_start_finish": "UNKNOWN",
+            "actual_task_finish_utc": "UNKNOWN",
+            "last_scientific_write_utc": "UNKNOWN",
+            "active_provider_seconds": "UNKNOWN",
+            "billing": "UNKNOWN",
+            "cumulative_native_usage_counters_present": "tokensUsed and timeUsedSeconds are present; counter values are not published and do not establish billing or task linkage."
+          },
+          {
+            "stage": "reviser",
+            "prepared_at_utc": "2026-10-12T04:40:23.301Z",
+            "requested_at_utc": "2026-10-12T04:40:23.301Z",
+            "dispatch_return_captured_at_utc": "2026-10-12T04:40:25.613Z",
+            "native_created_at_record_utc": "2026-10-12T04:40:33+00:00",
+            "native_terminal_updated_at_record_utc": "2026-10-12T04:47:28+00:00",
+            "native_reported_elapsed_seconds": 415,
+            "native_timestamp_span_seconds": 415,
+            "frozen_stage_deadline_utc": "2026-10-12T04:58:23.301Z",
+            "within_frozen_stage_deadline_by_record": true,
+            "task_terminal_status_observed_in_receipt": "completed",
+            "has_pending_children_in_receipt": false,
+            "same_birth_and_exact_objective_custody_consistent": true,
+            "precompletion_science_hashes_match_terminal_snapshot": true,
+            "native_terminal_capture_checked_in_auxiliary": true,
+            "actual_provider_start_finish": "UNKNOWN",
+            "actual_task_finish_utc": "UNKNOWN",
+            "last_scientific_write_utc": "UNKNOWN",
+            "active_provider_seconds": "UNKNOWN",
+            "billing": "UNKNOWN",
+            "cumulative_native_usage_counters_present": "tokensUsed and timeUsedSeconds are present; counter values are not published and do not establish billing or task linkage."
+          }
+        ],
+        "final_native_terminal_record_utc": "2026-10-12T04:47:28+00:00",
+        "named_timing_proxy": "T0 to final native-terminal timestamp in immutable custody; not actual T3 task finish or last scientific write.",
+        "t0_to_final_native_terminal_record_seconds": 1770.916,
+        "native_record_spans_sum_seconds": 1635,
+        "native_record_spans_union_seconds": 1635,
+        "native_record_spans_overlap_seconds": 0,
+        "context_occupancy_created_started_sum_union_overlap": "UNKNOWN; native Goal spans are only a separate proxy, not full context residency.",
+        "clock_reset_or_reconstruction": false,
+        "eligibility_limit": "Files are delivered in the immutable notification before the original whole deadline; every native terminal record is within its stage cap. Direct native-to-task provenance remains UNKNOWN. Component limit of 25 minutes is not used for this FULL assignment."
+      },
+      "method_compliance": {
+        "status": "OBSERVABLE_TOPOLOGY_AND_OUTPUT_COMPLIANCE_WITH_PROVENANCE_LIMITS",
+        "observed_stage_topology": [
+          "investigator",
+          "critic",
+          "reviser"
+        ],
+        "configured_final_stage": "reviser",
+        "configured_stage_maximums_seconds": {
+          "investigator": 1800,
+          "critic": 720,
+          "reviser": 1080
+        },
+        "stored_method_id": "R0",
+        "stored_public_recipe_choice": "R0",
+        "discovery_hash_and_revealed_plan_receipt_match": true,
+        "source_ids_preserved_without_rebinding": true,
+        "treatment_adversarial_check_observed": "Not an added requirement for this arm.",
+        "metadata_issue": null,
+        "unobservable": [
+          "pre-input execution order and absence of unseen actions",
+          "direct native call freshness/task linkage",
+          "complete transcript routing history"
+        ],
+        "no_evaluator_execution_of_candidate_helpers": true
+      },
+      "native_identity_provenance": {
+        "status": "CUSTODY_CONSISTENT_DIRECT_PROVENANCE_UNKNOWN",
+        "birth_active_terminal_objective_identity_checks_match": true,
+        "precompletion_science_matches": true,
+        "direct_return_capture_checks_present": true,
+        "provenance_independently_proved": false,
+        "native_to_assigned_T3_task_linkage": "UNKNOWN beyond exact assigned capture/objective custody",
+        "absence_of_unlisted_goals_or_rescue": "UNKNOWN, not established by receipts",
+        "private_identity_and_raw_transcripts_published": false
+      },
+      "resource_billing_coverage": {
+        "status": "PARTIAL_OBSERVABILITY",
+        "candidate_product": {
+          "native_elapsed_counter_records": "PRESENT; separate from provider activity",
+          "native_cumulative_usage_counters": "PRESENT; not published, not proved billable or task-linked",
+          "tokens_and_cache_reasoning_breakdown": "UNKNOWN",
+          "active_provider_time": "UNKNOWN",
+          "context_occupancy": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "billing_cost": "UNKNOWN"
+        },
+        "this_grader": {
+          "cost_class": "independent_evaluation",
+          "elapsed_first_observation_to_freeze": "Recorded separately in evaluation-process/manifest timestamps; not candidate cost",
+          "active_provider_time": "UNKNOWN",
+          "billing": "UNKNOWN",
+          "account_epoch_telemetry": "UNAVAILABLE within supplied inputs; no historical backfill"
+        },
+        "unknown_is_zero": false,
+        "no_failure_or_stage_denominator_removed": true
+      },
+      "limitations": [
+        "Imperfect blinding from paths/prompts/topology.",
+        "Finite proposal review; no deployment or universal correctness claim.",
+        "Unknown owner facts remain honest unknowns.",
+        "Direct native freshness/linkage, actual task finish and billing unavailable."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,474 @@
+{
+  "block_id": "D-R1-P03",
+  "verified_at_utc": "2026-10-12T05:01:34.916385+00:00",
+  "all_output_manifest_members_verified": true,
+  "full_authored_assessments_read": true,
+  "arms": [
+    {
+      "arm_id": "D-R1-P03-control",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/assessment.json",
+      "assessment_sha256": "e9db49431db742d30ca26fd4e16afddfd8e07af805389daba53dd813eeac0668",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/assessment.md",
+      "authored_assessment_md_sha256": "eb30cac4ec47792a6b5780e2d2b5f22883c2c7f648a041626415adb75b6e2829",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/manifest.json",
+      "manifest_sha256": "52b3da0f68016829247d3ae0ff2d7f04524fdabbca325c8b9abcea2c48807deb",
+      "source_judgment": {
+        "status": "FAIL",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [
+          "C-D01"
+        ],
+        "finite_assessment": true,
+        "universal_correctness_claim": false,
+        "basis": "Material causal repair-history error; otherwise coherent proposal."
+      },
+      "source_assessment": {
+        "status": "FAIL",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [
+          "C-D01"
+        ],
+        "finite_assessment": true,
+        "universal_correctness_claim": false,
+        "basis": "Material causal repair-history error; otherwise coherent proposal."
+      },
+      "source_dimension_field": "source_judgment (authored structured source dimension; original unchanged)",
+      "coverage": {
+        "axes": [
+          {
+            "id": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "All five obligations and three negatives addressed; planning-level unresolved choices retained."
+          },
+          {
+            "id": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "basis": "Consequential repair-history account C-D01 conflicts with final code and rejected revision context."
+          },
+          {
+            "id": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "basis": "Useful breadth present, but one purported implemented repair is incorrectly understood; C-D01."
+          },
+          {
+            "id": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Every exact provisional clause and all three critic findings have defensible dispositions; no unsafe original assumption restored."
+          },
+          {
+            "id": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Supported investigator meaning, alternatives, negative constraints and proposed-status boundaries retained. Wrong historical premise is a source error, not supported-meaning loss."
+          },
+          {
+            "id": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Domain-specific proposed faults have outcome oracles; no product checks claimed executed. Deployment is not required."
+          }
+        ],
+        "obligations": "COMPLETE",
+        "source_families": [
+          {
+            "family": "archive",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Python editions, implementation and bad-CRC tests checked; duplicate/path/compression duties examined.",
+            "primary_source_ids": [
+              "P09",
+              "P11",
+              "P12"
+            ]
+          },
+          {
+            "family": "atomicity",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Database-versus-files and rename-versus-durability boundaries checked; exact target filesystem remains open.",
+            "primary_source_ids": [
+              "P05"
+            ]
+          },
+          {
+            "family": "crypto",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Pinned/current specs, header MAC, wrapping, payload reader/tests and digest definition examined; no selected-library security audit claimed.",
+            "primary_source_ids": [
+              "P17",
+              "P18",
+              "P19",
+              "P20",
+              "P21",
+              "P22"
+            ]
+          },
+          {
+            "family": "identity_history",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "basis": "Import/link definitions, incident versions, narrow clipboard fix, merged caller/test, withdrawn helper proposal and review chronology inspected.",
+            "primary_source_ids": [
+              "P29",
+              "P30",
+              "P31",
+              "P32",
+              "P33",
+              "P34",
+              "P35",
+              "P36",
+              "P37",
+              "P38",
+              "P39"
+            ]
+          },
+          {
+            "family": "incremental",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Repository/snapshot dependencies, read errors, overwrite/interruption and full-data check cost examined.",
+            "primary_source_ids": [
+              "P24",
+              "P25",
+              "P26",
+              "P27"
+            ]
+          },
+          {
+            "family": "incremental_history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Historical SIGINT report and later comment distinguished from current implemented feature.",
+            "primary_source_ids": [
+              "P28"
+            ]
+          },
+          {
+            "family": "inventory",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Expected source inventory versus member/hash validity checked independently with opaque-payload definitions; neither proves usability.",
+            "primary_source_ids": [
+              "P40"
+            ]
+          },
+          {
+            "family": "migration",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "PRAGMA meanings/defaults and version/config-sensitive ALTER TABLE examined; actual future schema registry unknown.",
+            "primary_source_ids": [
+              "P04",
+              "P06"
+            ]
+          },
+          {
+            "family": "snapshot",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "SQLite snapshot API, fatal/retry/finish semantics and WAL sidecars checked; claims conditional on choosing SQLite.",
+            "primary_source_ids": [
+              "P01",
+              "P02",
+              "P03"
+            ]
+          },
+          {
+            "family": "snapshot_history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "WAL-reset versions/condition and fixed release checked; source chronology is conditional.",
+            "primary_source_ids": [
+              "P41"
+            ]
+          }
+        ],
+        "full_details": "coverage.json"
+      },
+      "primary_source_index_sha256": "718a292ad76a5ba9af7bc852a1405d248cf951cf51204e870a7062a1474fb732",
+      "manifest_frozen_at": "2026-10-12T04:58:59.703475+00:00"
+    },
+    {
+      "arm_id": "D-R1-P03-treatment",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/treatment/assessment.json",
+      "assessment_sha256": "6b78e1dcc354837957a31511fbaa731a46c3610b24bd2730f5d02e54dc901455",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/treatment/assessment.md",
+      "authored_assessment_md_sha256": "9140e98af1a3aab6c956f7c69e9477a83cdae06b9683930c2ab83a9a030e6507",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/treatment/manifest.json",
+      "manifest_sha256": "7ce62a002e8dac4c5361ef34819f5cb0a413110453dd8b33bb107cfc996c51c2",
+      "source_judgment": {
+        "status": "PASS",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [],
+        "finite_assessment": true,
+        "universal_correctness_claim": false,
+        "basis": "No material unsupported claim, required omission, false rejection or supported-meaning loss found under declared complete planning coverage."
+      },
+      "source_assessment": {
+        "status": "PASS",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [],
+        "finite_assessment": true,
+        "universal_correctness_claim": false,
+        "basis": "No material unsupported claim, required omission, false rejection or supported-meaning loss found under declared complete planning coverage."
+      },
+      "source_dimension_field": "source_judgment (authored structured source dimension; original unchanged)",
+      "coverage": {
+        "axes": [
+          {
+            "id": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "All five obligations and three negatives addressed with coherent staging and explicit choices."
+          },
+          {
+            "id": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Consequential mechanisms, definitions, versions, exceptions and repair conditions verified under finite scope."
+          },
+          {
+            "id": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "WAL-reset qualification, ZIP symlink-order repair, authenticated final chunks, VACUUM interruption and repository check costs are useful supported discoveries."
+          },
+          {
+            "id": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "All plan clauses and CR-01 through CR-05 accounted for; severity overstatement recorded T-L01 without a false final rejection."
+          },
+          {
+            "id": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Supported capture, inventory, IDs/references, alternatives, owner choices and proposed validation meanings retained; discovery locator corrected."
+          },
+          {
+            "id": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Specific proposed domains/oracles cover interruption, damage, migration, merge, secrets and usability; no invented execution."
+          }
+        ],
+        "obligations": "COMPLETE",
+        "source_families": [
+          {
+            "family": "archive",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Python editions, implementation and bad-CRC tests checked; duplicate/path/compression duties examined.",
+            "primary_source_ids": [
+              "P10",
+              "P11",
+              "P12"
+            ]
+          },
+          {
+            "family": "archive_history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Advisory, fixed extractor/caller and symlink-order regression plus release examined.",
+            "primary_source_ids": [
+              "P13",
+              "P14",
+              "P15"
+            ]
+          },
+          {
+            "family": "atomicity",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Database-versus-files and rename-versus-durability boundaries checked; exact target filesystem remains open.",
+            "primary_source_ids": [
+              "P16"
+            ]
+          },
+          {
+            "family": "crypto",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Pinned/current specs, header MAC, wrapping, payload reader/tests and digest definition examined; no selected-library security audit claimed.",
+            "primary_source_ids": [
+              "P17",
+              "P18",
+              "P20",
+              "P21",
+              "P22",
+              "P23"
+            ]
+          },
+          {
+            "family": "incremental",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Repository/snapshot dependencies, read errors, overwrite/interruption and full-data check cost examined.",
+            "primary_source_ids": [
+              "P24",
+              "P26"
+            ]
+          },
+          {
+            "family": "inventory",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Expected source inventory versus member/hash validity checked independently with opaque-payload definitions; neither proves usability.",
+            "primary_source_ids": [
+              "P40"
+            ]
+          },
+          {
+            "family": "migration",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "PRAGMA meanings/defaults and version/config-sensitive ALTER TABLE examined; actual future schema registry unknown.",
+            "primary_source_ids": [
+              "P04",
+              "P07"
+            ]
+          },
+          {
+            "family": "snapshot",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "SQLite snapshot API, fatal/retry/finish semantics and WAL sidecars checked; claims conditional on choosing SQLite.",
+            "primary_source_ids": [
+              "P01",
+              "P02",
+              "P03",
+              "P08"
+            ]
+          },
+          {
+            "family": "snapshot_history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "WAL-reset versions/condition and fixed release checked; source chronology is conditional.",
+            "primary_source_ids": [
+              "P41"
+            ]
+          }
+        ],
+        "full_details": "coverage.json"
+      },
+      "primary_source_index_sha256": "e6c85fb60bf097860c89ec486ece0fe260939552f81217539e95de35e7eebdcb",
+      "manifest_frozen_at": "2026-10-12T04:58:59.705472+00:00"
+    }
+  ],
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/coverage.json",
+      "bytes": 10062,
+      "sha256": "a1c8913b367433e3aef20e983380eae4e695a09b413061257eb04dcde2d638cb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/defects.json",
+      "bytes": 2320,
+      "sha256": "d8a1591a87a938c00ad0fd64d54433414b39ccd5ba6de7fee6a3cc12f47b91ae"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/primary-source-index.json",
+      "bytes": 31444,
+      "sha256": "718a292ad76a5ba9af7bc852a1405d248cf951cf51204e870a7062a1474fb732"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/assessment.json",
+      "bytes": 13814,
+      "sha256": "e9db49431db742d30ca26fd4e16afddfd8e07af805389daba53dd813eeac0668"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/assessment.md",
+      "bytes": 3516,
+      "sha256": "eb30cac4ec47792a6b5780e2d2b5f22883c2c7f648a041626415adb75b6e2829"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/evidence/input-integrity.json",
+      "bytes": 2883,
+      "sha256": "87d87ffae2f902d72d4034ee0dd76f3d6c439b04e518592e5d70a15dd20b143f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/evidence/joplin-repair-context.json",
+      "bytes": 2642,
+      "sha256": "1641ecf999254ba94a0f10544d0d8be6215396b83dd28d10d2d805dd86b2bf50"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/treatment/coverage.json",
+      "bytes": 9813,
+      "sha256": "2c931e26f0f82a738ea9cd1729e345bfd22bb084e197d4d5a4ac443580f43a4e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/treatment/defects.json",
+      "bytes": 1856,
+      "sha256": "1edcba5d71956f2b3bbb057f9ab7a15b196364e06b338d2f9143d22e545c9e12"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/treatment/primary-source-index.json",
+      "bytes": 22088,
+      "sha256": "e6c85fb60bf097860c89ec486ece0fe260939552f81217539e95de35e7eebdcb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/treatment/assessment.json",
+      "bytes": 12386,
+      "sha256": "6b78e1dcc354837957a31511fbaa731a46c3610b24bd2730f5d02e54dc901455"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/treatment/assessment.md",
+      "bytes": 3496,
+      "sha256": "9140e98af1a3aab6c956f7c69e9477a83cdae06b9683930c2ab83a9a030e6507"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/treatment/evidence/input-integrity.json",
+      "bytes": 2323,
+      "sha256": "5fe88ba3767c047b2142565e94aec0c5867621a525ca6dd579dee033ccad78df"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/comparison.json",
+      "bytes": 3826,
+      "sha256": "64577a51de4b25a9cd194a75f993a3b5e0f7e84e35a7458add1f01b7bd2cfb42"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/comparison.md",
+      "bytes": 1988,
+      "sha256": "7bed7617182fffe2d349d511b024015bed003d781aeb5cbe5d37c8e1d45ff28e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/manifest.json",
+      "bytes": 2110,
+      "sha256": "52b3da0f68016829247d3ae0ff2d7f04524fdabbca325c8b9abcea2c48807deb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/treatment/manifest.json",
+      "bytes": 1850,
+      "sha256": "7ce62a002e8dac4c5361ef34819f5cb0a413110453dd8b33bb107cfc996c51c2"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/assessment.json",
+      "bytes": 26090,
+      "sha256": "c03e56127c3c16d6892dafb3b235c75daf897ecd8234a3342da8088786ee1888"
+    }
+  ],
+  "comparison_manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/comparison-manifest.json",
+  "comparison_manifest_sha256": "1d40a2db67d9e2af5d784bf6f8c7d526bcf0744eb25ba38071995ec8e891bf33",
+  "originals_frozen_before_comparison": true,
+  "actual_completed_zero_pending": true,
+  "science_boundary": "Independent evaluator judgments relayed unchanged; custody verification is not source scoring",
+  "primary_evidence_retention": "All manifest-listed primary context evidence and authored source index hashed/read; URL/version context retention not byte-exact external replay unless separately present"
+}

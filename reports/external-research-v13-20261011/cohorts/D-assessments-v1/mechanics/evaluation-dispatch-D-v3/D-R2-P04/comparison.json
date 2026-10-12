@@ -1,0 +1,133 @@
+{
+  "schema": "er13.finite-original-comparison.v1",
+  "block_id": "D-R2-P04",
+  "scope": "FULL",
+  "arm_count": 2,
+  "analysis_written_at_utc": "2026-10-12T05:15:17.586352+00:00",
+  "original_freeze_utc": "2026-10-12T05:13:47.978645+00:00",
+  "original_manifest": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/manifest.json",
+    "bytes": 4708,
+    "sha256": "e5b796f80498ea109c848b7cd6783d67b7c156b9e1c1e32c78fb0bd777ccb50d"
+  },
+  "original_arm_manifests": {
+    "control": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/control/manifest.json",
+      "bytes": 2945,
+      "sha256": "11f23de57977e21a95d724ccc4b630db09765e1d9bb7b999dcd3f90667b648fd"
+    },
+    "treatment": {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/manifest.json",
+      "bytes": 2957,
+      "sha256": "b3958f76252077f28faca78a5c56bd274827be01ec800a77648787bf23a9c619"
+    }
+  },
+  "original_grades_unchanged": true,
+  "label": "FAIL / UNASSESSED; treatment available science PARTIAL",
+  "comparability": "NO_COMPARABLE_COMPLETE_SOURCE_QUALITY_PAIR",
+  "matched_stratum": {
+    "case": "D-P08",
+    "requested_and_status_reported_model": "gpt-6-luna",
+    "requested_reasoning": "max",
+    "requested_tier": "default",
+    "maximum_full_elapsed_minutes": 60,
+    "private_route_and_session_attribution": "UNKNOWN beyond frozen custody; omitted"
+  },
+  "original_arm_records": {
+    "control": {
+      "arm_id": "D-R2-P04-control",
+      "source_judgment": {
+        "grade": "FAIL",
+        "coverage": "COMPLETE",
+        "target": "exact_complete_frozen_final_and_carried_evidence",
+        "material_source_defects": [
+          "D-C01",
+          "D-C02"
+        ],
+        "finite_quality_only": true
+      },
+      "coverage": "COMPLETE",
+      "delivery": "DELIVERED",
+      "time_eligibility": "ELIGIBLE_BY_FROZEN_CUSTODY",
+      "observed_native_terminal_utc": "2026-10-12T04:43:35+00:00",
+      "t0_to_native_terminal_proxy_s": 1370.697,
+      "t0_to_frozen_status_observation_proxy_s": 1591.84957,
+      "source_defect_ids": [
+        "D-C01",
+        "D-C02"
+      ],
+      "billing": "UNKNOWN"
+    },
+    "treatment": {
+      "arm_id": "D-R2-P04-treatment",
+      "source_judgment": {
+        "grade": "UNASSESSED",
+        "target": "missing_complete_final",
+        "all_six_complete_final_axes": "UNASSESSED",
+        "available_partial_science": {
+          "coverage": "PARTIAL",
+          "judgment": "DEFECT_FOUND_WITH_USEFUL_SUPPORTED_SCIENCE",
+          "material_source_defects": [
+            "D-T01"
+          ],
+          "comparable_complete_grade": false
+        }
+      },
+      "coverage": "UNASSESSED",
+      "delivery": "MISSING_FINAL",
+      "time_eligibility": "NO_TIME_ELIGIBLE_DELIVERED_FINAL",
+      "observed_native_terminal_utc": null,
+      "t0_to_native_terminal_proxy_s": null,
+      "t0_to_frozen_status_observation_proxy_s": 1589.52457,
+      "source_defect_ids": [
+        "D-T01"
+      ],
+      "billing": "UNKNOWN"
+    }
+  },
+  "all_assigned_counts": {
+    "arms": 2,
+    "delivered_finals": 1,
+    "missing_finals": 1,
+    "complete_finals_source_assessed": 1,
+    "complete_source_pass_outputs_observed": 0,
+    "unassessed_complete_final_attempts": 1,
+    "interrupted_required_stages": 1,
+    "launched_task_records": 6,
+    "unlaunched_reviser_records": 1
+  },
+  "finite_scientific_observations": [
+    "Control has a complete self-contained version/membership/freshness proposal and valid critic dispositions, but the carried Tantivy character cutoff and imported PDF-origin omission prevent source PASS.",
+    "Treatment available draft expressly describes unverified imported text origin and its truth critic gives useful Tika AUTO/isolation conditions. Those localized observations do not establish overall superiority or final preservation.",
+    "Treatment exact transcript/audio version association remains a partial-science gap. Missing breadth documents and final cannot be inferred, reconstructed or ranked as a complete output.",
+    "Defect counts under COMPLETE versus PARTIAL/UNASSESSED coverage are not comparable quality scores."
+  ],
+  "latency_comparison": {
+    "paired_successful_final_difference_s": null,
+    "reason": "Treatment has no delivered final; failure-observation time cannot be subtracted as equal-quality successful completion. Native terminal proxy is not actual artifact/provider finish."
+  },
+  "resources": {
+    "candidate_product_total_consumption": "UNKNOWN",
+    "independent_evaluation_cost": "UNKNOWN; separate category, own primary lookup shared",
+    "created_started_context_occupancy_unions_overlap": "UNKNOWN",
+    "active_provider_activity": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "passing_output_consumption_quotient": null,
+    "passing_output_consumption_quotient_status": "UNDEFINED_ZERO_OBSERVED_SOURCE_PASSES",
+    "failed_missing_interrupted_attempts_retained": true
+  },
+  "claims_not_established": [
+    "Equal-quality savings",
+    "Affordability or resource reduction",
+    "Universal reliability or non-inferiority",
+    "Discovery effectiveness or cold full-pipeline success from shared preparation/component work",
+    "A recipe winner or successor selection"
+  ],
+  "selection_action": "NONE; recipe selection and C/D lock remain outside this assignment.",
+  "limitations": [
+    "Imperfect blinding from labels, paths and prompt topology.",
+    "Finite matched-pair observation with an incomplete arm, not a repeatable optimizer signal.",
+    "Independent native-to-task linkage and actual provider activity/billing remain UNKNOWN, not zero.",
+    "No repairs, feedback, repeated graders, replacement attempts, new Goals or subagents; originals unchanged."
+  ]
+}

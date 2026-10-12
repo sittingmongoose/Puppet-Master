@@ -1,0 +1,66 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "D-R2-P04-treatment",
+  "source_grade_target": "complete_frozen_final",
+  "complete_final_grade": "UNASSESSED",
+  "defects": [
+    {
+      "id": "D-T01",
+      "dimension": "source_assessment",
+      "scope": "available_investigator_partial_science_only",
+      "classification": "material_incomplete",
+      "axes": [
+        1,
+        2,
+        6
+      ],
+      "obligations": [
+        "O02",
+        "O03",
+        "O04"
+      ],
+      "finding": "A supplied transcript has its own version and a link to audio, but the draft does not bind that exact transcript revision to the exact audio byte revision whose cue timeline it describes.",
+      "materiality": "Replacing audio independently can leave old transcript times apparently applicable to a new clip. Verifying the transcript or a generic attachment digest does not define both sides of that association.",
+      "frozen_locators": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/investigator/files/draft.md",
+          "sha256": "ccf0ad68d70626eec1d5871ef3e3f9df2788ae08507ec6ac8b0dbf7f82ba41ce",
+          "locator": "lines 24–30, 58–62 and 83"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/critic-truth/files/critique.md",
+          "sha256": "50426eeeec630139c3da3375f49cba64b776c5490a7f2457c0e0c305f686a2db",
+          "locator": "lines 11–21 do not address this association"
+        }
+      ],
+      "primary_sources": [
+        "PS15"
+      ],
+      "qualification": "No final exists. This is a finding about available partial science, not an inferred final failure, critic disposition or repaired proposal."
+    },
+    {
+      "id": "D-T-M01",
+      "dimension": "delivery_and_method",
+      "scope": "original_notified_failure",
+      "classification": "missing_final_after_interrupted_required_stage",
+      "axes": [],
+      "finding": "Breadth critic interrupted with critique.md, source-map.json and native-goal-terminal.json missing; reviser held and never launched.",
+      "retained_failure_record": {
+        "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R2-P04-failure-record-custody/state/dispatcher-v1/arms/D-R2-P04-treatment/critic-breadth-terminal-mechanics-failure.json",
+        "sha256": "594dbb7acb867a545c085824c62429f90f7635e24dfc95ec79d6fafe4f6ba842"
+      },
+      "missing_capture_auxiliary": [
+        "native-completion-attempt.json",
+        "native-completion-output-snapshot.json",
+        "native-terminal-capture-checked.json"
+      ],
+      "source_quality_boundary": "All six complete-final axes UNASSESSED. No completion receipt, final, replacement attempt or clock correction was reconstructed."
+    }
+  ],
+  "nonmaterial_limits": [
+    "Finite assessment of the exact frozen inputs; no universal correctness, external discovery recall, deployment success or cold full-pipeline claim.",
+    "Unknown notebook storage, languages/corpus, devices, packaging, retention and numeric limits may remain owner/runtime questions. Available mechanism facts were independently researched.",
+    "Technique-bearing paths, R0/B06 labels and complementary-critic instructions make blinding imperfect; no claim of blinded review.",
+    "Raw lifecycle/hash receipts establish declared custody, not source truth or independent native-to-task linkage. No full native transcripts, private account identity or machine state published."
+  ]
+}

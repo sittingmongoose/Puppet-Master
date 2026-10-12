@@ -1,0 +1,43 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "D-R1-P02-control",
+  "findings": [
+    {
+      "id": "D01",
+      "severity": "MATERIAL",
+      "kind": "unsupported_resolution_claim_and_missing_fix_context",
+      "axes": [
+        2,
+        3
+      ],
+      "candidate_locator": "reviser/final.md:70; source-map.json SRC-LIBVIPS-15; discovery History; draft C1",
+      "finding": "Final calls libvips #4343 resolution unknown. The cited issue already contains a diagnosis and merged alpha-range repair; the final omits that actionable mechanism.",
+      "significance": "This directly affects high-precision color/profile/alpha resampling, which the brief and plan explicitly require researching. Private sample availability limits reproduction, not reading public fixing code.",
+      "primary_source_ids": [
+        "E23",
+        "E02",
+        "E11"
+      ],
+      "evidence": "Issue Apr 12–16, PR #4467 merged Apr 16, 2025; tagged v8.18.7 colour.c scales alpha when interpretation ranges change.",
+      "limits": "Independent static source assessment, no image execution; no claim that all profiles or current binaries are correct."
+    },
+    {
+      "id": "N01",
+      "severity": "NONMATERIAL",
+      "kind": "carried_history_explanation_imprecise",
+      "axes": [
+        2,
+        4
+      ],
+      "candidate_locator": "reviser/source-map.json SRC-PILLOW-13; critic Source and claim audit",
+      "finding": "Carried map compresses the YCbCr fix into orientation-tag removal. PR #8556 instead suppresses libtiff orientation before Pillow handles it.",
+      "significance": "Critic narrative states the correct mechanism; final retains exactly-once and pinned-path tests, so no additional material product error is established.",
+      "primary_source_ids": [
+        "E20"
+      ],
+      "limits": "Preserved lineage is identifiable; no separate source ID falsely rebound."
+    }
+  ],
+  "material_defect_count": 1,
+  "no_repair_or_regrade": true
+}

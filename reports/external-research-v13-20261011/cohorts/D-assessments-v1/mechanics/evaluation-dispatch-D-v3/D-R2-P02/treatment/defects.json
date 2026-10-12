@@ -1,0 +1,80 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "D-R2-P02-treatment",
+  "records": [
+    {
+      "id": "T-M01",
+      "classification": "delivery/lifecycle failure",
+      "scope": "complete_final",
+      "axes": [],
+      "finding": "Breadth critic interrupted with no critique, source map or native terminal capture. Reviser was never launched; final missing.",
+      "evidence": "Exact frozen failure record SHA256 cda6255f2ed7c10684db51b4f75c5060cc218113125891d0a163b8130755b500",
+      "materiality": "Not a source FAIL for a fabricated final. Complete-final source judgment and all six axes remain UNASSESSED."
+    },
+    {
+      "id": "T-P01",
+      "classification": "material incomplete",
+      "scope": "available_partial_science",
+      "axes": [
+        1,
+        2,
+        3
+      ],
+      "obligations": [
+        "O04"
+      ],
+      "source_family": "upstream_tests",
+      "candidate_locator": "discovery Public implementation/test...; draft validation/regression; source WASMTIME-TESTS",
+      "finding": "The available investigator identifies a test guide, commands and directories, but does not inspect a concrete upstream test case and oracle. The brief explicitly requires relevant repository paths and tests.",
+      "primary": [
+        "P43",
+        "P04",
+        "P05"
+      ],
+      "materiality": "Planning tests and source guidance do not supply concrete upstream test discovery. No future software execution is required. This finding is limited to available partial science; no final was assessed."
+    },
+    {
+      "id": "T-P02",
+      "classification": "conditional source gap confirmed",
+      "scope": "available_partial_science",
+      "axes": [
+        2,
+        4
+      ],
+      "obligations": [
+        "O04"
+      ],
+      "source_family": "runtime_history",
+      "candidate_locator": "draft WASM comparison and WASMTIME-RELEASE; truth critique finding 1",
+      "finding": "The investigator general resource-budget advice does not carry the release-listed no-stdio sink condition into its runtime treatment. The truth critic correctly supplies the precise conditional defect and bounded-stream workaround.",
+      "primary": [
+        "P14",
+        "P18",
+        "P19"
+      ],
+      "materiality": "Useful supported correction, not proof that all current Wasmtime embeddings are vulnerable. Its disposition and preservation into a complete final are UNASSESSED."
+    },
+    {
+      "id": "T-L01",
+      "classification": "nonmaterial conditional overstatement",
+      "scope": "available_partial_science",
+      "axes": [
+        2,
+        4
+      ],
+      "obligations": [
+        "O04"
+      ],
+      "source_family": "native_os",
+      "candidate_locator": "draft temp-cleanup clause and source APPLE-PROCESS: different entitlements require XPC",
+      "finding": "XPC is a documented and recommended route, but the wording is too exclusive when generalized beyond an ordinary inherited child. Current Apple guidance also names login items and helper apps.",
+      "primary": [
+        "P41",
+        "P42"
+      ],
+      "materiality": "The core warning about ordinary child inheritance is supported. No broad architectural reversal or complete-final failure inferred.",
+      "limits": "Full current Apple API context unavailable; no selected launch recipe assessed."
+    }
+  ],
+  "missing_final_is_not_source_fail": true
+}

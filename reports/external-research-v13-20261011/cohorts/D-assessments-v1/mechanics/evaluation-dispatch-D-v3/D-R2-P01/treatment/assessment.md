@@ -1,0 +1,34 @@
+Original ER13 assessment — D-R2-P01-treatment
+Complete-final source judgment: **UNASSESSED**. There is no frozen reviser/final. All six complete-final axes, every final obligation/source family, critic disposition and final preservation witness are explicitly **UNASSESSED**. Available investigator and both critic science is assessed separately as **PARTIAL**; no comparable complete PASS/FAIL is fabricated.
+The available proposal has useful mechanisms and broadly responsive plan dispositions. Three consequential draft conditions/tensions remain: Elastic alias action success (T01), explicit OpenSearch mixed-role/override behavior (T02), and the unconstrained historical-ACL option despite a current-access invariant (T03). These concern the partial proposal, not a demonstrated deployed leak. The [Elastic alias documentation](https://www.elastic.co/docs/manage-data/data-store/aliases) and [OpenSearch DLS documentation](https://docs.opensearch.org/latest/security/access-control/document-level-security/) support the first two; the unchanged brief governs the third.
+Useful researched discoveries include scoped-key parent revocation, preview ACL freshness/failure behavior, temporary version URLs and retention/purge distinctions. The [hybrid fix PR](https://github.com/opensearch-project/neural-search/pull/1873) rejects unsupported DFS requests; it does not enable that combination. Each source remains version/context bounded. No mandatory deployment, product winner or universal discovery recall is required.
+Axis coverage and findings:
+- Axis 1 — PARTIAL: Available draft addresses all obligations, but its historical-ACL owner option conflicts with its current-access invariant. Complete-final obligations are UNASSESSED.
+- Axis 2 — PARTIAL: Available science has supported governing research plus omissions in alias action outcomes and explicit DLS role conditions. Full final source quality is UNASSESSED.
+- Axis 3 — PARTIAL: Supported useful discoveries include scoped-key revocation, preview ACL failure/freshness behavior, temporary version URLs, finite retention/purge and an unsupported-query guard. Discovery effectiveness for a completed pipeline is UNASSESSED.
+- Axis 4 — PARTIAL: Draft dispositions are present; both critics' seven findings were independently examined. No reviser disposition exists, so resolution and complete-final corrections/rejections are UNASSESSED.
+- Axis 5 — PARTIAL: Investigator discovery-to-draft meaning is inspectable. No final exists: investigator/critic-to-final preservation is UNASSESSED; critic proposals are not treated as adopted changes.
+- Axis 6 — PARTIAL: Available documents honestly propose synthetic/production checks without claiming execution. The final validation proposal and final execution-status preservation are UNASSESSED.
+
+Every critic finding was independently examined:
+- B01 — Final disposition UNASSESSED. Supported recipient/copy boundary clarification; current per-viewer checks already point in this direction. Useful precision, not independent evidence of deployed safety.
+- B02 — Final disposition UNASSESSED. Supported representation-state refinement. Digest/extractor version already exists; format/locale and explicit ambiguity oracle improve the proposal without proving an edition mismatch.
+- B03 — Final disposition UNASSESSED. Useful derived-data lifecycle/owner inventory. Future backups/queues deletion policy is not a fact available here; do not invent it or demand deployment.
+- F1 — Final disposition UNASSESSED. Supported consequential alias action-success condition omitted by draft; atomic publication alone is insufficient to establish intended action-list success.
+- F2 — Final disposition UNASSESSED. Supported explicit OR/mixed-role/override configuration detail; draft only calls it a caveat. Historical code/caller/tests independently corroborate the mechanism.
+- F3 — Final disposition UNASSESSED. Supported tension: a historical-ACL-only owner choice can preserve withdrawn access. Other draft passages require current checks; no actual leak is demonstrated.
+- F4 — Final disposition UNASSESSED. Invariant-first wording is useful, but draft step 3 already permits an owner-approved authorization service. A claim that it forces direct synchronous source calls would overstate the text. No new material topology defect established.
+
+The breadth suggestions B01–B03 are supported clarifications/owner opportunities, not proof of existing defects in deployment. F4 does not establish a forced direct-call topology: draft step 3 already allows an approved authorization service. No criticism is presumed accepted or rejected by an absent reviser. Minor S10 Time-State and S16 index labels are recorded separately.
+
+Delivery, time, method, native identity and resources remain separate:
+- Final missing; reviser unlaunched. Truth-critic task interrupted with no pending child runs. Its original terminal preflight reports deadline expiry, native terminal and three auxiliaries are missing, and the next stage was held. No receipt reconstruction, replacement or clock reset was performed.
+- Exact activation aliases/objectives/births and five successful precompletion science snapshots match. Independent native freshness/direct-call-to-task linkage and actual scientific last-write/task-finish times are UNKNOWN.
+- Candidate native elapsed fields are reported separately and are not provider activity, occupancy or billing. Active work, context occupancy, subscription consumption and billing are UNKNOWN; failed use is never zero. Private cumulative counters are not published or added.
+- This grader is independent_evaluation, separate from candidate product. Its active activity/billing and allowed epoch2 telemetry are UNKNOWN; no private routing/account data or historical backfill is used.
+
+All proposed corpus, authorization, relevance, retention and organizational tests remain proposed. Primary/code/test-source review and deterministic custody checks were performed; upstream tests and a future application were not executed. Source pass does not require deployment.
+
+Technique-bearing paths/topology/output make blinding imperfect. Own independent primary lookup was shared across the assigned arms, but this original arm judgment is recorded separately. Only exact allowlisted immutable snapshots/supplements/status/failure custody were read; no active candidate original, held-out case, tree/history search, Git/canon/provider change, Goal, extra agent or candidate feedback was used. Original files and evidence will be manifest-frozen before any comparison; subsequent disputes require a separate adjudication.
+
+Detailed records: [assessment.json](assessment.json), [coverage.json](coverage.json), [defects.json](defects.json), [primary-source-index.json](primary-source-index.json), [input custody](evidence/input-verification.json).

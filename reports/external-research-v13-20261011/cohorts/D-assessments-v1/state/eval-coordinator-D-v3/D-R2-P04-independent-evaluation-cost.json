@@ -1,0 +1,23 @@
+{
+  "cost_category": "independent_evaluation",
+  "public_account_epoch": "private_account_epoch_2",
+  "requested_model": "gpt-6.1-sol",
+  "requested_effort": "xhigh",
+  "requested_service_tier": "priority",
+  "actual_run": {
+    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A3d6006ae-6c98-4fc0-9848-576b3ba21dcd%253Adelegate-task%253Aer13-original-grader-D-v3-D-R2-P04-001:ordinal:1",
+    "ordinal": 1,
+    "status": "completed",
+    "providerInstanceId": "PUBLIC_ROUTING_EPOCH_2",
+    "model": "gpt-6.1-sol",
+    "requestedAt": "2026-10-12T04:48:14.974Z",
+    "startedAt": "2026-10-12T04:48:15.464Z",
+    "completedAt": "2026-10-12T05:16:07.316Z"
+  },
+  "request_to_terminal_seconds": 1672.342,
+  "provider_activity_seconds": null,
+  "billing": null,
+  "tokens": null,
+  "unknown_not_zero": true,
+  "native_grader_goal_created": false
+}

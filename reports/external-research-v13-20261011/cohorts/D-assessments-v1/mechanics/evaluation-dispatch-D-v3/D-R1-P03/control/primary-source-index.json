@@ -1,0 +1,603 @@
+{
+  "arm_id": "D-R1-P03-control",
+  "independent_research_shared_across_assigned_arms": true,
+  "scope": "Primary claims, definitions and relevant code/caller/test/repair context; finite, not universal recall.",
+  "sources": [
+    {
+      "id": "P01",
+      "family": "snapshot",
+      "title": "SQLite backup overview",
+      "exact_url": "https://sqlite.org/backup.html",
+      "version_context": "Live documentation; updated 2025-11-13",
+      "locator": "Sections 1, 3.1, C example backupDb",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129227+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Completed API snapshot; external writes can restart it; repeated restarts can prevent completion. Database copy does not capture unrelated files.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P02",
+      "family": "snapshot",
+      "title": "SQLite C backup API",
+      "exact_url": "https://www.sqlite.org/c3ref/backup_finish.html",
+      "version_context": "Live C interface contract",
+      "locator": "backup_step, backup_finish, Concurrent Usage",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129249+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "BUSY/LOCKED retry; IOERR/NOMEM/READONLY fatal; destination handle excluded from other uses. Finish without DONE can return OK after rollback; completion must be distinguished.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P03",
+      "family": "snapshot",
+      "title": "SQLite WAL",
+      "exact_url": "https://www.sqlite.org/wal.html",
+      "version_context": "WAL since 3.7.0; current reset-bug notice",
+      "locator": "Sections 4 and 11",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129253+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "WAL carries committed state. Reset race requires concurrent connections writing/checkpointing; fixed 3.51.3+, backports 3.44.6/3.50.7. Not a claim that backup alone triggers it.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P04",
+      "family": "migration",
+      "title": "SQLite PRAGMA",
+      "exact_url": "https://www.sqlite.org/pragma.html",
+      "version_context": "Live documentation; defaults may be compiled differently",
+      "locator": "integrity_check; foreign_key_check; foreign_keys; user_version",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129258+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Integrity and FK checks differ; FK setting is connection-scoped and cannot change inside a transaction; user_version is application-owned.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P05",
+      "family": "atomicity",
+      "title": "SQLite atomic commit",
+      "exact_url": "https://sqlite.org/atomiccommit.html",
+      "version_context": "Rollback journal explanation; WAL separate",
+      "locator": "Introduction, hardware assumptions, multi-file commit",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129261+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Participating database commit and documented storage assumptions do not provide an arbitrary database-plus-files transaction.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P06",
+      "family": "migration",
+      "title": "SQLite foreign keys",
+      "exact_url": "https://sqlite.org/foreignkeys.html",
+      "version_context": "Feature since 3.6.19; compile-time conditions",
+      "locator": "Section 2",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129264+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Enforcement requires connection initialization and has compile/default conditions; external file presence remains an application check.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P09",
+      "family": "archive",
+      "title": "Python zipfile",
+      "exact_url": "https://docs.python.org/3.14/library/zipfile.html",
+      "version_context": "3.14.8 edition observed",
+      "locator": "testzip, open, extractall, Path, compression notes",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129270+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "CRC/header API scope; duplicates representable; Path caller sanitizes; optional compression compatibility. Reject duplicates before relying on tests.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://docs.python.org/3.14/license.html",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P11",
+      "family": "archive",
+      "title": "CPython ZIP implementation",
+      "exact_url": "https://github.com/python/cpython/blob/v3.14.0/Lib/zipfile/__init__.py",
+      "version_context": "Pinned v3.14.0 corroboration, not 3.14.8 execution",
+      "locator": "testzip 1613; getinfo 1629; _extract_member 1871",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129275+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "CRC read loop resolves names via NameToInfo; duplicate-name aliasing reinforces explicit duplicate rejection. Extraction normalization is API-specific.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://github.com/python/cpython/blob/v3.14.0/LICENSE",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P12",
+      "family": "archive",
+      "title": "CPython CRC tests",
+      "exact_url": "https://github.com/python/cpython/blob/v3.14.0/Lib/test/test_zipfile/test_core.py",
+      "version_context": "Pinned v3.14.0",
+      "locator": "AbstractBadCrcTests 2625",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129277+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Bad CRC fixture checks first bad filename and read failure; not application completeness/usability.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://github.com/python/cpython/blob/v3.14.0/LICENSE",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P17",
+      "family": "crypto",
+      "title": "age specification 1.0.0",
+      "exact_url": "https://c2sp.org/age@v1.0.0",
+      "version_context": "Pinned older spec edition",
+      "locator": "Header, payload, scrypt",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129290+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Scrypt wrapping, bounded work, sole-scrypt stanza, authenticated 64 KiB chunks and required final chunk. Encryption is not signature/provenance.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://creativecommons.org/licenses/by/4.0/",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P18",
+      "family": "crypto",
+      "title": "age specification 1.1.0",
+      "exact_url": "https://c2sp.org/age@v1.1.0",
+      "version_context": "Current edition identified by older page",
+      "locator": "Header MAC, payload, scrypt, recipient types",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129293+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Core passphrase/final-chunk rules retained; adds recipient types including tagged types, which do not permit mixing with scrypt.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://creativecommons.org/licenses/by/4.0/",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P19",
+      "family": "crypto",
+      "title": "age CLI",
+      "exact_url": "https://github.com/FiloSottile/age",
+      "version_context": "Rolling project README",
+      "locator": "Passphrases, recipients/identities",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129295+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Passphrase generation and separate recipient/identity choices are available examples, without a service recovery promise.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P20",
+      "family": "crypto",
+      "title": "age passphrase implementation",
+      "exact_url": "https://github.com/FiloSottile/age/blob/v1.2.1/scrypt.go",
+      "version_context": "Pinned library v1.2.1; does not qualify a future chosen library",
+      "locator": "ScryptIdentity.Unwrap and work bounds",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129297+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Unwrap rejects mixed scrypt stanzas and excessive work factor. Library release and spec edition are separate version identities.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://github.com/FiloSottile/age/blob/v1.2.1/LICENSE",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P21",
+      "family": "crypto",
+      "title": "age streaming reader",
+      "exact_url": "https://github.com/FiloSottile/age/blob/v1.2.1/internal/stream/stream.go",
+      "version_context": "Pinned v1.2.1",
+      "locator": "Reader.readChunk 88-126",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129299+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "EOF without final marked chunk errors; payload authentication failures do not identify password versus modified bytes.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://github.com/FiloSottile/age/blob/v1.2.1/LICENSE",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P22",
+      "family": "crypto",
+      "title": "age streaming tests",
+      "exact_url": "https://github.com/FiloSottile/age/blob/v1.2.1/internal/stream/stream_test.go",
+      "version_context": "Pinned v1.2.1",
+      "locator": "TestRoundTrip",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129301+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Inspected boundary-length/step-size round-trip fixtures; not executed and not a complete hostile-input suite.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://github.com/FiloSottile/age/blob/v1.2.1/LICENSE",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P24",
+      "family": "incremental",
+      "title": "restic backup",
+      "exact_url": "https://restic.readthedocs.io/en/stable/040_backup.html",
+      "version_context": "0.19.1 observed",
+      "locator": "Snapshots, file change detection, exit statuses",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129307+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Deduplicated snapshots and metadata shortcuts; unreadable source files can produce incomplete snapshot, exit 3. Not an application-coherent snapshot.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P25",
+      "family": "incremental",
+      "title": "restic restore",
+      "exact_url": "https://restic.readthedocs.io/en/stable/050_restore.html",
+      "version_context": "0.19.1 observed",
+      "locator": "Restoring in-place; overwrite/delete",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129309+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Default overwrites and interruption can leave partial files; dry run does not establish application merge/reference validity.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P26",
+      "family": "incremental",
+      "title": "restic repository check",
+      "exact_url": "https://restic.readthedocs.io/en/stable/045_working_with_repos.html",
+      "version_context": "0.19.1 observed",
+      "locator": "Check, --read-data and subsets",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129312+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Structural check differs from reading all packs; data pass costs I/O. Random subsets are not guaranteed exhaustive coverage.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P27",
+      "family": "incremental",
+      "title": "restic troubleshooting",
+      "exact_url": "https://restic.readthedocs.io/en/stable/077_troubleshooting.html",
+      "version_context": "0.19.1 observed",
+      "locator": "Finding damaged data and checking repairs",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129314+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Repair/check workflows remain repository-level, not evidence of application usability.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P28",
+      "family": "incremental_history",
+      "title": "restic interrupted-snapshot issue",
+      "exact_url": "https://github.com/restic/restic/issues/2960",
+      "version_context": "Historical 0.10.0 report; later 0.17.x discussion",
+      "locator": "Issue report and SIGINT comments",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129316+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Stored blobs without selectable snapshot illustrate publication distinction. Later discussion is not proof the requested interrupted-snapshot feature shipped.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P29",
+      "family": "identity_history",
+      "title": "Joplin import/export",
+      "exact_url": "https://github.com/laurent22/joplin/blob/dev/readme/apps/import_export.md",
+      "version_context": "Rolling dev, not pinned release",
+      "locator": "Exporting and ENEX link discussion",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129318+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "JEX is TAR interchange; ENEX link guesses can fail. Product-defined lossless format does not certify all historical failure cases.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P30",
+      "family": "identity_history",
+      "title": "Joplin duplication warning",
+      "exact_url": "https://github.com/laurent22/joplin/issues/14791",
+      "version_context": "Windows 3.5.13 report",
+      "locator": "Description and proposed warning",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129831+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Report discusses additive import confusion; warning specifically describes later sync with same notes elsewhere. Narrowing must not imply sync is the only duplication scenario.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P31",
+      "family": "identity_history",
+      "title": "Joplin Unicode report",
+      "exact_url": "https://github.com/laurent22/joplin/issues/9069",
+      "version_context": "Android 2.12.2, Android 10 historical report",
+      "locator": "Reproduction and linked repair",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129838+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Reporter describes non-ASCII replacement in JEX. Linked release/fix not established by candidate; no present universal defect claimed.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P32",
+      "family": "identity_history",
+      "title": "Joplin absolute-resource report",
+      "exact_url": "https://github.com/laurent22/joplin/issues/6211",
+      "version_context": "Windows 2.7.13 historical report",
+      "locator": "Absolute URL and absent-image reproduction",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129841+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Specific clipboard/reference route produces missing images; not a claim all exports omit attachments.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P33",
+      "family": "identity_history",
+      "title": "Joplin clipboard repair",
+      "exact_url": "https://github.com/laurent22/joplin/pull/6865",
+      "version_context": "Merged 2023-01-11",
+      "locator": "Final CodeMirror paste diff via API files",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129843+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Paste caller converts external resource links to internal links; scope is cross-editor paste, not every resource omission.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P34",
+      "family": "identity_history",
+      "title": "Joplin extensionless-resource issue",
+      "exact_url": "https://github.com/laurent22/joplin/issues/12049",
+      "version_context": "Joplin 3.3.3, revision 23254e6",
+      "locator": "Three-relative-link reproduction",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129848+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Both dot-relative and plain extensionless paths fail differently; importer path reconstruction is consequential context.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P35",
+      "family": "identity_history",
+      "title": "Joplin importer repair review",
+      "exact_url": "https://github.com/laurent22/joplin/pull/12974",
+      "version_context": "Merged c27d542a4b9f5ce669d61c43aeca7494a506af64, 2025-09-08",
+      "locator": "Review objections; remove-modifications/native-resolve commits; final files",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129850+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Initial helper rewrite was abandoned; merged importer caller uses native resolve. Importer-level fixture checks three resources and expected names/extensions; 11 CI checks reported, not evaluator execution.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P36",
+      "family": "identity_history",
+      "title": "Joplin merged caller",
+      "exact_url": "https://github.com/laurent22/joplin/blob/c27d542a4b9f5ce669d61c43aeca7494a506af64/packages/lib/services/interop/InteropService_Importer_Md.ts",
+      "version_context": "Pinned merge",
+      "locator": "importLocalFiles, 126-159",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129852+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Caller resolves joined path before stat/resource creation and link rewriting; merged helper redesign claim is contradicted.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://github.com/laurent22/joplin/blob/c27d542a4b9f5ce669d61c43aeca7494a506af64/LICENSE",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P37",
+      "family": "identity_history",
+      "title": "Joplin merged regression",
+      "exact_url": "https://github.com/laurent22/joplin/blob/c27d542a4b9f5ce669d61c43aeca7494a506af64/packages/lib/services/interop/InteropService_Importer_Md.test.ts",
+      "version_context": "Pinned merge",
+      "locator": "resources without extension test",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129854+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "One note/three resources and exact title/extension assertions exercise importer rather than only path-helper unit tests.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://github.com/laurent22/joplin/blob/c27d542a4b9f5ce669d61c43aeca7494a506af64/LICENSE",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P38",
+      "family": "identity_history",
+      "title": "Joplin withdrawn helper modifications",
+      "exact_url": "https://github.com/laurent22/joplin/commit/510300728b7dae481eb6836b3688214110b404b7",
+      "version_context": "Pinned review revision",
+      "locator": "utils/path and path-test diffs",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129856+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Revision removes proposed normalization/helper edits; changes do not survive the merged repair.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P39",
+      "family": "identity_history",
+      "title": "Joplin caller replacement",
+      "exact_url": "https://github.com/laurent22/joplin/commit/f1cca262db91a0af512213ebc97681a6b32cd780",
+      "version_context": "Pinned review revision",
+      "locator": "Importer pathWithExtension diff",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129858+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Replaces filename/extension reconstruction with filesystem-driver resolve at the caller.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P40",
+      "family": "inventory",
+      "title": "BagIt definitions",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc8493",
+      "version_context": "RFC 8493, October 2018 informational",
+      "locator": "Definitions; 2.1.3; 3; security",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129861+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Complete member set and verified checksums are distinct. Opaque payload checks do not establish application meaning or an honest source inventory. Independent comparator, no requirement to select BagIt.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P41",
+      "family": "snapshot_history",
+      "title": "SQLite fixed release",
+      "exact_url": "https://www.sqlite.org/releaselog/3_51_3.html",
+      "version_context": "3.51.3, 2026-03-13",
+      "locator": "Patch release item 1",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129863+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Release explicitly fixes WAL-reset corruption; corroborates conditional version finding.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    }
+  ],
+  "source_license_policy": "No raw source/code corpus copied into scientific artifacts. Notice links retained. Joplin root AGPL-3.0-or-later permits subdirectory overrides; full integration license audit unassessed. ZIP MIT; age BSD-style notice at linked LICENSE; age specs CC BY 4.0.",
+  "unknowns": "Eventual selected library, schema and platform are unknown; code/test inspection is not test execution."
+}

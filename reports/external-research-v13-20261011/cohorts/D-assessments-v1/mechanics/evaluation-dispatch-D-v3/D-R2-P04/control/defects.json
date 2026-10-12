@@ -1,0 +1,88 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "D-R2-P04-control",
+  "source_grade_target": "complete_frozen_final",
+  "complete_final_grade": "FAIL",
+  "defects": [
+    {
+      "id": "D-C01",
+      "dimension": "source_assessment",
+      "scope": "complete_frozen_final_and_carried_source_map",
+      "classification": "material_wrong",
+      "axes": [
+        2
+      ],
+      "obligations": [
+        "O01",
+        "O05"
+      ],
+      "finding": "Carried S01 describes the default Tantivy cutoff in characters; the exact 0.26.2 filter uses UTF-8 bytes and excludes the limit itself.",
+      "materiality": "A short unsegmented CJK run can disappear below the stated character threshold. This changes language/analyzer applicability, rather than merely formatting a citation.",
+      "frozen_locators": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/investigator/files/source-map.json",
+          "sha256": "a0438cfe33d2456ad14330ce8dde951e3fc03664a67f2ca5b107ba59f9ef3e2a",
+          "locator": "sources[S01].governing_condition_default_exception"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/critic/files/source-map.json",
+          "sha256": "70ebbc82083cf1baf7d7e924055c024894541786787d4ca485b62f4c66464b5a",
+          "locator": "sources[S01].critic_review"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/reviser/files/source-map.json",
+          "sha256": "597bfaf8ee404646e569d3fba139b2d5ea11cf0b758979189b803cbd73fa38bc",
+          "locator": "sources[S01], carried without correction"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/reviser/files/final.md",
+          "sha256": "744c9ff187bb4d87abc7d5940bfe45b61d15b9427184621b5dfd0130c2569202",
+          "locator": "lines 75–77 and 167 refer to the carried tokenizer evidence"
+        }
+      ],
+      "primary_sources": [
+        "PS04"
+      ],
+      "independent_evidence": "evidence/tantivy-cutoff.md",
+      "inference_boundary": "The code-derived 14-character/42-byte example is not an executed Tantivy query or corpus relevance result."
+    },
+    {
+      "id": "D-C02",
+      "dimension": "source_assessment",
+      "scope": "complete_frozen_final",
+      "classification": "material_incomplete",
+      "axes": [
+        1,
+        2
+      ],
+      "obligations": [
+        "O02"
+      ],
+      "finding": "The provenance model identifies embedded extraction versus new OCR, but never states the unknown origin of imported PDF text layers that may already be OCR.",
+      "materiality": "An already-OCRed scan enters the embedded_text path without a declared prior-OCR/unknown-origin meaning. The brief requires users to distinguish original and recognition provenance; extraction route alone cannot establish that origin.",
+      "frozen_locators": [
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/reviser/files/final.md",
+          "sha256": "744c9ff187bb4d87abc7d5940bfe45b61d15b9427184621b5dfd0130c2569202",
+          "locator": "lines 57 and 63; provenance/uncertainty at lines 67–71"
+        },
+        {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/reviser/files/final.md",
+          "sha256": "744c9ff187bb4d87abc7d5940bfe45b61d15b9427184621b5dfd0130c2569202",
+          "locator": "line 117 fixture set includes native/scan/mixed pages but no imported OCR-layer origin case"
+        }
+      ],
+      "primary_sources": [
+        "PS09",
+        "PS11"
+      ],
+      "qualification": "The final does not expressly call every embedded layer faithful authored text, and correctly calls snippets derivative. This is a missing honest origin condition, not an accusation of that stronger explicit claim. Determining every unknown PDF origin is not required."
+    }
+  ],
+  "nonmaterial_limits": [
+    "Finite assessment of the exact frozen inputs; no universal correctness, external discovery recall, deployment success or cold full-pipeline claim.",
+    "Unknown notebook storage, languages/corpus, devices, packaging, retention and numeric limits may remain owner/runtime questions. Available mechanism facts were independently researched.",
+    "Technique-bearing paths, R0/B06 labels and complementary-critic instructions make blinding imperfect; no claim of blinded review.",
+    "Raw lifecycle/hash receipts establish declared custody, not source truth or independent native-to-task linkage. No full native transcripts, private account identity or machine state published."
+  ]
+}

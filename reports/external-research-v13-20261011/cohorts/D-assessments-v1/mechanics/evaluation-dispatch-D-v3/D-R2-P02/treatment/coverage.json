@@ -1,0 +1,431 @@
+{
+  "schema": "er13.original_coverage.v1",
+  "arm_id": "D-R2-P02-treatment",
+  "complete_final": {
+    "axes": [
+      {
+        "axis": 1,
+        "name": "Material original obligations and negative constraints",
+        "coverage": "UNASSESSED",
+        "judgment": "UNASSESSED",
+        "reason": "Final absent; no complete-final judgment can be supplied."
+      },
+      {
+        "axis": 2,
+        "name": "Consequential source facts, governing conditions, versions and applicability",
+        "coverage": "UNASSESSED",
+        "judgment": "UNASSESSED",
+        "reason": "Final absent; no complete-final judgment can be supplied."
+      },
+      {
+        "axis": 3,
+        "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+        "coverage": "UNASSESSED",
+        "judgment": "UNASSESSED",
+        "reason": "Final absent; no complete-final judgment can be supplied."
+      },
+      {
+        "axis": 4,
+        "name": "Valid corrections, rejections and exact plan dispositions",
+        "coverage": "UNASSESSED",
+        "judgment": "UNASSESSED",
+        "reason": "Final absent; no complete-final judgment can be supplied."
+      },
+      {
+        "axis": 5,
+        "name": "Supported meaning retained from draft and criticism into the complete final",
+        "coverage": "UNASSESSED",
+        "judgment": "UNASSESSED",
+        "reason": "Final absent; no complete-final judgment can be supplied."
+      },
+      {
+        "axis": 6,
+        "name": "Meaningful proposed validation, with executed work distinguished",
+        "coverage": "UNASSESSED",
+        "judgment": "UNASSESSED",
+        "reason": "Final absent; no complete-final judgment can be supplied."
+      }
+    ],
+    "obligations_and_negative_constraints": [
+      {
+        "id": "O01",
+        "coverage": "UNASSESSED",
+        "observation": "Missing final.",
+        "result": "UNASSESSED"
+      },
+      {
+        "id": "O02",
+        "coverage": "UNASSESSED",
+        "observation": "Missing final.",
+        "result": "UNASSESSED"
+      },
+      {
+        "id": "O03",
+        "coverage": "UNASSESSED",
+        "observation": "Missing final.",
+        "result": "UNASSESSED"
+      },
+      {
+        "id": "O04",
+        "coverage": "UNASSESSED",
+        "observation": "Missing final.",
+        "result": "UNASSESSED"
+      },
+      {
+        "id": "O05",
+        "coverage": "UNASSESSED",
+        "observation": "Missing final.",
+        "result": "UNASSESSED"
+      },
+      {
+        "id": "N01",
+        "coverage": "UNASSESSED",
+        "observation": "Missing final.",
+        "result": "UNASSESSED"
+      },
+      {
+        "id": "N02",
+        "coverage": "UNASSESSED",
+        "observation": "Missing final.",
+        "result": "UNASSESSED"
+      },
+      {
+        "id": "N03",
+        "coverage": "UNASSESSED",
+        "observation": "Missing final.",
+        "result": "UNASSESSED"
+      }
+    ],
+    "additional_obligations": [
+      {
+        "id": "editing_responsiveness",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "id": "malformed_inputs_output",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "id": "all_six_named_plan_dispositions",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "id": "all_required_validation_families",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "id": "actual_product_deployment",
+        "coverage": "UNASSESSED",
+        "required": false,
+        "reason": "Outside the planning deliverable; neither demanded nor inferred."
+      }
+    ],
+    "source_families": [
+      {
+        "family": "extension_interfaces",
+        "coverage": "UNASSESSED",
+        "primary_ids": [
+          "P27",
+          "P28",
+          "P29",
+          "P30",
+          "P31"
+        ],
+        "scope": "complete_final",
+        "limit": "Missing final."
+      },
+      {
+        "family": "browser_rendering",
+        "coverage": "UNASSESSED",
+        "primary_ids": [
+          "P21",
+          "P29"
+        ],
+        "scope": "complete_final",
+        "limit": "Missing final."
+      },
+      {
+        "family": "wasmtime_controls",
+        "coverage": "UNASSESSED",
+        "primary_ids": [
+          "P01",
+          "P02",
+          "P03"
+        ],
+        "scope": "complete_final",
+        "limit": "Missing final."
+      },
+      {
+        "family": "runtime_history",
+        "coverage": "UNASSESSED",
+        "primary_ids": [
+          "P13",
+          "P14",
+          "P15",
+          "P16",
+          "P17",
+          "P18",
+          "P19",
+          "P20"
+        ],
+        "scope": "complete_final",
+        "limit": "Missing final."
+      },
+      {
+        "family": "wasi_filesystem_capabilities",
+        "coverage": "UNASSESSED",
+        "primary_ids": [
+          "P08",
+          "P17"
+        ],
+        "scope": "complete_final",
+        "limit": "Missing final."
+      },
+      {
+        "family": "nested_workers_native_os",
+        "coverage": "UNASSESSED",
+        "primary_ids": [
+          "P22",
+          "P24",
+          "P37",
+          "P38",
+          "P39",
+          "P40",
+          "P41",
+          "P42"
+        ],
+        "scope": "complete_final",
+        "limit": "Missing final."
+      },
+      {
+        "family": "deno_permissions",
+        "coverage": "UNASSESSED",
+        "primary_ids": [],
+        "scope": "complete_final",
+        "limit": "Missing final."
+      },
+      {
+        "family": "storage_search",
+        "coverage": "UNASSESSED",
+        "primary_ids": [
+          "P34",
+          "P35",
+          "P36"
+        ],
+        "scope": "complete_final",
+        "limit": "Missing final."
+      },
+      {
+        "family": "upstream_tests",
+        "coverage": "UNASSESSED",
+        "primary_ids": [
+          "P04",
+          "P05",
+          "P06",
+          "P07",
+          "P43"
+        ],
+        "scope": "complete_final",
+        "limit": "Missing final."
+      },
+      {
+        "family": "licenses",
+        "coverage": "UNASSESSED",
+        "primary_ids": [
+          "P44",
+          "P45"
+        ],
+        "scope": "complete_final",
+        "limit": "Missing final."
+      }
+    ]
+  },
+  "assessment_is_finite": true,
+  "available_partial_science": {
+    "axes": [
+      {
+        "axis": 1,
+        "coverage": "PARTIAL",
+        "reason": "Available proposal meets core boundary/state/provenance/cleanup intent; repository/test research gap remains."
+      },
+      {
+        "axis": 2,
+        "coverage": "PARTIAL",
+        "reason": "Principal runtime/history/storage/rendering facts checked; no-stdio correction supported; OS/Apple depth limited."
+      },
+      {
+        "axis": 3,
+        "coverage": "PARTIAL",
+        "reason": "Useful platform and search mechanisms; concrete test-case discovery missing."
+      },
+      {
+        "axis": 4,
+        "coverage": "PARTIAL",
+        "reason": "All available plan dispositions and all six truth-critic findings examined; no reviser disposition exists."
+      },
+      {
+        "axis": 5,
+        "coverage": "UNASSESSED",
+        "reason": "No final; no investigator/critic-to-final preservation possible."
+      },
+      {
+        "axis": 6,
+        "coverage": "PARTIAL",
+        "reason": "Eight proposed witness groups meaningful; helper/JSON observations distinct from product execution."
+      }
+    ],
+    "obligations_and_negative_constraints": [
+      {
+        "id": "O01",
+        "coverage": "PARTIAL",
+        "observation": "Opaque job-scoped read capability, validated declarative output, isolated richer option, unrelated-notebook denial."
+      },
+      {
+        "id": "O02",
+        "coverage": "PARTIAL",
+        "observation": "Editable original plus failed/timed-out/stale/disabled/unavailable/version state; upgrade/re-enable/uninstall behavior."
+      },
+      {
+        "id": "O03",
+        "coverage": "PARTIAL",
+        "observation": "Separate derived search namespace/record, source and producer identity, no partial-current publication."
+      },
+      {
+        "id": "O04",
+        "coverage": "PARTIAL",
+        "observation": "Permission/resource/nested-worker/host limitation comparisons; C-D01 in control, partial source/test gaps in treatment."
+      },
+      {
+        "id": "O05",
+        "coverage": "PARTIAL",
+        "observation": "Host ownership registry, private job roots, references/leases/generations, no-follow identity, crash reconciliation."
+      },
+      {
+        "id": "N01",
+        "coverage": "PARTIAL",
+        "observation": "No broad notebook grant or ambient-privilege markup; proposal invariant distinguished from actual enforcement."
+      },
+      {
+        "id": "N02",
+        "coverage": "PARTIAL",
+        "observation": "Path suffix or child exit rejected as cleanup ownership proof."
+      },
+      {
+        "id": "N03",
+        "coverage": "PARTIAL",
+        "observation": "Extracted text never substituted for authored note content."
+      }
+    ],
+    "source_families": [
+      {
+        "family": "extension_interfaces",
+        "coverage": "COMPLETE",
+        "primary_ids": [
+          "P27",
+          "P28",
+          "P29",
+          "P30",
+          "P31"
+        ],
+        "scope": "available_partial_science"
+      },
+      {
+        "family": "browser_rendering",
+        "coverage": "COMPLETE",
+        "primary_ids": [
+          "P21",
+          "P29"
+        ],
+        "scope": "available_partial_science"
+      },
+      {
+        "family": "wasmtime_controls",
+        "coverage": "COMPLETE",
+        "primary_ids": [
+          "P01",
+          "P02",
+          "P03"
+        ],
+        "scope": "available_partial_science"
+      },
+      {
+        "family": "runtime_history",
+        "coverage": "COMPLETE",
+        "primary_ids": [
+          "P13",
+          "P14",
+          "P15",
+          "P16",
+          "P17",
+          "P18",
+          "P19",
+          "P20"
+        ],
+        "scope": "available_partial_science"
+      },
+      {
+        "family": "wasi_filesystem_capabilities",
+        "coverage": "COMPLETE",
+        "primary_ids": [
+          "P08",
+          "P17"
+        ],
+        "scope": "available_partial_science"
+      },
+      {
+        "family": "nested_workers_native_os",
+        "coverage": "PARTIAL",
+        "primary_ids": [
+          "P22",
+          "P24",
+          "P37",
+          "P38",
+          "P39",
+          "P40",
+          "P41",
+          "P42"
+        ],
+        "scope": "available_partial_science"
+      },
+      {
+        "family": "deno_permissions",
+        "coverage": "UNASSESSED",
+        "primary_ids": [],
+        "scope": "available_partial_science"
+      },
+      {
+        "family": "storage_search",
+        "coverage": "COMPLETE",
+        "primary_ids": [
+          "P34",
+          "P35",
+          "P36"
+        ],
+        "scope": "available_partial_science"
+      },
+      {
+        "family": "upstream_tests",
+        "coverage": "PARTIAL",
+        "primary_ids": [
+          "P04",
+          "P05",
+          "P06",
+          "P07",
+          "P43"
+        ],
+        "scope": "available_partial_science"
+      },
+      {
+        "family": "licenses",
+        "coverage": "COMPLETE",
+        "primary_ids": [
+          "P44",
+          "P45"
+        ],
+        "scope": "available_partial_science"
+      }
+    ],
+    "critic_dispositions_to_final": "UNASSESSED",
+    "discovery_to_draft_preservation": "PARTIAL; no material loss found in available prose, full final chain absent"
+  }
+}

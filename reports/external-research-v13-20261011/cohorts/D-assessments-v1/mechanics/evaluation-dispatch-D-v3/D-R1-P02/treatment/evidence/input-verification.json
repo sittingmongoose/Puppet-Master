@@ -1,0 +1,91 @@
+{
+  "schema": "er13.independent_input_verification.v1",
+  "arm_id": "D-R1-P02-treatment",
+  "packet": {
+    "path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/D-R1-P02.json",
+    "sha256": "f090aca29625124f8f5c3332e5abf87306c53619a531a4703628e052dc1358b4"
+  },
+  "contract": {
+    "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+    "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+  },
+  "receipt": {
+    "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R1-P02-input-verification.json",
+    "sha256": "24345dbff37cf6938f1c7f78c8b5d7ad4312a6ef2462d90c3e0c091095f41353"
+  },
+  "rubric": {
+    "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/evaluator-custody/D-R1-P02/rubric.json",
+    "sha256": "2e536171cc09c1ad53cc6c6e5e9724245c4f70a3046198caeede285c5c433b6c"
+  },
+  "manifest_count": 5,
+  "member_count": 50,
+  "all_member_sizes_and_sha256_verified": true,
+  "status_receipt_count": 2,
+  "all_exact_status_receipt_hashes_verified": true,
+  "precompletion_output_hashes_match_terminal_files": true,
+  "scientific_input_inventory": [
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/run/D-R1-P02-treatment/control/terminal-handoffs/investigator/files/discovery.md",
+      "bytes": 11484,
+      "sha256": "2d4b6e6c51e9035afb50043185d2e6b3c21c0975c290d566d51785885fd04fc0"
+    },
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/run/D-R1-P02-treatment/control/terminal-handoffs/investigator/files/draft.md",
+      "bytes": 24932,
+      "sha256": "6359b3504669fb1d877ad893175ab07aa148fc4310469beae2a67c43ee0871ae"
+    },
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/run/D-R1-P02-treatment/control/terminal-handoffs/investigator/files/source-map.json",
+      "bytes": 22852,
+      "sha256": "8b9ff8d9c6b635953eb3b7402cea2e26cfc041da3be773da127c9011230e7e7b"
+    },
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/run/D-R1-P02-treatment/control/terminal-handoffs/investigator/files/revealed-plan.md",
+      "bytes": 2313,
+      "sha256": "bbd04b870cdecb29f3354fdc746c8a5a845685855ff8bd4c1e206ac1bc379057"
+    },
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/run/D-R1-P02-treatment/control/terminal-handoffs/investigator/files/plan-reveal.json",
+      "bytes": 477,
+      "sha256": "5f5fa3acabe7cf8c5e0f520bbe03a0ea464a678e5639cd0cf1d881a1eb4181e0"
+    },
+    {
+      "stage": "investigator",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/run/D-R1-P02-treatment/control/terminal-handoffs/investigator/files/sources/index.md",
+      "bytes": 3588,
+      "sha256": "5b42ec7ba1ccb46900b9a1756b335ec0222037ad05e8abf40eb3c7bbd9b7faa4"
+    },
+    {
+      "stage": "critic",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/run/D-R1-P02-treatment/control/terminal-handoffs/critic/files/critique.md",
+      "bytes": 14387,
+      "sha256": "e19223f68bec92a5b626c3c3a1d35a39c744e8418489ab545bf9394bda7c3127"
+    },
+    {
+      "stage": "critic",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/run/D-R1-P02-treatment/control/terminal-handoffs/critic/files/final.md",
+      "bytes": 21274,
+      "sha256": "c9bce52f70dbe58bc2dacee4117628548480dbfcf61443212c8eb62a2897304a"
+    },
+    {
+      "stage": "critic",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/run/D-R1-P02-treatment/control/terminal-handoffs/critic/files/source-map.json",
+      "bytes": 20615,
+      "sha256": "a405ff0982762697fa3bd0edbd2d47ba592b43fcfd654d1489d8c04af9e50a5d"
+    },
+    {
+      "stage": "critic",
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-treatment/run/D-R1-P02-treatment/control/terminal-handoffs/critic/files/sources/index.md",
+      "bytes": 8012,
+      "sha256": "73ed3758960dc4ad8b0eaa4eda207d6bddfe20e6658ce6e9a73aea61d7d59526"
+    }
+  ],
+  "other_member_hash_sequence_sha256": "1cdd9c62f03318634ec71b47c0f54f70cd5291f9b5661f9b8c3754fc60d970cc",
+  "input_boundary": "Exact allowlisted frozen snapshots/supplements only; no referenced active paths, tree/history scans or other cases.",
+  "no_native_identity_or_routing_fields_copied": true
+}

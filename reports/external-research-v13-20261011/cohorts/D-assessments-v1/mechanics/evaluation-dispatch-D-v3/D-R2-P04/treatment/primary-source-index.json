@@ -1,0 +1,255 @@
+{
+  "schema": "er13.original-primary-source-index.v1",
+  "arm_id": "D-R2-P04-treatment",
+  "independent_research": true,
+  "shared_frozen_catalogue": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/evidence/public-source-observations.json",
+    "sha256": "144f0204bb534bda8c67f16173f5d1681d656e2a209e7fb2d1f36d00719bfc87"
+  },
+  "sources": [
+    {
+      "id": "PS01",
+      "exact_urls": [
+        "https://www.sqlite.org/fts5.html"
+      ],
+      "version_context": "Live official FTS5 reference; candidate shipped build remains unknown.",
+      "locator": "Sections 2.1, 4.3.1–4.3.4, 4.4.3–4.4.4, BM25/snippet and integrity/rebuild commands.",
+      "candidate_source_ids": [
+        "S06",
+        "CT04"
+      ],
+      "research_context_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "conditions_and_applicability_ref": "shared_frozen_catalogue.sources[PS01]"
+    },
+    {
+      "id": "PS02",
+      "exact_urls": [
+        "https://github.com/sqlite/sqlite/blob/master/ext/fts5/fts5_tokenize.c",
+        "https://github.com/sqlite/sqlite/blob/master/ext/fts5/test/fts5unicode.test",
+        "https://sqlite.org/forum/info/e336faf90e60d53f?t=c"
+      ],
+      "version_context": "Official mutable master retrieved at the recorded time; exact bytes hashed, not a candidate runtime pin.",
+      "locator": "Unicode61 initialization/category/folding callers; complete short fts5unicode.test; Dan Kennedy reply 2021-01-11 to report on SQLite 3.30.1.",
+      "candidate_source_ids": [
+        "S06",
+        "CT04"
+      ],
+      "research_context_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "conditions_and_applicability_ref": "shared_frozen_catalogue.sources[PS02]"
+    },
+    {
+      "id": "PS03",
+      "exact_urls": [
+        "https://www.sqlite.org/lang_transaction.html",
+        "https://www.sqlite.org/atomiccommit.html"
+      ],
+      "version_context": "Live official transaction/atomic-commit documentation.",
+      "locator": "Transaction semantics, database-local atomic commit and failure/storage assumptions.",
+      "candidate_source_ids": [
+        "S06"
+      ],
+      "research_context_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "conditions_and_applicability_ref": "shared_frozen_catalogue.sources[PS03]"
+    },
+    {
+      "id": "PS04",
+      "exact_urls": [
+        "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+        "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/struct.RemoveLongFilter.html",
+        "https://github.com/quickwit-oss/tantivy/blob/0.26.2/src/tokenizer/remove_long.rs",
+        "https://github.com/quickwit-oss/tantivy/blob/0.26.2/src/tokenizer/tokenizer_manager.rs",
+        "https://github.com/quickwit-oss/tantivy/blob/0.26.2/src/tokenizer/simple_tokenizer.rs"
+      ],
+      "version_context": "Pinned Tantivy 0.26.2.",
+      "locator": "Filter definition/predicate and complete small unit test; default registration; SimpleTokenizer character loop and test; module documentation compared with detailed API.",
+      "candidate_source_ids": [
+        "S07"
+      ],
+      "research_context_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "conditions_and_applicability_ref": "shared_frozen_catalogue.sources[PS04]"
+    },
+    {
+      "id": "PS05",
+      "exact_urls": [
+        "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+        "https://github.com/quickwit-oss/tantivy/blob/0.26.2/src/indexer/index_writer.rs",
+        "https://github.com/quickwit-oss/tantivy/blob/0.26.2/src/indexer/segment_updater.rs"
+      ],
+      "version_context": "Pinned Tantivy 0.26.2.",
+      "locator": "commit, prepare_commit caller, rollback, delete_term/delete_query ordering; delete_all_docs_min plus adjacent deletion test.",
+      "candidate_source_ids": [
+        "S07"
+      ],
+      "research_context_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "conditions_and_applicability_ref": "shared_frozen_catalogue.sources[PS05]"
+    },
+    {
+      "id": "PS06",
+      "exact_urls": [
+        "https://github.com/quickwit-oss/tantivy/blob/main/CHANGELOG.md",
+        "https://github.com/quickwit-oss/tantivy/issues/2619"
+      ],
+      "version_context": "0.27.0 heading above 0.26.2 in mutable main changelog; issue #2619 is an open configuration question.",
+      "locator": "Top release headings/breaking changes and complete issue description/status.",
+      "candidate_source_ids": [
+        "S07"
+      ],
+      "research_context_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "conditions_and_applicability_ref": "shared_frozen_catalogue.sources[PS06]"
+    },
+    {
+      "id": "PS09",
+      "exact_urls": [
+        "https://github.com/tesseract-ocr/tesseract/blob/5.5.3/doc/tesseract.1.asc",
+        "https://github.com/tesseract-ocr/tesseract/releases/tag/5.5.3",
+        "https://tesseract-ocr.github.io/tessdoc/Command-Line-Usage.html"
+      ],
+      "version_context": "Tesseract 5.5.3 tagged manual/release; live command examples separately scoped.",
+      "locator": "Output format switches, TSV/hOCR boxes/confidence, searchable PDF output, language configuration and release context.",
+      "candidate_source_ids": [
+        "S04"
+      ],
+      "research_context_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "conditions_and_applicability_ref": "shared_frozen_catalogue.sources[PS09]"
+    },
+    {
+      "id": "PS13",
+      "exact_urls": [
+        "https://ecma-international.org/publications-and-standards/standards/ecma-376/",
+        "https://learn.microsoft.com/en-us/office/open-xml/presentation/structure-of-a-presentationml-document"
+      ],
+      "version_context": "ECMA-376 part-specific fifth editions; Microsoft PresentationML primary documentation.",
+      "locator": "Parts/edition table; package/slide relationships, slide IDs and shape-tree/nonvisual identifiers in generated example.",
+      "candidate_source_ids": [
+        "S02"
+      ],
+      "research_context_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "conditions_and_applicability_ref": "shared_frozen_catalogue.sources[PS13]"
+    },
+    {
+      "id": "PS15",
+      "exact_urls": [
+        "https://www.w3.org/TR/webvtt1/",
+        "https://www.loc.gov/preservation/digital/formats/fdd/fdd000569.shtml"
+      ],
+      "version_context": "W3C WebVTT specification; LoC SRT FDD000569 Preliminary, updated 2025-05-27.",
+      "locator": "WebVTT overview, cue timing/overlap/order and timestamp parsing; SRT description/status/encoding variation.",
+      "candidate_source_ids": [],
+      "research_context_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "conditions_and_applicability_ref": "shared_frozen_catalogue.sources[PS15]"
+    },
+    {
+      "id": "PS16",
+      "exact_urls": [
+        "https://tika.apache.org/download.html",
+        "https://tika.apache.org/docs/4.1.x/formats.html",
+        "https://tika.apache.org/docs/4.1.x/using-tika/java-api/index.html"
+      ],
+      "version_context": "Tika 4.1.0 release, Java 17+, ZIP/thin launcher; supported 3.3.2 maintenance line differs.",
+      "locator": "Release/package/runtime notes; PDFBox/POI parser mappings; direct Java API versus configured forked routes.",
+      "candidate_source_ids": [
+        "S01",
+        "S02",
+        "S12"
+      ],
+      "research_context_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "conditions_and_applicability_ref": "shared_frozen_catalogue.sources[PS16]"
+    },
+    {
+      "id": "PS17",
+      "exact_urls": [
+        "https://tika.apache.org/docs/4.1.x/configuration/pages.html",
+        "https://issues.apache.org/jira/browse/TIKA-4883",
+        "https://github.com/apache/tika/pull/3145/files"
+      ],
+      "version_context": "Tika 4.1.x docs; TIKA-4883 fixed in 4.1.0, merged PR #3145 on 2026-09-09.",
+      "locator": "Defaults/config overlays; TextRecognizer capability; page buffering/endPage/doOCR caller chain; PDFParserTest and ContentEnrichersTest changes.",
+      "candidate_source_ids": [
+        "S03",
+        "S10",
+        "S11",
+        "CT01",
+        "CT03"
+      ],
+      "research_context_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "conditions_and_applicability_ref": "shared_frozen_catalogue.sources[PS17]"
+    },
+    {
+      "id": "PS18",
+      "exact_urls": [
+        "https://tika.apache.org/docs/4.1.x/security.html",
+        "https://pdfbox.apache.org/3.0/faq.html"
+      ],
+      "version_context": "Tika 4.1.x security documentation; PDFBox 3.0 FAQ is not a patch pin.",
+      "locator": "Direct caller-thread/heap parsing, output versus work limits, fork timeout/heap bounds, server trust; reading order, scanned/encoding/permission conditions.",
+      "candidate_source_ids": [
+        "S05",
+        "S13",
+        "CT02",
+        "CT05"
+      ],
+      "research_context_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "conditions_and_applicability_ref": "shared_frozen_catalogue.sources[PS18]"
+    },
+    {
+      "id": "PS19",
+      "exact_urls": [
+        "https://github.com/asg017/sqlite-vec/blob/v0.1.9/README.md",
+        "https://github.com/asg017/sqlite-vec/issues/274",
+        "https://github.com/asg017/sqlite-vec/pull/275/files",
+        "https://github.com/asg017/sqlite-vec/releases/tag/v0.1.9"
+      ],
+      "version_context": "sqlite-vec pre-v1 README at v0.1.9; issue #274 fixed by #275 / v0.1.9 e9f598a.",
+      "locator": "Pre-v1/KNN purpose; long-metadata deletion return-code fix, caller effect and added test_delete_by_metadata_with_long_text.",
+      "candidate_source_ids": [
+        "S08",
+        "S09"
+      ],
+      "research_context_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "conditions_and_applicability_ref": "shared_frozen_catalogue.sources[PS19]"
+    },
+    {
+      "id": "PS20",
+      "exact_urls": [
+        "https://arxiv.org/abs/2004.04906v3",
+        "https://arxiv.org/abs/2104.08663v4"
+      ],
+      "version_context": "DPR arXiv:2004.04906v3 and BEIR arXiv:2104.08663v4 primary research abstracts.",
+      "locator": "Dual-encoder dense passage retrieval definition and heterogeneous zero-shot retrieval comparison.",
+      "candidate_source_ids": [],
+      "research_context_coverage": "COMPLETE",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "conditions_and_applicability_ref": "shared_frozen_catalogue.sources[PS20]"
+    }
+  ],
+  "coverage_boundary": "Relevant definitions/code/callers/tests/version/exception/license/history contexts inspected as needed, not entire repositories or universal discovery recall. All family references resolve through the shared catalogue.",
+  "third_party_tests_executed": false,
+  "privacy": "Public sources and compact observations only; no private account identities, native transcripts, usage quantities or machine state."
+}

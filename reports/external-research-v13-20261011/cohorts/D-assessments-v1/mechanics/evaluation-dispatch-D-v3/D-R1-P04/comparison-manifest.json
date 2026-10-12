@@ -1,0 +1,24 @@
+{
+  "schema_version": "er13.separate-comparison-output-freeze.v1",
+  "assignment": "D-R1-P04",
+  "frozen_at_utc": "2026-10-12T05:10:13.148968+00:00",
+  "original_manifest": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/manifest.json",
+    "bytes": 4167,
+    "sha256": "d55b8f84204d424833e635c98262ec902f8d7dd2f90facd9acc2eb8d9e4e3c64"
+  },
+  "entries": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/comparison.md",
+      "bytes": 3051,
+      "sha256": "555afaf861d3175f3492ee4fcc573debdf09e2c5a5eb2e849dfbb8167234eaca"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/comparison.json",
+      "bytes": 4853,
+      "sha256": "304baa1485309a284b0ab11b67347514bf1e52749c0338498c81cf4798875645"
+    }
+  ],
+  "manifest_self_hash": "Excluded to avoid self-reference; externally reported.",
+  "originals_unchanged": true
+}

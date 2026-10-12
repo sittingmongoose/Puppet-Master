@@ -1,0 +1,499 @@
+{
+  "schema": "er13.independent-custody-observations.v1",
+  "observed_at_utc": "2026-10-12T04:56:59.164352+00:00",
+  "stages": [
+    {
+      "arm_id": "D-R2-P04-control",
+      "stage": "investigator",
+      "prepared_at_utc": "2026-10-12T04:20:45.269Z",
+      "requested_at_utc": "2026-10-12T04:20:45.269Z",
+      "dispatch_captured_at_utc": "2026-10-12T04:20:46.455Z",
+      "stage_deadline_utc": "2026-10-12T04:50:45.269Z",
+      "stage_budget_s": 1800,
+      "native_created_at_utc": "2026-10-12T04:20:56+00:00",
+      "same_exact_objective": true,
+      "request_hash_matches_freeze": true,
+      "mapping_and_freeze_route_consistent": true,
+      "dispatch_args_match_request": true,
+      "predecessor_snapshot_checks": [
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R2-P04-control-eval-inputs/control-inputs/brief.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/investigator/files/assignment.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/investigator/files/input-map.json",
+          "match": true
+        }
+      ],
+      "unread_reference_hashes": [],
+      "aux_members_read": 9,
+      "capture_methods": {
+        "activation": {
+          "version": "prospective-capture-v1",
+          "root_only_integration": true,
+          "dispatch_performed": false,
+          "idempotent": false,
+          "args_non_task_equal_request": true,
+          "task_has_only_later_terminal_loader_addition": true
+        },
+        "terminal": {
+          "version": "prospective-terminal-capture-v1",
+          "root_only_integration": true,
+          "dispatch_performed": false,
+          "idempotent": false,
+          "args_non_task_equal_request": true,
+          "binding_and_runtime_pins_match": true
+        }
+      },
+      "native_counter_present": true,
+      "required_output_names": [
+        "source-map.json",
+        "discovery.md",
+        "draft.md",
+        "revealed-plan.md",
+        "plan-reveal.json"
+      ],
+      "terminal_aux_present": true,
+      "native_terminal_at_utc": "2026-10-12T04:28:06+00:00",
+      "native_time_counter_s": 429,
+      "native_birth_to_terminal_delta_s": 430,
+      "terminal_source": "direct_update_goal_return",
+      "provenance_independently_proved": false,
+      "required_science_and_source_snapshot_match": true
+    },
+    {
+      "arm_id": "D-R2-P04-control",
+      "stage": "critic",
+      "prepared_at_utc": "2026-10-12T04:28:42.002Z",
+      "requested_at_utc": "2026-10-12T04:28:42.002Z",
+      "dispatch_captured_at_utc": "2026-10-12T04:28:43.441Z",
+      "stage_deadline_utc": "2026-10-12T04:40:42.002Z",
+      "stage_budget_s": 720,
+      "native_created_at_utc": "2026-10-12T04:28:54+00:00",
+      "same_exact_objective": true,
+      "request_hash_matches_freeze": true,
+      "mapping_and_freeze_route_consistent": true,
+      "dispatch_args_match_request": true,
+      "predecessor_snapshot_checks": [
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R2-P04-control-eval-inputs/control-inputs/brief.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/critic/files/assignment.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/critic/files/input-map.json",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/investigator/files/discovery.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/investigator/files/draft.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/investigator/files/source-map.json",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/investigator/files/revealed-plan.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/investigator/files/plan-reveal.json",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/investigator/files/sources/index.md",
+          "match": true
+        }
+      ],
+      "unread_reference_hashes": [],
+      "aux_members_read": 9,
+      "capture_methods": {
+        "activation": {
+          "version": "prospective-capture-v1",
+          "root_only_integration": true,
+          "dispatch_performed": false,
+          "idempotent": false,
+          "args_non_task_equal_request": true,
+          "task_has_only_later_terminal_loader_addition": true
+        },
+        "terminal": {
+          "version": "prospective-terminal-capture-v1",
+          "root_only_integration": true,
+          "dispatch_performed": false,
+          "idempotent": false,
+          "args_non_task_equal_request": true,
+          "binding_and_runtime_pins_match": true
+        }
+      },
+      "native_counter_present": true,
+      "required_output_names": [
+        "source-map.json",
+        "critique.md"
+      ],
+      "terminal_aux_present": true,
+      "native_terminal_at_utc": "2026-10-12T04:37:25+00:00",
+      "native_time_counter_s": 511,
+      "native_birth_to_terminal_delta_s": 511,
+      "terminal_source": "direct_update_goal_return",
+      "provenance_independently_proved": false,
+      "required_science_and_source_snapshot_match": true
+    },
+    {
+      "arm_id": "D-R2-P04-control",
+      "stage": "reviser",
+      "prepared_at_utc": "2026-10-12T04:38:08.377Z",
+      "requested_at_utc": "2026-10-12T04:38:08.377Z",
+      "dispatch_captured_at_utc": "2026-10-12T04:38:09.583Z",
+      "stage_deadline_utc": "2026-10-12T04:56:08.377Z",
+      "stage_budget_s": 1080,
+      "native_created_at_utc": "2026-10-12T04:38:15+00:00",
+      "same_exact_objective": true,
+      "request_hash_matches_freeze": true,
+      "mapping_and_freeze_route_consistent": true,
+      "dispatch_args_match_request": true,
+      "predecessor_snapshot_checks": [
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R2-P04-control-eval-inputs/control-inputs/brief.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/reviser/files/assignment.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/reviser/files/input-map.json",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/investigator/files/discovery.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/investigator/files/draft.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/investigator/files/source-map.json",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/investigator/files/revealed-plan.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/investigator/files/plan-reveal.json",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/critic/files/critique.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/critic/files/source-map.json",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/investigator/files/sources/index.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/critic/files/sources/index.md",
+          "match": true
+        }
+      ],
+      "unread_reference_hashes": [],
+      "aux_members_read": 9,
+      "capture_methods": {
+        "activation": {
+          "version": "prospective-capture-v1",
+          "root_only_integration": true,
+          "dispatch_performed": false,
+          "idempotent": false,
+          "args_non_task_equal_request": true,
+          "task_has_only_later_terminal_loader_addition": true
+        },
+        "terminal": {
+          "version": "prospective-terminal-capture-v1",
+          "root_only_integration": true,
+          "dispatch_performed": false,
+          "idempotent": false,
+          "args_non_task_equal_request": true,
+          "binding_and_runtime_pins_match": true
+        }
+      },
+      "native_counter_present": true,
+      "required_output_names": [
+        "source-map.json",
+        "final.md"
+      ],
+      "terminal_aux_present": true,
+      "native_terminal_at_utc": "2026-10-12T04:43:35+00:00",
+      "native_time_counter_s": 319,
+      "native_birth_to_terminal_delta_s": 320,
+      "terminal_source": "direct_update_goal_return",
+      "provenance_independently_proved": false,
+      "required_science_and_source_snapshot_match": true
+    },
+    {
+      "arm_id": "D-R2-P04-treatment",
+      "stage": "investigator",
+      "prepared_at_utc": "2026-10-12T04:20:47.830Z",
+      "requested_at_utc": "2026-10-12T04:20:47.830Z",
+      "dispatch_captured_at_utc": "2026-10-12T04:20:49.688Z",
+      "stage_deadline_utc": "2026-10-12T04:50:47.830Z",
+      "stage_budget_s": 1800,
+      "native_created_at_utc": "2026-10-12T04:20:54+00:00",
+      "same_exact_objective": true,
+      "request_hash_matches_freeze": true,
+      "mapping_and_freeze_route_consistent": true,
+      "dispatch_args_match_request": true,
+      "predecessor_snapshot_checks": [
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R2-P04-treatment-eval-inputs/control-inputs/brief.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/investigator/files/assignment.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/investigator/files/input-map.json",
+          "match": true
+        }
+      ],
+      "unread_reference_hashes": [
+        {
+          "reference_kind": "method_delta",
+          "sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+          "reason": "Reference not in immutable allowlist; no live path followed. Supplemental config contains method delta text."
+        }
+      ],
+      "aux_members_read": 9,
+      "capture_methods": {
+        "activation": {
+          "version": "prospective-capture-v1",
+          "root_only_integration": true,
+          "dispatch_performed": false,
+          "idempotent": false,
+          "args_non_task_equal_request": true,
+          "task_has_only_later_terminal_loader_addition": true
+        },
+        "terminal": {
+          "version": "prospective-terminal-capture-v1",
+          "root_only_integration": true,
+          "dispatch_performed": false,
+          "idempotent": false,
+          "args_non_task_equal_request": true,
+          "binding_and_runtime_pins_match": true
+        }
+      },
+      "native_counter_present": true,
+      "required_output_names": [
+        "source-map.json",
+        "discovery.md",
+        "draft.md",
+        "revealed-plan.md",
+        "plan-reveal.json"
+      ],
+      "terminal_aux_present": true,
+      "native_terminal_at_utc": "2026-10-12T04:34:05+00:00",
+      "native_time_counter_s": 790,
+      "native_birth_to_terminal_delta_s": 791,
+      "terminal_source": "direct_update_goal_return",
+      "provenance_independently_proved": false,
+      "required_science_and_source_snapshot_match": true
+    },
+    {
+      "arm_id": "D-R2-P04-treatment",
+      "stage": "critic-truth",
+      "prepared_at_utc": "2026-10-12T04:35:02.199Z",
+      "requested_at_utc": "2026-10-12T04:35:02.199Z",
+      "dispatch_captured_at_utc": "2026-10-12T04:35:04.810Z",
+      "stage_deadline_utc": "2026-10-12T04:41:02.199Z",
+      "stage_budget_s": 360,
+      "native_created_at_utc": "2026-10-12T04:35:18+00:00",
+      "same_exact_objective": true,
+      "request_hash_matches_freeze": true,
+      "mapping_and_freeze_route_consistent": true,
+      "dispatch_args_match_request": true,
+      "predecessor_snapshot_checks": [
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R2-P04-treatment-eval-inputs/control-inputs/brief.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/critic-truth/files/assignment.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/critic-truth/files/input-map.json",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/investigator/files/discovery.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/investigator/files/draft.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/investigator/files/source-map.json",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/investigator/files/revealed-plan.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/investigator/files/plan-reveal.json",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/investigator/files/sources/index.md",
+          "match": true
+        }
+      ],
+      "unread_reference_hashes": [
+        {
+          "reference_kind": "method_delta",
+          "sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+          "reason": "Reference not in immutable allowlist; no live path followed. Supplemental config contains method delta text."
+        }
+      ],
+      "aux_members_read": 9,
+      "capture_methods": {
+        "activation": {
+          "version": "prospective-capture-v1",
+          "root_only_integration": true,
+          "dispatch_performed": false,
+          "idempotent": false,
+          "args_non_task_equal_request": true,
+          "task_has_only_later_terminal_loader_addition": true
+        },
+        "terminal": {
+          "version": "prospective-terminal-capture-v1",
+          "root_only_integration": true,
+          "dispatch_performed": false,
+          "idempotent": false,
+          "args_non_task_equal_request": true,
+          "binding_and_runtime_pins_match": true
+        }
+      },
+      "native_counter_present": true,
+      "required_output_names": [
+        "source-map.json",
+        "critique.md"
+      ],
+      "terminal_aux_present": true,
+      "native_terminal_at_utc": "2026-10-12T04:39:43+00:00",
+      "native_time_counter_s": 264,
+      "native_birth_to_terminal_delta_s": 265,
+      "terminal_source": "direct_update_goal_return",
+      "provenance_independently_proved": false,
+      "required_science_and_source_snapshot_match": true
+    },
+    {
+      "arm_id": "D-R2-P04-treatment",
+      "stage": "critic-breadth",
+      "prepared_at_utc": "2026-10-12T04:34:58.446Z",
+      "requested_at_utc": "2026-10-12T04:34:58.446Z",
+      "dispatch_captured_at_utc": "2026-10-12T04:35:00.524Z",
+      "stage_deadline_utc": "2026-10-12T04:40:58.446Z",
+      "stage_budget_s": 360,
+      "native_created_at_utc": "2026-10-12T04:35:12+00:00",
+      "same_exact_objective": true,
+      "request_hash_matches_freeze": true,
+      "mapping_and_freeze_route_consistent": true,
+      "dispatch_args_match_request": true,
+      "predecessor_snapshot_checks": [
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R2-P04-treatment-eval-inputs/control-inputs/brief.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/critic-breadth/files/assignment.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/critic-breadth/files/input-map.json",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/investigator/files/discovery.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/investigator/files/draft.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/investigator/files/source-map.json",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/investigator/files/revealed-plan.md",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/investigator/files/plan-reveal.json",
+          "match": true
+        },
+        {
+          "snapshot": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-treatment/run/D-R2-P04-treatment/control/terminal-handoffs/investigator/files/sources/index.md",
+          "match": true
+        }
+      ],
+      "unread_reference_hashes": [
+        {
+          "reference_kind": "method_delta",
+          "sha256": "3c2d6d1131d222f9ec58c2f8bff60c7026357cbe94abcfc311e1d4fcee68ac08",
+          "reason": "Reference not in immutable allowlist; no live path followed. Supplemental config contains method delta text."
+        }
+      ],
+      "aux_members_read": 6,
+      "capture_methods": {
+        "activation": {
+          "version": "prospective-capture-v1",
+          "root_only_integration": true,
+          "dispatch_performed": false,
+          "idempotent": false,
+          "args_non_task_equal_request": true,
+          "task_has_only_later_terminal_loader_addition": true
+        },
+        "terminal": {
+          "version": "prospective-terminal-capture-v1",
+          "root_only_integration": true,
+          "dispatch_performed": false,
+          "idempotent": false,
+          "args_non_task_equal_request": true,
+          "binding_and_runtime_pins_match": true
+        }
+      },
+      "native_counter_present": true,
+      "required_output_names": [
+        "source-map.json",
+        "critique.md"
+      ],
+      "terminal_aux_present": false,
+      "native_terminal_at_utc": null,
+      "native_time_counter_s": null,
+      "native_birth_to_terminal_delta_s": null,
+      "terminal_source": null,
+      "provenance_independently_proved": false,
+      "required_science_and_source_snapshot_match": false
+    }
+  ],
+  "scope_limit": "Exact frozen member consistency only. No native-session linkage, history, active candidate paths, provider activity or billing inspected; private routing IDs and token quantities omitted."
+}

@@ -1,0 +1,230 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "D-R2-P03-treatment",
+  "final_source_judgment": "UNASSESSED",
+  "findings": [
+    {
+      "id": "T-D01",
+      "dimension": "delivery",
+      "severity": "critical_delivery",
+      "scope": "complete final",
+      "finding": "Reviser unlaunched and final/source map/dispositions absent. All six complete-final axes UNASSESSED.",
+      "evidence": "Packet items[treatment].final_missing and failure report"
+    },
+    {
+      "id": "T-M01",
+      "dimension": "time_eligibility",
+      "severity": "qualification_failure",
+      "scope": "critic-truth",
+      "finding": "Frozen terminal capture failed during preflight with original deadline expired; no native terminal receipt. T3 task interrupted; reviser held.",
+      "evidence": "native-terminal-capture-failed.json and frozen critic-truth failure report",
+      "limit": "Exact scientific artifact finish time and final native status unknown; not a claim that whole 60-minute cap elapsed."
+    },
+    {
+      "id": "T-S01",
+      "dimension": "source_assessment",
+      "severity": "material_research_omission",
+      "axes": [
+        2,
+        3,
+        6
+      ],
+      "scope": "available investigator and breadth review",
+      "finding": "Brief explicitly requests relevant repository tests. Draft/source map inspect README/demo/issue, propose adapting #48, but identify no actual SDK test case or its oracle/limits. Breadth critic defers SDK caller/repair review because target app is unspecified, although exact candidate SDK tests are available now.",
+      "frozen_locators": [
+        "investigator/discovery.md: Repository callers and repair history",
+        "investigator/draft.md: Validation record, proposed trace 8",
+        "critic-breadth/critique.md: Maintained mechanisms row"
+      ],
+      "independent_sources": [
+        "E16",
+        "E17",
+        "E18",
+        "E19"
+      ],
+      "consequence": "Source-backed transaction-grouping and queue-progress qualification remains incomplete; future execution is not required.",
+      "final_effect": "UNASSESSED"
+    },
+    {
+      "id": "T-S02",
+      "dimension": "source_assessment",
+      "severity": "material_applicability_omission",
+      "axes": [
+        2,
+        3
+      ],
+      "scope": "PowerSync/local SQLite representation",
+      "finding": "Local FK advice cites native SQLite enable/check rules without qualifying PowerSync default JSON views versus raw tables. Available raw-table mechanism, migrations/triggers, deferred FK application order and stream-priority restriction are absent.",
+      "frozen_locators": [
+        "investigator/discovery.md: Proposed data and workflow boundaries, SQLite paragraph",
+        "investigator/draft.md: Alternatives and conditions; recovery trace 7",
+        "investigator/source-map.json: S13–S16"
+      ],
+      "independent_sources": [
+        "E14",
+        "E15",
+        "E25"
+      ],
+      "consequence": "Generic SQLite facts are true, but native FK diagnostics alone cannot demonstrate reference integrity on default sync views or across separately applied priorities. Useful available mechanism research was omitted.",
+      "limit": "No selected platform or deployed schema is inferred; supported raw-table options prevent categorical rejection of PowerSync.",
+      "final_effect": "UNASSESSED"
+    },
+    {
+      "id": "T-S03",
+      "dimension": "source_assessment",
+      "severity": "material_version_context_omission",
+      "axes": [
+        2,
+        3
+      ],
+      "scope": "Sync Streams authorization",
+      "finding": "S08/draft discuss user-filtered streams and a service 1.20+ floor, yet omit the governing 1.20.0 edition-3 authorization-filter exception/fix. Requirements are mislocated to GA page rather than the separate beta announcement.",
+      "frozen_locators": [
+        "investigator/source-map.json: S08",
+        "investigator/draft.md: Alternatives and conditions, PowerSync candidate",
+        "critic-truth/critique.md: Approval audit"
+      ],
+      "independent_sources": [
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13"
+      ],
+      "consequence": "Feature availability does not establish authorization enforcement for every version/configuration included in that floor. Relevant patch/history qualification is feasible mechanism research.",
+      "limit": "Advisory affects particular authenticated-user gating subqueries; partitioning queries/legacy rules/edition 2 excluded; Cloud patched. No present exposure at an unknown center asserted.",
+      "final_effect": "UNASSESSED"
+    },
+    {
+      "id": "T-S04",
+      "dimension": "source_assessment",
+      "severity": "material_conditional_history_omission",
+      "axes": [
+        2,
+        3,
+        6
+      ],
+      "scope": "local recovery and library version qualification",
+      "finding": "WAL storage/recovery discussion and checkpoint-crash proposals omit the WAL-reset corruption race and patched SQLite library versions documented on the cited WAL source.",
+      "frozen_locators": [
+        "investigator/discovery.md: SQLite persistence/recovery paragraph",
+        "investigator/source-map.json: S14",
+        "investigator/draft.md: local recovery proposed trace 7"
+      ],
+      "independent_sources": [
+        "E26",
+        "E27"
+      ],
+      "consequence": "OS flush caveats and generic process termination tests do not qualify a known write/checkpoint race. Exact embedded-library patch status matters independently of adapter/SDK marketing version.",
+      "limit": "Rare multi-connection write/checkpoint race; fixed 3.51.3+ with named backports. Selected library unknown, so no candidate deployment defect or observed corruption inferred.",
+      "final_effect": "UNASSESSED"
+    },
+    {
+      "id": "T-C01",
+      "dimension": "source_assessment",
+      "severity": "nonmaterial_framing_overstatement",
+      "axes": [
+        4
+      ],
+      "scope": "truth critique of rule timing",
+      "finding": "Critic frames draft as rejecting every post-merge check/requiring validation before every draft write. Exact draft rejects post-merge-only timing for accepted/authoritative data and already separates pending proposals. Staged-merge clarification is useful but not evidence that all pending-draft writes were forbidden.",
+      "frozen_locators": [
+        "investigator/draft.md: paragraph 1 rule-check row and paragraph 2 offline row",
+        "critic-truth/critique.md: Paragraph 1 timing finding"
+      ],
+      "independent_sources": [
+        "E01",
+        "E02",
+        "E03"
+      ],
+      "consequence": "Do not turn the framing into a broader forced architecture or a false reversal of the accepted-state boundary. No final exists to establish harmful disposition or preservation loss.",
+      "final_effect": "UNASSESSED"
+    },
+    {
+      "id": "T-C02",
+      "dimension": "method_compliance",
+      "severity": "nonmaterial_metadata_error",
+      "scope": "breadth source-map header",
+      "finding": "Critic-breadth/source-map.json retains stage=investigator while adding S20–S23. File custody and individual access records establish which frozen critic artifact contains additions; header is still erroneous.",
+      "evidence": "Exact frozen breadth source map top-level stage and S20–S23",
+      "limit": "No silent source-ID rebinding or semantic truth failure inferred from this metadata error; no repair/regrade performed."
+    }
+  ],
+  "critic_disposition_audit": [
+    {
+      "id": "B1",
+      "artifact": "critic-breadth/critique.md §1",
+      "judgment": "Supported conditional opportunity",
+      "sources": [
+        "E34",
+        "E35"
+      ],
+      "meaning": "Operation replay plus durable business rejection/sequence progress differs from row CRUD; browser platform gating retained.",
+      "final_disposition": "UNASSESSED; absent final"
+    },
+    {
+      "id": "B2",
+      "artifact": "critic-breadth/critique.md §2",
+      "judgment": "Supported conditional opportunity",
+      "sources": [
+        "E36"
+      ],
+      "meaning": "Checkpointed master/fork document sync adds a useful representation comparison; page alone neither proves nor universally disproves cross-document transactions.",
+      "final_disposition": "UNASSESSED; absent final"
+    },
+    {
+      "id": "B3",
+      "artifact": "critic-breadth/critique.md §3",
+      "judgment": "Supported boundary",
+      "sources": [
+        "E37"
+      ],
+      "meaning": "Electric is read-path component with separate write API/queue; no winner or forced product selection.",
+      "final_disposition": "UNASSESSED; absent final"
+    },
+    {
+      "id": "CT1",
+      "artifact": "critic-truth/critique.md timing finding",
+      "judgment": "Useful clarification; overstates original draft as recorded T-C01",
+      "sources": [
+        "E01",
+        "E02",
+        "E03"
+      ],
+      "meaning": "Staged invalid candidate may exist before validation; accepted/publication state must be gated. Exact draft already partially states this distinction.",
+      "final_disposition": "UNASSESSED; absent final"
+    },
+    {
+      "id": "CT2",
+      "artifact": "critic-truth/critique.md Rejected upload versus retained proposal",
+      "judgment": "Supported consequential clarification",
+      "sources": [
+        "E03",
+        "E06",
+        "E16",
+        "E17"
+      ],
+      "meaning": "Durable idempotent rejection record plus handled response/queue completion needed; business-command identity differs from per-client CRUD identity.",
+      "final_disposition": "UNASSESSED; absent final"
+    },
+    {
+      "id": "CT-audit",
+      "artifact": "critic-truth/critique.md Disposition audit, all eight bullets",
+      "judgment": "Core retentions supported under bounded context; history/applicability gaps remain T-S01–T-S04",
+      "sources": [
+        "E01",
+        "E02",
+        "E20",
+        "E21",
+        "E22",
+        "E23",
+        "E31",
+        "E35",
+        "E38"
+      ],
+      "meaning": "Stable IDs; scoped descriptive merge; qualifications/dependencies; protected approval projection; immutable publication/consumers; explicit rebase and terminal request states; optional technologies; honest proposed validation assessed. Negative no-material-alternative-correction statement is not an exhaustive version/platform/license pass.",
+      "final_disposition": "UNASSESSED; absent final"
+    }
+  ],
+  "no_repairs_or_regrades": true
+}

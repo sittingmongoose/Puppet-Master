@@ -1,0 +1,51 @@
+{
+  "original_capture_hashes": {
+    "D-R1-P03-request.json": "92bbe1a685ea3d26e0a6ad7857fab6690fa43789ce79fefc641707467881c92f",
+    "D-R1-P03-dispatch.raw.json": "4aea1d7aa3a8da4b1de3abe88a3a990c1b0fbf0488a2ac8562a261b20176d4ce",
+    "D-R1-P03-terminal.raw.json": "4149ea00016109a8ef66ca41716a02b2e3dda39a724afc50ea24f2d2edae98f4",
+    "D-R1-P03-settle.raw.json": "709a6f4e76dc1aa9ccacb9dcbecaeec4404bf8bde7b80ac10c58c2c60b931305"
+  },
+  "dispatch": {
+    "taskId": "node:delegated-task:command%3Amcp%3A3d6006ae-6c98-4fc0-9848-576b3ba21dcd%3Adelegate-task%3Aer13-original-grader-D-v3-D-R1-P03-001",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A3d6006ae-6c98-4fc0-9848-576b3ba21dcd%3Adelegate-task%3Aer13-original-grader-D-v3-D-R1-P03-001",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A3d6006ae-6c98-4fc0-9848-576b3ba21dcd%253Adelegate-task%253Aer13-original-grader-D-v3-D-R1-P03-001:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A3d6006ae-6c98-4fc0-9848-576b3ba21dcd%3Adelegate-task%3Aer13-original-grader-D-v3-D-R1-P03-001",
+    "status": "running",
+    "workState": "working",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": null,
+    "latestTerminalStatus": null,
+    "providerInstanceId": "PUBLIC_ROUTING_EPOCH_2",
+    "model": "gpt-6.1-sol",
+    "waitTimedOut": false
+  },
+  "terminal": {
+    "taskId": "node:delegated-task:command%3Amcp%3A3d6006ae-6c98-4fc0-9848-576b3ba21dcd%3Adelegate-task%3Aer13-original-grader-D-v3-D-R1-P03-001",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A3d6006ae-6c98-4fc0-9848-576b3ba21dcd%3Adelegate-task%3Aer13-original-grader-D-v3-D-R1-P03-001",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A3d6006ae-6c98-4fc0-9848-576b3ba21dcd%253Adelegate-task%253Aer13-original-grader-D-v3-D-R1-P03-001:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A3d6006ae-6c98-4fc0-9848-576b3ba21dcd%3Adelegate-task%3Aer13-original-grader-D-v3-D-R1-P03-001",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A3d6006ae-6c98-4fc0-9848-576b3ba21dcd%253Adelegate-task%253Aer13-original-grader-D-v3-D-R1-P03-001:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "providerInstanceId": "PUBLIC_ROUTING_EPOCH_2",
+    "model": "gpt-6.1-sol",
+    "waitTimedOut": false
+  },
+  "requested_options": {
+    "reasoningEffort": "xhigh",
+    "serviceTier": "priority"
+  },
+  "settlement": {
+    "sequence": 914626
+  },
+  "routing_epoch": 2,
+  "routing_amendment": {
+    "path": "ER13_RUNTIME/state/account-routing-amendment-v1.json",
+    "sha256": "7094c3ee0b12087616f70226b9f00906b41ccfdd2f5747e6ef869c37627ccb18",
+    "bytes": 1884
+  },
+  "actual_backend_linkage_activity_billing": "UNKNOWN beyond original saved observations",
+  "no_full_native_transcript": true
+}

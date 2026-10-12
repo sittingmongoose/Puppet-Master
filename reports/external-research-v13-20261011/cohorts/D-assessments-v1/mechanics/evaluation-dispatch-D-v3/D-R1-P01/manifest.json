@@ -1,0 +1,92 @@
+{
+  "schema": "er13.immutable-paired-original-output-manifest.v1",
+  "block_id": "D-R1-P01",
+  "arm_count": 2,
+  "scope": "FULL",
+  "frozen_at_utc": "2026-10-12T05:20:28.524395+00:00",
+  "comparison_not_started": true,
+  "original_grades_immutable": true,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/input-verification.json",
+      "bytes": 41199,
+      "sha256": "7264f589c742bee7ff04d0635c8d6f106735c5ae9392a16f22b0d389a3b2f7f2"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/evaluation-observations.json",
+      "bytes": 1328,
+      "sha256": "7542b040be29844ef4a2f3b3b69e4bb96a3b52ae59245e939441966afe148e65"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/control/assessment.md",
+      "bytes": 5946,
+      "sha256": "2f587b006841bfa435499ac2e2696eebbf1e5c8c79d75b04ee780ead570ce1c4"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/control/assessment.json",
+      "bytes": 13312,
+      "sha256": "1b98c9abcd9569ecfaf4ecabbfbc5920c79fdeaeeb788ea56c9b955c70d70930"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/control/coverage.json",
+      "bytes": 17670,
+      "sha256": "c67596b0cc33eef994207b45d9a748b9346fc49ca979314bc2825487c9be862d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/control/defects.json",
+      "bytes": 1126,
+      "sha256": "5e56b1f356f5610b5b299d8b01b12394067e40299d7813145ef827f3c0d01228"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/control/primary-source-index.json",
+      "bytes": 15622,
+      "sha256": "023b6fc65dae628bbb109daf2b3c2067a08608c452b2ae67e10546b6da42657a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/control/evidence/source-checks.json",
+      "bytes": 1274,
+      "sha256": "15a8e6f96fccad025ba3def6c8a1b5bcdf81fbe71e5776058b51392ab0d50207"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/control/manifest.json",
+      "bytes": 2481,
+      "sha256": "a89a27750fc17c2f34bb807f178223f25b58ccfe35a17f2054e255cb0f55f141"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/assessment.md",
+      "bytes": 6684,
+      "sha256": "9ece89d4898608ce5864096cdb6e9d82b2c0448e71fb326ce35870a859ec13b5"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/assessment.json",
+      "bytes": 12624,
+      "sha256": "531fad41b7150e51235f9341b4f048bc58131815e318ba6a259fcf3df2c95f78"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/coverage.json",
+      "bytes": 19920,
+      "sha256": "45f43c8dc50920886b7c852a0da6008ff392fcd94e2105b8bd98364d367820b8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/defects.json",
+      "bytes": 2550,
+      "sha256": "2dfe6d6cf656b1fe4ed4c409d2926a86f47eae17d2d734c538d28740f59be7fa"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/primary-source-index.json",
+      "bytes": 18870,
+      "sha256": "90a8161eb210ba0f5e270dedf88fef88f1ab70c729ec1db8778c765ce0d035f4"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/evidence/source-checks.json",
+      "bytes": 2522,
+      "sha256": "89e845c8ee288593c263c8b24f8319287f8540e27059b6a82d0fb3c44395e58b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/manifest.json",
+      "bytes": 2495,
+      "sha256": "f7a52db90e7e6899998377298271a6bea9f21347d0121711315d2f64e301d774"
+    }
+  ],
+  "self_hash": "Excluded from own members; reported separately in terminal reply."
+}

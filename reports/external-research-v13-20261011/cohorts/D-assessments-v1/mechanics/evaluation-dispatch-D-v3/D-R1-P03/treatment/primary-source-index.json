@@ -1,0 +1,423 @@
+{
+  "arm_id": "D-R1-P03-treatment",
+  "independent_research_shared_across_assigned_arms": true,
+  "scope": "Primary claims, definitions and relevant code/caller/test/repair context; finite, not universal recall.",
+  "sources": [
+    {
+      "id": "P01",
+      "family": "snapshot",
+      "title": "SQLite backup overview",
+      "exact_url": "https://sqlite.org/backup.html",
+      "version_context": "Live documentation; updated 2025-11-13",
+      "locator": "Sections 1, 3.1, C example backupDb",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129227+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Completed API snapshot; external writes can restart it; repeated restarts can prevent completion. Database copy does not capture unrelated files.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P02",
+      "family": "snapshot",
+      "title": "SQLite C backup API",
+      "exact_url": "https://www.sqlite.org/c3ref/backup_finish.html",
+      "version_context": "Live C interface contract",
+      "locator": "backup_step, backup_finish, Concurrent Usage",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129249+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "BUSY/LOCKED retry; IOERR/NOMEM/READONLY fatal; destination handle excluded from other uses. Finish without DONE can return OK after rollback; completion must be distinguished.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P03",
+      "family": "snapshot",
+      "title": "SQLite WAL",
+      "exact_url": "https://www.sqlite.org/wal.html",
+      "version_context": "WAL since 3.7.0; current reset-bug notice",
+      "locator": "Sections 4 and 11",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129253+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "WAL carries committed state. Reset race requires concurrent connections writing/checkpointing; fixed 3.51.3+, backports 3.44.6/3.50.7. Not a claim that backup alone triggers it.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P04",
+      "family": "migration",
+      "title": "SQLite PRAGMA",
+      "exact_url": "https://www.sqlite.org/pragma.html",
+      "version_context": "Live documentation; defaults may be compiled differently",
+      "locator": "integrity_check; foreign_key_check; foreign_keys; user_version",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129258+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Integrity and FK checks differ; FK setting is connection-scoped and cannot change inside a transaction; user_version is application-owned.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P07",
+      "family": "migration",
+      "title": "SQLite ALTER TABLE",
+      "exact_url": "https://sqlite.org/lang_altertable.html",
+      "version_context": "3.25.0/3.26.0 compatibility changes",
+      "locator": "RENAME compatibility table, schema rebuild procedure",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129266+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Trigger/view and FK rename behavior depends on version and legacy mode; known migration sequencing and invariants remain required.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P08",
+      "family": "snapshot",
+      "title": "SQLite VACUUM INTO",
+      "exact_url": "https://www.sqlite.org/lang_vacuum.html",
+      "version_context": "Live page updated 2025-07-12",
+      "locator": "Section 2.1",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129268+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Consistent completed DB snapshot; interrupted output may be incomplete/corrupt. Completed-output durability assumes NORMAL/FULL sync and functioning storage.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P10",
+      "family": "archive",
+      "title": "Python zipfile rolling edition",
+      "exact_url": "https://docs.python.org/3/library/zipfile.html",
+      "version_context": "3.15.0 edition observed",
+      "locator": "Same API and Path sections",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129273+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Relevant CRC, duplicate-name and path responsibilities agree with the older edition; rolling URL is not a permanently pinned version.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://docs.python.org/3/license.html",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P11",
+      "family": "archive",
+      "title": "CPython ZIP implementation",
+      "exact_url": "https://github.com/python/cpython/blob/v3.14.0/Lib/zipfile/__init__.py",
+      "version_context": "Pinned v3.14.0 corroboration, not 3.14.8 execution",
+      "locator": "testzip 1613; getinfo 1629; _extract_member 1871",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129275+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "CRC read loop resolves names via NameToInfo; duplicate-name aliasing reinforces explicit duplicate rejection. Extraction normalization is API-specific.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://github.com/python/cpython/blob/v3.14.0/LICENSE",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P12",
+      "family": "archive",
+      "title": "CPython CRC tests",
+      "exact_url": "https://github.com/python/cpython/blob/v3.14.0/Lib/test/test_zipfile/test_core.py",
+      "version_context": "Pinned v3.14.0",
+      "locator": "AbstractBadCrcTests 2625",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129277+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Bad CRC fixture checks first bad filename and read failure; not application completeness/usability.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://github.com/python/cpython/blob/v3.14.0/LICENSE",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P13",
+      "family": "archive_history",
+      "title": "Rust ZIP advisory",
+      "exact_url": "https://github.com/zip-rs/zip2/security/advisories/GHSA-94vh-gphv-8pm8",
+      "version_context": "Published 2025-03-16; table affected >=1.3.0, patched 2.3.0",
+      "locator": "Summary, impact APIs and patch table",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129279+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Earlier symlink redirects later extraction. Advisory range must be read with the patch entry; it does not establish every future version vulnerable.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P14",
+      "family": "archive_history",
+      "title": "Rust ZIP repaired code and regression",
+      "exact_url": "https://github.com/zip-rs/zip2/blob/v2.3.0/src/read.rs",
+      "version_context": "Pinned v2.3.0",
+      "locator": "extract 776-825; safe_prepare_path 1424 onward; regression 1994",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129284+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Caller checks output path components/symlinks; regression constructs symlink then later file and asserts outside file absent. Extraction still is not atomic.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://github.com/zip-rs/zip2/blob/v2.3.0/LICENSE",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P15",
+      "family": "archive_history",
+      "title": "Rust ZIP release",
+      "exact_url": "https://github.com/zip-rs/zip2/releases/tag/v2.3.0",
+      "version_context": "2025-03-16 release",
+      "locator": "Bug fixes",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129286+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Release records canonicalized output/symlink containment and stream extraction changes; no test execution by evaluator.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P16",
+      "family": "atomicity",
+      "title": "Rust rename",
+      "exact_url": "https://doc.rust-lang.org/std/fs/fn.rename.html",
+      "version_context": "std 1.99.0, b940084d7, 2026-09-28 observed",
+      "locator": "Function and platform-specific behavior",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129288+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Cross-mount moves fail; directory replacement differs on Unix/Windows and filesystem support; this contract supplies no multi-resource power-loss guarantee.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P17",
+      "family": "crypto",
+      "title": "age specification 1.0.0",
+      "exact_url": "https://c2sp.org/age@v1.0.0",
+      "version_context": "Pinned older spec edition",
+      "locator": "Header, payload, scrypt",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129290+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Scrypt wrapping, bounded work, sole-scrypt stanza, authenticated 64 KiB chunks and required final chunk. Encryption is not signature/provenance.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://creativecommons.org/licenses/by/4.0/",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P18",
+      "family": "crypto",
+      "title": "age specification 1.1.0",
+      "exact_url": "https://c2sp.org/age@v1.1.0",
+      "version_context": "Current edition identified by older page",
+      "locator": "Header MAC, payload, scrypt, recipient types",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129293+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Core passphrase/final-chunk rules retained; adds recipient types including tagged types, which do not permit mixing with scrypt.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://creativecommons.org/licenses/by/4.0/",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P20",
+      "family": "crypto",
+      "title": "age passphrase implementation",
+      "exact_url": "https://github.com/FiloSottile/age/blob/v1.2.1/scrypt.go",
+      "version_context": "Pinned library v1.2.1; does not qualify a future chosen library",
+      "locator": "ScryptIdentity.Unwrap and work bounds",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129297+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Unwrap rejects mixed scrypt stanzas and excessive work factor. Library release and spec edition are separate version identities.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://github.com/FiloSottile/age/blob/v1.2.1/LICENSE",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P21",
+      "family": "crypto",
+      "title": "age streaming reader",
+      "exact_url": "https://github.com/FiloSottile/age/blob/v1.2.1/internal/stream/stream.go",
+      "version_context": "Pinned v1.2.1",
+      "locator": "Reader.readChunk 88-126",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129299+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "EOF without final marked chunk errors; payload authentication failures do not identify password versus modified bytes.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://github.com/FiloSottile/age/blob/v1.2.1/LICENSE",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P22",
+      "family": "crypto",
+      "title": "age streaming tests",
+      "exact_url": "https://github.com/FiloSottile/age/blob/v1.2.1/internal/stream/stream_test.go",
+      "version_context": "Pinned v1.2.1",
+      "locator": "TestRoundTrip",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129301+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Inspected boundary-length/step-size round-trip fixtures; not executed and not a complete hostile-input suite.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": "https://github.com/FiloSottile/age/blob/v1.2.1/LICENSE",
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P23",
+      "family": "crypto",
+      "title": "NIST Secure Hash Standard",
+      "exact_url": "https://csrc.nist.gov/pubs/fips/180-4/upd1/final",
+      "version_context": "FIPS 180-4 Update 1, 2015-08-04; revision planning note",
+      "locator": "Abstract and publication history",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129303+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Digest detects message changes; replaceable digest beside payload does not bind an author. The latter is a mechanism inference, not a signature claim.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P24",
+      "family": "incremental",
+      "title": "restic backup",
+      "exact_url": "https://restic.readthedocs.io/en/stable/040_backup.html",
+      "version_context": "0.19.1 observed",
+      "locator": "Snapshots, file change detection, exit statuses",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129307+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Deduplicated snapshots and metadata shortcuts; unreadable source files can produce incomplete snapshot, exit 3. Not an application-coherent snapshot.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P26",
+      "family": "incremental",
+      "title": "restic repository check",
+      "exact_url": "https://restic.readthedocs.io/en/stable/045_working_with_repos.html",
+      "version_context": "0.19.1 observed",
+      "locator": "Check, --read-data and subsets",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129312+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Structural check differs from reading all packs; data pass costs I/O. Random subsets are not guaranteed exhaustive coverage.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P40",
+      "family": "inventory",
+      "title": "BagIt definitions",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc8493",
+      "version_context": "RFC 8493, October 2018 informational",
+      "locator": "Definitions; 2.1.3; 3; security",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129861+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Complete member set and verified checksums are distinct. Opaque payload checks do not establish application meaning or an honest source inventory. Independent comparator, no requirement to select BagIt.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    },
+    {
+      "id": "P41",
+      "family": "snapshot_history",
+      "title": "SQLite fixed release",
+      "exact_url": "https://www.sqlite.org/releaselog/3_51_3.html",
+      "version_context": "3.51.3, 2026-03-13",
+      "locator": "Patch release item 1",
+      "independent_operation": "Opened governing primary context; any listed code/tests inspected statically, never executed.",
+      "access_utc_interval": [
+        "2026-10-12T04:50:00Z",
+        "2026-10-12T04:58:59.129863+00:00"
+      ],
+      "coverage": "COMPLETE",
+      "assessed_facts": "Release explicitly fixes WAL-reset corruption; corroborates conditional version finding.",
+      "limits": "Conditional examples; no product dependency or future application result established.",
+      "license_notice_location": null,
+      "raw_corpus_redistributed": false
+    }
+  ],
+  "source_license_policy": "No raw source/code corpus copied into scientific artifacts. Notice links retained. Joplin root AGPL-3.0-or-later permits subdirectory overrides; full integration license audit unassessed. ZIP MIT; age BSD-style notice at linked LICENSE; age specs CC BY 4.0.",
+  "unknowns": "Eventual selected library, schema and platform are unknown; code/test inspection is not test execution."
+}

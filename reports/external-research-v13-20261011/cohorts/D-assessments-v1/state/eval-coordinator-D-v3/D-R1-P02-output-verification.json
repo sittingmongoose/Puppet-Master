@@ -1,0 +1,170 @@
+{
+  "block_id": "D-R1-P02",
+  "verified_at_utc": "2026-10-12T05:01:34.910622+00:00",
+  "all_output_manifest_members_verified": true,
+  "full_authored_assessments_read": true,
+  "arms": [
+    {
+      "arm_id": "D-R1-P02-control",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/assessment.json",
+      "assessment_sha256": "0c0a629763f0d44a4e48ab4166eca39169773730480d553d30296cab8932850e",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/assessment.md",
+      "authored_assessment_md_sha256": "cab9a0c6497450a709f1bd6fdeffd6a81f5d0266c55f078f5d1b96759ffd4cdd",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/manifest.json",
+      "manifest_sha256": "9cbbeea6bf35c4f9694dcb1161d7e552d17314dd5a7946f838f83732d3b55fca",
+      "source_judgment": "FAIL",
+      "source_assessment": {
+        "judgment": "FAIL",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [
+          "D01"
+        ],
+        "finite_not_universal": true,
+        "rationale": "Material unsupported historical resolution and missed fixing mechanism."
+      },
+      "source_dimension_field": "source_assessment",
+      "coverage": {
+        "axes": {
+          "1": "COMPLETE",
+          "2": "COMPLETE",
+          "3": "COMPLETE",
+          "4": "COMPLETE",
+          "5": "COMPLETE",
+          "6": "COMPLETE"
+        },
+        "detail_file": "coverage.json"
+      },
+      "primary_source_index_sha256": "503b06377c8f4fb2408238a658331a58daab6d6b017eed3e1cdb277a8de07d97",
+      "manifest_frozen_at": "2026-10-12T04:58:15.834853+00:00"
+    },
+    {
+      "arm_id": "D-R1-P02-treatment",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/assessment.json",
+      "assessment_sha256": "d869a811eaf1d61fd269a408a3e40be81055f5a3314c7c8b86f9f4255ed35966",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/assessment.md",
+      "authored_assessment_md_sha256": "ceaea0f7f86a608f08acce7c03e0b01ff36777a4667dd2bc0552ed9cce3190dc",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/manifest.json",
+      "manifest_sha256": "a4e453f5a2797666b76c8482052f5009e25dde40b0b1373fe9f9fafa4f37d19f",
+      "source_judgment": "PASS",
+      "source_assessment": {
+        "judgment": "PASS",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [],
+        "finite_not_universal": true,
+        "rationale": "No material unsupported final claim, required omission, false rejection or supported-meaning loss found in the complete assessed planning proposal."
+      },
+      "source_dimension_field": "source_assessment",
+      "coverage": {
+        "axes": {
+          "1": "COMPLETE",
+          "2": "COMPLETE",
+          "3": "COMPLETE",
+          "4": "COMPLETE",
+          "5": "COMPLETE",
+          "6": "COMPLETE"
+        },
+        "detail_file": "coverage.json"
+      },
+      "primary_source_index_sha256": "5b9f9044c06b23f23f268eb34347145da2d2b55ac4b0fae7840a7692f4e56d9b",
+      "manifest_frozen_at": "2026-10-12T04:58:15.844567+00:00"
+    }
+  ],
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/assessment.md",
+      "bytes": 5631,
+      "sha256": "cab9a0c6497450a709f1bd6fdeffd6a81f5d0266c55f078f5d1b96759ffd4cdd"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/assessment.json",
+      "bytes": 7268,
+      "sha256": "0c0a629763f0d44a4e48ab4166eca39169773730480d553d30296cab8932850e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/coverage.json",
+      "bytes": 11973,
+      "sha256": "f974147ad22c525e86c9679bd6855471db30f47ea02309af70bf17fc592c4d61"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/defects.json",
+      "bytes": 1973,
+      "sha256": "b845e1c55fe926984f3cfaa7cab5d5533a3beaf621619fbd37e17364eaa994f7"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/primary-source-index.json",
+      "bytes": 19390,
+      "sha256": "503b06377c8f4fb2408238a658331a58daab6d6b017eed3e1cdb277a8de07d97"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/evidence/input-verification.json",
+      "bytes": 5611,
+      "sha256": "fed6e04e7b400286970a74cf4dd770bbe1845ff3e0355c3c178b7b77ef50062d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/evidence/primary-context.json",
+      "bytes": 1615,
+      "sha256": "502d3b0102db98b6e53a29bcaca7e423d8c05c69df0ae1385ab380283f9c551d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/assessment.md",
+      "bytes": 6181,
+      "sha256": "ceaea0f7f86a608f08acce7c03e0b01ff36777a4667dd2bc0552ed9cce3190dc"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/assessment.json",
+      "bytes": 6717,
+      "sha256": "d869a811eaf1d61fd269a408a3e40be81055f5a3314c7c8b86f9f4255ed35966"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/coverage.json",
+      "bytes": 14006,
+      "sha256": "51e2ddc7aeaeddc60f39a3c69d96b364ecb60f46af21a3a9c6af42b5b3087e12"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/defects.json",
+      "bytes": 1803,
+      "sha256": "08d27a9be9338ddb06c2e51a5816e11f13566a187e15fdd00838f43cbcf93f59"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/primary-source-index.json",
+      "bytes": 19300,
+      "sha256": "5b9f9044c06b23f23f268eb34347145da2d2b55ac4b0fae7840a7692f4e56d9b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/evidence/input-verification.json",
+      "bytes": 4978,
+      "sha256": "bf5599b5dc0f0ef7aae587c3aa6f1fd3af658272c5e9a2833e6ed44919b7b316"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/evidence/primary-context.json",
+      "bytes": 1617,
+      "sha256": "87afec02823db5e86b9c10f3932eb32b0de4b6383f40dbdc75d11c07424aafbc"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/comparison.md",
+      "bytes": 2147,
+      "sha256": "202068bb60b255148619275a42644c643d5e23d39f408cdad249c6a3c8eea3dd"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/comparison.json",
+      "bytes": 5704,
+      "sha256": "9d198b1d82cfa64051b66f7f1f8a453e941654e090c367c3c04a61a0fef6f10b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/manifest.json",
+      "bytes": 2438,
+      "sha256": "9cbbeea6bf35c4f9694dcb1161d7e552d17314dd5a7946f838f83732d3b55fca"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/manifest.json",
+      "bytes": 2454,
+      "sha256": "a4e453f5a2797666b76c8482052f5009e25dde40b0b1373fe9f9fafa4f37d19f"
+    }
+  ],
+  "comparison_manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/comparison-manifest.json",
+  "comparison_manifest_sha256": "5670da37b640e867fcddb1ee2614b600b1ef151f4097bc457b2d41749ace37f7",
+  "originals_frozen_before_comparison": true,
+  "actual_completed_zero_pending": true,
+  "science_boundary": "Independent evaluator judgments relayed unchanged; custody verification is not source scoring",
+  "primary_evidence_retention": "All manifest-listed primary context evidence and authored source index hashed/read; URL/version context retention not byte-exact external replay unless separately present"
+}

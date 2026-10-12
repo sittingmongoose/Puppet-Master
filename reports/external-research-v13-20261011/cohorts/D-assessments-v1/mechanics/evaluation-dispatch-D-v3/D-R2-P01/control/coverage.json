@@ -1,0 +1,211 @@
+{
+  "overall": "COMPLETE",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "finding": "All O01–O05 and N01–N03 assessed in the complete final. Edition identity, current visibility, changed headings, removed passages, index states, owners and alternatives are substantively addressed."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "finding": "All consequential declared source families checked against primary definitions, versions, exceptions and relevant code/callers/test/history. Vendor controls remain scoped examples rather than integration guarantees."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "finding": "Useful discoveries include filtered ANN underfill and bounded iterative modes, rank-only fusion, analyzer/role hazards, representation-bound selectors and conditional atomic publication. No mandatory product winner or universal recall is inferred."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "finding": "All significant plan clauses and all four critic findings independently assessed. The final accepts the supported role detail and upgrade follow-up; keeps revocation semantics honestly unresolved; clarifies authorization before tombstones. No false substantive rejection found."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "finding": "Discovery-to-draft-to-final trace covers retrieval, locator alternatives, privacy, authorization/cache uncertainty, archived access, rebuild state, failure history and owner boundaries. Critic corrections are retained. No material supported-meaning loss found."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "finding": "Proposed synthetic domains and oracles cover edits, repeated text, ranking conflicts, revoked memberships/caches, archived access, policy failure and rebuild faults. No corpus or integration tests are claimed executed; read-only research/custody checks are distinct."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "name": "Useful retrieval and durable passage references across changing editions",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_AT_PLANNING_LEVEL",
+      "finding": "Final retrieval and identity sections keep index chunks separate from pinned editions/passages; representation hashes/versions supplement stable IDs."
+    },
+    {
+      "id": "O02",
+      "name": "Cited edition versus newer policy and removed-passage fallback",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_AT_PLANNING_LEVEL",
+      "finding": "Resolver distinguishes original and current editions, authorizes tombstones and offers a related passage separately without equivalence."
+    },
+    {
+      "id": "O03",
+      "name": "No restricted title/snippet/cache disclosure after permission changes",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_AT_PLANNING_LEVEL",
+      "finding": "Current per-edition checks precede metadata/content; stale identity/ACL information fails closed; cache/open/copy and side channels are included. Revocation commit point/races are explicit owner inputs."
+    },
+    {
+      "id": "O04",
+      "name": "Defined freshness/rebuild/prior-edition states and owner boundaries",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_AT_PLANNING_LEVEL",
+      "finding": "Queued/extracting/segmenting/optional embedding/indexing/validating/current/stale/failed/withdrawn states separate source and ACL generations; six owner roles are identified."
+    },
+    {
+      "id": "O05",
+      "name": "Lexical/semantic/hybrid and passage-identity alternatives with applicability",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_AT_PLANNING_LEVEL",
+      "finding": "Conditional lexical, dense and fusion choices plus stable blocks, immutable snapshot/digest, quote and position locators have meaningful trade-offs."
+    },
+    {
+      "id": "N01",
+      "name": "No search-rank inference of policy authority",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_AT_PLANNING_LEVEL",
+      "finding": "Status/effective dates come from content/policy owners; rank is neither authority, currency nor access."
+    },
+    {
+      "id": "N02",
+      "name": "No live-URL-only immutable citation or private-document upload",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_AT_PLANNING_LEVEL",
+      "finding": "Live URL remains only a navigation hint; protected quote fields are kept out of exposed URLs; local embeddings or deferral preserve the private-data boundary."
+    },
+    {
+      "id": "N03",
+      "name": "No promise to revoke already-exported copies",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED_AT_PLANNING_LEVEL",
+      "finding": "Exported work-note copies are explicitly outside revocation promises."
+    }
+  ],
+  "plan_dispositions": [
+    {
+      "id": "chunk_identity",
+      "coverage": "COMPLETE",
+      "finding": "Reject ordinal sufficiency; retain edition-bound block IDs or snapshot/representation-bound locator alternatives."
+    },
+    {
+      "id": "citations",
+      "coverage": "COMPLETE",
+      "finding": "Reject live URL sufficiency; bind the displayed edition/passage and reauthorize resolution."
+    },
+    {
+      "id": "permissions_and_caches",
+      "coverage": "COMPLETE",
+      "finding": "Reject reindex-only labels and still-servable snippets; establish fresh authorization before disclosure."
+    },
+    {
+      "id": "ranking",
+      "coverage": "COMPLETE",
+      "finding": "Retain lexical+dense fusion as evaluated hypothesis; relevance never defines authority."
+    },
+    {
+      "id": "edition_replacement",
+      "coverage": "COMPLETE",
+      "finding": "Condition current default search and historical retention on policy status, current exact-edition access and explicit state."
+    },
+    {
+      "id": "missing_passage",
+      "coverage": "COMPLETE",
+      "finding": "Reject silent related-heading fulfillment; retain original or authorized unavailable outcome with separate navigation."
+    },
+    {
+      "id": "indexing_and_validation",
+      "coverage": "COMPLETE",
+      "finding": "Add source/index/ACL generations and failure states; tests remain proposed."
+    }
+  ],
+  "source_family_scope": "Every consequential source family present in the complete final and preserved maps, as bounded in primary-source-index.json; no claim to every possible source/history.",
+  "unassessed_consequential_remainder": [],
+  "source_families": [
+    {
+      "id": "P01",
+      "family": "PostgreSQL lexical retrieval / GIN",
+      "coverage": "COMPLETE",
+      "scope": "Consequential final/preserved claims and conditions"
+    },
+    {
+      "id": "P02",
+      "family": "PostgreSQL row security",
+      "coverage": "COMPLETE",
+      "scope": "Consequential final/preserved claims and conditions"
+    },
+    {
+      "id": "P03",
+      "family": "pgvector filtered retrieval and implementation",
+      "coverage": "COMPLETE",
+      "scope": "Consequential final/preserved claims and conditions"
+    },
+    {
+      "id": "P04",
+      "family": "pgvector release and issue history",
+      "coverage": "COMPLETE",
+      "scope": "Consequential final/preserved claims and conditions"
+    },
+    {
+      "id": "P05",
+      "family": "OpenSearch lexical / semantic / hybrid fusion",
+      "coverage": "COMPLETE",
+      "scope": "Consequential final/preserved claims and conditions"
+    },
+    {
+      "id": "P06",
+      "family": "OpenSearch DLS / role composition / exact identity mapping",
+      "coverage": "COMPLETE",
+      "scope": "Consequential final/preserved claims and conditions"
+    },
+    {
+      "id": "P07",
+      "family": "OpenSearch vector filtering / engine alternatives",
+      "coverage": "COMPLETE",
+      "scope": "Consequential final/preserved claims and conditions"
+    },
+    {
+      "id": "P08",
+      "family": "OpenSearch index publication",
+      "coverage": "COMPLETE",
+      "scope": "Consequential final/preserved claims and conditions"
+    },
+    {
+      "id": "P09",
+      "family": "W3C passage selectors / representation state",
+      "coverage": "COMPLETE",
+      "scope": "Consequential final/preserved claims and conditions"
+    },
+    {
+      "id": "P10",
+      "family": "Elastic DLS / cache boundaries",
+      "coverage": "COMPLETE",
+      "scope": "Consequential final/preserved claims and conditions"
+    },
+    {
+      "id": "P11",
+      "family": "License and deployment applicability",
+      "coverage": "COMPLETE",
+      "scope": "Consequential final/preserved claims and conditions"
+    }
+  ],
+  "schema": "er13.original_coverage.v1",
+  "arm_id": "D-R2-P01-control",
+  "scope": "FULL",
+  "definition": "COMPLETE means all consequential obligations/claims in the declared frozen planning package were assessed; not all possible history, recall or deployed behavior.",
+  "future_deployment_or_production_execution_required_for_grade": false
+}

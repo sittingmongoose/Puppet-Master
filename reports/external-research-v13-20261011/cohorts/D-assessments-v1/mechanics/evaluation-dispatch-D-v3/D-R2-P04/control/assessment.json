@@ -1,0 +1,238 @@
+{
+  "schema": "er13.original-assessment.v1",
+  "block_id": "D-R2-P04",
+  "scope": "FULL",
+  "original": true,
+  "authored_at_utc": "2026-10-12T05:12:15.894866+00:00",
+  "contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+  "rubric_sha256": "11499e3bedecea6049bf6b05c03645df0cec3668a6ffafea87662305b968b123",
+  "packet_sha256": "3d38e83c3ddf22e8ab42fb072819bc8e269af6bc68e2bf8d401e58d8022efae2",
+  "verification_receipt_sha256": "750bf41c6d0a8445c26a4e5e1703ae2fc23a2f89b807e96856a3891e6f060df1",
+  "arms": [
+    {
+      "arm_id": "D-R2-P04-control",
+      "source_judgment": {
+        "grade": "FAIL",
+        "coverage": "COMPLETE",
+        "target": "exact_complete_frozen_final_and_carried_evidence",
+        "material_source_defects": [
+          "D-C01",
+          "D-C02"
+        ],
+        "finite_quality_only": true
+      },
+      "coverage": {
+        "complete_final": "COMPLETE",
+        "axes": {
+          "1": "COMPLETE",
+          "2": "COMPLETE",
+          "3": "COMPLETE",
+          "4": "COMPLETE",
+          "5": "COMPLETE",
+          "6": "COMPLETE"
+        },
+        "available_science": "COMPLETE",
+        "detail": {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/control/coverage.json",
+          "sha256": "1a6236fbb8254827d0226a89a5c76f3fd282e65004211942de76a2fd9450d15f"
+        }
+      },
+      "defects": {
+        "detail": {
+          "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/control/defects.json",
+          "sha256": "f4765f39fa0115b3715528ed0c40f530310e39171e891194115dc3b90be53d62"
+        },
+        "source_defect_ids": [
+          "D-C01",
+          "D-C02"
+        ],
+        "mechanical_failure_ids": []
+      },
+      "delivery": {
+        "status": "DELIVERED",
+        "frozen_final": {
+          "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P04-control/run/D-R2-P04-control/control/terminal-handoffs/reviser/files/final.md",
+          "sha256": "744c9ff187bb4d87abc7d5940bfe45b61d15b9427184621b5dfd0130c2569202"
+        },
+        "actual_tasks_terminal_zero_pending": true,
+        "unlaunched_stages": [],
+        "failure_qualified_packet": true,
+        "failure_record": null,
+        "missing_outputs_preserved": []
+      },
+      "time_eligibility": {
+        "status": "ELIGIBLE_BY_FROZEN_CUSTODY",
+        "frozen_t0_utc": "2026-10-12T04:20:44.303Z",
+        "unchanged_whole_deadline_utc": "2026-10-12T05:20:44.303Z",
+        "maximum_elapsed_minutes": 60,
+        "stage_caps_s": {
+          "investigator": 1800,
+          "critic": 720,
+          "reviser": 1080
+        },
+        "stages": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T04:20:45.269Z",
+            "requested_at_utc": "2026-10-12T04:20:45.269Z",
+            "dispatch_acceptance_capture_utc": "2026-10-12T04:20:46.455Z",
+            "native_birth_utc": "2026-10-12T04:20:56+00:00",
+            "native_terminal_utc": "2026-10-12T04:28:06+00:00",
+            "original_deadline_utc": "2026-10-12T04:50:45.269Z",
+            "original_cap_s": 1800,
+            "terminal_within_stage_cap_by_receipt": true,
+            "native_reported_time_s": 429,
+            "native_birth_terminal_timestamp_interval_s": 430,
+            "actual_provider_start_utc": null,
+            "actual_provider_finish_utc": null,
+            "last_complete_scientific_artifact_time_utc": null
+          },
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T04:28:42.002Z",
+            "requested_at_utc": "2026-10-12T04:28:42.002Z",
+            "dispatch_acceptance_capture_utc": "2026-10-12T04:28:43.441Z",
+            "native_birth_utc": "2026-10-12T04:28:54+00:00",
+            "native_terminal_utc": "2026-10-12T04:37:25+00:00",
+            "original_deadline_utc": "2026-10-12T04:40:42.002Z",
+            "original_cap_s": 720,
+            "terminal_within_stage_cap_by_receipt": true,
+            "native_reported_time_s": 511,
+            "native_birth_terminal_timestamp_interval_s": 511,
+            "actual_provider_start_utc": null,
+            "actual_provider_finish_utc": null,
+            "last_complete_scientific_artifact_time_utc": null
+          },
+          {
+            "stage": "reviser",
+            "prepared_at_utc": "2026-10-12T04:38:08.377Z",
+            "requested_at_utc": "2026-10-12T04:38:08.377Z",
+            "dispatch_acceptance_capture_utc": "2026-10-12T04:38:09.583Z",
+            "native_birth_utc": "2026-10-12T04:38:15+00:00",
+            "native_terminal_utc": "2026-10-12T04:43:35+00:00",
+            "original_deadline_utc": "2026-10-12T04:56:08.377Z",
+            "original_cap_s": 1080,
+            "terminal_within_stage_cap_by_receipt": true,
+            "native_reported_time_s": 319,
+            "native_birth_terminal_timestamp_interval_s": 320,
+            "actual_provider_start_utc": null,
+            "actual_provider_finish_utc": null,
+            "last_complete_scientific_artifact_time_utc": null
+          }
+        ],
+        "recorded_final_native_terminal_utc": "2026-10-12T04:43:35+00:00",
+        "t0_to_recorded_final_native_terminal_s": 1370.697,
+        "frozen_eval_ready_observation_utc": "2026-10-12T04:47:16.152570+00:00",
+        "proxy_name": "T0_to_frozen_eval_ready_terminal-status_observation",
+        "proxy_elapsed_s": 1591.84957,
+        "proxy_is_delivery_success_latency": true,
+        "proxy_limit": "Packet freeze is an upper observation/proxy, not an actual last-write or provider finish timestamp. For missing final it is failure observation only, never a successful or zero-second delivery.",
+        "actual_last_complete_artifact_time_utc": null,
+        "actual_queue_and_provider_activity": "UNKNOWN; request/acceptance/native-birth boundaries are not provider queue/activity measurements.",
+        "clock_corrections": "None. Native bookkeeping counters and timestamp intervals differ by one second in some receipts; both retained without retrospective adjustment."
+      },
+      "method_compliance": {
+        "status": "OBSERVABLE_REQUIRED_PATH_COMPLETE_PROVENANCE_UNKNOWN",
+        "frozen_recipe_label": "R0",
+        "base_method_id_recorded": "R0",
+        "declared_topology": "investigator → independent critic → fresh complete reviser",
+        "launched_stages": [
+          "investigator",
+          "critic",
+          "reviser"
+        ],
+        "discovery_hash_matches_one_shot_reveal": true,
+        "exact_plan_hash_matches_supplement": true,
+        "complete_required_science_before_terminal_verified_by_snapshots": true,
+        "no_extra_candidate_or_goal_claim_from_receipts": "No extra attempts present in assigned packet. Full native history was not inspected; absence outside the packet is not independently proved.",
+        "component_boundary": "FULL original review; shared primary preparation is grader efficiency, not discovery effectiveness or a component/cold-pipeline win."
+      },
+      "native_identity_provenance": {
+        "status": "CUSTODY_ONLY_INDEPENDENT_PROVENANCE_UNKNOWN",
+        "stages": [
+          {
+            "stage": "investigator",
+            "exact_objective_matches_frozen_assignment": true,
+            "active_birth_alias_consistency": true,
+            "terminal_birth_consistency": true,
+            "direct_terminal_capture_qualified_by_provided_guard": true,
+            "original_status": "completed",
+            "independent_native_session_to_t3_task_linkage": "UNKNOWN",
+            "provenance_independently_proved": false
+          },
+          {
+            "stage": "critic",
+            "exact_objective_matches_frozen_assignment": true,
+            "active_birth_alias_consistency": true,
+            "terminal_birth_consistency": true,
+            "direct_terminal_capture_qualified_by_provided_guard": true,
+            "original_status": "completed",
+            "independent_native_session_to_t3_task_linkage": "UNKNOWN",
+            "provenance_independently_proved": false
+          },
+          {
+            "stage": "reviser",
+            "exact_objective_matches_frozen_assignment": true,
+            "active_birth_alias_consistency": true,
+            "terminal_birth_consistency": true,
+            "direct_terminal_capture_qualified_by_provided_guard": true,
+            "original_status": "completed",
+            "independent_native_session_to_t3_task_linkage": "UNKNOWN",
+            "provenance_independently_proved": false
+          }
+        ],
+        "original_manifest_flags": "native_lifecycle_qualified=false and science_qualified=false remain unchanged in terminal manifests; later supplements qualify custody only.",
+        "missing_terminal_policy": "No getter substitution, reconstruction, replacement Goal, clock rescue or historical backfill.",
+        "grader_native_goal": "Not created; prohibited by assignment."
+      },
+      "resource_billing_coverage": {
+        "coverage": "PARTIAL_CUSTODY_COUNTER_PRESENCE_BILLING_UNAVAILABLE",
+        "candidate_product": {
+          "assigned_arm_in_failure_inclusive_denominator": true,
+          "requested_and_status_reported_model": "gpt-6-luna",
+          "requested_reasoning_effort": "max",
+          "requested_service_tier": "default",
+          "route_limit": "Requested/reported model metadata is not independent account or native-session attribution; private routing identity omitted.",
+          "native_cumulative_counter_presence": {
+            "investigator": "PRESENT_IN_TERMINAL_CAPTURE",
+            "critic": "PRESENT_IN_TERMINAL_CAPTURE",
+            "reviser": "PRESENT_IN_TERMINAL_CAPTURE"
+          },
+          "counter_limit": "Cumulative bookkeeping counters are not itemized provider usage or billing; quantities intentionally not published. No overlapping counters added.",
+          "active_provider_activity": "UNKNOWN",
+          "context_occupancy_lifetime_union_overlap": "UNKNOWN",
+          "itemized_input_cached_output_reasoning_usage": "UNKNOWN",
+          "subscription_consumption": "UNKNOWN",
+          "billing": "UNKNOWN",
+          "missing_or_failed_attempt_cost": "Retained in assigned denominator; not zero or discarded."
+        },
+        "independent_evaluation": {
+          "cost_category": "independent_evaluation",
+          "separate_from_candidate_product": true,
+          "first_clock_observation_utc": "2026-10-12T04:48:26Z",
+          "original_authoring_observation_utc": "2026-10-12T05:12:15.894866+00:00",
+          "shared_lookup_rule": "Own primary lookup shared across these matched arms; not candidate assistance or free product-path work.",
+          "runtime_identity": "Harness-reported gpt-6.1-sol, xhigh; independent billing/session attribution unavailable.",
+          "provider_activity_context_and_billing": "UNKNOWN",
+          "private_account_epoch_rule": "Assignment epoch2 applies prospectively to this fresh grader only; no historical backfill or account identity published."
+        },
+        "preparation_support_publication_experiment_total": "UNKNOWN; not manufactured from native counters or unrelated medians."
+      }
+    }
+  ],
+  "independence_and_blinding": {
+    "role": "independent_original_evaluator",
+    "candidate_author_or_repair_worker": false,
+    "own_primary_lookup_shared": true,
+    "blinding": "IMPERFECT; technique-bearing paths/prompt/topology visible",
+    "comparison_before_original_freeze": false,
+    "candidate_feedback_sent": false,
+    "new_goals_or_subagents": false
+  },
+  "boundaries": [
+    "Finite assessment of the exact frozen inputs; no universal correctness, external discovery recall, deployment success or cold full-pipeline claim.",
+    "Unknown notebook storage, languages/corpus, devices, packaging, retention and numeric limits may remain owner/runtime questions. Available mechanism facts were independently researched.",
+    "Technique-bearing paths, R0/B06 labels and complementary-critic instructions make blinding imperfect; no claim of blinded review.",
+    "Raw lifecycle/hash receipts establish declared custody, not source truth or independent native-to-task linkage. No full native transcripts, private account identity or machine state published."
+  ]
+}

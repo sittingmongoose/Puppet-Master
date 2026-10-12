@@ -1,0 +1,60 @@
+{
+  "schema": "er13.original-output-manifest.v1",
+  "arm_id": "D-R2-P04-treatment",
+  "frozen_at_utc": "2026-10-12T05:13:47.978645+00:00",
+  "original_judgment": true,
+  "frozen_before_any_comparative_analysis": true,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/assessment.md",
+      "bytes": 5096,
+      "sha256": "9ecb644139b013d80c7a732b3a7bb1a1a82f0bfa8a4c2d4d818b0e41d2d1ba05"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/assessment.json",
+      "bytes": 12898,
+      "sha256": "e5ee1365b42f43f4984ef09f9cbb24cf88949991063f2446b9f954f5083daffc"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/coverage.json",
+      "bytes": 14518,
+      "sha256": "639838b87316e7465638321f7bb1655842d4890a9312d3b04d00e7a23e9626ca"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/defects.json",
+      "bytes": 3708,
+      "sha256": "8314ef209dde13d5918049103c995f77ed2930a68b1613164040826c13857ef8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/treatment/primary-source-index.json",
+      "bytes": 11735,
+      "sha256": "d285e474bb8349c5ddca04c392bdc018469211f78e81049322e6c4be45822e84"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/evidence/input-audit.json",
+      "bytes": 48469,
+      "sha256": "d44a60bf56cd10c46c7b8c71d65b5f3e0bb5a1f3178a5a6a66f3db2e71790a27"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/evidence/custody-observations.json",
+      "bytes": 23013,
+      "sha256": "85fe95bd6be67873b40a656aec0ff01a95eaf0a470b5ac041123fd9466dcadbf"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/evidence/public-source-observations.json",
+      "bytes": 35171,
+      "sha256": "144f0204bb534bda8c67f16173f5d1681d656e2a209e7fb2d1f36d00719bfc87"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/evidence/tantivy-cutoff.md",
+      "bytes": 2173,
+      "sha256": "d0edf330855f2eeee9c3a0131a6ec2a2478d4aab089cf2c4faf0ecb8934a0765"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P04/evidence/tantivy-MIT-LICENSE.txt",
+      "bytes": 1099,
+      "sha256": "acacd14bebbffdb30d62443c282fb4da3e81915a9f69c63d5d745a029f44de8a"
+    }
+  ],
+  "boundary": "Exact original assessment and shared independent permitted evidence; self hash is recorded by the root manifest."
+}

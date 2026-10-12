@@ -1,0 +1,49 @@
+{
+  "arm_id": "D-R1-P03-control",
+  "packet_sha256": "41a80590d454f215c1fa751d13685cea7035ea338c6ece80a94ededa5c2a0258",
+  "contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+  "rubric_sha256": "357dd741e567eae753cf672f83c993e1361899da3859a587bb88ce333f4fc820",
+  "coordinator_receipt_sha256": "a1b7da0abc88e4faa646d640987063053123c2f625bd04a9f749da6994b8bc64",
+  "exact_allowlist_verified": true,
+  "verified_member_count": 79,
+  "hash_and_size_mismatches": [],
+  "read_boundary": "Only exact allowlisted frozen terminal snapshots, supplements and raw status receipts; active locations merely named in documents were not followed. No tree/history scans or held-out reads.",
+  "manifest_references": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/control/terminal-handoffs/investigator/manifest.json",
+      "bytes": 2872,
+      "sha256": "ff3d3afe715802040d4617c53a1403c2cf6a9da7e6b31cd1182f53c0ec385a1b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R1-P03-control-investigator-capture-aux/authored-manifest.json",
+      "bytes": 1616,
+      "sha256": "2f71fa4b88fa6dfcc2de42836109818b0948cb6a2a178b0c6c4e7b9686cfe812"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/control/terminal-handoffs/critic/manifest.json",
+      "bytes": 2198,
+      "sha256": "a1be397fe65810c1988be62d190350decf13cbbea47ec99153eea1c751dfe283"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R1-P03-control-critic-capture-aux/authored-manifest.json",
+      "bytes": 1615,
+      "sha256": "b1233360861ee91840fd41ca35c7fc89e9ff5676a8baa4801f40544adaf6228a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/control/terminal-handoffs/reviser/manifest.json",
+      "bytes": 2386,
+      "sha256": "0d71bd390332e57c85817d2256ad63934d5ef43a26c2d969d941ab6526d0a490"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R1-P03-control-reviser-capture-aux/authored-manifest.json",
+      "bytes": 1615,
+      "sha256": "b78005d8b717b0a626dac3793b4c1233b6a17d93511c21f3c6f60657aaea2278"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R1-P03-control-eval-inputs/authored-manifest.json",
+      "bytes": 795,
+      "sha256": "dfc4b70419808c730b7daa010e40ffacd94ae622fea1403db84a068961cb4736"
+    }
+  ],
+  "failed_reports": "No failure report listed in this exact arm; all listed native/auxiliary members inspected, no rescue/reconstruction."
+}

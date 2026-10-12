@@ -1,0 +1,51 @@
+{
+  "finding": "C-D01",
+  "independent_public_receipts": [
+    {
+      "label": "withdrawal",
+      "url": "https://api.github.com/repos/laurent22/joplin/commits/510300728b7dae481eb6836b3688214110b404b7",
+      "retrieved_at_utc": "2026-10-12T04:58:59.353107+00:00",
+      "response_bytes": 11721,
+      "response_sha256": "9b225e0f86acdebd01af685a4193c4a58b93de6635e9134a457799d698f6ed9b",
+      "commit": "510300728b7dae481eb6836b3688214110b404b7",
+      "changed_files": [
+        "packages/lib/services/interop/InteropService_Exporter_Md.test.ts",
+        "packages/lib/services/interop/InteropService_Exporter_Md.ts",
+        "packages/utils/path.test.ts",
+        "packages/utils/path.ts"
+      ]
+    },
+    {
+      "label": "caller_fix",
+      "url": "https://api.github.com/repos/laurent22/joplin/commits/f1cca262db91a0af512213ebc97681a6b32cd780",
+      "retrieved_at_utc": "2026-10-12T04:58:59.506275+00:00",
+      "response_bytes": 4661,
+      "response_sha256": "8c2bba9aa7add0d990b5df38164494c92268980ca4f7cd6f9ced50c58b060af9",
+      "commit": "f1cca262db91a0af512213ebc97681a6b32cd780",
+      "changed_files": [
+        "packages/lib/services/interop/InteropService_Importer_Md.ts"
+      ]
+    },
+    {
+      "label": "merged_diff",
+      "url": "https://api.github.com/repos/laurent22/joplin/commits/c27d542a4b9f5ce669d61c43aeca7494a506af64",
+      "retrieved_at_utc": "2026-10-12T04:58:59.700770+00:00",
+      "response_bytes": 13398,
+      "response_sha256": "0d959e400f0a20f1a2590711ba176db53272c2d4585caf1456a641c6874c1b95",
+      "commit": "c27d542a4b9f5ce669d61c43aeca7494a506af64",
+      "changed_files": [
+        "packages/app-cli/tests/support/test_notes/md/resources_without_extension/file1",
+        "packages/app-cli/tests/support/test_notes/md/resources_without_extension/file2",
+        "packages/app-cli/tests/support/test_notes/md/resources_without_extension/file3.text",
+        "packages/app-cli/tests/support/test_notes/md/resources_without_extension/markdown_file.md",
+        "packages/lib/services/interop/InteropService_Importer_Md.test.ts",
+        "packages/lib/services/interop/InteropService_Importer_Md.ts",
+        "packages/lib/services/interop/__snapshots__/InteropService_Importer_OneNote.test.js.snap"
+      ]
+    }
+  ],
+  "facts": "Withdrawn helper redesign differs from merged importer resolve call and three-resource regression. Final merged changed-file inventory contains no utils/path changes.",
+  "raw_responses_preserved": false,
+  "source_corpus_rewritten": false,
+  "code_license_notice": "https://github.com/laurent22/joplin/blob/c27d542a4b9f5ce669d61c43aeca7494a506af64/LICENSE"
+}

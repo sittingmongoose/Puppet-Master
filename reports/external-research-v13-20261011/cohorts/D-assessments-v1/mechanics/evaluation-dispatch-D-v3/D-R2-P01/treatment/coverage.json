@@ -1,0 +1,323 @@
+{
+  "overall": "UNASSESSED_COMPLETE_FINAL",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "UNASSESSED",
+      "reason": "No frozen final/reviser; complete-final judgment unavailable."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "UNASSESSED",
+      "reason": "No frozen final/reviser; complete-final judgment unavailable."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "UNASSESSED",
+      "reason": "No frozen final/reviser; complete-final judgment unavailable."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "UNASSESSED",
+      "reason": "No frozen final/reviser; complete-final judgment unavailable."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "UNASSESSED",
+      "reason": "No frozen final/reviser; complete-final judgment unavailable."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "UNASSESSED",
+      "reason": "No frozen final/reviser; complete-final judgment unavailable."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "name": "Useful retrieval and durable passage references across changing editions",
+      "coverage": "UNASSESSED",
+      "reason": "No complete final."
+    },
+    {
+      "id": "O02",
+      "name": "Cited edition versus newer policy and removed-passage fallback",
+      "coverage": "UNASSESSED",
+      "reason": "No complete final."
+    },
+    {
+      "id": "O03",
+      "name": "No restricted title/snippet/cache disclosure after permission changes",
+      "coverage": "UNASSESSED",
+      "reason": "No complete final."
+    },
+    {
+      "id": "O04",
+      "name": "Defined freshness/rebuild/prior-edition states and owner boundaries",
+      "coverage": "UNASSESSED",
+      "reason": "No complete final."
+    },
+    {
+      "id": "O05",
+      "name": "Lexical/semantic/hybrid and passage-identity alternatives with applicability",
+      "coverage": "UNASSESSED",
+      "reason": "No complete final."
+    },
+    {
+      "id": "N01",
+      "name": "No search-rank inference of policy authority",
+      "coverage": "UNASSESSED",
+      "reason": "No complete final."
+    },
+    {
+      "id": "N02",
+      "name": "No live-URL-only immutable citation or private-document upload",
+      "coverage": "UNASSESSED",
+      "reason": "No complete final."
+    },
+    {
+      "id": "N03",
+      "name": "No promise to revoke already-exported copies",
+      "coverage": "UNASSESSED",
+      "reason": "No complete final."
+    }
+  ],
+  "available_science": {
+    "overall": "PARTIAL",
+    "axes": [
+      {
+        "axis": 1,
+        "name": "Material original obligations and negative constraints",
+        "coverage": "PARTIAL",
+        "finding": "Available draft addresses all obligations, but its historical-ACL owner option conflicts with its current-access invariant. Complete-final obligations are UNASSESSED."
+      },
+      {
+        "axis": 2,
+        "name": "Consequential source facts, governing conditions, versions and applicability",
+        "coverage": "PARTIAL",
+        "finding": "Available science has supported governing research plus omissions in alias action outcomes and explicit DLS role conditions. Full final source quality is UNASSESSED."
+      },
+      {
+        "axis": 3,
+        "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+        "coverage": "PARTIAL",
+        "finding": "Supported useful discoveries include scoped-key revocation, preview ACL failure/freshness behavior, temporary version URLs, finite retention/purge and an unsupported-query guard. Discovery effectiveness for a completed pipeline is UNASSESSED."
+      },
+      {
+        "axis": 4,
+        "name": "Valid corrections, rejections and exact plan dispositions",
+        "coverage": "PARTIAL",
+        "finding": "Draft dispositions are present; both critics' seven findings were independently examined. No reviser disposition exists, so resolution and complete-final corrections/rejections are UNASSESSED."
+      },
+      {
+        "axis": 5,
+        "name": "Supported meaning retained from draft and criticism into the complete final",
+        "coverage": "PARTIAL",
+        "finding": "Investigator discovery-to-draft meaning is inspectable. No final exists: investigator/critic-to-final preservation is UNASSESSED; critic proposals are not treated as adopted changes."
+      },
+      {
+        "axis": 6,
+        "name": "Meaningful proposed validation, with executed work distinguished",
+        "coverage": "PARTIAL",
+        "finding": "Available documents honestly propose synthetic/production checks without claiming execution. The final validation proposal and final execution-status preservation are UNASSESSED."
+      }
+    ],
+    "obligations": [
+      {
+        "id": "O01",
+        "name": "Useful retrieval and durable passage references across changing editions",
+        "coverage": "PARTIAL",
+        "finding": "Edition-bound IDs, hashes and alternate selectors are proposed; no final."
+      },
+      {
+        "id": "O02",
+        "name": "Cited edition versus newer policy and removed-passage fallback",
+        "coverage": "PARTIAL",
+        "finding": "Current versus cited edition and a stop/separate-link fallback are proposed; no final."
+      },
+      {
+        "id": "O03",
+        "name": "No restricted title/snippet/cache disclosure after permission changes",
+        "coverage": "PARTIAL",
+        "finding": "Strong serve-time checks exist, but the historical-ACL option is insufficiently constrained (T03). No executed authorization proof or final."
+      },
+      {
+        "id": "O04",
+        "name": "Defined freshness/rebuild/prior-edition states and owner boundaries",
+        "coverage": "PARTIAL",
+        "finding": "Explicit current/indexing/ACL-unknown/removed/failed states and owners are proposed; alias action success caveat remains open (T01)."
+      },
+      {
+        "id": "O05",
+        "name": "Lexical/semantic/hybrid and passage-identity alternatives with applicability",
+        "coverage": "PARTIAL",
+        "finding": "Multiple retrieval and locator alternatives are researched; role configuration detail remains incomplete (T02)."
+      },
+      {
+        "id": "N01",
+        "name": "No search-rank inference of policy authority",
+        "coverage": "PARTIAL",
+        "finding": "Draft separates relevance from authority; no final preservation witness."
+      },
+      {
+        "id": "N02",
+        "name": "No live-URL-only immutable citation or private-document upload",
+        "coverage": "PARTIAL",
+        "finding": "Draft rejects live-only and unauthenticated temporary URLs and external uploads; no final preservation witness."
+      },
+      {
+        "id": "N03",
+        "name": "No promise to revoke already-exported copies",
+        "coverage": "PARTIAL",
+        "finding": "Draft explicitly limits revocation of exports; no final preservation witness."
+      }
+    ],
+    "plan_dispositions": [
+      {
+        "id": "chunk_identity",
+        "coverage": "PARTIAL",
+        "finding": "Draft examined: Reject ordinal sufficiency; retain edition-bound block IDs or snapshot/representation-bound locator alternatives. Final disposition UNASSESSED."
+      },
+      {
+        "id": "citations",
+        "coverage": "PARTIAL",
+        "finding": "Draft examined: Reject live URL sufficiency; bind the displayed edition/passage and reauthorize resolution. Final disposition UNASSESSED."
+      },
+      {
+        "id": "permissions_and_caches",
+        "coverage": "PARTIAL",
+        "finding": "Draft examined: Reject reindex-only labels and still-servable snippets; establish fresh authorization before disclosure. Final disposition UNASSESSED."
+      },
+      {
+        "id": "ranking",
+        "coverage": "PARTIAL",
+        "finding": "Draft examined: Retain lexical+dense fusion as evaluated hypothesis; relevance never defines authority. Final disposition UNASSESSED."
+      },
+      {
+        "id": "edition_replacement",
+        "coverage": "PARTIAL",
+        "finding": "Draft examined: Condition current default search and historical retention on policy status, current exact-edition access and explicit state. Final disposition UNASSESSED."
+      },
+      {
+        "id": "missing_passage",
+        "coverage": "PARTIAL",
+        "finding": "Draft examined: Reject silent related-heading fulfillment; retain original or authorized unavailable outcome with separate navigation. Final disposition UNASSESSED."
+      },
+      {
+        "id": "indexing_and_validation",
+        "coverage": "PARTIAL",
+        "finding": "Draft examined: Add source/index/ACL generations and failure states; tests remain proposed. Final disposition UNASSESSED."
+      }
+    ]
+  },
+  "unassessed_consequential_remainder": [
+    "All complete-final obligations and six axes",
+    "Every critic-to-final disposition",
+    "Investigator/critic-to-final semantic preservation",
+    "Final validation proposal and execution-status preservation"
+  ],
+  "source_families": [
+    {
+      "id": "P01",
+      "family": "PostgreSQL lexical retrieval / GIN",
+      "coverage": "UNASSESSED",
+      "available_science_research_coverage": "COMPLETE",
+      "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+    },
+    {
+      "id": "P05",
+      "family": "OpenSearch lexical / semantic / hybrid fusion",
+      "coverage": "UNASSESSED",
+      "available_science_research_coverage": "COMPLETE",
+      "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+    },
+    {
+      "id": "P06",
+      "family": "OpenSearch DLS / role composition / exact identity mapping",
+      "coverage": "UNASSESSED",
+      "available_science_research_coverage": "COMPLETE",
+      "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+    },
+    {
+      "id": "P09",
+      "family": "W3C passage selectors / representation state",
+      "coverage": "UNASSESSED",
+      "available_science_research_coverage": "COMPLETE",
+      "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+    },
+    {
+      "id": "P10",
+      "family": "Elastic DLS / cache boundaries",
+      "coverage": "UNASSESSED",
+      "available_science_research_coverage": "COMPLETE",
+      "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+    },
+    {
+      "id": "P11",
+      "family": "License and deployment applicability",
+      "coverage": "UNASSESSED",
+      "available_science_research_coverage": "COMPLETE",
+      "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+    },
+    {
+      "id": "P12",
+      "family": "Elastic alias action outcomes",
+      "coverage": "UNASSESSED",
+      "available_science_research_coverage": "COMPLETE",
+      "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+    },
+    {
+      "id": "P13",
+      "family": "Typesense scoped search capabilities",
+      "coverage": "UNASSESSED",
+      "available_science_research_coverage": "COMPLETE",
+      "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+    },
+    {
+      "id": "P14",
+      "family": "Azure ACL enforcement / freshness / preview history",
+      "coverage": "UNASSESSED",
+      "available_science_research_coverage": "COMPLETE",
+      "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+    },
+    {
+      "id": "P15",
+      "family": "Graph version retrieval / retention and SharePoint purge",
+      "coverage": "UNASSESSED",
+      "available_science_research_coverage": "COMPLETE",
+      "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+    },
+    {
+      "id": "P16",
+      "family": "Hybrid issue / fix / release / unshipped resolver",
+      "coverage": "UNASSESSED",
+      "available_science_research_coverage": "COMPLETE",
+      "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+    },
+    {
+      "id": "P17",
+      "family": "Relevance evaluation / hybrid alternative",
+      "coverage": "UNASSESSED",
+      "available_science_research_coverage": "COMPLETE",
+      "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+    },
+    {
+      "id": "P18",
+      "family": "Repository object locator alternative",
+      "coverage": "UNASSESSED",
+      "available_science_research_coverage": "COMPLETE",
+      "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+    }
+  ],
+  "schema": "er13.original_coverage.v1",
+  "arm_id": "D-R2-P01-treatment",
+  "scope": "FULL",
+  "definition": "COMPLETE means all consequential obligations/claims in the declared frozen planning package were assessed; not all possible history, recall or deployed behavior.",
+  "future_deployment_or_production_execution_required_for_grade": false
+}

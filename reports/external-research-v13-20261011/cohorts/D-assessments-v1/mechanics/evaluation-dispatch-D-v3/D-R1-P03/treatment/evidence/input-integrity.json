@@ -1,0 +1,39 @@
+{
+  "arm_id": "D-R1-P03-treatment",
+  "packet_sha256": "41a80590d454f215c1fa751d13685cea7035ea338c6ece80a94ededa5c2a0258",
+  "contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+  "rubric_sha256": "357dd741e567eae753cf672f83c993e1361899da3859a587bb88ce333f4fc820",
+  "coordinator_receipt_sha256": "a1b7da0abc88e4faa646d640987063053123c2f625bd04a9f749da6994b8bc64",
+  "exact_allowlist_verified": true,
+  "verified_member_count": 57,
+  "hash_and_size_mismatches": [],
+  "read_boundary": "Only exact allowlisted frozen terminal snapshots, supplements and raw status receipts; active locations merely named in documents were not followed. No tree/history scans or held-out reads.",
+  "manifest_references": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-treatment/run/D-R1-P03-treatment/control/terminal-handoffs/investigator/manifest.json",
+      "bytes": 2872,
+      "sha256": "469d0ed285d13cda3f425eadbd2830825b6bd48d125b104503ba4c8a2ba42a5f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R1-P03-treatment-investigator-capture-aux/authored-manifest.json",
+      "bytes": 1616,
+      "sha256": "cd3b22c9650df35f99d4ceadee2083204480bcc413ff9a639fbc3f2cf82b4135"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-treatment/run/D-R1-P03-treatment/control/terminal-handoffs/critic/manifest.json",
+      "bytes": 2541,
+      "sha256": "612640b291b916140845d1b71aaeeb50499d07bb4fa4505e63b7d9c580f57566"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R1-P03-treatment-critic-capture-aux/authored-manifest.json",
+      "bytes": 1615,
+      "sha256": "8848f1902b0f7e0f11b883a4e3af9f2c5bb4a07e26daab3c30703e1c9af648e1"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R1-P03-treatment-eval-inputs/authored-manifest.json",
+      "bytes": 800,
+      "sha256": "2efe92768e0fa2200b6cdac538468de2e9b2659a1aa679427b8233422b071e81"
+    }
+  ],
+  "failed_reports": "No failure report listed in this exact arm; all listed native/auxiliary members inspected, no rescue/reconstruction."
+}

@@ -1,0 +1,201 @@
+{
+  "schema": "er13.independent_primary_source_index.v1",
+  "arm_id": "D-R2-P01-control",
+  "access_window_utc": {
+    "earliest_observed_grader_clock": "2026-10-12T04:50:18+00:00",
+    "through": "2026-10-12T05:04:42.481080+00:00",
+    "individual_request_timestamps": "UNKNOWN"
+  },
+  "research_method": "Independent direct public primary documentation/web lookup and narrowly targeted upstream source/PR-file reads. No repository tree/history scan, local Git, downloaded code execution, candidate assistance or held-out input.",
+  "sources": [
+    {
+      "id": "P01",
+      "family": "PostgreSQL lexical retrieval / GIN",
+      "urls": [
+        "https://www.postgresql.org/docs/18/textsearch-controls.html",
+        "https://www.postgresql.org/docs/18/datatype-textsearch.html",
+        "https://www.postgresql.org/docs/18/gin.html"
+      ],
+      "version": "18 documentation; 19 development/beta banner observed",
+      "context": "§12.3 parsing/weights/ranking; §8.11 types; §65.4 pending entries and fuzzy limit",
+      "observation": "Configuration changes lexemes and phrase matching. Ranking is application-specific. GIN searches pending entries; cleanup affects latency. The optional fuzzy limit returns a random subset.",
+      "applies_to": [
+        "control",
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P02",
+      "family": "PostgreSQL row security",
+      "urls": [
+        "https://www.postgresql.org/docs/18/ddl-rowsecurity.html"
+      ],
+      "version": "18",
+      "context": "§5.9 enablement, privileged bypass, permissive/restrictive composition and cross-table races",
+      "observation": "Enabled RLS without policies denies ordinary rows; privileged roles/owners have exceptions. Permissive rules OR, restrictive rules AND. Cross-table policy reads can race.",
+      "applies_to": [
+        "control"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P03",
+      "family": "pgvector filtered retrieval and implementation",
+      "urls": [
+        "https://github.com/pgvector/pgvector/blob/v0.8.7/README.md",
+        "https://github.com/pgvector/pgvector/blob/f37c13f68b57d2c3472b2214fbcff699d6d34876/src/hnswscan.c",
+        "https://github.com/pgvector/pgvector/blob/f37c13f68b57d2c3472b2214fbcff699d6d34876/src/hnsw.c",
+        "https://github.com/pgvector/pgvector/blob/f37c13f68b57d2c3472b2214fbcff699d6d34876/src/hnsw.h"
+      ],
+      "version": "v0.8.7 resolves to commit f37c13f68b57d2c3472b2214fbcff699d6d34876",
+      "context": "Filtering/Multitenancy/Iterative Scans; ScanItems, ResumeScanItems, hnswgettuple; option registration and constants",
+      "observation": "Approximate filtering can underfill; iterative modes are optional and bounded by tuple/memory/probe limits. Code confirms OFF default, ef_search 40 and ordering controls. Exact search and partitioning are distinct alternatives.",
+      "applies_to": [
+        "control"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P04",
+      "family": "pgvector release and issue history",
+      "urls": [
+        "https://github.com/pgvector/pgvector/blob/v0.8.7/CHANGELOG.md",
+        "https://github.com/pgvector/pgvector/issues/719",
+        "https://github.com/pgvector/pgvector/issues/785"
+      ],
+      "version": "0.8.0–0.8.7; #719 original 0.7.0 and 0.8.0/PG17 follow-up; #785 0.8.0/PG15",
+      "context": "Tagged release entries; reporter/maintainer exchanges and closure context",
+      "observation": "Iterative scans arrived in 0.8.0. Later releases fixed build/vacuum defects. #719 includes persistence after upgrade and plan/statistics requests; #785 closes without a documented patch. Neither issue proves universal failure or resolution.",
+      "applies_to": [
+        "control"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P05",
+      "family": "OpenSearch lexical / semantic / hybrid fusion",
+      "urls": [
+        "https://docs.opensearch.org/3.8/vector-search/ai-search/hybrid-search/rrf/",
+        "https://docs.opensearch.org/latest/vector-search/ai-search/hybrid-search/rrf/",
+        "https://docs.opensearch.org/latest/vector-search/ai-search/hybrid-search/index/"
+      ],
+      "version": "3.8 banner says no longer maintained; latest unpinned; hybrid 2.11, RRF 2.19, normalization 2.10",
+      "context": "Fusion definitions, score interpretation, required pipeline and BM25/vector example",
+      "observation": "RRF uses ranks, discards margins and is not a calibrated confidence threshold. Pipeline fusion is distinct from relevance validation and authorization.",
+      "applies_to": [
+        "control",
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P06",
+      "family": "OpenSearch DLS / role composition / exact identity mapping",
+      "urls": [
+        "https://docs.opensearch.org/3.8/security/access-control/document-level-security/",
+        "https://docs.opensearch.org/latest/security/access-control/document-level-security/",
+        "https://github.com/opensearch-project/security/pull/1735"
+      ],
+      "version": "3.8 and latest documentation; introducing PR merged 2022-04-12 at 7e6b62cb7f54977be736c5efaa14e01579aa5324",
+      "context": "Read/write scope; Unicode mapping; adaptive TLQ; multiple roles; PR setting registration, PrivilegesEvaluator caller, ConfigModelV7 and DfmOverwritesAllTest",
+      "observation": "DLS rules OR; mixed no-DLS roles remain filtered unless the override is enabled. Historical implementation/tests establish false default for the introduced setting. Analyzer tokenization can conflate identifiers. This is not a revocation protocol.",
+      "applies_to": [
+        "control",
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P07",
+      "family": "OpenSearch vector filtering / engine alternatives",
+      "urls": [
+        "https://docs.opensearch.org/3.8/vector-search/filter-search-knn/index/",
+        "https://docs.opensearch.org/latest/vector-search/filter-search-knn/index/",
+        "https://docs.opensearch.org/3.8/mappings/supported-field-types/knn-methods-engines/"
+      ],
+      "version": "3.8 and latest; efficient Lucene HNSW 2.4+, Faiss HNSW 2.9+, IVF 2.10+; JVector plugin separate",
+      "context": "Efficient/in-query, post-filter and exact scoring modes; engine recommendation table",
+      "observation": "Filter placement changes result fill and cost. Engine/method/version govern applicability. JVector is an optional plugin; vendor workload guidance is not an independently measured winner.",
+      "applies_to": [
+        "control"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P08",
+      "family": "OpenSearch index publication",
+      "urls": [
+        "https://docs.opensearch.org/3.8/im-plugin/index-alias/",
+        "https://docs.opensearch.org/latest/im-plugin/index-alias/",
+        "https://github.com/opensearch-project/OpenSearch/blob/3.8.0/server/src/main/java/org/opensearch/action/admin/indices/alias/TransportIndicesAliasesAction.java",
+        "https://github.com/opensearch-project/OpenSearch/blob/3.8.0/server/src/main/java/org/opensearch/cluster/metadata/MetadataIndexAliasesService.java",
+        "https://github.com/opensearch-project/OpenSearch/blob/3.8.0/server/src/test/java/org/opensearch/cluster/metadata/MetadataIndexAliasesServiceTests.java"
+      ],
+      "version": "3.8 docs and core 3.8.0; latest unpinned",
+      "context": "Remove/add switch; resolved action caller; applyAliasActions; add/remove, alias version and swap test sources",
+      "observation": "A resolved action list becomes one cluster-state transition. Publication success and read availability still require checks. Atomic pointer change does not make permissions current or retain cited editions.",
+      "applies_to": [
+        "control"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P09",
+      "family": "W3C passage selectors / representation state",
+      "urls": [
+        "https://www.w3.org/TR/annotation-model/"
+      ],
+      "version": "Recommendation 2017-02-23",
+      "context": "§4.2.4–4.2.5 quote/position normalization, ambiguity and restricted-content warning; §4.3–4.3.2 State before selectors",
+      "observation": "Quote matching may remain ambiguous and duplicates selected content. Offsets depend on normalized representation; State precedes selector processing. These locators provide neither retention nor authorization.",
+      "applies_to": [
+        "control",
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P10",
+      "family": "Elastic DLS / cache boundaries",
+      "urls": [
+        "https://www.elastic.co/docs/deploy-manage/users-roles/cluster-or-deployment-auth/controlling-access-at-document-field-level",
+        "https://www.elastic.co/docs/reference/elasticsearch/configuration-reference/node-query-cache-settings"
+      ],
+      "version": "Current documentation; deployment release unspecified",
+      "context": "Multiple role union, aggregate-information warning, conditional request-cache exclusions; node/segment cache eligibility",
+      "observation": "A no-query role can widen Elastic access; aggregate facts may remain observable. Request-cache exclusions are conditional. Node query caches differ from protected application snippets. These vendor-specific examples cannot be transferred as guarantees.",
+      "applies_to": [
+        "control",
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P11",
+      "family": "License and deployment applicability",
+      "urls": [
+        "https://github.com/pgvector/pgvector/blob/v0.8.7/LICENSE",
+        "https://github.com/opensearch-project/security/blob/7e6b62cb7f54977be736c5efaa14e01579aa5324/LICENSE.txt",
+        "https://www.elastic.co/pricing/faq",
+        "https://github.com/typesense/typesense/blob/v28.0/LICENSE.txt"
+      ],
+      "version": "pgvector v0.8.7; OpenSearch pinned historical license; Typesense v28.0; current Elastic FAQ",
+      "context": "License notices and Elastic ESRE feature eligibility",
+      "observation": "pgvector uses PostgreSQL license terms; OpenSearch code Apache 2.0; Typesense GPLv3. Elastic DLS/RRF feature eligibility depends on subscription/deployment. No package or model license is selected by either proposal.",
+      "license_notices": "No upstream code or corpus is copied into this evidence. Copyright and full license terms remain at the exact linked originals.",
+      "applies_to": [
+        "control",
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    }
+  ],
+  "coverage_boundary": "Coverage is of available researched source claims. Treatment complete-final source-family coverage is UNASSESSED even where available primary research is COMPLETE.",
+  "unavailable_or_corrected_locators": [
+    "Typesense v28.0 LICENSE returned HTTP 404; exact LICENSE.txt was then read.",
+    "OpenSearch hybrid directory route exposed a redirect; its exact /index/ document was read."
+  ],
+  "copyright_handling": "Only compact original observations and links; no copied source corpus/code. Original copyright/license notices remain linked.",
+  "upstream_tests": "Source inspected only; not executed."
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "D-R1-P02-treatment",
+  "findings": [
+    {
+      "id": "N01",
+      "severity": "NONMATERIAL",
+      "kind": "predecessor_history_depth_and_chronology",
+      "axes": [
+        2,
+        3,
+        5
+      ],
+      "candidate_locator": "investigator/discovery Issue and release evidence; investigator/source-map.json LIBVIPS-ISSUE-4343; critic/critique opening",
+      "finding": "Discovery reads #4343 narrowly; public later fixing context is available. Critique says #5195 was resolved since the investigator check, although the merge predates both checks.",
+      "significance": "Final does not repeat an unknown-resolution claim for #4343 and correctly dates #5195. Color/alpha policies and proposed domains survive. The lost specific optional history does not remove a required obligation.",
+      "primary_source_ids": [
+        "E23",
+        "E24"
+      ],
+      "limits": "Source PASS applies to the complete final planning proposal, not a claim that every predecessor statement is correct."
+    },
+    {
+      "id": "N02",
+      "severity": "NONMATERIAL",
+      "kind": "final_disposition_traceability",
+      "axes": [
+        4
+      ],
+      "candidate_locator": "critic/critique C-01–C-12 and critic/final.md",
+      "finding": "Final integrates criticism without a dedicated final accept/amend/reject table or C-ID references.",
+      "significance": "Each disposition can be traced in final sections and the critique table. This is a method/documentation precision limit, not a material false correction.",
+      "primary_source_ids": [],
+      "limits": "Assessor mapping below is evidence of observed content, not a candidate-authored missing record."
+    }
+  ],
+  "material_defect_count": 0,
+  "no_repair_or_regrade": true
+}

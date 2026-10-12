@@ -1,0 +1,36 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "D-R2-P03-control",
+  "final_source_judgment": "UNASSESSED",
+  "findings": [
+    {
+      "id": "C-D01",
+      "dimension": "delivery",
+      "severity": "critical_delivery",
+      "scope": "complete final",
+      "finding": "Final absent; investigator discovery/draft/source map/plan reveal also absent. Critic and reviser unlaunched.",
+      "evidence": "Packet items[control], investigator terminal manifest and frozen failure-record-custody report",
+      "source_quality_implication": "UNASSESSED, not a fabricated source FAIL or PASS."
+    },
+    {
+      "id": "C-M01",
+      "dimension": "method_compliance",
+      "severity": "material_mechanical",
+      "scope": "investigator precondition",
+      "finding": "Blocker reports admitted/ARM/inputs/brief.md, while frozen assignment/input-map declare admitted/ARM/run/ARM/inputs/brief.md. Addendum records declared path existence and correct hash at its observation.",
+      "evidence": "Frozen precondition blocker plus d-input-locator-blocker-addendum-v1.json",
+      "source_quality_implication": "No science produced. Wrong reported locator is established; deeper runtime cause and historical availability at every instant are unproven."
+    },
+    {
+      "id": "C-N01",
+      "dimension": "native_identity_provenance",
+      "severity": "qualification_failure",
+      "scope": "investigator lifecycle",
+      "finding": "Active birth/objective receipt exists but no terminal receipt/completion attempt/output snapshot/check. Task status completed with blocked summary does not prove native terminal completion.",
+      "evidence": "Native create/active snapshots, status and failure report",
+      "source_quality_implication": "No native-Goal full-method qualification; source truth remains unassessed."
+    }
+  ],
+  "critic_disposition_audit": [],
+  "no_repairs_or_regrades": true
+}

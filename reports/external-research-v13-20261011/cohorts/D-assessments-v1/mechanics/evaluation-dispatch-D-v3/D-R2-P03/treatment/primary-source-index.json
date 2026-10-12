@@ -1,0 +1,660 @@
+{
+  "schema": "er13.independent_primary_index.v1",
+  "arm_id": "D-R2-P03-treatment",
+  "independent_research": true,
+  "candidate_scientific_claims_available": true,
+  "scope_note": "Bounded independent source context for available partial science, not complete-final pass",
+  "sources": [
+    {
+      "id": "E01",
+      "title": "PowerSync update-conflict contract",
+      "url": "https://docs.powersync.com/handling-writes/handling-update-conflicts",
+      "version_or_context": "Rolling official docs",
+      "locator": "Handling Update Conflicts; operations/idempotency and CRDT paragraphs",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Ordered upload queue, application-owned backend, server-received per-field LWW/delete-wins example, repeated delivery. Transport does not provide domain approval or roster validity.",
+      "source_family": "collaboration_sync",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E02",
+      "title": "PowerSync custom conflict patterns",
+      "url": "https://docs.powersync.com/handling-writes/custom-conflict-resolution",
+      "version_or_context": "Rolling React/Web, Node/Postgres examples",
+      "locator": "Client/backend flow; CrudEntry; strategies 1–6",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Local writes are optimistic; clock checks can drift; whole-row versions reject disjoint edits too. Conflict/status tables can retain proposed values. Illustrative SELECT-then-UPDATE examples do not independently prove race-safe application acceptance.",
+      "source_family": "collaboration_sync",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E03",
+      "title": "PowerSync write/validation errors",
+      "url": "https://docs.powersync.com/handling-writes/handling-write-validation-errors",
+      "version_or_context": "Rolling official docs",
+      "locator": "Technical Details; Backend Recommendations; rollback",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Permanent business rejection may be acknowledged with HTTP 2xx and error details/conflict table; transient failures remain queued. Server-state reconciliation after an empty queue can replace local edits. Durable intent storage and queue acknowledgment must be coordinated.",
+      "source_family": "collaboration_sync",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E04",
+      "title": "PowerSync Web release history",
+      "url": "https://releases.powersync.com/announcements/powersync-js-web-client-sdk",
+      "version_or_context": "Web 2.4.2, 2026-10-01; historical 0.2.1; 2.4.0/2.4.1",
+      "locator": "Version entries; v2.0 breaking changes; v1.38.0 raw-table promotion",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Confirms transactionId fix and OPFS WAL-size regression/fix. Current release does not prove every adapter or roster invariant. Raw tables became stable in Web 1.38.0; 2.0 changed APIs substantially.",
+      "source_family": "implementation_history",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E05",
+      "title": "PowerSync release package",
+      "url": "https://github.com/powersync-ja/powersync-js/commit/ba6737ee9cc940fc0dd1f7adbb554f8185084dc9",
+      "version_or_context": "ba6737ee9cc940fc0dd1f7adbb554f8185084dc9",
+      "locator": "Commit; packages/web/package.json; README",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Version-packages release and Web 2.4.2 manifest verified. Test suite location/README is evidence of available tests, not their examination or execution by candidates.",
+      "source_family": "implementation_history",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E06",
+      "title": "PowerSync upload caller",
+      "url": "https://github.com/powersync-ja/self-host-demo/blob/main/demos/nodejs/demo-app/src/library/powersync/DemoConnector.ts",
+      "version_or_context": "Rolling main; illustrative caller",
+      "locator": "uploadData; getNextCrudTransaction; response.ok; complete; catch",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Posts one transaction batch and completes after an OK response; optional checkpoint fetch. Demo authentication and this caller are not a roster authorization or atomic-backend implementation.",
+      "source_family": "callers_tests",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E07",
+      "title": "PowerSync historical transaction issue",
+      "url": "https://github.com/powersync-ja/powersync-js/issues/48",
+      "version_or_context": "2024-02-07 report; 2024-02-12 maintainer response",
+      "locator": "Reproduction; closing response",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Two inserts reportedly split, transactionId undefined. Maintainer names React Native 1.2.1/Web 0.2.1 as fixes. No linked fix/test in the issue itself; do not infer current failure from old report.",
+      "source_family": "implementation_history",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E08",
+      "title": "PowerSync Kotlin changelog",
+      "url": "https://github.com/powersync-ja/powersync-kotlin/blob/main/CHANGELOG.md",
+      "version_or_context": "Rolling main; BETA31/BETA29/1.5.1 and current 1.15.2",
+      "locator": "Named historical entries and adjacent releases",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Grouping/race fixes confirmed. 1.5.1 offline delay was specifically a legacy sync-client issue. Current 1.15.2 notes retry fix and SQLite 3.53.4; these platform-specific facts cannot be generalized to another adapter.",
+      "source_family": "implementation_history",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E09",
+      "title": "Sync Streams GA",
+      "url": "https://releases.powersync.com/announcements/sync-streams-are-now-generally-available",
+      "version_or_context": "2026-05-14 GA",
+      "locator": "Partial sync; auto_subscribe; TTL; edition 3",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "GA, per-user query example, subscription TTL and legacy support confirmed. Required service floor/Rust-client list cited by the investigator appears in the separate beta announcement, not this page.",
+      "source_family": "authorization",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E10",
+      "title": "Sync Streams beta requirements",
+      "url": "https://releases.powersync.com/announcements/sync-streams-are-now-in-beta",
+      "version_or_context": "2026-03-03 beta",
+      "locator": "Requirements",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Historical requirement: service 1.20.0+, Rust sync client, edition 3. Feature availability is distinct from later security fixes and target-version suitability.",
+      "source_family": "authorization",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E11",
+      "title": "PowerSync service release exceptions",
+      "url": "https://releases.powersync.com/announcements/powersync-service",
+      "version_or_context": "1.20.1, 2026-03-06; current 1.26.1",
+      "locator": "1.20.1 notice and compiler fix",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Release context exposes an authorization-filter defect in 1.20.0 edition 3. A general 1.20+ compatibility statement cannot substitute for patched-version qualification.",
+      "source_family": "authorization",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E12",
+      "title": "PowerSync authorization advisory",
+      "url": "https://github.com/powersync-ja/powersync-service/security/advisories/GHSA-q6wc-xx4m-92fj",
+      "version_or_context": "GHSA-q6wc-xx4m-92fj; CVE-2026-30870",
+      "locator": "Affected/patched versions; Impact; unaffected queries",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Service-core 1.20.0/sync-rules 0.32.0 affected; fixes 1.20.1/0.33.0. Specific edition-3 gating subqueries could expose data to authenticated users. Partitioning queries, edition 2 and legacy rules excluded. Cloud was updated. No claim about an unknown center deployment.",
+      "source_family": "authorization",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E13",
+      "title": "PowerSync authorization fix/tests",
+      "url": "https://github.com/powersync-ja/powersync-service/pull/547",
+      "version_or_context": "Merged 2026-03-05; e7152ceff61fba6d3aba74c0eb3af19983b4573f",
+      "locator": "querier_graph; parameter_evaluator; compiler snapshots; evaluator tests",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Inspected exact PR metadata/files/patches. Fix handles empty unused lookups; evaluator tests cover absent/present permissions with stubbed parameter lookups. Compiler snapshots do not establish end-to-end roster security; no tests run by evaluator.",
+      "source_family": "callers_tests",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E14",
+      "title": "PowerSync native raw-table boundary",
+      "url": "https://docs.powersync.com/client-sdks/advanced/raw-tables",
+      "version_or_context": "Rolling docs; Web 1.35.0-era convenience API; deployment unspecified",
+      "locator": "JSON view system; raw table availability; Using Foreign Keys",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Default synchronized schema is JSON/views. Raw tables expose native constraints but require schema/mapping/trigger ownership; FK application order requires deferred constraints, and cross-priority references can fail. .NET raw tables unavailable on this page.",
+      "source_family": "local_data",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E15",
+      "title": "PowerSync raw-table introduction",
+      "url": "https://releases.powersync.com/announcements/introducing-raw-sqlite-tables-support-experimental",
+      "version_or_context": "2025-07-17 experimental announcement",
+      "locator": "Availability; JSON views; mapping/triggers",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Historical introduction explains native constraints absent from default views; Web 1.24.0 and Rust-client requirement are historical. E04 records later stabilization; do not label current Web raw tables experimental solely from this announcement.",
+      "source_family": "local_data",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E16",
+      "title": "PowerSync CRUD API definitions",
+      "url": "https://github.com/powersync-ja/powersync-js/blob/ba6737ee9cc940fc0dd1f7adbb554f8185084dc9/packages/common/src/client/CommonPowerSyncDatabase.ts",
+      "version_or_context": "ba6737ee9cc940fc0dd1f7adbb554f8185084dc9",
+      "locator": "getNextCrudTransaction/getCrudTransactions, lines 304–346",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Single transaction versus oldest unfinished item versus multi-transaction iterator differ. Completing an iterator item marks it and prior emitted transactions handled; no implied business-command authorization.",
+      "source_family": "callers_tests",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E17",
+      "title": "PowerSync CRUD implementation",
+      "url": "https://github.com/powersync-ja/powersync-js/blob/ba6737ee9cc940fc0dd1f7adbb554f8185084dc9/packages/shared-internals/src/client/BasePowerSyncDatabase.ts",
+      "version_or_context": "ba6737ee9cc940fc0dd1f7adbb554f8185084dc9",
+      "locator": "getNextCrudTransaction/getCrudTransactions, lines 550–595",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Observed recursive query groups contiguous ps_crud rows with equal tx_id; completion delegates to handleCrudCheckpoint using final client operation ID. This is queue grouping, not a backend atomic swap.",
+      "source_family": "callers_tests",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E18",
+      "title": "PowerSync concrete CRUD tests",
+      "url": "https://github.com/powersync-ja/powersync-js/blob/ba6737ee9cc940fc0dd1f7adbb554f8185084dc9/packages/web/tests/crud.test.ts",
+      "version_or_context": "ba6737ee9cc940fc0dd1f7adbb554f8185084dc9",
+      "locator": "Transaction grouping 267–295; exclusivity 298–318; batch limits 321–351",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Two inserts group into one queued transaction, completion advances to next; rollback visibility and getCrudBatch crossing transaction boundaries tested in source. Inspected source, did not execute. No server roster-rule oracle.",
+      "source_family": "callers_tests",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E19",
+      "title": "PowerSync upload tests",
+      "url": "https://github.com/powersync-ja/powersync-js/blob/ba6737ee9cc940fc0dd1f7adbb554f8185084dc9/packages/web/tests/uploads.test.ts",
+      "version_or_context": "ba6737ee9cc940fc0dd1f7adbb554f8185084dc9",
+      "locator": "describeCrudUploadTests",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Tests warn for missing upload work and count sequential uploads with/without workers. Progress test manually deletes CRUD rows via a mock connector. It does not prove real durable backend acknowledgment. Inspected, not executed.",
+      "source_family": "callers_tests",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E20",
+      "title": "PostgreSQL constraints",
+      "url": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+      "version_or_context": "PostgreSQL 18",
+      "locator": "5.5.1 CHECK; foreign keys; 5.5.6 EXCLUDE",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Cross-row CHECK cannot guarantee consistency. EXCLUDE/FK/UNIQUE apply only to expressed relationships/operators; null/immutability caveats matter. Center qualification/dependency rules still need an explicit policy owner.",
+      "source_family": "relational_transactions",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E21",
+      "title": "PostgreSQL RLS",
+      "url": "https://www.postgresql.org/docs/18/ddl-rowsecurity.html",
+      "version_or_context": "PostgreSQL 18",
+      "locator": "5.9 enable/default-deny; owners; BYPASSRLS; policy examples",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Disabled by default; enabled without policies defaults to deny. Owner normally bypasses unless FORCE, superusers/BYPASSRLS bypass. Referential checks bypass RLS; use actual app-role tests.",
+      "source_family": "authorization",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E22",
+      "title": "PostgreSQL isolation",
+      "url": "https://www.postgresql.org/docs/18/sql-set-transaction.html",
+      "version_or_context": "PostgreSQL 18",
+      "locator": "Isolation description and selection timing",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "READ COMMITTED default; SERIALIZABLE aborts nonserializable patterns. Setting must precede first query/write. Atomic transaction plus actual roster reads/validation is necessary; isolation alone supplies no rules.",
+      "source_family": "relational_transactions",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E23",
+      "title": "PostgreSQL serializable/retry context",
+      "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+      "version_or_context": "PostgreSQL 18",
+      "locator": "13.2 Serializable; business-rule consistency",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Whole-transaction retry and consistency discipline needed. Version checks/constraints/serialization are conditional design tools, not a demonstrated implementation.",
+      "source_family": "relational_transactions",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E24",
+      "title": "SQLite transaction control",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_or_context": "Rolling official docs; updated 2026-02-18",
+      "locator": "2.1–2.3; error responses",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "One writer, multiple readers; deferred upgrade and immediate acquisition can be BUSY. Errors may undo a statement or whole transaction; BEGIN does not nest. Local atomicity is not global roster validity.",
+      "source_family": "local_data",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E25",
+      "title": "SQLite FK contract",
+      "url": "https://www.sqlite.org/foreignkeys.html",
+      "version_or_context": "3.6.19 introduction; compile/runtime-dependent defaults",
+      "locator": "Enabling FK support",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Enforcement must be set/checked per connection; compile configuration can alter defaults/support. Toggling during transaction is ineffective. This does not establish FK support on PowerSync view schemas.",
+      "source_family": "local_data",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E26",
+      "title": "SQLite WAL and repair",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_context": "WAL 3.7.0+; reset fix 3.51.3; backports 3.44.6/3.50.7",
+      "locator": "Overview; checkpoints/concurrency; section 11 WAL-reset bug",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Same-host shared memory and one writer caveats confirmed. Rare corruption race involves multiple connections with overlapping write/checkpoint activity. Fixes are version-specific; chosen embedded library is unknown. No inferred occurrence or reproduced corruption.",
+      "source_family": "local_data",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E27",
+      "title": "SQLite atomic commit/crash tests",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "version_or_context": "Rolling official docs",
+      "locator": "Flush dependencies; sections 8/9 crash tests and limitations",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Upstream crash tests simulate VFS damage and reopen with all-or-nothing oracle; OS/device flush and locking correctness remain assumptions. Candidate process-kill proposals are not equivalent to power-loss tests.",
+      "source_family": "local_data",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E28",
+      "title": "SQLite diagnostic pragmas",
+      "url": "https://www.sqlite.org/pragma.html#pragma_integrity_check",
+      "version_or_context": "Rolling docs",
+      "locator": "foreign_keys, integrity_check, foreign_key_check, quick_check",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Structural integrity check excludes FK violations; FK check is separate. Checks do not recover unsent intent or provide a backup protocol.",
+      "source_family": "local_data",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E29",
+      "title": "Automerge conflict API",
+      "url": "https://automerge.org/automerge/api-docs/js/functions/getConflicts.html",
+      "version_or_context": "Automerge 3.5.0",
+      "locator": "getConflicts description/example",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Concurrent map puts retain alternative values, while one arbitrary deterministic value is surfaced. Convergence is distinct from roster constraints; this API alone does not characterize all text semantics.",
+      "source_family": "crdt",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E30",
+      "title": "Automerge conflict accessor code",
+      "url": "https://github.com/automerge/automerge/blob/4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903/javascript/src/implementation.ts",
+      "version_or_context": "4d2a8f6bfecfb7f1e4fca126e6d2122ac526f903",
+      "locator": "getConflicts lines 977–989; surrounding example",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Accessor delegates to conflictAt for an object/property; wrong non-object has no conflicts returned. Inspected definition, no application execution. Full CRDT text/backend tests not reviewed.",
+      "source_family": "crdt",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E31",
+      "title": "CouchDB conflict model",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "version_or_context": "CouchDB 3.5 docs",
+      "locator": "2.3.1–2.3.4; default winner/views; conflicts/open_revs",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Replicated competing leaves survive but ordinary reads/views surface one winner; same-node stale _rev returns 409. Explicit conflict inspection/merge needed; historical bodies are compacted.",
+      "source_family": "document_replication",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E32",
+      "title": "CouchDB document/history design",
+      "url": "https://docs.couchdb.org/en/stable/best-practices/documents.html",
+      "version_or_context": "CouchDB 3.5 docs",
+      "locator": "4.1.4 decomposition/event history",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Document boundaries affect conflicts; revision history is for replication, not retained application version history. Command/event histories require ordering, duplicate and retention policy.",
+      "source_family": "document_replication",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E33",
+      "title": "CouchDB winning-only option",
+      "url": "https://docs.couchdb.org/en/stable/replication/replicator.html",
+      "version_or_context": "3.3.0 introduction; 3.5 docs",
+      "locator": "2.2.16 Replicate Winning Revisions Only",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "winning_revs_only discards conflict revisions in that replication, but uses separate checkpoint IDs and later full replication may backfill. Candidate fact is supported, cited conflicts page is an incomplete locator.",
+      "source_family": "document_replication",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E34",
+      "title": "Replicache replay model",
+      "url": "https://doc.replicache.dev/concepts/how-it-works",
+      "version_or_context": "Rolling browser/JavaScript docs",
+      "locator": "Mutations; sync details; rebase; client groups/cache",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Speculative client mutations rerun on canonical server and rebase locally. Cache name separates users; browser storage limits apply. Optional operation-replay comparison is useful, not server-authoritative approval by itself.",
+      "source_family": "operation_replay",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E35",
+      "title": "Replicache push contract",
+      "url": "https://doc.replicache.dev/reference/server-push",
+      "version_or_context": "pushVersion 1",
+      "locator": "Mutation status; atomic/ordered; errors",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Effects and lastMutationID atomic; permanent rejection must advance processing or later operations block. A 200 push response alone is not mutation acknowledgment: pull sequence carries acknowledgment. Critic retains business rejection in app state.",
+      "source_family": "operation_replay",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E36",
+      "title": "RxDB replication",
+      "url": "https://rxdb.info/replication.html",
+      "version_or_context": "Rolling docs, package unspecified",
+      "locator": "Document/master-fork; handlers; checkpoint; conflict handling",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Push uses assumed master/new fork; conflicts resolve on client; default drops fork for master. Cross-document swap atomicity is not established by this page. Useful optional family, with backend authority separate.",
+      "source_family": "document_replication",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E37",
+      "title": "Electric read boundary",
+      "url": "https://electric.ax/docs/sync/",
+      "version_or_context": "Rolling current read-path architecture",
+      "locator": "Overview; Shapes; Writes",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Read-path Postgres-to-client Shapes over HTTP; writes through separate API patterns. Candidate correctly treats it as a read component, not complete durable offline-write mechanism.",
+      "source_family": "read_replication",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E38",
+      "title": "Transactional outbox authority",
+      "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html",
+      "version_or_context": "Rolling primary architecture guidance",
+      "locator": "Intent; issues; relational outbox implementation",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Data/outbox commit atomically; later dispatch can duplicate, ordering and idempotent consumers matter. General pattern supports proposed version-pinned outbox; no AWS implementation or external atomic-delivery claim inferred.",
+      "source_family": "publication_consumers",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E39",
+      "title": "PowerSync license split",
+      "url": "https://powersync.com/open-source",
+      "version_or_context": "Rolling package overview; Web LICENSE pinned at E05 commit",
+      "locator": "SDK/service package license listings",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "SDK/supporting client packages Apache/MIT; service and CLI FSL. Web pinned package manifest/LICENSE Apache-2.0 confirmed. No candidate technology selected; service licensing qualification remains absent from draft.",
+      "source_family": "licenses",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E40",
+      "title": "SQLite public-domain notice",
+      "url": "https://www.sqlite.org/copyright.html",
+      "version_or_context": "Rolling notice, 2026-01-12",
+      "locator": "Public domain; deliverable/build distinction",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Code/documentation dedicated to public domain; some build scripts differ. Wrapper/adapter licenses are separate. No upstream source corpus copied into outputs.",
+      "source_family": "licenses",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E41",
+      "title": "PostgreSQL license notice",
+      "url": "https://www.postgresql.org/about/licence/",
+      "version_or_context": "2026 notice",
+      "locator": "PostgreSQL License",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Copyright PostgreSQL Global Development Group and Regents of University of California; permissive license with retained notices and warranty disclaimer. Notes are original paraphrases; source notice linked.",
+      "source_family": "licenses",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E42",
+      "title": "RxDB license boundaries",
+      "url": "https://rxdb.info/premium/",
+      "version_or_context": "Rolling official product licensing",
+      "locator": "Free core versus commercial storage/plugin tiers",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Core Apache-2.0 and optional commercial plugin terms differ. No selected storage/tier, price or affordability finding; deployment license inventory remains unassessed.",
+      "source_family": "licenses",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E43",
+      "title": "Replicache current license API condition",
+      "url": "https://doc.replicache.dev/api/interfaces/ReplicacheOptions",
+      "version_or_context": "Current API; older v12 docs not governing current behavior",
+      "locator": "Deprecated licenseKey option",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Current API says licenseKey ignored; old v12 key/ping instructions must not be generalized. Current package license and release history are not fully inspected; no licensing recommendation.",
+      "source_family": "licenses",
+      "coverage": "PARTIAL"
+    }
+  ],
+  "license_and_notice_handling": "Only original annotations and public links retained. No upstream corpus/code copied. Package license notices remain linked; deployment license inventory PARTIAL.",
+  "lookup_failures_and_limits": [
+    "Several guessed public SDK doc/source paths returned 404/internal error; relevant definitions/tests and governing pages then found through bounded primary links/API listings.",
+    "Current Replicache package license lookup unavailable at guessed path; old v12 license-key page not applied to current API.",
+    "No recursive repository/campaign tree or full history scan. Public exact file/PR context only."
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "D-R2-P01-treatment",
+  "complete_final_assessment": "UNASSESSED",
+  "records": [
+    {
+      "id": "T01",
+      "dimension": "available_science_source_applicability",
+      "severity": "MATERIAL_INCOMPLETE",
+      "material": true,
+      "final_effect": "UNASSESSED",
+      "locator": {
+        "stage": "investigator",
+        "file": "draft.md",
+        "section": "Edition/index state model; S13"
+      },
+      "finding": "The alias publication discussion omits Elastic's per-action partial-success condition and the guard/result inspection needed when all intended remove/add actions must succeed. A single atomic metadata transition does not prove intended action-set success. Truth critic F1 identifies this supported condition; no frozen final resolves it.",
+      "evidence": [
+        "P12",
+        "critic-truth F1"
+      ],
+      "source_judgment_effect": "AVAILABLE_PARTIAL_SCIENCE_ONLY"
+    },
+    {
+      "id": "T02",
+      "dimension": "available_science_source_applicability",
+      "severity": "MATERIAL_INCOMPLETE",
+      "material": true,
+      "final_effect": "UNASSESSED",
+      "locator": {
+        "stage": "investigator",
+        "file": "draft.md",
+        "section": "Team labels disposition / DLS caveats"
+      },
+      "finding": "The draft calls OpenSearch role composition a caveat without spelling out the OR/mixed-role/override condition that governs an overlapping-team example. The map identifies part of it and truth critic F2 adds the explicit rule; no final resolution exists. This is a planning precision omission, not a claim that a deployed system leaked.",
+      "evidence": [
+        "P06",
+        "critic-truth F2"
+      ],
+      "source_judgment_effect": "AVAILABLE_PARTIAL_SCIENCE_ONLY"
+    },
+    {
+      "id": "T03",
+      "dimension": "available_science_original_obligation",
+      "severity": "MATERIAL_INCOMPLETE",
+      "material": true,
+      "final_effect": "UNASSESSED",
+      "locator": {
+        "stage": "investigator",
+        "file": "draft.md",
+        "section": "Owner decisions: current ACL, historical ACL, or more restrictive rule"
+      },
+      "finding": "Historical ACL alone remains listed as an unconstrained owner option although other draft passages require current authorization at disclosure. Grandfathering historical permission could violate post-change visibility. The tension needs resolution under the unchanged brief; it is not evidence of an executed exposure. Truth critic F3 is supported.",
+      "evidence": [
+        "Brief paragraph 3 / O03",
+        "draft Permission and cache sequence",
+        "critic-truth F3"
+      ],
+      "source_judgment_effect": "AVAILABLE_PARTIAL_SCIENCE_ONLY"
+    },
+    {
+      "id": "T04",
+      "dimension": "source_navigation",
+      "severity": "MINOR_LOCATOR",
+      "material": false,
+      "final_effect": "UNASSESSED",
+      "locator": {
+        "stages": [
+          "investigator",
+          "critic-truth"
+        ],
+        "file": "source-map.json",
+        "entry": "S10"
+      },
+      "finding": "Time State is cited as §4.1, but the Recommendation places State at §4.3 and Time State at §4.3.1. The complete URL and correct selector sections remain identifiable; the breadth critic gives the correct State location.",
+      "evidence": [
+        "P09",
+        "critic-breadth source-map.json S10"
+      ],
+      "source_judgment_effect": "NONMATERIAL_PARTIAL_SCIENCE"
+    },
+    {
+      "id": "T05",
+      "dimension": "source_navigation",
+      "severity": "MINOR_LOCATOR",
+      "material": false,
+      "final_effect": "UNASSESSED",
+      "locator": {
+        "stage": "investigator",
+        "file": "discovery.md",
+        "section": "Search and evidence leads S16"
+      },
+      "finding": "Discovery labels its no-executed-checks statement S16, while the source map/index identify S16 as the resolver HLD. The preceding S05–S06 lead also includes that HLD without its mapped S16 identity. Underlying proposal/history and validation truth remain independently identifiable.",
+      "evidence": [
+        "discovery.md",
+        "investigator source-map.json S06/S16",
+        "P16"
+      ],
+      "source_judgment_effect": "NONMATERIAL_PARTIAL_SCIENCE"
+    },
+    {
+      "id": "M01",
+      "dimension": "delivery_time_native_method",
+      "severity": "MECHANICS_FAILURE",
+      "material_for_source": false,
+      "locator": {
+        "stage": "critic-truth",
+        "file": "native-terminal-capture-failed.json"
+      },
+      "finding": "Original completion preflight reports the unchanged deadline expired; retry is forbidden. Native terminal and three completion auxiliaries are absent. Actual task is interrupted with no pending child runs; next stage was held and reviser was not launched. No final is reconstructed.",
+      "evidence": [
+        "Exact frozen failure auxiliary",
+        "Exact coordinator failure-record custody",
+        "Packet and raw eval-ready status"
+      ],
+      "source_judgment_effect": "COMPLETE_FINAL_UNASSESSED"
+    }
+  ],
+  "limits": "Material findings for treatment apply only to available partial science. Mechanics, source truth and final absence are separate."
+}

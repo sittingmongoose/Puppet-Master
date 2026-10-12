@@ -1,0 +1,47 @@
+{
+  "schema": "er13.original_output_manifest.v1",
+  "block_id": "D-R2-P01",
+  "arm_id": "D-R2-P01-control",
+  "frozen_at_utc": "2026-10-12T05:05:24.906317+00:00",
+  "original_judgment_immutable": true,
+  "comparative_analysis_started": false,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/control/assessment.md",
+      "relative_path": "assessment.md",
+      "bytes": 6139,
+      "sha256": "7881106e900edc3381216651fc04cdc62abb03115b593e47e6bc2182e4472e8d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/control/assessment.json",
+      "relative_path": "assessment.json",
+      "bytes": 26890,
+      "sha256": "456278178c5492b87870926a27a64f0f1ce762b315945d0c4f85e206169ae33d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/control/coverage.json",
+      "relative_path": "coverage.json",
+      "bytes": 9454,
+      "sha256": "0541a314d69ea451f6b3d8734b492738f2cddd2693896f1d0ff3e98be5585c10"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/control/defects.json",
+      "relative_path": "defects.json",
+      "bytes": 1773,
+      "sha256": "2ca3053bdc74830cb0aff091dc9d07146ff2eff963d22a346037281fcbc98a6d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/control/primary-source-index.json",
+      "relative_path": "primary-source-index.json",
+      "bytes": 11262,
+      "sha256": "195580618cab5f6f3de8ebcce70ca6289397201abcaac902ef964cd62d18d5dd"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/control/evidence/input-verification.json",
+      "relative_path": "evidence/input-verification.json",
+      "bytes": 8086,
+      "sha256": "aafe72619b485ccf7c41c4b0261f0ef7cd50e922f20f038511e867bef144aff6"
+    }
+  ],
+  "self_hash_boundary": "Manifest cannot contain its own hash; its exact hash is reported separately and bound by comparison-manifest.json."
+}

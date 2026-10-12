@@ -1,0 +1,21 @@
+{
+  "schema": "er13.independent_public_context.v1",
+  "primary": [
+    "P14",
+    "P18",
+    "P19",
+    "P41"
+  ],
+  "urls": [
+    "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-gqmc-89g8-p25r",
+    "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-852m-cvvp-9p4w",
+    "https://github.com/bytecodealliance/wasmtime/releases/tag/v49.0.2",
+    "https://developer.apple.com/documentation/security/discovering-and-diagnosing-app-sandbox-violations?changes=_7"
+  ],
+  "observation": "The later absent-stdio WASIp2 sink advisory is distinct from earlier general allocation limits. Affected ranges are below 36.0.17, 37 through before 48.0.4, and 49.0.0/49.0.1; configured bounded streams and patched branches differ. The truth critic correction is supported. Apple official search context also lists login items/helper apps besides XPC; full-body access remains limited.",
+  "status": "Independent public documentation read, not code execution or completed reviser science",
+  "finding_refs": [
+    "T-P02",
+    "T-L01"
+  ]
+}

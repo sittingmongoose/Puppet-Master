@@ -1,0 +1,508 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "D-R1-P01-control",
+  "scope": "FULL",
+  "coverage_definition": "COMPLETE means every required axis/obligation and consequential declared source family was examined against supplied full science and focused independent governing research; it is not universal correctness.",
+  "axes": [
+    {
+      "axis_id": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "rationale": "All O01-O05 and N01-N03 are addressed in the complete final; API, locale and privacy choices are explicit owner inputs.",
+      "defect_ids": []
+    },
+    {
+      "axis_id": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "rationale": "Consequential standards, HTTP exceptions, source lifecycle and bounded history checked independently. C-N01 is nonmaterial.",
+      "defect_ids": [
+        "C-N01"
+      ]
+    },
+    {
+      "axis_id": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "rationale": "Useful alternatives include native/custom recovery, inline-summary/status vs checklist, early conflict notice vs save-time discovery, and conditional writes. USWDS history is properly cautioned.",
+      "defect_ids": [
+        "C-N01"
+      ]
+    },
+    {
+      "axis_id": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "rationale": "All released clauses and C-01-C-07 adjudicated. Current-result invalidation, visible pending and presentation comparisons are strengthened; uncertainty is preserved rather than fabricated.",
+      "defect_ids": []
+    },
+    {
+      "axis_id": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "rationale": "Snapshot correlation, authority, dirty text, focus, layout/direction, alternatives, conditions, owner choices and execution limits survive discovery/draft/criticism into final.",
+      "defect_ids": []
+    },
+    {
+      "axis_id": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "rationale": "Proposed state/focus/link/race/save/layout/AT-language checks have meaningful domains and oracles. Artifact mechanics are distinguished from unrun product tests.",
+      "defect_ids": []
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "topic": "Async validation/save/remote state",
+      "coverage": "COMPLETE",
+      "functional_judgment": "PASS",
+      "source_limit": null,
+      "candidate_locator": "final Recommended behavior/clarifications/state/alternatives/validation and plan dispositions"
+    },
+    {
+      "id": "O02",
+      "topic": "Keyboard/AT error discovery and return",
+      "coverage": "COMPLETE",
+      "functional_judgment": "PASS",
+      "source_limit": null,
+      "candidate_locator": "final Recommended behavior/clarifications/state/alternatives/validation and plan dispositions"
+    },
+    {
+      "id": "O03",
+      "topic": "Stale replies/interrupted saves/authority",
+      "coverage": "COMPLETE",
+      "functional_judgment": "PASS",
+      "source_limit": null,
+      "candidate_locator": "final Recommended behavior/clarifications/state/alternatives/validation and plan dispositions"
+    },
+    {
+      "id": "O04",
+      "topic": "Narrow/zoom/expanded labels/mixed direction",
+      "coverage": "COMPLETE",
+      "functional_judgment": "PASS",
+      "source_limit": null,
+      "candidate_locator": "final Recommended behavior/clarifications/state/alternatives/validation and plan dispositions"
+    },
+    {
+      "id": "O05",
+      "topic": "Draft preservation and presentation alternatives",
+      "coverage": "COMPLETE",
+      "functional_judgment": "PASS",
+      "source_limit": null,
+      "candidate_locator": "final Recommended behavior/clarifications/state/alternatives/validation and plan dispositions"
+    },
+    {
+      "id": "N01",
+      "topic": "No pointer requirement or color-only errors",
+      "coverage": "COMPLETE",
+      "functional_judgment": "PASS",
+      "source_limit": null,
+      "candidate_locator": "final Recommended behavior/clarifications/state/alternatives/validation and plan dispositions"
+    },
+    {
+      "id": "N02",
+      "topic": "No response focus theft or per-keystroke save announcements",
+      "coverage": "COMPLETE",
+      "functional_judgment": "PASS",
+      "source_limit": null,
+      "candidate_locator": "final Recommended behavior/clarifications/state/alternatives/validation and plan dispositions"
+    },
+    {
+      "id": "N03",
+      "topic": "No invented translation/device compatibility",
+      "coverage": "COMPLETE",
+      "functional_judgment": "PASS",
+      "source_limit": null,
+      "candidate_locator": "final Recommended behavior/clarifications/state/alternatives/validation and plan dispositions"
+    }
+  ],
+  "revealed_plan_dispositions": [
+    {
+      "clause": "P1.1",
+      "topic": "Local typing checks",
+      "coverage": "COMPLETE",
+      "observed_disposition": "REVISE",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P1.1"
+    },
+    {
+      "clause": "P1.2",
+      "topic": "Every-blur server checks",
+      "coverage": "COMPLETE",
+      "observed_disposition": "REVISE",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P1.2"
+    },
+    {
+      "clause": "P1.3",
+      "topic": "Inline messages",
+      "coverage": "COMPLETE",
+      "observed_disposition": "RETAIN_WITH_CONDITIONS",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P1.3"
+    },
+    {
+      "clause": "P1.4",
+      "topic": "Summary placement",
+      "coverage": "COMPLETE",
+      "observed_disposition": "REVISE",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P1.4"
+    },
+    {
+      "clause": "P1.5",
+      "topic": "Single live status",
+      "coverage": "COMPLETE",
+      "observed_disposition": "RETAIN_WITH_CONDITIONS",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P1.5"
+    },
+    {
+      "clause": "P1.6",
+      "topic": "Assumed sufficiency of fields/status",
+      "coverage": "COMPLETE",
+      "observed_disposition": "REJECT_ASSUMPTION",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P1.6"
+    },
+    {
+      "clause": "P2.1",
+      "topic": "Sequence-only freshness",
+      "coverage": "COMPLETE",
+      "observed_disposition": "REVISE",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P2.1"
+    },
+    {
+      "clause": "P2.2",
+      "topic": "Clean-field remote refresh",
+      "coverage": "COMPLETE",
+      "observed_disposition": "REVISE",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P2.2"
+    },
+    {
+      "clause": "P2.3",
+      "topic": "Submit first-invalid focus exception",
+      "coverage": "COMPLETE",
+      "observed_disposition": "REVISE_OWNER_CHOICE",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P2.3"
+    },
+    {
+      "clause": "P2.4",
+      "topic": "Successful save clears local text",
+      "coverage": "COMPLETE",
+      "observed_disposition": "REFINE_OR_REJECT_CLEARING",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P2.4"
+    },
+    {
+      "clause": "P2.5",
+      "topic": "Delayed checks/save-conflict/navigation",
+      "coverage": "COMPLETE",
+      "observed_disposition": "RETAIN_AND_EXPAND",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P2.5"
+    },
+    {
+      "clause": "P3.1",
+      "topic": "Flexible layout",
+      "coverage": "COMPLETE",
+      "observed_disposition": "RETAIN_AND_EXPAND",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P3.1"
+    },
+    {
+      "clause": "P3.2",
+      "topic": "Document direction alone",
+      "coverage": "COMPLETE",
+      "observed_disposition": "REJECT",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P3.2"
+    },
+    {
+      "clause": "P3.3",
+      "topic": "Notes/identifiers/summary-link alternatives",
+      "coverage": "COMPLETE",
+      "observed_disposition": "OWNER_CHOICE_WITH_MECHANISM_OPTIONS",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P3.3"
+    },
+    {
+      "clause": "P3.4",
+      "topic": "Validation versus durable save",
+      "coverage": "COMPLETE",
+      "observed_disposition": "RETAIN_AND_STRENGTHEN",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P3.4"
+    },
+    {
+      "clause": "P4.1",
+      "topic": "Evidence-based dispositions",
+      "coverage": "COMPLETE",
+      "observed_disposition": "RETAIN",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P4.1"
+    },
+    {
+      "clause": "P4.2",
+      "topic": "Named proposed checks",
+      "coverage": "COMPLETE",
+      "observed_disposition": "RETAIN_AND_EXPAND",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P4.2"
+    },
+    {
+      "clause": "P4.3",
+      "topic": "Executed versus proposed distinction",
+      "coverage": "COMPLETE",
+      "observed_disposition": "RETAIN",
+      "judgment": "PASS",
+      "candidate_locator": "final per-clause table P4.3"
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "criticism_id": "C-01",
+      "coverage": "COMPLETE",
+      "observed_disposition": "ACCEPT/AMEND",
+      "independent_assessment": "Displayed-result invalidation and safe suggestions carried; valid refinement.",
+      "primary_sources": [
+        "PS01",
+        "PS03"
+      ]
+    },
+    {
+      "criticism_id": "C-02",
+      "coverage": "COMPLETE",
+      "observed_disposition": "ACCEPT/AMEND",
+      "independent_assessment": "Visible pending persists; optional announcement no longer stands in for exposure.",
+      "primary_sources": [
+        "PS02"
+      ]
+    },
+    {
+      "criticism_id": "C-03",
+      "coverage": "COMPLETE",
+      "observed_disposition": "ACCEPT/AMEND",
+      "independent_assessment": "User-facing validation/conflict alternatives added.",
+      "primary_sources": [
+        "PS15",
+        "PS21",
+        "PS22",
+        "PS23"
+      ]
+    },
+    {
+      "criticism_id": "C-04",
+      "coverage": "COMPLETE",
+      "observed_disposition": "ACCEPT/BOUND",
+      "independent_assessment": "Cancellation expressly an engineering inference, not a cited guarantee.",
+      "primary_sources": []
+    },
+    {
+      "criticism_id": "C-05",
+      "coverage": "COMPLETE",
+      "observed_disposition": "RETAIN_UNCERTAINTY",
+      "independent_assessment": "Atomic API/reconciliation/persistence contract remains proposed; already-applied exception retained.",
+      "primary_sources": [
+        "PS14"
+      ]
+    },
+    {
+      "criticism_id": "C-06",
+      "coverage": "COMPLETE",
+      "observed_disposition": "RETAIN_UNCERTAINTY",
+      "independent_assessment": "Locale/identifier/Unicode/AT facts remain owner inputs; available direction research retained.",
+      "primary_sources": [
+        "PS10",
+        "PS13"
+      ]
+    },
+    {
+      "criticism_id": "C-07",
+      "coverage": "COMPLETE",
+      "observed_disposition": "ACCEPT/BOUND",
+      "independent_assessment": "Prototype failure and closure context retained; no present-library fix asserted.",
+      "primary_sources": [
+        "PS20"
+      ]
+    }
+  ],
+  "preservation": [
+    {
+      "topic": "async_identity",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "trace": "Discovery/draft correlation survives final with value/revision/server basis."
+    },
+    {
+      "topic": "authority_and_save",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "trace": "Server enforcement and check-versus-commit distinction survive; API guarantees remain proposals."
+    },
+    {
+      "topic": "unsaved_text",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "trace": "Rejection/conflict/uncertain-save and later edits preserve draft ownership."
+    },
+    {
+      "topic": "focus_and_errors",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "trace": "Persistent linked recovery and delayed-focus preservation survive; owner submit alternative stays available."
+    },
+    {
+      "topic": "presentation_alternatives",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "trace": "Both validation/announcement and remote-conflict alternatives remain meaningful."
+    },
+    {
+      "topic": "direction_layout",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "trace": "Wrapping, zoom/reflow and mixed text remain proposed with owner inputs."
+    },
+    {
+      "topic": "history_conditions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "trace": "Historical scopes, uncertainty and lifecycle caveats remain; no present compatibility inferred."
+    },
+    {
+      "topic": "validation_truth",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "trace": "Research/artifact operations remain separate from future component/API/AT/language checks."
+    }
+  ],
+  "source_families": [
+    {
+      "family": "accessibility_errors_focus",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "independent_sources": "PS01/PS03/PS04/PS05/PS15"
+    },
+    {
+      "family": "status_semantics_verbosity",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "independent_sources": "PS01/PS02"
+    },
+    {
+      "family": "layout_zoom_reflow",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "independent_sources": "PS01/PS09"
+    },
+    {
+      "family": "language_direction_mixed_content",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "independent_sources": "PS10"
+    },
+    {
+      "family": "client_server_authority",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "independent_sources": "PS12/PS13"
+    },
+    {
+      "family": "conditional_write_retry_reconciliation",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "independent_sources": "PS14"
+    },
+    {
+      "family": "maintained_patterns_code_callers_tests",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "independent_sources": "PS15/PS17/PS28"
+    },
+    {
+      "family": "issue_fix_release_context",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "independent_sources": "PS18/PS19/PS20"
+    },
+    {
+      "family": "presentation_alternatives_and_lifecycle",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "independent_sources": "PS15/PS21/PS22/PS23"
+    }
+  ],
+  "proposed_validation_domains": [
+    {
+      "domain": "deterministic_async_state_and_remote_races",
+      "proposal_assessment_coverage": "COMPLETE",
+      "future_execution_coverage": "UNASSESSED",
+      "reason": "Not executed; implementation/user matrix unavailable and not required by planning contract."
+    },
+    {
+      "domain": "keyboard_focus_selection_error_return",
+      "proposal_assessment_coverage": "COMPLETE",
+      "future_execution_coverage": "UNASSESSED",
+      "reason": "Not executed; implementation/user matrix unavailable and not required by planning contract."
+    },
+    {
+      "domain": "save_snapshot_and_unknown_outcome",
+      "proposal_assessment_coverage": "COMPLETE",
+      "future_execution_coverage": "UNASSESSED",
+      "reason": "Not executed; implementation/user matrix unavailable and not required by planning contract."
+    },
+    {
+      "domain": "conditional_or_disappearing_fields",
+      "proposal_assessment_coverage": "COMPLETE",
+      "future_execution_coverage": "UNASSESSED",
+      "reason": "Not executed; implementation/user matrix unavailable and not required by planning contract."
+    },
+    {
+      "domain": "narrow_zoom_label_expansion_bidi",
+      "proposal_assessment_coverage": "COMPLETE",
+      "future_execution_coverage": "UNASSESSED",
+      "reason": "Not executed; implementation/user matrix unavailable and not required by planning contract."
+    },
+    {
+      "domain": "browser_AT_announcements",
+      "proposal_assessment_coverage": "COMPLETE",
+      "future_execution_coverage": "UNASSESSED",
+      "reason": "Not executed; implementation/user matrix unavailable and not required by planning contract."
+    },
+    {
+      "domain": "translation_and_multilingual_usability",
+      "proposal_assessment_coverage": "COMPLETE",
+      "future_execution_coverage": "UNASSESSED",
+      "reason": "Not executed; implementation/user matrix unavailable and not required by planning contract."
+    }
+  ],
+  "available_partial_science": [
+    {
+      "stage": "investigator",
+      "coverage": "COMPLETE",
+      "judgment": "Contains completeness gaps refined by critic/final: displayed-result invalidation, visible pending and presentation comparison."
+    },
+    {
+      "stage": "critic",
+      "coverage": "COMPLETE",
+      "judgment": "All C-01-C-07 reviewed; material refinements/owner uncertainties are resolved in final."
+    }
+  ],
+  "scientific_remainder_unassessed": [],
+  "nonrequired_exhaustiveness_limits": [
+    "No exhaustive survey of every UI library, locale, device or source history.",
+    "No current application deployment or AT/translation compatibility test.",
+    "No independent reproduction of publisher historical issue reports or execution of publisher tests."
+  ]
+}

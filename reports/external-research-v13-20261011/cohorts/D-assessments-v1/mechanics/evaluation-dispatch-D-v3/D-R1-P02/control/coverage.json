@@ -1,0 +1,367 @@
+{
+  "schema": "er13.original_coverage.v1",
+  "arm_id": "D-R1-P02-control",
+  "scope": "FULL",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "evidence": "All O01–O05 and N01–N03 examined against complete final and original brief. Unknown product parameters remain explicit owner decisions.",
+      "defect_ids": []
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "evidence": "Consequential standards/API/default/version/history claims checked against independent primary context. See per-source families and defect records.",
+      "defect_ids": [
+        "D01"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "evidence": "Materially different maintained approaches and decoding/CMM/scaling/privacy/resource opportunities examined; no citation-count or universal-recall score.",
+      "defect_ids": [
+        "D01"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "evidence": "Every significant plan clause and every criticism examined; available primary context, rather than critic agreement, governs the judgment.",
+      "defect_ids": []
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "evidence": "Supported draft/discovery meaning traced into final by grouped obligation and criticism. Wording/ID duplication is not semantic preservation.",
+      "defect_ids": []
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "evidence": "Domains, expected observations and proposed oracles examined. Both arms claim desk research only; no future execution or deployment demanded.",
+      "defect_ids": []
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O01",
+      "text": "Non-destructive inspection, thumbnails/review copies and selective export",
+      "coverage": "COMPLETE",
+      "proposal_coverage": "SATISFIED",
+      "final_locator": "intake/output contract and role settings",
+      "consequential_source_defects": []
+    },
+    {
+      "id": "O02",
+      "text": "Orientation, color profiles, scaling, transparency and visual consistency",
+      "coverage": "COMPLETE",
+      "proposal_coverage": "SATISFIED",
+      "final_locator": "geometry/color/alpha and validation",
+      "consequential_source_defects": [
+        "D01"
+      ]
+    },
+    {
+      "id": "O03",
+      "text": "Derivative regeneration provenance across policy and decoder changes",
+      "coverage": "COMPLETE",
+      "proposal_coverage": "SATISFIED",
+      "final_locator": "provenance/recipe identity",
+      "consequential_source_defects": []
+    },
+    {
+      "id": "O04",
+      "text": "Distinct internal/external metadata policies and identifying-data limits",
+      "coverage": "COMPLETE",
+      "proposal_coverage": "SATISFIED",
+      "final_locator": "metadata roles and container audit",
+      "consequential_source_defects": []
+    },
+    {
+      "id": "O05",
+      "text": "Bounded resources, mixed batch failures, unsupported inputs and cancellation with alternatives",
+      "coverage": "COMPLETE",
+      "proposal_coverage": "SATISFIED",
+      "final_locator": "resources/batch/cancellation and alternatives",
+      "consequential_source_defects": []
+    }
+  ],
+  "negative_constraints": [
+    {
+      "id": "N01",
+      "text": "No originals overwrite or contributor upload",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED"
+    },
+    {
+      "id": "N02",
+      "text": "No one-field metadata-removal completeness claim",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED"
+    },
+    {
+      "id": "N03",
+      "text": "No dimension-only fidelity claim or plausible-image substitution after failed decode",
+      "coverage": "COMPLETE",
+      "judgment": "SATISFIED"
+    }
+  ],
+  "source_families": [
+    {
+      "family": "orientation, decoder ownership and geometry",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "E09",
+        "E11",
+        "E13",
+        "E17",
+        "E19",
+        "E20",
+        "E21"
+      ],
+      "limits": "No installed decoder or user images tested."
+    },
+    {
+      "family": "ICC, transfer/alpha, sample precision and output profiles",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "E01",
+        "E02",
+        "E10",
+        "E11",
+        "E14",
+        "E23",
+        "E25"
+      ],
+      "judgment": "FAIL",
+      "limits": "Finite source claims assessed; arbitrary CMM/profile correctness not proved."
+    },
+    {
+      "family": "JPEG/EXIF/XMP/IPTC and ICC disclosure structures",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "E03",
+        "E04",
+        "E15",
+        "E18",
+        "E20"
+      ],
+      "limits": "Core claimed mechanisms assessed through specifications and maintainer/code context; full Exif 3.1 normative tag schema not analyzed."
+    },
+    {
+      "family": "PNG current edition and metadata/privacy",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "E01"
+      ],
+      "limits": "Per-writer behavior proposed, not executed."
+    },
+    {
+      "family": "WebP/AVIF/MPF ancillary and auxiliary handling",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "E03",
+        "E05",
+        "E06"
+      ],
+      "limits": "Claims and support gates assessed; optional exact MPF/HEIF/MIAF implementation compliance unassessed."
+    },
+    {
+      "family": "resource enforcement and unsafe/partial decode",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "E08",
+        "E12",
+        "E15",
+        "E16",
+        "E17",
+        "E24"
+      ],
+      "limits": "OS caps and selected codec builds remain proposed."
+    },
+    {
+      "family": "publication, no-overwrite, cancellation and batch state",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "E26"
+      ],
+      "limits": "Atomic visibility and durability distinguished; filesystem/platform behavior not executed."
+    },
+    {
+      "family": "maintained alternatives, release and fixing history",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "E19",
+        "E20",
+        "E21",
+        "E22",
+        "E23",
+        "E24",
+        "E25",
+        "E28"
+      ],
+      "judgment": "FAIL",
+      "limits": "Historical reports are not prevalence or future build guarantees."
+    },
+    {
+      "family": "license notices and packaging applicability",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "E06",
+        "E16",
+        "E17",
+        "E28"
+      ],
+      "limits": "Notices inspected; no chosen package or transitive-license/deployment approval asserted."
+    }
+  ],
+  "plan_dispositions": [
+    {
+      "clause": "P1/C1",
+      "coverage": "COMPLETE",
+      "outcome": "revise order/representation with logical geometry and explicit color/alpha"
+    },
+    {
+      "clause": "P2/C2",
+      "coverage": "COMPLETE",
+      "outcome": "reject decoder-provenance omission; retain digest/preset invalidation"
+    },
+    {
+      "clause": "P3/C3",
+      "coverage": "COMPLETE",
+      "outcome": "revise denylist; keep role distinction; compare re-encode/fresh output/audit"
+    },
+    {
+      "clause": "P4/C4",
+      "coverage": "COMPLETE",
+      "outcome": "retain independent publish/success retention; strengthen caps and batch visibility"
+    },
+    {
+      "clause": "P4 validation/C5",
+      "coverage": "COMPLETE",
+      "outcome": "retain and expand proposed checks; no product execution claimed"
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "F-01",
+      "coverage": "COMPLETE",
+      "assessor_observed_disposition": "accept with amendment",
+      "final_witness": "final geometry/alpha contract: premultiply/filter/unpremultiply; PNG/CSS authority bounds retained",
+      "primary_sources": [
+        "E01",
+        "E27"
+      ]
+    },
+    {
+      "id": "F-02",
+      "coverage": "COMPLETE",
+      "assessor_observed_disposition": "accept",
+      "final_witness": "current PNG addition; 2003 source identity remains distinct",
+      "primary_sources": [
+        "E01"
+      ]
+    },
+    {
+      "id": "F-03",
+      "coverage": "COMPLETE",
+      "assessor_observed_disposition": "accept with scope condition",
+      "final_witness": "JPEG APPn evidence, selected-format inventory and encoded-byte audit",
+      "primary_sources": [
+        "E04"
+      ]
+    },
+    {
+      "id": "F-04",
+      "coverage": "COMPLETE",
+      "assessor_observed_disposition": "accept",
+      "final_witness": "filesystem atomicity qualification and commit-state fallback",
+      "primary_sources": [
+        "E26"
+      ]
+    },
+    {
+      "id": "F-05",
+      "coverage": "COMPLETE",
+      "assessor_observed_disposition": "accept with amendment",
+      "final_witness": "patch/revert verified as attributed historical reports; no current-release proof",
+      "primary_sources": [
+        "E22"
+      ]
+    }
+  ],
+  "preservation": [
+    {
+      "meaning": "Immutable local originals; selected derivatives and explicit failure",
+      "coverage": "COMPLETE",
+      "outcome": "RETAINED"
+    },
+    {
+      "meaning": "Orientation/profile/precision/alpha interplay and quality limits",
+      "coverage": "COMPLETE",
+      "outcome": "RETAINED; factual D01 separately"
+    },
+    {
+      "meaning": "Versioned recipe, dependency identity and finite replay promise",
+      "coverage": "COMPLETE",
+      "outcome": "RETAINED"
+    },
+    {
+      "meaning": "External/internal metadata roles, auxiliary structures and no universal sanitization",
+      "coverage": "COMPLETE",
+      "outcome": "RETAINED"
+    },
+    {
+      "meaning": "Layered limits, mixed outcomes, cancel cleanup and proposed witnesses",
+      "coverage": "COMPLETE",
+      "outcome": "RETAINED"
+    },
+    {
+      "meaning": "Specific ancillary history and optional mechanisms",
+      "coverage": "COMPLETE",
+      "outcome": "History D01 remains deficient"
+    }
+  ],
+  "unassessed_expansion_domains": [
+    {
+      "domain": "Every Exif 3.1 tag and serialization exception",
+      "coverage": "UNASSESSED",
+      "consequential_to_this_claimed_proposal": false,
+      "reason": "Version/index confirmed; full PDF delivery obtained but extraction unavailable. No normative tag-schema completeness claim accepted."
+    },
+    {
+      "domain": "Full MPF 2026 and HEIF/MIAF normative implementation certification",
+      "coverage": "UNASSESSED",
+      "consequential_to_this_claimed_proposal": false,
+      "reason": "Optional formats remain support gates, not assumed capability."
+    },
+    {
+      "domain": "Installed candidate codecs, actual contributor corpus and display perceptual accuracy",
+      "coverage": "UNASSESSED",
+      "consequential_to_this_claimed_proposal": false,
+      "reason": "Research proposal; all execution explicitly proposed."
+    },
+    {
+      "domain": "Cold pipeline/product-wide effectiveness, all billing and full behavior provenance",
+      "coverage": "UNASSESSED",
+      "consequential_to_this_claimed_proposal": false,
+      "reason": "No such inference from this finite FULL source assessment or saved capture."
+    }
+  ],
+  "coverage_definition": "COMPLETE means every material stated obligation and consequential claim family was assessed as a finite research planning proposal, not universal format or software correctness.",
+  "early_failure_stop": false
+}

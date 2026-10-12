@@ -1,0 +1,227 @@
+{
+  "schema": "er13.original-primary-research.v1",
+  "arm_id": "D-R1-P01-control",
+  "lookup_shared_across_matched_arms": true,
+  "independent_lookup_window_utc": [
+    "2026-10-12T04:59:39Z",
+    "2026-10-12T05:17:23Z"
+  ],
+  "coverage_scope": "All consequential declared source families; focused adjacent code/tests/history as needed. Not all possible libraries, releases or user agents.",
+  "sources": [
+    {
+      "id": "PS01",
+      "exact_url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "version_or_context": "WCAG 2.2 Recommendation, 12 December 2024",
+      "locator": "1.4.1, 1.4.4, 1.4.10, 2.1.1, 2.4.3, 3.3.1, 3.3.3, 4.1.3",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "Text errors, keyboard access, non-color signals and status semantics apply. Known suggestions have a security/purpose exception. Ordinary reflow uses 320 CSS px; 200% text resizing is separate.",
+      "applicability_limit": "Normative criteria; neither one focus policy nor universal AT compatibility follows.",
+      "source_notice": "W3C/WAI authors; W3C document-use notices remain at the linked primary page."
+    },
+    {
+      "id": "PS02",
+      "exact_url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html",
+      "version_or_context": "Rolling WCAG 2.2 Understanding",
+      "locator": "Intent; modification/removal; Other uses of live regions or alerts",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "Waiting/results without context change need status semantics. The page explicitly warns about excessive chatter and recommends user testing; removing pending text alone can be insufficient.",
+      "applicability_limit": "Informative interpretation, not an obligation to generate a message for every change.",
+      "source_notice": "W3C/WAI authors; W3C document-use notices remain at the linked primary page."
+    },
+    {
+      "id": "PS03",
+      "exact_url": "https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA21.html",
+      "version_or_context": "Rolling WCAG 2.2 sufficient technique",
+      "locator": "Description; Example 2; Tests",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "Detected failed fields can use aria-invalid with associated text. Do not flag invalid before checking; examples join aria-invalid and aria-describedby.",
+      "applicability_limit": "One technique, not the sole conforming implementation or device proof.",
+      "source_notice": "W3C/WAI authors; W3C document-use notices remain at the linked primary page."
+    },
+    {
+      "id": "PS04",
+      "exact_url": "https://www.w3.org/WAI/tutorials/forms/notifications/",
+      "version_or_context": "Rolling WAI Forms Tutorial",
+      "locator": "Listing errors; After submit; During typing; On focus change",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "Offers linked error lists, field associations, first-invalid focus after erroneous submit, and conditional typing/blur feedback. The typing example is local, not async freshness evidence.",
+      "applicability_limit": "First-invalid focus is expressly suggested, not normatively mandated. No late-response focus policy is established.",
+      "source_notice": "W3C/WAI authors; W3C document-use notices remain at the linked primary page."
+    },
+    {
+      "id": "PS05",
+      "exact_url": "https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html",
+      "version_or_context": "Rolling WCAG 2.2 Understanding",
+      "locator": "Input-error definition; User agent native HTML form validation",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "Native error UI can expose one error at a time, be generic or transient, and fail to enlarge with content. Input-error scope concerns supplied values.",
+      "applicability_limit": "User-agent limitations are conditional; not a blanket prohibition of native validation.",
+      "source_notice": "W3C/WAI authors; W3C document-use notices remain at the linked primary page."
+    },
+    {
+      "id": "PS09",
+      "exact_url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html",
+      "version_or_context": "Rolling WCAG 2.2 Understanding",
+      "locator": "SC; viewport equivalence; Resize Text overlap; user-agent conditions",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "320 CSS px is equivalent to 1280 CSS px at 400% zoom. Two-dimensional exceptions are bounded; text enlargement and reflow are separate checks.",
+      "applicability_limit": "Tests below the required viewport or on incapable user agents need contextual interpretation.",
+      "source_notice": "W3C/WAI authors; W3C document-use notices remain at the linked primary page."
+    },
+    {
+      "id": "PS10",
+      "exact_url": "https://html.spec.whatwg.org/multipage/dom.html#the-dir-attribute",
+      "version_or_context": "HTML Living Standard; rolling",
+      "locator": "3.2.6.2 language; 3.2.6.4 dir and auto directionality",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "Language and direction differ. Auto uses first-strong direction; textarea/pre apply it per paragraph. Explicit direction and isolation address mixed content.",
+      "applicability_limit": "Auto is a last resort for truly unknown direction; locale quality is outside this algorithm.",
+      "source_notice": "WHATWG HTML contributors; source notices remain at the linked standard."
+    },
+    {
+      "id": "PS12",
+      "exact_url": "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#security-7",
+      "version_or_context": "HTML Living Standard; rolling",
+      "locator": "4.10.21 Constraints; 4.10.21.4 Security",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "Client constraint checks improve UX and can be bypassed; server validation remains required.",
+      "applicability_limit": "Does not specify portal policy or async response identity.",
+      "source_notice": "WHATWG HTML contributors; source notices remain at the linked standard."
+    },
+    {
+      "id": "PS13",
+      "exact_url": "https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html",
+      "version_or_context": "Maintained OWASP Cheat Sheet; rolling",
+      "locator": "Strategies; Free-form Unicode Text; Common Pitfalls",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "Preserve legitimate scripts/punctuation; apply consistent normalization only when needed. Repeat checks server-side.",
+      "applicability_limit": "Domain limits remain owner inputs; normalization is not sanitization.",
+      "source_notice": "Cheat Sheets Series Team; CC BY-SA 4.0 notice at source."
+    },
+    {
+      "id": "PS14",
+      "exact_url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "version_or_context": "RFC 9110, June 2022",
+      "locator": "8.8.3; 9.2.2; 13.1.1; 13.2.1-2; 15.5.13",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "If-Match uses strong comparison to prevent lost updates. False conditions prevent application; already-applied operations can receive success. ETags do not supply temporal ordering.",
+      "applicability_limit": "The origin must enforce preconditions. Non-idempotent replay and operation reconciliation require an API contract.",
+      "source_notice": "Owner public documentation/issue; no source corpus reproduced."
+    },
+    {
+      "id": "PS15",
+      "exact_url": "https://design-system.service.gov.uk/components/error-summary/",
+      "version_or_context": "Rolling GOV.UK Design System; history through v6.2.0",
+      "locator": "How it works; links; Recent changes",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "Summary/inline wording and field links match. Conventional summaries take focus. The v4.4.0 nested alert change addressed a JAWS reading issue.",
+      "applicability_limit": "Adaptation for delayed results is necessary; history does not prove current portal compatibility.",
+      "source_notice": "Owner public documentation/issue; no source corpus reproduced."
+    },
+    {
+      "id": "PS17",
+      "exact_url": "https://github.com/alphagov/govuk-frontend/releases/tag/v6.5.1",
+      "version_or_context": "v6.5.1, release efdc06c, 14 September 2026",
+      "locator": "Release header; Fixes",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "Release note changes a service-navigation example, not error-summary behavior.",
+      "applicability_limit": "A release label alone cannot establish component or AT correctness.",
+      "source_notice": "Owner public documentation/issue; no source corpus reproduced."
+    },
+    {
+      "id": "PS18",
+      "exact_url": "https://github.com/alphagov/govuk-frontend/issues/1410",
+      "version_or_context": "Historical issue; opened 31 May 2019",
+      "locator": "Cause; linked repair; October retest",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "The legacy example lacked expected Elements JavaScript. DAC retest dated 7 October 2019 was reported fixed on 8 October.",
+      "applicability_limit": "Assembly-specific history, not a current library defect.",
+      "source_notice": "Owner public documentation/issue; no source corpus reproduced."
+    },
+    {
+      "id": "PS19",
+      "exact_url": "https://github.com/alphagov/govuk-frontend/pull/1459",
+      "version_or_context": "Merged 18 June 2019",
+      "locator": "Discussion; legacy full-page repair",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "Repairs legacy summary autofocus/example assembly and is linked from issue 1410.",
+      "applicability_limit": "No asynchronous SPA or present-device compatibility proof.",
+      "source_notice": "Owner public documentation/issue; no source corpus reproduced."
+    },
+    {
+      "id": "PS20",
+      "exact_url": "https://github.com/alphagov/govuk-design-system/issues/2799",
+      "version_or_context": "Historical issue; opened 24 May 2023; closed 16 August 2023",
+      "locator": "Code; July comments; August closure",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "Prototype summary href and input ID differed. Authors confirmed prototype scope; closure says guidance was sufficient and cross-checking inadequate.",
+      "applicability_limit": "No verified current component defect or release fix follows from closure.",
+      "source_notice": "Owner public documentation/issue; no source corpus reproduced."
+    },
+    {
+      "id": "PS21",
+      "exact_url": "https://designsystem.digital.gov/components/validation/",
+      "version_or_context": "Rolling docs; download v3.14.0; support ending after v3.12.0",
+      "locator": "About; Known issues; Latest updates",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "Live checklist pattern is deprecated/unsupported beyond v3.12.0. Docs identify usability/accessibility issues despite a newer site download.",
+      "applicability_limit": "An alternative/history lead, not a maintained recommended choice for adoption.",
+      "source_notice": "Owner public documentation/issue; no source corpus reproduced."
+    },
+    {
+      "id": "PS22",
+      "exact_url": "https://github.com/uswds/uswds/issues/5642",
+      "version_or_context": "Opened 28 November 2023; closed not planned",
+      "locator": "Observations; Research method; October 2024 disposition",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "Five prototype participants missed validation status changes and expected inline or submit errors.",
+      "applicability_limit": "Small bounded study; no universal preference or AT conclusion.",
+      "source_notice": "Owner public documentation/issue; no source corpus reproduced."
+    },
+    {
+      "id": "PS23",
+      "exact_url": "https://github.com/uswds/uswds/issues/5750",
+      "version_or_context": "Opened 25 October 2023; closed",
+      "locator": "Observations; Research method",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "Four participants were confused; research method describes five visually impaired participants.",
+      "applicability_limit": "Four is the confused subset, not the full study size; independence from issue 5642 is not established.",
+      "source_notice": "Owner public documentation/issue; no source corpus reproduced."
+    },
+    {
+      "id": "PS28",
+      "exact_url": "https://github.com/alphagov/govuk-frontend/blob/v6.5.1/packages/govuk-frontend/src/govuk/components/error-summary/error-summary.mjs",
+      "version_or_context": "GOV.UK Frontend v6.5.1",
+      "locator": "Constructor; focusTarget; defaults/schema; paired template and tests",
+      "coverage": "COMPLETE",
+      "observed_operation": "Independent primary page/code/test read; no product execution",
+      "independent_observation": "disableAutoFocus defaults false but can disable initialization focus. Links resolve a real target and scroll associated label/legend. Template uses a nested alert.",
+      "applicability_limit": "Code and test assertions were read, not run. Disabling focus alone does not suppress alert announcements.",
+      "source_notice": "MIT; 2017 Crown Copyright (Government Digital Service). License: https://github.com/alphagov/govuk-frontend/blob/v6.5.1/LICENSE.txt"
+    }
+  ],
+  "additional_exact_code_links": [
+    "https://raw.githubusercontent.com/alphagov/govuk-frontend/v6.5.1/packages/govuk-frontend/src/govuk/components/error-summary/template.njk",
+    "https://raw.githubusercontent.com/alphagov/govuk-frontend/v6.5.1/packages/govuk-frontend/src/govuk/components/error-summary/error-summary.puppeteer.test.js",
+    "https://raw.githubusercontent.com/alphagov/govuk-frontend/v6.5.1/packages/govuk-frontend/src/govuk/components/error-summary/template.test.js"
+  ],
+  "per_page_access_time_limitation": "Window is the observed evaluation research interval; source-check evidence records exact direct-fetch times for disputed passages. Web results do not expose independent per-page server timestamps."
+}

@@ -1,0 +1,33 @@
+{
+  "pins": [
+    {
+      "original_locator": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R2-P02-output-verification.json",
+      "sha256": "2050db26c5a134c3145c3b1b706685b7b0661615d314a880237437ed522d86d2",
+      "bytes": 31635,
+      "retention": "Metadata pin only, not another case/rubric body or full selection corpus"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/d-rubric-mechanical-authorization-v1.json",
+      "sha256": "760e907ca7028ce6a2e21a6225e409a2c151ba6bfdd9d7d1f45e1167ed73e675",
+      "bytes": 1983,
+      "retention": "Metadata pin only, not another case/rubric body or full selection corpus"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/d-selection-lock-v1.json",
+      "sha256": "440170c9bc813a76de2622837863c6531cf320f8767e8fab7eb34ed5e4cef9b6",
+      "bytes": 14095,
+      "retention": "Metadata pin only, not another case/rubric body or full selection corpus"
+    },
+    {
+      "original_locator": "ER13_RUNTIME/state/account-routing-amendment-v1.json",
+      "sha256": "7094c3ee0b12087616f70226b9f00906b41ccfdd2f5747e6ef869c37627ccb18",
+      "bytes": 1884,
+      "retention": "Metadata pin only, not another case/rubric body or full selection corpus"
+    }
+  ],
+  "routing_epoch": 2,
+  "routing_amendment_original_sha256": "7094c3ee0b12087616f70226b9f00906b41ccfdd2f5747e6ef869c37627ccb18",
+  "condition": "USER_AUTHORIZED_ROUTING_AMENDMENT7094; epoch1 historical original remains epoch1, amendment does not replace it",
+  "shared_selection_and_authorization_bodies_copied": false,
+  "other_pair_config_or_rubric_body_reads": 0
+}

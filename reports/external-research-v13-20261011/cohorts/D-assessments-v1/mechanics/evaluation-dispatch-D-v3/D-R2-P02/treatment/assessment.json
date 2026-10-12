@@ -1,0 +1,754 @@
+{
+  "schema": "er13.immutable_original_assessment.v1",
+  "block_id": "D-R2-P02",
+  "case_id": "D-P06",
+  "original": true,
+  "adjudication": false,
+  "evaluation_started_utc": "2026-10-12T05:05:18Z",
+  "authored_utc": "2026-10-12T05:19:33.712725+00:00",
+  "arms": [
+    {
+      "arm_id": "D-R2-P02-treatment",
+      "scope": "FULL",
+      "source_judgment": {
+        "status": "UNASSESSED",
+        "domain": "complete_final",
+        "material_defect_ids": [],
+        "reason": "No frozen final exists; available science assessed separately.",
+        "coverage_qualification": "All six complete-final axes UNASSESSED."
+      },
+      "source_assessment": {
+        "status": "UNASSESSED",
+        "domain": "complete_final",
+        "material_defect_ids": [],
+        "reason": "No frozen final exists; available science assessed separately.",
+        "coverage_qualification": "All six complete-final axes UNASSESSED."
+      },
+      "coverage": {
+        "schema": "er13.original_coverage.v1",
+        "arm_id": "D-R2-P02-treatment",
+        "complete_final": {
+          "axes": [
+            {
+              "axis": 1,
+              "name": "Material original obligations and negative constraints",
+              "coverage": "UNASSESSED",
+              "judgment": "UNASSESSED",
+              "reason": "Final absent; no complete-final judgment can be supplied."
+            },
+            {
+              "axis": 2,
+              "name": "Consequential source facts, governing conditions, versions and applicability",
+              "coverage": "UNASSESSED",
+              "judgment": "UNASSESSED",
+              "reason": "Final absent; no complete-final judgment can be supplied."
+            },
+            {
+              "axis": 3,
+              "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+              "coverage": "UNASSESSED",
+              "judgment": "UNASSESSED",
+              "reason": "Final absent; no complete-final judgment can be supplied."
+            },
+            {
+              "axis": 4,
+              "name": "Valid corrections, rejections and exact plan dispositions",
+              "coverage": "UNASSESSED",
+              "judgment": "UNASSESSED",
+              "reason": "Final absent; no complete-final judgment can be supplied."
+            },
+            {
+              "axis": 5,
+              "name": "Supported meaning retained from draft and criticism into the complete final",
+              "coverage": "UNASSESSED",
+              "judgment": "UNASSESSED",
+              "reason": "Final absent; no complete-final judgment can be supplied."
+            },
+            {
+              "axis": 6,
+              "name": "Meaningful proposed validation, with executed work distinguished",
+              "coverage": "UNASSESSED",
+              "judgment": "UNASSESSED",
+              "reason": "Final absent; no complete-final judgment can be supplied."
+            }
+          ],
+          "obligations_and_negative_constraints": [
+            {
+              "id": "O01",
+              "coverage": "UNASSESSED",
+              "observation": "Missing final.",
+              "result": "UNASSESSED"
+            },
+            {
+              "id": "O02",
+              "coverage": "UNASSESSED",
+              "observation": "Missing final.",
+              "result": "UNASSESSED"
+            },
+            {
+              "id": "O03",
+              "coverage": "UNASSESSED",
+              "observation": "Missing final.",
+              "result": "UNASSESSED"
+            },
+            {
+              "id": "O04",
+              "coverage": "UNASSESSED",
+              "observation": "Missing final.",
+              "result": "UNASSESSED"
+            },
+            {
+              "id": "O05",
+              "coverage": "UNASSESSED",
+              "observation": "Missing final.",
+              "result": "UNASSESSED"
+            },
+            {
+              "id": "N01",
+              "coverage": "UNASSESSED",
+              "observation": "Missing final.",
+              "result": "UNASSESSED"
+            },
+            {
+              "id": "N02",
+              "coverage": "UNASSESSED",
+              "observation": "Missing final.",
+              "result": "UNASSESSED"
+            },
+            {
+              "id": "N03",
+              "coverage": "UNASSESSED",
+              "observation": "Missing final.",
+              "result": "UNASSESSED"
+            }
+          ],
+          "additional_obligations": [
+            {
+              "id": "editing_responsiveness",
+              "coverage": "UNASSESSED"
+            },
+            {
+              "id": "malformed_inputs_output",
+              "coverage": "UNASSESSED"
+            },
+            {
+              "id": "all_six_named_plan_dispositions",
+              "coverage": "UNASSESSED"
+            },
+            {
+              "id": "all_required_validation_families",
+              "coverage": "UNASSESSED"
+            },
+            {
+              "id": "actual_product_deployment",
+              "coverage": "UNASSESSED",
+              "required": false,
+              "reason": "Outside the planning deliverable; neither demanded nor inferred."
+            }
+          ],
+          "source_families": [
+            {
+              "family": "extension_interfaces",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P27",
+                "P28",
+                "P29",
+                "P30",
+                "P31"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "browser_rendering",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P21",
+                "P29"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "wasmtime_controls",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P01",
+                "P02",
+                "P03"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "runtime_history",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P13",
+                "P14",
+                "P15",
+                "P16",
+                "P17",
+                "P18",
+                "P19",
+                "P20"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "wasi_filesystem_capabilities",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P08",
+                "P17"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "nested_workers_native_os",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P22",
+                "P24",
+                "P37",
+                "P38",
+                "P39",
+                "P40",
+                "P41",
+                "P42"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "deno_permissions",
+              "coverage": "UNASSESSED",
+              "primary_ids": [],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "storage_search",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P34",
+                "P35",
+                "P36"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "upstream_tests",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P04",
+                "P05",
+                "P06",
+                "P07",
+                "P43"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            },
+            {
+              "family": "licenses",
+              "coverage": "UNASSESSED",
+              "primary_ids": [
+                "P44",
+                "P45"
+              ],
+              "scope": "complete_final",
+              "limit": "Missing final."
+            }
+          ]
+        },
+        "assessment_is_finite": true,
+        "available_partial_science": {
+          "axes": [
+            {
+              "axis": 1,
+              "coverage": "PARTIAL",
+              "reason": "Available proposal meets core boundary/state/provenance/cleanup intent; repository/test research gap remains."
+            },
+            {
+              "axis": 2,
+              "coverage": "PARTIAL",
+              "reason": "Principal runtime/history/storage/rendering facts checked; no-stdio correction supported; OS/Apple depth limited."
+            },
+            {
+              "axis": 3,
+              "coverage": "PARTIAL",
+              "reason": "Useful platform and search mechanisms; concrete test-case discovery missing."
+            },
+            {
+              "axis": 4,
+              "coverage": "PARTIAL",
+              "reason": "All available plan dispositions and all six truth-critic findings examined; no reviser disposition exists."
+            },
+            {
+              "axis": 5,
+              "coverage": "UNASSESSED",
+              "reason": "No final; no investigator/critic-to-final preservation possible."
+            },
+            {
+              "axis": 6,
+              "coverage": "PARTIAL",
+              "reason": "Eight proposed witness groups meaningful; helper/JSON observations distinct from product execution."
+            }
+          ],
+          "obligations_and_negative_constraints": [
+            {
+              "id": "O01",
+              "coverage": "PARTIAL",
+              "observation": "Opaque job-scoped read capability, validated declarative output, isolated richer option, unrelated-notebook denial."
+            },
+            {
+              "id": "O02",
+              "coverage": "PARTIAL",
+              "observation": "Editable original plus failed/timed-out/stale/disabled/unavailable/version state; upgrade/re-enable/uninstall behavior."
+            },
+            {
+              "id": "O03",
+              "coverage": "PARTIAL",
+              "observation": "Separate derived search namespace/record, source and producer identity, no partial-current publication."
+            },
+            {
+              "id": "O04",
+              "coverage": "PARTIAL",
+              "observation": "Permission/resource/nested-worker/host limitation comparisons; C-D01 in control, partial source/test gaps in treatment."
+            },
+            {
+              "id": "O05",
+              "coverage": "PARTIAL",
+              "observation": "Host ownership registry, private job roots, references/leases/generations, no-follow identity, crash reconciliation."
+            },
+            {
+              "id": "N01",
+              "coverage": "PARTIAL",
+              "observation": "No broad notebook grant or ambient-privilege markup; proposal invariant distinguished from actual enforcement."
+            },
+            {
+              "id": "N02",
+              "coverage": "PARTIAL",
+              "observation": "Path suffix or child exit rejected as cleanup ownership proof."
+            },
+            {
+              "id": "N03",
+              "coverage": "PARTIAL",
+              "observation": "Extracted text never substituted for authored note content."
+            }
+          ],
+          "source_families": [
+            {
+              "family": "extension_interfaces",
+              "coverage": "COMPLETE",
+              "primary_ids": [
+                "P27",
+                "P28",
+                "P29",
+                "P30",
+                "P31"
+              ],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "browser_rendering",
+              "coverage": "COMPLETE",
+              "primary_ids": [
+                "P21",
+                "P29"
+              ],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "wasmtime_controls",
+              "coverage": "COMPLETE",
+              "primary_ids": [
+                "P01",
+                "P02",
+                "P03"
+              ],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "runtime_history",
+              "coverage": "COMPLETE",
+              "primary_ids": [
+                "P13",
+                "P14",
+                "P15",
+                "P16",
+                "P17",
+                "P18",
+                "P19",
+                "P20"
+              ],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "wasi_filesystem_capabilities",
+              "coverage": "COMPLETE",
+              "primary_ids": [
+                "P08",
+                "P17"
+              ],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "nested_workers_native_os",
+              "coverage": "PARTIAL",
+              "primary_ids": [
+                "P22",
+                "P24",
+                "P37",
+                "P38",
+                "P39",
+                "P40",
+                "P41",
+                "P42"
+              ],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "deno_permissions",
+              "coverage": "UNASSESSED",
+              "primary_ids": [],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "storage_search",
+              "coverage": "COMPLETE",
+              "primary_ids": [
+                "P34",
+                "P35",
+                "P36"
+              ],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "upstream_tests",
+              "coverage": "PARTIAL",
+              "primary_ids": [
+                "P04",
+                "P05",
+                "P06",
+                "P07",
+                "P43"
+              ],
+              "scope": "available_partial_science"
+            },
+            {
+              "family": "licenses",
+              "coverage": "COMPLETE",
+              "primary_ids": [
+                "P44",
+                "P45"
+              ],
+              "scope": "available_partial_science"
+            }
+          ],
+          "critic_dispositions_to_final": "UNASSESSED",
+          "discovery_to_draft_preservation": "PARTIAL; no material loss found in available prose, full final chain absent"
+        }
+      },
+      "defects": [
+        {
+          "id": "T-M01",
+          "classification": "delivery/lifecycle failure",
+          "scope": "complete_final",
+          "axes": [],
+          "finding": "Breadth critic interrupted with no critique, source map or native terminal capture. Reviser was never launched; final missing.",
+          "evidence": "Exact frozen failure record SHA256 cda6255f2ed7c10684db51b4f75c5060cc218113125891d0a163b8130755b500",
+          "materiality": "Not a source FAIL for a fabricated final. Complete-final source judgment and all six axes remain UNASSESSED."
+        },
+        {
+          "id": "T-P01",
+          "classification": "material incomplete",
+          "scope": "available_partial_science",
+          "axes": [
+            1,
+            2,
+            3
+          ],
+          "obligations": [
+            "O04"
+          ],
+          "source_family": "upstream_tests",
+          "candidate_locator": "discovery Public implementation/test...; draft validation/regression; source WASMTIME-TESTS",
+          "finding": "The available investigator identifies a test guide, commands and directories, but does not inspect a concrete upstream test case and oracle. The brief explicitly requires relevant repository paths and tests.",
+          "primary": [
+            "P43",
+            "P04",
+            "P05"
+          ],
+          "materiality": "Planning tests and source guidance do not supply concrete upstream test discovery. No future software execution is required. This finding is limited to available partial science; no final was assessed."
+        },
+        {
+          "id": "T-P02",
+          "classification": "conditional source gap confirmed",
+          "scope": "available_partial_science",
+          "axes": [
+            2,
+            4
+          ],
+          "obligations": [
+            "O04"
+          ],
+          "source_family": "runtime_history",
+          "candidate_locator": "draft WASM comparison and WASMTIME-RELEASE; truth critique finding 1",
+          "finding": "The investigator general resource-budget advice does not carry the release-listed no-stdio sink condition into its runtime treatment. The truth critic correctly supplies the precise conditional defect and bounded-stream workaround.",
+          "primary": [
+            "P14",
+            "P18",
+            "P19"
+          ],
+          "materiality": "Useful supported correction, not proof that all current Wasmtime embeddings are vulnerable. Its disposition and preservation into a complete final are UNASSESSED."
+        },
+        {
+          "id": "T-L01",
+          "classification": "nonmaterial conditional overstatement",
+          "scope": "available_partial_science",
+          "axes": [
+            2,
+            4
+          ],
+          "obligations": [
+            "O04"
+          ],
+          "source_family": "native_os",
+          "candidate_locator": "draft temp-cleanup clause and source APPLE-PROCESS: different entitlements require XPC",
+          "finding": "XPC is a documented and recommended route, but the wording is too exclusive when generalized beyond an ordinary inherited child. Current Apple guidance also names login items and helper apps.",
+          "primary": [
+            "P41",
+            "P42"
+          ],
+          "materiality": "The core warning about ordinary child inheritance is supported. No broad architectural reversal or complete-final failure inferred.",
+          "limits": "Full current Apple API context unavailable; no selected launch recipe assessed."
+        }
+      ],
+      "delivery": {
+        "status": "MISSING_FINAL",
+        "final_path": null,
+        "final_sha256": null,
+        "missing_required_stage_outputs": [
+          "breadth critique.md",
+          "breadth source-map.json",
+          "breadth native-goal-terminal.json",
+          "reviser/final.md"
+        ],
+        "original_failures_preserved": true
+      },
+      "time_eligibility": {
+        "status": "INELIGIBLE_COMPLETE_DELIVERY_MISSING",
+        "t0_utc": "2026-10-12T04:18:11.150Z",
+        "full_deadline_utc": "2026-10-12T05:18:11.150Z",
+        "full_maximum_seconds": 3600,
+        "original_clocks_unchanged": true,
+        "stages": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T04:18:12.423Z",
+            "requested_at_utc": "2026-10-12T04:18:12.423Z",
+            "dispatch_return_captured_at_utc": "2026-10-12T04:18:13.812Z",
+            "stage_deadline_utc": "2026-10-12T04:48:12.423Z",
+            "native_birth_receipt_utc": "2026-10-12T04:18:29+00:00",
+            "native_terminal_receipt_utc": "2026-10-12T04:36:35+00:00",
+            "reported_native_elapsed_seconds": 1085,
+            "terminal_within_stage_cap": true,
+            "t3_observed_terminal_status": "completed",
+            "pending_children_observed": false,
+            "birth_objective_custody_matches": true,
+            "direct_terminal_custody_qualified": true,
+            "physical_native_task_linkage": "UNKNOWN",
+            "actual_provider_start_utc": null,
+            "actual_provider_finish_utc": null,
+            "actual_scientific_file_finish_utc": null
+          },
+          {
+            "stage": "critic-truth",
+            "prepared_at_utc": "2026-10-12T04:37:31.872Z",
+            "requested_at_utc": "2026-10-12T04:37:31.872Z",
+            "dispatch_return_captured_at_utc": "2026-10-12T04:37:33.435Z",
+            "stage_deadline_utc": "2026-10-12T04:43:31.872Z",
+            "native_birth_receipt_utc": "2026-10-12T04:37:44+00:00",
+            "native_terminal_receipt_utc": "2026-10-12T04:43:03+00:00",
+            "reported_native_elapsed_seconds": 319,
+            "terminal_within_stage_cap": true,
+            "t3_observed_terminal_status": "completed",
+            "pending_children_observed": false,
+            "birth_objective_custody_matches": true,
+            "direct_terminal_custody_qualified": true,
+            "physical_native_task_linkage": "UNKNOWN",
+            "actual_provider_start_utc": null,
+            "actual_provider_finish_utc": null,
+            "actual_scientific_file_finish_utc": null
+          },
+          {
+            "stage": "critic-breadth",
+            "prepared_at_utc": "2026-10-12T04:37:29.134Z",
+            "requested_at_utc": "2026-10-12T04:37:29.134Z",
+            "dispatch_return_captured_at_utc": "2026-10-12T04:37:30.331Z",
+            "stage_deadline_utc": "2026-10-12T04:43:29.134Z",
+            "native_birth_receipt_utc": "2026-10-12T04:37:50+00:00",
+            "native_terminal_receipt_utc": null,
+            "reported_native_elapsed_seconds": null,
+            "terminal_within_stage_cap": null,
+            "t3_observed_terminal_status": "interrupted",
+            "pending_children_observed": false,
+            "birth_objective_custody_matches": false,
+            "direct_terminal_custody_qualified": false,
+            "physical_native_task_linkage": "UNKNOWN",
+            "actual_provider_start_utc": null,
+            "actual_provider_finish_utc": null,
+            "actual_scientific_file_finish_utc": null
+          }
+        ],
+        "last_complete_scientific_artifact_time_utc": null,
+        "actual_task_finish_time_utc": null,
+        "packet_frozen_at_utc": "2026-10-12T05:04:49.206512+00:00",
+        "limits": "Native updatedAt and custody freezes are observations/proxies, not independently linked provider finish or genuine scientific-file finish. Missing breadth terminal cannot be assigned zero duration; interruption is not relabeled as a late completed stage."
+      },
+      "method_compliance": {
+        "status": "INCOMPLETE",
+        "observed_topology": [
+          "investigator",
+          "parallel truth and breadth critics; breadth interrupted",
+          "reviser unlaunched"
+        ],
+        "discovery_before_reveal_hashes_match": true,
+        "source_identity_preservation": "Inherited source identities retained field-for-field; added observations separate.",
+        "no_extra_children_in_terminal_observation": true,
+        "one_goal_receipt_per_launched_stage": true,
+        "terminal_capture_completion": "Missing breadth completion; failure retained",
+        "all_behavior_independently_proved": false,
+        "private_route_epoch_change": "None recorded for these started stages",
+        "raw_transcript_or_native_session_linkage_available": false,
+        "limitations": "Frozen prompts/receipts cannot prove every source-access order, absence of forbidden reads, physical routing identity or compliance. No rescue or replacement performed."
+      },
+      "native_identity_provenance": {
+        "status": "UNKNOWN_DIRECT_PROVENANCE",
+        "same_birth_objective_custody": "Verified for each present native receipt; breadth terminal absent",
+        "direct_return_capture_independently_proved": false,
+        "task_terminal_is_source_truth": false,
+        "account_and_physical_session_linkage": "UNKNOWN",
+        "privacy": "Private identities, token quantities and native transcripts omitted."
+      },
+      "resource_billing_coverage": {
+        "status": "PARTIAL_OBSERVABILITY",
+        "cost_class": "candidate_product",
+        "observable": [
+          "Frozen preparation/request/dispatch timestamps",
+          "Native receipt timestamps and reported elapsed counters",
+          "Presence of cumulative native counters (values withheld from public artifact)"
+        ],
+        "provider_active_seconds": null,
+        "actual_context_occupancy_seconds": null,
+        "context_overlap_union_seconds": null,
+        "input_usage": null,
+        "cached_input_usage": null,
+        "output_usage": null,
+        "reasoning_usage": null,
+        "subscription_consumption": null,
+        "billing": null,
+        "unknown_is_not_zero": true,
+        "failed_attempts_retained": true,
+        "native_counters_are_provider_billing": false,
+        "evaluation_cost_class": "independent_evaluation",
+        "evaluation_billing": null,
+        "grader_epoch": "Epoch 2 prospectively declared; physical/account linkage UNKNOWN; no identity published"
+      },
+      "input_custody": {
+        "packet_path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/D-R2-P02.json",
+        "packet_sha256": "7b65b202676f2716d858e41a3cc1bd2b88367bda3acf0f04b275a82bc8d8ce37",
+        "receipt_sha256": "e6045ebfaf0c4f4f37878ffe4503b3514d837ad07dd9e55541aa7492f2ccad0b",
+        "contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+        "rubric_sha256": "0e37e2ba43aea4ac6dad6788c0bac5dc5634add4f31e40d03e99478b8afc2cc5",
+        "brief_sha256": "f112bf6a0ba5bb27f04a2c258216098b5fa673e84cb023e1b1b90350ccd4ecb2",
+        "plan_sha256": "58f202584f015d98ea3590cf4e217bf07a651663defc46065fc3bf844801d49c",
+        "all_present_allowlisted_member_hashes_independently_verified": true,
+        "allowlisted_members_verified": 134,
+        "allowlisted_manifest_status_hashes_verified": 21,
+        "route_supplement_members_verified": 0,
+        "science_members": [
+          {
+            "stage": "investigator",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/control/terminal-handoffs/investigator/files/discovery.md",
+            "bytes": 14379,
+            "sha256": "2297d6bda964437f265e189aa99e7e4363a6625d0b89e5c494b2087a4ea8c90d"
+          },
+          {
+            "stage": "investigator",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/control/terminal-handoffs/investigator/files/draft.md",
+            "bytes": 24811,
+            "sha256": "9aca14bd6f42cb5956876c00f0d633845fc430f78e0bd63a4ba148d5d3a375a2"
+          },
+          {
+            "stage": "investigator",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/control/terminal-handoffs/investigator/files/source-map.json",
+            "bytes": 24086,
+            "sha256": "f5b7ec5af73947c5e7053a8d083ba6ee1d78b8c4e0f8b9cbec66ac1317e9e70c"
+          },
+          {
+            "stage": "investigator",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/control/terminal-handoffs/investigator/files/revealed-plan.md",
+            "bytes": 2175,
+            "sha256": "58f202584f015d98ea3590cf4e217bf07a651663defc46065fc3bf844801d49c"
+          },
+          {
+            "stage": "investigator",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/control/terminal-handoffs/investigator/files/plan-reveal.json",
+            "bytes": 477,
+            "sha256": "7b12fe9b05a8d93d84c93206477aff9d33399a1e88475daeba0ed1bb5f9b3f67"
+          },
+          {
+            "stage": "investigator",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/control/terminal-handoffs/investigator/files/sources/index.md",
+            "bytes": 4915,
+            "sha256": "cde284926fbc4decd814b1c7189c45aac5d825cb23a3e8d3da581a8f93cb8394"
+          },
+          {
+            "stage": "critic-truth",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/control/terminal-handoffs/critic-truth/files/critique.md",
+            "bytes": 7587,
+            "sha256": "3a9e13609381a350459782d64ec8b8b64291a7a859235d3ccf476398a1fe6504"
+          },
+          {
+            "stage": "critic-truth",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/control/terminal-handoffs/critic-truth/files/source-map.json",
+            "bytes": 13604,
+            "sha256": "a050f4d6f761d2f2535d249ef4d85b6721d0d3b7201902c0b3ac9c5acfdca4c4"
+          },
+          {
+            "stage": "critic-truth",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-treatment/run/D-R2-P02-treatment/control/terminal-handoffs/critic-truth/files/sources/index.md",
+            "bytes": 2388,
+            "sha256": "d2a68b0cb1c29dde0db9124593cb2b95a8ff480a5396fb8ac14683e929e79ed9"
+          }
+        ],
+        "read_boundary": "Exact assignment/verification-listed frozen terminal snapshots and explicit supplements/status only. Active source locations within their text were never followed. Workspace AGENTS.md and only handoff sections 10/12 read. No Git/canon/held-out/history/tree scan or candidate feedback.",
+        "deduplicated_read": "Inherited source-map records were parsed in full, compared field-for-field, and every new observation/disposition read separately.",
+        "verification_count_scope": "Counts 134 members and 21 manifest/status hashes refer to the complete paired allowlist batch, not this arm alone."
+      }
+    }
+  ],
+  "independence": {
+    "own_primary_lookup_shared_across_matched_arms": true,
+    "arm_judgments_independent": true,
+    "comparison_performed": false,
+    "blinding": "Imperfect: arm/stage/technique-bearing paths and complementary critic prompts reveal treatment. No claim of blind grading.",
+    "no_candidates_repaired_or_contacted": true,
+    "no_nested_delegation_or_goals": true
+  },
+  "evaluation_resources": {
+    "cost_class": "independent_evaluation",
+    "actual_provider_activity": null,
+    "billing": null,
+    "elapsed_observation": "Wall-clock start/authored timestamps only; no inferred billing or account linkage.",
+    "private_account_epoch": "2 prospectively applies; no historical backfill"
+  },
+  "evaluation_started_utc_basis": "First evaluator clock observation after initial AGENTS/hash reads; actual admission/provider start UNKNOWN."
+}

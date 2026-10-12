@@ -1,0 +1,128 @@
+{
+  "schema": "er13.separate-original-pair-comparison.v1",
+  "block_id": "D-R1-P01",
+  "scope": "FULL",
+  "arm_count": 2,
+  "comparative_analysis_started_utc": "2026-10-12T05:21:36.408775+00:00",
+  "originals_frozen_at_utc": "2026-10-12T05:20:28.524395+00:00",
+  "original_manifest": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/manifest.json",
+    "bytes": 4458,
+    "sha256": "d8033397f517d371c13e518a3240589bb5e31b316bd1033fbdf85e5047e7366e"
+  },
+  "arm_original_manifests": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/control/manifest.json",
+      "bytes": 2481,
+      "sha256": "a89a27750fc17c2f34bb807f178223f25b58ccfe35a17f2054e255cb0f55f141"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/manifest.json",
+      "bytes": 2495,
+      "sha256": "f7a52db90e7e6899998377298271a6bea9f21347d0121711315d2f64e301d774"
+    }
+  ],
+  "original_grades_altered": false,
+  "comparison_label": "PASS/FAIL; finite diagnostic signal only",
+  "arm_records": [
+    {
+      "arm_id": "D-R1-P01-control",
+      "source_judgment": "PASS",
+      "coverage_by_axis": {
+        "1": "COMPLETE",
+        "2": "COMPLETE",
+        "3": "COMPLETE",
+        "4": "COMPLETE",
+        "5": "COMPLETE",
+        "6": "COMPLETE"
+      },
+      "axis_judgments": {
+        "1": "PASS",
+        "2": "PASS",
+        "3": "PASS",
+        "4": "PASS",
+        "5": "PASS",
+        "6": "PASS"
+      },
+      "material_defects": [],
+      "nonmaterial_defects": [
+        "C-N01"
+      ],
+      "delivery": "PASS",
+      "time_eligibility": "ELIGIBLE_ON_FROZEN_CUSTODY",
+      "native_provenance": "CAPTURE_CUSTODY_QUALIFIED; INDEPENDENT_PROVENANCE_UNKNOWN",
+      "resource_coverage": "UNKNOWN_FOR_BILLING_AND_ACTIVITY"
+    },
+    {
+      "arm_id": "D-R1-P01-treatment",
+      "source_judgment": "FAIL",
+      "coverage_by_axis": {
+        "1": "COMPLETE",
+        "2": "COMPLETE",
+        "3": "COMPLETE",
+        "4": "COMPLETE",
+        "5": "COMPLETE",
+        "6": "COMPLETE"
+      },
+      "axis_judgments": {
+        "1": "PASS",
+        "2": "FAIL",
+        "3": "PASS",
+        "4": "FAIL",
+        "5": "FAIL",
+        "6": "PASS"
+      },
+      "material_defects": [
+        "T-S01"
+      ],
+      "nonmaterial_defects": [
+        "T-N02"
+      ],
+      "delivery": "PASS",
+      "time_eligibility": "ELIGIBLE_ON_FROZEN_CUSTODY",
+      "native_provenance": "CAPTURE_CUSTODY_QUALIFIED; INDEPENDENT_PROVENANCE_UNKNOWN",
+      "resource_coverage": "UNKNOWN_FOR_BILLING_AND_ACTIVITY"
+    }
+  ],
+  "quality_observation": "Functional scope and meaningful proposed validation are retained in both originals. Treatment accepts a material false source correction about first-invalid focus; the alternative survives behaviorally but loses valid grounding. Control has only nonmaterial sample precision C-N01; treatment also has nonmaterial attribution error T-N02. This does not establish universal correctness or a causal recipe effect.",
+  "useful_distinct_content": {
+    "control": "Explicit current-result invalidation and visible pending refinement; live checklist lifecycle caution; early-notice versus save-time presentation comparison.",
+    "treatment": "Form-instance identity, still-current hidden-issue recovery, opaque ETag ordering limits, service/input distinction and bounded framework-reset history."
+  },
+  "latency_observation": {
+    "proxy_name": "T0 to captured final-stage native updatedAt",
+    "control_seconds": 2501.222,
+    "treatment_seconds": 1562.748,
+    "treatment_minus_control_seconds": -938.474,
+    "actual_finish_and_request_to_quiet_latency": "UNKNOWN",
+    "equal_quality_saving_established": false,
+    "limits": [
+      "Native captures do not independently prove native-to-task linkage.",
+      "Shared pair notification time is a custody upper bound, not the separate original completion time.",
+      "No percentage speedup or billing saving is claimed for a source-failed final."
+    ]
+  },
+  "resource_observation": {
+    "candidate_product_cost": "UNKNOWN",
+    "complete_experiment_cost": "UNKNOWN",
+    "preparation_support_publication_root_cost": "UNKNOWN",
+    "actual_context_occupancy_activity": "UNKNOWN",
+    "billing_and_subscription": "UNKNOWN",
+    "independent_grader_cost_category": "independent_evaluation",
+    "independent_grader_cost": "UNKNOWN",
+    "passing_final_consumption_quotients": {
+      "control": "UNDEFINED: consumption not observed",
+      "treatment": "UNDEFINED: zero assessed source passes; consumption also unknown"
+    },
+    "failed_missing_capped_invalid_interrupted_attempts": "All supplied originals remain in assigned denominator; no replacement or rescue. Extra unobserved attempts are UNKNOWN."
+  },
+  "causal_and_promotion_limits": [
+    "One matched pair only; no replication/dispersion signal, discovery-recall score or non-inferiority proof.",
+    "Requested model/effort/tier match in frozen configs, but actual account/provider activity identity is not independently proved.",
+    "The two-stage treatment also embeds a critic prompt delta; the comparison does not isolate one causal factor.",
+    "FULL means complete assigned research pipeline, not executed portal deployment. No COMPONENT inference or cold component-preparation saving is claimed.",
+    "No recipe selected, promoted, repaired or recommended; root retains selection authority."
+  ],
+  "imperfect_blinding": true,
+  "process_limit": "Separate provisional labels/coverage were disclosed in commentary before manifest freeze; no comparative arithmetic or selection preceded the freeze. Original grades are not changed by this disclosure."
+}

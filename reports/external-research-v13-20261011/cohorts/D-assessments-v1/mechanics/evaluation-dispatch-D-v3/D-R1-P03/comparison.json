@@ -1,0 +1,75 @@
+{
+  "schema": "er13.original-comparison.v1",
+  "block_id": "D-R1-P03",
+  "arm_count": 2,
+  "comparison_started_at_utc": "2026-10-12T05:00:00.394903+00:00",
+  "original_manifest": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/manifest.json",
+    "sha256": "bd89bce6c2514cd1f855176dd04d427714ad55084feb8767f6d28affa049e334"
+  },
+  "original_grades_changed": false,
+  "diagnostic_label": "FAIL/PASS",
+  "arms": [
+    {
+      "arm_id": "D-R1-P03-control",
+      "source_judgment": "FAIL",
+      "axis_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "delivered": true,
+      "recorded_native_terminal_elapsed_from_t0_seconds": 1645.651,
+      "observed_assigned_stage_count": 3,
+      "actual_scientific_finish": "UNKNOWN",
+      "actual_task_finish": "UNKNOWN",
+      "provider_activity": "UNKNOWN",
+      "candidate_billing": "UNKNOWN"
+    },
+    {
+      "arm_id": "D-R1-P03-treatment",
+      "source_judgment": "PASS",
+      "axis_coverage": [
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE",
+        "COMPLETE"
+      ],
+      "delivered": true,
+      "recorded_native_terminal_elapsed_from_t0_seconds": 768.337,
+      "observed_assigned_stage_count": 2,
+      "actual_scientific_finish": "UNKNOWN",
+      "actual_task_finish": "UNKNOWN",
+      "provider_activity": "UNKNOWN",
+      "candidate_billing": "UNKNOWN"
+    }
+  ],
+  "finite_quality_signal": "Both complete finals were assessed; control has one material historical source-fact defect, treatment has no material final defect found. This is one finite matched pair, not universal correctness or method reliability.",
+  "timing_observation": {
+    "paired_native_terminal_proxy_difference_treatment_minus_control_seconds": -877.314,
+    "interpretation": "Descriptive difference between reported native lifecycle timestamps only; direct provenance and actual scientific/task finish are UNKNOWN. It is not a measured equal-quality user-visible saving, billed activity or independently linked native-to-task latency.",
+    "whole_deadline_and_stage_caps": "Unchanged; reported native terminals within frozen caps and finals present before whole deadline."
+  },
+  "resource_observation": {
+    "assigned_arm_denominator": 2,
+    "assessed_source_passing_finals": 1,
+    "failure_inclusive_candidate_consumption": "UNKNOWN",
+    "consumption_per_passing_final": "UNKNOWN, numerator unobserved; not a retry-cost estimate",
+    "independent_evaluation_cost": "Separate category; elapsed tool-clock observation only, billing UNKNOWN",
+    "provider_active_or_context_occupancy": "UNKNOWN; stage counts and native elapsed do not establish either."
+  },
+  "method_observation": "Control has three assigned stages; treatment combines criticism/finalization into two and includes a negative/default/limit challenge. Requested routes match privately; actual native-to-task/provider linkage is UNKNOWN. This pair does not isolate the causal contribution of each method change.",
+  "limits": [
+    "Imperfect blinding from technique-bearing paths and assignments.",
+    "No universal unfamiliar-mechanism recall or complete cold-pipeline success claim.",
+    "No recipe selection, promotion, candidate feedback, repair, rescue, reconstruction, new candidates, Goals or regrading.",
+    "Source PASS does not imply full method/provenance/billing qualification or product deployment.",
+    "Faster FAIL or unequal quality cannot establish equal-quality savings; no savings percentage claimed."
+  ],
+  "future_dispute_rule": "Any dispute is a new separately preserved adjudication with original brief/findings/responses/unresolved objections. Originals remain unchanged."
+}

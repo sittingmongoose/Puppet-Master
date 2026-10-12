@@ -1,0 +1,130 @@
+{
+  "schema": "er13.finite_original_comparison.v1",
+  "block_id": "D-R1-P02",
+  "scope": "FULL",
+  "arm_count": 2,
+  "original_assessment_manifests": [
+    {
+      "arm": "control",
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/manifest.json",
+      "bytes": 2438,
+      "sha256": "9cbbeea6bf35c4f9694dcb1161d7e552d17314dd5a7946f838f83732d3b55fca",
+      "frozen_at_utc": "2026-10-12T04:58:15.834853+00:00"
+    },
+    {
+      "arm": "treatment",
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/treatment/manifest.json",
+      "bytes": 2454,
+      "sha256": "a4e453f5a2797666b76c8482052f5009e25dde40b0b1373fe9f9fafa4f37d19f",
+      "frozen_at_utc": "2026-10-12T04:58:15.844567+00:00"
+    }
+  ],
+  "comparison_started_after_both_original_freezes": true,
+  "comparison_written_utc": "2026-10-12T04:59:44.069794+00:00",
+  "original_grades_unchanged": true,
+  "design": "Diagnostic matched pair; not a four-cell factorial block.",
+  "arms": [
+    {
+      "arm_id": "D-R1-P02-control",
+      "source_judgment": "FAIL",
+      "axis_coverage": {
+        "1": "COMPLETE",
+        "2": "COMPLETE",
+        "3": "COMPLETE",
+        "4": "COMPLETE",
+        "5": "COMPLETE",
+        "6": "COMPLETE"
+      },
+      "delivery": "COMPLETE_FINAL_PRESENT",
+      "assigned_stage_attempts": 3,
+      "time_eligibility": "WITHIN_SUPPLIED_FROZEN_CLOCKS",
+      "t0_utc": "2026-10-12T04:17:47.866Z",
+      "whole_deadline_utc": "2026-10-12T05:17:47.866Z",
+      "original_clocks_unchanged": true,
+      "final_artifact_actual_finish": "UNKNOWN",
+      "provider_activity": "UNKNOWN",
+      "native_to_task_linkage": "UNKNOWN",
+      "billing": "UNKNOWN",
+      "t0_to_final_native_terminal_field_proxy_seconds": 1406.134,
+      "interstage_field_gaps": [
+        {
+          "from": "investigator",
+          "to": "critic",
+          "native_terminal_field_to_next_request_seconds": 36.99
+        },
+        {
+          "from": "critic",
+          "to": "reviser",
+          "native_terminal_field_to_next_request_seconds": 44.2
+        }
+      ],
+      "native_field_window_sum_seconds": 1288.0,
+      "native_reported_elapsed_sum_seconds": 1286,
+      "context_residency": "UNKNOWN",
+      "counter_sum_or_dollars": "UNKNOWN"
+    },
+    {
+      "arm_id": "D-R1-P02-treatment",
+      "source_judgment": "PASS",
+      "axis_coverage": {
+        "1": "COMPLETE",
+        "2": "COMPLETE",
+        "3": "COMPLETE",
+        "4": "COMPLETE",
+        "5": "COMPLETE",
+        "6": "COMPLETE"
+      },
+      "delivery": "COMPLETE_FINAL_PRESENT",
+      "assigned_stage_attempts": 2,
+      "time_eligibility": "WITHIN_SUPPLIED_FROZEN_CLOCKS",
+      "t0_utc": "2026-10-12T04:17:49.959Z",
+      "whole_deadline_utc": "2026-10-12T05:17:49.959Z",
+      "original_clocks_unchanged": true,
+      "final_artifact_actual_finish": "UNKNOWN",
+      "provider_activity": "UNKNOWN",
+      "native_to_task_linkage": "UNKNOWN",
+      "billing": "UNKNOWN",
+      "t0_to_final_native_terminal_field_proxy_seconds": 1494.041,
+      "interstage_field_gaps": [
+        {
+          "from": "investigator",
+          "to": "critic",
+          "native_terminal_field_to_next_request_seconds": 46.195
+        }
+      ],
+      "native_field_window_sum_seconds": 1429.0,
+      "native_reported_elapsed_sum_seconds": 1429,
+      "context_residency": "UNKNOWN",
+      "counter_sum_or_dollars": "UNKNOWN"
+    }
+  ],
+  "source_outcome": "FAIL/PASS",
+  "assigned_final_denominator": 2,
+  "delivered_finals": 2,
+  "finite_source_passing_finals": 1,
+  "assigned_stage_attempt_denominator": 5,
+  "timing_proxy_difference_treatment_minus_control_seconds": 87.90699999999993,
+  "timing_proxy_interpretation": "Saved native terminal field arithmetic only. Treatment proxy is longer. Actual final-file finish, provider activity and independent native-to-task linkage remain UNKNOWN. This is not a request-to-quiet or billed-work measurement.",
+  "equal_quality_savings": "NOT_ESTABLISHED; source judgments differ.",
+  "candidate_resource_or_billing_total": "UNKNOWN",
+  "candidate_consumption_per_source_passing_final": "UNKNOWN; unavailable numerator, not expected retry cost.",
+  "independent_evaluation": {
+    "cost_category": "independent_evaluation",
+    "first_observed_clock_utc": "2026-10-12T04:44:23Z",
+    "comparison_record_clock_utc": "2026-10-12T04:59:44.069794+00:00",
+    "provider_activity": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "allocation": "One paired evaluation with shared independent primary research; no duplicated per-arm cost total."
+  },
+  "preparation_support_publication_root_cost": "UNKNOWN; separate dimensions",
+  "limitations": [
+    "Imperfect blinding from paths, instructions and topology.",
+    "One finite assessed case cannot establish universal quality, discovery recall, reliability, non-inferiority or method causation.",
+    "Independent investigator outputs differ; source outcome cannot be attributed solely to context topology or the critic delta.",
+    "No cold full-pipeline or COMPONENT discovery-effectiveness inference.",
+    "All proposal validations remain proposed; no deployment is required.",
+    "Full Exif normative tag schema and optional MPF/HEIF/MIAF certification remain unassessed expansion domains.",
+    "No recipe selection or promotion decision made."
+  ],
+  "comparison": "Control retains a consequential unsupported unknown-resolution statement for #4343. Treatment final avoids that claim, revises the overbroad orientation sequence and correctly bounds #5195 fix/release applicability while retaining required policies. This is a finite quality signal only."
+}

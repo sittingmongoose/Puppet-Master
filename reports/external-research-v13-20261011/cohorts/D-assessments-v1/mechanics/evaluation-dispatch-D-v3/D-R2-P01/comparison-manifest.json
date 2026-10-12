@@ -1,0 +1,30 @@
+{
+  "schema": "er13.comparison_output_manifest.v1",
+  "block_id": "D-R2-P01",
+  "frozen_at_utc": "2026-10-12T05:06:29.525139+00:00",
+  "originals_previously_frozen": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/control/manifest.json",
+      "bytes": 2215,
+      "sha256": "867bc987ab4878e4fd74c0013603016c8da549ba29c113f8a06544e19be4fd02"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/treatment/manifest.json",
+      "bytes": 2230,
+      "sha256": "d2253114e67edca36e319651571e7276770565cdd70aba044d7ddeb16f78a09f"
+    }
+  ],
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/comparison.md",
+      "bytes": 2289,
+      "sha256": "b6987eec790dcc1b507f14633868adaa724162967559ed0548a4cfac0f8af6b6"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/comparison.json",
+      "bytes": 4234,
+      "sha256": "8d94365e71e4be6b482d8b429e681513905b811f7f9d096122d92d738eaaa1ef"
+    }
+  ],
+  "originals_reverified_unchanged": true
+}

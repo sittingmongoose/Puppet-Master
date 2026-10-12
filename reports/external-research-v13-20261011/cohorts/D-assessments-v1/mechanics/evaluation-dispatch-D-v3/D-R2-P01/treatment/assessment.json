@@ -1,0 +1,673 @@
+{
+  "arm_id": "D-R2-P01-treatment",
+  "source_judgment": {
+    "judgment": "UNASSESSED",
+    "assessment_scope": "complete final missing",
+    "coverage": "UNASSESSED",
+    "rationale": "The notified frozen arm has no reviser/final. All six complete-final axes are UNASSESSED. Available investigator and both critic science is separately PARTIAL with three consequential draft conditions/tensions recorded; this is not a fabricated complete source FAIL or PASS.",
+    "available_science_judgment": "PARTIAL_MATERIAL_ISSUES_FOUND",
+    "universal_correctness": false
+  },
+  "coverage": {
+    "overall": "UNASSESSED_COMPLETE_FINAL",
+    "axes": [
+      {
+        "axis": 1,
+        "name": "Material original obligations and negative constraints",
+        "coverage": "UNASSESSED",
+        "reason": "No frozen final/reviser; complete-final judgment unavailable."
+      },
+      {
+        "axis": 2,
+        "name": "Consequential source facts, governing conditions, versions and applicability",
+        "coverage": "UNASSESSED",
+        "reason": "No frozen final/reviser; complete-final judgment unavailable."
+      },
+      {
+        "axis": 3,
+        "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+        "coverage": "UNASSESSED",
+        "reason": "No frozen final/reviser; complete-final judgment unavailable."
+      },
+      {
+        "axis": 4,
+        "name": "Valid corrections, rejections and exact plan dispositions",
+        "coverage": "UNASSESSED",
+        "reason": "No frozen final/reviser; complete-final judgment unavailable."
+      },
+      {
+        "axis": 5,
+        "name": "Supported meaning retained from draft and criticism into the complete final",
+        "coverage": "UNASSESSED",
+        "reason": "No frozen final/reviser; complete-final judgment unavailable."
+      },
+      {
+        "axis": 6,
+        "name": "Meaningful proposed validation, with executed work distinguished",
+        "coverage": "UNASSESSED",
+        "reason": "No frozen final/reviser; complete-final judgment unavailable."
+      }
+    ],
+    "obligations": [
+      {
+        "id": "O01",
+        "name": "Useful retrieval and durable passage references across changing editions",
+        "coverage": "UNASSESSED",
+        "reason": "No complete final."
+      },
+      {
+        "id": "O02",
+        "name": "Cited edition versus newer policy and removed-passage fallback",
+        "coverage": "UNASSESSED",
+        "reason": "No complete final."
+      },
+      {
+        "id": "O03",
+        "name": "No restricted title/snippet/cache disclosure after permission changes",
+        "coverage": "UNASSESSED",
+        "reason": "No complete final."
+      },
+      {
+        "id": "O04",
+        "name": "Defined freshness/rebuild/prior-edition states and owner boundaries",
+        "coverage": "UNASSESSED",
+        "reason": "No complete final."
+      },
+      {
+        "id": "O05",
+        "name": "Lexical/semantic/hybrid and passage-identity alternatives with applicability",
+        "coverage": "UNASSESSED",
+        "reason": "No complete final."
+      },
+      {
+        "id": "N01",
+        "name": "No search-rank inference of policy authority",
+        "coverage": "UNASSESSED",
+        "reason": "No complete final."
+      },
+      {
+        "id": "N02",
+        "name": "No live-URL-only immutable citation or private-document upload",
+        "coverage": "UNASSESSED",
+        "reason": "No complete final."
+      },
+      {
+        "id": "N03",
+        "name": "No promise to revoke already-exported copies",
+        "coverage": "UNASSESSED",
+        "reason": "No complete final."
+      }
+    ],
+    "available_science": {
+      "overall": "PARTIAL",
+      "axes": [
+        {
+          "axis": 1,
+          "name": "Material original obligations and negative constraints",
+          "coverage": "PARTIAL",
+          "finding": "Available draft addresses all obligations, but its historical-ACL owner option conflicts with its current-access invariant. Complete-final obligations are UNASSESSED."
+        },
+        {
+          "axis": 2,
+          "name": "Consequential source facts, governing conditions, versions and applicability",
+          "coverage": "PARTIAL",
+          "finding": "Available science has supported governing research plus omissions in alias action outcomes and explicit DLS role conditions. Full final source quality is UNASSESSED."
+        },
+        {
+          "axis": 3,
+          "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+          "coverage": "PARTIAL",
+          "finding": "Supported useful discoveries include scoped-key revocation, preview ACL failure/freshness behavior, temporary version URLs, finite retention/purge and an unsupported-query guard. Discovery effectiveness for a completed pipeline is UNASSESSED."
+        },
+        {
+          "axis": 4,
+          "name": "Valid corrections, rejections and exact plan dispositions",
+          "coverage": "PARTIAL",
+          "finding": "Draft dispositions are present; both critics' seven findings were independently examined. No reviser disposition exists, so resolution and complete-final corrections/rejections are UNASSESSED."
+        },
+        {
+          "axis": 5,
+          "name": "Supported meaning retained from draft and criticism into the complete final",
+          "coverage": "PARTIAL",
+          "finding": "Investigator discovery-to-draft meaning is inspectable. No final exists: investigator/critic-to-final preservation is UNASSESSED; critic proposals are not treated as adopted changes."
+        },
+        {
+          "axis": 6,
+          "name": "Meaningful proposed validation, with executed work distinguished",
+          "coverage": "PARTIAL",
+          "finding": "Available documents honestly propose synthetic/production checks without claiming execution. The final validation proposal and final execution-status preservation are UNASSESSED."
+        }
+      ],
+      "obligations": [
+        {
+          "id": "O01",
+          "name": "Useful retrieval and durable passage references across changing editions",
+          "coverage": "PARTIAL",
+          "finding": "Edition-bound IDs, hashes and alternate selectors are proposed; no final."
+        },
+        {
+          "id": "O02",
+          "name": "Cited edition versus newer policy and removed-passage fallback",
+          "coverage": "PARTIAL",
+          "finding": "Current versus cited edition and a stop/separate-link fallback are proposed; no final."
+        },
+        {
+          "id": "O03",
+          "name": "No restricted title/snippet/cache disclosure after permission changes",
+          "coverage": "PARTIAL",
+          "finding": "Strong serve-time checks exist, but the historical-ACL option is insufficiently constrained (T03). No executed authorization proof or final."
+        },
+        {
+          "id": "O04",
+          "name": "Defined freshness/rebuild/prior-edition states and owner boundaries",
+          "coverage": "PARTIAL",
+          "finding": "Explicit current/indexing/ACL-unknown/removed/failed states and owners are proposed; alias action success caveat remains open (T01)."
+        },
+        {
+          "id": "O05",
+          "name": "Lexical/semantic/hybrid and passage-identity alternatives with applicability",
+          "coverage": "PARTIAL",
+          "finding": "Multiple retrieval and locator alternatives are researched; role configuration detail remains incomplete (T02)."
+        },
+        {
+          "id": "N01",
+          "name": "No search-rank inference of policy authority",
+          "coverage": "PARTIAL",
+          "finding": "Draft separates relevance from authority; no final preservation witness."
+        },
+        {
+          "id": "N02",
+          "name": "No live-URL-only immutable citation or private-document upload",
+          "coverage": "PARTIAL",
+          "finding": "Draft rejects live-only and unauthenticated temporary URLs and external uploads; no final preservation witness."
+        },
+        {
+          "id": "N03",
+          "name": "No promise to revoke already-exported copies",
+          "coverage": "PARTIAL",
+          "finding": "Draft explicitly limits revocation of exports; no final preservation witness."
+        }
+      ],
+      "plan_dispositions": [
+        {
+          "id": "chunk_identity",
+          "coverage": "PARTIAL",
+          "finding": "Draft examined: Reject ordinal sufficiency; retain edition-bound block IDs or snapshot/representation-bound locator alternatives. Final disposition UNASSESSED."
+        },
+        {
+          "id": "citations",
+          "coverage": "PARTIAL",
+          "finding": "Draft examined: Reject live URL sufficiency; bind the displayed edition/passage and reauthorize resolution. Final disposition UNASSESSED."
+        },
+        {
+          "id": "permissions_and_caches",
+          "coverage": "PARTIAL",
+          "finding": "Draft examined: Reject reindex-only labels and still-servable snippets; establish fresh authorization before disclosure. Final disposition UNASSESSED."
+        },
+        {
+          "id": "ranking",
+          "coverage": "PARTIAL",
+          "finding": "Draft examined: Retain lexical+dense fusion as evaluated hypothesis; relevance never defines authority. Final disposition UNASSESSED."
+        },
+        {
+          "id": "edition_replacement",
+          "coverage": "PARTIAL",
+          "finding": "Draft examined: Condition current default search and historical retention on policy status, current exact-edition access and explicit state. Final disposition UNASSESSED."
+        },
+        {
+          "id": "missing_passage",
+          "coverage": "PARTIAL",
+          "finding": "Draft examined: Reject silent related-heading fulfillment; retain original or authorized unavailable outcome with separate navigation. Final disposition UNASSESSED."
+        },
+        {
+          "id": "indexing_and_validation",
+          "coverage": "PARTIAL",
+          "finding": "Draft examined: Add source/index/ACL generations and failure states; tests remain proposed. Final disposition UNASSESSED."
+        }
+      ]
+    },
+    "unassessed_consequential_remainder": [
+      "All complete-final obligations and six axes",
+      "Every critic-to-final disposition",
+      "Investigator/critic-to-final semantic preservation",
+      "Final validation proposal and execution-status preservation"
+    ],
+    "source_families": [
+      {
+        "id": "P01",
+        "family": "PostgreSQL lexical retrieval / GIN",
+        "coverage": "UNASSESSED",
+        "available_science_research_coverage": "COMPLETE",
+        "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+      },
+      {
+        "id": "P05",
+        "family": "OpenSearch lexical / semantic / hybrid fusion",
+        "coverage": "UNASSESSED",
+        "available_science_research_coverage": "COMPLETE",
+        "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+      },
+      {
+        "id": "P06",
+        "family": "OpenSearch DLS / role composition / exact identity mapping",
+        "coverage": "UNASSESSED",
+        "available_science_research_coverage": "COMPLETE",
+        "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+      },
+      {
+        "id": "P09",
+        "family": "W3C passage selectors / representation state",
+        "coverage": "UNASSESSED",
+        "available_science_research_coverage": "COMPLETE",
+        "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+      },
+      {
+        "id": "P10",
+        "family": "Elastic DLS / cache boundaries",
+        "coverage": "UNASSESSED",
+        "available_science_research_coverage": "COMPLETE",
+        "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+      },
+      {
+        "id": "P11",
+        "family": "License and deployment applicability",
+        "coverage": "UNASSESSED",
+        "available_science_research_coverage": "COMPLETE",
+        "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+      },
+      {
+        "id": "P12",
+        "family": "Elastic alias action outcomes",
+        "coverage": "UNASSESSED",
+        "available_science_research_coverage": "COMPLETE",
+        "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+      },
+      {
+        "id": "P13",
+        "family": "Typesense scoped search capabilities",
+        "coverage": "UNASSESSED",
+        "available_science_research_coverage": "COMPLETE",
+        "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+      },
+      {
+        "id": "P14",
+        "family": "Azure ACL enforcement / freshness / preview history",
+        "coverage": "UNASSESSED",
+        "available_science_research_coverage": "COMPLETE",
+        "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+      },
+      {
+        "id": "P15",
+        "family": "Graph version retrieval / retention and SharePoint purge",
+        "coverage": "UNASSESSED",
+        "available_science_research_coverage": "COMPLETE",
+        "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+      },
+      {
+        "id": "P16",
+        "family": "Hybrid issue / fix / release / unshipped resolver",
+        "coverage": "UNASSESSED",
+        "available_science_research_coverage": "COMPLETE",
+        "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+      },
+      {
+        "id": "P17",
+        "family": "Relevance evaluation / hybrid alternative",
+        "coverage": "UNASSESSED",
+        "available_science_research_coverage": "COMPLETE",
+        "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+      },
+      {
+        "id": "P18",
+        "family": "Repository object locator alternative",
+        "coverage": "UNASSESSED",
+        "available_science_research_coverage": "COMPLETE",
+        "scope": "Only available investigator/critic claims; complete-final coverage remains UNASSESSED"
+      }
+    ]
+  },
+  "critic_dispositions": [
+    {
+      "id": "B01",
+      "independent_judgment": "Supported recipient/copy boundary clarification; current per-viewer checks already point in this direction. Useful precision, not independent evidence of deployed safety.",
+      "severity": "NONMATERIAL_CLARIFICATION",
+      "evidence": [
+        "P09",
+        "O03",
+        "N03"
+      ],
+      "final_disposition": "UNASSESSED"
+    },
+    {
+      "id": "B02",
+      "independent_judgment": "Supported representation-state refinement. Digest/extractor version already exists; format/locale and explicit ambiguity oracle improve the proposal without proving an edition mismatch.",
+      "severity": "NONMATERIAL_CLARIFICATION",
+      "evidence": [
+        "P09"
+      ],
+      "final_disposition": "UNASSESSED"
+    },
+    {
+      "id": "B03",
+      "independent_judgment": "Useful derived-data lifecycle/owner inventory. Future backups/queues deletion policy is not a fact available here; do not invent it or demand deployment.",
+      "severity": "OPTIONAL_OWNER_CLARIFICATION",
+      "evidence": [
+        "O03",
+        "O04",
+        "N03"
+      ],
+      "final_disposition": "UNASSESSED"
+    },
+    {
+      "id": "F1",
+      "independent_judgment": "Supported consequential alias action-success condition omitted by draft; atomic publication alone is insufficient to establish intended action-list success.",
+      "severity": "MATERIAL_INCOMPLETE",
+      "evidence": [
+        "P12"
+      ],
+      "final_disposition": "UNASSESSED"
+    },
+    {
+      "id": "F2",
+      "independent_judgment": "Supported explicit OR/mixed-role/override configuration detail; draft only calls it a caveat. Historical code/caller/tests independently corroborate the mechanism.",
+      "severity": "MATERIAL_INCOMPLETE",
+      "evidence": [
+        "P06"
+      ],
+      "final_disposition": "UNASSESSED"
+    },
+    {
+      "id": "F3",
+      "independent_judgment": "Supported tension: a historical-ACL-only owner choice can preserve withdrawn access. Other draft passages require current checks; no actual leak is demonstrated.",
+      "severity": "MATERIAL_INCOMPLETE",
+      "evidence": [
+        "O03"
+      ],
+      "final_disposition": "UNASSESSED"
+    },
+    {
+      "id": "F4",
+      "independent_judgment": "Invariant-first wording is useful, but draft step 3 already permits an owner-approved authorization service. A claim that it forces direct synchronous source calls would overstate the text. No new material topology defect established.",
+      "severity": "NONMATERIAL_ALREADY_PARTLY_COVERED",
+      "evidence": [
+        "P14"
+      ],
+      "final_disposition": "UNASSESSED"
+    }
+  ],
+  "preservation": [
+    {
+      "from": "investigator discovery",
+      "to": "investigator draft",
+      "coverage": "PARTIAL",
+      "judgment": "SUPPORTED_MEANING_INSPECTABLE",
+      "meaning": "Retrieval/authority separation, current access checks, quote/position limits, version retention and no-export-revocation survive into available draft."
+    },
+    {
+      "from": "investigator/critics",
+      "to": "complete final",
+      "coverage": "UNASSESSED",
+      "judgment": "NO_FINAL",
+      "meaning": "No adoption, rejection, repair or loss is fabricated."
+    }
+  ],
+  "defects": {
+    "complete_final_material_count": null,
+    "available_science_material_count": 3,
+    "nonmaterial_count": 2,
+    "mechanics_failure_count": 1,
+    "records_file": "defects.json"
+  },
+  "limitations": [
+    "Finite assessed planning quality, not universal correctness, exhaustive external discovery recall, deployment success or a reliability estimate.",
+    "No user source platform, corpus, authoritative policy status, embedding model/license, retention period or revocation consistency contract is selected; those facts legitimately remain unknown.",
+    "Public latest routes are mutable and unpinned; detailed deployed release/role/license qualification remains future owner work.",
+    "Upstream code and test sources were inspected; no downloaded code or proposed product/test harness was executed.",
+    "Private routing identity, raw native responses, token values, full transcripts and machine state are excluded from these scientific outputs.",
+    "Technique-bearing path names, declared topology and output make blinding imperfect.",
+    "Only exact allowlisted terminal snapshots/supplements/status/failure custody were read; active referenced originals and held-out cases were not followed.",
+    "No outcome after the truth-critic interruption is reconstructed. The unlaunched reviser and absent final remain in the assigned denominator."
+  ],
+  "schema": "er13.original_independent_assessment.v1",
+  "block_id": "D-R2-P01",
+  "case_id": "D-P05",
+  "scope": "FULL",
+  "original_assessment": true,
+  "authored_at_utc": "2026-10-12T05:04:42.481080+00:00",
+  "input_custody": {
+    "independently_verified": true,
+    "receipt": "evidence/input-verification.json",
+    "complete_scientific_documents_read": true,
+    "native_and_auxiliary_members_read": true,
+    "duplicate_payloads": "Exact duplicated payloads inspected once with all per-stage bindings/differences checked; no active references followed.",
+    "public_source_lookup": "Shared own independent primary lookup across the assigned arms; judgments written separately.",
+    "imperfect_blinding": true
+  },
+  "delivery": {
+    "judgment": "MISSING_FINAL",
+    "final": null,
+    "unlaunched_stages": [
+      "reviser"
+    ],
+    "available_science_stages": [
+      "investigator",
+      "critic-breadth",
+      "critic-truth"
+    ],
+    "actual_terminal_task_custody": [
+      {
+        "stage": "investigator",
+        "actual_task_status_capture": "completed",
+        "pending_child_runs_capture": false
+      },
+      {
+        "stage": "critic-breadth",
+        "actual_task_status_capture": "completed",
+        "pending_child_runs_capture": false
+      },
+      {
+        "stage": "critic-truth",
+        "actual_task_status_capture": "interrupted",
+        "pending_child_runs_capture": false
+      }
+    ],
+    "failure_qualified_packet": true,
+    "missing_final_is_not_zero_time_success": true
+  },
+  "time_eligibility": {
+    "whole_maximum_seconds": 3600,
+    "t0_utc": "2026-10-12T04:18:05.184Z",
+    "whole_deadline_utc": "2026-10-12T05:18:05.184Z",
+    "frozen_clocks_unchanged": true,
+    "judgment": "INELIGIBLE_STAGE_COMPLETION_AND_NO_FINAL",
+    "qualification": "Custody timestamps, not independently established execution/finish provenance.",
+    "stages": [
+      {
+        "stage": "investigator",
+        "prepared_at_utc": "2026-10-12T04:18:06.265Z",
+        "requested_at_utc": "2026-10-12T04:18:06.265Z",
+        "dispatch_return_capture_utc": "2026-10-12T04:18:08.034Z",
+        "stage_deadline_utc": "2026-10-12T04:48:06.265Z",
+        "native_birth_timestamp_utc": "2026-10-12T04:18:21+00:00",
+        "native_terminal_timestamp_utc": "2026-10-12T04:25:01+00:00",
+        "native_elapsed_field_seconds": 400,
+        "native_elapsed_field_boundary": "captured Goal elapsed only; not activity, occupancy or billing",
+        "same_frozen_objective_birth_checked": true,
+        "actual_task_status_capture": "completed",
+        "pending_child_runs_capture": false,
+        "terminal_capture_present": true,
+        "direct_return_custody_qualified": true,
+        "independent_direct_native_call_to_task_linkage": "UNKNOWN",
+        "actual_provider_start_finish_utc": "UNKNOWN",
+        "actual_scientific_last_write_utc": "UNKNOWN",
+        "missing_required_outputs": [],
+        "missing_auxiliaries": []
+      },
+      {
+        "stage": "critic-breadth",
+        "prepared_at_utc": "2026-10-12T04:25:28.469Z",
+        "requested_at_utc": "2026-10-12T04:25:28.469Z",
+        "dispatch_return_capture_utc": "2026-10-12T04:25:29.777Z",
+        "stage_deadline_utc": "2026-10-12T04:31:28.469Z",
+        "native_birth_timestamp_utc": "2026-10-12T04:25:39+00:00",
+        "native_terminal_timestamp_utc": "2026-10-12T04:30:40+00:00",
+        "native_elapsed_field_seconds": 300,
+        "native_elapsed_field_boundary": "captured Goal elapsed only; not activity, occupancy or billing",
+        "same_frozen_objective_birth_checked": true,
+        "actual_task_status_capture": "completed",
+        "pending_child_runs_capture": false,
+        "terminal_capture_present": true,
+        "direct_return_custody_qualified": true,
+        "independent_direct_native_call_to_task_linkage": "UNKNOWN",
+        "actual_provider_start_finish_utc": "UNKNOWN",
+        "actual_scientific_last_write_utc": "UNKNOWN",
+        "missing_required_outputs": [],
+        "missing_auxiliaries": []
+      },
+      {
+        "stage": "critic-truth",
+        "prepared_at_utc": "2026-10-12T04:25:31.434Z",
+        "requested_at_utc": "2026-10-12T04:25:31.434Z",
+        "dispatch_return_capture_utc": "2026-10-12T04:25:32.964Z",
+        "stage_deadline_utc": "2026-10-12T04:31:31.434Z",
+        "native_birth_timestamp_utc": "2026-10-12T04:25:39+00:00",
+        "native_terminal_timestamp_utc": null,
+        "native_elapsed_field_seconds": null,
+        "native_elapsed_field_boundary": "captured Goal elapsed only; not activity, occupancy or billing",
+        "same_frozen_objective_birth_checked": false,
+        "actual_task_status_capture": "interrupted",
+        "pending_child_runs_capture": false,
+        "terminal_capture_present": false,
+        "direct_return_custody_qualified": false,
+        "independent_direct_native_call_to_task_linkage": "UNKNOWN",
+        "actual_provider_start_finish_utc": "UNKNOWN",
+        "actual_scientific_last_write_utc": "UNKNOWN",
+        "missing_required_outputs": [
+          "native-goal-terminal.json"
+        ],
+        "missing_auxiliaries": [
+          "native-completion-attempt.json",
+          "native-completion-output-snapshot.json",
+          "native-terminal-capture-checked.json"
+        ]
+      }
+    ],
+    "actual_task_finish_utc": "UNKNOWN",
+    "last_complete_scientific_artifact_utc": "UNKNOWN",
+    "request_to_quiet_final_proxy": "UNKNOWN; exact terminal-task finish not timestamped in supplied status",
+    "visible_by_notification_frozen_utc": "2026-10-12T04:49:50.439818+00:00",
+    "latency_saving_claim": null
+  },
+  "method_compliance": {
+    "judgment": "FAIL_REQUIRED_TERMINAL_HANDOFF",
+    "declared_topology": "investigator -> parallel breadth/truth critics -> unlaunched reviser",
+    "complete_brief_and_revealed_plan_hashes_match": true,
+    "discovery_hash_matches_one_shot_reveal": true,
+    "scientific_scope_narrowing_found": false,
+    "science_saved_before_successful_terminal_capture": "Exact precompletion snapshot hashes match the five successful stages; failed truth stage has no completion snapshot.",
+    "full_native_method_qualification": "NOT_QUALIFIED; truth terminal absent",
+    "session_freshness_and_no_parent_history_use": "UNKNOWN; no full native transcripts inspected",
+    "actual_no_nested_agent_proof": "UNKNOWN; supplied tasks have no pending child runs",
+    "component_claims": "No component discovery/cold full-pipeline success inferred.",
+    "grader_actions": "No Goals, delegation, candidates, repairs, feedback to candidate authors, Git/canon/provider/shared-server mutations."
+  },
+  "native_identity_provenance": {
+    "judgment": "UNKNOWN_INDEPENDENT_LINKAGE",
+    "observed": "Exact activation aliases, frozen objectives/births, and successful terminal same-birth captures match custody.",
+    "successful_direct_return_capture_stages": [
+      "investigator",
+      "critic-breadth"
+    ],
+    "failed_or_absent_terminal_stages": [
+      "critic-truth"
+    ],
+    "independent_native_receipt_freshness": "UNKNOWN",
+    "independent_native_to_actual_task_session_linkage": "UNKNOWN",
+    "candidate_route": "Requests and T3 captures report gpt-6-luna / max reasoning / default service tier; independent native-session route not proved.",
+    "no_receipt_reconstruction_or_clock_rescue": true
+  },
+  "resource_billing_coverage": {
+    "judgment": "PARTIAL_ELAPSED_FIELDS_BILLING_UNKNOWN",
+    "candidate_product": {
+      "captured_native_elapsed_fields": "Present for five successful stages only; shown separately by stage, not summed as provider work.",
+      "cumulative_usage_counters": "Present in successful native receipts; values excluded from public science, no billing equivalence established.",
+      "active_provider_activity": "UNKNOWN",
+      "open_context_lifetime": "UNKNOWN",
+      "created_started_context_occupancy": "UNKNOWN",
+      "queue_setup_active_work_split": "UNKNOWN",
+      "subscription_consumption": "UNKNOWN",
+      "billing": "UNKNOWN",
+      "failed_stage_resource_use": "UNKNOWN, never zero",
+      "complete_experiment_total": "UNKNOWN",
+      "all_assigned_failure_denominator_retained": true
+    },
+    "this_grader": {
+      "cost_class": "independent_evaluation",
+      "observed_first_clock_utc": "2026-10-12T04:50:18+00:00",
+      "original_outputs_authored_utc": "2026-10-12T05:04:42.481080+00:00",
+      "observed_harness_model": "gpt-6.1-sol / xhigh",
+      "actual_queue_start_finish_and_active_activity": "UNKNOWN",
+      "billing_and_subscription_consumption": "UNKNOWN",
+      "prospective_epoch2_rule": "Acknowledged for this fresh grader only; no allowed epoch2 telemetry or account changes/backfill.",
+      "included_in_candidate_product": false
+    },
+    "unknown_is_not_zero": true
+  },
+  "scientific_input_members": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/control/terminal-handoffs/investigator/files/discovery.md",
+      "bytes": 7948,
+      "sha256": "a8ace1c2663c1e886ed5f87e130db38710cf370cc928c9ea54507e1e88f407fc"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/control/terminal-handoffs/investigator/files/draft.md",
+      "bytes": 19683,
+      "sha256": "a03841d07ee2ac109f059bf6e26da1bca8bd8cf0f0d9b98348d93a2f32b17ddc"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/control/terminal-handoffs/investigator/files/source-map.json",
+      "bytes": 17338,
+      "sha256": "8a0d9755afe5f8546e6be14d12bceeab83b7a447ef4a344fda4d7490a7f54ffc"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/control/terminal-handoffs/investigator/files/revealed-plan.md",
+      "bytes": 2186,
+      "sha256": "c036fb29c9b1ffb4c0179c9919eee7484ba71bf2fbe1c9be8167bb2e25db2d00"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/control/terminal-handoffs/investigator/files/plan-reveal.json",
+      "bytes": 476,
+      "sha256": "a62b7b026098b9269f30b18b4f8226015c0105f140f05e43b53aee5a35f108b8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/control/terminal-handoffs/investigator/files/sources/INDEX.md",
+      "bytes": 4145,
+      "sha256": "1c7afaf6b86881921f14f0f9b52b36427a6a3934c1b96daa94c7feb07ef9e292"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/control/terminal-handoffs/critic-breadth/files/critique.md",
+      "bytes": 7929,
+      "sha256": "1533be2c420e1778127414a1b7d266446a63b8bbfc75779a37d6eeb59db971db"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/control/terminal-handoffs/critic-breadth/files/source-map.json",
+      "bytes": 2979,
+      "sha256": "526014410091828ebf973273cb04ac53384bd220b6c85dc6611a31af082b9070"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/control/terminal-handoffs/critic-truth/files/critique.md",
+      "bytes": 8375,
+      "sha256": "3d4da75f2257d61b52b0b9b6beba87501fc3aa55dc122a2b1c79c4aefec71189"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/control/terminal-handoffs/critic-truth/files/source-map.json",
+      "bytes": 9769,
+      "sha256": "cdb7293d258203f658d51f7cd0b28eee6d9e10b4a18c9e677fc76b0c2d45f91a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P01-treatment/run/D-R2-P01-treatment/control/terminal-handoffs/critic-truth/files/sources/INDEX.md",
+      "bytes": 1876,
+      "sha256": "280683239662d7daf1a82b55753672c92c27cf9b576c2c4f531587a2baae7a47"
+    }
+  ]
+}

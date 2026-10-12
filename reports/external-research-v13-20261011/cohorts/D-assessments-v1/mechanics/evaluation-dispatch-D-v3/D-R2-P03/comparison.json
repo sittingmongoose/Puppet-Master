@@ -1,0 +1,113 @@
+{
+  "schema": "er13.finite_diagnostic_comparison.v1",
+  "block_id": "D-R2-P03",
+  "scope": "FULL",
+  "arm_count": 2,
+  "comparison_authored_after_original_freezes": true,
+  "authored_at_utc": "2026-10-12T04:50:44.702295+00:00",
+  "originals": [
+    {
+      "arm_id": "D-R2-P03-control",
+      "original_manifest": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/control/manifest.json",
+        "bytes": 2331,
+        "sha256": "d19f0194d12e9ee7c9fad3cac5f97cc3da16c0df09ff3cf98223d83fe8f6b1fa"
+      },
+      "frozen_at_utc": "2026-10-12T04:49:53.729824+00:00"
+    },
+    {
+      "arm_id": "D-R2-P03-treatment",
+      "original_manifest": {
+        "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/treatment/manifest.json",
+        "bytes": 2348,
+        "sha256": "27c23761bf5b2cd1497db144b8a41f94ce683a4f6853e8505ad4113db71684a8"
+      },
+      "frozen_at_utc": "2026-10-12T04:49:53.731533+00:00"
+    }
+  ],
+  "comparison_type": "D original failure-qualified diagnostic only",
+  "original_grades_unchanged": true,
+  "arm_results": [
+    {
+      "arm_id": "D-R2-P03-control",
+      "delivery": "FAILED_MISSING_FINAL",
+      "complete_final_source_judgment": "UNASSESSED",
+      "complete_final_axes": [
+        "UNASSESSED",
+        "UNASSESSED",
+        "UNASSESSED",
+        "UNASSESSED",
+        "UNASSESSED",
+        "UNASSESSED"
+      ],
+      "available_science": "UNASSESSED_NO_SCIENCE",
+      "original_findings": [
+        "C-D01",
+        "C-M01",
+        "C-N01"
+      ],
+      "qualification": "Wrong reported input locator; required science/native terminal absent; downstream stages unlaunched."
+    },
+    {
+      "arm_id": "D-R2-P03-treatment",
+      "delivery": "FAILED_MISSING_FINAL",
+      "complete_final_source_judgment": "UNASSESSED",
+      "complete_final_axes": [
+        "UNASSESSED",
+        "UNASSESSED",
+        "UNASSESSED",
+        "UNASSESSED",
+        "UNASSESSED",
+        "UNASSESSED"
+      ],
+      "available_science": "PARTIAL_MATERIAL_RESEARCH_OMISSIONS_FOUND",
+      "original_findings": [
+        "T-D01",
+        "T-M01",
+        "T-S01",
+        "T-S02",
+        "T-S03",
+        "T-S04",
+        "T-C01",
+        "T-C02"
+      ],
+      "qualification": "Investigator/breadth direct-return custody qualify; truth terminal preflight expired/interrupted; reviser unlaunched. Partial draft/criticism assessed separately."
+    }
+  ],
+  "coverage_limits": [
+    "No complete-final source comparison or critic-to-final preservation possible.",
+    "Partial artifact availability differs; this is not comparable complete scientific quality.",
+    "Bounded primary research supports core proposals and identifies material partial research gaps; it does not establish discovery recall/effectiveness.",
+    "Technique-bearing paths/configuration/topology make blinding imperfect.",
+    "Method semantics cannot be collapsed into terminal task status or hashes."
+  ],
+  "observations": {
+    "assigned_arm_count": 2,
+    "missing_final_count": 2,
+    "observed_qualifying_passing_final_count": 0,
+    "complete_final_grade_count": 0,
+    "final_latency_comparison": null,
+    "exact_final_and_last_complete_artifact_finish_utc": null,
+    "exact_finish_status": "UNKNOWN; neither final exists",
+    "provider_activity_and_context_occupancy": null,
+    "billing_comparison": null,
+    "native_stage_receipts": "Treatment investigator elapsed field 487s; breadth 186s (birth/update interval 187s). No critic-truth or control terminal receipt. These are separate native observations, not candidate final latency or billing.",
+    "native_to_task_provenance": "UNKNOWN beyond exact capture/objective custody",
+    "grader_cost_category": "independent_evaluation",
+    "grader_billing": null,
+    "consumption_per_passing_final": null,
+    "quotient_status": "UNDEFINED; zero observed passing finals and incomplete consumption coverage"
+  },
+  "inference": {
+    "comparable_complete_quality": false,
+    "equal_quality_savings_established": false,
+    "cold_full_pipeline_success_established": false,
+    "method_winner_selected": false,
+    "campaign_recipe_selected": false,
+    "confirmation_claimed": false,
+    "finite_diagnostic_signal": "Different observed failure paths and available partial science only. No quality, latency, affordability, reliability or promotion conclusion from this block."
+  },
+  "prohibited_actions_not_taken": [
+    "No source regrade, repeat grader, author feedback/repair, new scientific candidate or Goal, nested delegation, original-clock change, native getter rescue, Git/canon/main/WorkNode/provider/shared-server change."
+  ]
+}

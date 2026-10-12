@@ -1,0 +1,45 @@
+{
+  "schema": "er13.original-output-manifest.v1",
+  "arm_id": "D-R1-P03-control",
+  "frozen_at_utc": "2026-10-12T04:58:59.703475+00:00",
+  "original_judgments_immutable": true,
+  "comparison_started": false,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/coverage.json",
+      "bytes": 10062,
+      "sha256": "a1c8913b367433e3aef20e983380eae4e695a09b413061257eb04dcde2d638cb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/defects.json",
+      "bytes": 2320,
+      "sha256": "d8a1591a87a938c00ad0fd64d54433414b39ccd5ba6de7fee6a3cc12f47b91ae"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/primary-source-index.json",
+      "bytes": 31444,
+      "sha256": "718a292ad76a5ba9af7bc852a1405d248cf951cf51204e870a7062a1474fb732"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/assessment.json",
+      "bytes": 13814,
+      "sha256": "e9db49431db742d30ca26fd4e16afddfd8e07af805389daba53dd813eeac0668"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/assessment.md",
+      "bytes": 3516,
+      "sha256": "eb30cac4ec47792a6b5780e2d2b5f22883c2c7f648a041626415adb75b6e2829"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/evidence/input-integrity.json",
+      "bytes": 2883,
+      "sha256": "87d87ffae2f902d72d4034ee0dd76f3d6c439b04e518592e5d70a15dd20b143f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P03/control/evidence/joplin-repair-context.json",
+      "bytes": 2642,
+      "sha256": "1641ecf999254ba94a0f10544d0d8be6215396b83dd28d10d2d805dd86b2bf50"
+    }
+  ],
+  "self_hash": "Recorded by parent manifest; manifest excludes itself."
+}

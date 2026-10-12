@@ -1,0 +1,86 @@
+{
+  "block_id": "D-R1-P01",
+  "pins": [
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/evaluator-custody/D-R1-P01/rubric.json",
+      "sha256": "a176a7d1f5d6411f8accbb11f99723400036cb1760ad5ea03364c2d93abf5b44",
+      "bytes": 4119
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/evaluator-custody/D-R1-P01/rubric.json.release.json",
+      "sha256": "da68c2ebd354e4442b52092a251f9f52c13ba7b3c9dcb8e63195084ce01f5418",
+      "bytes": 417
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R1-P01-rubric-release.json",
+      "sha256": "0f78a263dab1ca76d2e53ba1451c6089f473f086e871f517137e5c8f3bc05d5a",
+      "bytes": 670
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R1-P01-evaluator-binding.json",
+      "sha256": "ef4dc87d4fcdb61fbebeebcbc8c86cc3855b18cbeed81145afa4e52f706df202",
+      "bytes": 1211
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R1-P01-request.json",
+      "sha256": "7cf106e1fa76c895dd813500b30a81ad864a50ca617652dbb424d644566c257c",
+      "bytes": 9511
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R1-P01-dispatch.raw.json",
+      "sha256": "5497de47c295fa2c904401732084bd621d30aef821ba62bdfd5effc174b205c8",
+      "bytes": 2005
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R1-P01-config.raw.json",
+      "sha256": "0f4b89a02ae175cb0d9f659b72ea7ef8b4fe55d5228604b36c3a8741a0732ac3",
+      "bytes": 843
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R1-P01-terminal.raw.json",
+      "sha256": "dbf556f1a750b9bae606010509594625baba6f5a9c962c61794e3445eff58eed",
+      "bytes": 19817
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R1-P01-settle.raw.json",
+      "sha256": "ec03beaaa03001799b02a127aa01a60ac1f005daf9ebe4741e98bb46c31a2562",
+      "bytes": 117
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R1-P01-settlement-confirmation.raw.json",
+      "sha256": "89ba63c48e1c9ada645c93d75538dd309cf16d546e3e0bf17e8ad6a21ca542fa",
+      "bytes": 5553
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R1-P01-input-verification.json",
+      "sha256": "bfa57221fb9b0646ea1d61855f6dfe8b951e7a0d465f88d8ff5f11deecfc1f5f",
+      "bytes": 32202
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R1-P01-output-verification.json",
+      "sha256": "b639cfa55f7c0e115e9d5a65b160daba61e632a43adb5d1ca8d5d8bfce7844a6",
+      "bytes": 17628
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R1-P01-independent-evaluation-cost.json",
+      "sha256": "e8676f63cabee5a4809b63bce11d6a91fdae13e44e066b4146aaeee96038eb18",
+      "bytes": 848
+    },
+    {
+      "path": "ER13_RUNTIME/state/d-rubric-mechanical-authorization-v1.json",
+      "sha256": "760e907ca7028ce6a2e21a6225e409a2c151ba6bfdd9d7d1f45e1167ed73e675",
+      "bytes": 1983
+    },
+    {
+      "path": "ER13_RUNTIME/state/d-selection-lock-v1.json",
+      "sha256": "440170c9bc813a76de2622837863c6531cf320f8767e8fab7eb34ed5e4cef9b6",
+      "bytes": 14095
+    },
+    {
+      "path": "ER13_RUNTIME/state/account-routing-amendment-v1.json",
+      "sha256": "7094c3ee0b12087616f70226b9f00906b41ccfdd2f5747e6ef869c37627ccb18",
+      "bytes": 1884
+    }
+  ],
+  "scope": "Exact frozenpair only; normalize private route metadata; no new grading"
+}

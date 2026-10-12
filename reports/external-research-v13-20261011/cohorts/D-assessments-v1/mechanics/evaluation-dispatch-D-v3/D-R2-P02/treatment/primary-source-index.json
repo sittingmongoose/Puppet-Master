@@ -1,0 +1,610 @@
+{
+  "schema": "er13.independent_primary_index.v1",
+  "arm_id": "D-R2-P02-treatment",
+  "research_is_independent": true,
+  "records": [
+    {
+      "id": "P01",
+      "family": "wasmtime_controls",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/3c8a3e79aa3188a1a12b3aebbaa097abccceac92/crates/wasmtime/src/config.rs",
+      "version_context": "Wasmtime 49.0.2, exact release commit",
+      "locator": "consume_fuel; epoch_interruption; wasm_threads; component async/threading configuration",
+      "independent_observation": "Fuel starts disabled; stores require supplied fuel. Epochs require a deadline and cannot interrupt every blocking host operation or bulk-transfer duration. Thread compilation differs from spawn authority. Compiler/features matter.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": "2763a78934a53e38e586b5b8de281fab651c7400652c3b05588e1e9d2800d39a",
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P02",
+      "family": "wasmtime_controls",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/3c8a3e79aa3188a1a12b3aebbaa097abccceac92/crates/wasmtime/src/runtime/limits.rs",
+      "version_context": "Wasmtime 49.0.2, exact release commit",
+      "locator": "ResourceLimiter; StoreLimitsBuilder; StoreLimits::memory_growing/table_growing",
+      "independent_observation": "Memory/table size caps are per object. Defaults leave sizes unlimited; object counts are separate. This is not a process-wide or host-allocation budget.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": "07d25368279a57e5767601f8e98c8401452bfe60534570f4d6d1035621ca49ac",
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P03",
+      "family": "wasmtime_controls",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/3c8a3e79aa3188a1a12b3aebbaa097abccceac92/crates/wasmtime/src/runtime/store.rs",
+      "version_context": "Wasmtime 49.0.2, exact release commit",
+      "locator": "set_epoch_deadline and Store API context",
+      "independent_observation": "Default epoch deadline is already elapsed. Setting a future deadline and incrementing the engine epoch are separate obligations.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": "0fc153b8ec77707258b11a744204a4098524d057c371576bd5fbbd6df2da8530",
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P04",
+      "family": "upstream_tests",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/3c8a3e79aa3188a1a12b3aebbaa097abccceac92/tests/all/fuel.rs",
+      "version_context": "Wasmtime 49.0.2, exact release commit",
+      "locator": "run/fuel_consumed; iloop and iloop_aborts, especially lines 452-459",
+      "independent_observation": "The source enables fuel, supplies 10,000, instantiates synthetic start-function loops/bulk operations, and asserts OutOfFuel.",
+      "coverage": "COMPLETE",
+      "limits": "A configured upstream test oracle; inspected, not run. No preview host, OS descendants or shared-reader cleanup covered.",
+      "body_sha256": "b8de0ad1a3bce77a889775f825bb117d515cd796f8f8f5547652d57b3167ab2b",
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P05",
+      "family": "upstream_tests",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/3c8a3e79aa3188a1a12b3aebbaa097abccceac92/tests/all/limits.rs",
+      "version_context": "Wasmtime 49.0.2, exact release commit",
+      "locator": "test_limits; growth_trap lines 1111-1165",
+      "independent_observation": "The source installs its limiter, tests host/exported memory and table growth, and checks guest memory.grow failure.",
+      "coverage": "COMPLETE",
+      "limits": "A configured upstream test oracle; inspected, not run. No preview host, OS descendants or shared-reader cleanup covered.",
+      "body_sha256": "a7357a48fbd96e74512ca149d31a1893b542ba3109f8ac4f61c99fe778e47933",
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P06",
+      "family": "upstream_tests",
+      "url": "https://github.com/WebAssembly/wasi-testsuite/blob/5ea11d8fe958beb60fb871d6852ae020e45c0433/tests/rust/wasm32-wasip3/src/bin/filesystem-dotdot.rs",
+      "version_context": "5ea11d8fe958beb60fb871d6852ae020e45c0433; test ABI 0.3.0",
+      "locator": "imports@0.3.0; test_symlink lines 21-79",
+      "independent_observation": "One preopened fixture root; child descriptor attempts ../x.cleanup and expects NotPermitted. The test removes its own fixtures.",
+      "coverage": "COMPLETE",
+      "limits": "ABI differs from the separately cited filesystem 0.3.1 spec. No execution or whole-host guarantee.",
+      "body_sha256": "8d499ea7ffaaa9b5ff3f7476da9b897fd27e7571a5da706eefc31706bd73928f",
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P07",
+      "family": "upstream_tests",
+      "url": "https://github.com/WebAssembly/wasi-testsuite/blob/5ea11d8fe958beb60fb871d6852ae020e45c0433/tests/rust/wasm32-wasip3/src/bin/filesystem-rename.rs",
+      "version_context": "5ea11d8fe958beb60fb871d6852ae020e45c0433; test ABI 0.3.0",
+      "locator": "imports@0.3.0; test_rename lines 21-98",
+      "independent_observation": "Parent traversal and absolute rename targets are rejected; the symlink case is conditional on symlink support. No shared artifact lease race tested.",
+      "coverage": "COMPLETE",
+      "limits": "ABI differs from the separately cited filesystem 0.3.1 spec. No execution or whole-host guarantee.",
+      "body_sha256": "9d87d030f2370f861a2436fbacd42adc84d127534981b435aa65376354bf5ad9",
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P08",
+      "family": "wasi_filesystem",
+      "url": "https://github.com/WebAssembly/WASI/blob/90105ffc2a4eed594909f9df2f473596500b49d2/proposals/filesystem/imports.md",
+      "version_context": "Exact commit 90105ffc2a4eed594909f9df2f473596500b49d2; filesystem 0.3.1",
+      "locator": "Descriptor-relative resolution and host variation",
+      "independent_observation": "Traversal is capability-relative; case, unlink with open descriptors, durability and concurrent-writer atomicity vary by host.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": "4d149bbd604efe5f9230e4866da97ef7a574aaaf6eb895231ed19a7c1c8d16b4",
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P13",
+      "family": "runtime_history",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-j366-h8gg-77pm",
+      "version_context": "2026-10-02; patched 36.0.17, 48.0.4, 49.0.2",
+      "locator": "Impact/versions/workaround",
+      "independent_observation": "Preview 0 adapter work omitted fuel charging; CLI defaults and library explicit enablement differ. WASIp1/2/3 excluded.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P14",
+      "family": "runtime_history",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-gqmc-89g8-p25r",
+      "version_context": "2026-10-02; patched 36.0.17, 48.0.4, 49.0.2",
+      "locator": "WASIp2 SinkOutputStream; write-zeroes; absent stdout/stderr",
+      "independent_observation": "Unconfigured stdio selected an unbounded sink allocation. Configured streams have independent limits. Bounded check_write is the stated workaround.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P15",
+      "family": "runtime_history",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-c9gc-w9vx-w86p",
+      "version_context": "2026-09-24; 49.0.0 affected, 49.0.1 patched; older branch patches also listed",
+      "locator": "Outgoing HTTP body write/check-write",
+      "independent_observation": "An exposed outgoing HTTP body accepted writes above its allowance and retained host storage. It does not apply merely because Wasmtime is present.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P16",
+      "family": "runtime_history",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-4ch3-9j33-3pmj",
+      "version_context": "2026-06-24; patched 24.0.11, 36.0.12, 45.0.3, 46.0.1",
+      "locator": "Two preopens; FilePerms; hardlink/rename",
+      "independent_observation": "Different file rights and mutable directories enabled a hardlink/rename bypass. The advisory excludes symlinks as this attack vector.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P17",
+      "family": "runtime_history",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-vqjp-4c8c-hfgg",
+      "version_context": "2026-08-20; patched 24.0.13, 36.0.14, 46.0.3, 47.0.4; 48+ unaffected",
+      "locator": "Impact; cap-std/openat2 exception",
+      "independent_observation": "A trailing-slash/symlink escape affected specified releases. Linux using openat2 after 5.6 is excluded for this bug; macOS/older Linux affected; do not invent Windows applicability.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P18",
+      "family": "runtime_history",
+      "url": "https://github.com/bytecodealliance/wasmtime/security/advisories/GHSA-852m-cvvp-9p4w",
+      "version_context": "2026-02-24; patches through 42.0.0",
+      "locator": "Host allocations, handles, WIT lists/strings; default tuning",
+      "independent_observation": "Earlier patched branches left knobs large; 42+ tuned defaults address that issue. Custom host APIs still need review; this does not cover the later absent-stdio sink bug.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P19",
+      "family": "runtime_history",
+      "url": "https://github.com/bytecodealliance/wasmtime/releases/tag/v49.0.2",
+      "version_context": "Released 2026-10-02; release commit 3c8a3e79aa3188a1a12b3aebbaa097abccceac92",
+      "locator": "Fixed entries and release identity",
+      "independent_observation": "The release carries the fuel and no-stdio fixes and other API-conditioned security fixes. Latest at inspection is a time-bounded observation.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P20",
+      "family": "runtime_history",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/3c8a3e79aa3188a1a12b3aebbaa097abccceac92/docs/security-what-is-considered-a-security-vulnerability.md",
+      "version_context": "Exact 49.0.2 release commit",
+      "locator": "Guest values and execution/compilation DoS policy",
+      "independent_observation": "Guest values need validation; execution DoS is covered by the policy, compilation DoS is treated separately.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": "2866f66d4d1c31d55893c893a86c71a7a0d34264204121616bf84baacb874909",
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P21",
+      "family": "process_rendering",
+      "url": "https://www.electronjs.org/docs/latest/tutorial/sandbox",
+      "version_context": "Rolling Electron docs; no release chosen",
+      "locator": "Default since Electron 20; preload; IPC; disablement",
+      "independent_observation": "Node integration disables renderer sandboxing; preload can leak authority. CPU/memory and application update duties remain.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P22",
+      "family": "process_rendering",
+      "url": "https://www.electronjs.org/docs/latest/api/utility-process",
+      "version_context": "Rolling Electron docs; no release chosen",
+      "locator": "fork env/session/stdio; child.kill",
+      "independent_observation": "Node and message ports are enabled. Environment and network defaults remain ambient; POSIX kill is graceful SIGTERM, not a whole-tree hard-stop API.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P24",
+      "family": "process_rendering",
+      "url": "https://doc.rust-lang.org/std/process/struct.Child.html",
+      "version_context": "Rolling Rust std; Child::kill stable since 1.0",
+      "locator": "kill; wait; try_wait",
+      "independent_observation": "Rust kill targets the direct child and maps to SIGKILL on Unix. Waiting/reaping and descendant containment are distinct.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P27",
+      "family": "extension_interfaces",
+      "url": "https://code.visualstudio.com/api/extension-guides/web-extensions",
+      "version_context": "Rolling VS Code docs at independent access",
+      "locator": "Browser limitations and declarative contributions",
+      "independent_observation": "Web extensions lack Node/child processes but can create web workers and fetch subject to web conditions.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P28",
+      "family": "extension_interfaces",
+      "url": "https://code.visualstudio.com/api/advanced-topics/extension-host",
+      "version_context": "Rolling VS Code docs at independent access",
+      "locator": "Configurations and runtimes",
+      "independent_observation": "Local/remote Node and web Worker placement does not establish notebook authorization. Reopened directly in this evaluation; candidate excerpt limitation remains historical.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P29",
+      "family": "extension_interfaces",
+      "url": "https://code.visualstudio.com/api/extension-guides/webview",
+      "version_context": "Rolling VS Code docs at independent access",
+      "locator": "Security; localResourceRoots; persistence",
+      "independent_observation": "Resource roots and sanitization are insufficient alone. Capability minimization, CSP and lifecycle costs remain distinct.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P30",
+      "family": "extension_interfaces",
+      "url": "https://code.visualstudio.com/api/extension-guides/custom-editors",
+      "version_context": "Rolling VS Code docs at independent access",
+      "locator": "Document/view model; invalid structured text; lifecycle",
+      "independent_observation": "Invalid JSON/XML needs graceful error handling; document and view disposal differ; read-only providers exist.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P31",
+      "family": "extension_interfaces",
+      "url": "https://code.visualstudio.com/docs/editing/workspaces/workspace-trust",
+      "version_context": "Rolling VS Code docs at independent access",
+      "locator": "Restricted Mode caution",
+      "independent_observation": "Workspace Trust cannot prevent a malicious extension from ignoring its restrictions.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P32",
+      "family": "extension_history",
+      "url": "https://github.com/microsoft/vscode/issues/321901",
+      "version_context": "Reporter 1.125.0, Windows; milestone 1.125.1",
+      "locator": "Body and discussion, including confirmation/closed/verified",
+      "independent_observation": "The reported Search/Git stall is supported. Discussion includes patched-extension/test-build confirmations. Body alone does not identify a fix commit; no application-transfer guarantee inferred.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P34",
+      "family": "storage_search",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "version_context": "Rolling SQLite docs; chosen engine/journal mode unspecified",
+      "locator": "Read/write transactions; DEFERRED; SQLITE_BUSY",
+      "independent_observation": "Multiple readers and one writer; snapshots and busy upgrades require explicit handling.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P35",
+      "family": "storage_search",
+      "url": "https://www.sqlite.org/fts5.html",
+      "version_context": "Rolling SQLite docs; chosen engine/journal mode unspecified",
+      "locator": "External content tables/pitfalls; rebuild/integrity-check",
+      "independent_observation": "The application synchronizes external content. Creating triggers does not backfill existing rows; index drift and stale provenance require explicit handling.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P36",
+      "family": "storage_search",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "version_context": "Rolling SQLite docs; chosen engine/journal mode unspecified",
+      "locator": "Single-file/rollback-journal commit and assumptions",
+      "independent_observation": "Database commit scope does not atomically publish arbitrary external artifact files or establish deletion ownership.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P37",
+      "family": "native_os",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+      "version_context": "Updated 2025-07-14; nested jobs Windows 8+/Server 2012+",
+      "locator": "Managing processes, breakaway, termination, security limits",
+      "independent_observation": "Job membership has creation/breakaway exceptions. Termination affects associated members; security limits are separate per-process controls.",
+      "coverage": "PARTIAL",
+      "limits": "Docs checked. Full launch callers, OS code/test and release/fix history UNASSESSED after decisive source omission.",
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P38",
+      "family": "native_os",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/secauthz/appcontainer-isolation",
+      "version_context": "Rolling Microsoft Learn",
+      "locator": "File/network/process isolation",
+      "independent_observation": "AppContainer is a capability/identity/ACL mechanism, separate from job resource/termination management.",
+      "coverage": "PARTIAL",
+      "limits": "Packaged/unpackaged launch callers and tests UNASSESSED.",
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P39",
+      "family": "native_os",
+      "url": "https://www.kernel.org/doc/html/v6.6/admin-guide/cgroup-v2.html",
+      "version_context": "Linux v6.6 docs",
+      "locator": "cgroup.kill; memory.max; cpu.max",
+      "independent_observation": "Cgroup kill covers descendants and handles concurrent forks. Memory may temporarily overshoot; CPU bandwidth is not a total wall-clock deadline.",
+      "coverage": "PARTIAL",
+      "limits": "Exact kernel code/callers/platform history UNASSESSED.",
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P40",
+      "family": "native_os",
+      "url": "https://www.kernel.org/doc/html/v6.6/userspace-api/seccomp_filter.html",
+      "version_context": "Linux v6.6 docs",
+      "locator": "Scope, inheritance, no_new_privs, architecture pitfalls",
+      "independent_observation": "Syscall filters are not a complete sandbox; allowed fork/exec inherit filters and architecture checks matter.",
+      "coverage": "PARTIAL",
+      "limits": "man7 seccomp and setsid timed out through web and direct fetch; kernel documentation used. Full code/test/history UNASSESSED.",
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P41",
+      "family": "native_os",
+      "url": "https://developer.apple.com/documentation/security/discovering-and-diagnosing-app-sandbox-violations?changes=_7",
+      "version_context": "Rolling official Apple search excerpt",
+      "locator": "Separate helper capabilities",
+      "independent_observation": "Direct child inherits sandbox. Apple also lists XPC, login items and helper apps for differing capabilities.",
+      "coverage": "PARTIAL",
+      "limits": "JS page and Markdown link fetch did not expose full body. Official search excerpt corroborated core claim; complete API/code/test context UNASSESSED.",
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P42",
+      "family": "native_os",
+      "url": "https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html",
+      "version_context": "Archived official documentation; historical context",
+      "locator": "Sandbox inheritance entitlements",
+      "independent_observation": "Child inheritance requires the documented entitlement pattern; static rights differ from dynamically obtained file access.",
+      "coverage": "PARTIAL",
+      "limits": "Archive applicability to a selected current macOS implementation remains UNASSESSED.",
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P43",
+      "family": "upstream_tests",
+      "url": "https://docs.wasmtime.dev/contributing-testing.html",
+      "version_context": "Rolling contributor docs",
+      "locator": "WASI integration tests and test-programs",
+      "independent_observation": "Commands and source directories are documented; guidance is not an inspected concrete test oracle or executed result.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": null,
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P44",
+      "family": "licenses",
+      "url": "https://github.com/bytecodealliance/wasmtime/blob/3c8a3e79aa3188a1a12b3aebbaa097abccceac92/LICENSE",
+      "version_context": "Wasmtime 49.0.2",
+      "locator": "License and exceptions",
+      "independent_observation": "Apache-2.0 with LLVM exception. No upstream code was redistributed in these assessment artifacts.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": "268872b9816f90fd8e85db5a28d33f8150ebb8dd016653fb39ef1f94f2686bc5",
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    },
+    {
+      "id": "P45",
+      "family": "licenses",
+      "url": "https://github.com/WebAssembly/wasi-testsuite/blob/5ea11d8fe958beb60fb871d6852ae020e45c0433/LICENSE",
+      "version_context": "5ea11d8fe958beb60fb871d6852ae020e45c0433",
+      "locator": "License",
+      "independent_observation": "Apache-2.0. Upstream source links and compact authored observations retained; no test corpus copied.",
+      "coverage": "COMPLETE",
+      "limits": null,
+      "body_sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "research_window_utc": [
+        "2026-10-12T05:07:00Z",
+        "2026-10-12T05:19:33.712725+00:00"
+      ],
+      "execution": "Read only; no upstream or product code executed"
+    }
+  ],
+  "source_counts_not_quality": true,
+  "scope": "Available partial science only; complete final missing",
+  "unavailable": [
+    "Version-specific docs.rs Config/StoreLimitsBuilder inaccessible through web; exact release source used",
+    "man7 seccomp/setsid fetch timeouts; kernel seccomp documentation used",
+    "Apple JS/Markdown full-body access unavailable; explicit search/archive limitations retained"
+  ],
+  "unassessed": [
+    "Complete OS and Deno code/test/fix/release history beyond listed context",
+    "Future product behavior/physical deployment (outside deliverable)"
+  ]
+}

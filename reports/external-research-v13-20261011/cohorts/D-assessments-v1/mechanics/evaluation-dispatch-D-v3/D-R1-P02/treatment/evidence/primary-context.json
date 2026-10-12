@@ -1,0 +1,34 @@
+{
+  "schema": "er13.compact_primary_evidence.v1",
+  "arm_id": "D-R1-P02-treatment",
+  "independent": true,
+  "records": [
+    {
+      "id": "E23-context",
+      "urls": [
+        "https://github.com/libvips/libvips/issues/4343#issuecomment-2798834668",
+        "https://github.com/libvips/libvips/issues/4343#issuecomment-2809904419",
+        "https://github.com/libvips/libvips/pull/4467"
+      ],
+      "observation": "Public issue diagnosis separates output-profile direction from alpha-range conversion; merged patch repairs scaling. Samples remain private; no reproduction claimed.",
+      "merge_utc": "2025-04-16T14:58:12Z",
+      "commit": "a7e8f464e3dec9b1efcc0c81f2978b1e0646b2fb"
+    },
+    {
+      "id": "E23-tagged-code",
+      "url": "https://raw.githubusercontent.com/libvips/libvips/v8.18.7/libvips/colour/colour.c",
+      "observation": "Static tagged code compares interpretation alpha maxima, scales extra bands before casting and reattaching. This supports bounded historical fix context, not universal image fidelity.",
+      "license": "LGPL-2.0-or-later; full copyright/license header stays at linked original; no source code copied."
+    },
+    {
+      "id": "E20-context",
+      "urls": [
+        "https://github.com/python-pillow/Pillow/pull/8556/files",
+        "https://github.com/python-pillow/Pillow/issues/8554"
+      ],
+      "observation": "Patch suppresses libtiff transpose; regression test checks mirrored old-style JPEG TIFF. Earlier tag cleanup already prevented a later helper transpose.",
+      "merge_utc": "2025-03-29T16:25:58Z"
+    }
+  ],
+  "not_product_validation": true
+}

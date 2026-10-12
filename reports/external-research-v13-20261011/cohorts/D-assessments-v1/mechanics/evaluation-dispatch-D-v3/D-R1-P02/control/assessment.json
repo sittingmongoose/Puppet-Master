@@ -1,0 +1,162 @@
+{
+  "schema": "er13.original_assessment.v1",
+  "block_id": "D-R1-P02",
+  "original": true,
+  "evaluated_at_utc": "2026-10-12T04:58:15.832293+00:00",
+  "independence": "Original evaluator; no repairs, author feedback, new Goal, extra grader or delegation.",
+  "imperfect_blinding": "Arm paths, topology and technique-bearing assignments expose treatment identity.",
+  "governing_contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+  "assignment_packet_sha256": "f090aca29625124f8f5c3332e5abf87306c53619a531a4703628e052dc1358b4",
+  "arms": [
+    {
+      "arm_id": "D-R1-P02-control",
+      "scope": "FULL",
+      "source_judgment": "FAIL",
+      "source_assessment": {
+        "judgment": "FAIL",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [
+          "D01"
+        ],
+        "finite_not_universal": true,
+        "rationale": "Material unsupported historical resolution and missed fixing mechanism."
+      },
+      "coverage": {
+        "axes": {
+          "1": "COMPLETE",
+          "2": "COMPLETE",
+          "3": "COMPLETE",
+          "4": "COMPLETE",
+          "5": "COMPLETE",
+          "6": "COMPLETE"
+        },
+        "detail_file": "coverage.json"
+      },
+      "defects": {
+        "material": [
+          "D01"
+        ],
+        "nonmaterial": [
+          "N01"
+        ],
+        "detail_file": "defects.json"
+      },
+      "delivery": {
+        "status": "COMPLETE_FINAL_PRESENT",
+        "frozen_final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P02-control/run/D-R1-P02-control/control/terminal-handoffs/reviser/files/final.md",
+        "bytes": 25611,
+        "sha256": "0f4df9d164f816dd8a45903cd5656d1307db82db4d6943ccb8c29e0beea7f5b0",
+        "all_manifest_members_verified": true
+      },
+      "time_eligibility": {
+        "whole_allowance_seconds": 3600,
+        "t0_utc": "2026-10-12T04:17:47.866Z",
+        "whole_deadline_utc": "2026-10-12T05:17:47.866Z",
+        "original_clocks_unchanged": true,
+        "stages": [
+          {
+            "stage": "investigator",
+            "prepared_and_requested_utc": "2026-10-12T04:17:48.740Z",
+            "dispatch_capture_utc": "2026-10-12T04:17:49.742Z",
+            "stage_deadline_utc": "2026-10-12T04:47:48.740Z",
+            "native_birth_field_utc": "2026-10-12T04:17:56+00:00",
+            "native_terminal_field_utc": "2026-10-12T04:25:35+00:00",
+            "native_reported_elapsed_seconds": 458,
+            "task_terminal": "completed",
+            "pending_children": false,
+            "independent_native_to_task_linkage": "UNKNOWN",
+            "actual_provider_start_or_finish": "UNKNOWN",
+            "within_saved_stage_clock": true
+          },
+          {
+            "stage": "critic",
+            "prepared_and_requested_utc": "2026-10-12T04:26:11.990Z",
+            "dispatch_capture_utc": "2026-10-12T04:26:14.265Z",
+            "stage_deadline_utc": "2026-10-12T04:38:11.990Z",
+            "native_birth_field_utc": "2026-10-12T04:26:29+00:00",
+            "native_terminal_field_utc": "2026-10-12T04:33:24+00:00",
+            "native_reported_elapsed_seconds": 415,
+            "task_terminal": "completed",
+            "pending_children": false,
+            "independent_native_to_task_linkage": "UNKNOWN",
+            "actual_provider_start_or_finish": "UNKNOWN",
+            "within_saved_stage_clock": true
+          },
+          {
+            "stage": "reviser",
+            "prepared_and_requested_utc": "2026-10-12T04:34:08.200Z",
+            "dispatch_capture_utc": "2026-10-12T04:34:10.257Z",
+            "stage_deadline_utc": "2026-10-12T04:52:08.200Z",
+            "native_birth_field_utc": "2026-10-12T04:34:20+00:00",
+            "native_terminal_field_utc": "2026-10-12T04:41:14+00:00",
+            "native_reported_elapsed_seconds": 413,
+            "task_terminal": "completed",
+            "pending_children": false,
+            "independent_native_to_task_linkage": "UNKNOWN",
+            "actual_provider_start_or_finish": "UNKNOWN",
+            "within_saved_stage_clock": true
+          }
+        ],
+        "eligibility": "WITHIN_SUPPLIED_FROZEN_CLOCKS",
+        "all_reported_native_terminals_within_stage_deadlines": true,
+        "packet_freeze_utc": "2026-10-12T04:43:16.050784+00:00",
+        "final_artifact_actual_finish_utc": "UNKNOWN",
+        "last_provider_activity_utc": "UNKNOWN",
+        "request_to_quiet_final_proxy": "UNKNOWN; exact status is terminal but has no actual quiet timestamp",
+        "caveat": "Capture fields and frozen packet timestamps are observable records, not independently verified native-to-task or artifact-finish telemetry. No clock reconstruction/reset."
+      },
+      "method_compliance": {
+        "observed_topology": [
+          "investigator",
+          "critic",
+          "reviser"
+        ],
+        "package_conformance": "OBSERVED_WITH_LIMITATIONS",
+        "discovery_reveal_hash_matches": true,
+        "one_saved_birth_per_assigned_stage": true,
+        "precompletion_science_hashes_match_terminal_handoff": true,
+        "independently_verified_preinput_activation_order": "UNKNOWN",
+        "no_extra_children_in_exact_terminal_status": true,
+        "full_scope_science_delivered": true,
+        "limitation": "Full private native transcripts not accessed; all behavioral compliance is not proved by saved receipts."
+      },
+      "native_identity_provenance": {
+        "capture_custody": "VERIFIED",
+        "activation_and_completion_identity_fields_match": true,
+        "direct_return_capture_check_present": true,
+        "attempt_marker_is_native_receipt": false,
+        "independent_native_identity_or_task_linkage": "UNKNOWN",
+        "independent_provenance_beyond_assigned_capture_objective_custody": "UNKNOWN",
+        "raw_identity_or_native_transcript_published": false
+      },
+      "resource_billing_coverage": {
+        "category": "candidate_product",
+        "coverage": "PARTIAL",
+        "saved_cumulative_native_counter_fields_observed": true,
+        "native_counter_values_published": false,
+        "native_counters_summed": false,
+        "verified_native_window_fields_available": true,
+        "provider_activity": "UNKNOWN",
+        "open_context_residency": "UNKNOWN",
+        "input_cached_output_reasoning_breakdown": "UNKNOWN",
+        "subscription_consumption": "UNKNOWN",
+        "billing": "UNKNOWN",
+        "dollars": "UNKNOWN",
+        "assigned_stage_attempts": 3,
+        "reported_failed_or_interrupted_stages": [],
+        "zero_failure_claim_scope": "No such failures in assigned frozen packet; unreported attempts UNKNOWN.",
+        "evaluator_cost_category": "independent_evaluation",
+        "evaluator_billing": "UNKNOWN",
+        "independent_evaluation": {
+          "first_observed_clock_utc": "2026-10-12T04:44:23Z",
+          "record_written_utc": "2026-10-12T04:58:15.832231+00:00",
+          "provider_activity": "UNKNOWN",
+          "billing": "UNKNOWN",
+          "shared_lookup_allocation": "UNKNOWN; one matched evaluation, no duplicated per-arm charge"
+        },
+        "support_preparation_publication_root_costs": "UNKNOWN; separate from candidate_product",
+        "unknown_is_zero": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "schema": "er13.independent_primary_index.v1",
+  "arm_id": "D-R2-P03-control",
+  "independent_research": true,
+  "candidate_scientific_claims_available": false,
+  "scope_note": "Governing lookup only; cannot reconstruct absent control science",
+  "sources": [
+    {
+      "id": "E01",
+      "title": "PowerSync update-conflict contract",
+      "url": "https://docs.powersync.com/handling-writes/handling-update-conflicts",
+      "version_or_context": "Rolling official docs",
+      "locator": "Handling Update Conflicts; operations/idempotency and CRDT paragraphs",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Ordered upload queue, application-owned backend, server-received per-field LWW/delete-wins example, repeated delivery. Transport does not provide domain approval or roster validity.",
+      "source_family": "collaboration_sync",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E03",
+      "title": "PowerSync write/validation errors",
+      "url": "https://docs.powersync.com/handling-writes/handling-write-validation-errors",
+      "version_or_context": "Rolling official docs",
+      "locator": "Technical Details; Backend Recommendations; rollback",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Permanent business rejection may be acknowledged with HTTP 2xx and error details/conflict table; transient failures remain queued. Server-state reconciliation after an empty queue can replace local edits. Durable intent storage and queue acknowledgment must be coordinated.",
+      "source_family": "collaboration_sync",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E20",
+      "title": "PostgreSQL constraints",
+      "url": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+      "version_or_context": "PostgreSQL 18",
+      "locator": "5.5.1 CHECK; foreign keys; 5.5.6 EXCLUDE",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Cross-row CHECK cannot guarantee consistency. EXCLUDE/FK/UNIQUE apply only to expressed relationships/operators; null/immutability caveats matter. Center qualification/dependency rules still need an explicit policy owner.",
+      "source_family": "relational_transactions",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E21",
+      "title": "PostgreSQL RLS",
+      "url": "https://www.postgresql.org/docs/18/ddl-rowsecurity.html",
+      "version_or_context": "PostgreSQL 18",
+      "locator": "5.9 enable/default-deny; owners; BYPASSRLS; policy examples",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Disabled by default; enabled without policies defaults to deny. Owner normally bypasses unless FORCE, superusers/BYPASSRLS bypass. Referential checks bypass RLS; use actual app-role tests.",
+      "source_family": "authorization",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E26",
+      "title": "SQLite WAL and repair",
+      "url": "https://www.sqlite.org/wal.html",
+      "version_or_context": "WAL 3.7.0+; reset fix 3.51.3; backports 3.44.6/3.50.7",
+      "locator": "Overview; checkpoints/concurrency; section 11 WAL-reset bug",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Same-host shared memory and one writer caveats confirmed. Rare corruption race involves multiple connections with overlapping write/checkpoint activity. Fixes are version-specific; chosen embedded library is unknown. No inferred occurrence or reproduced corruption.",
+      "source_family": "local_data",
+      "coverage": "PARTIAL"
+    },
+    {
+      "id": "E31",
+      "title": "CouchDB conflict model",
+      "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+      "version_or_context": "CouchDB 3.5 docs",
+      "locator": "2.3.1–2.3.4; default winner/views; conflicts/open_revs",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Replicated competing leaves survive but ordinary reads/views surface one winner; same-node stale _rev returns 409. Explicit conflict inspection/merge needed; historical bodies are compacted.",
+      "source_family": "document_replication",
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "E38",
+      "title": "Transactional outbox authority",
+      "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/transactional-outbox.html",
+      "version_or_context": "Rolling primary architecture guidance",
+      "locator": "Intent; issues; relational outbox implementation",
+      "observed_operation": "Independent primary-source read; code/tests inspected only where stated; not executed",
+      "access_window_utc": {
+        "start": "2026-10-12T04:36:05Z",
+        "end": "2026-10-12T04:49:06Z"
+      },
+      "governing_context_and_applicability": "Data/outbox commit atomically; later dispatch can duplicate, ordering and idempotent consumers matter. General pattern supports proposed version-pinned outbox; no AWS implementation or external atomic-delivery claim inferred.",
+      "source_family": "publication_consumers",
+      "coverage": "COMPLETE"
+    }
+  ],
+  "license_and_notice_handling": "Only original annotations and public links retained. No upstream corpus/code copied. Package license notices remain linked; deployment license inventory PARTIAL.",
+  "lookup_failures_and_limits": [
+    "Several guessed public SDK doc/source paths returned 404/internal error; relevant definitions/tests and governing pages then found through bounded primary links/API listings.",
+    "Current Replicache package license lookup unavailable at guessed path; old v12 license-key page not applied to current API.",
+    "No recursive repository/campaign tree or full history scan. Public exact file/PR context only."
+  ]
+}

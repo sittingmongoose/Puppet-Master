@@ -1,0 +1,48 @@
+{
+  "schema": "er13.original_output_manifest.v1",
+  "block_id": "D-R2-P03",
+  "arm_id": "D-R2-P03-treatment",
+  "original_assessment": true,
+  "frozen_at_utc": "2026-10-12T04:49:53.731533+00:00",
+  "comparison_started": false,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/treatment/assessment.md",
+      "relative_path": "assessment.md",
+      "bytes": 7246,
+      "sha256": "4632f24c47b1c70263f2bf5f8574556bfcc8f7525f53880b7a8cd3a3ec375596"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/treatment/assessment.json",
+      "relative_path": "assessment.json",
+      "bytes": 14175,
+      "sha256": "ce950af608ddd0870a934c582ccc8651c00c633c7d3c5c98e1a3cab61d29c18c"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/treatment/coverage.json",
+      "relative_path": "coverage.json",
+      "bytes": 17991,
+      "sha256": "eb9ad0e227f583b16c16bbb3adaaa41519dd11298e68f010b93e8ad86bca3689"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/treatment/defects.json",
+      "relative_path": "defects.json",
+      "bytes": 10480,
+      "sha256": "ad21172cac87dce46a2e53e07bebedc59616c1c6ef36e00d93f258fb9ae57345"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/treatment/primary-source-index.json",
+      "relative_path": "primary-source-index.json",
+      "bytes": 37730,
+      "sha256": "0a9177e3a72fe06cdce94f28ccbb33b30370cb9e657e31aa6bc0bf87775c07a6"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/treatment/evidence/input-audit.json",
+      "relative_path": "evidence/input-audit.json",
+      "bytes": 24655,
+      "sha256": "d39237a4d0965878aeb051cb7360a64faf863c3852d168323c40ba219f20773d"
+    }
+  ],
+  "self_hash_policy": "Manifest excludes itself; exact manifest size/hash is reported externally and bound in the later comparison manifest.",
+  "immutability": "Exclusive initial creation, manifest hashes, read-only original files/directories; no original grade edits after this freeze."
+}

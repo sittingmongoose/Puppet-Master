@@ -1,0 +1,48 @@
+{
+  "schema": "er13.original_output_manifest.v1",
+  "block_id": "D-R2-P03",
+  "arm_id": "D-R2-P03-control",
+  "original_assessment": true,
+  "frozen_at_utc": "2026-10-12T04:49:53.729824+00:00",
+  "comparison_started": false,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/control/assessment.md",
+      "relative_path": "assessment.md",
+      "bytes": 3578,
+      "sha256": "e5615de93ca5a1e477dfb9148ff38672aed663b5b089371802b29250a48bb4e2"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/control/assessment.json",
+      "relative_path": "assessment.json",
+      "bytes": 10794,
+      "sha256": "4e518d2e3532b8c483df07a4468ec5f05a7b54be58d9b56a64fa961abacdaa9b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/control/coverage.json",
+      "relative_path": "coverage.json",
+      "bytes": 10868,
+      "sha256": "a8bd0260c765f92bfec007c5bb47c9ed3c83ad475ef9ef9c25769e5ce08123f8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/control/defects.json",
+      "relative_path": "defects.json",
+      "bytes": 1900,
+      "sha256": "8435227ad2a2afd93da2ca1cb4b0962e68046607040fc289dd046a7ad9240b94"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/control/primary-source-index.json",
+      "relative_path": "primary-source-index.json",
+      "bytes": 6985,
+      "sha256": "f6d7645e318786e62a38a57ebab6b7f41bee6e2d0b1eef5d297703a7de604c13"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P03/control/evidence/input-audit.json",
+      "relative_path": "evidence/input-audit.json",
+      "bytes": 8595,
+      "sha256": "4061c3a14d108387feb177d310edcac1c0d310aebdd08fcf77cad191653cc563"
+    }
+  ],
+  "self_hash_policy": "Manifest excludes itself; exact manifest size/hash is reported externally and bound in the later comparison manifest.",
+  "immutability": "Exclusive initial creation, manifest hashes, read-only original files/directories; no original grade edits after this freeze."
+}

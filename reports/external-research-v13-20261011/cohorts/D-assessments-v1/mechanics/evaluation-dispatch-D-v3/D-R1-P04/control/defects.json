@@ -1,0 +1,70 @@
+{
+  "arm_id": "D-R1-P04-control",
+  "unresolved_material_complete_final_defects_found": [],
+  "original_findings": [
+    {
+      "id": "C-I1",
+      "severity": "material_incomplete",
+      "scope": "investigator_draft_only",
+      "status": "REPAIRED_IN_FROZEN_FINAL",
+      "axis_ids": [
+        3,
+        4,
+        5
+      ],
+      "locator": "investigator draft: executed research/brief coverage; critic C1; final Repository mechanisms, callers, tests",
+      "finding": "The investigator omitted an identified repository test surface. Critic C1 independently adds it and the complete final describes the suite and its limits. This is not an unresolved final omission.",
+      "evidence_context_ids": [
+        "E15"
+      ]
+    },
+    {
+      "id": "C-N1",
+      "severity": "nonmaterial_precision",
+      "scope": "complete_final_and_carried_test_descriptions",
+      "status": "ORIGINAL_LIMIT_RECORDED",
+      "axis_ids": [
+        2,
+        6
+      ],
+      "locator": "final: repository-test helper characterization; reviser source-map C01 recheck",
+      "finding": "The helper checks IDs/order and unique indices, not direct equality of every selected record payload/version. The final wording about selection/result equality is broader than that direct oracle. It explicitly disclaims component validation, so this does not undermine the proposed component contract.",
+      "evidence_context_ids": [
+        "E15"
+      ]
+    },
+    {
+      "id": "C-N2",
+      "severity": "nonmaterial_locator_context",
+      "scope": "source_maps_and_final",
+      "status": "ORIGINAL_LIMIT_RECORDED",
+      "axis_ids": [
+        2,
+        3
+      ],
+      "locator": "R15/R16/C01 mutable master; C02 issue 938 version field",
+      "finding": "Mutable upstream references are already disclosed. C02 says no package version was identified, although the report specifies loro-crdt ^1.10.6. The final treats the report as unverified rather than a current-version defect.",
+      "evidence_context_ids": [
+        "E14",
+        "E15",
+        "E17"
+      ]
+    },
+    {
+      "id": "C-N3",
+      "severity": "nonmaterial_history_context",
+      "scope": "R09 and final memory-report discussion",
+      "status": "ORIGINAL_LIMIT_RECORDED",
+      "axis_ids": [
+        2,
+        3
+      ],
+      "locator": "R09 / Yjs #741",
+      "finding": "The later application-loop/workaround context is not carried. The final already limits the report to its workload and does not claim a general benchmark or confirmed Yjs leak, so the omitted detail does not change its storage-measurement proposal.",
+      "evidence_context_ids": [
+        "E07"
+      ]
+    }
+  ],
+  "grade_not_repaired_or_regraded": true
+}

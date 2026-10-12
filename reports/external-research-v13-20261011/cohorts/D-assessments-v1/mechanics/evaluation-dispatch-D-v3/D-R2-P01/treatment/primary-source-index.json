@@ -1,0 +1,226 @@
+{
+  "schema": "er13.independent_primary_source_index.v1",
+  "arm_id": "D-R2-P01-treatment",
+  "access_window_utc": {
+    "earliest_observed_grader_clock": "2026-10-12T04:50:18+00:00",
+    "through": "2026-10-12T05:04:42.481080+00:00",
+    "individual_request_timestamps": "UNKNOWN"
+  },
+  "research_method": "Independent direct public primary documentation/web lookup and narrowly targeted upstream source/PR-file reads. No repository tree/history scan, local Git, downloaded code execution, candidate assistance or held-out input.",
+  "sources": [
+    {
+      "id": "P01",
+      "family": "PostgreSQL lexical retrieval / GIN",
+      "urls": [
+        "https://www.postgresql.org/docs/18/textsearch-controls.html",
+        "https://www.postgresql.org/docs/18/datatype-textsearch.html",
+        "https://www.postgresql.org/docs/18/gin.html"
+      ],
+      "version": "18 documentation; 19 development/beta banner observed",
+      "context": "§12.3 parsing/weights/ranking; §8.11 types; §65.4 pending entries and fuzzy limit",
+      "observation": "Configuration changes lexemes and phrase matching. Ranking is application-specific. GIN searches pending entries; cleanup affects latency. The optional fuzzy limit returns a random subset.",
+      "applies_to": [
+        "control",
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P05",
+      "family": "OpenSearch lexical / semantic / hybrid fusion",
+      "urls": [
+        "https://docs.opensearch.org/3.8/vector-search/ai-search/hybrid-search/rrf/",
+        "https://docs.opensearch.org/latest/vector-search/ai-search/hybrid-search/rrf/",
+        "https://docs.opensearch.org/latest/vector-search/ai-search/hybrid-search/index/"
+      ],
+      "version": "3.8 banner says no longer maintained; latest unpinned; hybrid 2.11, RRF 2.19, normalization 2.10",
+      "context": "Fusion definitions, score interpretation, required pipeline and BM25/vector example",
+      "observation": "RRF uses ranks, discards margins and is not a calibrated confidence threshold. Pipeline fusion is distinct from relevance validation and authorization.",
+      "applies_to": [
+        "control",
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P06",
+      "family": "OpenSearch DLS / role composition / exact identity mapping",
+      "urls": [
+        "https://docs.opensearch.org/3.8/security/access-control/document-level-security/",
+        "https://docs.opensearch.org/latest/security/access-control/document-level-security/",
+        "https://github.com/opensearch-project/security/pull/1735"
+      ],
+      "version": "3.8 and latest documentation; introducing PR merged 2022-04-12 at 7e6b62cb7f54977be736c5efaa14e01579aa5324",
+      "context": "Read/write scope; Unicode mapping; adaptive TLQ; multiple roles; PR setting registration, PrivilegesEvaluator caller, ConfigModelV7 and DfmOverwritesAllTest",
+      "observation": "DLS rules OR; mixed no-DLS roles remain filtered unless the override is enabled. Historical implementation/tests establish false default for the introduced setting. Analyzer tokenization can conflate identifiers. This is not a revocation protocol.",
+      "applies_to": [
+        "control",
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P09",
+      "family": "W3C passage selectors / representation state",
+      "urls": [
+        "https://www.w3.org/TR/annotation-model/"
+      ],
+      "version": "Recommendation 2017-02-23",
+      "context": "§4.2.4–4.2.5 quote/position normalization, ambiguity and restricted-content warning; §4.3–4.3.2 State before selectors",
+      "observation": "Quote matching may remain ambiguous and duplicates selected content. Offsets depend on normalized representation; State precedes selector processing. These locators provide neither retention nor authorization.",
+      "applies_to": [
+        "control",
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P10",
+      "family": "Elastic DLS / cache boundaries",
+      "urls": [
+        "https://www.elastic.co/docs/deploy-manage/users-roles/cluster-or-deployment-auth/controlling-access-at-document-field-level",
+        "https://www.elastic.co/docs/reference/elasticsearch/configuration-reference/node-query-cache-settings"
+      ],
+      "version": "Current documentation; deployment release unspecified",
+      "context": "Multiple role union, aggregate-information warning, conditional request-cache exclusions; node/segment cache eligibility",
+      "observation": "A no-query role can widen Elastic access; aggregate facts may remain observable. Request-cache exclusions are conditional. Node query caches differ from protected application snippets. These vendor-specific examples cannot be transferred as guarantees.",
+      "applies_to": [
+        "control",
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P11",
+      "family": "License and deployment applicability",
+      "urls": [
+        "https://github.com/pgvector/pgvector/blob/v0.8.7/LICENSE",
+        "https://github.com/opensearch-project/security/blob/7e6b62cb7f54977be736c5efaa14e01579aa5324/LICENSE.txt",
+        "https://www.elastic.co/pricing/faq",
+        "https://github.com/typesense/typesense/blob/v28.0/LICENSE.txt"
+      ],
+      "version": "pgvector v0.8.7; OpenSearch pinned historical license; Typesense v28.0; current Elastic FAQ",
+      "context": "License notices and Elastic ESRE feature eligibility",
+      "observation": "pgvector uses PostgreSQL license terms; OpenSearch code Apache 2.0; Typesense GPLv3. Elastic DLS/RRF feature eligibility depends on subscription/deployment. No package or model license is selected by either proposal.",
+      "license_notices": "No upstream code or corpus is copied into this evidence. Copyright and full license terms remain at the exact linked originals.",
+      "applies_to": [
+        "control",
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P12",
+      "family": "Elastic alias action outcomes",
+      "urls": [
+        "https://www.elastic.co/docs/manage-data/data-store/aliases"
+      ],
+      "version": "Current docs; deployment release unspecified",
+      "context": "Multiple actions / Multiple action results / must_exist",
+      "observation": "One atomic state update can include partial action success. The documented guard and per-action results matter when the intended remove/add set must succeed together.",
+      "applies_to": [
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P13",
+      "family": "Typesense scoped search capabilities",
+      "urls": [
+        "https://typesense.org/docs/28.0/api/api-keys.html"
+      ],
+      "version": "28.0 documentation",
+      "context": "Scoped keys, server-side generation, parent revocation and search-only parent permissions",
+      "observation": "Embedded filters constrain requests; revoking a parent invalidates descendant keys. Correct indexed ACL data and protected parent credentials remain required; this is not source-permission freshness.",
+      "applies_to": [
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P14",
+      "family": "Azure ACL enforcement / freshness / preview history",
+      "urls": [
+        "https://learn.microsoft.com/en-us/azure/search/search-query-access-control-rbac-enforcement",
+        "https://learn.microsoft.com/en-us/azure/search/search-index-access-control-lists-and-rbac-push-api"
+      ],
+      "version": "Examples 2026-08-01-preview; November 2025 behavior change; push functionality preview",
+      "context": "Query filter construction, missing token/elevated read, 5xx failure, last-written ACL fields and preview limits",
+      "observation": "Enabled enforcement omits protected content without a user token and fails rather than returning partially filtered results on evaluation errors. Push ACLs stay stale until updated. Preview status and elevated read prevent blanket production-security claims.",
+      "applies_to": [
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P15",
+      "family": "Graph version retrieval / retention and SharePoint purge",
+      "urls": [
+        "https://learn.microsoft.com/en-us/graph/api/resources/driveitemversion?view=graph-rest-1.0",
+        "https://learn.microsoft.com/en-us/graph/api/driveitemversion-get?view=graph-rest-1.0",
+        "https://learn.microsoft.com/en-us/graph/api/driveitem-list-versions?view=graph-rest-1.0",
+        "https://learn.microsoft.com/en-us/sharepoint/faqs-for-versions"
+      ],
+      "version": "Graph v1.0; SharePoint/OneDrive configuration-dependent",
+      "context": "Version id, authorized GET permissions, temporary download URL, finite history; purge/retention/hold FAQ",
+      "observation": "Version IDs do not assure retention. Temporary content URLs are unauthenticated and not immediately revoked. Expiry trimming differs from manual deletion/recycle-bin behavior and respects retention/hold conditions.",
+      "applies_to": [
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P16",
+      "family": "Hybrid issue / fix / release / unshipped resolver",
+      "urls": [
+        "https://github.com/opensearch-project/neural-search/issues/1490",
+        "https://github.com/opensearch-project/neural-search/pull/1873",
+        "https://github.com/opensearch-project/opensearch-build/blob/main/release-notes/opensearch-release-notes-3.8.0.md",
+        "https://github.com/opensearch-project/neural-search/issues/1932"
+      ],
+      "version": "#1490 opened 2025-07-31; #1873 merged 2026-06-18 at 06d9226eeb04cf88abc7be71829fabbeb597b657; #1932 open proposal",
+      "context": "Request-filter/query-phase callers, HybridQueryUtil validation, all three added unit-test paths; 3.8.0 release note; HLD body",
+      "observation": "The merged remedy rejects unsupported DFS hybrid requests; it does not implement that combination. The open resolver design is not a shipped feature. Test source was inspected, never run.",
+      "applies_to": [
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P17",
+      "family": "Relevance evaluation / hybrid alternative",
+      "urls": [
+        "https://www.elastic.co/docs/solutions/search/hybrid-search",
+        "https://docs.opensearch.org/latest/search-plugins/search-relevance/optimize-hybrid-search/"
+      ],
+      "version": "Current vendor docs",
+      "context": "Elastic RRF recommendation; OpenSearch query sets/judgments/configurations and exactly two Workbench clauses",
+      "observation": "Vendor recommendations do not establish this corpus's relevance. Workbench requires judgments and has a two-clause optimization scope; ordinary hybrid and its optimizer are distinct.",
+      "applies_to": [
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    },
+    {
+      "id": "P18",
+      "family": "Repository object locator alternative",
+      "urls": [
+        "https://git-scm.com/docs/git-rev-parse"
+      ],
+      "version": "Current public Git documentation; no local Git operations",
+      "context": "SPECIFYING REVISIONS: rev:path",
+      "observation": "A retained commit plus path selects its blob/tree. A moving reference or line number alone is not a durable document-edition locator.",
+      "applies_to": [
+        "treatment"
+      ],
+      "coverage": "COMPLETE"
+    }
+  ],
+  "coverage_boundary": "Coverage is of available researched source claims. Treatment complete-final source-family coverage is UNASSESSED even where available primary research is COMPLETE.",
+  "unavailable_or_corrected_locators": [
+    "Typesense v28.0 LICENSE returned HTTP 404; exact LICENSE.txt was then read.",
+    "OpenSearch hybrid directory route exposed a redirect; its exact /index/ document was read."
+  ],
+  "copyright_handling": "Only compact original observations and links; no copied source corpus/code. Original copyright/license notices remain linked.",
+  "upstream_tests": "Source inspected only; not executed."
+}

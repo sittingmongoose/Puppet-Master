@@ -1,0 +1,26 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "D-R1-P01-control",
+  "defects": [
+    {
+      "id": "C-N01",
+      "severity": "NONMATERIAL",
+      "kind": "source_sample_precision",
+      "axes": [
+        2,
+        3
+      ],
+      "status": "PRESENT_IN_CARRIED_WITNESS",
+      "candidate_locator": "investigator/sources/index.md S17 and carried reviser index S17; final Maintained implementation evidence",
+      "finding": "Carried investigator wording can imply that four people constituted the tested prototype sample. Issue 5750 says four were confused and describes a five-participant study. The final reports four confused participants accurately; critic source map also records five total.",
+      "primary_sources": [
+        "PS23"
+      ],
+      "materiality_reason": "The final decision uses a bounded prototype caution; no universal preference, compatibility claim, or independent-study count is credited. This does not change the recommendation."
+    }
+  ],
+  "material_defect_count": 0,
+  "nonmaterial_defect_count": 1,
+  "finite_assessment": true,
+  "candidate_repairs_or_feedback_provided": false
+}

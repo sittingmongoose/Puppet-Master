@@ -1,0 +1,52 @@
+{
+  "schema": "er13.original_output_manifest.v1",
+  "arm_id": "D-R1-P02-control",
+  "original": true,
+  "frozen_at_utc": "2026-10-12T04:58:15.834853+00:00",
+  "comparison_has_not_started": true,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/assessment.md",
+      "relative_path": "assessment.md",
+      "bytes": 5631,
+      "sha256": "cab9a0c6497450a709f1bd6fdeffd6a81f5d0266c55f078f5d1b96759ffd4cdd"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/assessment.json",
+      "relative_path": "assessment.json",
+      "bytes": 7268,
+      "sha256": "0c0a629763f0d44a4e48ab4166eca39169773730480d553d30296cab8932850e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/coverage.json",
+      "relative_path": "coverage.json",
+      "bytes": 11973,
+      "sha256": "f974147ad22c525e86c9679bd6855471db30f47ea02309af70bf17fc592c4d61"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/defects.json",
+      "relative_path": "defects.json",
+      "bytes": 1973,
+      "sha256": "b845e1c55fe926984f3cfaa7cab5d5533a3beaf621619fbd37e17364eaa994f7"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/primary-source-index.json",
+      "relative_path": "primary-source-index.json",
+      "bytes": 19390,
+      "sha256": "503b06377c8f4fb2408238a658331a58daab6d6b017eed3e1cdb277a8de07d97"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/evidence/input-verification.json",
+      "relative_path": "evidence/input-verification.json",
+      "bytes": 5611,
+      "sha256": "fed6e04e7b400286970a74cf4dd770bbe1845ff3e0355c3c178b7b77ef50062d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P02/control/evidence/primary-context.json",
+      "relative_path": "evidence/primary-context.json",
+      "bytes": 1615,
+      "sha256": "502d3b0102db98b6e53a29bcaca7e423d8c05c69df0ae1385ab380283f9c551d"
+    }
+  ],
+  "manifest_self_hash": "Excluded to avoid self-reference; SHA-256 reported externally."
+}

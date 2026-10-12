@@ -1,0 +1,39 @@
+{
+  "schema": "er13.independent-source-checks.v1",
+  "arm_id": "D-R1-P01-treatment",
+  "checks": [
+    {
+      "source": "PS04",
+      "exact_url": "https://www.w3.org/WAI/tutorials/forms/notifications/#after-submit",
+      "access_utc": "2026-10-12T05:09:05.842658+00:00",
+      "retrieved_html_sha256": "7c6e4494b3ec9c13f5f197e4ca4921ee836b126332add4345d2c55047b595457",
+      "http_status": 200,
+      "permitted_short_excerpt": "it is convenient to set the focus to the first <input> element that contains an error",
+      "observation": "C2 falsely denies a first-invalid recommendation. The page is informative; neither it nor the draft makes this the mandatory asynchronous focus rule. Correct source grounding was rejected, while the behavioral alternative survived."
+    },
+    {
+      "source": "PS02",
+      "exact_url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html",
+      "access_utc": "2026-10-12T05:09:05.891113+00:00",
+      "retrieved_html_sha256": "d5a085f7be8814e4f01520db08d41d09b62491f40dc0fb6fb4941ec762cf3746",
+      "http_status": 200,
+      "locator": "Other uses of live regions or alerts",
+      "permitted_short_excerpt": "However, there is a risk of making an application too \"chatty\" for a screen reader user.",
+      "observation": "C5 incorrectly denies this caution. APG independently supports the retained interruption advice, so this is a nonmaterial attribution correction error."
+    },
+    {
+      "source": "PS16",
+      "exact_url": "https://design-system.service.gov.uk/components/error-message/#when-not-to-use-this-component",
+      "access_utc": "2026-10-12T05:09:06.118410+00:00",
+      "retrieved_html_sha256": "5b944dd0dc4efcbce3ac586f4d525bd8244ae79b769117c5f5b5be7604ffee55",
+      "http_status": 200,
+      "observation": "C4 correctly identifies the input/service distinction. The retained conflict notice adapts the source page-navigation pattern to preserve this form; it is not claimed as mandatory GOV.UK behavior."
+    },
+    {
+      "source": "PS26/PS29",
+      "context": "PR head effce7989abb7f7b7f1145095fe63a6d5a48a11a; merged as f149209",
+      "observation": "Reset hooks/caller/test assertions support the bounded history. The public head and merge commits are distinct; no selected released package or executed portal test is established."
+    }
+  ],
+  "retained_material": "Short attributed source excerpts and authored checks only; W3C/WAI and Adobe notices remain at primary links; no source corpus or native transcript copied."
+}

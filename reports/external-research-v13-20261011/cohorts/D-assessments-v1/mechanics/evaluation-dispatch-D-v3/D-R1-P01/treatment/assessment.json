@@ -1,0 +1,252 @@
+{
+  "schema": "er13.original-assessment.v1",
+  "block_id": "D-R1-P01",
+  "arm_id": "D-R1-P01-treatment",
+  "scope": "FULL",
+  "assessment_created_utc": "2026-10-12T05:16:16.331415+00:00",
+  "governing_contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+  "packet_sha256": "11ae1510daeeb375f81dc8c2181df401b70334913413b65e4d8a368428a67147",
+  "rubric_sha256": "a176a7d1f5d6411f8accbb11f99723400036cb1760ad5ea03364c2d93abf5b44",
+  "source_judgment": {
+    "judgment": "FAIL",
+    "coverage": "COMPLETE",
+    "scope": "Exact frozen final and complete available investigator/critic lineage; FULL research-planning deliverable",
+    "material_defects": [
+      "T-S01"
+    ],
+    "nonmaterial_defects": [
+      "T-N02"
+    ],
+    "finite_assessment": true,
+    "universal_correctness_claimed": false,
+    "rationale": "A material false source correction is accepted in the focus-policy disposition (T-S01). Functional alternatives remain; the source failure is independent of delivery and timing."
+  },
+  "delivery": {
+    "status": "PASS",
+    "coverage": "COMPLETE",
+    "final_present": true,
+    "final_snapshot_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P01-treatment/run/D-R1-P01-treatment/control/terminal-handoffs/critic/files/final.md",
+    "final_bytes": 19605,
+    "final_sha256": "4f4065095b40b0992c2427ac9f5912a6c84cf3dadefd0e0c6a0e3f68bba2ec22",
+    "required_outputs_present_in_each_stage": true,
+    "scientific_documents_read_completely": true,
+    "all_actual_tasks_terminal_zero_pending_as_frozen": true,
+    "unlaunched_stages": [],
+    "listed_failure_records": [],
+    "unobserved_attempts_or_failures": "UNKNOWN"
+  },
+  "source_assessment": {
+    "judgment": "FAIL",
+    "coverage": "COMPLETE",
+    "scope": "Exact frozen final and complete available investigator/critic lineage; FULL research-planning deliverable",
+    "material_defects": [
+      "T-S01"
+    ],
+    "nonmaterial_defects": [
+      "T-N02"
+    ],
+    "finite_assessment": true,
+    "universal_correctness_claimed": false,
+    "rationale": "A material false source correction is accepted in the focus-policy disposition (T-S01). Functional alternatives remain; the source failure is independent of delivery and timing."
+  },
+  "time_eligibility": {
+    "status": "ELIGIBLE_ON_FROZEN_CUSTODY",
+    "coverage": "PARTIAL",
+    "scope": "FULL",
+    "maximum_elapsed_seconds": 3600,
+    "t0_utc": "2026-10-12T04:17:05.252Z",
+    "whole_deadline_utc": "2026-10-12T05:17:05.252Z",
+    "clocks_reset": false,
+    "all_listed_terminal_captures_within_stage_deadlines": true,
+    "final_and_zero_pending_terminal_status_frozen_at_utc": "2026-10-12T04:59:09.979222+00:00",
+    "frozen_before_whole_deadline": true,
+    "actual_finish_utc": "UNKNOWN",
+    "last_complete_scientific_artifact_time_utc": "UNKNOWN",
+    "named_latency_proxy": "T0 to captured final-stage native updatedAt; not actual request-to-quiet finish",
+    "named_latency_proxy_seconds": 1562.748,
+    "T0_to_pair_notification_custody_upper_bound_seconds": 2524.727222,
+    "stages": [
+      {
+        "stage": "investigator",
+        "prepared_at_utc": "2026-10-12T04:17:06.085Z",
+        "requested_at_utc": "2026-10-12T04:17:06.085Z",
+        "dispatch_response_captured_utc": "2026-10-12T04:17:07.347Z",
+        "native_created_utc_as_captured": "2026-10-12T04:17:18+00:00",
+        "native_terminal_updated_utc_as_captured": "2026-10-12T04:29:08+00:00",
+        "native_reported_elapsed_seconds": 709,
+        "native_timestamp_interval_seconds": 710,
+        "stage_deadline_utc": "2026-10-12T04:47:06.085Z",
+        "captured_terminal_within_stage_cap": true,
+        "quiet_task_finish_upper_bound_from_custody_utc": "2026-10-12T04:29:50.044Z",
+        "actual_provider_start_utc": "UNKNOWN",
+        "actual_task_finish_utc": "UNKNOWN",
+        "active_provider_seconds": "UNKNOWN",
+        "lower_bound_caveat": "Native timestamps are capture fields; no independent native-to-task mapping proved."
+      },
+      {
+        "stage": "critic",
+        "prepared_at_utc": "2026-10-12T04:29:50.044Z",
+        "requested_at_utc": "2026-10-12T04:29:50.044Z",
+        "dispatch_response_captured_utc": "2026-10-12T04:29:51.970Z",
+        "native_created_utc_as_captured": "2026-10-12T04:30:02+00:00",
+        "native_terminal_updated_utc_as_captured": "2026-10-12T04:43:08+00:00",
+        "native_reported_elapsed_seconds": 785,
+        "native_timestamp_interval_seconds": 786,
+        "stage_deadline_utc": "2026-10-12T04:59:50.044Z",
+        "captured_terminal_within_stage_cap": true,
+        "quiet_task_finish_upper_bound_from_custody_utc": "2026-10-12T04:59:09.979222+00:00",
+        "actual_provider_start_utc": "UNKNOWN",
+        "actual_task_finish_utc": "UNKNOWN",
+        "active_provider_seconds": "UNKNOWN",
+        "lower_bound_caveat": "Native timestamps are capture fields; no independent native-to-task mapping proved."
+      }
+    ],
+    "inter_stage_proxies": [
+      {
+        "after_stage": "investigator",
+        "before_stage": "critic",
+        "native_terminal_to_next_request_proxy_seconds": 42.044,
+        "actual_idle_or_billed_wait_seconds": "UNKNOWN"
+      }
+    ],
+    "captured_native_interval_sum_seconds": 1496,
+    "captured_native_interval_union_seconds": 1496,
+    "captured_native_interval_overlap_seconds": 0,
+    "actual_context_occupancy_sum_union_overlap": "UNKNOWN",
+    "limitations": [
+      "Birth/update timestamps and timeUsedSeconds differ by up to one second in these captures; neither measures provider activity.",
+      "Stage request-to-birth includes unseparated queue/setup; custody bounds include unseparated handoff/notification.",
+      "Native interval arithmetic describes only the listed serialized receipts. Actual context creation/residency and task linkage are not proved."
+    ]
+  },
+  "method_compliance": {
+    "status": "CUSTODY_CONSISTENT_WITH_LIMITS",
+    "coverage": "PARTIAL",
+    "observed_topology": "investigator / critic also finalizes; no separate reviser",
+    "declared_recipe": "B02",
+    "observed_reveal_discovery_hash_preserved": true,
+    "observed_source_ids_not_rebound": true,
+    "required_science_matches_precompletion_snapshots": true,
+    "pre_input_activation_order": "UNKNOWN independently; loader and birth captures are consistent",
+    "no_extra_goals_or_unlisted_input_reads": "UNASSESSED beyond frozen records",
+    "method_card_original_read": "Only the permitted frozen config/assignment embeds method information; referenced active method paths were not followed.",
+    "scientific_method_observation": "Negative/default claim challenge was attempted, but T-S01 and T-N02 are false source corrections; receipt compliance does not rescue that semantic failure."
+  },
+  "native_identity_provenance": {
+    "status": "CAPTURE_CUSTODY_QUALIFIED; INDEPENDENT_PROVENANCE_UNKNOWN",
+    "coverage": "PARTIAL",
+    "stages_with_create_active_terminal": 2,
+    "active_equals_create_bytes": true,
+    "exact_objective_same_birth_matches": true,
+    "stage_births_distinct_in_supplied_records": true,
+    "precompletion_science_hashes_match_terminal_snapshot": true,
+    "checked_direct_return_source_recorded": true,
+    "direct_response_freshness_proved": false,
+    "native_to_actual_task_or_provider_linkage": "UNKNOWN",
+    "retained_failure_reports_listed": [],
+    "no_rescue_reconstruction_or_replacement_performed_by_evaluator": true,
+    "privacy": "Native identities and full transcripts are not exported.",
+    "original_stage_manifest_flags": "native_lifecycle_qualified=false and science_qualified=false were preserved. Later listed supplements qualify capture custody only; this evaluator does not infer independent native provenance from them."
+  },
+  "resource_billing_coverage": {
+    "status": "UNKNOWN_FOR_BILLING_AND_ACTIVITY",
+    "coverage": "PARTIAL",
+    "candidate_product_cost": "UNKNOWN",
+    "preparation_cost": "UNKNOWN",
+    "support_publication_root_cost": "UNKNOWN",
+    "full_experiment_total": "UNKNOWN",
+    "raw_cumulative_usage_fields": "Present in supplied native captures; private quantities not exported or summed.",
+    "provider_input_cached_output_reasoning_split": "UNKNOWN",
+    "subscription_consumption": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "active_provider_activity": "UNKNOWN",
+    "actual_open_context_occupancy": "UNKNOWN",
+    "evaluation_cost_category": "independent_evaluation",
+    "grader_billing_activity_and_usage": "UNKNOWN",
+    "private_account_epoch2": "Prospective requirement noted; no permitted account telemetry supplied, no historical backfill.",
+    "unknown_values_are_not_zero": true,
+    "denominator": "One original assigned arm including all listed stages and any listed failures; no repeat or replacement attempt introduced."
+  },
+  "coverage": {
+    "axes": [
+      {
+        "axis_id": 1,
+        "name": "Material original obligations and negative constraints",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "rationale": "All functional obligations and negative constraints are represented. Source grounding for the focus disposition fails separately under T-S01.",
+        "defect_ids": []
+      },
+      {
+        "axis_id": 2,
+        "name": "Consequential source facts, governing conditions, versions and applicability",
+        "coverage": "COMPLETE",
+        "judgment": "FAIL",
+        "rationale": "Most source facts and applicability are supported, including HTTP exceptions and reset history. T-S01 is material; T-N02 is a nonmaterial false attribution correction.",
+        "defect_ids": [
+          "T-S01",
+          "T-N02"
+        ]
+      },
+      {
+        "axis_id": 3,
+        "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "rationale": "Maintained React Aria/GOV.UK mechanisms, reset lifecycle, native/aria and timing alternatives, and record-vs-field conflict choices are useful and bounded. No toolkit winner or universal recall score is required.",
+        "defect_ids": []
+      },
+      {
+        "axis_id": 4,
+        "name": "Valid corrections, rejections and exact plan dispositions",
+        "coverage": "COMPLETE",
+        "judgment": "FAIL",
+        "rationale": "C1, C3 and C4 produce justified qualifications/additions. C2 rejects correct primary guidance; C5 also rejects a real caution. Every criticism and significant plan decision was examined.",
+        "defect_ids": [
+          "T-S01",
+          "T-N02"
+        ]
+      },
+      {
+        "axis_id": 5,
+        "name": "Supported meaning retained from draft and criticism into the complete final",
+        "coverage": "COMPLETE",
+        "judgment": "FAIL",
+        "rationale": "Behavioral alternatives and draft/save/race/locale/owner/test meaning are retained. T-S01 removes valid focus-source grounding; the first-invalid functional option itself remains.",
+        "defect_ids": [
+          "T-S01"
+        ]
+      },
+      {
+        "axis_id": 6,
+        "name": "Meaningful proposed validation, with executed work distinguished",
+        "coverage": "COMPLETE",
+        "judgment": "PASS",
+        "rationale": "State and interaction fixtures have concrete oracles, including current hidden issues and old form identity. All portal, synthetic, AT and translation behavior checks remain explicitly proposed.",
+        "defect_ids": []
+      }
+    ],
+    "axis_count": 6,
+    "all_axes_complete": true,
+    "obligations_and_source_families": "See coverage.json",
+    "independent_lookup_shared": true,
+    "blinding": "Imperfect: control/treatment and technique-bearing config/assignment paths and topology are visible. No recipe selection performed."
+  },
+  "defects": {
+    "material_ids": [
+      "T-S01"
+    ],
+    "nonmaterial_ids": [
+      "T-N02"
+    ],
+    "record": "defects.json"
+  },
+  "limitations": [
+    "Finite planning-quality assessment; no universal recall/correctness or deployment claim.",
+    "Future portal, AT and multilingual evaluations were not executed or required for this review.",
+    "Direct native provenance, exact task finish, actual provider activity and billing remain unknown.",
+    "Originals immutable after manifest freeze; any dispute requires separate adjudication preserving original evidence, responses and unresolved objections.",
+    "Rolling primary sources were independently read at evaluation time; the exact historical bytes of candidate fetches are not independently retained/proved."
+  ],
+  "comparison_performed_before_freeze": false
+}

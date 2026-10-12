@@ -1,0 +1,64 @@
+{
+  "arm_id": "D-R1-P04-treatment",
+  "unresolved_material_complete_final_defects_found": [],
+  "original_findings": [
+    {
+      "id": "T-N1",
+      "severity": "nonmaterial_optional_mechanism_limit",
+      "scope": "sequence-anchor source history and proposed tests",
+      "status": "ORIGINAL_LIMIT_RECORDED",
+      "axis_ids": [
+        2,
+        3,
+        6
+      ],
+      "locator": "investigator discovery: Yjs #657; critic history checks; final Yrs/Yjs optional text-anchor row",
+      "finding": "The no-undo reproducer and persistent local-redo versus shared-resolution distinction are narrower than the deletion/undo summary. Optional text anchors require that qualification. The final neither uses sequence positions as shape identity nor promises validated cross-replica undo behavior; its tests remain proposals.",
+      "evidence_context_ids": [
+        "E08",
+        "E09"
+      ]
+    },
+    {
+      "id": "T-N2",
+      "severity": "nonmaterial_version_context",
+      "scope": "Loro release characterization",
+      "status": "ORIGINAL_LIMIT_RECORDED",
+      "axis_ids": [
+        2,
+        3
+      ],
+      "locator": "LORO-RELEASE-JS-1.16.4; critic CR-04; final Loro alternative",
+      "finding": "JavaScript snapshot/decoder wording compresses distinct pure-TypeScript producer and Rust/WASM decoder versions. The final correctly avoids asserting a defect in Rust 1.16.2 and proposes interop checks. Exact producer, importer controls and fix context are preserved in independent E05.",
+      "evidence_context_ids": [
+        "E05"
+      ]
+    },
+    {
+      "id": "T-N3",
+      "severity": "nonmaterial_criticism_severity",
+      "scope": "critic CR-01/CR-02 reasoning and final dispositions",
+      "status": "ORIGINAL_LIMIT_RECORDED",
+      "axis_ids": [
+        4,
+        5
+      ],
+      "locator": "draft P2.2/P3.1/P3.3; critique CR-01/CR-02; final incarnation and quarantine policies",
+      "finding": "The predecessor already separates explicit restoration from stale edits and leaves stale-input discard versus review to the owner. Thus inevitability of indistinguishable restore or silent work loss is not demonstrated. Clarifying incarnation and non-destructive quarantine is a valid disclosed design choice; restoration, old context and explicit owner discard remain available. No material false rejection or scope loss is found in the complete final.",
+      "evidence_context_ids": [
+        "E02",
+        "E13"
+      ]
+    },
+    {
+      "id": "T-M1",
+      "severity": "method_metadata_inconsistency",
+      "scope": "method_compliance_only",
+      "status": "ORIGINAL_LIMIT_RECORDED_NO_REPAIR",
+      "axis_ids": [],
+      "locator": "frozen config and run.json method_id; config public_recipe_choice; stage assignments",
+      "finding": "method_id remains R0 while public_recipe_choice says B02 and the frozen allocation/topology uses investigator then critic-finalizer. The latter is observable; grouping solely on method_id would misdescribe it. Source grade and original clocks are unchanged."
+    }
+  ],
+  "grade_not_repaired_or_regraded": true
+}

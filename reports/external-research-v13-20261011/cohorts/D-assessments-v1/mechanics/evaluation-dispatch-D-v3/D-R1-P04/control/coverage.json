@@ -1,0 +1,309 @@
+{
+  "arm_id": "D-R1-P04-control",
+  "complete_final": {
+    "present": true,
+    "axes": [
+      {
+        "axis_id": 1,
+        "name": "Material original obligations and negative constraints",
+        "coverage": "COMPLETE",
+        "judgment": "SATISFIED",
+        "basis": "All required targets, edit/reconnect cases, durable identity, original/unresolved context, retention and read-only export are addressed; all three negative constraints are explicit."
+      },
+      {
+        "axis_id": 2,
+        "name": "Consequential source facts, governing conditions, versions and applicability",
+        "coverage": "COMPLETE",
+        "judgment": "SATISFIED_WITH_NONMATERIAL_LIMITS",
+        "basis": "Governing documentation, definitions, relevant implementation/caller/tests, editions and historical exceptions were checked. C-N1/C-N2/C-N3 bound nonmaterial wording and locator limits."
+      },
+      {
+        "axis_id": 3,
+        "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+        "coverage": "COMPLETE",
+        "judgment": "SATISFIED",
+        "basis": "Useful tree/history, deletion-metadata, conflict, reconciliation and annotation mechanisms have relevant alternatives and failure history. Discovery is finite, with no universal recall claim."
+      },
+      {
+        "axis_id": 4,
+        "name": "Valid corrections, rejections and exact plan dispositions",
+        "coverage": "COMPLETE",
+        "judgment": "SATISFIED",
+        "basis": "All significant plan decisions and C1-C3 are examined. C1 is a valid predecessor omission and is repaired; owner decisions and mutable editions remain qualified."
+      },
+      {
+        "axis_id": 5,
+        "name": "Supported meaning retained from draft and criticism into the complete final",
+        "coverage": "COMPLETE",
+        "judgment": "SATISFIED",
+        "basis": "Supported identity, transform, connector/region, deletion, ordering, alternatives, privacy, export and validation meaning survive into the self-contained final. No material loss found."
+      },
+      {
+        "axis_id": 6,
+        "name": "Meaningful proposed validation, with executed work distinguished",
+        "coverage": "COMPLETE",
+        "judgment": "SATISFIED_WITH_NONMATERIAL_LIMITS",
+        "basis": "Synthetic histories specify domains and expected semantic invariants separately from convergence. Proposed tests, permission/usability work and measurements remain unexecuted; deployment is not required."
+      }
+    ]
+  },
+  "obligations_and_negative_constraints": [
+    {
+      "id": "O01",
+      "obligation": "Comment intent across move/group/replace/delete and offline reconciliation",
+      "coverage": "COMPLETE",
+      "final_locator": "final P1/P2; proposed cases 1-8",
+      "assessment": "SATISFIED"
+    },
+    {
+      "id": "O02",
+      "obligation": "Durable identity versus visually identical replacement",
+      "coverage": "COMPLETE",
+      "final_locator": "final identity and replacement/split/merge lineage",
+      "assessment": "SATISFIED"
+    },
+    {
+      "id": "O03",
+      "obligation": "Original context and explicit unresolved anchors without silent thread loss",
+      "coverage": "COMPLETE",
+      "final_locator": "final component contract and unresolved state/reassignment",
+      "assessment": "SATISFIED"
+    },
+    {
+      "id": "O04",
+      "obligation": "Merge/history/compaction, storage growth and privacy",
+      "coverage": "COMPLETE",
+      "final_locator": "final P2/P3 history, privacy and stale clients",
+      "assessment": "SATISFIED"
+    },
+    {
+      "id": "O05",
+      "obligation": "Read-only exportable context and automatic versus user resolution",
+      "coverage": "COMPLETE",
+      "final_locator": "final P3 read-only export and owner choices",
+      "assessment": "SATISFIED"
+    },
+    {
+      "id": "N01",
+      "obligation": "No nearest-coordinate-only ambiguous resolution",
+      "coverage": "COMPLETE",
+      "final_locator": "final region/endpoint/lineage rules",
+      "assessment": "SATISFIED"
+    },
+    {
+      "id": "N02",
+      "obligation": "No unannounced resurrection or dropping nonvisible-target comments",
+      "coverage": "COMPLETE",
+      "final_locator": "final tombstone, stale-edit and visible unresolved list",
+      "assessment": "SATISFIED"
+    },
+    {
+      "id": "N03",
+      "obligation": "No live shared-document or account changes",
+      "coverage": "COMPLETE",
+      "final_locator": "final actually performed record; no contrary frozen evidence",
+      "assessment": "SATISFIED; N03 is truthful delivered-work reporting, not independently proven unseen conduct."
+    },
+    {
+      "id": "B01",
+      "obligation": "Shapes, connectors and selected regions; nested transforms and splitting",
+      "coverage": "COMPLETE",
+      "final_locator": "final P1 coordinate/group/connector/region contract",
+      "assessment": "SATISFIED"
+    },
+    {
+      "id": "B02",
+      "obligation": "Ordering; materially different identity/merge alternatives; no assumed engine/service",
+      "coverage": "COMPLETE",
+      "final_locator": "final P2 alternatives and independent ordering",
+      "assessment": "SATISFIED"
+    },
+    {
+      "id": "B03",
+      "obligation": "Maintained mechanisms, repository callers/tests and useful public regression history",
+      "coverage": "COMPLETE",
+      "final_locator": "final repository mechanisms/test/history section; C1 repaired",
+      "assessment": "SATISFIED"
+    },
+    {
+      "id": "B04",
+      "obligation": "Full exact plan dispositions and all critic dispositions",
+      "coverage": "COMPLETE",
+      "final_locator": "final disposition register, P1-P3 and critique table; P4 validation/comparison instructions answered",
+      "assessment": "SATISFIED"
+    },
+    {
+      "id": "B05",
+      "obligation": "Meaningful synthetic histories, distinguished from executed work and future permission/usability checks",
+      "coverage": "COMPLETE",
+      "final_locator": "final ten proposed synthetic cases and actual-work record",
+      "assessment": "SATISFIED"
+    }
+  ],
+  "consequential_source_families": [
+    {
+      "context_id": "E01",
+      "family": "Annotation interchange",
+      "coverage": "COMPLETE",
+      "evidence": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json#E01"
+    },
+    {
+      "context_id": "E02",
+      "family": "Loro hierarchy and visibility",
+      "coverage": "COMPLETE",
+      "evidence": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json#E02"
+    },
+    {
+      "context_id": "E03",
+      "family": "Loro structural ordering",
+      "coverage": "COMPLETE",
+      "evidence": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json#E03"
+    },
+    {
+      "context_id": "E04",
+      "family": "Loro history cutoff",
+      "coverage": "COMPLETE",
+      "evidence": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json#E04"
+    },
+    {
+      "context_id": "E06",
+      "family": "Yjs deletion and GC",
+      "coverage": "COMPLETE",
+      "evidence": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json#E06"
+    },
+    {
+      "context_id": "E07",
+      "family": "Yjs memory report context",
+      "coverage": "COMPLETE",
+      "evidence": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json#E07"
+    },
+    {
+      "context_id": "E12",
+      "family": "Automerge data and conflicts",
+      "coverage": "COMPLETE",
+      "evidence": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json#E12"
+    },
+    {
+      "context_id": "E13",
+      "family": "Automerge history and storage",
+      "coverage": "COMPLETE",
+      "evidence": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json#E13"
+    },
+    {
+      "context_id": "E14",
+      "family": "Excalidraw reconciliation and caller",
+      "coverage": "COMPLETE",
+      "evidence": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json#E14"
+    },
+    {
+      "context_id": "E15",
+      "family": "Excalidraw test oracle",
+      "coverage": "COMPLETE",
+      "evidence": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json#E15"
+    },
+    {
+      "context_id": "E16",
+      "family": "Excalidraw import and ordering history",
+      "coverage": "COMPLETE",
+      "evidence": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json#E16"
+    },
+    {
+      "context_id": "E17",
+      "family": "Loro redo report",
+      "coverage": "COMPLETE",
+      "evidence": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json#E17"
+    },
+    {
+      "context_id": "E18",
+      "family": "Central sequencing alternative",
+      "coverage": "COMPLETE",
+      "evidence": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json#E18"
+    }
+  ],
+  "preservation_witnesses": [
+    {
+      "id": "identity_and_appearance",
+      "coverage": "COMPLETE",
+      "draft_locator": "identity/lineage clauses",
+      "final_locator": "identity/lineage clauses",
+      "supported_meaning": "same-target movement; replacements are distinct; historical context preserved",
+      "assessment": "RETAINED, with explicit design dispositions"
+    },
+    {
+      "id": "coordinate_frames_and_scope",
+      "coverage": "COMPLETE",
+      "draft_locator": "point/connector/region/group clauses",
+      "final_locator": "point/connector/region/group clauses",
+      "supported_meaning": "coordinate frame, original selector, nested mapping and ambiguity boundary retained",
+      "assessment": "RETAINED, with explicit design dispositions"
+    },
+    {
+      "id": "delete_and_stale_edit",
+      "coverage": "COMPLETE",
+      "draft_locator": "tombstone/restoration clauses",
+      "final_locator": "tombstone/restoration clauses",
+      "supported_meaning": "thread survives; stale edits do not silently materialize a deleted target",
+      "assessment": "RETAINED, with explicit design dispositions"
+    },
+    {
+      "id": "merge_alternatives_and_order",
+      "coverage": "COMPLETE",
+      "draft_locator": "alternative-mechanism tables",
+      "final_locator": "alternative-mechanism tables",
+      "supported_meaning": "convergence separated from intent; ordering and conflict qualifications retained",
+      "assessment": "RETAINED, with explicit design dispositions"
+    },
+    {
+      "id": "history_membership_privacy",
+      "coverage": "COMPLETE",
+      "draft_locator": "retention/stale-peer/compaction clauses",
+      "final_locator": "retention/stale-peer/compaction clauses",
+      "supported_meaning": "roster, cutoff, archive/redaction and returning-peer choices remain visible",
+      "assessment": "RETAINED, with explicit design dispositions"
+    },
+    {
+      "id": "export_unresolved_context",
+      "coverage": "COMPLETE",
+      "draft_locator": "read-only export sections",
+      "final_locator": "read-only export sections",
+      "supported_meaning": "semantic context and unresolved threads survive; screenshots are supplemental",
+      "assessment": "RETAINED, with explicit design dispositions"
+    },
+    {
+      "id": "execution_status",
+      "coverage": "COMPLETE",
+      "draft_locator": "validation/executed-work sections",
+      "final_locator": "validation/executed-work sections",
+      "supported_meaning": "proposed tests remain proposals; no deployment or executed merge proof invented",
+      "assessment": "RETAINED, with explicit design dispositions"
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "C1",
+      "coverage": "COMPLETE",
+      "assessment": "Valid omission, accepted and repaired through repository test inspection."
+    },
+    {
+      "id": "C2",
+      "coverage": "COMPLETE",
+      "assessment": "Correctly retains unknown product facts and policies."
+    },
+    {
+      "id": "C3",
+      "coverage": "COMPLETE",
+      "assessment": "Mutable editions remain disclosed; no implementation pin is falsely claimed."
+    }
+  ],
+  "outside_declared_finite_assessment": {
+    "coverage": "UNASSESSED",
+    "items": [
+      "whole repositories and all history beyond consequential definitions/callers/tests/fixes",
+      "unseen workloads and universal discovery recall",
+      "future component execution, deployment, access-control and usability outcomes",
+      "actual user/device/membership/privacy-policy facts not in brief",
+      "private routing identity, direct native transcripts and unavailable billing telemetry"
+    ]
+  },
+  "coverage_definition": "COMPLETE means the entire declared planning brief, exact plan, all available stage science and consequential obligations/claims were assessed at finite depth. It is not universal correctness or deployed behavior. No decisive early-stop shortcut was used."
+}

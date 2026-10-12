@@ -1,0 +1,36 @@
+{
+  "schema": "er13.separate-comparison-manifest.v1",
+  "block_id": "D-R1-P01",
+  "frozen_at_utc": "2026-10-12T05:21:36.409252+00:00",
+  "original_manifest": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/manifest.json",
+    "bytes": 4458,
+    "sha256": "d8033397f517d371c13e518a3240589bb5e31b316bd1033fbdf85e5047e7366e"
+  },
+  "arm_original_manifests": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/control/manifest.json",
+      "bytes": 2481,
+      "sha256": "a89a27750fc17c2f34bb807f178223f25b58ccfe35a17f2054e255cb0f55f141"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/treatment/manifest.json",
+      "bytes": 2495,
+      "sha256": "f7a52db90e7e6899998377298271a6bea9f21347d0121711315d2f64e301d774"
+    }
+  ],
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/comparison.md",
+      "bytes": 3662,
+      "sha256": "dba16aaf0ca89f01c79c7b995a8c96c4d4deffb81e97a140880b24435bd04e5b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P01/comparison.json",
+      "bytes": 5800,
+      "sha256": "82ffb7a489ab4de61428463667dfbafea283cc2ba1ef85d6224cf03f89e7cf2d"
+    }
+  ],
+  "original_grades_unchanged": true,
+  "self_hash": "Excluded; reported in terminal reply."
+}

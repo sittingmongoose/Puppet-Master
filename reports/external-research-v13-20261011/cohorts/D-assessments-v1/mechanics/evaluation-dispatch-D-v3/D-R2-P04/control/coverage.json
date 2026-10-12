@@ -1,0 +1,411 @@
+{
+  "schema": "er13.original-coverage.v1",
+  "arm_id": "D-R2-P04-control",
+  "target": "complete_frozen_final",
+  "coverage": "COMPLETE",
+  "meaning_of_complete": "Every assigned scientific document and relevant consequential obligation/source family assessed within finite declared research; not universal correctness, all possible alternatives or product execution.",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "basis": "All original obligations/negative constraints reviewed. Imported embedded-layer origin is materially incomplete (D-C02); identity, location honesty, deletion and optional-transcript boundaries otherwise covered."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "basis": "Relevant definitions, defaults, code/callers/tests, versions, conditions and scoped histories reviewed. D-C01 is a material numeric language condition; D-C02 is a missing provenance condition."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Useful bounded PDF APIs, local OCR geometry, sidecar exclusions, dictionary/substring and conditional FTS5/Tantivy/semantic alternatives are preserved; histories are useful and scoped. No universal discovery recall claim."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Each released-plan clause and every authored criticism has an explicit and defensible disposition. SRT is honestly conditional; changelog access uncertainty is resolved through primary context. Undetected independent defects remain separately recorded."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Supported discovery/draft/critic meaning and stable source IDs are retained; transcript binding is added. No material supported meaning loss found. Carrying an erroneous fact is charged to accuracy, not invented preservation success."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Proposed fixtures have meaningful domains/oracles for versions, membership races, locations, malformed inputs and scripts. No parser/index/OCR, fixture or integration execution is claimed; upstream tests remain inspected source."
+    }
+  ],
+  "obligations_and_negative_constraints": [
+    {
+      "id": "O01",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_SOURCE_DEFECT",
+      "basis": "Incremental multilingual attachment scope and explicit unsupported/optional inputs are covered; tokenizer factual defect charged to axis 2.",
+      "frozen_locator": "final.md lines 11, 57–59, 75–78, 113–120"
+    },
+    {
+      "id": "O02",
+      "coverage": "COMPLETE",
+      "judgment": "FAIL",
+      "basis": "Exact original opening and per-chunk provenance are substantial, but imported embedded OCR origin is not represented (D-C02).",
+      "frozen_locator": "final.md lines 57–71"
+    },
+    {
+      "id": "O03",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Versioned page/shape/region/cue locators, coordinate frame and honest approximation/unavailability; timed transcript/audio association added.",
+      "frozen_locator": "final.md lines 59–71, 117"
+    },
+    {
+      "id": "O04",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Rename/move, profile changes, failed/cancelled replacement, membership deletion and late-worker fencing are coherent proposed rules.",
+      "frozen_locator": "final.md lines 39–51, 84–96, 113–118"
+    },
+    {
+      "id": "O05",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_SOURCE_DEFECT",
+      "basis": "Materially different retrieval/language/publication alternatives, coalescing and resource limits are compared. D-C01 limits source accuracy.",
+      "frozen_locator": "final.md lines 73–88, 147–163"
+    },
+    {
+      "id": "N01",
+      "coverage": "COMPLETE",
+      "judgment": "PASS_WITH_PROVENANCE_OMISSION",
+      "basis": "Local-only proposal and derivative/OCR caveats are explicit; no private upload or express OCR-fidelity claim. The origin omission is separately D-C02.",
+      "frozen_locator": "final.md lines 5, 57–71, 142"
+    },
+    {
+      "id": "N02",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "No precise unsupported locator is promised; membership/tombstone filtering explains deferred cleanup and suppresses deleted hits.",
+      "frozen_locator": "final.md lines 63–71, 88–96"
+    },
+    {
+      "id": "N03",
+      "coverage": "COMPLETE",
+      "judgment": "PASS",
+      "basis": "Audio transcription and unavailable-corpus accuracy are not made completion requirements; future recognition/relevance work is separated.",
+      "frozen_locator": "final.md lines 59, 119–122"
+    }
+  ],
+  "source_families": [
+    {
+      "family": "retrieval_language_lexical",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "PS01",
+        "PS02",
+        "PS04",
+        "PS06",
+        "PS07"
+      ],
+      "scope": "Defaults, script limitations, exact versus substring and dictionary alternatives; D-C01."
+    },
+    {
+      "family": "publication_identity_membership",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "PS03",
+        "PS05"
+      ],
+      "scope": "Library transaction/commit semantics separated from proposed app fencing and shared ownership."
+    },
+    {
+      "family": "pdf_extraction_limits",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "PS08",
+        "PS18"
+      ],
+      "scope": "Bounded versus ordinary API, lenient/error/order behavior; no fabricated regions."
+    },
+    {
+      "family": "ocr_origin_geometry",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "PS09",
+        "PS10",
+        "PS11"
+      ],
+      "scope": "Recognized text, image coordinates and imported OCR origin; D-C02."
+    },
+    {
+      "family": "sidecar_and_ocr_regressions",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "PS11",
+        "PS12"
+      ],
+      "scope": "Version-scoped exclusions and issue/fix/test/release context."
+    },
+    {
+      "family": "slides_xml_zip",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "PS13",
+        "PS14",
+        "PS16"
+      ],
+      "scope": "PDF exports/native PPTX alternatives and package/parser conditions."
+    },
+    {
+      "family": "transcripts_media_association",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "PS15"
+      ],
+      "scope": "Track timing, source versions, accuracy versus asserted association, optional SRT."
+    },
+    {
+      "family": "background_work_isolation_errors",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "PS08",
+        "PS14",
+        "PS17",
+        "PS18"
+      ],
+      "scope": "Concurrency is distinct from bytes/pages/pixels/time/work budgets and local isolation."
+    },
+    {
+      "family": "semantic_vector_alternative",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "PS19",
+        "PS20"
+      ],
+      "scope": "Optional dense retrieval, model/version/provenance/deletion limits; no relevance score."
+    },
+    {
+      "family": "versions_licenses_applicability",
+      "coverage": "COMPLETE",
+      "primary_sources": [
+        "PS06",
+        "PS07",
+        "PS08",
+        "PS09",
+        "PS11",
+        "PS16",
+        "PS19"
+      ],
+      "scope": "Pinned and mutable context separated. Candidate dependency/platform/dictionary support not selected or certified."
+    }
+  ],
+  "plan_dispositions": [
+    {
+      "clause": "P1a",
+      "coverage": "COMPLETE",
+      "disposition": "revise",
+      "final_lines": "32–39",
+      "assessment": "Logical ID, byte version, extraction/index profiles and membership are distinct."
+    },
+    {
+      "clause": "P1b",
+      "coverage": "COMPLETE",
+      "disposition": "retain_conditionally",
+      "final_lines": "41–43",
+      "assessment": "Rename/move without extraction only for unchanged bytes; owner copy/move semantics remain open."
+    },
+    {
+      "clause": "P1c",
+      "coverage": "COMPLETE",
+      "disposition": "amend",
+      "final_lines": "45–47",
+      "assessment": "Old chunks are prior-version/stale, not indefinitely pending/current after failure."
+    },
+    {
+      "clause": "P1d",
+      "coverage": "COMPLETE",
+      "disposition": "resolve_at_planning_level",
+      "final_lines": "49–51",
+      "assessment": "Duplicates, moves and profile/revision changes have explicit proposed rules."
+    },
+    {
+      "clause": "P2a",
+      "coverage": "COMPLETE",
+      "disposition": "retain_with_explicit_scope",
+      "final_lines": "55–59",
+      "assessment": "PDF/slide/optional OCR and transcript-only audio; SRT conditional; binding added."
+    },
+    {
+      "clause": "P2b",
+      "coverage": "COMPLETE",
+      "disposition": "amend",
+      "final_lines": "61–63",
+      "assessment": "Per-chunk structured provenance; D-C02 is an independent missing origin condition."
+    },
+    {
+      "clause": "P2c",
+      "coverage": "COMPLETE",
+      "disposition": "amend",
+      "final_lines": "65–67",
+      "assessment": "Typed page/shape/region/time/unknown locators rather than untyped offsets."
+    },
+    {
+      "clause": "P2d",
+      "coverage": "COMPLETE",
+      "disposition": "revise",
+      "final_lines": "69–78",
+      "assessment": "Original opening/version verification; conditional retrieval alternatives; D-C01 remains in supporting map."
+    },
+    {
+      "clause": "P3a",
+      "coverage": "COMPLETE",
+      "disposition": "retain_and_bound",
+      "final_lines": "82–84",
+      "assessment": "One active worker plus bounded coalescing queue and explicit resource limits."
+    },
+    {
+      "clause": "P3b",
+      "coverage": "COMPLETE",
+      "disposition": "reject_as_complete_freshness_rule",
+      "final_lines": "86–88",
+      "assessment": "Old storage may survive but is not current for a new revision; staged publication."
+    },
+    {
+      "clause": "P3c",
+      "coverage": "COMPLETE",
+      "disposition": "reject_note_id_only",
+      "final_lines": "90–92",
+      "assessment": "Membership removal, immediate query suppression, last-owner cleanup."
+    },
+    {
+      "clause": "P3d",
+      "coverage": "COMPLETE",
+      "disposition": "reject_safety_assumption",
+      "final_lines": "94–96",
+      "assessment": "Current operation token/revision/live membership fence late completion."
+    },
+    {
+      "clause": "P4",
+      "coverage": "COMPLETE",
+      "disposition": "explicit_summary",
+      "final_lines": "98–107",
+      "assessment": "All six requested disposition areas are present."
+    },
+    {
+      "clause": "P5",
+      "coverage": "COMPLETE",
+      "disposition": "propose_and_disclose",
+      "final_lines": "109–122",
+      "assessment": "All requested fixture families and actual no-execution boundary."
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "finding": "transcript/audio revision",
+      "coverage": "COMPLETE",
+      "disposition": "accept_and_amend",
+      "locator": "final lines 19, 59, 63, 117, 135, 157",
+      "assessment": "Supported by PS15; association is provenance, not accuracy proof."
+    },
+    {
+      "finding": "maintenance/currentness",
+      "coverage": "COMPLETE",
+      "disposition": "accept_and_qualify",
+      "locator": "final lines 11, 20, 163, 167",
+      "assessment": "PS06/PS11 confirm listed versions; behavior/support transfer not claimed."
+    },
+    {
+      "finding": "SRT evidence",
+      "coverage": "COMPLETE",
+      "disposition": "accept_gap_keep_support_open",
+      "locator": "final lines 21, 59, 117–118, 140",
+      "assessment": "PS15 supports preliminary description only; no parser or corpus certification required."
+    },
+    {
+      "finding": "lopdf history access",
+      "coverage": "COMPLETE",
+      "disposition": "retain_historical_uncertainty_then_resolve",
+      "locator": "final lines 22, 167; source map S19/S25",
+      "assessment": "PS08 independently confirms scoped main changelog history and tagged API."
+    },
+    {
+      "finding": "central corrections sound",
+      "coverage": "COMPLETE",
+      "disposition": "accept_with_finite_limits",
+      "locator": "final line 23 and P1/P3",
+      "assessment": "Ownership/freshness proposal is sound; this does not exonerate independent D-C01/D-C02."
+    },
+    {
+      "finding": "owner/runtime questions",
+      "coverage": "COMPLETE",
+      "disposition": "retain_uncertainty",
+      "locator": "final lines 24, 147–163",
+      "assessment": "Unknown user storage, packaging, corpus, limits and retention may remain unknown."
+    }
+  ],
+  "supported_meaning_trace": [
+    {
+      "meaning": "Stable logical identity versus content/profile versions and shared membership",
+      "lineage": "discovery 7, 21–23 → draft P1/P3 → final P1/P3",
+      "result": "retained"
+    },
+    {
+      "meaning": "Failed/cancelled replacement leaves previous generation explicitly stale; query suppression and late-worker gating",
+      "lineage": "discovery 23 → draft 34, 75–83 → final 47, 88–96",
+      "result": "retained"
+    },
+    {
+      "meaning": "Per-chunk extraction provenance, normalized/display text separation and honest page/region/time mapping",
+      "lineage": "discovery 14–18, 25 → draft 44–58 → final 57–71",
+      "result": "retained_with_transcript_binding_added; imported origin omission separately D-C02"
+    },
+    {
+      "meaning": "FTS5/Tantivy, substring/dictionary and optional semantic alternatives with script/build limits",
+      "lineage": "discovery 9, 29 → draft 60–65 → final 73–78",
+      "result": "supported_alternatives_retained; false cutoff is accuracy defect D-C01"
+    },
+    {
+      "meaning": "OOXML/PDF slide alternatives and local OCR dependencies, supported subsets and coordinate limits",
+      "lineage": "discovery 14–18 → draft P2 → final P2 and owner questions",
+      "result": "retained"
+    },
+    {
+      "meaning": "Partial/error reporting, coalescing and bounded work; optional capability and owner uncertainty",
+      "lineage": "discovery 21–23, 33–40 → draft P3 and owner decisions → final 84, 145, 147–163",
+      "result": "retained"
+    },
+    {
+      "meaning": "Scoped issue/fix/upstream-test evidence and no executed application checks",
+      "lineage": "all original maps/indexes → final 122, 167 and carried stable S01–S20",
+      "result": "retained; no source-ID rebinding found"
+    },
+    {
+      "meaning": "All original authored critic findings",
+      "lineage": "complete critique → final critique-disposition table",
+      "result": "accepted/amended/qualified or uncertainty retained, as individually indexed"
+    }
+  ],
+  "validation_domains_oracles": [
+    "Version/profile changes: only current eligible generation publishes; failed old jobs cannot relabel old content.",
+    "Shared deletion and late completion: only live membership yields hits, final tombstone prevents resurrection.",
+    "Locator tests: version-aware page/shape/cue, approximate/unknown and transformed OCR boxes; original opening checks bytes.",
+    "Retrieval fixtures: declared scripts/short queries/punctuation and expected passages, not unavailable-corpus accuracy.",
+    "Malformed/oversized/partial/cancel/timeout fixtures: typed errors, no premature destructive publication; explicit future dependency/runtime tests."
+  ],
+  "executed_candidate_validation": "No parser/index/OCR/public-fixture/application tests claimed. Research and upstream test-source inspection only.",
+  "independent_execution": "Hash/custody checks and Python UTF-8 example arithmetic; no third-party engine/test or future notebook deployment.",
+  "unassessed_outside_scope": [
+    "Future runtime integration, corpus relevance/OCR quality and unchosen dependency packaging are not required executed validation.",
+    "Full native transcripts, private account identity, independent native-session linkage and provider/billing telemetry were unavailable and not sought."
+  ]
+}

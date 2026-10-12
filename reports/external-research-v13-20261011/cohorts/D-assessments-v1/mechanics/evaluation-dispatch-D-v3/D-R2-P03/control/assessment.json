@@ -1,0 +1,250 @@
+{
+  "schema": "er13.original_assessment.v1",
+  "contract_version": "er13-independent-evaluation-v1",
+  "block_id": "D-R2-P03",
+  "scope": "FULL",
+  "original_assessment": true,
+  "authored_at_utc": "2026-10-12T04:48:28.530212+00:00",
+  "arms": [
+    {
+      "arm_id": "D-R2-P03-control",
+      "source_judgment": "UNASSESSED",
+      "source_assessment": {
+        "complete_final_judgment": "UNASSESSED",
+        "available_partial_science_judgment": "UNASSESSED_NO_SCIENCE",
+        "available_partial_coverage": "UNASSESSED",
+        "no_fabricated_comparable_complete_grade": true,
+        "finite_scope": "All available frozen authored science read; bounded independent public context and omissions recorded. No final means no final source grade.",
+        "source_pass_status": "NOT_ASSESSED_MISSING_FINAL"
+      },
+      "coverage": {
+        "artifact": "coverage.json",
+        "complete_final_axes": [
+          {
+            "axis": 1,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 2,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 3,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 4,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 5,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          },
+          {
+            "axis": 6,
+            "coverage": "UNASSESSED",
+            "judgment": "UNASSESSED"
+          }
+        ],
+        "available_partial_science_axes": [
+          {
+            "axis": 1,
+            "coverage": "UNASSESSED"
+          },
+          {
+            "axis": 2,
+            "coverage": "UNASSESSED"
+          },
+          {
+            "axis": 3,
+            "coverage": "UNASSESSED"
+          },
+          {
+            "axis": 4,
+            "coverage": "UNASSESSED"
+          },
+          {
+            "axis": 5,
+            "coverage": "UNASSESSED"
+          },
+          {
+            "axis": 6,
+            "coverage": "UNASSESSED"
+          }
+        ],
+        "obligation_and_family_details": "coverage.json; every obligation, negative constraint and consequential family explicitly classified",
+        "complete_final_preservation": "UNASSESSED"
+      },
+      "defects": [
+        "C-D01",
+        "C-M01",
+        "C-N01"
+      ],
+      "delivery": {
+        "status": "FAILED_MISSING_FINAL",
+        "final_path": null,
+        "final_missing": true,
+        "available_science": [],
+        "science_not_substituted_for_final": true,
+        "failure_qualification_preserved": true,
+        "next_stage_held": true
+      },
+      "time_eligibility": {
+        "maximum_full_elapsed_seconds": 3600,
+        "t0_utc": "2026-10-12T04:18:14.047Z",
+        "whole_deadline_utc": "2026-10-12T05:18:14.047Z",
+        "clocks_unchanged": true,
+        "delivery_eligibility": "INELIGIBLE_NO_FINAL",
+        "actual_final_finish_utc": null,
+        "actual_final_finish_observation": "UNKNOWN; no final",
+        "last_complete_scientific_artifact_finish_utc": null,
+        "last_complete_scientific_artifact_finish_observation": "UNKNOWN; no timestamped complete-final artifact or justified proxy",
+        "stage_observations": [
+          {
+            "stage": "investigator",
+            "stage_deadline_utc": "2026-10-12T04:48:15.277Z",
+            "stage_cap_seconds": 1800,
+            "task_terminal_status": "completed",
+            "pending_child_runs": false,
+            "native_created_at_utc": "2026-10-12T04:18:26+00:00",
+            "native_terminal_updated_at_utc": null,
+            "native_reported_elapsed_seconds": null,
+            "native_elapsed_semantics": "Receipt observation, not provider active time or scientific artifact finish",
+            "stage_completion_eligibility": "INCOMPLETE_MISSING_OUTPUTS",
+            "scientific_artifact_finish_utc": null,
+            "scientific_artifact_finish_status": "UNKNOWN",
+            "request_utc": "2026-10-12T04:18:15.277Z",
+            "dispatch_response_captured_utc": "2026-10-12T04:18:16.486Z",
+            "provider_queue_start_finish_utc": null,
+            "provider_queue_observation": "UNKNOWN; response capture is not provider activity boundary"
+          }
+        ],
+        "whole_cap_expiry_claimed": false,
+        "declared_stage_caps_seconds": {
+          "investigator": 1800,
+          "critic": 720,
+          "reviser": 1080
+        }
+      },
+      "method_compliance": {
+        "status": "FAILED_FULL_METHOD_QUALIFICATION",
+        "declared_topology": "investigator → critic → reviser",
+        "observed_launched_stages": [
+          "investigator"
+        ],
+        "unlaunched_stages": [
+          "critic",
+          "reviser"
+        ],
+        "full_scope_reconstruction_performed": false,
+        "source_id_preservation": "UNASSESSED; source map missing",
+        "discovery_reveal_hashes": "UNASSESSED; reveal absent",
+        "process_order_independently_proved": "UNKNOWN beyond frozen reveal/capture custody; no native full transcript examined",
+        "method_effectiveness": "UNASSESSED; no full final and no comparison used for this judgment",
+        "notes": [
+          "No replacement, capture rescue, clock reset or schema repair performed.",
+          "Reading all frozen inputs/auxiliaries does not establish unobservable runtime behavior."
+        ]
+      },
+      "native_identity_provenance": {
+        "independent_native_to_task_provenance": "UNKNOWN",
+        "capture_custody": "PARTIAL",
+        "native_method_qualification": "FAILED_INCOMPLETE_LIFECYCLE",
+        "raw_receipts_are_not_source_quality": true,
+        "identity_values_omitted_for_privacy": true,
+        "stages": [
+          {
+            "stage": "investigator",
+            "birth_objective_matches_frozen_objective": true,
+            "terminal_present": false,
+            "same_birth_exact_objective_terminal": false,
+            "terminal_status": null,
+            "direct_return_custody_qualified": false,
+            "independent_provenance": "UNKNOWN; checker explicitly does not prove freshness/session linkage",
+            "missing_auxiliary_members": [
+              "native-completion-attempt.json",
+              "native-completion-output-snapshot.json",
+              "native-terminal-capture-checked.json"
+            ],
+            "missing_required_outputs": [
+              "source-map.json",
+              "discovery.md",
+              "draft.md",
+              "revealed-plan.md",
+              "plan-reveal.json",
+              "native-goal-terminal.json"
+            ]
+          }
+        ]
+      },
+      "resource_billing_coverage": {
+        "coverage": "UNASSESSED_PRODUCT_ACTIVITY",
+        "candidate_product": {
+          "provider_active_seconds": null,
+          "context_occupancy_seconds": null,
+          "input_cached_output_reasoning_breakdown": null,
+          "billed_resource_cost": null,
+          "subscription_consumption": null,
+          "status": "UNKNOWN; birth zero counters do not establish whole attempted product cost"
+        },
+        "raw_native_counters_observed": false,
+        "native_counter_values_public": "WITHHELD under contract privacy; no sums/billing conversion",
+        "counter_semantics_and_task_linkage": "UNKNOWN",
+        "independent_evaluation": {
+          "cost_category": "independent_evaluation",
+          "first_observed_clock_utc": "2026-10-12T04:36:05Z",
+          "billing": null,
+          "provider_active_seconds": null,
+          "context_occupancy_seconds": null,
+          "status": "UNKNOWN; independent grader cost separate from candidate product"
+        },
+        "preparation_support_publication_root_cost": null,
+        "all_unknowns_are_zero": false,
+        "notes": [
+          "Missing/unlaunched/interrupted stages remain in assigned failure denominator.",
+          "No total product or cold full-pipeline cost inferred from stage-native counters."
+        ]
+      }
+    }
+  ],
+  "independence": {
+    "imperfect_blinding": true,
+    "reason": "Technique-bearing arm paths/configuration/topology and critique text reveal technique; no masked grading claimed.",
+    "independent_primary_lookup_shared": true,
+    "candidate_feedback_sent": false,
+    "subagents_or_goals_created": false,
+    "comparative_analysis_before_freeze": false
+  },
+  "limitations": [
+    "Both complete finals and reviser source maps/dispositions are absent. Complete-final grading and all final preservation are UNASSESSED.",
+    "Exact frozen snapshots only; active files, referred original stage paths, campaign tree/history, other/held-out cases, native full transcripts and provider settings were not consulted.",
+    "Technique-bearing arm paths/configuration and criticism make blinding imperfect. Evaluator authored independent judgments; no author feedback, repair, new scientific candidates, Goals or subagents.",
+    "Primary research is finite. Rolling public pages were independently read in this access window; candidate-cited source corpus was not fully snapshotted, and per-page instantaneous timestamps are unavailable.",
+    "Actual native-to-task/session linkage is UNKNOWN beyond verified capture/objective custody. No scientific truth follows from lifecycle or hashes.",
+    "No future application deployment or execution required. Code/test source inspection is not test execution. Unknown center rules/platform/provider capabilities remain legitimate unknowns.",
+    "Full target-version/license/adapter inventory, notification provider semantics, organizational acceptance and theoretical exhaustive mechanism recall remain unassessed. No discovery effectiveness score or cold complete-pipeline success inferred."
+  ],
+  "governing_inputs": [
+    {
+      "path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/D-R2-P03.json",
+      "sha256": "0114530e4e1fb54b236e06bb243ae0d5c64ee79e7e583a2d38c24662a309d931"
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R2-P03-input-verification.json",
+      "sha256": "d2326f9c2dc4f58d4e7ff6f5953e946ed8e54a714270062d30ffd2e11753a674"
+    },
+    {
+      "path": "ER13_RUNTIME/state/evaluation-contract-v1.json",
+      "sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49"
+    },
+    {
+      "path": "ER13_RUNTIME/state/eval-coordinator-D-v3/evaluator-custody/D-R2-P03/rubric.json",
+      "sha256": "821eadae11fc81eadaf34edc3f7b48c4c034dd25de3000378566dd989848e058"
+    }
+  ]
+}

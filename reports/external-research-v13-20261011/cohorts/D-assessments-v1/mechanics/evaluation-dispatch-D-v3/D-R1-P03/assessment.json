@@ -1,0 +1,563 @@
+{
+  "schema": "er13.original-pair-assessment.v1",
+  "block_id": "D-R1-P03",
+  "original": true,
+  "arm_count": 2,
+  "written_at_utc": "2026-10-12T04:58:59.705607+00:00",
+  "arms": [
+    {
+      "arm_id": "D-R1-P03-control",
+      "scope": "FULL",
+      "source_judgment": {
+        "status": "FAIL",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [
+          "C-D01"
+        ],
+        "finite_assessment": true,
+        "universal_correctness_claim": false,
+        "basis": "Material causal repair-history error; otherwise coherent proposal."
+      },
+      "coverage": {
+        "axes": [
+          {
+            "id": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "All five obligations and three negatives addressed; planning-level unresolved choices retained."
+          },
+          {
+            "id": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "basis": "Consequential repair-history account C-D01 conflicts with final code and rejected revision context."
+          },
+          {
+            "id": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "basis": "Useful breadth present, but one purported implemented repair is incorrectly understood; C-D01."
+          },
+          {
+            "id": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Every exact provisional clause and all three critic findings have defensible dispositions; no unsafe original assumption restored."
+          },
+          {
+            "id": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Supported investigator meaning, alternatives, negative constraints and proposed-status boundaries retained. Wrong historical premise is a source error, not supported-meaning loss."
+          },
+          {
+            "id": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Domain-specific proposed faults have outcome oracles; no product checks claimed executed. Deployment is not required."
+          }
+        ],
+        "obligations": "COMPLETE",
+        "source_families": [
+          {
+            "family": "archive",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Python editions, implementation and bad-CRC tests checked; duplicate/path/compression duties examined.",
+            "primary_source_ids": [
+              "P09",
+              "P11",
+              "P12"
+            ]
+          },
+          {
+            "family": "atomicity",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Database-versus-files and rename-versus-durability boundaries checked; exact target filesystem remains open.",
+            "primary_source_ids": [
+              "P05"
+            ]
+          },
+          {
+            "family": "crypto",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Pinned/current specs, header MAC, wrapping, payload reader/tests and digest definition examined; no selected-library security audit claimed.",
+            "primary_source_ids": [
+              "P17",
+              "P18",
+              "P19",
+              "P20",
+              "P21",
+              "P22"
+            ]
+          },
+          {
+            "family": "identity_history",
+            "coverage": "COMPLETE",
+            "judgment": "FAIL",
+            "basis": "Import/link definitions, incident versions, narrow clipboard fix, merged caller/test, withdrawn helper proposal and review chronology inspected.",
+            "primary_source_ids": [
+              "P29",
+              "P30",
+              "P31",
+              "P32",
+              "P33",
+              "P34",
+              "P35",
+              "P36",
+              "P37",
+              "P38",
+              "P39"
+            ]
+          },
+          {
+            "family": "incremental",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Repository/snapshot dependencies, read errors, overwrite/interruption and full-data check cost examined.",
+            "primary_source_ids": [
+              "P24",
+              "P25",
+              "P26",
+              "P27"
+            ]
+          },
+          {
+            "family": "incremental_history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Historical SIGINT report and later comment distinguished from current implemented feature.",
+            "primary_source_ids": [
+              "P28"
+            ]
+          },
+          {
+            "family": "inventory",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Expected source inventory versus member/hash validity checked independently with opaque-payload definitions; neither proves usability.",
+            "primary_source_ids": [
+              "P40"
+            ]
+          },
+          {
+            "family": "migration",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "PRAGMA meanings/defaults and version/config-sensitive ALTER TABLE examined; actual future schema registry unknown.",
+            "primary_source_ids": [
+              "P04",
+              "P06"
+            ]
+          },
+          {
+            "family": "snapshot",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "SQLite snapshot API, fatal/retry/finish semantics and WAL sidecars checked; claims conditional on choosing SQLite.",
+            "primary_source_ids": [
+              "P01",
+              "P02",
+              "P03"
+            ]
+          },
+          {
+            "family": "snapshot_history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "WAL-reset versions/condition and fixed release checked; source chronology is conditional.",
+            "primary_source_ids": [
+              "P41"
+            ]
+          }
+        ],
+        "full_details": "coverage.json"
+      },
+      "defects": {
+        "records": "defects.json",
+        "material_ids": [
+          "C-D01"
+        ],
+        "nonmaterial_ids": [
+          "C-L01"
+        ]
+      },
+      "delivery": {
+        "status": "DELIVERED",
+        "frozen_final": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/control/terminal-handoffs/reviser/files/final.md",
+        "final_bytes": 34814,
+        "final_sha256": "4fb53a6d87992e01fcb0c7684274fc4699ad024337c131f2f9a202125d9f479c",
+        "all_assigned_scientific_native_auxiliary_members_read": true,
+        "input_allowlist_member_count": 79,
+        "all_member_hashes_and_sizes_verified": true,
+        "missing_final": false,
+        "retained_failure_reports_listed": [],
+        "unlaunched_stages": [],
+        "status_receipts": "all assigned stages completed with no pending children; not source truth"
+      },
+      "time_eligibility": {
+        "status": "RECORDED_CLOCKS_WITHIN_MAXIMUM; actual_finish_UNKNOWN",
+        "maximum_elapsed_seconds": 3600,
+        "frozen_t0_utc": "2026-10-12T04:17:52.349Z",
+        "frozen_whole_deadline_utc": "2026-10-12T05:17:52.349Z",
+        "packet_frozen_at_utc": "2026-10-12T04:46:36.449829+00:00",
+        "final_present_at_packet_freeze_before_whole_deadline": true,
+        "stage_observations": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T04:17:53.253Z",
+            "request_at_utc": "2026-10-12T04:17:53.253Z",
+            "dispatch_return_capture_utc": "2026-10-12T04:17:54.423Z",
+            "frozen_stage_deadline_utc": "2026-10-12T04:47:53.253Z",
+            "native_created_at_utc_reported": "2026-10-12T04:18:00+00:00",
+            "native_terminal_updated_at_utc_reported": "2026-10-12T04:25:56+00:00",
+            "native_time_used_seconds_reported": 475,
+            "terminal_within_recorded_stage_deadline": true,
+            "actual_task_start": "UNKNOWN",
+            "actual_task_finish": "UNKNOWN",
+            "last_scientific_write": "UNKNOWN",
+            "provider_active_duration": "UNKNOWN",
+            "native_identity_custody": "same birth/objective, active alias, terminal hash, required output snapshot and status structure match; direct provenance UNKNOWN"
+          },
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T04:26:30.932Z",
+            "request_at_utc": "2026-10-12T04:26:30.932Z",
+            "dispatch_return_capture_utc": "2026-10-12T04:26:32.093Z",
+            "frozen_stage_deadline_utc": "2026-10-12T04:38:30.932Z",
+            "native_created_at_utc_reported": "2026-10-12T04:26:45+00:00",
+            "native_terminal_updated_at_utc_reported": "2026-10-12T04:33:56+00:00",
+            "native_time_used_seconds_reported": 431,
+            "terminal_within_recorded_stage_deadline": true,
+            "actual_task_start": "UNKNOWN",
+            "actual_task_finish": "UNKNOWN",
+            "last_scientific_write": "UNKNOWN",
+            "provider_active_duration": "UNKNOWN",
+            "native_identity_custody": "same birth/objective, active alias, terminal hash, required output snapshot and status structure match; direct provenance UNKNOWN"
+          },
+          {
+            "stage": "reviser",
+            "prepared_at_utc": "2026-10-12T04:34:55.536Z",
+            "request_at_utc": "2026-10-12T04:34:55.536Z",
+            "dispatch_return_capture_utc": "2026-10-12T04:34:56.925Z",
+            "frozen_stage_deadline_utc": "2026-10-12T04:52:55.536Z",
+            "native_created_at_utc_reported": "2026-10-12T04:35:11+00:00",
+            "native_terminal_updated_at_utc_reported": "2026-10-12T04:45:18+00:00",
+            "native_time_used_seconds_reported": 606,
+            "terminal_within_recorded_stage_deadline": true,
+            "actual_task_start": "UNKNOWN",
+            "actual_task_finish": "UNKNOWN",
+            "last_scientific_write": "UNKNOWN",
+            "provider_active_duration": "UNKNOWN",
+            "native_identity_custody": "same birth/objective, active alias, terminal hash, required output snapshot and status structure match; direct provenance UNKNOWN"
+          }
+        ],
+        "actual_last_complete_scientific_artifact_time": "UNKNOWN",
+        "native_last_terminal_proxy_utc": "2026-10-12T04:45:18+00:00",
+        "request_to_quiet_final_proxy": "UNKNOWN: task-status receipts expose terminal state but no actual quiet/finish timestamp",
+        "clock_reset": false,
+        "limits": "Receipt timestamps are reported lifecycle proxies, not independently proved native transport or active provider time."
+      },
+      "method_compliance": {
+        "status": "OBSERVABLE_REQUIREMENTS_SATISFIED; full_runtime_UNKNOWN",
+        "observed_topology": "investigator -> critic -> separate reviser",
+        "brief_plan_reveal": "discovery and exact released-plan bytes match single-use reveal receipt; no proof of all pre-reveal reads",
+        "source_and_disposition_protocol": "complete authored package and source identities inspected; treatment negative/default/limit challenges visible where assigned",
+        "mechanical_custody": "activation aliases, exact objectives, same birth, snapshots, terminal check hashes and raw task status structure verified",
+        "unobservable": "No full transcript or independent transport; hidden accesses, absence of all retries and fresh-context/native-to-task linkage are UNKNOWN.",
+        "imperfect_blinding": true
+      },
+      "native_identity_provenance": {
+        "status": "CUSTODY_VERIFIED; DIRECT_PROVENANCE_UNKNOWN",
+        "separate_stage_records": 3,
+        "birth_objective_alias_terminal_consistency": true,
+        "direct_completion_claim": "all checks label direct_update_goal_return, provenance_independently_proved=false",
+        "independent_native_to_task_linkage": "UNKNOWN",
+        "attempt_markers": "metadata only; UNKNOWN outcomes in markers are not missing-receipt proof or native receipts",
+        "native_transcripts_republished": false
+      },
+      "resource_billing_coverage": {
+        "status": "PARTIAL_OBSERVATION; billing_UNKNOWN",
+        "candidate_product_cost": "UNKNOWN",
+        "provider_active_time": "UNKNOWN",
+        "context_occupancy": "UNKNOWN; native Goal lifetimes do not prove T3 context start/end or billing",
+        "subscription_consumption": "UNKNOWN",
+        "billing": "UNKNOWN",
+        "detailed_consumption_counters": "Present in native receipts; private and attribution/billing coverage unproved; not republished or summed.",
+        "zero_imputation": false,
+        "failed_attempt_denominator": "All assigned stages and retained reports included; none listed missing/failed in this exact packet. No claim of zero unobserved retries.",
+        "grader_cost_category": "independent_evaluation",
+        "grader_observed_start_utc": "2026-10-12T04:48:21Z",
+        "grader_billing": "UNKNOWN",
+        "private_account_epoch": "Prospective-only instruction respected; account identity and consumption not observed, no historical backfill."
+      }
+    },
+    {
+      "arm_id": "D-R1-P03-treatment",
+      "scope": "FULL",
+      "source_judgment": {
+        "status": "PASS",
+        "coverage": "COMPLETE",
+        "material_defect_ids": [],
+        "finite_assessment": true,
+        "universal_correctness_claim": false,
+        "basis": "No material unsupported claim, required omission, false rejection or supported-meaning loss found under declared complete planning coverage."
+      },
+      "coverage": {
+        "axes": [
+          {
+            "id": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "All five obligations and three negatives addressed with coherent staging and explicit choices."
+          },
+          {
+            "id": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Consequential mechanisms, definitions, versions, exceptions and repair conditions verified under finite scope."
+          },
+          {
+            "id": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "WAL-reset qualification, ZIP symlink-order repair, authenticated final chunks, VACUUM interruption and repository check costs are useful supported discoveries."
+          },
+          {
+            "id": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "All plan clauses and CR-01 through CR-05 accounted for; severity overstatement recorded T-L01 without a false final rejection."
+          },
+          {
+            "id": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Supported capture, inventory, IDs/references, alternatives, owner choices and proposed validation meanings retained; discovery locator corrected."
+          },
+          {
+            "id": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Specific proposed domains/oracles cover interruption, damage, migration, merge, secrets and usability; no invented execution."
+          }
+        ],
+        "obligations": "COMPLETE",
+        "source_families": [
+          {
+            "family": "archive",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Python editions, implementation and bad-CRC tests checked; duplicate/path/compression duties examined.",
+            "primary_source_ids": [
+              "P10",
+              "P11",
+              "P12"
+            ]
+          },
+          {
+            "family": "archive_history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Advisory, fixed extractor/caller and symlink-order regression plus release examined.",
+            "primary_source_ids": [
+              "P13",
+              "P14",
+              "P15"
+            ]
+          },
+          {
+            "family": "atomicity",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Database-versus-files and rename-versus-durability boundaries checked; exact target filesystem remains open.",
+            "primary_source_ids": [
+              "P16"
+            ]
+          },
+          {
+            "family": "crypto",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Pinned/current specs, header MAC, wrapping, payload reader/tests and digest definition examined; no selected-library security audit claimed.",
+            "primary_source_ids": [
+              "P17",
+              "P18",
+              "P20",
+              "P21",
+              "P22",
+              "P23"
+            ]
+          },
+          {
+            "family": "incremental",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Repository/snapshot dependencies, read errors, overwrite/interruption and full-data check cost examined.",
+            "primary_source_ids": [
+              "P24",
+              "P26"
+            ]
+          },
+          {
+            "family": "inventory",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "Expected source inventory versus member/hash validity checked independently with opaque-payload definitions; neither proves usability.",
+            "primary_source_ids": [
+              "P40"
+            ]
+          },
+          {
+            "family": "migration",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "PRAGMA meanings/defaults and version/config-sensitive ALTER TABLE examined; actual future schema registry unknown.",
+            "primary_source_ids": [
+              "P04",
+              "P07"
+            ]
+          },
+          {
+            "family": "snapshot",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "SQLite snapshot API, fatal/retry/finish semantics and WAL sidecars checked; claims conditional on choosing SQLite.",
+            "primary_source_ids": [
+              "P01",
+              "P02",
+              "P03",
+              "P08"
+            ]
+          },
+          {
+            "family": "snapshot_history",
+            "coverage": "COMPLETE",
+            "judgment": "PASS",
+            "basis": "WAL-reset versions/condition and fixed release checked; source chronology is conditional.",
+            "primary_source_ids": [
+              "P41"
+            ]
+          }
+        ],
+        "full_details": "coverage.json"
+      },
+      "defects": {
+        "records": "defects.json",
+        "material_ids": [],
+        "nonmaterial_ids": [
+          "T-L01",
+          "T-L02"
+        ]
+      },
+      "delivery": {
+        "status": "DELIVERED",
+        "frozen_final": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-treatment/run/D-R1-P03-treatment/control/terminal-handoffs/critic/files/final.md",
+        "final_bytes": 23897,
+        "final_sha256": "3878f2c8fbb9d565469b384392d972eb21795c63b1ea83f66287504690475b79",
+        "all_assigned_scientific_native_auxiliary_members_read": true,
+        "input_allowlist_member_count": 57,
+        "all_member_hashes_and_sizes_verified": true,
+        "missing_final": false,
+        "retained_failure_reports_listed": [],
+        "unlaunched_stages": [],
+        "status_receipts": "all assigned stages completed with no pending children; not source truth"
+      },
+      "time_eligibility": {
+        "status": "RECORDED_CLOCKS_WITHIN_MAXIMUM; actual_finish_UNKNOWN",
+        "maximum_elapsed_seconds": 3600,
+        "frozen_t0_utc": "2026-10-12T04:17:54.663Z",
+        "frozen_whole_deadline_utc": "2026-10-12T05:17:54.663Z",
+        "packet_frozen_at_utc": "2026-10-12T04:46:36.449829+00:00",
+        "final_present_at_packet_freeze_before_whole_deadline": true,
+        "stage_observations": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T04:17:55.602Z",
+            "request_at_utc": "2026-10-12T04:17:55.602Z",
+            "dispatch_return_capture_utc": "2026-10-12T04:17:56.927Z",
+            "frozen_stage_deadline_utc": "2026-10-12T04:47:55.602Z",
+            "native_created_at_utc_reported": "2026-10-12T04:18:05+00:00",
+            "native_terminal_updated_at_utc_reported": "2026-10-12T04:24:11+00:00",
+            "native_time_used_seconds_reported": 366,
+            "terminal_within_recorded_stage_deadline": true,
+            "actual_task_start": "UNKNOWN",
+            "actual_task_finish": "UNKNOWN",
+            "last_scientific_write": "UNKNOWN",
+            "provider_active_duration": "UNKNOWN",
+            "native_identity_custody": "same birth/objective, active alias, terminal hash, required output snapshot and status structure match; direct provenance UNKNOWN"
+          },
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T04:25:04.036Z",
+            "request_at_utc": "2026-10-12T04:25:04.036Z",
+            "dispatch_return_capture_utc": "2026-10-12T04:25:05.139Z",
+            "frozen_stage_deadline_utc": "2026-10-12T04:55:04.036Z",
+            "native_created_at_utc_reported": "2026-10-12T04:25:13+00:00",
+            "native_terminal_updated_at_utc_reported": "2026-10-12T04:30:43+00:00",
+            "native_time_used_seconds_reported": 329,
+            "terminal_within_recorded_stage_deadline": true,
+            "actual_task_start": "UNKNOWN",
+            "actual_task_finish": "UNKNOWN",
+            "last_scientific_write": "UNKNOWN",
+            "provider_active_duration": "UNKNOWN",
+            "native_identity_custody": "same birth/objective, active alias, terminal hash, required output snapshot and status structure match; direct provenance UNKNOWN"
+          }
+        ],
+        "actual_last_complete_scientific_artifact_time": "UNKNOWN",
+        "native_last_terminal_proxy_utc": "2026-10-12T04:30:43+00:00",
+        "request_to_quiet_final_proxy": "UNKNOWN: task-status receipts expose terminal state but no actual quiet/finish timestamp",
+        "clock_reset": false,
+        "limits": "Receipt timestamps are reported lifecycle proxies, not independently proved native transport or active provider time."
+      },
+      "method_compliance": {
+        "status": "OBSERVABLE_REQUIREMENTS_SATISFIED; full_runtime_UNKNOWN",
+        "observed_topology": "investigator -> same-context critic/finalizer",
+        "brief_plan_reveal": "discovery and exact released-plan bytes match single-use reveal receipt; no proof of all pre-reveal reads",
+        "source_and_disposition_protocol": "complete authored package and source identities inspected; treatment negative/default/limit challenges visible where assigned",
+        "mechanical_custody": "activation aliases, exact objectives, same birth, snapshots, terminal check hashes and raw task status structure verified",
+        "unobservable": "No full transcript or independent transport; hidden accesses, absence of all retries and fresh-context/native-to-task linkage are UNKNOWN.",
+        "imperfect_blinding": true
+      },
+      "native_identity_provenance": {
+        "status": "CUSTODY_VERIFIED; DIRECT_PROVENANCE_UNKNOWN",
+        "separate_stage_records": 2,
+        "birth_objective_alias_terminal_consistency": true,
+        "direct_completion_claim": "all checks label direct_update_goal_return, provenance_independently_proved=false",
+        "independent_native_to_task_linkage": "UNKNOWN",
+        "attempt_markers": "metadata only; UNKNOWN outcomes in markers are not missing-receipt proof or native receipts",
+        "native_transcripts_republished": false
+      },
+      "resource_billing_coverage": {
+        "status": "PARTIAL_OBSERVATION; billing_UNKNOWN",
+        "candidate_product_cost": "UNKNOWN",
+        "provider_active_time": "UNKNOWN",
+        "context_occupancy": "UNKNOWN; native Goal lifetimes do not prove T3 context start/end or billing",
+        "subscription_consumption": "UNKNOWN",
+        "billing": "UNKNOWN",
+        "detailed_consumption_counters": "Present in native receipts; private and attribution/billing coverage unproved; not republished or summed.",
+        "zero_imputation": false,
+        "failed_attempt_denominator": "All assigned stages and retained reports included; none listed missing/failed in this exact packet. No claim of zero unobserved retries.",
+        "grader_cost_category": "independent_evaluation",
+        "grader_observed_start_utc": "2026-10-12T04:48:21Z",
+        "grader_billing": "UNKNOWN",
+        "private_account_epoch": "Prospective-only instruction respected; account identity and consumption not observed, no historical backfill."
+      }
+    }
+  ],
+  "comparison_started": false
+}

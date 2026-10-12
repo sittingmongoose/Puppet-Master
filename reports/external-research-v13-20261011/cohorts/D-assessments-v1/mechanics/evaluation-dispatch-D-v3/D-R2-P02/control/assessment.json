@@ -1,0 +1,536 @@
+{
+  "schema": "er13.immutable_original_assessment.v1",
+  "block_id": "D-R2-P02",
+  "case_id": "D-P06",
+  "original": true,
+  "adjudication": false,
+  "evaluation_started_utc": "2026-10-12T05:05:18Z",
+  "authored_utc": "2026-10-12T05:19:33.712725+00:00",
+  "arms": [
+    {
+      "arm_id": "D-R2-P02-control",
+      "scope": "FULL",
+      "source_judgment": {
+        "status": "FAIL",
+        "domain": "complete_final",
+        "material_defect_ids": [
+          "C-D01"
+        ],
+        "reason": "Required governing permission-scope research incomplete for the offered Deno mechanism.",
+        "coverage_qualification": "Axes 1/4/5/6 COMPLETE, 2/3 PARTIAL; no comparable exhaustive final grade or universal correctness claim."
+      },
+      "source_assessment": {
+        "status": "FAIL",
+        "domain": "complete_final",
+        "material_defect_ids": [
+          "C-D01"
+        ],
+        "reason": "Required governing permission-scope research incomplete for the offered Deno mechanism.",
+        "coverage_qualification": "Axes 1/4/5/6 COMPLETE, 2/3 PARTIAL; no comparable exhaustive final grade or universal correctness claim."
+      },
+      "coverage": {
+        "schema": "er13.original_coverage.v1",
+        "arm_id": "D-R2-P02-control",
+        "complete_final": {
+          "axes": [
+            {
+              "axis": 1,
+              "name": "Material original obligations and negative constraints",
+              "coverage": "COMPLETE",
+              "judgment": "FAIL",
+              "reason": "Every rubric obligation/negative constraint examined; O04 has C-D01. Editing, malformed input, lifecycle, provenance and owned cleanup otherwise concretely addressed."
+            },
+            {
+              "axis": 2,
+              "name": "Consequential source facts, governing conditions, versions and applicability",
+              "coverage": "PARTIAL",
+              "judgment": "FAIL",
+              "reason": "Consequential runtime/browser/storage facts independently checked; C-D01 is a governing-condition omission. Native OS deep code/test/history and Deno release/fix context remain UNASSESSED."
+            },
+            {
+              "axis": 3,
+              "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+              "coverage": "PARTIAL",
+              "judgment": "FAIL",
+              "reason": "Declarative output, Wasm, browser/native workers and Deno offer useful different mechanisms. History and concrete tests are useful. Scope exceptions limit full breadth qualification."
+            },
+            {
+              "axis": 4,
+              "name": "Valid corrections, rejections and exact plan dispositions",
+              "coverage": "COMPLETE",
+              "judgment": "NO_MATERIAL_DEFECT_FOUND",
+              "reason": "All P1-P4 clauses and six required design dispositions examined; all C-01 through C-04 dispositions traced and supported."
+            },
+            {
+              "axis": 5,
+              "name": "Supported meaning retained from draft and criticism into the complete final",
+              "coverage": "COMPLETE",
+              "judgment": "NO_MATERIAL_DEFECT_FOUND",
+              "reason": "Complete discovery/draft/criticism/final/maps compared by supported meaning. No material loss found; C-L02 records narrative compression."
+            },
+            {
+              "axis": 6,
+              "name": "Meaningful proposed validation, with executed work distinguished",
+              "coverage": "COMPLETE",
+              "judgment": "NO_MATERIAL_DEFECT_FOUND",
+              "reason": "The six requested synthetic/disposable witness families specify meaningful denial/state/resource/deletion oracles. All application/adversarial/cross-platform checks remain proposed, not executed."
+            }
+          ],
+          "obligations_and_negative_constraints": [
+            {
+              "id": "O01",
+              "coverage": "COMPLETE",
+              "observation": "Opaque job-scoped read capability, validated declarative output, isolated richer option, unrelated-notebook denial.",
+              "result": "NO_MATERIAL_DEFECT_FOUND"
+            },
+            {
+              "id": "O02",
+              "coverage": "COMPLETE",
+              "observation": "Editable original plus failed/timed-out/stale/disabled/unavailable/version state; upgrade/re-enable/uninstall behavior.",
+              "result": "NO_MATERIAL_DEFECT_FOUND"
+            },
+            {
+              "id": "O03",
+              "coverage": "COMPLETE",
+              "observation": "Separate derived search namespace/record, source and producer identity, no partial-current publication.",
+              "result": "NO_MATERIAL_DEFECT_FOUND"
+            },
+            {
+              "id": "O04",
+              "coverage": "COMPLETE",
+              "observation": "Permission/resource/nested-worker/host limitation comparisons; C-D01 in control, partial source/test gaps in treatment.",
+              "result": "MATERIAL_RESEARCH_OMISSION"
+            },
+            {
+              "id": "O05",
+              "coverage": "COMPLETE",
+              "observation": "Host ownership registry, private job roots, references/leases/generations, no-follow identity, crash reconciliation.",
+              "result": "NO_MATERIAL_DEFECT_FOUND"
+            },
+            {
+              "id": "N01",
+              "coverage": "COMPLETE",
+              "observation": "No broad notebook grant or ambient-privilege markup; proposal invariant distinguished from actual enforcement.",
+              "result": "NO_MATERIAL_DEFECT_FOUND"
+            },
+            {
+              "id": "N02",
+              "coverage": "COMPLETE",
+              "observation": "Path suffix or child exit rejected as cleanup ownership proof.",
+              "result": "NO_MATERIAL_DEFECT_FOUND"
+            },
+            {
+              "id": "N03",
+              "coverage": "COMPLETE",
+              "observation": "Extracted text never substituted for authored note content.",
+              "result": "NO_MATERIAL_DEFECT_FOUND"
+            }
+          ],
+          "additional_obligations": [
+            {
+              "id": "editing_responsiveness",
+              "coverage": "COMPLETE"
+            },
+            {
+              "id": "malformed_inputs_output",
+              "coverage": "COMPLETE"
+            },
+            {
+              "id": "all_six_named_plan_dispositions",
+              "coverage": "COMPLETE"
+            },
+            {
+              "id": "all_required_validation_families",
+              "coverage": "COMPLETE"
+            },
+            {
+              "id": "actual_product_deployment",
+              "coverage": "UNASSESSED",
+              "required": false,
+              "reason": "Outside the planning deliverable; neither demanded nor inferred."
+            }
+          ],
+          "source_families": [
+            {
+              "family": "extension_interfaces",
+              "coverage": "COMPLETE",
+              "primary_ids": "P11/P27-P31",
+              "scope": "complete_final",
+              "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+            },
+            {
+              "family": "browser_rendering",
+              "coverage": "COMPLETE",
+              "primary_ids": "P21/P23/P25/P26/P29",
+              "scope": "complete_final",
+              "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+            },
+            {
+              "family": "wasmtime_controls",
+              "coverage": "COMPLETE",
+              "primary_ids": "P01-P03",
+              "scope": "complete_final",
+              "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+            },
+            {
+              "family": "runtime_history",
+              "coverage": "COMPLETE",
+              "primary_ids": "P13-P20",
+              "scope": "complete_final",
+              "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+            },
+            {
+              "family": "wasi_filesystem_capabilities",
+              "coverage": "COMPLETE",
+              "primary_ids": "P08-P10",
+              "scope": "complete_final",
+              "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+            },
+            {
+              "family": "nested_workers_native_os",
+              "coverage": "PARTIAL",
+              "primary_ids": "P12/P22/P24/P37-P42",
+              "scope": "complete_final",
+              "limit": "Full code/callers/test/release history UNASSESSED after decisive C-D01; documented conditions checked."
+            },
+            {
+              "family": "deno_permissions",
+              "coverage": "PARTIAL",
+              "primary_ids": "P33",
+              "scope": "complete_final",
+              "limit": "Full code/callers/test/release history UNASSESSED after decisive C-D01; documented conditions checked."
+            },
+            {
+              "family": "storage_search",
+              "coverage": "COMPLETE",
+              "primary_ids": "P34-P36",
+              "scope": "complete_final",
+              "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+            },
+            {
+              "family": "upstream_tests",
+              "coverage": "COMPLETE",
+              "primary_ids": "P04-P09/P43",
+              "scope": "complete_final",
+              "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+            },
+            {
+              "family": "licenses",
+              "coverage": "COMPLETE",
+              "primary_ids": "P44/P45",
+              "scope": "complete_final",
+              "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+            }
+          ]
+        },
+        "assessment_is_finite": true,
+        "unassessed_remainder": [
+          "Native OS launch implementation/callers, complete tests and release/fix histories",
+          "Deno implementation/callers/tests and issue/fix/release history beyond governing docs",
+          "Any product execution/deployment; not required"
+        ]
+      },
+      "defects": [
+        {
+          "id": "C-D01",
+          "classification": "material incomplete",
+          "scope": "complete_final",
+          "axes": [
+            1,
+            2,
+            3
+          ],
+          "obligations": [
+            "O04",
+            "N01"
+          ],
+          "source_family": "deno_permissions",
+          "candidate_locator": "final.md P2 Deno paragraph; investigator discovery Permission... and source S-22; final source-map S-22",
+          "finding": "The offered Deno permission alternative carries allow-all and hidden disk-consumption caveats but omits module-loader authority and link-location permission behavior. Required research of indirect references/effective attachment-only permission scope is incomplete.",
+          "primary": [
+            "P33"
+          ],
+          "context": "The official page permits statically analyzable entrypoint imports by default, distinguishes import access from ordinary file/network permissions, and checks existing symlinks by link location rather than target (with specified sensitive-path exceptions). These can change isolation choice even when ordinary read permissions are narrow.",
+          "materiality": "This is an omission in governing research for an explicitly offered mechanism, not an exploit result or a requirement to deploy the future host. The broad deny-outside-object design intention does not research how this runtime grants actual authority.",
+          "limits": "No selected Deno configuration, notebook format, OS or executed bypass is claimed. The unaffected architecture alternatives remain useful; source PASS nevertheless requires no material required omission."
+        },
+        {
+          "id": "C-L01",
+          "classification": "nonmaterial limit",
+          "scope": "complete_final",
+          "axes": [
+            2,
+            3
+          ],
+          "obligations": [
+            "O04"
+          ],
+          "source_family": "nested_workers_native_os",
+          "candidate_locator": "final.md P2 process-group/job-object supervision; Owner decisions",
+          "finding": "Native OS controls are left substantially as policy and future platform checks. Generic group/job names are not a proved hostile-descendant boundary.",
+          "primary": [
+            "P37",
+            "P38",
+            "P39",
+            "P40",
+            "P41"
+          ],
+          "materiality": "Recorded as a research-depth limit, not a second decisive failure: the final states conditional guarantees and does not choose a platform.",
+          "limits": "Full OS launch/code/test/release history UNASSESSED. No product execution demanded."
+        },
+        {
+          "id": "C-L02",
+          "classification": "nonmaterial preservation limit",
+          "scope": "complete_final",
+          "axes": [
+            5
+          ],
+          "obligations": [
+            "O04"
+          ],
+          "source_family": "wasi_filesystem_capabilities",
+          "candidate_locator": "final.md prose versus final source-map S-10/S-13/S-05",
+          "finding": "Overlapping-preopen/raw-WASIp3 nuance, core thread embedder context and additional release issues survive more fully in the final source map than in the narrative.",
+          "primary": [
+            "P10",
+            "P12",
+            "P19"
+          ],
+          "materiality": "No material supported-meaning loss found in the complete frozen final package; the substantive boundary, history qualification and relevant mapped conditions remain accessible."
+        }
+      ],
+      "delivery": {
+        "status": "DELIVERED",
+        "final_path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/control/terminal-handoffs/reviser/files/final.md",
+        "final_sha256": "877e47062aa4036e5645d432c6f1c1a8fa08f1dac18180891662ad0f374a03fa",
+        "missing_required_stage_outputs": [],
+        "original_failures_preserved": true
+      },
+      "time_eligibility": {
+        "status": "WITHIN_RECORDED_STAGE_AND_FULL_CAPS",
+        "t0_utc": "2026-10-12T04:18:08.191Z",
+        "full_deadline_utc": "2026-10-12T05:18:08.191Z",
+        "full_maximum_seconds": 3600,
+        "original_clocks_unchanged": true,
+        "stages": [
+          {
+            "stage": "investigator",
+            "prepared_at_utc": "2026-10-12T04:18:09.505Z",
+            "requested_at_utc": "2026-10-12T04:18:09.505Z",
+            "dispatch_return_captured_at_utc": "2026-10-12T04:18:10.954Z",
+            "stage_deadline_utc": "2026-10-12T04:48:09.505Z",
+            "native_birth_receipt_utc": "2026-10-12T04:18:27+00:00",
+            "native_terminal_receipt_utc": "2026-10-12T04:41:46+00:00",
+            "reported_native_elapsed_seconds": 1399,
+            "terminal_within_stage_cap": true,
+            "t3_observed_terminal_status": "completed",
+            "pending_children_observed": false,
+            "birth_objective_custody_matches": true,
+            "direct_terminal_custody_qualified": true,
+            "physical_native_task_linkage": "UNKNOWN",
+            "actual_provider_start_utc": null,
+            "actual_provider_finish_utc": null,
+            "actual_scientific_file_finish_utc": null
+          },
+          {
+            "stage": "critic",
+            "prepared_at_utc": "2026-10-12T04:42:33.811Z",
+            "requested_at_utc": "2026-10-12T04:42:33.811Z",
+            "dispatch_return_captured_at_utc": "2026-10-12T04:42:35.774Z",
+            "stage_deadline_utc": "2026-10-12T04:54:33.811Z",
+            "native_birth_receipt_utc": "2026-10-12T04:42:46+00:00",
+            "native_terminal_receipt_utc": "2026-10-12T04:52:15+00:00",
+            "reported_native_elapsed_seconds": 568,
+            "terminal_within_stage_cap": true,
+            "t3_observed_terminal_status": "completed",
+            "pending_children_observed": false,
+            "birth_objective_custody_matches": true,
+            "direct_terminal_custody_qualified": true,
+            "physical_native_task_linkage": "UNKNOWN",
+            "actual_provider_start_utc": null,
+            "actual_provider_finish_utc": null,
+            "actual_scientific_file_finish_utc": null
+          },
+          {
+            "stage": "reviser",
+            "prepared_at_utc": "2026-10-12T04:57:59.580Z",
+            "requested_at_utc": "2026-10-12T04:57:59.580Z",
+            "dispatch_return_captured_at_utc": "2026-10-12T04:58:00.316Z",
+            "stage_deadline_utc": "2026-10-12T05:15:59.580Z",
+            "native_birth_receipt_utc": "2026-10-12T04:58:05+00:00",
+            "native_terminal_receipt_utc": "2026-10-12T05:04:27+00:00",
+            "reported_native_elapsed_seconds": 381,
+            "terminal_within_stage_cap": true,
+            "t3_observed_terminal_status": "completed",
+            "pending_children_observed": false,
+            "birth_objective_custody_matches": true,
+            "direct_terminal_custody_qualified": true,
+            "physical_native_task_linkage": "UNKNOWN",
+            "actual_provider_start_utc": null,
+            "actual_provider_finish_utc": null,
+            "actual_scientific_file_finish_utc": null
+          }
+        ],
+        "last_complete_scientific_artifact_time_utc": null,
+        "actual_task_finish_time_utc": null,
+        "packet_frozen_at_utc": "2026-10-12T05:04:49.206512+00:00",
+        "limits": "Native updatedAt and custody freezes are observations/proxies, not independently linked provider finish or genuine scientific-file finish. Missing breadth terminal cannot be assigned zero duration; interruption is not relabeled as a late completed stage."
+      },
+      "method_compliance": {
+        "status": "CUSTODY_CONSISTENT_WITH_METHOD",
+        "observed_topology": [
+          "investigator",
+          "single critic",
+          "reviser"
+        ],
+        "discovery_before_reveal_hashes_match": true,
+        "source_identity_preservation": "Inherited source identities retained field-for-field; added observations separate.",
+        "no_extra_children_in_terminal_observation": true,
+        "one_goal_receipt_per_launched_stage": true,
+        "terminal_capture_completion": "Present for all three stages; no source truth implied",
+        "all_behavior_independently_proved": false,
+        "private_route_epoch_change": "Prospective reviser-only routing fork recorded; original clocks/method/science unchanged; confound retained",
+        "raw_transcript_or_native_session_linkage_available": false,
+        "limitations": "Frozen prompts/receipts cannot prove every source-access order, absence of forbidden reads, physical routing identity or compliance. No rescue or replacement performed."
+      },
+      "native_identity_provenance": {
+        "status": "UNKNOWN_DIRECT_PROVENANCE",
+        "same_birth_objective_custody": "Verified for all three stages",
+        "direct_return_capture_independently_proved": false,
+        "task_terminal_is_source_truth": false,
+        "account_and_physical_session_linkage": "UNKNOWN",
+        "privacy": "Private identities, token quantities and native transcripts omitted."
+      },
+      "resource_billing_coverage": {
+        "status": "PARTIAL_OBSERVABILITY",
+        "cost_class": "candidate_product",
+        "observable": [
+          "Frozen preparation/request/dispatch timestamps",
+          "Native receipt timestamps and reported elapsed counters",
+          "Presence of cumulative native counters (values withheld from public artifact)"
+        ],
+        "provider_active_seconds": null,
+        "actual_context_occupancy_seconds": null,
+        "context_overlap_union_seconds": null,
+        "input_usage": null,
+        "cached_input_usage": null,
+        "output_usage": null,
+        "reasoning_usage": null,
+        "subscription_consumption": null,
+        "billing": null,
+        "unknown_is_not_zero": true,
+        "failed_attempts_retained": true,
+        "native_counters_are_provider_billing": false,
+        "evaluation_cost_class": "independent_evaluation",
+        "evaluation_billing": null,
+        "grader_epoch": "Epoch 2 prospectively declared; physical/account linkage UNKNOWN; no identity published"
+      },
+      "input_custody": {
+        "packet_path": "ER13_RUNTIME/state/dispatcher-v1/eval-ready/D-R2-P02.json",
+        "packet_sha256": "7b65b202676f2716d858e41a3cc1bd2b88367bda3acf0f04b275a82bc8d8ce37",
+        "receipt_sha256": "e6045ebfaf0c4f4f37878ffe4503b3514d837ad07dd9e55541aa7492f2ccad0b",
+        "contract_sha256": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+        "rubric_sha256": "0e37e2ba43aea4ac6dad6788c0bac5dc5634add4f31e40d03e99478b8afc2cc5",
+        "brief_sha256": "f112bf6a0ba5bb27f04a2c258216098b5fa673e84cb023e1b1b90350ccd4ecb2",
+        "plan_sha256": "58f202584f015d98ea3590cf4e217bf07a651663defc46065fc3bf844801d49c",
+        "all_present_allowlisted_member_hashes_independently_verified": true,
+        "allowlisted_members_verified": 134,
+        "allowlisted_manifest_status_hashes_verified": 21,
+        "route_supplement_members_verified": 11,
+        "science_members": [
+          {
+            "stage": "investigator",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/control/terminal-handoffs/investigator/files/discovery.md",
+            "bytes": 10174,
+            "sha256": "25feb8d7486c3ddd338c300b94f6853602564d5f9c23b7074913f3141e5bafa4"
+          },
+          {
+            "stage": "investigator",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/control/terminal-handoffs/investigator/files/draft.md",
+            "bytes": 20368,
+            "sha256": "c9a2b1134a9e1e62623eada06dd05443cc9c6ca66c657d6d585c60cf83030990"
+          },
+          {
+            "stage": "investigator",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/control/terminal-handoffs/investigator/files/source-map.json",
+            "bytes": 25039,
+            "sha256": "8340ae20c7103a32a686264024416c9300704562897130d69c9a3873e4999759"
+          },
+          {
+            "stage": "investigator",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/control/terminal-handoffs/investigator/files/revealed-plan.md",
+            "bytes": 2175,
+            "sha256": "58f202584f015d98ea3590cf4e217bf07a651663defc46065fc3bf844801d49c"
+          },
+          {
+            "stage": "investigator",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/control/terminal-handoffs/investigator/files/plan-reveal.json",
+            "bytes": 473,
+            "sha256": "dd71b11e57b3139f7016e60032abe9d0b75756552a9bd74aab6f9ce0ec7b7ca9"
+          },
+          {
+            "stage": "investigator",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/control/terminal-handoffs/investigator/files/sources/README.md",
+            "bytes": 6268,
+            "sha256": "8e14af4513afffb264f3db092e537bb116baf14c3a50ca7828dadb4a2cabfc7c"
+          },
+          {
+            "stage": "critic",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/control/terminal-handoffs/critic/files/critique.md",
+            "bytes": 9641,
+            "sha256": "93678f0f94e1a9eef8930ff92c0a07a89fca720b41917e92faea6c1d12ec21ec"
+          },
+          {
+            "stage": "critic",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/control/terminal-handoffs/critic/files/source-map.json",
+            "bytes": 57658,
+            "sha256": "82a9c96ba6a039af735ee96272a1e871ae74f3e2c25642d907b1b3fe40b0b732"
+          },
+          {
+            "stage": "critic",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/control/terminal-handoffs/critic/files/sources/README.md",
+            "bytes": 3130,
+            "sha256": "572bb0c2a6e0eae1053d05795aecd61ca1b3d9e3cc1521f0e3bd7c63cc9ffe28"
+          },
+          {
+            "stage": "reviser",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/control/terminal-handoffs/reviser/files/final.md",
+            "bytes": 22988,
+            "sha256": "877e47062aa4036e5645d432c6f1c1a8fa08f1dac18180891662ad0f374a03fa"
+          },
+          {
+            "stage": "reviser",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/control/terminal-handoffs/reviser/files/source-map.json",
+            "bytes": 45920,
+            "sha256": "64b168c07d09738097e0892634634192afe97d06ca2a83d7e3e5fe54c63089af"
+          },
+          {
+            "stage": "reviser",
+            "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R2-P02-control/run/D-R2-P02-control/control/terminal-handoffs/reviser/files/sources/README.md",
+            "bytes": 2786,
+            "sha256": "ca64e1f4d5edd2440fde4641c81dab013074635b1b311f11c70bda545f3ed51b"
+          }
+        ],
+        "read_boundary": "Exact assignment/verification-listed frozen terminal snapshots and explicit supplements/status only. Active source locations within their text were never followed. Workspace AGENTS.md and only handoff sections 10/12 read. No Git/canon/held-out/history/tree scan or candidate feedback.",
+        "deduplicated_read": "Inherited source-map records were parsed in full, compared field-for-field, and every new observation/disposition read separately.",
+        "verification_count_scope": "Counts 134 members and 21 manifest/status hashes refer to the complete paired allowlist batch, not this arm alone."
+      }
+    }
+  ],
+  "independence": {
+    "own_primary_lookup_shared_across_matched_arms": true,
+    "arm_judgments_independent": true,
+    "comparison_performed": false,
+    "blinding": "Imperfect: arm/stage/technique-bearing paths and complementary critic prompts reveal treatment. No claim of blind grading.",
+    "no_candidates_repaired_or_contacted": true,
+    "no_nested_delegation_or_goals": true
+  },
+  "evaluation_resources": {
+    "cost_class": "independent_evaluation",
+    "actual_provider_activity": null,
+    "billing": null,
+    "elapsed_observation": "Wall-clock start/authored timestamps only; no inferred billing or account linkage.",
+    "private_account_epoch": "2 prospectively applies; no historical backfill"
+  },
+  "evaluation_started_utc_basis": "First evaluator clock observation after initial AGENTS/hash reads; actual admission/provider start UNKNOWN."
+}

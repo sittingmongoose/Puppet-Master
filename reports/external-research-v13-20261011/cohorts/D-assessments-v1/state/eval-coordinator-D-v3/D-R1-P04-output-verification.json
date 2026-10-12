@@ -1,0 +1,328 @@
+{
+  "block_id": "D-R1-P04",
+  "verified_at_utc": "2026-10-12T05:12:01.456146+00:00",
+  "all_output_manifest_members_verified": true,
+  "full_authored_assessments_read": true,
+  "arms": [
+    {
+      "arm_id": "D-R1-P04-control",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/assessment.json",
+      "assessment_sha256": "09e1aa8faca169bb8bb280483d837d91b7a9aa806f02d433c61a35ab0d96e18c",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/assessment.md",
+      "authored_assessment_md_sha256": "7eb41945b581af19dfb6e93355a2ccd162d2168641360b678d44728ce8f931d9",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/manifest.json",
+      "manifest_sha256": "91f8b0e015b09dd1222aa66a236fb1fb2e3542f6fb3a76cefa5fe8c56ebeb2fd",
+      "source_judgment": {
+        "complete_final": "PASS",
+        "finite_assessed_quality": true,
+        "basis": "Full declared coverage; no material unsupported claim, required omission, material false rejection or material preservation loss found in the complete frozen final.",
+        "nonmaterial_limits": [
+          "C-N1",
+          "C-N2",
+          "C-N3"
+        ],
+        "earlier_stage_science": "Investigator repository-test omission identified and repaired in frozen final; complete predecessor/critic/final chain assessed."
+      },
+      "source_assessment": {
+        "complete_final": "PASS",
+        "finite_assessed_quality": true,
+        "basis": "Full declared coverage; no material unsupported claim, required omission, material false rejection or material preservation loss found in the complete frozen final.",
+        "nonmaterial_limits": [
+          "C-N1",
+          "C-N2",
+          "C-N3"
+        ],
+        "earlier_stage_science": "Investigator repository-test omission identified and repaired in frozen final; complete predecessor/critic/final chain assessed."
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis_id": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "All required targets, edit/reconnect cases, durable identity, original/unresolved context, retention and read-only export are addressed; all three negative constraints are explicit."
+          },
+          {
+            "axis_id": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_WITH_NONMATERIAL_LIMITS",
+            "basis": "Governing documentation, definitions, relevant implementation/caller/tests, editions and historical exceptions were checked. C-N1/C-N2/C-N3 bound nonmaterial wording and locator limits."
+          },
+          {
+            "axis_id": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "Useful tree/history, deletion-metadata, conflict, reconciliation and annotation mechanisms have relevant alternatives and failure history. Discovery is finite, with no universal recall claim."
+          },
+          {
+            "axis_id": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "All significant plan decisions and C1-C3 are examined. C1 is a valid predecessor omission and is repaired; owner decisions and mutable editions remain qualified."
+          },
+          {
+            "axis_id": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "Supported identity, transform, connector/region, deletion, ordering, alternatives, privacy, export and validation meaning survive into the self-contained final. No material loss found."
+          },
+          {
+            "axis_id": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_WITH_NONMATERIAL_LIMITS",
+            "basis": "Synthetic histories specify domains and expected semantic invariants separately from convergence. Proposed tests, permission/usability work and measurements remain unexecuted; deployment is not required."
+          }
+        ],
+        "obligations": "COMPLETE",
+        "consequential_source_families": "COMPLETE",
+        "detail_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/coverage.json",
+        "outside_scope": "Explicitly UNASSESSED in coverage.json"
+      },
+      "method_compliance": {
+        "status": "OBSERVABLE_TOPOLOGY_AND_OUTPUT_COMPLIANCE_WITH_PROVENANCE_LIMITS",
+        "observed_stage_topology": [
+          "investigator",
+          "critic",
+          "reviser"
+        ],
+        "configured_final_stage": "reviser",
+        "configured_stage_maximums_seconds": {
+          "investigator": 1800,
+          "critic": 720,
+          "reviser": 1080
+        },
+        "stored_method_id": "R0",
+        "stored_public_recipe_choice": "R0",
+        "discovery_hash_and_revealed_plan_receipt_match": true,
+        "source_ids_preserved_without_rebinding": true,
+        "treatment_adversarial_check_observed": "Not an added requirement for this arm.",
+        "metadata_issue": null,
+        "unobservable": [
+          "pre-input execution order and absence of unseen actions",
+          "direct native call freshness/task linkage",
+          "complete transcript routing history"
+        ],
+        "no_evaluator_execution_of_candidate_helpers": true
+      },
+      "primary_source_index_sha256": "3faaa9dd67e548f93da9754e5a3e7a75d50fc6c982cf8277fdbfa08a4a6037cb",
+      "manifest_frozen_at": "2026-10-12T05:08:47.224665+00:00",
+      "all_seven_dimensions_preserved": true,
+      "source_dimension_field": "source_judgment (authored structured source assessment; no original edit)"
+    },
+    {
+      "arm_id": "D-R1-P04-treatment",
+      "assessment": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/assessment.json",
+      "assessment_sha256": "e727096c310be72069d2fbd92a529fe94f0fe34817fd58be651e98a20f55fd5a",
+      "authored_assessment_md": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/assessment.md",
+      "authored_assessment_md_sha256": "2357ad5bead4eb835f541145e08a0c8a3313f253f586973286641973d3f28f79",
+      "manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/manifest.json",
+      "manifest_sha256": "c2d767522303293eb8781f8f0fed4898b8af938afa049887e5b02a9f5286f058",
+      "source_judgment": {
+        "complete_final": "PASS",
+        "finite_assessed_quality": true,
+        "basis": "Full declared coverage; no material unsupported claim, required omission, material false rejection or material preservation loss found in the complete frozen final.",
+        "nonmaterial_limits": [
+          "T-N1",
+          "T-N2",
+          "T-N3",
+          "T-M1"
+        ],
+        "earlier_stage_science": "All investigator and critic-finalizer science assessed; T-N3 qualifies severity of two criticisms without rejecting the final design policy."
+      },
+      "source_assessment": {
+        "complete_final": "PASS",
+        "finite_assessed_quality": true,
+        "basis": "Full declared coverage; no material unsupported claim, required omission, material false rejection or material preservation loss found in the complete frozen final.",
+        "nonmaterial_limits": [
+          "T-N1",
+          "T-N2",
+          "T-N3",
+          "T-M1"
+        ],
+        "earlier_stage_science": "All investigator and critic-finalizer science assessed; T-N3 qualifies severity of two criticisms without rejecting the final design policy."
+      },
+      "coverage": {
+        "axes": [
+          {
+            "axis_id": 1,
+            "name": "Material original obligations and negative constraints",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "All required target/edit/reconnect cases, identity versus appearance, original context, unresolved threads, retention and export are addressed; no forbidden automatic fallback, silent resurrection or invisible-thread loss is proposed."
+          },
+          {
+            "axis_id": 2,
+            "name": "Consequential source facts, governing conditions, versions and applicability",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_WITH_NONMATERIAL_LIMITS",
+            "basis": "Pinned Rust API/defaults, shared-type context, bindings, code/test/fix history and applicability were checked. T-N1/T-N2 are nonmaterial optional-mechanism/history qualifications."
+          },
+          {
+            "axis_id": 3,
+            "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "Tree visibility/moves, sequence anchoring/defaults, nested deletion/GC regression and map conflicts are useful discoveries. Sequencing and event/snapshot alternatives are materially different; no engine is selected."
+          },
+          {
+            "axis_id": 4,
+            "name": "Valid corrections, rejections and exact plan dispositions",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_WITH_NONMATERIAL_LIMITS",
+            "basis": "All sixteen plan clauses and CR-01 through CR-05 are examined. Critic severity is sometimes overstated (T-N3); the final choices are disclosed design policies, not uniquely mandated library truths."
+          },
+          {
+            "axis_id": 5,
+            "name": "Supported meaning retained from draft and criticism into the complete final",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED",
+            "basis": "Original identity/context, stale-edit recovery, supported mechanisms and alternatives, privacy/export policy and validation status survive. Incarnation-on-restore replaces a predecessor schema choice while retaining explicit restoration and historical linkage."
+          },
+          {
+            "axis_id": 6,
+            "name": "Meaningful proposed validation, with executed work distinguished",
+            "coverage": "COMPLETE",
+            "judgment": "SATISFIED_WITH_NONMATERIAL_LIMITS",
+            "basis": "The proposed matrix separates convergence, semantic attachment, stale-peer recovery, export and privacy oracles. No executed merge/test/deployment claim is made. Optional sequence tests have the T-N1 qualification."
+          }
+        ],
+        "obligations": "COMPLETE",
+        "consequential_source_families": "COMPLETE",
+        "detail_path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/coverage.json",
+        "outside_scope": "Explicitly UNASSESSED in coverage.json"
+      },
+      "method_compliance": {
+        "status": "OBSERVABLE_TOPOLOGY_AND_OUTPUT_COMPLIANCE_WITH_PROVENANCE_LIMITS",
+        "observed_stage_topology": [
+          "investigator",
+          "critic"
+        ],
+        "configured_final_stage": "critic",
+        "configured_stage_maximums_seconds": {
+          "investigator": 1800,
+          "critic": 1800
+        },
+        "stored_method_id": "R0",
+        "stored_public_recipe_choice": "B02",
+        "discovery_hash_and_revealed_plan_receipt_match": true,
+        "source_ids_preserved_without_rebinding": true,
+        "treatment_adversarial_check_observed": "Negative/default/limit and capability/architecture audit present in frozen critique.",
+        "metadata_issue": "T-M1: method_id R0 conflicts with public B02 labeling and two-context topology.",
+        "unobservable": [
+          "pre-input execution order and absence of unseen actions",
+          "direct native call freshness/task linkage",
+          "complete transcript routing history"
+        ],
+        "no_evaluator_execution_of_candidate_helpers": true
+      },
+      "primary_source_index_sha256": "6497f051a41e304fe98b4cd8762eac6b49d2d6a66670537d018954e39e0becfe",
+      "manifest_frozen_at": "2026-10-12T05:08:47.226779+00:00",
+      "all_seven_dimensions_preserved": true,
+      "source_dimension_field": "source_judgment (authored structured source assessment; no original edit)"
+    }
+  ],
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/assessment.md",
+      "bytes": 6698,
+      "sha256": "7eb41945b581af19dfb6e93355a2ccd162d2168641360b678d44728ce8f931d9"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/assessment.json",
+      "bytes": 15957,
+      "sha256": "09e1aa8faca169bb8bb280483d837d91b7a9aa806f02d433c61a35ab0d96e18c"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/coverage.json",
+      "bytes": 13456,
+      "sha256": "fc0bedf7d314e744411004e870cbe45772a271ce04ca8f93cc403181ae750fef"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/defects.json",
+      "bytes": 2700,
+      "sha256": "ed0ce6aec2c259e58e8793a3b922c6d87ed20d09b5b26e7c0e1b51815152b39d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/primary-source-index.json",
+      "bytes": 15148,
+      "sha256": "3faaa9dd67e548f93da9754e5a3e7a75d50fc6c982cf8277fdbfa08a4a6037cb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/input-verification.json",
+      "bytes": 4300,
+      "sha256": "c73a16b976f429e34aa95d69694ae260d086dd1e3e593ea469f6c90790deb48a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json",
+      "bytes": 48267,
+      "sha256": "d2d9ab25c75e36a6caaeec25adb3c7670f1d87c79f3e075a2a0e477d450b6f92"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/evaluation-process.json",
+      "bytes": 13234,
+      "sha256": "93623c485bc6d8c1e008566fe846bdeeebb262e9628aac5210187b20e1769117"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/assessment.md",
+      "bytes": 7437,
+      "sha256": "2357ad5bead4eb835f541145e08a0c8a3313f253f586973286641973d3f28f79"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/assessment.json",
+      "bytes": 15237,
+      "sha256": "e727096c310be72069d2fbd92a529fe94f0fe34817fd58be651e98a20f55fd5a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/coverage.json",
+      "bytes": 13723,
+      "sha256": "bb048eccbd8baa8001b96a6b63285991102c8c8a27baa1769337015dc7f771d6"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/defects.json",
+      "bytes": 3099,
+      "sha256": "92f980a768fe864e9f9c90b0f9cbd517357b4ceb0981324da0ccb5504757192d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/primary-source-index.json",
+      "bytes": 12603,
+      "sha256": "6497f051a41e304fe98b4cd8762eac6b49d2d6a66670537d018954e39e0becfe"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/comparison.md",
+      "bytes": 3051,
+      "sha256": "555afaf861d3175f3492ee4fcc573debdf09e2c5a5eb2e849dfbb8167234eaca"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/comparison.json",
+      "bytes": 4853,
+      "sha256": "304baa1485309a284b0ab11b67347514bf1e52749c0338498c81cf4798875645"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/manifest.json",
+      "bytes": 4167,
+      "sha256": "d55b8f84204d424833e635c98262ec902f8d7dd2f90facd9acc2eb8d9e4e3c64"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/manifest.json",
+      "bytes": 2389,
+      "sha256": "91f8b0e015b09dd1222aa66a236fb1fb2e3542f6fb3a76cefa5fe8c56ebeb2fd"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/manifest.json",
+      "bytes": 2401,
+      "sha256": "c2d767522303293eb8781f8f0fed4898b8af938afa049887e5b02a9f5286f058"
+    }
+  ],
+  "comparison_manifest": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/comparison-manifest.json",
+  "comparison_manifest_sha256": "c4f510c4687a636da688855d80880ef7f0e36ce8a47e652085b8b03f0ae7f9fa",
+  "originals_frozen_before_comparison": true,
+  "actual_completed_zero_pending": true,
+  "science_boundary": "Evaluator findings unchanged; custody not source scoring",
+  "primary_evidence_retention": "All manifest-listed authored evidence/source index bytes hashed/read; external fullsource bodies not asserted absent retainedbody"
+}

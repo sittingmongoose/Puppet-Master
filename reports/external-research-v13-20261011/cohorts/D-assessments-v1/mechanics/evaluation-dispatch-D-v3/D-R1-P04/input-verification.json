@@ -1,0 +1,75 @@
+{
+  "assignment": "D-R1-P04",
+  "independent_verification": "ALL_MATCH",
+  "member_count": 137,
+  "records": [
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P04-control/run/D-R1-P04-control/control/terminal-handoffs/critic/manifest.json",
+      "bytes": 2384,
+      "sha256": "4370e871af25e9a019cfe3b7d4138eb0f019aa961392a44046ff989e9cc1cb1b"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P04-control/run/D-R1-P04-control/control/terminal-handoffs/investigator/manifest.json",
+      "bytes": 2869,
+      "sha256": "a17ed6b6ff4c3700f48c990b13fa60572455ab18924b5380f9291fce58ce988e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P04-control/run/D-R1-P04-control/control/terminal-handoffs/reviser/manifest.json",
+      "bytes": 2384,
+      "sha256": "452a5ac8de8c1c27f8fe49dd7020896dfbc502e2da03f7ea9acd65bbeee946b6"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P04-treatment/run/D-R1-P04-treatment/control/terminal-handoffs/critic/manifest.json",
+      "bytes": 2541,
+      "sha256": "88f23da214982b93e3ccc164fd828b62507f9b7587e0de79bd5b9930c43ab787"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P04-treatment/run/D-R1-P04-treatment/control/terminal-handoffs/investigator/manifest.json",
+      "bytes": 2871,
+      "sha256": "7bb74ecf2e4de56722c1351faa5dc1dc84bddf018661a01a771290c7dbd2c76d"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R1-P04-control-critic-capture-aux/authored-manifest.json",
+      "bytes": 1615,
+      "sha256": "f9b3fbc087d7818dc613dc2dd8419a991d9a655f0083e0935f1e7d6b35458f1a"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R1-P04-control-eval-inputs/authored-manifest.json",
+      "bytes": 795,
+      "sha256": "f659115123701cd747d182a9630bac88b41595568dd6c9baec2c00f7b1c066ed"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R1-P04-control-investigator-capture-aux/authored-manifest.json",
+      "bytes": 1616,
+      "sha256": "03c9f9ffe37107f8cff0c4e217f291325c753f190325737a0c0cda2809aaaebc"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R1-P04-control-reviser-capture-aux/authored-manifest.json",
+      "bytes": 1615,
+      "sha256": "0b92632bd94aa6b82fdc089326add04a64b5e2722928ec11bf01f4c3cd1ce19f"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R1-P04-treatment-critic-capture-aux/authored-manifest.json",
+      "bytes": 1615,
+      "sha256": "134eef65195e814b3ced5073626af0395c5a6ae7ac8e402f8693f234231a5235"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R1-P04-treatment-eval-inputs/authored-manifest.json",
+      "bytes": 800,
+      "sha256": "a47c332ef5f697caf8a3dee21d8af6dc59a5f54265bedfeabd5c9e026d8c4056"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/dispatch-v1/frozen/D-R1-P04-treatment-investigator-capture-aux/authored-manifest.json",
+      "bytes": 1616,
+      "sha256": "6fd7f8224fa6a78ad5405a64717f9c36dfa34e15990df3fb4058de490dcf0228"
+    }
+  ],
+  "governing_hashes": {
+    "packet": "a6af0fcad6b122f3df602bd4540e8c254873c4ad4e9a7583f8cfc285ffdd80de",
+    "contract": "7156edae8844b66212e926373f448651f33f2db7b4d22508188d90042fea6e49",
+    "rubric": "90761969bbb108b7c45923dae375d8b92cf0fd8763c0b109cdc2db9903d69c9d",
+    "receipt": "6218502b3f8251f9ecb0609e4f7a058232d67e442183b49ef1e7792483f05cc9"
+  },
+  "receipt_path": "ER13_RUNTIME/state/eval-coordinator-D-v3/D-R1-P04-input-verification.json",
+  "scope_note": "All 137 exact allowlisted members were independently hashed before scientific reading; compact record retains the frozen container manifests, whose members identify every verified input. No referenced active originals were followed."
+}

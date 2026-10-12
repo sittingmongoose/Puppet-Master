@@ -1,0 +1,24 @@
+{
+  "original_sha256": "e5017719973cc9a7b490bae019ebb1f49cef7e9a26a530faa749241d81d54607",
+  "returned_configuration": {
+    "threadId": "thread:delegated-task:command%3Amcp%3Ab64dca0f-5c14-47a9-9a0e-33d34ddde5d8%3Adelegate-task%3Aer13-original-grader-D-v3-D-R1-P02-001",
+    "modelSelection": {
+      "instanceId": "PUBLIC_ROUTING_EPOCH_1",
+      "model": "gpt-6.1-sol",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "xhigh"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ]
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default"
+  },
+  "routing_epoch": 1,
+  "actual_backend_or_physical_identity": "UNKNOWN beyond saved returned configuration; no private account disclosed"
+}

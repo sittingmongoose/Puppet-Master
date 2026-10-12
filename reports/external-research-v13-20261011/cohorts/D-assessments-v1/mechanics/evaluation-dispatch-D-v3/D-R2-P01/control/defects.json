@@ -1,0 +1,45 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "D-R2-P01-control",
+  "complete_final_assessment": "COMPLETE",
+  "records": [
+    {
+      "id": "C01",
+      "dimension": "source_navigation",
+      "severity": "MINOR_LOCATOR",
+      "material": false,
+      "locator": {
+        "stage": "critic",
+        "file": "sources/index.md",
+        "entries": [
+          "C15",
+          "C17"
+        ]
+      },
+      "finding": "The critic index labels C15 as current RRF and C17 as current vector filters, opposite the complete source-map.json identities (C15 filters, C17 RRF). The reviser carries the correct full JSON records. This did not alter the final mechanism claims or prevent their independent assessment.",
+      "evidence": [
+        "critic source-map.json C15/C17",
+        "reviser source-map.json inherited C15/C17"
+      ],
+      "source_judgment_effect": "NONMATERIAL"
+    },
+    {
+      "id": "C02",
+      "dimension": "source_navigation",
+      "severity": "MINOR_LOCATOR",
+      "material": false,
+      "locator": {
+        "stage": "reviser",
+        "file": "sources/index.md",
+        "section": "Inherited source indexes"
+      },
+      "finding": "The ../investigator/sources/index.md and ../critic/sources/index.md links resolve below the reviser directory rather than to the notified sibling-stage indexes. They were not followed. The same index's ../source-map.json link and complete carried identities remain usable.",
+      "evidence": [
+        "Exact frozen reviser source index",
+        "Notified stage-directory mappings"
+      ],
+      "source_judgment_effect": "NONMATERIAL"
+    }
+  ],
+  "limits": "Material findings for treatment apply only to available partial science. Mechanics, source truth and final absence are separate."
+}

@@ -1,0 +1,74 @@
+{
+  "schema": "er13.original_defects.v1",
+  "arm_id": "D-R2-P02-control",
+  "records": [
+    {
+      "id": "C-D01",
+      "classification": "material incomplete",
+      "scope": "complete_final",
+      "axes": [
+        1,
+        2,
+        3
+      ],
+      "obligations": [
+        "O04",
+        "N01"
+      ],
+      "source_family": "deno_permissions",
+      "candidate_locator": "final.md P2 Deno paragraph; investigator discovery Permission... and source S-22; final source-map S-22",
+      "finding": "The offered Deno permission alternative carries allow-all and hidden disk-consumption caveats but omits module-loader authority and link-location permission behavior. Required research of indirect references/effective attachment-only permission scope is incomplete.",
+      "primary": [
+        "P33"
+      ],
+      "context": "The official page permits statically analyzable entrypoint imports by default, distinguishes import access from ordinary file/network permissions, and checks existing symlinks by link location rather than target (with specified sensitive-path exceptions). These can change isolation choice even when ordinary read permissions are narrow.",
+      "materiality": "This is an omission in governing research for an explicitly offered mechanism, not an exploit result or a requirement to deploy the future host. The broad deny-outside-object design intention does not research how this runtime grants actual authority.",
+      "limits": "No selected Deno configuration, notebook format, OS or executed bypass is claimed. The unaffected architecture alternatives remain useful; source PASS nevertheless requires no material required omission."
+    },
+    {
+      "id": "C-L01",
+      "classification": "nonmaterial limit",
+      "scope": "complete_final",
+      "axes": [
+        2,
+        3
+      ],
+      "obligations": [
+        "O04"
+      ],
+      "source_family": "nested_workers_native_os",
+      "candidate_locator": "final.md P2 process-group/job-object supervision; Owner decisions",
+      "finding": "Native OS controls are left substantially as policy and future platform checks. Generic group/job names are not a proved hostile-descendant boundary.",
+      "primary": [
+        "P37",
+        "P38",
+        "P39",
+        "P40",
+        "P41"
+      ],
+      "materiality": "Recorded as a research-depth limit, not a second decisive failure: the final states conditional guarantees and does not choose a platform.",
+      "limits": "Full OS launch/code/test/release history UNASSESSED. No product execution demanded."
+    },
+    {
+      "id": "C-L02",
+      "classification": "nonmaterial preservation limit",
+      "scope": "complete_final",
+      "axes": [
+        5
+      ],
+      "obligations": [
+        "O04"
+      ],
+      "source_family": "wasi_filesystem_capabilities",
+      "candidate_locator": "final.md prose versus final source-map S-10/S-13/S-05",
+      "finding": "Overlapping-preopen/raw-WASIp3 nuance, core thread embedder context and additional release issues survive more fully in the final source map than in the narrative.",
+      "primary": [
+        "P10",
+        "P12",
+        "P19"
+      ],
+      "materiality": "No material supported-meaning loss found in the complete frozen final package; the substantive boundary, history qualification and relevant mapped conditions remain accessible."
+    }
+  ],
+  "missing_final_is_not_source_fail": true
+}

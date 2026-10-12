@@ -1,0 +1,19 @@
+{
+  "schema": "er13.independent-evaluation-observations.v1",
+  "block_id": "D-R1-P01",
+  "arm_count": 2,
+  "scope": "FULL",
+  "cost_category": "independent_evaluation",
+  "first_observed_clock_utc": "2026-10-12T04:59:39Z",
+  "last_primary_lookup_observed_clock_utc": "2026-10-12T05:17:23Z",
+  "actual_provider_activity": "UNKNOWN",
+  "grader_billing_and_detailed_usage": "UNKNOWN",
+  "account_epoch2_telemetry": "UNKNOWN; no permitted private telemetry packet supplied; no backfill",
+  "failed_evaluator_source_extraction_attempts": 1,
+  "failure_limit": "A local source extraction attempt failed; successful direct primary fetch followed. No candidate record, clock or grade was rescued.",
+  "no_new_goals_subagents_candidates_or_repeat_graders": true,
+  "no_git_canon_main_worknodes_provider_or_shared_server_changes": true,
+  "no_findings_sent_to_candidate_authors": true,
+  "original_judgment_process": "Separate per-arm authored records; shared primary lookup; no comparative arithmetic, recipe choice or selection before original manifest freeze. A commentary update disclosed the separate provisional labels and coverage before manifest freeze; this is recorded as a process limitation.",
+  "privacy": "Only assigned frozen paths/hashes, public source links and non-identifying custody/time observations are exported."
+}

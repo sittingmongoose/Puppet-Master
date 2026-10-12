@@ -1,0 +1,31 @@
+{
+  "original_sha256": "c56717d4d4cca189013bfc5370131a362933c652d1f73a906940b931865c7a45",
+  "thread": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A3d6006ae-6c98-4fc0-9848-576b3ba21dcd%3Adelegate-task%3Aer13-original-grader-D-v3-D-R2-P01-001",
+    "activeRunId": null,
+    "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A3d6006ae-6c98-4fc0-9848-576b3ba21dcd%253Adelegate-task%253Aer13-original-grader-D-v3-D-R2-P01-001:ordinal:1",
+    "pendingRequestCount": 0,
+    "status": "completed",
+    "settled": true,
+    "settledAt": "2026-10-12T05:07:33.008Z",
+    "runCount": 1,
+    "model": "gpt-6.1-sol",
+    "providerInstanceId": "PUBLIC_ROUTING_EPOCH_2",
+    "runtimeMode": "full-access",
+    "interactionMode": "default"
+  },
+  "recent_runs": [
+    {
+      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A3d6006ae-6c98-4fc0-9848-576b3ba21dcd%253Adelegate-task%253Aer13-original-grader-D-v3-D-R2-P01-001:ordinal:1",
+      "ordinal": 1,
+      "status": "completed",
+      "providerInstanceId": "PUBLIC_ROUTING_EPOCH_2",
+      "model": "gpt-6.1-sol",
+      "requestedAt": "2026-10-12T04:50:12.817Z",
+      "startedAt": "2026-10-12T04:50:13.078Z",
+      "completedAt": "2026-10-12T05:07:09.219Z"
+    }
+  ],
+  "timeline_items_excluded": true,
+  "scope": "Actual original grader settlement metadata; no transcript or narrative summary"
+}

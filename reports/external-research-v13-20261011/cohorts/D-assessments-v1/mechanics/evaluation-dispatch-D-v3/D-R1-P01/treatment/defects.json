@@ -1,0 +1,47 @@
+{
+  "schema": "er13.original-defects.v1",
+  "arm_id": "D-R1-P01-treatment",
+  "defects": [
+    {
+      "id": "T-S01",
+      "severity": "MATERIAL",
+      "kind": "false_source_rejection",
+      "axes": [
+        2,
+        4,
+        5
+      ],
+      "status": "PRESENT_IN_FROZEN_FINAL_PACKAGE",
+      "candidate_locator": "critic/critique.md C2; Exact released-plan disposition audit P2.3; critic/final.md Error-summary focus; critic/source-map.json S04 critic_recheck",
+      "finding": "C2 says WAI User Notification does not recommend first-invalid focus after submit and accepts that assertion as a correction. The exact page After submit expressly suggests that recovery behavior. The investigator had correctly treated it as an alternative, not a mandatory async rule. The final carries the erroneous denial as its source contrast.",
+      "primary_sources": [
+        "PS04",
+        "PS05",
+        "PS15"
+      ],
+      "materiality_reason": "Focus recovery is a significant revealed-plan decision and a central brief obligation. Rejecting its valid primary grounding is a consequential false correction/preservation loss, even though first-invalid focus remains a behavioral option. This is a source-quality failure; no functional portal bug or requirement to choose first-invalid focus is asserted.",
+      "interpretive_boundary": "The final phrase does not prescribe could narrowly mean no normative mandate, which is true of informative guidance. That does not vindicate C2’s categorical does not recommend claim or its accepted source-attribution correction. No universal correctness claim is made."
+    },
+    {
+      "id": "T-N02",
+      "severity": "NONMATERIAL",
+      "kind": "false_source_rejection",
+      "axes": [
+        2,
+        4
+      ],
+      "status": "PRESENT_IN_FROZEN_CRITIQUE_AND_MAP",
+      "candidate_locator": "critic/critique.md C5; critic/source-map.json S01 critic_recheck",
+      "finding": "C5 denies that WCAG status-message guidance makes the chatter warning. Other uses of live regions or alerts explicitly does. The final retains sound interruption guidance attributed to APG.",
+      "primary_sources": [
+        "PS02",
+        "PS07"
+      ],
+      "materiality_reason": "The substantive warning and coalesced/persistent presentation remain supported. This is an incorrect attribution correction, without a separate material behavior loss."
+    }
+  ],
+  "material_defect_count": 1,
+  "nonmaterial_defect_count": 1,
+  "finite_assessment": true,
+  "candidate_repairs_or_feedback_provided": false
+}

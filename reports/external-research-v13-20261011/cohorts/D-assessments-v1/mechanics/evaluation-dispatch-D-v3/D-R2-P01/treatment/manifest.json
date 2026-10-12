@@ -1,0 +1,47 @@
+{
+  "schema": "er13.original_output_manifest.v1",
+  "block_id": "D-R2-P01",
+  "arm_id": "D-R2-P01-treatment",
+  "frozen_at_utc": "2026-10-12T05:05:24.906914+00:00",
+  "original_judgment_immutable": true,
+  "comparative_analysis_started": false,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/treatment/assessment.md",
+      "relative_path": "assessment.md",
+      "bytes": 6886,
+      "sha256": "c61eb1936ec2592c6ff870d59e961ef2bf5e13bf4de17c78a81458246442071e"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/treatment/assessment.json",
+      "relative_path": "assessment.json",
+      "bytes": 31344,
+      "sha256": "93189b08a859351ff62da8cc6ab875e26ec6a99e1d9f743262f8fb08e97cce5c"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/treatment/coverage.json",
+      "relative_path": "coverage.json",
+      "bytes": 13513,
+      "sha256": "26d23c53644c1e0837a7f649a502f83c2d42d5e919c22702ad7f8b0184bf65f8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/treatment/defects.json",
+      "relative_path": "defects.json",
+      "bytes": 5217,
+      "sha256": "e589fd9fd43167298b8edb445086c866e17c51b5c28e0a277b8f1d64baf545a9"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/treatment/primary-source-index.json",
+      "relative_path": "primary-source-index.json",
+      "bytes": 12161,
+      "sha256": "2ce8113f5dea549a14d4cb33e33a25b044d7f7ae9e1c9c47b2ffcace3a812915"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P01/treatment/evidence/input-verification.json",
+      "relative_path": "evidence/input-verification.json",
+      "bytes": 8580,
+      "sha256": "283283625c3bdb2e9dfa1aa2c9ebdfec519ca39f695dae6b0b9777b4d37d763d"
+    }
+  ],
+  "self_hash_boundary": "Manifest cannot contain its own hash; its exact hash is reported separately and bound by comparison-manifest.json."
+}

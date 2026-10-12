@@ -1,0 +1,52 @@
+{
+  "arm_id": "D-R1-P03-control",
+  "scope": "immutable original",
+  "defects": [
+    {
+      "id": "C-D01",
+      "classification": "material_wrong_source_fact",
+      "material": true,
+      "axes": [
+        2,
+        3
+      ],
+      "input_locator": {
+        "file": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/control/terminal-handoffs/reviser/files/final.md",
+        "line": 50,
+        "section": "Merge identity and references",
+        "claim": "The extensionless-file PR changed path helpers"
+      },
+      "additional_locator": "reviser source-map.json: reviser_rechecks/SRC-JOP-PATH-FIX; investigator discovery and source record carry the same mechanism",
+      "finding": "The final presents a withdrawn helper redesign as the merged repair mechanism. The merged code changes the Markdown importer caller to native filesystem resolve and adds importer integration fixtures; helper edits were removed during review.",
+      "materiality": "This changes the causal account of the public repair and hides a rejected broader change. Actual code/caller/test and rejected-review context are part of the required research proposal, although the core staged-restore recommendation remains sound.",
+      "primary_source_ids": [
+        "P35",
+        "P36",
+        "P37",
+        "P38",
+        "P39"
+      ],
+      "evidence": "evidence/joplin-repair-context.json",
+      "resolution": "Original FAIL; no repair or author feedback performed."
+    },
+    {
+      "id": "C-L01",
+      "classification": "nonmaterial_discovery_limit",
+      "material": false,
+      "axes": [
+        2,
+        3
+      ],
+      "input_locator": {
+        "file": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-control/run/D-R1-P03-control/control/terminal-handoffs/reviser/files/final.md",
+        "line": 32
+      },
+      "finding": "Current WAL-reset release qualification was not discussed. Because SQLite is conditional and the final leaves implementation/platform qualification open, this is recorded as a useful-discovery limit, not an invented mandatory version-selection requirement.",
+      "primary_source_ids": [
+        "P03",
+        "P41"
+      ]
+    }
+  ],
+  "no_candidate_repair": true
+}

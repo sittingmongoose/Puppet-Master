@@ -1,0 +1,390 @@
+{
+  "schema": "er13.original_coverage.v1",
+  "arm_id": "D-R2-P03-treatment",
+  "scope": "FULL",
+  "complete_final_axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "reason": "Exact complete final missing; no substitute grade."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "reason": "Exact complete final missing; no substitute grade."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "reason": "Exact complete final missing; no substitute grade."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "reason": "Exact complete final missing; no substitute grade."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "reason": "Exact complete final missing; no substitute grade."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "UNASSESSED",
+      "judgment": "UNASSESSED",
+      "reason": "Exact complete final missing; no substitute grade."
+    }
+  ],
+  "available_partial_science_axes": [
+    {
+      "axis": 1,
+      "name": "Material original obligations and negative constraints",
+      "coverage": "PARTIAL",
+      "finding": "All listed obligations/negative constraints examined in available draft/critics; proposal coverage present, full delivery absent."
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source facts, governing conditions, versions and applicability",
+      "coverage": "PARTIAL",
+      "finding": "Core governing facts supported; consequential tests/raw-table/auth/WAL context gaps recorded."
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+      "coverage": "PARTIAL",
+      "finding": "Meaningful alternatives/repair history present; material available-mechanism and test-context gaps; no universal recall claim."
+    },
+    {
+      "axis": 4,
+      "name": "Valid corrections, rejections and exact plan dispositions",
+      "coverage": "PARTIAL",
+      "finding": "Every provisional plan paragraph and critic proposal audited; nonmaterial timing-framing overstatement; final decisions absent."
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning retained from draft and criticism into the complete final",
+      "coverage": "UNASSESSED",
+      "finding": "Complete-final preservation unavailable. Separate discovery-to-draft observations recorded below."
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed validation, with executed work distinguished",
+      "coverage": "PARTIAL",
+      "finding": "Proposed witnesses have inputs/order/fault cases and useful oracles; no application/synthetic execution claimed. SDK test-context gaps remain."
+    }
+  ],
+  "obligations_and_negative_constraints": [
+    {
+      "id": "O01",
+      "required": true,
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "finding": "Connected pending/local edits, accepted draft, conflicts, revision-scoped approval, immutable snapshot and outbox described in discovery workflow and draft paragraphs 1–4."
+    },
+    {
+      "id": "O02",
+      "required": true,
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "finding": "Atomic multi-record swap/domain command, expected versions, retained intent and server checks for overlap/qualification/dependency explicit; center policy left to named owner decisions."
+    },
+    {
+      "id": "O03",
+      "required": true,
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "finding": "Draft/publication separated, request keeps observed version, explicit rebase and deterministic old/new diff before republish."
+    },
+    {
+      "id": "O04",
+      "required": true,
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "finding": "Safe descriptive field merge versus constrained commands; concrete queue/document/CRDT alternatives; local recovery and authority boundaries present but SDK raw-table/FK conditions and repair qualification incomplete."
+    },
+    {
+      "id": "O05",
+      "required": true,
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "finding": "Request/export/notification/delivery publication IDs, pointer/outbox transaction and server-validation owner location explicit."
+    },
+    {
+      "id": "N01",
+      "required": true,
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "finding": "No fieldwise convergence as validity; pending versus server acceptance; reconnect does not auto-publish."
+    },
+    {
+      "id": "N02",
+      "required": true,
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "finding": "Server-owned approval tied to protected revision/hash; generic offline edit cannot replace approval; metadata scope is an owner decision."
+    },
+    {
+      "id": "N03",
+      "required": true,
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "finding": "Correction instead of recall; no actual roster/account/notification work claimed or evidenced; delayed retries preserve original reference."
+    }
+  ],
+  "source_families": [
+    {
+      "family": "collaboration_sync",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "independent_context": "E01–E19",
+      "limits": "Queue semantics, caller, core grouping and concrete tests inspected; candidate package misses E14/E18/E19 context. No full all-SDK/adapter execution or compatibility audit."
+    },
+    {
+      "family": "authorization",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "independent_context": "E09–E13,E21",
+      "limits": "Endpoint versus download filter versus RLS distinction supported. Service 1.20.0 edition-3 advisory omitted by available package; target configuration unknown."
+    },
+    {
+      "family": "relational_transactions",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "COMPLETE",
+      "independent_context": "E20–E23",
+      "limits": "Bounded PostgreSQL 18 CHECK/EXCLUDE/FK/RLS/isolation and retry facts assessed. No center rule completeness or implementation demonstrated."
+    },
+    {
+      "family": "local_data",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "independent_context": "E14,E15,E24–E28",
+      "limits": "Native SQLite transaction/recovery/FK facts supported; raw-table/priorities and WAL-reset patch qualification absent. Full selected VFS/adapter/backup behavior unknown."
+    },
+    {
+      "family": "implementation_history",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "independent_context": "E04–E08,E11–E15,E26",
+      "limits": "Historical PowerSync reported fixes checked against release/caller/tests; consequential authorization/WAL/raw-table history adds gaps. Not exhaustive release history."
+    },
+    {
+      "family": "callers_tests",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "independent_context": "E06,E13,E16–E19",
+      "limits": "Concrete queue definition/implementation/caller and tests inspected independently. Candidate only points to README/demo/issue; tests were neither run nor proven to validate a roster."
+    },
+    {
+      "family": "document_replication",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "COMPLETE",
+      "independent_context": "E31–E33",
+      "limits": "Bounded CouchDB winner/conflict/revision-history/optional winning-only semantics assessed; RxDB is assessed separately below."
+    },
+    {
+      "family": "crdt",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "independent_context": "E29,E30",
+      "limits": "Automerge map conflicts/accessor checked; broader text/Yjs algorithms and tests unassessed. Convergence never treated as roster validity."
+    },
+    {
+      "family": "operation_replay",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "independent_context": "E34,E35",
+      "limits": "Replicache proposed option and permanent rejection/sequence atomicity supported; current package/releases/complete backend code not exhaustively reviewed."
+    },
+    {
+      "family": "rxdb_replication",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "independent_context": "E36,E42",
+      "limits": "Client conflict handler/checkpoints confirmed; deployment/version/storage/license selection and cross-document transactions unassessed."
+    },
+    {
+      "family": "read_replication",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "COMPLETE",
+      "independent_context": "E37",
+      "limits": "Electric bounded read-path claim and separate write requirement supported; complete target stack unassessed."
+    },
+    {
+      "family": "publication_consumers",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "independent_context": "E20–E23,E38",
+      "limits": "Version pinning/outbox is a proposal with supported pattern; actual channels, recall APIs, organizational policies and endpoint execution unknown."
+    },
+    {
+      "family": "licenses",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "PARTIAL",
+      "independent_context": "E39–E43",
+      "limits": "SDK/service license split and SQLite/PostgreSQL notices checked; RxDB storage tiers differ. All target dependencies, current Replicache/CouchDB distribution and notices not fully audited."
+    },
+    {
+      "family": "center_specific_rules",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "UNASSESSED",
+      "independent_context": null,
+      "limits": "Unknown factual center overlap/qualification/dependency/permission rules are not invented; proposed owner locations and tests assessed only."
+    },
+    {
+      "family": "complete_final_preservation",
+      "complete_final_coverage": "UNASSESSED",
+      "available_science_coverage": "UNASSESSED",
+      "independent_context": null,
+      "limits": "No reviser/final or complete-final dispositions exist; no recovery/reconstruction or comparable final grade."
+    }
+  ],
+  "all_available_scientific_documents_read": true,
+  "all_allowlisted_native_and_auxiliary_members_read": true,
+  "critic_and_plan_dispositions": [
+    {
+      "id": "B1",
+      "artifact": "critic-breadth/critique.md §1",
+      "judgment": "Supported conditional opportunity",
+      "sources": [
+        "E34",
+        "E35"
+      ],
+      "meaning": "Operation replay plus durable business rejection/sequence progress differs from row CRUD; browser platform gating retained.",
+      "final_disposition": "UNASSESSED; absent final"
+    },
+    {
+      "id": "B2",
+      "artifact": "critic-breadth/critique.md §2",
+      "judgment": "Supported conditional opportunity",
+      "sources": [
+        "E36"
+      ],
+      "meaning": "Checkpointed master/fork document sync adds a useful representation comparison; page alone neither proves nor universally disproves cross-document transactions.",
+      "final_disposition": "UNASSESSED; absent final"
+    },
+    {
+      "id": "B3",
+      "artifact": "critic-breadth/critique.md §3",
+      "judgment": "Supported boundary",
+      "sources": [
+        "E37"
+      ],
+      "meaning": "Electric is read-path component with separate write API/queue; no winner or forced product selection.",
+      "final_disposition": "UNASSESSED; absent final"
+    },
+    {
+      "id": "CT1",
+      "artifact": "critic-truth/critique.md timing finding",
+      "judgment": "Useful clarification; overstates original draft as recorded T-C01",
+      "sources": [
+        "E01",
+        "E02",
+        "E03"
+      ],
+      "meaning": "Staged invalid candidate may exist before validation; accepted/publication state must be gated. Exact draft already partially states this distinction.",
+      "final_disposition": "UNASSESSED; absent final"
+    },
+    {
+      "id": "CT2",
+      "artifact": "critic-truth/critique.md Rejected upload versus retained proposal",
+      "judgment": "Supported consequential clarification",
+      "sources": [
+        "E03",
+        "E06",
+        "E16",
+        "E17"
+      ],
+      "meaning": "Durable idempotent rejection record plus handled response/queue completion needed; business-command identity differs from per-client CRUD identity.",
+      "final_disposition": "UNASSESSED; absent final"
+    },
+    {
+      "id": "CT-audit",
+      "artifact": "critic-truth/critique.md Disposition audit, all eight bullets",
+      "judgment": "Core retentions supported under bounded context; history/applicability gaps remain T-S01–T-S04",
+      "sources": [
+        "E01",
+        "E02",
+        "E20",
+        "E21",
+        "E22",
+        "E23",
+        "E31",
+        "E35",
+        "E38"
+      ],
+      "meaning": "Stable IDs; scoped descriptive merge; qualifications/dependencies; protected approval projection; immutable publication/consumers; explicit rebase and terminal request states; optional technologies; honest proposed validation assessed. Negative no-material-alternative-correction statement is not an exhaustive version/platform/license pass.",
+      "final_disposition": "UNASSESSED; absent final"
+    }
+  ],
+  "available_lineage": [
+    {
+      "meaning": "Separate draft/pending/conflict/approval/publication; retain original request base",
+      "discovery": "Proposed workflow boundaries",
+      "draft": "Paragraphs 1–3 and consumer dispositions",
+      "available_transition": "RETAINED",
+      "complete_final": "UNASSESSED"
+    },
+    {
+      "meaning": "Constrained swap atomicity, qualifications/dependencies, safe descriptive merge only",
+      "discovery": "Findings/models",
+      "draft": "Paragraph 1 and Merge/Rule-check dispositions",
+      "available_transition": "RETAINED",
+      "complete_final": "UNASSESSED"
+    },
+    {
+      "meaning": "Approval exact scope with metadata owner choice",
+      "discovery": "Approval workflow",
+      "draft": "Paragraph 2 and owner decisions",
+      "available_transition": "RETAINED",
+      "complete_final": "UNASSESSED"
+    },
+    {
+      "meaning": "Immutable consumer references, outbox, supersession/correction, no recall",
+      "discovery": "Publication/outbox workflow",
+      "draft": "Paragraphs 2–4 and traces 5–6",
+      "available_transition": "RETAINED",
+      "complete_final": "UNASSESSED"
+    },
+    {
+      "meaning": "Restore accepted server state first and retain/export unresolved local-only proposals",
+      "discovery": "SQLite restore sentence",
+      "draft": "Owner recovery question and explicit-restoration trace, less operational detail",
+      "available_transition": "PARTIALLY_EXPLICIT; no conclusive loss since unresolved recovery retained",
+      "complete_final": "UNASSESSED"
+    },
+    {
+      "meaning": "Version-scoped SDK repair facts and proposed-versus-executed distinction",
+      "discovery": "Repair history and no executed traces",
+      "draft": "Source references and trace 8; no tests claimed",
+      "available_transition": "RETAINED with research gaps T-S01–T-S04",
+      "complete_final": "UNASSESSED"
+    },
+    {
+      "meaning": "Each breadth option and truth clarification",
+      "discovery": null,
+      "draft": "Criticism arrives after draft",
+      "available_transition": "No reviser transition exists; neither accepted nor rejected by a final",
+      "complete_final": "UNASSESSED"
+    }
+  ],
+  "limitations": [
+    "Both complete finals and reviser source maps/dispositions are absent. Complete-final grading and all final preservation are UNASSESSED.",
+    "Exact frozen snapshots only; active files, referred original stage paths, campaign tree/history, other/held-out cases, native full transcripts and provider settings were not consulted.",
+    "Technique-bearing arm paths/configuration and criticism make blinding imperfect. Evaluator authored independent judgments; no author feedback, repair, new scientific candidates, Goals or subagents.",
+    "Primary research is finite. Rolling public pages were independently read in this access window; candidate-cited source corpus was not fully snapshotted, and per-page instantaneous timestamps are unavailable.",
+    "Actual native-to-task/session linkage is UNKNOWN beyond verified capture/objective custody. No scientific truth follows from lifecycle or hashes.",
+    "No future application deployment or execution required. Code/test source inspection is not test execution. Unknown center rules/platform/provider capabilities remain legitimate unknowns.",
+    "Full target-version/license/adapter inventory, notification provider semantics, organizational acceptance and theoretical exhaustive mechanism recall remain unassessed. No discovery effectiveness score or cold complete-pipeline success inferred."
+  ]
+}

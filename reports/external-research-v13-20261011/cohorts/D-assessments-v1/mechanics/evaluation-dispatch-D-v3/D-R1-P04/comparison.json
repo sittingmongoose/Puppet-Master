@@ -1,0 +1,101 @@
+{
+  "schema_version": "er13.finite-original-pair-comparison.v1",
+  "assignment": "D-R1-P04",
+  "arm_count": 2,
+  "comparison_started_at_utc": "2026-10-12T05:10:13.148601+00:00",
+  "original_freeze_verified_before_comparison": {
+    "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/manifest.json",
+    "bytes": 4167,
+    "sha256": "d55b8f84204d424833e635c98262ec902f8d7dd2f90facd9acc2eb8d9e4e3c64"
+  },
+  "original_frozen_at_utc": "2026-10-12T05:08:47.228375+00:00",
+  "original_arm_manifests": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/control/manifest.json",
+      "bytes": 2389,
+      "sha256": "91f8b0e015b09dd1222aa66a236fb1fb2e3542f6fb3a76cefa5fe8c56ebeb2fd"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/treatment/manifest.json",
+      "bytes": 2401,
+      "sha256": "c2d767522303293eb8781f8f0fed4898b8af938afa049887e5b02a9f5286f058"
+    }
+  ],
+  "source_signal": {
+    "label": "FINITE_PASS_PASS",
+    "each_complete_final": {
+      "control": "PASS",
+      "treatment": "PASS"
+    },
+    "coverage": {
+      "control": {
+        "six_axes": "COMPLETE",
+        "consequential_obligations_and_sources": "COMPLETE"
+      },
+      "treatment": {
+        "six_axes": "COMPLETE",
+        "consequential_obligations_and_sources": "COMPLETE"
+      }
+    },
+    "interpretation": "Both complete originals meet the assessed source threshold. This is not universal equal quality, non-inferiority, discovery recall, or recipe promotion."
+  },
+  "quality_distinctions": {
+    "control": "Broad whiteboard reconciliation/caller/test and annotation-export context. Its earlier repository-test omission is repaired; direct test-oracle precision and report/version qualifiers remain nonmaterial limits.",
+    "treatment": "More pinned Rust/shared-type and binding/GC regression context. Sequence-undo and Loro producer/importer distinctions remain nonmaterial limits; two criticism severity claims are overstated while final policies remain valid.",
+    "material_final_defects_found": {
+      "control": [],
+      "treatment": []
+    },
+    "preservation": "Both keep the required semantic intent and validation boundary. Their implementation-policy choices differ; passing labels do not make their science interchangeable."
+  },
+  "delivery_and_timing": {
+    "scope": "FULL",
+    "whole_cap_seconds": 3600,
+    "original_clocks_unchanged": true,
+    "eligibility": {
+      "control": "ELIGIBLE_BY_FROZEN_DELIVERY_AND_CLOCK_RECORDS",
+      "treatment": "ELIGIBLE_BY_FROZEN_DELIVERY_AND_CLOCK_RECORDS"
+    },
+    "actual_user_visible_completion_seconds": "UNKNOWN",
+    "actual_task_finish_and_last_scientific_write": "UNKNOWN",
+    "named_proxy": "T0 to recorded final native-terminal timestamp in immutable custody",
+    "proxy_seconds": {
+      "control": 1770.916,
+      "treatment": 1475.68
+    },
+    "treatment_minus_control_proxy_seconds": -295.236,
+    "native_goal_timestamp_span_sum_seconds": {
+      "control": 1635,
+      "treatment": 1425
+    },
+    "treatment_minus_control_native_span_sum_seconds": -210,
+    "interpretation": "The treatment record proxy is earlier. These are custody timestamp differences, not independently established actual T3 completion, full context occupancy, provider activity or a repeatable user-latency saving."
+  },
+  "method_and_provenance": {
+    "control_topology": [
+      "investigator",
+      "critic",
+      "reviser"
+    ],
+    "treatment_topology": [
+      "investigator",
+      "critic-finalizer"
+    ],
+    "treatment_metadata_issue": "T-M1: stored method_id R0 versus public B02/two-context configuration. No schema repair or regrade.",
+    "native_custody": "Same-birth/objective and science hashes consistent in both arms.",
+    "independent_direct_native_to_task_provenance": "UNKNOWN",
+    "blinding": "IMPERFECT from technique-bearing paths/prompts/topology."
+  },
+  "resources": {
+    "cost_class_of_grader": "independent_evaluation",
+    "candidate_billing_and_active_provider_consumption": "UNKNOWN",
+    "all_assigned_arms_retained": 2,
+    "all_assigned_stages_retained": 5,
+    "cumulative_native_counters": "Present but neither published nor converted into billed consumption.",
+    "total_experiment_cost": "UNKNOWN",
+    "cost_per_passing_final": "UNKNOWN because consumption numerator is unavailable; no zero substitution.",
+    "no_equal_quality_resource_saving_claim": true
+  },
+  "decision_boundary": "No campaign recipe selected, no held-out case revealed, no candidates or extra graders launched, no candidate feedback. One matched pair is a limited diagnostic quality signal; no integration/cold full-pipeline or promotion inference.",
+  "original_grades_unchanged": true
+}

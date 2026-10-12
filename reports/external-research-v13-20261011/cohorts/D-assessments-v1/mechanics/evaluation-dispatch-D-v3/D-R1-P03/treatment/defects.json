@@ -1,0 +1,44 @@
+{
+  "arm_id": "D-R1-P03-treatment",
+  "scope": "immutable original",
+  "defects": [
+    {
+      "id": "T-L01",
+      "classification": "nonmaterial_critic_severity_overstatement",
+      "material": false,
+      "axes": [
+        4
+      ],
+      "input_locator": {
+        "file": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-treatment/run/D-R1-P03-treatment/control/terminal-handoffs/critic/files/critique.md",
+        "section": "CR-01, CR-02, CR-04"
+      },
+      "finding": "The critic calls these material incompleteness. The draft did not promise archive authorship, and already staged/verified output. Authorship/header qualifiers and the conditional VACUUM INTO witness are sound additions, but their claimed material severity is stronger than the demonstrated gap. No required capability is falsely rejected or supported final meaning lost.",
+      "primary_source_ids": [
+        "P08",
+        "P17",
+        "P18",
+        "P20",
+        "P21"
+      ]
+    },
+    {
+      "id": "T-L02",
+      "classification": "nonmaterial_discovery_locator_error_corrected_in_draft",
+      "material": false,
+      "axes": [
+        2,
+        5
+      ],
+      "input_locator": {
+        "file": "ER13_RUNTIME/mechanics/dispatch-v1/admitted/D-R1-P03-treatment/run/D-R1-P03-treatment/control/terminal-handoffs/investigator/files/discovery.md",
+        "section": "Capture and archive completeness / Encryption"
+      },
+      "finding": "Discovery references S10 for NIST hash scope although its source map has S09. Draft/final correctly use S09; final S10 is separately introduced age v1.1.0. The original discovery locator error does not become a final material source error.",
+      "primary_source_ids": [
+        "P23"
+      ]
+    }
+  ],
+  "no_candidate_repair": true
+}

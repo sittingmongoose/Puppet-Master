@@ -1,0 +1,337 @@
+{
+  "arm_id": "D-R1-P04-control",
+  "research_owner": "independent_evaluator",
+  "shared_context_evidence": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R1-P04/independent-evidence.json",
+  "sources": [
+    {
+      "url": "https://automerge.org/blog/",
+      "candidate_source_ids": [
+        "R14"
+      ],
+      "candidate_version_statements": [
+        "Blog index accessed 2026-10-12; August 2026 entry names Automerge 3.4.1; Automerge Repo 2.0 release entry May 2025"
+      ],
+      "independent_context_id": "E13",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.022760+00:00",
+      "retrieval_response_sha256": "2bd287f79b0adc5d4110ee2afce313fd14b2bb07463b99e006fe34749b3ef50b",
+      "retrieval_url": "https://automerge.org/blog/",
+      "resolved_url": "https://automerge.org/blog/"
+    },
+    {
+      "url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "candidate_source_ids": [
+        "R10"
+      ],
+      "candidate_version_statements": [
+        "Rolling current docs; no package build pinned by page",
+        "Rolling current docs; release month Aug 2026 reports Automerge 3.4.1, but this page does not pin a package build"
+      ],
+      "independent_context_id": "E12",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.100632+00:00",
+      "retrieval_response_sha256": "28612ef6b87e734290784f212926a360f1946c4114494b75179fdce2f8557746",
+      "retrieval_url": "https://automerge.org/docs/reference/documents/conflicts/",
+      "resolved_url": "https://automerge.org/docs/reference/documents/conflicts/"
+    },
+    {
+      "url": "https://automerge.org/docs/reference/glossary/",
+      "candidate_source_ids": [
+        "R13"
+      ],
+      "candidate_version_statements": [
+        "Rolling current docs, not version-pinned",
+        "Rolling current docs; not package-version pinned"
+      ],
+      "independent_context_id": "E13",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.190652+00:00",
+      "retrieval_response_sha256": "8034031b485449a307cf0b83d758db50dce44ddb0b8d7ab3fe4f6633e2fa76ff",
+      "retrieval_url": "https://automerge.org/docs/reference/glossary/",
+      "resolved_url": "https://automerge.org/docs/reference/glossary/"
+    },
+    {
+      "url": "https://automerge.org/docs/reference/under-the-hood/merge-rules/",
+      "candidate_source_ids": [
+        "R11"
+      ],
+      "candidate_version_statements": [
+        "Rolling current docs, not version-pinned",
+        "Rolling current docs; not version-pinned"
+      ],
+      "independent_context_id": "E12",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.198916+00:00",
+      "retrieval_response_sha256": "8b5f1faf73fcd01f82e570288afae8964d28a7977ce18d3375126e43f311262e",
+      "retrieval_url": "https://automerge.org/docs/reference/under-the-hood/merge-rules/",
+      "resolved_url": "https://automerge.org/docs/reference/under-the-hood/merge-rules/"
+    },
+    {
+      "url": "https://automerge.org/docs/reference/under-the-hood/storage/",
+      "candidate_source_ids": [
+        "R12"
+      ],
+      "candidate_version_statements": [
+        "Automerge Repo current docs; page not package-version pinned",
+        "Rolling current Repo docs; not package-version pinned"
+      ],
+      "independent_context_id": "E13",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.194866+00:00",
+      "retrieval_response_sha256": "00f8b834aaf8805fd1ce8c5650d262f62d6cf9f5985c35ce9792ef4e7aa89f81",
+      "retrieval_url": "https://automerge.org/docs/reference/under-the-hood/storage/",
+      "resolved_url": "https://automerge.org/docs/reference/under-the-hood/storage/"
+    },
+    {
+      "url": "https://docs.yjs.dev/api/y.doc",
+      "candidate_source_ids": [
+        "R06"
+      ],
+      "candidate_version_statements": [
+        "Current API docs; exact package build not pinned by page",
+        "Current Yjs docs, API is on v13 line unless otherwise stated; stable v13.6.33 release record is R08"
+      ],
+      "independent_context_id": "E06",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.734362+00:00",
+      "retrieval_response_sha256": "5400e8f8f9d57982e78978a08f945b540eb77f52b90082e7ef684200c7c449b3",
+      "retrieval_url": "https://docs.yjs.dev/api/y.doc",
+      "resolved_url": "https://docs.yjs.dev/api/y.doc"
+    },
+    {
+      "url": "https://github.com/excalidraw/excalidraw/blob/master/excalidraw-app/collab/Collab.tsx",
+      "candidate_source_ids": [
+        "R16"
+      ],
+      "candidate_version_statements": [
+        "Mutable `master` at access; current caller source, no commit SHA exposed in browser response",
+        "Mutable master; immutable commit not identified in inspected page"
+      ],
+      "independent_context_id": "E14",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.635177+00:00",
+      "retrieval_response_sha256": "5b29df5568e154cf919b68c2f1c71982008f22aec3833afbdd65f856cf80a53b",
+      "retrieval_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/excalidraw-app/collab/Collab.tsx",
+      "resolved_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/excalidraw-app/collab/Collab.tsx"
+    },
+    {
+      "url": "https://github.com/excalidraw/excalidraw/blob/master/packages/excalidraw/data/reconcile.ts",
+      "candidate_source_ids": [
+        "R15"
+      ],
+      "candidate_version_statements": [
+        "Mutable `master` at access; no immutable commit hash exposed in browser response; public issue R17 says 0.18.1 for separate reported case",
+        "Mutable master; immutable commit not identified in inspected page"
+      ],
+      "independent_context_id": "E14",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.734752+00:00",
+      "retrieval_response_sha256": "07ee09fe90a94db2cf44e5a4c0c838a7c7005ffc3a03c9c8e227de4bdcbf4db0",
+      "retrieval_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/excalidraw/data/reconcile.ts",
+      "resolved_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/excalidraw/data/reconcile.ts"
+    },
+    {
+      "url": "https://github.com/excalidraw/excalidraw/blob/master/packages/excalidraw/tests/data/reconcile.test.ts",
+      "candidate_source_ids": [
+        "C01"
+      ],
+      "candidate_version_statements": [
+        "Mutable master; immutable commit not identified in inspected page"
+      ],
+      "independent_context_id": "E15",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:07.758412+00:00",
+      "retrieval_response_sha256": "2dc053c6212ffc52579b946f73aeecebc01af154239e1a59e226c3929a9b984c",
+      "retrieval_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/excalidraw/tests/data/reconcile.test.ts",
+      "resolved_url": "https://raw.githubusercontent.com/excalidraw/excalidraw/master/packages/excalidraw/tests/data/reconcile.test.ts"
+    },
+    {
+      "url": "https://github.com/excalidraw/excalidraw/issues/11933",
+      "candidate_source_ids": [
+        "R18"
+      ],
+      "candidate_version_statements": [
+        "Opened 2026-08-22; reporter claims repro on @excalidraw/excalidraw 0.18.1 and current master; still Open, no linked PR in observed metadata",
+        "Opened 2026-08-22; reporter claims reproduction on package 0.18.1 and current master"
+      ],
+      "independent_context_id": "E16",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:08.458917+00:00",
+      "retrieval_response_sha256": "d7e883ccf5489e5576cb27c180ef4eeb9f3702ed45ef52bba50980a25c042978",
+      "retrieval_url": "https://github.com/excalidraw/excalidraw/issues/11933",
+      "resolved_url": "https://github.com/excalidraw/excalidraw/issues/11933"
+    },
+    {
+      "url": "https://github.com/excalidraw/excalidraw/issues/3795",
+      "candidate_source_ids": [
+        "R17"
+      ],
+      "candidate_version_statements": [
+        "Issue opened 2021-07-04; closed with linked PR #3797 (issue page exposes link; patch retrieval unavailable)",
+        "Opened 2021-07-04; issue closed with PR 3797; patch not inspected"
+      ],
+      "independent_context_id": "E16",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:09.471341+00:00",
+      "retrieval_response_sha256": "62add06098f67532f36927eb3860077e00d451f18aa20f9dcf488c1607b013ce",
+      "retrieval_url": "https://github.com/excalidraw/excalidraw/issues/3795",
+      "resolved_url": "https://github.com/excalidraw/excalidraw/issues/3795"
+    },
+    {
+      "url": "https://github.com/loro-dev/loro/issues/938",
+      "candidate_source_ids": [
+        "C02"
+      ],
+      "candidate_version_statements": [
+        "Issue page; no package version or immutable commit identified in inspected page"
+      ],
+      "independent_context_id": "E17",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:08.299900+00:00",
+      "retrieval_response_sha256": "130b98db74607a82066d772b153b667008376de62fac3bd9fbe7a49749089187",
+      "retrieval_url": "https://github.com/loro-dev/loro/issues/938",
+      "resolved_url": "https://github.com/loro-dev/loro/issues/938"
+    },
+    {
+      "url": "https://github.com/yjs/yjs/blob/main/INTERNALS.md",
+      "candidate_source_ids": [
+        "R07"
+      ],
+      "candidate_version_statements": [
+        "Mutable main; immutable commit not identified in the inspected page",
+        "Rolling `main` file; no immutable commit hash exposed in browser response. Yjs v13.6.33 release is separately recorded in R08."
+      ],
+      "independent_context_id": "E06",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:09.321479+00:00",
+      "retrieval_response_sha256": "8e9324eaa08c834ef8b8d93d7d8e2413820ae1d0edaf7ea5517eb3ce7df08924",
+      "retrieval_url": "https://raw.githubusercontent.com/yjs/yjs/main/INTERNALS.md",
+      "resolved_url": "https://raw.githubusercontent.com/yjs/yjs/main/INTERNALS.md"
+    },
+    {
+      "url": "https://github.com/yjs/yjs/issues/741",
+      "candidate_source_ids": [
+        "R09"
+      ],
+      "candidate_version_statements": [
+        "Reporter says Yjs 13.6.27; issue opened 2025-10-21 and remains open in observed page"
+      ],
+      "independent_context_id": "E07",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:10.181753+00:00",
+      "retrieval_response_sha256": "68aa4431dbc7b95b9671dd8cb97c1710d3b6868bc879caf1cd0ddbb0eb569bc8",
+      "retrieval_url": "https://github.com/yjs/yjs/issues/741",
+      "resolved_url": "https://github.com/yjs/yjs/issues/741"
+    },
+    {
+      "url": "https://github.com/yjs/yjs/releases",
+      "candidate_source_ids": [
+        "R08"
+      ],
+      "candidate_version_statements": [
+        "At access, latest stable shown was v13.6.33 at commit 9ea3a4f (2026-09-23); v14.0.0-rc.28 is labeled pre-release (2026-09-29)"
+      ],
+      "independent_context_id": "E06",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:10.918492+00:00",
+      "retrieval_response_sha256": "3e08d5b56b1dd8d19afe6ee6198414256bb074869dbf72a055e3bf1db8b31699",
+      "retrieval_url": "https://github.com/yjs/yjs/releases",
+      "resolved_url": "https://github.com/yjs/yjs/releases"
+    },
+    {
+      "url": "https://loro.dev/changelog/v1.0.0-beta",
+      "candidate_source_ids": [
+        "R02"
+      ],
+      "candidate_version_statements": [
+        "Loro 1.0.0 release page; stable encoding format announced for v1.0"
+      ],
+      "independent_context_id": "E04",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:10.600641+00:00",
+      "retrieval_response_sha256": "e199c672f0237825c9e4f76e9d4dbb20ee5c9e47a1b0ce957938a4882a1242b8",
+      "retrieval_url": "https://loro.dev/changelog/v1.0.0-beta",
+      "resolved_url": "https://loro.dev/changelog/v1.0.0-beta"
+    },
+    {
+      "url": "https://loro.dev/docs/api/js",
+      "candidate_source_ids": [
+        "R03"
+      ],
+      "candidate_version_statements": [
+        "Rolling current API reference; page does not pin an immutable release; Loro 1.0 stable-format release is separately recorded in R02",
+        "Rolling current docs; not pinned to an immutable package release"
+      ],
+      "independent_context_id": "E02",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:10.645217+00:00",
+      "retrieval_response_sha256": "19f7b8ad24cea8c052b706751685cc6f5a11c638264357d48891258bdcdb1a2f",
+      "retrieval_url": "https://loro.dev/docs/api/js",
+      "resolved_url": "https://loro.dev/docs/api/js"
+    },
+    {
+      "url": "https://loro.dev/docs/concepts/shallow_snapshots",
+      "candidate_source_ids": [
+        "R05"
+      ],
+      "candidate_version_statements": [
+        "Loro 1.0 feature; current docs",
+        "Loro 1.0 feature; rolling current docs"
+      ],
+      "independent_context_id": "E04",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:10.251144+00:00",
+      "retrieval_response_sha256": "081dcb4dcc6adf3149234fdeca42c8404a598b29a3d453ffed939fd282cbbc78",
+      "retrieval_url": "https://loro.dev/docs/concepts/shallow_snapshots",
+      "resolved_url": "https://loro.dev/docs/concepts/shallow_snapshots"
+    },
+    {
+      "url": "https://loro.dev/docs/tutorial/tree",
+      "candidate_source_ids": [
+        "R04"
+      ],
+      "candidate_version_statements": [
+        "Rolling current LoroTree documentation",
+        "Rolling current documentation; LoroTree API"
+      ],
+      "independent_context_id": "E02",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:10.321649+00:00",
+      "retrieval_response_sha256": "4cb20592383323794f3ccc5231f2f982e903131901170d6ff8e973c3dc2496e8",
+      "retrieval_url": "https://loro.dev/docs/tutorial/tree",
+      "resolved_url": "https://loro.dev/docs/tutorial/tree"
+    },
+    {
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "candidate_source_ids": [
+        "R01"
+      ],
+      "candidate_version_statements": [
+        "Current canonical W3C TR; no software release",
+        "W3C Recommendation; current canonical TR URL; publication date shown on document; not a merge protocol"
+      ],
+      "independent_context_id": "E01",
+      "coverage": "COMPLETE",
+      "retrieval_utc": "2026-10-12T04:52:10.996848+00:00",
+      "retrieval_response_sha256": "a7513e022f56c0a6f4e99ac11aec03f3451d1ff1ce14054780b3ccfb38fa7980",
+      "retrieval_url": "https://www.w3.org/TR/annotation-model/",
+      "resolved_url": "https://www.w3.org/TR/annotation-model/"
+    }
+  ],
+  "additional_governing_context_ids": [
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E06",
+    "E07",
+    "E12",
+    "E13",
+    "E14",
+    "E15",
+    "E16",
+    "E17",
+    "E18"
+  ],
+  "source_versions_boundary": "Reported candidate edition labels are retained as labels, not silently updated. Independent pinned/rolling context and code/test/fix conditions appear in shared evidence. Mutable sources remain point-in-time. No citation count is a truth score."
+}

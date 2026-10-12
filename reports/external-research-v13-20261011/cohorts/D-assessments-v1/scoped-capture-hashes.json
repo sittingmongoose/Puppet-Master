@@ -1,0 +1,338 @@
+[
+  {
+    "capture_label": "D-R1-P01-request.json",
+    "original_private_sha256": "7cf106e1fa76c895dd813500b30a81ad864a50ca617652dbb424d644566c257c",
+    "public_scoped_capsule": "evaluators/D-R1-P01/dispatch-terminal-settlement.json",
+    "public_sha256": "3387cf76894346dc8402aa57d17726669315535f85c85f85418eacf67d7e784c",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R1-P01-dispatch.raw.json",
+    "original_private_sha256": "5497de47c295fa2c904401732084bd621d30aef821ba62bdfd5effc174b205c8",
+    "public_scoped_capsule": "evaluators/D-R1-P01/dispatch-terminal-settlement.json",
+    "public_sha256": "3387cf76894346dc8402aa57d17726669315535f85c85f85418eacf67d7e784c",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R1-P01-terminal.raw.json",
+    "original_private_sha256": "dbf556f1a750b9bae606010509594625baba6f5a9c962c61794e3445eff58eed",
+    "public_scoped_capsule": "evaluators/D-R1-P01/dispatch-terminal-settlement.json",
+    "public_sha256": "3387cf76894346dc8402aa57d17726669315535f85c85f85418eacf67d7e784c",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R1-P01-settle.raw.json",
+    "original_private_sha256": "ec03beaaa03001799b02a127aa01a60ac1f005daf9ebe4741e98bb46c31a2562",
+    "public_scoped_capsule": "evaluators/D-R1-P01/dispatch-terminal-settlement.json",
+    "public_sha256": "3387cf76894346dc8402aa57d17726669315535f85c85f85418eacf67d7e784c",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "exact_returned_capture",
+    "original_private_sha256": "0f4b89a02ae175cb0d9f659b72ea7ef8b4fe55d5228604b36c3a8741a0732ac3",
+    "public_scoped_capsule": "evaluators/D-R1-P01/actual-returned-config.json",
+    "public_sha256": "c72836e71aa8f869694d05a6bd61d22f41981b3e04a274e2d36a06e431edc658",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "exact_returned_capture",
+    "original_private_sha256": "89ba63c48e1c9ada645c93d75538dd309cf16d546e3e0bf17e8ad6a21ca542fa",
+    "public_scoped_capsule": "evaluators/D-R1-P01/actual-settlement-confirmation.json",
+    "public_sha256": "c8c477bd048e84122a1fa7be2f7395d1253b4305288ab39d316a84aa3b1c160f",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R2-P03-request.json",
+    "original_private_sha256": "411f88339210258750c79732a4161e7a915fc442613c7c361011eadd3e6e865e",
+    "public_scoped_capsule": "evaluators/D-R2-P03/dispatch-terminal-settlement.json",
+    "public_sha256": "9c3f2a24399988a3f421159bab3978c03100b73f2ddf90e0d3da29c2b5b7dc53",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R2-P03-dispatch.raw.json",
+    "original_private_sha256": "e6a52f41a23099ce193d14251099ad3e6d00ccd99fc23a5dfe3f4573feec45a0",
+    "public_scoped_capsule": "evaluators/D-R2-P03/dispatch-terminal-settlement.json",
+    "public_sha256": "9c3f2a24399988a3f421159bab3978c03100b73f2ddf90e0d3da29c2b5b7dc53",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R2-P03-terminal.raw.json",
+    "original_private_sha256": "a415bda99b38bd85b8b51ee3bb339fa8ab9012ce1cdcd5632f147192d8d54464",
+    "public_scoped_capsule": "evaluators/D-R2-P03/dispatch-terminal-settlement.json",
+    "public_sha256": "9c3f2a24399988a3f421159bab3978c03100b73f2ddf90e0d3da29c2b5b7dc53",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R2-P03-settle.raw.json",
+    "original_private_sha256": "4e87ef2a3326a307852fd1c1c2cd815c2daca7aa537346df9d68697976b5e93a",
+    "public_scoped_capsule": "evaluators/D-R2-P03/dispatch-terminal-settlement.json",
+    "public_sha256": "9c3f2a24399988a3f421159bab3978c03100b73f2ddf90e0d3da29c2b5b7dc53",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "exact_returned_capture",
+    "original_private_sha256": "e793165ef94ec88c11d21f4892f54ba2b2d8c36fed4bac401f604a105492ebe5",
+    "public_scoped_capsule": "evaluators/D-R2-P03/actual-returned-config.json",
+    "public_sha256": "7e1392485c69844fce024cf13afa0272ad19c8f2011f444854a8608b27b9bb2c",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "exact_returned_capture",
+    "original_private_sha256": "cdcb999cf1bb162b49f5687499b6921a723abbf5cdbef0d058e7c94ad071adc8",
+    "public_scoped_capsule": "evaluators/D-R2-P03/actual-settlement-confirmation.json",
+    "public_sha256": "539249af571221bdae97ea81150114b84c2ee1f319aef95d8530b976f0f566b9",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R2-P01-request.json",
+    "original_private_sha256": "80b480b0539635e70785fe9f7690acfed2d5d9b98b175494953bb2808c098517",
+    "public_scoped_capsule": "evaluators/D-R2-P01/dispatch-terminal-settlement.json",
+    "public_sha256": "1bd4c60428bf8939851b4b1e3464dde894140334e758f6f2bc4b41c870d1ee63",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R2-P01-dispatch.raw.json",
+    "original_private_sha256": "4ef47a7329bb01fca135ee608474e7ab6fe7be95b610ee074b040b92944eb494",
+    "public_scoped_capsule": "evaluators/D-R2-P01/dispatch-terminal-settlement.json",
+    "public_sha256": "1bd4c60428bf8939851b4b1e3464dde894140334e758f6f2bc4b41c870d1ee63",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R2-P01-terminal.raw.json",
+    "original_private_sha256": "5d541a569f3d91a7c5ac212b9a55589b93223a8e530aaae748ec1fa29653fdf9",
+    "public_scoped_capsule": "evaluators/D-R2-P01/dispatch-terminal-settlement.json",
+    "public_sha256": "1bd4c60428bf8939851b4b1e3464dde894140334e758f6f2bc4b41c870d1ee63",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R2-P01-settle.raw.json",
+    "original_private_sha256": "4f4203674040def40af891837296aacab417a2ca00334f2cfdf82fac0ac00408",
+    "public_scoped_capsule": "evaluators/D-R2-P01/dispatch-terminal-settlement.json",
+    "public_sha256": "1bd4c60428bf8939851b4b1e3464dde894140334e758f6f2bc4b41c870d1ee63",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "exact_returned_capture",
+    "original_private_sha256": "0c230aeab9f9efb9e89b4379fc5fce5d7f8f28533676878ba316e95a82f707f2",
+    "public_scoped_capsule": "evaluators/D-R2-P01/actual-returned-config.json",
+    "public_sha256": "e7406d7ec4bd5f10e83f23ace594d14ace376349cab53f0d41b98669c3de8338",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "exact_returned_capture",
+    "original_private_sha256": "c56717d4d4cca189013bfc5370131a362933c652d1f73a906940b931865c7a45",
+    "public_scoped_capsule": "evaluators/D-R2-P01/actual-settlement-confirmation.json",
+    "public_sha256": "4ac995f84886e488a3a632c742b4bf82a16bf794bee0bf35b8fd1b6b581f0727",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R1-P04-request.json",
+    "original_private_sha256": "3d216152ab4d7db27ca49d35ae24fb0f08d7b3bdc8d3a8155dd4b5e436ac2191",
+    "public_scoped_capsule": "evaluators/D-R1-P04/dispatch-terminal-settlement.json",
+    "public_sha256": "676f167f82cd0be8a8a3cc4577ce1bf782320f52745ab49a0068d07fb8d8b4a7",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R1-P04-dispatch.raw.json",
+    "original_private_sha256": "73a7f6d94dc05bb2d5fb376f3158abf78585ad1652a28927738f573ce95ab202",
+    "public_scoped_capsule": "evaluators/D-R1-P04/dispatch-terminal-settlement.json",
+    "public_sha256": "676f167f82cd0be8a8a3cc4577ce1bf782320f52745ab49a0068d07fb8d8b4a7",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R1-P04-terminal.raw.json",
+    "original_private_sha256": "f79054c3dfb50fcc02b219d7f2065b1fbc429d53b52a90d2a2dc2ea84e5e18fb",
+    "public_scoped_capsule": "evaluators/D-R1-P04/dispatch-terminal-settlement.json",
+    "public_sha256": "676f167f82cd0be8a8a3cc4577ce1bf782320f52745ab49a0068d07fb8d8b4a7",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R1-P04-settle.raw.json",
+    "original_private_sha256": "037a82ff978e9911c1608296403aa16fe0f61b3e2ca0d4308349f8a07291d00c",
+    "public_scoped_capsule": "evaluators/D-R1-P04/dispatch-terminal-settlement.json",
+    "public_sha256": "676f167f82cd0be8a8a3cc4577ce1bf782320f52745ab49a0068d07fb8d8b4a7",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "exact_returned_capture",
+    "original_private_sha256": "d16bce144ec333413700f87a05ba5bafdadf208ce3b70137ce5d323247b02658",
+    "public_scoped_capsule": "evaluators/D-R1-P04/actual-returned-config.json",
+    "public_sha256": "b3bf4d6d08623ac8e438e253cd7ff230f4c3d75c5289f90c9f854ecc79e26130",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "exact_returned_capture",
+    "original_private_sha256": "e1539aabc724aab9bc3cd6a410cf9291ec7674e3bfcac0ba52c67660c54a0ba6",
+    "public_scoped_capsule": "evaluators/D-R1-P04/actual-settlement-confirmation.json",
+    "public_sha256": "b00a3ce05af7cb45b00ceb664b33fd170a88682c4af232108cdc3e06b37360e4",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R1-P02-request.json",
+    "original_private_sha256": "2f2aeee7a2ec6f931687e314e3eb8906e06cd9f303b6c27876ef2c23d2e19a5e",
+    "public_scoped_capsule": "evaluators/D-R1-P02/dispatch-terminal-settlement.json",
+    "public_sha256": "aa0aa2c95db8a685366092a4b4d9531955586b23878b3c4bbd83b0ba2cf09f0a",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R1-P02-dispatch.raw.json",
+    "original_private_sha256": "d03a14173a9d9aee27827c04b358d32c616b5b05af08dc3935fdada83ece3bcd",
+    "public_scoped_capsule": "evaluators/D-R1-P02/dispatch-terminal-settlement.json",
+    "public_sha256": "aa0aa2c95db8a685366092a4b4d9531955586b23878b3c4bbd83b0ba2cf09f0a",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R1-P02-terminal.raw.json",
+    "original_private_sha256": "843f1fa5e936ae7b2eeabbd6b9f47962b36df9eeef158af92b7ef384e4c83aac",
+    "public_scoped_capsule": "evaluators/D-R1-P02/dispatch-terminal-settlement.json",
+    "public_sha256": "aa0aa2c95db8a685366092a4b4d9531955586b23878b3c4bbd83b0ba2cf09f0a",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R1-P02-settle.raw.json",
+    "original_private_sha256": "6429da827a051773668fdeb71815bd9453d7451217861efffab041a09bd9795c",
+    "public_scoped_capsule": "evaluators/D-R1-P02/dispatch-terminal-settlement.json",
+    "public_sha256": "aa0aa2c95db8a685366092a4b4d9531955586b23878b3c4bbd83b0ba2cf09f0a",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "exact_returned_capture",
+    "original_private_sha256": "e5017719973cc9a7b490bae019ebb1f49cef7e9a26a530faa749241d81d54607",
+    "public_scoped_capsule": "evaluators/D-R1-P02/actual-returned-config.json",
+    "public_sha256": "579d2e66009676235667d79758602825aaa0024f32ce5f101994096167f361de",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "exact_returned_capture",
+    "original_private_sha256": "37b8ef09dbac494dc092fc6109c1772d44bf580666b19f3237ac3c9b49fe792b",
+    "public_scoped_capsule": "evaluators/D-R1-P02/actual-settlement-confirmation.json",
+    "public_sha256": "9870d397535ecad23d5ae79368600e893857e80e38729c64c9e9dd830eb8922e",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R2-P02-request.json",
+    "original_private_sha256": "b9c3bd82334d667485a720f5466abadc64e2b29b14d74b0f222afb6772d87bdd",
+    "public_scoped_capsule": "evaluators/D-R2-P02/dispatch-terminal-settlement.json",
+    "public_sha256": "3a2373645bbbb5f836ff98c6fef3c8f2933b37920442fd3cb48e1dc7cb08c4ce",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R2-P02-dispatch.raw.json",
+    "original_private_sha256": "6da87304e32217d52f4cba654321b0d16a3a13b303f17ac76b1832e53f7259a8",
+    "public_scoped_capsule": "evaluators/D-R2-P02/dispatch-terminal-settlement.json",
+    "public_sha256": "3a2373645bbbb5f836ff98c6fef3c8f2933b37920442fd3cb48e1dc7cb08c4ce",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R2-P02-terminal.raw.json",
+    "original_private_sha256": "611ec5b879f1d849676c066ec35ee780c69a4a5ada64f9d70dfd121fee61e015",
+    "public_scoped_capsule": "evaluators/D-R2-P02/dispatch-terminal-settlement.json",
+    "public_sha256": "3a2373645bbbb5f836ff98c6fef3c8f2933b37920442fd3cb48e1dc7cb08c4ce",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R2-P02-settle.raw.json",
+    "original_private_sha256": "c6274a9a46425534b6f9a9fb7fefe98fe1b8c17c94602da6ad5c224dcd4a8058",
+    "public_scoped_capsule": "evaluators/D-R2-P02/dispatch-terminal-settlement.json",
+    "public_sha256": "3a2373645bbbb5f836ff98c6fef3c8f2933b37920442fd3cb48e1dc7cb08c4ce",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "exact_returned_capture",
+    "original_private_sha256": "dd4d6ba23ba0da41c3bcb473fad9af16280df996701686a2a8cf843ad3eebd1e",
+    "public_scoped_capsule": "evaluators/D-R2-P02/actual-returned-config.json",
+    "public_sha256": "2d95f2958ba1c1d2bf154b03f4c4234937e95d454096d86f2f0805df941cde57",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "exact_returned_capture",
+    "original_private_sha256": "24668e6ad5e9840badaf7659e4be7b32c45790a0647deba7fd0a515226006a85",
+    "public_scoped_capsule": "evaluators/D-R2-P02/actual-settlement-confirmation.json",
+    "public_sha256": "d8110655d2635f8a3bdd9560b251dee6201fa5623baf88b9501051ef72171258",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R1-P03-request.json",
+    "original_private_sha256": "92bbe1a685ea3d26e0a6ad7857fab6690fa43789ce79fefc641707467881c92f",
+    "public_scoped_capsule": "evaluators/D-R1-P03/dispatch-terminal-settlement.json",
+    "public_sha256": "b3e40346261a0c9296f789aa35c01bc86c5ec165b235ec6402fd8780a012b4d6",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R1-P03-dispatch.raw.json",
+    "original_private_sha256": "4aea1d7aa3a8da4b1de3abe88a3a990c1b0fbf0488a2ac8562a261b20176d4ce",
+    "public_scoped_capsule": "evaluators/D-R1-P03/dispatch-terminal-settlement.json",
+    "public_sha256": "b3e40346261a0c9296f789aa35c01bc86c5ec165b235ec6402fd8780a012b4d6",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R1-P03-terminal.raw.json",
+    "original_private_sha256": "4149ea00016109a8ef66ca41716a02b2e3dda39a724afc50ea24f2d2edae98f4",
+    "public_scoped_capsule": "evaluators/D-R1-P03/dispatch-terminal-settlement.json",
+    "public_sha256": "b3e40346261a0c9296f789aa35c01bc86c5ec165b235ec6402fd8780a012b4d6",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R1-P03-settle.raw.json",
+    "original_private_sha256": "709a6f4e76dc1aa9ccacb9dcbecaeec4404bf8bde7b80ac10c58c2c60b931305",
+    "public_scoped_capsule": "evaluators/D-R1-P03/dispatch-terminal-settlement.json",
+    "public_sha256": "b3e40346261a0c9296f789aa35c01bc86c5ec165b235ec6402fd8780a012b4d6",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "exact_returned_capture",
+    "original_private_sha256": "c792caa5aa9bb89a6de71320e6c0131c0dd767eb390b1e56ac4e32a30e1fa710",
+    "public_scoped_capsule": "evaluators/D-R1-P03/actual-returned-config.json",
+    "public_sha256": "a7c125e32e075393fc7d8299297a0c901bbfe1f686709469b37ce10d8020cc34",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "exact_returned_capture",
+    "original_private_sha256": "1b39ac5b1d085307a7764347b4c142522b2130294c75f97ae36c36eee4549b22",
+    "public_scoped_capsule": "evaluators/D-R1-P03/actual-settlement-confirmation.json",
+    "public_sha256": "6eb571ce4071319d9206434f9f4e731570db27c724610f10d282130f3d029f20",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R2-P04-request.json",
+    "original_private_sha256": "50697d057a4afcfb893bcf01b3ab2739aa6c75ec1e91c414519cfb78a25f1a4d",
+    "public_scoped_capsule": "evaluators/D-R2-P04/dispatch-terminal-settlement.json",
+    "public_sha256": "475357eae3ccc4d90f63dd383bd6ca9f9a4420f5b3a3c85d3cee2f087b12157b",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R2-P04-dispatch.raw.json",
+    "original_private_sha256": "2fe39b3c0d7e9fd3585aa527bc0ca672a6416264dd2881a0fc69439580db20d8",
+    "public_scoped_capsule": "evaluators/D-R2-P04/dispatch-terminal-settlement.json",
+    "public_sha256": "475357eae3ccc4d90f63dd383bd6ca9f9a4420f5b3a3c85d3cee2f087b12157b",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R2-P04-terminal.raw.json",
+    "original_private_sha256": "8335631a7d621a8038cbcdb6b111380014a0b7518ae8194da07b71ad235a5adb",
+    "public_scoped_capsule": "evaluators/D-R2-P04/dispatch-terminal-settlement.json",
+    "public_sha256": "475357eae3ccc4d90f63dd383bd6ca9f9a4420f5b3a3c85d3cee2f087b12157b",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "D-R2-P04-settle.raw.json",
+    "original_private_sha256": "1657468c3ac0dde7450ae1454f67a3ec9305f8ad38d309f30536f3f8ae20289e",
+    "public_scoped_capsule": "evaluators/D-R2-P04/dispatch-terminal-settlement.json",
+    "public_sha256": "475357eae3ccc4d90f63dd383bd6ca9f9a4420f5b3a3c85d3cee2f087b12157b",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "exact_returned_capture",
+    "original_private_sha256": "184c3da985b928925faabf79bbb48d739ca1c23437e9aef4a26ccbcc8f03d594",
+    "public_scoped_capsule": "evaluators/D-R2-P04/actual-returned-config.json",
+    "public_sha256": "ec94e819009dc5184cc12d395e05b1a44870fc8f9806af0a525b9d2b41e1eb6b",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  },
+  {
+    "capture_label": "exact_returned_capture",
+    "original_private_sha256": "742848b84e4333fc99c3004f0e3d26bc7951c56b04dce24d81909ef8004461e9",
+    "public_scoped_capsule": "evaluators/D-R2-P04/actual-settlement-confirmation.json",
+    "public_sha256": "673d974b827a61efaa8f1bdfa60fb2c4ba253c4e02a3eaa7e022152ce9bdaf7b",
+    "operation": "Exact scoped field extraction; narrative/transfer/private host/account envelopes excluded, original findings retained"
+  }
+]

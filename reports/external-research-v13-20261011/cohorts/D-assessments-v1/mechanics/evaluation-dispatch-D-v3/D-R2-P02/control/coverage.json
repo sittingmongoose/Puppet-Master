@@ -1,0 +1,202 @@
+{
+  "schema": "er13.original_coverage.v1",
+  "arm_id": "D-R2-P02-control",
+  "complete_final": {
+    "axes": [
+      {
+        "axis": 1,
+        "name": "Material original obligations and negative constraints",
+        "coverage": "COMPLETE",
+        "judgment": "FAIL",
+        "reason": "Every rubric obligation/negative constraint examined; O04 has C-D01. Editing, malformed input, lifecycle, provenance and owned cleanup otherwise concretely addressed."
+      },
+      {
+        "axis": 2,
+        "name": "Consequential source facts, governing conditions, versions and applicability",
+        "coverage": "PARTIAL",
+        "judgment": "FAIL",
+        "reason": "Consequential runtime/browser/storage facts independently checked; C-D01 is a governing-condition omission. Native OS deep code/test/history and Deno release/fix context remain UNASSESSED."
+      },
+      {
+        "axis": 3,
+        "name": "Useful unfamiliar mechanisms, alternatives and implementation/failure history",
+        "coverage": "PARTIAL",
+        "judgment": "FAIL",
+        "reason": "Declarative output, Wasm, browser/native workers and Deno offer useful different mechanisms. History and concrete tests are useful. Scope exceptions limit full breadth qualification."
+      },
+      {
+        "axis": 4,
+        "name": "Valid corrections, rejections and exact plan dispositions",
+        "coverage": "COMPLETE",
+        "judgment": "NO_MATERIAL_DEFECT_FOUND",
+        "reason": "All P1-P4 clauses and six required design dispositions examined; all C-01 through C-04 dispositions traced and supported."
+      },
+      {
+        "axis": 5,
+        "name": "Supported meaning retained from draft and criticism into the complete final",
+        "coverage": "COMPLETE",
+        "judgment": "NO_MATERIAL_DEFECT_FOUND",
+        "reason": "Complete discovery/draft/criticism/final/maps compared by supported meaning. No material loss found; C-L02 records narrative compression."
+      },
+      {
+        "axis": 6,
+        "name": "Meaningful proposed validation, with executed work distinguished",
+        "coverage": "COMPLETE",
+        "judgment": "NO_MATERIAL_DEFECT_FOUND",
+        "reason": "The six requested synthetic/disposable witness families specify meaningful denial/state/resource/deletion oracles. All application/adversarial/cross-platform checks remain proposed, not executed."
+      }
+    ],
+    "obligations_and_negative_constraints": [
+      {
+        "id": "O01",
+        "coverage": "COMPLETE",
+        "observation": "Opaque job-scoped read capability, validated declarative output, isolated richer option, unrelated-notebook denial.",
+        "result": "NO_MATERIAL_DEFECT_FOUND"
+      },
+      {
+        "id": "O02",
+        "coverage": "COMPLETE",
+        "observation": "Editable original plus failed/timed-out/stale/disabled/unavailable/version state; upgrade/re-enable/uninstall behavior.",
+        "result": "NO_MATERIAL_DEFECT_FOUND"
+      },
+      {
+        "id": "O03",
+        "coverage": "COMPLETE",
+        "observation": "Separate derived search namespace/record, source and producer identity, no partial-current publication.",
+        "result": "NO_MATERIAL_DEFECT_FOUND"
+      },
+      {
+        "id": "O04",
+        "coverage": "COMPLETE",
+        "observation": "Permission/resource/nested-worker/host limitation comparisons; C-D01 in control, partial source/test gaps in treatment.",
+        "result": "MATERIAL_RESEARCH_OMISSION"
+      },
+      {
+        "id": "O05",
+        "coverage": "COMPLETE",
+        "observation": "Host ownership registry, private job roots, references/leases/generations, no-follow identity, crash reconciliation.",
+        "result": "NO_MATERIAL_DEFECT_FOUND"
+      },
+      {
+        "id": "N01",
+        "coverage": "COMPLETE",
+        "observation": "No broad notebook grant or ambient-privilege markup; proposal invariant distinguished from actual enforcement.",
+        "result": "NO_MATERIAL_DEFECT_FOUND"
+      },
+      {
+        "id": "N02",
+        "coverage": "COMPLETE",
+        "observation": "Path suffix or child exit rejected as cleanup ownership proof.",
+        "result": "NO_MATERIAL_DEFECT_FOUND"
+      },
+      {
+        "id": "N03",
+        "coverage": "COMPLETE",
+        "observation": "Extracted text never substituted for authored note content.",
+        "result": "NO_MATERIAL_DEFECT_FOUND"
+      }
+    ],
+    "additional_obligations": [
+      {
+        "id": "editing_responsiveness",
+        "coverage": "COMPLETE"
+      },
+      {
+        "id": "malformed_inputs_output",
+        "coverage": "COMPLETE"
+      },
+      {
+        "id": "all_six_named_plan_dispositions",
+        "coverage": "COMPLETE"
+      },
+      {
+        "id": "all_required_validation_families",
+        "coverage": "COMPLETE"
+      },
+      {
+        "id": "actual_product_deployment",
+        "coverage": "UNASSESSED",
+        "required": false,
+        "reason": "Outside the planning deliverable; neither demanded nor inferred."
+      }
+    ],
+    "source_families": [
+      {
+        "family": "extension_interfaces",
+        "coverage": "COMPLETE",
+        "primary_ids": "P11/P27-P31",
+        "scope": "complete_final",
+        "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+      },
+      {
+        "family": "browser_rendering",
+        "coverage": "COMPLETE",
+        "primary_ids": "P21/P23/P25/P26/P29",
+        "scope": "complete_final",
+        "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+      },
+      {
+        "family": "wasmtime_controls",
+        "coverage": "COMPLETE",
+        "primary_ids": "P01-P03",
+        "scope": "complete_final",
+        "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+      },
+      {
+        "family": "runtime_history",
+        "coverage": "COMPLETE",
+        "primary_ids": "P13-P20",
+        "scope": "complete_final",
+        "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+      },
+      {
+        "family": "wasi_filesystem_capabilities",
+        "coverage": "COMPLETE",
+        "primary_ids": "P08-P10",
+        "scope": "complete_final",
+        "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+      },
+      {
+        "family": "nested_workers_native_os",
+        "coverage": "PARTIAL",
+        "primary_ids": "P12/P22/P24/P37-P42",
+        "scope": "complete_final",
+        "limit": "Full code/callers/test/release history UNASSESSED after decisive C-D01; documented conditions checked."
+      },
+      {
+        "family": "deno_permissions",
+        "coverage": "PARTIAL",
+        "primary_ids": "P33",
+        "scope": "complete_final",
+        "limit": "Full code/callers/test/release history UNASSESSED after decisive C-D01; documented conditions checked."
+      },
+      {
+        "family": "storage_search",
+        "coverage": "COMPLETE",
+        "primary_ids": "P34-P36",
+        "scope": "complete_final",
+        "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+      },
+      {
+        "family": "upstream_tests",
+        "coverage": "COMPLETE",
+        "primary_ids": "P04-P09/P43",
+        "scope": "complete_final",
+        "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+      },
+      {
+        "family": "licenses",
+        "coverage": "COMPLETE",
+        "primary_ids": "P44/P45",
+        "scope": "complete_final",
+        "limit": "Finite assessment of the declared consequential claims, not the whole upstream project."
+      }
+    ]
+  },
+  "assessment_is_finite": true,
+  "unassessed_remainder": [
+    "Native OS launch implementation/callers, complete tests and release/fix histories",
+    "Deno implementation/callers/tests and issue/fix/release history beyond governing docs",
+    "Any product execution/deployment; not required"
+  ]
+}

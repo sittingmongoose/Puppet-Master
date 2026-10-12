@@ -1,0 +1,47 @@
+{
+  "schema": "er13.immutable_original_output_manifest.v1",
+  "block_id": "D-R2-P02",
+  "arm_id": "D-R2-P02-control",
+  "frozen_at_utc": "2026-10-12T05:21:31.176473+00:00",
+  "original": true,
+  "comparative_analysis_started": false,
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/control/assessment.md",
+      "relative_path": "assessment.md",
+      "bytes": 4951,
+      "sha256": "c3f640ff57cd9cfa91ead8295f699bc10f23ac945dbdbd884213ca13386a0abb"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/control/assessment.json",
+      "relative_path": "assessment.json",
+      "bytes": 27634,
+      "sha256": "70cb9274317d9d969edae9ddc07b6d027ac346c32a7b07e7953f0d474f8714f4"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/control/coverage.json",
+      "relative_path": "coverage.json",
+      "bytes": 8033,
+      "sha256": "045f7333025480a089f9545971490a4c012ea22fc42ac704d7ea883607e636ea"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/control/defects.json",
+      "relative_path": "defects.json",
+      "bytes": 3420,
+      "sha256": "d0a832220d0e82090ea1b357c132cfb6257dd85ed59e01bdd54f05fa5788c660"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/control/primary-source-index.json",
+      "relative_path": "primary-source-index.json",
+      "bytes": 35843,
+      "sha256": "521f58ff46e73ef29705d33f7034496ac736e2ac9d3424f16f06bab19e4d4112"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/control/evidence/source-context.json",
+      "relative_path": "evidence/source-context.json",
+      "bytes": 820,
+      "sha256": "4b503014142289506dee327f07c8a522903f0e9101cd44672d5f2b01ecea11e9"
+    }
+  ],
+  "immutability": "Original files/evidence and manifest frozen before comparison; any later dispute is a separate adjudication."
+}

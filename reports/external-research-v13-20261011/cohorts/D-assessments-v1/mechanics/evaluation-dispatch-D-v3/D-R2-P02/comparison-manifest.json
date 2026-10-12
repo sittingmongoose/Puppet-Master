@@ -1,0 +1,36 @@
+{
+  "schema": "er13.postfreeze_comparison_manifest.v1",
+  "block_id": "D-R2-P02",
+  "frozen_at_utc": "2026-10-12T05:22:33.105048+00:00",
+  "files": [
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/comparison.md",
+      "relative_path": "comparison.md",
+      "bytes": 2288,
+      "sha256": "0298a2a01ad4d6dd54f85ff8bef8dddaaf00d09e8e5ec4cb04cb5683a9d68bd8"
+    },
+    {
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/comparison.json",
+      "relative_path": "comparison.json",
+      "bytes": 4648,
+      "sha256": "b3d66a7e4ead76aad15a0882cce02e40d237d17295961df8bf754a9961ad8576"
+    }
+  ],
+  "original_manifest_refs": [
+    {
+      "arm_id": "D-R2-P02-control",
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/control/manifest.json",
+      "bytes": 2185,
+      "sha256": "4aa5541501689779c2fc446635882dfb1c6436e5733eda8beb94fba413f5b141",
+      "frozen_at_utc": "2026-10-12T05:21:31.176473+00:00"
+    },
+    {
+      "arm_id": "D-R2-P02-treatment",
+      "path": "ER13_RUNTIME/mechanics/evaluation-dispatch-D-v3/D-R2-P02/treatment/manifest.json",
+      "bytes": 2201,
+      "sha256": "11cf16b8aab6679aac954fe170e27eab4413bec83d8b08b96ec82d7069ab545d",
+      "frozen_at_utc": "2026-10-12T05:21:31.178993+00:00"
+    }
+  ],
+  "original_outputs_unchanged": true
+}
