@@ -86,6 +86,8 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="decode"]) .o55-f-nier .o55-
 .o55-amb-blink { animation: o55-led var(--ambd, 1.1s) steps(1, end) infinite; }
 .o55-amb-drift { animation: o55-drift var(--ambd, 18s) ease-in-out infinite alternate; transform-box: view-box; transform-origin: 0 0; }
 .o55-amb-sweep { animation: o55-sweep 11s ease-in-out infinite; transform-box: view-box; }
+/* Glass's waves swell sideways, each by its own distance (--sw), slowly (53-art-glass.js) */
+.o55-amb-swell { animation: o55-swell var(--ambd, 26s) ease-in-out infinite alternate; transform-box: view-box; }
 .o55-amb-pulse .o55-ring, .o55-ring { animation: o55-ring 1.9s ease-out infinite; animation-delay: calc(var(--ri, 0) * 320ms); transform-box: fill-box; transform-origin: center; }
 .o55-pulse { animation: o55-pulse 2.6s linear infinite; }
 .o55-trav { opacity: 0; } /* a travelling light (53-art-glass.js) is seen only while it travels */
@@ -234,6 +236,7 @@ html[data-o55-nier-parts]:not([data-o55-nier-parts~="decode"]) .o55-nier-asleep 
 @keyframes o55-twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 @keyframes o55-float { from { transform: translateY(0); } to { transform: translateY(-7px); } }
 @keyframes o55-drift { from { transform: translate(0, 0); } to { transform: translate(26px, -18px); } }
+@keyframes o55-swell { from { transform: translateX(0); } to { transform: translateX(var(--sw, -14px)); } }
 @keyframes o55-sweep { 0%, 55% { transform: translateX(0); } 100% { transform: translateX(900px); } }
 @keyframes o55-ring { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(1.35); opacity: 0; } }
 @keyframes o55-pulse { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }

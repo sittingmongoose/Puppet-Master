@@ -1,7 +1,9 @@
-/* Glass — "the light lab". Layered translucent panes, light-filament strings, crystal helpers with inner light,
-   a reflective stage under drifting aurora. Gradients only (no blur filters, so it ports to Slint and films at full
-   rate). Motion: depth parallax, light sweeps, lens focus pulls, slow float.
-   Dark = violet aurora night; light = dawn pastel prism. */
+/* Glass — "the light lab", in the Liquid Glass look's language (2026-10-13). Ball-jointed crystal marionettes with
+   light piped through their limbs, on light-filament strings, over a thick glass stage; behind them, layered waves of
+   tinted glass like the Glass wallpaper (Ribbons) under a clear sky with a few floating lens droplets. Captions stand on
+   a shelf of light with no box; nameplates are cut-glass plates. Gradients only (no blur filters, so it ports to Slint
+   and films at full rate). Motion: the waves swell, droplets float, light sweeps, lens focus pulls.
+   Dark = a deep night sky; light = a pale dawn. */
 (function () {
   'use strict';
   const O55 = window.O55, A = O55.art, U = O55.util;
@@ -25,29 +27,70 @@
   const label = (p, x, y, s, size) => `<text x="${x}" y="${y}" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="${size || 8.5}" letter-spacing="0.4" fill="${p.text}">${U.esc(s)}</text>`;
   const tints = ['lav', 'pink', 'mint', 'amber'];
 
+  /* The crystal marionette: a cut-glass torso with a socket at every corner, and glass rods for limbs that meet at glass
+     beads (neck, shoulders, elbows, hands, hips, knees), so every limb starts inside the joint it turns on and nothing
+     ever stands apart from the body, whatever the rig does to it. Light from the core runs down each rod in the puppet's
+     own tint. Joints, in helper units (feet at 0, the head's top at -68.5, where its string ties):
+       neck 0,-45.8; shoulders +-13,-40.5; elbows (by pose); hands (by pose); hips +-5.5,-13 (on the bow's hip line, -12,
+       so the pitched torso and the standing legs share them); knees +-6.2,-6.8; ankles +-6.6,-1.6.
+     A waving arm is the rig's .o55-arm (pivot: the shoulder) holding an .o55-fore (pivot: the elbow), so the forearm
+     bends while the arm swings and both stay on their beads. */
+  const rod = (a, b, r) => {
+    const dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy) || 1, nx = (-dy / L) * r, ny = (dx / L) * r, f = (v) => v.toFixed(2);
+    return `M${f(a[0] + nx)} ${f(a[1] + ny)} L${f(b[0] + nx)} ${f(b[1] + ny)} A${r} ${r} 0 0 0 ${f(b[0] - nx)} ${f(b[1] - ny)} L${f(a[0] - nx)} ${f(a[1] - ny)} A${r} ${r} 0 0 0 ${f(a[0] + nx)} ${f(a[1] + ny)}Z`;
+  };
+  /* a limb part: the glass rod, the light piped through it, and a glint along its lit side */
+  const limb = (ctx, a, b, r, tint) => {
+    const p = ctx.pal, dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy) || 1, ox = (-dy / L) * r * 0.45, oy = (dx / L) * r * 0.45, side = ox + oy < 0 ? 1 : -1;
+    return `<path d="${rod(a, b, r)}" fill="${ctx.url('glass')}" stroke="${ctx.url('edge')}" stroke-width="0.9"/>`
+      + `<path d="M${a[0].toFixed(2)} ${a[1].toFixed(2)} L${b[0].toFixed(2)} ${b[1].toFixed(2)}" stroke="${p[tint]}" stroke-width="${(r * 0.85).toFixed(2)}" stroke-linecap="round" opacity="${p.dark ? 0.55 : 0.45}"/>`
+      + `<path d="M${(a[0] + side * ox).toFixed(2)} ${(a[1] + side * oy).toFixed(2)} L${(b[0] + side * ox).toFixed(2)} ${(b[1] + side * oy).toFixed(2)}" stroke="#fff" stroke-width="0.7" stroke-linecap="round" opacity="0.55"/>`;
+  };
+  /* a joint: a glass bead with its own small specular, lit in the tint when it carries light */
+  const bead = (ctx, [x, y], r, tint) => {
+    const p = ctx.pal;
+    return `<circle cx="${x}" cy="${y}" r="${r}" fill="${ctx.url('glass')}" stroke="${ctx.url('edge')}" stroke-width="0.9"/>`
+      + (tint ? `<circle cx="${x}" cy="${y}" r="${(r * 0.5).toFixed(2)}" fill="${p[tint]}" opacity="${p.dark ? 0.7 : 0.55}"/>` : '')
+      + `<circle cx="${(x - r * 0.38).toFixed(2)}" cy="${(y - r * 0.38).toFixed(2)}" r="${(r * 0.3).toFixed(2)}" fill="#fff" opacity="0.85"/>`;
+  };
+  /* arms by pose: [shoulder, elbow, hand] for each side; wave keeps the left arm standing (the right is the rig's) */
+  const SH = [[-13, -40.5], [13, -40.5]];
+  const ARMS = {
+    stand: [[[-16.5, -30], [-17, -20]], [[16.5, -30], [17, -20]]],
+    bow: [[[-14.5, -30.5], [-12.5, -21]], [[14.5, -30.5], [12.5, -21]]],
+    carry: [[[-15, -30], [-6, -27.6]], [[15, -30], [6, -27.6]]],
+    point: [[[-16.5, -30], [-17, -20]], [[23.5, -39.6], [33.5, -39]]],
+    wave: [[[-16.5, -30], [-17, -20]], null]
+  };
+  const WAVE = { elbow: [20, -50.5], hand: [23, -61] };
+  const TORSO = 'M-7 -46 L7 -46 L13 -41 L11 -25 L7 -13 L-7 -13 L-11 -25 L-13 -41 Z';
   const helper = (ctx, item) => {
-    const p = ctx.pal, o = item.opts || {}, s = item.s || 1, tint = tints[(o.variant || 0) % 4];
+    const p = ctx.pal, o = item.opts || {}, s = item.s || 1, tint = tints[(o.variant || 0) % 4], pose = ARMS[o.pose] ? o.pose : 'stand';
     const str = o.anchor ? (() => { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; return `<path d="M0 -68 L${dx.toFixed(1)} ${dy.toFixed(1)}" stroke="${p[tint]}" stroke-width="5" opacity="0.14" stroke-linecap="round"/><path d="M0 -68 L${dx.toFixed(1)} ${dy.toFixed(1)}" stroke="${ctx.url('fil')}" stroke-width="1.3" stroke-linecap="round"/><circle cx="0" cy="-68" r="2.2" fill="${p.core}"/>`; })() : '';
-    const pose = o.pose || 'stand';
-    /* the waving arm is drawn by its own group below; '' here means no second right arm (it must not fall through) */
-    const armR = ({ wave: '', point: 'M13 -40 L26 -39 L36 -38', carry: 'M13 -40 L9 -30 L3 -27' })[pose] ?? 'M13 -40 L18 -28 L19 -18';
-    /* a waving arm is its own group (the rig lifts it); tied to the bar, a bright knot where the string meets the head */
-    const waveArm = pose === 'wave' ? `<g class="o55-arm" data-pivot="13 -40"><path d="M13 -40 L22 -54 L25 -64" fill="none" stroke="${ctx.url('edge')}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>`
-      + `<path d="M13 -40 L22 -54 L25 -64" fill="none" stroke="${p[tint]}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/><circle cx="25" cy="-64" r="2" fill="${p.core}"/><circle class="o55-hook" data-hook="hand" cx="25" cy="-64" r="0.01" fill="none"/></g>` : '';
+    const arm = (side) => { const a = ARMS[pose][side]; if (!a) return ''; const sh = SH[side]; return limb(ctx, sh, a[0], 2.2, tint) + limb(ctx, a[0], a[1], 2, tint) + bead(ctx, a[0], 2.4) + bead(ctx, a[1], 2.7, tint); };
+    const waveArm = pose === 'wave' ? `<g class="o55-arm" data-pivot="${SH[1].join(' ')}">${limb(ctx, SH[1], WAVE.elbow, 2.2, tint)}`
+      + `<g class="o55-fore" data-pivot="${WAVE.elbow.join(' ')}">${limb(ctx, WAVE.elbow, WAVE.hand, 2, tint)}${bead(ctx, WAVE.hand, 2.7, tint)}<circle class="o55-hook" data-hook="hand" cx="${WAVE.hand[0]}" cy="${WAVE.hand[1]}" r="0.01" fill="none"/></g>`
+      + `${bead(ctx, WAVE.elbow, 2.4)}${bead(ctx, SH[1], 3)}</g>` : '';
     const knot = o.rig ? `${glow(ctx, tint, 7, 0, -68.5)}<circle cx="0" cy="-68.5" r="2.2" fill="${p.core}"/>` : '';
-    const armL = pose === 'carry' ? 'M-13 -40 L-9 -30 L-3 -27' : 'M-13 -40 L-18 -28 L-19 -18';
-    const orb = pose === 'carry' ? `${glow(ctx, 'amber', 14, 0, -28)}<circle cx="0" cy="-28" r="6" ${G(ctx)}/><circle cx="0" cy="-28" r="2.4" fill="${p.core}"/>` : '';
-    /* the arms and the body above the legs are .o55-up groups, in the drawing's own paint order, so a bow can pitch the
-       upper body toward the audience about the hips (66-family-window.js) while the legs stand; the sphere of the head
-       and the knot on it are .o55-hd groups inside them (the eyes an .o55-fc group in the head), so the bow keeps the
-       head round, sends it down and tips the eyes toward the floor */
-    return `<g>${str}<ellipse cx="0" cy="1" rx="16" ry="3.5" fill="${p.shade}"/>`
-      + `<g class="o55-up"><path d="${armL}${armR ? ' M' + armR.slice(1) : ''}" fill="none" stroke="${ctx.url('edge')}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>`
-      + `<path d="${armL}${armR ? ' M' + armR.slice(1) : ''}" fill="none" stroke="${p[tint]}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>` + waveArm + '</g>'
-      + `<path d="M-7 -12 L-8 0 M7 -12 L8 0" stroke="${ctx.url('edge')}" stroke-width="4.5" stroke-linecap="round"/>`
-      + `<g class="o55-up"><path d="M0 -46 L15 -38 L12 -14 L0 -8 L-12 -14 L-15 -38 Z" ${G(ctx)}/>${glow(ctx, tint, 13, 0, -27)}<circle cx="0" cy="-27" r="3.2" fill="${p.core}" class="o55-core"/>`
-      + hl('M-11 -37 L-3 -41') + `<g class="o55-hd"><circle cx="0" cy="-57" r="11.5" ${G(ctx)}/>${hl('M-7 -62 A8 8 0 0 1 2 -65.5')}`
-      + `<g class="o55-fc"><circle cx="-3.6" cy="-57" r="1.4" fill="${p.core}"/><circle cx="3.6" cy="-57" r="1.4" fill="${p.core}"/></g></g>${orb}${knot ? `<g class="o55-hd">${knot}</g>` : ''}</g></g>`;
+    const orb = pose === 'carry' ? `${glow(ctx, 'amber', 14, 0, -28)}<circle cx="0" cy="-28" r="6" ${G(ctx)}/><circle cx="-2" cy="-30" r="1.6" fill="#fff" opacity="0.9"/><circle cx="0" cy="-28" r="2.4" fill="${p.core}"/>` : '';
+    const legs = [-1, 1].map((k) => { const hip = [k * 5.5, -13], knee = [k * 6.2, -6.8], ankle = [k * 6.6, -1.6];
+      return limb(ctx, hip, knee, 2.5, tint) + limb(ctx, knee, ankle, 2.2, tint) + `<ellipse cx="${k * 7.8}" cy="-0.9" rx="4.4" ry="1.9" ${G(ctx)}/>` + bead(ctx, knee, 2.4); }).join('')
+      + bead(ctx, [-5.5, -13], 3, tint) + bead(ctx, [5.5, -13], 3, tint);
+    /* the arms and the body above the hips are .o55-up groups, in the drawing's own paint order, so a bow can pitch the
+       upper body toward the audience about the hips (66-family-window.js) while the legs stand on their beads; the neck
+       bead is an .o55-nk group (it folds away behind the head as the head comes forward); the sphere of the head and the
+       knot on it are .o55-hd groups inside them (the eyes an .o55-fc group in the head), so the bow keeps the head round,
+       sends it down and tips the eyes toward the floor */
+    return `<g>${str}<ellipse cx="0" cy="1" rx="16" ry="3.5" fill="${p.shade}"/><ellipse cx="0" cy="1.4" rx="11" ry="2" fill="${ctx.url('glow-' + tint)}" opacity="0.8"/>`
+      + `<g class="o55-up">${arm(0)}${arm(1)}</g>${legs}`
+      + `<g class="o55-up"><path d="${TORSO}" ${G(ctx)} stroke-linejoin="round"/>`
+      + `<path d="M-4 -43 L4 -43 L8.5 -39.5 L7 -26 L4.5 -16.5 L-4.5 -16.5 L-7 -26 L-8.5 -39.5 Z" fill="none" stroke="#fff" stroke-width="0.6" stroke-linejoin="round" opacity="${p.dark ? 0.28 : 0.45}"/>`
+      + `<path d="M-13 -41 L-4 -43 M13 -41 L4 -43 M-11 -25 L-7 -26 M11 -25 L7 -26 M-7 -13 L-4.5 -16.5 M7 -13 L4.5 -16.5" stroke="#fff" stroke-width="0.5" opacity="${p.dark ? 0.22 : 0.4}"/>`
+      + `${glow(ctx, tint, 13, 0, -28)}<circle cx="0" cy="-28" r="3.2" fill="${p.core}" class="o55-core"/>`
+      + hl('M-10.5 -38.5 L-4 -42.5') + bead(ctx, SH[0], 3) + (pose === 'wave' ? '' : bead(ctx, SH[1], 3)) + waveArm
+      + `<g class="o55-nk">${bead(ctx, [0, -45.8], 2.8)}</g>`
+      + `<g class="o55-hd"><circle cx="0" cy="-57" r="11.5" ${G(ctx)}/>${hl('M-7 -62 A8 8 0 0 1 2 -65.5')}<path d="M5.5 -50.5 A8.5 8.5 0 0 0 8.6 -55" fill="none" stroke="#fff" stroke-width="0.8" stroke-linecap="round" opacity="0.35"/>`
+      + `<g class="o55-fc"><circle cx="-3.6" cy="-57" r="1.5" fill="${p.core}"/><circle cx="3.6" cy="-57" r="1.5" fill="${p.core}"/></g></g>${orb}${knot ? `<g class="o55-hd">${knot}</g>` : ''}</g></g>`;
   };
 
   /* The light that travels along a filament: a short bright streak carried along the curve by transform keyframes
@@ -87,11 +130,18 @@
         + `<path d="M${flip ? 30 : -210} -260 L${flip ? 110 : -130} 260" stroke="#fff" stroke-width="10" opacity="0.18"/></g>`;
       return `<g class="o55-cur-all">${pane(false)}${pane(true)}<rect class="o55-cur o55-cur-flare" x="-3" y="-300" width="6" height="600" fill="#fff"/></g>`;
     },
+    /* the stage: a thick disc of glass under the spotlight. Its top face holds the light (the ripples run on it), its
+       front edge is a band of glass with a lit rim and a few long reflections, and a faint caustic falls in front */
     stage(ctx) {
-      const p = ctx.pal;
+      const p = ctx.pal, R = 196, r = 30, T = 11;
+      const front = `M${-R} -16 A${R} ${r} 0 0 0 ${R} -16 V${-16 + T} A${R} ${r} 0 0 1 ${-R} ${-16 + T} Z`;
       return `<g><path d="M-44 -330 H44 L170 -18 H-170Z" fill="${ctx.url('beam')}" class="o55-beam"/>`
-        + `<ellipse cx="0" cy="-16" rx="196" ry="30" fill="${ctx.url('floor')}"/><ellipse cx="0" cy="-16" rx="196" ry="30" fill="none" stroke="${ctx.url('edge')}" stroke-width="1"/>`
-        + [0.72, 0.48, 0.26].map((k, i) => `<ellipse cx="0" cy="-16" rx="${196 * k}" ry="${30 * k}" fill="none" stroke="${p.core}" stroke-opacity="${0.22 - i * 0.05}" stroke-width="1" class="o55-ripple" style="--ri:${i}"/>`).join('') + '</g>';
+        + `<ellipse cx="0" cy="${-16 + T + 14}" rx="${R * 0.86}" ry="${r * 0.55}" fill="${ctx.url('glow-lav')}" opacity="0.45"/>`
+        + `<path d="${front}" fill="${ctx.url('glass')}" stroke="${ctx.url('edge')}" stroke-width="1"/>`
+        + [-120, -46, 58, 132].map((x, i) => `<path d="M${x} ${-16 + r * Math.sqrt(1 - (x / R) ** 2) + 2} v${T - 4}" stroke="#fff" stroke-width="${i % 2 ? 1.6 : 3}" stroke-linecap="round" opacity="${p.dark ? 0.12 : 0.3}"/>`).join('')
+        + `<ellipse cx="0" cy="-16" rx="${R}" ry="${r}" fill="${ctx.url('floor')}"/><ellipse cx="0" cy="-16" rx="${R}" ry="${r}" fill="none" stroke="${ctx.url('edge')}" stroke-width="1"/>`
+        + `<path d="M${-R + 14} -9 A${R} ${r} 0 0 0 ${R - 14} -9" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity="${p.dark ? 0.35 : 0.65}"/>`
+        + [0.72, 0.48, 0.26].map((k, i) => `<ellipse cx="0" cy="-16" rx="${R * k}" ry="${r * k}" fill="none" stroke="${p.core}" stroke-opacity="${0.22 - i * 0.05}" stroke-width="1" class="o55-ripple" style="--ri:${i}"/>`).join('') + '</g>';
     },
     computer(ctx, item) {
       const p = ctx.pal, o = item.opts || {};
@@ -147,11 +197,20 @@
       const p = ctx.pal;
       return `<g>${[20, 36, 52].map((r, i) => `<circle r="${r}" fill="none" stroke="${p.lav}" stroke-width="1.6" opacity="${0.6 - i * 0.15}" class="o55-ring" style="--ri:${i}"/>`).join('')}</g>`;
     },
+    /* a nameplate (the name sign, the ready sign, a plan's notes): a plate of cut glass, its corners chamfered like the
+       troupe's torso, with a bevel cut a little inside the edge, light along its top facet and a thin line of the
+       accent along its foot; the word is engraved in it (the last text, where a typed letter's fleck leaves from) */
     badge(ctx, item) {
-      const p = ctx.pal, o = item.opts || {}, w = Math.max(72, (o.label || '').length * 6 + (o.glyph ? 34 : 20));
-      return `<g><rect x="${-w / 2}" y="-15" width="${w}" height="30" rx="15" ${G(ctx)}/>` + hl(`M${-w / 2 + 10} -11 H${w / 2 - 20}`)
-        + (o.glyph ? `<g transform="translate(${-w / 2 + 9} -9) scale(0.75)" style="color:${p.core}">${A.glyph(o.glyph, 'currentColor', 2)}</g>` : '')
-        + label(p, o.glyph ? 9 : 0, 3.5, o.label || '') + '</g>';
+      const p = ctx.pal, o = item.opts || {}, w = Math.max(76, (o.label || '').length * 6.1 + (o.glyph ? 38 : 26)), h = 28, c = 5, x = w / 2, y = h / 2, i = 3.2, ci = c - 1.6;
+      const plate = (X, Y, C) => `M${-X + C} ${-Y} H${X - C} L${X} ${-Y + C} V${Y - C} L${X - C} ${Y} H${-X + C} L${-X} ${Y - C} V${-Y + C} Z`;
+      const tint = o.accent ? 'lav' : 'mint';
+      return `<g>${o.accent ? glow(ctx, 'lav', Math.min(70, w * 0.55), 0, 2) : ''}<path d="${plate(x, y, c)}" ${G(ctx)} stroke-linejoin="round"/>`
+        + `<path d="${plate(x - i, y - i, ci)}" fill="none" stroke="#fff" stroke-width="0.6" stroke-linejoin="round" opacity="${p.dark ? 0.3 : 0.5}"/>`
+        + `<path d="M${-x + c} ${-y} L${-x + i + ci} ${-y + i} M${x - c} ${-y} L${x - i - ci} ${-y + i} M${-x + c} ${y} L${-x + i + ci} ${y - i} M${x - c} ${y} L${x - i - ci} ${y - i}" stroke="#fff" stroke-width="0.5" opacity="${p.dark ? 0.3 : 0.5}"/>`
+        + hl(`M${-x + c + 3} ${-y + 1.6} H${x - c - 12}`)
+        + `<rect x="${-x + c + 4}" y="${y - 2.4}" width="${w - 2 * c - 8}" height="0.9" fill="${p[tint]}" opacity="${p.dark ? 0.75 : 0.6}"/>`
+        + (o.glyph ? `<g transform="translate(${-x + 10} -9) scale(0.75)" style="color:${p.dark ? p.core : '#4f3596'}">${A.glyph(o.glyph, 'currentColor', 2)}</g>` : '')
+        + label(p, o.glyph ? 9 : 0, 3.4, o.label || '', 9) + '</g>';
     },
     identity(ctx, item) {
       const p = ctx.pal, o = item.opts || {};
@@ -159,10 +218,17 @@
         + `<g transform="translate(-22 -22)">${A.identitySvg(o.seed || 'nas', 44, 'glass').replace('<svg', '<svg x="0" y="0"')}</g>`
         + (o.words ? label(p, 0, 52, o.words) : '') + '</g>';
     },
+    /* a caption: no box. A filament leaves a glass bead on the thing it names, turns at a small lit square and runs on
+       as a shelf of light, fading away, that the words stand on (the shelf is a hairline plate, so its gradient has a
+       box to span) */
     note(ctx, item) {
-      const p = ctx.pal, o = item.opts || {}, dx = o.dx == null ? 60 : o.dx, dy = o.dy == null ? -30 : o.dy, w = (o.text || '').length * 5.3 + 20, x = dx >= 0 ? dx : dx - w;
-      return `<g><path d="M0 0 L${dx >= 0 ? x : x + w} ${dy}" stroke="${ctx.url('fil')}" stroke-width="1.1"/><circle r="2.6" fill="${p.core}"/>`
-        + `<rect x="${x}" y="${dy - 10}" width="${w}" height="20" rx="10" ${G(ctx)}/>` + label(p, x + w / 2, dy + 3.2, o.text || '', 8) + '</g>';
+      const p = ctx.pal, o = item.opts || {}, dx = o.dx == null ? 60 : o.dx, dy = o.dy == null ? -30 : o.dy, right = dx >= 0, w = (o.text || '').length * 5.4 + 14;
+      const sy = dy + 5.5, x0 = right ? dx : dx - w, ink = p.dark ? p.core : A.mix(p.lav, p.text, 0.3); /* white light on a dark sky, the deepened tint on a pale one */
+      return `<g><path d="M0 0 L${dx} ${sy}" stroke="${p.lav}" stroke-width="3.6" opacity="0.13" stroke-linecap="round"/><path d="M0 0 L${dx} ${sy}" stroke="${ink}" stroke-width="0.9" opacity="0.85" stroke-linecap="round"/>`
+        + `<rect x="${x0}" y="${sy - 0.5}" width="${w}" height="1" fill="${ctx.url(right ? 'shelf' : 'shelfR')}"/>`
+        + `<circle r="2.6" ${G(ctx)}/><circle r="1.2" fill="${ink}"/>`
+        + `<rect x="${dx - 1.8}" y="${sy - 1.8}" width="3.6" height="3.6" fill="${ink}" transform="rotate(45 ${dx} ${sy})"/>`
+        + `<text x="${right ? dx + 4 : dx - 4}" y="${dy + 2}" text-anchor="${right ? 'start' : 'end'}" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="9" letter-spacing="0.3" fill="${p.text}">${U.esc(o.text || '')}</text></g>`;
     }
   };
 
@@ -171,7 +237,7 @@
     props,
     /* a marionette string: a soft glow under a bright filament (the rig sets both d's every frame) */
     string: (ctx, d) => `<path class="o55-sp" d="${d}" fill="none" stroke="${ctx.pal.lav}" stroke-width="5" opacity="0.14" stroke-linecap="round"/><path class="o55-sp" d="${d}" fill="none" stroke="${ctx.url('fil')}" stroke-width="1.3" stroke-linecap="round"/>`,
-    hand: { wave: [25, -64] },
+    hand: { wave: WAVE.hand },
     defs(ctx) {
       const p = ctx.pal, u = ctx.uid;
       const rg = (name, color, a) => `<radialGradient id="${u}-glow-${name}"><stop offset="0" stop-color="${color}" stop-opacity="${a}"/><stop offset="0.45" stop-color="${color}" stop-opacity="${a * 0.35}"/><stop offset="1" stop-color="${color}" stop-opacity="0"/></radialGradient>`;
@@ -179,25 +245,55 @@
       /* light mode: glass takes a violet tint and violet edges so it reads on pastel; dark mode: clear glass, white edges */
       const tint = p.dark ? '#fff' : p.lav;
       return `<linearGradient id="${u}-glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="${p.g0}"/><stop offset="0.5" stop-color="${tint}" stop-opacity="${p.dark ? p.g1 : 0.16}"/><stop offset="1" stop-color="${tint}" stop-opacity="${p.dark ? p.g2 : 0.22}"/></linearGradient>`
-        + `<linearGradient id="${u}-edge" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="${p.e0}"/><stop offset="0.55" stop-color="${p.dark ? '#fff' : p.lav}" stop-opacity="${p.dark ? p.e1 : 0.75}"/><stop offset="1" stop-color="${p.dark ? '#fff' : p.pink}" stop-opacity="${p.dark ? p.e0 * 0.6 : 0.7}"/></linearGradient>`
+        /* light mode: the edge runs from a white glint into the tint deepened toward the ink, so glass keeps its outline
+           on a pale sky (a pure tint edge washed out there) */
+        + `<linearGradient id="${u}-edge" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="${p.e0}"/><stop offset="0.55" stop-color="${p.dark ? '#fff' : A.mix(p.lav, p.text, 0.38)}" stop-opacity="${p.dark ? p.e1 : 0.9}"/><stop offset="1" stop-color="${p.dark ? '#fff' : A.mix(p.pink, p.text, 0.32)}" stop-opacity="${p.dark ? p.e0 * 0.6 : 0.85}"/></linearGradient>`
+        + `<linearGradient id="${u}-shelf" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${p.dark ? p.core : A.mix(p.lav, p.text, 0.3)}" stop-opacity="0.95"/><stop offset="0.55" stop-color="${p.lav}" stop-opacity="0.55"/><stop offset="1" stop-color="${p.lav}" stop-opacity="0"/></linearGradient>`
+        + `<linearGradient id="${u}-shelfR" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="${p.dark ? p.core : A.mix(p.lav, p.text, 0.3)}" stop-opacity="0.95"/><stop offset="0.55" stop-color="${p.lav}" stop-opacity="0.55"/><stop offset="1" stop-color="${p.lav}" stop-opacity="0"/></linearGradient>`
         + `<linearGradient id="${u}-fil" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${p.pink}"/><stop offset="1" stop-color="${p.lav}"/></linearGradient>`
         + `<linearGradient id="${u}-screen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${p.lav}" stop-opacity="0.55"/><stop offset="1" stop-color="${p.pink}" stop-opacity="0.35"/></linearGradient>`
         + `<linearGradient id="${u}-beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="${p.dark ? 0.14 : 0.35}"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>`
         + `<radialGradient id="${u}-floor" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="${p.lav}" stop-opacity="${p.dark ? 0.32 : 0.3}"/><stop offset="1" stop-color="${p.lav}" stop-opacity="0.02"/></radialGradient>`
         + `<linearGradient id="${u}-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.bg2}"/><stop offset="1" stop-color="${p.bg}"/></linearGradient>`
         + `<linearGradient id="${u}-sweep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="0.5" stop-color="#fff" stop-opacity="${p.dark ? 0.08 : 0.22}"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>`
-        + rg('lav', p.lav, glowA) + rg('pink', p.pink, glowA) + rg('mint', p.mint, glowA) + rg('amber', p.amber, glowA);
+        + rg('lav', p.lav, glowA) + rg('pink', p.pink, glowA) + rg('mint', p.mint, glowA) + rg('amber', p.amber, glowA)
+        /* the waves: opaque, lit at the crest and deepening below it, from the back layer (mostly sky) to the front */
+        + ['lav', 'pink', 'mint', 'lav', p.dark ? 'pink' : 'amber'].map((c, i) => {
+          const depth = p.dark ? 0.72 - i * 0.07 : 0.62 - i * 0.06, lit = A.mix(p[c], '#ffffff', p.dark ? 0.12 : 0.4), deep = A.mix(p[c], p.dark ? p.bg2 : '#ffffff', p.dark ? 0.15 : 0.55);
+          return `<linearGradient id="${u}-wv${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${A.mix(lit, p.bg, depth)}"/><stop offset="0.5" stop-color="${A.mix(deep, p.bg, depth + (p.dark ? 0.12 : 0.05))}"/><stop offset="1" stop-color="${A.mix(deep, p.bg2, depth + (p.dark ? 0.2 : 0.1))}"/></linearGradient>`;
+        }).join('')
+        /* a droplet: clear at the rim, brighter in the middle (the lens gathers the light behind it) */
+        + `<radialGradient id="${u}-lens" cx="0.45" cy="0.42" r="0.6"><stop offset="0" stop-color="#fff" stop-opacity="${p.dark ? 0.22 : 0.55}"/><stop offset="0.7" stop-color="#fff" stop-opacity="${p.dark ? 0.06 : 0.2}"/><stop offset="1" stop-color="${tint}" stop-opacity="${p.dark ? 0.14 : 0.28}"/></radialGradient>`;
     },
+    /* the ground: the Glass wallpaper's own language (Liquid Glass, Ribbons). A clear night or dawn sky above, where the
+       bar and its strings hang, and below it, rising behind the stage, five layered waves of tinted glass, each lit along
+       its crest with a fine rim of light and casting a soft shadow on the layer beneath; the back layers are deeper, the
+       front ones brighter. The layers are opaque colour (mixed from the look's tokens with the sky), so they stack as
+       crisply as the wallpaper and the words in front of them keep their contrast. They swell very slowly sideways, the
+       back ones least; a few clear droplets float in the sky, each a small lens. (The earlier aurora blobs and shards
+       read as debris.) */
     background(ctx) {
-      const p = ctx.pal, W = A.W, H = A.H;
-      const blobs = [[70, 110, 210, p.aurora[0]], [420, 80, 190, p.aurora[1]], [260, 520, 250, p.aurora[2]]].map(([x, y, r, c], i) => `<g class="o55-amb o55-amb-drift" style="--ambd:${16000 + i * 4000}ms;--ai:${i}"><circle cx="${x}" cy="${y}" r="${r}" fill="${ctx.url('glow-' + c)}" opacity="0.8"/></g>`).join('');
-      const r = U.rng('glass-shards');
-      let shards = '';
-      for (let i = 0; i < 7; i++) {
-        const x = 30 + r() * (W - 60), y = 30 + r() * (H * 0.62), s = 6 + r() * 12, a = r() * 180;
-        shards += `<g class="o55-amb o55-amb-float" style="--ambd:${5000 + r() * 4000}ms;--ai:${i}"><path transform="translate(${x.toFixed(0)} ${y.toFixed(0)}) rotate(${a.toFixed(0)})" d="M0 ${-s} L${s * 0.7} 0 L0 ${s} L${-s * 0.5} ${s * 0.2}Z" fill="${ctx.url('glass')}" stroke="${ctx.url('edge')}" stroke-width="0.8" opacity="0.75"/></g>`;
-      }
-      return `<rect width="${W}" height="${H}" fill="${ctx.url('sky')}"/>${blobs}${shards}`;
+      const p = ctx.pal, W = A.W, H = A.H, f = (v) => v.toFixed(1);
+      const crest = (y, amp, ph) => {
+        const xs = [-60, 110, 280, 450, 620], ys = xs.map((x, i) => y + amp * Math.sin(ph + i * 1.35));
+        let d = `M${xs[0]} ${f(ys[0])}`;
+        for (let i = 1; i < xs.length; i++) { const m = (xs[i - 1] + xs[i]) / 2; d += ` C${m} ${f(ys[i - 1])} ${m} ${f(ys[i])} ${xs[i]} ${f(ys[i])}`; }
+        return d;
+      };
+      const layers = [[352, 16, 0.4], [392, 20, 2.1], [430, 14, 4.2], [470, 18, 1.2], [516, 12, 3.3]];
+      const waves = layers.map(([y, amp, ph], i) => {
+        const top = crest(y, amp, ph);
+        return `<g class="o55-amb o55-amb-swell" style="--ambd:${30000 - i * 3500}ms;--sw:${-(8 + i * 5)}px;--ai:${i}">`
+          + `<path d="${crest(y + 5, amp, ph)}" fill="none" stroke="#000" stroke-width="10" opacity="${p.dark ? 0.22 : 0.07}"/>`
+          + `<path d="${top} V${H + 60} H-60 Z" fill="${ctx.url('wv' + i)}"/>`
+          + `<path d="${top}" fill="none" stroke="#fff" stroke-width="1.1" opacity="${p.dark ? 0.34 : 0.85}"/></g>`;
+      }).join('');
+      const halo = [[70, 120, 200, p.aurora[0]], [430, 70, 170, p.aurora[1]]].map(([x, y, r, c]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${ctx.url('glow-' + c)}" opacity="0.5"/>`).join('');
+      const drops = [[62, 228, 9], [424, 196, 6], [404, 300, 11], [96, 330, 5]].map(([x, y, r], i) => `<g class="o55-amb o55-amb-float" style="--ambd:${6200 + i * 1300}ms;--ai:${i}">`
+        + `<circle cx="${x}" cy="${y}" r="${r}" fill="${ctx.url('lens')}" stroke="${ctx.url('edge')}" stroke-width="0.8"/>`
+        + `<path d="M${f(x - r * 0.62)} ${f(y - r * 0.2)} A${f(r * 0.66)} ${f(r * 0.66)} 0 0 1 ${f(x - r * 0.1)} ${f(y - r * 0.64)}" fill="none" stroke="#fff" stroke-width="${Math.max(0.8, r * 0.16).toFixed(2)}" stroke-linecap="round" opacity="0.8"/>`
+        + `<circle cx="${f(x + r * 0.42)}" cy="${f(y + r * 0.46)}" r="${(r * 0.14).toFixed(2)}" fill="#fff" opacity="0.45"/></g>`).join('');
+      return `<rect width="${W}" height="${H}" fill="${ctx.url('sky')}"/>${halo}${drops}${waves}`;
     },
     overlay(ctx) {
       return `<g class="o55-amb o55-amb-sweep"><rect x="-260" y="-40" width="160" height="${A.H + 80}" fill="${ctx.url('sweep')}" transform="rotate(14)"/></g>`;

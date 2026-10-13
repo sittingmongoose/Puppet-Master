@@ -43,14 +43,19 @@
       point: 'M-12 -40 L-17 -29 L-18 -19 M12 -40 L23 -37 L33 -36'
     }[pose] || '';
     const joint = ([x, y]) => `<circle cx="${x}" cy="${y}" r="1.7" fill="${p.paper}" stroke="${p.ink}" stroke-width="1"/>`;
-    const shoulders = [[-12, -40], [12, -40]].map(joint).join(''), hipsKnees = [[-8, -18], [8, -18], [-6, -9], [6, -9]].map(joint).join('');
+    /* every joint is drawn, the elbows too, so each part of a limb visibly turns on the one before it */
+    const elbows = ({ stand: [[-17, -29], [17, -29]], wave: [[-17, -29]], carry: [[-10, -30], [10, -30]], bow: [[-14, -30], [14, -30]], point: [[-17, -29], [23, -37]] }[pose] || []).map(joint).join('');
+    const shoulders = [[-12, -40], [12, -40]].map(joint).join('') + elbows, hipsKnees = [[-8, -18], [8, -18], [-6, -9], [6, -9]].map(joint).join('');
     /* a hand at the end of every arm (the waving hand is drawn with its arm) */
     const hands = ({ stand: [[-18, -19], [18, -19]], wave: [[-18, -19]], carry: [[-3, -27], [3, -27]], bow: [[-12, -21], [12, -21]], point: [[-18, -19], [33, -36]] }[pose] || [])
       .map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.9" fill="${p.paper}" stroke="${p.ink}" stroke-width="1"/>`).join('');
     const str = o.anchor ? (() => { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; return `<path d="M0 -64 L${dx.toFixed(1)} ${dy.toFixed(1)}" ${S(p, 0.8, p.ink2)}/><circle cx="0" cy="-64" r="1.6" fill="${p.ink}"/>`; })() : '';
     /* tied to the bar: a knot where the string meets the head; a waving arm is its own group (the rig lifts it) */
     const knot = o.rig ? `<g class="o55-hd"><circle cx="0" cy="-63" r="1.7" fill="${p.ink}"/></g>` : '';
-    const waveArm = pose === 'wave' ? `<g class="o55-arm" data-pivot="12 -40"><path d="M12 -40 L20 -50 L24 -61" ${S(p, 1.4)}/><circle cx="24" cy="-61" r="1.9" fill="${p.paper}" stroke="${p.ink}" stroke-width="1"/><circle class="o55-hook" data-hook="hand" cx="24" cy="-61" r="0.01" fill="none"/></g>` : '';
+    /* a waving arm is the rig's .o55-arm (pivot: the shoulder) holding an .o55-fore (pivot: the elbow), so the forearm
+       bends on its joint while the arm swings */
+    const waveArm = pose === 'wave' ? `<g class="o55-arm" data-pivot="12 -40"><g class="o55-fore" data-pivot="20 -50"><path d="M20 -50 L24 -61" ${S(p, 1.4)}/><circle cx="24" cy="-61" r="1.9" fill="${p.paper}" stroke="${p.ink}" stroke-width="1"/><circle class="o55-hook" data-hook="hand" cx="24" cy="-61" r="0.01" fill="none"/></g>`
+      + `<path d="M12 -40 L20 -50" ${S(p, 1.4)}/>${joint([20, -50])}</g>` : '';
     const carry = pose === 'carry' ? `<rect x="-9" y="-34" width="18" height="12" rx="1" ${F(p, p.accentFill, 1.2, p.accent)}/><path d="M-5 -30H5M-5 -26.5H2" ${S(p, 0.8, p.accent)}/>` : '';
     /* the upper body (head, torso, arms) is two .o55-up groups around the legs, in the drawing's own paint order, so a
        bow can pitch it toward the audience about the hips (66-family-window.js) while the legs stand; the head and the

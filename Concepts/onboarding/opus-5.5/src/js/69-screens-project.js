@@ -208,7 +208,7 @@
     lead: () => T('name.lead'),
     body(S) {
       const d = md(S), prob = nameProblem(S, d.project_name), touched = S.sess.ui.nameTouched;
-      let out = C.field({ bind: 'name', label: T('name.label'), value: d.project_name, placeholder: T('name.placeholder'), hint: prob ? '' : (d.project_name ? T('name.ok') : ''), error: touched && prob ? prob : '', valid: !prob, invalid: touched && !!prob, autocomplete: 'off' });
+      let out = C.field({ bind: 'name', cls: 'o55-namefield', reserve: true, label: T('name.label'), value: d.project_name, placeholder: T('name.placeholder'), hint: prob ? '' : (d.project_name ? T('name.ok') : ''), error: touched && prob ? prob : '', valid: !prob, invalid: touched && !!prob, autocomplete: 'off' });
       if (d.project_mode === 'new') out += F.chips('suggest', O55.tx('name.suggest'), d.project_name);
       /* where its files live: an existing folder stays where it is (also on a Server); a new or copied Project on a
          Server offers the Server, this device or a network drive */

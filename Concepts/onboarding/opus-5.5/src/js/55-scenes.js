@@ -12,8 +12,8 @@
   const hooks = (a) => ({ a0: a[0], a1: a[1], a2: a[2], w0: [Math.round(a[0][0] * 0.56), a[0][1]], w2: [Math.round(a[2][0] * 0.56), a[2][1]] });
   const METRICS = {
     basic: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 470, helperScale: 1.75, barY: 136, hook: [0, -63] },
-    friendly: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 472, helperScale: 1.6, barY: 140, hook: [0, -73.5], edgeInset: 17 },
-    glass: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 478, helperScale: 1.7, barY: 136, hook: [0, -68.5], edgeInset: 17 },
+    friendly: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 472, helperScale: 1.6, barY: 140, hook: [0, -73.5], edgeInset: 9 },
+    glass: { anchors: [[-100, 0], [0, 30], [100, 0]], floor: 478, helperScale: 1.7, barY: 136, hook: [0, -68.5], edgeInset: 9 },
     retro: { anchors: [[-96, -4], [0, 36], [96, -4]], floor: 458, helperScale: 1, barY: 132, helperPx: 7, hook: [0, -100] },
     /* NieR Mode's art (54-art-nier.js), the unit marionettes (design/puppets-final/spec.md): Basic's three bar studs (so
        barHooks derive unchanged), hook = the unit's diamond knot on its head top (every variant and pose), edgeInset =

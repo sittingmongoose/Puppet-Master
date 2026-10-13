@@ -9,7 +9,7 @@
     const dark = mode === 'dark';
     return {
       dark,
-      wall: dark ? '#2b2436' : '#fdf3e8', wall2: dark ? '#221c2b' : '#f8e7d6', dots: dark ? 'rgba(255,255,255,0.035)' : 'rgba(150,120,201,0.07)',
+      wall: dark ? '#2b2436' : '#fdf3e8', wall2: dark ? '#221c2b' : '#f8e7d6', dots: dark ? 'rgba(255,255,255,0.07)' : 'rgba(150,120,201,0.14)', /* the Friendly wallpaper's dots, strong enough to read (Jared, 2026-10-11: use them in more places) */
       floor: dark ? '#6b4637' : '#e7ba8d', floorHi: dark ? '#7d5443' : '#f0c9a0', plank: dark ? 'rgba(0,0,0,0.22)' : 'rgba(150,90,40,0.18)',
       wood: dark ? '#b8805a' : '#d59a68', woodHi: dark ? '#d29b72' : '#eab98a',
       peach: tok.orange, mint: tok.lime, sky: tok.blue, lilac: tok.magenta, sun: dark ? '#f7cf6a' : '#f3b93f',
@@ -27,17 +27,31 @@
   const label = (p, x, y, s, color) => `<text x="${x}" y="${y}" text-anchor="middle" font-family="Poppins, Nunito, system-ui, sans-serif" font-weight="600" font-size="9" fill="${color || p.ink}">${U.esc(s)}</text>`;
   const variants = (p) => [p.peach, p.mint, p.sky, p.lilac];
 
+  /* A felt puppet whose every part is sewn on: two-part sleeves (upper arm over forearm, folded at the elbow) end in a
+     mitten hand, and short legs run up under the hem so the shoes are always attached. A waving arm is the rig's
+     .o55-arm (pivot: the shoulder) holding an .o55-fore (pivot: the elbow), both in the helper's own units, so the
+     forearm can bend while the arm swings. Arm angles are SVG rotations from hanging straight down. */
+  const UA = 11, FA = 9; /* upper arm and forearm lengths */
+  const ANG = { stand: [[16, 6], [-16, -6]], wave: [[16, 6], [-150, -172]], carry: [[-38, -64], [38, 64]], bow: [[6, 0], [-6, 0]], point: [[16, 6], [-95, -92]] };
+  const along = (o, a, L) => [o[0] - L * Math.sin((a * Math.PI) / 180), o[1] + L * Math.cos((a * Math.PI) / 180)];
+  const SHF = [[-15, -40], [15, -40]];
+  const WAVE_F = (() => { const e = along(SHF[1], -150, UA); return { elbow: e.map((v) => +v.toFixed(2)), hand: along(e, -172, FA).map((v) => +v.toFixed(2)) }; })();
   const helper = (ctx, item) => {
-    const p = ctx.pal, o = item.opts || {}, s = item.s || 1, v = o.variant || 0, pose = o.pose || 'stand';
-    const body = variants(p)[v % 4], skin = p.skin[v % 3], hair = p.hair[v % 3];
+    const p = ctx.pal, o = item.opts || {}, s = item.s || 1, v = o.variant || 0, pose = ANG[o.pose] ? o.pose : 'stand';
+    const body = variants(p)[v % 4], skin = p.skin[v % 3], hair = p.hair[v % 3], legs = A.mix(body, p.ink, 0.5);
     const str = o.anchor ? (() => { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; return `<path d="M0 -67 Q${(dx * 0.5 + 3).toFixed(1)} ${(dy * 0.5).toFixed(1)} ${dx.toFixed(1)} ${dy.toFixed(1)}" fill="none" stroke="${p.paper}" stroke-width="1.5" stroke-linecap="round" opacity="0.85"/>`; })() : '';
-    const arm = (side, a, hook) => { const x = side * 15; const dir = a; return `<g transform="translate(${x} -40) rotate(${dir})"><rect x="-3.5" y="-2" width="7" height="20" rx="3.5" fill="${body}" ${OL(p, 1.8)}/><circle cx="0" cy="19" r="4.2" fill="${skin}" ${OL(p, 1.6)}/>${hook ? '<circle class="o55-hook" data-hook="hand" cx="0" cy="19" r="0.01" fill="none"/>' : ''}</g>`; };
-    const angles = { stand: [14, -14], wave: [14, -150], carry: [-38, 38], bow: [4, -4], point: [14, -95] }[pose] || [14, -14];
+    const seg = (at, a, L, w) => `<g transform="translate(${at[0].toFixed(2)} ${at[1].toFixed(2)}) rotate(${a})"><rect x="${-w / 2}" y="-2" width="${w}" height="${L + 4}" rx="${w / 2}" fill="${body}" ${OL(p, 1.8)}/></g>`;
+    const mitt = (at, hook) => `<circle cx="${at[0].toFixed(2)}" cy="${at[1].toFixed(2)}" r="4.2" fill="${skin}" ${OL(p, 1.6)}/>${hook ? `<circle class="o55-hook" data-hook="hand" cx="${at[0].toFixed(2)}" cy="${at[1].toFixed(2)}" r="0.01" fill="none"/>` : ''}`;
+    const arm = (side) => { const [a1, a2] = ANG[pose][side], sh = SHF[side], e = along(sh, a1, UA), h = along(e, a2, FA); return seg(e, a2, FA, 6.6) + mitt(h) + seg(sh, a1, UA, 7.2); };
+    const waveArm = `<g class="o55-arm" data-pivot="${SHF[1].join(' ')}"><g class="o55-fore" data-pivot="${WAVE_F.elbow.join(' ')}">${seg(WAVE_F.elbow, -172, FA, 6.6)}${mitt(WAVE_F.hand, true)}</g>${seg(SHF[1], -150, UA, 7.2)}</g>`;
     const sheet = pose === 'carry' ? `<g transform="translate(0 -26) rotate(-4)"><rect x="-10" y="-8" width="20" height="16" rx="2" fill="${p.paper}" ${OL(p, 1.6)}/><path d="M-6 -3H6M-6 1H3" stroke="${p.lilac}" stroke-width="1.6" stroke-linecap="round"/></g>` : '';
-    const feet = `<ellipse cx="-6" cy="-1" rx="6" ry="3.2" fill="${p.ink}"/><ellipse cx="6" cy="-1" rx="6" ry="3.2" fill="${p.ink}"/>`;
+    /* legs first: they run up under the hem; then the shoes over their feet */
+    const feet = `<rect x="-9.6" y="-12" width="6.6" height="11" rx="3.2" fill="${legs}" ${OL(p, 1.6)}/><rect x="3" y="-12" width="6.6" height="11" rx="3.2" fill="${legs}" ${OL(p, 1.6)}/>`
+      + `<ellipse cx="-6.6" cy="-1" rx="6" ry="3.2" fill="${p.ink}"/><ellipse cx="6.6" cy="-1" rx="6" ry="3.2" fill="${p.ink}"/>`
+      + `<ellipse cx="-8" cy="-2.3" rx="2" ry="0.9" fill="#fff" opacity="0.25"/><ellipse cx="5.2" cy="-2.3" rx="2" ry="0.9" fill="#fff" opacity="0.25"/>`;
     const figure = `<path d="M-15 -42 Q-19 -24 -18 -8 Q0 -2 18 -8 Q19 -24 15 -42 Q0 -48 -15 -42Z" fill="${body}" ${OL(p)}/>`
       + `<path d="M-13 -24 Q0 -20 13 -24" fill="none" stroke="${p.ink}" stroke-width="1.4" stroke-linecap="round" opacity="0.35"/>`
-      + arm(-1, angles[0]) + (pose === 'wave' ? `<g class="o55-arm" data-pivot="15 -40">${arm(1, angles[1], true)}</g>` : arm(1, angles[1]))
+      + arm(0) + (pose === 'wave' ? waveArm : arm(1))
       + `<path d="M-7 -44 Q0 -39 7 -44" fill="${p.cream}" ${OL(p, 1.6)}/>`
       + `<g class="o55-hd"><circle cx="0" cy="-56" r="13" fill="${skin}" ${OL(p)}/>`
       + `<path d="M-11 -62 Q-8 -73 1 -71 Q10 -74 11 -62 Q6 -67 0 -65 Q-6 -67 -11 -62Z" fill="${hair}" ${OL(p, 1.6)}/>`
@@ -46,10 +60,10 @@
       + `<path d="M-3.4 -50.5 Q0 -47.5 3.4 -50.5" fill="none" stroke="${p.ink}" stroke-width="1.6" stroke-linecap="round"/></g></g>` + sheet
       /* tied to the bar: the string ends in a little paper loop tied into the hair */
       + (o.rig ? `<g class="o55-hd"><circle cx="0" cy="-71.5" r="2.3" fill="none" stroke="${p.paper}" stroke-width="1.5"/><circle cx="0" cy="-71.5" r="3.4" fill="none" stroke="${p.ink}" stroke-width="0.8" opacity="0.5"/></g>` : '');
-    /* everything above the feet (and its paper shadow) is in .o55-up groups, in the drawing's own paint order, so a bow can
-       pitch it toward the audience about the hips (66-family-window.js) while the feet stay on the boards; the head, its
-       shadow and the loop in its hair are .o55-hd groups inside them (the face an .o55-fc group in the head), so the bow
-       keeps the head round, sends it down and tips the face toward the boards */
+    /* everything above the hem (and its paper shadow) is in .o55-up groups, in the drawing's own paint order, so a bow can
+       pitch it toward the audience about the hips (66-family-window.js) while the legs and shoes stay on the boards; the
+       head, its shadow and the loop in its hair are .o55-hd groups inside them (the face an .o55-fc group in the head), so
+       the bow keeps the head round, sends it down and tips the face toward the boards */
     return `<g>${str}<g class="o55-up">${sh(p, '<path d="M-15 -42 Q-19 -24 -18 -8 Q0 -2 18 -8 Q19 -24 15 -42 Q0 -48 -15 -42Z"/>')}<g class="o55-hd">${sh(p, '<circle cx="0" cy="-56" r="13"/>')}</g></g>${feet}<g class="o55-up">${figure}</g></g>`;
   };
 
@@ -128,7 +142,9 @@
       for (let i = 0; i <= n; i++) { const a = (i / n) * Math.PI * 2, r = i % 2 ? 28 : 31; d += `${i ? 'L' : 'M'}${(Math.cos(a) * r).toFixed(1)} ${(Math.sin(a) * r).toFixed(1)}`; }
       return `<g>${sh(p, `<path d="${d}Z"/>`)}<path d="${d}Z" fill="${col}" ${OL(p)}/><circle r="20" fill="${p.paper}" ${OL(p, 1.6)}/>`
         + `<g transform="translate(-12 -12)" style="color:${p.ink}">${A.glyph(o.icon || 'spark', 'currentColor', 2)}</g>`
-        + (o.label ? `<g transform="translate(0 47)">${sh(p, `<rect x="${-o.label.length * 3 - 8}" y="-10" width="${o.label.length * 6 + 16}" height="18" rx="9"/>`)}<rect x="${-o.label.length * 3 - 8}" y="-10" width="${o.label.length * 6 + 16}" height="18" rx="9" fill="${p.paper}" ${OL(p, 1.6)}/>${label(p, 0, 3, o.label)}</g>` : '') + '</g>';
+        /* its name: no box, the words on a hand-drawn squiggle in the node's own colour (as the captions are) */
+        + (o.label ? (() => { const w = o.label.length * 5.8 + 6, n = Math.max(2, Math.round(w / 8)), st = w / n; let sq = `M${(-w / 2).toFixed(1)} 9`; for (let i = 0; i < n; i++) sq += ` q${(st / 2).toFixed(2)} ${i % 2 ? 2.2 : -2.2} ${st.toFixed(2)} 0`;
+          return `<g transform="translate(0 44)"><path d="${sq}" fill="none" stroke="${col}" stroke-width="2" stroke-linecap="round"/>${label(p, 0, 3, o.label, p.label)}</g>`; })() : '') + '</g>';
     },
     pathline(ctx, item) {
       const p = ctx.pal, pts = (item.opts || {}).pts || [];
@@ -157,9 +173,12 @@
       const p = ctx.pal;
       return `<g>${[20, 36, 52].map((r, i) => `<path d="M${-r * 0.8} ${-r * 0.6} A${r} ${r} 0 0 1 ${r * 0.8} ${-r * 0.6}" fill="none" stroke="${p.lilac}" stroke-width="3" stroke-linecap="round" class="o55-ring" style="--ri:${i}"/>`).join('')}</g>`;
     },
+    /* a sign: a card of thick paper with a sewn border (a stitch line just inside its edge), as on a handheld's menu
+       cards; its flat paper shadow under it */
     badge(ctx, item) {
-      const p = ctx.pal, o = item.opts || {}, w = Math.max(70, (o.label || '').length * 6.4 + (o.glyph ? 34 : 20));
-      return `<g>${sh(p, `<rect x="${-w / 2}" y="-15" width="${w}" height="30" rx="15"/>`)}<rect x="${-w / 2}" y="-15" width="${w}" height="30" rx="15" fill="${o.accent ? p.sun : p.paper}" ${OL(p, 1.8)}/>`
+      const p = ctx.pal, o = item.opts || {}, w = Math.max(74, (o.label || '').length * 6.4 + (o.glyph ? 36 : 24));
+      return `<g>${sh(p, `<rect x="${-w / 2}" y="-15" width="${w}" height="30" rx="7"/>`)}<rect x="${-w / 2}" y="-15" width="${w}" height="30" rx="7" fill="${o.accent ? p.sun : p.paper}" ${OL(p, 1.8)}/>`
+        + `<rect x="${-w / 2 + 3.6}" y="-11.4" width="${w - 7.2}" height="22.8" rx="4" fill="none" stroke="${p.ink}" stroke-width="1" stroke-dasharray="2.6 2.4" opacity="0.4"/>`
         + (o.glyph ? `<g transform="translate(${-w / 2 + 8} -9) scale(0.75)" style="color:${p.ink}">${A.glyph(o.glyph, 'currentColor', 2.2)}</g>` : '')
         + label(p, o.glyph ? 9 : 0, 3.5, o.label || '') + '</g>';
     },
@@ -169,10 +188,17 @@
         + `<g transform="translate(-22 -22)">${A.identitySvg(o.seed || 'nas', 44, 'friendly').replace('<svg', '<svg x="0" y="0"')}</g>`
         + (o.words ? label(p, 0, 52, o.words, p.dark ? p.paper : p.ink) : '') + '</g>';
     },
+    /* a caption: no box. A dotted thread runs from a felt dot on the thing it names to a second felt dot, and the words
+       stand beside it on a hand-drawn squiggle in the puppet colours */
     note(ctx, item) {
-      const p = ctx.pal, o = item.opts || {}, dx = o.dx == null ? 60 : o.dx, dy = o.dy == null ? -30 : o.dy, w = (o.text || '').length * 5.6 + 18, x = dx >= 0 ? dx : dx - w;
-      return `<g><path d="M0 0 Q${(dx * 0.5).toFixed(1)} ${(dy * 0.15).toFixed(1)} ${dx >= 0 ? x : x + w} ${dy}" fill="none" stroke="${p.label}" stroke-width="1.4" stroke-dasharray="2 3" stroke-linecap="round"/>`
-        + sh(p, `<rect x="${x}" y="${dy - 10}" width="${w}" height="20" rx="10"/>`) + `<rect x="${x}" y="${dy - 10}" width="${w}" height="20" rx="10" fill="${p.paper}" ${OL(p, 1.6)}/>` + label(p, x + w / 2, dy + 3.5, o.text || '') + '</g>';
+      const p = ctx.pal, o = item.opts || {}, dx = o.dx == null ? 60 : o.dx, dy = o.dy == null ? -30 : o.dy, right = dx >= 0, w = (o.text || '').length * 5.8 + 6, x0 = right ? dx + 6 : dx - 6 - w;
+      const n = Math.max(2, Math.round(w / 8)), step = w / n;
+      let sq = `M${x0.toFixed(1)} ${dy + 6}`; for (let i = 0; i < n; i++) sq += ` q${(step / 2).toFixed(2)} ${i % 2 ? 2.2 : -2.2} ${step.toFixed(2)} 0`;
+      const tone = variants(p)[(o.tone || 2) % 4];
+      return `<g><path d="M0 0 Q${(dx * 0.5).toFixed(1)} ${(dy * 0.15).toFixed(1)} ${dx} ${dy}" fill="none" stroke="${p.label}" stroke-width="1.4" stroke-dasharray="2 3" stroke-linecap="round"/>`
+        + `<circle r="2.8" fill="${tone}" ${OL(p, 1.3)}/><circle cx="${dx}" cy="${dy}" r="2.6" fill="${tone}" ${OL(p, 1.3)}/>`
+        + `<path d="${sq}" fill="none" stroke="${tone}" stroke-width="2" stroke-linecap="round"/>`
+        + `<text x="${right ? x0 : x0 + w}" y="${dy + 3.4}" text-anchor="${right ? 'start' : 'end'}" font-family="Poppins, Nunito, system-ui, sans-serif" font-weight="600" font-size="9.5" fill="${p.label}">${U.esc(o.text || '')}</text></g>`;
     }
   };
 
@@ -181,11 +207,11 @@
     props,
     /* a marionette string: paper thread (the rig sets its d every frame; a slack thread sags) */
     string: (ctx, d) => `<path class="o55-sp" d="${d}" fill="none" stroke="${ctx.mode === 'light' ? ctx.pal.ink : ctx.pal.paper}" stroke-width="1.5" stroke-linecap="round" opacity="${ctx.mode === 'light' ? 0.55 : 0.9}"/>`,
-    hand: { wave: [24.5, -56.5] },
+    hand: { wave: WAVE_F.hand },
     defs(ctx) {
       const p = ctx.pal;
       return `<linearGradient id="${ctx.uid}-wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.wall}"/><stop offset="1" stop-color="${p.wall2}"/></linearGradient>`
-        + `<pattern id="${ctx.uid}-dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="1.6" fill="${p.dots}"/><circle cx="13" cy="13" r="1.6" fill="${p.dots}"/></pattern>`
+        + `<pattern id="${ctx.uid}-dots" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="1.9" fill="${p.dots}"/><circle cx="12" cy="12" r="1.9" fill="${p.dots}"/></pattern>`
         + `<radialGradient id="${ctx.uid}-lamp" cx="0.5" cy="0" r="0.8"><stop offset="0" stop-color="${p.glow}"/><stop offset="1" stop-color="${p.glow}" stop-opacity="0"/></radialGradient>`;
     },
     background(ctx) {

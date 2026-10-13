@@ -594,7 +594,9 @@
       if (rose) return; rose = true;
       if (sting) play('chapter', { chapter: 'ready', depth: 4, intensity: 0.85 });
     };
-    p.end(() => { if (!quiet) rise(); R.calling = false; els.forEach((el) => markBody(el, false)); if (f === 'retro') tally(svg, 1, true); if (!quiet && s.railHold) { s.railHold = null; O55.ui.renderRail(); } });
+    /* (and the rig measures its strings again once every bow and hook is back where it rests: measured while the springy
+       rise was still settling, they kept that pose's hook places and hung a little off the knots afterwards) */
+    p.end(() => { if (!quiet) rise(); R.calling = false; els.forEach((el) => markBody(el, false)); watch(svg, 400); if (f === 'retro') tally(svg, 1, true); if (!quiet && s.railHold) { s.railHold = null; O55.ui.renderRail(); } });
     p.at(170, () => railWalk(f, () => restamp(f)));
     /* the bodies: Retro's bow frames, the others' heads carry their string points while they bow */
     const ctx = f === 'retro' ? famCtx(f, st) : null;
