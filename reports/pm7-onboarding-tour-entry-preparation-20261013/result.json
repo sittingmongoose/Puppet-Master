@@ -1,0 +1,240 @@
+{
+  "schema": "onboarding-tour-entry-preparation/PA4-v1",
+  "utc": "2026-10-13T19:17:32.839452+00:00",
+  "implementation_status": "READY_FOR_ROOT_MECHANICAL_REVIEW",
+  "product_source_look_criteria_landing_status": "HOLD",
+  "stop_after_current_step": true,
+  "authority": {
+    "go": "/mnt/Cursor/share/puppet-master/2026-10-13-creative-queue/ONBOARDING-PA4-TOUR-ENTRY-PREPARATION-GO.md",
+    "go_sha256": "70bd532041ad987cef2c6d21540f7f158219fc202af6cda724a2c28a52b48f5e",
+    "actual_preparation_message_id": "message:mcp:4103467a-6a3c-4191-a4dc-ae5ad70ae674:thread-send:home-planner-onboarding-tour-entry-own-preparation-20261013-v1",
+    "native_preparation_receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013/actual-pa4-authority-and-thread.json",
+      "bytes": 6089,
+      "sha256": "7ebb8988a672fc98a00b10ef98c51578adee2ce68f9a747710ebb7d11e4e0812"
+    },
+    "actual_stop_message_id": "message:mcp:4103467a-6a3c-4191-a4dc-ae5ad70ae674:thread-send:home-planner-onboarding-stop-tooling-after-current-step-20261013-v1",
+    "native_stop_receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013/actual-stop-after-current-step-thread-read.json",
+      "bytes": 13639,
+      "sha256": "0dcdd7c251ea2d38a8c1e5402bd2ec5b12a0d1b19c49528bb69b5b399f209480"
+    },
+    "new_execution_binding_created": false,
+    "separate_execution_go_required": true,
+    "scheduler_directive": "STOP after this coherent atomic step; no next tooling phase/product/source/owner wake."
+  },
+  "bindings": {
+    "starting_head": "2beb53077535a79e9cb183748122ada3b311ff2b",
+    "starting_parent": "1b4b1ca8b7a63753fe18d8ed56203cd5b72c5396",
+    "old_tool": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013/historical-tested-c6ad-tool.mjs",
+      "bytes": 190370,
+      "sha256": "c6ad5f4050b1b42194fa122e94400ff4f516ca96e946e45e5f0c66d903adf7e7"
+    },
+    "tested_tool": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013/tested-tool.mjs",
+      "bytes": 202054,
+      "sha256": "fdefb69a6fdee9ba776300ca1786e2bc3a82230df6227bb04fb0e6ae709ff255"
+    },
+    "source": {
+      "head": "f109bad9f312ca0f55887f069dd4328dc17f7b9e",
+      "page": "Concepts/PMConcept7.html",
+      "bytes": 18602927,
+      "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+      "three_app_pages_equal": true,
+      "rail_bytes": 19237474,
+      "rail_sha256": "13d002fc7057c17270cbc149457cee588df423b8a3543fa5a5359901d7cba8bb"
+    },
+    "base": {
+      "head": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
+      "page": "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html",
+      "bytes": 18598981,
+      "sha256": "b612df00caa2e2fb13b9b2307a17f283358845b596f33a27a31ba55d40266451"
+    },
+    "composition_head": "967653b5265e27b13cf0c300dd0b1b0599c2d482",
+    "candidate_authority_is_source_head": true,
+    "committed_head_and_independent_remote_tips": "Recorded after this exact-path normal commit in raw COMMIT-CUSTODY.json; report self-hash/head cycle avoided."
+  },
+  "delta": {
+    "only_existing_path": "Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs",
+    "original_entire_prefix_bytes": 190370,
+    "original_entire_prefix_sha256": "c6ad5f4050b1b42194fa122e94400ff4f516ca96e946e45e5f0c66d903adf7e7",
+    "original_entire_prefix_exact": true,
+    "every_original_export_private_body_and_top_level_byte_exact": true,
+    "added_bytes": 11684,
+    "new_exports": [
+      "tourDiagnosticContract",
+      "tourDiagnosticGrant",
+      "bindTourDiagnostic",
+      "runTourDiagnostic"
+    ],
+    "generic_click_transport_PB1_tourWalk_S8_collectors_judges_floor_binder_lifecycle_coverage_source_exact": true,
+    "new_report_paths": [
+      "reports/pm7-onboarding-tour-entry-preparation-20261013/NOTES.md",
+      "reports/pm7-onboarding-tour-entry-preparation-20261013/result.json"
+    ]
+  },
+  "diagnostic_contract": {
+    "version": "onboarding-tour-diagnostic/PA4-v1",
+    "phase": "B-tour-diagnostic",
+    "execution_scope": {
+      "kind": "tour-diagnostic",
+      "version": "PA4/v1",
+      "look": "glass-dark",
+      "motion": "normal",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "parts": {
+        "tour": true,
+        "window": false,
+        "sweep": false
+      },
+      "parallel": 1,
+      "pages": [
+        "base",
+        "cand"
+      ]
+    },
+    "runner": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013/tour-diagnostic-runner.mjs",
+      "bytes": 1399,
+      "sha256": "3900f2189e25c46dadfc405240710f3b2eb5b3a2408c1ed83f951d4352800d73"
+    },
+    "entry_contract": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013/ENTRY-CONTRACT.md",
+      "bytes": 3824,
+      "sha256": "e865465a876aa5169fe91fc2eb82e3047f9c832e87d83b910d2bf7cdd3b3d666"
+    },
+    "inert_binding_shape": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013/INERT-diagnostic-binding-example.json",
+      "bytes": 3335,
+      "sha256": "6bbf5992374bf5f018d30aee7159168d019178bb7a75e8204faaab21ac52b174"
+    },
+    "live_cli_invoked": false,
+    "current_preparation_authority_rejected_for_execution": true,
+    "old_cli_additional_flags": [],
+    "old_phase_B_route_syntax_predicates_and_campaign_semantics_exact": true,
+    "dedicated_runtime": "Hash-bound single-invocation runner; pristine same-module mutex and exclusively claimed exact root-bound new output before any startup. No mixed ordinary/diagnostic process supported.",
+    "state_restoration": "Original launch/VIEWPORT/doTour/doWindow/PAGES/OUT/looks/motions/argv/phaseBinding/lifecycleParallel restored by identity on success/validation/navigation/abort/output errors. Failed OWN closer remains registered and blocks reentry.",
+    "retained_bootstrap": "Unchanged runLook boots each page twice, preserves ordinary startup/runtime purpose=window metadata, then invokes original tourWalk. No window measurement or sweep records.",
+    "admission_and_stop": "Original production reconciliation/admission/launchOwned/ownedStopVerified/createOwnedCloser are used unchanged. Fresh declaration before startup, fresh physical observations before each start, cap4ALL/cap2OWN/parallel1 and strict own profile absence.",
+    "authority": "Future exact source/base/pages/APIs/tool/running-file/runner/output/scope EXECUTE_ONCE grant in actual untruncated root user_message native receipt. Current preparation and inert examples are not permission."
+  },
+  "new_checks": {
+    "distinct_new_cases": 18,
+    "passed": 18,
+    "failed": 0,
+    "edition_sha256": "fdefb69a6fdee9ba776300ca1786e2bc3a82230df6227bb04fb0e6ae709ff255",
+    "attempt1": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013/attempt-1/results.json",
+      "bytes": 5931,
+      "sha256": "ad44e1fac587857d936d23e13f1430fb65a1716089fcc9a83e43bcb32071dcef"
+    },
+    "attempt1_cases": 16,
+    "attempt2": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013/attempt-2/results.json",
+      "bytes": 1236,
+      "sha256": "ef079da6ade7224642086324b62be0bc7ffc60a61034010a1851d87e757a27c1"
+    },
+    "attempt2_cases": 2,
+    "attempt2_selection": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013/attempt-2-selection.json",
+      "bytes": 417,
+      "sha256": "eed8e825b2484194ad811406b4d4003803e85fbf7eefaf0c9ac11d6e03bd256f"
+    },
+    "combined": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013/NEW-CONTROLLED-RESULTS.json",
+      "bytes": 7086,
+      "sha256": "60ce12f389368e8307a9ff9d896c3d8830fe0f2a435607188985153659c8cc4f"
+    },
+    "initial_genuine_test_failures": 0,
+    "controlled_expected_errors_retained": "Readiness acquisition exceptions, navigation failure, aborted connection, physical cap HOLD, OWN profile debt and report EEXIST are fixtures retained as HOLD/error evidence; not product failures or successful observations.",
+    "passed_new_cases_replayed": 0,
+    "old_passed_suites_replayed": 0,
+    "actual_browser_helper_admission_liveCLI_product_capture_image_staging": 0,
+    "syntax": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013/syntax-checks.json",
+      "bytes": 1586,
+      "sha256": "da997ac053f44d5da3ff70713dcecccb421b4677a286830ad14fd3f431caf8fe"
+    },
+    "prefix_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013/protected-original-prefix-attempt-1.json",
+      "bytes": 1469,
+      "sha256": "4b75d92dd71816c15e6fe7b49090085af7f9999643d818fc3d963ddb5b9a89a4"
+    },
+    "scope_limits": "Controlled protocol/classifier/entry behavior only; no actual tour readiness, trusted click, book window, renderer, look, word contrast or source acceptance proven."
+  },
+  "custody": {
+    "starting_Git_physical_entries": 16052,
+    "original_outside_successor_entries": 16051,
+    "historical_raw_roots": 12,
+    "historical_files_bytes_modes_seals": 1014,
+    "original_helper_history_records": 105,
+    "unknown_peer_profile_trees": 3,
+    "control_files": 58,
+    "starting_snapshot": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013/starting-custody.json",
+      "bytes": 4193796,
+      "sha256": "4a797a286c318664955399a50f432bbf470f9088079a1f403e0c8cf141f52c01"
+    },
+    "precommit_custody": "precommit-custody.json; full final custody/committed-working-tested proof and normal dual-push independent tips retained in raw final packet.",
+    "peer_resources0_claim": false,
+    "global_histories": "Original105 bytes/modes exact. Genuine first reader refusal retained at precommit-custody.json after11 new global records; later receipt records evolving non-owned additions as UNKNOWN observation only, not peer resources0 or current admission. No actual worker helper/browser command.",
+    "reader_correction": "CUSTODY-READER-CORRECTION.json; raw verifier corrected original-versus-global-append distinction without tool/source/test change.",
+    "corrected_precommit_receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013/corrected-precommit-custody.json",
+      "sha256": "ba36c2fab020660fc2ac31da0eaa957c68513c3acf60b2fe852a9338fca176a9",
+      "bytes": 6329,
+      "originals_pass": true,
+      "global_additions": "UNKNOWN observation only"
+    }
+  },
+  "coverage": {
+    "this_preparation_product_invocations": 0,
+    "diagnostic_product_observations": 0,
+    "wide_completed_pair_contribution": 0,
+    "narrow_completed_pair_contribution": 0,
+    "full_campaign_acceptance": false,
+    "historical_run7_wide_attempts": 5,
+    "historical_run7_wide_expected": 24,
+    "historical_earlier_collection_records": 4,
+    "historical_fifth_reachability_hold": true,
+    "remaining_wide_NOT_RUN": 19,
+    "remaining_narrow_NOT_RUN": 12,
+    "old_PA3_Glass_pair_is_separate_edition": true,
+    "book_pre_completed_three_outcomes": "NOT_OBSERVED",
+    "old8misattributed_practice_rows_upgraded": false
+  },
+  "preserved_holds": {
+    "old_PA3_counts": {
+      "absolute": 0,
+      "regressions": 46,
+      "holds": 13,
+      "unverified": 274,
+      "raw": 76,
+      "numeric_word_readings": 0
+    },
+    "floor": 4.5,
+    "historical_trusted_click_and_book_causes": "UNKNOWN",
+    "unsupported_paint_missing_ink_active_renderer": "UNVERIFIED",
+    "source_owner_R1_R2_R3": "Exact original scoped rulings and responses preserved as owner records only; no extension or new look decision. R3 resolved previously unseen22/examples in its own scope; their old raw counts are unchanged.",
+    "marks_geometry_contexts": "needs/fail/address/NP-square ink/unpaired sweep/controls/Wizard-Jared/GLY4/rail/whitespace/canon/full-source held. Owner-specified host geometry dispositions remain separate records.",
+    "old_384_vs4_probe_limitation": "384 improved readings bound intermediate97256a; only4 to final88ed. Hiding/suppression/box-median/transients/fallback do not prove floor/trusted flow.",
+    "peer_debts": [
+      "ab64d1003f13",
+      "cc80c88970ef",
+      "c4bdf8272f25"
+    ],
+    "peer_debts_touched": false,
+    "Glass_Edge_performance": "No performance authority in this packet; historical parked holds not cleared here.",
+    "source_finish_and_Jared_visible_defects_owner": "claude_me per latest scheduler directive; no duplicate worker/source action here."
+  },
+  "closure": {
+    "after_current_atomic_step": "STOP; no self-next, owner wake, new actor, further tool phase or product invocation.",
+    "meaningful_raw_retained": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013",
+    "clean_unlanded_worktree_retained": true,
+    "actual_OWN0_receipt": "Written after normal commit/push/custody/waiter consume/local runtime cleanup in raw OWN-CLEANUP.json and FINAL packet. No premature resources0 or peer0 claim."
+  }
+}

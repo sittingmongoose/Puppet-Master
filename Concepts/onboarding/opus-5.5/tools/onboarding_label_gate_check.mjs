@@ -2308,3 +2308,123 @@ export async function main(args=process.argv.slice(2),dependencies={}) {
 if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url)) main().catch((e) => {
   console.error('HOLD '+String(e.stack||e));process.exitCode=2;
 });
+
+/* PA4/v1 is a separate diagnostic entry. The whole preceding c6ad edition is immutable.
+ * Only the hash-bound dedicated runner may enter it. No ordinary CLI/campaign route changes.
+ * A future root user_message must contain PA4_EXECUTION_GRANT_JSON followed by the JSON
+ * returned by tourDiagnosticGrant(binding), then PA4_EXECUTION_GRANT_END. This preparation
+ * is not that execution authority; a sealed native read receipt is evidence of the later grant.
+ */
+const TOUR_DIAGNOSTIC_VERSION='onboarding-tour-diagnostic/PA4-v1';
+const TOUR_DIAGNOSTIC_TOOL='Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs';
+const TOUR_DIAGNOSTIC_ENTRY={path:'/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-tour-entry-preparation-20261013/tour-diagnostic-runner.mjs',
+  sha256:'3900f2189e25c46dadfc405240710f3b2eb5b3a2408c1ed83f951d4352800d73'};
+const TOUR_DIAGNOSTIC_SOURCE={candidate_head:'f109bad9f312ca0f55887f069dd4328dc17f7b9e',candidate_page:'Concepts/PMConcept7.html',
+  candidate_sha256:'88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c',base_head:BASE_HEAD,
+  base_page:'Concepts/Onboarding concepts/TestOpus5.5PmConcept.html',base_sha256:'b612df00caa2e2fb13b9b2307a17f283358845b596f33a27a31ba55d40266451'};
+let tourDiagnosticActive=false;
+export function tourDiagnosticContract() {
+  return {version:TOUR_DIAGNOSTIC_VERSION,phase:'B-tour-diagnostic',source:{...TOUR_DIAGNOSTIC_SOURCE},entry:{...TOUR_DIAGNOSTIC_ENTRY},
+    execution_scope:{kind:'tour-diagnostic',version:'PA4/v1',look:'glass-dark',motion:'normal',viewport:{width:1440,height:900},
+      parts:{tour:true,window:false,sweep:false},parallel:1,pages:['base','cand']},
+    campaign_credit:{wide_completed_pairs:0,narrow_completed_pairs:0},fixture_apis:[...FIXTURE_APIS],fixture_contract:TOUR_FIXTURE_CONTRACT};
+}
+export function tourDiagnosticGrant(b) {
+  return {permission:'EXECUTE_ONCE',contract:b.contract,...Object.fromEntries(Object.keys(TOUR_DIAGNOSTIC_SOURCE).map((k)=>[k,b[k]])),
+    fixture_apis:b.fixture_apis,tool_custody:b.tool_custody,running_tool:b.running_tool,entry_custody:b.entry_custody,
+    pages:b.pages,output:b.output,execution_scope:b.execution_scope};
+}
+const tourDiagnosticIO={...normalBindingIO,exists:existsSync,running_entry:()=>resolve(process.argv[1]||'.')};
+export function bindTourDiagnostic(bindingPath,io=tourDiagnosticIO) {
+  const path=resolve(bindingPath),bytes=io.read(path),b=parseBindingJSON(bytes),contract=tourDiagnosticContract();
+  const required=['contract','phase','root_message_id','authority_receipt',...Object.keys(TOUR_DIAGNOSTIC_SOURCE),'fixture_apis',
+    'tool_custody','running_tool','entry_custody','pages','output','execution_scope','global_admission'];
+  const reject=(reason)=>{throw new Error('HOLD: PA4 '+reason);};
+  if(!exactKeys(b,required)||b.contract!==contract.version||b.phase!==contract.phase)reject('explicit separate versioned binding required');
+  try {assert.deepEqual(b.execution_scope,contract.execution_scope);}catch{reject('fixed GlassDark normal1440x900 tour-only/base-candidate/parallel1 scope mismatch');}
+  for(const [k,v] of Object.entries(TOUR_DIAGNOSTIC_SOURCE))if(b[k]!==v)reject('frozen source/base tuple mismatch: '+k);
+  if(JSON.stringify(b.fixture_apis)!==JSON.stringify(FIXTURE_APIS))reject('fixture APIs mismatch');
+  if(!exactKeys(b.pages,['base','cand'])||Object.values(b.pages).some((p)=>typeof p!=='string'||resolve(p)!==p)||
+    typeof b.output!=='string'||resolve(b.output)!==b.output||!b.output.startsWith('/mnt/Cursor/PuppetMaster-Evidence/tests/')||io.exists(b.output))reject('exact absolute pages and new raw output required');
+  const a=b.global_admission;
+  if(!exactKeys(a,['checked_at','all_cdp_browsers','unmanaged_cdp_browsers','max_total','owned_session_limit','source_owner_coordinated'])||
+    !fresh(a.checked_at,io.now())||a.max_total!==4||a.owned_session_limit!==2||a.source_owner_coordinated!==true||
+    !Number.isInteger(a.all_cdp_browsers)||a.all_cdp_browsers<0||a.all_cdp_browsers>=4||!Number.isInteger(a.unmanaged_cdp_browsers)||
+    a.unmanaged_cdp_browsers<0||a.unmanaged_cdp_browsers>a.all_cdp_browsers)reject('fresh declared normal4/OWN2/source-coordinated admission required');
+  const t=b.tool_custody,rt=b.running_tool,e=b.entry_custody;
+  if(!exactKeys(t,['head','sha256'])||!/^[a-f0-9]{40}$/.test(t.head||'')||!/^[a-f0-9]{64}$/.test(t.sha256||'')||
+    !exactKeys(rt,['path','sha256'])||rt.path!==fileURLToPath(import.meta.url)||rt.sha256!==t.sha256||
+    !exactKeys(e,['path','sha256'])||e.path!==TOUR_DIAGNOSTIC_ENTRY.path||e.sha256!==TOUR_DIAGNOSTIC_ENTRY.sha256||
+    io.running_entry()!==e.path||sha(io.read(e.path))!==e.sha256||sha(io.read(rt.path))!==t.sha256)reject('committed/running tool or dedicated runner artifact mismatch');
+  const root=io.git(['rev-parse','--show-toplevel'],HERE).toString().trim();
+  if(rt.path!==join(root,TOUR_DIAGNOSTIC_TOOL)||b.pages.cand!==join(root,b.candidate_page)||
+    io.git(['rev-parse','HEAD'],root).toString().trim()!==t.head||sha(io.git(['show',t.head+':'+TOUR_DIAGNOSTIC_TOOL],root))!==t.sha256)reject('exact current tool worktree/head mismatch');
+  io.git(['merge-base','--is-ancestor',FROZEN_HEAD,b.candidate_head],root);
+  for(const which of ['base','cand']) {
+    const head=which==='base'?b.base_head:b.candidate_head,page=which==='base'?b.base_page:b.candidate_page,hash=which==='base'?b.base_sha256:b.candidate_sha256;
+    if(sha(io.read(b.pages[which]))!==hash||sha(io.git(['show',head+':'+page],root))!==hash)reject('exact committed and runtime page mismatch: '+which);
+  }
+  const ar=b.authority_receipt;
+  if(!exactKeys(ar,['path','sha256'])||typeof ar.path!=='string'||resolve(ar.path)!==ar.path||!/^[a-f0-9]{64}$/.test(ar.sha256||''))reject('native later root authority receipt required');
+  const authorityBytes=io.read(ar.path);if(sha(authorityBytes)!==ar.sha256)reject('native root receipt hash mismatch');
+  const native=parseBindingJSON(authorityBytes),items=native.items?.filter((i)=>i.messageId===b.root_message_id)||[];
+  if(native.thread?.threadId!=='mcp:08716ad7-36a6-4533-8f02-3902c8786948'||items.length!==1||items[0].type!=='user_message'||
+    items[0].status!=='completed'||items[0].textTruncated!==false||items[0].sourceThreadId!==native.thread.threadId||
+    !/^message:mcp:4103467a-6a3c-4191-a4dc-ae5ad70ae674:thread-send:.+$/.test(b.root_message_id||''))reject('actual untruncated later root message mismatch');
+  const matches=[...items[0].text.matchAll(/PA4_EXECUTION_GRANT_JSON\s*([\s\S]*?)\s*PA4_EXECUTION_GRANT_END/g)];
+  if(matches.length!==1)reject('separate exact later EXECUTE_ONCE grant absent');
+  try {assert.deepEqual(parseBindingJSON(Buffer.from(matches[0][1])),tourDiagnosticGrant(b));}catch{reject('later root grant/source/tool/artifact/scope mismatch');}
+  return {...b,binding_path:path,binding_sha256:sha(bytes),bound_route:{kind:'tour-diagnostic',version:'PA4/v1',campaign_credit:contract.campaign_credit},
+    authority_message_receipt:{message_id:items[0].messageId,position:items[0].position,updated_at:items[0].updatedAt,artifact:ar}};
+}
+function tourDiagnosticSharedState() {return {launch,VIEWPORT,doTour,doWindow,PAGES,OUT,looks,motions,argv,phaseBinding,lifecycleParallel};}
+function restoreTourDiagnosticState(s) {({launch,VIEWPORT,doTour,doWindow,PAGES,OUT,looks,motions,argv,phaseBinding,lifecycleParallel}=s);}
+export async function runTourDiagnostic(bindingPath,dependencies={}) {
+  if(tourDiagnosticActive||ownClosers.size||phaseBinding||OUT||argv.length||launch)throw new Error('HOLD: PA4 dedicated pristine serialized runtime required');
+  tourDiagnosticActive=true;
+  const saved=tourDiagnosticSharedState(),r=newReport(),abort={requested:dependencies.signal?.aborted===true,receipts:[],errors:[]};
+  let outputOwned=false;
+  const stopOnAbort=()=>{abort.requested=true;abort.reason=String(dependencies.signal?.reason||'abort');
+    abort.pending=Promise.all([...ownClosers].map((c)=>c())).then((receipts)=>{abort.receipts.push(...receipts);}).catch((e)=>abort.errors.push(String(e.stack||e)));};
+  dependencies.signal?.addEventListener('abort',stopOnAbort,{once:true});
+  try {
+    r.phase='PA4-tour-diagnostic';r.diagnostic_contract=tourDiagnosticContract();r.observations_complete=false;
+    try {
+      const io=dependencies.bindingIO||tourDiagnosticIO;
+      if(abort.requested)throw new Error('HOLD: PA4 aborted before binding/admission; no launch');
+      r.binding=bindTourDiagnostic(bindingPath,io);r.frozen_custody=verifyFrozen();
+      bindDeclaredAdmission(r.binding.global_admission,io.now());
+      mkdirSync(r.binding.output,{recursive:false});
+      outputOwned=true;
+      VIEWPORT={width:1440,height:900};doTour=true;doWindow=false;argv=[];looks=LOOKS.filter((l)=>l.id==='glass-dark');motions=['normal'];
+      PAGES={...r.binding.pages};OUT=r.binding.output;phaseBinding=r.binding;lifecycleParallel=1;
+      const guardedLaunch=async(...args)=>{if(abort.requested)throw new Error('HOLD: PA4 aborted; no further browser launch');return launchOwned(...args);};
+      launch=guardedLaunch;
+      r.runs.push(await runLook(looks[0],'normal',{lifecycle:dependencies.lifecycle||normalLifecycleIO,launch:guardedLaunch,parallel:1}));
+      for(const run of r.runs)judgeRun(r,run);
+      r.resources=r.runs.flatMap((run)=>Object.entries(run.pages).map(([which,p])=>({which,closed:p.resource_closed,stop_receipt:p.stop_receipt||null})));
+      r.diagnostic_coverage=r.runs.flatMap((run)=>Object.entries(run.pages).map(([which,p])=>({which,
+        named_contexts:TOUR_STEPS.map((step)=>({step,records:(p.tour||[]).filter((x)=>x.step===step).length,
+          confirmed:(p.tour||[]).filter((x)=>x.step===step&&x.named_binding?.confirmed===true).length})),
+        window_records:Object.keys(p.views||{}).length,sweep_records:Object.keys(p.sweep||{}).length})));
+      if(r.diagnostic_coverage.some((p)=>p.window_records||p.sweep_records))throw new Error('HOLD: PA4 unexpected window/sweep records');
+    } catch(e) {unknown(r,'PA4 entry','diagnostic-entry-error',String(e.stack||e));}
+    finally {
+      try {if(abort.pending)await abort.pending;r.final_owned_stop_receipts=await Promise.all([...ownClosers].map((c)=>c()));}
+      catch(e) {unknown(r,'PA4 entry','owned-cleanup-error',String(e.stack||e));}
+      restoreTourDiagnosticState(saved);
+      r.shared_state_restoration=Object.fromEntries(Object.entries(saved).map(([k,v])=>[k,Object.is(tourDiagnosticSharedState()[k],v)]));
+      r.owned_resource_proof={remaining_registered_closers:ownClosers.size,pages:r.resources,extra_stop_receipts:r.final_owned_stop_receipts};
+      r.abort_receipt={requested:abort.requested,reason:abort.reason||null,receipts:abort.receipts,errors:abort.errors};
+      if(abort.requested)unknown(r,'PA4 entry','diagnostic-aborted',r.abort_receipt);
+      for(const e of abort.errors)unknown(r,'PA4 entry','abort-owned-stop-error',e);
+    }
+    r.campaign_credit={wide_completed_pairs:0,narrow_completed_pairs:0,full_campaign_complete:false};
+    hold(r,'PA4 entry','tour-diagnostic-does-not-certify-campaign','No wide/narrow completion or source/look/floor/full-criteria/landing acceptance. Initial original runtime purpose=window is bootstrap evidence only, not a window measurement.');
+    r.historical_cleanup_debts=r.runs.flatMap((run)=>Object.values(run.pages).flatMap((p)=>[
+      ...(p.admission?.cleanup_debts||[]),...(p.stop_receipt?.historical_cleanup_debts||[])]));
+    r.summary=verdict(r);
+    if(outputOwned)writeFileSync(join(r.binding.output,'report.json'),JSON.stringify(r,null,2)+'\n',{flag:'wx'});
+    return r;
+  } finally {dependencies.signal?.removeEventListener('abort',stopOnAbort);tourDiagnosticActive=false;}
+}
