@@ -1,0 +1,307 @@
+{
+  "schema": "pm7-onboarding-label-gates-phase-a/v1",
+  "at": "2026-10-13T05:54:21.135006+00:00",
+  "status": "HOLD",
+  "phase": "A ONLY",
+  "reason": "Successor is prepared; product/source acceptance and Phase B are not authorized or established. Missing contexts, actual word paint, checkpoint mark custody and open ownership remain held.",
+  "branch": "fix/pm7-onboarding-label-gates-20261013",
+  "initial_head": "29cdc86e3c9078d94260b79905e6ae49c169305c",
+  "initial_clean": true,
+  "base_head": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
+  "owned_paths": [
+    "Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs",
+    "reports/pm7-onboarding-label-gates-20261013/NOTES.md",
+    "reports/pm7-onboarding-label-gates-20261013/result.json"
+  ],
+  "successor": {
+    "path": "Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs",
+    "sha256": "a71978292078dbddbc28b08a2bab6e9db1be1dfa05c81dfa7b84f111b8f16479",
+    "bytes": 119845,
+    "replaces_original": false,
+    "syntax_check": "PASS",
+    "isolated_checks": {
+      "passed": 26,
+      "failed": 0,
+      "exit_code": 0,
+      "scope": "synthetic/frozen scanner and gate logic only; no product launch"
+    }
+  },
+  "authority": {
+    "gate_go": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-13-creative-queue/ONBOARDING-SOL-GATES-GO.md",
+      "sha256": "4f2c29cd86ff950e0bda1506807f12cc32924f61da3729dfae26e469f0d84e2f"
+    },
+    "contrast": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-13-creative-queue/ONBOARDING-CONTRAST-AMENDMENT.md",
+      "sha256": "9b1d8ee180b18e772621ac8a745b3998ca7cf7a4b6755899373c56f1af2a2424",
+      "required_text": "normal-text4.5:1 floor"
+    },
+    "label_action": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-11-onboarding-no-pills/README.md"
+    }
+  },
+  "frozen_tools": {
+    "onboarding_label_check.mjs": {
+      "sha256": "bce699ebc9fce3234abdc5c3f5c2884fcc36e7c0f8e23b1f249e53d539b24b6c",
+      "bytes": 50304
+    },
+    "pill_check.mjs": {
+      "sha256": "2d2ed65deadf51b2d4ff1e53551cc37b9b77c85100319f14c9b0a56100180041",
+      "bytes": 35036
+    },
+    "settings_nopills_accept.mjs": {
+      "sha256": "f0f9293cc82498e866c1eadac5a8c5eb70b62ca76da102a9bc9bb5e3cc3c2728",
+      "bytes": 16737
+    }
+  },
+  "frozen_pages": {
+    "Concepts/PMConcept7.html": "11348f491ed03929ee92b18312bf50993294d9be275006f54b6c22b4229036b8",
+    "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html": "11348f491ed03929ee92b18312bf50993294d9be275006f54b6c22b4229036b8",
+    "Concepts/HomeTestPMConcept7.html": "11348f491ed03929ee92b18312bf50993294d9be275006f54b6c22b4229036b8",
+    "Concepts/LeftRailPMConcept7.html": "4661f3c205c13ed6830e34202663639adb98e0c1eaaadde2ddbc15d06cc9021d"
+  },
+  "frozen_report": {
+    "path": "reports/pm7-no-pills-onboarding-20261013/NOTES.md",
+    "sha256": "d8d7fae270e12c50148761a24b9ab29fd2b877e63f5f44cdd3d76edf0f0581f1"
+  },
+  "custody": {
+    "at": "2026-10-13T05:16:29.891322+00:00",
+    "frozen_head": "29cdc86e3c9078d94260b79905e6ae49c169305c",
+    "initial_clean_verified": true,
+    "all_original_entries": 16030,
+    "original_modes": {
+      "100644": 15906,
+      "100755": 123,
+      "120000": 1
+    },
+    "original_bytes_read": 2412299756,
+    "manifest_sha256": "500e2b640b2086474399927cc34a78fe0533ef677769d3e78ff7cd7cd97e1b12",
+    "all_original_byte_mode_mismatches": [],
+    "untouched_main_entries": 16018,
+    "frozen_source_delta_paths": 12
+  },
+  "original_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-no-pills-onboarding-20261013",
+    "manifest_sha256": "2c80bac2cb4af4303243f3860d6750495b69a542635814cb2ab2e89e3106d820",
+    "entries": 144,
+    "bytes": 27431008,
+    "mismatches": []
+  },
+  "retained_replay": {
+    "summary": {
+      "status": "HOLD",
+      "exit_code": 2,
+      "absolute_failures": 42,
+      "regressions": 0,
+      "ownership_holds": 39,
+      "unverified": 1455,
+      "observations_complete": false,
+      "raw_findings": 323,
+      "contrast_below_floor": 26
+    },
+    "new_product_observations": 0,
+    "original_reports": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-no-pills-onboarding-20261013/check-smoke/olc-smoke5/report.json",
+        "sha256": "a28dae386f5395bef7316f703e5da20e603e53e17386809e6e6c57a8759478b6",
+        "original_summary": {
+          "views": 44,
+          "labels": 80,
+          "kinds": [
+            "status",
+            "tag",
+            "choice"
+          ],
+          "selectors": [
+            ".o55-chip",
+            ".o55-tag",
+            ".o55-routelink > span",
+            ".o55-suggestchip",
+            ".o55-pill",
+            ".o55t-trylabel",
+            ".o55p-badge"
+          ],
+          "failures": 4,
+          "errors": 0,
+          "capsules": {
+            "open .o55-railbar-friendly": 16,
+            "kept .o55-seg": 3,
+            "kept .o55-seg button": 3,
+            "kept .o55-btn": 1,
+            "kept .o55-lookopt": 18,
+            "kept .o55-looknier-adjust": 1,
+            "kept .o55t-btn": 6,
+            "kept .o55t-bar": 12,
+            "kept .o55t-seg": 6,
+            "kept .o55t-seg button": 6,
+            "kept .o55-explain": 1,
+            "open .pm6-wiz-schip": 12,
+            "open .pm6-wiz-topic-prog": 6,
+            "kept .o55p-approve": 2,
+            "unknown span.o55-spin": 4
+          },
+          "contrastLow": 26,
+          "unverified": 1
+        }
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-no-pills-onboarding-20261013/check-smoke/olc-smoke6/report.json",
+        "sha256": "6c1b13ccf4c5185bad7c73e5eb09e5ae486868f1203109b452720e95b25b875e",
+        "original_summary": {
+          "views": 16,
+          "labels": 32,
+          "kinds": [
+            "status",
+            "tag",
+            "choice"
+          ],
+          "selectors": [
+            ".o55-chip",
+            ".o55-tag",
+            ".o55-routelink > span",
+            ".o55-suggestchip",
+            ".o55-pill"
+          ],
+          "failures": 0,
+          "errors": 0,
+          "capsules": {
+            "kept .o55-lookopt": 9
+          },
+          "contrastLow": 0,
+          "unverified": 3
+        }
+      }
+    ],
+    "absolute_failure_kinds": {
+      "absolute-word-contrast": 26,
+      "wizard-label-pill-outside-source-scope": 12,
+      "eligible-unaccepted-pill": 4
+    },
+    "low_word_min": 2.64,
+    "low_word_max": 3.15,
+    "known_spinner_findings": 4,
+    "regressions_zero_is_not_acceptance": true
+  },
+  "corrections": [
+    "verbatim frozen eligibility/scanEl with all six skipped tags, SVG and keycap exclusions; roots and metadata only adapted",
+    "direct status marks remain eligible raw findings; mark comparisons never waive them",
+    "absolute 4.5 normal-word floor independent of historical regression comparison; full-precision measurements",
+    "non-invasive actual text Range and background witness sampling, exclusive screenshot retention; ambiguous/image/gradient/backdrop/filter/stroke/animated/offscreen/occluded paint stays unverified",
+    "missing candidate/base measurements, roots, selectors, device paths, expected tour steps, motion, renderer, response errors and stop receipts stay unverified",
+    "duplicate marks retain every instance; exact markup, size, opacity, animation and computed SVG-part ink compare; no host-ink waiver",
+    "new NP square mark ink needs independently bound checkpoint custody; e254 does not contain its baseline",
+    "explicit action classification retains raw capsules and verifies roles/actions/arguments/ARIA/markup/style; OPEN shapes remain held",
+    "candidate-only sweep; existing base inventory never replayed; unmatched base contexts retain candidate absolute findings plus comparison HOLD",
+    "strict CLI and responsive routes; later exact Phase B/source binding required; source29 rejected as a live candidate; zero browser imports in Phase A",
+    "normal agent-browser private session IDs, actual global CDP census and maximum two own sessions; only own IDs stopped and retained exact receipts",
+    "declared OPEN non-label art is classified before a kept ancestor; swatch bars cannot be blanket-exempted by their action parent",
+    "Show Me/Next require observed trusted native clicks with passive isolated-world receipts; no PM_PAGES.go(wizard) fallback; missing legacy receipts remain UNVERIFIED"
+  ],
+  "remaining_gates": [
+    "root Phase A mechanical review",
+    "later explicit root message in this T3 channel binding the source-owner contrast checkpoint and successor hashes",
+    "NEW 12 looks x normal/reduced --sweep and 390x844 normal --no-tour only after that GO; not run here",
+    "word background support beyond uniform paint; live collector/renderer/fixture/route/transport/cleanup remain unverified",
+    "paired base snapshots missing outside targeted views/NAS path; do not repeat passed base inventory to fill them without separate exact new-dependency disposition",
+    ".o55-officialurl and .o55-pill-fail renderer states absent; needs/fail marks absent; no fabricated fixture",
+    "introduced NP square mark ink custody against frozen source29",
+    "Wizard .pm6-wiz-schip/.pm6-wiz-statepill/.pm6-wiz-topic-prog ownership and genuine findings; rail/swatches/list-box scope dispositions",
+    "source-owner look review and source/root acceptance; no landing permission",
+    "Final88ed source acceptance cannot reuse384 readings on97256a or four box-median final readings; before crashes/transients/Show Me fallback remain held"
+  ],
+  "raw_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-gates-20261013",
+    "manifest_sha256": "e7692a9a6badffc5ab3286104e9c156ff93d2998559f838cc260310cf96a9a84",
+    "artifacts": 26,
+    "final_isolated_report_sha256": "34ba9d882192998d0c9e2c07df28cdcac69c17c596a0fd0951ae6f9217a63828",
+    "final_replay_report_sha256": "7f510ac44a84c75167993fa9061ddf75e87940cb16dbdd60f2eb34499a026ce2",
+    "failed_attempt_kept": "isolated-attempt-1/report.json (mock TreeWalker.currentNode omission; no product observation); corrected exact tool versions retained",
+    "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-gates-20261013/SHA256SUMS-static-context",
+    "prior_manifest_sha256": "939f5f540ae0bda78b355c1c735658c9308c3398a0fd0c597194f9930bd24608",
+    "static_source_context_sha256": "aea9ce8030376fc0046e154ac6a19e428da6e6a274bc8cab048fd5815ee5b1cf"
+  },
+  "resources": {
+    "product_browsers_started": 0,
+    "recordings": 0,
+    "servers": 0,
+    "GPU_sessions": 0,
+    "product_test_runs": 0,
+    "children_or_other_actors": 0,
+    "mailbox_waiter_during_work": 1,
+    "final_stop_receipt": "raw final-head-receipt.json and final pm-mail; waiter/runtime stopped before handback"
+  },
+  "git_head_receipt": "raw final-head-receipt.json and final pm-mail contain the post-commit exact head and both remote receipts; no self-referential commit hash embedded here",
+  "no_main_landing_reseal_source_or_t3_service_action": true,
+  "static_source_context": {
+    "at": "2026-10-13T05:54:21.019642+00:00",
+    "execution_authority": "STATIC CONTEXT ONLY, same Phase A; no Phase B GO",
+    "source_head": "f109bad9f312ca0f55887f069dd4328dc17f7b9e",
+    "source_note": {
+      "path": "reports/pm7-no-pills-onboarding-contrast-20261013/NOTES.md",
+      "read_from_exact_commit": true,
+      "sha256": "b1d091e59975f902b410e90b4b66d161e60157befcd6d8b7e7fc5e2931c5b45d",
+      "bytes": 5547
+    },
+    "root_review": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-13-onboarding-checkpoint-root-review/CONTRAST-CANDIDATE-REVIEW.json",
+      "sha256": "b8594e2d8b2e1090c2ab48d668ffb8f3ac5be0a93ba3136962b3bffb708602cd",
+      "decision": "Source proposal custody verified; source-owner scoped look result recorded; absolute contrast, full matrix and landing remain HOLD"
+    },
+    "source_custody_as_root_reported": {
+      "delta": "Four allowed local CSS files, four generated parents and one NEW compact report only;16022 prior entries/blob/modes unchanged",
+      "pages": {
+        "app": {
+          "bytes": 18602927,
+          "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c"
+        },
+        "rail": {
+          "bytes": 19237474,
+          "sha256": "13d002fc7057c17270cbc149457cee588df423b8a3543fa5a5359901d7cba8bb"
+        },
+        "outside_onboarding_css": "Byte-identical to29 on all four parents"
+      },
+      "evidence": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-no-pills-onboarding-contrast-20261013",
+        "entries_verified": 60,
+        "bytes": 8176809,
+        "sha256sums": "bb96ea189abdc3ce03b68036f7efa8475c7b975a527a7ea5e70795a6b1ea7528"
+      },
+      "remote_tips": {
+        "github": "f109bad9f312ca0f55887f069dd4328dc17f7b9e",
+        "nas": "f109bad9f312ca0f55887f069dd4328dc17f7b9e"
+      },
+      "lifecycle": {
+        "actual_final_read": true,
+        "has_pending_child_runs": false,
+        "owned_runtime_and_waiters": 0,
+        "settle_sequence": 1052247,
+        "Me_slot": "UNASSIGNED; original source owner needed later for only new look evidence"
+      }
+    },
+    "probe_limits": {
+      "method": "Whole-element median background after injected word/mark/square hiding and animation/transition suppression; cannot certify the worst actual word background",
+      "main_after_readings": 384,
+      "after_page_sha256": "97256a5155f8ea6f3a3e5f92a27428e458b9eaf7f9721556953ed514b3ae5a6e",
+      "after_lowest_reported_ratio": 4.75,
+      "final_page_readings": 4,
+      "final_page_sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+      "final_readings_scope": "NieR light/dark tour only; minimum reported5.7",
+      "source_binding": "Keep384 intermediate readings bound to97256a; do not relabel as the final88ed page",
+      "failure_history": "Before window/tour runs retain zero-width screenshot crashes and stuck steps; later probe fixed guard and used a disclosed app page switch",
+      "tour_fallback": "PM_PAGES.go(wizard) after Show Me readiness failed; does not prove the trusted Show Me flow",
+      "settle": "Fixed waits and transient NieR readings disclosed; strict successor still must validate actual states/errors/word backgrounds",
+      "status_marks": "Owner reports60 identical computed colours; that is not a full glyph/motion/markup matrix"
+    },
+    "unverified": [
+      "Wizard header Practice badge has zero visible size at1440x900",
+      "Failed status and official address have no renderer",
+      "Planning Wizard-owned pills/meters scope pending Jared",
+      "Other rail/swatches/list box shapes remain open"
+    ],
+    "latest_main_as_root_reported": "a1ca86073499aab3937d6505f53035aa57710e64",
+    "e254_base_source_bytes_unchanged_as_root_reported": true,
+    "source_owner_look": "scoped NP result recorded by source owner; no root/worker look decision",
+    "source_imports_browser_runs_probe_replays": 0,
+    "acceptance": "HOLD:384 readings remain on intermediate97256a, four final readings remain on88ed; injected hiding/suppression/box median cannot prove worst word background or the absolute floor; crashes/transients/page-switch fallback remain unproven flow"
+  }
+}
