@@ -476,7 +476,9 @@
     var sid = f('scheme'), s;
     if (sid === 'follow:light' || sid === 'follow:dark') s = scheme(L[sid.slice(7)]);
     else if (sid === 'follow' || !scheme(sid)) s = scheme(L[mode]) || scheme(mode === 'light' ? 'one-half-light' : 'one-half-dark');
-    else { s = scheme(sid); if (f('schemePair')) s = pairOf(s, mode); }
+    /* a scheme being previewed (hovered in the Customize screen) shows as it is: "Switch with light and dark" never
+       shows a hovered light scheme as its dark sibling */
+    else { s = scheme(sid); if (f('schemePair') && !(view && view.previewAppearance && view.previewAppearance.scheme !== undefined)) s = pairOf(s, mode); }
     if (!s) s = (T.SCHEMES || [])[0];
     if (s && /^pm-yorha/.test(s.id) && look.nier) s = nierScheme(s, s.appearance === 'dark');
     var bgKind = f('background'); if (bgKind === 'follow') bgKind = L.background === 'soft' || L.background === 'paper' ? 'theme' : L.background;

@@ -165,4 +165,14 @@ test('Light and Dark from Settings pin the look’s own scheme of that appearanc
   assert.equal(A.resolve(view()).scheme.id, 'one-half-dark');
 });
 
+test('a hovered scheme previews as it is; a stored pick still switches with light and dark', () => {
+  clear();
+  const v = view({ scheme: 'catppuccin-latte' });            /* the app is dark (basic-dark) */
+  assert.equal(A.resolve(v).scheme.id, 'catppuccin-mocha');
+  v.previewAppearance = { scheme: 'catppuccin-latte' };
+  assert.equal(A.resolve(v).scheme.id, 'catppuccin-latte');
+  v.previewAppearance = null; v.tabAppearance.schemePair = false;
+  assert.equal(A.resolve(v).scheme.id, 'catppuccin-latte');
+});
+
 console.log(`customize.test: ${passed} passed`);
