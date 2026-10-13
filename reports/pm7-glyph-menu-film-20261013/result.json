@@ -1,0 +1,116 @@
+{
+  "schema_id": "pm7.glyph-menu-film.v1",
+  "status": "HOLD",
+  "test_disposition": "NOT_RUN",
+  "reason": "The single discovery browser never admitted an observable cold published UI; its one same-browser recovery failed during CDP attachment before navigation.",
+  "thread_id": "mcp:3a44587d-e304-4ef0-a3f4-e331eb82ecf9",
+  "branch": "research/pm7-glyph-menu-film-20261013",
+  "frozen_head": "16908ac73bed831d5aeb38504fab213526e25c59",
+  "frozen_parent": "e43f8f6ab624841398c65dc7219783a04eea8404",
+  "source_owner_head": "81617137658b89ace8af7eeac2baf8c5918364f8",
+  "page": {
+    "repo_path": "Concepts/PMConcept7.html",
+    "bytes": 18866028,
+    "sha256": "bb87e95f06686b76305fbc5b083719bea17c4385799b3ee1f7a21d73343240bd",
+    "actual_first_navigation_url": "http://127.0.0.1:42931/PMConcept7.html",
+    "approved_recovery_route": "?o55=off",
+    "recovery_navigation_issued": false,
+    "raw_recovery_result_url_is_planned_only": true
+  },
+  "case": {
+    "room": "Accounts",
+    "candidate_widget_id": "acct-switch",
+    "action": "First size-tool opening; same existing row gains a new neon control check after natural fit measurement",
+    "eligible_predicate": "Cold unknown fit; no cached/stale/picked measure; unchanged row values/order and no query; natural measured preset equals unchanged card w x h; same button/data-mi gains active, aria-checked=true and a new last-child neon nx-r-control check at14; list children are not replaced.",
+    "owner_definition_approval_mail": "1013034426-1f12",
+    "exact_candidate_film_approval": null,
+    "target_support": "NOT_ESTABLISHED",
+    "first_picker_opens_observed": 0,
+    "maximum_cards_permitted_by_clarification": 3,
+    "additional_card_scope": "UNRUN",
+    "before_event_after_receipt": null
+  },
+  "attempts": [
+    {
+      "kind": "initial discovery",
+      "browser_id": "6c621893f548",
+      "failure": "page.goto: Timeout12000ms exceeded; waiting until load",
+      "evidence": "discovery-run.log"
+    },
+    {
+      "kind": "bounded passive evaluation",
+      "browser_id": "6c621893f548",
+      "failure": "No Runtime.evaluate response returned within the bounded12s shell command; subcommand exit code unavailable",
+      "evidence": "passive-evaluate-receipt.json"
+    },
+    {
+      "kind": "one recovery in same browser",
+      "browser_id": "6c621893f548",
+      "failure": "browserType.connectOverCDP: Timeout30000ms exceeded; WebSocket connected, attachment did not complete",
+      "evidence": "recovery-run.log",
+      "navigation_issued": false
+    }
+  ],
+  "new_browser_sessions": 1,
+  "recoveries": 1,
+  "films": 0,
+  "screenshots": 0,
+  "hardware_renderer_receipt": null,
+  "visible_look_review": "NOT_RUN; no film or visible DOM receipt",
+  "source_verdict": "No new source verdict; F1/F2 and passed G1 remain closed",
+  "performance_verdict": "No timing, exposure, performance or exclusivity claim",
+  "source_discovery": {
+    "finding": "The previous G1 helper calls PM7_USAGE.sizePresets while selecting the fit card; 90-api.js calls presetH for each preset, which synchronously measures unknown fits. The new discovery did not call that API.",
+    "evidence": "source-discovery.json",
+    "all_relevant_excerpts_verbatim_in_published_page": true
+  },
+  "evidence": {
+    "directory": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-menu-film-20261013",
+    "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-menu-film-20261013/FAILURE-MANIFEST.json",
+    "manifest_sha256": "a3a63e449e2e1303aadf2d5aeb71003d336fb7d7cc04c254a401d68ce582ff6c",
+    "sha256sums_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glyph-menu-film-20261013/FAILURE-SHA256SUMS",
+    "sha256sums_sha256": "afd2a379d2a3a10f54fd81b978fd456722919bc52a8a91154bd425f7d80a2b88"
+  },
+  "cleanup": {
+    "P1000_active_resources": 0,
+    "owned_browser_status": "complete",
+    "owned_browser_profile_exists": false,
+    "runtime_removed_on_P1000_and_Nas1": true,
+    "mailbox_waiter": "One own waiter maintained for final owner review; stop/consume before FINAL and bind its final census in the share receipt.",
+    "evidence_preserved": true
+  },
+  "original_holds_unchanged": [
+    "strict glyph",
+    "BasicLight contrast2.49 and Jared ink/fill decision",
+    "original whitespace",
+    "Windows rail",
+    "GLY4/Jared",
+    "source and full landing holds",
+    "Liquid Glass performance and Edge parked"
+  ],
+  "final_receipt_path": "/mnt/Cursor/share/puppet-master/2026-10-13-glyph-menu-film/FINAL-RECEIPT.json",
+  "hardware_renderer_receipt_scope": "Page-level WebGL probe NOT_RUN; the field does not describe the browser graphics-backend log.",
+  "browser_backend_observation": {
+    "evidence": "owned-browser.log",
+    "sha256": "0b96b164fbbe2d10f2a7a4be43df332b5624682bbe9f63c29b13a2c88b14fc46",
+    "selection": "Quadro P1000 / Vulkan",
+    "meaning": "The browser process saw the GPU; the page renderer is not established."
+  },
+  "failure_cause": "UNKNOWN",
+  "unexcluded_factors": [
+    "document-wide external init-script MutationObserver",
+    "12-second load gate",
+    "browser/CDP state after the blocked driver was stopped"
+  ],
+  "owner_review": {
+    "path": "/mnt/Cursor/share/puppet-master/2026-10-13-glyph-menu-film-owner-review/REVIEW.md",
+    "sha256": "2a2adcfb34b83e3aaed1ca47f9583f5ae416b2bcc3109047a6c5c1f726f242d9",
+    "packet_sums_sha256": "26bb5ac46443ec010a3aaefe1866b1347fa14697c57331bb69a682f97b006ecb",
+    "mail": "1013040130-5a80",
+    "verdict": "HOLD / NOT_RUN accepted as accurate; eligibility NOT_ESTABLISHED; no visible-look/source-defect/performance verdict",
+    "reviewed_report_commit": "b21d3446488476f835e1471cddaa485617a84a82",
+    "reviewed_NOTES_sha256": "47a2f5b6821ff882dd1177e7a5af90a70fc756516f7f3b2ca882e6f5c11881af",
+    "reviewed_result_sha256": "8b334f8d74e2e895337c9184e4071f07b1257ddf7931fa3996ce64951fe36384",
+    "current_report_change": "Records the original owner qualifiers and review link; no new execution."
+  }
+}
