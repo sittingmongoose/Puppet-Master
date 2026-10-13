@@ -658,11 +658,15 @@
     if (isGlass() && beadOn && beadOn.isConnected) { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); } else resetBead();
     menuMotions.forEach(function (M, menu) { resetMenuMorph(menu); });
   }
-  /* the lens where it is drawn right now (mid-flight included), so a new move starts from there and never jumps */
+  /* the lens where it is drawn right now (mid-flight included), so a new move starts from there and never jumps. Read
+     from the travel's own path and the wall clock, never from the DOM: inside a long task (a page switch) the
+     document's animation clock stays at the frame before it, and the DOM reports the lens where it was hundreds of
+     milliseconds ago (seen in the films as a jump back along its path). */
   function visualRect(L) {
-    if (!L.anim || !L.rect) return L.rect;
-    var r = L.lens.getBoundingClientRect(), lr = L.layer.getBoundingClientRect();
-    return { x: r.left - lr.left, y: r.top - lr.top, w: r.width, h: r.height };
+    var T = L.path; if (!L.anim || !T || !L.rect) return L.rect;
+    var t = performance.now() - T.t0; if (t >= T.dur) return L.rect;
+    for (var i = 1; i < T.rects.length; i++) if (T.rects[i].t >= t) return T.rects[i];
+    return L.rect;
   }
   /* ---- magnification: the labels a lens passes over swell as vector text, about the lens's centre, so they stay
      crisp. Each label's scale and shift are keyframed from the lens's own path, so they ride the same clock as the
@@ -705,7 +709,7 @@
     var S = spring.apply(null, GLIDE), dur = S[S.length - 1].t, frames = [], glint = [], track = [];
     var dist = vertical ? (B.y + B.h / 2) - (A.y + A.h / 2) : (B.x + B.w / 2) - (A.x + A.w / 2), ad = Math.abs(dist), dir = dist < 0 ? -1 : 1;
     var sw = A.w / B.w, shh = A.h / B.h, land = -1, lr = L.layer.getBoundingClientRect();
-    var cB = vertical ? lr.top + B.y + B.h / 2 : lr.left + B.x + B.w / 2;
+    var cB = vertical ? lr.top + B.y + B.h / 2 : lr.left + B.x + B.w / 2, rects = [];
     for (var i = 0; i < S.length; i++) {
       var t = S[i].t, p = S[i].x, v = S[i].v, over = (p - 1) * ad;
       if (over > 0) p = 1 + 3 * Math.tanh(over / 3) / Math.max(1, ad);
@@ -720,8 +724,10 @@
       var gl = (-dir * Math.min(6, Math.abs(v) * ad / 900)).toFixed(2);
       glint.push({ offset: at, transform: vertical ? 'translate3d(0,' + gl + 'px,0)' : 'translate3d(' + gl + 'px,0,0)', opacity: (0.6 + 0.4 * lift).toFixed(3) });
       track.push({ t: t, c: cB + off, half: (vertical ? B.h * sy : B.w * sx) / 2, lift: lift });
+      var rw = B.w * sx, rh = B.h * sy;
+      rects.push({ t: t, x: B.x + B.w / 2 - rw / 2 + (vertical ? 0 : off), y: B.y + B.h / 2 - rh / 2 + (vertical ? off : 0), w: rw, h: rh });
     }
-    var an = L.lens.animate(frames, { duration: dur, easing: 'linear' }); L.anim = an;
+    var an = L.lens.animate(frames, { duration: dur, easing: 'linear' }); L.anim = an; L.path = { t0: performance.now(), dur: dur, rects: rects };
     try { L.glintAnim = L.lens.animate(glint, { duration: dur, easing: 'linear', pseudoElement: '::after' }); } catch (e) { L.glintAnim = null; }
     magnifyAlong(L, track, dur, o);
     an.onfinish = function () { if (L.anim === an) L.anim = null; };
@@ -749,6 +755,12 @@
     if (!A || quiet || !isGlass()) {
       stopLensTravel(L);
       if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } }; }
+      setLensBox(L, R); return;
+    }
+    /* the destination moved by a pixel or two (the chosen label turned bold): a move in flight carries on, re-based;
+       a lens at rest just takes the new box. Neither starts a new move (it would lift and swell for nothing). */
+    if (Math.max(Math.abs(A.x - R.x), Math.abs(A.y - R.y), Math.abs(A.w - R.w), Math.abs(A.h - R.h)) < 4) {
+      if (!(L.anim && L.path && performance.now() - L.path.t0 < L.path.dur)) stopLensTravel(L);
       setLensBox(L, R); return;
     }
     var from = visualRect(L) || A, vertical = !!cfg.vertical || Math.abs(from.y - R.y) > Math.abs(from.x - R.x);
@@ -794,7 +806,7 @@
         if (!strip.isConnected || !L.lens.isConnected || !isGlass() || reduced()) { cleanup(); return; }
         var dx = ev.clientX - sx;
         if (!moved2 && Math.abs(dx) < 6) return;
-        if (!moved2) { moved2 = true; L.dragging = true; L.pending = null; stopLensTravel(L); L.lens.setAttribute('data-lg-lifted', ''); labs = labelsOf(cfg, strip, false); }
+        if (!moved2) { moved2 = true; L.dragging = true; L.pending = null; stopLensTravel(L); L.lens.setAttribute('data-lg-lifted', ''); labs = labelsOf(cfg, strip, false); try { getSelection().removeAllRanges(); } catch (e2) {} }
         var sr = strip.getBoundingClientRect(), lr = L.layer.getBoundingClientRect(), x = ev.clientX - sr.left - L.rect.w / 2;
         var lo = 0, hi = strip.clientWidth - L.rect.w; if (x < lo) x = lo - Math.sqrt(lo - x) * 2; if (x > hi) x = hi + Math.sqrt(x - hi) * 2;
         L.lens.style.transform = 'translate3d(' + (sr.left - lr.left + x - L.rect.x).toFixed(1) + 'px,0,0) scale(1.1,1.12)';
