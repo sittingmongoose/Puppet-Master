@@ -334,7 +334,9 @@ function dropdownOpen(trigger) {
       if (!sel.isConnected) return;
       const changed = sel.selectedIndex !== index; sel.selectedIndex = index;
       const v = trigger.querySelector('.pm51-dd-value'); if (v) v.textContent = o.label;
-      if (changed) sel.dispatchEvent(new Event('change', { bubbles: true }));
+      /* A theme names an explicit light/dark version. Picking it during Auto must commit that version even when
+         this is the saved option: the computer may currently be painting its opposite. */
+      if (changed || (sel.dataset.setting === 'general.visual.theme' && PM51.value('general.visual.theme-mode') === 'Auto')) sel.dispatchEvent(new Event('change', { bubbles: true }));
     } });
 }
 PM51.on('dd-open', el => dropdownOpen(el));

@@ -1,0 +1,184 @@
+{
+  "status": "READY_FOR_ROOT_REVIEW_NOT_LANDED",
+  "created_utc": "2026-10-13T19:58:57.267592+00:00",
+  "binding": {
+    "account_instance": "codex_party",
+    "model": "gpt-6.1-sol",
+    "reasoning": "max",
+    "interaction_mode": "default",
+    "runtime_mode": "full-access",
+    "worktree": "/home/sittingmongoose/pm-worktrees/pm7-glass-settings-bugs-20261013",
+    "branch": "fix/pm7-glass-settings-bugs-20261013",
+    "root_session_rebound": false
+  },
+  "source": {
+    "current_main_at_start": "a1ca86073499aab3937d6505f53035aa57710e64",
+    "frozen_r3": "b48799b7a9896891c3b6da1717f441c0b114c1d5",
+    "exact_transport": "57a16583706201acfdc7bb7d6c3db4ceb68ac216",
+    "control_commit": "372a5fe601490301fb5ac02356fd15bce90ad438",
+    "derived_parent_commit": "f0b7b6260124f6c945677e7a5774a6e1990b43ce",
+    "owner_alpha_commit": "bf7137836f1788acad5f85f506abd4cc89ac5cfa",
+    "complete_product_source_head": "533c55ed322e25de8925fdb963fd6c9d25c2cafd"
+  },
+  "contracts": {
+    "theme": "Existing commitSettingValue pairs Theme with Light/Dark. Accepted/refused picks synchronize hidden selects and visible labels. Explicit same Theme during Auto emits its existing change event. Preview row, keep/back binding and timer removed.",
+    "numeric": "Existing o55Number/text-control/o55-num field beside the percent stepper. Fractional percent stores unitless alpha; existing 35% Dark and 45% Light floors, maximum 100%, default 55%. Empty/nonfinite/unfinished invalid input does not commit; blur restores the accepted effective value. Auto display follows existing clampGlassAlpha.",
+    "public_alpha": "Unchanged general.visual.glass-transparency and inline HTML --glass-alpha; existing per-project owner transaction/persistence.",
+    "owner_material": "Opus-owned CSS on panel/card/bar only. At a>=.55, t=t0+(.94-t0)*(a-.55)/.45; below .55, t=t0*(1-.25*(.55-a)/(.55-floor)). Per-look/per-tier t0, menus/lenses and Glass JS preserved."
+  },
+  "validation": {
+    "distinct_focused_checks": 27,
+    "settings_checks": 16,
+    "material_checks": 11,
+    "browser_exceptions": 0,
+    "commands_passed": [
+      "python3 Concepts/onboarding/opus-5.5/tools/build.py --check",
+      "python3 Concepts/home-redesign/tools/build_home.py --check",
+      "python3 Concepts/leftrail-redesign/tools/build_rail.py --check",
+      "python3 Concepts/leftrail-redesign/tools/build_d_css.py --check",
+      "node --check Concepts/onboarding/opus-5.5/src/settings/kit.d/17-look.js",
+      "git diff --check"
+    ],
+    "generated_outputs": "All four parents regenerated; only pm4-settings-js changes. PM7/TestOpus/Home byte-identical; rail embeds changed authored Kit/Look parts exactly.",
+    "visual_QA": "Inspected controls, Dark minimum and Light maximum screenshots; the adjacent stepper/number field is unclipped at 1600x1000.",
+    "corrections": "Two product edge cases corrected with only affected checks rerun. Material driver corrected rounded RGBA oracle precision and route after reload; no product changes during material checks."
+  },
+  "input_reconciliation": {
+    "authorized_by": "Root authorized canonical current-main parents plus exact r3 Glass for NEW source-generated preview. No frozen HTML hand-patching or peer-source rewind.",
+    "before_fix": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/source-parent-before-settings.html",
+      "bytes": 19417362,
+      "sha256": "90199b0e661886fe0485be1800f1d0b015c630694b90283180c5b12df8ee46b4"
+    },
+    "prior_landed_changed_blocks": 8,
+    "custody": "baseline-custody.json; prior no-pills Settings, hover return, rail counts and disabled Undo are inputs, not this worker repairs or proof. Builder stdout counted characters; all records use raw bytes."
+  },
+  "preview": {
+    "path": "/mnt/Cursor/share/puppet-master/2026-10-13-glass-settings-bugs/PMConcept7-LiquidGlass-settings-r1.html",
+    "bytes": 19419775,
+    "sha256": "088ef5a26e317eb0f4ace49536915cdba1884deaa8945109561590eaef4967bf"
+  },
+  "changed_paths": [
+    "Concepts/onboarding/opus-5.5/src/settings/kit.js",
+    "Concepts/onboarding/opus-5.5/src/settings/kit.d/17-look.js",
+    "Concepts/onboarding/opus-5.5/src/settings/o55/placement.d/60-app-input.json",
+    "Concepts/onboarding/opus-5.5/src/settings/o55/rows.d/60-app-input.json",
+    "Concepts/liquid-glass/opus-5.5/src/glass.css",
+    "Concepts/PMConcept7.html",
+    "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html",
+    "Concepts/HomeTestPMConcept7.html",
+    "Concepts/LeftRailPMConcept7.html",
+    "reports/pm7-glass-settings-bugs-20261013/NOTES.md",
+    "reports/pm7-glass-settings-bugs-20261013/result.json"
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/baseline-custody.json",
+      "bytes": 4133,
+      "sha256": "31ef09467cf7de17c5a79211e9f052fb0bd21807792158130bca9fd5080ced03"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/candidate-custody.json",
+      "bytes": 3933,
+      "sha256": "652aeedb90c344550a035ea13cce37d88d1d3c680b9b905d508721a9351d8b7d"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/derived-parent-proof.json",
+      "bytes": 2454,
+      "sha256": "0b57c86ce29b8dcd3e2f7245c9d0139d1c7f68581ec9644c4f719a61e0fc628a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/settings-validation.json",
+      "bytes": 9109,
+      "sha256": "319e8872cf59ca0f79f9075a06ced97013f859bdd1853256aa099f637ae17788"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/material-validation.json",
+      "bytes": 10290,
+      "sha256": "8005de9633c01a4581104831da8acd2a85d1f6b85bc4b0f0ed1416001000f139"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/settings-behavior-first-attempt.json",
+      "bytes": 6203,
+      "sha256": "5aa30da2d84171f147c38d9caf914f449ca32c4b6f807099b36cc829ef0751ea"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/settings-behavior-second-attempt.json",
+      "bytes": 4605,
+      "sha256": "5bc188dd8150d014d6043664183cfee0563a2aa18d642cd2367097d3b4b45e44"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/settings-behavior.json",
+      "bytes": 2123,
+      "sha256": "463e6e6b7aafbe840c62097b36c65bc9a16c94bc93f2184a7590f39172c7ccad"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/material-behavior-oracle-attempt.json",
+      "bytes": 296,
+      "sha256": "7b2066209919f5a0b824654b40562796d5e94c96f27c9591da6b0caf340813c0"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/material-behavior-scenes.json",
+      "bytes": 8740,
+      "sha256": "e10af9e3041de203ba8a618f33df1e79581e667cd9a92b274de5cbb378db2e4e"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/material-persistence-route-attempt.json",
+      "bytes": 343,
+      "sha256": "8c5480068a59bbf346113b8800618f7d1d434f6c2af33d24982d1f71630cc0a4"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/material-persistence.json",
+      "bytes": 1389,
+      "sha256": "fc8a08553c00c79f692a2ab226f2d2266f47fd788c710a97d0373b75b61874c2"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/settings-behavior.mjs",
+      "bytes": 9312,
+      "sha256": "871e93ef581e2186f6768e146d65a46402f4275913c195b3f06442bbda9a8fff"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/material-behavior.mjs",
+      "bytes": 6909,
+      "sha256": "685c9112ab06414825c91cc9fa53e2225eacedec9d24627303f2e6a84f56b926"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/dark-floor.png",
+      "bytes": 1690153,
+      "sha256": "34d432665c3c53b7e60e5c9ff9984f039d81653877ff1cd0f43cfe38000cfe76"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/light-maximum.png",
+      "bytes": 809620,
+      "sha256": "26e8075bba9d8a3ffb2540dd30c41f6fed2fe9af72480fbcfe9c7f72f7b88557"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/tooling.json",
+      "bytes": 369,
+      "sha256": "30966c460d4d6deb635b21b5dfbd0e63fb8c4142364027a8e5d3e614cceb068d"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/controls.png",
+      "bytes": 903441,
+      "sha256": "449e7dbce776c3029959fbc285696ce542a0400ed2ad611c1d17fa07ac4c8840"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-settings-bugs-20261013/cleanup-receipt.json",
+      "bytes": 451,
+      "sha256": "c2180b23dca08e518bcf6edafda51a61f872812c31527bc6bc2bd0649330af64"
+    }
+  ],
+  "limitations": "Ordinary legacy Nas1 CPU-tier behavior/material checks began before remote-gpu-browser steering and finished per root instruction. No GPU/performance/recording claims, old matrices, art/picker/lens/wallpaper work, Plans/governance/main/landing lock activity. Root review/landing remain separate.",
+  "cleanup": {
+    "owned_browsers": 0,
+    "recorders": 0,
+    "GPU_sessions": 0,
+    "dev_servers": 0,
+    "test_jobs": 0,
+    "mail_waiters": 0,
+    "extra_agents": 0,
+    "profile_removed": true,
+    "unnecessary_runtime_removed": true,
+    "retained": "Unlanded worktree/branch, cited raw proof, review preview, and four runtime input links; peer worktrees/processes untouched."
+  }
+}
