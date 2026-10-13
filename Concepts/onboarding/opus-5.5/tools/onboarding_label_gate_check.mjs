@@ -1397,16 +1397,181 @@ export async function windowView(page, v, sweep, captureBinding, captureDependen
   return { ...snapshot, flow, pathCaps };
 }
 
+/* PB-1/v1: public/DOM tour readiness only; no product state or animation is changed. */
+export async function sampleTourCalloutReady(selector,intendedStep,semantics,frames,budgetMs) {
+  const result={version:'PB-1/v1',selector,intended_step:intendedStep,semantics,frames:[],errors:[],ready:false};
+  let firstCallout=null,firstTarget=null;
+  const stamp=() => ({observed_at:new Date().toISOString(),time_origin:performance.timeOrigin,monotonic_ms:performance.now()});
+  const rect=(el) => {const r=el.getBoundingClientRect();return {left:r.left,top:r.top,right:r.right,bottom:r.bottom,width:r.width,height:r.height};};
+  const visible=(el) => {if(!el||!el.isConnected||!el.getClientRects().length)return false;const s=getComputedStyle(el);return s.display!=='none'&&s.visibility!=='hidden'&&Number(s.opacity)>0;};
+  const sample=(rafAt) => {
+    const s={clock:stamp(),raf_at:rafAt,problems:[]};result.frames.push(s);
+    const roots=[...document.querySelectorAll('#pm-o55-tour')],callouts=[...document.querySelectorAll('#pm-o55-tour .o55t-callout')],targets=[...document.querySelectorAll(selector)];
+    s.url=location.href;s.ready_state=document.readyState;s.root_count=roots.length;s.callout_count=callouts.length;s.target_count=targets.length;
+    const root=roots[0],callout=callouts[0],target=targets[0];
+    s.public_state=typeof window.O55?.tour?.state==='function'?JSON.parse(JSON.stringify(window.O55.tour.state())):null;
+    if(!s.public_state||s.public_state.running!==true||s.public_state.paused!==false||s.public_state.step!==intendedStep)s.problems.push('public-step-not-ready');
+    if(roots.length!==1||!visible(root))s.problems.push('tour-root-unavailable');
+    s.opening=!!root?.classList.contains('o55t-opening');if(s.opening)s.problems.push('tour-opening');
+    if(callouts.length!==1||!visible(callout))s.problems.push('callout-unavailable');
+    s.callout=callout?{data_step:callout.getAttribute('data-step'),title:callout.querySelector('.o55t-title')?.textContent?.trim()??null,
+      class:callout.className,morphing:callout.classList.contains('o55t-morphing'),success:callout.classList.contains('o55t-success'),rect:rect(callout)}:null;
+    if(s.callout?.data_step!==intendedStep)s.problems.push('rendered-step-not-ready');
+    if(s.callout?.morphing)s.problems.push('callout-morphing');
+    if(semantics==='pre-action'&&s.callout?.success)s.problems.push('pre-action-already-success');
+    if(callout) {
+      if(typeof callout.getAnimations!=='function')s.problems.push('callout-animation-observation-unavailable');
+      else {
+        s.animations=callout.getAnimations().map((a) => ({play_state:a.playState,pending:a.pending,current_time:a.currentTime,start_time:a.startTime}));
+        if(s.animations.some((a) => a.pending===true||a.play_state==='running'))s.problems.push('callout-animation-active');
+        if(s.animations.some((a) => typeof a.pending!=='boolean'||!['idle','running','paused','finished'].includes(a.play_state)))s.problems.push('callout-animation-state-unsupported');
+      }
+    }
+    if(targets.length!==1||!visible(target)||!callout?.contains(target)||target.closest('[inert]')||target.disabled||target.getAttribute('aria-disabled')==='true')s.problems.push('callout-target-unavailable');
+    if(target) {
+      const r=rect(target),x=r.left+r.width/2,y=r.top+r.height/2,hit=document.elementFromPoint(x,y);
+      s.target={tag:target.tagName,action:target.getAttribute('data-o55t'),connected:target.isConnected,inert:!!target.closest('[inert]'),disabled:!!target.disabled,rect:r,x,y,
+        hit:{tag:hit?.tagName??null,action:hit?.closest('[data-o55t]')?.getAttribute('data-o55t')??null,matches:hit===target||target.contains(hit)}};
+      if(!Object.values(r).every(Number.isFinite)||r.width<=0||r.height<=0||!s.target.hit.matches)s.problems.push('callout-hit-unavailable');
+    }
+    if(firstCallout&&callout!==firstCallout||firstTarget&&target!==firstTarget)s.problems.push('callout-target-identity-changed');
+    if(!firstCallout)firstCallout=callout;if(!firstTarget)firstTarget=target;
+    if(!Number.isFinite(s.clock.time_origin)||!Number.isFinite(s.clock.monotonic_ms))s.problems.push('page-clock-unavailable');
+    return s;
+  };
+  try {
+    if(!['pre-action','stay-next'].includes(semantics)||![0,2].includes(frames)||!(budgetMs>0))throw new Error('unsupported PB-1 readiness request');
+    const deadline=performance.now()+budgetMs;
+    if(frames===0)sample(null);
+    else for(let i=0;i<2;i++) {
+      const rafAt=await new Promise((resolve,reject) => {
+        let settled=false;const left=deadline-performance.now();if(!(left>0)){reject(new Error('readiness frame timeout'));return;}
+        const timer=setTimeout(() => {settled=true;reject(new Error('readiness frame timeout'));},left);
+        requestAnimationFrame((at) => {if(settled)return;settled=true;clearTimeout(timer);resolve(at);});
+      });
+      sample(rafAt);
+    }
+    if(result.frames.length===2) {
+      const [a,b]=result.frames;
+      if(JSON.stringify(a.callout?.rect)!==JSON.stringify(b.callout?.rect)||JSON.stringify(a.target?.rect)!==JSON.stringify(b.target?.rect))result.errors.push('readiness-rectangle-changed');
+      if(JSON.stringify([a.public_state,a.callout?.data_step,a.callout?.title,a.callout?.success,a.url])!==JSON.stringify([b.public_state,b.callout?.data_step,b.callout?.title,b.callout?.success,b.url]))result.errors.push('readiness-context-changed');
+    }
+    result.ready=result.frames.length===(frames===0?1:2)&&!result.errors.length&&result.frames.every((s) => !s.problems.length);
+  } catch(e){result.errors.push(String(e.stack||e));}
+  return result;
+}
+export async function clickTourCallout(page,selector,intendedStep,captureBinding,options={}) {
+  const next='#pm-o55-tour .o55t-callout [data-o55t="next"]',show='#pm-o55-tour .o55t-callout [data-o55t="showMe"]';
+  const now=options.now||Date.now,delay=options.sleep||sleep,read=options.observe||observeCaptureState;
+  const semantics=options.semantics||'pre-action',limit=selector===next?12000:15000,budget=options.readinessTimeout??limit;
+  const at=() => ({epoch_ms:now(),clock_origin:'host-Date.now-epoch-ms'}),trace={version:'PB-1/v1',selector,intended_step:intendedStep,semantics,
+    capture_expected:captureBinding,started:at(),budget_ms:budget,wait_samples:[],protocol:[],attempted_stage:'guard',dispatch_attempted:false,dispatch_acknowledged:[],receipt:null,ok:false};
+  let x=null,y=null,receipt=null,actionBefore=null;
+  const protocol=async(stage,method,params) => {
+    trace.attempted_stage=stage;const event={stage,method,params,started:at()};trace.protocol.push(event);
+    try{const value=await page.send(method,params);event.return_value=value;event.finished=at();return value;}
+    catch(e){event.error=String(e.stack||e);event.finished=at();throw e;}
+  };
+  const evaluate=async(stage,fn,args,contextId) => {
+    const response=await protocol(stage,'Runtime.evaluate',{expression:'('+fn.toString()+')('+args.map((a) => JSON.stringify(a)).join(',')+')',
+      ...(contextId===undefined?{}:{contextId}),awaitPromise:true,returnByValue:true,userGesture:true});
+    if(response?.exceptionDetails||!response?.result||!Object.hasOwn(response.result,'value'))throw new Error(stage+' protocol error: '+JSON.stringify(response));
+    return response.result.value;
+  };
+  const state=async(stage) => {
+    trace.attempted_stage=stage;const event={stage,started:at()};trace.protocol.push(event);
+    try{const value=await read(page,'tour');event.return_value=value;event.finished=at();return value;}
+    catch(e){event.error=String(e.stack||e);event.finished=at();throw e;}
+  };
+  const identity=(s) => JSON.stringify([s?.public_state,s?.callout?.data_step,s?.callout?.title,s?.callout?.success,s?.callout?.rect,s?.target?.rect,s?.target?.tag,s?.target?.action,s?.url]);
+  try {
+    if(![next,show].includes(selector)||typeof intendedStep!=='string'||!intendedStep||!['pre-action','stay-next'].includes(semantics)||
+      semantics==='stay-next'&&selector!==next||!(budget>0&&budget<=limit))throw new Error('unsupported PB-1 callout request');
+    const started=now();let ready=null;
+    while(now()-started<budget) {
+      const sample=await evaluate('readiness-sample',sampleTourCalloutReady,[selector,intendedStep,semantics,2,budget-(now()-started)]);
+      trace.wait_samples.push({started:trace.protocol.at(-1).started,finished:at(),sample});
+      if(sample?.ready===true){ready=sample;break;}
+      if(sample?.errors?.length)throw new Error('tour readiness observation error: '+JSON.stringify(sample.errors));
+      const remaining=budget-(now()-started);if(remaining>0)await delay(Math.min(120,remaining));
+    }
+    if(!ready)throw new Error('tour callout readiness timeout; no click dispatched');
+    trace.ready=ready;trace.pre_arm_state=await state('pre-arm-state');
+    const preProblems=stateReceiptProblems(trace.pre_arm_state,captureBinding);
+    if(preProblems.length||trace.pre_arm_state.public_state?.step!==intendedStep||trace.pre_arm_state.callout?.data_step!==intendedStep)throw new Error('pre-arm context unverified: '+JSON.stringify(preProblems));
+    const tree=await protocol('observer-frame','Page.getFrameTree',{}),frameId=tree?.frameTree?.frame?.id;
+    if(!frameId)throw new Error('observer frame unavailable');
+    const world=await protocol('observer-world','Page.createIsolatedWorld',{frameId,worldName:'pm7-onboarding-label-gate-input-v1'});
+    if(!Number.isSafeInteger(world?.executionContextId))throw new Error('observer execution context unavailable');
+    const contextId=world.executionContextId;
+    const arm=function(sel) {
+      const state=globalThis.__pm7GateInput||(globalThis.__pm7GateInput={});
+      if(!state.listening) {
+        document.addEventListener('click',(e) => {const t=e.target&&e.target.closest&&e.target.closest(state.selector);
+          if(t)state.receipt={type:e.type,trusted:e.isTrusted,selector:state.selector,tag:t.tagName,role:t.getAttribute('role'),
+            action:t.getAttribute('data-o55t')||t.getAttribute('data-o55-do')||t.getAttribute('data-o55p'),observed_at:new Date().toISOString()};
+        },{capture:true,passive:true});state.listening=true;
+      }
+      state.selector=sel;state.receipt=null;state.target=document.querySelector(sel);
+      return {armed:!!state.target,selector:sel,tag:state.target?.tagName??null,clock:{observed_at:new Date().toISOString(),time_origin:performance.timeOrigin,monotonic_ms:performance.now()}};
+    };
+    trace.observer_arm=await evaluate('observer-arm',arm,[selector],contextId);
+    if(trace.observer_arm?.armed!==true||trace.observer_arm.selector!==selector)throw new Error('trusted input observer arm unverified');
+    actionBefore=await state('action-before');trace.action_before=actionBefore;
+    const beforeProblems=stateReceiptProblems(actionBefore,captureBinding);
+    if(beforeProblems.length||actionBefore.public_state?.step!==intendedStep||actionBefore.callout?.data_step!==intendedStep||
+      JSON.stringify([trace.pre_arm_state.public_state,trace.pre_arm_state.tour_root,trace.pre_arm_state.callout])!==JSON.stringify([actionBefore.public_state,actionBefore.tour_root,actionBefore.callout]))throw new Error('tour context changed after observer arm: '+JSON.stringify(beforeProblems));
+    if(selector===show&&!classifyNamedTourState(intendedStep,actionBefore,captureBinding).confirmed)throw new Error('tour state changed before action');
+    const fresh=await evaluate('pre-dispatch-ready',sampleTourCalloutReady,[selector,intendedStep,semantics,0,budget]);trace.pre_dispatch_ready=fresh;
+    const target=fresh?.frames?.[0]?.target;
+    if(fresh?.ready!==true||identity(ready.frames.at(-1))!==identity(fresh.frames[0]))throw new Error('tour context or rectangle changed before dispatch');
+    x=target.x;y=target.y;
+    const hit=function(sel,px,py) {
+      const state=globalThis.__pm7GateInput,target=document.querySelector(sel),top=document.elementFromPoint(px,py),r=target?.getBoundingClientRect();
+      return {selector:sel,target_same:!!target&&target===state?.target,connected:!!target?.isConnected,inert:!!target?.closest('[inert]'),disabled:!!target?.disabled,
+        tag:target?.tagName??null,hit_tag:top?.tagName??null,hit_action:top?.closest('[data-o55t]')?.getAttribute('data-o55t')??null,
+        hit:!!target&&(top===target||target.contains(top)),rect:r?{left:r.left,top:r.top,right:r.right,bottom:r.bottom,width:r.width,height:r.height}:null,x:px,y:py,
+        clock:{observed_at:new Date().toISOString(),time_origin:performance.timeOrigin,monotonic_ms:performance.now()}};
+    };
+    trace.pre_dispatch_hit=await evaluate('pre-dispatch-hit',hit,[selector,x,y],contextId);
+    const hitReceipt=trace.pre_dispatch_hit;
+    if(!hitReceipt?.target_same||!hitReceipt.connected||hitReceipt.inert||hitReceipt.disabled||!hitReceipt.hit||JSON.stringify(hitReceipt.rect)!==JSON.stringify(target.rect))throw new Error('fresh tour click target changed or unavailable');
+    trace.dispatch_ready=await evaluate('dispatch-ready',sampleTourCalloutReady,[selector,intendedStep,semantics,0,budget]);
+    if(trace.dispatch_ready?.ready!==true||identity(fresh.frames[0])!==identity(trace.dispatch_ready.frames[0]))throw new Error('tour context or hit changed at dispatch boundary');
+    x=trace.dispatch_ready.frames[0].target.x;y=trace.dispatch_ready.frames[0].target.y;
+    trace.dispatch_hit=await evaluate('dispatch-hit',hit,[selector,x,y],contextId);
+    const dispatchHit=trace.dispatch_hit;
+    if(!dispatchHit?.target_same||!dispatchHit.connected||dispatchHit.inert||dispatchHit.disabled||!dispatchHit.hit||
+      JSON.stringify(dispatchHit.rect)!==JSON.stringify(trace.dispatch_ready.frames[0].target.rect))throw new Error('armed tour target changed at final dispatch hit; no click dispatched');
+    for(const event of [{type:'mouseMoved',x,y},{type:'mousePressed',x,y,button:'left',clickCount:1},{type:'mouseReleased',x,y,button:'left',clickCount:1}]) {
+      trace.dispatch_attempted=true;await protocol(event.type,'Input.dispatchMouseEvent',event);trace.dispatch_acknowledged.push(event.type);
+    }
+    const readReceipt=function(){return globalThis.__pm7GateInput.receipt;};
+    receipt=await evaluate('receipt-read',readReceipt,[],contextId);trace.receipt=receipt;
+    trace.ok=trustedClickVerified(receipt,selector);
+    if(!trace.ok)throw new Error('tour trusted click receipt unverified; no retry');
+    trace.attempted_stage='complete';
+  } catch(e){trace.error=String(e.stack||e);trace.disposition='readiness/acquisition UNKNOWN/HOLD';}
+  trace.finished=at();
+  (page.inputReceipts||(page.inputReceipts=[])).push({selector,x,y,receipt,trace});
+  return {ok:trace.ok,actionBefore,trace};
+}
+
 export async function tourWalk(page,captureBinding,dependencies={}) {
   const out = []; const ev = (fn, ...a) => page.evaluate(fn, ...a);
   const read=dependencies.observe||observeCaptureState,delay=dependencies.sleep||sleep,now=dependencies.now||Date.now;
   const until = async (fn, ms = 15000) => { const t0 = now(); while (now() - t0 < ms) { if (await ev(fn)) return true; await delay(120); } return false; };
-  let lastState=null;
+  let lastState=null,lastActionTrace=null;
+  const calloutClick=async(selector,id,semantics='pre-action') => {
+    const click=await clickTourCallout(page,selector,id,captureBinding,{...dependencies,semantics});lastActionTrace=click.trace;
+    if(!click.ok)throw new Error('tour callout trusted click unverified; no retry: '+click.trace.error);
+    return click;
+  };
   try {
   await ev(() => window.PM7_GUIDED_TOUR.start({ project: 'tastebook' }));
   const WANT = new Set(['comfort_intro', 'open_chat', 'same_answer_eli5', 'book_club_goal', 'three_outcomes']);
   for (let guard = 0; guard < 40; guard++) {
-    lastState=await read(page,'tour');const id=lastState.public_state?.step;
+    lastActionTrace=null;lastState=await read(page,'tour');const id=lastState.public_state?.step;
     if(!id)throw new Error('actual public tour step unavailable');
     const def = await ev((i) => { const d = window.O55.tour.byId[i]; return { kind: d.kind, after: !!d.after, stay: !!d.stay }; }, id);
     await mouseAway(page);
@@ -1418,11 +1583,10 @@ export async function tourWalk(page,captureBinding,dependencies={}) {
       if(!ready.confirmed){out.push({step:id,error:'tour action state unconfirmed',wait_receipt:ready});break;}
     }
     if (id === 'three_outcomes') break;
-    if (def.kind === 'info') { if(!(await until(() => !!document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="next"]'), 12000))) throw new Error('tour Next unavailable');
-      if(!(await clickAt(page, '#pm-o55-tour .o55t-callout [data-o55t="next"]'))) throw new Error('tour Next trusted click unverified'); }
+    if (def.kind === 'info') { await calloutClick('#pm-o55-tour .o55t-callout [data-o55t="next"]',id); }
     else {
       if (id === 'same_answer_eli5') await until(() => window.O55.tour.chat.answered('a1'));
-      const actionBefore=await read(page,'tour'),inputStart=(page.inputReceipts||[]).length;
+      let actionBefore=await read(page,'tour');const inputStart=(page.inputReceipts||[]).length;
       if(!classifyNamedTourState(id,actionBefore,captureBinding).confirmed){out.push({step:id,error:'tour state changed before action',state_receipt:actionBefore});break;}
       if (id === 'split_by_drag') {
         const a = await ev(() => { const d = window.PMW.tour.splitDrag(); const r = d.el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, tx: d.to.x, ty: d.to.y }; });
@@ -1434,18 +1598,19 @@ export async function tourWalk(page,captureBinding,dependencies={}) {
         for (let j = 0; j < 5; j++) { await page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: a.tx + (j % 2), y: a.ty + j * 0.5, button: 'left', buttons: 1 }); await sleep(45); }
         await sleep(500);
         await page.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: a.tx, y: a.ty, button: 'left', clickCount: 1 });
-      } else if(!(await clickAt(page, '#pm-o55-tour .o55t-callout [data-o55t="showMe"]'))) throw new Error('Show Me trusted click unverified; no page-switch fallback');
+      } else { const click=await calloutClick('#pm-o55-tour .o55t-callout [data-o55t="showMe"]',id);actionBefore=click.actionBefore; }
       const actionAfter=await read(page,'tour');
       if (id === 'book_club_goal') {
         const action={selector:'#pm-o55-tour .o55t-callout [data-o55t="showMe"]',before:actionBefore,after:actionAfter,input_receipts:(page.inputReceipts||[]).slice(inputStart)};
         const practice=await captureNamedTourSnapshot(page,'book_club_goal:practice',captureBinding,action,dependencies);out.push(practice);
         if(!practice.named_binding.confirmed||practice.error)break;
       } else if (!(await until(new Function(`return window.O55.tour.state().done.includes(${JSON.stringify(id)})`), 20000))) { out.push({ step: id, error: 'step not done' }); break; }
-      if (def.stay) { await sleep(900); if(!(await clickAt(page, '#pm-o55-tour .o55t-callout [data-o55t="next"]'))) throw new Error('tour stay Next trusted click unverified'); }
+      if (def.stay) { await sleep(900); await calloutClick('#pm-o55-tour .o55t-callout [data-o55t="next"]',id,'stay-next'); }
     }
     if (!(await until(new Function(`return window.O55.tour.state().step !== ${JSON.stringify(id)}`), 12000))) { out.push({ step: id, error: 'tour did not move on' }); break; }
   }
-  } catch(e){out.push({error:String(e.stack||e),state_receipt:lastState});}
+  } catch(e){out.push({error:String(e.stack||e),state_receipt:lastActionTrace?(lastActionTrace.action_before||lastActionTrace.pre_arm_state||null):lastState,
+    ...(lastActionTrace?{action_trace:lastActionTrace,loop_state_receipt:lastState}:{})});}
   return out;
 }
 

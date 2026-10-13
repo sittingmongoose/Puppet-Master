@@ -1,0 +1,259 @@
+{
+  "schema": "pm7-onboarding-label-pb1-readiness/1",
+  "prepared_at": "2026-10-13T17:59:03.072753+00:00",
+  "status": "MECHANICAL_PACKET_READY_FOR_ROOT_REVIEW",
+  "product_status": "HOLD",
+  "scope": "same-worker test-tool implementation and NEW controlled pre-browser protocol cases only",
+  "authority": {
+    "go_path": "/mnt/Cursor/share/puppet-master/2026-10-13-creative-queue/ONBOARDING-PB1-READINESS-IMPLEMENTATION-GO.md",
+    "go_sha256": "dbf20020a576a7f531756d67e4af56e2b7e00c3be921598176fa2c52365626b3",
+    "actual_root_message_id": "message:mcp:4103467a-6a3c-4191-a4dc-ae5ad70ae674:thread-send:home-planner-onboarding-pb1-own-readiness-implementation-20261013-v1",
+    "static_review_sha256": "82ba9293f0e6c0dd15c601c388df2788376677487ced4bbfedc2b757b102cfeb",
+    "PB1_R1_message_id": "message:mcp:4103467a-6a3c-4191-a4dc-ae5ad70ae674:thread-send:home-planner-onboarding-pb1-precommit-target-identity-20261013-v1",
+    "PB1_R1_finding": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/PB1-PRECOMMIT-BOUNDARY-FINDING.json",
+      "bytes": 2358,
+      "sha256": "f770e1be68cb1d290e56274ee049249005c5fb131cb25080faf5d670617e59a9"
+    },
+    "owner_round2_json_sha256": "76fc175bec1ff0f38ecdeae73afa943374200d0154d641589b84a0979f6ace30",
+    "owner_round2_notes_sha256": "013c5b27542292524bfee70964e65f172fbcd638c405b222fc6914667ab2e9e0",
+    "root_owner_disposition_sha256": "2eefe16c17f1744077b4393ea4b79db843d9ebe516fbe84d885331b910143b2e"
+  },
+  "bindings": {
+    "input_head": "1b4b1ca8b7a63753fe18d8ed56203cd5b72c5396",
+    "input_parent": "b73b6bdc1b5cf915a5d6abf9e8ac969170421788",
+    "source_head": "f109bad9f312ca0f55887f069dd4328dc17f7b9e",
+    "candidate_page": "Concepts/PMConcept7.html",
+    "candidate_bytes": 18602927,
+    "candidate_sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+    "three_app_pages_sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+    "rail_bytes": 19237474,
+    "rail_sha256": "13d002fc7057c17270cbc149457cee588df423b8a3543fa5a5359901d7cba8bb",
+    "base_head": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
+    "base_page": "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html",
+    "base_bytes": 18598981,
+    "base_sha256": "b612df00caa2e2fb13b9b2307a17f283358845b596f33a27a31ba55d40266451",
+    "composition_head": "967653b5265e27b13cf0c300dd0b1b0599c2d482",
+    "initial29": "29cdc86e3c9078d94260b79905e6ae49c169305c",
+    "tested_tool": {
+      "path": "Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs",
+      "bytes": 190370,
+      "sha256": "c6ad5f4050b1b42194fa122e94400ff4f516ca96e946e45e5f0c66d903adf7e7",
+      "retained": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/attempt-5-tested-tool.mjs",
+        "bytes": 190370,
+        "sha256": "c6ad5f4050b1b42194fa122e94400ff4f516ca96e946e45e5f0c66d903adf7e7"
+      }
+    },
+    "actual_commit_head_receipt": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/FINAL-RECEIPT.json",
+    "new_live_phase_b_binding_created": false
+  },
+  "implementation": {
+    "new_functions": [
+      "sampleTourCalloutReady",
+      "clickTourCallout"
+    ],
+    "trace_version": "PB-1/v1",
+    "fixture_contract": "onboarding-named-tour/PA2-v2",
+    "sole_changed_old_body": "tourWalk",
+    "readiness": "public intended step=rendered data-step; opening/morphing and pre-action success guards; standard callout getAnimations and two stable rAF rectangle observations; existing12000/15000ms bounds; explicit stay-Next semantics without a new done requirement",
+    "input": "passive isolated observer arm; fresh public/DOM/actionBefore and hit receipts; final isolated dispatch-hit checks same armed DOM reference/connectedness/inertness/rect/hit; one mouseMoved/Pressed/Released sequence only; original trustedClickVerified exact",
+    "trace": "each performed wait/sample/frame/state/arm/hit/dispatch/ack/receipt read or failure stage retains host epoch and browser clock-origin timestamps, return values and actual errors; compatible selector/x/y/receipt fields retained",
+    "tourWalk_deltas": [
+      "add local calloutClick adapter and per-loop trace reset",
+      "replace info Next presence-only wait/shared clickAt with bounded tour-only guard",
+      "replace nondrag ShowMe call and retain fresh helper actionBefore for existing completed-book input proof",
+      "replace stay Next call with stay-next semantics after the unchanged existing900ms sleep",
+      "retain click-time state/action trace separately from explicitly labelled loop-top state on failure"
+    ],
+    "protected_original_function_bodies": 93,
+    "full_original_prefix_suffix_exact": true,
+    "split_drag_bytes": 1257,
+    "split_drag_sha256": "2937fa547d7bc4db4224fa9559c3efe71a36f67f3162dbe2828afdec8e060cc0",
+    "generic_clickAt_transport_window_NAS_S8_judges_binder_lifecycle_exact": true,
+    "body_proof": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/protected-bodies-final-proof.json",
+      "bytes": 27856,
+      "sha256": "f8c88f53724c556a81a4f5a32f18e0ac3c743b1991f9206568a6724b79514c58"
+    },
+    "regions_proof": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/protected-regions-final-proof.json",
+      "bytes": 687,
+      "sha256": "2ad91097d71f1a0aaeffa41d2634534d08a278fbe4789d50cdc9b0c42404abc0"
+    },
+    "fixture_contract_unchanged": true
+  },
+  "controlled_verification": {
+    "no_browser_or_product": true,
+    "no_actual_trusted_product_input": true,
+    "no_old_suite_replay": true,
+    "attempts": [
+      {
+        "attempt": 1,
+        "tool_sha256": "3c52646485e9875257b11a311b5468ae4734ec0fc4374f122ca5f40002c725f4",
+        "purpose": "60 initial new PB1 cases",
+        "passed": 59,
+        "failed": 1,
+        "results": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/attempt-1/results.json",
+          "bytes": 13573,
+          "sha256": "a981480503dd74ce311d09fcbf58bccabb52ce6c56bb356a5cb7328ace7aaedf"
+        }
+      },
+      {
+        "attempt": 2,
+        "tool_sha256": "3c52646485e9875257b11a311b5468ae4734ec0fc4374f122ca5f40002c725f4",
+        "purpose": "only the failed one-off replacement fixture, with complete evidence retention",
+        "passed": 0,
+        "failed": 1,
+        "results": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/attempt-2-failed-case-evidence/results.json",
+          "bytes": 1386,
+          "sha256": "e396e1ef3f9a313c2f1283a419b225c484cea93ac9f708baa69404c0dfb16e7b"
+        }
+      },
+      {
+        "attempt": 3,
+        "tool_sha256": "3c52646485e9875257b11a311b5468ae4734ec0fc4374f122ca5f40002c725f4",
+        "purpose": "corrected continuously changing negative fixture plus three new boundary/wiring cases",
+        "passed": 4,
+        "failed": 0,
+        "results": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/attempt-3/results.json",
+          "bytes": 1666,
+          "sha256": "ae3f3db7d3008cc59006cc0a4e703dedd47a8456d84cff3d3481dd4781690ae8"
+        }
+      },
+      {
+        "attempt": 4,
+        "tool_sha256": "3c52646485e9875257b11a311b5468ae4734ec0fc4374f122ca5f40002c725f4",
+        "purpose": "one new root PB1-R1 actual-helper counterexample before repair",
+        "passed": 0,
+        "failed": 1,
+        "results": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/attempt-4-pb1-r1-first/results.json",
+          "bytes": 1384,
+          "sha256": "a1aaa8d50b07a9cb58ead107e1a442dae09cb0bb8bf350962a2b4711439af5a6"
+        }
+      },
+      {
+        "attempt": 5,
+        "tool_sha256": "c6ad5f4050b1b42194fa122e94400ff4f516ca96e946e45e5f0c66d903adf7e7",
+        "purpose": "PB1-R1 plus exactly21 prior cases reaching the inserted final phase",
+        "passed": 22,
+        "failed": 0,
+        "results": {
+          "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/attempt-5/results.json",
+          "bytes": 7193,
+          "sha256": "091ec3ce7de0754c0c36e315422fb105d16abfa4f11c4f9901354dcb5c9f2bd6"
+        }
+      }
+    ],
+    "prior63": {
+      "tool_sha256": "3c52646485e9875257b11a311b5468ae4734ec0fc4374f122ca5f40002c725f4",
+      "distinct_cases": 63,
+      "prior_pass_outcomes_preserved": 63,
+      "first_failed_assertion_and_diagnostic_failures_retained": true,
+      "59_initial_passes_unrepeated_before_R1": true,
+      "proof": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/case-body-custody.json",
+        "bytes": 29267,
+        "sha256": "243a5289a17447c4eeb2dec3c3813e20c46390ae237df7d5aa6f50de3c001557"
+      }
+    },
+    "PB1_R1": {
+      "first_observed": "FAIL on3c526464; equal-geometry replacement after pre_dispatch_hit sent one sequence; exact trace preserved",
+      "narrow_correction": "433 new bytes in only clickTourCallout final isolated dispatch-hit; all other PB1 bytes exact",
+      "final_observed": "expected UNKNOWN/HOLD at dispatch-hit with target_same=false and no dispatch",
+      "current_edition_selected_cases": 22,
+      "passed": 22,
+      "failed": 0,
+      "selection": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/attempt-5-selection-and-why.json",
+        "bytes": 16861,
+        "sha256": "164af52da2bdb453f272f571c5ae3461b83e83706a0566e69c2e7676f9ef54e2"
+      },
+      "42_prior_nonreaching_paths_not_replayed_or_relabelled": true,
+      "edition_proof": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/PB1-R1-edition-custody.json",
+        "bytes": 714,
+        "sha256": "fe1a7a3ca7dc70a9365753b9376b179e181fe424ab8bf4ea9d17e0aa27d9aedc"
+      }
+    },
+    "history_distinct_case_names": 64,
+    "history_actual_case_invocations": 88,
+    "current_tool_validation_is_only_the_selected22": true,
+    "static_checks": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/static-checks-final.json",
+      "bytes": 1841,
+      "sha256": "ab74c4edb72f573ec862047f4e368d8b1637c063bf38880d92090483a794dd7e"
+    },
+    "syntax_and_tool_whitespace": true,
+    "staged_owned_paths_check_receipt": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/staged-checks.json"
+  },
+  "custody": {
+    "starting_entries": 16050,
+    "original_outside_successor_entries": 16049,
+    "old_raw_roots": 11,
+    "old_raw_files_modes_seals": 843,
+    "original_helper_histories": 105,
+    "new_helper_histories": 0,
+    "unknown_peer_profiles_unchanged": [
+      "ab64d1003f13",
+      "cc80c88970ef",
+      "c4bdf8272f25"
+    ],
+    "peer_resource_free_claim": false,
+    "old_control_artifacts": 47,
+    "helper_configuration_unchanged": true,
+    "source_four_pages_exact": true,
+    "pre_report_proof": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/final-tool-pre-report-custody.json",
+      "bytes": 1574,
+      "sha256": "65abf8d78c1149f004d055a1ff96b4725f91cea59fa8e438d9a7b3926688bbff"
+    },
+    "after_commit_proof": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/final-custody.json"
+  },
+  "historical_product_evidence": {
+    "old_PA3_counts_unchanged": {
+      "absolute": 0,
+      "regressions": 46,
+      "holds": 13,
+      "unverified": 274,
+      "raw_findings": 76,
+      "numeric_contrast_samples": 0
+    },
+    "both_trusted_click_failures_cause": "UNKNOWN",
+    "old_loop_top_receipts": "not click-time evidence",
+    "book_pre_completed_three_outcomes_PA3": "NOT_OBSERVED; no readiness correction success claim",
+    "old8_practice_misattributed_rows": "immutable; not upgraded",
+    "old_run7_wide_attempted": 5,
+    "old_run7_wide_expected": 24,
+    "remaining_wide": 19,
+    "remaining_narrow": 12,
+    "remaining_pairs_status": "NOT_RUN",
+    "new_product_invocations": 0
+  },
+  "criteria_and_ownership": "HOLD unchanged: absolute4.5/unsupported paint/backdrops/transforms/missing ink/renderer; needs/fail/official address marks and absent states; square ink; action geometry; unpaired contexts; Wizard/nonlabel/Jared questions; canon/GLY4/rail/whitespace/source/look/full campaign/landing. Scoped owner look rulings remain separate records and supply no exemptions. Old384@97256a versus4@88ed and method/transient/fallback limits remain bound to old evidence. Glass/Edge performance parked.",
+  "resources": {
+    "real_browser_helper_product_capture_calls": 0,
+    "image_load_or_render_calls": 0,
+    "new_profiles_or_sessions": 0,
+    "no_peer_cleanup": true,
+    "closure_receipt": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/FINAL-RECEIPT.json",
+    "owned_cleanup_receipt": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/OWN-CLEANUP.json",
+    "no_self_next": true
+  },
+  "evidence": {
+    "raw_root": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013",
+    "committable_seal": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/COMMITTABLE-SEAL.json",
+      "bytes": 33139,
+      "sha256": "dc2ce03821687c12c947e4ea489881dce4ea7d4b9e24c1d4f985bb12620600cd"
+    },
+    "committable_files": 150,
+    "committable_bytes": 19444811,
+    "final_seal": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/FINAL-SEAL.json",
+    "final_receipt": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pb1-readiness-20261013/FINAL-RECEIPT.json"
+  }
+}
