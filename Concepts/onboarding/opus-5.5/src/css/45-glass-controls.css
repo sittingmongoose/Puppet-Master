@@ -77,17 +77,19 @@ html:not([data-lg="on"]) #pm-o55-onboarding[data-family="glass"] .o55-seg button
 html:not([data-lg="on"]) .o55t-root[data-family="glass"] .o55t-seg button.o55t-on {
   background: var(--o55g-sel); box-shadow: inset 0 1px 0 var(--o55g-edge-top), 0 1px 3px rgba(0, 0, 0, 0.18), 0 0 0 0.5px var(--o55g-line); }
 
-/* switches: the curved glass switch. A capsule track; a round, glossy knob that travels on a slower spring (Jared,
-   2026-10-11: curved ends, and the switching animation slowed down a bit), the track's colour following it */
+/* switches: the curved glass switch. A capsule track; a round, glossy knob that glides across and lands with a small
+   overshoot (Jared, 2026-10-11: curved ends, and the switching animation slowed down a bit), the track's colour turning
+   with it. (Filmed at 60 fps on the P1000, the Glass layer's spring curve, cubic-bezier(.3, 1.4, .45, 1), covered four
+   fifths of the travel in the first frame and read as a jump; this curve eases in, so the travel is seen.) */
 #pm-o55-onboarding[data-family="glass"] .o55-switch {
   width: 38px; height: 22px; border-radius: 11px; background: var(--o55g-switch-off);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.22), inset 0 0 0 0.5px var(--o55g-line); transition: background-color 420ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.22), inset 0 0 0 0.5px var(--o55g-line); transition: background-color 380ms ease-in-out; }
 #pm-o55-onboarding[data-family="glass"] .o55-toggle.o55-on .o55-switch { background: var(--accent-blue); }
 #pm-o55-onboarding[data-family="glass"] .o55-switch span {
   top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%;
   background: radial-gradient(120% 90% at 35% 22%, #fff, #f1f4f9 55%, #dce3ee);
   box-shadow: inset 0 1px 0 #fff, inset 0 -1px 1px rgba(20, 30, 60, 0.14), 0 2px 5px rgba(0, 8, 30, 0.32);
-  transition: transform 560ms cubic-bezier(0.3, 1.4, 0.45, 1), background 220ms ease; }
+  transition: transform 520ms cubic-bezier(0.45, 0, 0.2, 1.15), background 220ms ease; }
 #pm-o55-onboarding[data-family="glass"] .o55-toggle.o55-on .o55-switch span { transform: translateX(16px); }
 
 /* the tour: its callout and bar are glass sheets with concentric corners; the bar's buttons are clear until the pointer

@@ -376,10 +376,11 @@ html[data-motion="reduced"] .o55-it { transition-duration: 140ms !important; }
 @keyframes o55-cur-lift { 0% { transform: none; } 20% { transform: translateY(6px); } 100% { transform: translateY(-640px); } }
 .o55-f-glass .o55-cur-l { animation: o55-cur-slide-l 1400ms cubic-bezier(0.05, 0.7, 0.1, 1) 350ms both; }
 .o55-f-glass .o55-cur-r { animation: o55-cur-slide-r 1400ms cubic-bezier(0.05, 0.7, 0.1, 1) 350ms both; }
-.o55-f-glass .o55-cur-flare { animation: o55-cur-flare 900ms ease-out 250ms both; }
+.o55-f-glass .o55-cur-flare { transform-origin: 50% 50%; animation: o55-cur-flare 950ms cubic-bezier(0.2, 0.6, 0.3, 1) 250ms both; }
 @keyframes o55-cur-slide-l { to { transform: translateX(-250px); opacity: 0.2; } }
 @keyframes o55-cur-slide-r { to { transform: translateX(250px); opacity: 0.2; } }
-@keyframes o55-cur-flare { 0% { opacity: 0; transform: scaleX(1); } 30% { opacity: 1; transform: scaleX(6); } 100% { opacity: 0; transform: scaleX(40); } }
+/* Glass's seam: a soft band of light that blooms out from the middle as the panes part, and fades */
+@keyframes o55-cur-flare { 0% { opacity: 0; transform: scaleX(0.15); } 30% { opacity: 1; transform: scaleX(0.7); } 100% { opacity: 0; transform: scaleX(3); } }
 .o55-f-retro .o55-cur-px { animation: o55-cur-px 1ms steps(1, end) calc(300ms + var(--k, 0) * 110ms) both; }
 @keyframes o55-cur-px { to { opacity: 0; } }
 /* NieR: a theatre curtain of two panels (54-art-nier.js). Its edges move in held steps and stand only in the gaps

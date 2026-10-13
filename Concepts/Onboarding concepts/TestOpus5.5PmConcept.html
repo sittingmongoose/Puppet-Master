@@ -31163,10 +31163,11 @@ html[data-motion="reduced"] .o55-it { transition-duration: 140ms !important; }
 @keyframes o55-cur-lift { 0% { transform: none; } 20% { transform: translateY(6px); } 100% { transform: translateY(-640px); } }
 .o55-f-glass .o55-cur-l { animation: o55-cur-slide-l 1400ms cubic-bezier(0.05, 0.7, 0.1, 1) 350ms both; }
 .o55-f-glass .o55-cur-r { animation: o55-cur-slide-r 1400ms cubic-bezier(0.05, 0.7, 0.1, 1) 350ms both; }
-.o55-f-glass .o55-cur-flare { animation: o55-cur-flare 900ms ease-out 250ms both; }
+.o55-f-glass .o55-cur-flare { transform-origin: 50% 50%; animation: o55-cur-flare 950ms cubic-bezier(0.2, 0.6, 0.3, 1) 250ms both; }
 @keyframes o55-cur-slide-l { to { transform: translateX(-250px); opacity: 0.2; } }
 @keyframes o55-cur-slide-r { to { transform: translateX(250px); opacity: 0.2; } }
-@keyframes o55-cur-flare { 0% { opacity: 0; transform: scaleX(1); } 30% { opacity: 1; transform: scaleX(6); } 100% { opacity: 0; transform: scaleX(40); } }
+/* Glass's seam: a soft band of light that blooms out from the middle as the panes part, and fades */
+@keyframes o55-cur-flare { 0% { opacity: 0; transform: scaleX(0.15); } 30% { opacity: 1; transform: scaleX(0.7); } 100% { opacity: 0; transform: scaleX(3); } }
 .o55-f-retro .o55-cur-px { animation: o55-cur-px 1ms steps(1, end) calc(300ms + var(--k, 0) * 110ms) both; }
 @keyframes o55-cur-px { to { opacity: 0; } }
 /* NieR: a theatre curtain of two panels (54-art-nier.js). Its edges move in held steps and stand only in the gaps
@@ -31780,6 +31781,27 @@ html[data-o55-nier="on"] .o55t-landing::before { content: ""; flex: none; width:
 html[data-motion="reduced"] #pm-o55-tour :is(.o55t-pod-unit > i, .o55t-npod-sig) { animation: none !important; }
 html[data-motion="reduced"] #pm-o55-tour .o55t-npod-body { transition: none !important; }
 
+/* ---- css/43-chat-labels.css ---- */
+/* The labels on the tour's guided messages in the shell's Chat (Jared via the coordinator, 2026-10-13: the no-pills
+   rule covers the "Guided example" and "Teacher message" tags too). The Teacher adapter (81-tour-chat.js) and Pod 042
+   (84-pod042-chat.js) relabel the message's runtime tag and mark the message (data-o55-guided, data-o55-pod042); here
+   that tag loses the shell's capsule and becomes a label in the approved no-pills vocabulary, as the onboarding's own
+   tags are (.o55-tag, .o55t-trylabel): the word, small and set in capitals, after a 5 px square in the word's own ink,
+   with no box, border or fill. On the reply the ink is the secondary text colour; inside the person's own bubble it
+   is the bubble's text colour (Retro Light keeps its approved readable ink, 03-retro-light-readability.css); Retro sets
+   it in its display face; NieR Mode in its ink and mono face, as its tags are. The shell's other runtime tags (on
+   ordinary messages) are the Chat's own and are left alone. */
+:is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]) .runtime-snapshot {
+  display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
+  font: 700 10.5px/1.5 var(--body-font, Inter, system-ui, sans-serif); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); }
+:is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]) .runtime-snapshot::before {
+  content: ""; flex: none; width: 5px; height: 5px; background: currentColor; }
+:is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]).user .runtime-snapshot { color: inherit; }
+[data-theme^="retro"] :is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]) .runtime-snapshot {
+  font-family: var(--display-font-sm, 'Rajdhani', sans-serif); letter-spacing: 0.08em; }
+html[data-o55-nier="on"] :is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]) .runtime-snapshot {
+  color: var(--o55-nier-ink); font-family: var(--mono-font, 'IBM Plex Mono', monospace); font-weight: 500; letter-spacing: 0.14em; }
+
 /* ---- css/45-glass-controls.css ---- */
 /* Onboarding and the tour in Liquid Glass: the action controls (Jared, 2026-10-11: "update the buttons and switches in
    the onboarding to match your new look"). This is the rollout of the Glass owner's approved direction (pm7-liquid-glass,
@@ -31860,17 +31882,19 @@ html:not([data-lg="on"]) #pm-o55-onboarding[data-family="glass"] .o55-seg button
 html:not([data-lg="on"]) .o55t-root[data-family="glass"] .o55t-seg button.o55t-on {
   background: var(--o55g-sel); box-shadow: inset 0 1px 0 var(--o55g-edge-top), 0 1px 3px rgba(0, 0, 0, 0.18), 0 0 0 0.5px var(--o55g-line); }
 
-/* switches: the curved glass switch. A capsule track; a round, glossy knob that travels on a slower spring (Jared,
-   2026-10-11: curved ends, and the switching animation slowed down a bit), the track's colour following it */
+/* switches: the curved glass switch. A capsule track; a round, glossy knob that glides across and lands with a small
+   overshoot (Jared, 2026-10-11: curved ends, and the switching animation slowed down a bit), the track's colour turning
+   with it. (Filmed at 60 fps on the P1000, the Glass layer's spring curve, cubic-bezier(.3, 1.4, .45, 1), covered four
+   fifths of the travel in the first frame and read as a jump; this curve eases in, so the travel is seen.) */
 #pm-o55-onboarding[data-family="glass"] .o55-switch {
   width: 38px; height: 22px; border-radius: 11px; background: var(--o55g-switch-off);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.22), inset 0 0 0 0.5px var(--o55g-line); transition: background-color 420ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.22), inset 0 0 0 0.5px var(--o55g-line); transition: background-color 380ms ease-in-out; }
 #pm-o55-onboarding[data-family="glass"] .o55-toggle.o55-on .o55-switch { background: var(--accent-blue); }
 #pm-o55-onboarding[data-family="glass"] .o55-switch span {
   top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%;
   background: radial-gradient(120% 90% at 35% 22%, #fff, #f1f4f9 55%, #dce3ee);
   box-shadow: inset 0 1px 0 #fff, inset 0 -1px 1px rgba(20, 30, 60, 0.14), 0 2px 5px rgba(0, 8, 30, 0.32);
-  transition: transform 560ms cubic-bezier(0.3, 1.4, 0.45, 1), background 220ms ease; }
+  transition: transform 520ms cubic-bezier(0.45, 0, 0.2, 1.15), background 220ms ease; }
 #pm-o55-onboarding[data-family="glass"] .o55-toggle.o55-on .o55-switch span { transform: translateX(16px); }
 
 /* the tour: its callout and bar are glass sheets with concentric corners; the bar's buttons are clear until the pointer
@@ -138560,11 +138584,18 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         + [[-100, 0, 'pink'], [100, 0, 'lav'], [0, 30, 'mint']].map(([x, y, c]) => `${glow(ctx, c, 12, x, y)}<circle cx="${x}" cy="${y}" r="3" fill="${p.core}"/>`).join('') + '</g>';
     },
     helper,
-    /* the finale's curtain: two frosted panes slide apart, light flaring at the seam */
+    /* the finale's curtain: two tall panes of frosted glass, each lit along the edge where they meet and crossed by a
+       broad reflection, slide apart; light blooms softly out of the seam and fades (a gradient, so it has no hard edge:
+       the earlier solid white bar, scaled from its left edge, swept across the stage like a glitch) */
     curtain(ctx) {
-      const p = ctx.pal, pane = (flip) => `<g class="o55-cur o55-cur-${flip ? 'r' : 'l'}"><rect x="${flip ? 0 : -240}" y="-300" width="240" height="600" fill="${p.dark ? 'rgba(210,200,255,0.30)' : 'rgba(255,255,255,0.55)'}" stroke="${ctx.url('edge')}" stroke-width="2"/>`
-        + `<path d="M${flip ? 30 : -210} -260 L${flip ? 110 : -130} 260" stroke="#fff" stroke-width="10" opacity="0.18"/></g>`;
-      return `<g class="o55-cur-all">${pane(false)}${pane(true)}<rect class="o55-cur o55-cur-flare" x="-3" y="-300" width="6" height="600" fill="#fff"/></g>`;
+      const p = ctx.pal, pane = (flip) => {
+        const x0 = flip ? 0 : -240, edge = flip ? 1.2 : -1.2, X = (x) => (flip ? x : -x);
+        return `<g class="o55-cur o55-cur-${flip ? 'r' : 'l'}"><rect x="${x0}" y="-300" width="240" height="600" fill="${p.dark ? 'rgba(140,150,215,0.34)' : 'rgba(255,255,255,0.62)'}"/>`
+          + `<rect x="${x0}" y="-300" width="240" height="600" fill="${ctx.url('glass')}"/>`
+          + `<path d="M${X(46)} -300 L${X(132)} 300" stroke="#fff" stroke-width="26" opacity="${p.dark ? 0.06 : 0.16}"/><path d="M${X(84)} -300 L${X(170)} 300" stroke="#fff" stroke-width="5" opacity="${p.dark ? 0.1 : 0.24}"/>`
+          + `<path d="M${edge} -300 V300" stroke="#fff" stroke-width="2.2" opacity="0.75"/><path d="M${X(238.5)} -300 V300" stroke="${ctx.url('edge')}" stroke-width="1.5"/></g>`;
+      };
+      return `<g class="o55-cur-all">${pane(false)}${pane(true)}<rect class="o55-cur o55-cur-flare" x="-40" y="-300" width="80" height="600" fill="${ctx.url('seam')}"/></g>`;
     },
     /* the stage: a thick disc of glass under the spotlight. Its top face holds the light (the ripples run on it), its
        front edge is a band of glass with a lit rim and a few long reflections, and a faint caustic falls in front */
@@ -138684,6 +138715,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         /* light mode: the edge runs from a white glint into the tint deepened toward the ink, so glass keeps its outline
            on a pale sky (a pure tint edge washed out there) */
         + `<linearGradient id="${u}-edge" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="${p.e0}"/><stop offset="0.55" stop-color="${p.dark ? '#fff' : A.mix(p.lav, p.text, 0.38)}" stop-opacity="${p.dark ? p.e1 : 0.9}"/><stop offset="1" stop-color="${p.dark ? '#fff' : A.mix(p.pink, p.text, 0.32)}" stop-opacity="${p.dark ? p.e0 * 0.6 : 0.85}"/></linearGradient>`
+        + `<linearGradient id="${u}-seam" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="0.5" stop-color="#fff" stop-opacity="${p.dark ? 0.8 : 0.95}"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>`
         + `<linearGradient id="${u}-shelf" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${p.dark ? p.core : A.mix(p.lav, p.text, 0.3)}" stop-opacity="0.95"/><stop offset="0.55" stop-color="${p.lav}" stop-opacity="0.55"/><stop offset="1" stop-color="${p.lav}" stop-opacity="0"/></linearGradient>`
         + `<linearGradient id="${u}-shelfR" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="${p.dark ? p.core : A.mix(p.lav, p.text, 0.3)}" stop-opacity="0.95"/><stop offset="0.55" stop-color="${p.lav}" stop-opacity="0.55"/><stop offset="1" stop-color="${p.lav}" stop-opacity="0"/></linearGradient>`
         + `<linearGradient id="${u}-fil" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${p.pink}"/><stop offset="1" stop-color="${p.lav}"/></linearGradient>`

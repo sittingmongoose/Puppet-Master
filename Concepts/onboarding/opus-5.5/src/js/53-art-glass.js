@@ -124,11 +124,18 @@
         + [[-100, 0, 'pink'], [100, 0, 'lav'], [0, 30, 'mint']].map(([x, y, c]) => `${glow(ctx, c, 12, x, y)}<circle cx="${x}" cy="${y}" r="3" fill="${p.core}"/>`).join('') + '</g>';
     },
     helper,
-    /* the finale's curtain: two frosted panes slide apart, light flaring at the seam */
+    /* the finale's curtain: two tall panes of frosted glass, each lit along the edge where they meet and crossed by a
+       broad reflection, slide apart; light blooms softly out of the seam and fades (a gradient, so it has no hard edge:
+       the earlier solid white bar, scaled from its left edge, swept across the stage like a glitch) */
     curtain(ctx) {
-      const p = ctx.pal, pane = (flip) => `<g class="o55-cur o55-cur-${flip ? 'r' : 'l'}"><rect x="${flip ? 0 : -240}" y="-300" width="240" height="600" fill="${p.dark ? 'rgba(210,200,255,0.30)' : 'rgba(255,255,255,0.55)'}" stroke="${ctx.url('edge')}" stroke-width="2"/>`
-        + `<path d="M${flip ? 30 : -210} -260 L${flip ? 110 : -130} 260" stroke="#fff" stroke-width="10" opacity="0.18"/></g>`;
-      return `<g class="o55-cur-all">${pane(false)}${pane(true)}<rect class="o55-cur o55-cur-flare" x="-3" y="-300" width="6" height="600" fill="#fff"/></g>`;
+      const p = ctx.pal, pane = (flip) => {
+        const x0 = flip ? 0 : -240, edge = flip ? 1.2 : -1.2, X = (x) => (flip ? x : -x);
+        return `<g class="o55-cur o55-cur-${flip ? 'r' : 'l'}"><rect x="${x0}" y="-300" width="240" height="600" fill="${p.dark ? 'rgba(140,150,215,0.34)' : 'rgba(255,255,255,0.62)'}"/>`
+          + `<rect x="${x0}" y="-300" width="240" height="600" fill="${ctx.url('glass')}"/>`
+          + `<path d="M${X(46)} -300 L${X(132)} 300" stroke="#fff" stroke-width="26" opacity="${p.dark ? 0.06 : 0.16}"/><path d="M${X(84)} -300 L${X(170)} 300" stroke="#fff" stroke-width="5" opacity="${p.dark ? 0.1 : 0.24}"/>`
+          + `<path d="M${edge} -300 V300" stroke="#fff" stroke-width="2.2" opacity="0.75"/><path d="M${X(238.5)} -300 V300" stroke="${ctx.url('edge')}" stroke-width="1.5"/></g>`;
+      };
+      return `<g class="o55-cur-all">${pane(false)}${pane(true)}<rect class="o55-cur o55-cur-flare" x="-40" y="-300" width="80" height="600" fill="${ctx.url('seam')}"/></g>`;
     },
     /* the stage: a thick disc of glass under the spotlight. Its top face holds the light (the ripples run on it), its
        front edge is a band of glass with a lit rim and a few long reflections, and a faint caustic falls in front */
@@ -248,6 +255,7 @@
         /* light mode: the edge runs from a white glint into the tint deepened toward the ink, so glass keeps its outline
            on a pale sky (a pure tint edge washed out there) */
         + `<linearGradient id="${u}-edge" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="${p.e0}"/><stop offset="0.55" stop-color="${p.dark ? '#fff' : A.mix(p.lav, p.text, 0.38)}" stop-opacity="${p.dark ? p.e1 : 0.9}"/><stop offset="1" stop-color="${p.dark ? '#fff' : A.mix(p.pink, p.text, 0.32)}" stop-opacity="${p.dark ? p.e0 * 0.6 : 0.85}"/></linearGradient>`
+        + `<linearGradient id="${u}-seam" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="0.5" stop-color="#fff" stop-opacity="${p.dark ? 0.8 : 0.95}"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>`
         + `<linearGradient id="${u}-shelf" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${p.dark ? p.core : A.mix(p.lav, p.text, 0.3)}" stop-opacity="0.95"/><stop offset="0.55" stop-color="${p.lav}" stop-opacity="0.55"/><stop offset="1" stop-color="${p.lav}" stop-opacity="0"/></linearGradient>`
         + `<linearGradient id="${u}-shelfR" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="${p.dark ? p.core : A.mix(p.lav, p.text, 0.3)}" stop-opacity="0.95"/><stop offset="0.55" stop-color="${p.lav}" stop-opacity="0.55"/><stop offset="1" stop-color="${p.lav}" stop-opacity="0"/></linearGradient>`
         + `<linearGradient id="${u}-fil" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${p.pink}"/><stop offset="1" stop-color="${p.lav}"/></linearGradient>`
