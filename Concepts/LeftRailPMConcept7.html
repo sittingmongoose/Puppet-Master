@@ -39095,6 +39095,18 @@ html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(-
 .pmt-cz-navn { min-width: 0; font-size: 10.5px; font-weight: 700; color: var(--pmt-cz-accent); }
 .pmt-cz-navn:empty { display: none; }
 
+/* the docked preview: the same live view, small, under the group index while the preview's own place is away */
+.pmt-cz-dock { position: absolute; right: 0; top: calc(100% + 8px); z-index: 4; width: min(46%, 372px); height: 170px; overflow: hidden; pointer-events: none;
+  border: 1px solid var(--pmt-cz-line-2); border-radius: var(--pmt-cz-r); background: var(--pmt-cz-ground); box-shadow: 0 10px 28px rgb(0 0 0 / .32); }
+.pmt-cz-docktitle { position: absolute; left: 0; right: 0; top: 0; height: 22px; padding: 4px 9px 0; font: 650 9.5px/1.3 var(--pm-font-code, ui-monospace, monospace);
+  letter-spacing: .14em; text-transform: uppercase; color: var(--pmw-text-2, inherit); border-bottom: 1px solid var(--pmt-cz-line); background: var(--pmt-cz-plate); }
+.pmt-cz-dockbox { position: absolute; inset: 22px 0 0 0; }
+.pmt-cz-dockbox > .pmt-root { position: absolute; inset: 0; }
+.pmt-cz-dock.pmt-in { animation: pmt-m-fade-in var(--pmt-t-in, 120ms) var(--pmt-ease-fade, linear) both; }
+.pmt-cz-nav { position: sticky; }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(--o55-nier-shadow-rgb), .2); }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-dock { border-width: 2px; box-shadow: 4px 4px 0 color-mix(in srgb, var(--pmt-cz-accent) 28%, transparent); }
+
 /* ---- groups ---- */
 .pmt-cz-group { display: grid; gap: 12px; min-width: 0; scroll-margin-top: 52px; }
 .pmt-cz-ghead { display: flex; align-items: baseline; gap: 10px; padding-bottom: 7px; border-bottom: 1px solid var(--pmt-cz-line); }
@@ -39244,6 +39256,13 @@ html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(-
 .pmt-cz.pmt-out .pmt-cz-dialog { transform-origin: 50% 0; animation: var(--pmt-a-pop-out, pmt-m-fade-out) var(--pmt-t-out, 100ms) var(--pmt-ease-exit, linear) both; }
 .pmt-cz-body.pmt-rescope { animation: var(--pmt-a-rescope, pmt-m-dim-in) calc(var(--pmt-t-swap, 120ms) * 1.1) var(--pmt-ease-fade, linear) both; }
 html[data-motion="reduced"] .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set, .pmt-cz-chipbox, .pmt-cz-cells > i) { transition: none; }
+/* NieR's slice part opens the screen from a thin line at its top in NieR's eight steps. A screen this tall unrolls
+   under a clip instead of the popovers' scaleY, so its text is never squashed on the way (seen frame by frame) */
+@keyframes pmt-cz-slice-in { from { clip-path: inset(0 0 calc(100% - 2px) 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes pmt-cz-slice-out { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 calc(100% - 2px) 0); } }
+@media (prefers-reduced-motion: no-preference) {
+  html[data-o55-nier="on"][data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .pmt-cz.pmt-cz[data-pmt-look] { --pmt-a-pop-in: pmt-cz-slice-in; --pmt-a-pop-out: pmt-cz-slice-out; }
+}
 
 /* ---- narrow: the dialog under 640 px stacks; under 420 px one column ---- */
 @container pmt-cz (max-width: 640px) {
@@ -39257,6 +39276,7 @@ html[data-motion="reduced"] .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set, .pmt-cz-chipb
   .pmt-cz-body { padding: 14px 14px 18px; }
 }
 @container pmt-cz (max-width: 440px) {
+  .pmt-cz-dock { width: calc(100% - 4px); height: 132px; }
   .pmt-cz-title { font-size: 17px; }
   .pmt-cz-lead { display: none; }
   .pmt-cz-sets { grid-template-columns: 1fr 1fr; }
@@ -39343,6 +39363,7 @@ html[data-motion="reduced"] .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set, .pmt-cz-chipb
   --pmt-cz-line: color-mix(in srgb, var(--pmt-cz-accent) 32%, transparent);
   --pmt-cz-line-2: color-mix(in srgb, var(--pmt-cz-accent) 64%, transparent);
   --pmt-cz-scrim: rgb(0 0 0 / .62);
+  --pmt-cz-ring: var(--pmt-cz-accent);
   font-family: var(--body-font, 'IBM Plex Mono', ui-monospace, monospace);
 }
 .pmt-cz[data-pmt-look="retro"][data-pmt-mode="light"] { --pmt-cz-accent: color-mix(in srgb, var(--accent-lime, #1d8f3a) 72%, #000); --pmt-cz-scrim: color-mix(in srgb, var(--background, #f4f1e8) 64%, transparent); }
@@ -191836,7 +191857,8 @@ var T = {};
       var n = typeof v === 'number' ? v : parseFloat(String(v).replace(',', '.'));
       if (!isFinite(n) || !/^\s*-?[\d.,]+\s*(px|%)?\s*$/.test(String(v))) return undefined;
       n = Math.min(max, Math.max(min, n));
-      return step ? Math.round(n / step) * step : n;
+      /* to the step, without the binary remainder (1.45 stays 1.45, not 1.4500000000000002) */
+      return +(step ? Math.round(n / step) * step : n).toFixed(4);
     };
   }
   function bool(v) { if (v === true || v === 'true' || v === 'On' || v === 'on') return true; if (v === false || v === 'false' || v === 'Off' || v === 'off') return false; return undefined; }
@@ -191917,7 +191939,8 @@ var T = {};
     schemePair: { id: S + 'scheme-pair', in: bool, out: boolOut },
     minContrast: { id: S + 'min-contrast', in: WORDS.contrast.in, out: WORDS.contrast.out },
     font: { id: S + 'font-family', in: fontIn, out: fontOut, custom: true },
-    fontSize: { id: S + 'font-size', in: num(8, 32, 0.5), out: numOut },
+    /* no step: a face's own size need not sit on the half pixel (Departure Mono's is 13.75) */
+    fontSize: { id: S + 'font-size', in: num(8, 32), out: numOut },
     fontWeight: { id: S + 'font-weight', in: num(200, 800, 100), out: numOut },
     lineHeight: { id: S + 'line-height', in: num(1, 2, 0.05), out: numOut },
     letterSpacing: { id: S + 'letter-spacing', in: num(-1, 3, 0.25), out: numOut },
@@ -192167,7 +192190,9 @@ var T = {};
     var sid = f('scheme'), s;
     if (sid === 'follow:light' || sid === 'follow:dark') s = scheme(L[sid.slice(7)]);
     else if (sid === 'follow' || !scheme(sid)) s = scheme(L[mode]) || scheme(mode === 'light' ? 'one-half-light' : 'one-half-dark');
-    else { s = scheme(sid); if (f('schemePair')) s = pairOf(s, mode); }
+    /* a scheme being previewed (hovered in the Customize screen) shows as it is: "Switch with light and dark" never
+       shows a hovered light scheme as its dark sibling */
+    else { s = scheme(sid); if (f('schemePair') && !(view && view.previewAppearance && view.previewAppearance.scheme !== undefined)) s = pairOf(s, mode); }
     if (!s) s = (T.SCHEMES || [])[0];
     if (s && /^pm-yorha/.test(s.id) && look.nier) s = nierScheme(s, s.appearance === 'dark');
     var bgKind = f('background'); if (bgKind === 'follow') bgKind = L.background === 'soft' || L.background === 'paper' ? 'theme' : L.background;
@@ -201984,7 +202009,9 @@ var T = {};
       '<button type="button" class="pmt-textbtn" data-act="degauss" hidden' + tagged('Degauss', 'The tube wobbles and settles once, as a CRT does when you press its degauss button') + '>Degauss</button></div>' +
       '<p class="pmt-cz-note" data-note-side hidden></p></aside></div>';
     /* the group index */
-    html += '<nav class="pmt-cz-nav" aria-label="Groups">' + GROUPS.map(function (g) { return '<button type="button" class="pmt-textbtn" data-jump="' + g[0] + '"' + NOTAG + '>' + esc(g[1]) + '<span class="pmt-cz-navn" data-navn="' + g[0] + '"></span></button>'; }).join('') + '</nav>';
+    html += '<nav class="pmt-cz-nav" aria-label="Groups">' + GROUPS.map(function (g) { return '<button type="button" class="pmt-textbtn" data-jump="' + g[0] + '"' + NOTAG + '>' + esc(g[1]) + '<span class="pmt-cz-navn" data-navn="' + g[0] + '"></span></button>'; }).join('') +
+      /* the preview docks here, small, while its own place is scrolled away */
+      '<div class="pmt-cz-dock" data-dock hidden aria-hidden="true"><span class="pmt-cz-docktitle">Preview</span><div class="pmt-cz-dockbox" data-dock-box></div></div></nav>';
     /* colours */
     html += '<section class="pmt-cz-group" data-group="colors" aria-labelledby="pmt-cz-g-colors">' + ghead('colors', 'Colors', 'One catalog with the code editor. Hover a scheme to see it here and on the terminal; click to keep it.') +
       '<div class="pmt-cz-findrow"><input class="pmt-cz-search pmt-pop-search" type="search" placeholder="Find a scheme" aria-label="Find a scheme"' + NOTAG + '><span class="pmt-cz-findn" data-find-n></span></div>' +
@@ -201992,6 +202019,7 @@ var T = {};
       '<div class="pmt-cz-row">' + chip('schemePair', 'Switch with light and dark', 'A scheme you pick swaps for its family’s other version when the app changes mode.') +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Minimum text contrast</span>' + seg('minContrast', [[1, 'Off'], [3, '3:1'], [4.5, '4.5:1'], [7, '7:1']], 'Minimum text contrast') +
       '<span class="pmt-cz-fhelp">Text moves lighter or darker to stay readable; its hue never changes.</span></div></div>' +
+      '<p class="pmt-cz-note" data-note-colors hidden></p>' +
       '<div class="pmt-cz-import"><button type="button" class="pmt-textbtn" data-act="import"' + tagged('Import a scheme', 'Adds a colour scheme from a file; it stays on this computer') + '>Import a scheme…</button>' +
       '<span class="pmt-cz-fhelp">iTerm2, Windows Terminal, kitty, Ghostty, Alacritty, base16 or base24, Xresources</span>' +
       '<p class="pmt-cz-error" data-import-error role="alert" hidden></p></div></section>';
@@ -202194,6 +202222,8 @@ var T = {};
       /* notes */
       note('[data-note-face]', R.font.local && !R.font.local.installed ? R.font.label + ' is not on this computer, so JetBrains Mono shows in its place.' :
         R.font.axes && R.font.axes.unavailable ? 'This browser cannot set Sixtyfour’s axes, so its default draws.' : '');
+      if (val('schemePair')) pairNote = '';
+      note('[data-note-colors]', pairNote);
       note('[data-note-trail]', R.look.reduced ? 'Reduced Motion is on, so the cursor has no trail and does not blink.' :
         isNier && !/(^|\s)sweep(\s|$)/.test(document.documentElement.getAttribute('data-o55-nier-parts') || '') ? 'NieR’s trace needs its Scan sweep part; with it removed the trail stays off.' : '');
       var pic = String(val('bgImageData') || '');
@@ -202258,7 +202288,8 @@ var T = {};
       else left = Math.round((W - width) / 2);
       dialog.style.left = left + 'px'; dialog.style.width = width + 'px';
       var top = narrow ? 8 : Math.max(M, Math.min(56, H * 0.06));
-      dialog.style.top = top + 'px'; dialog.style.maxHeight = (H - top - (narrow ? 8 : M)) + 'px';
+      /* the page's status strip stays clear (the concept's demo badge sits above every overlay there) */
+      dialog.style.top = top + 'px'; dialog.style.maxHeight = (H - top - 30) + 'px';
       dialog.classList.toggle('pmt-cz-beside', !narrow && hole && (left >= r.right || left + width <= r.left));
       /* the scrim around the terminal's rectangle (none when it is not on screen) */
       var s = root.querySelectorAll('.pmt-cz-scrim > i'), x0 = hole ? Math.max(0, r.left) : 0, y0 = hole ? Math.max(0, r.top) : 0, x1 = hole ? Math.min(W, r.right) : 0, y1 = hole ? Math.min(H, r.bottom) : 0;
@@ -202284,7 +202315,15 @@ var T = {};
       }
       var value = /^-?[\d.]+$/.test(raw) && key !== 'scheme' && key !== 'font' ? Number(raw) : raw;
       if (key === 'scheme') { clearTimeout(intent); A().endPreview(v); previewing = null; v.recolorFrom.apply(v, centre(b)); }
-      put(key, value);
+      /* a scheme of the other appearance (a light one while the app is dark) is shown as picked: "Switch with light and
+         dark" would show its sibling instead, so it turns off for this scope, and the screen says so */
+      var pick = key === 'scheme' && value !== 'follow' ? A().scheme(value) : null, mode = eff().look.mode === 'light' ? 'light' : 'dark';
+      pairNote = '';
+      if (pick && val('schemePair') && pick.appearance !== mode && A().pairOf(pick, mode) !== pick) {
+        write({ scheme: value, schemePair: false });
+        pairNote = 'Switch with light and dark is now off, so ' + pick.name + ' stays while the app is ' + mode + '.';
+        paint();
+      } else put(key, value);
       moveInk(key, before);
       if (key === 'scheme') v.announce('Scheme: ' + b.querySelector('.pmt-cz-tname').textContent);
       if ((key === 'cursorShape' || key === 'cursorTrail') && preview) preview.moveCursor();
@@ -202327,9 +202366,8 @@ var T = {};
     function quickSet(id) {
       var s = SETS.filter(function (x) { return x.id === id; })[0]; if (!s) return;
       if (!s.patch) { A().reset(scope, v); syncPreview(); paint(); return; }
-      var patch = {}; COUNTED.forEach(function (k) { if (mine(k)) patch[k] = null; });
-      Object.keys(s.patch).forEach(function (k) { patch[k] = s.patch[k]; });
-      write(patch);
+      /* a set changes its own fields and leaves the rest of this scope's choices (the scheme you picked stays) */
+      write(Object.assign({}, s.patch));
       if (s.patch.cursorTrail && preview) preview.moveCursor();
     }
     /* sliders: shown while they move, written when let go */
@@ -202363,7 +202401,7 @@ var T = {};
     }
     /* a scheme previews when the pointer rests on it (hover intent, 110 ms) or the arrow keys reach it; leaving the
        list or Escape puts the chosen one back (SPEC section 6) */
-    var INTENT_MS = 110, intent = 0, previewing = null;
+    var INTENT_MS = 110, intent = 0, previewing = null, pairNote = '';
     function previewSoon(tileEl, ms) {
       clearTimeout(intent);
       var id = tileEl.getAttribute('data-value');
@@ -202486,7 +202524,7 @@ var T = {};
     var ro = typeof ResizeObserver === 'function' ? new ResizeObserver(function (list) {
       list.forEach(function (en) { if (en.target === v.root) place(); else if (pv) { pv.layout(); preview.select(); } });
     }) : null;
-    if (ro) { ro.observe(v.root); if (pv) ro.observe(root.querySelector('[data-pv-box]')); }
+    if (ro) { ro.observe(v.root); if (pv) { ro.observe(root.querySelector('[data-pv-box]')); ro.observe(root.querySelector('[data-dock-box]')); } }
     function close(noFocus) {
       if (v.pop !== root) return;
       v.closeAppearance(noFocus);
@@ -202496,10 +202534,25 @@ var T = {};
       if (offChange) offChange();
       window.removeEventListener('resize', onResize);
       if (ro) ro.disconnect();
+      if (io) io.disconnect();
       if (preview) preview.dispose();
       root.setAttribute('aria-hidden', 'true'); root.inert = true;
       if (noFocus) root.remove(); else T.Motion.leave(root, function () { root.remove(); });
     };
+    /* the preview follows you down the screen: when less than 40 % of its own place shows, the same live view moves
+       into the dock under the group index, and back when its place returns */
+    var dock = root.querySelector('[data-dock]'), dockBox = root.querySelector('[data-dock-box]'), homeBox = root.querySelector('[data-pv-box]'), io = null;
+    function dockTo(on) {
+      if (!pv || !!on === !dock.hidden) return;
+      (on ? dockBox : homeBox).appendChild(pv.root);
+      dock.hidden = !on; root.classList.toggle('pmt-cz-docked', !!on);
+      if (on) T.Motion.play(dock);
+      pv.layout(true); preview.select();
+    }
+    if (pv && typeof IntersectionObserver === 'function') {
+      io = new IntersectionObserver(function (list) { var en = list[list.length - 1]; dockTo(en.intersectionRatio < 0.4); }, { root: body, threshold: [0, 0.4, 1] });
+      io.observe(root.querySelector('.pmt-cz-preview'));
+    }
     root._pmtPreview = preview; /* the preview, for checks that read what it draws */
     place();
     if (pv) { pv.layout(true); preview.select(); }
