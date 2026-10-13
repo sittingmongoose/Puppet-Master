@@ -16,7 +16,8 @@
        Follow look, the seven built-in faces and System monospace). A value stored from the earlier lists still shows as
        the current choice, and still means what it said (42-appearance.js reads it).
      - Import a Color Scheme imports into the terminal's catalog and makes it Terminal Colors (UCC-201's
-       cmd.terminal.appearance.import_scheme), instead of the generic example panel. */
+       cmd.terminal.appearance.import_scheme), instead of the generic example panel.
+     - the Terminal look group's owner line opens the terminal's Customize screen (Open Customize). */
 (function o55TerminalLookModule() {
   const PREFIX = 'code.terminal.';
   const CUSTOM_ROWS = ['code.terminal.theme', 'code.terminal.font-family'];
@@ -94,6 +95,28 @@
       if (set({ 'code.terminal.theme': r.id })) showToast('Saved', `Terminal colors: ${r.name}.`, 'success', 2600);
       else showToast('Imported', `${r.name} is in the terminal's schemes. Settings could not be changed here.`, 'warning', 4200);
     } });
+  });
+
+  /* ---------- the Customize screen from Settings: the Terminal look group's owner line ----------
+     Settings' rows set one field at a time; the terminal's Customize screen shows them on a live preview. Its button
+     goes Home and opens the screen on the terminal in view (the one last typed in), in "All terminals", the scope these
+     rows hold. With no terminal on Home it opens one first. */
+  const look = PLACEMENT && PLACEMENT.sections && PLACEMENT.sections['editor-terminal-look'];
+  if (look && !look.owner) look.owner = { text: 'See every look option on a live terminal, with a preview, in the terminal’s Customize screen.', buttons: [{ label: 'Open Customize', action: 'pm51-o55-terminal-customize' }] };
+  PM51.on('o55-terminal-customize', () => {
+    const P = window.PMT;
+    if (!P || typeof P.sessions !== 'function' || typeof P.view !== 'function') { showToast('Not available', 'The terminal is not loaded on this page.', 'warning', 3600); return; }
+    const home = document.getElementById('tab-dashboard'); if (home) home.click();
+    const shown = () => P.sessions().map(s => P.view(s.id)).filter(v => v && v.root && v.root.isConnected && v.root.getBoundingClientRect().width > 0)
+      .sort((a, b) => (b.lastInput || 0) - (a.lastInput || 0))[0];
+    let tries = 0;
+    const go = () => {
+      const v = shown();
+      if (v && typeof v.openAppearance === 'function') { v._apScope = 'app'; if (!v.pop) v.openAppearance(); return; }
+      if (tries === 3 && typeof P.open === 'function') P.open({ kind: 'terminal' });
+      if (++tries < 30) setTimeout(go, 100); else showToast('No terminal to show', 'Open a terminal on Home, then choose Appearance in its menu.', 'info', 3600);
+    };
+    setTimeout(go, 80);
   });
 
   seen = (() => { try { return JSON.stringify(values()); } catch (e) { return ''; } })();
