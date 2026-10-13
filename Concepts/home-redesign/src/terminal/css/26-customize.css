@@ -215,16 +215,20 @@ html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(-
 .pmt-cz-chipmore { display: grid; gap: 8px; padding: 2px 12px 11px 38px; }
 .pmt-cz-mini { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; cursor: pointer; }
 .pmt-cz-mini input { accent-color: var(--pmt-cz-accent); width: 15px; height: 15px; margin: 0; }
-/* the effect chips' small pictures */
+/* the effect chips' small pictures: a few lines of text in this scope's own scheme (--pmt-cz-sfg on --pmt-cz-sbg, set
+   by the screen), with the effect laid on them */
 .pmt-cz-art { display: none; flex: none; width: 58px; margin: 9px 9px 9px 0; border-radius: var(--pmt-cz-r-in); border: 1px solid color-mix(in srgb, var(--pmw-text, #fff) 12%, transparent);
-  background: #0f1512; }
+  --pmt-cz-shade: rgb(0 0 0 / .5);
+  --pmt-cz-text: linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 10px / 28px 3px no-repeat, linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 18px / 38px 3px no-repeat,
+    linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 26px / 20px 3px no-repeat, linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 34px / 32px 3px no-repeat;
+  background: var(--pmt-cz-text), var(--pmt-cz-sbg, #111); }
 .pmt-cz-fxchips .pmt-cz-art { display: block; }
-.pmt-cz-art-scanlines { background: repeating-linear-gradient(to bottom, #2c9b52 0 2px, #0d1a11 2px 3px); }
-.pmt-cz-art-glow { background: radial-gradient(closest-side, #8dffb0, #2c9b52 45%, #0d1a11 80%); }
-.pmt-cz-art-crt { background: radial-gradient(120% 95% at 50% 50%, #2a7a49 0 52%, #0b130d 72%); border-radius: 30% / 22%; }
-.pmt-cz-art-flicker { background: linear-gradient(90deg, #2c9b52 0 50%, #278a49 50% 100%); }
-.pmt-cz-art-inactiveDim { background: linear-gradient(90deg, var(--pmt-cz-ground) 0 50%, color-mix(in srgb, var(--pmt-cz-ground) 55%, #000) 50%); }
-.pmt-cz-art-smoothScroll { background: repeating-linear-gradient(to bottom, color-mix(in srgb, var(--pmw-text, #fff) 34%, transparent) 0 2px, transparent 2px 7px), var(--pmt-cz-ground); }
+.pmt-cz-art-scanlines { background: repeating-linear-gradient(to bottom, transparent 0 1.5px, var(--pmt-cz-shade) 1.5px 3px), var(--pmt-cz-text), var(--pmt-cz-sbg, #111); }
+.pmt-cz-art-glow { background: var(--pmt-cz-text), radial-gradient(closest-side, color-mix(in srgb, var(--pmt-cz-sglow, #8f8) 55%, transparent), transparent), var(--pmt-cz-sbg, #111); }
+.pmt-cz-art-crt { border-radius: 26% / 20%; box-shadow: inset 0 0 12px var(--pmt-cz-shade), inset 0 0 0 2px color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 18%, transparent); }
+.pmt-cz-art-flicker { background: linear-gradient(90deg, color-mix(in srgb, var(--pmt-cz-sfg, #fff) 14%, transparent) 0 50%, transparent 50%), var(--pmt-cz-text), var(--pmt-cz-sbg, #111); }
+.pmt-cz-art-inactiveDim { background: linear-gradient(90deg, transparent 0 50%, color-mix(in srgb, var(--pmt-cz-sbg, #111) 62%, transparent) 50%), var(--pmt-cz-text), var(--pmt-cz-sbg, #111); }
+.pmt-cz-art-smoothScroll { background: linear-gradient(to bottom, var(--pmt-cz-sbg, #111), transparent 34%, transparent 66%, var(--pmt-cz-sbg, #111)), var(--pmt-cz-text), var(--pmt-cz-sbg, #111); }
 
 /* ---- sliders: the track fills to the value ---- */
 .pmt-cz-slider { display: grid; grid-template-columns: minmax(84px, auto) minmax(0, 1fr) 54px; align-items: center; gap: 10px; min-width: 0; font-size: 12px; }
@@ -295,7 +299,8 @@ html[data-motion="reduced"] .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set, .pmt-cz-chipb
   background-size: 14px 14px; background-position: 7px 7px;
   box-shadow: 0 24px 70px rgb(40 24 70 / .32), 0 2px 0 rgb(255 255 255 / .06) inset;
 }
-.pmt-cz[data-pmt-look="friendly"] :is(.pmt-cz-head, .pmt-cz-foot, .pmt-cz-nav) { background: color-mix(in srgb, var(--pmt-cz-plate) 88%, transparent); }
+.pmt-cz[data-pmt-look="friendly"] :is(.pmt-cz-head, .pmt-cz-foot) { background: color-mix(in srgb, var(--pmt-cz-plate) 88%, transparent); }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz-nav { background: var(--pmt-cz-plate); }
 .pmt-cz[data-pmt-look="friendly"] .pmt-cz-kicker { color: var(--pmt-cz-accent); }
 .pmt-cz[data-pmt-look="friendly"] .pmt-cz-title { font-weight: 750; }
 .pmt-cz[data-pmt-look="friendly"] :is(.pmt-cz-tile, .pmt-cz-chipbox, .pmt-cz-set, .pmt-cz-meter, .pmt-cz-preview) { background-color: color-mix(in srgb, var(--pmt-cz-plate) 82%, var(--pmw-text, #fff) 2%); border-color: var(--pmt-cz-line); }
@@ -409,12 +414,7 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-cells > i { background: transparent; bo
 html[data-o55-nier="on"] .pmt-cz .pmt-cz-cells > i.pmt-cz-on { background: var(--o55-nier-ink); border-color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmt-cz .pmt-cz-done { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] .pmt-cz :is(.pmt-cz-art, .pmt-cz-trail-phosphor i, .pmt-cz-trail-phosphor b) { filter: none; }
-html[data-o55-nier="on"] .pmt-cz .pmt-cz-art { background: var(--o55-nier-paper); }
-html[data-o55-nier="on"] .pmt-cz .pmt-cz-art-scanlines { background: repeating-linear-gradient(to bottom, var(--o55-nier-ink) 0 1px, transparent 1px 3px), var(--o55-nier-paper); }
-html[data-o55-nier="on"] .pmt-cz .pmt-cz-art-glow { background: radial-gradient(closest-side, var(--o55-nier-ink), transparent 70%), var(--o55-nier-paper); }
-html[data-o55-nier="on"] .pmt-cz .pmt-cz-art-crt { background: radial-gradient(110% 90% at 50% 50%, var(--o55-nier-paper) 0 50%, var(--o55-nier-ink) 72%); }
-html[data-o55-nier="on"] .pmt-cz .pmt-cz-art-flicker { background: linear-gradient(90deg, var(--o55-nier-paper) 0 50%, rgba(var(--o55-nier-ink-rgb), .2) 50%); }
-html[data-o55-nier="on"] .pmt-cz .pmt-cz-art-inactiveDim { background: linear-gradient(90deg, var(--o55-nier-paper) 0 50%, rgba(var(--o55-nier-ink-rgb), .32) 50%); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-art { --pmt-cz-shade: rgba(var(--o55-nier-ink-rgb), .42); --pmt-cz-sglow: var(--o55-nier-ink); }
 html[data-o55-nier="on"] .pmt-cz :is(.pmt-cz-cur i, .pmt-cz-trail b, .pmt-cz-trail-trace i, .pmt-cz-trail-glow i) { background: var(--o55-nier-ink); box-shadow: none; }
 html[data-o55-nier="on"] .pmt-cz :is(.pmt-cz-trail-soft i, .pmt-cz-trail-phosphor i) { background: linear-gradient(90deg, transparent, rgba(var(--o55-nier-ink-rgb), .5)); }
 html[data-o55-nier="on"] .pmt-cz .pmt-cz-cur-look i { background: transparent; outline-color: var(--o55-nier-ink); }

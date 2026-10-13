@@ -337,6 +337,12 @@
       root.setAttribute('data-pmt-look', isNier ? 'nier' : look);
       root.setAttribute('data-pmt-mode', R.look.mode === 'light' ? 'light' : 'dark');
       root.setAttribute('data-scope', scope);
+      /* the effect pictures are drawn in this scope's own scheme */
+      if (R.theme) {
+        root.style.setProperty('--pmt-cz-sfg', T.color.toHex(R.theme.fg));
+        root.style.setProperty('--pmt-cz-sbg', T.color.toHex(R.theme.bg));
+        root.style.setProperty('--pmt-cz-sglow', R.theme.roles && R.theme.roles.glow ? R.theme.roles.glow : T.color.toHex(R.theme.fg));
+      }
       root.classList.toggle('pmt-cz-reduced', !!R.look.reduced);
       /* radios: tiles and segments */
       [].forEach.call(root.querySelectorAll('[role="radio"][data-key]'), function (b) {
@@ -355,7 +361,7 @@
         setA(c, 'aria-checked', String(o));
         var st = c.querySelector('.pmt-cz-chipstate'), word = o ? 'On' : 'Off';
         if (fx.off && c.closest('.pmt-cz-fxchips')) word = 'Off · effects off';
-        else if (val('effects') === 'follow' && c.closest('.pmt-cz-fxchips')) word += ' · the look’s';
+        else if (val('effects') === 'follow' && c.closest('.pmt-cz-fxchips')) word += ' · from the look';
         if (st.textContent !== word) st.textContent = word;
         c.classList.toggle('pmt-cz-is-mine', mine(key));
         var box = c.parentNode, more = box.querySelector('.pmt-cz-chipmore'); if (more) more.hidden = !o;
@@ -533,7 +539,7 @@
       if (b.getAttribute('role') === 'switch') { toggle(b); return; }
       if (b.hasAttribute('data-step')) { var R = eff(); put('fontSize', T.util.clamp(R.font.size + parseFloat(b.getAttribute('data-step')), 8, 32)); return; }
       if (b.hasAttribute('data-set')) { quickSet(b.getAttribute('data-set')); return; }
-      if (b.hasAttribute('data-jump')) { var g = root.querySelector('[data-group="' + b.getAttribute('data-jump') + '"]'); if (g) { body.scrollTo({ top: g.offsetTop - 8, behavior: reducedNow() ? 'auto' : 'smooth' }); var h = g.querySelector('h3'); if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); } } return; }
+      if (b.hasAttribute('data-jump')) { var g = root.querySelector('[data-group="' + b.getAttribute('data-jump') + '"]'); if (g) { g.scrollIntoView({ block: 'start', behavior: reducedNow() ? 'auto' : 'smooth' }); var h = g.querySelector('h3'); if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); } } return; }
       var act = b.getAttribute('data-act');
       if (act === 'close') close();
       else if (act === 'reset') { A().reset(scope, v); syncPreview(); paint(); v.announce(scope === 'tab' ? 'This terminal follows the defaults again' : 'All terminals follow the look again'); }
