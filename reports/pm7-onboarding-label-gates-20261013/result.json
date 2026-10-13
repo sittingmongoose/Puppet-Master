@@ -1,6 +1,6 @@
 {
   "schema": "pm7-onboarding-label-gates-phase-a/v1",
-  "at": "2026-10-13T05:54:21.135006+00:00",
+  "at": "2026-10-13T05:59:00.321244+00:00",
   "status": "HOLD",
   "phase": "A ONLY",
   "reason": "Successor is prepared; product/source acceptance and Phase B are not authorized or established. Missing contexts, actual word paint, checkpoint mark custody and open ownership remain held.",
@@ -15,8 +15,8 @@
   ],
   "successor": {
     "path": "Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs",
-    "sha256": "a71978292078dbddbc28b08a2bab6e9db1be1dfa05c81dfa7b84f111b8f16479",
-    "bytes": 119845,
+    "sha256": "b84ffda3889d93ccaa9aa8a8eb261b91aa6a1ad62475e5210e7015b7790739b5",
+    "bytes": 119844,
     "replaces_original": false,
     "syntax_check": "PASS",
     "isolated_checks": {
@@ -24,6 +24,19 @@
       "failed": 0,
       "exit_code": 0,
       "scope": "synthetic/frozen scanner and gate logic only; no product launch"
+    },
+    "exact_tested_body_equivalence": {
+      "at": "2026-10-13T05:59:00.221133+00:00",
+      "correction": "Remove exactly one extra final LF byte from NEW tool; no executable token, function, option, criterion or source/old artifact change",
+      "tested_tool_sha256": "a71978292078dbddbc28b08a2bab6e9db1be1dfa05c81dfa7b84f111b8f16479",
+      "final_tool_sha256": "b84ffda3889d93ccaa9aa8a8eb261b91aa6a1ad62475e5210e7015b7790739b5",
+      "tested_bytes": 119845,
+      "final_bytes": 119844,
+      "body_equivalence": true,
+      "isolated_checks_on_exact_tested_body": 26,
+      "product_test_replay": 0,
+      "syntax_check": "node --check rerun only",
+      "git_whitespace_check": "staged check exposed EOF blank; fixed with normal follow-up commit, no history rewrite"
     }
   },
   "authority": {
@@ -211,14 +224,15 @@
   ],
   "raw_evidence": {
     "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-gates-20261013",
-    "manifest_sha256": "e7692a9a6badffc5ab3286104e9c156ff93d2998559f838cc260310cf96a9a84",
-    "artifacts": 26,
+    "manifest_sha256": "490e255135073e57a92c3539f101075c514348d877f46250cdc595df0be19448",
+    "artifacts": 29,
     "final_isolated_report_sha256": "34ba9d882192998d0c9e2c07df28cdcac69c17c596a0fd0951ae6f9217a63828",
     "final_replay_report_sha256": "7f510ac44a84c75167993fa9061ddf75e87940cb16dbdd60f2eb34499a026ce2",
     "failed_attempt_kept": "isolated-attempt-1/report.json (mock TreeWalker.currentNode omission; no product observation); corrected exact tool versions retained",
-    "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-gates-20261013/SHA256SUMS-static-context",
-    "prior_manifest_sha256": "939f5f540ae0bda78b355c1c735658c9308c3398a0fd0c597194f9930bd24608",
-    "static_source_context_sha256": "aea9ce8030376fc0046e154ac6a19e428da6e6a274bc8cab048fd5815ee5b1cf"
+    "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-gates-20261013/SHA256SUMS-committable",
+    "prior_manifest_sha256": "e7692a9a6badffc5ab3286104e9c156ff93d2998559f838cc260310cf96a9a84",
+    "static_source_context_sha256": "aea9ce8030376fc0046e154ac6a19e428da6e6a274bc8cab048fd5815ee5b1cf",
+    "final_equivalence_sha256": "f398d8ff9419335327da1a379189a146f88398d7d1ce7ae11ebb01d1ff02422b"
   },
   "resources": {
     "product_browsers_started": 0,
