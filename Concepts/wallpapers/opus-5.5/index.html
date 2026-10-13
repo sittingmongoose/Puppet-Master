@@ -116,7 +116,7 @@
       '<span class="thumb"' + (id === 'look' ? ' data-own=""' : ' data-id="' + esc(id) + '"') + '></span><span class="name">' + esc(name) + '</span></button>';
   }
   function build() {
-    var g = '<div class="grid own">' + tile('look', "Look's own", "Look's own", 'Each look keeps its own background.') + '<p id="note" aria-live="polite"></p></div>', all = '';
+    var g = '<div class="grid own">' + tile('look', "Look's own", "Look's own", 'Each look keeps its own background.') + '<p id="note"></p></div>', all = '';
     cat.forEach(function (f) {
       g += '<div class="fam" aria-hidden="true">' + esc(f.label) + '</div><div class="grid">';
       all += '<h2>' + esc(f.label) + ' (' + f.wallpapers.length + ')</h2><p class="about">' + esc(f.about) + '</p><div class="prints">';

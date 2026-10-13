@@ -15,6 +15,8 @@
 html[data-lg-wall-any]:not([data-theme^="glass"]):not(#wpkz) body { background: var(--background) var(--lg-wall-any, none) center / cover no-repeat !important; }
 html[data-lg-wall-any]:not([data-theme^="glass"]):not(#wpkz) :is(.app-shell, .main-area) { background: transparent !important; }
 html[data-lg-wall-any][data-o55-nier-scene]:not(#wpkz) #o55-nier-scene { display: none !important; }
+/* Glass, between a choice and its new frost: the body keeps the print it showed (wallpapers.js, "hold") */
+html[data-lg="on"][data-theme^="glass"][data-wpk-hold]:not(#lgz):not(#wpkz) body { background-image: var(--wpk-hold) !important; }
 /* The page grounds that NieR's scenes already show through (the Usage board, Settings Home) show the wallpaper too,
    under a light veil of the look's ground, so the few words that sit between the cards keep their contrast. The cards,
    the board's header and its rail keep their own fills. */
