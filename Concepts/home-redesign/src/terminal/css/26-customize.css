@@ -376,6 +376,7 @@ html[data-motion="reduced"] .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set, .pmt-cz-chipb
   --pmt-cz-line: color-mix(in srgb, var(--pmt-cz-accent) 32%, transparent);
   --pmt-cz-line-2: color-mix(in srgb, var(--pmt-cz-accent) 64%, transparent);
   --pmt-cz-scrim: rgb(0 0 0 / .62);
+  --pmt-cz-ring: var(--pmt-cz-accent);
   font-family: var(--body-font, 'IBM Plex Mono', ui-monospace, monospace);
 }
 .pmt-cz[data-pmt-look="retro"][data-pmt-mode="light"] { --pmt-cz-accent: color-mix(in srgb, var(--accent-lime, #1d8f3a) 72%, #000); --pmt-cz-scrim: color-mix(in srgb, var(--background, #f4f1e8) 64%, transparent); }
