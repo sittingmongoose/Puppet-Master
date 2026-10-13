@@ -45,7 +45,7 @@
     var painted = 0;
     var imgGen = term.images ? term.images.gen : 0;
     if (imgGen !== this.imgGen) { full = true; this.imgGen = imgGen; }
-    var frameKey = th.id + '|' + m.devW + 'x' + m.devH + '|' + v.focused + '|' + (v.opts.ligatures ? 1 : 0) + '|' + v.opts.minContrast + '|' + (term.modes.reverse ? 1 : 0) + '|' + (v.dimmed ? 1 : 0);
+    var frameKey = th.id + '|' + m.devW + 'x' + m.devH + '|' + m.font + '|' + v.focused + '|' + (v.opts.ligatures ? 1 : 0) + '|' + v.opts.minContrast + '|' + (term.modes.reverse ? 1 : 0) + '|' + (v.dimmed ? 1 : 0) + '|' + (v.opts.textRendering || '');
     if (frameKey !== this.frameKey) { full = true; this.frameKey = frameKey; }
     for (var y = 0; y < rows; y++) {
       var abs = top + y;
@@ -155,6 +155,8 @@
     var lig = v.opts.ligatures && !m.letterSpacing;
     var curFont = '';
     ctx.textBaseline = 'alphabetic';
+    /* Settings' Font Rendering: Smooth draws unhinted outlines; Crisp and Auto keep the browser's hinting */
+    if ('textRendering' in ctx) ctx.textRendering = v.opts.textRendering || 'auto';
     var baseY = y0 + m.baseline;
     x = 0;
     while (x < cols) {

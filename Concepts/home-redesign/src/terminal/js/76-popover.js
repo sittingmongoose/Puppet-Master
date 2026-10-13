@@ -1,8 +1,8 @@
-/* The terminal's More menu (D12) and the Appearance popover (D15, D16, D17). The popover binds controls to
-   T.Appearance only; Settings > Terminal will bind the same fields later. Everything applies live. Hovering a scheme
-   previews it on this terminal; leaving the list or pressing Escape reverts the preview. The scope switch chooses the
-   layer written: "This terminal" (the tab) or "All terminals" (the app default). The same popover, cut down to scheme,
-   font and size, is the code editor's (T.AppearancePopover, surface 'editor', D30). */
+/* The terminal's More menu (D12) and the Appearance component (D15, D16, D17; DR-068: one component for two
+   surfaces). The terminal's surface is the Customize screen (77-customize.js), opened from the More menu's
+   Appearance...; the code editor's surface is the compact popover below: Colour scheme ('Follow look' first), font and
+   size (T.AppearancePopover, surface 'editor', D30). Both read the same scheme catalog, and the NieR paint (40-nier.css)
+   reaches the popover through the same classes. */
 (function () {
   var A = function () { return T.Appearance; };
   function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html !== undefined) e.innerHTML = html; return e; }
@@ -70,17 +70,11 @@
   var QF = ' data-pm-hover-visual-suppressed="true"', QM = QF;
   function tag(label, detail) { return ' data-pm-hover-label="' + esc(label) + '" data-pm-hover-detail="' + esc(detail) + '"'; }
   function row(label, ctl) { return '<div class="pmt-pop-row"><span class="pmt-pop-label">' + esc(label) + '</span><span class="pmt-pop-ctl">' + ctl + '</span></div>'; }
-  function fieldLabel(key) { return A().FIELDS[key] ? A().FIELDS[key].label : key; }
   function select(key, value, opts, label) {
-    return '<select data-key="' + key + '"' + QF + ' aria-label="' + esc(label || fieldLabel(key)) + '">' + opts.map(function (o) { return '<option value="' + esc(o[0]) + '"' + (String(o[0]) === String(value) ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join('') + '</select>';
+    return '<select data-key="' + key + '"' + QF + ' aria-label="' + esc(label || key) + '">' + opts.map(function (o) { return '<option value="' + esc(o[0]) + '"' + (String(o[0]) === String(value) ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join('') + '</select>';
   }
-  function check(key, value, label) { return '<label class="pmt-check"><input type="checkbox" data-key="' + key + '"' + QF + (value ? ' checked' : '') + '><span>' + esc(label) + '</span></label>'; }
-  function range(key, value, min, max, step, text) { return '<input type="range" data-key="' + key + '"' + QF + ' min="' + min + '" max="' + max + '" step="' + step + '" value="' + value + '" aria-label="' + esc(fieldLabel(key)) + '"><output>' + esc(text) + '</output>'; }
   function stepper(key, value, min, max, step) {
     return '<span class="pmt-stepper"><button type="button" class="pmt-step" data-step="-' + step + '" data-key="' + key + '" aria-label="Smaller"' + tag('Smaller', 'Text size ' + step + ' px smaller') + '>−</button><output>' + value + ' px</output><button type="button" class="pmt-step" data-step="' + step + '" data-key="' + key + '" aria-label="Bigger"' + tag('Bigger', 'Text size ' + step + ' px bigger') + '>+</button></span>';
-  }
-  function seg(key, value, opts) {
-    return '<span class="pmt-seg" role="radiogroup">' + opts.map(function (o) { return '<button type="button" role="radio"' + QF + ' data-key="' + key + '" data-value="' + o[0] + '" aria-checked="' + (String(value) === String(o[0])) + '">' + esc(o[1]) + '</button>'; }).join('') + '</span>';
   }
   function swatch(sch) {
     var c = sch.colors, a = c.ansi;
@@ -165,9 +159,10 @@
   }
 
   T.AppearancePopover = {
+    /* surface 'terminal' (opts.view, the T.View): the Customize screen; 'editor': the compact popover below */
     open: function (anchor, opts) {
       opts = opts || {};
-      return opts.surface === 'editor' ? openEditor(anchor, opts) : openTerminal(anchor, opts);
+      return opts.surface === 'editor' ? openEditor(anchor, opts) : T.Customize.open(opts.view, opts);
     }
   };
 
@@ -176,266 +171,6 @@
     T.AppearancePopover.open(this.root, { surface: 'terminal', view: this });
   };
 
-  function openTerminal(anchor, opts) {
-    var v = opts.view;
-    if (v.pop) v.closeAppearance(true);
-    v._apOnClose = typeof opts.onClose === 'function' ? opts.onClose : null;
-    var scope = v._apScope || 'tab';
-    var pop = el('div', 'pmt-pop pmt-calm');
-    pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', 'Terminal appearance'); pop.tabIndex = -1;
-    (anchor || v.root).appendChild(pop);
-    v.pop = pop;
-    function val(key) {
-      /* what the control shows: this scope's own value if set, otherwise the value in effect */
-      if (scope === 'tab' && v.tabAppearance && v.tabAppearance[key] !== undefined) return v.tabAppearance[key];
-      return A().get(scope === 'tab' ? v : null, key);
-    }
-    function set(key, value) { A().set(scope, key, value, v); render(true); }
-    var ap = function () { return v.appearance; };
-    /* the font metrics this scope has, so "All terminals" never starts from this tab's zoom: the scope's own value,
-       otherwise the default of the font that scope resolves to */
-    function scopeFont() {
-      var fid = val('font'); if (fid === 'follow' || !A().FONTS[fid]) fid = A().LOOKS[ap().lookKey].font;
-      var fd = A().FONTS[fid];
-      return { size: val('fontSize') || fd.size, lineHeight: val('lineHeight') || fd.lineHeight, letterSpacing: val('letterSpacing') || 0 };
-    }
-
-    function render(keepScroll) {
-      var body = pop.querySelector('.pmt-pop-body'), st = body ? body.scrollTop : 0, before = memo(pop);
-      var R = ap(), look = R.lookKey;
-      var sid = val('scheme');
-      var html = '';
-      html += '<div class="pmt-pop-head"><span class="pmt-pop-title">Appearance</span>' +
-        '<span class="pmt-seg" role="radiogroup" aria-label="Apply to">' +
-        '<button type="button" role="radio"' + QF + ' data-scope="tab" aria-checked="' + (scope === 'tab') + '">This terminal</button>' +
-        '<button type="button" role="radio"' + QF + ' data-scope="app" aria-checked="' + (scope === 'app') + '">All terminals</button></span>' +
-        '<button type="button" class="pmt-pop-x" data-act="close" aria-label="Close appearance" aria-keyshortcuts="Escape" data-pm-hover-label="Close appearance"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>';
-      html += '<div class="pmt-pop-body pmt-calm">';
-      /* scheme */
-      html += '<section class="pmt-pop-sec" aria-label="Colour scheme"><h4>Colour scheme</h4>' +
-        '<input class="pmt-pop-search" type="search"' + QF + ' placeholder="Search schemes" aria-label="Search schemes" value="' + esc(v._apQuery || '') + '">' +
-        '<div class="pmt-schemes" role="listbox" aria-label="Colour schemes">' + schemeOptions(sid, follow(sid), v._apQuery || '') + '</div>' +
-        row('Light and dark', check('schemePair', val('schemePair'), 'Switch with the app\'s light and dark mode')) +
-        row('Minimum contrast', select('minContrast', val('minContrast'), [[1, 'Off'], [3, '3:1'], [4.5, '4.5:1'], [7, '7:1']])) +
-        '<div class="pmt-pop-row pmt-pop-import"><button type="button" class="pmt-textbtn" data-act="import"' + tag('Import scheme', 'Adds a colour scheme from a file; it stays on this machine') + '>Import scheme…</button><span class="pmt-pop-note">iTerm2, Windows Terminal, kitty, Ghostty, Alacritty, base16 or base24, Xresources</span></div>' +
-        '</section>';
-      /* font */
-      var fonts = [['follow', 'Follow look (' + A().FONTS[A().LOOKS[look].font].label + ')']].concat(Object.keys(A().FONTS).map(function (k) { return [k, A().FONTS[k].label]; }));
-      var sf = scopeFont();
-      html += '<section class="pmt-pop-sec" aria-label="Font"><h4>Font</h4>' +
-        row('Face', select('font', val('font'), fonts)) +
-        row('Size', stepper('fontSize', sf.size, 8, 32, 0.5)) +
-        row('Weight', select('fontWeight', val('fontWeight') || 400, [[400, 'Regular'], [500, 'Medium'], [600, 'Semibold']])) +
-        row('Line height', range('lineHeight', sf.lineHeight, 1, 2, 0.05, sf.lineHeight.toFixed(2))) +
-        row('Letter spacing', range('letterSpacing', sf.letterSpacing, -1, 3, 0.25, sf.letterSpacing + ' px')) +
-        row('Ligatures', check('ligatures', val('ligatures'), 'Join ligatures where the font has them')) +
-        (R.font.id === 'sixtyfour' || R.font.id === 'sixtyfour-raster' ? '<p class="pmt-pop-note">Sixtyfour Raster is Sixtyfour with its scanline and bleed axes set (45, 40): a CRT look with no motion.</p>' : '') +
-        '</section>';
-      /* cursor */
-      html += '<section class="pmt-pop-sec" aria-label="Cursor"><h4>Cursor</h4>' +
-        row('Shape', seg('cursorShape', val('cursorShape'), [['follow', 'Theme'], ['block', 'Block'], ['bar', 'Bar'], ['underline', 'Underline']])) +
-        row('Blink', check('cursorBlink', val('cursorBlink'), 'Blink (stops after 15 s idle)')) +
-        row('Trail', select('cursorTrail', val('cursorTrail'), [['follow', 'Follow look'], ['off', 'Off'], ['soft', 'Soft'], ['glow', 'Glow'], ['phosphor', 'Phosphor'], ['trace', 'Trace']])) +
-        '</section>';
-      /* background */
-      var bgk = val('background');
-      html += '<section class="pmt-pop-sec" aria-label="Background"><h4>Background</h4>' +
-        row('Fill', select('background', bgk, [['follow', 'Follow look'], ['theme', 'Theme surface'], ['solid', 'Solid colour'], ['gradient', 'Gradient'], ['image', 'Image']]));
-      if (bgk === 'solid') html += row('Colour', '<input type="color" class="pmt-pop-color" data-key="bgColor" value="' + esc(val('bgColor') || T.color.toHex(R.theme.bg)) + '" aria-label="Background colour">');
-      if (bgk === 'gradient') html += row('Gradient', select('bgGradient', val('bgGradient'), [['dusk', 'Dusk'], ['dawn', 'Dawn'], ['deep', 'Deep'], ['paper', 'Paper']]));
-      if (bgk === 'image') {
-        html += row('Image', select('bgImage', val('bgImage'), [['hills', 'Hills'], ['grid', 'Grid'], ['paper', 'Paper'], ['custom', 'Your image']]) + '<button type="button" class="pmt-textbtn" data-act="upload"' + tag('Choose an image', 'PNG, JPEG or WebP from this computer') + '>Choose…</button>');
-        html += row('Dim', range('bgDim', val('bgDim'), 0, 0.9, 0.05, Math.round(val('bgDim') * 100) + '%'));
-        html += row('Blur', range('bgBlur', val('bgBlur'), 0, 24, 1, val('bgBlur') + ' px'));
-      }
-      var op = val('opacity'); if (op === null || op === undefined) op = R.theme.bgAlpha || 1;
-      if (look === 'glass' || val('opacity') !== null) html += row('Opacity', range('opacity', op, 0.4, 1, 0.02, Math.round(op * 100) + '%'));
-      html += row('Padding', range('padding', val('padding'), 0, 24, 1, val('padding') + ' px'));
-      html += '</section>';
-      /* effects */
-      var fx = R.effects, eff = v.fx ? v.fx.effective : {};
-      var fxMode = val('effects');
-      html += '<section class="pmt-pop-sec" aria-label="Effects"><h4>Effects</h4>' +
-        row('Effects', seg('effects', fxMode, [['follow', 'Theme'], ['off', 'Off'], ['custom', 'Custom']]));
-      if (fxMode !== 'off') {
-        html += row('Inactive', check('inactiveDim', fx.dim > 0, 'Dim terminals that are not focused')) +
-          row('Scrolling', check('smoothScroll', fx.smoothScroll, 'Smooth scrolling')) +
-          row('Scanlines', check('scanlines', fx.scanlines.on, 'Scanlines') + (fx.scanlines.on ? range('scanStrength', val('scanStrength'), 0, 0.6, 0.05, Math.round(val('scanStrength') * 100) + '%') : '')) +
-          row('Glow', check('glow', fx.glow.on, 'Phosphor glow') + (fx.glow.on ? range('glowStrength', val('glowStrength'), 0, 1, 0.05, Math.round(val('glowStrength') * 100) + '%') : '')) +
-          /* Full CRT and Flicker show what applies: Theme does not apply a stored custom choice */
-          row('Full CRT', check('crt', fx.crt, 'Curvature, bezel, burn-in and noise')) +
-          (fx.crt ? row('Curvature', range('curvature', val('curvature'), 0, 0.2, 0.01, String(val('curvature')))) + row('Burn-in', check('burnIn', val('burnIn'), 'Afterglow when text moves')) + row('Noise', range('noise', val('noise'), 0, 0.12, 0.005, String(val('noise')))) : '') +
-          row('Flicker', check('flicker', fxMode === 'custom' && !!val('flicker'), 'Flicker (at most 3% brightness change, below the WCAG flash threshold)')) +
-          (look === 'retro' ? '<div class="pmt-pop-row"><span></span><button type="button" class="pmt-textbtn" data-act="degauss"' + tag('Degauss', 'The tube wobbles and settles once, as a CRT does when you press its degauss button') + '>Degauss</button></div>' : '');
-      }
-      var notes = [];
-      if (fx.reduced) notes.push('Reduced Motion is on: nothing moves; static looks stay.');
-      else if (eff.motion && /^Battery saver/.test(eff.motion)) notes.push('Battery saver is on: nothing moves; static looks stay.');
-      if (eff.curvature && /not drawn/.test(eff.curvature)) notes.push('No GPU on this machine: curvature, burn-in and noise are not drawn; scanlines and glow use the flat fallback.');
-      if (notes.length) html += '<p class="pmt-pop-note">' + notes.map(esc).join(' ') + '</p>';
-      html += '</section></div>';
-      html += '<div class="pmt-pop-foot"><button type="button" class="pmt-textbtn" data-act="reset"' + (scope === 'tab' ? tag('Reset this terminal', 'This terminal follows the defaults again') : tag('Reset all terminals', 'Every terminal goes back to the look\'s defaults')) + '>' + (scope === 'tab' ? 'Reset this terminal' : 'Reset all terminals') + '</button><span class="pmt-pop-spacer"></span><button type="button" class="pmt-textbtn pmt-textbtn-primary" data-act="close"' + tag('Done', 'Closes Appearance; every change is already applied') + '>Done</button></div>';
-      pop.innerHTML = html;
-      var nb = pop.querySelector('.pmt-pop-body'); if (keepScroll && nb) nb.scrollTop = st;
-      place();
-      slide(pop, before);
-    }
-    /* Follow look: the look's own scheme, swatched as it applies now when this scope follows */
-    function follow(sid) {
-      var R = ap(), L = A().LOOKS[R.lookKey];
-      var name = L ? (A().scheme(L[R.look.mode === 'light' ? 'light' : 'dark']) || {}).name : '';
-      return { label: 'Follow look', meta: name || '', swatch: sid === 'follow' && R.scheme ? R.scheme : A().scheme(L[R.look.mode]) };
-    }
-    function place() {
-      /* under the header row, right-aligned; full width in narrow panels; never taller than the body */
-      var hr = v.hrow && v.hrow.el && !v.hrow.el.hidden ? v.hrow.el.offsetHeight : 0;
-      pop.style.top = (hr + 6) + 'px';
-      pop.style.maxHeight = Math.max(120, v.root.clientHeight - hr - 12) + 'px';
-      pop.classList.toggle('pmt-pop-narrow', v.root.clientWidth < 420);
-    }
-
-    render(false);
-    /* events */
-    pop.addEventListener('input', function (e) {
-      var t = e.target, key = t.getAttribute('data-key');
-      if (t.classList.contains('pmt-pop-search')) {
-        v._apQuery = t.value;
-        pop.querySelector('.pmt-schemes').innerHTML = schemeOptions(val('scheme'), follow(val('scheme')), v._apQuery);
-        return;
-      }
-      if (!key) return;
-      if (t.type === 'range') { t.nextElementSibling && (t.nextElementSibling.textContent = t.value); A().set(scope, key, parseFloat(t.value), v); return; }
-      if (t.type === 'color') { A().set(scope, key, t.value, v); }
-    });
-    pop.addEventListener('change', function (e) {
-      var t = e.target, key = t.getAttribute('data-key'); if (!key) return;
-      if (t.type === 'checkbox') {
-        var value = t.checked;
-        if (['scanlines', 'glow', 'inactiveDim', 'smoothScroll', 'crt', 'flicker'].indexOf(key) >= 0 && val('effects') === 'follow') A().set(scope, 'effects', 'custom', v);
-        set(key, value); return;
-      }
-      if (t.tagName === 'SELECT') { var raw = t.value, num = Number(raw); set(key, raw !== '' && !isNaN(num) && /^-?[\d.]+$/.test(raw) ? num : raw); return; }
-      if (t.type === 'range') render(true);
-    });
-    pop.addEventListener('click', function (e) {
-      var b = e.target.closest('button, .pmt-scheme'); if (!b) return;
-      if (b.classList.contains('pmt-scheme')) { A().endPreview(v); set('scheme', b.getAttribute('data-id')); v.announce('Scheme: ' + b.querySelector('.pmt-scheme-name').textContent); return; }
-      if (b.hasAttribute('data-scope')) {
-        var to = b.getAttribute('data-scope'); if (to === scope) return;
-        /* the values below now read from the other layer: they fade in as the switch slides over */
-        scope = v._apScope = to; render(true);
-        T.Motion.play(pop.querySelector('.pmt-pop-body'), 'pmt-rescope');
-        return;
-      }
-      if (b.hasAttribute('data-step')) { var k = b.getAttribute('data-key'); set(k, T.util.clamp(scopeFont().size + parseFloat(b.getAttribute('data-step')), 8, 32)); return; }
-      if (b.getAttribute('role') === 'radio' && b.hasAttribute('data-key')) { set(b.getAttribute('data-key'), b.getAttribute('data-value')); return; }
-      var act = b.getAttribute('data-act');
-      if (act === 'close') v.closeAppearance();
-      else if (act === 'reset') { A().reset(scope, v); render(true); v.announce(scope === 'tab' ? 'This terminal follows the defaults again' : 'All terminals reset'); }
-      else if (act === 'degauss') { if (v.fx) v.fx.degauss(); }
-      else if (act === 'import') importScheme();
-      else if (act === 'upload') uploadImage();
-    });
-    /* live preview on hover and keyboard focus in the list */
-    /* the recolour starts from the scheme that caused it (Friendly's bloom pours out of that row) */
-    function from(o) { var r = o.getBoundingClientRect(); v.recolorFrom(r.left, r.top + r.height / 2); }
-    /* a preview waits until the pointer rests on a row, or the arrow keys stop (hover intent): a pointer sweeping
-       across the list, or a held arrow key, would otherwise recolour the terminal through every scheme it passes,
-       light and dark in turn, a strobe of half-finished recolours. Moving back onto the scheme already shown cancels
-       a preview still waiting */
-    var INTENT_MS = 110, intent = 0;
-    function previewSoon(o, ms) {
-      clearTimeout(intent);
-      var id = o.getAttribute('data-id');
-      if (v._previewId === id) return;
-      intent = setTimeout(function () {
-        if (!pop.isConnected || !o.isConnected || v.pop !== pop) return;
-        v._previewId = id; from(o); A().preview(v, { scheme: id });
-      }, ms);
-    }
-    pop.addEventListener('mouseover', function (e) {
-      var o = e.target.closest('.pmt-scheme'); if (o) previewSoon(o, INTENT_MS);
-    });
-    pop.addEventListener('mouseout', function (e) {
-      var list = pop.querySelector('.pmt-schemes');
-      if (list && !list.contains(e.relatedTarget)) { clearTimeout(intent); v._previewId = null; v.recolorFrom(e.clientX, e.clientY); A().endPreview(v); }
-    });
-    pop.addEventListener('click', function () { clearTimeout(intent); }, true);
-    pop.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { clearTimeout(intent); e.preventDefault(); e.stopPropagation(); A().endPreview(v); v.closeAppearance(); return; }
-      var o = e.target.closest && e.target.closest('.pmt-scheme');
-      var n = listStep(pop, e);
-      if (n) previewSoon(n, e.repeat ? INTENT_MS : 0);
-      if (e.key === 'Enter' && o) { e.preventDefault(); o.click(); }
-      e.stopPropagation();
-    });
-    function importScheme() {
-      var input = el('input'); input.type = 'file'; input.accept = '.itermcolors,.json,.conf,.toml,.yaml,.yml,.Xresources,.xresources,.txt,.theme';
-      input.addEventListener('change', function () {
-        var f = input.files && input.files[0]; if (!f) return;
-        if (f.size > 256 * 1024) { v.announce('That file is too large for a colour scheme'); return; }
-        f.text().then(function (text) {
-          var r = T.SchemeImport ? T.SchemeImport.parse(text, f.name) : { ok: false, error: 'Import is not available' };
-          if (!r.ok) { v.notice({ id: 'import', tone: 'warn', focus: true, text: 'Could not import that scheme: ' + r.error, actions: [{ label: 'OK' }] }); return; }
-          var entry = A().addUserScheme(r.scheme);
-          set('scheme', entry.id);
-          v.announce('Imported ' + entry.name);
-        });
-      });
-      input.click();
-    }
-    /* the image is kept once, on this machine, under its own key and a content hash; the layers hold only 'img:<hash>'.
-       A data URL in a layer would push this tab's saved state over the host's 16 KB cap (the whole state then stops
-       saving) or fill the settings store. It is scaled down (never up) to just cover the 960 x 600 the background uses,
-       as a JPEG */
-    function storeImage(img) {
-      var k = Math.min(1, Math.max(960 / img.naturalWidth, 600 / img.naturalHeight));
-      var cv = el('canvas'); cv.width = Math.max(1, Math.round(img.naturalWidth * k)); cv.height = Math.max(1, Math.round(img.naturalHeight * k));
-      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
-      var data = cv.toDataURL('image/jpeg', 0.85);
-      var h1 = 0x811c9dc5, h2 = 0x01000193;
-      for (var i = 0; i < data.length; i++) { var c = data.charCodeAt(i); h1 = Math.imul(h1 ^ c, 0x01000193); h2 = Math.imul(h2 ^ c, 0x5bd1e995); }
-      var hash = (h1 >>> 0).toString(16) + (h2 >>> 0).toString(16), KEY = 'pm.home.terminal:v1:bg';
-      try {
-        /* the four most recent images stay, and the ones All terminals and this terminal use; an older one another tab
-           still names falls back to the default image. The old ones go first, so they make room for the new one */
-        var used = [A().get(null, 'bgImageData'), v.tabAppearance && v.tabAppearance.bgImageData];
-        var kept = JSON.parse(localStorage.getItem(KEY) || '[]').filter(function (x) { return x !== hash; });
-        var drop = kept.length + 1 - 4;
-        kept = kept.filter(function (x) {
-          if (drop <= 0 || used.indexOf('img:' + x) >= 0) return true;
-          drop--; localStorage.removeItem(KEY + ':' + x); return false;
-        });
-        kept.push(hash);
-        localStorage.setItem(KEY, JSON.stringify(kept));
-        localStorage.setItem(KEY + ':' + hash, data);
-      } catch (e) { return null; }
-      return 'img:' + hash;
-    }
-    function uploadImage() {
-      var input = el('input'); input.type = 'file'; input.accept = 'image/png,image/jpeg,image/webp';
-      input.addEventListener('change', function () {
-        var f = input.files && input.files[0]; if (!f) return;
-        if (f.size > 4 * 1024 * 1024) { v.announce('Choose an image under 4 MB'); return; }
-        var url = URL.createObjectURL(f), img = new Image();
-        img.onload = function () {
-          URL.revokeObjectURL(url);
-          var ref = storeImage(img);
-          if (!ref) { v.announce('There is no room to keep that image on this machine'); return; }
-          A().set(scope, 'bgImageData', ref, v); set('bgImage', 'custom');
-        };
-        img.onerror = function () { URL.revokeObjectURL(url); v.announce('That image could not be read'); };
-        img.src = url;
-      });
-      input.click();
-    }
-    v._popOutside = function (e) { if (v.pop && !v.pop.contains(e.target) && !e.target.closest('.pmw-hbtn, [role="menu"], .pmw-menu')) v.closeAppearance(); };
-    setTimeout(function () { document.addEventListener('mousedown', v._popOutside, true); }, 0);
-    focusFirst(pop);
-    T.Motion.play(pop);
-    v._apRender = render;
-    return { el: pop, close: function () { if (v.pop === pop) v.closeAppearance(); }, refresh: function () { if (v.pop === pop) render(true); } };
-  }
   /* noFocus: the view is going away (dispose), so the focus is left where it is */
   T.View.prototype.closeAppearance = function (noFocus) {
     if (!this.pop) return;
@@ -443,13 +178,16 @@
     /* closed at once for everything else (a new one may open); its exit plays, unless the view is going away */
     var pop = this.pop;
     this.pop = null;
-    pop.inert = true; pop.setAttribute('aria-hidden', 'true');
-    if (noFocus) pop.remove(); else T.Motion.leave(pop, function () { pop.remove(); });
-    document.removeEventListener('mousedown', this._popOutside, true);
+    if (pop._pmtClose) pop._pmtClose(noFocus);
+    else { pop.inert = true; pop.setAttribute('aria-hidden', 'true'); if (noFocus) pop.remove(); else T.Motion.leave(pop, function () { pop.remove(); }); }
+    if (this._popOutside) document.removeEventListener('mousedown', this._popOutside, true);
     var done = this._apOnClose; this._apOnClose = null;
     if (done) { try { done(); } catch (e) { console.error('[pmt] appearance onClose failed', e); } }
     if (!noFocus) this.focus();
   };
+
+  /* the scheme rows and swatches, for any surface that lists the catalog */
+  T.AppearanceUI = { swatch: swatch, schemeOptions: schemeOptions, listStep: listStep };
 
   /* ---- the editor surface ---- */
   /* the scheme 'Follow look' gives the editor now: the look's own scheme for the mode, and in Retro dark the phosphor
