@@ -337,7 +337,7 @@
   View.prototype._measure = function () {
     var f = this.appearance.font;
     this.metrics = T.Metrics.measure({ family: f.family, fontPx: f.size, weight: f.weight, boldWeight: f.boldWeight,
-      lineHeight: f.lineHeight, letterSpacing: f.letterSpacing, dpr: window.devicePixelRatio || 1 });
+      lineHeight: f.lineHeight, letterSpacing: f.letterSpacing, dpr: window.devicePixelRatio || 1, crisp: !!f.crisp });
   };
 
   /* ---- geometry ---- */
@@ -1123,7 +1123,7 @@
   };
   /* image animation runs only while the terminal shows (SPEC section 7) */
   View.prototype.onShow = function () { this.visible = true; if (this.term.images) this.term.images.pause(false); this.layout(); this.schedule(true); if (this.fx) this.fx.visible(true); };
-  View.prototype.onHide = function () { this.visible = false; if (this.term.images) this.term.images.pause(true); if (this.fx) this.fx.visible(false); };
+  View.prototype.onHide = function () { this.visible = false; if (this.term.images) this.term.images.pause(true); if (this.fx) this.fx.visible(false); if (this.pop && this.closeAppearance) this.closeAppearance(true); };
   View.prototype.onLook = function () {
     var h = document.documentElement;
     /* the resolved Reduced Motion flag too: the system setting can change with no attribute changing */

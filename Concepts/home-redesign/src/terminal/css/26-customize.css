@@ -1,0 +1,471 @@
+/* The terminal's Customize screen (77-customize.js), drawn after NieR Mode's Plug-in Chips popup: a kicker band and
+   title, a live preview beside a side column (change meter, quick sets, try-it actions), a group index, then groups of
+   tiles and chips, Done at the foot. Each look draws it its own way:
+     Basic     crisp plate, 1 px hairlines, the neutral chosen fill, an accent check on what is on
+     Friendly  a soft plate on the Friendly dot ground (the wallpapers' dots), rounded cards that lift when chosen
+     Glass     the app's Glass menu plate (--rg-menu) with its rims; light catches the chosen card's top edge; the
+               terminal adds no backdrop blur (F3-431)
+     Retro     square, 2 px rules, the Retro type, bracketed headings, reverse video for what is chosen
+     NieR      Plug-in Chips itself: clipped-corner chips with contact pins, ink bands, bracket rules, ink and parchment
+               tokens only, each touch gated by an installed part
+   One-of-several controls use the panels' chosen fill (.pmw-ink-row / .pmw-ink-opt, 45-frames.css); a chosen tile is
+   that same neutral fill on its own box, never an underline or a side stripe. Sizes follow the dialog, not the window
+   (@container pmt-cz). Reduced Motion: the screen fades in and out and nothing travels. No pills, no :has(). */
+
+/* ---- tokens (Basic is the floor) ---- */
+.pmt-cz {
+  --pmt-cz-plate: var(--pmw-pop, var(--surface-elevated, #1f2328));
+  --pmt-cz-ground: var(--pmw-surface, var(--surface, #16181d));
+  --pmt-cz-line: var(--pmw-pop-line, color-mix(in srgb, var(--pmw-text, #e8e8e8) 14%, transparent));
+  --pmt-cz-line-2: color-mix(in srgb, var(--pmw-text, #e8e8e8) 26%, transparent);
+  --pmt-cz-fill: var(--pmw-press, color-mix(in srgb, var(--pmw-text, #e8e8e8) 11%, transparent));
+  --pmt-cz-hover: color-mix(in srgb, var(--pmw-hover, rgba(255, 255, 255, .07)) 70%, transparent);
+  --pmt-cz-ink: var(--pmw-tab-active, var(--pmw-text, #e8e8e8));
+  --pmt-cz-accent: var(--pmw-accent, var(--accent-primary, #64b5f6));
+  --pmt-cz-on-accent: var(--background, #0d0f12);
+  --pmt-cz-ring: var(--pmw-focus, var(--pmt-cz-accent));
+  /* the scrim is the page's own ground laid over it, as NieR's Plug-in Chips popup does (62 %) */
+  --pmt-cz-scrim: color-mix(in srgb, var(--background, #0b0c0f) 64%, transparent);
+  --pmt-cz-radius: 12px; --pmt-cz-r: 8px; --pmt-cz-r-in: 5px;
+  --pmt-cz-shadow: var(--pmw-pop-shadow, 0 18px 60px rgb(0 0 0 / .45));
+  --pmt-cz-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.6 8.4l2.9 2.9 5.9-6.6' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  position: fixed; inset: 0; z-index: 40; pointer-events: none;
+  color: var(--pmw-text, var(--text-primary)); font-family: var(--pm-font-ui, var(--body-font, system-ui));
+}
+.pmt-cz[data-pmt-mode="light"] { --pmt-cz-line-2: color-mix(in srgb, var(--pmw-text, #222) 30%, transparent); }
+html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(--pmw-text) 15%, transparent); }
+.pmt-cz *, .pmt-cz *::before, .pmt-cz *::after { box-sizing: border-box; }
+.pmt-cz [hidden] { display: none !important; }
+
+/* ---- the scrim, leaving the terminal itself uncovered, and the frame round it ---- */
+.pmt-cz-scrim { position: fixed; inset: 0; pointer-events: none; }
+.pmt-cz-scrim > i { position: fixed; display: block; pointer-events: auto; background: var(--pmt-cz-scrim); }
+.pmt-cz-frame { position: fixed; pointer-events: auto; cursor: pointer; border-radius: var(--pmw-panel-radius, 8px);
+  box-shadow: 0 0 0 1.5px var(--pmt-cz-ring), 0 0 0 5px color-mix(in srgb, var(--pmt-cz-ring) 20%, transparent); }
+.pmt-cz-framelabel { position: absolute; right: 10px; bottom: 10px; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 600;
+  background: var(--pmt-cz-ring); color: var(--pmt-cz-on-accent); white-space: nowrap; }
+
+/* ---- the dialog ---- */
+.pmt-cz-dialog {
+  container: pmt-cz / inline-size;
+  position: fixed; pointer-events: auto; display: flex; flex-direction: column; min-height: 0; overflow: hidden; outline: none;
+  background: var(--pmt-cz-plate); color: var(--pmw-text, var(--text-primary)); border: 1px solid var(--pmt-cz-line);
+  border-radius: var(--pmt-cz-radius); box-shadow: var(--pmt-cz-shadow); font-size: 13px; line-height: 1.45;
+}
+.pmt-cz-head { flex: none; display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: start; gap: 8px 16px; padding: 16px 16px 14px 20px; border-bottom: 1px solid var(--pmt-cz-line); }
+.pmt-cz-kicker { margin: 0 0 5px; font: 600 10.5px/1.3 var(--pm-font-code, ui-monospace, monospace); letter-spacing: .18em; text-transform: uppercase; color: var(--pmw-text-3, var(--text-muted)); }
+.pmt-cz-title { margin: 0; font-size: 19px; line-height: 1.2; font-weight: 650; letter-spacing: -.005em; }
+.pmt-cz-lead { margin: 5px 0 0; max-width: 62ch; font-size: 12.5px; color: var(--pmw-text-2, var(--text-secondary)); }
+.pmt-cz-scope { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; padding-top: 2px; }
+.pmt-cz-scopewhy { font-size: 11px; color: var(--pmw-text-3, var(--text-muted)); }
+.pmt-cz .pmt-cz-x { width: 30px; height: 30px; border-radius: 8px; }
+.pmt-cz-body { flex: 1 1 auto; min-height: 0; overflow: auto; display: grid; align-content: start; gap: 22px; padding: 16px 20px 22px; scroll-padding-top: 52px;
+  scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--pmw-text, currentColor) 26%, transparent) transparent; }
+.pmt-cz-foot { flex: none; display: flex; align-items: center; gap: 10px; padding: 11px 16px 11px 20px; border-top: 1px solid var(--pmt-cz-line); }
+.pmt-cz-footn { font-size: 11.5px; color: var(--pmw-text-3, var(--text-muted)); }
+.pmt-cz .pmt-cz-done { height: 32px; padding: 0 18px; font-size: 12.5px; border-radius: 8px; background: var(--pmt-cz-accent); color: var(--pmt-cz-on-accent); border-color: transparent; }
+.pmt-cz .pmt-cz-done:hover { background: color-mix(in srgb, var(--pmt-cz-accent) 86%, #fff); }
+/* the page's button rules (Friendly rounds every button to 14 px) are restated here at two classes */
+.pmt-cz :is(.pmt-textbtn, .pmt-step, .pmt-pop-x) { border-radius: 7px; }
+.pmt-cz .pmt-textbtn { height: 28px; padding: 0 10px; font-size: 12px; }
+.pmt-cz .pmt-textbtn[aria-disabled="true"] { opacity: .45; cursor: default; }
+.pmt-cz .pmt-textbtn[aria-disabled="true"]:hover { background: transparent; }
+
+/* ---- top: preview and side column ---- */
+.pmt-cz-top { display: grid; grid-template-columns: minmax(0, 1fr) 214px; gap: 14px; align-items: stretch; }
+.pmt-cz-preview { position: relative; margin: 0; display: flex; flex-direction: column; min-width: 0; overflow: hidden; border: 1px solid var(--pmt-cz-line); border-radius: var(--pmt-cz-r); background: var(--pmt-cz-ground); }
+.pmt-cz-pvcap { flex: none; display: flex; align-items: baseline; gap: 10px; min-width: 0; padding: 7px 10px; border-bottom: 1px solid var(--pmt-cz-line); font-size: 11px; }
+.pmt-cz-pvtitle { font-weight: 650; letter-spacing: .06em; text-transform: uppercase; font-size: 10.5px; color: var(--pmw-text-2, var(--text-secondary)); }
+.pmt-cz-pvdesc { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--pmw-text-3, var(--text-muted)); }
+.pmt-cz-pvbox { position: relative; flex: 1 1 auto; height: 236px; min-height: 180px; }
+.pmt-cz-pvbox > .pmt-root { position: absolute; inset: 0; }
+.pmt-cz-pvbox .pmt-sb-thumb { display: none; }
+.pmt-cz-side { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.pmt-cz-meter { padding: 8px 10px 10px; border: 1px solid var(--pmt-cz-line); border-radius: var(--pmt-cz-r); }
+.pmt-cz-meterhead { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 7px;
+  font: 600 9.5px/1.3 var(--pm-font-code, ui-monospace, monospace); letter-spacing: .16em; text-transform: uppercase; color: var(--pmw-text-3, var(--text-muted)); }
+.pmt-cz-meterhead b { font-weight: 650; letter-spacing: .06em; color: var(--pmw-text, inherit); }
+.pmt-cz-cells { display: grid; grid-template-columns: repeat(41, 1fr); gap: 1.5px; height: 10px; }
+.pmt-cz-cells > i { border-radius: 1.5px; background: color-mix(in srgb, var(--pmw-text, #fff) 12%, transparent); transition: background-color var(--pmt-t-tint, 0ms) linear; }
+.pmt-cz-cells > i.pmt-cz-on { background: var(--pmt-cz-accent); }
+.pmt-cz-sets { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.pmt-cz .pmt-cz-set { display: grid; align-content: start; gap: 1px; min-height: 52px; padding: 7px 9px; text-align: left; cursor: pointer; color: inherit; font: inherit;
+  border: 1px solid var(--pmt-cz-line); border-radius: var(--pmt-cz-r); background: transparent;
+  transition: background-color var(--pmt-t-tint, 0ms) linear, border-color var(--pmt-t-tint, 0ms) linear; }
+.pmt-cz-set span { font-weight: 650; font-size: 12px; }
+.pmt-cz-set small { font-size: 10.5px; color: var(--pmw-text-3, var(--text-muted)); }
+.pmt-cz .pmt-cz-set:hover { background: var(--pmt-cz-hover); border-color: var(--pmt-cz-line-2); }
+.pmt-cz .pmt-cz-set[aria-pressed="true"] { background: var(--pmt-cz-fill); border-color: var(--pmt-cz-line-2); }
+.pmt-cz-set[aria-pressed="true"] small { color: var(--pmw-text-2, inherit); }
+.pmt-cz-try { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 2px; }
+.pmt-cz-trylabel { width: 100%; font: 600 9.5px/1.3 var(--pm-font-code, ui-monospace, monospace); letter-spacing: .16em; text-transform: uppercase; color: var(--pmw-text-3, var(--text-muted)); }
+.pmt-cz-try .pmt-textbtn { height: 26px; padding: 0 8px; border-color: var(--pmt-cz-line); }
+
+/* ---- the group index: stays at the top of the scrolling body ---- */
+.pmt-cz-nav { position: sticky; top: -16px; z-index: 3; display: flex; flex-wrap: wrap; gap: 2px; margin: -6px -8px -10px; padding: 8px; background: var(--pmt-cz-plate); border-bottom: 1px solid var(--pmt-cz-line); }
+.pmt-cz-nav .pmt-textbtn { display: inline-flex; align-items: center; gap: 6px; color: var(--pmw-text-2, inherit); }
+.pmt-cz-nav .pmt-textbtn:hover { color: var(--pmw-text, inherit); }
+.pmt-cz-navn { min-width: 0; font-size: 10.5px; font-weight: 700; color: var(--pmt-cz-accent); }
+.pmt-cz-navn:empty { display: none; }
+
+/* ---- groups ---- */
+.pmt-cz-group { display: grid; gap: 12px; min-width: 0; scroll-margin-top: 52px; }
+.pmt-cz-ghead { display: flex; align-items: baseline; gap: 10px; padding-bottom: 7px; border-bottom: 1px solid var(--pmt-cz-line); }
+.pmt-cz-ghead h3 { margin: 0; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; outline: none; }
+.pmt-cz-gcount { font: 500 10.5px/1.3 var(--pm-font-code, ui-monospace, monospace); letter-spacing: .06em; color: var(--pmt-cz-accent); }
+.pmt-cz-greset { margin-left: auto; }
+.pmt-cz .pmt-cz-greset { height: 24px; font-size: 11.5px; color: var(--pmw-text-2, inherit); }
+.pmt-cz-glead { margin: -4px 0 0; font-size: 12px; color: var(--pmw-text-2, var(--text-secondary)); max-width: 70ch; }
+.pmt-cz-sub { margin: 2px 0 -4px; font-size: 11px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--pmw-text-2, var(--text-secondary)); }
+.pmt-cz-note { margin: 0; padding: 7px 10px; font-size: 11.5px; line-height: 1.4; color: var(--pmw-text-2, var(--text-secondary)); border: 1px dashed var(--pmt-cz-line-2); border-radius: var(--pmt-cz-r); }
+.pmt-cz-error { margin: 0; width: 100%; padding: 7px 10px; font-size: 12px; color: var(--pmw-text, inherit); border: 1px solid color-mix(in srgb, var(--pmw-bad, #ef6b6b) 60%, transparent);
+  background: color-mix(in srgb, var(--pmw-bad, #ef6b6b) 12%, transparent); border-radius: var(--pmt-cz-r); }
+.pmt-cz-row, .pmt-cz-grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px 18px; align-items: start; }
+.pmt-cz-field { display: grid; gap: 5px; min-width: 0; }
+.pmt-cz-flabel { font-size: 12px; font-weight: 600; }
+.pmt-cz-fhelp { font-size: 11px; line-height: 1.4; color: var(--pmw-text-3, var(--text-muted)); }
+.pmt-cz-fhelp:empty { display: none; }
+.pmt-cz-import { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+.pmt-cz-import .pmt-textbtn { border-color: var(--pmt-cz-line-2); }
+.pmt-cz-findrow { display: flex; align-items: center; gap: 10px; }
+.pmt-cz .pmt-cz-search { flex: 0 1 280px; height: 30px; margin: 0; padding: 0 10px; font: inherit; font-size: 12.5px; color: inherit;
+  background: var(--pmt-cz-ground); border: 1px solid var(--pmt-cz-line-2); border-radius: 7px; }
+.pmt-cz-findn { font-size: 11.5px; color: var(--pmw-text-3, var(--text-muted)); }
+.pmt-cz-more { margin: 0; }
+
+/* ---- one of several: the panels' chosen fill ---- */
+.pmt-cz-seg { --pmw-ink-y: 2px; display: inline-flex; flex-wrap: wrap; align-self: start; justify-self: start; gap: 0; padding: 2px; border: 1px solid var(--pmt-cz-line); border-radius: 9px; }
+.pmt-cz .pmt-cz-segopt { height: 30px; padding: 0 12px; border: 0; background: transparent; color: var(--pmw-text-2, inherit); font: inherit; font-size: 12px; font-weight: 550; cursor: pointer; white-space: nowrap; border-radius: 7px; }
+.pmt-cz-seg .pmw-ink-opt::after, .pmt-cz-seg .pmw-ink { border-radius: 7px; }
+
+/* ---- tiles: they show what they choose ---- */
+.pmt-cz-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 8px; }
+.pmt-cz-tiles.pmt-cz-small { grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); }
+.pmt-cz-faces { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+.pmt-cz .pmt-cz-tile { position: relative; isolation: isolate; display: grid; grid-template-rows: auto auto; align-content: start; gap: 2px 8px; min-width: 0; padding: 5px 5px 7px; text-align: left;
+  color: inherit; font: inherit; cursor: pointer; border: 1px solid transparent; border-radius: var(--pmt-cz-r); background: transparent;
+  transition: background-color var(--pmt-t-tint, 0ms) linear, border-color var(--pmt-t-tint, 0ms) linear; }
+.pmt-cz .pmt-cz-tile:hover { background: var(--pmt-cz-hover); }
+.pmt-cz .pmt-cz-tile[aria-checked="true"] { background: var(--pmt-cz-fill); border-color: var(--pmt-cz-line-2); }
+.pmt-cz .pmt-cz-tile:focus-visible, .pmt-cz .pmt-cz-chip:focus-visible, .pmt-cz .pmt-cz-set:focus-visible, .pmt-cz .pmt-cz-segopt:focus-visible { outline: 2px solid var(--pmt-cz-ring); outline-offset: 2px; }
+.pmt-cz-thumb { position: relative; display: block; height: 48px; overflow: hidden; border-radius: var(--pmt-cz-r-in); border: 1px solid color-mix(in srgb, var(--pmw-text, #fff) 14%, transparent); background: var(--pmt-cz-ground); }
+.pmt-cz-small .pmt-cz-thumb { height: 40px; }
+.pmt-cz-tname { min-width: 0; padding: 3px 3px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 550; }
+.pmt-cz-tmeta { min-width: 0; padding: 0 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10.5px; color: var(--pmw-text-3, var(--text-muted)); }
+.pmt-cz-tmeta:empty { display: none; }
+.pmt-cz-tile[aria-checked="true"] .pmt-cz-tname { color: var(--pmt-cz-ink); font-weight: 650; }
+/* the chosen tile's check, on its thumbnail's corner */
+.pmt-cz-tile[aria-checked="true"] .pmt-cz-thumb::after { content: ""; position: absolute; right: 4px; top: 4px; width: 16px; height: 16px; border-radius: 5px;
+  background: var(--pmt-cz-accent); box-shadow: 0 0 0 1.5px var(--pmt-cz-plate); }
+.pmt-cz-tile[aria-checked="true"] .pmt-cz-thumb::before { content: ""; position: absolute; z-index: 1; right: 4px; top: 4px; width: 16px; height: 16px;
+  background: var(--pmt-cz-on-accent); -webkit-mask: var(--pmt-cz-check) center / 12px no-repeat; mask: var(--pmt-cz-check) center / 12px no-repeat; }
+.pmt-cz-fam { grid-column: 1 / -1; margin: 6px 2px -2px; font: 650 10px/1.2 var(--pm-font-code, ui-monospace, monospace); letter-spacing: .14em; text-transform: uppercase; color: var(--pmw-text-3, var(--text-muted)); }
+.pmt-cz-fam:first-of-type { margin-top: 0; }
+/* a scheme as a tiny terminal */
+.pmt-cz-sw { display: flex; flex-direction: column; justify-content: space-between; height: 100%; padding: 6px 8px 7px; font: 11px/1 var(--pm-font-code, ui-monospace, monospace); }
+.pmt-cz-swline b { font-weight: 600; }
+.pmt-cz-swline i { font-style: normal; }
+.pmt-cz-swdots { display: flex; gap: 3px; }
+.pmt-cz-swdots i { width: 9px; height: 9px; border-radius: 2px; }
+/* a face as its own letters */
+.pmt-cz-face { display: flex; align-items: center; height: 100%; padding: 0 10px; font-size: 18px; line-height: 1; letter-spacing: .02em; color: var(--pmw-text, inherit); white-space: nowrap; overflow: hidden; }
+.pmt-cz-localface { grid-column: 1 / -1; font-size: 11.5px; color: var(--pmw-text-2, inherit); }
+/* a cursor shape after a prompt */
+.pmt-cz-cur { display: flex; align-items: center; gap: 3px; height: 100%; padding: 0 10px; font: 13px/1 var(--pm-font-code, ui-monospace, monospace); color: var(--pmw-text-2, inherit); }
+.pmt-cz-cur i { display: block; width: 8px; height: 17px; background: var(--pmt-cz-accent); }
+.pmt-cz-cur-bar i { width: 2px; }
+.pmt-cz-cur-underline i { height: 2px; align-self: flex-end; margin-bottom: 11px; }
+.pmt-cz-cur-look i { background: transparent; outline: 1.5px dashed var(--pmt-cz-accent); outline-offset: -1.5px; }
+/* a trail: the jump it follows */
+.pmt-cz-trail { position: relative; display: block; height: 100%; }
+.pmt-cz-trail b { position: absolute; right: 12px; top: 50%; width: 7px; height: 15px; margin-top: -7.5px; background: var(--pmt-cz-accent); }
+.pmt-cz-trail i { position: absolute; left: 12px; right: 19px; top: 50%; height: 9px; margin-top: -4.5px; }
+.pmt-cz-trail-soft i { background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--pmt-cz-accent) 45%, transparent)); border-radius: 4px; }
+.pmt-cz-trail-glow i { height: 5px; margin-top: -2.5px; background: linear-gradient(90deg, transparent, var(--pmt-cz-accent)); box-shadow: 0 0 8px color-mix(in srgb, var(--pmt-cz-accent) 70%, transparent); border-radius: 3px; }
+.pmt-cz-trail-phosphor i { background: linear-gradient(90deg, transparent, color-mix(in srgb, #7dff9c 70%, transparent)); }
+.pmt-cz-trail-phosphor b { background: #7dff9c; }
+.pmt-cz-trail-trace i { height: 1.5px; margin-top: -.75px; background: var(--pmt-cz-accent); }
+.pmt-cz-trail-off i { display: none; }
+.pmt-cz-trail-look i { height: 0; margin-top: 0; border-top: 1.5px dashed color-mix(in srgb, var(--pmt-cz-accent) 70%, transparent); }
+/* grounds, gradients and pictures */
+.pmt-cz-gnd { display: block; height: 100%; background-size: cover; background-position: center; }
+.pmt-cz-gnd.pmt-cz-empty { background: repeating-linear-gradient(135deg, transparent 0 6px, color-mix(in srgb, var(--pmw-text, #fff) 9%, transparent) 6px 7px); }
+
+/* ---- chips: what they turn on (the Plug-in Chips card) ---- */
+.pmt-cz-chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(228px, 1fr)); gap: 8px; }
+.pmt-cz-chipbox { display: flex; flex-direction: column; min-width: 0; border: 1px solid var(--pmt-cz-line); border-radius: var(--pmt-cz-r);
+  transition: background-color var(--pmt-t-tint, 0ms) linear, border-color var(--pmt-t-tint, 0ms) linear; }
+.pmt-cz-chipbox.pmt-cz-lit { background: var(--pmt-cz-fill); border-color: var(--pmt-cz-line-2); }
+.pmt-cz .pmt-cz-chip { position: relative; display: flex; align-items: stretch; width: 100%; min-height: 74px; padding: 0; text-align: left; color: inherit; font: inherit; cursor: pointer;
+  border: 0; border-radius: var(--pmt-cz-r); background: transparent; }
+.pmt-cz .pmt-cz-chip:hover { background: var(--pmt-cz-hover); }
+.pmt-cz-pins { display: none; }
+.pmt-cz-chipcopy { display: flex; flex-direction: column; gap: 3px; flex: 1 1 auto; min-width: 0; padding: 10px 12px 9px 38px; }
+.pmt-cz-chipname { font-size: 12.5px; font-weight: 650; }
+.pmt-cz-chiphelp { font-size: 11.5px; line-height: 1.35; color: var(--pmw-text-2, var(--text-secondary)); }
+.pmt-cz-chipfoot { display: flex; gap: 10px; margin-top: auto; padding-top: 4px; font: 600 9.5px/1.3 var(--pm-font-code, ui-monospace, monospace); letter-spacing: .12em; text-transform: uppercase; color: var(--pmw-text-3, var(--text-muted)); }
+.pmt-cz-mine { display: none; color: var(--pmt-cz-accent); }
+.pmt-cz-is-mine .pmt-cz-mine { display: inline; }
+/* the switch's own mark: an empty box, then the accent with its check */
+.pmt-cz-chip::before { content: ""; position: absolute; left: 12px; top: 12px; width: 16px; height: 16px; border-radius: 5px; border: 1.5px solid var(--pmt-cz-line-2); background: transparent; }
+.pmt-cz-chip[aria-checked="true"]::before { border-color: var(--pmt-cz-accent); background: var(--pmt-cz-accent); }
+.pmt-cz-chip[aria-checked="true"]::after { content: ""; position: absolute; left: 12px; top: 12px; width: 16px; height: 16px; background: var(--pmt-cz-on-accent);
+  -webkit-mask: var(--pmt-cz-check) center / 12px no-repeat; mask: var(--pmt-cz-check) center / 12px no-repeat; }
+.pmt-cz-chip[aria-checked="true"] .pmt-cz-chipstate { color: var(--pmw-text, inherit); }
+.pmt-cz-chipmore { display: grid; gap: 8px; padding: 2px 12px 11px 38px; }
+.pmt-cz-mini { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; cursor: pointer; }
+.pmt-cz-mini input { accent-color: var(--pmt-cz-accent); width: 15px; height: 15px; margin: 0; }
+/* the effect chips' small pictures */
+.pmt-cz-art { display: none; flex: none; width: 58px; margin: 9px 9px 9px 0; border-radius: var(--pmt-cz-r-in); border: 1px solid color-mix(in srgb, var(--pmw-text, #fff) 12%, transparent);
+  background: #0f1512; }
+.pmt-cz-fxchips .pmt-cz-art { display: block; }
+.pmt-cz-art-scanlines { background: repeating-linear-gradient(to bottom, #2c9b52 0 2px, #0d1a11 2px 3px); }
+.pmt-cz-art-glow { background: radial-gradient(closest-side, #8dffb0, #2c9b52 45%, #0d1a11 80%); }
+.pmt-cz-art-crt { background: radial-gradient(120% 95% at 50% 50%, #2a7a49 0 52%, #0b130d 72%); border-radius: 30% / 22%; }
+.pmt-cz-art-flicker { background: linear-gradient(90deg, #2c9b52 0 50%, #278a49 50% 100%); }
+.pmt-cz-art-inactiveDim { background: linear-gradient(90deg, var(--pmt-cz-ground) 0 50%, color-mix(in srgb, var(--pmt-cz-ground) 55%, #000) 50%); }
+.pmt-cz-art-smoothScroll { background: repeating-linear-gradient(to bottom, color-mix(in srgb, var(--pmw-text, #fff) 34%, transparent) 0 2px, transparent 2px 7px), var(--pmt-cz-ground); }
+
+/* ---- sliders: the track fills to the value ---- */
+.pmt-cz-slider { display: grid; grid-template-columns: minmax(84px, auto) minmax(0, 1fr) 54px; align-items: center; gap: 10px; min-width: 0; font-size: 12px; }
+.pmt-cz-slabel { font-weight: 600; }
+.pmt-cz-out { font: 500 11.5px/1 var(--pm-font-code, ui-monospace, monospace); color: var(--pmw-text-2, inherit); text-align: right; font-variant-numeric: tabular-nums; }
+.pmt-cz-is-mine .pmt-cz-out { color: var(--pmt-cz-accent); }
+.pmt-cz input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 22px; margin: 0; background: transparent; cursor: pointer; }
+.pmt-cz input[type="range"]::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: color-mix(in srgb, var(--pmw-text, #fff) 18%, transparent); }
+.pmt-cz input[type="range"]::-moz-range-track { height: 4px; border-radius: 2px; background: color-mix(in srgb, var(--pmw-text, #fff) 18%, transparent); }
+.pmt-cz input[type="range"]::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--pmt-cz-accent); }
+.pmt-cz input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; margin-top: -6px; border-radius: 5px; border: 2px solid var(--pmt-cz-plate); background: var(--pmt-cz-accent); box-shadow: 0 1px 3px rgb(0 0 0 / .35); }
+.pmt-cz input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 5px; border: 2px solid var(--pmt-cz-plate); background: var(--pmt-cz-accent); }
+.pmt-cz input[type="range"]:focus-visible { outline: 2px solid var(--pmt-cz-ring); outline-offset: 2px; border-radius: 4px; }
+.pmt-cz-color { width: 44px; height: 30px; padding: 0; border: 1px solid var(--pmt-cz-line-2); border-radius: 7px; background: transparent; cursor: pointer; }
+.pmt-cz-sub-solid .pmt-cz-field { grid-auto-flow: column; justify-content: start; align-items: center; gap: 10px; }
+.pmt-cz-stepper { gap: 6px; }
+.pmt-cz-stepper .pmt-step { width: 30px; height: 30px; font-size: 15px; border-color: var(--pmt-cz-line-2); }
+.pmt-cz-stepper output { min-width: 56px; text-align: center; }
+.pmt-cz-default { justify-self: start; }
+
+/* ---- motion: in each look's voice (60-motion.css tokens); Reduced Motion fades ---- */
+.pmt-cz.pmt-in .pmt-cz-scrim > i, .pmt-cz.pmt-in .pmt-cz-frame { animation: pmt-m-fade-in var(--pmt-t-in, 120ms) linear both; }
+.pmt-cz.pmt-in .pmt-cz-dialog { transform-origin: 50% 0; animation: var(--pmt-a-pop-in, pmt-m-fade-in) var(--pmt-t-in, 120ms) var(--pmt-ease-move, linear) both; }
+.pmt-cz.pmt-out { pointer-events: none; }
+.pmt-cz.pmt-out .pmt-cz-scrim > i, .pmt-cz.pmt-out .pmt-cz-frame { animation: pmt-m-fade-out var(--pmt-t-out, 100ms) linear both; }
+.pmt-cz.pmt-out .pmt-cz-dialog { transform-origin: 50% 0; animation: var(--pmt-a-pop-out, pmt-m-fade-out) var(--pmt-t-out, 100ms) var(--pmt-ease-exit, linear) both; }
+.pmt-cz-body.pmt-rescope { animation: var(--pmt-a-rescope, pmt-m-dim-in) calc(var(--pmt-t-swap, 120ms) * 1.1) var(--pmt-ease-fade, linear) both; }
+html[data-motion="reduced"] .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set, .pmt-cz-chipbox, .pmt-cz-cells > i) { transition: none; }
+
+/* ---- narrow: the dialog under 640 px stacks; under 420 px one column ---- */
+@container pmt-cz (max-width: 640px) {
+  .pmt-cz-head { grid-template-columns: minmax(0, 1fr) auto; }
+  .pmt-cz-scope { grid-column: 1 / -1; grid-row: 2; align-items: flex-start; }
+  .pmt-cz-top { grid-template-columns: 1fr; }
+  .pmt-cz-side { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .pmt-cz-meter, .pmt-cz-try, .pmt-cz-side > .pmt-cz-note { grid-column: 1 / -1; }
+  .pmt-cz-sets { grid-column: 1 / -1; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pmt-cz-pvbox { height: 196px; }
+  .pmt-cz-body { padding: 14px 14px 18px; }
+}
+@container pmt-cz (max-width: 440px) {
+  .pmt-cz-title { font-size: 17px; }
+  .pmt-cz-lead { display: none; }
+  .pmt-cz-sets { grid-template-columns: 1fr 1fr; }
+  .pmt-cz-tiles, .pmt-cz-faces { grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); }
+  .pmt-cz-chips { grid-template-columns: 1fr; }
+  .pmt-cz-slider { grid-template-columns: 1fr 54px; }
+  .pmt-cz-slider .pmt-cz-slabel { grid-column: 1 / -1; }
+  .pmt-cz-pvbox { height: 172px; }
+  .pmt-cz-foot { flex-wrap: wrap; padding: 10px 12px; }
+  .pmt-cz-footn { order: 3; width: 100%; }
+}
+.pmt-cz.pmt-cz-narrow .pmt-cz-dialog { border-radius: min(var(--pmt-cz-radius), 12px); }
+
+/* =================================================================================================================
+   Friendly: a soft plate on the dot ground, rounded cards that lift when chosen (the DS/Wii menus' warmth)
+   ================================================================================================================= */
+.pmt-cz[data-pmt-look="friendly"] {
+  --pmt-cz-radius: 22px; --pmt-cz-r: 14px; --pmt-cz-r-in: 10px;
+  --pmt-cz-accent: var(--accent-lime, var(--pmw-accent));
+  --pmt-cz-scrim: color-mix(in srgb, color-mix(in srgb, var(--background, #1d1830) 80%, #3b2a5c) 66%, transparent);
+  --pmt-cz-dot: color-mix(in srgb, var(--pmw-text, #3b3550) 9%, transparent);
+}
+.pmt-cz[data-pmt-look="friendly"][data-pmt-mode="light"] { --pmt-cz-fill: color-mix(in srgb, var(--pmw-text) 12%, transparent); }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz-dialog {
+  background-color: var(--pmt-cz-plate);
+  background-image: radial-gradient(var(--pmt-cz-dot) 1.1px, transparent 1.6px);
+  background-size: 14px 14px; background-position: 7px 7px;
+  box-shadow: 0 24px 70px rgb(40 24 70 / .32), 0 2px 0 rgb(255 255 255 / .06) inset;
+}
+.pmt-cz[data-pmt-look="friendly"] :is(.pmt-cz-head, .pmt-cz-foot, .pmt-cz-nav) { background: color-mix(in srgb, var(--pmt-cz-plate) 88%, transparent); }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz-kicker { color: var(--pmt-cz-accent); }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz-title { font-weight: 750; }
+.pmt-cz[data-pmt-look="friendly"] :is(.pmt-cz-tile, .pmt-cz-chipbox, .pmt-cz-set, .pmt-cz-meter, .pmt-cz-preview) { background-color: color-mix(in srgb, var(--pmt-cz-plate) 82%, var(--pmw-text, #fff) 2%); border-color: var(--pmt-cz-line); }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz .pmt-cz-tile, .pmt-cz[data-pmt-look="friendly"] .pmt-cz-tile { border-width: 1.5px; }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz-tile[aria-checked="true"], .pmt-cz[data-pmt-look="friendly"] .pmt-cz-chipbox.pmt-cz-lit, .pmt-cz[data-pmt-look="friendly"] .pmt-cz-set[aria-pressed="true"] {
+  background-color: color-mix(in srgb, var(--pmt-cz-accent) 14%, var(--pmt-cz-plate)); border-color: color-mix(in srgb, var(--pmt-cz-accent) 70%, transparent);
+  box-shadow: 0 6px 16px rgb(40 24 70 / .16); transform: translateY(-1px); }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz-tile[aria-checked="true"] .pmt-cz-thumb::after { border-radius: 50%; }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz-chip::before, .pmt-cz[data-pmt-look="friendly"] .pmt-cz-chip[aria-checked="true"]::after { border-radius: 50%; }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz-cells > i { border-radius: 50%; }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz-cells { gap: 2px; height: 9px; }
+.pmt-cz[data-pmt-look="friendly"] :is(.pmt-textbtn, .pmt-step, .pmt-pop-x) { border-radius: 10px; }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz-done { border-radius: 12px; height: 34px; padding: 0 20px; font-weight: 750; }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz-seg { border-radius: 12px; }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz-segopt, .pmt-cz[data-pmt-look="friendly"] .pmt-cz-seg .pmw-ink-opt::after, .pmt-cz[data-pmt-look="friendly"] .pmt-cz-seg .pmw-ink { border-radius: 10px; }
+.pmt-cz[data-pmt-look="friendly"] input[type="range"]::-webkit-slider-thumb { border-radius: 50%; width: 18px; height: 18px; margin-top: -7px; }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz-ghead { border-bottom-style: dotted; border-bottom-width: 2px; }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz-search { border-radius: 12px; }
+
+/* =================================================================================================================
+   Glass: the app's menu plate and its rims; light on the chosen card's top edge. No blur of the terminal's own.
+   ================================================================================================================= */
+.pmt-cz[data-pmt-look="glass"] {
+  --pmt-cz-plate: var(--rg-menu, color-mix(in srgb, var(--surface-elevated, #2a2240) 94%, transparent));
+  --pmt-cz-ground: color-mix(in srgb, var(--rg-reading, #1b1730) 86%, transparent);
+  --pmt-cz-line: var(--rg-rim-soft, rgba(255, 255, 255, .16));
+  --pmt-cz-line-2: var(--rg-rim, rgba(255, 255, 255, .34));
+  --pmt-cz-fill: var(--pm6-glass-step-3, rgba(255, 255, 255, .14));
+  --pmt-cz-hover: var(--pm6-glass-step-1, rgba(255, 255, 255, .06));
+  --pmt-cz-radius: 20px; --pmt-cz-r: 12px; --pmt-cz-r-in: 8px;
+  --pmt-cz-scrim: color-mix(in srgb, var(--background, #0d0a1c) 58%, transparent);
+  --pmt-cz-edge: var(--glass-edge, rgba(255, 255, 255, .55));
+}
+.pmt-cz[data-pmt-look="glass"][data-pmt-mode="light"] { --pmt-cz-fill: var(--pm6-glass-plate, rgba(255, 255, 255, .7)); --pmt-cz-hover: var(--pm6-glass-step-2, rgba(255, 255, 255, .4)); }
+.pmt-cz[data-pmt-look="glass"] .pmt-cz-dialog { box-shadow: 0 30px 80px var(--rg-shadow, rgba(0, 0, 0, .4)), 0 0 0 1px var(--rg-rim-low, rgba(255, 255, 255, .1)), inset 0 1px 0 var(--pmt-cz-edge); }
+.pmt-cz[data-pmt-look="glass"] :is(.pmt-cz-tile[aria-checked="true"], .pmt-cz-chipbox.pmt-cz-lit, .pmt-cz-set[aria-pressed="true"]) {
+  background: linear-gradient(var(--pmt-cz-edge), var(--pmt-cz-edge)) 0 0 / 100% 1px no-repeat, var(--pmt-cz-fill); }
+.pmt-cz[data-pmt-look="glass"] .pmt-cz-preview { box-shadow: inset 0 1px 0 color-mix(in srgb, var(--pmt-cz-edge) 60%, transparent); }
+.pmt-cz[data-pmt-look="glass"] .pmt-cz-thumb { border-color: var(--pmt-cz-line); }
+.pmt-cz[data-pmt-look="glass"] :is(.pmt-textbtn, .pmt-step, .pmt-pop-x) { border-radius: 10px; }
+.pmt-cz[data-pmt-look="glass"] .pmt-cz-done { border-radius: 12px; box-shadow: inset 0 1px 0 rgb(255 255 255 / .4); }
+.pmt-cz[data-pmt-look="glass"] .pmt-cz-seg { border-radius: 12px; background: color-mix(in srgb, var(--pmt-cz-ground) 50%, transparent); }
+.pmt-cz[data-pmt-look="glass"] .pmt-cz-nav { background: var(--pmt-cz-plate); }
+.pmt-cz[data-pmt-look="glass"] .pmt-cz-cells > i.pmt-cz-on { background: var(--pmt-cz-edge); box-shadow: 0 0 4px color-mix(in srgb, var(--pmt-cz-edge) 70%, transparent); }
+
+/* =================================================================================================================
+   Retro: square, 2 px rules, the Retro type, bracketed headings, reverse video for what is chosen
+   ================================================================================================================= */
+.pmt-cz[data-pmt-look="retro"] {
+  --pmt-cz-radius: 0px; --pmt-cz-r: 0px; --pmt-cz-r-in: 0px;
+  --pmt-cz-accent: var(--accent-lime, #33ff66);
+  --pmt-cz-on-accent: var(--surface, #0a0f0a);
+  --pmt-cz-line: color-mix(in srgb, var(--pmt-cz-accent) 32%, transparent);
+  --pmt-cz-line-2: color-mix(in srgb, var(--pmt-cz-accent) 64%, transparent);
+  --pmt-cz-scrim: rgb(0 0 0 / .62);
+  font-family: var(--body-font, 'IBM Plex Mono', ui-monospace, monospace);
+}
+.pmt-cz[data-pmt-look="retro"][data-pmt-mode="light"] { --pmt-cz-accent: color-mix(in srgb, var(--accent-lime, #1d8f3a) 72%, #000); --pmt-cz-scrim: color-mix(in srgb, var(--background, #f4f1e8) 64%, transparent); }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-dialog { border-width: 2px; border-color: var(--pmt-cz-line-2); box-shadow: 6px 6px 0 color-mix(in srgb, var(--pmt-cz-accent) 28%, transparent); }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-scrim > i { background: repeating-linear-gradient(to bottom, rgb(0 0 0 / .58) 0 2px, rgb(0 0 0 / .72) 2px 3px); }
+.pmt-cz[data-pmt-look="retro"][data-pmt-mode="light"] .pmt-cz-scrim > i { background: var(--pmt-cz-scrim); }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-frame { border-radius: 0; box-shadow: 0 0 0 2px var(--pmt-cz-accent); }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-framelabel { border-radius: 0; }
+.pmt-cz[data-pmt-look="retro"] :is(.pmt-cz-kicker, .pmt-cz-ghead h3)::before { content: "[ "; }
+.pmt-cz[data-pmt-look="retro"] :is(.pmt-cz-kicker, .pmt-cz-ghead h3)::after { content: " ]"; }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-kicker { color: var(--pmt-cz-accent); }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-title { font-weight: 600; text-transform: uppercase; letter-spacing: .06em; font-size: 17px; }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-ghead { border-bottom: 1px dashed var(--pmt-cz-line-2); }
+.pmt-cz[data-pmt-look="retro"] :is(.pmt-cz-tile[aria-checked="true"], .pmt-cz-chipbox.pmt-cz-lit, .pmt-cz-set[aria-pressed="true"]) { background: var(--pmt-cz-accent); color: var(--pmt-cz-on-accent); border-color: var(--pmt-cz-accent); }
+.pmt-cz[data-pmt-look="retro"] :is(.pmt-cz-tile[aria-checked="true"], .pmt-cz-chipbox.pmt-cz-lit, .pmt-cz-set[aria-pressed="true"]) :is(.pmt-cz-tname, .pmt-cz-tmeta, .pmt-cz-chiphelp, .pmt-cz-chipfoot, .pmt-cz-chipstate, small, .pmt-cz-out, .pmt-cz-slabel, .pmt-cz-mine, .pmt-cz-mini) { color: var(--pmt-cz-on-accent); }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-chipbox.pmt-cz-lit input[type="range"]::-webkit-slider-runnable-track { background: color-mix(in srgb, var(--pmt-cz-on-accent) 40%, transparent); }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-chipbox.pmt-cz-lit input[type="range"]::-webkit-slider-thumb { background: var(--pmt-cz-on-accent); border-color: var(--pmt-cz-accent); }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-tile[aria-checked="true"] .pmt-cz-thumb::after { border-radius: 0; background: var(--pmt-cz-on-accent); }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-tile[aria-checked="true"] .pmt-cz-thumb::before { background: var(--pmt-cz-accent); }
+/* the chips: three contact pins, lit when on (the chip's own motif, in phosphor) */
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-chip::before, .pmt-cz[data-pmt-look="retro"] .pmt-cz-chip::after { display: none; }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-pins { display: flex; flex-direction: column; justify-content: center; gap: 4px; flex: none; width: 18px; border-right: 1px solid currentColor; opacity: .7; }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-pins > i { width: 6px; height: 6px; margin-left: 6px; border: 1px solid currentColor; }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-chip[aria-checked="true"] .pmt-cz-pins > i { background: currentColor; }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-chipcopy { padding-left: 10px; }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-chipmore { padding-left: 28px; }
+.pmt-cz[data-pmt-look="retro"] :is(.pmt-textbtn, .pmt-step, .pmt-pop-x, .pmt-cz-done, .pmt-cz-search, .pmt-cz-color) { border-radius: 0; }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-done { text-transform: uppercase; letter-spacing: .08em; }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-seg { border-radius: 0; }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-segopt { border-radius: 0; }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-cells > i { border-radius: 0; }
+.pmt-cz[data-pmt-look="retro"] input[type="range"]::-webkit-slider-runnable-track { border-radius: 0; height: 2px; background: var(--pmt-cz-line-2); }
+.pmt-cz[data-pmt-look="retro"] input[type="range"]::-webkit-slider-thumb { border-radius: 0; width: 10px; height: 16px; margin-top: -7px; box-shadow: none; }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-note { border-radius: 0; }
+
+/* =================================================================================================================
+   NieR: Plug-in Chips itself, only through installed parts and only in ink and parchment tokens. Nothing glows,
+   blurs or filters; changes are cuts (no fades), the slice part opens the screen from a line (60-motion.css).
+   ================================================================================================================= */
+html[data-o55-nier="on"] .pmt-cz {
+  --pmt-cz-plate: var(--o55-nier-raised); --pmt-cz-ground: var(--o55-nier-paper);
+  --pmt-cz-line: var(--o55-nier-line, rgba(var(--o55-nier-ink-rgb), .22)); --pmt-cz-line-2: var(--o55-nier-line-strong);
+  --pmt-cz-fill: var(--o55-nier-ink); --pmt-cz-hover: var(--o55-nier-hover, rgba(var(--o55-nier-ink-rgb), .1));
+  --pmt-cz-ink: var(--o55-nier-on-ink); --pmt-cz-accent: var(--o55-nier-ink); --pmt-cz-on-accent: var(--o55-nier-on-ink); --pmt-cz-ring: var(--o55-nier-ink);
+  --pmt-cz-scrim: rgba(var(--o55-nier-paper-rgb), .62);
+  --pmt-cz-shadow: 0 3px 10px rgba(var(--o55-nier-shadow-rgb), .18);
+  color: var(--o55-nier-ink);
+}
+html[data-o55-nier="on"] .pmt-cz :is(.pmt-cz-tile, .pmt-cz-chipbox, .pmt-cz-set, .pmt-cz-cells > i, .pmt-cz-segopt) { transition: none; }
+html[data-o55-nier="on"] .pmt-cz :is(.pmt-cz-tile[aria-checked="true"], .pmt-cz-chipbox.pmt-cz-lit, .pmt-cz-set[aria-pressed="true"]) { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); box-shadow: none; transform: none; }
+html[data-o55-nier="on"] .pmt-cz :is(.pmt-cz-tile[aria-checked="true"], .pmt-cz-chipbox.pmt-cz-lit, .pmt-cz-set[aria-pressed="true"]) :is(.pmt-cz-tname, .pmt-cz-tmeta, .pmt-cz-chiphelp, .pmt-cz-chipfoot, .pmt-cz-chipstate, .pmt-cz-mine, small, .pmt-cz-out, .pmt-cz-slabel, .pmt-cz-mini) { color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-tile[aria-checked="true"] .pmt-cz-thumb { border-color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-tile[aria-checked="true"] .pmt-cz-thumb::after { background: var(--o55-nier-ink); box-shadow: 0 0 0 1.5px var(--o55-nier-on-ink); border-radius: 0; }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-tile[aria-checked="true"] .pmt-cz-thumb::before { background: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-cells > i { background: transparent; border: 1px solid rgba(var(--o55-nier-ink-rgb), .3); border-radius: 0; }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-cells > i.pmt-cz-on { background: var(--o55-nier-ink); border-color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-done { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmt-cz :is(.pmt-cz-art, .pmt-cz-trail-phosphor i, .pmt-cz-trail-phosphor b) { filter: none; }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-art { background: var(--o55-nier-paper); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-art-scanlines { background: repeating-linear-gradient(to bottom, var(--o55-nier-ink) 0 1px, transparent 1px 3px), var(--o55-nier-paper); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-art-glow { background: radial-gradient(closest-side, var(--o55-nier-ink), transparent 70%), var(--o55-nier-paper); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-art-crt { background: radial-gradient(110% 90% at 50% 50%, var(--o55-nier-paper) 0 50%, var(--o55-nier-ink) 72%); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-art-flicker { background: linear-gradient(90deg, var(--o55-nier-paper) 0 50%, rgba(var(--o55-nier-ink-rgb), .2) 50%); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-art-inactiveDim { background: linear-gradient(90deg, var(--o55-nier-paper) 0 50%, rgba(var(--o55-nier-ink-rgb), .32) 50%); }
+html[data-o55-nier="on"] .pmt-cz :is(.pmt-cz-cur i, .pmt-cz-trail b, .pmt-cz-trail-trace i, .pmt-cz-trail-glow i) { background: var(--o55-nier-ink); box-shadow: none; }
+html[data-o55-nier="on"] .pmt-cz :is(.pmt-cz-trail-soft i, .pmt-cz-trail-phosphor i) { background: linear-gradient(90deg, transparent, rgba(var(--o55-nier-ink-rgb), .5)); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-cur-look i { background: transparent; outline-color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-trail-look i { border-top-color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-error { border-color: var(--o55-nier-error); background: var(--o55-nier-warn-surface, transparent); color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-chip::before { border-color: var(--o55-nier-line-strong); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-chip[aria-checked="true"]::before { background: var(--o55-nier-on-ink); border-color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-chip[aria-checked="true"]::after { background: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmt-cz input[type="range"]::-webkit-slider-thumb { box-shadow: none; }
+/* square: square corners and hairlines everywhere; the chips take the clipped corner and the contact pins */
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-cz { --pmt-cz-radius: 0px; --pmt-cz-r: 0px; --pmt-cz-r-in: 0px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-cz :is(.pmt-textbtn, .pmt-step, .pmt-pop-x, .pmt-cz-done, .pmt-cz-search, .pmt-cz-color, .pmt-cz-seg, .pmt-cz-segopt, .pmt-cz-framelabel, .pmt-cz-note, .pmt-cz-error) { border-radius: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-cz .pmt-cz-frame { border-radius: 0; box-shadow: 0 0 0 1.5px var(--o55-nier-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-cz .pmt-cz-chipbox {
+  clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 0 100%);
+  background-image: linear-gradient(to bottom left, transparent calc(50% - .6px), var(--pmt-cz-line-2) calc(50% - .6px) calc(50% + .6px), transparent calc(50% + .6px));
+  background-size: 11px 11px; background-position: right top; background-repeat: no-repeat; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-cz .pmt-cz-chipbox.pmt-cz-lit {
+  background-image: linear-gradient(to bottom left, transparent calc(50% - .6px), var(--o55-nier-ink) calc(50% - .6px) calc(50% + .6px), transparent calc(50% + .6px)); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-cz .pmt-cz-chip::before, html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-cz .pmt-cz-chip::after { display: none; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-cz .pmt-cz-pins { display: flex; flex-direction: column; justify-content: center; gap: 4px; flex: none; width: 16px; border-right: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-cz .pmt-cz-pins > i { width: 5px; height: 5px; margin-left: 5px; border: 1px solid currentColor; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-cz .pmt-cz-chip[aria-checked="true"] .pmt-cz-pins > i { background: currentColor; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-cz .pmt-cz-chipcopy { padding-left: 9px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-cz .pmt-cz-chipmore { padding-left: 25px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-cz :is(.pmt-cz-cells > i, .pmt-cz-swdots i) { border-radius: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-cz input[type="range"]::-webkit-slider-runnable-track { border-radius: 0; height: 2px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-cz input[type="range"]::-webkit-slider-thumb { border-radius: 0; width: 8px; height: 14px; margin-top: -6px; }
+/* headers: the kicker band ("Plug-in Chips"), wide capitals, and the group heads on the bracket rule */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmt-cz .pmt-cz-kicker { display: inline-flex; align-items: center; gap: 8px; padding: 3px 10px 3px 8px; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); letter-spacing: .24em; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmt-cz .pmt-cz-kicker::before { content: ""; width: 6px; height: 6px; background: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmt-cz :is(.pmt-cz-title, .pmt-cz-ghead h3, .pmt-cz-pvtitle, .pmt-cz-sub) { text-transform: uppercase; letter-spacing: .16em; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmt-cz .pmt-cz-title { font-weight: 600; font-size: 18px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmt-cz .pmt-cz-ghead { border-bottom: 0; padding-bottom: 8px;
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) left bottom / 5px 5px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) right bottom / 5px 5px no-repeat,
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .45), rgba(var(--o55-nier-ink-rgb), .45)) center calc(100% - 2px) / calc(100% - 12px) 1px no-repeat; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmt-cz .pmt-cz-head { border-bottom: 2px solid var(--o55-nier-ink); }
+/* ground: the faint grid behind the screen */
+html[data-o55-nier="on"][data-o55-nier-parts~="ground"] .pmt-cz .pmt-cz-dialog {
+  background-image: linear-gradient(rgba(var(--o55-nier-ink-rgb), .045) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .045) 1px, transparent 1px);
+  background-size: 32px 32px; }
+/* cursor: the hovered tile is an ink bar with the square cursor */
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set):not([aria-checked="true"]):not([aria-pressed="true"]):hover { background: var(--o55-nier-hover); }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmt-cz .pmt-cz-tile:hover .pmt-cz-tname::before,
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmt-cz .pmt-cz-tile[aria-checked="true"] .pmt-cz-tname::before { content: ""; display: inline-block; width: 6px; height: 6px; margin: 0 6px 1px 0; background: currentColor; }
+/* brackets: the frame round the terminal and the focused tile take ink corner brackets */
+html[data-o55-nier="on"][data-o55-nier-parts~="brackets"] .pmt-cz .pmt-cz-frame { box-shadow: none;
+  --b: var(--o55-nier-ink);
+  background:
+    linear-gradient(var(--b), var(--b)) left top / 14px 2px no-repeat, linear-gradient(var(--b), var(--b)) left top / 2px 14px no-repeat,
+    linear-gradient(var(--b), var(--b)) right top / 14px 2px no-repeat, linear-gradient(var(--b), var(--b)) right top / 2px 14px no-repeat,
+    linear-gradient(var(--b), var(--b)) left bottom / 14px 2px no-repeat, linear-gradient(var(--b), var(--b)) left bottom / 2px 14px no-repeat,
+    linear-gradient(var(--b), var(--b)) right bottom / 14px 2px no-repeat, linear-gradient(var(--b), var(--b)) right bottom / 2px 14px no-repeat; }
+html[data-o55-nier="on"][data-o55-nier-parts~="brackets"] .pmt-cz :is(.pmt-cz-tile, .pmt-cz-chip, .pmt-cz-set, .pmt-cz-segopt):focus-visible { outline: 1.5px solid var(--o55-nier-ink); outline-offset: 3px; }
