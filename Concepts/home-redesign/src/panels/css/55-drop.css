@@ -1,0 +1,258 @@
+/* The drop guide and the docks (31-dropzones.js): while a tab or a panel is carried, the panel under the pointer shows
+   four side tiles around its Join tile, the zone's name under them, and the centre's four outer sides show a dock
+   each. The tile under the pointer's zone lights; a side that has no room is dimmed and empty. Each look draws them in
+   its own grammar: Basic crisp, Friendly soft and round, Glass frosted with a specular rim, Retro reverse-video cells
+   with stepped motion, NieR ink squares with no glow. */
+
+#pmw-overlay {
+  --pmw-guide-bg: color-mix(in srgb, var(--pmw-pop) 94%, transparent);
+  --pmw-guide-line: color-mix(in srgb, var(--pmw-text) 16%, transparent);
+  --pmw-guide-ink: var(--pmw-text-2);
+  --pmw-guide-on: var(--pmw-accent);
+  --pmw-guide-on-ink: #0B1220;
+  --pmw-guide-glow: color-mix(in srgb, var(--pmw-accent) 55%, transparent);
+  --pmw-guide-shadow: 0 10px 26px -10px rgba(0, 0, 0, .6), 0 2px 6px -2px rgba(0, 0, 0, .35);
+  --pmw-guide-r: 9px;
+  --pmw-guide-map-r: 2.5px;
+  --pmw-guide-t: 140ms;
+}
+html[data-theme$="-light"] #pmw-overlay {
+  --pmw-guide-on-ink: #FFFFFF;
+  --pmw-guide-shadow: 0 10px 24px -10px rgba(21, 32, 43, .32), 0 2px 6px -2px rgba(21, 32, 43, .16);
+  --pmw-guide-glow: color-mix(in srgb, var(--pmw-accent) 38%, transparent);
+}
+
+.pmw-guide {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1260;
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: repeat(3, var(--pmw-guide-tile, 40px));
+  grid-template-rows: repeat(3, var(--pmw-guide-tile, 40px));
+  gap: var(--pmw-guide-gap, 6px);
+  transition: translate 190ms var(--pmw-ease-slide);
+  font-family: var(--pm-font-ui);
+}
+.pmw-guide[hidden] { display: none; }
+.pmw-guide-tile[data-edge="top"] { grid-area: 1 / 2; }
+.pmw-guide-tile[data-edge="left"] { grid-area: 2 / 1; }
+.pmw-guide-tile[data-edge="merge"] { grid-area: 2 / 2; }
+.pmw-guide-tile[data-edge="right"] { grid-area: 2 / 3; }
+.pmw-guide-tile[data-edge="bottom"] { grid-area: 3 / 2; }
+.pmw-guide[data-size="join"] .pmw-guide-tile:not([data-edge="merge"]) { visibility: hidden; }
+.pmw-guide[data-dock-cap] .pmw-guide-tile { visibility: hidden; }
+
+.pmw-guide-tile, .pmw-dock {
+  position: relative;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  border-radius: var(--pmw-guide-r);
+  background: var(--pmw-guide-bg);
+  color: var(--pmw-guide-ink);
+  box-shadow: 0 0 0 1px var(--pmw-guide-line), var(--pmw-guide-shadow);
+  transition: background-color var(--pmw-guide-t) linear, color var(--pmw-guide-t) linear,
+    box-shadow 180ms var(--pmw-ease), transform 200ms var(--pmw-ease), opacity var(--pmw-guide-t) linear;
+}
+.pmw-guide-tile[data-on], .pmw-dock[data-on] {
+  background: var(--pmw-guide-on);
+  color: var(--pmw-guide-on-ink);
+  box-shadow: 0 0 0 1px var(--pmw-guide-on), 0 0 22px 0 var(--pmw-guide-glow), var(--pmw-guide-shadow);
+  transform: scale(1.08);
+}
+.pmw-guide-tile[data-off], .pmw-dock[data-off] { opacity: .38; }
+.pmw-guide-tile[data-edge="merge"][data-off] { visibility: hidden; }
+
+/* the little map on each tile: the panel, and the part of it the drop fills */
+.pmw-guide-map {
+  position: relative;
+  display: block;
+  width: 56%;
+  height: 46%;
+  box-sizing: border-box;
+  border: 1.5px solid currentColor;
+  border-radius: var(--pmw-guide-map-r);
+}
+.pmw-guide-map::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+  opacity: .62;
+  border-radius: calc(var(--pmw-guide-map-r) - 1px);
+}
+[data-edge="left"] > .pmw-guide-map::after { left: 1px; top: 1px; bottom: 1px; width: calc(50% - 2px); }
+[data-edge="right"] > .pmw-guide-map::after { right: 1px; top: 1px; bottom: 1px; width: calc(50% - 2px); }
+[data-edge="top"] > .pmw-guide-map::after { left: 1px; right: 1px; top: 1px; height: calc(50% - 2px); }
+[data-edge="bottom"] > .pmw-guide-map::after { left: 1px; right: 1px; bottom: 1px; height: calc(50% - 2px); }
+/* the Join tile: a strip with a tab on it, and the tab's place in it */
+[data-edge="merge"] > .pmw-guide-map { border-top-width: 4px; }
+[data-edge="merge"] > .pmw-guide-map::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: -6px;
+  width: 42%;
+  height: 4px;
+  border-radius: 2px 2px 0 0;
+  background: currentColor;
+}
+[data-edge="merge"] > .pmw-guide-map::after { left: 1px; right: 1px; top: 1px; bottom: 1px; opacity: .3; }
+.pmw-guide-tile[data-off] > .pmw-guide-map::after { opacity: 0; }
+
+/* docks: one on each outer side of the centre, its map a full-length band */
+.pmw-dock {
+  position: fixed;
+  z-index: 1255;
+  width: 32px;
+  height: 32px;
+  translate: -50% -50%;
+  pointer-events: none;
+  --pmw-guide-r: 8px;
+}
+.pmw-dock[hidden] { display: none; }
+.pmw-dock[data-edge="left"] > .pmw-guide-map::after { width: calc(36% - 1px); right: auto; }
+.pmw-dock[data-edge="right"] > .pmw-guide-map::after { width: calc(36% - 1px); left: auto; }
+.pmw-dock[data-edge="top"] > .pmw-guide-map::after { height: calc(36% - 1px); bottom: auto; }
+.pmw-dock[data-edge="bottom"] > .pmw-guide-map::after { height: calc(36% - 1px); top: auto; }
+
+/* the zone's name, under the guide (beside the dock for a dock) */
+.pmw-guide-cap {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 10px);
+  translate: -50% 0;
+  white-space: nowrap;
+  padding: 4px 9px;
+  border-radius: 7px;
+  background: var(--pmw-pop);
+  color: var(--pmw-text);
+  box-shadow: 0 0 0 1px var(--pmw-pop-line), var(--pmw-guide-shadow);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: .01em;
+}
+.pmw-guide-cap:empty { display: none; }
+.pmw-guide[data-dock-cap="left"] .pmw-guide-cap { left: calc(50% + 26px); top: 50%; translate: 0 -50%; }
+.pmw-guide[data-dock-cap="right"] .pmw-guide-cap { left: auto; right: calc(50% + 26px); top: 50%; translate: 0 -50%; }
+.pmw-guide[data-dock-cap="top"] .pmw-guide-cap { top: calc(50% + 26px); }
+.pmw-guide[data-dock-cap="bottom"] .pmw-guide-cap { top: auto; bottom: calc(50% + 26px); }
+
+/* ---- per look ---- */
+html[data-theme^="friendly"] #pmw-overlay {
+  --pmw-guide-r: 13px;
+  --pmw-guide-map-r: 4px;
+  --pmw-guide-bg: color-mix(in srgb, var(--pmw-pop) 96%, transparent);
+  --pmw-guide-on: var(--accent-lime, var(--pmw-accent));
+  --pmw-guide-glow: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 45%, transparent);
+}
+html[data-theme="friendly-light"] #pmw-overlay { --pmw-guide-on: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 72%, #000); }
+html[data-theme^="friendly"] .pmw-guide-tile[data-on], html[data-theme^="friendly"] .pmw-dock[data-on] {
+  transform: scale(1.12);
+  transition: background-color var(--pmw-guide-t) linear, color var(--pmw-guide-t) linear, box-shadow 220ms var(--pmw-ease),
+    transform 320ms cubic-bezier(.34, 1.56, .64, 1), opacity var(--pmw-guide-t) linear;
+}
+html[data-theme^="friendly"] .pmw-guide-cap { border-radius: 10px; }
+
+html[data-theme^="basic"] #pmw-overlay { --pmw-guide-r: 7px; --pmw-guide-map-r: 2px; }
+html[data-theme^="basic"] .pmw-guide-tile[data-on], html[data-theme^="basic"] .pmw-dock[data-on] { transform: none; }
+
+/* Glass: frosted tiles with the slab's specular rim along the top; the lit tile is the selection glass */
+html[data-theme^="glass"] #pmw-overlay {
+  --pmw-guide-r: 12px;
+  --pmw-guide-map-r: 3px;
+  --pmw-guide-bg: var(--lg-tint-menu, color-mix(in srgb, var(--pmw-pop) 82%, transparent));
+  --pmw-guide-line: var(--rg-rim-low, rgba(255, 255, 255, .14));
+  --pmw-guide-on: var(--lg-sel, color-mix(in srgb, var(--pmw-accent) 70%, transparent));
+  --pmw-guide-on-ink: var(--lg-on-sel, #FFFFFF);
+  --pmw-guide-glow: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 60%, transparent);
+  --pmw-guide-shadow: 0 12px 30px -12px var(--lg-shadow, rgba(0, 2, 12, .55)), 0 3px 8px -3px var(--lg-shadow-near, rgba(0, 2, 12, .3));
+}
+html[data-theme^="glass"] .pmw-guide-tile, html[data-theme^="glass"] .pmw-dock {
+  box-shadow: inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .3)), inset 0 -1px 0 var(--lg-edge-bot, rgba(0, 0, 0, .25)),
+    0 0 0 1px var(--pmw-guide-line), var(--pmw-guide-shadow);
+}
+html[data-theme^="glass"] .pmw-guide-tile[data-on], html[data-theme^="glass"] .pmw-dock[data-on] {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 0 0 1px color-mix(in srgb, var(--pmw-guide-on) 80%, #fff),
+    0 0 26px 2px var(--pmw-guide-glow), var(--pmw-guide-shadow);
+  transform: scale(1.07);
+}
+html[data-theme^="glass"] .pmw-guide-cap {
+  border-radius: 10px;
+  background: var(--lg-tint-menu, var(--pmw-pop));
+  box-shadow: inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .3)), 0 0 0 1px var(--pmw-guide-line), var(--pmw-guide-shadow);
+}
+
+/* Retro: box cells; the lit cell is reverse video; stepped */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #pmw-overlay {
+  --pmw-guide-r: 0px;
+  --pmw-guide-map-r: 0px;
+  --pmw-guide-bg: var(--surface);
+  --pmw-guide-line: var(--accent-lime);
+  --pmw-guide-ink: var(--accent-lime);
+  --pmw-guide-on: var(--accent-lime);
+  --pmw-guide-on-ink: var(--surface);
+  --pmw-guide-shadow: 3px 3px 0 rgba(0, 0, 0, .35);
+  --pmw-guide-t: 0ms;
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-tile[data-on], html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dock[data-on] {
+  transform: none;
+  box-shadow: 0 0 0 1px var(--accent-lime), 3px 3px 0 rgba(0, 0, 0, .35);
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide { transition: translate 140ms steps(3, end); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-map { border-width: 1px; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-map::after { opacity: 1; background: repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 3px); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-cap {
+  border-radius: 0;
+  background: var(--accent-lime);
+  color: var(--surface);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, .35);
+  font-family: var(--pm-font-code);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-cap::before { content: "> "; }
+
+/* NieR: ink squares on paper, the lit square solid ink; no glow; stepped */
+html[data-o55-nier="on"] #pmw-overlay {
+  --pmw-guide-r: 0px;
+  --pmw-guide-map-r: 0px;
+  --pmw-guide-bg: var(--o55-nier-overlay, var(--pmw-pop));
+  --pmw-guide-line: var(--o55-nier-ink);
+  --pmw-guide-ink: var(--o55-nier-ink);
+  --pmw-guide-on: var(--o55-nier-ink);
+  --pmw-guide-on-ink: var(--o55-nier-on-ink, var(--o55-nier-paper));
+  --pmw-guide-glow: transparent;
+  --pmw-guide-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .16);
+  --pmw-guide-t: 0ms;
+}
+html[data-o55-nier="on"] .pmw-guide-tile[data-on], html[data-o55-nier="on"] .pmw-dock[data-on] {
+  transform: none;
+  box-shadow: 0 0 0 1px var(--o55-nier-ink), 3px 3px 0 rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .16);
+}
+html[data-o55-nier="on"] .pmw-guide { transition: translate 160ms steps(4, end); }
+html[data-o55-nier="on"] .pmw-guide-map { border-width: 1px; }
+html[data-o55-nier="on"] .pmw-guide-map::after { opacity: 1; background: repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 3px); }
+html[data-o55-nier="on"] .pmw-guide-tile[data-on] > .pmw-guide-map::after, html[data-o55-nier="on"] .pmw-dock[data-on] > .pmw-guide-map::after { background: currentColor; }
+html[data-o55-nier="on"] .pmw-guide-cap {
+  border-radius: 0;
+  background: var(--o55-nier-ink);
+  color: var(--o55-nier-on-ink, var(--o55-nier-paper));
+  box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .16);
+  font-family: var(--pm-font-code);
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+/* Reduced Motion: the guide and the docks appear and change in place; nothing glides, grows or scales */
+html[data-motion="reduced"] .pmw-guide { transition: none; }
+html[data-motion="reduced"] :is(.pmw-guide-tile, .pmw-dock) { transition: none; }
+html[data-motion="reduced"] :is(.pmw-guide-tile, .pmw-dock)[data-on] { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .pmw-guide, .pmw-guide-tile, .pmw-dock { transition: none; }
+  .pmw-guide-tile[data-on], .pmw-dock[data-on] { transform: none; }
+}
