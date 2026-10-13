@@ -52,7 +52,27 @@
   /* the wallpaper on show: ?lgwall= first, as glass.js reads it, then the saved choice */
   function shown() { var c = q.get('lgwall') || choice(); return c === 'look' ? lookDefault(look()) : c; }
   function attr(a, v) { if (v === null) { if (root.hasAttribute(a)) root.removeAttribute(a); } else if (root.getAttribute(a) !== v) root.setAttribute(a, v); }
-  function apply() { var id = shown(); attr('data-lg-wall', id || null); attr('data-lg-wall-any', id && look() !== 'glass' ? '' : null); }
+  /* Glass bakes its sheets' frost from the wallpaper after the wallpaper changes, a third of a second later on an
+     RTX 3090 (films, 2026-10-13), so for that long the sheets showed the old frost over the new picture. While Glass
+     rebakes, the body keeps the print it showed, and the moment glass.js lands the new frost (it writes --lg-frost-*
+     on <html>) the hold lets go in the same task: picture and frost change in one frame. If no new frost comes, the
+     hold lets go after 1.5 s. (Glass follow-up G4 would do this inside glass.js.) */
+  var hold = null;
+  function frostNow() { return root.style.getPropertyValue('--lg-frost-heavy'); }
+  function release() { if (!hold) return; clearTimeout(hold.t); hold = null; root.removeAttribute('data-wpk-hold'); root.style.removeProperty('--wpk-hold'); }
+  function holdPrint(prev) {
+    release();
+    var url = getComputedStyle(root).getPropertyValue('--lg-wall-' + prev + '-' + (/-light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark')).trim();
+    if (!url) return;
+    hold = { frost: frostNow(), t: setTimeout(release, 1500) };
+    root.style.setProperty('--wpk-hold', url); root.setAttribute('data-wpk-hold', '');
+  }
+  new MutationObserver(function () { if (hold && frostNow() !== hold.frost) release(); }).observe(root, { attributes: true, attributeFilter: ['style'] });
+  function apply() {
+    var id = shown(), prev = root.getAttribute('data-lg-wall'), glass = look() === 'glass' && root.getAttribute('data-lg') === 'on';
+    if (glass && prev && id && prev !== id && byId[prev] && frostNow()) holdPrint(prev); else if (!glass) release();
+    attr('data-lg-wall', id || null); attr('data-lg-wall-any', id && look() !== 'glass' ? '' : null);
+  }
 
   var commitT = 0;
   function choose(c, later) {
@@ -76,7 +96,7 @@
       '<span class="pm-status-mark" data-status="change-modified" data-tone="changed" aria-hidden="true"></span><span>Changed</span></span></div>' +
       '<div class="setting-description" id="wpk-desc">Shows behind the panels in every look. Its light or dark print follows the look.</div></div>' +
       '<div class="wpk-gallery" role="radiogroup" aria-labelledby="wpk-label" aria-describedby="wpk-desc">' +
-      '<div class="wpk-grid wpk-own">' + tile('look', "Look's own", "Look's own", 'Each look keeps its own background.') + '<p class="wpk-note" aria-live="polite"></p></div>';
+      '<div class="wpk-grid wpk-own">' + tile('look', "Look's own", "Look's own", 'Each look keeps its own background.') + '<p class="wpk-note"></p></div>';   /* not live: each radio already announces itself */
     CAT.families.forEach(function (f) {
       h += '<div class="wpk-fam" aria-hidden="true">' + esc(f.label) + '</div><div class="wpk-grid">';
       f.wallpapers.forEach(function (w) { h += tile(w.id, w.name, w.name + ', ' + f.label, w.description); });
@@ -109,7 +129,8 @@
     if (def) own.setAttribute('data-wpk-id', def); else own.removeAttribute('data-wpk-id');
     own.setAttribute('data-wpk-own', inNier() && !def ? 'nier' : fam);
     var lookName = inNier() && !def ? 'NieR Mode' : (LOOK_NAMES[fam] || 'This look');
-    var note = w ? w.name + ' shows in every look, in its light or dark print.'
+    /* in the opaque looks Settings itself covers most of the wallpaper: say where it shows */
+    var note = w ? w.name + ' shows in every look, in its light or dark print.' + (fam === 'glass' ? '' : ' Home and Usage show the most of it.')
       : def ? lookName + ' shows ' + byId[def].name + ' until you choose another.' : lookName + ' keeps its own background until you choose one.';
     var n = r.querySelector('.wpk-note'); if (n.textContent !== note) n.textContent = note;
   }

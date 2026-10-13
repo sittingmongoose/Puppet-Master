@@ -42,7 +42,7 @@ owners in `reports/pm7-all-look-wallpapers-20261013/OWNER-PROPOSAL.md`.
 | On show | `<html data-lg-wall="<id>">`: the chosen id, or the look's default while the choice is `'look'`, or absent. |
 | Non-Glass look showing one | `<html data-lg-wall-any>` present. |
 | Images | `--lg-wall-<id>-<dark\|light>` on `html`. The build adds the ones the page lacks and reuses identical ones already there. |
-| Glass | `--lg-wall` takes the print for the mode. `glass.js` bakes its frost and rims from it. |
+| Glass | `--lg-wall` takes the print for the mode. `glass.js` bakes its frost and rims from it. When a choice changes the wallpaper, the body keeps the previous print (`<html data-wpk-hold>` with `--wpk-hold`) until glass.js writes the new `--lg-frost-*`, so the picture and its frost change in the same frame. The cap is 1.5 s. Follow-up G4 moves this into glass.js. |
 | Basic, Friendly, Retro | `--lg-wall-any` takes the print. The body carries it, and the shell's grounds go clear around the panels. The Usage board and Settings Home show it under a light veil of the look's ground. |
 | NieR Mode | As the other looks, and the wallpaper takes the place of NieR's ground and its ink scene. "Look's own" brings NieR's background setting back. |
 | Stale choice | A saved id that this build lacks is set back to `'look'` when the page loads. Nothing paints a missing image, and `glass.js` agrees at its next pass. |
