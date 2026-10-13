@@ -851,7 +851,14 @@ function compareRows(r,where,kind,b,c,key,fields) {
     for(let i=0;i<bb.length;i++) for(const f of fields) {
       if(bb[i][f]==null || cc[i][f]==null) { unknown(r,where,kind+'-'+f+'-unmeasured',{key:k,n:i,base:bb[i][f],cand:cc[i][f]}); continue; }
       if(kind==='kept' && bb[i].hasLabel && (f==='w'||f==='h')) {
-        if(bb[i][f]!==cc[i][f]) r.notes.push({where,code:'label-host-natural-size-delta',key:k,n:i,property:f,base:bb[i][f],cand:cc[i][f]});
+        const equal=bb[i][f]===cc[i][f],detail={key:k,n:i,property:f,base:bb[i][f],cand:cc[i][f],
+          base_size:{w:bb[i].w,h:bb[i].h},cand_size:{w:cc[i].w,h:cc[i].h}};
+        r.comparisons.push({where,kind:'kept-label-host-dimension',...detail,equal,
+          acceptance:equal?'exact equality recorded; other action checks remain required':'HOLD: source-owner disposition required; natural size does not establish control preservation'});
+        if(!equal) {
+          r.notes.push({where,code:'label-host-natural-size-delta',...detail});
+          hold(r,where,'label-host-control-geometry-source-owner-disposition-required',detail);
+        }
         continue;
       }
       if(JSON.stringify(bb[i][f])!==JSON.stringify(cc[i][f])) issue(r,'regressions',where,kind+'-'+f,{key:k,n:i,base:bb[i][f],cand:cc[i][f]});
@@ -906,14 +913,18 @@ function judgeUnpairedCandidate(r,where,d,motion) {
     if(l.kind==='tag' && l.sel!=='.o55-routelink > span' && l.before) unknown(r,where+' '+l.sel,'checkpoint-square-mark-ink-custody-unverified',{checkpoint:FROZEN_HEAD,candidate:l.before});
   }
 }
-function judgeRun(r,run) {
+export function judgeRun(r,run) {
   const tag=run.look+'/'+run.motion, B=run.pages && run.pages.base, C=run.pages && run.pages.cand;
   if(!B || !C) { unknown(r,tag,'page-run-missing',run); return; }
   if(B.runtime && C.runtime && B.runtime.renderer!==C.runtime.renderer) unknown(r,tag,'base-candidate-renderer-mismatch',{base:B.runtime.renderer,cand:C.runtime.renderer});
   for(const [which,p] of [['base',B],['cand',C]]) {
     if(!p.state || !p.state.confirmed || p.state.reduced!==(run.motion==='reduced')) unknown(r,tag+' '+which,'look-motion-unconfirmed',p.state);
     for(const e of p.errors||[]) unknown(r,tag+' '+which,'page-or-driver-error',e);
-    if(!p.runtime || !p.runtime.renderer || !p.runtime.rendererConfirmed || !p.runtime.browserVersion) unknown(r,tag+' '+which,'renderer-runtime-unverified',p.runtime);
+    const runtimes=p.runtime_observations && p.runtime_observations.length ? p.runtime_observations : [p.runtime];
+    for(const runtime of runtimes) {
+      if(!runtime || runtime.schema!=='onboarding-ordinary-runtime/v1' || runtime.contextConfirmed!==true) unknown(r,tag+' '+which,'navigated-runtime-context-unverified',runtime);
+      if(!runtime || !runtime.renderer || !runtime.rendererConfirmed || !runtime.browserVersion) unknown(r,tag+' '+which,'renderer-runtime-unverified',runtime);
+    }
     if(p.resource_closed!==true) unknown(r,tag+' '+which,'owned-browser-stop-unverified',p.resource_closed);
   }
   const paired=(where,b,c) => { if(!b || !c || b.error || c.error) { unknown(r,where,'view-unavailable',{base:b&&b.error||(!b?'missing':null),cand:c&&c.error||(!c?'missing':null)}); return; }
@@ -1072,6 +1083,25 @@ async function nasPath(page, seen) {
   return page.evaluate(() => window.O55.S.sess.screen);
 }
 
+export async function pickSuggestion(page,how,n) {
+  if(how!=='click' && how!=='key') throw new Error('unsupported suggestion activation: '+how);
+  const sel=`#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-suggestchip:nth-child(${n})`;
+  const want=await page.evaluate((s) => {const b=document.querySelector(s);return b?b.textContent.trim():null;},sel);
+  if(!want) return {how,ok:false,why:'no suggestion '+n};
+  if(how==='click') {
+    if(!(await clickAt(page,sel))) throw new Error('suggestion click unavailable: '+sel);
+  } else {
+    await page.evaluate((s) => document.querySelector(s).focus(),sel);
+    await page.send('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13,text:'\r',unmodifiedText:'\r'});
+    await page.send('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
+  }
+  await sleep(250);await settle(page);await sleep(400);
+  const result=await page.evaluate((w) => {const l=document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)');const f=l.querySelector('[data-o55-bind="name"]');const on=[...l.querySelectorAll('.o55-suggestchip.o55-on')].map((b) => b.textContent.trim());
+    const cell=[...l.querySelectorAll('.o55-suggestchip')].find((b) => b.textContent.trim()===w);const cs=cell&&getComputedStyle(cell);
+    return {want:w,field:f?f.value:null,on,chosenFill:cs?cs.backgroundColor:null,ok:!!f&&f.value===w&&on.length===1&&on[0]===w};},want);
+  return {how,...result};
+}
+
 async function windowView(page, v, sweep) {
   const pathCaps = v.path === 'nas' ? {} : null;
   if (v.path === 'nas') { const at = await nasPath(page, pathCaps); if (at !== v.screen) return { error: 'the NAS path ended on ' + at }; }
@@ -1100,18 +1130,7 @@ async function windowView(page, v, sweep) {
   await measure(page, data);
   if (v.flow === 'suggest') {
     /* a real click on the second suggestion, then Enter on the first with the keyboard */
-    const pick = async (how, n) => {
-      const sel = `#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-suggestchip:nth-child(${n})`;
-      const want = await page.evaluate((s) => { const b = document.querySelector(s); return b ? b.textContent.trim() : null; }, sel);
-      if (!want) return { how, ok: false, why: 'no suggestion ' + n };
-      if (how === 'click' && !(await clickAt(page, sel))) throw new Error('suggestion click unavailable: ' + sel);
-      else { await page.evaluate((s) => document.querySelector(s).focus(), sel); await page.send('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13, text: '\r', unmodifiedText: '\r' }); await page.send('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 }); }
-      await sleep(250); await settle(page); await sleep(400);
-      return page.evaluate((w) => { const l = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)'); const f = l.querySelector('[data-o55-bind="name"]'); const on = [...l.querySelectorAll('.o55-suggestchip.o55-on')].map((b) => b.textContent.trim());
-        const cell = [...l.querySelectorAll('.o55-suggestchip')].find((b) => b.textContent.trim() === w); const cs = cell && getComputedStyle(cell);
-        return { want: w, field: f ? f.value : null, on, chosenFill: cs ? cs.backgroundColor : null, ok: !!f && f.value === w && on.length === 1 && on[0] === w }; }, want);
-    };
-    flow.click = await pick('click', 2); await mouseAway(page); flow.key = await pick('key', 1); await mouseAway(page);
+    flow.click = await pickSuggestion(page,'click',2); await mouseAway(page); flow.key = await pickSuggestion(page,'key',1); await mouseAway(page);
     flow.after = await page.evaluate(collect, R_WIN); await measure(page, flow.after);
   }
   if (v.flow === 'lookmenu' && !(await clickAt(page, '#pm-o55-onboarding .o55-lookbtn.o55-on'))) throw new Error('look menu close not reachable');
@@ -1228,10 +1247,56 @@ async function launchOwned(viewport) {
 
 
 
+export function bindOrdinaryRuntime(observation,expected) {
+  const unverified=[],miss=(code,detail) => unverified.push({code,detail});
+  const o=observation||{},nav=o.navigation,frame=o.frameTree&&o.frameTree.frameTree&&o.frameTree.frameTree.frame,dom=o.document;
+  if(!expected || !['base','cand'].includes(expected.which) || !/^file:\/\//.test(expected.url||'') ||
+    !/^[a-f0-9]{40}$/.test(expected.source_head||'') || !/^[a-f0-9]{64}$/.test(expected.page_sha256||'') ||
+    !/^[a-f0-9]{64}$/.test(expected.binding_sha256||'') || typeof expected.reduced!=='boolean') miss('frozen-runtime-binding-unavailable',expected);
+  if(!nav || nav.url!==expected?.url || nav.loaded!==true || !nav.response || nav.response.errorText || nav.response.isDownload ||
+    !nav.response.frameId || !nav.response.loaderId) miss('navigation-receipt-unverified',nav);
+  if(!frame || frame.parentId || frame.unreachableUrl || frame.url!==expected?.url ||
+    frame.id!==nav?.response?.frameId || frame.loaderId!==nav?.response?.loaderId) miss('navigated-main-frame-unverified',frame);
+  if(!dom || dom.url!==expected?.url || dom.location!==expected?.url || dom.documentURI!==expected?.url ||
+    dom.readyState!=='complete' || dom.fixture_ready!==true) miss('navigated-document-readiness-unverified',dom);
+  if(!o.state || o.state.confirmed!==true || o.state.reduced!==expected?.reduced || !dom ||
+    ['theme','nier','parts','reduced'].some((k) => dom[k]!==o.state[k])) miss('runtime-look-motion-unverified',{state:o.state,document:dom});
+  if(o.page_sha256!==expected?.page_sha256) miss('navigated-frozen-file-hash-unverified',{base:expected?.page_sha256,observed:o.page_sha256});
+  if(!o.browserVersion || ['protocolVersion','product','revision','userAgent','jsVersion'].some((k) => typeof o.browserVersion[k]!=='string' || !o.browserVersion[k])) miss('ordinary-browser-version-unavailable',o.browserVersion);
+  if(!o.session || typeof o.session.id!=='string' || !o.session.id || typeof o.profile!=='string' || !o.profile ||
+    o.profile!==(o.session.profile||o.session.profile_dir)) miss('owned-runtime-profile-unavailable',{session:o.session,profile:o.profile});
+  for(const e of o.errors||[]) miss('ordinary-runtime-observation-error',e);
+  return {...o,schema:'onboarding-ordinary-runtime/v1',expected,contextConfirmed:unverified.length===0,
+    context_status:unverified.length?'UNVERIFIED':'CONFIRMED',context_unverified:unverified,
+    renderer:null,rendererConfirmed:false,renderer_status:'UNVERIFIED',
+    renderer_evidence:{status:'UNVERIFIED',code:'ordinary-page-renderer-evidence-unavailable',
+      detail:'Browser.getVersion, Page.getFrameTree, ordinary document readiness and owned profile metadata do not identify the active renderer. No GPU/WebGL probe or renderer inference is authorized.'}};
+}
+
+export async function captureOrdinaryRuntime(owned,expected,state) {
+  const page=owned.page,o={observed_at:new Date().toISOString(),state,navigation:page.navigation||null,
+    session:owned.session,profile:owned.profile,errors:[],fixture_apis:FIXTURE_APIS,
+    normal_launcher:'agent-browser start --url about:blank; Playwright CDP connection only; no custom renderer/animation flags; startup is not document evidence'};
+  const observations=await Promise.allSettled([
+    Promise.resolve().then(() => owned.send('Browser.getVersion')),Promise.resolve().then(() => page.send('Page.getFrameTree')),
+    Promise.resolve().then(() => page.evaluate(() => ({url:document.URL,location:location.href,documentURI:document.documentURI,readyState:document.readyState,
+      fixture_ready:!!(window.O55&&window.O55.ui&&window.O55.ui.open&&window.PM12_KIMI&&window.PM_THEME),
+      theme:document.documentElement.dataset.theme,nier:document.documentElement.getAttribute('data-o55-nier'),
+      parts:document.documentElement.getAttribute('data-o55-nier-parts')||'',reduced:matchMedia('(prefers-reduced-motion: reduce)').matches}))),
+  ]);
+  for(let i=0;i<observations.length;i++) {
+    const field=['browserVersion','frameTree','document'][i],result=observations[i];
+    if(result.status==='fulfilled') o[field]=result.value;
+    else {o[field]=null;o.errors.push({method:field,error:String(result.reason?.stack||result.reason)});}
+  }
+  try {o.page_sha256=sha(readFileSync(expected.page));} catch(e) {o.errors.push({method:'frozen-file-hash',error:String(e.stack||e)});}
+  return bindOrdinaryRuntime(o,expected);
+}
+
 async function runLook(look,motion) {
   const res={look:look.id,motion,pages:{}};
   for(const which of ['base','cand']) {
-    const pr={views:{},tour:[],state:null,errors:[],runtime:null,resource_closed:false}, owned={}, events=[];
+    const pr={views:{},tour:[],state:null,errors:[],runtime:null,runtime_observations:[],resource_closed:false}, owned={}, events=[];
     try {
       const admitted=phaseBinding.global_admission;
       const census=JSON.parse(execFileSync('agent-browser',['list'],{encoding:'utf8',timeout:15000}));
@@ -1249,16 +1314,19 @@ async function runLook(look,motion) {
       page.goto=async (url) => {
         const loaded=page.once('Page.loadEventFired',() => true,90000);
         const response=await page.send('Page.navigate',{url});
+        page.navigation={url,response,observed_at:new Date().toISOString(),loaded:false};
         if(response.errorText) { loaded.catch(() => {}); throw new Error('Page.navigate: '+response.errorText); }
         await loaded;
+        page.navigation.loaded=true;
       };
       await page.setViewport(VIEWPORT.width,VIEWPORT.height);
-      pr.runtime={browserVersion:await owned.send('Browser.getVersion'),
-        renderer:await page.evaluate(() => {const c=document.createElement('canvas'),g=c.getContext('webgl'); const x=g&&g.getExtension('WEBGL_debug_renderer_info');
-          return x?g.getParameter(x.UNMASKED_RENDERER_WEBGL):null;}),
-        rendererConfirmed:true,normal_launcher:'agent-browser start --url about:blank; Playwright CDP connection only; no custom renderer/animation flags',session:owned.session,
-        fixture_apis:FIXTURE_APIS,profile:owned.profile};
+      const expected={which,page:PAGES[which],url:pathToFileURL(PAGES[which]).href+'?o55=off&o55scenario=fresh',
+        source_head:which==='base'?phaseBinding.base_head:phaseBinding.candidate_head,
+        page_sha256:which==='base'?phaseBinding.base_sha256:phaseBinding.candidate_sha256,
+        binding_sha256:phaseBinding.binding_sha256,reduced:motion==='reduced'};
       pr.state=await bootPage(page,which,look,motion);
+      pr.runtime=await captureOrdinaryRuntime(owned,expected,pr.state);
+      pr.runtime_observations.push({purpose:'window',...pr.runtime});
       if(!pr.state.confirmed) throw new Error('look/motion not confirmed: '+JSON.stringify(pr.state));
       if(doWindow) for(const v of VIEWS) {
         try {pr.views[v.id]=await windowView(page,v,false);} catch(e) {pr.views[v.id]={error:String(e.stack||e)};}
@@ -1271,6 +1339,7 @@ async function runLook(look,motion) {
       }
       if(doTour) {
         const st=await bootPage(page,which,look,motion);
+        pr.runtime_observations.push({purpose:'tour',...await captureOrdinaryRuntime(owned,expected,st)});
         if(!st.confirmed) throw new Error('tour look/motion not confirmed: '+JSON.stringify(st));
         try {pr.tour=await tourWalk(page);} catch(e) {pr.tour.push({error:String(e.stack||e)});}
       }

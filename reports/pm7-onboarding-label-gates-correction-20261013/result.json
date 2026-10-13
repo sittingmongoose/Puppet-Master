@@ -1,0 +1,248 @@
+{
+  "schema": "pm7-onboarding-label-gates-correction-phase-a/v1",
+  "at": "2026-10-13T06:39:25.395202+00:00",
+  "status": "HOLD",
+  "phase": "A ONLY, same worker correction",
+  "implementation": "S1-S3 prepared for root mechanical review; isolated checks pass, no product acceptance",
+  "branch": "fix/pm7-onboarding-label-gates-20261013",
+  "start_head": "1c40733e83f9af49da366633b0b9eb71e6d174e2",
+  "frozen_source_head": "29cdc86e3c9078d94260b79905e6ae49c169305c",
+  "base_head": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
+  "owned_paths": [
+    "Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs",
+    "reports/pm7-onboarding-label-gates-correction-20261013/NOTES.md",
+    "reports/pm7-onboarding-label-gates-correction-20261013/result.json"
+  ],
+  "authority": {
+    "correction_go": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-13-creative-queue/ONBOARDING-GATE-CORRECTIONS-GO.md",
+      "sha256": "8db77d34c8bd26452368f5b923887da1803a2871f3c7414c8ffec1648622e2af"
+    },
+    "root_review": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-13-onboarding-gate-root-review/REVIEW.json",
+      "sha256": "2bc6b949f5755d197e7e6771048caa7c3bd9dbb45a846eb75304da5816dee40d"
+    },
+    "original_gate_go": "4f2c29cd86ff950e0bda1506807f12cc32924f61da3729dfae26e469f0d84e2f",
+    "source_go": "2ba171bbc44b88fcbe5cf60812374d06864aba7efda4a5ba2784f9752c6220ec",
+    "contrast_amendment": "9b1d8ee180b18e772621ac8a745b3998ca7cf7a4b6755899373c56f1af2a2424"
+  },
+  "successor": {
+    "path": "Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs",
+    "sha256": "8a489ebbaa0e81b5495b5931b12fd6232b054d4546cdeeb4e490533197c42f81",
+    "bytes": 125379,
+    "exact_tested_edition": true,
+    "syntax": "PASS",
+    "whitespace": "PASS"
+  },
+  "finding_dispositions": {
+    "S1": {
+      "implementation": "CORRECTED",
+      "mouse_keyboard_exclusive": true,
+      "click_field_chosen_state_read_before_key": true,
+      "counterexample": "Trusted-event protocol fixture has broken mouse handler and working keyboard: click.ok=false remains false after key.ok=true.",
+      "click_success_sends_keys": false,
+      "keyboard_uses_own_path": true,
+      "missing_trusted_receipt": "Raw receipt retained; failure propagates without keyboard rescue.",
+      "product_trusted_flow": "UNVERIFIED; fixtures are synthetic, no product browser"
+    },
+    "S2": {
+      "implementation": "CORRECTED",
+      "ordinary_runtime_context": "Captured after each base/candidate window and tour boot; exact source/file hash, requested URL, navigation frame/loader, actual frame/document URL, readiness, look/motion, browser version and owned profile are retained.",
+      "rejected_fixture_contexts": [
+        "blank startup",
+        "wrong file",
+        "error page",
+        "loading document",
+        "missing fixture readiness",
+        "stale loader",
+        "unsupported browser/frame observation",
+        "missing profile",
+        "mismatched file hash",
+        "unbound startup renderer claim"
+      ],
+      "renderer": "UNVERIFIED",
+      "rendererConfirmed": false,
+      "hold_code": "ordinary-page-renderer-evidence-unavailable",
+      "hold_reason": "Supported Browser.getVersion, Page.getFrameTree, ordinary document readiness and profile metadata do not establish active renderer. No GPU/WebGL probe or flags/configuration change authorized or performed."
+    },
+    "S3": {
+      "implementation": "CORRECTED",
+      "changed_label_host_control_dimensions": "Exact base/candidate width and height retained, natural-size note retained, explicit source-owner disposition HOLD.",
+      "hold_code": "label-host-control-geometry-source-owner-disposition-required",
+      "equal_dimensions": "Exact equality explicitly recorded; other action checks still required.",
+      "tolerance_or_look_decision": false,
+      "role_action_markup_style_raw_checks": "Retained unchanged"
+    }
+  },
+  "necessary_checks": {
+    "passed": 19,
+    "failed": 0,
+    "scope": "Synthetic DOM/protocol/control fixtures and static custody only",
+    "product_observations": 0,
+    "old26_tests_replayed": 0,
+    "old_product_campaigns_replayed": 0,
+    "report": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-gates-correction-20261013/attempt-1-isolated.json",
+      "sha256": "e80f7e16e520358216589e0bbe3367ca720c93fd870a702e314049ecc92aee53"
+    },
+    "validation": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-gates-correction-20261013/validation.json",
+      "sha256": "e612301e7b5c65542dae2fe95070280ea91ea8f8c6f658fc6e29167e3386ab8b"
+    },
+    "cases": [
+      {
+        "name": "S1 mouse handler fails while keyboard works; click result stays false",
+        "pass": true
+      },
+      {
+        "name": "S1 successful click selects the second suggestion without any keyboard activation",
+        "pass": true
+      },
+      {
+        "name": "S1 keyboard activation uses its own focus/key path without mouse input",
+        "pass": true
+      },
+      {
+        "name": "S1 unavailable trusted click remains a raw failure without a keyboard rescue",
+        "pass": true
+      },
+      {
+        "name": "S2 navigated exact context is bound while absent renderer remains UNVERIFIED",
+        "pass": true
+      },
+      {
+        "name": "S2 rejects blank startup",
+        "pass": true
+      },
+      {
+        "name": "S2 rejects wrong file page",
+        "pass": true
+      },
+      {
+        "name": "S2 rejects navigation error page",
+        "pass": true
+      },
+      {
+        "name": "S2 rejects incomplete document",
+        "pass": true
+      },
+      {
+        "name": "S2 rejects absent fixture readiness",
+        "pass": true
+      },
+      {
+        "name": "S2 rejects different loader on same URL",
+        "pass": true
+      },
+      {
+        "name": "S2 rejects unsupported browser observation",
+        "pass": true
+      },
+      {
+        "name": "S2 rejects unavailable owned profile",
+        "pass": true
+      },
+      {
+        "name": "S2 rejects unsupported frame observation",
+        "pass": true
+      },
+      {
+        "name": "S2 mismatched file hash and an unbound renderer claim cannot confirm runtime",
+        "pass": true
+      },
+      {
+        "name": "S3 changed label-host control dimensions retain exact values and source-owner HOLD",
+        "pass": true
+      },
+      {
+        "name": "S3 exactly equal label-host dimensions are explicitly recorded",
+        "pass": true
+      },
+      {
+        "name": "S3 geometry HOLD leaves role/action markup/style regressions and raw findings intact",
+        "pass": true
+      },
+      {
+        "name": "static frozen detector, classifications, floor and trusted-click helper are unchanged",
+        "pass": true
+      }
+    ]
+  },
+  "custody": {
+    "all_frozen_29_entries": 16030,
+    "all_original_1c_entries_except_owned_successor": 16032,
+    "working_bytes_verified": 2412324118,
+    "working_modes": {
+      "100644": 15908,
+      "100755": 123,
+      "120000": 1
+    },
+    "working_byte_mode_mismatches": [],
+    "old_phase_a_reports": {
+      "reports/pm7-onboarding-label-gates-20261013/NOTES.md": "c1a959e352fb94a7a5ecf8c673bae439e8d0d3bb583e0ccd96991c4c2f08eaaa",
+      "reports/pm7-onboarding-label-gates-20261013/result.json": "85cbdf356818ef1ac07f9b19d0996a7fbca92a0448f427d535c812c5b8378684"
+    },
+    "old_raw_files": 32,
+    "old_raw_byte_mode_mismatches": [],
+    "old_committable_seal_sha256": "490e255135073e57a92c3539f101075c514348d877f46250cdc595df0be19448",
+    "historical_successor": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-gates-correction-20261013/historical-b84-successor.mjs",
+      "sha256": "b84ffda3889d93ccaa9aa8a8eb261b91aa6a1ad62475e5210e7015b7790739b5",
+      "bytes": 119844,
+      "mode": "0444"
+    },
+    "frozen_detector_helper_bodies": "Root-accepted canonical12/helper and scanEl proof carried by exact unchanged pre-compareRows module prefix and scanOnboarding/trusted-click body equality with immutable b84; no exemption changes.",
+    "frozen_prefix_sha256": "b85a14b8fc5590f43b15852587af6ff9f3e125ead72bf100b98c3ebfcbfd89a0",
+    "eligibility_exemptions_visibility_marks_action_classification_floor45": "Unchanged",
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-gates-correction-20261013/custody-before-commit.json",
+      "sha256": "26d0351df7d8daba71482dd52414cf285d3b75e0d6e3797c59489687b0474145"
+    }
+  },
+  "frozen_prior_findings": {
+    "origin": "Unchanged original Phase A retained-replay report; not rerun",
+    "status": "HOLD",
+    "absolute_failures": 42,
+    "ownership_holds": 39,
+    "unverified": 1455,
+    "raw_findings": 323,
+    "known_low_words": 26,
+    "regressions": 0
+  },
+  "static_source_context": {
+    "source_head": "f109bad9f312ca0f55887f069dd4328dc17f7b9e",
+    "source_import": false,
+    "intermediate_384_readings_page_sha256": "97256a5155f8ea6f3a3e5f92a27428e458b9eaf7f9721556953ed514b3ae5a6e",
+    "final_4_readings_page_sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+    "limits": "Injected hiding/animation suppression and whole-box median, before crashes/transients/fixed sleeps and PM_PAGES.go(wizard) fallback do not establish worst actual word floor or trusted Show Me. Source-owner NP look recorded; no root/worker look ruling."
+  },
+  "remaining_holds": [
+    "Root mechanical correction review and later explicit exact Phase B source/tool binding",
+    "Active renderer unavailable from authorized ordinary-page observations",
+    "Actual word-background/floor and trusted product flow",
+    "Any changed label-host action geometry needs source-owner disposition",
+    "Introduced checkpoint square ink; missing renderers/marks; unpaired contexts",
+    "Wizard/non-label ownership and source-owner look; source/root acceptance and landing"
+  ],
+  "raw_evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-gates-correction-20261013",
+    "committable_manifest": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-gates-correction-20261013/SHA256SUMS-committable",
+    "sha256": "d4b7232823e6222c5af9e23ae936d7b96f8c51d4c813dcbe5683b8bd57ab29ec",
+    "entries": 11
+  },
+  "post_commit_receipt": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-gates-correction-20261013/final-head-receipt.json records exact head, two remote tips, post-commit custody and resources0 after cleanup",
+  "execution": {
+    "same_worker": true,
+    "children_or_other_actors": 0,
+    "product_browsers": 0,
+    "product_matrix": 0,
+    "GPU_WebGL_performance": 0,
+    "source_imports": 0,
+    "old_probe_replays": 0,
+    "main_landing_reseal": false,
+    "T3_service_action": false,
+    "phase_b_go": false,
+    "mailbox_waiter_while_active": 1,
+    "final_resources": "Stop/consume own waiter and disposable runtime; actual resources0 recorded in post-commit receipt/mail"
+  }
+}
