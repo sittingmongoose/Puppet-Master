@@ -143,7 +143,8 @@
       var n = typeof v === 'number' ? v : parseFloat(String(v).replace(',', '.'));
       if (!isFinite(n) || !/^\s*-?[\d.,]+\s*(px|%)?\s*$/.test(String(v))) return undefined;
       n = Math.min(max, Math.max(min, n));
-      return step ? Math.round(n / step) * step : n;
+      /* to the step, without the binary remainder (1.45 stays 1.45, not 1.4500000000000002) */
+      return +(step ? Math.round(n / step) * step : n).toFixed(4);
     };
   }
   function bool(v) { if (v === true || v === 'true' || v === 'On' || v === 'on') return true; if (v === false || v === 'false' || v === 'Off' || v === 'off') return false; return undefined; }
@@ -224,7 +225,8 @@
     schemePair: { id: S + 'scheme-pair', in: bool, out: boolOut },
     minContrast: { id: S + 'min-contrast', in: WORDS.contrast.in, out: WORDS.contrast.out },
     font: { id: S + 'font-family', in: fontIn, out: fontOut, custom: true },
-    fontSize: { id: S + 'font-size', in: num(8, 32, 0.5), out: numOut },
+    /* no step: a face's own size need not sit on the half pixel (Departure Mono's is 13.75) */
+    fontSize: { id: S + 'font-size', in: num(8, 32), out: numOut },
     fontWeight: { id: S + 'font-weight', in: num(200, 800, 100), out: numOut },
     lineHeight: { id: S + 'line-height', in: num(1, 2, 0.05), out: numOut },
     letterSpacing: { id: S + 'letter-spacing', in: num(-1, 3, 0.25), out: numOut },

@@ -212,7 +212,9 @@
       '<button type="button" class="pmt-textbtn" data-act="degauss" hidden' + tagged('Degauss', 'The tube wobbles and settles once, as a CRT does when you press its degauss button') + '>Degauss</button></div>' +
       '<p class="pmt-cz-note" data-note-side hidden></p></aside></div>';
     /* the group index */
-    html += '<nav class="pmt-cz-nav" aria-label="Groups">' + GROUPS.map(function (g) { return '<button type="button" class="pmt-textbtn" data-jump="' + g[0] + '"' + NOTAG + '>' + esc(g[1]) + '<span class="pmt-cz-navn" data-navn="' + g[0] + '"></span></button>'; }).join('') + '</nav>';
+    html += '<nav class="pmt-cz-nav" aria-label="Groups">' + GROUPS.map(function (g) { return '<button type="button" class="pmt-textbtn" data-jump="' + g[0] + '"' + NOTAG + '>' + esc(g[1]) + '<span class="pmt-cz-navn" data-navn="' + g[0] + '"></span></button>'; }).join('') +
+      /* the preview docks here, small, while its own place is scrolled away */
+      '<div class="pmt-cz-dock" data-dock hidden aria-hidden="true"><span class="pmt-cz-docktitle">Preview</span><div class="pmt-cz-dockbox" data-dock-box></div></div></nav>';
     /* colours */
     html += '<section class="pmt-cz-group" data-group="colors" aria-labelledby="pmt-cz-g-colors">' + ghead('colors', 'Colors', 'One catalog with the code editor. Hover a scheme to see it here and on the terminal; click to keep it.') +
       '<div class="pmt-cz-findrow"><input class="pmt-cz-search pmt-pop-search" type="search" placeholder="Find a scheme" aria-label="Find a scheme"' + NOTAG + '><span class="pmt-cz-findn" data-find-n></span></div>' +
@@ -555,9 +557,8 @@
     function quickSet(id) {
       var s = SETS.filter(function (x) { return x.id === id; })[0]; if (!s) return;
       if (!s.patch) { A().reset(scope, v); syncPreview(); paint(); return; }
-      var patch = {}; COUNTED.forEach(function (k) { if (mine(k)) patch[k] = null; });
-      Object.keys(s.patch).forEach(function (k) { patch[k] = s.patch[k]; });
-      write(patch);
+      /* a set changes its own fields and leaves the rest of this scope's choices (the scheme you picked stays) */
+      write(Object.assign({}, s.patch));
       if (s.patch.cursorTrail && preview) preview.moveCursor();
     }
     /* sliders: shown while they move, written when let go */
@@ -714,7 +715,7 @@
     var ro = typeof ResizeObserver === 'function' ? new ResizeObserver(function (list) {
       list.forEach(function (en) { if (en.target === v.root) place(); else if (pv) { pv.layout(); preview.select(); } });
     }) : null;
-    if (ro) { ro.observe(v.root); if (pv) ro.observe(root.querySelector('[data-pv-box]')); }
+    if (ro) { ro.observe(v.root); if (pv) { ro.observe(root.querySelector('[data-pv-box]')); ro.observe(root.querySelector('[data-dock-box]')); } }
     function close(noFocus) {
       if (v.pop !== root) return;
       v.closeAppearance(noFocus);
@@ -724,10 +725,25 @@
       if (offChange) offChange();
       window.removeEventListener('resize', onResize);
       if (ro) ro.disconnect();
+      if (io) io.disconnect();
       if (preview) preview.dispose();
       root.setAttribute('aria-hidden', 'true'); root.inert = true;
       if (noFocus) root.remove(); else T.Motion.leave(root, function () { root.remove(); });
     };
+    /* the preview follows you down the screen: when less than 40 % of its own place shows, the same live view moves
+       into the dock under the group index, and back when its place returns */
+    var dock = root.querySelector('[data-dock]'), dockBox = root.querySelector('[data-dock-box]'), homeBox = root.querySelector('[data-pv-box]'), io = null;
+    function dockTo(on) {
+      if (!pv || !!on === !dock.hidden) return;
+      (on ? dockBox : homeBox).appendChild(pv.root);
+      dock.hidden = !on; root.classList.toggle('pmt-cz-docked', !!on);
+      if (on) T.Motion.play(dock);
+      pv.layout(true); preview.select();
+    }
+    if (pv && typeof IntersectionObserver === 'function') {
+      io = new IntersectionObserver(function (list) { var en = list[list.length - 1]; dockTo(en.intersectionRatio < 0.4); }, { root: body, threshold: [0, 0.4, 1] });
+      io.observe(root.querySelector('.pmt-cz-preview'));
+    }
     root._pmtPreview = preview; /* the preview, for checks that read what it draws */
     place();
     if (pv) { pv.layout(true); preview.select(); }

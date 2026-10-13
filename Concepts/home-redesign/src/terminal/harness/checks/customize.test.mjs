@@ -64,6 +64,9 @@ test('Settings words: Follow look, numbers as text, the earlier choices', () => 
   assert.equal(A.LINK.fontSize.in('24'), 24);
   assert.equal(A.LINK.fontSize.in('Font default'), undefined);
   assert.equal(A.LINK.fontSize.in(99), 32);
+  assert.equal(A.LINK.fontSize.in(14.25), 14.25);          /* Departure's 13.75 + 0.5 stays on its quarter */
+  assert.equal(A.LINK.lineHeight.in(1.45), 1.45);          /* no binary remainder from the step */
+  assert.equal(A.LINK.flickerAmount.in('0.025'), 0.025);
   assert.equal(A.LINK.minContrast.in('4.5:1'), 4.5);
   assert.equal(A.LINK.scheme.in('Match App Theme'), 'follow');
   assert.equal(A.LINK.scheme.in('Light'), 'follow:light');
