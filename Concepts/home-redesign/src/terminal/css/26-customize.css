@@ -269,6 +269,13 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz.pmt-out .pmt-cz-dialog { transform-origin: 50% 0; animation: var(--pmt-a-pop-out, pmt-m-fade-out) var(--pmt-t-out, 100ms) var(--pmt-ease-exit, linear) both; }
 .pmt-cz-body.pmt-rescope { animation: var(--pmt-a-rescope, pmt-m-dim-in) calc(var(--pmt-t-swap, 120ms) * 1.1) var(--pmt-ease-fade, linear) both; }
 html[data-motion="reduced"] .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set, .pmt-cz-chipbox, .pmt-cz-cells > i) { transition: none; }
+/* NieR's slice part opens the screen from a thin line at its top in NieR's eight steps. A screen this tall unrolls
+   under a clip instead of the popovers' scaleY, so its text is never squashed on the way (seen frame by frame) */
+@keyframes pmt-cz-slice-in { from { clip-path: inset(0 0 calc(100% - 2px) 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes pmt-cz-slice-out { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 calc(100% - 2px) 0); } }
+@media (prefers-reduced-motion: no-preference) {
+  html[data-o55-nier="on"][data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .pmt-cz.pmt-cz[data-pmt-look] { --pmt-a-pop-in: pmt-cz-slice-in; --pmt-a-pop-out: pmt-cz-slice-out; }
+}
 
 /* ---- narrow: the dialog under 640 px stacks; under 420 px one column ---- */
 @container pmt-cz (max-width: 640px) {
