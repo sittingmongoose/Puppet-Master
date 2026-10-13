@@ -1,0 +1,37 @@
+Twenty new wallpapers (five each for Basic, Friendly, Retro and NieR; 40 prints, 2,418,476 bytes) and one Settings
+gallery in which any look, NieR Mode included, can use any of the 28 wallpapers. Ribbons stays the Glass default, and
+the other looks keep their own ground until a wallpaper is chosen. The art is original, drawn in code from fixed
+seeds. Regenerating all 96 prints and thumbnails reproduced every byte.
+
+The package is `Concepts/wallpapers/opus-5.5/`: catalog fragments per owner, prints, 320x180 thumbnails, the gallery
+and paint, a validating build tool, the Concept Hub entry, and `CONTRACT.md`. It keeps the Glass owner's picker
+contract (`pm-lg-wallpaper`, `data-lg-wall`/`-any`, `--lg-wall-<id>-<mode>`), so glass.js and the gallery never fight.
+A stale saved id falls back to "Look's own" at load and mid-session. Glass's five 2026-10-13 prints were copied
+byte-identical from 6b18ee4755, assets only, and their catalog fragment awaits the Glass owner's OK. No glass.js,
+glass.css, Settings source, generator or parent page was changed. The review page layers the package after Glass on
+the published PMConcept7, and the exact delta check passes (the Glass input plus only `wpk-css` and `wpk-js`).
+
+A 60 fps film on the Windows RTX 3090 found the Glass sheets keeping the old frost for 17 to 30 frames after each
+pick. The gallery now holds the previous print until glass.js lands the new frost: in the second film the picture,
+the frost and the rims change in the same frame on all six picks. Follow-up G4 moves this into glass.js.
+
+Checks on Nas1 CPU tier: the final page passes 17 of 17 behavior checks with no page errors. They cover:
+
+- every wallpaper in all 8 looks and under NieR Mode;
+- reload persistence and clearing back to the default;
+- stale-id fallback with no writer loop, both at load and mid-session;
+- keyboard, responsive widths, no motion, and the same-frame hold.
+
+Attempts 1 to 4 (harness defects, earlier builds) are retained. Size and speed, against the base review page:
+
+- the page grows 4.85 MB, 1.29 MB of it Glass's prints;
+- one fresh browser each: theme switches are within noise of the base, a pick costs 0.19 to 0.26 s, and renderer
+  memory at the same step is +13 MB.
+
+The first perf harness, which reloaded large pages in one browser, inflated the timings and reached an 8.3 GB
+renderer. It was killed and is retained as a failed attempt. That artefact is the harness's, not either page's.
+
+Decisions for Jared (W1 to W5) and the canon, DRY, command, wiring and Glass follow-ups are in OWNER-PROPOSAL.md. No
+Plans edit was made. Review page: `share/2026-10-13-wallpapers/PMConcept7-Wallpapers-r1.html`, SHA-256
+83f68bfad0f15c7833dad1cd338203f934594aef5e75b088478c97c7ab8110f3, 24,274,794 bytes. Not landed: a landing waits for
+root review and a separate GO.

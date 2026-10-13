@@ -1,0 +1,269 @@
+{
+ "status": "READY_FOR_ROOT_REVIEW_NOT_LANDED",
+ "created_utc": "2026-10-13T22:08:54.871790+00:00",
+ "binding": {
+  "account_instance": "claude_party",
+  "model": "claude-opus-5-5",
+  "effort": "xhigh",
+  "fast_mode": false,
+  "thread": "mcp:ebc9348e-7171-4e28-800d-ff9b4ccd71b3",
+  "mail_alias": "pm7-wallpapers",
+  "worktree": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/concept-pm7-all-look-wallpapers-20261013",
+  "branch": "concept/pm7-all-look-wallpapers-20261013"
+ },
+ "source": {
+  "stacked_base": "611b2404e4827675a435e7fe3113a0674bae2ed6",
+  "base_landed_on_main": true,
+  "commits": [
+   "fb0eda947d3c752c8218ab6940179bb310419537",
+   "37e316eb2bfa17344d875d3df7cec54cb08cef1c"
+  ],
+  "glass_assets_from": "6b18ee47555a8725e512da8f25394bb42ea41a50 (10 webp, byte-identical; no glass.js/glass.css/walls.mjs/lens source)"
+ },
+ "catalog": {
+  "wallpapers": 28,
+  "prints": 56,
+  "families": {
+   "glass": 8,
+   "basic": 5,
+   "friendly": 5,
+   "retro": 5,
+   "nier": 5
+  },
+  "new_wallpapers": 20,
+  "new_prints": 40,
+  "new_print_bytes": 2418476,
+  "all_print_bytes": 3898230,
+  "thumbnail_bytes": 222524,
+  "ids": {
+   "basic": [
+    "blueprint",
+    "contour",
+    "folds",
+    "sheets",
+    "arcs"
+   ],
+   "friendly": [
+    "dotwave",
+    "channels",
+    "bubbles",
+    "hills",
+    "stripes"
+   ],
+   "retro": [
+    "horizon",
+    "peaks",
+    "circuit",
+    "dither",
+    "stars"
+   ],
+   "nier": [
+    "archive",
+    "signal",
+    "fragments",
+    "hatch",
+    "flora"
+   ],
+   "glass": [
+    "ribbons",
+    "prism",
+    "orbs",
+    "aurora",
+    "dunes",
+    "bloom",
+    "pool",
+    "facets"
+   ]
+  },
+  "defaults": {
+   "glass": "ribbons",
+   "others": "own ground (W2 for Jared)"
+  },
+  "deterministic_regeneration": "96 of 96 files byte-identical (build/regenerate-manifest.json)"
+ },
+ "contract": {
+  "choice": "localStorage['pm-lg-wallpaper'] = 'look' | id; ?lgwall= one visit",
+  "paint": "html data-lg-wall / data-lg-wall-any as glass.js computes them; Glass --lg-wall, other looks --lg-wall-any on body with clear shell grounds and a 42% veil on the Usage board and Settings Home; NieR Mode: wallpaper replaces ground and ink scene",
+  "stale": "unknown saved id resets to 'look' at load and when another writer shows it",
+  "glass_hold": "body keeps previous print until glass.js writes new --lg-frost-*, then releases in the same task; 1.5 s cap",
+  "gallery": "setting-general.visual.wallpaper after Light or dark; one radiogroup; Look's own first; families; thumbnails; arrows/Home/End/Space; no motion; 5/4/3/2 columns by container width",
+  "doc": "Concepts/wallpapers/opus-5.5/CONTRACT.md"
+ },
+ "validation": {
+  "behavior": {
+   "final": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-all-look-wallpapers-20261013/tests/behavior-attempt5.json",
+    "bytes": 8117,
+    "sha256": "8aafcbf8a188e4960298fae7b37300cf77a3904f302b207d7fb05002876d344d"
+   },
+   "passed": 17,
+   "failed": 0,
+   "page_errors": 0,
+   "page_sha256": "83f68bfad0f15c7833dad1cd338203f934594aef5e75b088478c97c7ab8110f3",
+   "retained_attempts": {
+    "1": "14/15 on 10752f01: harness init script observed before <html> existed (3 errors, vacuous counter)",
+    "2": "14/15 on 10752f01: stale value cleaned on the old page before reload (harness)",
+    "3": "15/16 on 788172ad: settle counter assertion fragile; product fix for mid-session stale repaint added between 2 and 3",
+    "4": "16/16 on 788172ad (before the Glass hold)"
+   }
+  },
+  "delta": {
+   "result": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-all-look-wallpapers-20261013/tests/delta.json",
+    "bytes": 11506,
+    "sha256": "5ba56a72fd71a04aa99acfc395183ec446e1a14e8ad04393b0dc2ac2dfda8af0"
+   },
+   "glass_input_equals_base_plus_10_vars": true,
+   "review_equals_glass_input_plus_wpk_blocks": true,
+   "only_owned_paths": true,
+   "untouched_owner_files_equal_611b": true,
+   "transported_equal_6b18": true
+  },
+  "hub": "python3 Concepts/ConceptHub/validate.py Concepts/wallpapers/opus-5.5 -> passed",
+  "catalog_check": "python3 Concepts/wallpapers/opus-5.5/tools/build_walls.py --check -> ok",
+  "performance_nas1_cpu": {
+   "base": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-all-look-wallpapers-20261013/tests/perf2-base.json",
+    "bytes": 885,
+    "sha256": "095671894699f22190ed75174ba4876516921fd420f48d9fd185bc0c78deb0ae"
+   },
+   "candidate": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-all-look-wallpapers-20261013/tests/perf2-candidate.json",
+    "bytes": 1753,
+    "sha256": "4277d938a50cede36957dac26102ff63ed1d3cac33a8207768d1f9ba2d7e7a23"
+   },
+   "page_bytes": {
+    "base": 19419775,
+    "glass_input": 20704818,
+    "review": 24274794
+   },
+   "ready_ms": {
+    "base": 5176,
+    "candidate": 4671
+   },
+   "switch_ms": {
+    "basic_to_friendly": [
+     439,
+     516
+    ],
+    "open_settings": [
+     799,
+     718
+    ],
+    "friendly_to_glass": [
+     2339,
+     1912
+    ],
+    "glass_to_friendly": [
+     1270,
+     1061
+    ]
+   },
+   "pick_ms": {
+    "friendly": 187,
+    "glass": 264
+   },
+   "renderer_mb_same_step": [
+    710,
+    723
+   ],
+   "renderer_peak_mb": [
+    710,
+    1193
+   ],
+   "failed_attempt": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-all-look-wallpapers-20261013/tests/perf-attempt1-failed.json",
+    "bytes": 2313,
+    "sha256": "1bec4223093c5f52a8b867ee2cb9aa020206432f185b2cc91e7678125c5ec36a"
+   }
+  },
+  "film": {
+   "host": "windows RTX 3090, ANGLE D3D11, 1920x1080 dpr1, 1080p60 h264",
+   "before": {
+    "film": {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-all-look-wallpapers-20261013/film/film1-before-788172ad.mp4",
+     "bytes": 45996878,
+     "sha256": "6e7fecef87230e21eb2a727a45dc48509a613542c52e19ca8a7954c8499a339b"
+    },
+    "frost_lag_frames": [
+     21,
+     30,
+     22,
+     17,
+     21,
+     19
+    ],
+    "swaps": {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-all-look-wallpapers-20261013/tests/film1-swaps.json",
+     "bytes": 2001,
+     "sha256": "d531097edde70da04ce7683b26251c64923d619426d8e924a0c6823ad642ff9e"
+    }
+   },
+   "after": {
+    "film": {
+     "path": "/mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/film/wallpapers-film-r1.mp4",
+     "bytes": 43829474,
+     "sha256": "4e6cf03bad7bd051bf9d0f45169fe95e343d0afeeee1c44171f00b094dee69eb"
+    },
+    "frost_lag_frames": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "rims": "same frame",
+    "swaps": {
+     "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-all-look-wallpapers-20261013/tests/film2-swaps.json",
+     "bytes": 2000,
+     "sha256": "8a85d78decaea1d414eabe6c47c2716d1abc8307cf47572f1e9b247efdf0d69c"
+    }
+   },
+   "notes": "/mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/film/FRAME-NOTES.md",
+   "new_motion": "none in the gallery; swaps are one-frame cuts"
+  }
+ },
+ "preview": {
+  "path": "/mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/PMConcept7-Wallpapers-r1.html",
+  "bytes": 24274794,
+  "sha256": "83f68bfad0f15c7833dad1cd338203f934594aef5e75b088478c97c7ab8110f3"
+ },
+ "preview_build": "build_proto.py (glass-input 333465c8, 20,704,818 B) then build_walls.py; superseded unreported builds 10752f01 and 788172ad recorded in attempts",
+ "custody": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-all-look-wallpapers-20261013/custody.json",
+  "bytes": 52823,
+  "sha256": "b413014b333176107961ea50c552ab222b0f84af21554a42afaadfed2437bd59"
+ },
+ "changed_paths": {
+  "count_vs_611b": 120,
+  "groups": [
+   "Concepts/wallpapers/opus-5.5/** (110 files)",
+   "Concepts/liquid-glass/opus-5.5/src/walls/{aurora,dunes,bloom,pool,facets}-{dark,light}.webp (10, byte-identical to 6b18)"
+  ],
+  "reports": [
+   "reports/pm7-all-look-wallpapers-20261013/NOTES.md",
+   "result.json",
+   "OWNER-PROPOSAL.md"
+  ]
+ },
+ "share": "/mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/ (README, review page, 5 gallery sheets, OWNER-PROPOSAL, film/)",
+ "blockers": [
+  "Glass owner OK on catalog.d/10-glass.json and the 10 copied prints (mailed 1013202959-d515; owner quota-held)",
+  "Jared decisions W1-W5",
+  "root source and mechanical review, then a separate landing GO"
+ ],
+ "limitations": "Behavior and performance on Nas1 CPU tier (software rendering); film on one GPU host; no Edge or performance-campaign claim. The wallpaper row is a concept overlay: not in the Settings inventory or search, saved globally in localStorage, prints inlined as data URLs (product wiring proposed).",
+ "cleanup": {
+  "browsers": 0,
+  "gpu_sessions": 0,
+  "servers": 0,
+  "recorders": 0,
+  "test_jobs": 0,
+  "monitors": 0,
+  "profiles_removed": true,
+  "scratch_removed": true,
+  "mail_waiters": "one, consumed at final stop",
+  "retained": "clean pushed worktree and branch for review; evidence and share packet"
+ }
+}
