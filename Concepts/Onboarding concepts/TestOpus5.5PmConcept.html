@@ -190681,7 +190681,8 @@ var T = {};
     /* geometry for the looks' masks: the origin, the body's size and each layer's offset inside the body */
     var B = body.getBoundingClientRect(), S = this.screen.getBoundingClientRect();
     if (!from) {
-      var pr = this.pop && this.pop.getBoundingClientRect();
+      /* from the Appearance surface that is open (the Customize screen's dialog, not its full-window layer) */
+      var po = this.pop && (this.pop.querySelector('.pmt-cz-dialog') || this.pop), pr = po && po.getBoundingClientRect();
       from = pr && pr.width ? { x: pr.left, y: pr.top + Math.min(120, pr.height / 2) } : { x: B.left + B.width / 2, y: B.top + B.height / 2 };
     }
     var ox = from.x - B.left, oy = from.y - B.top;
