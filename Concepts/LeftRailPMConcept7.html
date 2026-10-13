@@ -34772,7 +34772,8 @@ html[data-theme$="-light"] #pm-home-centre, html[data-theme$="-light"] #pmw-over
 /* focus between panels: contrast plus a quiet inner outline of the focused panel's silhouette (research 9.2) */
 .pmw-panel:not([data-focused]) .pmw-tab[data-active] .pmw-tlabel { opacity: .86; }
 
-/* ---- dividers: a 6 px gap with a 1 px line in its centre; an 8 px hit target ---- */
+/* ---- dividers: a 6 px gap with a 1 px line in its centre; an 8 px hit target. Hover, drag and release draw the grab
+   light (56-light.css); Retro's box-drawn line and NieR's ticked hairline keep their own rest and hover lines ---- */
 .pmw-divider {
   position: absolute;
   z-index: 20;
@@ -34792,12 +34793,6 @@ html[data-theme$="-light"] #pm-home-centre, html[data-theme$="-light"] #pmw-over
 }
 .pmw-divider[data-dir="row"] .pmw-divider-line { top: 6px; bottom: 6px; left: 3.5px; width: 1px; }
 .pmw-divider[data-dir="col"] .pmw-divider-line { left: 6px; right: 6px; top: 3.5px; height: 1px; }
-.pmw-divider:hover .pmw-divider-line { transition-delay: 300ms; }
-.pmw-divider:hover .pmw-divider-line, .pmw-divider.pmw-active .pmw-divider-line, .pmw-divider:focus-visible .pmw-divider-line {
-  background: var(--pmw-accent);
-}
-.pmw-divider[data-dir="row"]:hover .pmw-divider-line, .pmw-divider[data-dir="row"].pmw-active .pmw-divider-line, .pmw-divider[data-dir="row"]:focus-visible .pmw-divider-line { transform: scaleX(3); }
-.pmw-divider[data-dir="col"]:hover .pmw-divider-line, .pmw-divider[data-dir="col"].pmw-active .pmw-divider-line, .pmw-divider[data-dir="col"]:focus-visible .pmw-divider-line { transform: scaleY(3); }
 body.pmw-resizing, body.pmw-resizing * { user-select: none !important; -webkit-user-select: none !important; }
 body.pmw-dragging, body.pmw-dragging * { user-select: none !important; -webkit-user-select: none !important; }
 
@@ -35895,6 +35890,800 @@ html[data-theme="basic-light"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pm
 html[data-theme="basic-dark"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scope) {
   --pmw-text-3: color-mix(in srgb, var(--text-muted) 68%, var(--text-primary));
   --pmw-bad: color-mix(in srgb, var(--accent-error, #ef6b6b) 74%, var(--text-primary));
+}
+/* ---- panels/css/55-drop.css ---- */
+/* The drop guide and the docks (31-dropzones.js), and the live preview (31-dropview.js). While a tab or a panel is
+   carried, the panel under the pointer shows
+   four side tiles around its Join tile, the zone's name under them, and the centre's four outer sides show a dock
+   each. The tile under the pointer's zone lights; a side that has no room is dimmed and empty. Each look draws them in
+   its own grammar: Basic crisp, Friendly soft and round, Glass frosted with a specular rim, Retro reverse-video cells
+   with stepped motion, NieR ink squares with no glow. */
+
+#pmw-overlay {
+  --pmw-guide-bg: color-mix(in srgb, var(--pmw-pop) 94%, transparent);
+  --pmw-guide-line: color-mix(in srgb, var(--pmw-text) 16%, transparent);
+  --pmw-guide-ink: var(--pmw-text-2);
+  --pmw-guide-on: var(--pmw-accent);
+  --pmw-guide-on-ink: #0B1220;
+  --pmw-guide-glow: color-mix(in srgb, var(--pmw-accent) 55%, transparent);
+  --pmw-guide-shadow: 0 10px 26px -10px rgba(0, 0, 0, .6), 0 2px 6px -2px rgba(0, 0, 0, .35);
+  --pmw-guide-r: 9px;
+  --pmw-guide-map-r: 2.5px;
+  --pmw-guide-t: 140ms;
+}
+html[data-theme$="-light"] #pmw-overlay {
+  --pmw-guide-on-ink: #FFFFFF;
+  --pmw-guide-shadow: 0 10px 24px -10px rgba(21, 32, 43, .32), 0 2px 6px -2px rgba(21, 32, 43, .16);
+  --pmw-guide-glow: color-mix(in srgb, var(--pmw-accent) 38%, transparent);
+}
+
+.pmw-guide {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1260;
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: repeat(3, var(--pmw-guide-tile, 40px));
+  grid-template-rows: repeat(3, var(--pmw-guide-tile, 40px));
+  gap: var(--pmw-guide-gap, 6px);
+  transition: translate 190ms var(--pmw-ease-slide);
+  font-family: var(--pm-font-ui);
+}
+.pmw-guide[hidden] { display: none; }
+/* the carried chip rides over the guide (a tab clone's own z-index would otherwise put it under the tiles) */
+#pmw-overlay > .pmw-chip { z-index: 1300; }
+.pmw-guide-tile[data-edge="top"] { grid-area: 1 / 2; }
+.pmw-guide-tile[data-edge="left"] { grid-area: 2 / 1; }
+.pmw-guide-tile[data-edge="merge"] { grid-area: 2 / 2; }
+.pmw-guide-tile[data-edge="right"] { grid-area: 2 / 3; }
+.pmw-guide-tile[data-edge="bottom"] { grid-area: 3 / 2; }
+.pmw-guide[data-size="join"] .pmw-guide-tile:not([data-edge="merge"]) { visibility: hidden; }
+.pmw-guide[data-dock-cap] .pmw-guide-tile { visibility: hidden; }
+
+.pmw-guide-tile, .pmw-dock {
+  position: relative;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  border-radius: var(--pmw-guide-r);
+  background: var(--pmw-guide-bg);
+  color: var(--pmw-guide-ink);
+  box-shadow: 0 0 0 1px var(--pmw-guide-line), var(--pmw-guide-shadow);
+  transition: background-color var(--pmw-guide-t) linear, color var(--pmw-guide-t) linear,
+    box-shadow 180ms var(--pmw-ease), transform 200ms var(--pmw-ease), opacity var(--pmw-guide-t) linear;
+}
+.pmw-guide-tile[data-on], .pmw-dock[data-on] {
+  background: var(--pmw-guide-on);
+  color: var(--pmw-guide-on-ink);
+  box-shadow: 0 0 0 1px var(--pmw-guide-on), 0 0 22px 0 var(--pmw-guide-glow), var(--pmw-guide-shadow);
+  transform: scale(1.08);
+}
+.pmw-guide-tile[data-off], .pmw-dock[data-off] { opacity: .38; }
+.pmw-guide-tile[data-edge="merge"][data-off] { visibility: hidden; }
+
+/* the little map on each tile: the panel, and the part of it the drop fills */
+.pmw-guide-map {
+  position: relative;
+  display: block;
+  width: 56%;
+  height: 46%;
+  box-sizing: border-box;
+  border: 1.5px solid currentColor;
+  border-radius: var(--pmw-guide-map-r);
+}
+.pmw-guide-map::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+  opacity: .62;
+  border-radius: calc(var(--pmw-guide-map-r) - 1px);
+}
+[data-edge="left"] > .pmw-guide-map::after { left: 1px; top: 1px; bottom: 1px; width: calc(50% - 2px); }
+[data-edge="right"] > .pmw-guide-map::after { right: 1px; top: 1px; bottom: 1px; width: calc(50% - 2px); }
+[data-edge="top"] > .pmw-guide-map::after { left: 1px; right: 1px; top: 1px; height: calc(50% - 2px); }
+[data-edge="bottom"] > .pmw-guide-map::after { left: 1px; right: 1px; bottom: 1px; height: calc(50% - 2px); }
+/* the Join tile: a strip with a tab on it, and the tab's place in it */
+[data-edge="merge"] > .pmw-guide-map { border-top-width: 4px; }
+[data-edge="merge"] > .pmw-guide-map::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: -6px;
+  width: 42%;
+  height: 4px;
+  border-radius: 2px 2px 0 0;
+  background: currentColor;
+}
+[data-edge="merge"] > .pmw-guide-map::after { left: 1px; right: 1px; top: 1px; bottom: 1px; opacity: .3; }
+.pmw-guide-tile[data-off] > .pmw-guide-map::after { opacity: 0; }
+
+/* docks: one on each outer side of the centre, its map a full-length band */
+.pmw-dock {
+  position: fixed;
+  z-index: 1255;
+  width: 32px;
+  height: 32px;
+  translate: -50% -50%;
+  pointer-events: none;
+  --pmw-guide-r: 8px;
+}
+.pmw-dock[hidden] { display: none; }
+.pmw-dock[data-edge="left"] > .pmw-guide-map::after { width: calc(36% - 1px); right: auto; }
+.pmw-dock[data-edge="right"] > .pmw-guide-map::after { width: calc(36% - 1px); left: auto; }
+.pmw-dock[data-edge="top"] > .pmw-guide-map::after { height: calc(36% - 1px); bottom: auto; }
+.pmw-dock[data-edge="bottom"] > .pmw-guide-map::after { height: calc(36% - 1px); top: auto; }
+
+/* the zone's name, under the guide (beside the dock for a dock) */
+.pmw-guide-cap {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 10px);
+  translate: -50% 0;
+  white-space: nowrap;
+  padding: 4px 9px;
+  border-radius: 7px;
+  background: var(--pmw-pop);
+  color: var(--pmw-text);
+  box-shadow: 0 0 0 1px var(--pmw-pop-line), var(--pmw-guide-shadow);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: .01em;
+}
+.pmw-guide-cap:empty { display: none; }
+.pmw-guide[data-dock-cap="left"] .pmw-guide-cap { left: calc(50% + 26px); top: 50%; translate: 0 -50%; }
+.pmw-guide[data-dock-cap="right"] .pmw-guide-cap { left: auto; right: calc(50% + 26px); top: 50%; translate: 0 -50%; }
+.pmw-guide[data-dock-cap="top"] .pmw-guide-cap { top: calc(50% + 26px); }
+.pmw-guide[data-dock-cap="bottom"] .pmw-guide-cap { top: auto; bottom: calc(50% + 26px); }
+
+/* ---- per look ---- */
+html[data-theme^="friendly"] #pmw-overlay {
+  --pmw-guide-r: 13px;
+  --pmw-guide-map-r: 4px;
+  --pmw-guide-bg: color-mix(in srgb, var(--pmw-pop) 96%, transparent);
+  --pmw-guide-on: var(--accent-lime, var(--pmw-accent));
+  --pmw-guide-glow: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 45%, transparent);
+}
+html[data-theme="friendly-light"] #pmw-overlay { --pmw-guide-on: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 72%, #000); }
+html[data-theme^="friendly"] .pmw-guide-tile[data-on], html[data-theme^="friendly"] .pmw-dock[data-on] {
+  transform: scale(1.12);
+  transition: background-color var(--pmw-guide-t) linear, color var(--pmw-guide-t) linear, box-shadow 220ms var(--pmw-ease),
+    transform 320ms cubic-bezier(.34, 1.56, .64, 1), opacity var(--pmw-guide-t) linear;
+}
+html[data-theme^="friendly"] .pmw-guide-cap { border-radius: 10px; }
+
+html[data-theme^="basic"] #pmw-overlay { --pmw-guide-r: 7px; --pmw-guide-map-r: 2px; }
+html[data-theme^="basic"] .pmw-guide-tile[data-on], html[data-theme^="basic"] .pmw-dock[data-on] { transform: none; }
+
+/* Glass: frosted tiles with the slab's specular rim along the top; the lit tile is the selection glass */
+html[data-theme^="glass"] #pmw-overlay {
+  --pmw-guide-r: 12px;
+  --pmw-guide-map-r: 3px;
+  --pmw-guide-bg: var(--lg-tint-menu, color-mix(in srgb, var(--pmw-pop) 82%, transparent));
+  --pmw-guide-line: var(--rg-rim-low, rgba(255, 255, 255, .14));
+  --pmw-guide-on: var(--lg-sel, color-mix(in srgb, var(--pmw-accent) 70%, transparent));
+  --pmw-guide-on-ink: var(--lg-on-sel, #FFFFFF);
+  --pmw-guide-glow: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 60%, transparent);
+  --pmw-guide-shadow: 0 12px 30px -12px var(--lg-shadow, rgba(0, 2, 12, .55)), 0 3px 8px -3px var(--lg-shadow-near, rgba(0, 2, 12, .3));
+}
+html[data-theme^="glass"] .pmw-guide-tile, html[data-theme^="glass"] .pmw-dock {
+  box-shadow: inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .3)), inset 0 -1px 0 var(--lg-edge-bot, rgba(0, 0, 0, .25)),
+    0 0 0 1px var(--pmw-guide-line), var(--pmw-guide-shadow);
+}
+html[data-theme^="glass"] .pmw-guide-tile[data-on], html[data-theme^="glass"] .pmw-dock[data-on] {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 0 0 1px color-mix(in srgb, var(--pmw-guide-on) 80%, #fff),
+    0 0 26px 2px var(--pmw-guide-glow), var(--pmw-guide-shadow);
+  transform: scale(1.07);
+}
+html[data-theme^="glass"] .pmw-guide-cap {
+  border-radius: 10px;
+  background: var(--lg-tint-menu, var(--pmw-pop));
+  box-shadow: inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .3)), 0 0 0 1px var(--pmw-guide-line), var(--pmw-guide-shadow);
+}
+
+/* Retro: box cells; the lit cell is reverse video; stepped */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #pmw-overlay {
+  --pmw-guide-r: 0px;
+  --pmw-guide-map-r: 0px;
+  --pmw-guide-bg: var(--surface);
+  --pmw-guide-line: var(--accent-lime);
+  --pmw-guide-ink: var(--accent-lime);
+  --pmw-guide-on: var(--accent-lime);
+  --pmw-guide-on-ink: var(--surface);
+  --pmw-guide-shadow: 3px 3px 0 rgba(0, 0, 0, .35);
+  --pmw-guide-t: 0ms;
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-tile[data-on], html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dock[data-on] {
+  transform: none;
+  box-shadow: 0 0 0 1px var(--accent-lime), 3px 3px 0 rgba(0, 0, 0, .35);
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide { transition: translate 140ms steps(3, end); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-map { border-width: 1px; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-map::after { opacity: 1; background: repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 3px); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-cap {
+  border-radius: 0;
+  background: var(--accent-lime);
+  color: var(--surface);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, .35);
+  font-family: var(--pm-font-code);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-cap::before { content: "> "; }
+
+/* NieR: ink squares on paper, the lit square solid ink; no glow; stepped */
+html[data-o55-nier="on"] #pmw-overlay {
+  --pmw-guide-r: 0px;
+  --pmw-guide-map-r: 0px;
+  --pmw-guide-bg: var(--o55-nier-overlay, var(--pmw-pop));
+  --pmw-guide-line: var(--o55-nier-ink);
+  --pmw-guide-ink: var(--o55-nier-ink);
+  --pmw-guide-on: var(--o55-nier-ink);
+  --pmw-guide-on-ink: var(--o55-nier-on-ink, var(--o55-nier-paper));
+  --pmw-guide-glow: transparent;
+  --pmw-guide-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .16);
+  --pmw-guide-t: 0ms;
+}
+html[data-o55-nier="on"] .pmw-guide-tile[data-on], html[data-o55-nier="on"] .pmw-dock[data-on] {
+  transform: none;
+  box-shadow: 0 0 0 1px var(--o55-nier-ink), 3px 3px 0 rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .16);
+}
+html[data-o55-nier="on"] .pmw-guide { transition: translate 160ms steps(4, end); }
+html[data-o55-nier="on"] .pmw-guide-map { border-width: 1px; }
+html[data-o55-nier="on"] .pmw-guide-map::after { opacity: 1; background: repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 3px); }
+html[data-o55-nier="on"] .pmw-guide-tile[data-on] > .pmw-guide-map::after, html[data-o55-nier="on"] .pmw-dock[data-on] > .pmw-guide-map::after { background: currentColor; }
+html[data-o55-nier="on"] .pmw-guide-cap {
+  border-radius: 0;
+  background: var(--o55-nier-ink);
+  color: var(--o55-nier-on-ink, var(--o55-nier-paper));
+  box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .16);
+  font-family: var(--pm-font-code);
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+/* ---- the live preview (31-dropview.js): the ghost panel, the join veil, the hole, a panel the carry empties ---- */
+#pm-home-centre {
+  --pmw-dv-tint: color-mix(in srgb, var(--pmw-accent) 14%, var(--pmw-surface));
+  --pmw-dv-tint-2: color-mix(in srgb, var(--pmw-accent) 6%, var(--pmw-surface));
+  --pmw-dv-ring: color-mix(in srgb, var(--pmw-accent) 78%, transparent);
+  --pmw-dv-tab: color-mix(in srgb, var(--pmw-accent) 24%, var(--pmw-surface));
+  --pmw-dv-glow: 0 22px 48px -20px rgba(0, 0, 0, .7), 0 0 34px -6px color-mix(in srgb, var(--pmw-accent) 40%, transparent);
+  --pmw-dv-sheen: color-mix(in srgb, #fff 16%, transparent);
+  --pmw-dv-veil: color-mix(in srgb, var(--pmw-accent) 11%, transparent);
+}
+html[data-theme$="-light"] #pm-home-centre {
+  --pmw-dv-tint: color-mix(in srgb, var(--pmw-accent) 12%, var(--pmw-surface));
+  --pmw-dv-tint-2: color-mix(in srgb, var(--pmw-accent) 4%, var(--pmw-surface));
+  --pmw-dv-tab: color-mix(in srgb, var(--pmw-accent) 18%, var(--pmw-surface));
+  --pmw-dv-glow: 0 20px 40px -22px rgba(21, 32, 43, .35), 0 0 30px -8px color-mix(in srgb, var(--pmw-accent) 34%, transparent);
+  --pmw-dv-sheen: color-mix(in srgb, #fff 55%, transparent);
+  --pmw-dv-veil: color-mix(in srgb, var(--pmw-accent) 9%, transparent);
+}
+/* while a preview shows, the dividers stand down: they belong to the layout as it is, not the one shown */
+#pm-home-centre[data-pmw-dv] .pmw-divider { opacity: 0; pointer-events: none; }
+.pmw-panel[data-dv-leaving] { opacity: .34; }
+
+.pmw-dv-ghost {
+  position: absolute;
+  z-index: 15;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: var(--pmw-panel-radius);
+  background: linear-gradient(180deg, var(--pmw-dv-tint), var(--pmw-dv-tint-2));
+  box-shadow: inset 0 0 0 1.5px var(--pmw-dv-ring), var(--pmw-dv-glow);
+  opacity: 0;
+  transition: opacity 150ms linear;
+}
+.pmw-dv-ghost.is-in { opacity: 1; }
+#pm-home-centre.pmw-animating .pmw-dv-ghost {
+  transition: left var(--pmw-t-med) var(--pmw-ease-slide), top var(--pmw-t-med) var(--pmw-ease-slide),
+    width var(--pmw-t-med) var(--pmw-ease-slide), height var(--pmw-t-med) var(--pmw-ease-slide), opacity 150ms linear;
+}
+.pmw-dv-ghost.is-out {
+  opacity: 0;
+  transition: left var(--pmw-t-med) var(--pmw-ease-slide), top var(--pmw-t-med) var(--pmw-ease-slide),
+    width var(--pmw-t-med) var(--pmw-ease-slide), height var(--pmw-t-med) var(--pmw-ease-slide), opacity var(--pmw-t-med) linear;
+}
+.pmw-dv-ghost.is-handoff { opacity: 0; transition: opacity 220ms linear; }
+.pmw-dv-ghost-strip { flex: 0 0 var(--pmw-strip-h); display: flex; align-items: flex-end; padding: 0 8px; min-width: 0; }
+.pmw-dv-ghost-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+  height: var(--pmw-tab-h);
+  padding: 0 12px 0 10px;
+  box-sizing: border-box;
+  border-radius: var(--pmw-tab-crown) var(--pmw-tab-crown) 0 0;
+  background: var(--pmw-dv-tab);
+  color: var(--pmw-text);
+  font-size: var(--pmw-tab-font);
+  font-weight: var(--pmw-tab-weight, 600);
+  white-space: nowrap;
+}
+.pmw-dv-ghost-name { overflow: hidden; text-overflow: ellipsis; }
+.pmw-dv-ghost-body { position: relative; flex: 1 1 auto; min-height: 0; display: grid; place-items: center; overflow: hidden; }
+.pmw-dv-ghost-mark {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  color: var(--pmw-accent);
+  background: color-mix(in srgb, var(--pmw-accent) 13%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmw-accent) 30%, transparent);
+}
+.pmw-dv-ghost-mark .pmw-ico { width: 26px; height: 26px; stroke-width: 1.4; }
+.pmw-dv-ghost-mark .pmw-kglyph { font-size: 20px; }
+.pmw-dv-ghost.is-in .pmw-dv-ghost-mark { animation: pmw-dv-mark 420ms cubic-bezier(.2, .9, .25, 1.15) 60ms both; }
+/* one pass of light across the new panel as it opens */
+.pmw-dv-ghost-sheen, .pmw-dv-veil-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 32%, var(--pmw-dv-sheen) 48%, transparent 64%);
+  translate: -110% 0;
+}
+.pmw-dv-ghost.is-in .pmw-dv-ghost-sheen, .pmw-dv-veil.is-in .pmw-dv-veil-sheen { animation: pmw-dv-sheen 900ms cubic-bezier(.3, .6, .2, 1) 90ms 1 both; }
+@keyframes pmw-dv-sheen { from { translate: -110% 0; } to { translate: 110% 0; } }
+@keyframes pmw-dv-mark { from { transform: scale(.6); opacity: 0; } to { transform: none; opacity: 1; } }
+
+.pmw-dv-veil {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--pmw-strip-h);
+  bottom: 0;
+  z-index: 12;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: 0 0 var(--pmw-panel-radius) var(--pmw-panel-radius);
+  background: var(--pmw-dv-veil);
+  box-shadow: inset 0 0 0 1.5px var(--pmw-dv-ring), inset 0 0 40px -10px color-mix(in srgb, var(--pmw-accent) 40%, transparent);
+  opacity: 0;
+  transition: opacity 150ms linear;
+}
+.pmw-dv-veil.is-in { opacity: 1; }
+
+.pmw-dv-hole {
+  position: absolute;
+  z-index: 0;
+  box-sizing: border-box;
+  pointer-events: none;
+  border-radius: var(--pmw-panel-radius);
+  border: 1.5px dashed color-mix(in srgb, var(--pmw-text) 30%, transparent);
+  background: color-mix(in srgb, var(--pmw-text) 4%, transparent);
+  opacity: 0;
+  transition: opacity 150ms linear;
+}
+.pmw-dv-hole.is-in { opacity: 1; }
+#pm-home-centre.pmw-animating .pmw-dv-hole {
+  transition: left var(--pmw-t-med) var(--pmw-ease-slide), top var(--pmw-t-med) var(--pmw-ease-slide),
+    width var(--pmw-t-med) var(--pmw-ease-slide), height var(--pmw-t-med) var(--pmw-ease-slide), opacity 150ms linear;
+}
+
+/* Friendly: soft and round; the mark pops in */
+html[data-theme^="friendly"] #pm-home-centre {
+  --pmw-dv-ring: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 70%, transparent);
+  --pmw-dv-tint: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 13%, var(--pmw-surface));
+  --pmw-dv-tint-2: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 5%, var(--pmw-surface));
+  --pmw-dv-tab: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 22%, var(--pmw-surface));
+  --pmw-dv-veil: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 10%, transparent);
+}
+html[data-theme^="friendly"] .pmw-dv-ghost { box-shadow: inset 0 0 0 2px var(--pmw-dv-ring), var(--pmw-dv-glow); }
+html[data-theme^="friendly"] .pmw-dv-ghost-mark { border-radius: 20px; color: var(--pmw-tab-active, var(--pmw-accent)); background: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 16%, transparent); }
+html[data-theme^="friendly"] .pmw-dv-ghost.is-in .pmw-dv-ghost-mark { animation: pmw-dv-mark 520ms cubic-bezier(.34, 1.56, .64, 1) 60ms both; }
+html[data-theme^="friendly"] .pmw-dv-hole { border-width: 2px; }
+
+/* Glass: a pane of the slab's glass, its rim lit, the selection glass glowing through */
+html[data-theme^="glass"] #pm-home-centre {
+  --pmw-dv-tint: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 22%, var(--lg-tint-panel, var(--pmw-strip)));
+  --pmw-dv-tint-2: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 8%, var(--lg-tint-panel, var(--pmw-strip)));
+  --pmw-dv-ring: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 85%, #fff);
+  --pmw-dv-tab: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 30%, var(--lg-tint-card, var(--pmw-surface)));
+  --pmw-dv-glow: 0 24px 56px -22px var(--lg-shadow, rgba(0, 2, 12, .55)), 0 0 44px -6px color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 55%, transparent);
+  --pmw-dv-sheen: rgba(255, 255, 255, .22);
+  --pmw-dv-veil: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 16%, transparent);
+}
+html[data-theme^="glass"] .pmw-dv-ghost {
+  box-shadow: inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .45)), inset 0 0 0 1px var(--pmw-dv-ring),
+    inset 0 -1px 0 var(--lg-edge-bot, rgba(0, 0, 0, .25)), var(--pmw-dv-glow);
+}
+html[data-theme^="glass"] .pmw-dv-ghost-mark { color: var(--lg-on-sel, #fff); background: var(--lg-sel, var(--pmw-accent)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 8px 24px -8px var(--lg-sel, var(--pmw-accent)); }
+html[data-theme^="glass"] .pmw-dv-veil { box-shadow: inset 0 0 0 1px var(--pmw-dv-ring), inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .45)), inset 0 0 48px -8px color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 55%, transparent); }
+html[data-theme^="glass"] .pmw-dv-hole { border-color: var(--rg-rim-soft, rgba(255, 255, 255, .3)); }
+
+/* Retro: a dithered phosphor cell, the tab in reverse video, a scanline passing once */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dv-ghost {
+  border-radius: 0;
+  background: repeating-conic-gradient(color-mix(in srgb, var(--accent-lime) 16%, transparent) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px, var(--surface);
+  box-shadow: inset 0 0 0 1px var(--accent-lime), 4px 4px 0 rgba(0, 0, 0, .35);
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dv-ghost-tab { border-radius: 0; background: var(--accent-lime); color: var(--surface); font-family: var(--pm-font-code); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dv-ghost-mark { border-radius: 0; color: var(--surface); background: var(--accent-lime); box-shadow: 3px 3px 0 rgba(0, 0, 0, .35); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dv-ghost.is-in .pmw-dv-ghost-mark { animation: pmw-dv-mark 240ms steps(3, end) 60ms both; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-dv-ghost-sheen, .pmw-dv-veil-sheen) {
+  background: linear-gradient(180deg, transparent 0 46%, color-mix(in srgb, var(--accent-lime) 30%, transparent) 46% 54%, transparent 54%);
+  translate: 0 -110%;
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-dv-ghost.is-in .pmw-dv-ghost-sheen, .pmw-dv-veil.is-in .pmw-dv-veil-sheen) { animation: pmw-dv-scan 720ms steps(9, end) 60ms 1 both; }
+@keyframes pmw-dv-scan { from { translate: 0 -110%; } to { translate: 0 110%; } }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dv-veil {
+  border-radius: 0;
+  background: repeating-conic-gradient(color-mix(in srgb, var(--accent-lime) 18%, transparent) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px;
+  box-shadow: inset 0 0 0 1px var(--accent-lime);
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dv-hole { border-radius: 0; border: 1px dashed var(--accent-lime); background: none; }
+
+/* NieR: hatched ink, square, no glow or light */
+html[data-o55-nier="on"] .pmw-dv-ghost {
+  border-radius: 0;
+  background: repeating-linear-gradient(45deg, rgba(var(--o55-nier-ink-rgb), .16) 0 1px, transparent 1px 6px), var(--o55-nier-paper, var(--surface));
+  box-shadow: inset 0 0 0 1px var(--o55-nier-ink), 3px 3px 0 rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .16);
+}
+html[data-o55-nier="on"] .pmw-dv-ghost-tab { border-radius: 0; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink, var(--o55-nier-paper)); font-weight: 500; }
+html[data-o55-nier="on"] .pmw-dv-ghost-mark { border-radius: 0; color: var(--o55-nier-on-ink, var(--o55-nier-paper)); background: var(--o55-nier-ink); box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .16); }
+html[data-o55-nier="on"] .pmw-dv-ghost.is-in .pmw-dv-ghost-mark { animation: pmw-dv-mark 200ms steps(2, end) 40ms both; }
+html[data-o55-nier="on"] :is(.pmw-dv-ghost-sheen, .pmw-dv-veil-sheen) { display: none; }
+html[data-o55-nier="on"] .pmw-dv-veil {
+  border-radius: 0;
+  background: repeating-linear-gradient(45deg, rgba(var(--o55-nier-ink-rgb), .14) 0 1px, transparent 1px 6px);
+  box-shadow: inset 0 0 0 1px var(--o55-nier-ink);
+}
+html[data-o55-nier="on"] .pmw-dv-hole { border-radius: 0; border: 1px dashed var(--o55-nier-ink); background: none; }
+
+/* Reduced Motion: the preview appears in place (31-dropview.js waits for the zone to hold); the ghost, the veil and
+   the hole fade, nothing glides, grows, pops or sweeps */
+html[data-motion="reduced"] :is(.pmw-dv-ghost-sheen, .pmw-dv-veil-sheen) { display: none; }
+html[data-motion="reduced"] .pmw-dv-ghost-mark { animation: none !important; }
+html[data-motion="reduced"] #pm-home-centre .pmw-dv-ghost, html[data-motion="reduced"] #pm-home-centre .pmw-dv-hole { transition: opacity 140ms linear !important; }
+@media (prefers-reduced-motion: reduce) {
+  .pmw-dv-ghost-sheen, .pmw-dv-veil-sheen { display: none; }
+  .pmw-dv-ghost-mark { animation: none !important; }
+  #pm-home-centre .pmw-dv-ghost, #pm-home-centre .pmw-dv-hole { transition: opacity 140ms linear !important; }
+}
+
+/* Reduced Motion: the guide and the docks appear and change in place; nothing glides, grows or scales */
+html[data-motion="reduced"] .pmw-guide { transition: none; }
+html[data-motion="reduced"] :is(.pmw-guide-tile, .pmw-dock) { transition: none; }
+html[data-motion="reduced"] :is(.pmw-guide-tile, .pmw-dock)[data-on] { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .pmw-guide, .pmw-guide-tile, .pmw-dock { transition: none; }
+  .pmw-guide-tile[data-on], .pmw-dock[data-on] { transform: none; }
+}
+/* ---- panels/css/56-light.css ---- */
+/* The grab light (25-light.js) on every resizer: the dividers between panels, the chat column's edge (#chatResizer),
+   the rail's edge (#leftPanelResizer) and the browser's DevTools split. Four parts, all following the pointer along
+   the bar (--pm-glow-off):
+   - the core (::before): a short bright mark where the bar will be taken;
+   - the halo (::after): a streak along the bar that fades with distance from the core, over a soft bloom;
+   - the line (.pmw-divider-line, .pmw-gl-line): the whole bar, lit while it is dragged (Glass: the two plate rims);
+   - the ripple (.pmw-gl-ripple): on release, two sparks run outward from the grab point as the light settles.
+   States: hover (after 60 ms, so a pointer crossing a bar does not flash it), focus (the light at the middle), drag
+   (brighter, the streak longer, the line on), settle (620 ms). Each look draws them in its own grammar; the rail's
+   Retro and NieR marks (Concepts/leftrail-redesign) are the same grammar, so its rules and these agree. The light is
+   pointer-events: none and clipped to the bar's length. Reduced Motion: fades only, nothing scales, drifts, breathes
+   or runs. */
+
+html[data-pmw-home="on"] {
+  --gl-c: var(--accent-primary, #64b5f6);
+  --gl-hot: #FFFFFF;
+  --gl-bloom: 38%;
+  --gl-streak: 95%;
+  --gl-line: 58%;
+  --gl-core-w: 3px;
+  --gl-core-l: 64px;
+  --gl-halo-w: 48px;
+  --gl-halo-l: 340px;
+  --gl-in: 170ms;
+  --gl-out: 260ms;
+  --gl-delay: 60ms;
+  --gl-ease: cubic-bezier(.2, .8, .2, 1);
+  --gl-core-shadow: 0 0 6px 1px color-mix(in srgb, var(--gl-c) 85%, transparent), 0 0 18px 3px color-mix(in srgb, var(--gl-c) 42%, transparent);
+}
+html[data-pmw-home="on"][data-theme$="-light"] {
+  --gl-hot: color-mix(in srgb, var(--gl-c) 55%, #FFFFFF);
+  --gl-bloom: 22%;
+  --gl-streak: 72%;
+  --gl-core-shadow: 0 0 4px 1px color-mix(in srgb, var(--gl-c) 70%, transparent), 0 0 12px 2px color-mix(in srgb, var(--gl-c) 30%, transparent);
+}
+
+/* ---- the bar ---- */
+html[data-pmw-home="on"] .pmw-gl { clip-path: inset(0 -60px); }
+html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"] { clip-path: inset(-60px 0); }
+html[data-pmw-home="on"] .pmw-br-split.pmw-gl { position: relative; z-index: 2; }
+/* the shell's chat edge drew a flat accent fill on hover: the light replaces it */
+html[data-pmw-home="on"] body.pm7-chat-global-owner #chatResizer.pm7-global-chat-resizer.pmw-gl:not(.hidden):is(:hover, .resizing) { background: transparent !important; }
+
+/* ---- core and halo ---- */
+html[data-pmw-home="on"] .pmw-gl::before, html[data-pmw-home="on"] .pmw-gl::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  pointer-events: none;
+  translate: 0 var(--pm-glow-off, 0px);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.55);
+  transition: opacity var(--gl-out) linear, transform var(--gl-out) var(--gl-ease);
+  animation: none;
+  filter: none;
+}
+html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"]::before, html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"]::after { translate: var(--pm-glow-off, 0px) 0; }
+html[data-pmw-home="on"] .pmw-gl::before {
+  width: var(--gl-core-w);
+  height: var(--gl-core-l);
+  border-radius: 3px;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--gl-c) 0%, transparent), var(--gl-hot) 30%, var(--gl-hot) 70%, color-mix(in srgb, var(--gl-c) 0%, transparent));
+  box-shadow: var(--gl-core-shadow);
+}
+html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"]::before {
+  width: var(--gl-core-l);
+  height: var(--gl-core-w);
+  background: linear-gradient(to right, color-mix(in srgb, var(--gl-c) 0%, transparent), var(--gl-hot) 30%, var(--gl-hot) 70%, color-mix(in srgb, var(--gl-c) 0%, transparent));
+}
+html[data-pmw-home="on"] .pmw-gl::after {
+  width: var(--gl-halo-w);
+  height: var(--gl-halo-l);
+  border-radius: 0;
+  box-shadow: none;
+  background:
+    radial-gradient(ellipse 1.5px 50% at 50% 50%, color-mix(in srgb, var(--gl-c) var(--gl-streak), transparent), color-mix(in srgb, var(--gl-c) 34%, transparent) 50%, transparent 100%),
+    radial-gradient(ellipse 50% 17% at 50% 50%, color-mix(in srgb, var(--gl-c) var(--gl-bloom), transparent), color-mix(in srgb, var(--gl-c) 10%, transparent) 55%, transparent 100%);
+}
+html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"]::after {
+  width: var(--gl-halo-l);
+  height: var(--gl-halo-w);
+  background:
+    radial-gradient(ellipse 50% 1.5px at 50% 50%, color-mix(in srgb, var(--gl-c) var(--gl-streak), transparent), color-mix(in srgb, var(--gl-c) 34%, transparent) 50%, transparent 100%),
+    radial-gradient(ellipse 17% 50% at 50% 50%, color-mix(in srgb, var(--gl-c) var(--gl-bloom), transparent), color-mix(in srgb, var(--gl-c) 10%, transparent) 55%, transparent 100%);
+}
+/* hover (after a moment) and keyboard focus */
+html[data-pmw-home="on"] .pmw-gl:is(:hover, :focus-visible)::before, html[data-pmw-home="on"] .pmw-gl:is(:hover, :focus-visible)::after {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  transition: opacity var(--gl-in) linear var(--gl-delay), transform 320ms var(--gl-ease) var(--gl-delay);
+}
+/* drag: brighter, the streak longer */
+html[data-pmw-home="on"] .pmw-gl:is(.pmw-active, .resizing, .is-active)::before {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.15, 1.2);
+  transition: opacity 90ms linear, transform 200ms var(--gl-ease);
+}
+html[data-pmw-home="on"] .pmw-gl:is(.pmw-active, .resizing, .is-active)::after {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.15, 1.45);
+  transition: opacity 90ms linear, transform 240ms var(--gl-ease);
+}
+html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"]:is(.pmw-active, .resizing, .is-active)::before { transform: translate(-50%, -50%) scale(1.2, 1.15); }
+html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"]:is(.pmw-active, .resizing, .is-active)::after { transform: translate(-50%, -50%) scale(1.45, 1.15); }
+/* settle: the core exhales from its drag size */
+html[data-pmw-home="on"] .pmw-gl.pmw-settle::before { animation: pmw-gl-exhale 420ms var(--gl-ease) both; }
+@keyframes pmw-gl-exhale { from { transform: translate(-50%, -50%) scale(1.3, 1.35); } }
+
+/* ---- the line: the whole bar, lit while it is dragged ---- */
+html[data-pmw-home="on"] .pmw-gl-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  translate: -50% 0;
+  pointer-events: none;
+}
+html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"] > .pmw-gl-line { left: 0; right: 0; top: 50%; bottom: auto; width: auto; height: 1px; translate: 0 -50%; }
+html[data-pmw-home="on"] .pmw-gl > :is(.pmw-gl-line, .pmw-divider-line)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 280ms linear;
+  background:
+    radial-gradient(ellipse 100% 22% at 50% calc(50% + var(--pm-glow-off, 0px)), var(--gl-hot), transparent 100%),
+    linear-gradient(to bottom, transparent, color-mix(in srgb, var(--gl-c) var(--gl-line), transparent) 10%, color-mix(in srgb, var(--gl-c) var(--gl-line), transparent) 90%, transparent);
+}
+html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"] > :is(.pmw-gl-line, .pmw-divider-line)::after {
+  background:
+    radial-gradient(ellipse 22% 100% at calc(50% + var(--pm-glow-off, 0px)) 50%, var(--gl-hot), transparent 100%),
+    linear-gradient(to right, transparent, color-mix(in srgb, var(--gl-c) var(--gl-line), transparent) 10%, color-mix(in srgb, var(--gl-c) var(--gl-line), transparent) 90%, transparent);
+}
+html[data-pmw-home="on"] .pmw-gl:is(.pmw-active, .resizing, .is-active) > :is(.pmw-gl-line, .pmw-divider-line)::after { opacity: 1; transition: opacity 120ms linear; }
+
+/* ---- the ripple: on release, two sparks run outward along the bar from where it was held ---- */
+html[data-pmw-home="on"] .pmw-gl-ripple {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 720px;
+  pointer-events: none;
+  border-radius: 2px;
+  translate: -50% calc(-50% + var(--pm-glow-off, 0px));
+  transform: scaleY(.06);
+  opacity: 0;
+  background: linear-gradient(to bottom, transparent, var(--gl-hot) 5%, color-mix(in srgb, var(--gl-c) 60%, transparent) 12%, transparent 26%, transparent 74%, color-mix(in srgb, var(--gl-c) 60%, transparent) 88%, var(--gl-hot) 95%, transparent);
+}
+html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"] > .pmw-gl-ripple {
+  width: 720px;
+  height: 2px;
+  translate: calc(-50% + var(--pm-glow-off, 0px)) -50%;
+  transform: scaleX(.06);
+  background: linear-gradient(to right, transparent, var(--gl-hot) 5%, color-mix(in srgb, var(--gl-c) 60%, transparent) 12%, transparent 26%, transparent 74%, color-mix(in srgb, var(--gl-c) 60%, transparent) 88%, var(--gl-hot) 95%, transparent);
+}
+html[data-pmw-home="on"] .pmw-gl.pmw-settle > .pmw-gl-ripple { animation: pmw-gl-ripple 620ms cubic-bezier(.15, .7, .25, 1) both; }
+html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"].pmw-settle > .pmw-gl-ripple { animation-name: pmw-gl-ripple-h; }
+@keyframes pmw-gl-ripple { 0% { opacity: 1; transform: scaleY(.06); } 70% { opacity: .7; } 100% { opacity: 0; transform: scaleY(1); } }
+@keyframes pmw-gl-ripple-h { 0% { opacity: 1; transform: scaleX(.06); } 70% { opacity: .7; } 100% { opacity: 0; transform: scaleX(1); } }
+
+/* ---- Basic: precise; the core is a clean rod, nothing breathes ---- */
+html[data-pmw-home="on"][data-theme^="basic"] { --gl-core-l: 54px; --gl-bloom: 28%; }
+
+/* ---- Friendly: a soft living blob in the look's green that breathes while held in view; the release bounces ---- */
+html[data-pmw-home="on"][data-theme^="friendly"] {
+  --gl-c: var(--accent-lime, #6fdabc);
+  --gl-core-w: 7px;
+  --gl-core-l: 62px;
+  --gl-halo-w: 56px;
+  --gl-bloom: 40%;
+  --gl-hot: color-mix(in srgb, var(--accent-lime, #6fdabc) 45%, #FFFFFF);
+}
+html[data-pmw-home="on"][data-theme="friendly-light"] { --gl-c: color-mix(in srgb, var(--accent-lime, #3aa57f) 80%, #000); --gl-hot: color-mix(in srgb, var(--accent-lime, #3aa57f) 70%, #FFFFFF); }
+html[data-pmw-home="on"][data-theme^="friendly"] .pmw-gl::before {
+  border-radius: 54% 46% 58% 42% / 38% 42% 58% 62%;
+  background: radial-gradient(closest-side, var(--gl-hot), color-mix(in srgb, var(--gl-c) 80%, #FFFFFF) 50%, color-mix(in srgb, var(--gl-c) 0%, transparent) 100%);
+  box-shadow: 0 0 14px 3px color-mix(in srgb, var(--gl-c) 45%, transparent);
+}
+html[data-pmw-home="on"][data-theme^="friendly"] .pmw-gl:is(:hover, :focus-visible)::before { animation: pmw-gl-drift 7s ease-in-out infinite; }
+html[data-pmw-home="on"][data-theme^="friendly"] .pmw-gl:is(:hover, :focus-visible)::after { animation: pmw-gl-breath 2.6s ease-in-out 400ms infinite; }
+html[data-pmw-home="on"][data-theme^="friendly"] .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::before { transition: opacity var(--gl-in) linear var(--gl-delay), transform 460ms cubic-bezier(.34, 1.56, .64, 1) var(--gl-delay); }
+html[data-pmw-home="on"][data-theme^="friendly"] .pmw-gl.pmw-settle::before { animation: pmw-gl-bounce 560ms cubic-bezier(.34, 1.56, .64, 1) both; }
+@keyframes pmw-gl-drift {
+  0%, 100% { border-radius: 54% 46% 58% 42% / 38% 42% 58% 62%; }
+  33% { border-radius: 44% 56% 42% 58% / 56% 34% 66% 44%; }
+  66% { border-radius: 60% 40% 50% 50% / 44% 62% 38% 56%; }
+}
+@keyframes pmw-gl-breath { 0%, 100% { opacity: 1; } 50% { opacity: .72; } }
+@keyframes pmw-gl-bounce { 0% { transform: translate(-50%, -50%) scale(1.45, 1.3); } 55% { transform: translate(-50%, -50%) scale(.9, .95); } 100% { transform: translate(-50%, -50%) scale(1); } }
+
+/* ---- Glass: light caught in the glass. A white-hot core, the bloom tinted through the slab, and the two plate rims
+   facing the gap lit near the pointer (the whole rims while dragged); the release runs along the rims ---- */
+html[data-pmw-home="on"][data-theme^="glass"] {
+  --gl-hot: #FFFFFF;
+  --gl-core-w: 2px;
+  --gl-core-l: 72px;
+  --gl-halo-w: 52px;
+  --gl-bloom: 40%;
+  --gl-streak: 70%;
+  --gl-rim: rgba(255, 255, 255, .78);
+  --gl-core-shadow: 0 0 5px 1px rgba(255, 255, 255, .9), 0 0 14px 3px color-mix(in srgb, var(--gl-c) 75%, transparent), 0 0 30px 6px color-mix(in srgb, var(--gl-c) 32%, transparent);
+}
+html[data-pmw-home="on"][data-theme="glass-light"] {
+  --gl-hot: #FFFFFF;
+  --gl-bloom: 30%;
+  --gl-rim: rgba(255, 255, 255, .95);
+  --gl-core-shadow: 0 0 4px 1px color-mix(in srgb, var(--gl-c) 80%, transparent), 0 0 12px 3px color-mix(in srgb, var(--gl-c) 45%, transparent), 0 0 24px 5px color-mix(in srgb, var(--gl-c) 20%, transparent);
+}
+/* the rims: the line becomes the gap's two plate edges, lit by a pool of light at the pointer */
+html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl > .pmw-gl-line { width: 7px; }
+/* a divider's 8 px box spans its 6 px gap and one pixel of each plate: the rims are those two pixels */
+html[data-pmw-home="on"][data-theme^="glass"] .pmw-divider.pmw-gl[data-dir="row"] > .pmw-divider-line { left: 0; width: 8px; }
+html[data-pmw-home="on"][data-theme^="glass"] .pmw-divider.pmw-gl[data-dir="col"] > .pmw-divider-line { left: 6px; right: 6px; top: 0; height: 8px; }
+html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl[aria-orientation="horizontal"] > .pmw-gl-line { width: auto; height: 7px; }
+html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl > :is(.pmw-gl-line, .pmw-divider-line)::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--gl-out) linear;
+  background: linear-gradient(to right, var(--gl-rim) 0 1px, transparent 1px calc(100% - 1px), var(--gl-rim) calc(100% - 1px));
+  -webkit-mask: radial-gradient(ellipse 100% 90px at 50% calc(50% + var(--pm-glow-off, 0px)), #000, transparent);
+  mask: radial-gradient(ellipse 100% 90px at 50% calc(50% + var(--pm-glow-off, 0px)), #000, transparent);
+}
+html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl[aria-orientation="horizontal"] > :is(.pmw-gl-line, .pmw-divider-line)::before {
+  background: linear-gradient(to bottom, var(--gl-rim) 0 1px, transparent 1px calc(100% - 1px), var(--gl-rim) calc(100% - 1px));
+  -webkit-mask: radial-gradient(ellipse 90px 100% at calc(50% + var(--pm-glow-off, 0px)) 50%, #000, transparent);
+  mask: radial-gradient(ellipse 90px 100% at calc(50% + var(--pm-glow-off, 0px)) 50%, #000, transparent);
+}
+html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active) > :is(.pmw-gl-line, .pmw-divider-line)::before { opacity: 1; transition: opacity var(--gl-in) linear var(--gl-delay); }
+html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl:is(.pmw-active, .resizing, .is-active) > :is(.pmw-gl-line, .pmw-divider-line)::before {
+  -webkit-mask: linear-gradient(to bottom, transparent, rgba(0, 0, 0, .5) 12%, rgba(0, 0, 0, .5) 88%, transparent), radial-gradient(ellipse 100% 140px at 50% calc(50% + var(--pm-glow-off, 0px)), #000, transparent);
+  mask: linear-gradient(to bottom, transparent, rgba(0, 0, 0, .5) 12%, rgba(0, 0, 0, .5) 88%, transparent), radial-gradient(ellipse 100% 140px at 50% calc(50% + var(--pm-glow-off, 0px)), #000, transparent);
+}
+html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl[aria-orientation="horizontal"]:is(.pmw-active, .resizing, .is-active) > :is(.pmw-gl-line, .pmw-divider-line)::before {
+  -webkit-mask: linear-gradient(to right, transparent, rgba(0, 0, 0, .5) 12%, rgba(0, 0, 0, .5) 88%, transparent), radial-gradient(ellipse 140px 100% at calc(50% + var(--pm-glow-off, 0px)) 50%, #000, transparent);
+  mask: linear-gradient(to right, transparent, rgba(0, 0, 0, .5) 12%, rgba(0, 0, 0, .5) 88%, transparent), radial-gradient(ellipse 140px 100% at calc(50% + var(--pm-glow-off, 0px)) 50%, #000, transparent);
+}
+html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl:is(.pmw-active, .resizing, .is-active) > :is(.pmw-gl-line, .pmw-divider-line)::after { opacity: .55; }
+html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl-ripple { width: 7px; background: linear-gradient(to bottom, transparent, var(--gl-rim) 5%, transparent 18%, transparent 82%, var(--gl-rim) 95%, transparent); -webkit-mask: linear-gradient(to right, #000 0 1px, transparent 1px calc(100% - 1px), #000 calc(100% - 1px)); mask: linear-gradient(to right, #000 0 1px, transparent 1px calc(100% - 1px), #000 calc(100% - 1px)); }
+html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl[aria-orientation="horizontal"] > .pmw-gl-ripple { width: 720px; height: 7px; background: linear-gradient(to right, transparent, var(--gl-rim) 5%, transparent 18%, transparent 82%, var(--gl-rim) 95%, transparent); -webkit-mask: linear-gradient(to bottom, #000 0 1px, transparent 1px calc(100% - 1px), #000 calc(100% - 1px)); mask: linear-gradient(to bottom, #000 0 1px, transparent 1px calc(100% - 1px), #000 calc(100% - 1px)); }
+
+/* ---- Retro: a hard phosphor block over a dashed streak (the rail's grammar), stepped; the release blinks outward ---- */
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) { --gl-c: var(--accent-lime, #b8d066); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl::before {
+  width: 4px;
+  height: 56px;
+  border-radius: 0;
+  background: var(--gl-c);
+  box-shadow: 2px 2px 0 color-mix(in srgb, var(--gl-c) 40%, transparent);
+}
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl[aria-orientation="horizontal"]::before { width: 56px; height: 4px; }
+/* the rail's own Retro mark (leftrail-redesign d.css) takes the page accent, which is blue in Retro Light: here it takes
+   the phosphor the panels' dividers and the chat edge use, so the three bars light alike */
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #leftPanelResizer.pmw-gl::before { background: var(--gl-c) !important; box-shadow: 2px 2px 0 color-mix(in srgb, var(--gl-c) 40%, transparent) !important; }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #leftPanelResizer.pmw-gl::after { background: repeating-linear-gradient(180deg, color-mix(in srgb, var(--gl-c) 70%, transparent) 0 4px, transparent 4px 8px) !important; }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl::after {
+  width: 2px;
+  height: 240px;
+  background: repeating-linear-gradient(180deg, color-mix(in srgb, var(--gl-c) 70%, transparent) 0 4px, transparent 4px 8px);
+}
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl[aria-orientation="horizontal"]::after { width: 240px; height: 2px; background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--gl-c) 70%, transparent) 0 4px, transparent 4px 8px); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl::before, html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl::after,
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::before,
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::after {
+  transition: opacity 120ms steps(2, end), transform 120ms steps(2, end);
+}
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl:is(.pmw-active, .resizing, .is-active)::before { transform: translate(-50%, -50%) scale(1.5, 1.15); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl > :is(.pmw-gl-line, .pmw-divider-line)::after { background: repeating-linear-gradient(180deg, var(--gl-c) 0 4px, transparent 4px 8px); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl[aria-orientation="horizontal"] > :is(.pmw-gl-line, .pmw-divider-line)::after { background: repeating-linear-gradient(90deg, var(--gl-c) 0 4px, transparent 4px 8px); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl.pmw-settle::before { animation: pmw-gl-blink 360ms steps(1, end) both; }
+@keyframes pmw-gl-blink { 0%, 50% { opacity: 1; } 25%, 75% { opacity: .2; } 100% { opacity: 1; } }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-ripple { width: 4px; border-radius: 0; background: linear-gradient(to bottom, transparent, var(--gl-c) 3% 7%, transparent 7% 93%, var(--gl-c) 93% 97%, transparent 97%); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl[aria-orientation="horizontal"] > .pmw-gl-ripple { width: 720px; height: 4px; background: linear-gradient(to right, transparent, var(--gl-c) 3% 7%, transparent 7% 93%, var(--gl-c) 93% 97%, transparent 97%); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl.pmw-settle > .pmw-gl-ripple { animation-timing-function: steps(6, end); }
+
+/* ---- NieR: a plain ink mark on a hairline, never a glow; stepped; the release is two ink ticks stepping outward ---- */
+html[data-pmw-home="on"][data-o55-nier="on"] { --gl-c: var(--o55-nier-ink, #211f1b); }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl::before { width: 3px; height: 48px; border-radius: 0; background: var(--gl-c); box-shadow: none; }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl[aria-orientation="horizontal"]::before { width: 48px; height: 3px; }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl::after {
+  width: 1px;
+  height: 240px;
+  background: linear-gradient(180deg, transparent, rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .5) 30%, rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .5) 70%, transparent);
+}
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl[aria-orientation="horizontal"]::after { width: 240px; height: 1px; background: linear-gradient(90deg, transparent, rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .5) 30%, rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .5) 70%, transparent); }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl::before, html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl::after,
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::before,
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::after {
+  transition: opacity 160ms steps(2, end), transform 160ms steps(2, end);
+}
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl:is(.pmw-active, .resizing, .is-active)::before { transform: translate(-50%, -50%) scale(1.34, 1); }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl > :is(.pmw-gl-line, .pmw-divider-line)::after { background: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .55); }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl.pmw-settle::before { animation: none; }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-ripple { width: 3px; border-radius: 0; background: linear-gradient(to bottom, transparent 2%, var(--gl-c) 2% 4%, transparent 4% 96%, var(--gl-c) 96% 98%, transparent 98%); }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl[aria-orientation="horizontal"] > .pmw-gl-ripple { width: 720px; height: 3px; background: linear-gradient(to right, transparent 2%, var(--gl-c) 2% 4%, transparent 4% 96%, var(--gl-c) 96% 98%, transparent 98%); }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl.pmw-settle > .pmw-gl-ripple { animation-timing-function: steps(5, end); }
+
+/* ---- Reduced Motion: the light fades in and out where the pointer is; nothing scales, drifts, breathes or runs; the
+   release is the whole line fading once ---- */
+html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl::before, html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl::after,
+html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::before,
+html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::after {
+  transform: translate(-50%, -50%) !important;
+  animation: none !important;
+  transition: opacity 140ms linear !important;
+}
+html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl-ripple { display: none; }
+html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl.pmw-settle > :is(.pmw-gl-line, .pmw-divider-line)::after { animation: pmw-gl-fade 420ms linear both; }
+@keyframes pmw-gl-fade { from { opacity: .8; } to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  html[data-pmw-home="on"] .pmw-gl::before, html[data-pmw-home="on"] .pmw-gl::after,
+  html[data-pmw-home="on"] .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::before,
+  html[data-pmw-home="on"] .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::after {
+    transform: translate(-50%, -50%) !important;
+    animation: none !important;
+    transition: opacity 140ms linear !important;
+  }
+  html[data-pmw-home="on"] .pmw-gl-ripple { display: none; }
+  html[data-pmw-home="on"] .pmw-gl.pmw-settle > :is(.pmw-gl-line, .pmw-divider-line)::after { animation: pmw-gl-fade 420ms linear both; }
 }
 /* ---- panels/css/60-kind-editor.css ---- */
 /* The Editor tab kind (src/panels/kinds/10-editor.js; D21). Everything sizes against the tab body (@container
@@ -165006,6 +165795,36 @@ PMW.treeRects = function () {
   var narrow = !!(PMW.narrow && PMW.narrow.singleColumn());
   return geom.layout(l, cr, { narrow: narrow, narrowFocus: l.view.focus });
 };
+/* The box the tree tiles now (the centre's content box; the last painted rects' union while Home is hidden). */
+PMW.layoutBox = function () {
+  var cr = PMW.render && PMW.render.centreRect ? PMW.render.centreRect() : null;
+  if (cr && cr.w > 0 && cr.h > 0) return cr;
+  var last = PMW.render && PMW.render.rects ? PMW.render.rects() : null;
+  return last ? rectsUnion(last) : null;
+};
+/* The room rule (2026-10-13, Jared: the drag "really didn't want me dragging and dropping above, below, or to the side
+   of other panels"): does `after` give every panel it changed at least its minimum? Both layouts are laid out in tree
+   mode over the same box, so the neighbours along a split give up room exactly as geom.distribute does when it paints,
+   and a panel too narrow to halve still takes a new panel beside it when its row or column has room. A panel already
+   below its minimum fails only if `after` makes it smaller still. Wider than splitFits, which asks only whether both
+   halves of the one panel fit; splitFits stays the rule for the automatic choosers (where an open lands). */
+geom.resultFits = function (before, after, box) {
+  if (!after || !after.root || !box || !(box.w > 0 && box.h > 0)) return false;
+  var ra = geom.layout(after, box, {}), rb = before && before.root ? geom.layout(before, box, {}) : { panels: {} };
+  var ok = true;
+  walk(after.root, function (n, parent) {
+    if (!ok || n.t !== 'panel') return;
+    var r = ra.panels[n.id];
+    if (!r) { ok = false; return; }
+    var m = PMW.panelMin(after, n), was = rb.panels[n.id];
+    var along = n.collapsed && parent ? (parent.dir === 'row' ? 'w' : 'h') : null;
+    ['w', 'h'].forEach(function (ax) {
+      if (ax === along || r[ax] >= m[ax] - 0.5) return;
+      if (!(was && r[ax] >= was[ax] - 0.5)) ok = false;
+    });
+  });
+  return ok;
+};
 geom.rootFits = function (layout, edge, centreRect, incomingMin) {
   var inc = incomingMin || PMW.PANEL_MIN;
   var axis = edge === 'left' || edge === 'right' ? 'w' : 'h';
@@ -165022,7 +165841,7 @@ var state = PMW.state = PMW.state || { layout: null, centre: null, moving: false
 var instances = PMW.instances = {};
 var panelEls = {};     // panelId -> element
 var dividerEls = {};   // splitId:index -> element
-var lastRects = null;
+var lastRects = null, paintedRects = null;
 var paintQueued = false, paintAnimate = false;
 var settleTimer = 0;
 var render = PMW.render = {};
@@ -165046,6 +165865,8 @@ function centreRect() {
 }
 render.centreRect = function () { return state.centre ? centreRect() : { x: 0, y: 0, w: 0, h: 0 }; };
 render.rects = function () { return lastRects; };
+/* what is painted: the drop preview's rects while a drag previews its result (31-dropview.js), else render.rects() */
+render.paintedRects = function () { return paintedRects || lastRects; };
 
 /* A divider drag's preview (24-dividers.js) is painted over the live layout, never written into it: commits, kind
    updates and saves made during the drag all land on the real layout, and the drag's own sizes reach the model once,
@@ -165088,17 +165909,27 @@ render.paint = function (opts) {
     narrowFocus: l.view.focus
   });
   lastRects = rects;
-  var animate = !!opts.animate && !state.dragging && dur('med') > 0;
+  // A drag's live preview (31-dropview.js) paints the layout its drop would leave: the panels go where that layout
+  // puts them and their strips fit those widths, while the model, render.rects() and every zone stay on the layout as
+  // it is. Its glides run while the drag is on (a plain drag paints without them).
+  var dv = state.dropPreview, shown = rects;
+  if (dv && dv.layout && dv.layout.root) {
+    shown = geom.layout(dv.layout, centreRect(), { maximized: narrow ? null : dv.layout.view.maximized, narrow: narrow, narrowFocus: dv.layout.view.focus });
+  }
+  paintedRects = dv ? shown : null;
+  var animate = !!opts.animate && (!state.dragging || !!opts.preview) && dur('med') > 0;
   c.setAttribute('data-pmw-mode', rects.mode);
-  c.classList.toggle('pmw-animating', animate);
+  // a paint without motion during a preview's glide leaves the glide running (dropping the class cancels it mid-way)
+  if (animate || !(state.moving && PMW.dropView && PMW.dropView.gliding())) c.classList.toggle('pmw-animating', animate);
+  setAttr(c, 'data-pmw-dv', dv ? 'on' : null);
 
   // panels
   var alive = {};
   model.panels(l).forEach(function (p) {
     alive[p.id] = true;
     var el = panelEls[p.id] || createPanelEl(p);
-    var r = rects.panels[p.id];
-    var hidden = !!rects.hidden[p.id] || !r;
+    var r = shown.panels[p.id];
+    var hidden = !!shown.hidden[p.id] || !r;
     setAttr(el, 'hidden', hidden);
     setAttr(el, 'data-focused', l.view.focus === p.id);
     setAttr(el, 'data-collapsed', p.collapsed ? (collapsedAxis(l, p) || 'col') : null);
@@ -165108,7 +165939,8 @@ render.paint = function (opts) {
     setAttr(el, 'data-maximized', l.view.maximized === p.id && rects.mode === 'maximized');
     el.setAttribute('aria-label', panelLabel(l, p));
     if (r) placeEl(el, r, animate);
-    PMW.strip.render(el, p, l, { narrow: narrow, rects: rects });
+    setAttr(el, 'data-dv-leaving', dv && dv.leaving && dv.leaving[p.id] ? true : null);
+    PMW.strip.render(el, p, l, { narrow: narrow, rects: shown });
     syncBodies(el, p, l, hidden);
     PMW.renderEmpty(el, p);
   });
@@ -165132,6 +165964,7 @@ render.paint = function (opts) {
   });
   for (var k in dividerEls) if (!seen[k]) { dividerEls[k].remove(); delete dividerEls[k]; }
 
+  if (dv && PMW.dropView) PMW.dropView.place(shown, animate);
   if (animate) {
     state.moving = true;
     clearTimeout(settleTimer);
@@ -165157,7 +165990,7 @@ function refitStrips() {
     if (!el || el.hidden) return;
     var host = el.querySelector('.pmw-strip-host'), s = host && host._pmw;
     if (!s || s.dragging || Math.abs(host.clientWidth - (s.fitW || 0)) <= 1) return;
-    PMW.strip.render(el, p, l, { narrow: narrow, rects: lastRects });
+    PMW.strip.render(el, p, l, { narrow: narrow, rects: render.paintedRects() });
   });
 }
 
@@ -165171,12 +166004,17 @@ function panelLabel(l, p) {
   return what + ' panel, ' + model.describe(l, p.id);
 }
 
+/* an element already headed for this rect is left alone: a paint without motion would otherwise cut a running glide
+   short (a kind's update during a drag preview, a strip refit) */
 function placeEl(el, r, animate) {
   var s = el.style;
+  var x = r.x + 'px', y = r.y + 'px', w = r.w + 'px', hh = r.h + 'px';
+  if (s.left === x && s.top === y && s.width === w && s.height === hh) return;
   if (!animate) s.transition = 'none';
-  s.left = r.x + 'px'; s.top = r.y + 'px'; s.width = r.w + 'px'; s.height = r.h + 'px';
+  s.left = x; s.top = y; s.width = w; s.height = hh;
   if (!animate) { void el.offsetWidth; s.transition = ''; }
 }
+render.placeEl = placeEl;
 
 function createPanelEl(p) {
   var el = h('section', { class: 'pmw-panel', 'data-pmw-panel': p.id, role: 'region' }, [
@@ -165631,6 +166469,7 @@ function commitPair(info, res, kind) {
 }
 
 dividers.bind = function (el) {
+  PMW.light.bind(el);
   el.addEventListener('pointerdown', function (ev) {
     if (ev.button !== 0) return;
     var d = el._pmwDivider;
@@ -165699,7 +166538,7 @@ dividers.bind = function (el) {
     if (!info) return;
     var half = (info.a + info.b) / 2;
     var res = solve(Object.assign({}, info, { canCollapseA: false, canCollapseB: false }), half);
-    if (res && commitPair(info, res, 'key').ok) announce('Panels evened');
+    if (res && commitPair(info, res, 'key').ok) { announce('Panels evened'); nextFrame(function () { var again = qs('.pmw-divider[data-key="' + d.split + ':' + d.index + '"]'); if (again) PMW.light.settle(again); }); }
   });
   el.addEventListener('keydown', function (e) {
     var d = el._pmwDivider;
@@ -165726,8 +166565,75 @@ dividers.bind = function (el) {
     var res = solve(Object.assign({}, info, { canCollapseA: false, canCollapseB: false, a: a, b: info.collapsedB ? STRIP_H : info.b }), want);
     if (!res) return;
     commitPair(info, res, 'key');
-    nextFrame(function () { var again = qs('.pmw-divider[data-key="' + d.split + ':' + d.index + '"]'); if (again) again.focus(); });
+    nextFrame(function () { var again = qs('.pmw-divider[data-key="' + d.split + ':' + d.index + '"]'); if (again) { again.focus(); PMW.light.settle(again); } });
   });
+};
+/* ---- panels/js/25-light.js ---- */
+/* The grab light on every resizer (Jared, 2026-10-13: "The glowing resize line is missing from most places ... That
+   effect should also be polished more"). One light for the dividers between panels, the chat column's edge
+   (#chatResizer), the rail's edge (#leftPanelResizer) and the browser's DevTools split: it blooms where the pointer
+   is along the bar, brightens and runs the bar's length while the bar is dragged, and on release sends a ripple
+   outward from the grab point as it settles back. The look is drawn per look in css/56-light.css.
+   This module only feeds the CSS: --pm-glow-off (the pointer's offset along the bar from its middle, the same
+   property the page's own resize controller writes for the shell's resizers), a ripple element, and the pmw-settle
+   class for 620 ms after a drag or a keyboard step. A bar's axis is its aria-orientation (vertical unless it says
+   horizontal). */
+
+var light = PMW.light = {};
+var SETTLE_LIGHT_MS = 620;
+
+function lightAxisV(el) { return el.getAttribute('aria-orientation') !== 'horizontal'; }
+function lightTrack(el, e) {
+  var r = el._pmwLightRect || el.getBoundingClientRect();
+  var v = lightAxisV(el);
+  var len = (v ? r.height : r.width) || 1;
+  var raw = v ? (e.clientY - r.top) / len : (e.clientX - r.left) / len;
+  el.style.setProperty('--pm-glow-off', ((clamp(raw, 0, 1) - 0.5) * len).toFixed(1) + 'px');
+}
+/* bind(el): once per bar; idempotent */
+light.bind = function (el) {
+  if (!el || el._pmwLight) return;
+  el._pmwLight = true;
+  el.classList.add('pmw-gl');
+  if (!el.querySelector(':scope > .pmw-gl-ripple')) el.appendChild(h('i', { class: 'pmw-gl-ripple', 'aria-hidden': 'true' }));
+  if (!el.querySelector(':scope > .pmw-gl-line, :scope > .pmw-divider-line')) el.appendChild(h('i', { class: 'pmw-gl-line', 'aria-hidden': 'true' }));
+  var pressed = false, moved = false, sx = 0, sy = 0;
+  el.addEventListener('pointerenter', function (e) { lightTrack(el, e); });
+  el.addEventListener('pointermove', function (e) {
+    lightTrack(el, e);
+    if (pressed && !moved && Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 2) moved = true;
+  });
+  el.addEventListener('pointerdown', function (e) {
+    if (e.button !== 0) return;
+    lightTrack(el, e);
+    // the rect is held for the drag: a bar only moves across its own axis, so the offset along it stays true
+    el._pmwLightRect = el.getBoundingClientRect();
+    pressed = true; moved = false; sx = e.clientX; sy = e.clientY;
+    el.classList.remove('pmw-settle');
+  });
+  function release() {
+    if (!pressed) return;
+    pressed = false;
+    el._pmwLightRect = null;
+    if (moved) light.settle(el);
+  }
+  el.addEventListener('pointerup', release);
+  el.addEventListener('pointercancel', release);
+  el.addEventListener('lostpointercapture', release);
+  el.addEventListener('focus', function () { if (!pressed) el.style.setProperty('--pm-glow-off', '0px'); });
+};
+/* settle(el): the ripple and the light easing back (restarts if it is still running) */
+light.settle = function (el) {
+  if (!el) return;
+  clearTimeout(el._pmwSettleT);
+  el.classList.remove('pmw-settle');
+  void el.offsetWidth;
+  el.classList.add('pmw-settle');
+  el._pmwSettleT = setTimeout(function () { el.classList.remove('pmw-settle'); }, SETTLE_LIGHT_MS);
+};
+/* the shell's two resizers, once the page is there */
+light.bindShell = function () {
+  ['chatResizer', 'leftPanelResizer'].forEach(function (id) { light.bind(doc.getElementById(id)); });
 };
 /* ---- panels/js/26-actions.js ---- */
 /* Actions: every user-visible change goes through one of these, so the mouse, the menus and the keyboard all reach
@@ -165935,26 +166841,98 @@ PMW.renameTab = function (tabId, label) {
   label = (label || '').trim().slice(0, 80);
   return commit(CMD.rename, { tabId: tabId, label: label }, function (d) { d.tabs[tabId].userLabel = label || null; return {}; }, { animate: false }).ok;
 };
+/* The moves' mutations, shared by their commands and by PMW.hypo (the drag's live preview), so what a preview shows is
+   exactly what its drop commits. */
+function moveMutate(d, tabId, panelId, index) {
+  var ff = model.panelOf(d, tabId);
+  if (!ff) return false;
+  if (ff.id === panelId) {
+    var cur = ff.tabs.indexOf(tabId);
+    if (index == null) index = ff.tabs.length - 1;
+    if (cur === index) return false;
+    ff.tabs.splice(cur, 1);
+    ff.tabs.splice(index, 0, tabId);
+    ff.active = tabId;
+    if (d.tabs[tabId] && d.tabs[tabId].preview) d.tabs[tabId].preview = false;   // dragging a tab keeps it (D7)
+    return {};
+  }
+  if (!model.moveTab(d, tabId, panelId, index)) return false;
+  d.view.focus = panelId;
+  return {};
+}
+function splitMutate(d, tabId, panelId, edge, ratio) {
+  var np = model.newPanel(d, []);
+  var ok = panelId === '@root' ? model.insertAtRoot(d, edge, np, ratio || 0.34) : model.insertBeside(d, panelId, edge, np, ratio || 0.5);
+  if (!ok) return false;
+  if (!model.moveTab(d, tabId, np.id, 0)) return false;
+  d.view.focus = np.id;
+  return { panelId: np.id };
+}
+function mergePanelMutate(d, panelId, intoId) {
+  var from = model.panel(d, panelId), to = model.panel(d, intoId);
+  if (!from || !to) return false;
+  from.tabs.slice().forEach(function (t) { model.moveTab(d, t, intoId); });
+  d.view.focus = intoId;
+  return {};
+}
+PMW.mergePanelMutate = mergePanelMutate;
+
+/* What a move would leave, built the way commit() builds its draft (a copy, the move, the fold, normalize) and never
+   committed: the drag measures the room rule on these. null when the move is refused or changes nothing.
+   o.preview builds what the drag's live preview paints instead: the place the carried thing leaves is kept (normalize
+   keepEmpty keeps a panel its last tab left; a carried panel leaves a hole, HOLE_ID, where it was), so the panels
+   under the pointer never move away from the zones they are measured by; the drop then closes that place. */
+var HOLE_ID = PMW.HOLE_ID = '~hole';
+function hypoOf(mutate, o) {
+  o = o || {};
+  var before = L();
+  if (!before) return null;
+  var d = model.clone(before);
+  var r;
+  try { r = mutate(d); } catch (_) { return null; }
+  if (r === false || (r && r.ok === false)) return null;
+  if (PMW.foldLayout) PMW.foldLayout(d);
+  model.normalize(d, { keepEmpty: !!o.preview });
+  if (model.validate(d).length || model.same(before, d)) return null;
+  d.revision = (before.revision || 0) + 1;
+  d.hypoResult = r || {};
+  return d;
+}
+/* a carried panel's preview: a hole where it was, the panel itself where it would land */
+function holeMove(d, panelId, targetId, edge) {
+  var f = model.find(d, panelId);
+  if (!f || f.node.t !== 'panel' || panelId === targetId) return false;
+  var hole = { t: 'panel', id: HOLE_ID, tabs: [], active: null, locked: false, collapsed: !!f.node.collapsed };
+  if (f.parent) f.parent.kids[f.index] = hole; else d.root = hole;
+  f.node.collapsed = false;
+  return (targetId === '@root' ? model.insertAtRoot(d, edge, f.node) : model.insertBeside(d, targetId, edge, f.node, 0.5)) ? {} : false;
+}
+PMW.hypo = {
+  move: function (tabId, panelId, index, o) { return hypoOf(function (d) { return moveMutate(d, tabId, panelId, index); }, o); },
+  split: function (tabId, panelId, edge, ratio, o) {
+    var from = model.panelOf(L(), tabId);
+    if (!from || (from.id === panelId && from.tabs.length === 1)) return null;
+    return hypoOf(function (d) { return splitMutate(d, tabId, panelId, edge, ratio); }, o);
+  },
+  movePanel: function (panelId, targetId, edge, o) {
+    return hypoOf(function (d) { return o && o.preview ? holeMove(d, panelId, targetId, edge) : (model.movePanel(d, panelId, targetId, edge) ? {} : false); }, o);
+  },
+  mergePanel: function (panelId, intoId, o) { return hypoOf(function (d) { return mergePanelMutate(d, panelId, intoId); }, o); }
+};
+/* the room rule (geom.resultFits) for a hypothetical layout, against the layout as it is now; in the single-column
+   ladder (narrow) nothing splits, so nothing fits */
+PMW.roomFits = function (after) {
+  if (!after || (PMW.narrow && PMW.narrow.singleColumn())) return false;
+  return geom.resultFits(L(), after, PMW.layoutBox());
+};
+
 PMW.moveTab = function (tabId, panelId, index, opts) {
   opts = opts || {};
   var l = L();
   var from = model.panelOf(l, tabId);
   if (!from) return false;
   var res = commit(CMD.move, { tabId: tabId, panelId: panelId, index: index }, function (d) {
-    var ff = model.panelOf(d, tabId);
-    if (ff.id === panelId) {
-      var cur = ff.tabs.indexOf(tabId);
-      if (index == null) index = ff.tabs.length - 1;
-      if (cur === index) return false;
-      ff.tabs.splice(cur, 1);
-      ff.tabs.splice(index, 0, tabId);
-      ff.active = tabId;
-      if (d.tabs[tabId] && d.tabs[tabId].preview) d.tabs[tabId].preview = false;   // dragging a tab keeps it (D7)
-      return {};
-    }
-    if (!model.moveTab(d, tabId, panelId, index)) return false;
-    d.view.focus = panelId;
-    return {};
+    return moveMutate(d, tabId, panelId, index);
   }, { animate: opts.animate !== false });
   if (res.ok && !res.noChange && !opts.quiet) {
     var to = model.panel(L(), panelId);
@@ -165970,21 +166948,17 @@ PMW.moveTabToSplit = function (tabId, panelId, edge, opts) {
   var from = model.panelOf(l, tabId);
   if (!from) return false;
   if (from.id === panelId && from.tabs.length === 1) return false;   // splitting a panel by its only tab changes nothing
-  // every caller (menus, keyboard, strip, drag) gets the same fit rule, measured on the tree, not the maximized rects
-  var rects = panelId !== '@root' && !opts.force ? treeRects() : null;
-  if (rects && rects.panels[panelId] && !geom.splitFits(l, panelId, edge, rects, PMW.panelMin(l, { tabs: [tabId] }))) {
+  // every caller (menus, keyboard, strip, drag) gets the same fit rule, the room rule on the move's own result,
+  // measured on the tree, not the maximized rects
+  if (panelId !== '@root' && !opts.force && treeRects() && !PMW.roomFits(PMW.hypo.split(tabId, panelId, edge, opts.ratio))) {
     if (!opts.quiet) PMW.toast(edge === 'left' || edge === 'right' ? 'There is not room to split this panel side by side. Try Split down.' : 'There is not room to split this panel. Try Split right.');
     return null;
   }
   var newId = null;
   var res = commit(CMD.move, { tabId: tabId, split: { panelId: panelId, edge: edge } }, function (d) {
-    var np = model.newPanel(d, []);
-    newId = np.id;
-    var ok = panelId === '@root' ? model.insertAtRoot(d, edge, np, opts.ratio || 0.34) : model.insertBeside(d, panelId, edge, np, opts.ratio || 0.5);
-    if (!ok) return false;
-    if (!model.moveTab(d, tabId, np.id, 0)) return false;
-    d.view.focus = np.id;
-    return { panelId: np.id };
+    var r = splitMutate(d, tabId, panelId, edge, opts.ratio);
+    if (r) newId = r.panelId;
+    return r;
   });
   if (res.ok) announce(tabLabel(l.tabs[tabId]) + ' split ' + (edge === 'left' || edge === 'right' ? edge : edge === 'top' ? 'up' : 'down') + ' into a new panel');
   return res.ok ? newId : null;
@@ -166806,7 +167780,7 @@ function suppressClick() {
 }
 
 /* start(event, spec): spec = { el, threshold, onStart(g) -> false to abort, onFrame(g), probe(g) -> zone|null,
-   onZone(g, zone, prev), onDrop(g, zone) -> truthy when it committed, onCancel(g, reason), onEnd(g), cursor } */
+   onProbe(g, zone) (each frame), onZone(g, zone, prev) (after the dwell), onDrop(g, zone) -> truthy when it committed, onCancel(g, reason), onEnd(g), cursor } */
 gesture.start = function (ev, spec) {
   if (gesture.active || ev.button !== 0) return null;
   var g = {
@@ -166888,6 +167862,7 @@ gesture.start = function (ev, spec) {
     if (spec.onFrame) spec.onFrame(g);
     if (g.done || !spec.probe) return;      // onFrame may end the gesture (its tab closed under it)
     var z = spec.probe(g);
+    if (spec.onProbe) spec.onProbe(g, z);      // every frame, before the dwell: what a release here would do
     var same = (z && g.zone && z.key === g.zone.key) || (!z && !g.zone);
     if (same) { g.cand = null; return; }
     var now = performance.now();
@@ -166993,6 +167968,545 @@ preview.hide = function () {
     previewFading = false;
     el.hidden = true;
   };
+};
+/* ---- panels/js/31-dropview.js ---- */
+/* The live drop preview (Jared, 2026-10-13: "It should also show the panel layout changes as you are dragging so the
+   user sees the effect of what they are doing"). While a tab or a panel is carried, the zone under it is shown as its
+   result, not as a highlight:
+   - a split or a dock: the panels glide to where the drop would put them and a ghost panel, the carried tab on its
+     strip, grows out of the side the new panel takes;
+   - joining a panel: that panel lights inside and its strip opens a slot at its end (33-tabdrag.js setGap);
+   - a carried panel glides to its new place, leaving a hole where it was;
+   - a panel the carry would empty fades back, to show it closes.
+   render.paint lays out the preview draft (PMW.hypo with o.preview) and this module places the ghost and the hole in
+   the same paint, with the same glide. The draft keeps the place the carried thing leaves, so the zones (measured on
+   the committed layout) stay under the panels the user sees; the drop commits the same move, so nothing moves at the
+   drop except that place closing, and the ghost hands over to the real panel. Leaving a zone glides back; Escape
+   glides everything home.
+   Intent: the guide answers the pointer at once, but the layout only changes once the pointer has settled over a zone
+   (held 90 ms and slower than 0.2 px/ms over the last 110 ms, which a hand aiming at a place reaches and a hand
+   passing over one does not) or has held it 420 ms, so carrying a tab across the centre does not shuffle every panel
+   it passes. Reduced Motion: the result appears in place once the zone has held 160 ms and the pointer
+   has slowed; nothing glides or grows; the ghost and the veil fade. */
+
+var dropView = PMW.dropView = {};
+var dvs = { ghost: null, hole: null, veil: null, glideUntil: 0, sig: null, pending: null, trail: [] };
+var RM_HOLD = 160, INTENT_SPEED = 0.2, INTENT_MIN = 90, INTENT_HOLD = 420, TRAIL_MS = 110;
+
+dropView.gliding = function () { return performance.now() < dvs.glideUntil; };
+dropView.active = function () { return !!state.dropPreview; };
+
+/* the preview for a zone: { key, layout, ghost, hole, join, leaving } or null (nothing to show) */
+function previewFor(g, z) {
+  if (!z || z.key === 'strip-self' || !state.layout) return null;
+  var o = { preview: true }, layout = null, spec = { key: z.key };
+  if (g.panelId) {
+    if (z.type === 'merge') { layout = PMW.hypo.mergePanel(g.panelId, z.panelId, o); spec.join = z.panelId; }
+    else if (z.type === 'split' || z.type === 'root') { layout = PMW.hypo.movePanel(g.panelId, z.type === 'root' ? '@root' : z.panelId, z.edge, o); spec.hole = true; }
+  } else if (g.tid) {
+    if (z.type === 'merge') { layout = PMW.hypo.move(g.tid, z.panelId, null, o); spec.join = z.panelId; }
+    else if (z.type === 'strip') layout = PMW.hypo.move(g.tid, z.panelId, z.index, o);
+    else if (z.type === 'split' || z.type === 'root') {
+      var root = z.type === 'root';
+      layout = PMW.hypo.split(g.tid, root ? '@root' : z.panelId, z.edge, root ? 0.34 : 0.5, o);
+      if (layout && layout.hypoResult && layout.hypoResult.panelId) {
+        spec.ghost = { id: layout.hypoResult.panelId, edge: z.edge, target: root ? '@root' : z.panelId, rec: state.layout.tabs[g.tid] };
+      }
+    }
+  }
+  if (!layout) return null;
+  spec.layout = layout;
+  var leaving = {};
+  model.panels(state.layout).forEach(function (p) {
+    var q = model.panel(layout, p.id);
+    if (p.tabs.length && q && !q.tabs.length) leaving[p.id] = true;
+  });
+  spec.leaving = leaving;
+  return spec;
+}
+
+/* show(g, zone): the preview follows the gesture's settled zone (after its dwell), once the carry shows intent */
+dropView.show = function (g, z) {
+  var sig = z && z.key !== 'strip-self' ? z.key : null;
+  dvs.g = g;
+  if (sig === dvs.sig) return;
+  dvs.sig = sig;
+  var spec = previewFor(g, z);
+  if (!spec && !state.dropPreview) { dvs.pending = null; return; }
+  dvs.pending = { spec: spec, at: performance.now() };
+  dropView.tick(g);
+};
+/* every frame of a carry: the pointer's recent speed, and the pending preview applied once it shows intent */
+dropView.tick = function (g) {
+  var now = performance.now(), tr = dvs.trail;
+  tr.push([now, g.px, g.py]);
+  while (tr.length > 2 && now - tr[0][0] > TRAIL_MS) tr.shift();
+  var pd = dvs.pending;
+  if (!pd) return;
+  var held = now - pd.at, a = tr[0], dt = now - a[0];
+  var speed = dt > 0 ? Math.hypot(g.px - a[1], g.py - a[2]) / dt : 0;
+  var settled = speed < INTENT_SPEED && held >= (reducedMotion() ? RM_HOLD : INTENT_MIN);
+  if (!settled && held < INTENT_HOLD) return;
+  dvs.pending = null;
+  apply(pd.spec);
+};
+
+function apply(spec) {
+  if (!spec && !state.dropPreview) return;
+  state.dropPreview = spec;
+  var gs = spec && spec.ghost;
+  // one ghost per target panel: another side of the same panel morphs it, another panel retires it and grows a new one
+  if (dvs.ghost && (!gs || dvs.ghost.target !== gs.target)) { retireGhost(dvs.ghost); dvs.ghost = null; }
+  if (gs && !dvs.ghost) dvs.ghost = makeGhost(gs);
+  if (dvs.ghost && gs) { dvs.ghost.id = gs.id; dvs.ghost.edge = gs.edge; setAttr(dvs.ghost.el, 'data-edge', gs.edge); }
+  if (spec && spec.hole) { if (!dvs.hole) dvs.hole = makeHole(); }
+  else if (dvs.hole) { retireHole(); }
+  setVeil(spec && spec.join);
+  glide();
+}
+function glide() {
+  dvs.glideUntil = performance.now() + dur('med') + 80;
+  render.now({ animate: true, preview: true });
+}
+
+/* place(shown, animate): from render.paint, with the preview's rects (centre coordinates) */
+dropView.place = function (shown, animate) {
+  var gh = dvs.ghost;
+  if (gh) {
+    var r = shown.panels[gh.id];
+    if (r) {
+      if (!gh.placed) {
+        render.placeEl(gh.el, seedRect(r, gh.edgeAtSeed || gh.edge), false);
+        gh.placed = true;
+        void gh.el.offsetWidth;
+        gh.el.classList.add('is-in');
+      }
+      render.placeEl(gh.el, r, animate);
+      gh.rect = r;
+    }
+  }
+  var ho = dvs.hole;
+  if (ho) {
+    var hr = shown.panels[HOLE_ID];
+    if (hr) {
+      render.placeEl(ho.el, hr, ho.placed && animate);
+      if (!ho.placed) { ho.placed = true; void ho.el.offsetWidth; ho.el.classList.add('is-in'); }
+    }
+  }
+};
+/* a zero-thickness sliver on the side the new panel comes from: it grows from there as its neighbour makes room */
+function seedRect(r, edge) {
+  if (edge === 'left') return { x: r.x, y: r.y, w: 0, h: r.h };
+  if (edge === 'right') return { x: r.x + r.w, y: r.y, w: 0, h: r.h };
+  if (edge === 'top') return { x: r.x, y: r.y, w: r.w, h: 0 };
+  return { x: r.x, y: r.y + r.h, w: r.w, h: 0 };
+}
+
+function makeGhost(gs) {
+  var rec = gs.rec;
+  var name = rec ? PMW.tabLabel(rec) : '';
+  var ic = rec ? PMW.tabIcon(rec) : 'file';
+  var el = h('div', { class: 'pmw-dv-ghost', 'aria-hidden': 'true', 'data-edge': gs.edge, 'data-root': gs.target === '@root' ? 'true' : null }, [
+    h('div', { class: 'pmw-dv-ghost-strip' }, [h('span', { class: 'pmw-dv-ghost-tab' }, [kindIcon(ic), h('span', { class: 'pmw-dv-ghost-name', text: name })])]),
+    h('div', { class: 'pmw-dv-ghost-body' }, [h('span', { class: 'pmw-dv-ghost-mark' }, [kindIcon(ic)]), h('i', { class: 'pmw-dv-ghost-sheen' })])
+  ]);
+  state.centre.appendChild(el);
+  return { el: el, id: gs.id, target: gs.target, edge: gs.edge, edgeAtSeed: gs.edge, placed: false, rect: null };
+}
+/* a ghost the zone left: back into the side it grew from, fading (Reduced Motion: a fade) */
+function retireGhost(gh) {
+  var el = gh.el;
+  el.classList.remove('is-in');
+  el.classList.add('is-out');
+  if (gh.rect && !reducedMotion()) render.placeEl(el, seedRect(gh.rect, gh.edge), true);
+  setTimeout(function () { el.remove(); }, Math.max(dur('med'), 140) + 60);
+}
+/* at a drop the real panel takes the ghost's place: the ghost fades over it */
+function handOffGhost(gh) {
+  var el = gh.el;
+  el.classList.add('is-handoff');
+  el.classList.remove('is-in');
+  setTimeout(function () { el.remove(); }, 260);
+}
+function makeHole() {
+  var el = h('div', { class: 'pmw-dv-hole', 'aria-hidden': 'true' });
+  state.centre.appendChild(el);
+  return { el: el, placed: false };
+}
+function retireHole() {
+  var el = dvs.hole.el;
+  dvs.hole = null;
+  el.classList.remove('is-in');
+  setTimeout(function () { el.remove(); }, 200);
+}
+function setVeil(panelId) {
+  var cur = dvs.veil;
+  if (cur && cur.panelId === panelId) return;
+  if (cur) {
+    var old = cur.el;
+    old.classList.remove('is-in');
+    setTimeout(function () { old.remove(); }, 200);
+    dvs.veil = null;
+  }
+  var pe = panelId && render.panelEl(panelId);
+  if (!pe) return;
+  var el = h('div', { class: 'pmw-dv-veil', 'aria-hidden': 'true' }, [h('i', { class: 'pmw-dv-veil-sheen' })]);
+  pe.appendChild(el);
+  void el.offsetWidth;
+  el.classList.add('is-in');
+  dvs.veil = { el: el, panelId: panelId };
+}
+
+/* clear(o): end the preview. o.animate false: in place; o.handoff: the drop committed (the ghost hands over to the
+   real panel); o.paint false: the caller paints next (a drop's commit) */
+dropView.clear = function (o) {
+  o = o || {};
+  dvs.g = null;
+  dvs.pending = null;
+  dvs.trail = [];
+  dvs.sig = null;
+  var had = !!state.dropPreview;
+  state.dropPreview = null;
+  if (dvs.ghost) { if (o.handoff) handOffGhost(dvs.ghost); else retireGhost(dvs.ghost); dvs.ghost = null; }
+  if (dvs.hole) retireHole();
+  setVeil(null);
+  if (!had || o.paint === false) return;
+  if (o.animate === false) render.now({ animate: false });
+  else glide();
+};
+/* after a refused drop the panels glide home from the preview they were left in */
+dropView.glideHome = function () { glide(); };
+/* the layout changed under a preview (an agent opened or closed a tab): show the same zone's result on the new layout,
+   or nothing if that zone no longer has one */
+bus.on('layout', function () {
+  var g = dvs.g;
+  if (!state.dropPreview || !g || g.done) return;
+  apply(previewFor(g, g.zone));
+});
+/* ---- panels/js/31-dropzones.js ---- */
+/* Drop zones and drop guides for a carried tab or panel (D1; Jared's review of 2026-10-13: the drag "really didn't want
+   me dragging and dropping above, below, or to the side of other panels ... typically wanted me to merge"). Splitting
+   is the default and joining is deliberate:
+   - a panel's body is cut by its diagonals into four split regions: the pointer is always in the split for the side it
+     is nearest, measured as a share of the body's width or height, so each side owns a quarter of the body;
+   - joining a panel as a tab takes the Join target at the body's centre (the guide's middle tile plus 8 px of slack)
+     or the panel's tab strip, where the strip opens a slot at the index;
+   - the centre's outer edge (an 18 px band, or the dock target in the middle of each side) makes a new full-length
+     panel, offered while there are two panels or more; along the top, where the tab strips are, only the dock target
+     does, and it sits just below the strips so a strip's first slots stay strip slots;
+   - a side whose result would leave a panel below its minimum is not offered (the room rule: PMW.hypo and
+     geom.resultFits, the same rule the drop commits under) and its region goes to the nearest side that fits; with no
+     side left the whole body joins (another panel) or offers nothing (the tab's own panel).
+   Zones are measured on the committed layout (render.rects(), which never holds the live preview's rects), never on
+   what is painted, so a preview that moves the panels never moves the zones under the pointer. Hysteresis: a side
+   holds until another is nearer by 5 % of the body; the Join target holds 12 px past its slack; a dock 12 px past its
+   band. The guide floats over the target panel's committed body: four side tiles around the Join tile, the zone's
+   name under them. */
+
+var dropZones = PMW.dropZones = {};
+var DOCK_BAND = 18, JOIN_SLACK = 8, HOLD_PX = 12, HOLD_SHARE = 0.05;
+var SIDES = ['left', 'right', 'top', 'bottom'];
+
+/* the committed rects in viewport px: { centre, panels: { id: rect }, hidden } (null when Home is not laid out) */
+function baseRects() {
+  var c = state.centre, rects = render.rects();
+  if (!c || !rects) return null;
+  var cb = c.getBoundingClientRect();
+  var ox = cb.left + c.clientLeft, oy = cb.top + c.clientTop;
+  var out = { ox: ox, oy: oy, centre: { x: ox + CENTRE_PAD, y: oy + CENTRE_PAD, w: Math.max(0, c.clientWidth - 2 * CENTRE_PAD), h: Math.max(0, c.clientHeight - 2 * CENTRE_PAD) }, panels: {}, hidden: rects.hidden || {}, mode: rects.mode };
+  for (var id in rects.panels) { var r = rects.panels[id]; out.panels[id] = { x: ox + r.x, y: oy + r.y, w: r.w, h: r.h }; }
+  return out;
+}
+dropZones.base = baseRects;
+function inBox(x, y, r, pad) { pad = pad || 0; return x >= r.x - pad && x <= r.x + r.w + pad && y >= r.y - pad && y <= r.y + r.h + pad; }
+function stripHeight(panelEl) { var s = panelEl && panelEl.querySelector('.pmw-strip'); return s ? s.offsetHeight : STRIP_H; }
+
+/* the guide's tile size for a body: full (40 px tiles), compact (30 px) or the Join tile alone */
+function guideSize(b) {
+  var m = Math.min(b.w, b.h);
+  if (m >= 210) return { mode: 'full', tile: 40, gap: 6 };
+  if (m >= 140) return { mode: 'compact', tile: 30, gap: 4 };
+  return { mode: 'join', tile: 30, gap: 4 };
+}
+dropZones.guideSize = guideSize;
+
+/* what a drop would leave, per carried thing and target (cached for the drag: the layout does not change under it,
+   and when it does the revision in the key moves on) */
+function hypoFor(g, kind, panelId, edge) {
+  var l = state.layout, box = PMW.layoutBox();
+  var key = [l.revision, box ? box.w + 'x' + box.h : '-', kind, panelId, edge || ''].join('|');
+  g.hypoCache = g.hypoCache || {};
+  if (Object.prototype.hasOwnProperty.call(g.hypoCache, key)) return g.hypoCache[key];
+  var hy = null;
+  if (g.panelId) {
+    if (kind === 'merge') hy = PMW.hypo.mergePanel(g.panelId, panelId);
+    else if (kind === 'root') hy = PMW.hypo.movePanel(g.panelId, '@root', edge);
+    else if (kind === 'split') hy = PMW.hypo.movePanel(g.panelId, panelId, edge);
+  } else {
+    if (kind === 'merge') hy = PMW.hypo.move(g.tid, panelId, null);
+    else if (kind === 'root') hy = PMW.hypo.split(g.tid, '@root', edge, 0.34);
+    else if (kind === 'split') hy = PMW.hypo.split(g.tid, panelId, edge, 0.5);
+  }
+  var fits = !!hy && (kind === 'merge' || PMW.roomFits(hy));
+  var res = { hypo: fits ? hy : null, fits: fits };
+  g.hypoCache[key] = res;
+  return res;
+}
+dropZones.hypoFor = hypoFor;
+
+function rootRect(r, edge) {
+  var f = 0.34;
+  if (edge === 'left') return { x: r.x, y: r.y, w: r.w * f, h: r.h };
+  if (edge === 'right') return { x: r.x + r.w * (1 - f), y: r.y, w: r.w * f, h: r.h };
+  if (edge === 'top') return { x: r.x, y: r.y, w: r.w, h: r.h * f };
+  return { x: r.x, y: r.y + r.h * (1 - f), w: r.w, h: r.h * f };
+}
+function halfRect(r, edge) {
+  var hw = (r.w - GAP) / 2, hh = (r.h - GAP) / 2;
+  if (edge === 'left') return { x: r.x, y: r.y, w: hw, h: r.h };
+  if (edge === 'right') return { x: r.x + r.w - hw, y: r.y, w: hw, h: r.h };
+  if (edge === 'top') return { x: r.x, y: r.y, w: r.w, h: hh };
+  return { x: r.x, y: r.y + r.h - hh, w: r.w, h: hh };
+}
+/* where a dock target sits: in the middle of a side of the centre, 10 px in (the top one below the strips) */
+function dockPoint(cr, edge) {
+  if (edge === 'left') return { x: cr.x + 10 + 16, y: cr.y + cr.h / 2 };
+  if (edge === 'right') return { x: cr.x + cr.w - 10 - 16, y: cr.y + cr.h / 2 };
+  if (edge === 'top') return { x: cr.x + cr.w / 2, y: cr.y + STRIP_H + 10 + 16 };
+  return { x: cr.x + cr.w / 2, y: cr.y + cr.h - 10 - 16 };
+}
+var DOCK_BANDS = { left: DOCK_BAND, right: DOCK_BAND, top: 0, bottom: DOCK_BAND };
+dropZones.dockPoint = dockPoint;
+var SPLIT_LABEL = { left: 'Split left', right: 'Split right', top: 'Split up', bottom: 'Split down' };
+var ROOT_LABEL = { left: 'New panel along the left', right: 'New panel along the right', top: 'New row across the top', bottom: 'New row across the bottom' };
+dropZones.SPLIT_LABEL = SPLIT_LABEL;
+
+/* docks are offered while there are two panels or more (with one, a side of that panel is the same place) */
+dropZones.docksOn = function (g) {
+  var narrow = PMW.narrow && PMW.narrow.singleColumn();
+  return !narrow && model.panels(state.layout).length > 1;
+};
+dropZones.rootFits = function (g, edge) { return hypoFor(g, 'root', '@root', edge).fits; };
+
+/* probe(g, o) -> zone | null. g: the gesture (px, py, zone, tid or panelId, origin, chipW); o.strips: tab strips are
+   targets (a carried tab); a carried panel joins a panel through its strip as through its centre.
+   zone = { key, type: 'strip'|'merge'|'split'|'root', panelId, edge, index, rect, label, gap, guide } */
+dropZones.probe = function (g, o) {
+  o = o || {};
+  var l = state.layout, base = baseRects();
+  if (!l || !base) return null;
+  var x = g.px, y = g.py, cr = base.centre, cur = g.zone;
+  var narrow = PMW.narrow && PMW.narrow.singleColumn();
+  var moving = g.panelId || null;
+  var originId = moving || (g.origin && g.origin.panelId);
+  if (!inBox(x, y, cr, 0)) return null;                                  // over the chat, the rail: no drop
+  // 1. the centre's outer edge: a dock (its band, or its target in the middle of the side)
+  if (dropZones.docksOn(g)) {
+    for (var e = 0; e < SIDES.length; e++) {
+      var ed = SIDES[e];
+      var holding = cur && cur.type === 'root' && cur.edge === ed;
+      var d = ed === 'left' ? x - cr.x : ed === 'right' ? cr.x + cr.w - x : ed === 'top' ? y - cr.y : cr.y + cr.h - y;
+      var dp = dockPoint(cr, ed);
+      var onTarget = Math.abs(x - dp.x) <= 22 + (holding ? HOLD_PX : 0) && Math.abs(y - dp.y) <= 22 + (holding ? HOLD_PX : 0);
+      var band = DOCK_BANDS[ed];
+      if (((band && d <= band + (holding ? HOLD_PX : 0)) || onTarget) && dropZones.rootFits(g, ed)) {
+        return { key: 'root-' + ed, type: 'root', edge: ed, rect: rootRect(cr, ed), label: ROOT_LABEL[ed] };
+      }
+    }
+  }
+  // 2. the panel under the pointer, by its committed rect
+  var panels = model.panels(l);
+  for (var i = 0; i < panels.length; i++) {
+    var p = panels[i], r = base.panels[p.id];
+    if (!r || base.hidden[p.id] || !inBox(x, y, r, 0)) continue;
+    var el = render.panelEl(p.id);
+    var own = p.id === originId;
+    var sh = stripHeight(el);
+    // a tab strip: insert at an index (a carried tab), or join (a carried panel)
+    if (!p.collapsed && y <= r.y + sh + 4) {
+      if (moving) return own ? null : joinZone(p, r, sh, 'Join as tabs');
+      var st = el && el.querySelector('.pmw-strip')._pmw;
+      if (!st) return null;
+      // the strip is drawn where the preview put its panel: read its tabs there, at the pointer's place in the panel
+      var drawn = el.getBoundingClientRect();
+      var px = x - r.x + drawn.left;
+      var moreR = st.more.hidden ? null : st.more.getBoundingClientRect();
+      if (moreR && px >= moreR.left - 4 && px <= moreR.right + 4) {
+        return { key: 'more-' + p.id, type: 'strip', panelId: p.id, index: p.tabs.length, rect: { x: moreR.left, y: drawn.top + 3, w: moreR.width, h: sh - 3 }, label: 'To the end' };
+      }
+      if (own) return null;     // the origin strip is handled in strip mode
+      var ins = PMW.tabDrag.insertionIn(st, p, px);
+      return { key: 'strip-' + p.id + '-' + ins.index, type: 'strip', panelId: p.id, index: ins.index, gap: true,
+        rect: { x: ins.x, y: drawn.top + 3, w: g.chipW || 120, h: sh - 3 }, label: '' };
+    }
+    if (p.collapsed) return own ? null : joinZone(p, r, sh, moving ? 'Join as tabs' : 'Join as a tab', true);
+    var b = { x: r.x, y: r.y + sh, w: r.w, h: r.h - sh };
+    var gs = guideSize(b);
+    var cx = b.x + b.w / 2, cy = b.y + b.h / 2;
+    var soleTab = !moving && own && p.tabs.length === 1;
+    var fits = {};
+    SIDES.forEach(function (s2) { fits[s2] = !narrow && !soleTab && !(moving && own) && hypoFor(g, 'split', p.id, s2).fits; });
+    var canJoin = !own;
+    var guide = { panelId: p.id, body: b, size: gs, fits: fits, join: canJoin, active: null };
+    // the Join target
+    if (canJoin) {
+      var holdJoin = cur && cur.type === 'merge' && cur.panelId === p.id && !cur.whole;
+      var reach = gs.tile / 2 + JOIN_SLACK + (holdJoin ? HOLD_PX : 0);
+      if (Math.abs(x - cx) <= reach && Math.abs(y - cy) <= reach) {
+        guide.active = 'merge';
+        return { key: 'merge-' + p.id, type: 'merge', panelId: p.id, rect: { x: b.x, y: b.y, w: b.w, h: b.h }, label: moving ? 'Join as tabs' : 'Join as a tab', guide: guide };
+      }
+    }
+    // the nearest side that fits (a share of the body), held against small moves
+    var best = null, bestN = Infinity;
+    for (var k = 0; k < SIDES.length; k++) {
+      var s3 = SIDES[k];
+      if (!fits[s3]) continue;
+      var dist = s3 === 'left' ? x - b.x : s3 === 'right' ? b.x + b.w - x : s3 === 'top' ? y - b.y : b.y + b.h - y;
+      var n = Math.max(0, dist) / (s3 === 'left' || s3 === 'right' ? b.w : b.h);
+      if (cur && cur.type === 'split' && cur.panelId === p.id && cur.edge === s3) n -= HOLD_SHARE;
+      if (n < bestN) { bestN = n; best = s3; }
+    }
+    if (best) {
+      guide.active = best;
+      return { key: 'split-' + p.id + '-' + best, type: 'split', panelId: p.id, edge: best, rect: halfRect(r, best), label: SPLIT_LABEL[best], guide: guide };
+    }
+    if (!canJoin) return null;
+    guide.active = 'merge';
+    return { key: 'merge-' + p.id, type: 'merge', panelId: p.id, whole: true, rect: { x: b.x, y: b.y, w: b.w, h: b.h }, label: moving ? 'Join as tabs' : 'Join as a tab', guide: guide };
+  }
+  return null;
+};
+function joinZone(p, r, sh, label, collapsed) {
+  return { key: 'merge-' + p.id, type: 'merge', panelId: p.id, whole: true, viaStrip: true,
+    rect: collapsed ? { x: r.x, y: r.y, w: r.w, h: r.h } : { x: r.x, y: r.y, w: r.w, h: r.h }, label: label };
+}
+
+/* ---- the drop guide: tiles around the Join target, the dock targets, the zone's name ---- */
+var dropGuide = PMW.dropGuide = {};
+var guideEl = null, guideTiles = {}, guideCap = null, dockEls = null, guideFor = null, guideFade = null;
+function ensureGuide() {
+  if (guideEl) return guideEl;
+  guideEl = h('div', { class: 'pmw-guide', 'aria-hidden': 'true', hidden: true });
+  ['top', 'left', 'merge', 'right', 'bottom'].forEach(function (k) {
+    var t = h('i', { class: 'pmw-guide-tile', 'data-edge': k }, [h('b', { class: 'pmw-guide-map' })]);
+    guideTiles[k] = t;
+    guideEl.appendChild(t);
+  });
+  guideCap = h('span', { class: 'pmw-guide-cap' });
+  guideEl.appendChild(guideCap);
+  overlay().appendChild(guideEl);
+  dockEls = {};
+  SIDES.forEach(function (e) {
+    var d = h('i', { class: 'pmw-dock', 'data-edge': e, 'aria-hidden': 'true', hidden: true }, [h('b', { class: 'pmw-guide-map' })]);
+    dockEls[e] = d;
+    overlay().appendChild(d);
+  });
+  return guideEl;
+}
+/* the docks come up with the carry (a torn tab, a lifted panel) */
+dropGuide.begin = function (g) {
+  ensureGuide();
+  var base = baseRects();
+  var on = !!base && dropZones.docksOn(g);
+  SIDES.forEach(function (e) {
+    var d = dockEls[e];
+    if (!on) { d.hidden = true; return; }
+    var p = dockPoint(base.centre, e);
+    d.style.left = p.x + 'px'; d.style.top = p.y + 'px';
+    setAttr(d, 'data-off', !dropZones.rootFits(g, e));
+    setAttr(d, 'data-on', null);
+    if (d._pmwFade) { try { d._pmwFade.cancel(); } catch (_) {} d._pmwFade = null; }   // a fade-out still running
+    if (d.hidden) { d.hidden = false; motion.animate(d, [{ opacity: 0 }, { opacity: 1 }], { dur: 160, easing: motion.ease('out') }); }
+  });
+};
+dropGuide.update = function (g, z) {
+  ensureGuide();
+  var sig = z ? z.key : '';
+  if (guideEl._pmwSig === sig) return;
+  guideEl._pmwSig = sig;
+  SIDES.forEach(function (e) { setAttr(dockEls[e], 'data-on', !!z && z.type === 'root' && z.edge === e); });
+  var gd = z && z.guide;
+  if (!gd) {
+    hideGuide();
+    if (z && z.type === 'root') showCaptionAtDock(z);
+    return;
+  }
+  var b = gd.body, s = gd.size;
+  var ext = s.tile * 3 + s.gap * 2;
+  var x = Math.round(b.x + b.w / 2 - ext / 2), y = Math.round(b.y + b.h / 2 - ext / 2);
+  var el = guideEl, first = el.hidden || guideFade;
+  if (guideFade) { try { guideFade.cancel(); } catch (_) {} guideFade = null; }
+  el.style.setProperty('--pmw-guide-tile', s.tile + 'px');
+  el.style.setProperty('--pmw-guide-gap', s.gap + 'px');
+  setAttr(el, 'data-size', s.mode);
+  setAttr(el, 'data-dock-cap', null);
+  SIDES.forEach(function (e) {
+    setAttr(guideTiles[e], 'data-off', !gd.fits[e]);
+    setAttr(guideTiles[e], 'data-on', gd.active === e);
+  });
+  setAttr(guideTiles.merge, 'data-off', !gd.join);
+  setAttr(guideTiles.merge, 'data-on', gd.active === 'merge');
+  setText(guideCap, z.label || '');
+  var moved = guideFor !== gd.panelId;
+  guideFor = gd.panelId;
+  el.hidden = false;
+  // placed with the translate property, so the entrance's scale (transform) grows about the guide's own centre
+  if (first || reducedMotion()) {
+    el.style.transition = 'none';
+    el.style.translate = x + 'px ' + y + 'px';
+    void el.offsetWidth;
+    el.style.transition = '';
+    if (first) motion.animate(el, [{ opacity: 0, transform: 'scale(.9)' }, { opacity: 1, transform: 'none' }], { dur: 170, easing: motion.ease('out') });
+  } else if (moved) {
+    el.style.translate = x + 'px ' + y + 'px';     // glides (CSS) to the next panel's centre
+  }
+};
+function showCaptionAtDock(z) {
+  // the root zone names itself beside its dock (the guide's caption, moved there; the tiles hidden)
+  var base = baseRects();
+  if (!base) return;
+  var p = dockPoint(base.centre, z.edge);
+  var el = guideEl;
+  if (guideFade) { try { guideFade.cancel(); } catch (_) {} guideFade = null; }
+  setAttr(el, 'data-dock-cap', z.edge);
+  setText(guideCap, z.label || '');
+  el.style.setProperty('--pmw-guide-tile', '32px');
+  el.style.setProperty('--pmw-guide-gap', '0px');
+  el.style.transition = 'none';
+  el.style.translate = Math.round(p.x - 48) + 'px ' + Math.round(p.y - 48) + 'px';
+  void el.offsetWidth;
+  el.style.transition = '';
+  guideFor = null;
+  if (el.hidden) { el.hidden = false; motion.animate(el, [{ opacity: 0 }, { opacity: 1 }], { dur: 140, easing: motion.ease('out') }); }
+}
+function hideGuide() {
+  if (guideEl) guideEl._pmwSig = null;
+  if (!guideEl || guideEl.hidden || guideFade) return;
+  guideFor = null;
+  var el = guideEl;
+  var a = motion.animate(el, [{ opacity: 1 }, { opacity: 0 }], { dur: 120, easing: motion.ease('out') });
+  if (!a) { el.hidden = true; return; }
+  guideFade = a;
+  a.onfinish = function () { if (guideFade !== a) return; guideFade = null; el.hidden = true; };
+}
+dropGuide.hide = function () {
+  hideGuide();
+  if (dockEls) SIDES.forEach(function (e) { setAttr(dockEls[e], 'data-on', null); });
+};
+dropGuide.end = function () {
+  if (!guideEl) return;
+  hideGuide();
+  SIDES.forEach(function (e) {
+    var d = dockEls[e];
+    if (d.hidden) return;
+    if (d._pmwFade) return;
+    var a = motion.animate(d, [{ opacity: 1 }, { opacity: 0 }], { dur: 120, easing: motion.ease('out'), fill: 'forwards' });
+    d._pmwFade = a;
+    if (a) a.onfinish = function () { if (d._pmwFade !== a) return; d._pmwFade = null; d.hidden = true; try { a.cancel(); } catch (_) {} };
+    else d.hidden = true;
+    setAttr(d, 'data-on', null);
+  });
 };
 /* ---- panels/js/32-strip.js ---- */
 /* The tab strip (D5), one for every panel. Anatomy, left to right:
@@ -167472,15 +168986,17 @@ PMW.moveTabToNewPanel = function (tabId) {
      follow, cached transform-free midpoints, 250 ms neighbour FLIP on (.22,1,.36,1), a 0.35 rubber band at the strip
      ends, Retro's 8 px cells, the plate under the carried tab in the same frame, a 160 ms (.17,.84,.29,.99) settle the
      plate rides, one cmd.panel_tab.move on release.
-   - torn off (the pointer leaves the strip band by 14 px): a floating chip follows the pointer and the landing preview
-     shows the result: another strip (insert), a panel body's edge (split, only where both halves fit), a body's centre
-     (merge), the centre's outer edge (a new full-height or full-width panel), "+N" (to the end).
+   - torn off (the pointer leaves the strip band by 14 px): a floating chip follows the pointer, the drop guide and the
+     docks come up, and the landing preview shows the result: another strip (insert), a side of a panel's body (split:
+     the body's diagonals give each side a quarter, wherever the result fits), the Join target in the body's centre
+     (merge), a dock on the centre's outer edge (a new full-height or full-width panel), "+N" (to the end). The zones
+     and the guide are 31-dropzones.js.
    Full cancel (Escape, pointercancel, lost capture, blur, a release over the chat or the rail) restores the order and
    the active tab and dispatches nothing. Every outcome also has a menu path (the tab menu) and a keyboard path
    (Ctrl+Shift+PgUp/PgDn, Ctrl+Alt+arrows). */
 
 var tabDrag = PMW.tabDrag = {};
-var TEAR_BAND = 14, ROOT_BAND = 12, FLIP_MS = 250, SETTLE_MS = 160;
+var TEAR_BAND = 14, FLIP_MS = 250, SETTLE_MS = 160;
 var SETTLE_EASE = 'cubic-bezier(.17,.84,.29,.99)', FLIP_EASE = 'cubic-bezier(.22,1,.36,1)';
 
 function retroOn() { var lk = look(); return lk.family === 'retro' && !lk.nier; }
@@ -167521,22 +169037,30 @@ tabDrag.begin = function (ev, tabEl, s) {
       // the carried tab closed or moved away under the drag (an agent, the chat): end it, nothing to put back
       var at = model.panelOf(state.layout, g.tid);
       if (!at || at.id !== g.origin.panelId || !g.tab.isConnected) { g.end('gone'); return; }
-      var hr = host.getBoundingClientRect();
+      // the band is the strip where the layout has it: a preview may have moved the drawn strip under the pointer
+      var hr = homeBand(g);
       var inBand = g.py >= hr.top - TEAR_BAND && g.py <= hr.bottom + TEAR_BAND && g.px >= hr.left - 40 && g.px <= hr.right + 40;
       if (g.mode === 'strip' && !inBand && canTear(g)) tearOff(g);
       else if (g.mode === 'torn' && inBand) rejoin(g);
       if (g.mode === 'strip') followInStrip(g);
-      else followChip(g);
+      else { followChip(g); dropView.tick(g); }
     },
-    probe: function (g) { return g.mode === 'strip' ? { key: 'strip-self', instant: true } : probeZones(g); },
+    probe: function (g) { return g.mode === 'strip' ? { key: 'strip-self', instant: true } : dropZones.probe(g, { strips: true }); },
+    onProbe: function (g, z) { if (g.mode === 'torn') dropGuide.update(g, z); },
     onZone: function (g, z) { showZone(g, z); },
     onDrop: function (g, z) { return drop(g, z); },
     onCancel: function (g, how) { cancel(g, how); },
-    onEnd: function (g) { clearGap(g, false); preview.hide(); }
+    onEnd: function (g) { clearGap(g, false); preview.hide(); dropGuide.end(); if (dropView.active()) dropView.clear({ animate: false }); }
   });
 };
 
 function canTear(g) { return true; }
+/* the origin strip's band in viewport px, on the committed layout (31-dropzones.js base), else as drawn */
+function homeBand(g) {
+  var base = dropView.active() && dropZones.base(), r = base && base.panels[g.origin.panelId];
+  if (!r) return g.host.getBoundingClientRect();
+  return { left: r.x, right: r.x + r.w, top: r.y, bottom: r.y + g.host.offsetHeight };
+}
 
 /* Activate on grab: the same view action as PMW.activateTab (the active tab, the attention mark cleared, the MRU, a
    quiet save, the 'activate' event), minus expanding a collapsed panel, which would move the strip under the pointer.
@@ -167652,7 +169176,8 @@ function tearOff(g) {
   g.tab.classList.add('pmw-torn');      // keeps its slot but paints nothing: the strip shows where it came from
   g.liftAt = performance.now();
   shape.snap(g.host);
-  announce('Moving ' + tabLabel(g.rec) + '. Drop it on a tab strip, the edge of a panel to split, or a panel to join it. Escape puts it back.');
+  dropGuide.begin(g);
+  announce('Moving ' + tabLabel(g.rec) + '. Drop it toward a side of a panel to split it, on the middle target or a tab strip to join, or on an outer edge for a full-length panel. Escape puts it back.');
 }
 function rejoin(g) {
   g.mode = 'strip';
@@ -167660,6 +169185,8 @@ function rejoin(g) {
   g.tab.classList.remove('pmw-torn');
   g.zone = null;
   preview.hide();
+  dropGuide.end();
+  dropView.clear();
   cacheSlots(g);      // the slot it kept while torn; followInStrip then draws it under the pointer again
 }
 function followChip(g) {
@@ -167670,88 +169197,6 @@ function followChip(g) {
   setAttr(g.chip, 'data-alt', g.alt);
 }
 
-function bodyRect(panelEl) {
-  var r = panelEl.getBoundingClientRect();
-  var strip = panelEl.querySelector('.pmw-strip');
-  var sh = strip ? strip.offsetHeight : STRIP_H;
-  return { x: r.left, y: r.top + sh, w: r.width, h: r.height - sh, top: r.top, full: { x: r.left, y: r.top, w: r.width, h: r.height } };
-}
-function inRect(x, y, r, pad) { pad = pad || 0; return x >= r.x - pad && x <= r.x + r.w + pad && y >= r.y - pad && y <= r.y + r.h + pad; }
-
-/* the drop zones under the pointer: { key, type, panelId, edge, index, rect, label } */
-function probeZones(g) {
-  var l = state.layout, c = state.centre.getBoundingClientRect();
-  var cr = { x: c.left, y: c.top, w: c.width, h: c.height };
-  var x = g.px, y = g.py;
-  var narrow = PMW.narrow && PMW.narrow.singleColumn();
-  var inCentre = inRect(x, y, cr, 0);
-  // the centre's outer edge: a new panel along the whole side. Checked before the hysteresis below, so the outer 12 px
-  // band takes over from any zone the pointer arrives from
-  if (inCentre && !narrow) {
-    var edges = [['left', x - cr.x], ['right', cr.x + cr.w - x], ['top', y - cr.y], ['bottom', cr.y + cr.h - y]];
-    for (var e = 0; e < edges.length; e++) {
-      if (edges[e][1] <= ROOT_BAND && geom.rootFits(l, edges[e][0], render.centreRect(), g.kindMin)) {
-        var ed = edges[e][0];
-        return { key: 'root-' + ed, type: 'root', edge: ed, rect: rootRect(cr, ed), hit: edgeBand(cr, ed, ROOT_BAND), label: rootLabel(ed) };
-      }
-    }
-  }
-  // keep the current zone while the pointer is still within 12 px of it (hysteresis); a merge zone's hit leaves out the
-  // edge bands that offer a split, so carrying a tab from a panel's middle toward its edge turns the preview into
-  // the split 12 px into the band, whatever the path
-  if (g.zone && g.zone.hit && inRect(x, y, g.zone.hit, 12) && g.zone.type !== 'strip') return g.zone;
-  if (!inCentre) return null;                                     // over the chat, the rail: no drop
-  var panels = model.panels(l);
-  for (var i = 0; i < panels.length; i++) {
-    var p = panels[i];
-    var el = render.panelEl(p.id);
-    if (!el || el.hidden) continue;
-    var full = el.getBoundingClientRect();
-    if (!inRect(x, y, { x: full.left, y: full.top, w: full.width, h: full.height }, 0)) continue;
-    var stripEl = el.querySelector('.pmw-strip');
-    var sr = stripEl.getBoundingClientRect();
-    var own = p.id === g.origin.panelId;
-    // a strip: insert at an index ("+N" appends)
-    if (y <= sr.bottom + 4) {
-      var st = stripEl._pmw;
-      var moreR = st.more.hidden ? null : st.more.getBoundingClientRect();
-      if (moreR && x >= moreR.left - 4 && x <= moreR.right + 4) {
-        return { key: 'more-' + p.id, type: 'strip', panelId: p.id, index: p.tabs.length, rect: { x: moreR.left, y: sr.top + 3, w: moreR.width, h: sr.height - 3 }, hit: { x: moreR.left, y: sr.top, w: moreR.width, h: sr.height }, label: 'To the end' };
-      }
-      if (own) return null;     // the origin strip is handled in strip mode
-      var ins = insertionIn(st, p, x);
-      return { key: 'strip-' + p.id + '-' + ins.index, type: 'strip', panelId: p.id, index: ins.index, gap: true,
-        rect: { x: ins.x, y: sr.top + 3, w: g.chipW, h: sr.height - 3 }, hit: null, label: '' };
-    }
-    if (p.collapsed) return { key: 'merge-' + p.id, type: 'merge', panelId: p.id, rect: rectOf(stripEl), hit: rectOf(stripEl), label: 'Join this panel' };
-    var b = bodyRect(el);
-    var band = function (len) { return clamp(len * 0.15, 32, 72); };
-    var dl = x - b.x, dr = b.x + b.w - x, dt = y - b.y, db = b.y + b.h - y;
-    var rects = render.rects();
-    var cands = [];
-    if (!narrow) {
-      if (dl <= band(b.w)) cands.push(['left', dl]);
-      if (dr <= band(b.w)) cands.push(['right', dr]);
-      if (dt <= band(b.h)) cands.push(['top', dt]);
-      if (db <= band(b.h)) cands.push(['bottom', db]);
-    }
-    cands.sort(function (a, c2) { return a[1] - c2[1]; });
-    var soleTab = own && p.tabs.length === 1;
-    for (var k = 0; k < cands.length; k++) {
-      var edge = cands[k][0];
-      if (soleTab) break;
-      if (!geom.splitFits(l, p.id, edge, rects, g.kindMin)) continue;
-      return { key: 'split-' + p.id + '-' + edge, type: 'split', panelId: p.id, edge: edge, rect: halfRect(b.full, edge), hit: edgeHit(b, edge, band), label: splitLabel(edge) };
-    }
-    if (own) return null;    // merging into its own panel changes nothing
-    var fitsEdge = function (ed) { return !narrow && geom.splitFits(l, p.id, ed, rects, g.kindMin); };
-    var il = fitsEdge('left') ? band(b.w) : 0, ir = fitsEdge('right') ? band(b.w) : 0;
-    var it = fitsEdge('top') ? band(b.h) : 0, ib = fitsEdge('bottom') ? band(b.h) : 0;
-    var mhit = { x: b.x + il, y: b.y + it, w: Math.max(0, b.w - il - ir), h: Math.max(0, b.h - it - ib) };
-    return { key: 'merge-' + p.id, type: 'merge', panelId: p.id, rect: { x: b.x, y: b.y, w: b.w, h: b.h }, hit: mhit, label: 'Join this panel' };
-  }
-  return null;
-}
 /* where a torn tab would go in another strip: measured at the tabs' resting places (layoutX), never where the gap the
    strip opens for it (setGap) draws them, so the index does not chase the slide */
 function insertionIn(st, p, x) {
@@ -167764,6 +169209,7 @@ function insertionIn(st, p, x) {
   var last = st.tabEls[tabs[tabs.length - 1]];
   return { index: p.tabs.length, x: layoutX(last) + last.offsetWidth + stripGap(st) };
 }
+tabDrag.insertionIn = insertionIn;
 function stripGap(st) { return parseFloat(getComputedStyle(st.tabsEl).columnGap) || 0; }
 /* the strip a torn tab hovers opens a gap at the insert index: the tabs from there slide right by the chip's width (the
    250 ms neighbour slide; instant under Reduced Motion), so the slot is drawn in the gap and covers no label */
@@ -167800,44 +169246,33 @@ function clearGap(g, animate) {
     else setTimeout(function () { if (!el.style.transform) el.style.transition = ''; }, FLIP_MS + 40);
   });
 }
-function halfRect(r, edge) {
-  var hw = (r.w - GAP) / 2, hh = (r.h - GAP) / 2;
-  if (edge === 'left') return { x: r.x, y: r.y, w: hw, h: r.h };
-  if (edge === 'right') return { x: r.x + r.w - hw, y: r.y, w: hw, h: r.h };
-  if (edge === 'top') return { x: r.x, y: r.y, w: r.w, h: hh };
-  return { x: r.x, y: r.y + r.h - hh, w: r.w, h: hh };
-}
-function edgeHit(b, edge, band) {
-  if (edge === 'left') return { x: b.x, y: b.y, w: band(b.w), h: b.h };
-  if (edge === 'right') return { x: b.x + b.w - band(b.w), y: b.y, w: band(b.w), h: b.h };
-  if (edge === 'top') return { x: b.x, y: b.y, w: b.w, h: band(b.h) };
-  return { x: b.x, y: b.y + b.h - band(b.h), w: b.w, h: band(b.h) };
-}
-function edgeBand(r, edge, w) {
-  if (edge === 'left') return { x: r.x, y: r.y, w: w, h: r.h };
-  if (edge === 'right') return { x: r.x + r.w - w, y: r.y, w: w, h: r.h };
-  if (edge === 'top') return { x: r.x, y: r.y, w: r.w, h: w };
-  return { x: r.x, y: r.y + r.h - w, w: r.w, h: w };
-}
-function rootRect(r, edge) {
-  var f = 0.34;
-  if (edge === 'left') return { x: r.x, y: r.y, w: r.w * f, h: r.h };
-  if (edge === 'right') return { x: r.x + r.w * (1 - f), y: r.y, w: r.w * f, h: r.h };
-  if (edge === 'top') return { x: r.x, y: r.y, w: r.w, h: r.h * f };
-  return { x: r.x, y: r.y + r.h * (1 - f), w: r.w, h: r.h * f };
-}
-function splitLabel(edge) { return { left: 'Split left', right: 'Split right', top: 'Split up', bottom: 'Split down' }[edge]; }
-function rootLabel(edge) { return { left: 'New panel along the left', right: 'New panel along the right', top: 'New row across the top', bottom: 'New row across the bottom' }[edge]; }
-
+/* a zone shows as its result (31-dropview.js); a strip slot also as the slot the strip opens, and a panel the tab joins
+   opens its slot at the end of its strip */
 function showZone(g, z) {
-  setGap(g, z && z.key !== 'strip-self' ? z : null);
-  if (!z || z.type === undefined || z.key === 'strip-self') {
+  var real = z && z.key !== 'strip-self' ? z : null;
+  setGap(g, real && real.type === 'merge' ? joinGap(real) : real);
+  dropView.show(g, real);
+  if (!real || real.type === undefined) {
     preview.hide();
     if (g.chip) setAttr(g.chip, 'data-nodrop', g.mode === 'torn' && !z);
     return;
   }
   if (g.chip) setAttr(g.chip, 'data-nodrop', null);
-  preview.show(z.rect, z.label, z.type);
+  if (real.type === 'strip') preview.show(real.rect, real.label, real.type);
+  else preview.hide();
+  sayZone(g, z);
+}
+function joinGap(z) {
+  var p = model.panel(state.layout, z.panelId);
+  return p && !p.collapsed ? { gap: true, panelId: p.id, index: p.tabs.length } : null;
+}
+/* the zone in words for a screen reader, once it has held a moment (crossing zones says nothing) */
+function sayZone(g, z) {
+  clearTimeout(g.sayTimer);
+  if (!z || !z.label || z.type === 'strip') return;
+  var where = z.panelId ? model.describe(state.layout, z.panelId) : '';
+  var text = z.type === 'split' ? z.label + ', beside the ' + where : z.type === 'merge' ? z.label + ' in the ' + where : z.label;
+  g.sayTimer = setTimeout(function () { if (g.zone === z && !g.done) announce(text); }, 450);
 }
 
 /* ---- release ---- */
@@ -167878,12 +169313,14 @@ function drop(g, z) {
   // tab's neighbour there
   var src = model.panel(state.layout, g.origin.panelId);
   if (g.activated && src && src.active === g.tid && src.tabs.indexOf(g.origin.active) >= 0) src.active = g.origin.active;
+  // the preview already shows this result: the commit paints it, the ghost hands over to the real panel
+  dropView.clear({ handoff: true, paint: false });
   var ok;
   if (z.type === 'strip') ok = PMW.moveTab(g.tid, z.panelId, z.index);
   else if (z.type === 'merge') ok = PMW.moveTab(g.tid, z.panelId, null);
-  else if (z.type === 'split') ok = !!PMW.moveTabToSplit(g.tid, z.panelId, z.edge);
+  else if (z.type === 'split') ok = !!PMW.moveTabToSplit(g.tid, z.panelId, z.edge, { ratio: 0.5 });
   else if (z.type === 'root') ok = !!PMW.moveTabToSplit(g.tid, '@root', z.edge, { ratio: 0.34 });
-  if (!ok) { restore(g); if (g.chip) { g.chip.remove(); g.chip = null; } return true; }
+  if (!ok) { dropView.glideHome(); restore(g); if (g.chip) { g.chip.remove(); g.chip = null; } return true; }
   // what listeners heard at the grab is no longer true: the source shows its previous tab, the carried tab is the
   // active tab of the panel it landed in
   var srcNow = model.panel(state.layout, g.origin.panelId), landedP = model.panelOf(state.layout, g.tid);
@@ -167971,6 +169408,7 @@ function restore(g, o) {
   render.now({ animate: false });
 }
 function cancel(g, how) {
+  dropView.clear();      // the panels glide home from the preview first; restore's paint then finds them on their way
   clearGap(g, true);
   var tabRect = g.tab.getBoundingClientRect();
   var chip = g.chip;
@@ -168007,36 +169445,29 @@ panelDrag.begin = function (ev, panelId, gripEl) {
       g.chip = h('div', { class: 'pmw-chip pmw-chip-panel', 'aria-hidden': 'true' }, [icon('panel', { size: 14 }), h('span', { text: (rec ? tabLabel(rec) : 'Empty') + (p.tabs.length > 1 ? ' and ' + (p.tabs.length - 1) + ' more' : '') })]);
       g.chip.style.left = (g.px + 12) + 'px'; g.chip.style.top = (g.py + 10) + 'px';
       overlay().appendChild(g.chip);
-      announce('Moving the ' + model.describe(state.layout, panelId) + '. Drop it beside another panel or on a panel to join its tabs. Escape puts it back.');
+      dropGuide.begin(g);
+      announce('Moving the ' + model.describe(state.layout, panelId) + '. Drop it toward a side of another panel, or on its middle target to join its tabs. Escape puts it back.');
       return true;
     },
     onFrame: function (g) {
       g.chip.style.transform = 'translate3d(' + (g.px - g.sx).toFixed(1) + 'px,' + (g.py - g.sy).toFixed(1) + 'px,0)';
+      dropView.tick(g);
     },
-    probe: function (g) {
-      var z = probePanelZones(g);
-      return z;
-    },
-    onZone: function (g, z) { if (z) preview.show(z.rect, z.label, z.type); else preview.hide(); setAttr(g.chip, 'data-nodrop', !z); },
+    probe: function (g) { return dropZones.probe(g, {}); },
+    onProbe: function (g, z) { dropGuide.update(g, z); },
+    onZone: function (g, z) { dropView.show(g, z); setAttr(g.chip, 'data-nodrop', !z); sayZone(g, z); },
     onDrop: function (g, z) {
       if (!z) return false;
-      if (z.type === 'merge') return PMW.mergePanel(g.panelId, z.panelId);
-      if (z.type === 'root') return PMW.movePanel(g.panelId, '@root', z.edge);
-      return PMW.movePanel(g.panelId, z.panelId, z.edge);
+      dropView.clear({ handoff: true, paint: false });
+      var ok = z.type === 'merge' ? PMW.mergePanel(g.panelId, z.panelId)
+        : PMW.movePanel(g.panelId, z.type === 'root' ? '@root' : z.panelId, z.edge);
+      if (!ok) dropView.glideHome();
+      return ok;
     },
-    onCancel: function (g, how) { if (how !== 'drop') announce('The panel is back where it was'); },
-    onEnd: function (g) { preview.hide(); if (g.chip) g.chip.remove(); if (g.panelEl) g.panelEl.classList.remove('pmw-panel-lifted'); }
+    onCancel: function (g, how) { dropView.clear(); if (how !== 'drop') announce('The panel is back where it was'); },
+    onEnd: function (g) { preview.hide(); dropGuide.end(); if (dropView.active()) dropView.clear({ animate: false }); if (g.chip) g.chip.remove(); if (g.panelEl) g.panelEl.classList.remove('pmw-panel-lifted'); }
   });
 };
-function probePanelZones(g) {
-  // the same zones a torn tab sees, minus strips; never the panel itself
-  var fake = { px: g.px, py: g.py, zone: g.zone, origin: { panelId: g.panelId }, kindMin: g.kindMin, chipW: 120 };
-  var z = probeZones(fake);
-  if (!z) return null;
-  if (z.panelId === g.panelId) return null;
-  if (z.type === 'strip') return { key: 'merge-' + z.panelId, type: 'merge', panelId: z.panelId, rect: rectOf(render.panelEl(z.panelId)), hit: rectOf(render.panelEl(z.panelId)), label: 'Join this panel' };
-  return z;
-}
 /* the grip's keyboard path: Enter opens the Move panel menu (every drag outcome has a menu and keyboard path) */
 panelDrag.keyboard = function (panelId, gripEl) {
   if (model.panels(state.layout).length < 2) { announce('This is the only panel'); return; }
@@ -169052,23 +170483,20 @@ menus.moveTargets = function (panelId) {
     if (q.id === panelId) return;
     var name = tabLabel(l.tabs[q.active]) + ' panel';
     [['left', 'Left of '], ['right', 'Right of '], ['top', 'Above '], ['bottom', 'Below ']].forEach(function (e) {
-      var fits = rects && geom.splitFits(l, q.id, e[0], rects, PMW.panelMin(l, model.panel(l, panelId)));
+      var fits = rects && PMW.roomFits(PMW.hypo.movePanel(panelId, q.id, e[0]));
       if (fits) rows.push({ id: q.id + e[0], label: e[1] + name, icon: e[0] === 'left' || e[0] === 'right' ? 'splitRight' : 'splitDown', run: function () { PMW.movePanel(panelId, q.id, e[0]); } });
     });
     rows.push({ id: q.id + 'merge', label: 'Into ' + name + ' (as tabs)', icon: 'panel', run: function () { PMW.mergePanel(panelId, q.id); } });
   });
   [['left', 'Left edge of the centre'], ['right', 'Right edge of the centre'], ['top', 'Top of the centre'], ['bottom', 'Bottom of the centre']].forEach(function (e) {
+    if (!PMW.roomFits(PMW.hypo.movePanel(panelId, '@root', e[0]))) return;
     rows.push({ id: 'root' + e[0], label: e[1], icon: 'layout', run: function () { PMW.movePanel(panelId, '@root', e[0]); } });
   });
   return { id: 'move:' + panelId, title: 'Move panel', search: { placeholder: 'Find a place' }, rows: rows };
 };
 PMW.mergePanel = function (panelId, intoId) {
   var res = commit(CMD.movePanel, { panelId: panelId, target: { panelId: intoId, edge: 'center' } }, function (d) {
-    var from = model.panel(d, panelId), to = model.panel(d, intoId);
-    if (!from || !to) return false;
-    from.tabs.slice().forEach(function (t) { model.moveTab(d, t, intoId); });
-    d.view.focus = intoId;
-    return {};
+    return PMW.mergePanelMutate(d, panelId, intoId);
   });
   if (res.ok) announce('Tabs moved into the ' + model.describe(state.layout, intoId));
   return res.ok;
@@ -169635,7 +171063,7 @@ function moveTabToward(dir) {
   if (other) { PMW.moveTab(p.active, other, null); return; }
   var edge = { left: 'left', right: 'right', up: 'top', down: 'bottom' }[dir];
   var rects = keyRects();
-  if (p.tabs.length > 1 && rects && geom.splitFits(l, p.id, edge, rects)) PMW.moveTabToSplit(p.active, p.id, edge);
+  if (p.tabs.length > 1 && rects && PMW.roomFits(PMW.hypo.split(p.active, p.id, edge))) PMW.moveTabToSplit(p.active, p.id, edge);
   else announce('There is no panel ' + (dir === 'up' ? 'above' : dir === 'down' ? 'below' : 'to the ' + dir));
 }
 function focusPanelN(n) {
@@ -171256,7 +172684,8 @@ PM_HOME.boot = function () {
      ['narrow ladder', function () { narrow.install(); }],
      ['stand-in chat', function () { if (PMW.standIn) PMW.standIn.install(); }],
      ['tour', function () { if (PMW.tour) PMW.tour.install(); }],
-     ['status bar dock', function () { if (PMW.pageShell) PMW.pageShell.install(); }]
+     ['status bar dock', function () { if (PMW.pageShell) PMW.pageShell.install(); }],
+     ['grab light', function () { PMW.light.bindShell(); }]
     ].forEach(function (step) {
       try { step[1](); } catch (err) { try { console.error('[pm-home] ' + step[0] + ' failed', err); } catch (_) {} }
     });
@@ -176738,6 +178167,7 @@ function mountBrowser(host, st, api) {
   var splitter = h('div', { class: 'pmw-br-split', role: 'separator', tabindex: '0', 'aria-label': 'Resize DevTools', 'data-pm-hover-exempt': 'true' });
   var dockEl = h('aside', { class: 'pmw-br-dock', 'aria-label': 'DevTools' });
   main.appendChild(view); main.appendChild(splitter); main.appendChild(dockEl);
+  if (PMW.light) PMW.light.bind(splitter);      // the shared grab light (56-light.css)
   root.appendChild(main);
 
   /* ---- navigation ---- */
