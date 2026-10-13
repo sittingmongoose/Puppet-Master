@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" data-concept-model="Opus 5.5">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notifications: one system in every look (Opus 5.5)</title>
+<!-- The published PMConcept7 (which carries the notification system: onboarding/opus-5.5 src/js/19-notify.js and
+     src/css/26-notify-*.css) in a frame, with this concept's Notification lab (src/lab.css, src/lab.js) injected when it
+     loads (src/host.js). liquid-glass.html is the same page with the Liquid Glass overlay from Concepts/liquid-glass/opus-5.5. Served over http by the
+     Concept Hub, so the fetches are same-origin. tools/build_preview.py writes the same thing as one file. -->
+<style>
+  html, body { margin: 0; height: 100%; background: #0b0d12; }
+  iframe { display: block; width: 100%; height: 100%; border: 0; }
+  #msg { position: fixed; inset: auto 12px 12px auto; font: 12px/1.4 Inter, system-ui, sans-serif; color: #c8cfdc; }
+</style>
+</head>
+<body>
+<iframe id="pmn-frame" title="PMConcept7 with the notification lab" src="../../PMConcept7.html?o55=off"></iframe>
+<div id="msg" role="status"></div>
+<script src="src/host.js"></script>
+</body>
+</html>

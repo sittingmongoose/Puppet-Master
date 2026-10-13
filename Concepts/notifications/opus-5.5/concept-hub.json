@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "topic": "Notifications",
+  "model": "Opus 5.5",
+  "presentation": "entries",
+  "order": 110,
+  "widthControl": {
+    "enabled": true,
+    "label": "Component width",
+    "role": "page",
+    "min": 1280,
+    "max": 1920,
+    "step": 10,
+    "default": 1920,
+    "presets": [1280, 1600, 1920],
+    "previewWidth": "test"
+  },
+  "entries": [
+    {
+      "id": "notifications-all-looks",
+      "title": "Notifications: toasts, the stack, the inbox and the other notices, in every look",
+      "path": "index.html",
+      "openPath": "index.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["notifications", "toasts", "inbox", "pm7-notifications"],
+      "order": 10
+    },
+    {
+      "id": "notifications-liquid-glass",
+      "title": "Notifications with the Liquid Glass overlay on",
+      "path": "liquid-glass.html",
+      "openPath": "liquid-glass.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["notifications", "glass", "liquid-glass", "pm7-notifications"],
+      "order": 20
+    }
+  ]
+}

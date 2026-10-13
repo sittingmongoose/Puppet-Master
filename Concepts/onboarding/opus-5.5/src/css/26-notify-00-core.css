@@ -1,0 +1,330 @@
+/* PM Notify: the notification system's shared frame and the Basic look (pm7-notifications, Opus 5.5, 2026-10-13).
+   The engine is src/js/19-notify.js; the other looks are 26-notify-10-friendly, -20-retro, -30-glass and -40-nier, and
+   26-notify-50-surfaces restyles the other owners' notices (the Home and Usage notes, the terminal's and the panels'
+   inline notices) in the same language. Every look sets the --pmn-* tokens below and adds its own flourishes.
+   Rules kept: no capsule labels (the count badge and the source kicker are rectangles or plain text), no side stripes
+   (severity is the glyph tile, a tint and the timer line), the title bar slot's width (--rs-stack-w) and the stage
+   element the Home and Usage owners move (#rsStage). */
+
+html {
+  --pmn-w: 344px;
+  --pmn-panel-w: 396px;
+  --pmn-surface: var(--surface-elevated);
+  --pmn-field: var(--surface);
+  --pmn-line: var(--border);
+  --pmn-line-soft: var(--border-light);
+  --pmn-text: var(--text-primary);
+  --pmn-text-2: var(--text-secondary);
+  --pmn-text-3: var(--text-muted);
+  --pmn-r: 10px;
+  --pmn-r-panel: 12px;
+  --pmn-r-item: 9px;
+  --pmn-r-tile: 8px;
+  --pmn-r-btn: var(--pm-ctl-r, 4px);
+  --pmn-tile: 30px;
+  --pmn-shadow: 0 1px 0 rgba(255, 255, 255, .04) inset, 0 14px 34px -12px rgba(0, 0, 0, .55), 0 3px 8px -2px rgba(0, 0, 0, .3);
+  --pmn-shadow-panel: 0 1px 0 rgba(255, 255, 255, .04) inset, 0 24px 60px -18px rgba(0, 0, 0, .6), 0 6px 16px -4px rgba(0, 0, 0, .3);
+  --pmn-on-acc: #0b1420;
+  --pmn-font: var(--body-font, system-ui, sans-serif);
+  --pmn-font-head: var(--display-font, var(--body-font, system-ui, sans-serif));
+  --pmn-hover: color-mix(in srgb, var(--text-primary) 6%, transparent);
+  --pmn-press: color-mix(in srgb, var(--text-primary) 10%, transparent);
+}
+html[data-theme$="light"] {
+  --pmn-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset, 0 14px 34px -14px rgba(20, 24, 40, .28), 0 2px 6px -1px rgba(20, 24, 40, .12);
+  --pmn-shadow-panel: 0 1px 0 rgba(255, 255, 255, .7) inset, 0 26px 60px -20px rgba(20, 24, 40, .32), 0 6px 16px -6px rgba(20, 24, 40, .14);
+  --pmn-on-acc: #ffffff;
+}
+
+/* severity: one accent per notice (the base defines --n-accent on .n-sev-*; these follow the look's own accents) */
+:is(.pmn-toast, .pmn-front, .pmn-item, .pmn-banner) { --pmn-acc: var(--accent-blue); }
+:is(.pmn-toast, .pmn-front, .pmn-item, .pmn-banner).n-sev-success { --pmn-acc: var(--accent-lime); }
+:is(.pmn-toast, .pmn-front, .pmn-item, .pmn-banner).n-sev-warn { --pmn-acc: var(--accent-warning); }
+:is(.pmn-toast, .pmn-front, .pmn-item, .pmn-banner).n-sev-error { --pmn-acc: var(--accent-error); }
+
+.pmn-ico { width: 100%; height: 100%; display: block; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   1. The stack in the title bar: a bell while nothing waits; a deck of cards peeking to the right once something does
+   --------------------------------------------------------------------------------------------------------------- */
+.title-bar .pmn-stack, .pmn-stack {
+  all: unset;
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  width: var(--rs-stack-w, 248px);
+  max-width: 100%;
+  height: 28px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-family: var(--pmn-font);
+  color: var(--pmn-text);
+  -webkit-tap-highlight-color: transparent;
+}
+.pmn-stack:focus { outline: none; }
+.pmn-stack:focus-visible { outline: 2px solid color-mix(in srgb, var(--accent-blue) 75%, transparent); outline-offset: 3px; }
+.pmn-stack[data-state="empty"]:focus-visible { outline: none; }
+.pmn-stack[data-state="empty"]:focus-visible .pmn-bell { box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-blue) 75%, transparent); }
+
+.pmn-bell {
+  position: absolute; left: 50%; top: 0; width: 30px; height: 28px; margin-left: -15px;
+  display: grid; place-items: center; border-radius: 8px; color: var(--pmn-text-3);
+  transition: background-color 160ms ease, color 160ms ease;
+}
+.pmn-bell > .pmn-ico { width: 16px; height: 16px; }
+.pmn-bell-light { display: none; }
+.pmn-stack[data-state="empty"]:hover .pmn-bell, .pmn-stack[data-state="empty"][aria-expanded="true"] .pmn-bell { background: var(--pmn-hover); color: var(--pmn-text-2); }
+.pmn-stack[data-state="filled"] .pmn-bell { visibility: hidden; }
+.pmn-stack[data-state="empty"] .pmn-deck { visibility: hidden; }
+
+.pmn-deck { position: absolute; inset: 0; transform-origin: 50% 50%; }
+.pmn-front, .pmn-peek {
+  position: absolute; left: 0; top: 0; height: 28px; width: calc(100% - 14px);
+  box-sizing: border-box; border-radius: 8px;
+  background: color-mix(in srgb, var(--pmn-acc, var(--accent-blue)) 7%, var(--pmn-surface));
+  border: 1px solid var(--pmn-line);
+  transition: transform 260ms cubic-bezier(.22, 1, .36, 1), opacity 200ms ease, box-shadow 200ms ease;
+}
+.pmn-peek { opacity: 0; pointer-events: none; transform-origin: 100% 50%; background: var(--pmn-surface); }
+.pmn-peek-1 { z-index: 1; }
+.pmn-peek-2 { z-index: 0; }
+.pmn-front { z-index: 2; display: flex; align-items: center; gap: 7px; padding: 0 9px 0 8px; box-shadow: 0 1px 2px rgba(0, 0, 0, .14); }
+.pmn-stack[data-depth="2"] .pmn-peek-1, .pmn-stack[data-depth="3"] .pmn-peek-1 { opacity: .78; transform: translateX(6px) scale(.94); }
+.pmn-stack[data-depth="3"] .pmn-peek-2 { opacity: .46; transform: translateX(12px) scale(.88); }
+.pmn-stack[data-hover][data-depth="2"] .pmn-peek-1, .pmn-stack[data-hover][data-depth="3"] .pmn-peek-1 { transform: translateX(10px) scale(.94); }
+.pmn-stack[data-hover][data-depth="3"] .pmn-peek-2 { transform: translateX(19px) scale(.88); }
+.pmn-stack[data-hover] .pmn-front { transform: translateY(-1px); box-shadow: 0 4px 12px -3px rgba(0, 0, 0, .35); }
+.pmn-stack[aria-expanded="true"] .pmn-front { box-shadow: 0 0 0 1px color-mix(in srgb, var(--pmn-acc) 55%, transparent); }
+.pmn-front-ico { flex: 0 0 auto; width: 14px; height: 14px; color: var(--pmn-acc); }
+.pmn-front-roll { flex: 1 1 auto; min-width: 0; display: grid; overflow: hidden; height: 28px; align-items: center; }
+.pmn-front-roll > .pmn-front-title { grid-area: 1 / 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 600; line-height: 28px; letter-spacing: 0; color: var(--pmn-text); }
+.pmn-front-when { flex: 0 0 auto; font-size: 10.5px; font-weight: 500; color: var(--pmn-text-3); font-variant-numeric: tabular-nums; }
+/* something waits on a decision: the front card keeps its colour ring until it is resolved */
+.pmn-stack[data-needs] .pmn-front { border-color: color-mix(in srgb, var(--pmn-acc) 60%, var(--pmn-line)); }
+
+/* the count badge: unread notices, a small rectangle (never a capsule), in the colour of the most urgent unread */
+.pmn-badge {
+  position: absolute; top: -7px; right: -6px; z-index: 4;
+  min-width: 17px; height: 17px; padding: 0 4px; box-sizing: border-box;
+  display: grid; place-items: center; border-radius: 5px;
+  background: var(--accent-blue); color: var(--pmn-on-acc);
+  font: 800 10.5px/1 var(--pmn-font-head); font-variant-numeric: tabular-nums; letter-spacing: 0;
+  box-shadow: 0 0 0 2px var(--background, #111), 0 2px 6px rgba(0, 0, 0, .3);
+  transform: scale(0); opacity: 0; pointer-events: none;
+  transition: transform 320ms cubic-bezier(.34, 1.56, .64, 1), opacity 140ms ease;
+}
+.pmn-badge[data-on] { transform: none; opacity: 1; }
+.pmn-badge[data-sev="warn"] { background: var(--accent-warning); }
+.pmn-badge[data-sev="error"] { background: var(--accent-error); }
+.pmn-light, .pmn-plus { display: none; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   2. The stage: toasts under the bell, newest on top (the newest is #rsStage's last child; column-reverse shows it
+      first). Home drops the stage past its panel strip; Usage moves it to its stage's bottom right; while the inbox
+      is open the stage sits under it (--pmn-push).
+   --------------------------------------------------------------------------------------------------------------- */
+#rsStage.pmn-stage {
+  width: var(--pmn-w); max-width: calc(100vw - 20px);
+  display: flex; flex-direction: column-reverse; gap: 8px;
+  margin-top: var(--pmn-push, 0px); margin-left: var(--pmn-stage-shift, 0px);
+  z-index: 65; pointer-events: none;
+}
+.pmn-toast {
+  position: relative; box-sizing: border-box; width: 100%;
+  pointer-events: auto; cursor: default; touch-action: pan-y;
+  font-family: var(--pmn-font); color: var(--pmn-text);
+  background: var(--pmn-surface);
+  border: 1px solid var(--pmn-line);
+  border-radius: var(--pmn-r);
+  box-shadow: var(--pmn-shadow);
+  overflow: hidden;
+  user-select: none;
+}
+.pmn-toast[data-level="attention"], .pmn-toast[data-level="blocking"] {
+  background: color-mix(in srgb, var(--pmn-acc) 7%, var(--pmn-surface));
+  border-color: color-mix(in srgb, var(--pmn-acc) 42%, var(--pmn-line));
+}
+.pmn-toast-in { display: grid; grid-template-columns: var(--pmn-tile) minmax(0, 1fr) 22px; gap: 11px; padding: 12px 10px 13px 12px; align-items: start; }
+.pmn-toast[data-level="quiet"] .pmn-toast-in { padding-top: 10px; padding-bottom: 11px; align-items: center; }
+.pmn-tile {
+  width: var(--pmn-tile); height: var(--pmn-tile); box-sizing: border-box; padding: 6px;
+  border-radius: var(--pmn-r-tile); display: block; flex: 0 0 auto;
+  color: var(--pmn-acc); background: color-mix(in srgb, var(--pmn-acc) 15%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmn-acc) 22%, transparent);
+}
+.pmn-text { min-width: 0; }
+.pmn-kicker { display: flex; gap: 6px; align-items: baseline; margin: 0 0 2px; font: 600 10.5px/1.3 var(--pmn-font); color: var(--pmn-text-3); letter-spacing: .02em; }
+.pmn-kicker:empty, .pmn-toast[data-level="quiet"] .pmn-kicker { display: none; }
+.pmn-src { color: color-mix(in srgb, var(--pmn-acc) 70%, var(--pmn-text-2)); }
+.pmn-when:not(:empty)::before { content: "\00b7"; margin-right: 6px; color: var(--pmn-text-3); }
+.pmn-title { font: 600 13px/1.38 var(--pmn-font-head); color: var(--pmn-text); overflow-wrap: anywhere; }
+.pmn-toast .pmn-title { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.pmn-body { margin-top: 2px; font: 450 12px/1.45 var(--pmn-font); color: var(--pmn-text-2); overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.pmn-acts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.pmn-count { position: absolute; top: 9px; right: 34px; font: 800 11px/1 var(--pmn-font-head); color: var(--pmn-acc); font-variant-numeric: tabular-nums; }
+.pmn-count[hidden] { display: none; }
+.pmn-timer {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 2px; display: block;
+  background: color-mix(in srgb, var(--pmn-acc) 80%, transparent); transform-origin: 0 50%; opacity: .75;
+}
+.pmn-toast[data-level="quiet"] .pmn-timer { opacity: .45; }
+.pmn-toast.pmn-leaving .pmn-timer, .pmn-toast.pmn-flying .pmn-timer { visibility: hidden; }
+.pmn-toast.pmn-flying { z-index: 5; }
+/* while Usage shows, the notices sit at its stage's bottom right and take no pointer (the Usage owner's rule) */
+body.pmu-page-active #rsStage .pmn-toast { pointer-events: none !important; }
+
+/* dismiss: always there, quieter until the card is hovered or focused */
+.pmn-x {
+  all: unset; box-sizing: border-box; width: 22px; height: 22px; padding: 4px; border-radius: var(--pmn-r-btn);
+  color: var(--pmn-text-3); opacity: .62; cursor: pointer; display: grid; place-items: center;
+  transition: opacity 120ms ease, background-color 120ms ease, color 120ms ease;
+}
+.pmn-x:hover { opacity: 1; color: var(--pmn-text); background: var(--pmn-hover); }
+.pmn-x:focus-visible { opacity: 1; outline: 2px solid color-mix(in srgb, var(--accent-blue) 70%, transparent); outline-offset: 1px; }
+:is(.pmn-toast, .pmn-item):hover .pmn-x { opacity: .9; }
+
+/* action buttons: rectangles with the look's control corner */
+.pmn-btn {
+  all: unset; box-sizing: border-box; height: 26px; padding: 0 10px; border-radius: var(--pmn-r-btn);
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;
+  font: 600 11.5px/1 var(--pmn-font); letter-spacing: 0; white-space: nowrap;
+  color: var(--pmn-text); background: color-mix(in srgb, var(--pmn-text) 6%, transparent);
+  box-shadow: inset 0 0 0 1px var(--pmn-line);
+  transition: background-color 120ms ease, transform 120ms ease, box-shadow 120ms ease, color 120ms ease;
+}
+.pmn-btn:hover { background: color-mix(in srgb, var(--pmn-text) 11%, transparent); }
+.pmn-btn:active { transform: translateY(1px); }
+.pmn-btn:focus-visible { outline: 2px solid color-mix(in srgb, var(--accent-blue) 75%, transparent); outline-offset: 2px; }
+.pmn-btn-primary { background: var(--pmn-acc); color: var(--pmn-on-acc); box-shadow: none; }
+.pmn-btn-primary:hover { background: color-mix(in srgb, var(--pmn-acc) 86%, var(--pmn-text)); }
+.pmn-btn-danger { color: var(--accent-error); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-error) 45%, var(--pmn-line)); }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   3. The inbox: a sprout panel under the stack. Groups by source ("Needs you" first); a source with three or more
+      notices folds into a deck that opens on click.
+   --------------------------------------------------------------------------------------------------------------- */
+.pmn-panel {
+  position: absolute; top: calc(100% + 8px); left: 50%; z-index: 70;
+  width: var(--pmn-panel-w); max-width: calc(100vw - 20px);
+  translate: calc(-50% + var(--pmn-shift, 0px)) 0;
+  font-family: var(--pmn-font); color: var(--pmn-text);
+}
+.pmn-panel[hidden] { display: none; }
+.pmn-chrome {
+  position: relative; box-sizing: border-box; display: flex; flex-direction: column;
+  max-height: min(580px, calc(100vh - 90px)); overflow: hidden;
+  background: var(--pmn-surface); border: 1px solid var(--pmn-line); border-radius: var(--pmn-r-panel);
+  box-shadow: var(--pmn-shadow-panel);
+}
+.pmn-head { display: flex; align-items: center; gap: 8px; padding: 11px 10px 10px 14px; border-bottom: 1px solid var(--pmn-line-soft); flex: 0 0 auto; }
+.pmn-head-ico { width: 15px; height: 15px; color: var(--pmn-text-2); }
+.pmn-head-title { margin: 0; font: 700 13.5px/1.2 var(--pmn-font-head); color: var(--pmn-text); letter-spacing: 0; }
+.pmn-head-count { font: 700 11px/1 var(--pmn-font); color: var(--accent-blue); font-variant-numeric: tabular-nums; }
+.pmn-head-gap { flex: 1 1 auto; }
+.pmn-textbtn {
+  all: unset; box-sizing: border-box; height: 24px; padding: 0 8px; border-radius: var(--pmn-r-btn); cursor: pointer;
+  font: 600 11.5px/24px var(--pmn-font); color: var(--pmn-text-2); white-space: nowrap;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.pmn-textbtn:hover { background: var(--pmn-hover); color: var(--pmn-text); }
+.pmn-textbtn:focus-visible { outline: 2px solid color-mix(in srgb, var(--accent-blue) 70%, transparent); outline-offset: 1px; }
+.pmn-textbtn[hidden] { display: none; }
+.pmn-textbtn-clear:hover { color: var(--accent-error); }
+.pmn-scroll {
+  position: relative; flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain;
+  padding: 6px 8px 16px;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 96%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 96%, transparent 100%);
+  scrollbar-width: thin;
+}
+.pmn-panel[data-empty] .pmn-scroll { -webkit-mask-image: none; mask-image: none; padding-bottom: 8px; }
+.pmn-panel[data-empty] .pmn-head { border-bottom-color: transparent; }
+.pmn-list { position: relative; display: flex; flex-direction: column; gap: 2px; }
+.pmn-group { display: flex; flex-direction: column; gap: 2px; }
+.pmn-group + .pmn-group { margin-top: 4px; }
+.pmn-group-head { display: flex; align-items: center; gap: 7px; padding: 8px 6px 4px 8px; font: 650 10.5px/1.2 var(--pmn-font); letter-spacing: .05em; text-transform: uppercase; color: var(--pmn-text-3); }
+.pmn-group-ico { width: 13px; height: 13px; }
+.pmn-group[data-group="needs"] .pmn-group-head { color: var(--accent-warning); }
+.pmn-group-n { font-variant-numeric: tabular-nums; opacity: .8; }
+.pmn-group-fold {
+  all: unset; margin-left: auto; display: inline-flex; align-items: center; gap: 3px; cursor: pointer; padding: 2px 6px; border-radius: var(--pmn-r-btn);
+  font: 600 10.5px/1.4 var(--pmn-font); letter-spacing: 0; text-transform: none; color: var(--pmn-text-2);
+}
+.pmn-group-fold:hover { background: var(--pmn-hover); color: var(--pmn-text); }
+.pmn-group-fold[hidden] { display: none; }
+.pmn-group-fold .pmn-ico { width: 13px; height: 13px; transition: transform 200ms ease; }
+.pmn-group-fold[aria-expanded="true"] .pmn-ico { transform: rotate(180deg); }
+.pmn-fold { display: none; }
+
+.pmn-item {
+  position: relative; box-sizing: border-box; display: grid; grid-template-columns: 28px minmax(0, 1fr) 22px; gap: 10px;
+  padding: 10px 8px 10px 14px; border-radius: var(--pmn-r-item); cursor: pointer; outline: none;
+  transition: background-color 140ms ease;
+}
+.pmn-item:hover { background: var(--pmn-hover); }
+.pmn-item:focus-visible { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--accent-blue) 70%, transparent); }
+.pmn-item .pmn-tile { width: 28px; height: 28px; padding: 5.5px; }
+.pmn-unread { position: absolute; left: 4px; top: 21px; width: 6px; height: 6px; border-radius: 50%; background: var(--pmn-acc); opacity: 0; transform: scale(.4); transition: opacity 200ms ease, transform 260ms cubic-bezier(.34, 1.56, .64, 1); }
+.pmn-item.is-unread .pmn-unread { opacity: 1; transform: none; }
+.pmn-item-title { font: 600 12.5px/1.38 var(--pmn-font-head); color: var(--pmn-text); overflow-wrap: anywhere; }
+.pmn-item-body { margin-top: 1px; font: 450 12px/1.45 var(--pmn-font); color: var(--pmn-text-2); overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.pmn-item-body[hidden] { display: none; }
+.pmn-item-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; font: 500 10.5px/1.3 var(--pmn-font); color: var(--pmn-text-3); font-variant-numeric: tabular-nums; }
+.pmn-item-src { display: none; }
+.pmn-item-life { color: var(--accent-error); font-weight: 650; }
+.pmn-item-life[hidden], .pmn-item-extra[hidden], .pmn-item-acts[hidden], .pmn-acts[hidden] { display: none; }
+.pmn-item-acts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+.pmn-item .pmn-count { top: 12px; right: 34px; }
+.pmn-item.pmn-leaving { z-index: 3; pointer-events: none; }
+.pmn-item-extra { margin-top: 8px; display: grid; gap: 6px; }
+.pmn-explain { padding: 8px 10px; border-radius: var(--pmn-r-btn); font: 450 11.5px/1.45 var(--pmn-font); color: var(--pmn-text-2); background: color-mix(in srgb, var(--accent-blue) 9%, transparent); }
+.pmn-pattern { display: flex; align-items: center; gap: 8px; font: 600 11px/1 var(--pmn-font); color: var(--pmn-text-3); }
+.pmn-pattern input, .pmn-rationale {
+  box-sizing: border-box; flex: 1; min-width: 0; padding: 6px 8px; border-radius: var(--pmn-r-btn);
+  font: 500 11.5px/1.4 var(--mono-font, ui-monospace, monospace); color: var(--pmn-text);
+  background: var(--pmn-field); border: 1px solid var(--pmn-line); outline: none;
+}
+.pmn-rationale { width: 100%; resize: vertical; font-family: var(--pmn-font); }
+.pmn-rationale[data-missing] { border-color: var(--accent-error); }
+.pmn-pattern input:focus, .pmn-rationale:focus { border-color: color-mix(in srgb, var(--accent-blue) 70%, var(--pmn-line)); }
+
+/* a folded source: the newest notice in front, two slivers under it */
+.pmn-group[data-folded="true"] .pmn-item[data-under] {
+  height: 7px; min-height: 0; padding: 0; margin: -3px 12px 0; overflow: hidden; cursor: pointer;
+  background: color-mix(in srgb, var(--pmn-text) 7%, var(--pmn-surface)); border-radius: 0 0 8px 8px;
+  box-shadow: inset 0 0 0 1px var(--pmn-line-soft);
+}
+.pmn-group[data-folded="true"] .pmn-item[data-under] > * { visibility: hidden; }
+.pmn-group[data-folded="true"] .pmn-item[data-under] + .pmn-item[data-under] { margin-left: 24px; margin-right: 24px; opacity: .7; }
+.pmn-group[data-folded="true"] .pmn-item:not([data-under]) { box-shadow: inset 0 0 0 1px var(--pmn-line-soft); background: color-mix(in srgb, var(--pmn-text) 3%, transparent); }
+
+.pmn-empty { display: grid; justify-items: center; gap: 6px; padding: 26px 24px 22px; text-align: center; }
+.pmn-empty[hidden] { display: none; }
+.pmn-empty-art { width: 52px; height: 52px; display: grid; place-items: center; border-radius: 14px; color: var(--pmn-text-3); background: color-mix(in srgb, var(--pmn-text) 6%, transparent); margin-bottom: 6px; }
+.pmn-empty-art > .pmn-ico { width: 24px; height: 24px; }
+.pmn-empty-art > i { display: none; }
+.pmn-empty-title { font: 650 13px/1.3 var(--pmn-font-head); color: var(--pmn-text); }
+.pmn-empty-sub { max-width: 270px; font: 450 11.5px/1.45 var(--pmn-font); color: var(--pmn-text-3); }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   4. Banner (Settings: How Alerts Appear = Banner): one strip under the title bar
+   --------------------------------------------------------------------------------------------------------------- */
+.pmn-banner {
+  position: fixed; top: 46px; left: 50%; translate: -50% 0; z-index: 80; box-sizing: border-box;
+  width: min(760px, calc(100vw - 40px)); display: flex; align-items: center; gap: 10px; padding: 8px 8px 9px 10px;
+  font-family: var(--pmn-font); color: var(--pmn-text); overflow: hidden;
+  background: color-mix(in srgb, var(--pmn-acc) 8%, var(--pmn-surface)); border: 1px solid color-mix(in srgb, var(--pmn-acc) 40%, var(--pmn-line));
+  border-radius: var(--pmn-r); box-shadow: var(--pmn-shadow);
+}
+.pmn-banner .pmn-tile { width: 26px; height: 26px; padding: 5px; }
+.pmn-banner-text { flex: 1 1 auto; min-width: 0; display: flex; gap: 8px; align-items: baseline; overflow: hidden; white-space: nowrap; }
+.pmn-banner-text .n-title { font: 650 12.5px/1.3 var(--pmn-font-head); overflow: hidden; text-overflow: ellipsis; }
+.pmn-banner-text .n-body { font: 450 12px/1.3 var(--pmn-font); color: var(--pmn-text-2); overflow: hidden; text-overflow: ellipsis; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   5. Reduced Motion: end states at once (the engine plays nothing; these stop the CSS transitions too)
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-motion="reduced"] :is(.pmn-front, .pmn-peek, .pmn-badge, .pmn-unread, .pmn-bell, .pmn-x, .pmn-btn, .pmn-item, .pmn-group-fold .pmn-ico) { transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  :is(.pmn-front, .pmn-peek, .pmn-badge, .pmn-unread, .pmn-bell, .pmn-x, .pmn-btn, .pmn-item, .pmn-group-fold .pmn-ico) { transition: none !important; }
+}
