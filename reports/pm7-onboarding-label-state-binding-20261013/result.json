@@ -1,0 +1,348 @@
+{
+  "schema": "pm7-onboarding-S8-state-binding/v1",
+  "at": "2026-10-13T13:19:16.449137+00:00",
+  "mechanical_status": "READY_FOR_ROOT_REVIEW",
+  "overall_status": "HOLD",
+  "authority": {
+    "GO": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-13-creative-queue/ONBOARDING-STATE-BINDING-CORRECTION-GO.md",
+      "sha256": "1b7494be887e4d6b6f3fa63b51a696ba49c222e0dfbd2704bf6687c7a934a853"
+    },
+    "owner_review_sha256": "d6b6053ee10b4a26af15f3025ae051098ad767057e78b3e8b29faf9a15712b06",
+    "root_disposition_sha256": "f436f8bfedf82a90981928fec20610483156200e8400bf4994215520fd79f3ef",
+    "actual_mechanical_message_id": "message:mcp:4103467a-6a3c-4191-a4dc-ae5ad70ae674:thread-send:home-planner-onboarding-state-binding-own-correction-20261013-v1",
+    "phase_B_execution_authorized": false
+  },
+  "inputs": {
+    "clean_start_head": "f4ab6db2783aeb368635a471e483a17500bbf910",
+    "parent_tool_head": "7e4025ba42b4b5b1ce08029ac25ac04ae00cc00a",
+    "historical_tool_bytes": 151473,
+    "historical_tool_sha256": "38e8b5aa255849466df28a55f39c2d1aebfb9e4cca25cd6a1a3a31dd5dab621c",
+    "candidate_head": "f109bad9f312ca0f55887f069dd4328dc17f7b9e",
+    "candidate_page": "Concepts/PMConcept7.html",
+    "candidate_sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+    "base_head": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
+    "base_sha256": "b612df00caa2e2fb13b9b2307a17f283358845b596f33a27a31ba55d40266451",
+    "composition_head": "967653b5265e27b13cf0c300dd0b1b0599c2d482",
+    "source_pages": {
+      "Concepts/PMConcept7.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact_source": true
+      },
+      "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact_source": true
+      },
+      "Concepts/HomeTestPMConcept7.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact_source": true
+      },
+      "Concepts/LeftRailPMConcept7.html": {
+        "bytes": 19237474,
+        "sha256": "13d002fc7057c17270cbc149457cee588df423b8a3543fa5a5359901d7cba8bb",
+        "exact_source": true
+      }
+    }
+  },
+  "tested_tool": {
+    "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs",
+    "bytes": 175446,
+    "sha256": "3800ab79c19d063895cbb94b371bcfe71b56a48f480180f5920a0f53f3c86558"
+  },
+  "fixture_contract": {
+    "version": "onboarding-named-tour/PA2-v2",
+    "authority": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-13-creative-queue/ONBOARDING-STATE-BINDING-CORRECTION-GO.md",
+      "sha256": "1b7494be887e4d6b6f3fa63b51a696ba49c222e0dfbd2704bf6687c7a934a853"
+    },
+    "owner_review_sha256": "d6b6053ee10b4a26af15f3025ae051098ad767057e78b3e8b29faf9a15712b06",
+    "root_disposition_sha256": "f436f8bfedf82a90981928fec20610483156200e8400bf4994215520fd79f3ef",
+    "source_markers": {
+      "core": {
+        "sha256": "8137a7c2ff780b70d3b17824539befc579c91be2d41e855c112dda16a26b17d4",
+        "lines": [
+          257,
+          265,
+          617,
+          627,
+          634,
+          688,
+          695,
+          1050
+        ]
+      },
+      "steps": {
+        "sha256": "d177465c0e3d61bfaf4a6fcfa92ff0ad3e5d33297514ddb3ea0a373b5f521256",
+        "lines": [
+          154,
+          165
+        ]
+      },
+      "practice": {
+        "sha256": "8aac0bc0d4163c421d1b2ddda4b6fa36c3dff9e201299d9e558c56122773c545",
+        "lines": [
+          20,
+          39
+        ]
+      }
+    },
+    "expectation": "Pre-action non-intro contexts retain TryIt; completed book practice requires its own completed state and Guided example badge, with no TryIt borrowed from three_outcomes.",
+    "historical_reports_unchanged": true,
+    "renderer_or_performance_proof": false
+  },
+  "named_state_receipt_fields": [
+    "public O55.tour.state()",
+    "actual callout data-step/title/visibility",
+    "done flags/success class",
+    "actual practice/badge words/visibility",
+    "browser/host UTC and monotonic/time-origin receipts",
+    "actual URL/look/motion/viewport",
+    "before/after collection and separate frame receipts",
+    "owned-page observed trusted ShowMe input and pre/post-action receipts"
+  ],
+  "state_disposition": "Unavailable, conflicting, stale, changing, timed-out or missed phase remains UNVERIFIED/HOLD with raw record; no Back/restart/private hook/force/pause",
+  "frame_capability": {
+    "same_existing_snapshot_only": true,
+    "trigger": "unchanged uniform sampler paint/geometry or background/ink rejection",
+    "artifact": "unmodified ordinary-page PNG, separately bound hash/dimensions/source/look/URL/motion/viewport/state receipts",
+    "new_measurement_method": false,
+    "contrast_or_renderer_acceptance": false,
+    "retry_or_extra_context": false,
+    "actual_browser_or_capture_this_run": 0,
+    "controlled_PNG_fixtures_only": true
+  },
+  "verification": {
+    "attempts": [
+      {
+        "attempt": 1,
+        "passed": 75,
+        "failed": 1,
+        "tool": {
+          "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs",
+          "bytes": 175122,
+          "sha256": "0cfd745f4ae94c48b504e37fe421a31fe9889eea8c4b06b4ec4a62aa1fbb7649"
+        },
+        "failure": "controlled window output-unbound evidence HOLD retained"
+      },
+      {
+        "attempt": 2,
+        "passed": 13,
+        "failed": 0,
+        "tool": {
+          "path": "/home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs",
+          "bytes": 175446,
+          "sha256": "3800ab79c19d063895cbb94b371bcfe71b56a48f480180f5920a0f53f3c86558"
+        },
+        "scope": "source\\/contract|windowView|frame guard|ordinary frame|screenshot|borrowed frame|unsupported word pixels"
+      }
+    ],
+    "final_affected_checks_passed": 13,
+    "unrepeated_passed_via_exact_S8_bodies": 65,
+    "unchanged_S8_functions": [
+      "readCaptureState",
+      "observeCaptureState",
+      "classifyNamedTourState",
+      "completedPracticeInputVerified",
+      "bindNamedTourSnapshot",
+      "waitNamedTourState",
+      "needsRenderedFrame",
+      "captureRenderedFrame",
+      "captureBoundSnapshot",
+      "captureNamedTourSnapshot",
+      "judgeNamedTourRecord",
+      "tourWalk",
+      "judgeRun"
+    ],
+    "distinct_new_case_outcomes": 78,
+    "all_cases_reexecuted_on_final": false,
+    "unresolved_test_failures": 0,
+    "original19_26_58_75_example_suite_replays": 0,
+    "syntax_whitespace": "PASS",
+    "exact_working_retained_tested_bytes": true
+  },
+  "custody": {
+    "at": "2026-10-13T13:12:03.060478+00:00",
+    "start": "f4ab6db2783aeb368635a471e483a17500bbf910",
+    "head": "f4ab6db2783aeb368635a471e483a17500bbf910",
+    "starting_entries": 16046,
+    "outside_successor_Git_physical_bytes_modes_exact": 16045,
+    "current_entries": 16046,
+    "delta": [
+      "Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs"
+    ],
+    "old_evidence_dirs": 9,
+    "old_evidence_files_modes_seals_exact": 689,
+    "helper_history_exact": 103,
+    "peer_profiles_exact": 3,
+    "helper_configuration_exact": true,
+    "controlling_share_files_exact": 35,
+    "source_pages": {
+      "Concepts/PMConcept7.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact_source": true
+      },
+      "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact_source": true
+      },
+      "Concepts/HomeTestPMConcept7.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact_source": true
+      },
+      "Concepts/LeftRailPMConcept7.html": {
+        "bytes": 19237474,
+        "sha256": "13d002fc7057c17270cbc149457cee588df423b8a3543fa5a5359901d7cba8bb",
+        "exact_source": true
+      }
+    },
+    "tool_sha256": "3800ab79c19d063895cbb94b371bcfe71b56a48f480180f5920a0f53f3c86558",
+    "tool_bytes": 175446,
+    "failures": [],
+    "pass": true
+  },
+  "historical_product_coverage": {
+    "run7_wide_attempted": 5,
+    "first4_collection_records": 4,
+    "fifth_reachability_HOLD": 1,
+    "wide_NOT_RUN": 19,
+    "narrow_NOT_RUN": 12,
+    "historical_state_or_reports_upgraded": false
+  },
+  "new_product_coverage": {
+    "actual_browser_starts_stops": 0,
+    "actual_captures": 0,
+    "product_pairs": 0,
+    "live_PhaseB_bindings": 0,
+    "source_staging_or_import": 0,
+    "source_or_criteria_wide_repair": 0
+  },
+  "held": [
+    "PA3 requires complete root mechanical code/custody review and separate exact execution GO",
+    "full source/product/look/criteria/canon/landing acceptance",
+    "old reachability cause UNKNOWN; no retrospective waiver",
+    "4.5 absolute word floor for unsupported/missing paint/pixels",
+    "renderer remains UNVERIFIED",
+    "needs/fail/address/renderers/marks and square ink",
+    "Wizard/non-label/control/canon ownership",
+    "unpaired contexts and geometry findings",
+    "19wide+12narrow NOT_RUN",
+    "384@intermediate97256a vs4@final88ed historical method/transient/fallback limits",
+    "three UNKNOWN peer profile debts untouched, no peerresources0 claim"
+  ],
+  "scoped_owner_rulings": {
+    "reference": "ROOT-DISPOSITION-ROUND1.json f436f8bf",
+    "scope": "BasicLight window look/specific two dimensions/real marks and DOM-flow only; not test exemptions or unseen look approval",
+    "worker_new_look_decisions": false
+  },
+  "evidence": {
+    "raw_root": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-state-binding-20261013",
+    "committable_seal": {
+      "bytes": 5125,
+      "sha256": "12c6887f54e3c670f483e6682fccab2d211323f47763f82eaf3deb2841330025",
+      "entries": 28
+    },
+    "artifacts": {
+      "actual-s8-authority-and-thread.json": {
+        "bytes": 14596,
+        "sha256": "ff112be65783331b1e45f46b02c98e51052f8f6385332cf64e6f9f9f202a5f53"
+      },
+      "historical-7e-tool.mjs": {
+        "bytes": 151473,
+        "sha256": "38e8b5aa255849466df28a55f39c2d1aebfb9e4cca25cd6a1a3a31dd5dab621c"
+      },
+      "starting-custody.json": {
+        "bytes": 4114512,
+        "sha256": "a8a83213de49775c0a43ee363c252ebd90b0350406aa571fc8898cc0de9cd41e"
+      },
+      "controlling-share-files.json": {
+        "bytes": 8012,
+        "sha256": "d874bf233ad8252ec3b4520311bccf7a88c75e9b84d328693da253e9e1936214"
+      },
+      "source-phase-proof.json": {
+        "bytes": 2791,
+        "sha256": "33d02e2fd044af14bebb3d0daed32d64c6e7b24bc26d1e653bec848ba29921dc"
+      },
+      "attempt-1-results.json": {
+        "bytes": 12382,
+        "sha256": "96b22341411b89bf8bb15c9705f83f65de08fe9d9cf6ac17c08117e049b1ef2e"
+      },
+      "attempt-1-protocol-receipts.json": {
+        "bytes": 760479,
+        "sha256": "ba2e8466574f45741a8af717cd4d39948099f2822f6bbc47e6f6ccba69490829"
+      },
+      "attempt-1-tool.mjs": {
+        "bytes": 175122,
+        "sha256": "0cfd745f4ae94c48b504e37fe421a31fe9889eea8c4b06b4ec4a62aa1fbb7649"
+      },
+      "attempt-1-isolated-s8.mjs": {
+        "bytes": 32045,
+        "sha256": "95843296cbe6fb3b386a710091277fcd83fca16a92b442554f0faa0552642e47"
+      },
+      "attempt-2-results.json": {
+        "bytes": 5182,
+        "sha256": "b95ef6c4ad91fa0518c0b3f3f3fc5697ea9c40d4bec7f90c50a61a4203f2ad0a"
+      },
+      "attempt-2-protocol-receipts.json": {
+        "bytes": 432513,
+        "sha256": "cf18583d1f941cc238071b0fcc270ee514a5f228ddb124beeceb490fa3240d56"
+      },
+      "attempt-2-tool.mjs": {
+        "bytes": 175446,
+        "sha256": "3800ab79c19d063895cbb94b371bcfe71b56a48f480180f5920a0f53f3c86558"
+      },
+      "attempt-2-isolated-s8.mjs": {
+        "bytes": 32976,
+        "sha256": "a6b958dddb034ea8b8b64b5f5db82d24ab5530b86baf7d7f09142516787397ca"
+      },
+      "fixture-contract.json": {
+        "bytes": 1302,
+        "sha256": "e7e8ac8b5aacf0448f3644fe7ed91a6ea3e5df1593cef1097416c7ddc41b02a5"
+      },
+      "tested-edition-equivalence.json": {
+        "bytes": 20643,
+        "sha256": "d99a24cbdcd2c8eb704c0a8ead3115727399f86f8a55ab8fafbc4ca60f15fd37"
+      },
+      "precommit-custody.json": {
+        "bytes": 1495,
+        "sha256": "d1393648bf696b922fca2881e595bd242040ce1cfb38d9216c1d4a77fc16c006"
+      },
+      "static-checks.json": {
+        "bytes": 659,
+        "sha256": "bde82a0ee3204aead24f253d6abae29f59f2852cf23c4aebaf325ba5c5ca0bac"
+      },
+      "successor-code-delta.patch": {
+        "bytes": 38683,
+        "sha256": "d4ac80c01d56e1f83d5a35be1e620fc9e4d068f10655532f3e7c09a18e0a9fe9"
+      },
+      "retained-fixture-frame-map.json": {
+        "bytes": 12055,
+        "sha256": "de5975d7b6fcbe74c6e3967dbd6a6059554e5fcf437172e420fc0e45f0188d96"
+      },
+      "implementation-attempt-notes.json": {
+        "bytes": 743,
+        "sha256": "8e938df5dc3be1239476793980bcb0943325c3cbf88400a6340fa320ae03cbb1"
+      }
+    },
+    "final_head_receipt": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-state-binding-20261013/final-head-receipt.json",
+    "final_seal": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-state-binding-20261013/FINAL-SEAL.json"
+  },
+  "resources": {
+    "new_actual_browsers_profiles_servers_children": 0,
+    "owned_waiter_while_active": 1,
+    "old_waiter42350": "actual timeout consumed0; fresh94852 rearmed after inbox clear",
+    "final_proof": "ALL OWN jobs/commands/waiters/browsers/profiles/servers/scratch/runtime0 in final-head-receipt after exact waiter consumption/local fixture cleanup",
+    "peer_resources0_claim": false
+  },
+  "owned_paths": [
+    "Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs",
+    "reports/pm7-onboarding-label-state-binding-20261013/NOTES.md",
+    "reports/pm7-onboarding-label-state-binding-20261013/result.json"
+  ],
+  "next": "Root mechanical/test-only review; PA3 separate GO mandatory; no self-next or owner wake"
+}

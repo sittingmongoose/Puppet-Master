@@ -127,6 +127,22 @@ const R_TOUR = { scope: 'tour', roots: ['#pm-o55-tour', '[class*="o55p-"]:not(.o
 
 
 const TOUR_STEPS = ['comfort_intro', 'open_chat', 'same_answer_eli5', 'book_club_goal', 'book_club_goal:practice', 'three_outcomes'];
+/* PA-1/PA-2 are a NEW fixture edition, never a retrospective interpretation of 7e/run7. */
+export const TOUR_FIXTURE_CONTRACT = {
+  version:'onboarding-named-tour/PA2-v2',
+  authority:{path:'/mnt/Cursor/share/puppet-master/2026-10-13-creative-queue/ONBOARDING-STATE-BINDING-CORRECTION-GO.md',sha256:'1b7494be887e4d6b6f3fa63b51a696ba49c222e0dfbd2704bf6687c7a934a853'},
+  owner_review_sha256:'d6b6053ee10b4a26af15f3025ae051098ad767057e78b3e8b29faf9a15712b06',
+  root_disposition_sha256:'f436f8bfedf82a90981928fec20610483156200e8400bf4994215520fd79f3ef',
+  source_markers:{core:{sha256:'8137a7c2ff780b70d3b17824539befc579c91be2d41e855c112dda16a26b17d4',lines:[257,265,617,627,634,688,695,1050]},
+    steps:{sha256:'d177465c0e3d61bfaf4a6fcfa92ff0ad3e5d33297514ddb3ea0a373b5f521256',lines:[154,165]},
+    practice:{sha256:'8aac0bc0d4163c421d1b2ddda4b6fa36c3dff9e201299d9e558c56122773c545',lines:[20,39]}},
+  expectation:'Pre-action non-intro contexts retain TryIt; completed book practice requires its own completed state and Guided example badge, with no TryIt borrowed from three_outcomes.',
+  historical_reports_unchanged:true,renderer_or_performance_proof:false,
+};
+const TOUR_TITLES = {
+  comfort_intro:'Let’s make Puppet Master feel familiar.',open_chat:'Assistant Chat is where you ask Puppet Master for help.',
+  same_answer_eli5:'Teacher can explain an answer more simply.',book_club_goal:'Start with a practice goal.',three_outcomes:'The idea becomes three clear outcomes.',
+};
 const EXPECT_LABELS = {
   where: { '.o55-chip': 3, '.o55-tag': 1 }, look: { '.o55-tag': 1 }, begin: { '.o55-tag': 1 },
   'c-review': { '.o55-tag': 1, '.o55-routelink > span': 1 }, name: { '.o55-suggestchip': 3 },
@@ -747,11 +763,158 @@ async function measure(page,d) {
   for(const L of d.labels) { try { L.contrast=await contrastOf(page,L); } catch(e) { L.contrast={error:String(e.stack||e)}; } }
 }
 
+/* Read-only public/DOM receipts. No observer, private phase hook, pause or state mutation. */
+export function readCaptureState(scope) {
+  const started_at=new Date().toISOString(),errors=[];
+  const visible=(el) => {
+    if(!el||!el.getClientRects().length)return false;
+    const r=el.getBoundingClientRect();if(!(r.width>0&&r.height>0))return false;
+    for(let e=el;e;e=e.parentElement){const s=getComputedStyle(e);if(s.display==='none'||s.visibility!=='visible'||!(parseFloat(s.opacity)>0)||e.hasAttribute('hidden')||e.hasAttribute('inert'))return false;}
+    return true;
+  };
+  let public_state=null;
+  try {if(typeof window.O55?.tour?.state!=='function')errors.push('O55.tour.state unavailable');else public_state=window.O55.tour.state();}
+  catch(e){errors.push(String(e.stack||e));}
+  const root=document.querySelector('#pm-o55-tour'),callouts=[...document.querySelectorAll('#pm-o55-tour .o55t-callout')];
+  const c=callouts[0],h=c?.querySelector('.o55t-title');
+  const nodes=(selector) => [...document.querySelectorAll(selector)].map((e) => ({text:(e.textContent||'').trim().replace(/\s+/g,' '),visible:visible(e)}));
+  const layer=document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)');
+  const wr=document.querySelector('#pm-o55-onboarding');
+  let window_screen=null;try{window_screen=window.O55?.S?.sess?.screen??null;}catch(e){errors.push(String(e.stack||e));}
+  return {schema:'onboarding-capture-state/v2',scope,started_at,observed_at:new Date().toISOString(),
+    clock:{time_origin:performance.timeOrigin,monotonic_ms:performance.now()},url:document.URL,ready_state:document.readyState,
+    look:{theme:document.documentElement.dataset.theme,nier:document.documentElement.getAttribute('data-o55-nier'),parts:document.documentElement.getAttribute('data-o55-nier-parts')||'',reduced:matchMedia('(prefers-reduced-motion: reduce)').matches},
+    viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},public_state,
+    tour_root:{present:!!root,visible:visible(root),class:root?.className??null,show_me:root?.getAttribute('data-showme')??null,paused:root?.getAttribute('data-paused')??null},
+    callout:{count:callouts.length,present:!!c,visible:visible(c),data_step:c?.getAttribute('data-step')??null,title:h?.textContent?.trim()??null,title_visible:visible(h),success:c?c.classList.contains('o55t-success'):null,
+      class:c?.className??null,try_labels:nodes('#pm-o55-tour .o55t-callout .o55t-trylabel'),buttons:c?[...c.querySelectorAll('[data-o55t]')].map((e) => ({action:e.getAttribute('data-o55t'),text:e.textContent,visible:visible(e)})):[]},
+    practice:{active:document.querySelector('#panel-wizard')?.classList.contains('o55p-practice')??false,badges:nodes('.o55p-badge')},
+    window_state:{screen:window_screen,layer_screen:layer?.getAttribute('data-screen')??null,visible:visible(layer),root_class:wr?.className??null,layer_class:layer?.className??null,
+      selected:layer?[...layer.querySelectorAll('.o55-on')].map((e) => ({key:e.getAttribute('data-key'),text:e.textContent})):[]},errors};
+}
+export async function observeCaptureState(page,scope) {
+  const started_at=new Date().toISOString();
+  try {const state=await page.evaluate(readCaptureState,scope);return {...state,host_started_at:started_at,host_observed_at:new Date().toISOString()};}
+  catch(e){return {schema:'onboarding-capture-state/v2',scope,host_started_at:started_at,host_observed_at:new Date().toISOString(),errors:[String(e.stack||e)]};}
+}
+function stateReceiptProblems(s,expected) {
+  const bad=[];
+  if(s?.schema!=='onboarding-capture-state/v2'||!Array.isArray(s.errors)||s.errors.length)bad.push('state-observation-unavailable');
+  if(!Number.isFinite(Date.parse(s?.started_at))||!Number.isFinite(Date.parse(s?.observed_at))||Date.parse(s.observed_at)<Date.parse(s.started_at)||
+    !Number.isFinite(s?.clock?.time_origin)||!(s.clock.time_origin>0)||!Number.isFinite(s?.clock?.monotonic_ms)||s.clock.monotonic_ms<0)bad.push('state-timestamps-unavailable');
+  if(s?.ready_state!=='complete'||s?.url!==expected.url||!expected.source_head||!expected.page_sha256)bad.push('state-page-binding-unconfirmed');
+  const look=LOOKS.find((l) => l.id===expected.look);
+  if(!look||s?.look?.theme!==look.family+'-'+look.mode||s?.look?.reduced!==(expected.motion==='reduced')||
+    (look.nier?s?.look?.nier!=='on':s?.look?.nier==='on')||(look.plain&&/\bsquare\b/.test(s?.look?.parts||'')))bad.push('state-look-motion-unconfirmed');
+  if(s?.viewport?.width!==expected.viewport?.width||s?.viewport?.height!==expected.viewport?.height||!Number.isFinite(s?.viewport?.dpr)||!(s.viewport.dpr>0))bad.push('state-viewport-unconfirmed');
+  return bad;
+}
+export function classifyNamedTourState(context,s,expected) {
+  const problems=stateReceiptProblems(s,expected),completed=context==='book_club_goal:practice',step=completed?'book_club_goal':context;
+  const p=s?.public_state,c=s?.callout,done=Array.isArray(p?.done)?p.done:[];
+  if(!p||p.running!==true||p.paused!==false||typeof p.step!=='string'||!Array.isArray(p.done)||p.done.some((x) => typeof x!=='string')||new Set(p.done).size!==p.done.length)problems.push('public-tour-state-unavailable');
+  if(!s?.tour_root?.present||!s.tour_root.visible||c?.count!==1||!c.present||!c.visible||!c.title_visible)problems.push('rendered-tour-callout-unavailable');
+  if(p?.step!==step||c?.data_step!==step||p?.step!==c?.data_step)problems.push('named-public-rendered-step-mismatch');
+  if(!c?.title||(TOUR_TITLES[step]&&c.title!==TOUR_TITLES[step]))problems.push('named-rendered-title-mismatch');
+  if(completed) {
+    if(!done.includes(step)||c?.success!==true)problems.push('completed-book-phase-unconfirmed');
+    if(s?.practice?.active!==true||!Array.isArray(s.practice.badges)||!s.practice.badges.some((b) => b.visible&&b.text==='Guided example'))problems.push('completed-practice-badge-unconfirmed');
+  } else if(done.includes(step)||c?.success!==false)problems.push('pre-action-phase-unconfirmed');
+  return {context,phase:completed?'completed-book':'pre-action',public_step:p?.step??null,rendered_step:c?.data_step??null,confirmed:problems.length===0,problems};
+}
+const stateIdentity=(s,scope) => JSON.stringify({url:s?.url,ready_state:s?.ready_state,look:s?.look,viewport:s?.viewport,
+  ...(scope==='tour'?{public_state:s?.public_state,tour_root:s?.tour_root,callout:s?.callout,practice:s?.practice}:{window_state:s?.window_state})});
+function pairedStateProblems(before,after,expected,scope,context) {
+  const bad=[...stateReceiptProblems(before,expected),...stateReceiptProblems(after,expected)];
+  if(before?.scope!==scope||after?.scope!==scope)bad.push('capture-state-scope-mismatch');
+  if(scope==='tour')for(const s of [before,after])bad.push(...classifyNamedTourState(context,s,expected).problems);
+  else for(const s of [before,after])if(s?.window_state?.screen!==context||s.window_state.layer_screen!==context||!s.window_state.visible)bad.push('named-window-state-unconfirmed');
+  if(before?.clock?.time_origin!==after?.clock?.time_origin||before?.clock?.monotonic_ms>after?.clock?.monotonic_ms||Date.parse(before?.observed_at)>Date.parse(after?.started_at))bad.push('state-timestamp-order-unconfirmed');
+  if(stateIdentity(before,scope)!==stateIdentity(after,scope))bad.push('named-state-changed-during-capture');
+  return [...new Set(bad)];
+}
+export function completedPracticeInputVerified(action,expected) {
+  const selector='#pm-o55-tour .o55t-callout [data-o55t="showMe"]';
+  if(!action||action.selector!==selector||!classifyNamedTourState('book_club_goal',action.before,expected).confirmed||!action.after||stateReceiptProblems(action.after,expected).length||action.before.clock.time_origin!==action.after.clock.time_origin)return false;
+  const before=Date.parse(action.before.observed_at),after=Date.parse(action.after.observed_at);
+  return Number.isFinite(before)&&Number.isFinite(after)&&after>=before&&Array.isArray(action.input_receipts)&&action.input_receipts.some((x) =>
+    x.selector===selector&&trustedClickVerified(x.receipt,selector)&&x.receipt.action==='showMe'&&Number.isFinite(Date.parse(x.receipt.observed_at))&&Date.parse(x.receipt.observed_at)>=before&&Date.parse(x.receipt.observed_at)<=after);
+}
+export function bindNamedTourSnapshot(context,before,after,expected,action=null) {
+  const problems=pairedStateProblems(before,after,expected,'tour',context);
+  if(!TOUR_STEPS.includes(context))problems.push('unsupported-named-tour-context');
+  if(context==='book_club_goal:practice'&&!completedPracticeInputVerified(action,expected))problems.push('trusted-completed-practice-input-unverified');
+  if(context==='book_club_goal:practice'&&[before,after].some((s) => Array.isArray(s?.callout?.try_labels)&&s.callout.try_labels.some((l) => l.visible)))problems.push('unexpected-try-it-in-completed-book-phase');
+  return {schema:'onboarding-named-tour-binding/v2',fixture_contract:TOUR_FIXTURE_CONTRACT.version,requested_context:context,
+    actual_context:problems.length?null:context,confirmed:problems.length===0,problems:[...new Set(problems)],expected,before,after,action};
+}
+export async function waitNamedTourState(page,context,expected,dependencies={}) {
+  const now=dependencies.now||Date.now,delay=dependencies.sleep||sleep,read=dependencies.observe||observeCaptureState;
+  const start=now(),observations=[],timeout=dependencies.timeout??20000;
+  for(let guard=0;guard<500&&now()-start<timeout;guard++) {
+    const receipt=await read(page,'tour'),state=classifyNamedTourState(context,receipt,expected);observations.push({receipt,state});
+    if(state.confirmed)return {confirmed:true,observations,elapsed_ms:now()-start};
+    if(context==='book_club_goal:practice'&&Array.isArray(receipt.public_state?.done)&&receipt.public_state.done.includes('book_club_goal')&&receipt.public_state.step!=='book_club_goal')
+      return {confirmed:false,reason:'completed-state-window-missed',observations,elapsed_ms:now()-start};
+    await delay(40);
+  }
+  return {confirmed:false,reason:'named-state-timeout',observations,elapsed_ms:now()-start};
+}
+export function needsRenderedFrame(data) {
+  return (data?.labels||[]).some((l) => ['unsupported actual word paint/geometry','actual word background/ink unverified'].includes(l.contrast?.error));
+}
+/* A separate unmodified ordinary-page artifact, never a replacement measurement or contrast acceptance. */
+export async function captureRenderedFrame(page,record,expected,scope,context,dependencies={}) {
+  const read=dependencies.observe||observeCaptureState,output=dependencies.output??OUT;
+  const frame={schema:'onboarding-rendered-frame/v2',purpose:'source-look evidence only; word sampler/floor unchanged',scope,requested_context:context,expected,
+    collection_before:record.before,collection_after:record.after,started_at:new Date().toISOString(),renderer_confirmed:false,contrast_acceptance:false,errors:[]};
+  frame.before=await read(page,scope);
+  try {
+    if(!output)throw new Error('ordinary-frame evidence output unbound');
+    const vp=frame.before.viewport;if(!(vp?.width>0&&vp?.height>0))throw new Error('ordinary-frame viewport unavailable');
+    const shot=await page.send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false,clip:{x:0,y:0,width:vp.width,height:vp.height,scale:1}});
+    frame.response_receipt={...shot,data:undefined,data_present:typeof shot?.data==='string'&&!!shot.data};
+    if(typeof shot?.data!=='string'||!shot.data)throw new Error('ordinary-frame screenshot response missing data');
+    const bytes=Buffer.from(shot.data,'base64');
+    if(bytes.length<24||bytes.subarray(0,8).toString('hex')!=='89504e470d0a1a0a'||bytes.subarray(12,16).toString()!=='IHDR')throw new Error('ordinary-frame PNG response invalid');
+    frame.pixel_dimensions={width:bytes.readUInt32BE(16),height:bytes.readUInt32BE(20)};
+    if(vp.dpr!==1||frame.pixel_dimensions.width!==vp.width||frame.pixel_dimensions.height!==vp.height)frame.errors.push('ordinary-frame viewport/pixel dimensions unconfirmed');
+    const hash=sha(bytes),dir=join(output,'frame-proofs'),path=join(dir,hash+'.png');mkdirSync(dir,{recursive:true});
+    if(existsSync(path)){if(sha(readFileSync(path))!==hash)throw new Error('ordinary-frame existing artifact custody mismatch');}else writeFileSync(path,bytes,{flag:'wx'});
+    Object.assign(frame,{path,sha256:hash,bytes:bytes.length,unmodified:true});
+  } catch(e){frame.errors.push(String(e.stack||e));}
+  frame.after=await read(page,scope);frame.completed_at=new Date().toISOString();
+  frame.errors.push(...pairedStateProblems(record.before,record.after,expected,scope,context),...pairedStateProblems(frame.before,frame.after,expected,scope,context));
+  if(stateIdentity(record.after,scope)!==stateIdentity(frame.before,scope)||record.after?.clock?.time_origin!==frame.before?.clock?.time_origin||record.after?.clock?.monotonic_ms>frame.before?.clock?.monotonic_ms)frame.errors.push('collection-frame-state-binding-unconfirmed');
+  frame.errors=[...new Set(frame.errors)];frame.confirmed=!!frame.sha256&&frame.errors.length===0;
+  frame.binding_sha256=sha(JSON.stringify(frame));return frame;
+}
+export async function captureBoundSnapshot(page,scope,context,expected,dependencies={}) {
+  const read=dependencies.observe||observeCaptureState;
+  const before=await read(page,scope),record={before,capture_expected:expected,fixture_contract:TOUR_FIXTURE_CONTRACT,input_receipts:[...(page.inputReceipts||[])]};
+  try {record.data=await page.evaluate(collect,scope==='tour'?R_TOUR:R_WIN);await (dependencies.measure||measure)(page,record.data);}
+  catch(e){record.error=String(e.stack||e);}
+  record.after=await read(page,scope);
+  if(!record.error&&needsRenderedFrame(record.data))record.frame_proof=await captureRenderedFrame(page,record,expected,scope,context,dependencies);
+  return record;
+}
+export async function captureNamedTourSnapshot(page,context,expected,action=null,dependencies={}) {
+  const wait=await waitNamedTourState(page,context,expected,dependencies),record=await captureBoundSnapshot(page,'tour',context,expected,dependencies);
+  const binding=bindNamedTourSnapshot(context,record.before,record.after,expected,action);
+  if(context==='book_club_goal:practice'&&(!action?.input_receipts?.length||!action.input_receipts.every((x) => record.input_receipts.some((y) => JSON.stringify(x)===JSON.stringify(y))))) {
+    binding.problems.push('trusted-practice-receipt-not-observed-in-owned-page');binding.confirmed=false;binding.actual_context=null;
+  }
+  if(!wait.confirmed){binding.problems.push(wait.reason);binding.confirmed=false;binding.actual_context=null;}
+  if(record.error){binding.problems.push('named-tour-collection-failed');binding.confirmed=false;binding.actual_context=null;}
+  return {...record,step:context,requested_context:context,fixture_contract:TOUR_FIXTURE_CONTRACT,wait_receipt:wait,
+    named_binding:binding};
+}
 
 
 export function newReport() {
   return { schema:'onboarding-label-gate/v1', generated_at:new Date().toISOString(), phase:'A-tool-preparation',
     authority:AUTHORITY, word_floor:WORD_FLOOR, frozen_head:FROZEN_HEAD, frozen_tools:FROZEN,
+    fixture_contract:TOUR_FIXTURE_CONTRACT,
     pages:{}, runs:[], failures:[], holds:[], unverified:[], regressions:[], comparisons:[],
     rawFindings:[], contrastLow:[], originalReceipts:[], notes:[], resources:[], coverage:[] };
 }
@@ -911,6 +1074,62 @@ function checkExpected(r,where,data,expected) {
     if(n<min) unknown(r,where,'expected-label-not-reached',{sel,expected_min:min,observed:n});
   }
 }
+export function judgeNamedTourRecord(r,where,record,context) {
+  const edition=record?.fixture_contract?.version===TOUR_FIXTURE_CONTRACT.version;
+  let confirmed=false;
+  if(edition) {
+    const b=record.named_binding;
+    if(!b?.expected)unknown(r,where,'named-tour-state-binding-unavailable',b);
+    else {
+      const checked=bindNamedTourSnapshot(context,b.before,b.after,b.expected,b.action);
+      confirmed=checked.confirmed&&b.confirmed===true&&b.requested_context===context&&record.requested_context===context&&record.wait_receipt?.confirmed===true&&!record.error&&
+        JSON.stringify(b.before)===JSON.stringify(record.before)&&JSON.stringify(b.after)===JSON.stringify(record.after)&&JSON.stringify(b.expected)===JSON.stringify(record.capture_expected);
+      if(context==='book_club_goal:practice'&&(!Array.isArray(record.input_receipts)||!b.action?.input_receipts?.length||!b.action.input_receipts.every((x) => record.input_receipts.some((y) => JSON.stringify(x)===JSON.stringify(y)))))confirmed=false;
+      if(!confirmed)unknown(r,where,'named-tour-state-unverified',{checked,recorded_binding:b,wait_receipt:record.wait_receipt,error:record.error});
+    }
+    judgeRenderedFrameRecord(r,where,record,'tour',context);
+  } else unknown(r,where,'legacy-tour-named-state-unverified','Historical snapshot has no PA2-v2 state proof; original expectation and HOLD remain historical.');
+  const expected={};
+  if(context!=='comfort_intro'&&(!edition||context!=='book_club_goal:practice'))expected['.o55t-trylabel']=1;
+  if(/book_club_goal|three_outcomes/.test(context))expected['.o55p-badge']=1;
+  checkExpected(r,where,record?.data,expected);
+  const tryCount=record?.data?.labels?.filter((l) => l.sel==='.o55t-trylabel').length??null;
+  if(edition&&context==='book_club_goal:practice'&&tryCount>0)unknown(r,where,'unexpected-try-it-in-completed-book-phase',{observed:tryCount,expected:0,raw:record.data.labels.filter((l) => l.sel==='.o55t-trylabel')});
+  let phaseLabelConfirmed=true;
+  if(edition&&context==='book_club_goal:practice'&&!record?.data?.labels?.some((l) => l.sel==='.o55p-badge'&&l.text==='Guided example')) {
+    phaseLabelConfirmed=false;unknown(r,where,'completed-practice-badge-word-unverified',record?.data?.labels);
+  }
+  if(edition&&context!=='comfort_intro'&&context!=='book_club_goal:practice'&&[record.before,record.after].some((s) => !Array.isArray(s?.callout?.try_labels)||!s.callout.try_labels.some((l) => l.visible))) {
+    phaseLabelConfirmed=false;unknown(r,where,'named-callout-try-label-not-reached',{before:record.before?.callout?.try_labels,after:record.after?.callout?.try_labels});
+  }
+  const counts=Object.entries(expected).map(([sel,min]) => ({sel,expected_min:min,observed:record?.data?.labels?.filter((l) => l.sel===sel).length??null}));
+  (r.tour_fixture_coverage||(r.tour_fixture_coverage=[])).push({where,context,version:edition?TOUR_FIXTURE_CONTRACT.version:'legacy-unbound',state_confirmed:confirmed,counts,
+    label_coverage_confirmed:confirmed&&phaseLabelConfirmed&&counts.every((c) => c.observed!==null&&c.observed>=c.expected_min)&&!(context==='book_club_goal:practice'&&tryCount>0)});
+  return confirmed;
+}
+export function judgeRenderedFrameRecord(r,where,record,scope,context) {
+  if(record?.fixture_contract?.version!==TOUR_FIXTURE_CONTRACT.version||!needsRenderedFrame(record.data))return;
+  const f=record.frame_proof,expected=record.capture_expected,problems=[];
+  if(!f||!expected)problems.push('separate-frame-binding-unavailable');
+  else {
+    const {binding_sha256,...bound}=f;
+    if(!f.confirmed||!f.unmodified||!f.path||!/^[a-f0-9]{64}$/.test(f.sha256||'')||!(f.bytes>0)||!Array.isArray(f.errors)||f.errors.length||
+      f.pixel_dimensions?.width!==expected.viewport?.width||f.pixel_dimensions?.height!==expected.viewport?.height||f.before?.viewport?.dpr!==1||
+      f.contrast_acceptance!==false||f.renderer_confirmed!==false||f.requested_context!==context||f.scope!==scope||sha(JSON.stringify(bound))!==binding_sha256||JSON.stringify(f.expected)!==JSON.stringify(expected))problems.push('separate-frame-proof-unconfirmed');
+    problems.push(...pairedStateProblems(record.before,record.after,expected,scope,context),...pairedStateProblems(f.before,f.after,expected,scope,context));
+    if(JSON.stringify(f.collection_before)!==JSON.stringify(record.before)||JSON.stringify(f.collection_after)!==JSON.stringify(record.after)||stateIdentity(record.after,scope)!==stateIdentity(f.before,scope))problems.push('separate-frame-collection-mismatch');
+  }
+  if(problems.length)unknown(r,where,'ordinary-rendered-frame-unverified',{problems:[...new Set(problems)],frame:f??null});
+}
+function judgeUnpairedTourRecord(r,where,record,which,motion) {
+  const d=record?.data;
+  if(!d||!Array.isArray(d.labels)||!Array.isArray(d.marks)||!Array.isArray(d.rawFindings)){unknown(r,where,'unpaired-tour-raw-snapshot-unavailable',d);return;}
+  judgeRaw(r,where,d,which);
+  if(which==='cand') {
+    judgeLabels(r,where,d,motion);
+    for(const l of d.labels){judgeContrast(r,where+' '+l.sel,null,l);if(l.kind==='tag'&&l.sel!=='.o55-routelink > span'&&l.before)unknown(r,where+' '+l.sel,'checkpoint-square-mark-ink-custody-unverified',{checkpoint:FROZEN_HEAD,candidate:l.before});}
+  }
+}
 function judgeUnpairedCandidate(r,where,d,motion) {
   unknown(r,where,'paired-base-context-unverified','The completed base inventory is not repeated. No new paired base snapshot exists for this sweep context; comparisons remain held.');
   if(!d || !Array.isArray(d.labels) || !Array.isArray(d.marks)) {unknown(r,where,'candidate-sweep-snapshot-unavailable',null);return;}
@@ -941,6 +1160,10 @@ export function judgeRun(r,run) {
   if(doWindow) for(const v of VIEWS) {
     const b=(B.views||{})[v.id],c=(C.views||{})[v.id],where=tag+' '+v.id;
     paired(where,b,c);
+    for(const [which,p] of [['base',b],['cand',c]]) {
+      judgeRenderedFrameRecord(r,where+' '+which,p,'window',v.screen);
+      if(p?.flow?.after_capture)judgeRenderedFrameRecord(r,where+' chosen '+which,p.flow.after_capture,'window',v.screen);
+    }
     for(const [which,p] of [['base',b],['cand',c]]) checkExpected(r,where+' '+which,p&&p.data,EXPECT_LABELS[v.id]);
     if(v.flow==='suggest') {
       for(const which of ['base','cand']) { const p=which==='base'?b:c;
@@ -963,9 +1186,11 @@ export function judgeRun(r,run) {
         unknown(r,tag+' sweep '+s,'screen-context-unverified',{base:b||null,cand:c||null,
           ownership:NEEDS_DEVICE.includes(s)?'fixture/UI path needs device or other legitimate route; no session/DOM forcing':'missing full snapshot'});
         if(c && !Array.isArray(c) && c.data) judgeUnpairedCandidate(r,tag+' sweep '+s,c.data,run.motion);
+        for(const [which,p] of [['base',b],['cand',c]])judgeRenderedFrameRecord(r,tag+' sweep '+s+' '+which,p,'window',s);
         continue;
       }
       paired(tag+' sweep '+s,b,c);
+      for(const [which,p] of [['base',b],['cand',c]])judgeRenderedFrameRecord(r,tag+' sweep '+s+' '+which,p,'window',s);
     }
   }
   if(doTour) {
@@ -973,14 +1198,21 @@ export function judgeRun(r,run) {
     for(const p of [...(B.tour||[]),...(C.tour||[])]) if(p.error) unknown(r,tag,'tour-error',p);
     for(const step of TOUR_STEPS) {
       const bb=b.get(step)||[],cc=c.get(step)||[];
-      if(bb.length!==1 || cc.length!==1) { unknown(r,tag+' tour '+step,'expected-tour-context-not-reached',{base:bb.length,cand:cc.length}); continue; }
-      paired(tag+' tour '+step,bb[0],cc[0]);
+      if(bb.length!==1 || cc.length!==1) {
+        unknown(r,tag+' tour '+step,'expected-tour-context-not-reached',{base:bb.length,cand:cc.length});
+        for(const [which,records] of [['base',bb],['cand',cc]])for(const p of records){judgeNamedTourRecord(r,tag+' tour '+step+' '+which,p,step);judgeUnpairedTourRecord(r,tag+' tour '+step+' '+which,p,which,run.motion);}
+        continue;
+      }
+      const baseConfirmed=judgeNamedTourRecord(r,tag+' tour '+step+' base',bb[0],step),candConfirmed=judgeNamedTourRecord(r,tag+' tour '+step+' cand',cc[0],step);
+      if(baseConfirmed&&candConfirmed)paired(tag+' tour '+step,bb[0],cc[0]);
+      else {
+        unknown(r,tag+' tour '+step,'paired-named-tour-context-unverified',{baseConfirmed,candConfirmed});
+        for(const [which,p] of [['base',bb[0]],['cand',cc[0]]])judgeUnpairedTourRecord(r,tag+' tour '+step+' '+which,p,which,run.motion);
+      }
       if(step==='book_club_goal:practice') for(const [which,p] of [['base',bb[0]],['cand',cc[0]]]) {
         if(!Array.isArray(p.input_receipts) || !p.input_receipts.some((x) => x.selector.includes('[data-o55t="showMe"]') && trustedClickVerified(x.receipt,x.selector)))
           unknown(r,tag+' tour '+step+' '+which,'trusted-show-me-flow-unverified','No observed trusted Show Me receipt; a page switch, fixed wait, done flag or zero array cannot substitute.');
       }
-      if(step!=='comfort_intro') for(const [which,p] of [['base',bb[0]],['cand',cc[0]]]) checkExpected(r,tag+' tour '+step+' '+which,p.data,{'.o55t-trylabel':1});
-      if(/book_club_goal|three_outcomes/.test(step)) for(const [which,p] of [['base',bb[0]],['cand',cc[0]]]) checkExpected(r,tag+' tour '+step+' '+which,p.data,{'.o55p-badge':1});
     }
   }
 }
@@ -1093,11 +1325,11 @@ const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
 const until = async (page, fn, ms = 12000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { if (await page.evaluate(fn)) return true; await sleep(150); } throw new Error('fixture/UI condition not reached: ' + fn.toString()); };
 /* The folder browser needs a device the person found and signed in to: the same clicks as scenario n1
    (tools/scenarios.mjs), from a fresh window, with the fixture world's Home NAS. */
-async function nasPath(page, seen) {
+async function nasPath(page, seen, captureBinding, captureDependencies={}) {
   const act = async (a, arg) => { if (!(await clickAt(page, `${LAYER} [data-o55-do="${a}"]` + (arg != null ? `[data-arg="${arg}"]` : '')))) throw new Error('no control ' + a + ' ' + (arg || '')); await settle(page); };
   const primary = async () => { await until(page, () => { const b = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-primary'); return b && b.getAttribute('aria-disabled') !== 'true'; });
     if (!(await clickAt(page, `${LAYER} .o55-primary`))) throw new Error('no primary'); await sleep(200); await settle(page);
-    if (seen) { await sleep(500); const sc = await page.evaluate(() => window.O55.S.sess.screen); if (!seen[sc]) { await mouseAway(page); const data = await page.evaluate(collect, R_WIN); await measure(page,data); seen[sc] = {data,flow:{}}; } } };
+    if (seen) { await sleep(500); const sc = await page.evaluate(() => window.O55.S.sess.screen); if (!seen[sc]) { await mouseAway(page); seen[sc] = {...await captureBoundSnapshot(page,'window',sc,captureBinding,captureDependencies),flow:{}}; } } };
   const type = async (bind, text) => { await page.evaluate((b) => { const i = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) [data-o55-bind="' + b + '"]'); i.focus(); i.select && i.select(); }, bind);
     await page.send('Input.insertText', { text }); await sleep(250); };
   await page.evaluate(() => { window.O55.ui.close('test'); localStorage.removeItem('pm.o55.onboarding.v1'); window.O55.ui.open({ fresh: true }); });
@@ -1130,9 +1362,9 @@ export async function pickSuggestion(page,how,n) {
   return {how,...result};
 }
 
-async function windowView(page, v, sweep) {
+export async function windowView(page, v, sweep, captureBinding, captureDependencies={}) {
   const pathCaps = v.path === 'nas' ? {} : null;
-  if (v.path === 'nas') { const at = await nasPath(page, pathCaps); if (at !== v.screen) return { error: 'the NAS path ended on ' + at }; }
+  if (v.path === 'nas') { const at = await nasPath(page, pathCaps,captureBinding,captureDependencies); if (at !== v.screen) return { error: 'the NAS path ended on ' + at }; }
   else await page.evaluate((s) => { window.O55.ui.close('test'); window.O55.ui.open({ screen: s }); }, v.screen);
   if (!(await settle(page, v.screen))) return { error: 'screen ' + v.screen + ' did not settle' };
   await mouseAway(page);
@@ -1154,33 +1386,44 @@ async function windowView(page, v, sweep) {
   if (v.flow === 'lookmenu') {
     flow.menu = await clickAt(page, '#pm-o55-onboarding .o55-lookbtn'); await sleep(500); await mouseAway(page);
   }
-  const data = await page.evaluate(collect, R_WIN);
-  await measure(page, data);
+  const snapshot=await captureBoundSnapshot(page,'window',v.screen,captureBinding,captureDependencies);
+  if(snapshot.error)return {...snapshot,flow,pathCaps};
   if (v.flow === 'suggest') {
     /* a real click on the second suggestion, then Enter on the first with the keyboard */
     flow.click = await pickSuggestion(page,'click',2); await mouseAway(page); flow.key = await pickSuggestion(page,'key',1); await mouseAway(page);
-    flow.after = await page.evaluate(collect, R_WIN); await measure(page, flow.after);
+    flow.after_capture=await captureBoundSnapshot(page,'window',v.screen,captureBinding,captureDependencies);flow.after=flow.after_capture.data;
   }
   if (v.flow === 'lookmenu' && !(await clickAt(page, '#pm-o55-onboarding .o55-lookbtn.o55-on'))) throw new Error('look menu close not reachable');
-  return { data, flow, pathCaps };
+  return { ...snapshot, flow, pathCaps };
 }
 
-async function tourWalk(page) {
+export async function tourWalk(page,captureBinding,dependencies={}) {
   const out = []; const ev = (fn, ...a) => page.evaluate(fn, ...a);
-  const until = async (fn, ms = 15000) => { const t0 = Date.now(); while (Date.now() - t0 < ms) { if (await ev(fn)) return true; await sleep(120); } return false; };
+  const read=dependencies.observe||observeCaptureState,delay=dependencies.sleep||sleep,now=dependencies.now||Date.now;
+  const until = async (fn, ms = 15000) => { const t0 = now(); while (now() - t0 < ms) { if (await ev(fn)) return true; await delay(120); } return false; };
+  let lastState=null;
+  try {
   await ev(() => window.PM7_GUIDED_TOUR.start({ project: 'tastebook' }));
   const WANT = new Set(['comfort_intro', 'open_chat', 'same_answer_eli5', 'book_club_goal', 'three_outcomes']);
   for (let guard = 0; guard < 40; guard++) {
-    const inputStart=(page.inputReceipts||[]).length;
-    const id = await ev(() => window.O55.tour.state().step);
+    lastState=await read(page,'tour');const id=lastState.public_state?.step;
+    if(!id)throw new Error('actual public tour step unavailable');
     const def = await ev((i) => { const d = window.O55.tour.byId[i]; return { kind: d.kind, after: !!d.after, stay: !!d.stay }; }, id);
-    await sleep(1400); await mouseAway(page);
-    if (WANT.has(id)) { const data = await ev(collect, R_TOUR); await measure(page, data); out.push({ step: id, data }); }
+    await mouseAway(page);
+    if (WANT.has(id)) {
+      const snapshot=await captureNamedTourSnapshot(page,id,captureBinding,null,dependencies);out.push(snapshot);
+      if(!snapshot.named_binding.confirmed||snapshot.error)break;
+    } else {
+      const ready=await waitNamedTourState(page,id,captureBinding,dependencies);
+      if(!ready.confirmed){out.push({step:id,error:'tour action state unconfirmed',wait_receipt:ready});break;}
+    }
     if (id === 'three_outcomes') break;
     if (def.kind === 'info') { if(!(await until(() => !!document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="next"]'), 12000))) throw new Error('tour Next unavailable');
       if(!(await clickAt(page, '#pm-o55-tour .o55t-callout [data-o55t="next"]'))) throw new Error('tour Next trusted click unverified'); }
     else {
       if (id === 'same_answer_eli5') await until(() => window.O55.tour.chat.answered('a1'));
+      const actionBefore=await read(page,'tour'),inputStart=(page.inputReceipts||[]).length;
+      if(!classifyNamedTourState(id,actionBefore,captureBinding).confirmed){out.push({step:id,error:'tour state changed before action',state_receipt:actionBefore});break;}
       if (id === 'split_by_drag') {
         const a = await ev(() => { const d = window.PMW.tour.splitDrag(); const r = d.el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, tx: d.to.x, ty: d.to.y }; });
         await page.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: a.x, y: a.y });
@@ -1192,12 +1435,17 @@ async function tourWalk(page) {
         await sleep(500);
         await page.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: a.tx, y: a.ty, button: 'left', clickCount: 1 });
       } else if(!(await clickAt(page, '#pm-o55-tour .o55t-callout [data-o55t="showMe"]'))) throw new Error('Show Me trusted click unverified; no page-switch fallback');
-      if (!(await until(new Function(`return window.O55.tour.state().done.includes(${JSON.stringify(id)})`), 20000))) { out.push({ step: id, error: 'step not done' }); break; }
-      if (id === 'book_club_goal') { await sleep(900); await mouseAway(page); const data = await ev(collect, R_TOUR); await measure(page, data); out.push({ step: 'book_club_goal:practice', data, input_receipts:(page.inputReceipts||[]).slice(inputStart) }); }
+      const actionAfter=await read(page,'tour');
+      if (id === 'book_club_goal') {
+        const action={selector:'#pm-o55-tour .o55t-callout [data-o55t="showMe"]',before:actionBefore,after:actionAfter,input_receipts:(page.inputReceipts||[]).slice(inputStart)};
+        const practice=await captureNamedTourSnapshot(page,'book_club_goal:practice',captureBinding,action,dependencies);out.push(practice);
+        if(!practice.named_binding.confirmed||practice.error)break;
+      } else if (!(await until(new Function(`return window.O55.tour.state().done.includes(${JSON.stringify(id)})`), 20000))) { out.push({ step: id, error: 'step not done' }); break; }
       if (def.stay) { await sleep(900); if(!(await clickAt(page, '#pm-o55-tour .o55t-callout [data-o55t="next"]'))) throw new Error('tour stay Next trusted click unverified'); }
     }
     if (!(await until(new Function(`return window.O55.tour.state().step !== ${JSON.stringify(id)}`), 12000))) { out.push({ step: id, error: 'tour did not move on' }); break; }
   }
+  } catch(e){out.push({error:String(e.stack||e),state_receipt:lastState});}
   return out;
 }
 
@@ -1509,24 +1757,25 @@ export async function runLook(look,motion,dependencies={}) {
         source_head:which==='base'?phaseBinding.base_head:phaseBinding.candidate_head,
         page_sha256:which==='base'?phaseBinding.base_sha256:phaseBinding.candidate_sha256,
         binding_sha256:phaseBinding.binding_sha256,reduced:motion==='reduced'};
+      const captureBinding={...expected,look:look.id,motion,viewport:{...VIEWPORT},tool_custody:phaseBinding.tool_custody};
       pr.state=await bootPage(page,which,look,motion);
       pr.runtime=await captureOrdinaryRuntime(owned,expected,pr.state);
       pr.runtime_observations.push({purpose:'window',...pr.runtime});
       if(!pr.state.confirmed) throw new Error('look/motion not confirmed: '+JSON.stringify(pr.state));
       if(doWindow) for(const v of VIEWS) {
-        try {pr.views[v.id]=await windowView(page,v,false);} catch(e) {pr.views[v.id]={error:String(e.stack||e)};}
+        try {pr.views[v.id]=await windowView(page,v,false,captureBinding);} catch(e) {pr.views[v.id]={error:String(e.stack||e)};}
       }
       if(doWindow && flag('sweep') && which==='cand') {
         pr.sweep={};
         for(const s of ALL_SCREENS.filter((x) => !NEEDS_DEVICE.includes(x))) {
-          try {pr.sweep[s]=await windowView(page,{id:s,screen:s},true);} catch(e) {pr.sweep[s]={error:String(e.stack||e)};}
+          try {pr.sweep[s]=await windowView(page,{id:s,screen:s},true,captureBinding);} catch(e) {pr.sweep[s]={error:String(e.stack||e)};}
         }
       }
       if(doTour) {
         const st=await bootPage(page,which,look,motion);
         pr.runtime_observations.push({purpose:'tour',...await captureOrdinaryRuntime(owned,expected,st)});
         if(!st.confirmed) throw new Error('tour look/motion not confirmed: '+JSON.stringify(st));
-        try {pr.tour=await tourWalk(page);} catch(e) {pr.tour.push({error:String(e.stack||e)});}
+        try {pr.tour=await tourWalk(page,captureBinding);} catch(e) {pr.tour.push({error:String(e.stack||e)});}
       }
 
       /* Keep the helper's errors as well, without slicing/filtering. */
