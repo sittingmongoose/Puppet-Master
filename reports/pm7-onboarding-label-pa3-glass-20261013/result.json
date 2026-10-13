@@ -1,0 +1,833 @@
+{
+  "schema": "pm7-onboarding-PA3-one-glass-namedstate/v1",
+  "at": "2026-10-13T14:28:21.627629+00:00",
+  "status": "STOP/HOLD",
+  "mechanical_packet": "READY_FOR_ROOT_REVIEW",
+  "authority": {
+    "GO": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-13-creative-queue/ONBOARDING-PA3-GLASS-NAMEDSTATE-GO.md",
+      "bytes": 10730,
+      "sha256": "212bf6f8b448c2cbd97ffd828ab44eb73c8146423bc1825f4a5af88747b56f97"
+    },
+    "root_message_id": "message:mcp:4103467a-6a3c-4191-a4dc-ae5ad70ae674:thread-send:home-planner-onboarding-pa3-glass-namedstate-observation-20261013-v1",
+    "actual_thread_receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/actual-thread-and-phase-b-authority.json",
+      "bytes": 13421,
+      "sha256": "7e10526e79d1d136596a29407990b36bea25a4fa14c6a5db29e31bc99b3eea94"
+    },
+    "S8_root_review_sha256": "4350a199d65b4a685efa5657ea6664f71d89783438f7596ae0f45cd0ab72ba2d",
+    "S8_root_custody_sha256": "5a87f9ab0d1ed2c95a45ec6747f4ca2c3b234d0b310ca295053b006de5f92010",
+    "owner_review_sha256": "d6b6053ee10b4a26af15f3025ae051098ad767057e78b3e8b29faf9a15712b06",
+    "owner_disposition_sha256": "f436f8bfedf82a90981928fec20610483156200e8400bf4994215520fd79f3ef"
+  },
+  "inputs": {
+    "starting_head": "b73b6bdc1b5cf915a5d6abf9e8ac969170421788",
+    "tool_custody": {
+      "head": "b73b6bdc1b5cf915a5d6abf9e8ac969170421788",
+      "sha256": "3800ab79c19d063895cbb94b371bcfe71b56a48f480180f5920a0f53f3c86558"
+    },
+    "tool_bytes": 175446,
+    "candidate_head": "f109bad9f312ca0f55887f069dd4328dc17f7b9e",
+    "candidate_page": "Concepts/PMConcept7.html",
+    "candidate_bytes": 18602927,
+    "candidate_sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+    "base_head": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
+    "base_page": "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html",
+    "base_bytes": 18598981,
+    "base_sha256": "b612df00caa2e2fb13b9b2307a17f283358845b596f33a27a31ba55d40266451",
+    "source_pages": {
+      "Concepts/PMConcept7.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact_source": true
+      },
+      "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact_source": true
+      },
+      "Concepts/HomeTestPMConcept7.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact_source": true
+      },
+      "Concepts/LeftRailPMConcept7.html": {
+        "bytes": 19237474,
+        "sha256": "13d002fc7057c17270cbc149457cee588df423b8a3543fa5a5359901d7cba8bb",
+        "exact_source": true
+      }
+    },
+    "composition_head": "967653b5265e27b13cf0c300dd0b1b0599c2d482",
+    "historical_tool_head": "7e4025ba42b4b5b1ce08029ac25ac04ae00cc00a",
+    "historical_report_head": "f4ab6db2783aeb368635a471e483a17500bbf910",
+    "existing_source_or_tool_changes": 0
+  },
+  "binding": {
+    "payload": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/wide/glass-dark-normal/phase-b-binding.json",
+      "bytes": 2039,
+      "sha256": "ed81114f980527a4d3b6cb5eb777b477ecd1020e3518f1def457d709168453ff"
+    },
+    "schema_sha256": "843c523ca77408a0d96861748bc793cab29796fab9ddd15997ac2ded18fc7fe4",
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/wide/glass-dark-normal/binding-receipt.json",
+      "bytes": 2821,
+      "sha256": "7cb7c9f6cd7446abffaf80342edf05a8b52da5aaafd370830f6846afa6e5915b"
+    },
+    "execution_scope": {
+      "kind": "bounded-pair",
+      "matrix": "wide",
+      "look": "glass-dark",
+      "motion": "normal",
+      "campaign": {
+        "looks": [
+          "basic-light",
+          "friendly-light",
+          "glass-dark",
+          "retro-dark",
+          "basic-dark",
+          "friendly-dark",
+          "glass-light",
+          "retro-light",
+          "nier-light",
+          "nier-dark",
+          "nier-light-plain",
+          "nier-dark-plain"
+        ],
+        "wide_pairs": 24,
+        "narrow_pairs": 12
+      }
+    },
+    "fixture_apis": [
+      "?o55=off&o55scenario=fresh",
+      "PM12_KIMI.setSettingFromHost",
+      "PM_NIER.set",
+      "PM_NIER.setParts",
+      "O55.ui.close/open({screen})",
+      "localStorage.removeItem(pm.o55.onboarding.v1,pm.o55.tour.v1)",
+      "Home NAS fixture via real UI clicks; fixture user=jared, password=correct horse",
+      "PM7_GUIDED_TOUR.start({project:tastebook})",
+      "PMW.tour.splitDrag() read-only target",
+      "focus/select on real fields; CDP Input.insertText/mouse/key; scrollIntoView",
+      "passive trusted-click observation in a separate CDP isolated world; no product globals/DOM/CSS/event cancellation"
+    ],
+    "global_admission": {
+      "checked_at": "2026-10-13T14:08:29.430Z",
+      "all_cdp_browsers": 0,
+      "unmanaged_cdp_browsers": 0,
+      "max_total": 4,
+      "owned_session_limit": 2,
+      "source_owner_coordinated": true
+    },
+    "all_current_live_reserved_at_admission": 0,
+    "unmanaged_current_at_admission": 0,
+    "fresh_age_at_schema_validation_seconds": 0.047902,
+    "source_owner_coordinated": true,
+    "new_binding_payloads": 1
+  },
+  "execution": {
+    "fixed_product_CLI_invocations": 1,
+    "base_candidate_pages_attempted": 2,
+    "started_at": "2026-10-13T14:08:29.550665+00:00",
+    "completed_at": "2026-10-13T14:12:46.039789+00:00",
+    "args": [
+      "node",
+      "/home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs",
+      "/home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/PMConcept7.html",
+      "--base",
+      "/home/sittingmongoose/PM-Experiments/pm7-onboarding-label-pa3-glass-20261013/base/Concepts/Onboarding concepts/TestOpus5.5PmConcept.html",
+      "--phase-b-binding",
+      "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/wide/glass-dark-normal/phase-b-binding.json",
+      "--looks",
+      "glass-dark",
+      "--motion",
+      "normal",
+      "--viewport",
+      "1440x900",
+      "--sweep",
+      "--parallel",
+      "1",
+      "--out",
+      "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/wide/glass-dark-normal"
+    ],
+    "exit_code": 2,
+    "no_retry_extra_capture_or_remaining_pairs": true,
+    "bounded_route": "wide 1440x900 glass-dark normal window+tour+candidate-only sweep parallel1",
+    "old_suites_inventory_or_examples_replayed": 0,
+    "code_source_sampler_criteria_look_or_landing_repair": 0
+  },
+  "fixture_contract": {
+    "version": "onboarding-named-tour/PA2-v2",
+    "authority": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-13-creative-queue/ONBOARDING-STATE-BINDING-CORRECTION-GO.md",
+      "sha256": "1b7494be887e4d6b6f3fa63b51a696ba49c222e0dfbd2704bf6687c7a934a853"
+    },
+    "owner_review_sha256": "d6b6053ee10b4a26af15f3025ae051098ad767057e78b3e8b29faf9a15712b06",
+    "root_disposition_sha256": "f436f8bfedf82a90981928fec20610483156200e8400bf4994215520fd79f3ef",
+    "source_markers": {
+      "core": {
+        "sha256": "8137a7c2ff780b70d3b17824539befc579c91be2d41e855c112dda16a26b17d4",
+        "lines": [
+          257,
+          265,
+          617,
+          627,
+          634,
+          688,
+          695,
+          1050
+        ]
+      },
+      "steps": {
+        "sha256": "d177465c0e3d61bfaf4a6fcfa92ff0ad3e5d33297514ddb3ea0a373b5f521256",
+        "lines": [
+          154,
+          165
+        ]
+      },
+      "practice": {
+        "sha256": "8aac0bc0d4163c421d1b2ddda4b6fa36c3dff9e201299d9e558c56122773c545",
+        "lines": [
+          20,
+          39
+        ]
+      }
+    },
+    "expectation": "Pre-action non-intro contexts retain TryIt; completed book practice requires its own completed state and Guided example badge, with no TryIt borrowed from three_outcomes.",
+    "historical_reports_unchanged": true,
+    "renderer_or_performance_proof": false
+  },
+  "pages": {
+    "base": {
+      "look_motion": {
+        "theme": "glass-dark",
+        "nier": null,
+        "parts": "",
+        "reduced": false,
+        "confirmed": true
+      },
+      "window_contexts": 16,
+      "candidate_sweep_contexts": 0,
+      "named_snapshots": [
+        {
+          "context": "comfort_intro",
+          "state_confirmed": true,
+          "label_coverage": {
+            "where": "glass-dark/normal tour comfort_intro base",
+            "context": "comfort_intro",
+            "version": "onboarding-named-tour/PA2-v2",
+            "state_confirmed": true,
+            "counts": [],
+            "label_coverage_confirmed": true
+          },
+          "before_at": "2026-10-13T14:09:41.514Z",
+          "after_at": "2026-10-13T14:09:41.712Z",
+          "before_public_step": "comfort_intro",
+          "after_public_step": "comfort_intro",
+          "before_rendered_step": "comfort_intro",
+          "after_rendered_step": "comfort_intro",
+          "title": "Let\u2019s make Puppet Master feel familiar.",
+          "before_done": [],
+          "after_done": [],
+          "success_before": false,
+          "success_after": false,
+          "badges_before": [],
+          "badges_after": []
+        }
+      ],
+      "requested_book_pre_completed_three_observed": false,
+      "tour_error": "Error: tour Next trusted click unverified\n    at tourWalk (file:///home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs:1422:89)\n    at async runLook (file:///home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs:1778:22)\n    at async worker (file:///home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs:2130:90)\n    at async Promise.all (index 0)\n    at async main (file:///home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs:2131:5)",
+      "failed_trusted_receipt": {
+        "selector": "#pm-o55-tour .o55t-callout [data-o55t=\"next\"]",
+        "x": 750.31396484375,
+        "y": 437.766357421875,
+        "receipt": null
+      },
+      "failure_public_step": "comfort_intro",
+      "failure_callout_step": "comfort_intro",
+      "failure_callout_title": "Let\u2019s make Puppet Master feel familiar.",
+      "failure_done": [],
+      "cause": "UNKNOWN; no source-defect or timing/performance diagnosis",
+      "numeric_word_readings": 0,
+      "numeric_minimum": null,
+      "ordinary_contexts": [
+        {
+          "purpose": "window",
+          "contextConfirmed": true,
+          "rendererConfirmed": false,
+          "renderer_status": "UNVERIFIED",
+          "context_unverified": [],
+          "errors": []
+        },
+        {
+          "purpose": "tour",
+          "contextConfirmed": true,
+          "rendererConfirmed": false,
+          "renderer_status": "UNVERIFIED",
+          "context_unverified": [],
+          "errors": []
+        }
+      ],
+      "input_receipts_retained": 19,
+      "suggestion_click_key": {
+        "name": {
+          "click": {
+            "how": "click",
+            "want": "Family recipes",
+            "field": "Family recipes",
+            "on": [
+              "Family recipes"
+            ],
+            "chosenFill": "color(srgb 0.392157 0.85098 1 / 0.12)",
+            "ok": true
+          },
+          "key": {
+            "how": "key",
+            "want": "Book club website",
+            "field": "Book club website",
+            "on": [
+              "Book club website"
+            ],
+            "chosenFill": "color(srgb 0.392157 0.85098 1 / 0.12)",
+            "ok": true
+          }
+        }
+      },
+      "stop": {
+        "id": "3e8b3c2284b8",
+        "returned_id": "3e8b3c2284b8",
+        "closed": true,
+        "command_succeeded": true,
+        "pid": 1611128,
+        "profile": "/home/sittingmongoose/.cache/intel-agent/profiles/browser-3e8b3c2284b8-profile",
+        "pid_fact": {
+          "available": true,
+          "exists": false
+        },
+        "profile_fact": {
+          "available": true,
+          "exists": false
+        },
+        "unit_fact": {
+          "Id": "intel-browser-3e8b3c2284b8.service",
+          "LoadState": "not-found",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "MainPID": "0",
+          "Result": "success",
+          "ExecMainStatus": "0",
+          "ControlGroup": ""
+        },
+        "errors": []
+      }
+    },
+    "cand": {
+      "look_motion": {
+        "theme": "glass-dark",
+        "nier": null,
+        "parts": "",
+        "reduced": false,
+        "confirmed": true
+      },
+      "window_contexts": 16,
+      "candidate_sweep_contexts": 35,
+      "named_snapshots": [
+        {
+          "context": "comfort_intro",
+          "state_confirmed": true,
+          "label_coverage": {
+            "where": "glass-dark/normal tour comfort_intro cand",
+            "context": "comfort_intro",
+            "version": "onboarding-named-tour/PA2-v2",
+            "state_confirmed": true,
+            "counts": [],
+            "label_coverage_confirmed": true
+          },
+          "before_at": "2026-10-13T14:12:07.898Z",
+          "after_at": "2026-10-13T14:12:08.076Z",
+          "before_public_step": "comfort_intro",
+          "after_public_step": "comfort_intro",
+          "before_rendered_step": "comfort_intro",
+          "after_rendered_step": "comfort_intro",
+          "title": "Let\u2019s make Puppet Master feel familiar.",
+          "before_done": [],
+          "after_done": [],
+          "success_before": false,
+          "success_after": false,
+          "badges_before": [],
+          "badges_after": []
+        },
+        {
+          "context": "open_chat",
+          "state_confirmed": true,
+          "label_coverage": {
+            "where": "glass-dark/normal tour open_chat cand",
+            "context": "open_chat",
+            "version": "onboarding-named-tour/PA2-v2",
+            "state_confirmed": true,
+            "counts": [
+              {
+                "sel": ".o55t-trylabel",
+                "expected_min": 1,
+                "observed": 1
+              }
+            ],
+            "label_coverage_confirmed": true
+          },
+          "before_at": "2026-10-13T14:12:08.740Z",
+          "after_at": "2026-10-13T14:12:08.953Z",
+          "before_public_step": "open_chat",
+          "after_public_step": "open_chat",
+          "before_rendered_step": "open_chat",
+          "after_rendered_step": "open_chat",
+          "title": "Assistant Chat is where you ask Puppet Master for help.",
+          "before_done": [],
+          "after_done": [],
+          "success_before": false,
+          "success_after": false,
+          "badges_before": [],
+          "badges_after": []
+        },
+        {
+          "context": "same_answer_eli5",
+          "state_confirmed": true,
+          "label_coverage": {
+            "where": "glass-dark/normal tour same_answer_eli5 cand",
+            "context": "same_answer_eli5",
+            "version": "onboarding-named-tour/PA2-v2",
+            "state_confirmed": true,
+            "counts": [
+              {
+                "sel": ".o55t-trylabel",
+                "expected_min": 1,
+                "observed": 1
+              }
+            ],
+            "label_coverage_confirmed": true
+          },
+          "before_at": "2026-10-13T14:12:20.445Z",
+          "after_at": "2026-10-13T14:12:20.618Z",
+          "before_public_step": "same_answer_eli5",
+          "after_public_step": "same_answer_eli5",
+          "before_rendered_step": "same_answer_eli5",
+          "after_rendered_step": "same_answer_eli5",
+          "title": "Teacher can explain an answer more simply.",
+          "before_done": [
+            "open_chat",
+            "select_teacher",
+            "send_question"
+          ],
+          "after_done": [
+            "open_chat",
+            "select_teacher",
+            "send_question"
+          ],
+          "success_before": false,
+          "success_after": false,
+          "badges_before": [],
+          "badges_after": []
+        }
+      ],
+      "requested_book_pre_completed_three_observed": false,
+      "tour_error": "Error: Show Me trusted click unverified; no page-switch fallback\n    at tourWalk (file:///home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs:1437:98)\n    at async runLook (file:///home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs:1778:22)\n    at async worker (file:///home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs:2130:90)\n    at async Promise.all (index 0)\n    at async main (file:///home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs:2131:5)",
+      "failed_trusted_receipt": {
+        "selector": "#pm-o55-tour .o55t-callout [data-o55t=\"showMe\"]",
+        "x": 901.7734375,
+        "y": 722.28125,
+        "receipt": null
+      },
+      "failure_public_step": "widget_action",
+      "failure_callout_step": "split_by_drag",
+      "failure_callout_title": "Split by dragging a tab",
+      "failure_done": [
+        "open_chat",
+        "select_teacher",
+        "send_question",
+        "same_answer_eli5",
+        "open_from_plus",
+        "open_file_from_rail",
+        "split_by_drag"
+      ],
+      "cause": "UNKNOWN; no source-defect or timing/performance diagnosis",
+      "numeric_word_readings": 0,
+      "numeric_minimum": null,
+      "ordinary_contexts": [
+        {
+          "purpose": "window",
+          "contextConfirmed": true,
+          "rendererConfirmed": false,
+          "renderer_status": "UNVERIFIED",
+          "context_unverified": [],
+          "errors": []
+        },
+        {
+          "purpose": "tour",
+          "contextConfirmed": true,
+          "rendererConfirmed": false,
+          "renderer_status": "UNVERIFIED",
+          "context_unverified": [],
+          "errors": []
+        }
+      ],
+      "input_receipts_retained": 29,
+      "suggestion_click_key": {
+        "name": {
+          "click": {
+            "how": "click",
+            "want": "Family recipes",
+            "field": "Family recipes",
+            "on": [
+              "Family recipes"
+            ],
+            "chosenFill": "color(srgb 0.392157 0.85098 1 / 0.12)",
+            "ok": true
+          },
+          "key": {
+            "how": "key",
+            "want": "Book club website",
+            "field": "Book club website",
+            "on": [
+              "Book club website"
+            ],
+            "chosenFill": "color(srgb 0.392157 0.85098 1 / 0.12)",
+            "ok": true
+          }
+        }
+      },
+      "stop": {
+        "id": "5a7cb4c33898",
+        "returned_id": "5a7cb4c33898",
+        "closed": true,
+        "command_succeeded": true,
+        "pid": 1612046,
+        "profile": "/home/sittingmongoose/.cache/intel-agent/profiles/browser-5a7cb4c33898-profile",
+        "pid_fact": {
+          "available": true,
+          "exists": false
+        },
+        "profile_fact": {
+          "available": true,
+          "exists": false
+        },
+        "unit_fact": {
+          "Id": "intel-browser-5a7cb4c33898.service",
+          "LoadState": "not-found",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "MainPID": "0",
+          "Result": "success",
+          "ExecMainStatus": "0",
+          "ControlGroup": ""
+        },
+        "errors": []
+      }
+    }
+  },
+  "new_named_state_coverage": {
+    "expected_contexts_per_page": [
+      "comfort_intro",
+      "open_chat",
+      "same_answer_eli5",
+      "book_club_goal",
+      "book_club_goal:practice",
+      "three_outcomes"
+    ],
+    "base_confirmed": [
+      "comfort_intro"
+    ],
+    "candidate_confirmed": [
+      "comfort_intro",
+      "open_chat",
+      "same_answer_eli5"
+    ],
+    "confirmed_snapshots": 4,
+    "matched_pair_contexts": [
+      "comfort_intro"
+    ],
+    "pre_book_completed_book_three_outcomes_confirmed": 0,
+    "requested_PA3_question": "UNVERIFIED: tour trusted-input collection stopped before any requested book or three-outcomes snapshot; completed-window timing was not observed",
+    "missing_contexts_and_unpaired_findings_retained": true,
+    "original_TryIt_and_completed_badge_expectations_unchanged": true,
+    "no_source_defect_inferred": true
+  },
+  "frame_coverage": {
+    "receipt_count": 52,
+    "confirmed": 52,
+    "held": 0,
+    "unique_png_files": 52,
+    "by_page_scope": [
+      {
+        "page": "base",
+        "scope": "window",
+        "count": 19
+      },
+      {
+        "page": "cand",
+        "scope": "window",
+        "count": 31
+      },
+      {
+        "page": "cand",
+        "scope": "tour",
+        "count": 2
+      }
+    ],
+    "dimensions": {
+      "width": 1440,
+      "height": 900
+    },
+    "unmodified_source_look_artifacts_only": true,
+    "hash_bytes_dimensions_and_receipts_inspected": true,
+    "full_state_and_source_binding_receipts": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/wide/glass-dark-normal/pair-inspection.json",
+      "bytes": 465302,
+      "sha256": "a4f6d9556a19a2101ba9be17bd1ed442e87e5e815fb77d22e8f397d327089bdb"
+    },
+    "numeric_contrast_floor_renderer_performance_acceptance": false,
+    "requested_book_or_three_frames": 0
+  },
+  "findings": {
+    "frozen_gate_summary": {
+      "status": "HOLD",
+      "exit_code": 2,
+      "absolute_failures": 0,
+      "regressions": 46,
+      "ownership_holds": 13,
+      "unverified": 274,
+      "observations_complete": false,
+      "raw_findings": 76,
+      "contrast_below_floor": 0,
+      "invocation_records_complete": true,
+      "full_campaign_complete": false,
+      "historical_cleanup_debts": 12
+    },
+    "issue_codes": {
+      "failures": {},
+      "regressions": {
+        "markup": 27,
+        "kept-count": 14,
+        "kept-w": 3,
+        "kept-attributes": 1,
+        "kept-box": 1
+      },
+      "holds": {
+        "label-host-control-geometry-source-owner-disposition-required": 4,
+        "scope-disposition-required": 9
+      },
+      "unverified": {
+        "renderer-runtime-unverified": 4,
+        "contrast-unmeasured": 81,
+        "base-contrast-unmeasured": 81,
+        "checkpoint-square-mark-ink-custody-unverified": 20,
+        "required-status-mark-absent": 10,
+        "screen-context-unverified": 35,
+        "paired-base-context-unverified": 31,
+        "tour-error": 2,
+        "expected-tour-context-not-reached": 5,
+        "bounded-pair-does-not-certify-full-matrix": 1,
+        "selector-never-rendered": 2,
+        "fail-status-renderer-unverified": 1,
+        "needs-fail-glyph-contract-open": 1
+      }
+    },
+    "raw_findings_retained": 76,
+    "acquisition_context_uncertainty": [
+      {
+        "page": "base",
+        "type": "tour acquisition/context/trusted flow error",
+        "error": "Error: tour Next trusted click unverified\n    at tourWalk (file:///home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs:1422:89)\n    at async runLook (file:///home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs:1778:22)\n    at async worker (file:///home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs:2130:90)\n    at async Promise.all (index 0)\n    at async main (file:///home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs:2131:5)"
+      },
+      {
+        "page": "cand",
+        "type": "tour acquisition/context/trusted flow error",
+        "error": "Error: Show Me trusted click unverified; no page-switch fallback\n    at tourWalk (file:///home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs:1437:98)\n    at async runLook (file:///home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs:1778:22)\n    at async worker (file:///home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs:2130:90)\n    at async Promise.all (index 0)\n    at async main (file:///home/sittingmongoose/.t3/worktrees/PuppetMaster/fix-pm7-onboarding-label-gates-20261013/Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs:2131:5)"
+      }
+    ],
+    "numeric_word_measurements": 0,
+    "absolute_4_5_floor": "UNVERIFIED; zero below-floor entries is no data, not a PASS; unsupported paint/geometry remains raw",
+    "baseline_vs_candidate": "All regressions and absolute-word criteria remain separate; no inherited/improved waiver",
+    "Wizard": "No new requested Wizard/book captures; all old genuine Wizard failures and ownership questions remain unchanged",
+    "renderer": "UNVERIFIED in all4 ordinary runtime contexts; no GPU/WebGL probe or configuration change"
+  },
+  "historical_campaign": {
+    "expected_wide": 24,
+    "expected_narrow": 12,
+    "run7_attempted_wide": 5,
+    "run7_first4_collection_records": 4,
+    "run7_fifth_distinct_reachability_HOLD": 1,
+    "remaining_wide_NOT_RUN": 19,
+    "remaining_narrow_NOT_RUN": 12,
+    "new_PA3_versioned_reobservation_pairs": 1,
+    "original_remaining_pairs_executed_this_round": 0,
+    "completed_historical_combinations_added": 0,
+    "old8_practice_records_not_upgraded": true,
+    "old_Glass_cause": "UNKNOWN",
+    "full_campaign_complete": false
+  },
+  "historical_holds": [
+    "All original failures/regressions/HOLD/UNVERIFIED and source/tool/owner inputs immutable",
+    "4.5 floor unsupported/nonuniform/transformed paint and missing pixels",
+    "needs/fail/address and absent renderers/marks",
+    "checkpoint square ink custody",
+    "Wizard/non-label/action/canon ownership with original owners/Jared",
+    "control geometry and unpaired sweep contexts",
+    "BasicLight owner approval stays scoped, not a Glass/tour exemption",
+    "384 intermediate97256a versus4 final88ed readings and hiding/suppression/median/crash/transient/fallback limits",
+    "source/product/look/full criteria/canon/landing held; Glass/Edge performance parked"
+  ],
+  "cleanup_debts": {
+    "distinct_unknown_peer_ids": [
+      "ab64d1003f13",
+      "cc80c88970ef",
+      "c4bdf8272f25"
+    ],
+    "distinct_peer_profiles": 3,
+    "frozen_gate_receipt_occurrences": 12,
+    "peer_deletion_or_history_filter": false,
+    "peer_resources0_claim": false,
+    "live_capacity_contribution_when_physically_inactive": 0
+  },
+  "custody": {
+    "at": "2026-10-13T14:17:23.584878+00:00",
+    "start": "b73b6bdc1b5cf915a5d6abf9e8ac969170421788",
+    "head": "b73b6bdc1b5cf915a5d6abf9e8ac969170421788",
+    "starting_entries": 16048,
+    "all_original_Git_physical_bytes_modes_exact": 16048,
+    "current_entries": 16048,
+    "delta": [],
+    "old_evidence_dirs": 10,
+    "old_evidence_files_modes_seals_exact": 728,
+    "original_helper_history_exact": 103,
+    "new_own_history_ids": [
+      "3e8b3c2284b8",
+      "5a7cb4c33898"
+    ],
+    "helper_history_total": 105,
+    "peer_profiles_exact": 3,
+    "helper_configuration_exact": true,
+    "controlling_share_files_exact": 38,
+    "source_pages": {
+      "Concepts/PMConcept7.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact_source": true
+      },
+      "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact_source": true
+      },
+      "Concepts/HomeTestPMConcept7.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact_source": true
+      },
+      "Concepts/LeftRailPMConcept7.html": {
+        "bytes": 19237474,
+        "sha256": "13d002fc7057c17270cbc149457cee588df423b8a3543fa5a5359901d7cba8bb",
+        "exact_source": true
+      }
+    },
+    "tool_sha256": "3800ab79c19d063895cbb94b371bcfe71b56a48f480180f5920a0f53f3c86558",
+    "tool_bytes": 175446,
+    "failures": [],
+    "pass": true
+  },
+  "staging": {
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/base-staging.json",
+      "bytes": 2270617,
+      "sha256": "f043058d62296375588979eb8915e3174c4cf3d8e14d0b75937b20208da36b4f"
+    },
+    "entries_verified": 6332,
+    "bytes_and_symlink_targets": 645145133,
+    "faithful_original_relative_paths_and_modes": true,
+    "rewrites_or_discarded_response_errors": false,
+    "cleanup": {
+      "at": "2026-10-13T14:20:03.727685+00:00",
+      "entries_reverified": 6332,
+      "bytes_and_modes_exact": true,
+      "mismatches": [],
+      "symlinks_unlinked_without_following": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/pm7-onboarding-label-pa3-glass-20261013/base/Concepts/chat-assistant-concepts/5.6 Pro/handoff/node_modules",
+          "target": "/mnt/Cursor/PuppetMaster/Concepts/chat-assistant-concepts/5.6 Pro/node_modules",
+          "traversed": false
+        }
+      ],
+      "base_staging_absent": true,
+      "archive_absent": true,
+      "remaining_local_runtime": "Owned metadata readers only; removed before FINAL",
+      "source_or_shared_cleanup": false
+    }
+  },
+  "report_builder_attempt": {
+    "attempt1": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/report-builder-attempt1-error.json",
+      "bytes": 934,
+      "sha256": "50f61ab9730529ca94d47333ba96f42e5810cbaa7061ee595871ba0cc89b047c"
+    },
+    "corrected_attempt2": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/compact-report-builder-attempt2.py",
+      "bytes": 21097,
+      "sha256": "b57d1533fde08b7383ef5976220ca144ef1707796212be67f533defd92e4f548"
+    },
+    "scope": "NEW report reader only; no product replay or code/source/criterion change"
+  },
+  "closure_reader_attempt": {
+    "receipt": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/closure-reader-attempt-error.json",
+      "bytes": 902,
+      "sha256": "e2dc5e95f72ccea003b8920536c72e7a50a5ad4ef64aaa79a3b9d2bb7b9384ce"
+    },
+    "disposition": "ReferenceError in print expression AFTER full supported read-only census persisted; genuine wrapper error retained, receipt statically inspected; no product/helper start/stop repeated"
+  },
+  "own_resources": {
+    "actual_browsers_closed": 2,
+    "actual_profiles_absent": 2,
+    "stop_ids": [
+      "3e8b3c2284b8",
+      "5a7cb4c33898"
+    ],
+    "normal_stop_success_and_exact_physical_proof": true,
+    "own_new_terminal_histories": 2,
+    "original_histories_unchanged": 103,
+    "servers_started": 0,
+    "source_staging_and_archive_removed": true,
+    "one_own_mailbox_waiter_while_active": true,
+    "all_OWN0_final_proof": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/final-head-receipt.json",
+    "local_metadata_runtime_removed_before_FINAL": true,
+    "peer0_claim": false
+  },
+  "evidence": {
+    "raw_root": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013",
+    "raw_report": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/wide/glass-dark-normal/report.json",
+      "bytes": 9285514,
+      "sha256": "3bea3f0fab15245f4a585c876109692d378797f0ebd1dc550421407d73133b24"
+    },
+    "pair_inspection": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/wide/glass-dark-normal/pair-inspection.json",
+      "bytes": 465302,
+      "sha256": "a4f6d9556a19a2101ba9be17bd1ed442e87e5e815fb77d22e8f397d327089bdb"
+    },
+    "failed_action_receipts": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/failed-action-inspection.json",
+      "bytes": 11876,
+      "sha256": "0f85b523ba9fba9238d65d9b99e4809b8db38928c423a454bc951963f11d0268"
+    },
+    "committable_seal": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/COMMITTABLE-SEAL-REPORT.json",
+      "bytes": 19689,
+      "sha256": "ad86a39cd9e3d9ecd512f55f10d6f7076b6ba2e0ffa0d4487a91c7f6d330216f",
+      "entries": 89
+    },
+    "final_seal": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/FINAL-SEAL.json",
+    "final_report_head_remotes_resources_receipt": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-pa3-glass-20261013/final-head-receipt.json"
+  },
+  "owned_paths": [
+    "reports/pm7-onboarding-label-pa3-glass-20261013/NOTES.md",
+    "reports/pm7-onboarding-label-pa3-glass-20261013/result.json"
+  ],
+  "next": "STOP. Root reviews completed packet; no retry/code/source repair/owner wake/self-next/source/look/full-criteria/landing approval."
+}
