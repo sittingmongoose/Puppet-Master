@@ -1,0 +1,107 @@
+{
+  "created_utc": "2026-10-12T17:04:59.558166+00:00",
+  "agent": "codex-pm7-glass-lenses",
+  "branch": "fix/pm7-glass-perf-lenses-20261012",
+  "input_head": "fd5d486c435a5d2b62469004b7ed999bc4521bda",
+  "source_owner_head": "8a94be0853fe9371792c8ba9fe10f4c3d4a185c4",
+  "presented_preview_sha256": "41202d26c0db26de49ea25af553ce3f5520234bae88d6e7fe217f313fd386440",
+  "source_path": "Concepts/liquid-glass/opus-5.5/src/glass.js",
+  "source_sha256": "2022f6b81a1275f541246114c2eef839b6b8e0855f8d399231f61c643506abce",
+  "status": "READY_FOR_INTEGRATION_AND_GPU_VALIDATION",
+  "validation": {
+    "node_syntax": "PASS",
+    "diff_whitespace": "PASS",
+    "new_lifecycle_equivalence_cases": 15,
+    "lifecycle_status": "PASS",
+    "source_preview_scope_status": "PASS",
+    "checks": [
+      "displacement/rim/spec pixel-byte equivalence and SVG optical graph",
+      "exact spring samples and bounded memoization",
+      "unchanged filter scales avoid queries and attribute invalidations",
+      "horizontal/vertical travel keyframes, timing and refraction samples",
+      "retarget cancels old RAF; finish/detach/off cannot revive old motion",
+      "unchanged reduced lens does not repeat or cancel its 140ms fade",
+      "scrub threshold, live geometry, nearest click and listener cancellation",
+      "bead entry/travel/exit keyframes and stale hide cancellation",
+      "menu morph/stagger bytes unchanged; closed/detached/deferred cleanup",
+      "completed menu tracking and removed children release animation owners",
+      "filter reuse, existing sharing and bounded replacement/resize history",
+      "local onboarding layer query cache respects replacement",
+      "closed menus skip lens geometry reads without changing overlap hiding",
+      "reduced transition retains visible hovered bead and exact reduced menu fade",
+      "owned lens cleanup joins available unmount API once"
+    ]
+  },
+  "static_regression_observations": {
+    "repeated_base_scale_500_calls": {
+      "baseline_selectors": 500,
+      "baseline_attribute_writes": 1500,
+      "candidate_selectors": 0,
+      "candidate_attribute_writes": 0
+    },
+    "retarget_raf_count": {
+      "baseline": 2,
+      "candidate": 1,
+      "candidate_after_stop_detach_off": 0
+    },
+    "closed_menu_geometry_100_scans": {
+      "baseline_reads": 100,
+      "candidate_reads": 0
+    },
+    "cache_bounds": {
+      "inactive_svg_filters": 16,
+      "spring_parameter_sets": 16
+    }
+  },
+  "integration_hooks": {
+    "runtime_sync": "pruneLenses()",
+    "glass_off_and_motion_transition": "suspendLensMotion()",
+    "baking_unmount_join": "unmount(e), optional fallback supported",
+    "baking_filter_trim": "pruneLensFilters(), after e.__lgF clearing if desired"
+  },
+  "preservation": [
+    "All non-owned glass.js sections byte-exact",
+    "All non-JS generated preview bytes byte-exact to presented v2.2",
+    "Optical map image-data bytes, SVG filter graph and optical parameters unchanged",
+    "Spring samples and travel/bead/menu keyframes, options, durations and offsets unchanged",
+    "Same lens padding, dimensions, labels, scrubbing threshold, live geometry and nearest-tab click",
+    "Changed reduced geometry retains 140ms fade, including subpixel positions",
+    "PM_LG API/version, CSS, art/wallpapers, keyboard/focus and switches unchanged",
+    "Motion preference transition retains the current hovered bead visibly at rest"
+  ],
+  "limits": [
+    "Selected-function deterministic Node sandbox is not a GPU/browser benchmark or full runtime acceptance.",
+    "Map bytes are checked before browser PNG encoding; rendered visual and end-to-end performance checks belong to sole profiler.",
+    "Existing same-key SVG filter sharing and shared refraction cross-talk remain unchanged.",
+    "Live scrubbing retains layout reads needed for moved/resized strip geometry.",
+    "Automatic detached/off/preference cleanup relies on agreed runtime and baking joins in the combined build."
+  ],
+  "owned_gpu_browser_child_server_resources_ever": 0,
+  "artifacts": [
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/lenses/lens-regression.mjs",
+      "bytes": 24422,
+      "sha256": "662af65f2d24e8d578040240ac24164d0543e568fd1a92f9f7ea2ac4f5851276"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/lenses/lens-scope.py",
+      "bytes": 2383,
+      "sha256": "1e6246e53a804c08bf0194706b2ccef8e27259e5175ab3c22e729e71b7d5be11"
+    },
+    {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/lenses/PMConcept7-LiquidGlass-lenses.html",
+      "bytes": 19367694,
+      "sha256": "ec769631a9ad018c9dd3af3eb4fad93679c0992ede82d247792ac60e7e971548"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/lenses/lifecycle-equivalence-result.json",
+      "bytes": 8818,
+      "sha256": "28c0cce7355d8bb56f4aed8fe0166c7fe8c590b94a81c7525e1dc5cedc60f1df"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/lenses/source-preview-scope-result.json",
+      "bytes": 689,
+      "sha256": "ab27056160f104dea6a5ba2f47a0ff16608441043078154cd419a57e7e593e31"
+    }
+  ]
+}

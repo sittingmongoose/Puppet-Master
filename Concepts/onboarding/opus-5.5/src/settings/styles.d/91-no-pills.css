@@ -1,0 +1,152 @@
+/* O55 · no pills (Jared 2026-10-10: "pills needs to be removed from settings and redesigned to not use them"; cards
+   NP-SWITCH, NP-BARS and NP-CHOICE, approved as presented; the rule is DL-184 / F3-648). 90-restraint.css removed the
+   chips, badges and tags; this file replaces the two shapes it had left round on purpose, the switch and the bars.
+   Corners come from src/css/06-corners.css (--pm-ctl-r outside, --pm-ctl-r-in inside). */
+
+/* ── The keyed switch ─────────────────────────────────────────────────────────────────────────────────────────────
+   role=switch, its wiring and its keyboard are unchanged; only the drawing is. The track is the look's rectangle. A lit
+   layer (::before) wipes in from the left behind a square key (::after) that carries a grip. The uncovered end shows the
+   power marks: a bar in the lit layer when on, a hollow square on the track when off, so the state reads without colour.
+   Pressing squashes the key. Friendly lands with the spring, Glass has a glass key with a lit top edge, Retro is reverse
+   video with a stepped key and a hard drop, NieR moves an ink block in two beats. */
+html { --pm-switch-off-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Crect x='.75' y='.75' width='6.5' height='6.5' rx='1' fill='none' stroke='rgba(0,0,0,.42)' stroke-width='1.5'/%3E%3C/svg%3E"); }
+html[data-theme$="-dark"] { --pm-switch-off-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Crect x='.75' y='.75' width='6.5' height='6.5' rx='1' fill='none' stroke='rgba(255,255,255,.5)' stroke-width='1.5'/%3E%3C/svg%3E"); }
+html #panel-settings .toggle {
+  width: 40px; height: 22px; border-radius: var(--pm-ctl-r); overflow: hidden; isolation: isolate;
+  background: var(--k3-surface-3) var(--pm-switch-off-mark) no-repeat right 7px center / 8px 8px;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+html #panel-settings .toggle.on { background-color: var(--k3-surface-3); border-color: var(--k3-line); }
+html #panel-settings .toggle::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(#fff, #fff) no-repeat 8.5px 50% / 1.5px 8px, var(--k3-accent);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18);
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 300ms var(--k3-ease-out, cubic-bezier(.2,.8,.2,1));
+}
+html #panel-settings .toggle.on::before { clip-path: inset(0 0 0 0); }
+html #panel-settings .toggle::after {
+  z-index: 1; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: var(--pm-ctl-r-in);
+  background-color: #fbfbfd;
+  background-image: linear-gradient(90deg, transparent 5.5px, rgba(0,0,0,.20) 5.5px 6.5px, transparent 6.5px 9.5px, rgba(0,0,0,.20) 9.5px 10.5px, transparent 10.5px);
+  background-repeat: no-repeat; background-size: 16px 7px; background-position: 0 50%;
+  box-shadow: 0 1px 2px rgba(0,0,0,.30), 0 0 0 .5px rgba(0,0,0,.18), inset 0 -1px 0 rgba(0,0,0,.08);
+  transition: transform 340ms var(--k3-ease-spring, cubic-bezier(.3,1.4,.5,1)), scale 140ms ease, background-color 200ms ease;
+}
+html #panel-settings .toggle.on::after { transform: translateX(18px); background-color: #fff; }
+html #panel-settings .toggle:active::after { scale: 1.14 .9; }
+html #panel-settings .toggle:hover { box-shadow: 0 0 0 3px var(--k3-accent-soft); }
+html #panel-settings .toggle:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 2px; }
+html[data-theme$="-dark"] #panel-settings .toggle:not(.on)::after { background-color: #c9c8d4; }
+/* Friendly: a softer shadow under the key */
+html[data-theme^="friendly"] #panel-settings .toggle::after { box-shadow: 0 2px 5px rgba(60,40,20,.22), 0 0 0 .5px rgba(60,40,20,.14); }
+/* Glass: a frosted track and a glass key with a lit top edge */
+html[data-theme^="glass"] #panel-settings .toggle { background-color: rgba(var(--glass-tint-rgb, 255,255,255), .22); box-shadow: inset 0 1px 0 rgba(255,255,255,.22), inset 0 0 0 1px rgba(255,255,255,.10); }
+html[data-theme^="glass"] #panel-settings .toggle::after {
+  background-color: transparent;
+  background-image: linear-gradient(90deg, transparent 5.5px, rgba(0,0,0,.16) 5.5px 6.5px, transparent 6.5px 9.5px, rgba(0,0,0,.16) 9.5px 10.5px, transparent 10.5px), linear-gradient(180deg, rgba(255,255,255,.98), rgba(236,234,250,.80));
+  background-size: 16px 7px, 100% 100%;
+  box-shadow: inset 0 1px 0 #fff, 0 0 0 .5px rgba(255,255,255,.7), 0 3px 8px rgba(20,10,60,.28);
+}
+/* Retro: hard edges and a 2px drop; on is reverse video; the key moves in four steps */
+html[data-theme^="retro"] #panel-settings .toggle { border-width: 2px; border-color: var(--k3-text-1); box-shadow: 2px 2px 0 var(--k3-text-1); background-color: var(--k3-surface-3); }
+html[data-theme^="retro"] #panel-settings .toggle::before { background: linear-gradient(var(--k3-surface-3), var(--k3-surface-3)) no-repeat 7px 50% / 2px 8px, var(--k3-text-1); box-shadow: none; transition: clip-path 160ms steps(4, end); }
+html[data-theme^="retro"] #panel-settings .toggle::after, html[data-theme^="retro"] #panel-settings .toggle:not(.on)::after { width: 14px; height: 14px; background-image: none; background-color: var(--k3-text-1); box-shadow: none; transition: transform 160ms steps(4, end); }
+html[data-theme^="retro"] #panel-settings .toggle.on::after { background-color: var(--k3-surface-3); }
+html[data-theme^="retro"] #panel-settings .toggle:hover { box-shadow: 2px 2px 0 var(--k3-text-1); filter: brightness(1.08); }
+/* NieR: ink on parchment; the key is an ink block that moves in two beats */
+html[data-o55-nier="on"] #panel-settings .toggle { border-color: var(--k3-text-1); background-color: transparent; box-shadow: none; }
+html[data-o55-nier="on"] #panel-settings .toggle::before { background: linear-gradient(var(--k3-surface-3), var(--k3-surface-3)) no-repeat 8px 50% / 1.5px 8px, var(--k3-text-1); box-shadow: none; transition: clip-path 180ms steps(2, end); }
+html[data-o55-nier="on"] #panel-settings .toggle::after, html[data-o55-nier="on"] #panel-settings .toggle:not(.on)::after { background-image: none; background-color: var(--k3-text-1); box-shadow: none; transition: transform 180ms steps(2, end); }
+html[data-o55-nier="on"] #panel-settings .toggle.on::after { background-color: var(--k3-surface-3); }
+/* Reduced Motion and NieR's Still: the key moves at once and the colour fades in, a calm version rather than none */
+@media (prefers-reduced-motion: reduce) {
+  html #panel-settings .toggle::before { clip-path: none; opacity: 0; transition: opacity 160ms ease; }
+  html #panel-settings .toggle.on::before { opacity: 1; }
+  html #panel-settings .toggle::after { transition: background-color 160ms ease; scale: none; }
+}
+html:is([data-motion="reduced"], [data-o55-still]) #panel-settings .toggle::before { clip-path: none; opacity: 0; transition: opacity 160ms ease; }
+html:is([data-motion="reduced"], [data-o55-still]) #panel-settings .toggle.on::before { opacity: 1; }
+html:is([data-motion="reduced"], [data-o55-still]) #panel-settings .toggle::after { transition: background-color 160ms ease; scale: none; }
+
+/* ── Segment rows inside Settings: the look's rectangle, the chosen cell with the inner corner ────────────────────── */
+html #panel-settings .segmented { border-radius: var(--pm-ctl-r); }
+html #panel-settings .segmented button { border-radius: var(--pm-ctl-r-in); }
+
+/* ── Square-ended bars (NP-BARS) ───────────────────────────────────────────────────────────────────────────────────
+   Meters get flat ends with a 1px corner at most, and a little more height so the end reads as meant. Retro counts
+   in blocks, like a segment display; NieR already draws its meters in blocks. The space split's shares sit 2px apart
+   (30-memory.js). The 2px lines (waveform bars, tab ink, step connectors) are lines, not capsules, and keep their ends. */
+html #panel-settings .pm51-meter-track { height: 5px; border-radius: 1px; }
+html #panel-settings .pm51-meter-fill { border-radius: 1px; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-settings .pm51-meter-track { height: 6px; border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-settings .pm51-meter-fill {
+  border-radius: 0;
+  -webkit-mask: repeating-linear-gradient(90deg, #000 0 5px, transparent 5px 7px);
+  mask: repeating-linear-gradient(90deg, #000 0 5px, transparent 5px 7px);
+}
+
+/* ── Status mark slot (NP-STATUS) ───────────────────────────────────────────────────────────────────────────────
+   A status is a mark and a word: every status dot in Settings now sits in one uniform 1em slot that the neon
+   glyph rollout will later fill with PMG.status(key, 14, 'nx-still'). Today the slot draws exactly the dot it
+   replaces (same colour, diameter and centre); the negative inline margin pays back the slot's extra width so
+   the word starts where it started. Colours still come from the old tone hooks (carry-over rules below, each
+   citing the rule it replaces); the [data-status] rules name each key's usual ink for slots without one. */
+html #panel-settings .pm-status-mark { display: inline-block; flex: none; width: 1em; height: 1em; position: relative; vertical-align: -0.125em; padding: 0; border: 0; background: none; margin-inline: calc((var(--pm-dot, 6px) - 1em) / 2); }
+html #panel-settings .pm-status-mark::before { content: ""; position: absolute; inset: 0; margin: auto; width: var(--pm-dot, 6px); height: var(--pm-dot, 6px); border-radius: 50%; background: var(--pm-status-ink, currentColor); }
+/* the two 7px dots (styles.css .pm51-status i, 11-web.js .o55-chain-step i); every other slot keeps 6px */
+html #panel-settings :is(.pm51-status, .o55-chain-step) .pm-status-mark { --pm-dot: 7px; }
+/* each key's usual ink */
+html #panel-settings .pm-status-mark[data-status="idle"] { --pm-status-ink: var(--k3-green); }
+html #panel-settings .pm-status-mark[data-status="working"] { --pm-status-ink: var(--k3-green); }
+html #panel-settings .pm-status-mark[data-status="complete"] { --pm-status-ink: var(--k3-green); }
+html #panel-settings .pm-status-mark[data-status="warning"] { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .pm-status-mark[data-status="waiting"] { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .pm-status-mark[data-status="paused"] { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .pm-status-mark[data-status="recovering"] { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .pm-status-mark[data-status="info"] { --pm-status-ink: var(--k3-blue); }
+html #panel-settings .pm-status-mark[data-status="reviewing"] { --pm-status-ink: var(--k3-blue); }
+html #panel-settings .pm-status-mark[data-status="failed"] { --pm-status-ink: var(--k3-red); }
+html #panel-settings .pm-status-mark[data-status="blocked"] { --pm-status-ink: var(--k3-red); }
+html #panel-settings .pm-status-mark[data-status="offline"] { --pm-status-ink: var(--k3-red); }
+html #panel-settings .pm-status-mark[data-status="off"] { --pm-status-ink: var(--k3-muted); }
+html #panel-settings .pm-status-mark[data-status="change-modified"] { --pm-status-ink: var(--k3-accent); }
+/* status tokens (carry-over from styles.css .pm51-status.tone-* i) */
+html #panel-settings .pm51-status.tone-ready .pm-status-mark { --pm-status-ink: var(--k3-green); }
+html #panel-settings .pm51-status.tone-info .pm-status-mark { --pm-status-ink: var(--k3-blue); }
+html #panel-settings .pm51-status.tone-attention .pm-status-mark { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .pm51-status.tone-blocked .pm-status-mark { --pm-status-ink: var(--k3-red); }
+html #panel-settings :is(.pm51-status.tone-off, .pm51-status.tone-neutral) .pm-status-mark { --pm-status-ink: var(--k3-muted); }
+html #panel-settings .pm51-acc-end .pm51-status > .pm-status-mark { margin-top: calc(.32em - (1em - 7px) / 2); margin-bottom: calc((7px - 1em) / 2); }
+/* roster and delivery-history dots (carry-over from the base .status-dot colour rules) */
+html #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.ready { --pm-status-ink: var(--k3-green); }
+html #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.attention { --pm-status-ink: var(--k3-amber); }
+html #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.disabled { --pm-status-ink: #69677d; }
+html #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.info { --pm-status-ink: var(--k3-blue); }
+html #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.error { --pm-status-ink: var(--k3-red); }
+/* the base page paints kept .status-dot classes on the element itself; the slot paints only ::before */
+html #panel-settings .status-dot.pm-status-mark { background: none; border-radius: 0; }
+html[data-o55-nier] #panel-settings .status-dot.pm-status-mark { background: none; }
+/* changed marker and its halo (carry-over from 10-rows.css .o55-changed i) */
+html #panel-settings .o55-changed .pm-status-mark { --pm-status-ink: var(--k3-accent); }
+html #panel-settings .o55-changed .pm-status-mark::before { box-shadow: 0 0 0 3px var(--k3-accent-soft); }
+html #panel-settings .o55-changed.o55-needed .pm-status-mark { --pm-status-ink: var(--k3-amber); }
+html #panel-settings .o55-changed.o55-needed .pm-status-mark::before { box-shadow: 0 0 0 3px var(--k3-amber-soft); }
+/* service chains (carry-over from 11-web.js .o55-chain-step i: off and blocked fall through to the grey) */
+html #panel-settings .o55-chain-step.tone-ready .pm-status-mark { --pm-status-ink: var(--k3-green); }
+html #panel-settings .o55-chain-step.tone-attention .pm-status-mark { --pm-status-ink: var(--k3-amber); }
+html #panel-settings :is(.o55-chain-step.tone-off, .o55-chain-step.tone-blocked) .pm-status-mark { --pm-status-ink: var(--k3-text-3); }
+/* rail health (carry-over from the base .side-health::before: currentColor plus its glow) */
+html #panel-settings .side-health.pm-has-mark::before { content: none; }
+html #panel-settings .side-health .pm-status-mark { --pm-status-ink: currentColor; }
+html #panel-settings .side-health .pm-status-mark::before { box-shadow: 0 0 10px currentColor; }
+/* home attention rows (carry-over from the base .status-dot.attention) */
+html #panel-settings .attention-row .pm-status-mark { --pm-status-ink: var(--k3-amber); }
+/* NieR idle dots (carry-over from 13-nier.css:538) */
+html[data-o55-nier] #panel-settings :is(.resource-row, .pm51-notif-result) .pm-status-mark.status-dot.disabled { --pm-status-ink: var(--o55-nier-line-strong); }
+
+/* ── Dropdown search (found by tools/pill_check.mjs --dialogs) ──────────────────────────────────────────────────────
+   The search at the top of a dropdown popout takes the look's rectangle; its input, focused when the popout opens, no
+   longer draws Friendly's 14px-cornered focus glow, which ringed it as a capsule. */
+html .pm51-popout-search { border-radius: var(--pm-ctl-r); }
+html .pm51-popout-search input { border-radius: var(--pm-ctl-r-in); }

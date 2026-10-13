@@ -124,9 +124,8 @@
 #panel-settings .o55-mem-doc-preview { font-family: var(--k3-mono, ui-monospace, monospace); font-size: 11.5px; color: var(--k3-text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 360px; }
 #panel-settings .o55-mem-doc-preview.is-empty { font-family: inherit; color: var(--k3-text-3); }
 #panel-settings .o55-mem-editor { width: 100%; min-height: 280px; box-sizing: border-box; padding: 12px; border: 1px solid var(--k3-line); border-radius: 8px; background: var(--k3-bg-2); color: var(--k3-text-1); font: 12.5px/1.6 var(--k3-mono, ui-monospace, monospace); resize: vertical; }
-#panel-settings .o55-mem-split-bar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--k3-bg-2); box-shadow: inset 0 0 0 1px var(--k3-line); }
-#panel-settings .o55-mem-split-bar span { height: 100%; transition: width 260ms ease; }
-#panel-settings .o55-mem-split-bar span + span { box-shadow: inset 1px 0 0 var(--k3-bg-1); }
+#panel-settings .o55-mem-split-bar { display: flex; gap: 2px; height: 14px; border-radius: min(var(--pm-ctl-r, 4px), 3px); overflow: hidden; background: var(--k3-bg-2); box-shadow: inset 0 0 0 1px var(--k3-line); }
+#panel-settings .o55-mem-split-bar span { height: 100%; flex: none; transition: width 260ms ease; }
 #panel-settings .o55-mem-split-row { display: grid; grid-template-columns: 12px minmax(0, 1fr) 92px; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--k3-line); }
 #panel-settings .o55-mem-split-row:last-child { border-bottom: 0; }
 #panel-settings .o55-mem-split-row i { width: 12px; height: 12px; border-radius: 3px; }

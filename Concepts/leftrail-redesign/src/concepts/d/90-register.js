@@ -18,7 +18,7 @@ function mountSkin() {
   listen(document, 'click', onClickMotion);
   listen(document, 'click', onEngine);
   /* counts roll when the shell changes them */
-  const mo = new MutationObserver(() => { if (D.on) panelEls().forEach(p => applyCounts(p, true)); });
+  const mo = new MutationObserver(mutations => { if (D.on) applyCountMutations(mutations); });
   panelEls().forEach(p => mo.observe(p, { subtree: true, characterData: true, childList: true }));
   D.observers.push(mo);
   requestAnimationFrame(fitAll);

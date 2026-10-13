@@ -73,7 +73,7 @@
     #panel-settings .pm51-mgr .pm51-sound-grid .sound-copy { grid-column: 2; grid-row: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
     #panel-settings .pm51-mgr .pm51-sound-grid .sound-copy strong { display: inline; font-size: 12.5px; font-weight: 650; color: var(--k3-text-1); overflow-wrap: anywhere; }
     #panel-settings .pm51-mgr .pm51-sound-grid .sound-copy .pm51-status { display: inline-flex; margin: 0; font-size: 11px; }
-    #panel-settings .pm51-mgr .pm51-sound-grid .sound-copy .pm51-status span { display: inline; margin: 0; font-size: 11px; color: inherit; }
+    #panel-settings .pm51-mgr .pm51-sound-grid .sound-copy .pm51-status > span:last-child { display: inline; margin: 0; font-size: 11px; color: inherit; }
     #panel-settings .pm51-mgr .pm51-sound-grid .sound-waveform { grid-column: 3; grid-row: 1; width: 72px; }
     #panel-settings .pm51-mgr .pm51-sound-grid .sound-row > .icon-btn { grid-column: 4; grid-row: 1; }
     #panel-settings .pm51-mgr .pm51-sound-grid .pm51-sound-lines { grid-column: 2 / 5; grid-row: 2; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
@@ -834,7 +834,7 @@
   function historyTab() {
     const rows = (N().history || []).map((hrow, i) => ({
       title: hrow.event, meta: `${hrow.time} · ${hrow.destination}`,
-      end: `<span class="pm51-notif-result">${PM51.dot(resultTone(hrow.result))}${h(hrow.result)}</span>${icon('chevron')}`,
+      end: `<span class="pm51-notif-result">${PM51.dot(resultTone(hrow.result), hrow.result)}${h(hrow.result)}</span>${icon('chevron')}`,
       action: 'pm51-notifications-history', data: { index: i }
     }));
     return PM51.section({ title: 'Delivery history', help: 'The most recent alerts and what happened to them.', body: rows.length ? PM51.list(rows) : PM51.note('Nothing delivered yet.') })

@@ -1,0 +1,288 @@
+{
+  "status": "HOLD",
+  "candidate_full_walks": "PASS",
+  "hold_reason": "The bounded main setup probe also failed in an owned isolated context; context isolation is not established as a reliable setup remedy. The two requested candidate full walks passed. Original default-context failures remain failures.",
+  "base": "eced2b522722c29931b6460ed05485d3b58ee83a",
+  "source_owner_main_base": "9324862e3456e7a9d3836225cfd972d2e6b0170b",
+  "code_commit": "95fea0976802ad4a0d240a3ff067ba1664518a39",
+  "branch": "fix/pm7-settings-dialog-gate-20261012",
+  "patch_scope": [
+    "Concepts/onboarding/opus-5.5/tools/pill_check.mjs",
+    "Concepts/onboarding/opus-5.5/README.md"
+  ],
+  "patch_stat": {
+    "insertions": 22,
+    "deletions": 5
+  },
+  "candidate_page_sha256": "b612df00caa2e2fb13b9b2307a17f283358845b596f33a27a31ba55d40266451",
+  "main_page_sha256": "5f87466ece4cb8167b40a68b4acaa1da3ecb4d5b268a95afae38abddde6522fb",
+  "rail_sha256": "57904010d6d6d14ca192cc45bb7b7e710a40f184c72df50a73df4f78375b541c",
+  "original_pill_driver_sha256": "a1fc6b95d757d2cdf2b16e982124d0c0e9f116b31bfdea179cf354b506477994",
+  "tested_pill_driver_sha256": "2d2ed65deadf51b2d4ff1e53551cc37b9b77c85100319f14c9b0a56100180041",
+  "functional_driver_sha256": "f0f9293cc82498e866c1eadac5a8c5eb70b62ca76da102a9bc9bb5e3cc3c2728",
+  "full_walk_configuration": {
+    "quick": false,
+    "dialogs": true,
+    "scopes": [
+      "settings",
+      "thememenu",
+      "floaters",
+      "shell"
+    ],
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    },
+    "context_mode": "cdp-isolated",
+    "attempts": {
+      "normal": 1,
+      "reduced": 1
+    }
+  },
+  "coverage": {
+    "full-normal": {
+      "views": 2513,
+      "per_look": {
+        "basic-light": 252,
+        "friendly-light": 250,
+        "glass-dark": 250,
+        "retro-dark": 257,
+        "basic-dark": 251,
+        "friendly-dark": 250,
+        "glass-light": 250,
+        "retro-light": 251,
+        "nier-light": 251,
+        "nier-dark": 251
+      },
+      "pages_per_look": {
+        "basic-light": 29,
+        "friendly-light": 29,
+        "glass-dark": 29,
+        "retro-dark": 29,
+        "basic-dark": 29,
+        "friendly-dark": 29,
+        "glass-light": 29,
+        "retro-light": 29,
+        "nier-light": 29,
+        "nier-dark": 29
+      },
+      "static_scope_views": {
+        "floaters": 10,
+        "thememenu": 10,
+        "shell": 10
+      },
+      "findings": 0,
+      "instances": 0,
+      "failed_views": 0,
+      "page_errors": 0,
+      "helper_id": "43142188a50e",
+      "report_sha256": "34ff10e29f1ac8d989957c2c7eea8ecefb925c75a30d5388bcda5fc9c9dd44f7",
+      "receipt_sha256": "c58f8c6e0ecb07b1e707667583d16a4b1b43698591428abe66e940fc51f220d4",
+      "renderer": "ANGLE (NVIDIA Corporation, Quadro P1000/PCIe/SSE2, OpenGL 4.5.0)",
+      "context_mode": "cdp-isolated"
+    },
+    "full-reduced": {
+      "views": 2631,
+      "per_look": {
+        "basic-light": 264,
+        "friendly-light": 263,
+        "glass-dark": 263,
+        "retro-dark": 263,
+        "basic-dark": 263,
+        "friendly-dark": 263,
+        "glass-light": 263,
+        "retro-light": 263,
+        "nier-light": 263,
+        "nier-dark": 263
+      },
+      "pages_per_look": {
+        "basic-light": 29,
+        "friendly-light": 29,
+        "glass-dark": 29,
+        "retro-dark": 29,
+        "basic-dark": 29,
+        "friendly-dark": 29,
+        "glass-light": 29,
+        "retro-light": 29,
+        "nier-light": 29,
+        "nier-dark": 29
+      },
+      "static_scope_views": {
+        "floaters": 10,
+        "thememenu": 10,
+        "shell": 10
+      },
+      "findings": 0,
+      "instances": 0,
+      "failed_views": 0,
+      "page_errors": 0,
+      "helper_id": "1e0430a9682f",
+      "report_sha256": "94462f943642c32d772d5d56121defc4bf9e35e50388265af6c77caacc46f5e6",
+      "receipt_sha256": "1eeed3e107716c82ba19dfcd21e1bb6181e7d55189086b3872ee43dbbc2d3b24",
+      "renderer": "ANGLE (NVIDIA Corporation, Quadro P1000/PCIe/SSE2, OpenGL 4.5.0)",
+      "context_mode": "cdp-isolated"
+    }
+  },
+  "setup_probe_error": "FATAL Error: look did not apply: basic-light got {\"theme\":\"basic-dark\",\"nier\":null}",
+  "setup_probes": {
+    "setup-candidate-after-default": {
+      "run": "setup-candidate-after-default",
+      "helper_id": "ab82b2039896",
+      "exit": 2,
+      "mode": "cdp-default",
+      "signal": null,
+      "context_disposed": true,
+      "helper_stopped": true,
+      "profile_removed": true,
+      "receipt_sha256": "e086ec09575434b76f8e4b84c7832e42c21a2fe05bad088f29e2ae394ee58e6d"
+    },
+    "setup-candidate-before-default": {
+      "run": "setup-candidate-before-default",
+      "helper_id": "b2c735ddaab0",
+      "exit": 2,
+      "mode": "cdp-default",
+      "signal": null,
+      "context_disposed": true,
+      "helper_stopped": true,
+      "profile_removed": true,
+      "receipt_sha256": "012d9ce3543ce8924e32e5a71fa94ffbe24100601f9be736f35fa71221b4ca25"
+    },
+    "setup-main-after-default": {
+      "run": "setup-main-after-default",
+      "helper_id": "7a770d5c655d",
+      "exit": 2,
+      "mode": "cdp-default",
+      "signal": null,
+      "context_disposed": true,
+      "helper_stopped": true,
+      "profile_removed": true,
+      "receipt_sha256": "76e29b8d60e408a147b777b448cc5575d6b9a2a32cfd62fed793a51aff81e327"
+    },
+    "setup-main-isolated": {
+      "run": "setup-main-isolated",
+      "helper_id": "06ac1d0c1d84",
+      "exit": 2,
+      "mode": "cdp-isolated",
+      "signal": null,
+      "context_disposed": true,
+      "helper_stopped": true,
+      "profile_removed": true,
+      "receipt_sha256": "f7e14d1faed4baf63d7b3203f8fbbfdfb55ba1068f856c1f645088e08e0016fa"
+    }
+  },
+  "setup_probe_method": "Verbatim driver prefix through boot/setLook, followed by setup-only entry and teardown; no Settings traversal and no main full campaign. Full walker also enumerates domains before setLook.",
+  "signal_checks": {
+    "lifecycle-sigint": {
+      "run": "lifecycle-sigint",
+      "helper_id": "e04a2cc6a6e6",
+      "exit": 130,
+      "mode": "cdp-isolated",
+      "signal": "SIGINT",
+      "context_disposed": true,
+      "helper_stopped": true,
+      "profile_removed": true,
+      "receipt_sha256": "d70187fa7808c22bd62881ffd37804cd7742e92cd98e264d972ea3886935b77b"
+    },
+    "lifecycle-sigterm": {
+      "run": "lifecycle-sigterm",
+      "helper_id": "f281a18d4527",
+      "exit": 143,
+      "mode": "cdp-isolated",
+      "signal": "SIGTERM",
+      "context_disposed": true,
+      "helper_stopped": true,
+      "profile_removed": true,
+      "receipt_sha256": "168f2dd7d2027c6cafdc14b1eefb9aca066f0a2789ec4012809b3a01772155d3"
+    }
+  },
+  "preservation": {
+    "default_path_projection": {
+      "sha256_before": "a1fc6b95d757d2cdf2b16e982124d0c0e9f116b31bfdea179cf354b506477994",
+      "sha256_after_projection": "a1fc6b95d757d2cdf2b16e982124d0c0e9f116b31bfdea179cf354b506477994",
+      "byte_identical": true,
+      "allowed_replacements": 11
+    },
+    "byte_identical_regions": {
+      "scopes_looks_quick_catalog": {
+        "sha256_before": "945bfbae8397214990a4369db7391e92e1a6f17e59f8af44eaf9832e4c2746e0",
+        "sha256_after": "945bfbae8397214990a4369db7391e92e1a6f17e59f8af44eaf9832e4c2746e0",
+        "byte_identical": true,
+        "bytes": 1080
+      },
+      "collector_all_predicates_thresholds_exemptions": {
+        "sha256_before": "235aa10d023e52c89429ca12b2a08eca5e2190ec20cf9eb2de3817d75bbc9b73",
+        "sha256_after": "235aa10d023e52c89429ca12b2a08eca5e2190ec20cf9eb2de3817d75bbc9b73",
+        "byte_identical": true,
+        "bytes": 9574
+      },
+      "navigation_to_settings": {
+        "sha256_before": "88a42cc17bb7eddc4be730d25b480e62cb92255fd180a5dfd3ed3b06eb1d2645",
+        "sha256_after": "88a42cc17bb7eddc4be730d25b480e62cb92255fd180a5dfd3ed3b06eb1d2645",
+        "byte_identical": true,
+        "bytes": 413
+      },
+      "look_setting_and_confirmation": {
+        "sha256_before": "45fd825192e7ce540a331ca03456c39522e9394592fb37a2693729bc90619b5a",
+        "sha256_after": "45fd825192e7ce540a331ca03456c39522e9394592fb37a2693729bc90619b5a",
+        "byte_identical": true,
+        "bytes": 988
+      },
+      "traversal_dialog_selection_scopes": {
+        "sha256_before": "b3bc601cee35d4e859a5a065bf90b58bc36e59a89c2948a61c48718de9fecb3a",
+        "sha256_after": "b3bc601cee35d4e859a5a065bf90b58bc36e59a89c2948a61c48718de9fecb3a",
+        "byte_identical": true,
+        "bytes": 7971
+      },
+      "full_walk_selection_and_loop": {
+        "sha256_before": "37e3c0715b71e9808d053247df06cb610db825a9445f8e59d3528c8130a5f787",
+        "sha256_after": "37e3c0715b71e9808d053247df06cb610db825a9445f8e59d3528c8130a5f787",
+        "byte_identical": true,
+        "bytes": 1192
+      },
+      "exit_criteria": {
+        "sha256_before": "85598bb5bb9b4fdc12640a85d8f0b74744b83757dcf9ed1e3f392762129fab3a",
+        "sha256_after": "85598bb5bb9b4fdc12640a85d8f0b74744b83757dcf9ed1e3f392762129fab3a",
+        "byte_identical": true,
+        "bytes": 221
+      }
+    },
+    "protected_paths_unchanged": [
+      "Plans",
+      "Concepts/PMConcept7.html",
+      "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html",
+      "Concepts/HomeTestPMConcept7.html",
+      "Concepts/LeftRailPMConcept7.html",
+      "Concepts/onboarding/opus-5.5/src",
+      "Concepts/onboarding/opus-5.5/tools/settings_nopills_accept.mjs"
+    ]
+  },
+  "evidence": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-settings-dialog-gate-20261012",
+    "manifest_sha256": "4f593a78cfc35cb1a1dc51a6ecb12af8813ed77ad5a8d4f39257d8c995eef6db",
+    "manifest_entries": 96,
+    "proof_sha256": "afc6699fcd3101400c2080480edd258920803d34c966a639b099ea42b6464177",
+    "patch_sha256": "65aacbf5cca1fbeaf2b83e5897904dcc9073005e1cb50e492bb0bd84b8b0ce62",
+    "cleanup_nas1_sha256": "6241dbe3de7d1fe8875dec20ecdd650215ae514e4b0008c6c0725be85bae9281",
+    "cleanup_p1000_sha256": "2d8b10d73aba25d48f3a08b2a4c4afefac61c5e16d625765d0cb3a933d410e86"
+  },
+  "old_evidence_unchanged": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-no-pills-final-20261011/SHA256SUMS",
+    "sha256": "e74bfe1d0a739e88e5b95fe000f83e50ab8b2f22131f139bd6dd7d9cb9d46197",
+    "entries": 334
+  },
+  "cleanup": {
+    "owned_helpers_stopped": 8,
+    "isolated_contexts_disposed": true,
+    "profiles_removed": true,
+    "local_and_remote_scratch_removed": true,
+    "owned_servers_started": 0,
+    "recordings_started": 0,
+    "waiter_terminated": true,
+    "autowakes_created": 0,
+    "final_waiter_rearm": false,
+    "worktree_retained_clean_and_unlanded_for_root": true,
+    "installed_helper_and_config_unchanged": true
+  },
+  "main_landed": false,
+  "source_owner_integration": "Requires explicit approval after root review"
+}

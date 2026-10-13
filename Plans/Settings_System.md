@@ -1813,7 +1813,10 @@ Settings manager refresh under USER-SETTINGS-MANAGER-REFRESH-20260908 (§22, SSY
      text; only keyboard keys keep a capsule. From 2026-09-27 the same holds for Details' Default and
      Recommended marks, engine badges and drawer status (words, with a dot only where they carry a tone);
      pick-several choices are squared tiles with a checkbox; related settings in Details are text links; and
-     Settings carries no coloured side or top stripe and no emoji.
+     Settings carries no coloured side or top stripe and no emoji. From 2026-10-10 (Jared: "pills needs to be
+     removed from settings and redesigned to not use them"; DL-184, F3-648) switches and bars are no exception:
+     a switch is the look's rectangle with a square key, a bar has square ends, every control takes the look's
+     control corner and never a radius of half its height, and a status mark sits in a 1em glyph slot.
   12. *Themed Listboxes:* Every select is a listbox drawn by the concept over a hidden native select, sharing
      the chat assistant's popout motion; no native option list is ever visible, and menus use the same popout.
   13. *Manager-Topic Settings Live Inside Their Manager:* Canonical ordinary settings that belong to a manager

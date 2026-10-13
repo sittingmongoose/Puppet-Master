@@ -1,0 +1,202 @@
+{
+  "schema": "pm7.glass.performance-integration.v1",
+  "status": "RUNTIME_LENS_MERGED_AWAITING_BAKING_AND_PROFILER",
+  "input": {
+    "created_utc": "2026-10-12T16:37:28.929384+00:00",
+    "source_owner_head": "8a94be0853fe9371792c8ba9fe10f4c3d4a185c4",
+    "source_owner_branch": "concept/pm7-liquid-glass-20261011",
+    "frozen_preview": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-11-liquid-glass-v2/PMConcept7-LiquidGlass-v2.2.html",
+      "bytes": 19360897,
+      "sha256": "41202d26c0db26de49ea25af553ce3f5520234bae88d6e7fe217f313fd386440"
+    },
+    "exported_base": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/BASE-PMConcept7.html",
+      "sha256": "5e1ac1863c886f4a349448513a85d8021fe1917cbff02754e02cc2cb0002fd82"
+    },
+    "current_main": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
+    "input_branch": "fix/pm7-glass-perf-input-20261012",
+    "input_head": "fd5d486c435a5d2b62469004b7ed999bc4521bda",
+    "input_worktree": "/home/sittingmongoose/pm-worktrees/pm7-glass-perf-input-20261012",
+    "glass_source_tree_exact": true,
+    "changed_paths": [
+      "Concepts/liquid-glass/opus-5.5/NOTE.md",
+      "Concepts/liquid-glass/opus-5.5/README.md",
+      "Concepts/liquid-glass/opus-5.5/art/index.html",
+      "Concepts/liquid-glass/opus-5.5/art/troupe.js",
+      "Concepts/liquid-glass/opus-5.5/concept-hub.json",
+      "Concepts/liquid-glass/opus-5.5/index.html",
+      "Concepts/liquid-glass/opus-5.5/src/glass.css",
+      "Concepts/liquid-glass/opus-5.5/src/glass.js",
+      "Concepts/liquid-glass/opus-5.5/src/walls/orbs-dark.webp",
+      "Concepts/liquid-glass/opus-5.5/src/walls/orbs-light.webp",
+      "Concepts/liquid-glass/opus-5.5/src/walls/prism-dark.webp",
+      "Concepts/liquid-glass/opus-5.5/src/walls/prism-light.webp",
+      "Concepts/liquid-glass/opus-5.5/src/walls/ribbons-dark.webp",
+      "Concepts/liquid-glass/opus-5.5/src/walls/ribbons-light.webp",
+      "Concepts/liquid-glass/opus-5.5/tools/build_proto.py",
+      "Concepts/liquid-glass/opus-5.5/tools/contrast.mjs",
+      "Concepts/liquid-glass/opus-5.5/tools/film.mjs",
+      "Concepts/liquid-glass/opus-5.5/tools/frametime.mjs",
+      "Concepts/liquid-glass/opus-5.5/tools/stills.mjs",
+      "Concepts/liquid-glass/opus-5.5/tools/walls.mjs"
+    ],
+    "authority": "Jared performance work; exact source snapshot only, no design/canon/governance/main landing"
+  },
+  "baseline_receipt": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/integration/baseline-reconstruction.json",
+    "sha256": "f6dd0947934e50aa9a1cae3ea875c02f167a0063d1249a02a245342eb36dc9b1"
+  },
+  "protected_source": {
+    "css_sha256": "cf87090104cde318defa085d6015bfac73b3c797f516144c6d92a23ce91efba8",
+    "js_sha256": "1fd2823e8acde153e564731be93809ac7d1e2047201bd64314a73f994e3b6d48"
+  },
+  "peer_heads": {
+    "runtime": "676017e1c4d231ee68a42e39c92761e467d1cfb1",
+    "lenses": "71407776a88bb0e7d4bb87ac7deaec2f91ab6e1f"
+  },
+  "candidate": {
+    "edition": "runtime-r1",
+    "created_utc": "2026-10-12T17:05:49.509364+00:00",
+    "candidate_head": "773e76a26f2a7de635ad8be7eeb1126782e5f463",
+    "candidate_source_tree": "db697909420a071782743ef4c1e642ced2daf349",
+    "candidate_source_js_sha256": "16b0e5a46d2fc4b171c4fbb0c8e3061703c0612dc65997a23cfdf69b51aa3223",
+    "page": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/candidate/PMConcept7-LiquidGlass-perf-runtime-r1.html",
+      "bytes": 19363410,
+      "sha256": "9696047fb1351fba9efb654b3f04b3e4df2fb70acb25465cb3ed422c129b2947"
+    },
+    "frozen_input": {
+      "created_utc": "2026-10-12T16:37:28.929384+00:00",
+      "source_owner_head": "8a94be0853fe9371792c8ba9fe10f4c3d4a185c4",
+      "source_owner_branch": "concept/pm7-liquid-glass-20261011",
+      "frozen_preview": {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-11-liquid-glass-v2/PMConcept7-LiquidGlass-v2.2.html",
+        "bytes": 19360897,
+        "sha256": "41202d26c0db26de49ea25af553ce3f5520234bae88d6e7fe217f313fd386440"
+      },
+      "exported_base": {
+        "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/BASE-PMConcept7.html",
+        "sha256": "5e1ac1863c886f4a349448513a85d8021fe1917cbff02754e02cc2cb0002fd82"
+      },
+      "current_main": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
+      "input_branch": "fix/pm7-glass-perf-input-20261012",
+      "input_head": "fd5d486c435a5d2b62469004b7ed999bc4521bda",
+      "input_worktree": "/home/sittingmongoose/pm-worktrees/pm7-glass-perf-input-20261012",
+      "glass_source_tree_exact": true,
+      "changed_paths": [
+        "Concepts/liquid-glass/opus-5.5/NOTE.md",
+        "Concepts/liquid-glass/opus-5.5/README.md",
+        "Concepts/liquid-glass/opus-5.5/art/index.html",
+        "Concepts/liquid-glass/opus-5.5/art/troupe.js",
+        "Concepts/liquid-glass/opus-5.5/concept-hub.json",
+        "Concepts/liquid-glass/opus-5.5/index.html",
+        "Concepts/liquid-glass/opus-5.5/src/glass.css",
+        "Concepts/liquid-glass/opus-5.5/src/glass.js",
+        "Concepts/liquid-glass/opus-5.5/src/walls/orbs-dark.webp",
+        "Concepts/liquid-glass/opus-5.5/src/walls/orbs-light.webp",
+        "Concepts/liquid-glass/opus-5.5/src/walls/prism-dark.webp",
+        "Concepts/liquid-glass/opus-5.5/src/walls/prism-light.webp",
+        "Concepts/liquid-glass/opus-5.5/src/walls/ribbons-dark.webp",
+        "Concepts/liquid-glass/opus-5.5/src/walls/ribbons-light.webp",
+        "Concepts/liquid-glass/opus-5.5/tools/build_proto.py",
+        "Concepts/liquid-glass/opus-5.5/tools/contrast.mjs",
+        "Concepts/liquid-glass/opus-5.5/tools/film.mjs",
+        "Concepts/liquid-glass/opus-5.5/tools/frametime.mjs",
+        "Concepts/liquid-glass/opus-5.5/tools/stills.mjs",
+        "Concepts/liquid-glass/opus-5.5/tools/walls.mjs"
+      ],
+      "authority": "Jared performance work; exact source snapshot only, no design/canon/governance/main landing"
+    },
+    "peer_heads": {
+      "runtime": "676017e1c4d231ee68a42e39c92761e467d1cfb1"
+    },
+    "static_check": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/integration/runtime-r1-static-check.json",
+      "sha256": "02231a12b4ab95e04d1a9e723b297cb7b96c562b3e27e7b520d6d34c61f95b31",
+      "status": "PASS"
+    },
+    "performance": "AWAITING_SOLE_PROFILER",
+    "visual_parity": "NOT_YET_MEASURED",
+    "main_landing": false,
+    "design_approval": false
+  },
+  "validation": {
+    "baseline_reconstruction": "PASS_BYTE_IDENTICAL",
+    "baseline_glass_js_syntax": "PASS",
+    "baseline_diff_check": "PASS",
+    "integration_lifecycle": "RUNTIME_R1_PASS_LAYOUT_OPTICS_STUBBED",
+    "live_performance": "AWAITING_SOLE_PROFILER",
+    "visual_parity": "AWAITING_SOLE_PROFILER",
+    "protected_source_and_page": "PASS_19_FILES_9_DECLARATIONS_ON_BASELINE",
+    "lens_lifecycle": "RUNTIME_LENS_R2_15_PASS_OPTICAL_BYTES_AND_KEYFRAMES"
+  },
+  "outstanding": [
+    "Review final exact baking head and mechanically combine it.",
+    "Run only focused checks justified by final composition.",
+    "Sole profiler completes matching baseline/candidate file-URL plain measurements and rendered state checks.",
+    "Jared visual feedback, owner review, and parent go-ahead remain required before any later landing."
+  ],
+  "resources": {
+    "own_browser_runs": 0,
+    "own_gpu_runs": 0,
+    "own_video_runs": 0,
+    "new_extra_agents": 0,
+    "main_landings": 0,
+    "t3_account_or_server_changes": 0,
+    "running_tests": 0,
+    "owned_servers": 0,
+    "owned_forwarders": 0,
+    "mail_waiters": 1,
+    "auto_wakes": 0,
+    "retained_task_artifacts": [
+      "unlanded private branch/worktree",
+      "external frozen receipts and candidate-preservation validator for continuation"
+    ]
+  },
+  "updated_utc": "2026-10-12T17:09:43.564553+00:00",
+  "evidence": {
+    "frozen_source_manifest": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/integration/frozen-source-manifest.json",
+      "bytes": 3603,
+      "sha256": "5cd27403e89c1c5079c5f6c4eccee90dea9143c792b1ca0025b3c0d72908b542"
+    },
+    "preparation_static_check": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/integration/preparation-static-check.json",
+      "bytes": 3645,
+      "sha256": "14cef70e8bed1585a6a6fe5274f42641dd146110519d32ff6aad9ea24bf31b62"
+    },
+    "candidate_validator": {
+      "path": "/home/sittingmongoose/PM-Experiments/pm7-glass-integration-20261012/check_candidate.py",
+      "bytes": 3133,
+      "sha256": "13004a2e0e9cc064a32d065bc3322bee585a8500f70d7ae2a487f326fb1a8ab2"
+    },
+    "runtime_r1_static": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/integration/runtime-r1-static-check.json",
+      "bytes": 3645,
+      "sha256": "02231a12b4ab95e04d1a9e723b297cb7b96c562b3e27e7b520d6d34c61f95b31"
+    },
+    "runtime_r1_native": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/integration/runtime-r1-native.json",
+      "bytes": 1677,
+      "sha256": "78d5f423b8338f04c0c48bd2ff520e5e525c1ac06f301a72d0f78781536b9829"
+    },
+    "runtime_lens_r2_native": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-20261012/integration/runtime-lenses-r2-native.json",
+      "bytes": 8823,
+      "sha256": "174a569f6dbc28abfdd6f9eb36449d515d7d7d490cd69641c883fa857ca74894"
+    },
+    "runtime_r1_candidate_receipt": {
+      "path": "/mnt/Cursor/share/puppet-master/2026-10-12-glass-performance/candidate/runtime-r1-receipt.json",
+      "bytes": 3327,
+      "sha256": "51b433264242926afbcfb724c1a7c19440151b1e046e6b0083dd1f857e20978e"
+    }
+  },
+  "review_notes": [
+    "Runtime confirms exact BASE reconstruction and idempotent applyWall fix with cancellation-aware scheduling.",
+    "Runtime confirms optional internal unmount and pruneLenses hooks; baking/lens ownership coordinated before source merge.",
+    "Lens worker preserves baseline shared-filter scale behavior; existing animation cross-talk remains a disclosed limitation. No independent optical choice is made here.",
+    "Sole profiler acquired a distinct performance P1000 lease and keeps global admission and existing campaigns intact.",
+    "Runtime676017 seven evidence bindings plus three-path diff verified; integrated native scheduler/state check PASS. Lenses714077 five evidence bindings plus source binding verified; clean ordinary provenance merge."
+  ]
+}

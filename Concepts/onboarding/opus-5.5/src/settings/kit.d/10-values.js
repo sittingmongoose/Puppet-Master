@@ -276,7 +276,7 @@ renderSettingRow = function (setting, section, workspace) {
   const needed = !!row.needed && empty && typeof PM51.value === 'function' && !!PM51.value(row.needed);
   const wide = row.layout === 'wide' || ['multiselect'].includes(row.control || setting.control) && o55Options(setting).length > 4;
   return `<div class="setting-row o55-row${changed ? ' is-changed' : ''}${wide ? ' is-wide' : ''}${row.risk ? ' is-risky' : ''}" id="setting-${a(setting.id)}" data-o55-kind="${a(row.control || setting.control || '')}">
-      <div class="setting-copy"><div class="setting-label">${h(label)}${changed ? '<span class="o55-changed" title="Changed from the default"><i></i><span>Changed</span></span>' : ''}${needed ? '<span class="o55-changed o55-needed" title="Needed before publishing"><i></i><span>Needed</span></span>' : ''}${row.risk ? `<span class="o55-risk">${icon('alert')}<span>${h(row.risk)}</span></span>` : ''}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div>
+      <div class="setting-copy"><div class="setting-label">${h(label)}${changed ? `<span class="o55-changed" title="Changed from the default">${PM51.mark('change-modified', 'changed')}<span>Changed</span></span>` : ''}${needed ? `<span class="o55-changed o55-needed" title="Needed before publishing">${PM51.mark('waiting', 'needed')}<span>Needed</span></span>` : ''}${row.risk ? `<span class="o55-risk">${icon('alert')}<span>${h(row.risk)}</span></span>` : ''}</div>${help ? `<div class="setting-description">${h(help)}</div>` : ''}</div>
       <div class="setting-control">${control}</div>
       <button type="button" class="icon-btn details-btn o55-about" aria-expanded="${state.detailSetting === setting.id ? 'true' : 'false'}" data-action="setting-details" data-setting="${a(setting.id)}" data-workspace="${a(workspace ? workspace.id : '')}" data-section="${a(section ? section.id : '')}" aria-label="${a('About ' + label)}" data-pm-hover-label="${a('About ' + label)}" data-pm-hover-detail="What it does, your choices, and the default.">${icon('help')}</button>
     </div>`;
@@ -321,7 +321,7 @@ function o55MarkChanged(id) {
   const on = !!(state.changed || {})[id];
   row.classList.toggle('is-changed', on);
   const lab = row.querySelector('.setting-label'), mark = lab && lab.querySelector('.o55-changed:not(.o55-needed)');
-  if (on && lab && !mark) lab.insertAdjacentHTML('beforeend', '<span class="o55-changed" title="Changed from the default"><i></i><span>Changed</span></span>');
+  if (on && lab && !mark) lab.insertAdjacentHTML('beforeend', `<span class="o55-changed" title="Changed from the default">${PM51.mark('change-modified', 'changed')}<span>Changed</span></span>`);
   if (!on && mark) mark.remove();
 }
 

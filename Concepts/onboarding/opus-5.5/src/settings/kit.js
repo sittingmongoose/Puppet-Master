@@ -51,14 +51,45 @@ const PLAIN_STATUS = {
 };
 PM51.plain = status => PLAIN_STATUS[String(status || '').toLowerCase()] || cap(String(status || ''));
 PM51.tone = label => TONE_BY_WORD[String(label || '').toLowerCase()] || 'neutral';
-/* Status token: a small coloured dot plus text. No capsules anywhere in Settings (the user does not
-   like pills); PM51.pill keeps its name so every manager converts without edits. */
-PM51.status = (label, tone) => `<span class="pm51-status tone-${a(tone || PM51.tone(label))}"><i aria-hidden="true"></i><span>${h(label)}</span></span>`;
+/* NP-STATUS: every status dot lives in one uniform 1em slot (PM51.mark) so the neon glyph rollout can
+   later fill each slot with PMG.status(key, 14, 'nx-still'). The KEY names the status vocabulary entry
+   (status.json surfaces.settings, else by meaning); the dot's colour still comes from the old tone hook
+   (carry-over rules in styles.d/91-no-pills.css), so re-keying a word never moves a pixel. */
+const STATUS_KEY_BY_WORD = {
+  'ok': 'complete',
+  'error': 'failed', 'failed': 'failed', 'failed recently': 'failed', 'has problems': 'failed', 'has a problem': 'failed', 'limit reached': 'failed',
+  'blocked': 'blocked', 'locked': 'blocked',
+  'info': 'info', 'neutral': 'info', 'default': 'info', 'recommended': 'info', 'ready to resume here': 'info', 'example': 'info', 'example run': 'info', 'protected handoff': 'info', 'checked · example data': 'info',
+  'active': 'working', 'in use': 'working', 'running': 'working', 'working': 'working', "active in this project's shell": 'working',
+  'clean': 'idle', 'enabled': 'idle', 'ready': 'idle', 'on': 'idle', 'connected': 'idle', 'current': 'idle', 'built in': 'idle', 'without asking': 'idle',
+  'verified': 'complete', 'passed': 'complete', 'passing': 'complete', 'manifest verified': 'complete', 'checked': 'complete', 'delivered': 'complete', 'complete': 'complete',
+  'attention': 'warning', 'needs attention': 'warning', 'needs sign-in': 'warning', 'needs setup': 'warning', 'needs-sign-in': 'warning', 'needs-signin': 'warning', 'needs-setup': 'warning', 'problem': 'warning', 'restart': 'warning', 'restart required': 'warning', 'setup': 'warning',
+  'warning': 'warning', 'not tested': 'warning', 'not checked yet': 'warning', 'not yet': 'warning', 'needs a look': 'warning', 'needs a key': 'warning', 'update ready': 'warning', 'file missing': 'warning', 'source missing': 'warning',
+  '1 failure': 'warning', 'partial with gaps': 'warning', 'redacted': 'warning', 'last checkup: ready with warnings': 'warning',
+  'needs permission': 'waiting', 'waiting': 'waiting', 'waiting for host': 'waiting', 'adjudication': 'waiting', 'needs-sign-in(remote-link)': 'waiting', 'asks first': 'waiting',
+  'paused': 'paused', 'held': 'paused',
+  'checking': 'reviewing', 'testing': 'reviewing',
+  'retrying': 'recovering',
+  'offline': 'offline', 'unavailable': 'offline', "can't reach the address": 'offline',
+  'disabled': 'off', 'not installed': 'off', 'not set up': 'off', 'not connected': 'off', 'off': 'off', 'available': 'off', 'not run': 'off', 'none': 'off', 'queued': 'off',
+  'no recording': 'off', 'rolled forward': 'off', 'can roll back': 'off', 'cleared': 'off', 'keeps local clock time': 'off', "in each chat's menu": 'off', 'kept while the chat exists': 'off', 'the latest 25 are kept': 'off'
+};
+const STATUS_KEY_BY_TONE = { ready: 'idle', attention: 'warning', off: 'off', neutral: 'off', info: 'info', blocked: 'failed' };
+PM51.statusKey = (label, tone) => {
+  const w = String(label || '').toLowerCase().trim();
+  if (STATUS_KEY_BY_WORD[w]) return STATUS_KEY_BY_WORD[w];
+  if (w.startsWith('clashes with ')) return 'warning';
+  return STATUS_KEY_BY_TONE[tone] || 'off';
+};
+PM51.mark = (key, tone) => `<span class="pm-status-mark" data-status="${a(key)}" data-tone="${a(tone || '')}" aria-hidden="true"></span>`;
+/* Status token: a slot plus text. No capsules anywhere in Settings (the user does not like pills);
+   PM51.pill keeps its name so every manager converts without edits. */
+PM51.status = (label, tone) => { const t = tone || PM51.tone(label); return `<span class="pm51-status tone-${a(t)}">${PM51.mark(PM51.statusKey(label, t), t)}<span>${h(label)}</span></span>`; };
 PM51.pill = PM51.status;
 PM51.statusPill = status => PM51.status(PM51.plain(status));
 PM51.tag = (label, { icon: ic } = {}) => `<span class="pm51-tag">${ic ? icon(ic) : ''}${h(label)}</span>`;
 PM51.kbd = key => `<kbd class="pm51-kbd">${h(key)}</kbd>`;
-PM51.dot = tone => `<span class="status-dot ${a({ ready: 'ready', attention: 'attention', off: 'disabled', info: 'info', blocked: 'error', neutral: 'disabled' }[tone] || 'disabled')}"></span>`;
+PM51.dot = (tone, label) => { const t = String(tone || ''); const cls = { ready: 'ready', attention: 'attention', off: 'disabled', info: 'info', blocked: 'error', neutral: 'disabled' }[t] || 'disabled'; return `<span class="status-dot ${cls} pm-status-mark" data-status="${a(label == null ? (STATUS_KEY_BY_TONE[t] || 'off') : PM51.statusKey(label, t))}" data-tone="${a(t)}" aria-hidden="true"></span>`; };
 
 /* ---------- primitives -------------------------------------------------- */
 const dataAttrs = data => Object.entries(data || {}).map(([k, v]) => `data-${a(k)}="${a(v == null ? '' : v)}"`).join(' ');
@@ -580,6 +611,24 @@ renderWorkspaceBody = function (workspace, domain) {
   finally { embedMode = false; }
 };
 pageHeader = function () { return ''; };
+/* NP-STATUS: the rail health line and the home attention rows are base-page static markup; the slot is
+   spliced in here (the established renderer-wrap pattern) instead of editing the base page. */
+const pm51OriginalRenderDomainRail = renderDomainRail;
+renderDomainRail = function () {
+  return String(pm51OriginalRenderDomainRail.apply(this, arguments)).replace(
+    '<div class="side-health">',
+    `<div class="side-health pm-has-mark">${PM51.mark('warning', 'attention')}`);
+};
+const pm51OriginalRenderHome = renderHome;
+renderHome = function () {
+  /* each attention row's key is read from its own words (the row after the dot): a missing seat is waiting, a test
+     that is retrying is recovering, anything else that needs attention is warning */
+  const keyFor = (text) => /\bseat\b/i.test(text) ? 'waiting' : /retrying/i.test(text) ? 'recovering' : 'warning';
+  return String(pm51OriginalRenderHome.apply(this, arguments)).replace(
+    /<span class="status-dot attention"><\/span>/g,
+    (m, at, all) => { const end = all.indexOf('</button>', at);
+      return `<span class="status-dot attention pm-status-mark" data-status="${keyFor(all.slice(at, end < 0 ? at + 400 : end))}" data-tone="attention" aria-hidden="true"></span>`; });
+};
 
 PM51.tab = (id, fallback) => PM51.s().tabs[id] || fallback;
 PM51.setTab = (id, tab) => { PM51.s().tabs[id] = tab; };

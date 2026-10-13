@@ -115,7 +115,19 @@ const PAGE_LIB = () => {
   /* a pair counts when an element carries it, or carries it as data-legacy-cmd/-arg (the fixture's canon replacement of
      an original action keeps the original pair there on purpose) */
   L.pairs = (panel) => { const s = new Set(); for (const r of L.roots(panel)) { r.querySelectorAll('[data-demo-action]').forEach((e) => s.add(e.getAttribute('data-demo-action') + ' | ' + (e.getAttribute('data-demo-arg') || ''))); r.querySelectorAll('[data-legacy-cmd]').forEach((e) => s.add(e.getAttribute('data-legacy-cmd') + ' | ' + (e.getAttribute('data-legacy-arg') || ''))); } return s; };
+  /* home's narrow ladder (DL-180 D4, 44-narrow.js) folds the side panel to an overlay when the centre is under 760 px, with
+     48 px of hysteresis; the width sweep below (480 px in a 1600 px window beside the chat column) would fold it and leave
+     it folded for every later panel. The rail is measured docked: the ladder is held still for the run and any fold it
+     made is undone (concept D's overlay under the fold is the ladder's own check, not this one) */
+  L.dock = () => {
+    const n = window.PMW && window.PMW.narrow; if (!n) return;
+    n.frozen = true;
+    const s = document.getElementById('sidePanelSlot'), ma = document.querySelector('.main-area');
+    if (s && s.hasAttribute('data-pm-rail-fold')) { s.removeAttribute('data-pm-rail-fold'); document.dispatchEvent(new CustomEvent('pm:rail-fold', { detail: { mode: 'docked', width: 0 } })); }
+    if (ma) ma.removeAttribute('data-pmw-rail-peek');
+  };
   L.open = async (panel) => {
+    L.dock();
     const icon = document.querySelector(`#activityBar .icon[data-target="${'panel-' + panel}"]`);
     const slot = document.getElementById('sidePanelSlot');
     const orig = document.getElementById('panel-' + panel);

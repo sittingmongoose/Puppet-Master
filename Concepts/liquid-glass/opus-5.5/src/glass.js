@@ -48,52 +48,73 @@
      128 = no shift, scale = twice the largest shift. The specular map is the rim lit by L = (-0.55, -0.83), a sharp
      line in the outer 1.5 px and a soft glow across the bevel, plus a fainter exit light on the far side. The rim map
      (alpha only) is where the pointer's shine may show. */
-  var mapCache = new Map();
-  function sdf(px, py, hx, hy, R) {
+  var mapCache = new Map(), mapBytes = 0, MAP_BYTES = 64 * 1024 * 1024, MAP_COUNT = 80;
+  function cachedMap(key) {
+    var rec = mapCache.get(key); if (!rec) return null;
+    mapCache.delete(key); mapCache.set(key, rec); return rec.value;
+  }
+  function keepMap(key, value) {
+    var bytes = 0;
+    ['disp', 'spec', 'rim'].forEach(function (name) { if (value[name]) bytes += value[name].length * 2; });
+    if (value.maps) value.maps.forEach(function (url) { bytes += url.length * 2; });
+    if (value.raw) Object.keys(value.raw).forEach(function (name) { bytes += value.raw[name].byteLength || 0; });
+    if (bytes > MAP_BYTES) return value;
+    while (mapCache.size && (mapBytes + bytes > MAP_BYTES || mapCache.size >= MAP_COUNT)) {
+      var oldest = mapCache.keys().next().value; mapBytes -= mapCache.get(oldest).bytes; mapCache.delete(oldest);
+    }
+    mapCache.set(key, { value: value, bytes: bytes }); mapBytes += bytes; return value;
+  }
+  function sdf(px, py, hx, hy, R, out) {
     var qx = Math.abs(px) - hx, qy = Math.abs(py) - hy, d, nx, ny;
     if (qx > 0 && qy > 0) { var l = Math.hypot(qx, qy); d = R - l; nx = Math.sign(px) * qx / l; ny = Math.sign(py) * qy / l; }
     else if (qx > qy) { d = R - qx; nx = Math.sign(px) || 1; ny = 0; } else { d = R - qy; nx = 0; ny = Math.sign(py) || 1; }
-    return [d, nx, ny];
+    out = out || [0, 0, 0]; out[0] = d; out[1] = nx; out[2] = ny; return out;
   }
   function profile(t) { return Math.pow(1 - Math.pow(1 - t, 4), 0.25); }
-  function buildMaps(W, H, R, B, T, mag, lightK, ring) {
+  function buildMaps(W, H, R, B, T, mag, lightK, ring, specOnly) {
     ring = ring || [3, 8];
-    var key = [W, H, R, B, T, mag, lightK, ring].join('|');
-    if (mapCache.has(key)) return mapCache.get(key);
-    var n = W * H, dx = new Float32Array(n), dy = new Float32Array(n), sp = new Float32Array(n), rim = new Float32Array(n), edge = new Float32Array(n);
+    var key = [W, H, R, B, T, mag, lightK, ring, !!specOnly].join('|'), hit = cachedMap(key);
+    if (hit) return hit;
+    var n = W * H, dx = new Float32Array(n), dy = new Float32Array(n), sp = new Float32Array(n), edge = new Float32Array(n), active = [];
     var hx = W / 2 - R, hy = H / 2 - R, cx = W / 2, cy = H / 2, L0 = -0.55, L1 = -0.83, max = 0;
+    var scratch = [0, 0, 0], bends = new Map(), lights = new Map();
     for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
-      var i = y * W + x, px = x + 0.5 - cx, py = y + 0.5 - cy, s = sdf(px, py, hx, hy, R), d = s[0];
+      var i = y * W + x, px = x + 0.5 - cx, py = y + 0.5 - cy, s = sdf(px, py, hx, hy, R, scratch), d = s[0];
       if (d <= 0) continue;
       /* only the outer few pixels stay sharp: text near an edge must sit on frost, never on raw refracted lines */
       var sharp = Math.min(ring[0], B * 0.3), soft = Math.min(ring[1], B * 0.8), u = Math.min(1, Math.max(0, (d - sharp) / (soft - sharp)));
       edge[i] = 1 - u * u * (3 - 2 * u);
+      if (edge[i] >= 0.004) active.push(i);
       var vx = 0, vy = 0;
       if (mag > 1) { vx = -px * (1 - 1 / mag); vy = -py * (1 - 1 / mag); }
       if (d < B) {
-        var t = d / B, e = 0.002, slope = (profile(Math.min(1, t + e)) - profile(Math.max(0, t - e))) / (2 * e) * (T / B);
-        var a = Math.atan(slope), b = Math.asin(Math.sin(a) / 1.5), m = T * Math.tan(a - b);
-        /* keep the bend physical for any size: content is pulled in from at most half a bevel deeper than the rim
-           band, and never from past the centre (a small lens would otherwise mirror its label) */
-        m = Math.max(0, Math.min(m, 1.55 * B - d, (mag > 1 ? 0.45 : 0.78) * (Math.min(W, H) / 2 - d)));
-        vx -= s[1] * m; vy -= s[2] * m;
-        var face = s[1] * L0 + s[2] * L1, lit = Math.pow(Math.max(0, face), 1.4), back = Math.pow(Math.max(0, -face), 2.0) * 0.62;
-        var line = Math.exp(-d / 1.25), glow = Math.exp(-d / Math.min(6, B * 0.22)) * 0.10;
-        sp[i] = Math.min(1, (lit + back) * (line + glow) * lightK + line * 0.10);
-        rim[i] = Math.min(1, Math.exp(-d / 2.2) + Math.exp(-d / (B * 0.5)) * 0.35);
+        var bend = bends.get(d);
+        if (!bend) {
+          var t = d / B, e = 0.002, slope = (profile(Math.min(1, t + e)) - profile(Math.max(0, t - e))) / (2 * e) * (T / B);
+          var a = Math.atan(slope), b = Math.asin(Math.sin(a) / 1.5), m = T * Math.tan(a - b);
+          /* keep the bend physical for any size: content is pulled in from at most half a bevel deeper than the rim
+             band, and never from past the centre (a small lens would otherwise mirror its label) */
+          m = Math.max(0, Math.min(m, 1.55 * B - d, (mag > 1 ? 0.45 : 0.78) * (Math.min(W, H) / 2 - d)));
+          bend = [m, Math.exp(-d / 1.25), Math.exp(-d / Math.min(6, B * 0.22)) * 0.10]; bends.set(d, bend);
+        }
+        vx -= s[1] * bend[0]; vy -= s[2] * bend[0];
+        var face = s[1] * L0 + s[2] * L1, lighting = lights.get(face);
+        if (lighting === undefined) { lighting = Math.pow(Math.max(0, face), 1.4) + Math.pow(Math.max(0, -face), 2.0) * 0.62; lights.set(face, lighting); }
+        var line = bend[1], glow = bend[2];
+        sp[i] = Math.min(1, lighting * (line + glow) * lightK + line * 0.10);
       }
       dx[i] = vx; dy[i] = vy; var mm = Math.max(Math.abs(vx), Math.abs(vy)); if (mm > max) max = mm;
     }
-    function img(fill) { var c = document.createElement('canvas'); c.width = W; c.height = H; var g = c.getContext('2d'), im = g.createImageData(W, H); fill(im.data); g.putImageData(im, 0, 0); return c.toDataURL('image/png'); }
+    var canvas = document.createElement('canvas'); canvas.width = W; canvas.height = H;
+    var ctx = canvas.getContext('2d'), pixels = ctx.createImageData(W, H);
+    function img(fill) { fill(pixels.data); ctx.putImageData(pixels, 0, 0); return canvas.toDataURL('image/png'); }
     var k = max || 1;
     var res = {
-      scale: max * 2, max: max, raw: { dx: dx, dy: dy, edge: edge },
-      disp: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = 128 + Math.round(dx[i] / k * 127); D[o + 1] = 128 + Math.round(dy[i] / k * 127); D[o + 2] = 128; D[o + 3] = 255; } }),
+      scale: max * 2, max: max, raw: { dx: dx, dy: dy, edge: edge, active: new Uint32Array(active) },
+      disp: specOnly ? null : img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = 128 + Math.round(dx[i] / k * 127); D[o + 1] = 128 + Math.round(dy[i] / k * 127); D[o + 2] = 128; D[o + 3] = 255; } }),
       spec: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(sp[i] * 255); } }),
     };
-    if (mapCache.size > 80) mapCache.delete(mapCache.keys().next().value);
-    mapCache.set(key, res);
-    return res;
+    return keepMap(key, res);
   }
 
   /* ---- optics: filters ------------------------------------------------------------------------------------------ */
@@ -114,28 +135,36 @@
        - the bevel band is softened by a sub-pixel blur, so the compressed surroundings at the rim read as a smooth
          reflection rather than as broken letters. */
   function buildLensMaps(W, H, R, B, T, mag, ca, lightK) {
-    var key = ['lens', W, H, R, B, T, mag, ca, lightK].join('|');
-    if (mapCache.has(key)) return mapCache.get(key);
+    var key = ['lens', W, H, R, B, T, mag, ca, lightK].join('|'), hit = cachedMap(key);
+    if (hit) return hit;
     var n = W * H, ch = [new Float32Array(n), new Float32Array(n), new Float32Array(n), new Float32Array(n), new Float32Array(n), new Float32Array(n)];
     var rimA = new Float32Array(n), sp = new Float32Array(n), hx = W / 2 - R, hy = H / 2 - R, cx = W / 2, cy = H / 2, L0 = -0.55, L1 = -0.83, max = 0;
     var cap = Math.min(3.5, B * 0.8), kR = 1 - ca, kB = 1 + ca;
+    var scratch = [0, 0, 0], bends = new Map(), lights = new Map();
     for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
-      var i = y * W + x, px = x + 0.5 - cx, py = y + 0.5 - cy, s0 = sdf(px, py, hx, hy, R), d = s0[0];
+      var i = y * W + x, px = x + 0.5 - cx, py = y + 0.5 - cy, s0 = sdf(px, py, hx, hy, R, scratch), d = s0[0];
       if (d <= 0) continue;
       var mx = -px * (1 - 1 / mag), my = -py * (1 - 1 / mag), bx = 0, by = 0;
       if (d < B) {
-        var t = d / B, e = 0.002, slope = (profile(Math.min(1, t + e)) - profile(Math.max(0, t - e))) / (2 * e) * (T / B);
-        var a = Math.atan(slope), b = Math.asin(Math.sin(a) / 1.5), m = Math.max(0, Math.min(T * Math.tan(a - b), cap, 0.35 * (Math.min(W, H) / 2 - d)));
-        bx = -s0[1] * m; by = -s0[2] * m;
-        var face = s0[1] * L0 + s0[2] * L1, lit = Math.pow(Math.max(0, face), 1.4), back = Math.pow(Math.max(0, -face), 2.0) * 0.62;
-        var line = Math.exp(-d / 1.1), glow = Math.exp(-d / Math.min(5, B * 0.5)) * 0.18;
-        sp[i] = Math.min(1, (lit + back) * (line + glow) * lightK + line * 0.12);
+        var bend = bends.get(d);
+        if (!bend) {
+          var t = d / B, e = 0.002, slope = (profile(Math.min(1, t + e)) - profile(Math.max(0, t - e))) / (2 * e) * (T / B);
+          var a = Math.atan(slope), b = Math.asin(Math.sin(a) / 1.5), m = Math.max(0, Math.min(T * Math.tan(a - b), cap, 0.35 * (Math.min(W, H) / 2 - d)));
+          bend = [m, Math.exp(-d / 1.1), Math.exp(-d / Math.min(5, B * 0.5)) * 0.18]; bends.set(d, bend);
+        }
+        bx = -s0[1] * bend[0]; by = -s0[2] * bend[0];
+        var face = s0[1] * L0 + s0[2] * L1, lighting = lights.get(face);
+        if (lighting === undefined) { lighting = Math.pow(Math.max(0, face), 1.4) + Math.pow(Math.max(0, -face), 2.0) * 0.62; lights.set(face, lighting); }
+        var line = bend[1], glow = bend[2];
+        sp[i] = Math.min(1, lighting * (line + glow) * lightK + line * 0.12);
       }
       var u = Math.min(1, Math.max(0, (d - 0.6) / 2.2)); rimA[i] = 1 - u * u * (3 - 2 * u);
       ch[0][i] = mx + bx * kR; ch[1][i] = my + by * kR; ch[2][i] = mx + bx; ch[3][i] = my + by; ch[4][i] = mx + bx * kB; ch[5][i] = my + by * kB;
       for (var c = 0; c < 6; c++) { var v = Math.abs(ch[c][i]); if (v > max) max = v; }
     }
-    function img(fill) { var cv = document.createElement('canvas'); cv.width = W; cv.height = H; var g = cv.getContext('2d'), im = g.createImageData(W, H); fill(im.data); g.putImageData(im, 0, 0); return cv.toDataURL('image/png'); }
+    var canvas = document.createElement('canvas'); canvas.width = W; canvas.height = H;
+    var ctx = canvas.getContext('2d'), pixels = ctx.createImageData(W, H);
+    function img(fill) { fill(pixels.data); ctx.putImageData(pixels, 0, 0); return canvas.toDataURL('image/png'); }
     var k = max || 1;
     function dmap(cx2, cy2) { return img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = 128 + Math.round(cx2[i] / k * 127); D[o + 1] = 128 + Math.round(cy2[i] / k * 127); D[o + 2] = 128; D[o + 3] = 255; } }); }
     var res = {
@@ -143,13 +172,15 @@
       rim: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(rimA[i] * 255); } }),
       spec: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(sp[i] * 255); } }),
     };
-    if (mapCache.size > 80) mapCache.delete(mapCache.keys().next().value);
-    mapCache.set(key, res);
-    return res;
+    return keepMap(key, res);
   }
   function lensFilter(W, H, m, rimBlur, id) {
     var key = id || (m.maps[1].length + ':' + W + 'x' + H + ':' + m.scale.toFixed(2) + ':' + rimBlur);
-    if (filterByKey.has(key)) return filterByKey.get(key);
+    if (filterByKey.has(key)) {
+      var cached = filterByKey.get(key);
+      if (!cached.el.isConnected) ensureDefs().appendChild(cached.el);
+      filterByKey.delete(key); filterByKey.set(key, cached); return cached;
+    }
     var f = document.createElementNS(SVGNS, 'filter'); id = id || ('lgf' + (fid++));
     f.setAttribute('id', id); f.setAttribute('x', '0'); f.setAttribute('y', '0'); f.setAttribute('width', W); f.setAttribute('height', H);
     f.setAttribute('filterUnits', 'userSpaceOnUse'); f.setAttribute('primitiveUnits', 'userSpaceOnUse'); f.setAttribute('color-interpolation-filters', 'sRGB');
@@ -168,11 +199,22 @@
     }
     f.innerHTML = h;
     ensureDefs().appendChild(f);
-    var rec = { id: id, el: f, scale: m.scale };
+    var rec = { id: id, el: f, scale: m.scale, displacement: f.querySelectorAll('feDisplacementMap'), writtenScale: sc };
     filterByKey.set(key, rec);
     return rec;
   }
-  function setLensScale(f, k) { f.el.querySelectorAll('feDisplacementMap').forEach(function (n) { n.setAttribute('scale', (f.scale * k).toFixed(2)); }); }
+  function setLensScale(f, k) {
+    var value = (f.scale * k).toFixed(2); if (value === f.writtenScale) return;
+    f.displacement.forEach(function (n) { n.setAttribute('scale', value); }); f.writtenScale = value;
+  }
+  /* Active filters stay alive; a small inactive pool reuses the same SVG and maps when a bead or tab returns to a
+     previous size. Replaced strips and resize history cannot grow the SVG tree without a bound. */
+  function pruneLensFilters() {
+    var used = new Set(), idle = [];
+    glassSet.forEach(function (e) { if (e.isConnected && e.__lgF) used.add(e.__lgF); });
+    filterByKey.forEach(function (f, key) { if (f.id !== 'lg-knob' && !used.has(f)) idle.push(key); });
+    for (var i = 0; i < idle.length - 16; i++) { var key = idle[i], f = filterByKey.get(key); f.el.remove(); filterByKey.delete(key); }
+  }
 
   /* ---- glass kinds -------------------------------------------------------------------------------------------------
      bezel and thickness in px; blur before the refraction; ca = chromatic split at the rim; mag = lens magnification;
@@ -203,15 +245,42 @@
          sharp, with a slight red-blue split; a ring image, transparent inside.
      Both are redrawn only when the sheet moves or resizes, or the look or wallpaper changes. They cost nothing per frame
      and draw the same with or without a GPU. */
-  var wallImg = null, wallUrl = '', frosts = {}, frostKey = '', bakeQ = new Set(), bakeT = 0;
-  function currentWallUrl() {
+  var wallUrl = '', wallSources = new Map(), wallSourceKey = null, wallSourceUrl = '', wallSourceId = 0;
+  var frosts = {}, frostKey = '', frostCache = new Map(), frostBytes = 0, frostJobs = new Map(), FROST_BYTES = 32 * 1024 * 1024;
+  var bakeQ = new Map(), bakeT = 0, bakeFrame = 0, bakeFlight = null, bakeEpoch = 0;
+  function currentWallUrl(refresh) {
+    /* The source's wallpaper variables are selected only by these attributes. Keep the large data URL out of each
+       surface signature and resolve the computed variable once per choice, with a fresh read before loading it. */
+    var key = [root.getAttribute('data-theme'), root.getAttribute('data-lg-wall'), root.style.getPropertyValue('--lg-wall')].join('|');
+    if (!refresh && key === wallSourceKey) return wallSourceUrl;
     var v = getComputedStyle(root).getPropertyValue('--lg-wall') || ''; var m = v.match(/url\(["']?(.*?)["']?\)\s*$/);
-    return m ? m[1] : '';
+    var u = m ? m[1] : '';
+    if (u !== wallSourceUrl) { wallSourceUrl = u; wallSourceId++; }
+    wallSourceKey = key; return u;
   }
   function withWall(cb) {
-    var u = currentWallUrl(); if (!u) return;
-    if (wallImg && wallUrl === u && wallImg.complete) { cb(wallImg); return; }
-    var im = new Image(); im.decoding = 'async'; im.onload = function () { wallImg = im; wallUrl = u; cb(im); }; im.src = u;
+    var u = currentWallUrl(true); if (!u) { cb(null); return; }
+    var rec = wallSources.get(u);
+    if (rec) {
+      wallSources.delete(u); wallSources.set(u, rec);
+      if (rec.ready) { wallUrl = u; cb(rec.im); } else rec.waiters.push(cb);
+      return;
+    }
+    var im = new Image(); im.decoding = 'async'; im.__lgWallUrl = u;
+    rec = { im: im, ready: false, waiters: [cb] }; wallSources.set(u, rec);
+    function finish(ok) {
+      im.onload = im.onerror = null; rec.ready = ok;
+      if (!ok) wallSources.delete(u);
+      else {
+        if (u === currentWallUrl()) wallUrl = u;
+        /* Two decoded stills are enough for returning to the previous look; pending loads stay single-flight. */
+        var ready = Array.from(wallSources.keys()).filter(function (key) { return wallSources.get(key).ready; });
+        while (ready.length > 2) wallSources.delete(ready.shift());
+      }
+      var waiters = rec.waiters; rec.waiters = []; waiters.forEach(function (done) { done(ok ? im : null); });
+    }
+    im.onload = function () { finish(im.naturalWidth > 0 && im.naturalHeight > 0); };
+    im.onerror = function () { finish(false); }; im.src = u;
   }
   /* where an element sits when nothing is moving it: its layout position from the offset chain, which ignores
      transforms (a board sliding in, a card leaning toward the pointer, a lifted card). The frost and the rim are
@@ -238,11 +307,47 @@
   function viewportVars() { root.style.setProperty('--lg-vw', innerWidth + 'px'); root.style.setProperty('--lg-vh', innerHeight + 'px'); }
   function cover(im) { var vw = innerWidth, vh = innerHeight, sc = Math.max(vw / im.naturalWidth, vh / im.naturalHeight); return { s: sc, ox: (vw - im.naturalWidth * sc) / 2, oy: (vh - im.naturalHeight * sc) / 2, vw: vw, vh: vh }; }
   var FROST = { heavy: { blur: 26, sat: 1.65 }, light: { blur: 14, sat: 1.6 } };
+  function dropFrost(rec) { Object.keys(rec.urls).forEach(function (name) { URL.revokeObjectURL(rec.urls[name]); }); }
+  function applyFrost(rec) {
+    if (frostKey === rec.key) return;
+    frosts = rec.urls; frostKey = rec.key;
+    Object.keys(frosts).forEach(function (name) { root.style.setProperty('--lg-frost-' + name, 'url(' + frosts[name] + ')'); });
+  }
   function makeFrosts(im, done) {
-    var c = cover(im), key = wallUrl.length + ':' + c.vw + 'x' + c.vh + ':' + root.getAttribute('data-theme');
-    if (frostKey === key) { done(); return; }
-    var pending = 0;
-    Object.keys(FROST).forEach(function (name) {
+    var c = cover(im), u = im.__lgWallUrl || wallUrl, key = u + ':' + c.vw + 'x' + c.vh, epoch = bakeEpoch;
+    if (!isGlass() || currentWallUrl() !== u) { done(false); return; }
+    if (frostKey === key) { done(true); return; }
+    var cached = frostCache.get(key);
+    if (cached) { frostCache.delete(key); frostCache.set(key, cached); applyFrost(cached); done(true); return; }
+    var job = frostJobs.get(key);
+    if (job && job.epoch === epoch) { job.waiters.push(done); return; }
+    var names = Object.keys(FROST);
+    job = { key: key, epoch: epoch, pending: names.length, blobs: {}, waiters: [done] }; frostJobs.set(key, job);
+    function finish(name, blob) {
+      job.blobs[name] = blob;
+      if (--job.pending) return;
+      if (frostJobs.get(key) === job) frostJobs.delete(key);
+      var valid = epoch === bakeEpoch && isGlass() && currentWallUrl() === u && innerWidth === c.vw && innerHeight === c.vh;
+      valid = valid && names.every(function (n) { return !!job.blobs[n]; });
+      if (valid) {
+        var rec = { key: key, urls: {}, bytes: 0 };
+        names.forEach(function (n) { rec.urls[n] = URL.createObjectURL(job.blobs[n]); rec.bytes += job.blobs[n].size; });
+        /* Apply both frost levels together. An older encoder can never replace half of the current wallpaper. */
+        var previous = frosts, previousUncached = !Array.from(frostCache.values()).some(function (r) { return r.urls === previous; });
+        applyFrost(rec);
+        while (frostCache.size && (frostCache.size >= 2 || frostBytes + rec.bytes > FROST_BYTES)) {
+          var oldest = frostCache.keys().next().value, old = frostCache.get(oldest);
+          frostBytes -= old.bytes; frostCache.delete(oldest); dropFrost(old);
+        }
+        if (rec.bytes <= FROST_BYTES) { frostCache.set(key, rec); frostBytes += rec.bytes; }
+        /* An unusually large active pair is kept only while displayed, rather than exceeding the cache budget. */
+        if (previous !== rec.urls && previousUncached) {
+          Object.keys(previous).forEach(function (n) { URL.revokeObjectURL(previous[n]); });
+        }
+      }
+      var waiters = job.waiters; job.waiters = []; waiters.forEach(function (cb) { cb(valid); });
+    }
+    names.forEach(function (name) {
       var F = FROST[name], pad = F.blur * 3, W = c.vw + pad * 2, H = c.vh + pad * 2;
       var src = document.createElement('canvas'); src.width = W; src.height = H; var g = src.getContext('2d');
       /* fill the margin with a slightly larger copy, so the blur has real colour to pull from at the window's edges */
@@ -250,20 +355,21 @@
       g.drawImage(im, c.ox + pad, c.oy + pad, im.naturalWidth * c.s, im.naturalHeight * c.s);
       var out = document.createElement('canvas'); out.width = c.vw; out.height = c.vh; var o = out.getContext('2d');
       o.filter = 'blur(' + F.blur + 'px) saturate(' + F.sat + ')'; o.drawImage(src, -pad, -pad); o.filter = 'none';
-      pending++;
-      out.toBlob(function (b) {
-        if (frosts[name]) URL.revokeObjectURL(frosts[name]);
-        frosts[name] = URL.createObjectURL(b); root.style.setProperty('--lg-frost-' + name, 'url(' + frosts[name] + ')');
-        if (--pending === 0) { frostKey = key; done(); }
-      }, 'image/png');
+      out.toBlob(function (b) { finish(name, b); }, 'image/png');
     });
   }
-  function bakeRing(e, kind, im) {
+  function currentBake(job, im) {
+    return job && job.epoch === bakeEpoch && isGlass() && job.e.isConnected && job.e.__lgBake === job && job.e.__lgSig === job.sig &&
+      job.e.getAttribute('data-lg-kind') === job.kind && job.wall === wallSourceId && job.theme === root.getAttribute('data-theme') &&
+      job.vw === innerWidth && job.vh === innerHeight && (!im || im.__lgWallUrl === currentWallUrl());
+  }
+  function bakeRing(e, kind, im, job) {
+    if (!currentBake(job, im)) return;
     var k = KINDS[kind], W = Math.round(e.offsetWidth), H = Math.round(e.offsetHeight);
     if (W < 4 || H < 4) return;
     var r = anchor(e); r = { left: r.x, top: r.y };
     var R = radiusOf(e, W, H), B = Math.max(2, Math.min(k.bezel, Math.min(W, H) / 2 - 1)), T = Math.min(k.thick, B * 2.4);
-    var m = buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), 1, k.light, k.ring), raw = m.raw, c = cover(im);
+    var m = buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), 1, k.light, k.ring, true), raw = m.raw, c = cover(im);
     var p = Math.ceil(m.max) + 3, SW = W + 2 * p, SH = H + 2 * p;
     var sc = document.createElement('canvas'); sc.width = SW; sc.height = SH; var g = sc.getContext('2d');
     g.filter = 'saturate(' + k.sat + ')';
@@ -274,29 +380,59 @@
       var x0 = x | 0, y0 = y | 0, fx = x - x0, fy = y - y0, i00 = (y0 * SW + x0) * 4 + ch, i10 = i00 + 4, i01 = i00 + SW * 4, i11 = i01 + 4;
       return (S[i00] * (1 - fx) + S[i10] * fx) * (1 - fy) + (S[i01] * (1 - fx) + S[i11] * fx) * fy;
     }
-    for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
-      var i = y * W + x, a = raw.edge[i]; if (a < 0.004) continue;
+    for (var j = 0; j < raw.active.length; j++) {
+      var i = raw.active[j], x = i % W, y = (i / W) | 0, a = raw.edge[i];
       var vx = raw.dx[i], vy = raw.dy[i], bx = x + p + 0.5, by = y + p + 0.5, o = i * 4;
       O[o] = at(bx + vx * (1 - ca), by + vy * (1 - ca), 0); O[o + 1] = at(bx + vx, by + vy, 1); O[o + 2] = at(bx + vx * (1 + ca), by + vy * (1 + ca), 2); O[o + 3] = a * 255;
     }
     var oc = document.createElement('canvas'); oc.width = W; oc.height = H; oc.getContext('2d').putImageData(out, 0, 0);
     e.style.setProperty('--lg-spec', 'url(' + m.spec + ')');
     oc.toBlob(function (b) {
-      if (!e.isConnected) return;
+      if (!currentBake(job, im)) return;
+      if (!b) { e.__lgSig = null; return; }
+      var lp = layoutPos(e);
+      if (Math.round(e.offsetWidth) !== W || Math.round(e.offsetHeight) !== H || Math.round(lp.x) !== Math.round(r.left) || Math.round(lp.y) !== Math.round(r.top)) {
+        e.__lgSig = null; mount(e, kind); return;
+      }
       if (e.__lgRing) URL.revokeObjectURL(e.__lgRing);
       e.__lgRing = URL.createObjectURL(b); e.style.setProperty('--lg-ring', 'url(' + e.__lgRing + ')');
     }, 'image/png');
   }
+  function scheduleBakes() { if (!bakeT && !bakeFlight && bakeQ.size && isGlass()) bakeT = setTimeout(flushBakes, 60); }
   function flushBakes() {
-    bakeT = 0; if (!isGlass() || !bakeQ.size) return;
+    bakeT = 0; if (!isGlass() || !bakeQ.size || bakeFlight) return;
+    var flight = { epoch: bakeEpoch }; bakeFlight = flight;
+    function finish(failed) {
+      if (bakeFlight !== flight) return;
+      bakeFlight = null;
+      if (failed) { bakeQ.forEach(function (job) { if (job.e.__lgBake === job) job.e.__lgSig = null; }); bakeQ.clear(); }
+      scheduleBakes();
+    }
     withWall(function (im) {
-      makeFrosts(im, function () {
-        var list = Array.from(bakeQ); bakeQ.clear();
-        (function step() { var t0 = performance.now(); while (list.length && performance.now() - t0 < 12) { var it = list.shift(); if (it[0].isConnected) bakeRing(it[0], it[1], im); } if (list.length) requestAnimationFrame(step); })();
+      if (bakeFlight !== flight) return;
+      if (!im || flight.epoch !== bakeEpoch || !isGlass()) { finish(true); return; }
+      if (im.__lgWallUrl !== currentWallUrl()) { finish(false); return; }
+      bakeQ.forEach(function (job, e) { if (!currentBake(job, im)) bakeQ.delete(e); });
+      if (!bakeQ.size) { finish(false); return; }
+      flight.vw = innerWidth; flight.vh = innerHeight;
+      makeFrosts(im, function (ok) {
+        if (bakeFlight !== flight) return;
+        if (!ok) { finish(im.__lgWallUrl === currentWallUrl() && innerWidth === flight.vw && innerHeight === flight.vh); return; }
+        var list = Array.from(bakeQ.values()), next = 0; bakeQ.clear();
+        (function step() {
+          bakeFrame = 0;
+          if (bakeFlight !== flight || flight.epoch !== bakeEpoch || !isGlass()) { finish(false); return; }
+          var t0 = performance.now();
+          while (next < list.length && performance.now() - t0 < 12) { var job = list[next++]; if (currentBake(job, im)) bakeRing(job.e, job.kind, im, job); }
+          if (next < list.length) bakeFrame = requestAnimationFrame(step); else finish(false);
+        })();
       });
     });
   }
-  function queueBake(e, kind) { bakeQ.add([e, kind]); if (!bakeT) bakeT = setTimeout(flushBakes, 60); }
+  function queueBake(e, kind) {
+    var job = { e: e, kind: kind, sig: e.__lgSig, epoch: bakeEpoch, wall: wallSourceId, theme: root.getAttribute('data-theme'), vw: innerWidth, vh: innerHeight };
+    e.__lgBake = job; bakeQ.set(e, job); scheduleBakes();
+  }
 
   /* mount or refresh one glass element; sheets bake, menus blur live (fast CSS blur), lenses refract live */
   function mount(e, kind) {
@@ -310,7 +446,8 @@
     var R = radiusOf(e, W, H);
     if (k.bake) {
       var lp = anchor(e);
-      var sig = W + 'x' + H + '@' + Math.round(lp.x) + ',' + Math.round(lp.y) + ':' + R.toFixed(1) + ':' + kind + ':' + currentWallUrl().length + ':' + innerWidth + 'x' + innerHeight + ':' + root.getAttribute('data-theme');
+      currentWallUrl();
+      var sig = W + 'x' + H + '@' + Math.round(lp.x) + ',' + Math.round(lp.y) + ':' + R.toFixed(1) + ':' + kind + ':' + wallSourceId + ':' + innerWidth + 'x' + innerHeight + ':' + root.getAttribute('data-theme');
       if (e.__lgSig !== sig) { e.__lgSig = sig; queueBake(e, kind); }
       return null;
     }
@@ -327,29 +464,58 @@
     else { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); }
     return e.__lgF;
   }
+  function unmount(e) {
+    bakeQ.delete(e); e.__lgBake = null; e.__lgSig = null; e.__lgF = null;
+    if (!bakeQ.size && !bakeFlight && bakeT) { clearTimeout(bakeT); bakeT = 0; }
+    if (e.__lgRing) { URL.revokeObjectURL(e.__lgRing); e.__lgRing = null; }
+    ['backdrop-filter', '-webkit-backdrop-filter', '--lg-ring', '--lg-spec'].forEach(function (name) { e.style.removeProperty(name); });
+    if (sizeWatch) sizeWatch.unobserve(e); glassSet.delete(e);
+  }
   function unmountAll() {
-    glassSet.forEach(function (e) { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); e.__lgSig = null; });
+    if (typeof suspendLensMotion === 'function') suspendLensMotion();
+    bakeEpoch++; bakeFlight = null; bakeQ.clear();
+    if (bakeT) { clearTimeout(bakeT); bakeT = 0; }
+    if (bakeFrame) { cancelAnimationFrame(bakeFrame); bakeFrame = 0; }
+    /* Keep connected sheets' finished images, as before: returning to Glass paints immediately while a changed
+       sheet is rebaked. Removed surfaces release their images through unmount; shared frost remains bounded. */
+    glassSet.forEach(function (e) {
+      if (!e.isConnected) { unmount(e); return; }
+      e.__lgBake = null; e.__lgSig = null; e.__lgF = null;
+      e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter');
+    });
+    frostJobs.clear();
+    if (typeof pruneLensFilters === 'function') pruneLensFilters();
   }
   /* scrolling moves sheets over the wallpaper: re-anchor their frost in the same frame, re-bake rims once it stops */
-  var scrollQ = false;
+  var scrollQ = false, scrollBoxes = new Set();
   document.addEventListener('scroll', function (ev) {
     if (!isGlass()) return;
     var box = ev.target && ev.target.nodeType === 1 ? ev.target : document.documentElement;
-    if (!scrollQ) { scrollQ = true; requestAnimationFrame(function () { scrollQ = false; glassSet.forEach(function (e) { if (e.isConnected && box.contains(e) && KINDS[e.getAttribute('data-lg-kind')] && KINDS[e.getAttribute('data-lg-kind')].bake) anchor(e); }); }); }
+    scrollBoxes.add(box);
+    if (!scrollQ) { scrollQ = true; requestAnimationFrame(function () {
+      scrollQ = false; var boxes = Array.from(scrollBoxes); scrollBoxes.clear();
+      if (!isGlass()) return;
+      glassSet.forEach(function (e) { if (e.isConnected && KINDS[e.getAttribute('data-lg-kind')] && KINDS[e.getAttribute('data-lg-kind')].bake && boxes.some(function (b) { return b.contains(e); })) anchor(e); });
+    }); }
     lazySync();
   }, true);
 
   /* ---- springs ------------------------------------------------------------------------------------------------------
      A damped spring from 0 to 1 sampled at 60 fps until it rests: the same curve every motion uses, so everything moves
      like one material. Returns [{t, x, v}] with t in ms. */
+  var springCache = new Map();
   function spring(stiff, damp, mass, v0) {
+    var key = [stiff, damp, mass || 1, v0 || 0].join('|');
+    if (springCache.has(key)) return springCache.get(key);
     var x = 0, v = v0 || 0, dt = 1 / 120, out = [{ t: 0, x: 0, v: v }], t = 0;
     for (var i = 0; i < 1200; i++) {
       var a = (-stiff * (x - 1) - damp * v) / (mass || 1); v += a * dt; x += v * dt; t += dt;
       if (i % 2 === 1) out.push({ t: t * 1000, x: x, v: v });
       if (Math.abs(x - 1) < 0.0006 && Math.abs(v) < 0.004 && t > 0.1) break;
     }
-    out[out.length - 1].x = 1; return out;
+    out[out.length - 1].x = 1;
+    if (springCache.size >= 16) springCache.delete(springCache.keys().next().value);
+    springCache.set(key, out); return out;
   }
   var LIQUID = [230, 19, 1];   /* a lively spring: one clear overshoot, a small second one */
   var SOFT = [170, 22, 1];
@@ -376,13 +542,15 @@
      the sheet, the wallpaper and the label together and magnifies them as one, and no sheet can cover it. */
   /* one layer per host surface: the app shell, or a window that floats above it (onboarding), so a lens is never
      covered by the surface its strip lives in */
-  var lenses = new Map(), layer = null;
+  var lenses = new Map(), layer = null, localLayers = new WeakMap();
   function lensLayer(strip) {
     var host = strip && strip.closest && strip.closest('#pm-o55-onboarding .o55-win');
     if (host) {
-      var own = host.querySelector(':scope > .lg-lenses-local');
+      var own = localLayers.get(host);
+      if (own && own.isConnected && own.parentElement === host) return own;
+      own = host.querySelector(':scope > .lg-lenses-local');
       if (!own) { own = el('div', { class: 'lg-lenses-local', 'aria-hidden': 'true' }); host.appendChild(own); }
-      return own;
+      localLayers.set(host, own); return own;
     }
     if (layer && layer.isConnected) return layer;
     layer = el('div', { id: 'lg-lenses', 'aria-hidden': 'true' });
@@ -402,18 +570,55 @@
   function lensFor(strip, cfg) {
     var L = lenses.get(strip);
     if (L && L.lens.isConnected) return L;
-    var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind });
-    lensLayer(strip).appendChild(lens);
-    L = { lens: lens, rect: null, anim: null, cfg: cfg }; lenses.set(strip, L); return L;
+    if (L) disposeLens(L);
+    var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind }), own = lensLayer(strip);
+    own.appendChild(lens);
+    L = { strip: strip, lens: lens, layer: own, rect: null, anim: null, scaleFrame: 0, scaleFilter: null, scrubCleanup: null, cfg: cfg }; lenses.set(strip, L); return L;
   }
   function setLensBox(L, R) {
-    var s = L.lens.style; s.left = R.x + 'px'; s.top = R.y + 'px'; s.width = R.w + 'px'; s.height = R.h + 'px'; L.rect = R;
+    var s = L.lens.style, A = L.rect;
+    if (!A || A.x !== R.x) s.left = R.x + 'px'; if (!A || A.y !== R.y) s.top = R.y + 'px';
+    if (!A || A.w !== R.w) s.width = R.w + 'px'; if (!A || A.h !== R.h) s.height = R.h + 'px'; L.rect = R;
     mount(L.lens, L.cfg.kind);
+  }
+  function stopLensScale(L) {
+    if (L.scaleFrame) cancelAnimationFrame(L.scaleFrame); L.scaleFrame = 0;
+    if (L.scaleFilter) setLensScale(L.scaleFilter, 1); L.scaleFilter = null;
+  }
+  function stopLensTravel(L) {
+    stopLensScale(L);
+    if (L.anim) { var an = L.anim; L.anim = null; an.onfinish = null; an.cancel(); } L.reducedAnim = false;
+  }
+  function removeLensElement(e) {
+    if (typeof unmount === 'function') unmount(e);
+    else { glassSet.delete(e); if (sizeWatch) sizeWatch.unobserve(e); e.__lgF = null; e.__lgSig = null; }
+    e.remove();
+  }
+  function disposeLens(L) {
+    stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup();
+    removeLensElement(L.lens); L.rect = null;
+    if (L.layer && L.layer.classList.contains('lg-lenses-local') && !L.layer.children.length) {
+      if (L.layer.parentElement) localLayers.delete(L.layer.parentElement); L.layer.remove();
+    }
+  }
+  function pruneLenses() {
+    lenses.forEach(function (L, strip) { if (!strip.isConnected || !L.lens.isConnected) { disposeLens(L); lenses.delete(strip); } });
+    if (bead && (!bead.isConnected || (beadOn && !beadOn.isConnected))) { resetBead(); removeLensElement(bead); bead = null; }
+    menuMotions.forEach(function (M, menu) {
+      if (!menu.isConnected || (menu.id === 'lg-demo-pop' && !menu.hasAttribute('data-open'))) resetMenuMorph(menu);
+      else M.animations.forEach(function (target, an) { if (!target.isConnected) { an.cancel(); M.animations.delete(an); } });
+    });
+    pruneLensFilters();
+  }
+  function suspendLensMotion() {
+    lenses.forEach(function (L) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); });
+    if (isGlass() && beadOn && beadOn.isConnected) { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); } else resetBead();
+    menuMotions.forEach(function (M, menu) { resetMenuMorph(menu); });
   }
   /* travel from A to B: the drop lifts (grows a little and magnifies more), stretches along its path with its speed,
      thins across it, overshoots and wobbles once, all from one spring */
   function travel(L, A, B, vertical) {
-    if (L.anim) L.anim.cancel();
+    stopLensTravel(L);
     setLensBox(L, B);
     var S = spring.apply(null, LIQUID), dist = vertical ? B.y - A.y : B.x - A.x, frames = [];
     var sw = A.w / B.w, shh = A.h / B.h;
@@ -425,21 +630,37 @@
       var sx = (vertical ? w * across : w * along), sy = (vertical ? h * along : h * across);
       frames.push({ offset: S[i].t / S[S.length - 1].t, transform: (vertical ? 'translate3d(0,' : 'translate3d(') + off.toFixed(2) + (vertical ? 'px,0)' : 'px,0,0)') + ' scale(' + sx.toFixed(4) + ',' + sy.toFixed(4) + ')' });
     }
-    L.anim = L.lens.animate(frames, { duration: S[S.length - 1].t, easing: 'linear' });
-    var f = L.lens.__lgF, base = f && f.scale;
+    var an = L.lens.animate(frames, { duration: S[S.length - 1].t, easing: 'linear' }); L.anim = an;
+    var f = L.lens.__lgF;
     /* while it travels the drop thickens a little: the refraction rises by up to 15 % and settles with it */
-    if (f) { var t0 = performance.now(), dur = S[S.length - 1].t; (function tick() { var k = Math.min(1, (performance.now() - t0) / dur); setLensScale(f, 1 + 0.15 * Math.sin(k * Math.PI)); if (k < 1 && L.anim) requestAnimationFrame(tick); else setLensScale(f, 1); })(); }
-    L.anim.onfinish = function () { L.anim = null; };
+    if (f) {
+      L.scaleFilter = f; var t0 = performance.now(), dur = S[S.length - 1].t;
+      (function tick() {
+        L.scaleFrame = 0;
+        if (L.anim !== an || !L.strip.isConnected || !L.lens.isConnected || !isGlass() || reduced()) { stopLensTravel(L); return; }
+        if (L.lens.__lgF !== f) { stopLensScale(L); return; }
+        var k = Math.min(1, (performance.now() - t0) / dur); setLensScale(f, 1 + 0.15 * Math.sin(k * Math.PI));
+        if (k < 1) L.scaleFrame = requestAnimationFrame(tick); else stopLensScale(L);
+      })();
+    }
+    an.onfinish = function () { if (L.anim === an) { L.anim = null; stopLensScale(L); } };
   }
   function syncStrip(cfg, strip) {
     var L = lensFor(strip, cfg);
     var target = cfg.pick ? cfg.pick(strip) : strip.querySelector(cfg.items + (cfg.active || '.active'));
-    if (!target || !visible(target) || !visible(strip)) { L.lens.style.opacity = '0'; L.rect = null; return; }
-    L.lens.style.opacity = '';
+    if (!target || !visible(target) || !visible(strip)) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; return; }
+    if (L.lens.style.opacity) L.lens.style.opacity = '';
     var R = rectIn(strip, cfg.box ? cfg.box(target) : target, cfg.pad == null ? 2 : cfg.pad), A = L.rect;
     if (L.dragging) return;
-    if (!A || reduced() || !isGlass()) { if (A && reduced()) L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); setLensBox(L, R); return; }
-    if (Math.abs(A.x - R.x) < 0.5 && Math.abs(A.y - R.y) < 0.5 && Math.abs(A.w - R.w) < 0.5 && Math.abs(A.h - R.h) < 0.5) return;
+    var quiet = reduced();
+    var still = A && (quiet ? A.x === R.x && A.y === R.y && A.w === R.w && A.h === R.h : Math.abs(A.x - R.x) < 0.5 && Math.abs(A.y - R.y) < 0.5 && Math.abs(A.w - R.w) < 0.5 && Math.abs(A.h - R.h) < 0.5);
+    if ((quiet && !L.reducedAnim) || !isGlass()) stopLensTravel(L);
+    if (still) return;
+    if (!A || quiet || !isGlass()) {
+      stopLensTravel(L);
+      if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } }; }
+      setLensBox(L, R); return;
+    }
     travel(L, A, R, !!cfg.vertical || Math.abs(A.y - R.y) > Math.abs(A.x - R.x));
   }
   /* scrubbing: press on a tab strip and slide; the lens lifts and follows the pointer like a drop of water, magnifying
@@ -450,28 +671,36 @@
       var cfg = STRIPS[i]; if (!cfg.scrub) continue;
       var strip = e.target.closest && e.target.closest(cfg.sel); if (!strip) continue;
       var L = lenses.get(strip); if (!L || !L.rect) return;
+      if (L.scrubCleanup) L.scrubCleanup();
       var sx = e.clientX, moved = false, items = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(visible);
       var onMove = function (ev) {
+        if (!strip.isConnected || !L.lens.isConnected || !isGlass() || reduced()) { cleanup(); return; }
         var dx = ev.clientX - sx;
         if (!moved && Math.abs(dx) < 6) return;
-        if (!moved) { moved = true; L.dragging = true; if (L.anim) L.anim.cancel(); L.lens.setAttribute('data-lg-lifted', ''); }
-        var sr = strip.getBoundingClientRect(), lr = lensLayer(strip).getBoundingClientRect(), x = ev.clientX - sr.left - L.rect.w / 2;
+        if (!moved) { moved = true; L.dragging = true; stopLensTravel(L); L.lens.setAttribute('data-lg-lifted', ''); }
+        var sr = strip.getBoundingClientRect(), lr = L.layer.getBoundingClientRect(), x = ev.clientX - sr.left - L.rect.w / 2;
         var lo = 0, hi = strip.clientWidth - L.rect.w; if (x < lo) x = lo - Math.sqrt(lo - x) * 2; if (x > hi) x = hi + Math.sqrt(x - hi) * 2;
         L.lens.style.transform = 'translate3d(' + (sr.left - lr.left + x - L.rect.x).toFixed(1) + 'px,0,0) scale(1.14,1.16)';
         ev.preventDefault();
       };
+      var removeListeners = function () {
+        document.removeEventListener('pointermove', onMove, true); document.removeEventListener('pointerup', onUp, true); document.removeEventListener('pointercancel', onUp, true);
+        if (L.scrubCleanup === cleanup) L.scrubCleanup = null;
+      };
+      var cleanup = function () { removeListeners(); L.lens.style.transform = ''; L.lens.removeAttribute('data-lg-lifted'); L.dragging = false; };
       var onUp = function (ev) {
-        document.removeEventListener('pointermove', onMove, true); document.removeEventListener('pointerup', onUp, true);
+        removeListeners();
         if (!moved) return;
-        var sr = strip.getBoundingClientRect(), best = null, bd = 1e9;
+        if (ev.type === 'pointercancel' || !strip.isConnected || !L.lens.isConnected || !isGlass() || reduced()) { cleanup(); return; }
+        var best = null, bd = 1e9;
         items.forEach(function (it) { var r = it.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - ev.clientX); if (d < bd) { bd = d; best = it; } });
-        var cur = L.lens.getBoundingClientRect(), lr2 = lensLayer(strip).getBoundingClientRect(), from = { x: cur.left - lr2.left + (cur.width - L.rect.w) / 2, y: L.rect.y, w: L.rect.w, h: L.rect.h };
-        L.lens.style.transform = ''; L.lens.removeAttribute('data-lg-lifted'); L.dragging = false;
+        var cur = L.lens.getBoundingClientRect(), lr2 = L.layer.getBoundingClientRect(), from = { x: cur.left - lr2.left + (cur.width - L.rect.w) / 2, y: L.rect.y, w: L.rect.w, h: L.rect.h };
+        cleanup();
         if (best && !best.classList.contains('active')) { L.rect = from; best.click(); } else { travel(L, from, L.rect, false); }
         var swallow = function (ce) { ce.stopPropagation(); ce.preventDefault(); document.removeEventListener('click', swallow, true); };
         document.addEventListener('click', swallow, true); setTimeout(function () { document.removeEventListener('click', swallow, true); }, 0);
       };
-      document.addEventListener('pointermove', onMove, true); document.addEventListener('pointerup', onUp, true);
+      L.scrubCleanup = cleanup; document.addEventListener('pointermove', onMove, true); document.addEventListener('pointerup', onUp, true); document.addEventListener('pointercancel', onUp, true);
       return;
     }
   }
@@ -536,13 +765,15 @@
      icon swells inside it (the self-reflection Jared liked on the lenses, now on the rail's and toolbars' buttons) ---- */
   var BEADS = '#sidePanelSlot :is(.pm-minibtn, .fm-tbtn, #fmRootBtn, .sh-bhead-acts button), #activityBar .icon:not([data-lg-current]), #activityBarToggle, .pmu-iconbtn, #pm-home-more-btn, #themeSelect, #projectMenuBtn, .pmu-livechev';
   var bead = null, beadOn = null, beadRect = null, beadAnim = null, beadHide = 0;
-  function beadEl() { if (bead && bead.isConnected) return bead; bead = el('i', { class: 'lg-lens lg-bead', 'aria-hidden': 'true', 'data-lg-lens': 'bead' }); lensLayer().appendChild(bead); return bead; }
+  function stopBeadAnimation() { if (beadAnim) { var an = beadAnim; beadAnim = null; an.onfinish = null; an.cancel(); } }
+  function resetBead() { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); if (bead) bead.classList.remove('on'); beadRect = null; beadOn = null; }
+  function beadEl() { if (bead && bead.isConnected) return bead; if (bead) { resetBead(); removeLensElement(bead); } bead = el('i', { class: 'lg-lens lg-bead', 'aria-hidden': 'true', 'data-lg-lens': 'bead' }); lensLayer().appendChild(bead); return bead; }
   function beadTo(t) {
-    clearTimeout(beadHide);
-    var b = beadEl(), lr = lensLayer().getBoundingClientRect(), r = (t.querySelector(':scope > .symbol') || t).getBoundingClientRect();
+    clearTimeout(beadHide); beadHide = 0;
+    var b = beadEl(), lr = lensLayer().getBoundingClientRect(), r = (t.querySelector(':scope > .symbol') || t).getBoundingClientRect(); beadOn = t;
     var R = { x: r.left - lr.left - 2, y: r.top - lr.top - 2, w: r.width + 4, h: r.height + 4 }, A = beadRect;
     var s = b.style; s.left = R.x + 'px'; s.top = R.y + 'px'; s.width = R.w + 'px'; s.height = R.h + 'px'; mount(b, 'bead');
-    if (beadAnim) beadAnim.cancel();
+    stopBeadAnimation();
     if (reduced()) { b.classList.add('on'); beadRect = R; return; }
     if (A && b.classList.contains('on')) {
       var S = spring.apply(null, LIQUID), dx = A.x - R.x, dy = A.y - R.y, dist = Math.hypot(dx, dy), fr = [];
@@ -553,11 +784,19 @@
       b.classList.add('on');
       beadAnim = b.animate([{ transform: 'scale(.55)', opacity: 0 }, { transform: 'scale(1.06)', opacity: 1, offset: 0.6 }, { transform: 'scale(1)', opacity: 1 }], { duration: 380, easing: 'cubic-bezier(.3,1.3,.5,1)' });
     }
+    var an = beadAnim; an.onfinish = function () { if (beadAnim === an) beadAnim = null; };
     beadRect = R;
   }
   function beadOff() {
     clearTimeout(beadHide);
-    beadHide = setTimeout(function () { if (!bead || !bead.classList.contains('on')) return; beadAnim = bead.animate([{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(.6)', opacity: 0 }], { duration: 220, easing: 'ease-in' }); beadAnim.onfinish = function () { bead.classList.remove('on'); beadRect = null; }; }, 140);
+    beadHide = setTimeout(function () {
+      beadHide = 0;
+      if (!bead || !bead.isConnected || !isGlass()) { resetBead(); return; }
+      if (!bead.classList.contains('on')) return;
+      stopBeadAnimation(); var b = bead;
+      var an = b.animate([{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(.6)', opacity: 0 }], { duration: 220, easing: 'ease-in' }); beadAnim = an;
+      an.onfinish = function () { if (beadAnim === an && bead === b) { beadAnim = null; b.classList.remove('on'); beadRect = null; } };
+    }, 140);
   }
   document.addEventListener('pointerover', function (e) {
     if (!isGlass() || e.pointerType === 'touch') return;
@@ -583,16 +822,36 @@
   }, true);
 
   /* ---- morph: a menu pours out of its control ------------------------------------------------------------------ */
-  var lastPress = null;
+  var lastPress = null, menuMotions = new Map();
   document.addEventListener('pointerdown', function (e) { lastPress = e.target.closest && e.target.closest('button, [role="button"], .pm6-tb-menu-trigger, .pmu-ctlbtn'); }, true);
+  function resetMenuMorph(menu) {
+    var M = menuMotions.get(menu);
+    if (M) {
+      if (M.frame) cancelAnimationFrame(M.frame);
+      if (M.held) menu.style.opacity = '';
+      M.animations.forEach(function (target, an) { an.onfinish = null; an.oncancel = null; an.cancel(); }); M.animations.clear(); menuMotions.delete(menu);
+    }
+    menu.__lgMorphed = false;
+  }
+  function menuAnimation(menu, target, frames, options) {
+    var M = menuMotions.get(menu), an = target.animate(frames, options); M.animations.set(an, target);
+    var done = function () { M.animations.delete(an); if (!M.frame && !M.animations.size && menuMotions.get(menu) === M) menuMotions.delete(menu); };
+    an.onfinish = done; an.oncancel = done; return an;
+  }
   function morph(menu, anchor) {
     if (!isGlass() || !visible(menu) || menu.__lgMorphed) return;
-    menu.__lgMorphed = true;
-    if (reduced()) { menu.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 140 }); return; }
+    resetMenuMorph(menu); menu.__lgMorphed = true;
+    var M = { frame: 0, held: false, animations: new Map() }; menuMotions.set(menu, M);
+    if (reduced()) { menuAnimation(menu, menu, [{ opacity: 0 }, { opacity: 1 }], { duration: 140 }); return; }
     /* the menu's own opening animation starts a moment after ours and would win: run ours on the next frame, after
        cancelling it, holding the first keyframe so the menu never flashes at full size */
-    menu.style.opacity = '0';
-    requestAnimationFrame(function () { menu.style.opacity = ''; morphNow(menu, anchor); });
+    menu.style.opacity = '0'; M.held = true;
+    M.frame = requestAnimationFrame(function () {
+      M.frame = 0; menu.style.opacity = ''; M.held = false;
+      if (!isGlass() || !visible(menu) || menuMotions.get(menu) !== M) { resetMenuMorph(menu); return; }
+      if (reduced()) { menuAnimation(menu, menu, [{ opacity: 0 }, { opacity: 1 }], { duration: 140 }); return; }
+      morphNow(menu, anchor);
+    });
   }
   function morphNow(menu, anchor) {
     menu.getAnimations().forEach(function (an) { an.cancel(); });
@@ -604,24 +863,25 @@
       frames.push({ offset: S[i].t / S[S.length - 1].t, transform: 'translate3d(' + (tx0 * (1 - p)).toFixed(1) + 'px,' + (ty0 * (1 - p)).toFixed(1) + 'px,0) scale(' + sx.toFixed(4) + ',' + sy.toFixed(4) + ')' });
     }
     menu.style.transformOrigin = '0 0';
-    menu.animate(frames, { duration: S[S.length - 1].t, easing: 'linear', fill: 'backwards' });
-    menu.animate([{ opacity: 0.2 }, { opacity: 1, offset: 0.25 }, { opacity: 1 }], { duration: S[S.length - 1].t, easing: 'linear' });
-    Array.prototype.slice.call(menu.children, 0, 30).forEach(function (k, i) { k.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: 110 + i * 10, easing: 'ease-out', fill: 'backwards' }); });
+    menuAnimation(menu, menu, frames, { duration: S[S.length - 1].t, easing: 'linear', fill: 'backwards' });
+    menuAnimation(menu, menu, [{ opacity: 0.2 }, { opacity: 1, offset: 0.25 }, { opacity: 1 }], { duration: S[S.length - 1].t, easing: 'linear' });
+    Array.prototype.slice.call(menu.children, 0, 30).forEach(function (k, i) { menuAnimation(menu, k, [{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: 110 + i * 10, easing: 'ease-out', fill: 'backwards' }); });
   }
   function lensesUnder(menus) {
     lenses.forEach(function (L) {
       if (!L.rect) return;
+      if (!menus.length) { if (L.lens.classList.contains('lg-under')) L.lens.classList.remove('lg-under'); return; }
       var r = L.lens.getBoundingClientRect(), hit = menus.some(function (m) { return r.right > m.left && r.left < m.right && r.bottom > m.top && r.top < m.bottom; });
-      L.lens.classList.toggle('lg-under', hit);
+      if (L.lens.classList.contains('lg-under') !== hit) L.lens.classList.toggle('lg-under', hit);
     });
   }
   function scanMenus() {
     var open = Array.prototype.slice.call(document.querySelectorAll('.pmu-pop.open, .pmr-menu-list, #lg-demo-pop[data-open], .pm6-tb-menu.is-open')).filter(visible).map(function (m) { return m.getBoundingClientRect(); });
     if (bead) bead.classList.toggle('lg-under', open.length > 0);
-    document.querySelectorAll('#themeMenu').forEach(function (m) { if (m.classList.contains('is-open') && visible(m)) { mount(m, 'menu'); morph(m, document.getElementById('themeSelect')); } else m.__lgMorphed = false; });
+    document.querySelectorAll('#themeMenu').forEach(function (m) { if (m.classList.contains('is-open') && visible(m)) { mount(m, 'menu'); morph(m, document.getElementById('themeSelect')); } else resetMenuMorph(m); });
     lensesUnder(open);
-    document.querySelectorAll('.pmu-pop').forEach(function (m) { if (m.classList.contains('open')) { mount(m, 'menu'); morph(m, document.querySelector('.pmu-menu-anchor-open') || lastPress); } else m.__lgMorphed = false; });
-    document.querySelectorAll('.pmr-menu-list').forEach(function (m) { if (visible(m)) { mount(m, 'menu'); morph(m, lastPress); } else m.__lgMorphed = false; });
+    document.querySelectorAll('.pmu-pop').forEach(function (m) { if (m.classList.contains('open')) { mount(m, 'menu'); morph(m, document.querySelector('.pmu-menu-anchor-open') || lastPress); } else resetMenuMorph(m); });
+    document.querySelectorAll('.pmr-menu-list').forEach(function (m) { if (visible(m)) { mount(m, 'menu'); morph(m, lastPress); } else resetMenuMorph(m); });
   }
 
   /* ---- materialize: glass arrives by ramping its refraction and its frost, not by fading ---------------------------- */
@@ -633,16 +893,27 @@
   }
 
   /* ---- sync -------------------------------------------------------------------------------------------------------- */
-  var syncQ = false, lazyT = 0;
+  var syncQ = 0, lazyT = 0;
+  function pruneGlass() {
+    glassSet.forEach(function (e) {
+      if (e.isConnected) return;
+      if (typeof unmount === 'function') unmount(e);
+      else { if (sizeWatch) sizeWatch.unobserve(e); glassSet.delete(e); }
+    });
+    if (typeof pruneLenses === 'function') pruneLenses();
+  }
   function syncAll() {
-    syncQ = false;
+    /* an immediate hot/API sync covers queued work; keep no second callback that can remount it next frame */
+    if (syncQ) { cancelAnimationFrame(syncQ); syncQ = 0; }
+    if (lazyT) { clearTimeout(lazyT); lazyT = 0; }
+    pruneGlass();
     applyWall(); mountPicker();
     if (!isGlass()) { unmountAll(); return; }
     syncSurfaces();
     STRIPS.forEach(function (cfg) { (cfg.many ? document.querySelectorAll(cfg.sel) : [document.querySelector(cfg.sel)]).forEach(function (s) { if (s) syncStrip(cfg, s); }); });
     scanMenus();
   }
-  function queueSync() { if (!syncQ) { syncQ = true; requestAnimationFrame(syncAll); } }
+  function queueSync() { if (!syncQ) syncQ = requestAnimationFrame(function () { syncQ = 0; syncAll(); }); }
   /* a hot change (a tab chosen, a menu opened) syncs at once so the lens and the morph start in the next frame; more
      than three in one frame means something is answering our own changes, so the rest wait for the frame */
   var hotN = 0, hotFrame = 0;
@@ -654,25 +925,47 @@
   }
   function lazySync() { if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140); }
   var HOT = '.page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, .o55-win, .o55t-callout, .o55t-bar';
+  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, #lg-shine, .lg-press, .pm-segtab-track';
+  function generatedMutation(rec) {
+    var t = rec.target;
+    if (t.nodeType === 1 && t.closest(GENERATED)) return true;
+    if (rec.type !== 'childList') return false;
+    /* app replacement can remove a persistent output layer; let that schedule its reconstruction */
+    for (var i = 0; i < rec.removedNodes.length; i++) {
+      var n = rec.removedNodes[i]; if (n.nodeType !== 1 || !n.matches('#lg-shine, .lg-press')) return false;
+    }
+    var nodes = Array.prototype.slice.call(rec.addedNodes).concat(Array.prototype.slice.call(rec.removedNodes));
+    return nodes.length > 0 && nodes.every(function (n) { return n.nodeType === 1 && n.matches(GENERATED); });
+  }
   var lastPage = null, lastTheme = root.getAttribute('data-theme'), lastLg = root.getAttribute('data-lg');
+  var lastTier = root.getAttribute('data-lg-tier'), lastWall = root.getAttribute('data-lg-wall'), lastMotion = root.getAttribute('data-motion');
   var mo = new MutationObserver(function (recs) {
-    var hot = false;
+    var hot = false, relevant = false;
     for (var i = 0; i < recs.length && !hot; i++) {
+      /* optics, lenses and light are outputs of sync, never inputs that should schedule it again */
+      if (generatedMutation(recs[i])) continue;
+      relevant = true;
       var t = recs[i].target; if (t.nodeType !== 1) continue;
       if (t.matches(HOT)) hot = true;
       else for (var j = 0; j < recs[i].addedNodes.length; j++) { var nd = recs[i].addedNodes[j]; if (nd.nodeType === 1 && (nd.matches(HOT) || nd.matches('.pmu-card') || (nd.querySelector && nd.querySelector('.pmr-menu-list, .pmu-card')))) { hot = true; break; } }
     }
+    if (!relevant) return;
     var page = document.querySelector('.page-tabs .page-tab.active'); page = page && page.id;
     if (hot && isGlass()) hotSync(); else lazySync();
     if (page !== lastPage) { var first = lastPage === null; lastPage = page; if (!first) setTimeout(syncAll, 30); }
   });
   new MutationObserver(function () {
     var th = root.getAttribute('data-theme'), lg = root.getAttribute('data-lg');
+    var tier = root.getAttribute('data-lg-tier'), wall = root.getAttribute('data-lg-wall'), motion = root.getAttribute('data-motion');
+    if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
+    if (motion !== lastMotion && reduced() && typeof suspendLensMotion === 'function') suspendLensMotion();
+    lastTier = tier; lastWall = wall; lastMotion = motion;
     if (th !== lastTheme || lg !== lastLg) {
       var enter = isGlass() && (!/^glass/.test(lastTheme || '') || lastLg !== 'on');
       lastTheme = th; lastLg = lg; lenses.forEach(function (L) { L.rect = null; });
       glassSet.forEach(function (e) { e.__lgSig = null; });
-      syncAll(); if (enter) materialize(Array.from(glassSet));
+      syncAll(); lastWall = root.getAttribute('data-lg-wall');
+      if (enter) materialize(Array.from(glassSet));
     } else queueSync();
   }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-lg-tier', 'data-lg-wall', 'data-motion'] });
   applyWall();
@@ -715,9 +1008,11 @@
   function applyWall() {
     var c = q.get('lgwall') || wallChoice(), fam = (root.getAttribute('data-theme') || '').split('-')[0];
     var id = c === 'look' ? (fam === 'glass' ? 'ribbons' : '') : c;
-    if (id) root.setAttribute('data-lg-wall', id); else root.removeAttribute('data-lg-wall');
+    if (id) { if (root.getAttribute('data-lg-wall') !== id) root.setAttribute('data-lg-wall', id); }
+    else if (root.hasAttribute('data-lg-wall')) root.removeAttribute('data-lg-wall');
     /* a non-Glass look shows a chosen wallpaper around and between its opaque panels */
-    if (id && fam !== 'glass') root.setAttribute('data-lg-wall-any', ''); else root.removeAttribute('data-lg-wall-any');
+    if (id && fam !== 'glass') { if (!root.hasAttribute('data-lg-wall-any')) root.setAttribute('data-lg-wall-any', ''); }
+    else if (root.hasAttribute('data-lg-wall-any')) root.removeAttribute('data-lg-wall-any');
   }
   function setWall(c) { try { localStorage.setItem(WALL_KEY, c); } catch (e) {} applyWall(); renderPickers(); }
   function pickerHtml() {
