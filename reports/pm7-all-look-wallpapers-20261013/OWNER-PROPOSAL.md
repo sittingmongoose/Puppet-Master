@@ -12,6 +12,8 @@ page in `share/2026-10-13-wallpapers/` layers it onto the published PMConcept7 a
 
 ## Decisions for Jared (cards)
 
+Answered 2026-10-13: W1 approved; W2, W3 and W4 as built; W5 retire now, which is done in 03e73022b4 (placement hand_drops).
+
 | Card | Question | Proposed answer |
 |---|---|---|
 | W1 | Approve the 20 new wallpapers (5 each for Basic, Friendly, Retro, NieR)? | Yes, from the review page and the gallery sheet. |
@@ -76,6 +78,8 @@ page in `share/2026-10-13-wallpapers/` layers it onto the published PMConcept7 a
   body keeps the previous print until glass.js writes the new `--lg-frost-*`, then both change together, with a
   1.5 s cap. The same lag applies to glass.js's own concept control, which this does not cover. Inside glass.js the
   fix is to keep painting the old print until `applyFrost` lands the new one, after which the hold here can go.
+- G5: `glass.css` hides `#setting-general.visual.glass-background-mode` under Liquid Glass. W5 dropped that row
+  (03e73022b4), so the rule matches nothing and can go.
 
 ## Jared's broader direction (context, not done here)
 

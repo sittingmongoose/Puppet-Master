@@ -1,5 +1,5 @@
 {
- "status": "READY_FOR_ROOT_REVIEW_NOT_LANDED",
+ "status": "READY_FOR_LANDING_REVIEW_NOT_LANDED",
  "created_utc": "2026-10-13T22:08:54.871790+00:00",
  "binding": {
   "account_instance": "claude_party",
@@ -16,7 +16,8 @@
   "base_landed_on_main": true,
   "commits": [
    "fb0eda947d3c752c8218ab6940179bb310419537",
-   "37e316eb2bfa17344d875d3df7cec54cb08cef1c"
+   "37e316eb2bfa17344d875d3df7cec54cb08cef1c",
+   "03e73022b4 (W5)"
   ],
   "glass_assets_from": "6b18ee47555a8725e512da8f25394bb42ea41a50 (10 webp, byte-identical; no glass.js/glass.css/walls.mjs/lens source)"
  },
@@ -225,9 +226,9 @@
   }
  },
  "preview": {
-  "path": "/mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/PMConcept7-Wallpapers-r1.html",
-  "bytes": 24274794,
-  "sha256": "83f68bfad0f15c7833dad1cd338203f934594aef5e75b088478c97c7ab8110f3"
+  "path": "/mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/PMConcept7-Wallpapers-r2.html",
+  "bytes": 24274465,
+  "sha256": "2f3abb55231fab27bb9ff3592db9a32fd2d400f90ab9225121ac8480f0e1121b"
  },
  "preview_build": "build_proto.py (glass-input 333465c8, 20,704,818 B) then build_walls.py; superseded unreported builds 10752f01 and 788172ad recorded in attempts",
  "custody": {
@@ -249,9 +250,8 @@
  },
  "share": "/mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/ (README, review page, 5 gallery sheets, OWNER-PROPOSAL, film/)",
  "blockers": [
-  "Glass owner OK on catalog.d/10-glass.json and the 10 copied prints (mailed 1013202959-d515; owner quota-held)",
-  "Jared decisions W1-W5",
-  "root source and mechanical review, then a separate landing GO"
+  "Glass owner OK on catalog.d/10-glass.json and the 10 copied prints (mailed; owner quota-held)",
+  "coordinator review, then a Sol landing worker"
  ],
  "limitations": "Behavior and performance on Nas1 CPU tier (software rendering); film on one GPU host; no Edge or performance-campaign claim. The wallpaper row is a concept overlay: not in the Settings inventory or search, saved globally in localStorage, prints inlined as data URLs (product wiring proposed).",
  "cleanup": {
@@ -265,5 +265,68 @@
   "scratch_removed": true,
   "mail_waiters": "one, consumed at final stop",
   "retained": "clean pushed worktree and branch for review; evidence and share packet"
- }
+ },
+ "updated_utc": "2026-10-13T23:18:35.523355+00:00",
+ "jared_answers": {
+  "W1": "approved (watched the film: \"it has my approval now\")",
+  "W2": "other looks keep their own backgrounds by default (as built)",
+  "W3": "one wallpaper setting for every look (as built)",
+  "W4": "NieR defaults to its ink scenes, can pick any (as built)",
+  "W5": "retire the Glass background row now -> done in 03e73022b4"
+ },
+ "w5": {
+  "change": "general.visual.glass-background-mode dropped from App & Input: placement hand_drops (it is a hand row; retire_ids refused by the validator, retained as the first build failure), removed from the app-theme override and the hand move, wording removed from rows.d",
+  "paths": [
+   "Concepts/onboarding/opus-5.5/src/settings/o55/placement.d/60-app-input.json",
+   "Concepts/onboarding/opus-5.5/src/settings/o55/rows.d/60-app-input.json",
+   "Concepts/PMConcept7.html",
+   "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html",
+   "Concepts/HomeTestPMConcept7.html",
+   "Concepts/LeftRailPMConcept7.html"
+  ],
+  "not_touched": "build.py, settings_layer.py, kit.js, kit.d/*, settings_tome_source.py, glass.css (its rule hiding the row under Liquid Glass is now dead; Glass follow-up)",
+  "generated": {
+   "PMConcept7=TestOpus=HomeTest": {
+    "bytes": 18599577,
+    "sha256": "06ab7dac489c74c5e03e3eef985c8080495d11631149255f05ff093b1fdd18ae"
+   },
+   "LeftRail": {
+    "bytes": 19234124,
+    "sha256": "d41be84718cd0e004823cb194c9d4dc7d8f30cf05fce7673fccc8ba8b1b35c2c"
+   },
+   "delta": "each page differs from 2de16e7911 only by the embedded placement/wording data (13 lines)"
+  },
+  "checks": {
+   "generators": "build.py --check, build_home.py --check, build_rail.py --check, build_d_css.py --check: exit 0; git diff --check ok",
+   "browser_private_build": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-all-look-wallpapers-20261013/w5/w5-check-private-attempt1.json",
+    "bytes": 1994,
+    "sha256": "5126098608b254e7ec8cdb8aea64b878c6e87bcd4a414235db945d2d03e27b14"
+   },
+   "control_on_previous_page": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-all-look-wallpapers-20261013/w5/w5-check-control-before.json",
+    "bytes": 1602,
+    "sha256": "de5ffaef25e7ceba71230359822e6d90d7cb1daaa31818169714fdb33347be14"
+   },
+   "browser_review_r2": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-all-look-wallpapers-20261013/w5/w5-check-r2.json",
+    "bytes": 1983,
+    "sha256": "efa627aa8473cfd611e22bb1d5f6c1b8e6aa178bb9aa387966afeec617d3e080"
+   },
+   "wallpaper_behavior_r2": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-all-look-wallpapers-20261013/tests/behavior-attempt6-r2.json",
+    "bytes": 8087,
+    "sha256": "9f81260a38c78ef3bf77c887f792513e0b2d86d1de3b3b2373cbd7a6e4cd9728"
+   },
+   "summary": "7/7 W5 checks on the private build (== published 06ab7dac) and on r2; control on the old page fails as it must; wallpaper suite 17/17 on r2"
+  },
+  "coordination": "exact lines mailed to pm7-perf-impl-sol first (1013230313-00d2); no overlap with its paths",
+  "residual": "a stored non-default Mesh/Depth/Minimal value still sets data-glass-bg; under Liquid Glass the cloudscape is hidden, so it shows only on plain pages without the Glass overlay. Clear-on-read like Chat Layout is a possible build.py follow-up, not done (minimal; build.py is the perf worker's area)."
+ },
+ "preview_r1_frozen": {
+  "path": "/mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/PMConcept7-Wallpapers-r1.html",
+  "bytes": 24274794,
+  "sha256": "83f68bfad0f15c7833dad1cd338203f934594aef5e75b088478c97c7ab8110f3"
+ },
+ "preview_build_r2": "build_proto.py (glass-input-r2 7b977b52, 20,704,489 B) then build_walls.py; r1->r2 delta is the 13-line W5 data change only"
 }
