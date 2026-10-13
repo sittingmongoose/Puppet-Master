@@ -60,6 +60,9 @@ html[data-o55-nier-parts~="headers"] #pm-o55-tour .o55t-kicker[data-count]::afte
 html[data-o55-nier-parts~="headers"] #pm-o55-tour .o55t-title { font-weight: 600; letter-spacing: .02em; }
 /* "Try it" reads Objective: an ink word after its square, no block (no pills) */
 html[data-o55-nier="on"] #pm-o55-tour .o55t-trylabel { padding: 0; background: none; color: var(--o55-nier-ink); font: 500 10px/1.5 var(--mono-font); letter-spacing: .2em; }
+/* NieR Light's practice marker in the Wizard reads in NieR's ink (its lime word read 4.2:1 on the practice card; NieR
+   Dark's reads 5.7:1 and keeps it) */
+html[data-o55-nier="on"][data-theme$="-light"] .o55p-badge { color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] #pm-o55-tour .o55t-tips { background: rgba(var(--o55-nier-ink-rgb), .06); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .18); }
 
 /* ---- Pod 042 in the callout: the unit docked by its words, a mono POD 042 head, the lead and the line ---- */

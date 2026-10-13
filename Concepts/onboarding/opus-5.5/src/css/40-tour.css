@@ -83,9 +83,14 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-handoff:not([data-o55nw-hand]
 .o55t-root[data-family="retro"] .o55t-title { text-transform: uppercase; font-size: 15px; }
 .o55t-root[data-family="retro"] .o55t-title::after { content: '_'; color: var(--o55t-accent); animation: o55t-blink 1s steps(1) infinite; }
 .o55t-body, .o55t-try { margin: 0 0 12px; font-size: 14px; line-height: 1.5; color: var(--text-secondary); }
-/* "Try it" is a plain word after a small square, like the window's tags; never a capsule (no pills) */
+/* "Try it" is a plain word after a small square, like the window's tags; never a capsule (no pills). It reads 4.5:1 or
+   more on the callout: the accent a little toward the text, or, where the look's accent is too light for a word, that
+   accent toward black by the least that reads (as the window's label inks, 10-window.css). */
+.o55t-root { --o55t-ink-try: color-mix(in srgb, var(--o55t-accent) 88%, var(--text-primary)); }
+.o55t-root[data-family="friendly"][data-mode="light"] { --o55t-ink-try: color-mix(in srgb, var(--o55t-accent) 66%, #000); }
+.o55t-root[data-family="glass"][data-mode="light"] { --o55t-ink-try: color-mix(in srgb, var(--o55t-accent) 72%, #000); }
 .o55t-trylabel { display: inline-block; margin-right: 8px; padding: 0; border-radius: 0; font: 700 11px/1.5 var(--body-font); letter-spacing: 0.06em; text-transform: uppercase; background: none;
-  color: color-mix(in srgb, var(--o55t-accent) 88%, var(--text-primary)); }
+  color: var(--o55t-ink-try); }
 .o55t-trylabel::before { content: ""; display: inline-block; width: 5px; height: 5px; margin: 0 6px 0 0; vertical-align: 0.12em; background: currentColor; }
 .o55t-tips { display: flex; gap: 8px; align-items: flex-start; margin: 0 0 12px; padding: 9px 11px; border-radius: 10px; background: color-mix(in srgb, var(--text-primary) 6%, transparent); font-size: 13px; line-height: 1.45; color: var(--text-secondary); }
 .o55t-tips .o55-sg { flex: none; margin-top: 2px; color: var(--o55t-accent); }
