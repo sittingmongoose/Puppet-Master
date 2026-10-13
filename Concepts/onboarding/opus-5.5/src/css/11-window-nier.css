@@ -33,14 +33,16 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-card:hover, html[data-o55-nier=
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-card.o55-on { background: var(--o55-nier-selected); box-shadow: inset 0 0 0 1px var(--o55-nier-ink); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-tile.o55-on { box-shadow: inset 0 0 0 1px var(--o55-nier-ink); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-glyph { color: var(--o55-nier-ink); background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .4); }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-tag { color: var(--o55-nier-ink); background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .5); font-family: var(--mono-font); font-weight: 500; letter-spacing: .14em; }
-/* status in ink: ready is an ink block, waiting a hairline, a problem the error ink */
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill { font: 500 10px/1 var(--mono-font); letter-spacing: .14em; text-transform: uppercase; padding: 5px 8px; background: transparent; color: var(--o55-nier-ink); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .45); }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill-ready { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill-needs { color: var(--o55-nier-warn-text); box-shadow: inset 0 0 0 1px var(--o55-nier-warn); }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill-fail { background: var(--o55-nier-error); color: var(--o55-nier-on-ink); box-shadow: none; }
+/* a tag is a mono word in ink after its square, no frame (no pills) */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-tag { color: var(--o55-nier-ink); background: none; font-family: var(--mono-font); font-weight: 500; letter-spacing: .14em; }
+/* status in ink, mono capitals and its mark, never a box (NP-STATUS): ready the ok ink, waiting the ink, a problem the
+   warning or error ink */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill { font: 500 10.5px/1.2 var(--mono-font); letter-spacing: .14em; text-transform: uppercase; padding: 0; background: none; color: var(--o55-nier-ink); box-shadow: none; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill-ready { color: var(--o55-nier-ok-text); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill-needs { color: var(--o55-nier-warn-text); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill-fail { color: var(--o55-nier-error-text); }
 html[data-o55-nier="on"] #pm-o55-onboarding :is(.o55-hint .o55-sg, .o55-chip .o55-sg, .o55-keep .o55-sg, .o55-note-ok .o55-sg) { color: var(--o55-nier-ok-text); }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-chip-ok { background: transparent; border-color: var(--o55-nier-ink); color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-chip-ok { color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-banner { background: var(--o55-nier-secondary); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .3); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-banner-warn { background: var(--o55-nier-error-surface); box-shadow: inset 0 0 0 1px var(--o55-nier-error); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-banner-warn .o55-sg, html[data-o55-nier="on"] #pm-o55-onboarding .o55-hint.o55-err { color: var(--o55-nier-error-text); }
@@ -129,8 +131,8 @@ html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-codeline code { font
 html[data-o55-nier-parts~="square"] #pm-o55-onboarding :is(.o55-routeline, .o55-paircard, .o55-saferow, .o55-summary, .o55-kit, .o55-devicecode, .o55-preview, .o55-install, .o55-identity-chip) { background: var(--o55-nier-raised); }
 html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-suggestchip { border-style: solid; border-color: rgba(var(--o55-nier-ink-rgb), .4); font: 500 11px/1 var(--mono-font); letter-spacing: .08em; }
 html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-suggestchip:is(:hover, .o55-on) { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); }
-html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-routelink::before { border-top: 1px dashed var(--o55-nier-ink); }
-html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-routelink span { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); font-family: var(--mono-font); font-weight: 500; letter-spacing: .14em; }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-routelink::before, html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-routelink::after { border-top: 1px dashed var(--o55-nier-ink); }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-routelink span { background: none; color: var(--o55-nier-ink); font-family: var(--mono-font); font-weight: 500; letter-spacing: .14em; }
 html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-lookmenu { border: 1px solid var(--o55-nier-ink); background: var(--o55-nier-overlay); box-shadow: 4px 4px 0 rgba(var(--o55-nier-shadow-rgb), .28); }
 
 /* ======================================================================================================= Menu cursor */
@@ -140,7 +142,6 @@ html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-card.o55-on,
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-tile.o55-on { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); box-shadow: none; }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-card, .o55-tile).o55-on :where(.o55-cardsub, .o55-tilesub, .o55-tilename, .o55-cardtitle, .o55-glyph, .o55-tag) { color: var(--o55-nier-on-ink); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-card.o55-on .o55-glyph { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
-html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-card.o55-on .o55-tag { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .6); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-on > .o55-check { border-color: var(--o55-nier-on-ink); background: var(--o55-nier-on-ink); box-shadow: inset 0 0 0 3px var(--o55-nier-ink); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-card, .o55-tile).o55-on[data-o55fx-cursor] .o55-glyph { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
 /* One meaning, one treatment (review art-direction-hover-vs-chosen). Chosen is the full ink inversion above; the menu
@@ -164,7 +165,7 @@ html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="tr
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] :is(.o55-niercheck, .o55-niername, .o55-niersub) { color: var(--o55-nier-on-ink); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-nierbox { border-color: var(--o55-nier-on-ink); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-nierbox::after { background: var(--o55-nier-on-ink); }
-html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-niertag { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink) !important; box-shadow: none; }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-niertag { background: none; color: var(--o55-nier-on-ink) !important; }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-nierthumb { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-nieradjust { background: transparent; color: var(--o55-nier-on-ink) !important; border-color: rgba(var(--o55-nier-paper-rgb), .6); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-nieradjust:hover { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink) !important; border-color: var(--o55-nier-on-ink); }
