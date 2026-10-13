@@ -90,24 +90,38 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.app-shell, .title-bar, #a
       behind them live (they float over content), and lenses refract live. --lg-mat condenses the glass as it arrives.
    --------------------------------------------------------------------------------------------------------------- */
 @property --lg-mat { syntax: '<number>'; inherits: false; initial-value: 1; }
+/* how see-through the sheets are. Settings' panel transparency (public --glass-alpha, from its floor, .35 dark and .45
+   light, to 1) moves each sheet's tint around today's look, which is the setting's default .55: up to a near-opaque .94
+   at 100 %, and down by at most a quarter of the tint at the floor, so the frost keeps text readable. --lg-ga is
+   registered as a number, so a value that is not one falls back to the default instead of breaking the paint. */
+@property --lg-ga { syntax: '<number>'; inherits: true; initial-value: 0.55; }
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-ga-floor: .35; }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-ga-floor: .45; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"]) {
+  --lg-ga: clamp(0, var(--glass-alpha, .55), 1);
+  /* tint alpha = alpha * k + add, with up = (ga - .55) / .45 above the default and down = (.55 - ga) / (.55 - floor)
+     below it: k = 1 - up - .25 * down, add = .94 * up */
+  --lg-ga-k: calc(1 - max(0, var(--lg-ga) - 0.55) / 0.45 - 0.25 * min(1, max(0, 0.55 - var(--lg-ga)) / (0.55 - var(--lg-ga-floor, .35))));
+  --lg-ga-add: calc(0.94 * max(0, var(--lg-ga) - 0.55) / 0.45);
+}
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind] { border: 0 !important; isolation: isolate; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"]) {
   -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="panel"] {
-  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-panel) r g b / calc(alpha * var(--lg-mat))), rgb(from var(--lg-tint-panel) r g b / calc(alpha * var(--lg-mat)))),
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
     var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
   border-radius: var(--lg-r-sheet) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 30px 60px -30px var(--lg-shadow), 0 2px 10px var(--lg-shadow-near) !important;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="card"] {
-  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-card) r g b / calc(alpha * var(--lg-mat))), rgb(from var(--lg-tint-card) r g b / calc(alpha * var(--lg-mat)))),
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
     var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
   border-radius: var(--lg-r-card) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 22px 44px -24px var(--lg-shadow), 0 2px 6px var(--lg-shadow-near) !important;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="bar"] {
-  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-bar) r g b / calc(alpha * var(--lg-mat))), rgb(from var(--lg-tint-bar) r g b / calc(alpha * var(--lg-mat)))),
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
     var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-light, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
   border-radius: var(--lg-r-bar) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 16px 34px -18px var(--lg-shadow), 0 1px 4px var(--lg-shadow-near) !important;
