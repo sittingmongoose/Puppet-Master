@@ -28856,6 +28856,155 @@ html[data-theme^="friendly"] .title-bar { border-radius: 14px !important; }
    corner instead (found by pm7-glyphs' toast gate). */
 html:is([data-theme^="friendly"], [data-theme^="glass"]) :is(.rs-card, .rs-clip) { border-radius: min(var(--border-radius, 10px), 10px) !important; }
 
+/* ---- css/25-hover-controls.css ---- */
+/* PMH control marker (2026-10-13 hover polish): the hover and press of the shell's small controls (icon buttons, tabs,
+   the rail's segments and rows, text buttons) in Basic, Friendly, Retro and NieR, at the bar Liquid Glass sets with its
+   bead and lens. The engine (src/js/18-hover.js) resolves these as the icon and ctl kinds and places ONE marker for
+   them, #pmh-frame, on the hovered control's rest rect; it travels to a neighbour on the look's spring (or in its
+   steps) no farther than --pmh-frame-max px, and carries .pmh-frame-new (placed, not travelled) and .pmh-frame-press
+   (primary button held). Cards keep the forms in 22-hover.css. Glass is never named here: its icons and controls keep
+   frame 0, so Glass draws exactly what it drew before (its own bead and lens are the Liquid Glass sources).
+   Only translate, scale and opacity animate on the marker; fills change on the control itself where a look inverts it.
+   A control inside a card resolves to the card and keeps its own hover. */
+
+/* ---- every look: a ctl never moves, never lights its neighbours, never glows (a look turns its marker on below) ---- */
+[data-pmh-kind="ctl"] { --pmh-mag-gain: 0; --pmh-field: 0; --pmh-near: 0; --pmh-glow: 0; --pmh-frame: 0; --pmh-hold: 0; }
+
+/* ===== BASIC: "Precision" =====
+   A state plate: a faint fill with a hairline edge, the control's own corners, laid over the control (a state layer,
+   so its few percent tint the label as much as the ground). It glides to the next control on a critically damped,
+   quick spring (about 120 ms, no overshoot) and stretches to its size; a new control gets it with a 90 ms fade from 97 %
+   scale. A press sinks it to 95 % and deepens the fill in 70 ms; release springs it back. The control's own hover fill
+   steps aside while the plate is on it, so one plate moves instead of fills popping in turn. */
+:root[data-theme^="basic"]:not([data-o55-nier]):not(#pmhz) :is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]) {
+  --pmh-frame: 1; --pmh-frame-stiff: 1050; --pmh-frame-damp: 64; --pmh-frame-snap-ms: 150; --pmh-frame-max: 140;
+  --pmh-frame-reach: 4;
+}
+:root[data-theme="basic-dark"]:not([data-o55-nier]) {
+  --pmc-fill: rgb(255 255 255 / .075); --pmc-fill-press: rgb(255 255 255 / .13);
+  --pmc-line: rgb(255 255 255 / .10); --pmc-top: rgb(255 255 255 / .07); --pmc-drop: 0 0 0 0 transparent;
+}
+:root[data-theme="basic-light"]:not([data-o55-nier]) {
+  --pmc-fill: rgb(16 24 40 / .055); --pmc-fill-press: rgb(16 24 40 / .10);
+  --pmc-line: rgb(16 24 40 / .085); --pmc-top: rgb(255 255 255 / .55); --pmc-drop: 0 1px 2px rgb(16 24 40 / .07);
+}
+#pmh-frame[data-pmh-family="basic"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]) {
+  background: var(--pmc-fill);
+  box-shadow: inset 0 0 0 1px var(--pmc-line), inset 0 1px 0 var(--pmc-top), var(--pmc-drop);
+  scale: .97;
+  transition: opacity 150ms cubic-bezier(.3, 0, .2, 1), scale 150ms cubic-bezier(.3, 0, .2, 1), background-color 90ms linear;
+}
+#pmh-frame[data-pmh-family="basic"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]).pmh-frame-on {
+  scale: 1; transition-duration: 90ms, 120ms, 90ms;
+}
+#pmh-frame[data-pmh-family="basic"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]).pmh-frame-press {
+  scale: .95; background-color: var(--pmc-fill-press); transition-duration: 0ms, 70ms, 40ms;
+}
+
+/* ===== FRIENDLY: "Bubble" =====
+   The handheld and console menus' cursor (DS, 3DS, Wii and Wii U, Cocoon's shelf, iisu's tiles): a soft bubble in the
+   look's own accent, a round ring, a 3 px halo (no blur) and, around it, an aura of the look's dot pattern that fades
+   outward (never over the label). It springs to the next
+   control with a little overshoot and lands with a bounce; a new control gets it popping up from 88 % scale. While the
+   pointer rests the ring breathes, slowly (2.4 s). A press squishes it to 90 % with a ring of dots rippling out;
+   release bounces it back past full size. */
+:root[data-theme^="friendly"]:not([data-o55-nier]):not(#pmhz) :is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]) {
+  --pmh-frame: 1; --pmh-frame-stiff: 430; --pmh-frame-damp: 27; --pmh-frame-snap-ms: 170; --pmh-frame-max: 160;
+  --pmh-frame-reach: 8;
+}
+:root[data-theme="friendly-light"]:not([data-o55-nier]) {
+  --pmc-fill: color-mix(in srgb, var(--accent-primary) 10%, transparent);
+  --pmc-dot: color-mix(in srgb, var(--accent-primary) 38%, transparent);
+  --pmc-ring: color-mix(in srgb, var(--accent-primary) 55%, transparent);
+  --pmc-halo: color-mix(in srgb, var(--accent-primary) 13%, transparent);
+  --pmc-drop: rgb(122 109 140 / .26);
+}
+:root[data-theme="friendly-dark"]:not([data-o55-nier]) {
+  --pmc-fill: color-mix(in srgb, var(--accent-primary) 15%, transparent);
+  --pmc-dot: color-mix(in srgb, color-mix(in srgb, var(--accent-primary) 70%, #fff) 45%, transparent);
+  --pmc-ring: color-mix(in srgb, color-mix(in srgb, var(--accent-primary) 70%, #fff) 62%, transparent);
+  --pmc-halo: color-mix(in srgb, var(--accent-primary) 20%, transparent);
+  --pmc-drop: rgb(10 6 18 / .5);
+}
+#pmh-frame[data-pmh-family="friendly"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]) {
+  background: var(--pmc-fill);
+  box-shadow: inset 0 0 0 1.5px var(--pmc-ring), 0 0 0 3px var(--pmc-halo), 0 3px 8px -3px var(--pmc-drop);
+  scale: .88;
+  transition: opacity 200ms cubic-bezier(.3, 0, .2, 1), scale 220ms cubic-bezier(.3, 0, .2, 1);
+}
+#pmh-frame[data-pmh-family="friendly"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]).pmh-frame-on {
+  scale: 1; transition: opacity 110ms linear, scale 340ms cubic-bezier(.34, 1.7, .5, 1);
+}
+#pmh-frame[data-pmh-family="friendly"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]).pmh-frame-press {
+  scale: .9; transition: opacity 110ms linear, scale 90ms cubic-bezier(.3, 0, .2, 1);
+}
+/* the dot aura: the first of the frame's four <i> (NieR's corners), a 6 px band of the dot pattern just outside the
+   halo, fading outward; it arrives with the bubble and swells a little on a press */
+#pmh-frame[data-pmh-family="friendly"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]) > i:first-child {
+  inset: -10px; border-radius: 14px; pointer-events: none;
+  background: radial-gradient(circle at 2px 2px, var(--pmc-dot) 0 1px, transparent 1.5px) 0 0 / 5px 5px;
+  /* the band, fading from the halo outward: the box less its content box, times a soft-edged rectangle */
+  mask: linear-gradient(#000 0 0) content-box exclude,
+        linear-gradient(to right, transparent, #000 7px, #000 calc(100% - 7px), transparent) intersect,
+        linear-gradient(to bottom, transparent, #000 7px, #000 calc(100% - 7px), transparent);
+  padding: 6px; opacity: .8; transition: scale 340ms cubic-bezier(.34, 1.7, .5, 1), opacity 200ms linear;
+}
+#pmh-frame[data-pmh-family="friendly"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]).pmh-frame-press > i:first-child { scale: 1.06; opacity: 1; }
+/* the breathing ring, over the bubble's own; and the press's ripple of dots */
+#pmh-frame[data-pmh-family="friendly"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"])::after,
+#pmh-frame[data-pmh-family="friendly"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"])::before {
+  content: ""; position: absolute; pointer-events: none; border-radius: inherit;
+}
+#pmh-frame[data-pmh-family="friendly"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"])::after {
+  inset: 0; box-shadow: inset 0 0 0 1.5px var(--pmc-ring); opacity: 0;
+}
+#pmh-frame[data-pmh-family="friendly"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]).pmh-frame-on:not(.pmh-frame-travel, .pmh-frame-press)::after {
+  animation: pmh-f-breathe 2400ms ease-in-out 400ms infinite;
+}
+@keyframes pmh-f-breathe { 0%, 100% { opacity: 0; } 50% { opacity: .9; } }
+#pmh-frame[data-pmh-family="friendly"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"])::before {
+  inset: -4px; opacity: 0;
+  background: radial-gradient(circle at 3px 3px, var(--pmc-ring) 0 1px, transparent 1.6px) 0 0 / 6px 6px;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  padding: 4px;
+}
+#pmh-frame[data-pmh-family="friendly"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]).pmh-frame-press::before {
+  animation: pmh-f-ripple 460ms cubic-bezier(.2, .6, .3, 1);
+}
+@keyframes pmh-f-ripple { from { opacity: 1; scale: .96; } to { opacity: 0; scale: 1.28; } }
+
+/* ---- Basic and Friendly: the control's own hover fill steps aside while the marker is on it, for the controls that
+   rest clear (icon buttons, tabs, segments, rows, quiet text buttons). Selected, active and pressed-state controls,
+   filled buttons and the title bar's project and look buttons keep theirs, under the marker. Weighted with ids: the
+   rail's skin and the panels' own hover rules are !important with one id. ---- */
+:root:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz)
+  :is([data-pmh-kind="icon"], .page-tab, .pmw-tab, .pm-segtab-item, .pmw-sc-btn, .fm-row, .sh-row, .tree-item, .pmr-row).pmh-on:not([class*="primary"], .danger, .active, .selected, .is-active, .is-selected, .is-open, [aria-selected="true"], [aria-pressed="true"], [aria-current="page"], [aria-expanded="true"]) {
+  background-color: transparent !important; background-image: none !important;
+}
+:root:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz)
+  .activity-bar .icon[data-pmh-kind="icon"].pmh-on:not(.active) .symbol {
+  background-color: transparent !important; background-image: none !important;
+}
+
+/* ---- Reduced Motion (Basic, Friendly): the engine places the marker without travel; it shows and goes at once, at
+   full size, with no breathing and no ripple. A press still reads: Basic's fill deepens, Friendly's ring thickens. ---- */
+:root[data-motion="reduced"] #pmh-frame:is([data-pmh-family="basic"], [data-pmh-family="friendly"]):is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]),
+:root[data-motion="reduced"] #pmh-frame:is([data-pmh-family="basic"], [data-pmh-family="friendly"]):is([data-pmh-kind="icon"], [data-pmh-kind="ctl"])::before,
+:root[data-motion="reduced"] #pmh-frame:is([data-pmh-family="basic"], [data-pmh-family="friendly"]):is([data-pmh-kind="icon"], [data-pmh-kind="ctl"])::after {
+  transition: none !important; animation: none !important; scale: none !important;
+}
+:root[data-motion="reduced"] #pmh-frame[data-pmh-family="friendly"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"])::after { opacity: .55; }
+:root[data-motion="reduced"] #pmh-frame[data-pmh-family="friendly"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]).pmh-frame-press::after { opacity: 1; box-shadow: inset 0 0 0 2.5px var(--pmc-ring); }
+@media (prefers-reduced-motion: reduce) {
+  #pmh-frame:is([data-pmh-family="basic"], [data-pmh-family="friendly"]):is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]),
+  #pmh-frame:is([data-pmh-family="basic"], [data-pmh-family="friendly"]):is([data-pmh-kind="icon"], [data-pmh-kind="ctl"])::before,
+  #pmh-frame:is([data-pmh-family="basic"], [data-pmh-family="friendly"]):is([data-pmh-kind="icon"], [data-pmh-kind="ctl"])::after {
+    transition: none !important; animation: none !important; scale: none !important;
+  }
+  #pmh-frame[data-pmh-family="friendly"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"])::after { opacity: .55; }
+  #pmh-frame[data-pmh-family="friendly"]:is([data-pmh-kind="icon"], [data-pmh-kind="ctl"]).pmh-frame-press::after { opacity: 1; box-shadow: inset 0 0 0 2.5px var(--pmc-ring); }
+}
+
 /* ---- css/30-art.css ---- */
 /* ---- O55 art: scene layers, family choreography, ambient loops -------------------------------------------------
    Families differ in easing and material, never in waiting time (canon budgets). Retro never scales (steps + cuts).
@@ -132902,11 +133051,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
    Targets (the outermost match of SEL; a target inside another target resolves to the outer box)
      the PM8 set, every .pm-sheen, the Usage .pmu-card (not the band, nor while it is pending, leaving, lifted,
      resized, settling after a drop, morphing or flying), and any element with [data-pmh] (an opt-in for future
-     panels; its value names the kind: card | row | tile | icon, empty = card; data-pmh="off" takes an element out of
-     the set). Tabs, text surfaces (inputs, editors, terminals) and resize dividers are never targets, and a pointer on a
+     panels; its value names the kind: card | row | tile | icon | ctl, empty = card; data-pmh="off" takes an element out of
+     the set). Tabs (except those the ctl kind names), text surfaces (inputs, editors, terminals) and resize dividers are never targets, and a pointer on a
      [data-pm-hover-exempt] surface inside a target (the home terminal's input and text) hovers nothing; a target that
      carries the attribute itself, or sits inside an exempt container, still hovers.
-   Kinds: every target gets data-pmh-kind="card|row|tile|icon" once for its lifetime, ahead of time at idle (a few per
+   Kinds: every target gets data-pmh-kind="card|row|tile|icon|ctl" once for its lifetime, ahead of time at idle (a few per
      idle callback, after load, after a look change and after a frame met a new target), so CSS and tokens can differ
      per kind and no hover frame writes it; a frame stamps only a target that appeared since.
    CSS contract (written only on the hovered target and its lit neighbours, only on a visible change)
@@ -132927,7 +133076,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
                       its opacity.
      #pmh-frame       one overlay with four <i> corners, over the target's rest rect (or following the magnet with
                       --pmh-frame-follow: 1), travelling between targets on a spring or in discrete steps
-                      (--pmh-frame-hz > 0); .pmh-frame-on while shown, .pmh-frame-travel while it moves.
+                      (--pmh-frame-hz > 0) no farther than --pmh-frame-max px; .pmh-frame-on while shown,
+                      .pmh-frame-travel while it moves, .pmh-frame-new from a placement (not a travel) until it next
+                      travels, .pmh-frame-press while the primary button is held on its target. NieR's reticle on cards
+                      and the control marker of Basic, Friendly, Retro and NieR on icon and ctl kinds (2026-10-13).
    Tokens: read from #pmh-probe (one <i data-pmh-kind> per kind, so family rows on <html> and kind rows both apply) at
      the first frame and at the frame after a change of data-theme, data-motion, data-o55-nier, data-o55-nier-parts or
      data-pmh-soft (never inside the observer itself). Names and defaults: TOKENS below.
@@ -132964,13 +133116,20 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 
     /* ---- targets and kinds ---- */
     var KINDS = {
-      icon: '.activity-bar .icon,.pm-term-icon-btn,.pm6-dash-iconbtn,.browser-action-btn',
+      icon: '.activity-bar .icon,.pm-term-icon-btn,.pm6-dash-iconbtn,.browser-action-btn,' +
+        '.pm-minibtn,.fm-tbtn,.pmw-tb-btn,#pm-home-more-btn',
+      /* controls that are not icon buttons (2026-10-13 hover polish): the shell's tabs, the rail's segments and rows, the
+         title bar's text buttons and the home chat's text buttons. Like icons they never move; the looks that draw a
+         control marker (#pmh-frame on icon and ctl kinds) give them its plate. A tab is never a target otherwise
+         (BOUNDARY); one named here is. Inside a card they resolve to the card, as icons do. */
+      ctl: '.page-tab,.pmw-tab,.pm-segtab-item,.pmw-sc-btn,#projectMenuBtn,#themeSelect,' +
+        '#sidePanelSlot :is(.fm-row,.sh-row,.tree-item,.pmr-row)',
       tile: '.pm6-dash-catalog-item,.pm6-orch-ctl,.pm6-orch-pc-stat,.pm6-orch-hist-state',
       row: '.pm6-sp-row,.pm6-art-row,.pm6-search-hit',
       card: '.pm6-dash-card,.pm6-proj-card,.project-card-bento,.pm6-wiz-choice-card,.pm6-wiz-attach-card,' +
         '.pm6-wiz-disc-card,.pm6-wiz-topic-card,.pm6-orch-widget,.pm6-chat-card,.pm6-usage-acct-status,.pmu-card,.pm7u-card'
     };
-    var KIND_ORDER = ['icon', 'tile', 'row', 'card'];
+    var KIND_ORDER = ['icon', 'ctl', 'tile', 'row', 'card'];
     var SEL = '[data-pmh],.pm-sheen,' + KIND_ORDER.map(function (k) { return KINDS[k]; }).join(',');
     var BOUNDARY = '[role="tab"],.page-tab,[class*="resizer"],[class*="-divider"],.xterm,textarea,input,select,' +
       '[contenteditable=""],[contenteditable="true"]';
@@ -133005,6 +133164,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       ['frame', '--pmh-frame', 0], ['follow', '--pmh-frame-follow', 0], ['fhz', '--pmh-frame-hz', 0],
       ['fk', '--pmh-frame-k', 0.5], ['fstiff', '--pmh-frame-stiff', 520], ['fdamp', '--pmh-frame-damp', 44],
       ['fsnap', '--pmh-frame-snap-ms', 180], ['freach', '--pmh-frame-reach', 12],
+      /* the longest way the frame travels between two targets, px (0 = any): a farther target is met by a new frame
+         (.pmh-frame-new), so a control marker glides along a toolbar but never flies across the window */
+      ['fmax', '--pmh-frame-max', 0],
       /* proxies on whole device pixels (0 = off): edges rounded the way Blink snaps the target's own border box, so a
          1 px line drawn on a proxy lands on the target's border instead of smearing over two half-intensity pixels at
          a fractional rect (NieR's hairline brackets) */
@@ -133056,7 +133218,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     function valid(el) {
       var v = el.getAttribute('data-pmh');
       if (v === 'off' || v === 'none') return false;
-      if (el.matches(BOUNDARY)) return false;
+      if (el.matches(BOUNDARY) && !el.matches(KINDS.ctl)) return false;
       if (el.classList.contains('pmu-card') &&
           (el.matches(PMU_SKIP) || el._pmuLeaving || el.closest('.pmu-ghostboard,#pmuFlight,.pmu-board[data-op]'))) return false;
       return true;
@@ -133554,7 +133716,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 
     /* ---- proxies ---- */
     var glowEl = null, GL = [], glowCur = -1, glowLastOff = 1;
-    var frameEl = null, FR = { on: false, x: 0, y: 0, w: 0, h: 0, vx: 0, vy: 0, vw: 0, vh: 0, acc: 0, offAt: -1e9, travel: false, clip: '', host: null };
+    var frameEl = null, FR = { fresh: false, press: false, on: false, x: 0, y: 0, w: 0, h: 0, vx: 0, vy: 0, vw: 0, vh: 0, acc: 0, offAt: -1e9, travel: false, clip: '', host: null };
     function proxyWanted(kind) { var t = tk(kind); return !!(t.glow || t.frame); }
     function proxyShown() { return !!(glowCur >= 0 || FR.on); }
     var clipMemo = new WeakMap();   /* ancestor -> 1 clips, 2 clips and is fixed, 3 is fixed, 0 neither (siblings share them) */
@@ -133599,8 +133761,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         var d = window.devicePixelRatio || 1, sl = Math.round(b.l * d) / d, sr = Math.round(b.t * d) / d;
         b = { l: sl, t: sr, w: Math.round((b.l + b.w) * d) / d - sl, h: Math.round((b.t + b.h) * d) / d - sr };
       }
-      var tr = 'translate(' + b.l.toFixed(1) + 'px,' + b.t.toFixed(1) + 'px)';
-      if (memo.tr !== tr) { es.transform = tr; memo.tr = tr; stats.writes++; }
+      /* the standalone translate, never transform: a look may scale a proxy (the control marker's press), and the
+         scale property composes inside translate, around the proxy's own centre, but outside transform */
+      var tr = b.l.toFixed(1) + 'px ' + b.t.toFixed(1) + 'px';
+      if (memo.tr !== tr) { es.translate = tr; memo.tr = tr; stats.writes++; }
       var w = Math.round(b.w * 2) / 2, h = Math.round(b.h * 2) / 2;
       if (memo.w !== w) { es.width = w + 'px'; memo.w = w; stats.writes++; }
       if (memo.h !== h) { es.height = h + 'px'; memo.h = h; stats.writes++; }
@@ -133659,17 +133823,22 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       var s = hover ? st(hover) : null, tok = s ? tk(s.kind) : null;
       var target = s && tok.frame && hc ? hover : null;
       if (!target) {
-        if (FR.on) { frameEl.classList.remove('pmh-frame-on', 'pmh-frame-travel'); FR.on = false; FR.travel = false; FR.offAt = now; FR.host = null; stats.writes++; }
+        if (FR.on) { frameEl.classList.remove('pmh-frame-on', 'pmh-frame-travel', 'pmh-frame-press'); FR.on = false; FR.travel = false; FR.press = false; FR.offAt = now; FR.host = null; stats.writes++; }
         return false;
       }
       ensureFrame();
       if (!frameEl) return false;
       var b = boxFor(hc), gx = b.l + (tok.follow ? s.wx : 0), gy = b.t + (tok.follow ? s.wy : 0), gw = b.w, gh = b.h;
+      var far = false;
       if (FR.host !== target) {
         if (frameEl.getAttribute('data-pmh-kind') !== s.kind) frameEl.setAttribute('data-pmh-kind', s.kind);
+        far = tok.fmax > 0 && Math.max(Math.abs(gx - FR.x), Math.abs(gy - FR.y)) > tok.fmax;
         FR.host = target;
       }
-      var snap = reduced || !FR.on && now - FR.offAt > tok.fsnap;
+      var snap = reduced || far || !FR.on && now - FR.offAt > tok.fsnap;
+      /* .pmh-frame-new: the frame met this target anew (placed, not travelled), so a look can play an arrival there;
+         it stays until the frame next travels */
+      if (snap !== FR.fresh && (snap || FR.x !== gx || FR.y !== gy)) { frameEl.classList.toggle('pmh-frame-new', snap); FR.fresh = snap; stats.writes++; }
       if (!FR.on) { FR.on = true; frameEl.classList.add('pmh-frame-on'); stats.writes++; }
       if (snap) { FR.x = gx; FR.y = gy; FR.w = gw; FR.h = gh; FR.vx = FR.vy = FR.vw = FR.vh = 0; }
       else if (tok.fhz > 0) {
@@ -133708,13 +133877,22 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     }
     PM.push(onMove);
     document.addEventListener('pointerout', onLeave);
+    /* the press: .pmh-frame-press on the frame while the primary button is held on the target it marks (a look draws its
+       control marker pressed in), dropped on release, cancel, or when the frame leaves */
+    function pressFrame(on) {
+      if (on === FR.press || !frameEl) return;
+      if (on && !FR.on) return;
+      frameEl.classList.toggle('pmh-frame-press', on); FR.press = on; stats.writes++;
+    }
     document.addEventListener('pointerdown', function (e) {
       if (e.pointerType === 'touch') return;
+      if (e.button === 0 && FR.on && FR.host && e.target && FR.host.contains(e.target)) pressFrame(true);
       buttons = e.buttons | 0 || 1;
       if (hover) { springs.add(st(hover)); start(); }
       recheckSoon();
     }, { capture: true, passive: true });
-    document.addEventListener('pointerup', function (e) { buttons = e.buttons | 0; recheckSoon(); }, { capture: true, passive: true });
+    document.addEventListener('pointerup', function (e) { pressFrame(false); buttons = e.buttons | 0; recheckSoon(); }, { capture: true, passive: true });
+    document.addEventListener('pointercancel', function () { pressFrame(false); }, { capture: true, passive: true });
     document.addEventListener('click', recheckSoon, { capture: true, passive: true });
     /* a character typed into a text field (the terminal's input, a search box) cannot change what is under the pointer:
        no frame for it, so typing costs the engine nothing; Enter, Escape, Tab, shortcuts and keys on anything else
