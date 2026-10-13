@@ -1,0 +1,59 @@
+{
+ "family": "retro",
+ "label": "Retro",
+ "owner": "pm7-wallpapers",
+ "order": 40,
+ "about": "Phosphor (dark) and printed-manual (light) pixel art, drawn small and scaled up by whole pixels; square and stepped.",
+ "wallpapers": [
+  {
+   "id": "horizon",
+   "name": "Horizon",
+   "description": "A banded sun over a stepped ridge and a grid floor running to the horizon.",
+   "files": {
+    "dark": "src/walls/horizon-dark.webp",
+    "light": "src/walls/horizon-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "peaks",
+   "name": "Peaks",
+   "description": "Stepped mountain ranges with lit ridges under a pixel moon or a pale sun.",
+   "files": {
+    "dark": "src/walls/peaks-dark.webp",
+    "light": "src/walls/peaks-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "circuit",
+   "name": "Circuit",
+   "description": "Board traces running in from the edges to pads, vias and chips.",
+   "files": {
+    "dark": "src/walls/circuit-dark.webp",
+    "light": "src/walls/circuit-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "dither",
+   "name": "Dither",
+   "description": "A ringed planet and a small moon in ordered dithering, like a riso print.",
+   "files": {
+    "dark": "src/walls/dither-dark.webp",
+    "light": "src/walls/dither-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "stars",
+   "name": "Stars",
+   "description": "A pixel starfield with a shooting star, or a printed star chart in the light print.",
+   "files": {
+    "dark": "src/walls/stars-dark.webp",
+    "light": "src/walls/stars-light.webp"
+   },
+   "default_for": null
+  }
+ ]
+}
