@@ -858,9 +858,14 @@
       if (!s.querySelector(':scope > .pm-segtab-track')) { var t = el('i', { class: 'pm-segtab-track', 'aria-hidden': 'true' }); s.insertBefore(t, s.firstChild); }
     });
   }
+  /* other owners opt their own surfaces in: data-lg-surface="menu" (a floating sheet that blurs what is behind it:
+     toasts, popovers), "card", "bar" or "panel" (baked sheets over the wallpaper). The attribute is theirs to set and
+     remove; glass.js only mounts what carries it, so no owner's selectors live in this file. */
+  var OPT_IN = { menu: 1, card: 1, bar: 1, panel: 1 };
   function syncSurfaces() {
     segTracks();
     SURFACES.forEach(function (p) { document.querySelectorAll(p[0]).forEach(function (e) { if (visible(e)) mount(e, p[1]); }); });
+    document.querySelectorAll('[data-lg-surface]').forEach(function (e) { var k = e.getAttribute('data-lg-surface'); if (OPT_IN[k] && visible(e)) { e.__lgOpt = true; mount(e, k); } });
   }
 
   /* ---- light: the pointer's shine on the rims, and the press ------------------------------------------------------- */
@@ -1040,6 +1045,7 @@
   var syncQ = 0, lazyT = 0;
   function pruneGlass() {
     glassSet.forEach(function (e) {
+      if (e.isConnected && e.__lgOpt && !OPT_IN[e.getAttribute('data-lg-surface')]) { e.__lgOpt = false; unmount(e); e.removeAttribute('data-lg-kind'); return; }
       if (e.isConnected) return;
       if (typeof unmount === 'function') unmount(e);
       else { if (sizeWatch) sizeWatch.unobserve(e); glassSet.delete(e); }
@@ -1068,7 +1074,7 @@
     syncAll();
   }
   function lazySync() { if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140); }
-  var HOT = '.page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, .o55-win, .o55t-callout, .o55t-bar';
+  var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, .o55-win, .o55t-callout, .o55t-bar';
   var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, #lg-shine, .lg-press, .pm-segtab-track';
   function generatedMutation(rec) {
     var t = rec.target;
@@ -1123,7 +1129,7 @@
   function start() {
     ensureDefs(); viewportVars(); knobFilter();
     window.addEventListener('resize', viewportVars);
-    mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['class', 'hidden', 'data-open'] });
+    mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface'] });
     if (window.ResizeObserver) { var ro = new ResizeObserver(lazySync); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
     window.addEventListener('resize', lazySync);
     demo();
