@@ -230,6 +230,7 @@ dropGuide.begin = function (g) {
     d.style.left = p.x + 'px'; d.style.top = p.y + 'px';
     setAttr(d, 'data-off', !dropZones.rootFits(g, e));
     setAttr(d, 'data-on', null);
+    if (d._pmwFade) { try { d._pmwFade.cancel(); } catch (_) {} d._pmwFade = null; }   // a fade-out still running
     if (d.hidden) { d.hidden = false; motion.animate(d, [{ opacity: 0 }, { opacity: 1 }], { dur: 160, easing: motion.ease('out') }); }
   });
 };
@@ -313,8 +314,11 @@ dropGuide.end = function () {
   SIDES.forEach(function (e) {
     var d = dockEls[e];
     if (d.hidden) return;
-    var a = motion.animate(d, [{ opacity: 1 }, { opacity: 0 }], { dur: 120, easing: motion.ease('out') });
-    if (a) a.onfinish = function () { d.hidden = true; }; else d.hidden = true;
+    if (d._pmwFade) return;
+    var a = motion.animate(d, [{ opacity: 1 }, { opacity: 0 }], { dur: 120, easing: motion.ease('out'), fill: 'forwards' });
+    d._pmwFade = a;
+    if (a) a.onfinish = function () { if (d._pmwFade !== a) return; d._pmwFade = null; d.hidden = true; try { a.cancel(); } catch (_) {} };
+    else d.hidden = true;
     setAttr(d, 'data-on', null);
   });
 };

@@ -240,9 +240,13 @@ function mergePanelMutate(d, panelId, intoId) {
 PMW.mergePanelMutate = mergePanelMutate;
 
 /* What a move would leave, built the way commit() builds its draft (a copy, the move, the fold, normalize) and never
-   committed: the drag paints these as its live preview and measures the room rule on them. null when the move is
-   refused or changes nothing. */
-function hypoOf(mutate) {
+   committed: the drag measures the room rule on these. null when the move is refused or changes nothing.
+   o.preview builds what the drag's live preview paints instead: the place the carried thing leaves is kept (normalize
+   keepEmpty keeps a panel its last tab left; a carried panel leaves a hole, HOLE_ID, where it was), so the panels
+   under the pointer never move away from the zones they are measured by; the drop then closes that place. */
+var HOLE_ID = PMW.HOLE_ID = '~hole';
+function hypoOf(mutate, o) {
+  o = o || {};
   var before = L();
   if (!before) return null;
   var d = model.clone(before);
@@ -250,21 +254,32 @@ function hypoOf(mutate) {
   try { r = mutate(d); } catch (_) { return null; }
   if (r === false || (r && r.ok === false)) return null;
   if (PMW.foldLayout) PMW.foldLayout(d);
-  model.normalize(d);
+  model.normalize(d, { keepEmpty: !!o.preview });
   if (model.validate(d).length || model.same(before, d)) return null;
   d.revision = (before.revision || 0) + 1;
   d.hypoResult = r || {};
   return d;
 }
+/* a carried panel's preview: a hole where it was, the panel itself where it would land */
+function holeMove(d, panelId, targetId, edge) {
+  var f = model.find(d, panelId);
+  if (!f || f.node.t !== 'panel' || panelId === targetId) return false;
+  var hole = { t: 'panel', id: HOLE_ID, tabs: [], active: null, locked: false, collapsed: !!f.node.collapsed };
+  if (f.parent) f.parent.kids[f.index] = hole; else d.root = hole;
+  f.node.collapsed = false;
+  return (targetId === '@root' ? model.insertAtRoot(d, edge, f.node) : model.insertBeside(d, targetId, edge, f.node, 0.5)) ? {} : false;
+}
 PMW.hypo = {
-  move: function (tabId, panelId, index) { return hypoOf(function (d) { return moveMutate(d, tabId, panelId, index); }); },
-  split: function (tabId, panelId, edge, ratio) {
+  move: function (tabId, panelId, index, o) { return hypoOf(function (d) { return moveMutate(d, tabId, panelId, index); }, o); },
+  split: function (tabId, panelId, edge, ratio, o) {
     var from = model.panelOf(L(), tabId);
     if (!from || (from.id === panelId && from.tabs.length === 1)) return null;
-    return hypoOf(function (d) { return splitMutate(d, tabId, panelId, edge, ratio); });
+    return hypoOf(function (d) { return splitMutate(d, tabId, panelId, edge, ratio); }, o);
   },
-  movePanel: function (panelId, targetId, edge) { return hypoOf(function (d) { return model.movePanel(d, panelId, targetId, edge) ? {} : false; }); },
-  mergePanel: function (panelId, intoId) { return hypoOf(function (d) { return mergePanelMutate(d, panelId, intoId); }); }
+  movePanel: function (panelId, targetId, edge, o) {
+    return hypoOf(function (d) { return o && o.preview ? holeMove(d, panelId, targetId, edge) : (model.movePanel(d, panelId, targetId, edge) ? {} : false); }, o);
+  },
+  mergePanel: function (panelId, intoId, o) { return hypoOf(function (d) { return mergePanelMutate(d, panelId, intoId); }, o); }
 };
 /* the room rule (geom.resultFits) for a hypothetical layout, against the layout as it is now; in the single-column
    ladder (narrow) nothing splits, so nothing fits */

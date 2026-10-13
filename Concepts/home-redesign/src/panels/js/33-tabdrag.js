@@ -54,23 +54,30 @@ tabDrag.begin = function (ev, tabEl, s) {
       // the carried tab closed or moved away under the drag (an agent, the chat): end it, nothing to put back
       var at = model.panelOf(state.layout, g.tid);
       if (!at || at.id !== g.origin.panelId || !g.tab.isConnected) { g.end('gone'); return; }
-      var hr = host.getBoundingClientRect();
+      // the band is the strip where the layout has it: a preview may have moved the drawn strip under the pointer
+      var hr = homeBand(g);
       var inBand = g.py >= hr.top - TEAR_BAND && g.py <= hr.bottom + TEAR_BAND && g.px >= hr.left - 40 && g.px <= hr.right + 40;
       if (g.mode === 'strip' && !inBand && canTear(g)) tearOff(g);
       else if (g.mode === 'torn' && inBand) rejoin(g);
       if (g.mode === 'strip') followInStrip(g);
-      else followChip(g);
+      else { followChip(g); dropView.tick(g); }
     },
     probe: function (g) { return g.mode === 'strip' ? { key: 'strip-self', instant: true } : dropZones.probe(g, { strips: true }); },
     onProbe: function (g, z) { if (g.mode === 'torn') dropGuide.update(g, z); },
     onZone: function (g, z) { showZone(g, z); },
     onDrop: function (g, z) { return drop(g, z); },
     onCancel: function (g, how) { cancel(g, how); },
-    onEnd: function (g) { clearGap(g, false); preview.hide(); dropGuide.end(); }
+    onEnd: function (g) { clearGap(g, false); preview.hide(); dropGuide.end(); if (dropView.active()) dropView.clear({ animate: false }); }
   });
 };
 
 function canTear(g) { return true; }
+/* the origin strip's band in viewport px, on the committed layout (31-dropzones.js base), else as drawn */
+function homeBand(g) {
+  var base = dropView.active() && dropZones.base(), r = base && base.panels[g.origin.panelId];
+  if (!r) return g.host.getBoundingClientRect();
+  return { left: r.x, right: r.x + r.w, top: r.y, bottom: r.y + g.host.offsetHeight };
+}
 
 /* Activate on grab: the same view action as PMW.activateTab (the active tab, the attention mark cleared, the MRU, a
    quiet save, the 'activate' event), minus expanding a collapsed panel, which would move the strip under the pointer.
@@ -196,6 +203,7 @@ function rejoin(g) {
   g.zone = null;
   preview.hide();
   dropGuide.end();
+  dropView.clear();
   cacheSlots(g);      // the slot it kept while torn; followInStrip then draws it under the pointer again
 }
 function followChip(g) {
@@ -255,16 +263,25 @@ function clearGap(g, animate) {
     else setTimeout(function () { if (!el.style.transform) el.style.transition = ''; }, FLIP_MS + 40);
   });
 }
+/* a zone shows as its result (31-dropview.js); a strip slot also as the slot the strip opens, and a panel the tab joins
+   opens its slot at the end of its strip */
 function showZone(g, z) {
-  setGap(g, z && z.key !== 'strip-self' ? z : null);
-  if (!z || z.type === undefined || z.key === 'strip-self') {
+  var real = z && z.key !== 'strip-self' ? z : null;
+  setGap(g, real && real.type === 'merge' ? joinGap(real) : real);
+  dropView.show(g, real);
+  if (!real || real.type === undefined) {
     preview.hide();
     if (g.chip) setAttr(g.chip, 'data-nodrop', g.mode === 'torn' && !z);
     return;
   }
   if (g.chip) setAttr(g.chip, 'data-nodrop', null);
-  preview.show(z.rect, z.guide || z.type === 'root' ? '' : z.label, z.type);     // the guide names its zones
+  if (real.type === 'strip') preview.show(real.rect, real.label, real.type);
+  else preview.hide();
   sayZone(g, z);
+}
+function joinGap(z) {
+  var p = model.panel(state.layout, z.panelId);
+  return p && !p.collapsed ? { gap: true, panelId: p.id, index: p.tabs.length } : null;
 }
 /* the zone in words for a screen reader, once it has held a moment (crossing zones says nothing) */
 function sayZone(g, z) {
@@ -313,12 +330,14 @@ function drop(g, z) {
   // tab's neighbour there
   var src = model.panel(state.layout, g.origin.panelId);
   if (g.activated && src && src.active === g.tid && src.tabs.indexOf(g.origin.active) >= 0) src.active = g.origin.active;
+  // the preview already shows this result: the commit paints it, the ghost hands over to the real panel
+  dropView.clear({ handoff: true, paint: false });
   var ok;
   if (z.type === 'strip') ok = PMW.moveTab(g.tid, z.panelId, z.index);
   else if (z.type === 'merge') ok = PMW.moveTab(g.tid, z.panelId, null);
   else if (z.type === 'split') ok = !!PMW.moveTabToSplit(g.tid, z.panelId, z.edge, { ratio: 0.5 });
   else if (z.type === 'root') ok = !!PMW.moveTabToSplit(g.tid, '@root', z.edge, { ratio: 0.34 });
-  if (!ok) { restore(g); if (g.chip) { g.chip.remove(); g.chip = null; } return true; }
+  if (!ok) { dropView.glideHome(); restore(g); if (g.chip) { g.chip.remove(); g.chip = null; } return true; }
   // what listeners heard at the grab is no longer true: the source shows its previous tab, the carried tab is the
   // active tab of the panel it landed in
   var srcNow = model.panel(state.layout, g.origin.panelId), landedP = model.panelOf(state.layout, g.tid);
@@ -406,6 +425,7 @@ function restore(g, o) {
   render.now({ animate: false });
 }
 function cancel(g, how) {
+  dropView.clear();      // the panels glide home from the preview first; restore's paint then finds them on their way
   clearGap(g, true);
   var tabRect = g.tab.getBoundingClientRect();
   var chip = g.chip;
@@ -448,18 +468,21 @@ panelDrag.begin = function (ev, panelId, gripEl) {
     },
     onFrame: function (g) {
       g.chip.style.transform = 'translate3d(' + (g.px - g.sx).toFixed(1) + 'px,' + (g.py - g.sy).toFixed(1) + 'px,0)';
+      dropView.tick(g);
     },
     probe: function (g) { return dropZones.probe(g, {}); },
     onProbe: function (g, z) { dropGuide.update(g, z); },
-    onZone: function (g, z) { if (z) preview.show(z.rect, z.guide || z.type === 'root' ? '' : z.label, z.type); else preview.hide(); setAttr(g.chip, 'data-nodrop', !z); sayZone(g, z); },
+    onZone: function (g, z) { dropView.show(g, z); setAttr(g.chip, 'data-nodrop', !z); sayZone(g, z); },
     onDrop: function (g, z) {
       if (!z) return false;
-      if (z.type === 'merge') return PMW.mergePanel(g.panelId, z.panelId);
-      if (z.type === 'root') return PMW.movePanel(g.panelId, '@root', z.edge);
-      return PMW.movePanel(g.panelId, z.panelId, z.edge);
+      dropView.clear({ handoff: true, paint: false });
+      var ok = z.type === 'merge' ? PMW.mergePanel(g.panelId, z.panelId)
+        : PMW.movePanel(g.panelId, z.type === 'root' ? '@root' : z.panelId, z.edge);
+      if (!ok) dropView.glideHome();
+      return ok;
     },
-    onCancel: function (g, how) { if (how !== 'drop') announce('The panel is back where it was'); },
-    onEnd: function (g) { preview.hide(); dropGuide.end(); if (g.chip) g.chip.remove(); if (g.panelEl) g.panelEl.classList.remove('pmw-panel-lifted'); }
+    onCancel: function (g, how) { dropView.clear(); if (how !== 'drop') announce('The panel is back where it was'); },
+    onEnd: function (g) { preview.hide(); dropGuide.end(); if (dropView.active()) dropView.clear({ animate: false }); if (g.chip) g.chip.remove(); if (g.panelEl) g.panelEl.classList.remove('pmw-panel-lifted'); }
   });
 };
 /* the grip's keyboard path: Enter opens the Move panel menu (every drag outcome has a menu and keyboard path) */
