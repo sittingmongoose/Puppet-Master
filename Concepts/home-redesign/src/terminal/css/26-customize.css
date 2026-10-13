@@ -108,6 +108,18 @@ html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(-
 .pmt-cz-navn { min-width: 0; font-size: 10.5px; font-weight: 700; color: var(--pmt-cz-accent); }
 .pmt-cz-navn:empty { display: none; }
 
+/* the docked preview: the same live view, small, under the group index while the preview's own place is away */
+.pmt-cz-dock { position: absolute; right: 0; top: calc(100% + 8px); z-index: 4; width: min(46%, 372px); height: 170px; overflow: hidden; pointer-events: none;
+  border: 1px solid var(--pmt-cz-line-2); border-radius: var(--pmt-cz-r); background: var(--pmt-cz-ground); box-shadow: 0 10px 28px rgb(0 0 0 / .32); }
+.pmt-cz-docktitle { position: absolute; left: 0; right: 0; top: 0; height: 22px; padding: 4px 9px 0; font: 650 9.5px/1.3 var(--pm-font-code, ui-monospace, monospace);
+  letter-spacing: .14em; text-transform: uppercase; color: var(--pmw-text-2, inherit); border-bottom: 1px solid var(--pmt-cz-line); background: var(--pmt-cz-plate); }
+.pmt-cz-dockbox { position: absolute; inset: 22px 0 0 0; }
+.pmt-cz-dockbox > .pmt-root { position: absolute; inset: 0; }
+.pmt-cz-dock.pmt-in { animation: pmt-m-fade-in var(--pmt-t-in, 120ms) var(--pmt-ease-fade, linear) both; }
+.pmt-cz-nav { position: sticky; }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(--o55-nier-shadow-rgb), .2); }
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-dock { border-width: 2px; box-shadow: 4px 4px 0 color-mix(in srgb, var(--pmt-cz-accent) 28%, transparent); }
+
 /* ---- groups ---- */
 .pmt-cz-group { display: grid; gap: 12px; min-width: 0; scroll-margin-top: 52px; }
 .pmt-cz-ghead { display: flex; align-items: baseline; gap: 10px; padding-bottom: 7px; border-bottom: 1px solid var(--pmt-cz-line); }
@@ -270,6 +282,7 @@ html[data-motion="reduced"] .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set, .pmt-cz-chipb
   .pmt-cz-body { padding: 14px 14px 18px; }
 }
 @container pmt-cz (max-width: 440px) {
+  .pmt-cz-dock { width: calc(100% - 4px); height: 132px; }
   .pmt-cz-title { font-size: 17px; }
   .pmt-cz-lead { display: none; }
   .pmt-cz-sets { grid-template-columns: 1fr 1fr; }
