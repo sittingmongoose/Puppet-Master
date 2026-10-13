@@ -222,6 +222,7 @@
       '<div class="pmt-cz-row">' + chip('schemePair', 'Switch with light and dark', 'A scheme you pick swaps for its family’s other version when the app changes mode.') +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Minimum text contrast</span>' + seg('minContrast', [[1, 'Off'], [3, '3:1'], [4.5, '4.5:1'], [7, '7:1']], 'Minimum text contrast') +
       '<span class="pmt-cz-fhelp">Text moves lighter or darker to stay readable; its hue never changes.</span></div></div>' +
+      '<p class="pmt-cz-note" data-note-colors hidden></p>' +
       '<div class="pmt-cz-import"><button type="button" class="pmt-textbtn" data-act="import"' + tagged('Import a scheme', 'Adds a colour scheme from a file; it stays on this computer') + '>Import a scheme…</button>' +
       '<span class="pmt-cz-fhelp">iTerm2, Windows Terminal, kitty, Ghostty, Alacritty, base16 or base24, Xresources</span>' +
       '<p class="pmt-cz-error" data-import-error role="alert" hidden></p></div></section>';
@@ -424,6 +425,8 @@
       /* notes */
       note('[data-note-face]', R.font.local && !R.font.local.installed ? R.font.label + ' is not on this computer, so JetBrains Mono shows in its place.' :
         R.font.axes && R.font.axes.unavailable ? 'This browser cannot set Sixtyfour’s axes, so its default draws.' : '');
+      if (val('schemePair')) pairNote = '';
+      note('[data-note-colors]', pairNote);
       note('[data-note-trail]', R.look.reduced ? 'Reduced Motion is on, so the cursor has no trail and does not blink.' :
         isNier && !/(^|\s)sweep(\s|$)/.test(document.documentElement.getAttribute('data-o55-nier-parts') || '') ? 'NieR’s trace needs its Scan sweep part; with it removed the trail stays off.' : '');
       var pic = String(val('bgImageData') || '');
@@ -488,7 +491,8 @@
       else left = Math.round((W - width) / 2);
       dialog.style.left = left + 'px'; dialog.style.width = width + 'px';
       var top = narrow ? 8 : Math.max(M, Math.min(56, H * 0.06));
-      dialog.style.top = top + 'px'; dialog.style.maxHeight = (H - top - (narrow ? 8 : M)) + 'px';
+      /* the page's status strip stays clear (the concept's demo badge sits above every overlay there) */
+      dialog.style.top = top + 'px'; dialog.style.maxHeight = (H - top - 30) + 'px';
       dialog.classList.toggle('pmt-cz-beside', !narrow && hole && (left >= r.right || left + width <= r.left));
       /* the scrim around the terminal's rectangle (none when it is not on screen) */
       var s = root.querySelectorAll('.pmt-cz-scrim > i'), x0 = hole ? Math.max(0, r.left) : 0, y0 = hole ? Math.max(0, r.top) : 0, x1 = hole ? Math.min(W, r.right) : 0, y1 = hole ? Math.min(H, r.bottom) : 0;
@@ -514,7 +518,15 @@
       }
       var value = /^-?[\d.]+$/.test(raw) && key !== 'scheme' && key !== 'font' ? Number(raw) : raw;
       if (key === 'scheme') { clearTimeout(intent); A().endPreview(v); previewing = null; v.recolorFrom.apply(v, centre(b)); }
-      put(key, value);
+      /* a scheme of the other appearance (a light one while the app is dark) is shown as picked: "Switch with light and
+         dark" would show its sibling instead, so it turns off for this scope, and the screen says so */
+      var pick = key === 'scheme' && value !== 'follow' ? A().scheme(value) : null, mode = eff().look.mode === 'light' ? 'light' : 'dark';
+      pairNote = '';
+      if (pick && val('schemePair') && pick.appearance !== mode && A().pairOf(pick, mode) !== pick) {
+        write({ scheme: value, schemePair: false });
+        pairNote = 'Switch with light and dark is now off, so ' + pick.name + ' stays while the app is ' + mode + '.';
+        paint();
+      } else put(key, value);
       moveInk(key, before);
       if (key === 'scheme') v.announce('Scheme: ' + b.querySelector('.pmt-cz-tname').textContent);
       if ((key === 'cursorShape' || key === 'cursorTrail') && preview) preview.moveCursor();
@@ -592,7 +604,7 @@
     }
     /* a scheme previews when the pointer rests on it (hover intent, 110 ms) or the arrow keys reach it; leaving the
        list or Escape puts the chosen one back (SPEC section 6) */
-    var INTENT_MS = 110, intent = 0, previewing = null;
+    var INTENT_MS = 110, intent = 0, previewing = null, pairNote = '';
     function previewSoon(tileEl, ms) {
       clearTimeout(intent);
       var id = tileEl.getAttribute('data-value');
