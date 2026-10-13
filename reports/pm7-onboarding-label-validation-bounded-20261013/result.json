@@ -1,0 +1,1437 @@
+{
+  "schema": "pm7-onboarding-bounded-phase-B/v1",
+  "at": "2026-10-13T11:22:00.750563+00:00",
+  "status": "HOLD",
+  "decision": "STOP/HOLD confirmed by root; closure only, no remaining CLI",
+  "authority": {
+    "GO": "/mnt/Cursor/share/puppet-master/2026-10-13-creative-queue/ONBOARDING-PHASE-B-BOUNDED-BINDING-GO.md",
+    "GO_sha256": "141356854db5bce855c87c2664c8176a7648220180f3a150b4952642dfa095be",
+    "actual_original_root_message_id": "message:mcp:4103467a-6a3c-4191-a4dc-ae5ad70ae674:thread-send:home-planner-onboarding-new-validation-bounded-binding-20261013-v1",
+    "separate_root_stop_disposition_message_id": "message:mcp:4103467a-6a3c-4191-a4dc-ae5ad70ae674:thread-send:home-planner-onboarding-run7-glass-reachability-stop-disposition-20261013-v1",
+    "original_execution_bindings_unchanged": true,
+    "stop_disposition_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/root-confirmed-stop-disposition.json",
+    "root_final_mechanical_review_sha256": "2cfaad267f8e2b639f6646dcc3276930aa615019f1b0d02d8a307a81f53603b6"
+  },
+  "inputs": {
+    "starting_worktree_and_tool_head": "7e4025ba42b4b5b1ce08029ac25ac04ae00cc00a",
+    "tool_path": "Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs",
+    "tool_bytes": 151473,
+    "tool_sha256": "38e8b5aa255849466df28a55f39c2d1aebfb9e4cca25cd6a1a3a31dd5dab621c",
+    "candidate_head": "f109bad9f312ca0f55887f069dd4328dc17f7b9e",
+    "candidate_page": "Concepts/PMConcept7.html",
+    "candidate_bytes": 18602927,
+    "candidate_sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+    "base_head": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
+    "base_page": "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html",
+    "base_bytes": 18598981,
+    "base_sha256": "b612df00caa2e2fb13b9b2307a17f283358845b596f33a27a31ba55d40266451",
+    "three_app_pages_equal_88ed": true,
+    "rail_bytes": 19237474,
+    "rail_sha256": "13d002fc7057c17270cbc149457cee588df423b8a3543fa5a5359901d7cba8bb",
+    "composition_head": "967653b5265e27b13cf0c300dd0b1b0599c2d482",
+    "composition_parents": [
+      "c98c42131a24bfc07f27e1607b3c69b35bd136cc",
+      "f109bad9f312ca0f55887f069dd4328dc17f7b9e"
+    ],
+    "original_common_source_head": "29cdc86e3c9078d94260b79905e6ae49c169305c",
+    "binding_schema_sha256": "843c523ca77408a0d96861748bc793cab29796fab9ddd15997ac2ded18fc7fe4",
+    "candidate_head_is_report_or_tool_head": false
+  },
+  "coverage": {
+    "wide": {
+      "expected": 24,
+      "attempted": 5,
+      "collector_completed": 5,
+      "earlier_collection_records_without_new_reachability_uncertainty": 4,
+      "fifth_reachability_HOLD": 1,
+      "fully_criteria_verified": 0,
+      "unattempted": 19,
+      "attempted_pairs": [
+        "basic-light/normal",
+        "basic-light/reduced",
+        "friendly-light/normal",
+        "friendly-light/reduced",
+        "glass-dark/normal"
+      ],
+      "unattempted_pairs": [
+        "glass-dark/reduced",
+        "retro-dark/normal",
+        "retro-dark/reduced",
+        "basic-dark/normal",
+        "basic-dark/reduced",
+        "friendly-dark/normal",
+        "friendly-dark/reduced",
+        "glass-light/normal",
+        "glass-light/reduced",
+        "retro-light/normal",
+        "retro-light/reduced",
+        "nier-light/normal",
+        "nier-light/reduced",
+        "nier-dark/normal",
+        "nier-dark/reduced",
+        "nier-light-plain/normal",
+        "nier-light-plain/reduced",
+        "nier-dark-plain/normal",
+        "nier-dark-plain/reduced"
+      ]
+    },
+    "narrow": {
+      "expected": 12,
+      "attempted": 0,
+      "collector_completed": 0,
+      "fully_criteria_verified": 0,
+      "unattempted": 12,
+      "unattempted_pairs": [
+        "basic-light/normal",
+        "friendly-light/normal",
+        "glass-dark/normal",
+        "retro-dark/normal",
+        "basic-dark/normal",
+        "friendly-dark/normal",
+        "glass-light/normal",
+        "retro-light/normal",
+        "nier-light/normal",
+        "nier-dark/normal",
+        "nier-light-plain/normal",
+        "nier-dark-plain/normal"
+      ]
+    }
+  },
+  "rows": [
+    {
+      "matrix": "wide",
+      "look": "basic-light",
+      "motion": "normal",
+      "started_at": "2026-10-13T10:28:07.931481+00:00",
+      "completed_at": "2026-10-13T10:33:27.006228+00:00",
+      "CLI_exit": 2,
+      "report_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/wide/basic-light-normal/report.json",
+      "report_sha256": "df3a79708dd3c2473961808723fcd1aea4e629359433decea7241f2257a70139",
+      "binding_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/wide/basic-light-normal/phase-b-binding.json",
+      "binding_sha256": "9dcf1102d1899f999c06bee53cc2b6ea2a2613554a257ad6f8e1f8386e3658c1",
+      "binding_checked_at": "2026-10-13T10:28:07.816Z",
+      "summary": {
+        "status": "HOLD",
+        "exit_code": 2,
+        "absolute_failures": 8,
+        "regressions": 50,
+        "ownership_holds": 27,
+        "unverified": 164,
+        "observations_complete": false,
+        "raw_findings": 133,
+        "contrast_below_floor": 0,
+        "invocation_records_complete": true,
+        "full_campaign_complete": false,
+        "historical_cleanup_debts": 12
+      },
+      "issue_codes": {
+        "failures": {
+          "wizard-label-pill-outside-source-scope": 8
+        },
+        "regressions": {
+          "markup": 28,
+          "kept-box": 4,
+          "kept-count": 13,
+          "kept-w": 3,
+          "kept-attributes": 2
+        },
+        "holds": {
+          "label-host-control-geometry-source-owner-disposition-required": 4,
+          "scope-disposition-required": 23
+        },
+        "unverified": {
+          "renderer-runtime-unverified": 4,
+          "checkpoint-square-mark-ink-custody-unverified": 26,
+          "required-status-mark-absent": 10,
+          "contrast-unmeasured": 9,
+          "base-contrast-unmeasured": 45,
+          "screen-context-unverified": 35,
+          "paired-base-context-unverified": 31,
+          "bounded-pair-does-not-certify-full-matrix": 1,
+          "selector-never-rendered": 1,
+          "fail-status-renderer-unverified": 1,
+          "needs-fail-glyph-contract-open": 1
+        }
+      },
+      "word_observations": {
+        "base": {
+          "numeric_ratio_observations": 34,
+          "minimum_numeric_ratio": 2.5334638366781395,
+          "below_4_5_numeric_observations": 10,
+          "unmeasured_observations": 9,
+          "unmeasured_error_counts": {
+            "actual word background/ink unverified": 1,
+            "unsupported actual word paint/geometry": 8
+          },
+          "full_word_floor_acceptance": false
+        },
+        "cand": {
+          "numeric_ratio_observations": 78,
+          "minimum_numeric_ratio": 4.9082971813763665,
+          "below_4_5_numeric_observations": 0,
+          "unmeasured_observations": 9,
+          "unmeasured_error_counts": {
+            "actual word background/ink unverified": 1,
+            "unsupported actual word paint/geometry": 8
+          },
+          "full_word_floor_acceptance": false
+        }
+      },
+      "screenshots": 130,
+      "paired_collector_completed": true,
+      "new_reachability_uncertainty": [],
+      "acceptance": "HOLD; findings retained, no source/product/look/full criteria acceptance",
+      "pages": {
+        "base": {
+          "state": {
+            "theme": "basic-light",
+            "nier": null,
+            "parts": "",
+            "reduced": false,
+            "confirmed": true
+          },
+          "targeted_window_snapshots": 16,
+          "candidate_only_sweep_snapshots": 0,
+          "tour_contexts": [
+            "comfort_intro",
+            "open_chat",
+            "same_answer_eli5",
+            "book_club_goal",
+            "book_club_goal:practice",
+            "three_outcomes"
+          ],
+          "trusted_input_receipts": 31,
+          "suggestion_click_and_key": {
+            "name": {
+              "click": {
+                "how": "click",
+                "want": "Family recipes",
+                "field": "Family recipes",
+                "on": [
+                  "Family recipes"
+                ],
+                "chosenFill": "color(srgb 0 0.337255 0.701961 / 0.12)",
+                "ok": true
+              },
+              "key": {
+                "how": "key",
+                "want": "Book club website",
+                "field": "Book club website",
+                "on": [
+                  "Book club website"
+                ],
+                "chosenFill": "color(srgb 0 0.337255 0.701961 / 0.12)",
+                "ok": true
+              }
+            }
+          },
+          "strict_stop": {
+            "id": "e86bddc054fc",
+            "returned_id": "e86bddc054fc",
+            "closed": true,
+            "command_succeeded": true,
+            "pid": 1541259,
+            "profile": "/home/sittingmongoose/.cache/intel-agent/profiles/browser-e86bddc054fc-profile",
+            "physical_pid": {
+              "available": true,
+              "exists": false
+            },
+            "physical_profile": {
+              "available": true,
+              "exists": false
+            },
+            "physical_unit": {
+              "Id": "intel-browser-e86bddc054fc.service",
+              "LoadState": "not-found",
+              "ActiveState": "inactive",
+              "SubState": "dead",
+              "MainPID": "0",
+              "Result": "success",
+              "ExecMainStatus": "0",
+              "ControlGroup": ""
+            },
+            "errors": [],
+            "peer_cleanup_debt_ids": [
+              "ab64d1003f13",
+              "cc80c88970ef",
+              "c4bdf8272f25"
+            ]
+          }
+        },
+        "cand": {
+          "state": {
+            "theme": "basic-light",
+            "nier": null,
+            "parts": "",
+            "reduced": false,
+            "confirmed": true
+          },
+          "targeted_window_snapshots": 16,
+          "candidate_only_sweep_snapshots": 35,
+          "tour_contexts": [
+            "comfort_intro",
+            "open_chat",
+            "same_answer_eli5",
+            "book_club_goal",
+            "book_club_goal:practice",
+            "three_outcomes"
+          ],
+          "trusted_input_receipts": 31,
+          "suggestion_click_and_key": {
+            "name": {
+              "click": {
+                "how": "click",
+                "want": "Family recipes",
+                "field": "Family recipes",
+                "on": [
+                  "Family recipes"
+                ],
+                "chosenFill": "color(srgb 0 0.337255 0.701961 / 0.12)",
+                "ok": true
+              },
+              "key": {
+                "how": "key",
+                "want": "Book club website",
+                "field": "Book club website",
+                "on": [
+                  "Book club website"
+                ],
+                "chosenFill": "color(srgb 0 0.337255 0.701961 / 0.12)",
+                "ok": true
+              }
+            }
+          },
+          "strict_stop": {
+            "id": "9ff5a353008f",
+            "returned_id": "9ff5a353008f",
+            "closed": true,
+            "command_succeeded": true,
+            "pid": 1542463,
+            "profile": "/home/sittingmongoose/.cache/intel-agent/profiles/browser-9ff5a353008f-profile",
+            "physical_pid": {
+              "available": true,
+              "exists": false
+            },
+            "physical_profile": {
+              "available": true,
+              "exists": false
+            },
+            "physical_unit": {
+              "Id": "intel-browser-9ff5a353008f.service",
+              "LoadState": "not-found",
+              "ActiveState": "inactive",
+              "SubState": "dead",
+              "MainPID": "0",
+              "Result": "success",
+              "ExecMainStatus": "0",
+              "ControlGroup": ""
+            },
+            "errors": [],
+            "peer_cleanup_debt_ids": [
+              "ab64d1003f13",
+              "cc80c88970ef",
+              "c4bdf8272f25"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "matrix": "wide",
+      "look": "basic-light",
+      "motion": "reduced",
+      "started_at": "2026-10-13T10:40:07.071828+00:00",
+      "completed_at": "2026-10-13T10:44:08.741331+00:00",
+      "CLI_exit": 2,
+      "report_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/wide/basic-light-reduced/report.json",
+      "report_sha256": "67acacba6a2001493e360bbb1799b1aeec0f471099fb188c03e559a5131bb5e5",
+      "binding_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/wide/basic-light-reduced/phase-b-binding.json",
+      "binding_sha256": "f81e0490cb8150a9c6a02d5118cd17f3856b9e227922d8af4cba56e70579743e",
+      "binding_checked_at": "2026-10-13T10:40:06.945Z",
+      "summary": {
+        "status": "HOLD",
+        "exit_code": 2,
+        "absolute_failures": 8,
+        "regressions": 51,
+        "ownership_holds": 27,
+        "unverified": 167,
+        "observations_complete": false,
+        "raw_findings": 131,
+        "contrast_below_floor": 0,
+        "invocation_records_complete": true,
+        "full_campaign_complete": false,
+        "historical_cleanup_debts": 12
+      },
+      "issue_codes": {
+        "failures": {
+          "wizard-label-pill-outside-source-scope": 8
+        },
+        "regressions": {
+          "markup": 27,
+          "kept-count": 13,
+          "kept-w": 3,
+          "mark-style": 1,
+          "mark-count": 2,
+          "label-set": 2,
+          "kept-attributes": 2,
+          "kept-box": 1
+        },
+        "holds": {
+          "label-host-control-geometry-source-owner-disposition-required": 4,
+          "scope-disposition-required": 23
+        },
+        "unverified": {
+          "renderer-runtime-unverified": 4,
+          "checkpoint-square-mark-ink-custody-unverified": 26,
+          "required-status-mark-absent": 10,
+          "contrast-unmeasured": 9,
+          "base-contrast-unmeasured": 48,
+          "screen-context-unverified": 35,
+          "paired-base-context-unverified": 31,
+          "bounded-pair-does-not-certify-full-matrix": 1,
+          "selector-never-rendered": 1,
+          "fail-status-renderer-unverified": 1,
+          "needs-fail-glyph-contract-open": 1
+        }
+      },
+      "word_observations": {
+        "base": {
+          "numeric_ratio_observations": 34,
+          "minimum_numeric_ratio": 2.5334638366781395,
+          "below_4_5_numeric_observations": 10,
+          "unmeasured_observations": 9,
+          "unmeasured_error_counts": {
+            "actual word background/ink unverified": 1,
+            "unsupported actual word paint/geometry": 8
+          },
+          "full_word_floor_acceptance": false
+        },
+        "cand": {
+          "numeric_ratio_observations": 78,
+          "minimum_numeric_ratio": 4.9082971813763665,
+          "below_4_5_numeric_observations": 0,
+          "unmeasured_observations": 9,
+          "unmeasured_error_counts": {
+            "actual word background/ink unverified": 1,
+            "unsupported actual word paint/geometry": 8
+          },
+          "full_word_floor_acceptance": false
+        }
+      },
+      "screenshots": 70,
+      "paired_collector_completed": true,
+      "new_reachability_uncertainty": [],
+      "acceptance": "HOLD; findings retained, no source/product/look/full criteria acceptance",
+      "pages": {
+        "base": {
+          "state": {
+            "theme": "basic-light",
+            "nier": null,
+            "parts": "",
+            "reduced": true,
+            "confirmed": true
+          },
+          "targeted_window_snapshots": 16,
+          "candidate_only_sweep_snapshots": 0,
+          "tour_contexts": [
+            "comfort_intro",
+            "open_chat",
+            "same_answer_eli5",
+            "book_club_goal",
+            "book_club_goal:practice",
+            "three_outcomes"
+          ],
+          "trusted_input_receipts": 31,
+          "suggestion_click_and_key": {
+            "name": {
+              "click": {
+                "how": "click",
+                "want": "Family recipes",
+                "field": "Family recipes",
+                "on": [
+                  "Family recipes"
+                ],
+                "chosenFill": "color(srgb 0 0.337255 0.701961 / 0.12)",
+                "ok": true
+              },
+              "key": {
+                "how": "key",
+                "want": "Book club website",
+                "field": "Book club website",
+                "on": [
+                  "Book club website"
+                ],
+                "chosenFill": "color(srgb 0 0.337255 0.701961 / 0.12)",
+                "ok": true
+              }
+            }
+          },
+          "strict_stop": {
+            "id": "6243628a618e",
+            "returned_id": "6243628a618e",
+            "closed": true,
+            "command_succeeded": true,
+            "pid": 1545949,
+            "profile": "/home/sittingmongoose/.cache/intel-agent/profiles/browser-6243628a618e-profile",
+            "physical_pid": {
+              "available": true,
+              "exists": false
+            },
+            "physical_profile": {
+              "available": true,
+              "exists": false
+            },
+            "physical_unit": {
+              "Id": "intel-browser-6243628a618e.service",
+              "LoadState": "not-found",
+              "ActiveState": "inactive",
+              "SubState": "dead",
+              "MainPID": "0",
+              "Result": "success",
+              "ExecMainStatus": "0",
+              "ControlGroup": ""
+            },
+            "errors": [],
+            "peer_cleanup_debt_ids": [
+              "ab64d1003f13",
+              "cc80c88970ef",
+              "c4bdf8272f25"
+            ]
+          }
+        },
+        "cand": {
+          "state": {
+            "theme": "basic-light",
+            "nier": null,
+            "parts": "",
+            "reduced": true,
+            "confirmed": true
+          },
+          "targeted_window_snapshots": 16,
+          "candidate_only_sweep_snapshots": 35,
+          "tour_contexts": [
+            "comfort_intro",
+            "open_chat",
+            "same_answer_eli5",
+            "book_club_goal",
+            "book_club_goal:practice",
+            "three_outcomes"
+          ],
+          "trusted_input_receipts": 31,
+          "suggestion_click_and_key": {
+            "name": {
+              "click": {
+                "how": "click",
+                "want": "Family recipes",
+                "field": "Family recipes",
+                "on": [
+                  "Family recipes"
+                ],
+                "chosenFill": "color(srgb 0 0.337255 0.701961 / 0.12)",
+                "ok": true
+              },
+              "key": {
+                "how": "key",
+                "want": "Book club website",
+                "field": "Book club website",
+                "on": [
+                  "Book club website"
+                ],
+                "chosenFill": "color(srgb 0 0.337255 0.701961 / 0.12)",
+                "ok": true
+              }
+            }
+          },
+          "strict_stop": {
+            "id": "53894d837494",
+            "returned_id": "53894d837494",
+            "closed": true,
+            "command_succeeded": true,
+            "pid": 1546640,
+            "profile": "/home/sittingmongoose/.cache/intel-agent/profiles/browser-53894d837494-profile",
+            "physical_pid": {
+              "available": true,
+              "exists": false
+            },
+            "physical_profile": {
+              "available": true,
+              "exists": false
+            },
+            "physical_unit": {
+              "Id": "intel-browser-53894d837494.service",
+              "LoadState": "not-found",
+              "ActiveState": "inactive",
+              "SubState": "dead",
+              "MainPID": "0",
+              "Result": "success",
+              "ExecMainStatus": "0",
+              "ControlGroup": ""
+            },
+            "errors": [],
+            "peer_cleanup_debt_ids": [
+              "ab64d1003f13",
+              "cc80c88970ef",
+              "c4bdf8272f25"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "matrix": "wide",
+      "look": "friendly-light",
+      "motion": "normal",
+      "started_at": "2026-10-13T10:46:31.206033+00:00",
+      "completed_at": "2026-10-13T10:51:34.493098+00:00",
+      "CLI_exit": 2,
+      "report_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/wide/friendly-light-normal/report.json",
+      "report_sha256": "0e8e230206a2527aa8b94a4b02dc87770a206eb1ba7c2d1a7ca3427beca3bcae",
+      "binding_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/wide/friendly-light-normal/phase-b-binding.json",
+      "binding_sha256": "6144b7d1e76e1fc4647f6d196b566325ab4b696f1d979f0d4185cbc596cb0276",
+      "binding_checked_at": "2026-10-13T10:46:31.088Z",
+      "summary": {
+        "status": "HOLD",
+        "exit_code": 2,
+        "absolute_failures": 8,
+        "regressions": 48,
+        "ownership_holds": 83,
+        "unverified": 284,
+        "observations_complete": false,
+        "raw_findings": 256,
+        "contrast_below_floor": 0,
+        "invocation_records_complete": true,
+        "full_campaign_complete": false,
+        "historical_cleanup_debts": 12
+      },
+      "issue_codes": {
+        "failures": {
+          "wizard-label-pill-outside-source-scope": 8
+        },
+        "regressions": {
+          "markup": 28,
+          "kept-box": 4,
+          "kept-count": 13,
+          "kept-w": 1,
+          "kept-attributes": 2
+        },
+        "holds": {
+          "scope-disposition-required": 80,
+          "label-host-control-geometry-source-owner-disposition-required": 3
+        },
+        "unverified": {
+          "renderer-runtime-unverified": 4,
+          "contrast-unmeasured": 87,
+          "base-contrast-unmeasured": 87,
+          "checkpoint-square-mark-ink-custody-unverified": 26,
+          "required-status-mark-absent": 10,
+          "screen-context-unverified": 35,
+          "paired-base-context-unverified": 31,
+          "bounded-pair-does-not-certify-full-matrix": 1,
+          "selector-never-rendered": 1,
+          "fail-status-renderer-unverified": 1,
+          "needs-fail-glyph-contract-open": 1
+        }
+      },
+      "word_observations": {
+        "base": {
+          "numeric_ratio_observations": 0,
+          "minimum_numeric_ratio": null,
+          "below_4_5_numeric_observations": 0,
+          "unmeasured_observations": 43,
+          "unmeasured_error_counts": {
+            "unsupported actual word paint/geometry": 43
+          },
+          "full_word_floor_acceptance": false
+        },
+        "cand": {
+          "numeric_ratio_observations": 0,
+          "minimum_numeric_ratio": null,
+          "below_4_5_numeric_observations": 0,
+          "unmeasured_observations": 87,
+          "unmeasured_error_counts": {
+            "unsupported actual word paint/geometry": 87
+          },
+          "full_word_floor_acceptance": false
+        }
+      },
+      "screenshots": 0,
+      "paired_collector_completed": true,
+      "new_reachability_uncertainty": [],
+      "acceptance": "HOLD; findings retained, no source/product/look/full criteria acceptance",
+      "pages": {
+        "base": {
+          "state": {
+            "theme": "friendly-light",
+            "nier": null,
+            "parts": "",
+            "reduced": false,
+            "confirmed": true
+          },
+          "targeted_window_snapshots": 16,
+          "candidate_only_sweep_snapshots": 0,
+          "tour_contexts": [
+            "comfort_intro",
+            "open_chat",
+            "same_answer_eli5",
+            "book_club_goal",
+            "book_club_goal:practice",
+            "three_outcomes"
+          ],
+          "trusted_input_receipts": 31,
+          "suggestion_click_and_key": {
+            "name": {
+              "click": {
+                "how": "click",
+                "want": "Family recipes",
+                "field": "Family recipes",
+                "on": [
+                  "Family recipes"
+                ],
+                "chosenFill": "color(srgb 0.941176 0.478431 0.333333 / 0.12)",
+                "ok": true
+              },
+              "key": {
+                "how": "key",
+                "want": "Book club website",
+                "field": "Book club website",
+                "on": [
+                  "Book club website"
+                ],
+                "chosenFill": "color(srgb 0.941176 0.478431 0.333333 / 0.12)",
+                "ok": true
+              }
+            }
+          },
+          "strict_stop": {
+            "id": "b82e5c5c8443",
+            "returned_id": "b82e5c5c8443",
+            "closed": true,
+            "command_succeeded": true,
+            "pid": 1548834,
+            "profile": "/home/sittingmongoose/.cache/intel-agent/profiles/browser-b82e5c5c8443-profile",
+            "physical_pid": {
+              "available": true,
+              "exists": false
+            },
+            "physical_profile": {
+              "available": true,
+              "exists": false
+            },
+            "physical_unit": {
+              "Id": "intel-browser-b82e5c5c8443.service",
+              "LoadState": "not-found",
+              "ActiveState": "inactive",
+              "SubState": "dead",
+              "MainPID": "0",
+              "Result": "success",
+              "ExecMainStatus": "0",
+              "ControlGroup": ""
+            },
+            "errors": [],
+            "peer_cleanup_debt_ids": [
+              "ab64d1003f13",
+              "cc80c88970ef",
+              "c4bdf8272f25"
+            ]
+          }
+        },
+        "cand": {
+          "state": {
+            "theme": "friendly-light",
+            "nier": null,
+            "parts": "",
+            "reduced": false,
+            "confirmed": true
+          },
+          "targeted_window_snapshots": 16,
+          "candidate_only_sweep_snapshots": 35,
+          "tour_contexts": [
+            "comfort_intro",
+            "open_chat",
+            "same_answer_eli5",
+            "book_club_goal",
+            "book_club_goal:practice",
+            "three_outcomes"
+          ],
+          "trusted_input_receipts": 31,
+          "suggestion_click_and_key": {
+            "name": {
+              "click": {
+                "how": "click",
+                "want": "Family recipes",
+                "field": "Family recipes",
+                "on": [
+                  "Family recipes"
+                ],
+                "chosenFill": "color(srgb 0.941176 0.478431 0.333333 / 0.12)",
+                "ok": true
+              },
+              "key": {
+                "how": "key",
+                "want": "Book club website",
+                "field": "Book club website",
+                "on": [
+                  "Book club website"
+                ],
+                "chosenFill": "color(srgb 0.941176 0.478431 0.333333 / 0.12)",
+                "ok": true
+              }
+            }
+          },
+          "strict_stop": {
+            "id": "b7d6d2f386c9",
+            "returned_id": "b7d6d2f386c9",
+            "closed": true,
+            "command_succeeded": true,
+            "pid": 1549826,
+            "profile": "/home/sittingmongoose/.cache/intel-agent/profiles/browser-b7d6d2f386c9-profile",
+            "physical_pid": {
+              "available": true,
+              "exists": false
+            },
+            "physical_profile": {
+              "available": true,
+              "exists": false
+            },
+            "physical_unit": {
+              "Id": "intel-browser-b7d6d2f386c9.service",
+              "LoadState": "not-found",
+              "ActiveState": "inactive",
+              "SubState": "dead",
+              "MainPID": "0",
+              "Result": "success",
+              "ExecMainStatus": "0",
+              "ControlGroup": ""
+            },
+            "errors": [],
+            "peer_cleanup_debt_ids": [
+              "ab64d1003f13",
+              "cc80c88970ef",
+              "c4bdf8272f25"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "matrix": "wide",
+      "look": "friendly-light",
+      "motion": "reduced",
+      "started_at": "2026-10-13T10:54:14.334038+00:00",
+      "completed_at": "2026-10-13T10:58:01.964590+00:00",
+      "CLI_exit": 2,
+      "report_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/wide/friendly-light-reduced/report.json",
+      "report_sha256": "3fb4c67aa08b2bbf62ac9748dde2c32c7bd76294d4cce0cf4199da9a8b5a75c2",
+      "binding_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/wide/friendly-light-reduced/phase-b-binding.json",
+      "binding_sha256": "178defaa81996c2df1f3c91b5e892ee04961b23277bc31fc07cb6b854869e38b",
+      "binding_checked_at": "2026-10-13T10:54:14.218Z",
+      "summary": {
+        "status": "HOLD",
+        "exit_code": 2,
+        "absolute_failures": 8,
+        "regressions": 48,
+        "ownership_holds": 83,
+        "unverified": 284,
+        "observations_complete": false,
+        "raw_findings": 254,
+        "contrast_below_floor": 0,
+        "invocation_records_complete": true,
+        "full_campaign_complete": false,
+        "historical_cleanup_debts": 12
+      },
+      "issue_codes": {
+        "failures": {
+          "wizard-label-pill-outside-source-scope": 8
+        },
+        "regressions": {
+          "markup": 27,
+          "kept-count": 13,
+          "mark-count": 2,
+          "label-set": 2,
+          "kept-w": 1,
+          "kept-attributes": 2,
+          "kept-box": 1
+        },
+        "holds": {
+          "scope-disposition-required": 80,
+          "label-host-control-geometry-source-owner-disposition-required": 3
+        },
+        "unverified": {
+          "renderer-runtime-unverified": 4,
+          "contrast-unmeasured": 87,
+          "base-contrast-unmeasured": 87,
+          "checkpoint-square-mark-ink-custody-unverified": 26,
+          "required-status-mark-absent": 10,
+          "screen-context-unverified": 35,
+          "paired-base-context-unverified": 31,
+          "bounded-pair-does-not-certify-full-matrix": 1,
+          "selector-never-rendered": 1,
+          "fail-status-renderer-unverified": 1,
+          "needs-fail-glyph-contract-open": 1
+        }
+      },
+      "word_observations": {
+        "base": {
+          "numeric_ratio_observations": 0,
+          "minimum_numeric_ratio": null,
+          "below_4_5_numeric_observations": 0,
+          "unmeasured_observations": 43,
+          "unmeasured_error_counts": {
+            "unsupported actual word paint/geometry": 43
+          },
+          "full_word_floor_acceptance": false
+        },
+        "cand": {
+          "numeric_ratio_observations": 0,
+          "minimum_numeric_ratio": null,
+          "below_4_5_numeric_observations": 0,
+          "unmeasured_observations": 87,
+          "unmeasured_error_counts": {
+            "unsupported actual word paint/geometry": 87
+          },
+          "full_word_floor_acceptance": false
+        }
+      },
+      "screenshots": 0,
+      "paired_collector_completed": true,
+      "new_reachability_uncertainty": [],
+      "acceptance": "HOLD; findings retained, no source/product/look/full criteria acceptance",
+      "pages": {
+        "base": {
+          "state": {
+            "theme": "friendly-light",
+            "nier": null,
+            "parts": "",
+            "reduced": true,
+            "confirmed": true
+          },
+          "targeted_window_snapshots": 16,
+          "candidate_only_sweep_snapshots": 0,
+          "tour_contexts": [
+            "comfort_intro",
+            "open_chat",
+            "same_answer_eli5",
+            "book_club_goal",
+            "book_club_goal:practice",
+            "three_outcomes"
+          ],
+          "trusted_input_receipts": 31,
+          "suggestion_click_and_key": {
+            "name": {
+              "click": {
+                "how": "click",
+                "want": "Family recipes",
+                "field": "Family recipes",
+                "on": [
+                  "Family recipes"
+                ],
+                "chosenFill": "color(srgb 0.941176 0.478431 0.333333 / 0.12)",
+                "ok": true
+              },
+              "key": {
+                "how": "key",
+                "want": "Book club website",
+                "field": "Book club website",
+                "on": [
+                  "Book club website"
+                ],
+                "chosenFill": "color(srgb 0.941176 0.478431 0.333333 / 0.12)",
+                "ok": true
+              }
+            }
+          },
+          "strict_stop": {
+            "id": "44c6877be871",
+            "returned_id": "44c6877be871",
+            "closed": true,
+            "command_succeeded": true,
+            "pid": 1552265,
+            "profile": "/home/sittingmongoose/.cache/intel-agent/profiles/browser-44c6877be871-profile",
+            "physical_pid": {
+              "available": true,
+              "exists": false
+            },
+            "physical_profile": {
+              "available": true,
+              "exists": false
+            },
+            "physical_unit": {
+              "Id": "intel-browser-44c6877be871.service",
+              "LoadState": "not-found",
+              "ActiveState": "inactive",
+              "SubState": "dead",
+              "MainPID": "0",
+              "Result": "success",
+              "ExecMainStatus": "0",
+              "ControlGroup": ""
+            },
+            "errors": [],
+            "peer_cleanup_debt_ids": [
+              "ab64d1003f13",
+              "cc80c88970ef",
+              "c4bdf8272f25"
+            ]
+          }
+        },
+        "cand": {
+          "state": {
+            "theme": "friendly-light",
+            "nier": null,
+            "parts": "",
+            "reduced": true,
+            "confirmed": true
+          },
+          "targeted_window_snapshots": 16,
+          "candidate_only_sweep_snapshots": 35,
+          "tour_contexts": [
+            "comfort_intro",
+            "open_chat",
+            "same_answer_eli5",
+            "book_club_goal",
+            "book_club_goal:practice",
+            "three_outcomes"
+          ],
+          "trusted_input_receipts": 31,
+          "suggestion_click_and_key": {
+            "name": {
+              "click": {
+                "how": "click",
+                "want": "Family recipes",
+                "field": "Family recipes",
+                "on": [
+                  "Family recipes"
+                ],
+                "chosenFill": "color(srgb 0.941176 0.478431 0.333333 / 0.12)",
+                "ok": true
+              },
+              "key": {
+                "how": "key",
+                "want": "Book club website",
+                "field": "Book club website",
+                "on": [
+                  "Book club website"
+                ],
+                "chosenFill": "color(srgb 0.941176 0.478431 0.333333 / 0.12)",
+                "ok": true
+              }
+            }
+          },
+          "strict_stop": {
+            "id": "d08d2d9fdfc4",
+            "returned_id": "d08d2d9fdfc4",
+            "closed": true,
+            "command_succeeded": true,
+            "pid": 1553294,
+            "profile": "/home/sittingmongoose/.cache/intel-agent/profiles/browser-d08d2d9fdfc4-profile",
+            "physical_pid": {
+              "available": true,
+              "exists": false
+            },
+            "physical_profile": {
+              "available": true,
+              "exists": false
+            },
+            "physical_unit": {
+              "Id": "intel-browser-d08d2d9fdfc4.service",
+              "LoadState": "not-found",
+              "ActiveState": "inactive",
+              "SubState": "dead",
+              "MainPID": "0",
+              "Result": "success",
+              "ExecMainStatus": "0",
+              "ControlGroup": ""
+            },
+            "errors": [],
+            "peer_cleanup_debt_ids": [
+              "ab64d1003f13",
+              "cc80c88970ef",
+              "c4bdf8272f25"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "matrix": "wide",
+      "look": "glass-dark",
+      "motion": "normal",
+      "started_at": "2026-10-13T10:59:10.682538+00:00",
+      "completed_at": "2026-10-13T11:04:37.334837+00:00",
+      "CLI_exit": 2,
+      "report_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/wide/glass-dark-normal/report.json",
+      "report_sha256": "6c41d7f38aea31246027cd9f9cb5f690fd256f8d6634f798fe7309703a15b2dc",
+      "binding_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/wide/glass-dark-normal/phase-b-binding.json",
+      "binding_sha256": "c8029ad09c8a3f1144a3d213ffee301109c392a7c1efafbbc8c14d887d79954b",
+      "binding_checked_at": "2026-10-13T10:59:10.562Z",
+      "summary": {
+        "status": "HOLD",
+        "exit_code": 2,
+        "absolute_failures": 8,
+        "regressions": 46,
+        "ownership_holds": 27,
+        "unverified": 283,
+        "observations_complete": false,
+        "raw_findings": 136,
+        "contrast_below_floor": 0,
+        "invocation_records_complete": true,
+        "full_campaign_complete": false,
+        "historical_cleanup_debts": 12
+      },
+      "issue_codes": {
+        "failures": {
+          "wizard-label-pill-outside-source-scope": 8
+        },
+        "regressions": {
+          "markup": 27,
+          "kept-count": 13,
+          "kept-w": 3,
+          "kept-attributes": 2,
+          "kept-box": 1
+        },
+        "holds": {
+          "label-host-control-geometry-source-owner-disposition-required": 4,
+          "scope-disposition-required": 23
+        },
+        "unverified": {
+          "renderer-runtime-unverified": 4,
+          "contrast-unmeasured": 86,
+          "base-contrast-unmeasured": 86,
+          "checkpoint-square-mark-ink-custody-unverified": 25,
+          "required-status-mark-absent": 10,
+          "screen-context-unverified": 35,
+          "paired-base-context-unverified": 31,
+          "expected-label-not-reached": 2,
+          "bounded-pair-does-not-certify-full-matrix": 1,
+          "selector-never-rendered": 1,
+          "fail-status-renderer-unverified": 1,
+          "needs-fail-glyph-contract-open": 1
+        }
+      },
+      "word_observations": {
+        "base": {
+          "numeric_ratio_observations": 0,
+          "minimum_numeric_ratio": null,
+          "below_4_5_numeric_observations": 0,
+          "unmeasured_observations": 42,
+          "unmeasured_error_counts": {
+            "unsupported actual word paint/geometry": 42
+          },
+          "full_word_floor_acceptance": false
+        },
+        "cand": {
+          "numeric_ratio_observations": 0,
+          "minimum_numeric_ratio": null,
+          "below_4_5_numeric_observations": 0,
+          "unmeasured_observations": 86,
+          "unmeasured_error_counts": {
+            "unsupported actual word paint/geometry": 86
+          },
+          "full_word_floor_acceptance": false
+        }
+      },
+      "screenshots": 0,
+      "paired_collector_completed": true,
+      "new_reachability_uncertainty": [
+        {
+          "type": "other UNVERIFIED requires scope inspection",
+          "where": "glass-dark/normal tour book_club_goal:practice base",
+          "code": "expected-label-not-reached"
+        },
+        {
+          "type": "other UNVERIFIED requires scope inspection",
+          "where": "glass-dark/normal tour book_club_goal:practice cand",
+          "code": "expected-label-not-reached"
+        }
+      ],
+      "acceptance": "HOLD; findings retained, no source/product/look/full criteria acceptance",
+      "pages": {
+        "base": {
+          "state": {
+            "theme": "glass-dark",
+            "nier": null,
+            "parts": "",
+            "reduced": false,
+            "confirmed": true
+          },
+          "targeted_window_snapshots": 16,
+          "candidate_only_sweep_snapshots": 0,
+          "tour_contexts": [
+            "comfort_intro",
+            "open_chat",
+            "same_answer_eli5",
+            "book_club_goal",
+            "book_club_goal:practice",
+            "three_outcomes"
+          ],
+          "trusted_input_receipts": 31,
+          "suggestion_click_and_key": {
+            "name": {
+              "click": {
+                "how": "click",
+                "want": "Family recipes",
+                "field": "Family recipes",
+                "on": [
+                  "Family recipes"
+                ],
+                "chosenFill": "color(srgb 0.392157 0.85098 1 / 0.12)",
+                "ok": true
+              },
+              "key": {
+                "how": "key",
+                "want": "Book club website",
+                "field": "Book club website",
+                "on": [
+                  "Book club website"
+                ],
+                "chosenFill": "color(srgb 0.392157 0.85098 1 / 0.12)",
+                "ok": true
+              }
+            }
+          },
+          "strict_stop": {
+            "id": "f33048198ace",
+            "returned_id": "f33048198ace",
+            "closed": true,
+            "command_succeeded": true,
+            "pid": 1554844,
+            "profile": "/home/sittingmongoose/.cache/intel-agent/profiles/browser-f33048198ace-profile",
+            "physical_pid": {
+              "available": true,
+              "exists": false
+            },
+            "physical_profile": {
+              "available": true,
+              "exists": false
+            },
+            "physical_unit": {
+              "Id": "intel-browser-f33048198ace.service",
+              "LoadState": "not-found",
+              "ActiveState": "inactive",
+              "SubState": "dead",
+              "MainPID": "0",
+              "Result": "success",
+              "ExecMainStatus": "0",
+              "ControlGroup": ""
+            },
+            "errors": [],
+            "peer_cleanup_debt_ids": [
+              "ab64d1003f13",
+              "cc80c88970ef",
+              "c4bdf8272f25"
+            ]
+          }
+        },
+        "cand": {
+          "state": {
+            "theme": "glass-dark",
+            "nier": null,
+            "parts": "",
+            "reduced": false,
+            "confirmed": true
+          },
+          "targeted_window_snapshots": 16,
+          "candidate_only_sweep_snapshots": 35,
+          "tour_contexts": [
+            "comfort_intro",
+            "open_chat",
+            "same_answer_eli5",
+            "book_club_goal",
+            "book_club_goal:practice",
+            "three_outcomes"
+          ],
+          "trusted_input_receipts": 31,
+          "suggestion_click_and_key": {
+            "name": {
+              "click": {
+                "how": "click",
+                "want": "Family recipes",
+                "field": "Family recipes",
+                "on": [
+                  "Family recipes"
+                ],
+                "chosenFill": "color(srgb 0.392157 0.85098 1 / 0.12)",
+                "ok": true
+              },
+              "key": {
+                "how": "key",
+                "want": "Book club website",
+                "field": "Book club website",
+                "on": [
+                  "Book club website"
+                ],
+                "chosenFill": "color(srgb 0.392157 0.85098 1 / 0.12)",
+                "ok": true
+              }
+            }
+          },
+          "strict_stop": {
+            "id": "1f1c1379b6f1",
+            "returned_id": "1f1c1379b6f1",
+            "closed": true,
+            "command_succeeded": true,
+            "pid": 1555773,
+            "profile": "/home/sittingmongoose/.cache/intel-agent/profiles/browser-1f1c1379b6f1-profile",
+            "physical_pid": {
+              "available": true,
+              "exists": false
+            },
+            "physical_profile": {
+              "available": true,
+              "exists": false
+            },
+            "physical_unit": {
+              "Id": "intel-browser-1f1c1379b6f1.service",
+              "LoadState": "not-found",
+              "ActiveState": "inactive",
+              "SubState": "dead",
+              "MainPID": "0",
+              "Result": "success",
+              "ExecMainStatus": "0",
+              "ControlGroup": ""
+            },
+            "errors": [],
+            "peer_cleanup_debt_ids": [
+              "ab64d1003f13",
+              "cc80c88970ef",
+              "c4bdf8272f25"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "raw_entry_totals_not_unique_defects": {
+    "absolute_failures": 40,
+    "regressions": 243,
+    "ownership_holds": 247,
+    "unverified": 1182,
+    "raw_findings": 910,
+    "contrast_below_floor": 0,
+    "historical_cleanup_debts": 60
+  },
+  "distinct_stop_observation": {
+    "pair": "wide/glass-dark-normal",
+    "context": "book_club_goal:practice",
+    "selector": ".o55t-trylabel",
+    "expected_min": 1,
+    "observed": 0,
+    "pages": [
+      "base",
+      "cand"
+    ],
+    "trusted_ShowMe_clicks_both": true,
+    "visible_Guided_example_badge_both": true,
+    "missing_target_certified_by_other_labels_or_click": false,
+    "navigation_driver_launch_stop_exception": false,
+    "classification": "Distinct unresolved reachability/scope/timing observation; cause undetermined. No source-defect diagnosis, waiver or equivalence to prior gaps.",
+    "continuation": "STOP;19wide+12narrow remain NOT_RUN; no same-pair retry, browser restart, extra capture, selector/predicate/method/source/tool change"
+  },
+  "finding_dispositions": {
+    "absolute_gate_failures": "40 raw Wizard label-pill entries across five pairs, retained including inherited/outside-source-scope findings; no new exemption or repair",
+    "absolute_word_floor": "No numeric candidate word ratio below4.5 in observed subset; no full floor acceptance. Basic Light has78 candidate numeric ratios/motion minimum4.9082971813763665 and9 unmeasured/motion; Friendly Light and Glass Dark word observations all unsupported/unmeasured. Baseline lows retained separately.",
+    "baseline_regressions": "243 raw entries, including markup, kept box/count/width/attributes, mark style/count and label-set differences; raw findings retained without normalization, waiver or source/look approval",
+    "action_geometry": "Changed label-host dimensions remain explicit source-owner disposition HOLD; exact dimensions retained; no tolerance/forcing/approval",
+    "marks": "Checkpoint square ink, required absent marks, spinner/glyph/Wizard raw findings and source-owned mark/look questions remain held",
+    "paint_renderer": "Unsupported paint/backdrops/transforms/missing word pixels and ordinary renderer remain UNVERIFIED; no hidden text, animation suppression, new sampler or GPU work",
+    "paired_contexts": "Candidate-only sweep contexts stay unpaired; completed440-view base inventory not replayed; absence is not a base success claim",
+    "source_owner_Jared": "Retains colour/look/geometry/mark/square ink and Wizard/non-label ownership; no source-owner wake or root/worker look decision"
+  },
+  "custody": {
+    "all_original_blob_mode_physical_entries_exact": 16044,
+    "old_evidence_files_including_all_seals_exact": 392,
+    "old_evidence_directories": 8,
+    "source_pages": {
+      "Concepts/PMConcept7.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact": true
+      },
+      "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact": true
+      },
+      "Concepts/HomeTestPMConcept7.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact": true
+      },
+      "Concepts/LeftRailPMConcept7.html": {
+        "bytes": 19237474,
+        "sha256": "13d002fc7057c17270cbc149457cee588df423b8a3543fa5a5359901d7cba8bb",
+        "exact": true
+      }
+    },
+    "working_git_retained_tool_exact": true,
+    "tool_and_source_code_edits": 0,
+    "original_helper_history_records_exact": 93,
+    "normal_new_owned_terminal_history_records": 10,
+    "helper_sha256": "84e83fd6d184b1d44713d01670246ae85f951d7c6726f3d512d69702a904b3ec",
+    "helper_configuration_exact": true,
+    "peer_profile_directories_exact": 3,
+    "peer_profile_ownership": "UNKNOWN",
+    "peer_cleanup": false,
+    "peer_resources0_claim": false,
+    "old_reports_failures_seals_AND_NOT_RUN_meaning_unchanged": true
+  },
+  "resources": {
+    "actual_browser_sessions_started_and_strictly_closed": 10,
+    "all_10_matching_normal_stop_ID_command_PID_unit_profile_absence_proofs": true,
+    "source_staging_entries": 6332,
+    "source_staging_bytes_and_symlink_targets": 645145133,
+    "base_and_archive_removed": true,
+    "tracked_directory_symlink_unlinked_without_traversal": true,
+    "global_closure_census_live_or_reserved": 0,
+    "historical_peer_profile_debt_ids": [
+      "ab64d1003f13",
+      "cc80c88970ef",
+      "c4bdf8272f25"
+    ],
+    "peer_resources0_claim": false,
+    "own_waiter_and_local_runners": "Final stop/consume/removal and ALL actual OWNresources0 are recorded after commit in final-head-receipt.json, not inferred from terminal peer history"
+  },
+  "evidence": {
+    "raw_root": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013",
+    "committable_seal": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/COMMITTABLE-SEAL.json",
+      "entries": 286,
+      "sha256": "2dfaf4aa84fd9ec1fe2d7955badcf93b6b193fa7d3bac911320c8dc9b90c0f48"
+    },
+    "aggregate": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/aggregate-observations.json",
+      "sha256": "da42a39f3f68deb5a528a213b0fe69364b78300d7ecf835e959a2c305dae7ee0"
+    },
+    "stop_confirmation": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/root-confirmed-stop-disposition.json",
+      "sha256": "12d6cfe9ce3ddfd033062bfd646c0422ef662f3635e2bd86fd5ef7f141f243b6"
+    },
+    "precommit_custody": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/precommit-custody.json",
+      "sha256": "f1faab0e0000ce2064c1dd4034eb4fe657781f3bbcf6f50da0accb178a56c45a"
+    },
+    "closure_only_resource_proof": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/owned-browser-final-resource-proof.json",
+      "sha256": "8bee54f55ca6de5bd4a39de343115a4f05c50a880e46b186de86cd77765f92b0"
+    },
+    "staging_cleanup": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/local-staging-cleanup.json",
+      "sha256": "d9d96eade2eb3cf6f84c710dcde06f510daf1cdd65a2d7a809dd4e52dd29a9b0"
+    },
+    "screenshots": 200,
+    "helper_logs_retained": 10,
+    "final_head_tip_custody_resources_receipt": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/final-head-receipt.json",
+    "final_seal": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-validation-bounded-20261013/FINAL-SEAL.json"
+  },
+  "source_product_look_full_criteria_landing_acceptance": false,
+  "next": "Root reviews completed packet; no self-next or independently assigned owner review.",
+  "execution_exclusions": {
+    "old19_26_58_75_or_example_suite_replays": 0,
+    "passed_smoke_Settings5144_glyph_D10_384_or_440_inventory_replays": 0,
+    "same_pair_retries": 0,
+    "browser_restarts": 0,
+    "extra_product_captures": 0,
+    "pilot_or_additional_helper_browser_sessions": 0,
+    "performance_GPU_WebGL_video_Windows_P1000_work": false,
+    "new_actor_source_owner_wake_main_lock_Plans_reseal_T3_service_actions": false
+  }
+}
