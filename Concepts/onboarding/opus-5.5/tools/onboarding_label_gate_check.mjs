@@ -24,11 +24,12 @@
  * Exit 1: failures/ownership HOLD; 2: UNVERIFIED/errors/invalid binding. Self-test exit 0 concerns isolated
  * tool logic only and confers no product, source, look, coverage, GPU, governance or landing acceptance.
  */
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, lstatSync } from 'node:fs';
+import { homedir } from 'node:os';
 import { resolve, join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import assert from 'node:assert/strict';
 
 export const FROZEN_HEAD = '29cdc86e3c9078d94260b79905e6ae49c169305c';
@@ -1177,9 +1178,147 @@ async function tourWalk(page) {
 
 
 /* Reserved Phase B path: normal helper owns the session; explicit IDs bound to every stop receipt. */
-export function ownedStopVerified(session,stopReceipt,census) {
-  return !!(session && typeof session.id==='string' && stopReceipt && stopReceipt.id===session.id && stopReceipt.command_succeeded===true &&
-    Array.isArray(census) && census.every((s) => s && typeof s.id==='string') && !census.some((s) => s.id===session.id));
+const HELPER_PROTOCOL_SHA='84e83fd6d184b1d44713d01670246ae85f951d7c6726f3d512d69702a904b3ec';
+const terminalStatus=(s) => s==='complete'||s==='failed';
+const helperProfile=(id) => join(homedir(),'.cache/intel-agent/profiles/browser-'+id+'-profile');
+const unitName=(id) => 'intel-browser-'+id+'.service';
+const fresh=(at,now) => Number.isFinite(Date.parse(at)) && now-Date.parse(at)>=0 && now-Date.parse(at)<60000;
+const unitLive=(u) => u && ['active','activating','deactivating','reloading'].includes(u.ActiveState);
+const inUnit=(fact,name) => !!(fact?.exists && typeof fact.cgroup==='string' && fact.cgroup.split('\n').some((l) => l.split(':').slice(2).join(':').split('/').includes(name)));
+function helperIdentity(s) {
+  return !!(s && /^[a-f0-9]{12}$/.test(s.id||'') && s.unit==='intel-browser-'+s.id && s.profile===helperProfile(s.id) &&
+    ['starting','ready','complete','failed'].includes(s.status) && (s.pid==null || Number.isSafeInteger(s.pid)&&s.pid>0));
+}
+const normalLifecycleIO={
+  now:() => Date.now(),helperHash:() => sha(readFileSync('/usr/local/libexec/intel-agent-tools')),
+  command:(name,args,timeout=15000) => {
+    try {const r=spawnSync(name,args,{encoding:'utf8',timeout,maxBuffer:16*1024*1024});return {name,args,exit_code:r.status,stdout:String(r.stdout||''),stderr:String(r.stderr||''),...(r.error?{error:String(r.error.stack||r.error)}:{})};}
+    catch(e) {return {name,args,exit_code:e.status??null,stdout:String(e.stdout||''),stderr:String(e.stderr||''),error:String(e.stack||e)};}
+  },
+  process:(pid) => {
+    try {return {available:true,exists:true,argv:readFileSync('/proc/'+pid+'/cmdline','utf8').split('\0').filter(Boolean),cgroup:readFileSync('/proc/'+pid+'/cgroup','utf8')};}
+    catch(e) {if(e.code==='ENOENT' && !existsSync('/proc/'+pid)) return {available:true,exists:false};return {available:false,error:String(e.stack||e)};}
+  },
+  profile:(path) => {try {const s=lstatSync(path);return {available:true,exists:true,symlink:s.isSymbolicLink()};} catch(e) {return e.code==='ENOENT'?{available:true,exists:false}:{available:false,error:String(e.stack||e)};}},
+  connect:async (endpoint) => {const {createRequire}=await import('node:module');const require=createRequire(join(process.env.PM_PLAYWRIGHT_DIR||'/home/sittingmongoose/pmt-dev/pw/','noop.js'));return require('playwright-core').chromium.connectOverCDP(endpoint,{timeout:30000});},
+};
+export function observeBrowserLifecycle(io=normalLifecycleIO) {
+  const o={schema:'agent-browser-lifecycle/v1',started_at:new Date(io.now()).toISOString(),errors:[],process_facts:{},profiles:{},units:{}};
+  const command=(name,args) => {const r=io.command(name,args);if(r.exit_code!==0||r.error)o.errors.push(r);return r;};
+  try {o.helper_sha256=io.helperHash();} catch(e) {o.errors.push({method:'helper-version',error:String(e.stack||e)});}
+  o.helper_command=command('agent-browser',['list']);
+  try {o.helper=JSON.parse(o.helper_command.stdout);} catch(e) {o.errors.push({method:'helper-json',error:String(e.stack||e)});}
+  o.unit_list_command=command('systemctl',['--user','list-units','--all','--plain','--no-legend','--no-pager','intel-browser-*.service']);
+  const names=new Set();
+  for(const line of o.unit_list_command.stdout.split('\n').filter((x) => x.trim())) {
+    const name=line.trim().split(/\s+/)[0];if(!/^intel-browser-[a-f0-9]{12}\.service$/.test(name))o.errors.push({method:'unit-inventory',line});else names.add(name);
+  }
+  if(Array.isArray(o.helper))for(const s of o.helper)if(helperIdentity(s))names.add(unitName(s.id));
+  o.unit_show_command=names.size?command('systemctl',['--user','show','--no-pager','--property=Id,LoadState,ActiveState,SubState,MainPID,ControlGroup,Result,ExecMainStatus',...names]):{name:'systemctl',exit_code:0,stdout:'',stderr:'',args:[],not_required:true};
+  for(const block of o.unit_show_command.stdout.trim().split(/\n\s*\n/).filter(Boolean)) {
+    const fields={};for(const line of block.split('\n')) {const n=line.indexOf('=');if(n<1||Object.hasOwn(fields,line.slice(0,n)))o.errors.push({method:'unit-properties',line});else fields[line.slice(0,n)]=line.slice(n+1);}
+    if(!fields.Id||o.units[fields.Id])o.errors.push({method:'unit-identity',fields});else o.units[fields.Id]=fields;
+  }
+  o.process_command=command('ps',['-eo','pid=,args=']);
+  const pids=new Set(o.process_command.stdout.split('\n').map((l) => /^\s*(\d+)\s+/.exec(l)?.[1]).filter(Boolean));
+  if(Array.isArray(o.helper))for(const s of o.helper)if(Number.isSafeInteger(s?.pid)&&s.pid>0)pids.add(String(s.pid));
+  for(const u of Object.values(o.units))if(/^\d+$/.test(u.MainPID||'')&&+u.MainPID>0)pids.add(u.MainPID);
+  for(const pid of pids) {try {o.process_facts[pid]=io.process(+pid);} catch(e) {o.process_facts[pid]={available:false,error:String(e.stack||e)};}}
+  if(Array.isArray(o.helper))for(const s of o.helper)if(helperIdentity(s)) {try {o.profiles[s.profile]=io.profile(s.profile);} catch(e) {o.profiles[s.profile]={available:false,error:String(e.stack||e)};}}
+  o.observed_at=new Date(io.now()).toISOString();return o;
+}
+export function reconcileBrowserLifecycle(o,now=Date.now()) {
+  const holds=[],bad=(code,detail) => holds.push({code,detail}),states=[],roots=new Map();
+  if(!o||o.schema!=='agent-browser-lifecycle/v1'||!fresh(o.started_at,now)||!fresh(o.observed_at,now))bad('lifecycle-observation-unavailable-or-stale',o?.observed_at);
+  if(o?.helper_sha256!==HELPER_PROTOCOL_SHA)bad('unsupported-helper-protocol',o?.helper_sha256);
+  for(const e of o?.errors||[])bad('lifecycle-observation-error',e);
+  if(!Array.isArray(o?.helper)||!o?.units||!o?.process_facts||!o?.profiles||o?.process_command?.exit_code!==0||typeof o.process_command.stdout!=='string')bad('lifecycle-census-unavailable',null);
+  for(const [field,name] of [['helper_command','agent-browser'],['unit_list_command','systemctl'],['unit_show_command','systemctl'],['process_command','ps']]) {
+    const c=o?.[field];if(!c||c.name!==name||c.exit_code!==0||c.error||typeof c.stdout!=='string'||typeof c.stderr!=='string')bad('lifecycle-command-observation-unavailable',{field,command:c});
+  }
+  if(o?.helper_command?.exit_code===0)try {if(JSON.stringify(JSON.parse(o.helper_command.stdout))!==JSON.stringify(o.helper))bad('helper-raw-census-conflict',null);} catch(e) {bad('helper-raw-census-unparsed',String(e));}
+  if(o?.unit_show_command?.exit_code===0&&typeof o.unit_show_command.stdout==='string') {
+    const rawUnits={};for(const block of o.unit_show_command.stdout.trim().split(/\n\s*\n/).filter(Boolean)) {
+      const fields={};for(const line of block.split('\n')) {const n=line.indexOf('=');if(n<1||Object.hasOwn(fields,line.slice(0,n)))bad('unit-raw-properties-invalid',line);else fields[line.slice(0,n)]=line.slice(n+1);}
+      if(!fields.Id||rawUnits[fields.Id])bad('unit-raw-identity-invalid',fields);else rawUnits[fields.Id]=fields;
+    }
+    if(Object.keys(rawUnits).length!==Object.keys(o.units||{}).length||Object.entries(rawUnits).some(([name,fields]) => !o.units?.[name]||Object.keys(fields).length!==Object.keys(o.units[name]).length||Object.entries(fields).some(([k,v]) => o.units[name][k]!==v)))bad('unit-raw-observation-conflict',null);
+  }
+  if(holds.length)return {holds,states,counts:null,observation:o};
+  const ps=new Map();
+  for(const line of o.process_command.stdout.split('\n').filter((l) => l.trim())) {
+    const m=/^\s*(\d+)\s+(\S+)(?:\s+(.*))?$/.exec(line);
+    if(!m||!Number.isSafeInteger(+m[1])||ps.has(+m[1])) {bad('malformed-or-duplicate-process',line);continue;}
+    const pid=+m[1];ps.set(pid,line);const fact=o.process_facts[pid];
+    if(fact?.available!==true||typeof fact.exists!=='boolean')bad('process-observation-unavailable',{pid,fact});
+    if(fact?.exists&&(!Array.isArray(fact.argv)||fact.argv.some((a) => typeof a!=='string')||typeof fact.cgroup!=='string'))bad('unsupported-process-observation',{pid,fact});
+    if(countCdpBrowsers(line)) {roots.set(pid,{line,fact});if(!fact?.exists||!Array.isArray(fact.argv)||!countCdpBrowsers(pid+' '+fact.argv.join(' ')))bad('stale-or-conflicting-cdp-process',{pid,fact});}
+  }
+  for(const [name,u] of Object.entries(o.units)) {
+    if(!/^intel-browser-[a-f0-9]{12}\.service$/.test(name)||u.Id!==name||!['loaded','not-found'].includes(u.LoadState)||
+      !['active','activating','deactivating','reloading','inactive','failed'].includes(u.ActiveState)||
+      !['running','start','start-pre','start-post','stop','stop-sigterm','stop-sigkill','stop-post','reload','auto-restart','dead','failed'].includes(u.SubState)||
+      !/^\d+$/.test(u.MainPID||'')||!Number.isSafeInteger(+u.MainPID)||typeof u.ControlGroup!=='string'||typeof u.Result!=='string'||!/^\d+$/.test(u.ExecMainStatus||''))bad('unsupported-unit-observation',{name,u});
+    if(unitLive(u)&&u.LoadState!=='loaded'||u.ActiveState==='active'&&u.SubState==='running'&&+u.MainPID===0||!unitLive(u)&&(+u.MainPID!==0||!['dead','failed'].includes(u.SubState)))bad('irreconcilable-unit-state',{name,u});
+  }
+  for(const [pid,fact] of Object.entries(o.process_facts))if(fact?.exists&&typeof fact.cgroup==='string')for(const name of fact.cgroup.match(/intel-browser-[a-f0-9]{12}\.service/g)||[])if(!o.units[name])bad('process-in-unobserved-helper-unit',{pid,name});
+  const claimedRoots=new Set(),usedUnits=new Set(),ids=new Set(),pids=new Set(),profiles=new Set();
+  for(const s of o.helper) {
+    if(!helperIdentity(s)||ids.has(s.id)||profiles.has(s.profile)||s.pid!=null&&pids.has(s.pid)) {bad('malformed-or-conflicting-helper-identity',s);continue;}
+    ids.add(s.id);profiles.add(s.profile);if(s.pid!=null)pids.add(s.pid);
+    const name=unitName(s.id),u=o.units[name],profile=o.profiles[s.profile],fact=s.pid==null?null:o.process_facts[s.pid];usedUnits.add(name);
+    if(!u)bad('helper-unit-unavailable',{id:s.id,name});
+    if(profile?.available!==true||typeof profile.exists!=='boolean'||s.pid!=null&&(fact?.available!==true||typeof fact.exists!=='boolean'))bad('helper-physical-observation-unavailable',{id:s.id,profile,fact});
+    const members=Object.entries(o.process_facts).filter(([,f]) => inUnit(f,name)).map(([pid]) => +pid);
+    const matchingRoots=[...roots].filter(([,r]) => r.fact?.argv?.includes('--user-data-dir='+s.profile)&&inUnit(r.fact,name)).map(([pid]) => pid);
+    for(const pid of matchingRoots)claimedRoots.add(pid);
+    if(matchingRoots.length>1)bad('conflicting-managed-processes',{id:s.id,pids:matchingRoots});
+    if(fact?.exists&&(!ps.has(s.pid)||!matchingRoots.includes(s.pid)))bad('helper-pid-identity-mismatch',{id:s.id,pid:s.pid,fact});
+    if(+u?.MainPID>0) {const worker=o.process_facts[u.MainPID];if(!worker?.available||!worker.exists||!ps.has(+u.MainPID)||!inUnit(worker,name)||!worker.argv?.includes('/usr/local/libexec/intel-agent-tools')||!worker.argv?.includes('browser-worker')||!worker.argv?.includes(s.id))bad('helper-worker-identity-unverified',{id:s.id,worker});}
+    const reserved=s.status==='starting'||s.status==='ready'||unitLive(u)||members.length>0||!!fact?.exists;
+    if(s.status==='ready'&&(!unitLive(u)||!u?.MainPID||+u.MainPID===0||matchingRoots.length!==1||matchingRoots[0]!==s.pid||!profile?.exists||typeof s.cdp_endpoint!=='string'||!/^http:\/\/127\.0\.0\.1:\d+$/.test(s.cdp_endpoint)))bad('ready-session-unreconciled',s);
+    if(s.status==='starting'&&!unitLive(u))bad('starting-reservation-unit-unconfirmed',s);
+    const resourceFree=terminalStatus(s.status)&&!!u&&!unitLive(u)&&+u.MainPID===0&&members.length===0&&!fact?.exists&&profile?.available===true&&profile.exists===false;
+    if(terminalStatus(s.status)&&!resourceFree)bad('terminal-history-resources-unverified',{id:s.id,u,fact,profile,members});
+    states.push({id:s.id,status:s.status,reserved,resource_free:resourceFree,managed_cdp_pids:matchingRoots,unit_members:members,unit:u,pid:fact,profile,record:s});
+  }
+  const orphanUnits=Object.entries(o.units).filter(([name,u]) => !usedUnits.has(name)&&(unitLive(u)||Object.values(o.process_facts).some((f) => inUnit(f,name))));
+  for(const [name,u] of orphanUnits)bad('live-helper-unit-without-record',{name,u});
+  const reservedWithoutCdp=states.filter((s) => s.reserved&&!s.managed_cdp_pids.length).length+
+    orphanUnits.filter(([name]) => ![...roots.values()].some((r) => inUnit(r.fact,name))).length;
+  return {holds,states,counts:{actual_cdp:roots.size,managed_cdp:claimedRoots.size,unmanaged_cdp:roots.size-claimedRoots.size,
+    reserved_without_cdp:reservedWithoutCdp,all_live_or_reserved:roots.size+reservedWithoutCdp,confirmed_dead_history:states.filter((s) => s.resource_free).length},observation:o};
+}
+const admissionTokens=new WeakMap();
+const declaredBindings=new WeakMap();
+let lifecycleParallel=1;
+export function bindDeclaredAdmission(declared,now=Date.now()) {
+  if(!declared||!fresh(declared.checked_at,now)||declared.max_total!==4||declared.owned_session_limit!==2||declared.source_owner_coordinated!==true||
+    !Number.isInteger(declared.all_cdp_browsers)||!Number.isInteger(declared.unmanaged_cdp_browsers)||declared.all_cdp_browsers<0||declared.unmanaged_cdp_browsers<0||declared.unmanaged_cdp_browsers>declared.all_cdp_browsers)throw new Error('HOLD: fresh exact declared CLI admission required');
+  declaredBindings.set(declared,{hash:sha(JSON.stringify(declared)),validated_at:new Date(now).toISOString(),used:false});
+}
+export function prepareBrowserAdmission(declared,ownCount,io=normalLifecycleIO,parallel=lifecycleParallel) {
+  const observation=observeBrowserLifecycle(io),state=reconcileBrowserLifecycle(observation,io.now()),holds=[...state.holds];
+  const binding=declared&&declaredBindings.get(declared),bound=!!binding&&binding.hash===sha(JSON.stringify(declared));
+  if(binding&&!bound)holds.push({code:'declared-binding-changed',detail:declared});
+  if(!declared||!bound&&!fresh(declared.checked_at,io.now())||declared.max_total!==4||declared.owned_session_limit!==2||declared.source_owner_coordinated!==true||
+    !Number.isInteger(declared.all_cdp_browsers)||!Number.isInteger(declared.unmanaged_cdp_browsers)||declared.all_cdp_browsers<0||declared.unmanaged_cdp_browsers<0||
+    declared.unmanaged_cdp_browsers>declared.all_cdp_browsers)holds.push({code:'declared-admission-unavailable-or-stale',detail:declared});
+  if(state.counts&&(!bound||!binding.used)&&(declared?.all_cdp_browsers!==state.counts.actual_cdp||declared?.unmanaged_cdp_browsers!==state.counts.unmanaged_cdp))holds.push({code:'declared-and-actual-census-mismatch',detail:state.counts});
+  if(parallel!==1||!Number.isInteger(ownCount)||ownCount<0||ownCount>=2||state.counts?.all_live_or_reserved>=4)holds.push({code:'global-or-owned-admission-cap',detail:{parallel,ownCount,counts:state.counts}});
+  const receipt={schema:'onboarding-browser-admission/v1',observed_at:observation.observed_at,declared,declared_validated_at:bound?binding.validated_at:null,
+    freshness_scope:'Declared binding checked before each CLI invocation; every start gets a newly observed <60s lifecycle receipt',ownCount,parallel,...state,holds,admitted:holds.length===0};
+  if(!receipt.admitted) {const e=new Error('HOLD: browser admission '+JSON.stringify(holds));e.admission_receipt=receipt;throw e;}
+  if(bound)binding.used=true;admissionTokens.set(receipt,{hash:sha(JSON.stringify(receipt)),io});return receipt;
+}
+export function ownedStopVerified(session,stopReceipt,observation,now=Date.now()) {
+  if(!helperIdentity(session)||!stopReceipt||stopReceipt.id!==session.id||stopReceipt.command_succeeded!==true||stopReceipt.stop_command?.name!=='agent-browser'||stopReceipt.stop_command.exit_code!==0||stopReceipt.stop_command.error||typeof stopReceipt.stop_command.stdout!=='string'||typeof stopReceipt.stop_command.stderr!=='string'||stopReceipt.stop_command.stderr.trim()||stopReceipt.disconnect_error||
+    !Array.isArray(stopReceipt.stop_command.args)||stopReceipt.stop_command.args.join('\0')!==['stop',session.id].join('\0'))return false;
+  const returned=stopReceipt.stop_result;
+  if(!helperIdentity(returned)||returned.id!==session.id||returned.unit!==session.unit||returned.profile!==session.profile||returned.pid!==session.pid||!terminalStatus(returned.status))return false;
+  try {if(JSON.stringify(JSON.parse(stopReceipt.stop_command.stdout))!==JSON.stringify(returned))return false;} catch {return false;}
+  const state=reconcileBrowserLifecycle(observation,now),own=state.states.filter((s) => s.id===session.id);
+  return !state.holds.length&&own.length===1&&own[0].resource_free&&own[0].status===returned.status&&own[0].record.unit===returned.unit&&own[0].record.profile===returned.profile&&own[0].record.pid===returned.pid;
 }
 export function countCdpBrowsers(processLines) {
   if(typeof processLines!=='string') throw new Error('global browser process census unavailable');
@@ -1190,31 +1329,42 @@ export function countCdpBrowsers(processLines) {
   }).length;
 }
 const ownClosers=new Set();
-async function launchOwned(viewport) {
-  const {createRequire}=await import('node:module');
-  const require=createRequire(join(process.env.PM_PLAYWRIGHT_DIR||'/home/sittingmongoose/pmt-dev/pw/','noop.js'));
-  const {chromium}=require('playwright-core');
-  const actual=countCdpBrowsers(execFileSync('ps',['-eo','pid=,args='],{encoding:'utf8',timeout:15000}));
-  const sessions=JSON.parse(execFileSync('agent-browser',['list'],{encoding:'utf8',timeout:15000}));
-  if(!Array.isArray(sessions) || actual<sessions.length || actual>=4 || ownClosers.size>=2) throw new Error('HOLD: actual global/owned browser admission unavailable or full; no peer stopped');
-  const session=JSON.parse(execFileSync('agent-browser',['start','--url','about:blank'],{encoding:'utf8',timeout:30000}));
-  let browser,closed=false; const receipt={id:session.id,command_succeeded:false};
-  const close=async () => {
-    if(closed) return receipt;
-    const errors=[];
-    try {receipt.raw_stop=execFileSync('agent-browser',['stop',session.id],{encoding:'utf8',timeout:30000});receipt.command_succeeded=true;}
-    catch(e) {errors.push(String(e.stack||e));}
-    try {if(browser) await browser.close();} catch(e) {errors.push(String(e.stack||e));}
-    try {receipt.census=JSON.parse(execFileSync('agent-browser',['list'],{encoding:'utf8',timeout:15000}));} catch(e) {errors.push(String(e.stack||e));}
-    receipt.closed=ownedStopVerified(session,receipt,receipt.census);
-    receipt.errors=errors;receipt.observed_at=new Date().toISOString();
-    if(receipt.closed) {closed=true;ownClosers.delete(close);}
-    return receipt;
-  };
-  ownClosers.add(close);
+export function createOwnedCloser(session,getBrowser,io=normalLifecycleIO,closers=ownClosers) {
+  let pending;
+  const close=() => pending||(pending=(async () => {
+    const receipt={id:session.id,command_succeeded:false,errors:[]};
+    if(!helperIdentity(session)) {receipt.closed=false;receipt.errors.push('Owned identity unsupported; no stop issued');return receipt;}
+    try {
+      receipt.stop_command=io.command('agent-browser',['stop',session.id],30000);receipt.raw_stop=receipt.stop_command.stdout;
+      receipt.command_succeeded=receipt.stop_command.exit_code===0&&!receipt.stop_command.error&&!receipt.stop_command.stderr?.trim();
+      if(!receipt.command_succeeded)receipt.errors.push(receipt.stop_command);
+      try {receipt.stop_result=JSON.parse(receipt.raw_stop);} catch(e) {receipt.errors.push(String(e.stack||e));}
+      if(receipt.stop_result?.status==='failed') {receipt.terminal_failure=receipt.stop_result;receipt.errors.push({type:'helper-terminal-failure',record:receipt.stop_result});}
+    } catch(e) {receipt.errors.push(String(e.stack||e));}
+    let timer;
+    try {const browser=getBrowser();if(browser)await Promise.race([Promise.resolve().then(() => browser.close()),new Promise((_,reject) => {timer=setTimeout(() => reject(new Error('owned CDP disconnect timeout')),15000);})]);}
+    catch(e) {receipt.disconnect_error=String(e.stack||e);receipt.errors.push(receipt.disconnect_error);} finally {clearTimeout(timer);}
+    receipt.observation=observeBrowserLifecycle(io);receipt.census=receipt.observation.helper;
+    const ownUnit=receipt.observation.units?.[unitName(session.id)];
+    if(ownUnit&&(ownUnit.ActiveState==='failed'||ownUnit.Result!=='success'||+ownUnit.ExecMainStatus!==0))receipt.errors.push({type:'helper-unit-failure',unit:ownUnit});
+    receipt.closed=ownedStopVerified(session,receipt,receipt.observation,io.now());receipt.observed_at=new Date(io.now()).toISOString();
+    if(receipt.closed)closers.delete(close);return receipt;
+  })());
+  close.session_id=session.id;closers.add(close);return close;
+}
+export async function launchOwned(viewport,admission=null,io=normalLifecycleIO,closers=ownClosers) {
+  if(!admission)admission=prepareBrowserAdmission(phaseBinding?.global_admission,closers.size,io);
+  const token=admissionTokens.get(admission);
+  const declaredBinding=declaredBindings.get(admission.declared),declaredValid=declaredBinding?declaredBinding.hash===sha(JSON.stringify(admission.declared)):fresh(admission.declared?.checked_at,io.now());
+  if(!token||token.io!==io||token.hash!==sha(JSON.stringify(admission))||!fresh(admission.observed_at,io.now())||!declaredValid||admission.ownCount!==closers.size||closers.size>=2) {const e=new Error('HOLD: admission receipt absent, changed, stale or own pool changed');e.admission_receipt=admission;throw e;}
+  const start=io.command('agent-browser',['start','--url','about:blank'],30000);
+  if(start.exit_code!==0||start.error||start.stderr?.trim()) {const e=new Error('normal owned start failed: '+JSON.stringify(start));e.admission_receipt=admission;throw e;}
+  const session=JSON.parse(start.stdout);
+  if(!helperIdentity(session)||session.status!=='ready'||admission.observation.helper.some((s) => s.id===session.id)) {const e=new Error('HOLD: returned start identity unsupported or already belongs to history; no peer stopped');e.start_receipt=start;throw e;}
+  let browser;const close=createOwnedCloser(session,() => browser,io,closers);
   try {
-    if(typeof session.id!=='string' || typeof session.cdp_endpoint!=='string') throw new Error('unsupported normal helper start response');
-    browser=await chromium.connectOverCDP(session.cdp_endpoint,{timeout:30000});
+    if(!Number.isSafeInteger(session.pid)||session.pid<=0||typeof session.cdp_endpoint!=='string'||!/^http:\/\/127\.0\.0\.1:\d+$/.test(session.cdp_endpoint)) throw new Error('unsupported normal helper start response');
+    browser=await io.connect(session.cdp_endpoint);
     const context=browser.contexts()[0];if(!context) throw new Error('normal helper context unavailable');
     const real=await context.newPage(),cdp=await context.newCDPSession(real),bs=await browser.newBrowserCDPSession();
     await cdp.send('Page.enable');await cdp.send('Runtime.enable');await cdp.send('DOM.enable');
@@ -1239,9 +1389,9 @@ async function launchOwned(viewport) {
       },
     };
     await page.setViewport(viewport.width,viewport.height);
-    return {page,send:(m,p) => bs.send(m,p),session,admission:{actual_cdp_browsers_before:actual,helper_sessions_before:sessions.length,observed_at:new Date().toISOString()},profile:session.profile||session.profile_dir||null,close};
+    return {page,send:(m,p) => bs.send(m,p),session,admission,start_receipt:start,profile:session.profile||session.profile_dir||null,close};
   } catch(e) {
-    const cleanup=await close();throw new Error(String(e.stack||e)+'; exact owned cleanup '+JSON.stringify(cleanup));
+    const cleanup=await close(),error=new Error(String(e.stack||e)+'; exact owned cleanup '+JSON.stringify(cleanup));error.owned_stop_receipt=cleanup;error.start_receipt=start;throw error;
   }
 }
 
@@ -1293,17 +1443,15 @@ export async function captureOrdinaryRuntime(owned,expected,state) {
   return bindOrdinaryRuntime(o,expected);
 }
 
-async function runLook(look,motion) {
+export async function runLook(look,motion,dependencies={}) {
   const res={look:look.id,motion,pages:{}};
   for(const which of ['base','cand']) {
     const pr={views:{},tour:[],state:null,errors:[],runtime:null,runtime_observations:[],resource_closed:false}, owned={}, events=[];
     try {
-      const admitted=phaseBinding.global_admission;
-      const census=JSON.parse(execFileSync('agent-browser',['list'],{encoding:'utf8',timeout:15000}));
-      if(!Array.isArray(census)) throw new Error('unsupported global agent-browser census response');
-      if(census.length + admitted.unmanaged_cdp_browsers >= admitted.max_total) throw new Error('global browser cap reached; no peer is stopped');
-      pr.admission={helper_census:census,declared_unmanaged:admitted.unmanaged_cdp_browsers,observed_at:new Date().toISOString()};
-      Object.assign(owned,await launch(VIEWPORT)); const page=owned.page;pr.admission.exact_start=owned.admission;
+      const io=dependencies.lifecycle||normalLifecycleIO;
+      pr.admission=prepareBrowserAdmission(dependencies.global_admission||phaseBinding?.global_admission,ownClosers.size,io,dependencies.parallel??lifecycleParallel);
+      Object.assign(owned,await (dependencies.launch||launch)(VIEWPORT,pr.admission,io)); const page=owned.page;
+      pr.start_receipt=owned.start_receipt;
 
       page.on('Runtime.exceptionThrown',(e) => events.push({type:'exception',event:e}));
       page.on('Runtime.consoleAPICalled',(e) => {if(e.type==='error') events.push({type:'console.error',event:e});});
@@ -1346,7 +1494,7 @@ async function runLook(look,motion) {
 
       /* Keep the helper's errors as well, without slicing/filtering. */
       pr.errors.push(...(page.errors||[]));
-    } catch(e) {pr.errors.push({type:'driver',error:String(e.stack||e)});}
+    } catch(e) {if(e.admission_receipt)pr.admission=e.admission_receipt;if(e.owned_stop_receipt){pr.stop_receipt=e.owned_stop_receipt;pr.resource_closed=e.owned_stop_receipt.closed===true;}if(e.start_receipt)pr.start_receipt=e.start_receipt;pr.errors.push({type:'driver',error:String(e.stack||e)});}
     finally {
       pr.errors.push(...events);
       pr.input_receipts=owned.page ? owned.page.inputReceipts||[] : [];
@@ -1644,6 +1792,8 @@ async function main() {
   else {
     PAGES={base:resolve(config.values['--base']),cand:resolve(config.candidate)};
     phaseBinding=bindLive(config);r.binding=phaseBinding;r.phase='B-exact-bound-matrix';
+    bindDeclaredAdmission(phaseBinding.global_admission);
+    lifecycleParallel=config.parallel;
     for(const [which,p] of Object.entries(PAGES)) r.pages[which]={path:p,sha256:sha(readFileSync(p))};
     /* Deferred import: Phase A has no browser launcher or browser signal handlers. */
     launch=launchOwned;
