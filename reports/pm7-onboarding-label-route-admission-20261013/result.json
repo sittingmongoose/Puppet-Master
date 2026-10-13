@@ -1,0 +1,255 @@
+{
+  "schema": "pm7-onboarding-S6-S7-correction/v1",
+  "at": "2026-10-13T09:55:16.289714+00:00",
+  "status": "HOLD",
+  "mechanical_status": "READY_FOR_ROOT_REVIEW",
+  "authorization": {
+    "scope": "Same-worker S6/S7 mechanical implementation and necessary NEW isolated checks only",
+    "GO_path": "/mnt/Cursor/share/puppet-master/2026-10-13-creative-queue/ONBOARDING-PAIR-ROUTE-ADMISSION-CORRECTION-GO.md",
+    "GO_sha256": "fcaf70b5a4e6a295e03e014f6a899f378bae8dcf9f64ded0f484412a2cd0e56c",
+    "actual_mechanical_message_id": "message:mcp:4103467a-6a3c-4191-a4dc-ae5ad70ae674:thread-send:home-planner-onboarding-pair-route-admission-own-correction-20261013-v1",
+    "Phase_B_execution_authorized": false
+  },
+  "custody": {
+    "input_head": "5cfa433ec3cd554306f3a22c402cdf345494e036",
+    "historical_tool": {
+      "bytes": 143595,
+      "sha256": "1bf57a48211ebd713190e291a3c6ce29a3c39b79061e475f616fc810a2cc26e1"
+    },
+    "tested_tool": {
+      "path": "Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs",
+      "bytes": 151473,
+      "sha256": "38e8b5aa255849466df28a55f39c2d1aebfb9e4cca25cd6a1a3a31dd5dab621c",
+      "retained_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-route-admission-20261013/attempt-1-tool.mjs"
+    },
+    "code_input_head": "f4d89c2fecd00da73be7c5a58f0fe7284e87dc7f",
+    "S1_S3_code_head": "c98c42131a24bfc07f27e1607b3c69b35bd136cc",
+    "composition_head": "967653b5265e27b13cf0c300dd0b1b0599c2d482",
+    "original_source_head": "29cdc86e3c9078d94260b79905e6ae49c169305c",
+    "original_Phase_A_head": "1c40733e83f9af49da366633b0b9eb71e6d174e2",
+    "candidate_head": "f109bad9f312ca0f55887f069dd4328dc17f7b9e",
+    "candidate_page": "Concepts/PMConcept7.html",
+    "candidate_sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+    "source_pages": {
+      "Concepts/PMConcept7.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "git_source_sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact_source": true
+      },
+      "Concepts/Onboarding concepts/TestOpus5.5PmConcept.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "git_source_sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact_source": true
+      },
+      "Concepts/HomeTestPMConcept7.html": {
+        "bytes": 18602927,
+        "sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "git_source_sha256": "88ed754dab14c13980dbfb25bb9eee510ae830110b2cef5397ded6b7ba1eba1c",
+        "exact_source": true
+      },
+      "Concepts/LeftRailPMConcept7.html": {
+        "bytes": 19237474,
+        "sha256": "13d002fc7057c17270cbc149457cee588df423b8a3543fa5a5359901d7cba8bb",
+        "git_source_sha256": "13d002fc7057c17270cbc149457cee588df423b8a3543fa5a5359901d7cba8bb",
+        "exact_source": true
+      }
+    },
+    "base": {
+      "head": "e254a56477c7b8da424b7485ba17f358fdbf3ec5",
+      "bytes": 18598981,
+      "sha256": "b612df00caa2e2fb13b9b2307a17f283358845b596f33a27a31ba55d40266451"
+    },
+    "starting_entries": 16042,
+    "outside_successor_original_entries_and_physical_bytes_exact": 16041,
+    "old_evidence_files_including_all_seals_exact": 351,
+    "old_evidence_directories": 7,
+    "helper_sha256": "84e83fd6d184b1d44713d01670246ae85f951d7c6726f3d512d69702a904b3ec",
+    "helper_history_records_exact": 93,
+    "peer_profiles_exact": 3,
+    "helper_configuration_exact": true,
+    "outside_delta": false,
+    "commit_remote_tool_equivalence_and_final_resource_receipt": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-route-admission-20261013/final-head-receipt.json"
+  },
+  "changes": {
+    "S6": {
+      "disposition": "Implemented for root mechanical review only",
+      "bounded_scope": {
+        "kind": "bounded-pair",
+        "matrix": "wide|narrow",
+        "look": "one published LOOKS ID",
+        "motion": "one allowed motion",
+        "campaign": {
+          "looks": [
+            "basic-light",
+            "friendly-light",
+            "glass-dark",
+            "retro-dark",
+            "basic-dark",
+            "friendly-dark",
+            "glass-light",
+            "retro-light",
+            "nier-light",
+            "nier-dark",
+            "nier-light-plain",
+            "nier-dark-plain"
+          ],
+          "wide_pairs": 24,
+          "narrow_pairs": 12
+        }
+      },
+      "tool_custody": "Exact committed tool head and running/committed SHA256 required for bounded routes",
+      "wide": "1440x900, sweep candidate only, tour, parallel1; normal or reduced",
+      "narrow": "390x844, normal, no-tour, no-sweep, parallel1",
+      "full_matrix_route": "Existing wide/narrow routes and requested-coverage semantics preserved",
+      "generic_subset_allowed": false,
+      "production_path": "parseArgs -> bindLive -> declared admission -> canonical queue -> finalCoverage -> verdict",
+      "bounded_verdict": "HOLD/UNVERIFIED with observations_complete=false; invocation record completeness distinct from full campaign completion",
+      "campaign_coverage_basis": "This invocation only; ignores declaration counters and prior records"
+    },
+    "S7": {
+      "disposition": "Implemented explicit inactive-history debt under this GO; old1bf HOLD unchanged",
+      "known_inactive_peer_records": [
+        "ab64d1003f13",
+        "cc80c88970ef",
+        "c4bdf8272f25"
+      ],
+      "retained_run5_fixture_counts": {
+        "history": 93,
+        "resource_free": 90,
+        "inactive_profile_debts": 3,
+        "actual_CDP": 0,
+        "reserved": 0
+      },
+      "debt": {
+        "owner": "UNKNOWN",
+        "resolution": "UNRESOLVED",
+        "resource_free": false,
+        "peer_resources0_claim": false,
+        "slot_contribution": 0
+      },
+      "admission": "Supported terminal status, exact PID absence, supported inactive unit/no members and reliable profile observation required. Every live/reserved managed/unmanaged browser remains counted. Unknown/unavailable/surviving state remains HOLD.",
+      "owned_closure": "Original S5 verifier body exact: normal stop/returned exact ID/physical PID and unit-member absence/OWN profile absent, bounded idempotence. Retained own profile cannot close or refund closer. Real failed record/unit/command errors retained.",
+      "peer_cleanup": false,
+      "report_metadata": "Full raw lifecycle observations and unresolved debt retained at admissions, owned stop and report/summary"
+    }
+  },
+  "new_verification": {
+    "attempts": 1,
+    "isolated_passed": 75,
+    "isolated_failed": 0,
+    "tested_tool_bytes": 151473,
+    "tested_tool_sha256": "38e8b5aa255849466df28a55f39c2d1aebfb9e4cca25cd6a1a3a31dd5dab621c",
+    "scope": "NEW controlled production CLI route preparation and lifecycle cases only; original retained run5 time/IO are fixtures, never new live evidence",
+    "production_route_positive_cases": 5,
+    "scope_source_API_freshness_cap_CLI_negative_cases": 47,
+    "coverage_cases": 2,
+    "lifecycle_cases": 20,
+    "static_preservation_case": 1,
+    "schema": "Draft2020-12 schema checked; two positive wide/narrow template payloads plus two rejection examples",
+    "final_exact_commit_examples": "New inert wide-binding.example.json and narrow-binding.example.json with real tool commit; exact schema/controlled pre-browser validations recorded after commit in final-example-validation.json",
+    "old19_26_58_replays": 0,
+    "syntax_and_whitespace": "PASS",
+    "actual_product_CLI": 0,
+    "actual_browser_unit_start_stop": 0,
+    "negative_errors": "Expected rejection counterexamples preserve raw errors, including unknown Git tool ref; no test failure normalized"
+  },
+  "product_coverage": {
+    "published_looks": [
+      "basic-light",
+      "friendly-light",
+      "glass-dark",
+      "retro-dark",
+      "basic-dark",
+      "friendly-dark",
+      "glass-light",
+      "retro-light",
+      "nier-light",
+      "nier-dark",
+      "nier-light-plain",
+      "nier-dark-plain"
+    ],
+    "wide": {
+      "expected_pairs": 24,
+      "executed_pairs": 0,
+      "remaining_pairs": 24,
+      "status": "NOT_RUN"
+    },
+    "narrow": {
+      "expected_pairs": 12,
+      "executed_pairs": 0,
+      "remaining_pairs": 12,
+      "status": "NOT_RUN"
+    },
+    "bindings_frozen_for_live_execution": 0,
+    "actual_pages_attempted": 0,
+    "fixture_coverage_is_product_coverage": false
+  },
+  "held": {
+    "product_source_look_full_criteria_landing": "HOLD; later exact frozen tool/source/root-message/admission Phase B GO mandatory",
+    "absolute_floor": 4.5,
+    "renderer": "UNVERIFIED; ordinary/software observations cannot certify renderer",
+    "paint": "Unsupported paint/backdrops/transforms and missing word pixels remain UNVERIFIED",
+    "ownership": "Original source owner/Jared retains colour, action geometry, marks/square ink/look and Wizard/non-label questions; no actor woken",
+    "coverage": "Missing states, trusted Show Me/input, look/motion/parts, unpaired contexts remain unverified until actual new observations",
+    "old_reports": "All original NOT_RUN/HOLD/raw failures and old19/26/58 meaning unchanged",
+    "contrast_context": "384 intermediate97256a readings and only4 final88ed readings; old hiding/suppression/whole-box median/crashes/transients/fallback cannot establish worst actual word-background floor or trusted flow"
+  },
+  "evidence": {
+    "root": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-route-admission-20261013",
+    "committable_seal": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-route-admission-20261013/COMMITTABLE-SEAL.json",
+      "entries": 20,
+      "sha256": "baec188459c8a99058a8c30af0064716bb7fdb4f84cdfccd45cf41aef2a4e0bb"
+    },
+    "files": {
+      "attempt-1-results.json": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-route-admission-20261013/attempt-1-results.json",
+        "sha256": "d3028f7ed073dae7c7ca8cb45b503431e4c4adf473a52780f3ede727ae30f5e7"
+      },
+      "attempt-1-protocol-receipts.json": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-route-admission-20261013/attempt-1-protocol-receipts.json",
+        "sha256": "da19ec322eb25adc4147526d72b03ad0654e295b7075ba0cddb376caa35e95ce"
+      },
+      "attempt-1-isolated-s6s7.mjs": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-route-admission-20261013/attempt-1-isolated-s6s7.mjs",
+        "sha256": "7f55437bd321be0188ff92c03e39bc472260dd2fe5ea50eb998f4af793fa5a04"
+      },
+      "attempt-1-route-fixtures.mjs": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-route-admission-20261013/attempt-1-route-fixtures.mjs",
+        "sha256": "d4a3dbb17d5aadfc5664175e6c901a3eb71e913a74d15f6d1f9fc10064fbdbf2"
+      },
+      "precommit-custody.json": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-route-admission-20261013/precommit-custody.json",
+        "sha256": "7128f51293e28ef99a840fe380a7cb669d17ed75a3a6768d173d9bcdeec130aa"
+      },
+      "bounded-binding.schema.json": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-route-admission-20261013/bounded-binding.schema.json",
+        "sha256": "843c523ca77408a0d96861748bc793cab29796fab9ddd15997ac2ded18fc7fe4"
+      },
+      "inert-binding-templates.json": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-route-admission-20261013/inert-binding-templates.json",
+        "sha256": "bb551a6fd3f4945f4ffdeea1f0610a82409463d9fd2be3c6bb269c8f905da6a1"
+      },
+      "schema-validation.json": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-route-admission-20261013/schema-validation.json",
+        "sha256": "58f1d4386aa48dab9c5b71926b7895fe79956039d28c9d42d1bfeb1c12ce48db"
+      },
+      "static-checks.json": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-route-admission-20261013/static-checks.json",
+        "sha256": "db112ef257dbec691bb47fdd1d0c183a508376de87d966f1d69372dc9d2d9f26"
+      }
+    },
+    "final_seal_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-label-route-admission-20261013/FINAL-SEAL.json"
+  },
+  "resources": {
+    "actual_product_browsers_started": 0,
+    "actual_helper_units_started_or_stopped": 0,
+    "profiles_created": 0,
+    "servers_started": 0,
+    "source_staging_created": 0,
+    "own_waiter_and_local_runners": "Active during implementation; exact stop/consumption and disposable cleanup are required before FINAL and recorded in final-head-receipt.json. No peer resource-free claim."
+  },
+  "next": "Root mechanical review only. No self-next or source/product/look/landing acceptance."
+}

@@ -19,6 +19,11 @@
  *   global_admission={checked_at, all_cdp_browsers, unmanaged_cdp_browsers, max_total:4,
  *                     owned_session_limit:2, source_owner_coordinated:true}.
  * Admission must be fresh (<60s), must count all browsers, and never grants authorization by itself.
+ * One-pair execution additionally requires execution_scope={kind:'bounded-pair',matrix:'wide'|'narrow',
+ * look,motion,campaign:{looks:[all12 in published order],wide_pairs:24,narrow_pairs:12}} and
+ * tool_custody={head:<exact commit containing this edition>,sha256:<exact running tool SHA256>}.
+ * Wide pairs require1440x900/sweep/tour; narrow pairs390x844/normal/no-tour/no-sweep; parallel1 only.
+ * Pair coverage never certifies full campaign completion. Examples are inert schema fixtures, not a GO.
  * --out writes a new report.json exclusively (existing evidence is never overwritten).
  * Verdict: READY only for fully measured requested gates with no failure, HOLD or gap; otherwise HOLD.
  * Exit 1: failures/ownership HOLD; 2: UNVERIFIED/errors/invalid binding. Self-test exit 0 concerns isolated
@@ -755,11 +760,14 @@ const failure=(r,w,c,d) => issue(r,'failures',w,c,d);
 const unknown=(r,w,c,d) => issue(r,'unverified',w,c,d);
 const hold=(r,w,c,d) => issue(r,'holds',w,c,d);
 export function verdict(r) {
-  const observed = r.observations_complete===true && r.runs.length>0;
+  const bounded=r.binding?.bound_route?.kind==='bounded-pair';
+  const observed = r.observations_complete===true && r.runs.length>0 && !bounded;
   const hold = !observed || !!(r.failures.length || r.regressions.length || r.holds.length || r.unverified.length);
   return { status:hold ? 'HOLD' : 'READY', exit_code:!observed || r.unverified.length ? 2 : hold ? 1 : 0,
     absolute_failures:r.failures.length, regressions:r.regressions.length, ownership_holds:r.holds.length,
-    unverified:r.unverified.length, observations_complete:observed, raw_findings:r.rawFindings.length, contrast_below_floor:r.contrastLow.length };
+    unverified:r.unverified.length, observations_complete:observed, raw_findings:r.rawFindings.length, contrast_below_floor:r.contrastLow.length,
+    ...(r.campaign_coverage?{invocation_records_complete:r.invocation_coverage.records_complete,full_campaign_complete:r.campaign_coverage.complete}:{}),
+    ...(r.historical_cleanup_debts?{historical_cleanup_debts:r.historical_cleanup_debts.length}: {}) };
 }
 export function judgeContrast(r,where,base,cand) {
   const cr=cand && cand.contrast, br=base && base.contrast;
@@ -976,12 +984,31 @@ export function judgeRun(r,run) {
     }
   }
 }
-function finalCoverage(r) {
+export function finalCoverage(r) {
   if(!r.runs.length) unknown(r,'matrix','no-product-observations','zero arrays or a tool-only exit 0 do not establish product success');
   const expected=looks.flatMap((l) => motions.map((m) => l.id+'/'+m));
   const observed=r.runs.map((x) => x.look+'/'+x.motion);
   r.observations_complete=expected.length>0 && expected.every((k) => observed.filter((x) => x===k).length===1);
   for(const k of expected) if(observed.filter((x) => x===k).length!==1) unknown(r,'matrix','expected-combination-missing-or-duplicate',k);
+  if(r.binding?.bound_route) {
+    const route=r.binding.bound_route,unexpected=observed.filter((k) => !expected.includes(k));
+    r.invocation_coverage={kind:route.kind,matrix:route.matrix,expected,attempted:observed,records_complete:r.observations_complete&&unexpected.length===0,unexpected};
+    for(const k of unexpected)unknown(r,'matrix','out-of-bound-route-combination',k);
+    const matrices={};
+    for(const matrix of ['wide','narrow']) {
+      const all=LOOKS.flatMap((l) => (matrix==='wide'?['normal','reduced']:['normal']).map((m) => l.id+'/'+m));
+      const attempted=matrix===route.matrix?observed.filter((k) => expected.includes(k)):[];
+      const once=all.filter((k) => attempted.filter((x) => x===k).length===1);
+      matrices[matrix]={expected_pairs:all.length,expected:all,attempted_pairs:attempted.length,attempted,remaining_pairs:all.length-once.length,remaining:all.filter((k) => !once.includes(k)),records_complete:once.length===all.length&&attempted.length===all.length};
+    }
+    r.campaign_coverage={expected_looks:LOOKS.map((l) => l.id),matrices,complete:matrices.wide.records_complete&&matrices.narrow.records_complete,
+      basis:'This exact invocation only; no binding counters or prior/other pair records certify completed coverage'};
+    r.observations_complete=r.invocation_coverage.records_complete&&route.kind!=='bounded-pair';
+    if(route.kind==='bounded-pair')unknown(r,'campaign','bounded-pair-does-not-certify-full-matrix',r.campaign_coverage);
+    r.historical_cleanup_debts=[];
+    for(const run of r.runs)for(const [which,p] of Object.entries(run.pages||{}))for(const [source,receipt] of [['admission',p.admission],['owned-stop',p.stop_receipt]])
+      for(const debt of receipt?.cleanup_debts||receipt?.historical_cleanup_debts||[])r.historical_cleanup_debts.push({look:run.look,motion:run.motion,which,receipt_source:source,...debt});
+  }
   for(const run of r.runs) {
     const p=run.pages&&run.pages.cand,sel=new Set();
     if(p) for(const v of [...Object.values(p.views||{}),...Object.values(p.sweep||{}),...(p.tour||[])]) for(const l of v&&v.data&&v.data.labels||[]) sel.add(l.sel);
@@ -1228,7 +1255,7 @@ export function observeBrowserLifecycle(io=normalLifecycleIO) {
   o.observed_at=new Date(io.now()).toISOString();return o;
 }
 export function reconcileBrowserLifecycle(o,now=Date.now()) {
-  const holds=[],bad=(code,detail) => holds.push({code,detail}),states=[],roots=new Map();
+  const holds=[],bad=(code,detail) => holds.push({code,detail}),states=[],cleanupDebts=[],roots=new Map();
   if(!o||o.schema!=='agent-browser-lifecycle/v1'||!fresh(o.started_at,now)||!fresh(o.observed_at,now))bad('lifecycle-observation-unavailable-or-stale',o?.observed_at);
   if(o?.helper_sha256!==HELPER_PROTOCOL_SHA)bad('unsupported-helper-protocol',o?.helper_sha256);
   for(const e of o?.errors||[])bad('lifecycle-observation-error',e);
@@ -1244,7 +1271,7 @@ export function reconcileBrowserLifecycle(o,now=Date.now()) {
     }
     if(Object.keys(rawUnits).length!==Object.keys(o.units||{}).length||Object.entries(rawUnits).some(([name,fields]) => !o.units?.[name]||Object.keys(fields).length!==Object.keys(o.units[name]).length||Object.entries(fields).some(([k,v]) => o.units[name][k]!==v)))bad('unit-raw-observation-conflict',null);
   }
-  if(holds.length)return {holds,states,counts:null,observation:o};
+  if(holds.length)return {holds,states,cleanup_debts:cleanupDebts,counts:null,observation:o};
   const ps=new Map();
   for(const line of o.process_command.stdout.split('\n').filter((l) => l.trim())) {
     const m=/^\s*(\d+)\s+(\S+)(?:\s+(.*))?$/.exec(line);
@@ -1271,6 +1298,7 @@ export function reconcileBrowserLifecycle(o,now=Date.now()) {
     if(profile?.available!==true||typeof profile.exists!=='boolean'||s.pid!=null&&(fact?.available!==true||typeof fact.exists!=='boolean'))bad('helper-physical-observation-unavailable',{id:s.id,profile,fact});
     const members=Object.entries(o.process_facts).filter(([,f]) => inUnit(f,name)).map(([pid]) => +pid);
     const matchingRoots=[...roots].filter(([,r]) => r.fact?.argv?.includes('--user-data-dir='+s.profile)&&inUnit(r.fact,name)).map(([pid]) => pid);
+    const profileRoots=[...roots].filter(([,r]) => r.fact?.argv?.includes('--user-data-dir='+s.profile)).map(([pid]) => pid);
     for(const pid of matchingRoots)claimedRoots.add(pid);
     if(matchingRoots.length>1)bad('conflicting-managed-processes',{id:s.id,pids:matchingRoots});
     if(fact?.exists&&(!ps.has(s.pid)||!matchingRoots.includes(s.pid)))bad('helper-pid-identity-mismatch',{id:s.id,pid:s.pid,fact});
@@ -1278,16 +1306,22 @@ export function reconcileBrowserLifecycle(o,now=Date.now()) {
     const reserved=s.status==='starting'||s.status==='ready'||unitLive(u)||members.length>0||!!fact?.exists;
     if(s.status==='ready'&&(!unitLive(u)||!u?.MainPID||+u.MainPID===0||matchingRoots.length!==1||matchingRoots[0]!==s.pid||!profile?.exists||typeof s.cdp_endpoint!=='string'||!/^http:\/\/127\.0\.0\.1:\d+$/.test(s.cdp_endpoint)))bad('ready-session-unreconciled',s);
     if(s.status==='starting'&&!unitLive(u))bad('starting-reservation-unit-unconfirmed',s);
-    const resourceFree=terminalStatus(s.status)&&!!u&&!unitLive(u)&&+u.MainPID===0&&members.length===0&&!fact?.exists&&profile?.available===true&&profile.exists===false;
-    if(terminalStatus(s.status)&&!resourceFree)bad('terminal-history-resources-unverified',{id:s.id,u,fact,profile,members});
-    states.push({id:s.id,status:s.status,reserved,resource_free:resourceFree,managed_cdp_pids:matchingRoots,unit_members:members,unit:u,pid:fact,profile,record:s});
+    const inactiveBrowser=terminalStatus(s.status)&&!!u&&['loaded','not-found'].includes(u.LoadState)&&u.Id===name&&['inactive','failed'].includes(u.ActiveState)&&['dead','failed'].includes(u.SubState)&&
+      +u.MainPID===0&&members.length===0&&s.pid!=null&&fact?.available===true&&fact.exists===false&&profileRoots.length===0;
+    const resourceFree=terminalStatus(s.status)&&!!u&&!unitLive(u)&&+u.MainPID===0&&members.length===0&&!fact?.exists&&profile?.available===true&&profile.exists===false&&profileRoots.length===0;
+    const cleanupDebt=inactiveBrowser&&profile?.available===true&&profile.exists===true ?
+      {id:s.id,status:s.status,profile:s.profile,owner:'UNKNOWN',resolution:'UNRESOLVED',inactive_browser:true,resource_free:false,peer_resources0_claim:false,slot_contribution:0,profile_observation:profile,record:s}:null;
+    if(cleanupDebt)cleanupDebts.push(cleanupDebt);
+    if(terminalStatus(s.status)&&!resourceFree&&!cleanupDebt)bad('terminal-history-resources-unverified',{id:s.id,u,fact,profile,members,profile_cdp_pids:profileRoots});
+    states.push({id:s.id,status:s.status,reserved,inactive_browser:inactiveBrowser,resource_free:resourceFree,cleanup_debt:cleanupDebt,managed_cdp_pids:matchingRoots,unit_members:members,unit:u,pid:fact,profile,record:s});
   }
   const orphanUnits=Object.entries(o.units).filter(([name,u]) => !usedUnits.has(name)&&(unitLive(u)||Object.values(o.process_facts).some((f) => inUnit(f,name))));
   for(const [name,u] of orphanUnits)bad('live-helper-unit-without-record',{name,u});
   const reservedWithoutCdp=states.filter((s) => s.reserved&&!s.managed_cdp_pids.length).length+
     orphanUnits.filter(([name]) => ![...roots.values()].some((r) => inUnit(r.fact,name))).length;
-  return {holds,states,counts:{actual_cdp:roots.size,managed_cdp:claimedRoots.size,unmanaged_cdp:roots.size-claimedRoots.size,
-    reserved_without_cdp:reservedWithoutCdp,all_live_or_reserved:roots.size+reservedWithoutCdp,confirmed_dead_history:states.filter((s) => s.resource_free).length},observation:o};
+  return {holds,states,cleanup_debts:cleanupDebts,counts:{actual_cdp:roots.size,managed_cdp:claimedRoots.size,unmanaged_cdp:roots.size-claimedRoots.size,
+    reserved_without_cdp:reservedWithoutCdp,all_live_or_reserved:roots.size+reservedWithoutCdp,confirmed_dead_history:states.filter((s) => s.resource_free).length,
+    inactive_browser_history:states.filter((s) => s.inactive_browser).length,historical_cleanup_debts:cleanupDebts.length},observation:o};
 }
 const admissionTokens=new WeakMap();
 const declaredBindings=new WeakMap();
@@ -1345,6 +1379,9 @@ export function createOwnedCloser(session,getBrowser,io=normalLifecycleIO,closer
     try {const browser=getBrowser();if(browser)await Promise.race([Promise.resolve().then(() => browser.close()),new Promise((_,reject) => {timer=setTimeout(() => reject(new Error('owned CDP disconnect timeout')),15000);})]);}
     catch(e) {receipt.disconnect_error=String(e.stack||e);receipt.errors.push(receipt.disconnect_error);} finally {clearTimeout(timer);}
     receipt.observation=observeBrowserLifecycle(io);receipt.census=receipt.observation.helper;
+    const lifecycle=reconcileBrowserLifecycle(receipt.observation,io.now());
+    receipt.historical_cleanup_debts=(lifecycle.cleanup_debts||[]).filter((d) => d.id!==session.id);
+    const ownDebt=(lifecycle.cleanup_debts||[]).find((d) => d.id===session.id);receipt.owned_cleanup_debt=ownDebt?{...ownDebt,owner:'OWN',peer_resources0_claim:false}:null;
     const ownUnit=receipt.observation.units?.[unitName(session.id)];
     if(ownUnit&&(ownUnit.ActiveState==='failed'||ownUnit.Result!=='success'||+ownUnit.ExecMainStatus!==0))receipt.errors.push({type:'helper-unit-failure',unit:ownUnit});
     receipt.closed=ownedStopVerified(session,receipt,receipt.observation,io.now());receipt.observed_at=new Date(io.now()).toISOString();
@@ -1548,30 +1585,73 @@ function verifyFrozen() {
   const amendment=readFileSync(AUTHORITY.contrast.path);if(sha(amendment)!==AUTHORITY.contrast.sha256 || !amendment.toString().includes(AUTHORITY.contrast.required_text)) throw new Error('contrast authority conflicts/missing: scope disposition required');
   return {tools:receipts,gate_go:AUTHORITY.gate_go,amendment_sha256:sha(amendment),successor_sha256:sha(readFileSync(fileURLToPath(import.meta.url)))};
 }
-function bindLive(config) {
-  const path=resolve(config.values['--phase-b-binding']),bytes=readFileSync(path),b=JSON.parse(bytes);
-  if(b.phase!=='B' || typeof b.root_message_id!=='string' || !b.root_message_id.trim() || !/^[a-f0-9]{40}$/.test(b.candidate_head||'') || b.candidate_head===FROZEN_HEAD || b.base_head!==BASE_HEAD) throw new Error('HOLD: absent/invalid later root/source binding; frozen 29 is not a Phase B candidate');
+export function expectedCampaign() {return {looks:LOOKS.map((l) => l.id),wide_pairs:24,narrow_pairs:12};}
+const exactKeys=(o,keys) => !!o&&typeof o==='object'&&!Array.isArray(o)&&JSON.stringify(Object.keys(o).sort())===JSON.stringify([...keys].sort());
+function parseBindingJSON(bytes) {
+  const text=bytes.toString(),b=JSON.parse(text),stack=[];
+  for(const token of text.match(/"(?:\\[\s\S]|[^"\\])*"|[{}\[\],:]|true|false|null|-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/g)||[]) {
+    if(token==='{')stack.push({object:true,key:true,keys:new Set()});
+    else if(token==='[')stack.push({object:false});
+    else if(token==='}'||token===']')stack.pop();
+    else if(token===','&&stack.at(-1)?.object)stack.at(-1).key=true;
+    else if(token[0]==='"'&&stack.at(-1)?.object&&stack.at(-1).key) {
+      const frame=stack.at(-1),key=JSON.parse(token);if(frame.keys.has(key))throw new Error('HOLD: duplicate Phase B binding key '+key);frame.keys.add(key);frame.key=false;
+    }
+  }
+  return b;
+}
+const normalBindingIO={now:() => Date.now(),read:readFileSync,
+  git:(args,cwd) => execFileSync('git',args,{cwd,maxBuffer:64*1024*1024})};
+export function bindLive(config,pages=PAGES,io=normalBindingIO) {
+  const path=resolve(config.values['--phase-b-binding']),bytes=io.read(path),b=parseBindingJSON(bytes);
+  if(!b || b.phase!=='B' || typeof b.root_message_id!=='string' || !b.root_message_id.trim() || !/^[a-f0-9]{40}$/.test(b.candidate_head||'') || b.candidate_head===FROZEN_HEAD || b.base_head!==BASE_HEAD) throw new Error('HOLD: absent/invalid later root/source binding; frozen 29 is not a Phase B candidate');
   if(JSON.stringify(b.fixture_apis)!==JSON.stringify(FIXTURE_APIS)) throw new Error('fixture/UI API bindings incomplete');
-  const a=b.global_admission,age=a&&Date.now()-Date.parse(a.checked_at);
+  const a=b.global_admission,age=a&&io.now()-Date.parse(a.checked_at);
   if(!a || !Number.isFinite(age) || age<0 || age>60000 || !Number.isInteger(a.all_cdp_browsers) || !Number.isInteger(a.unmanaged_cdp_browsers) ||
     a.all_cdp_browsers<0 || a.unmanaged_cdp_browsers<0 || a.unmanaged_cdp_browsers>a.all_cdp_browsers || a.max_total!==4 || a.owned_session_limit!==2 ||
     !a.source_owner_coordinated || a.all_cdp_browsers+config.parallel>4) throw new Error('HOLD: fresh actual global admission/source-owner coordination required');
-  const root=execFileSync('git',['rev-parse','--show-toplevel'],{cwd:HERE,encoding:'utf8'}).trim();
-  execFileSync('git',['merge-base','--is-ancestor',FROZEN_HEAD,b.candidate_head],{cwd:root});
+  const root=io.git(['rev-parse','--show-toplevel'],HERE).toString().trim();
+  io.git(['merge-base','--is-ancestor',FROZEN_HEAD,b.candidate_head],root);
   const owned=new Set(['10-window.css','11-window-nier.css','12-components.css','13-nier-look.css','40-tour.css','41-tour-nier.css'].map((f) => 'Concepts/onboarding/opus-5.5/src/css/'+f));
   for(const p of ['Concepts/PMConcept7.html','Concepts/Onboarding concepts/TestOpus5.5PmConcept.html','Concepts/HomeTestPMConcept7.html','Concepts/LeftRailPMConcept7.html']) owned.add(p);
-  const changed=execFileSync('git',['diff','--name-only','--no-renames',FROZEN_HEAD,b.candidate_head],{cwd:root,encoding:'utf8'}).trim().split('\n').filter(Boolean);
+  const changed=io.git(['diff','--name-only','--no-renames',FROZEN_HEAD,b.candidate_head],root).toString().trim().split('\n').filter(Boolean);
   if(changed.some((p) => !owned.has(p) && !p.startsWith('reports/pm7-no-pills-onboarding-contrast-20261013/'))) throw new Error('candidate has changes outside separately bound source ownership: '+changed.join(', '));
   const cp=b.candidate_page||'Concepts/PMConcept7.html';if(!owned.has(cp) || !cp.endsWith('.html')) throw new Error('candidate parent page not bound');
-  const blob=execFileSync('git',['show',b.candidate_head+':'+cp],{cwd:root,maxBuffer:64*1024*1024});
-  const base=execFileSync('git',['show',BASE_HEAD+':Concepts/Onboarding concepts/TestOpus5.5PmConcept.html'],{cwd:root,maxBuffer:64*1024*1024});
-  const candBytes=readFileSync(PAGES.cand),baseBytes=readFileSync(PAGES.base);
+  const blob=io.git(['show',b.candidate_head+':'+cp],root);
+  const base=io.git(['show',BASE_HEAD+':Concepts/Onboarding concepts/TestOpus5.5PmConcept.html'],root);
+  const candBytes=io.read(pages.cand),baseBytes=io.read(pages.base);
   if(sha(candBytes)!==b.candidate_sha256 || sha(blob)!==b.candidate_sha256 || sha(baseBytes)!==b.base_sha256 || sha(base)!==b.base_sha256) throw new Error('exact base/candidate page binding mismatch');
   const all=config.looks.length===12;
   const wide=all && config.viewport.width===1440 && config.viewport.height===900 && config.motions.length===2 && config.flags.includes('--sweep') && !config.flags.includes('--no-tour');
   const narrow=all && config.viewport.width===390 && config.viewport.height===844 && config.motions.join(',')==='normal' && config.flags.includes('--no-tour') && !config.flags.includes('--sweep');
-  if(!wide && !narrow) throw new Error('unsupported Phase B matrix/route; no silent responsive tour skip');
-  return {...b,binding_path:path,binding_sha256:sha(bytes),source_delta:changed};
+  let matrix=wide?'wide':narrow?'narrow':null,kind='full-matrix';
+  if(b.execution_scope!==undefined) {
+    const s=b.execution_scope,c=s?.campaign;
+    if(!exactKeys(s,['kind','matrix','look','motion','campaign'])||s.kind!=='bounded-pair'||!exactKeys(c,['looks','wide_pairs','narrow_pairs'])||
+      JSON.stringify(c.looks)!==JSON.stringify(expectedCampaign().looks)||c.wide_pairs!==24||c.narrow_pairs!==12||
+      config.looks.length!==1||config.motions.length!==1||s.look!==config.looks[0]||s.motion!==config.motions[0]||config.parallel!==1)
+      throw new Error('HOLD: exact explicit bounded-pair scope/campaign/CLI mismatch');
+    const pairWide=s.matrix==='wide'&&config.viewport.width===1440&&config.viewport.height===900&&config.flags.includes('--sweep')&&!config.flags.includes('--no-tour');
+    const pairNarrow=s.matrix==='narrow'&&config.viewport.width===390&&config.viewport.height===844&&s.motion==='normal'&&config.flags.includes('--no-tour')&&!config.flags.includes('--sweep');
+    if(!pairWide&&!pairNarrow)throw new Error('HOLD: unsupported bounded-pair matrix/viewport/tour/sweep route');
+    const t=b.tool_custody;
+    if(!exactKeys(t,['head','sha256'])||!/^[a-f0-9]{40}$/.test(t.head||'')||!/^[a-f0-9]{64}$/.test(t.sha256||''))throw new Error('HOLD: bounded-pair exact tool custody required');
+    const tool=io.read(fileURLToPath(import.meta.url));
+    if(sha(tool)!==t.sha256||sha(io.git(['show',t.head+':Concepts/onboarding/opus-5.5/tools/onboarding_label_gate_check.mjs'],root))!==t.sha256)throw new Error('HOLD: bounded-pair running/committed tool edition mismatch');
+    io.git(['merge-base','--is-ancestor',t.head,'HEAD'],root);
+    matrix=s.matrix;kind=s.kind;
+  }
+  if(!matrix)throw new Error('unsupported Phase B matrix/route; no silent responsive tour skip');
+  return {...b,binding_path:path,binding_sha256:sha(bytes),source_delta:changed,bound_route:{kind,matrix,campaign:expectedCampaign(),
+    requested_pairs:config.looks.flatMap((l) => config.motions.map((m) => l+'/'+m))}};
+}
+export function prepareLiveExecution(config,args,io=normalBindingIO) {
+  if(config.mode!=='live')throw new Error('HOLD: live preparation requires parsed live route');
+  const pages={base:resolve(config.values['--base']),cand:resolve(config.candidate)},binding=bindLive(config,pages,io);
+  bindDeclaredAdmission(binding.global_admission,io.now());
+  argv=[...args];VIEWPORT=config.viewport;doTour=!config.flags.includes('--no-tour');looks=LOOKS.filter((l) => config.looks.includes(l.id));motions=config.motions;
+  PAGES=pages;phaseBinding=binding;lifecycleParallel=config.parallel;
+  return {binding,pages,queue:looks.flatMap((l) => motions.map((m) => [l,m])),viewport:VIEWPORT,tour:doTour,sweep:config.flags.includes('--sweep')};
 }
 
 async function replayFiles(r,files) {
@@ -1779,8 +1859,8 @@ export function selfTest() {
   return {scope:'isolated tool logic, no product/browser execution',cases,passed:cases.filter((c) => c.pass).length,failed:cases.filter((c) => !c.pass).length};
 }
 
-async function main() {
-  argv=process.argv.slice(2);
+export async function main(args=process.argv.slice(2),dependencies={}) {
+  argv=[...args];
   const config=parseArgs(argv);VIEWPORT=config.viewport;doTour=!config.flags.includes('--no-tour');
   looks=LOOKS.filter((l) => config.looks.includes(l.id));motions=config.motions;
   OUT=config.values['--out']?resolve(config.values['--out']):null;
@@ -1790,15 +1870,14 @@ async function main() {
   if(config.mode==='self-test') {r.tool_tests=selfTest();r.phase='A-isolated-tool-tests';finalCoverage(r);}
   else if(config.mode==='replay') await replayFiles(r,config.replay);
   else {
-    PAGES={base:resolve(config.values['--base']),cand:resolve(config.candidate)};
-    phaseBinding=bindLive(config);r.binding=phaseBinding;r.phase='B-exact-bound-matrix';
-    bindDeclaredAdmission(phaseBinding.global_admission);
-    lifecycleParallel=config.parallel;
-    for(const [which,p] of Object.entries(PAGES)) r.pages[which]={path:p,sha256:sha(readFileSync(p))};
+    const io=dependencies.bindingIO||normalBindingIO,prepared=prepareLiveExecution(config,argv,io);r.binding=prepared.binding;r.phase='B-exact-bound-matrix';
+    for(const [which,p] of Object.entries(PAGES)) r.pages[which]={path:p,sha256:sha(io.read(p))};
+    const queue=[...prepared.queue];
+    /* Route-only isolated fixtures stop here, after the actual CLI binding/admission/queue path. */
+    if(dependencies.beforeBrowser)return dependencies.beforeBrowser({prepared,report:r,queue});
     /* Deferred import: Phase A has no browser launcher or browser signal handlers. */
     launch=launchOwned;
     for(const sig of ['SIGINT','SIGTERM']) process.once(sig,async () => {const receipts=await Promise.all([...ownClosers].map((c) => c()));console.error(JSON.stringify({signal:sig,owned_stop_receipts:receipts}));process.exit(sig==='SIGINT'?130:143);});
-    const queue=looks.flatMap((l) => motions.map((m) => [l,m]));
     const worker=async () => {while(queue.length) {const [l,m]=queue.shift();r.runs.push(await runLook(l,m));}};
     await Promise.all(Array.from({length:config.parallel},worker));
     for(const run of r.runs) judgeRun(r,run);finalCoverage(r);
