@@ -168,6 +168,9 @@ html .o55-demopill { display: inline-flex; align-items: center; gap: 8px; height
 .o55-demopill .o55-sg { color: var(--accent-magenta); }
 .o55-demoscn { position: relative; padding: 0 0 0 11px; color: var(--text-primary); font-weight: 650; }
 .o55-demoscn::before { content: ""; position: absolute; left: 0; top: 50%; width: 6px; height: 6px; margin-top: -3px; background: var(--accent-magenta); }
+/* docked in Home's status strip the scenario follows Home's middot in the line (home-redesign 20-shell.css, which takes
+   away the padding the square sat in): the floating pill's square is not drawn there, or it lands on the first letter */
+html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) .o55-demoscn::before { position: static; width: auto; height: auto; margin-top: 0; background: none; }
 .o55-demomenu { position: absolute; left: 0; bottom: 40px; width: 300px; max-height: min(560px, 70vh); overflow: auto; padding: 10px; border-radius: 14px; border: 1px solid var(--border); background: linear-gradient(var(--surface), var(--surface)), var(--background); box-shadow: 0 20px 50px -14px rgba(0, 0, 0, 0.6); display: grid; gap: 2px; }
 .o55-demotitle { margin: 2px 6px 0; font-weight: 750; font-size: 13.5px; }
 .o55-demonote { margin: 0 6px 6px; font-weight: 400; font-size: 12px; color: var(--text-muted); }
