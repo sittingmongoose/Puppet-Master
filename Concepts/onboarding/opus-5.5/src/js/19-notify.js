@@ -124,7 +124,7 @@
   const MOTION = {
     basic:    () => ({ enter: spring(430, 33), move: spring(420, 36), join: spring(250, 26), pop: spring(560, 24), panel: spring(480, 38), leave: { easing: 'cubic-bezier(.4,0,1,1)', duration: 180 } }),
     friendly: () => ({ enter: spring(330, 16), move: spring(340, 21), join: spring(210, 17), pop: spring(460, 12), panel: spring(340, 18), leave: { easing: 'cubic-bezier(.5,-0.4,.8,.4)', duration: 260 } }),
-    glass:    () => ({ enter: spring(250, 21), move: spring(300, 26), join: spring(200, 20), pop: spring(420, 20), panel: spring(260, 23), leave: { easing: 'cubic-bezier(.4,0,.8,.2)', duration: 240 } }),
+    glass:    () => ({ enter: spring(230, 19), move: spring(300, 26), join: spring(230, 19), pop: spring(420, 20), panel: spring(230, 19), leave: { easing: 'cubic-bezier(.4,0,.8,.2)', duration: 240 } }),
     retro:    () => ({ enter: steps(5, 150), move: steps(4, 120), join: steps(7, 280), pop: steps(3, 120), panel: steps(6, 210), leave: steps(4, 140) }),
     nier:     () => ({ enter: steps(6, 200), move: steps(4, 140), join: steps(8, 320), pop: steps(3, 150), panel: steps(8, 260), leave: steps(5, 170) })
   };
@@ -424,7 +424,7 @@
   const stageKids = () => Array.prototype.filter.call(stageEl.children, (c) => !c.classList.contains('pmn-leaving'));
 
   function toastEl(it) {
-    const c = el('div', 'pmn-toast n-sev-' + it.severity, { role: it.level === 'blocking' || it.level === 'attention' ? 'alert' : 'status', 'data-level': it.level, 'data-kind': it.kind, 'data-src': it.source, 'data-pmn-id': it.id });
+    const c = el('div', 'pmn-toast n-sev-' + it.severity, { role: it.level === 'blocking' || it.level === 'attention' ? 'alert' : 'status', 'data-level': it.level, 'data-kind': it.kind, 'data-src': it.source, 'data-pmn-id': it.id, 'data-lg-surface': 'menu' });
     c.innerHTML =
       '<div class="pmn-toast-in">' +
         '<span class="pmn-tile" aria-hidden="true">' + icon(it.icon) + '</span>' +
@@ -473,13 +473,16 @@
     staged.set(it.id, rec);
     clampStage();
     flip(before, c);
+    /* the cards already showing slide down first; the new one arrives into the slot they open, so two titles never
+       show through each other (frame review, 2026-10-13) */
     if (still()) { /* Reduced Motion: it is simply there */ }
-    else enter(c, it);
+    else enter(c, it, before.size ? Math.round(motion().move.duration * (look() === 'retro' || look() === 'nier' ? 0.5 : 0.32)) : 0);
     startTimer(rec);
     sound(it.level === 'blocking' ? (it.severity === 'error' ? 'error' : 'callout') : it.level === 'attention' ? 'warn' : it.level === 'notice' ? 'callout' : null, it.level === 'quiet' ? 0.3 : 0.55);
   }
-  function enter(c, it) {
+  function enter(c, it, delay) {
     const m = motion(), L = look();
+    const play = (e, f, o) => (e && typeof e.animate === 'function' ? e.animate(f, Object.assign({ fill: 'backwards', delay: delay || 0 }, o)) : null);
     if (L === 'retro') {
       play(c, [{ transform: 'scaleY(.04)', filter: 'brightness(2.4)' }, { transform: 'scaleY(1)', filter: 'brightness(1.6)', offset: 0.6 }, { transform: 'none', filter: 'none' }], { duration: 220, easing: 'steps(5, end)' });
       typeOn(c.querySelector('.pmn-title'));
@@ -493,19 +496,22 @@
       play(c, [{ transform: 'translateY(-8px) scale(.97)', opacity: 0 }, { opacity: 1, offset: 0.4 }, { transform: 'none', opacity: 1 }], { duration: m.enter.duration, easing: m.enter.easing });
     }
   }
-  /* Retro: the title types on, one character at a time, then the block cursor blinks for the card's life */
+  /* Retro: the title types on, one character at a time, with the block cursor riding its end; the words not typed yet
+     keep their place (invisible), so a title that wraps never grows the card while it types */
   function typeOn(t) {
     const text = t.textContent; if (!text) return;
-    const n = Math.min(text.length, 48), per = Math.max(8, Math.min(18, 320 / n));
-    t.setAttribute('data-typing', '');
+    const n = Math.min(text.length, 48), per = Math.max(8, Math.min(18, 320 / n)), step = Math.max(1, Math.round(text.length / n));
+    const typed = doc.createTextNode(''), cur = el('span', 'pmn-typecur'), rest = el('span', 'pmn-typerest');
+    rest.textContent = text;
+    t.textContent = ''; t.append(typed, cur, rest); t.setAttribute('data-typing', '');
     let i = 0;
     const tick = () => {
-      if (!t.isConnected) return;
-      i = Math.min(text.length, i + Math.max(1, Math.round(text.length / n)));
-      t.textContent = text.slice(0, i);
-      if (i < text.length) setTimeout(tick, per); else t.removeAttribute('data-typing');
+      if (!t.isConnected || rest.parentNode !== t) return;
+      i = Math.min(text.length, i + step);
+      typed.nodeValue = text.slice(0, i); rest.textContent = text.slice(i);
+      if (i < text.length) setTimeout(tick, per); else { t.textContent = text; t.removeAttribute('data-typing'); }
     };
-    t.textContent = ''; setTimeout(tick, 60);
+    setTimeout(tick, 60);
   }
 
   /* the timer: a line that runs out along the card's foot; hovering the stage (or a focus inside it) holds every card */
@@ -572,25 +578,33 @@
     const dist = Math.hypot(dx, dy), m = motion(), L = look();
     c.classList.add('pmn-flying');
     let frames, dur = m.join.duration, easing = m.join.easing;
+    /* the card shrinks evenly (its words never squeeze) toward the stack's front card and is gone as it reaches it; the
+       stack catches it at 80 % and rolls the new title in. Each look travels its own way. */
+    const k = Math.max(0.12, Math.min(1, sy * 1.05));
     if (L === 'friendly') {
-      /* a hop: up, over and down into the stack, spinning a little, like an icon dropped into a Wii menu folder */
-      const lift = -Math.min(70, 24 + dist * 0.12);
+      /* a hop: up, over and down into the stack, tipping a little, like an icon dropped into a Wii menu folder */
+      const lift = -Math.min(64, 22 + dist * 0.12);
       frames = [
-        { transform: 'translate(0,0) scale(1) rotate(0deg)', opacity: 1 },
-        { transform: 'translate(' + (dx * 0.35) + 'px,' + (Math.min(0, dy) * 0.35 + lift) + 'px) scale(' + ((1 + sx) / 2) + ',' + ((1 + sy) / 2 + 0.06) + ') rotate(-7deg)', opacity: 1, offset: 0.45, easing: 'cubic-bezier(.3,0,.5,1)' },
-        { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + sx + ',' + sy + ') rotate(0deg)', opacity: 0.35 }
+        { transform: 'translate(0,0) scale(1) rotate(0deg)', easing: 'cubic-bezier(.3,0,.5,1)' },
+        { transform: 'translate(' + (dx * 0.42) + 'px,' + (Math.min(0, dy) * 0.42 + lift) + 'px) scale(' + ((1 + k) / 2) + ') rotate(-6deg)', offset: 0.5, easing: 'cubic-bezier(.5,0,.7,1)' },
+        { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + k + ') rotate(0deg)' }
       ];
-      dur = Math.max(560, Math.min(820, 480 + dist * 0.35)); easing = 'cubic-bezier(.45,0,.55,1)';
+      dur = Math.max(600, Math.min(820, 500 + dist * 0.32)); easing = 'linear';
     } else if (L === 'retro' || L === 'nier') {
-      frames = [{ transform: 'translate(0,0) scale(1)', opacity: 1 }, { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + sx + ',' + sy + ')', opacity: 0.5 }];
-      dur = Math.max(dur, Math.min(420, 200 + dist * 0.18));
+      frames = [{ transform: 'translate(0,0) scale(1)' }, { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + k + ')' }];
+      dur = Math.max(dur, Math.min(460, 240 + dist * 0.18));
     } else {
-      frames = [{ transform: 'translate(0,0) scale(1)', opacity: 1, filter: 'blur(0px)' }, { transform: 'translate(' + (dx * 0.6) + 'px,' + (dy * 0.6) + 'px) scale(' + ((1 + sx) / 2) + ',' + ((1 + sy) / 2) + ')', opacity: 1, offset: 0.55 },
-        { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + sx + ',' + sy + ')', opacity: 0.2, filter: L === 'glass' ? 'blur(2px)' : 'blur(0px)' }];
-      dur = Math.max(420, Math.min(680, 340 + dist * 0.22)); easing = 'cubic-bezier(.5,0,.2,1)';
+      frames = [{ transform: 'translate(0,0) scale(1)', filter: 'blur(0px)' },
+        { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + k + ')', filter: L === 'glass' ? 'blur(1px)' : 'blur(0px)' }];
+      dur = Math.max(460, Math.min(700, 360 + dist * 0.24)); easing = 'cubic-bezier(.55,0,.25,1)';
     }
     c.style.transformOrigin = '50% 50%';
-    return done(play(c, frames, { duration: dur, easing, fill: 'forwards' })).then(() => { c.remove(); land(it); sound('land', 0.35); });
+    play(c, [{ opacity: 1 }, { opacity: 1, offset: 0.72 }, { opacity: 0 }], { duration: dur, easing: L === 'retro' || L === 'nier' ? 'steps(4, end)' : 'linear', fill: 'forwards' });
+    let landed = false;
+    const catchIt = () => { if (landed) return; landed = true; land(it); sound('land', 0.35); };
+    const tick = play(c.querySelector('.pmn-timer'), [{ visibility: 'hidden' }, { visibility: 'hidden' }], { duration: dur * 0.8 });
+    if (tick) done(tick).then(catchIt); else setTimeout(catchIt, dur * 0.8);
+    return done(play(c, frames, { duration: dur, easing, fill: 'forwards' })).then(() => { c.remove(); catchIt(); });
   }
 
   /* ---------- the store's changes ---------------------------------------------------------------------------- */
@@ -618,11 +632,14 @@
     const rows = Array.prototype.slice.call(listEl.querySelectorAll('.pmn-item, .pmn-group-head, .pmn-fold'));
     const m = motion(), L = look(), n = rows.length;
     panelEl.setAttribute('data-clearing', '');
-    const anims = rows.map((r, i) => play(r, L === 'retro' || L === 'nier'
+    const d = L === 'friendly' ? 300 : 220;
+    rows.forEach((r, i) => play(r, L === 'retro' || L === 'nier'
       ? [{ clipPath: 'inset(0 0 0 0)', opacity: 1 }, { clipPath: 'inset(0 100% 0 0)', opacity: 1 }]
       : [{ transform: 'none', opacity: 1 }, { transform: 'translateY(-16px) scale(.96)', opacity: 0 }],
-      { duration: L === 'friendly' ? 300 : 220, delay: (n - 1 - i) * 34, easing: L === 'retro' || L === 'nier' ? 'steps(4, end)' : m.leave.easing, fill: 'forwards' }));
-    Promise.all(anims.map(done)).then(() => {
+      { duration: d, delay: (n - 1 - i) * 34, easing: L === 'retro' || L === 'nier' ? 'steps(4, end)' : m.leave.easing, fill: 'forwards' }));
+    /* the panel starts to close while the top row is still leaving, so it never shows empty (F3-461: no empty flash) */
+    const lead = play(panelEl.querySelector('.pmn-head'), [{ opacity: 1 }, { opacity: 1 }], { duration: Math.max(0, (n - 1) * 34 + d * 0.55) });
+    done(lead).then(() => {
       items = []; explainOpen.clear(); patternEdit.clear();
       closePanel(true);
       renderStack(true);
@@ -685,7 +702,7 @@
     const it = bannerQ.shift();
     if (!it) return;
     const bar = doc.querySelector('.title-bar');
-    bannerEl = el('div', 'pmn-banner n-sev-' + it.severity, { role: it.level === 'blocking' ? 'alert' : 'status', 'data-level': it.level });
+    bannerEl = el('div', 'pmn-banner n-sev-' + it.severity, { role: it.level === 'blocking' ? 'alert' : 'status', 'data-level': it.level, 'data-lg-surface': 'menu' });
     bannerEl.innerHTML = '<span class="pmn-tile" aria-hidden="true">' + icon(it.icon) + '</span><span class="pmn-banner-text"><b class="n-title"></b><span class="n-body"></span></span>' +
       '<button type="button" class="pmn-btn" data-pmn="banner-open"></button><button type="button" class="pmn-x" aria-label="' + T('dismiss') + '">' + icon('x') + '</button><i class="pmn-timer" aria-hidden="true"></i>';
     bannerEl.querySelector('.n-title').textContent = it.title;
@@ -879,6 +896,7 @@
     if (closing) { closing.cancel(); closing = null; }
     panelEl.hidden = false;
     panelEl.setAttribute('data-open', '');
+    panelEl.querySelector('.pmn-chrome').setAttribute('data-lg-surface', 'menu');
     stackEl.setAttribute('aria-expanded', 'true');
     renderPanel(false);
     placePanel();
@@ -918,7 +936,7 @@
     stackEl.setAttribute('aria-expanded', 'false');
     panelEl.removeAttribute('data-open');
     pushStage();
-    const finish = () => { panelEl.hidden = true; closing = null; };
+    const finish = () => { panelEl.hidden = true; closing = null; panelEl.querySelector('.pmn-chrome').removeAttribute('data-lg-surface'); };
     if (panelEl.contains(doc.activeElement) && !keepFocus) stackEl.focus({ preventScroll: true });
     if (still() || quick === 'instant') { finish(); return; }
     const m = motion(), L = look(), chrome = panelEl.querySelector('.pmn-chrome');
@@ -1089,6 +1107,7 @@
       const before = rects(stageKids());
       chip.classList.add('pmn-pin');
       chip.setAttribute('role', 'group');
+      chip.setAttribute('data-lg-surface', 'menu');
       stageEl.insertBefore(chip, stageEl.firstChild);
       flip(before, chip);
       if (!still()) {

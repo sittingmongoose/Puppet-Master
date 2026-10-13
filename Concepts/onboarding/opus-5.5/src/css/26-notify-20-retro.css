@@ -145,3 +145,8 @@ html[data-theme^="retro"] .pmn-banner { border-width: 2px; border-color: color-m
 /* Reduced Motion: no blinking (the cursor stays lit) */
 html[data-theme^="retro"][data-motion="reduced"] :is(.pmn-toast .pmn-title::after, .pmn-cursor) { animation: none; }
 @media (prefers-reduced-motion: reduce) { html[data-theme^="retro"] :is(.pmn-toast .pmn-title::after, .pmn-cursor) { animation: none; } }
+
+/* typing: the block cursor rides the typed text; the rest keeps its place, unseen */
+html[data-theme^="retro"] .pmn-title[data-typing]::after { display: none; }
+.pmn-typerest { visibility: hidden; }
+.pmn-typecur { display: inline-block; width: .6em; height: 1.05em; margin: 0 1px; vertical-align: -.18em; background: var(--pmn-phos, currentColor); box-shadow: var(--pmn-glow, none); }

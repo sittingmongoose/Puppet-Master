@@ -61,7 +61,7 @@ html[data-theme^="glass"] .pmn-empty-art { border-radius: 16px; background: line
 /* ---- Liquid Glass: the menu material (P = html[data-lg="on"][data-theme^="glass"]:not(#lgz), as the overlay writes it) ---- */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) {
   --pmn-r: var(--lg-r-card, 16px);
-  --pmn-r-panel: var(--lg-r-sheet, 18px);
+  --pmn-r-panel: calc(var(--lg-r-card, 16px) + 2px);
   --pmn-r-item: 12px;
   --pmn-r-tile: 9px;
   --pmn-r-btn: var(--pm-ctl-r, 6px);
@@ -71,7 +71,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) {
   --pmn-on-acc: var(--lg-on-sel, #fff);
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmn-toast, .pmn-chrome, .pmn-banner) {
-  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(var(--lg-tint-menu), var(--lg-tint-menu));
+  background: linear-gradient(var(--lg-tint-menu), var(--lg-tint-menu));
   -webkit-backdrop-filter: blur(30px) saturate(1.5); backdrop-filter: blur(30px) saturate(1.5);
   box-shadow: var(--pmn-lg-rim), var(--pmn-lg-depth);
 }
@@ -79,7 +79,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-toast:is([data-level="att
   background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 18%, transparent), transparent 75%), linear-gradient(var(--lg-tint-menu), var(--lg-tint-menu));
   box-shadow: var(--pmn-lg-rim), inset 0 0 0 1px color-mix(in srgb, var(--pmn-acc) 34%, transparent), var(--pmn-lg-depth);
 }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-tile { background: color-mix(in srgb, var(--pmn-acc) 22%, var(--lg-tint-lens, rgba(255, 255, 255, .05))); box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-tile { background: color-mix(in srgb, var(--pmn-acc) 22%, var(--lg-fill, rgba(255, 255, 255, .075))); box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-btn { background: var(--lg-fill); box-shadow: inset 0 1px 0 var(--lg-edge-top); color: var(--text-primary); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-btn:hover { background: var(--lg-fill-hover); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-btn:active { background: var(--lg-fill-press); }
@@ -88,8 +88,12 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-btn-primary:hover { backg
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-item:hover { background: var(--lg-fill-hover); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-head { border-bottom-color: var(--lg-line, rgba(255, 255, 255, .1)); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmn-textbtn, .pmn-group-fold, .pmn-x):hover { background: var(--lg-fill-hover); }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-front { background: color-mix(in srgb, var(--pmn-acc) 14%, var(--lg-fill, rgba(255, 255, 255, .075))); box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot); }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-peek { background: var(--lg-fill, rgba(255, 255, 255, .075)); box-shadow: inset 0 1px 0 var(--lg-edge-top); }
+/* the stack sits on the overlay's title-bar sheet, and glass is never stacked on glass: plain fills and the overlay's line */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-front { background: var(--lg-fill); box-shadow: inset 0 0 0 1px var(--lg-line); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-stack[data-hover] .pmn-front { background: var(--lg-fill-hover); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-stack[data-needs] .pmn-front { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmn-acc) 60%, var(--lg-line)); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-deck { -webkit-mask-image: none; mask-image: none; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-peek { background: var(--lg-fill); box-shadow: inset 0 0 0 1px var(--lg-line); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-badge { background: var(--lg-sel); color: var(--lg-on-sel, #fff); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 2px 8px var(--lg-shadow-near); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-badge[data-sev="warn"] { background: var(--accent-warning); color: #1a1405; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-badge[data-sev="error"] { background: var(--accent-error); color: #fff; }
