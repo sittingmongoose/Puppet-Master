@@ -29021,8 +29021,9 @@ html:is([data-theme^="friendly"], [data-theme^="glass"]) :is(.rs-card, .rs-clip)
 }
 :root[data-theme="retro-dark"]:not([data-o55-nier]) { --pmc-ghost: color-mix(in srgb, var(--accent-primary) 30%, transparent); --pmc-bar: color-mix(in srgb, var(--accent-primary) 16%, transparent); --pmc-on: #10140b; }
 :root[data-theme="retro-light"]:not([data-o55-nier]) { --pmc-ghost: color-mix(in srgb, var(--accent-primary) 24%, transparent); --pmc-bar: color-mix(in srgb, var(--accent-primary) 11%, transparent); --pmc-on: #f4f1e6; }
-/* inverse video, raised; the activity bar's square is its .symbol */
-:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is([data-pmh-kind="icon"]:not(.activity-bar .icon), .activity-bar .icon[data-pmh-kind="icon"] .symbol) {
+/* inverse video, raised; the activity bar's square is its .symbol (the glow proxy's layers carry data-pmh-kind too:
+   they keep their own transition) */
+:root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is([data-pmh-kind="icon"]:not(.activity-bar .icon, #pmh-glow > i), .activity-bar .icon[data-pmh-kind="icon"] .symbol) {
   transition-duration: 0s !important;
 }
 :root[data-theme^="retro"]:not([data-o55-nier]):not(#pmhz):not(#pmhz):not(#pmhz) :is([data-pmh-kind="icon"]:not(.activity-bar .icon).pmh-on, .activity-bar .icon[data-pmh-kind="icon"].pmh-on:not(.active) .symbol) {
