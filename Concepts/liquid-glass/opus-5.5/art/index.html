@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" data-concept-model="Opus 5.5">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The troupe, redrawn: onboarding art study (Opus 5.5)</title>
+<style>
+  html, body { margin: 0; background: #0b0d12; color: #e8ebf2; font: 13px/1.4 Inter, system-ui, sans-serif; }
+  header { display: flex; align-items: center; gap: 16px; padding: 10px 18px; height: 34px; }
+  header h1 { font-size: 15px; font-weight: 650; margin: 0; }
+  header p { margin: 0; color: #9aa3b5; flex: 1; }
+  .seg { display: inline-flex; background: rgba(255,255,255,.07); border-radius: 8px; padding: 2px; }
+  .seg button { all: unset; cursor: pointer; padding: 5px 12px; border-radius: 6px; color: #b7bfcf; font-weight: 550; }
+  .seg button[aria-pressed="true"] { background: rgba(255,255,255,.16); color: #fff; }
+  .seg button:focus-visible { outline: 2px solid #6fb2ff; }
+  main { display: grid; grid-template-columns: repeat(4, 372px); justify-content: center; gap: 12px 18px; padding: 4px 18px 12px; }
+  figure { margin: 0; }
+  figure svg { display: block; width: 100%; height: auto; aspect-ratio: 480 / 600; border-radius: 14px; box-shadow: 0 10px 30px -14px rgba(0,0,0,.7), inset 0 0 0 1px rgba(255,255,255,.06); }
+  figcaption { margin-top: 4px; color: #9aa3b5; font-size: 12px; }
+  .tr-float { animation: trf 7s ease-in-out infinite alternate; animation-delay: calc(var(--d) * -1.7s); transform-box: fill-box; transform-origin: center; }
+  @keyframes trf { from { transform: translateY(-6px); } to { transform: translateY(6px); } }
+  @media (prefers-reduced-motion: reduce) { .tr-float { animation: none; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>The troupe, redrawn</h1>
+  <p>One rigged marionette in four materials. Strings pull the head and hands; elbows and knees bend by two-bone IK; every limb shares its joints.</p>
+  <div class="seg" role="group" aria-label="Scene" id="scenes"></div>
+  <div class="seg" role="group" aria-label="Motion" id="motion"></div>
+</header>
+<main id="grid"></main>
+<script src="troupe.js"></script>
+<script>
+(function () {
+  var LOOKS = [['glass', 'dark', 'Glass dark: crystal and light'], ['glass', 'light', 'Glass light'], ['friendly', 'light', 'Friendly light: paper puppets and dots'], ['friendly', 'dark', 'Friendly dark'],
+    ['basic', 'dark', 'Basic dark: blueprint, live joint angles'], ['basic', 'light', 'Basic light'], ['retro', 'dark', 'Retro dark: a 4 px sprite at 10 fps'], ['retro', 'light', 'Retro light']];
+  var q = new URLSearchParams(location.search), scene = q.get('scene') || 'welcome', reduced = q.get('motion') === 'reduced' || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var grid = document.getElementById('grid'), ctls = [];
+  LOOKS.forEach(function (l) {
+    var f = document.createElement('figure'), svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'), c = document.createElement('figcaption');
+    svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', 'The troupe, ' + l[2]); c.textContent = l[2];
+    f.appendChild(svg); f.appendChild(c); grid.appendChild(f);
+    ctls.push(Troupe.mount(svg, { family: l[0], mode: l[1], scene: scene, reduced: reduced }));
+  });
+  function seg(id, items, cur, on) {
+    var host = document.getElementById(id);
+    items.forEach(function (it) { var b = document.createElement('button'); b.type = 'button'; b.textContent = it[1]; b.setAttribute('aria-pressed', String(it[0] === cur)); b.onclick = function () { host.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); on(it[0]); }; host.appendChild(b); });
+  }
+  seg('scenes', [['welcome', 'Welcome'], ['computer', 'Computer'], ['ready', 'Ready']], scene, function (v) { scene = v; ctls.forEach(function (c) { c.set({ scene: v }); }); });
+  seg('motion', [['full', 'Full motion'], ['reduced', 'Reduced']], reduced ? 'reduced' : 'full', function (v) { reduced = v === 'reduced'; ctls.forEach(function (c) { c.set({ reduced: reduced }); }); });
+  window.__troupeReady = true;
+})();
+</script>
+</body>
+</html>
