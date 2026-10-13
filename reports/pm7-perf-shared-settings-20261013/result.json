@@ -1,0 +1,40 @@
+{
+  "status": "in_progress",
+  "branch": "fix/pm7-perf-shared-settings-20261013",
+  "base_commit": "611b2404e4827675a435e7fe3113a0674bae2ed6",
+  "host": "Windows RTX 3090",
+  "geometry": {
+    "width": 1920,
+    "height": 1080,
+    "dpr": 1
+  },
+  "fixes": [
+    {
+      "id": "M1",
+      "status": "under_validation"
+    },
+    {
+      "id": "M4",
+      "status": "not_implemented"
+    },
+    {
+      "id": "M5",
+      "status": "not_implemented"
+    },
+    {
+      "id": "M6",
+      "status": "not_implemented"
+    },
+    {
+      "id": "M10",
+      "status": "not_implemented"
+    }
+  ],
+  "evidence_root": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013",
+  "limitations": [
+    "Single pilots do not establish repeated savings.",
+    "Settings-entry saving not established.",
+    "Films and broader repeated proof pending."
+  ],
+  "landing": "coordinator_only"
+}
