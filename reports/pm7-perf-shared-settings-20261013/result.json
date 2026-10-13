@@ -11,7 +11,23 @@
   "fixes": [
     {
       "id": "M1",
-      "status": "under_validation"
+      "status": "implementation_committed_repeated_traces_passed_films_pending",
+      "commit": "9d77f51feb",
+      "action_windows": 840,
+      "paired_snapshots": 420,
+      "snapshot_differences": 0,
+      "measurement_summary": "reports/pm7-perf-shared-settings-20261013/m1-measurements.json",
+      "metric_semantics": {
+        "task_style_layout": "CDP cumulative duration deltas over action plus fixed3s settlement",
+        "largest_task": "page renderer traced RunTask wall duration",
+        "elements_restyled": "summed visits across style passes, not unique elements",
+        "click_to_paint": "trusted-click Event Timing duration,8ms quantization; film-based semantic first feedback pending"
+      },
+      "limitations": [
+        "Savings are established for Files\u2192Search across all10looks.",
+        "Settings-return and mode-only gains are small or not established.",
+        "Family Basic\u2192Friendly and Glass-entry pilots exist; repeated family proof and hardware films remain."
+      ]
     },
     {
       "id": "M4",

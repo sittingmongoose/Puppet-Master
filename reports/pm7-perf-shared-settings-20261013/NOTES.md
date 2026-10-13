@@ -25,3 +25,22 @@ M1 keeps the original full / abbreviated / symbol ladder, dependent control orde
 Initial correctness: all 360 pane records across ten looks, nine panes, 220 px and 500 px rail widths matched at both the first callback before paint and after settlement. Those records cover the initial candidate. A conservative signature refinement is receiving a final artifact check, long-label / font / visibility checks, repeated timings and films.
 
 Raw evidence: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/`. Failed and superseded attempts are retained. The first pilot had a renderer-selection parsing error, corrected offline from the retained trace; a later control inspection overlapped part of the Glass pilot, so those samples are diagnostic only. The release comparison uses separate immutable artifacts and no concurrent browser driver.
+
+Repeated M1 proof (final artifact): 840 action windows, 420 paired UI snapshots, zero differences. Each look has three independent cold documents and ten warm repetitions. All ten looks have a repeatable Files → Search reduction. Settings-return and mode-only savings remain small or unestablished. This is not yet a complete release packet: family-switch repetitions and hardware films still remain.
+
+Files → Search medians, before / after (13 samples per artifact and look):
+
+| Look | Task ms | Style ms | Layout ms | Largest task ms | Restyled visits | Click-to-paint ms |
+|---|---:|---:|---:|---:|---:|---:|
+| basic-dark | 1037.1 / 793.0 | 354.1 / 122.6 | 38.2 / 7.7 | 286.0 / 49.5 | 14478.0 / 6269.0 | 352.0 / 88.0 |
+| basic-light | 1031.1 / 802.0 | 339.6 / 109.3 | 37.7 / 7.1 | 280.6 / 44.4 | 14612.0 / 6269.0 | 344.0 / 80.0 |
+| friendly-dark | 1000.9 / 758.7 | 372.0 / 144.0 | 38.2 / 9.7 | 307.0 / 48.2 | 16164.0 / 7898.0 | 376.0 / 112.0 |
+| friendly-light | 987.7 / 779.2 | 359.2 / 139.3 | 39.4 / 9.5 | 303.6 / 47.0 | 16198.0 / 7910.0 | 368.0 / 112.0 |
+| retro-dark | 977.6 / 767.9 | 343.8 / 112.1 | 35.2 / 8.0 | 275.7 / 43.4 | 14573.0 / 6238.0 | 344.0 / 80.0 |
+| retro-light | 916.7 / 721.2 | 346.5 / 101.1 | 34.2 / 6.9 | 282.2 / 43.5 | 14606.0 / 6246.0 | 344.0 / 72.0 |
+| glass-dark | 1387.0 / 1066.5 | 569.9 / 320.2 | 135.0 / 20.4 | 400.1 / 86.6 | 18750.0 / 10987.0 | 504.0 / 128.0 |
+| glass-light | 1359.6 / 1080.6 | 559.3 / 328.4 | 135.3 / 20.7 | 382.6 / 85.2 | 18774.0 / 11019.0 | 496.0 / 128.0 |
+| nier-dark | 766.5 / 356.6 | 449.2 / 76.9 | 38.1 / 6.5 | 410.9 / 27.4 | 13463.0 / 5579.0 | 456.0 / 56.0 |
+| nier-light | 765.9 / 356.3 | 460.7 / 77.3 | 39.1 / 6.3 | 423.4 / 28.6 | 13523.0 / 5483.0 | 472.0 / 56.0 |
+
+Median and p95 for every action, including cold Settings entry, warm Settings return, General entry and all-look mode switches, are in `m1-measurements.json`. Raw traces and snapshots are in `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m1-repeated-v2`. The raw manifest will supply SHA-256 for every file.
