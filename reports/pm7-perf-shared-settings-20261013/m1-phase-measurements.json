@@ -1,0 +1,6162 @@
+[
+  {
+    "look": "basic-dark",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1037.139,
+        "p95": 1058.1770000000006,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 39.652999999999935,
+        "p95": 61.158000000000044,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 357.1849999999999,
+        "p95": 407.21700000000016,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 47.35,
+        "p95": 57.48399999999998,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 306.983,
+        "p95": 347.156,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 15768.0,
+        "p95": 16112.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 376.0,
+        "p95": 416.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1039.0555000000036,
+        "p95": 1093.8400000000001,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 25.824999999999765,
+        "p95": 31.330999999999996,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 345.7319999999999,
+        "p95": 369.40299999999837,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 37.86649999999992,
+        "p95": 42.83999999999999,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 281.75300000000004,
+        "p95": 297.708,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 14453.0,
+        "p95": 15600.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 348.0,
+        "p95": 368.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 774.9989999999993,
+        "p95": 793.0330000000013,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 36.07399999999994,
+        "p95": 39.12999999999989,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 148.28399999999985,
+        "p95": 150.25900000000013,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 14.591999999999993,
+        "p95": 25.222999999999995,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 57.303,
+        "p95": 59.651,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 8105.0,
+        "p95": 8357.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 120.0,
+        "p95": 128.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 810.8259999999987,
+        "p95": 927.0190000000014,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 27.80450000000001,
+        "p95": 33.036000000000065,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 111.16049999999956,
+        "p95": 136.7729999999998,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 7.044999999999968,
+        "p95": 8.492000000000054,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 46.818,
+        "p95": 57.006,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 6262.5,
+        "p95": 7022.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 76.0,
+        "p95": 112.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "action": "home-general",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1136.3979999999997,
+        "p95": 1183.9409999999998,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 107.46500000000003,
+        "p95": 120.07200000000017,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 251.56400000000014,
+        "p95": 267.44499999999994,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 27.328000000000017,
+        "p95": 45.547000000000004,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 117.459,
+        "p95": 127.386,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 10394.0,
+        "p95": 10545.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 232.0,
+        "p95": 264.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "action": "home-general",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1015.1810000000002,
+        "p95": 1058.6839999999995,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 105.72900000000018,
+        "p95": 108.42799999999997,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 240.97199999999975,
+        "p95": 244.68999999999986,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 32.74100000000002,
+        "p95": 42.545,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 116.804,
+        "p95": 119.725,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 10396.0,
+        "p95": 10417.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 208.0,
+        "p95": 224.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "action": "settings-entry",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 807.2460000000001,
+        "p95": 813.9759999999993,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 46.093999999999966,
+        "p95": 49.54099999999983,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 130.652,
+        "p95": 130.83200000000028,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 32.18499999999997,
+        "p95": 42.32400000000003,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 51.878,
+        "p95": 62.377,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 4259.0,
+        "p95": 4272.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 104.0,
+        "p95": 112.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "action": "settings-entry",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 806.642,
+        "p95": 818.9409999999997,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 50.383999999999986,
+        "p95": 62.273000000000025,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 138.55700000000004,
+        "p95": 139.39900000000006,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 30.37899999999999,
+        "p95": 42.16599999999998,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 54.781,
+        "p95": 65.994,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 4329.0,
+        "p95": 4715.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 96.0,
+        "p95": 112.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "action": "settings-return",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1144.805500000004,
+        "p95": 1218.1259999999997,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 77.7089999999998,
+        "p95": 86.67800000000003,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 355.82049999999924,
+        "p95": 395.56400000000025,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 17.683999999999976,
+        "p95": 22.535000000000082,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 89.7535,
+        "p95": 97.647,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 13005.0,
+        "p95": 14231.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 176.0,
+        "p95": 192.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "action": "settings-return",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1140.685500000001,
+        "p95": 1424.1659999999997,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 75.03049999999978,
+        "p95": 90.94099999999995,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 360.2574999999995,
+        "p95": 405.5079999999993,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 18.633500000000026,
+        "p95": 22.899,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 92.6455,
+        "p95": 112.014,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 12893.5,
+        "p95": 13661.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 180.0,
+        "p95": 216.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1165.4269999999992,
+        "p95": 1188.8699999999997,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 74.57800000000003,
+        "p95": 81.88099999999987,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 422.256,
+        "p95": 430.6219999999996,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 19.13300000000001,
+        "p95": 34.102999999999994,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 183.36,
+        "p95": 192.844,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 20526.0,
+        "p95": 20586.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 320.0,
+        "p95": 344.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1155.2715000000012,
+        "p95": 1221.1709999999982,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 78.42300000000013,
+        "p95": 80.41500000000035,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 387.9939999999982,
+        "p95": 408.01400000000143,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 16.752500000000058,
+        "p95": 19.436999999999927,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 173.1095,
+        "p95": 181.584,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 19654.5,
+        "p95": 20105.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 280.0,
+        "p95": 304.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1102.970000000001,
+        "p95": 1141.0339999999994,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 75.93000000000005,
+        "p95": 77.65100000000014,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 391.85700000000037,
+        "p95": 427.1570000000002,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 17.38299999999998,
+        "p95": 32.284999999999954,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 173.039,
+        "p95": 197.147,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 20411.0,
+        "p95": 20476.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 288.0,
+        "p95": 312.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1136.5645000000022,
+        "p95": 1286.4369999999994,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 75.97599999999983,
+        "p95": 98.78100000000023,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 388.92949999999973,
+        "p95": 421.5369999999998,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 16.282500000000034,
+        "p95": 23.737999999999982,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 179.47449999999998,
+        "p95": 189.621,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 19490.5,
+        "p95": 19927.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 296.0,
+        "p95": 312.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "basic-light",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 982.602,
+        "p95": 1145.2310000000007,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 37.13799999999989,
+        "p95": 49.50300000000007,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 363.7359999999998,
+        "p95": 458.74599999999964,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 54.08200000000002,
+        "p95": 61.34600000000001,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 313.274,
+        "p95": 377.065,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 16061.0,
+        "p95": 16116.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 384.0,
+        "p95": 480.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "basic-light",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1033.686999999997,
+        "p95": 1230.595000000001,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 25.408500000000167,
+        "p95": 33.27999999999997,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 332.66100000000074,
+        "p95": 373.43599999999986,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 37.58600000000001,
+        "p95": 38.47999999999985,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 273.57550000000003,
+        "p95": 297.472,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 14597.5,
+        "p95": 14645.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 336.0,
+        "p95": 384.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "basic-light",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 801.9700000000007,
+        "p95": 836.926,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 38.794999999999916,
+        "p95": 41.374000000000024,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 154.8529999999997,
+        "p95": 164.76099999999994,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 14.216000000000006,
+        "p95": 27.63500000000002,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 58.412,
+        "p95": 63.262,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 8241.0,
+        "p95": 8265.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 136.0,
+        "p95": 136.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "basic-light",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 796.0029999999989,
+        "p95": 904.0159999999986,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 24.97999999999978,
+        "p95": 27.393,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 106.89400000000049,
+        "p95": 117.63699999999844,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 7.005000000000011,
+        "p95": 7.564999999999933,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 43.771,
+        "p95": 46.045,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 6214.0,
+        "p95": 6288.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 72.0,
+        "p95": 80.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "basic-light",
+    "action": "home-general",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 967.5790000000006,
+        "p95": 1044.2009999999993,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 101.90199999999993,
+        "p95": 118.61900000000003,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 231.27399999999997,
+        "p95": 239.51799999999946,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 29.133999999999993,
+        "p95": 29.86,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 111.24,
+        "p95": 120.635,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 10382.0,
+        "p95": 10422.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 208.0,
+        "p95": 216.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "basic-light",
+    "action": "home-general",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1031.7480000000003,
+        "p95": 1174.3930000000003,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 101.98700000000005,
+        "p95": 117.94700000000003,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 243.59100000000035,
+        "p95": 260.7910000000002,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 36.39499999999998,
+        "p95": 40.67699999999999,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 122.479,
+        "p95": 131.056,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 10404.0,
+        "p95": 10518.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 224.0,
+        "p95": 264.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "basic-light",
+    "action": "settings-entry",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 721.9920000000002,
+        "p95": 811.0469999999995,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 47.659000000000006,
+        "p95": 52.91599999999996,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 118.96600000000035,
+        "p95": 136.08800000000042,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 26.73500000000001,
+        "p95": 31.68399999999999,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 50.694,
+        "p95": 50.765,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 4282.0,
+        "p95": 4297.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 96.0,
+        "p95": 112.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "basic-light",
+    "action": "settings-entry",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 779.9620000000002,
+        "p95": 836.163,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 48.60500000000001,
+        "p95": 49.073000000000036,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 133.44299999999976,
+        "p95": 135.21700000000035,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 29.02300000000002,
+        "p95": 30.519999999999992,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 53.005,
+        "p95": 55.586,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 4261.0,
+        "p95": 4276.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 88.0,
+        "p95": 104.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "basic-light",
+    "action": "settings-return",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1136.6509999999935,
+        "p95": 1237.2140000000015,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 78.33699999999999,
+        "p95": 85.507,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 354.2065000000018,
+        "p95": 372.166,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 17.50649999999998,
+        "p95": 22.357999999999876,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 89.47200000000001,
+        "p95": 93.272,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 13210.5,
+        "p95": 13613.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 176.0,
+        "p95": 192.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "basic-light",
+    "action": "settings-return",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1124.187500000005,
+        "p95": 1200.1559999999997,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 73.98599999999989,
+        "p95": 84.93799999999996,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 348.6855000000002,
+        "p95": 413.3489999999993,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 17.06150000000001,
+        "p95": 21.583999999999993,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 87.7975,
+        "p95": 96.234,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 13139.0,
+        "p95": 15590.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 168.0,
+        "p95": 192.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "basic-light",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1095.4679999999985,
+        "p95": 1130.8999999999987,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 82.36500000000002,
+        "p95": 94.39299999999994,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 401.72900000000044,
+        "p95": 409.38500000000033,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 26.856999999999964,
+        "p95": 33.83000000000003,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 170.497,
+        "p95": 175.809,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 20021.0,
+        "p95": 21153.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 304.0,
+        "p95": 312.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "basic-light",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1143.2165000000032,
+        "p95": 1269.2880000000032,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 75.84700000000011,
+        "p95": 79.19500000000035,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 399.21450000000027,
+        "p95": 408.1720000000004,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 15.946499999999974,
+        "p95": 18.15599999999995,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 175.838,
+        "p95": 187.942,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 20349.0,
+        "p95": 20556.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 296.0,
+        "p95": 312.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "basic-light",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1126.899,
+        "p95": 1177.7460000000008,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 76.06200000000007,
+        "p95": 80.47899999999997,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 418.377,
+        "p95": 419.4819999999999,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 29.38099999999999,
+        "p95": 32.934999999999995,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 172.286,
+        "p95": 174.125,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 21162.0,
+        "p95": 21425.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 304.0,
+        "p95": 304.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "basic-light",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1142.795999999997,
+        "p95": 1189.2289999999975,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 74.04600000000005,
+        "p95": 81.10200000000046,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 397.2415000000011,
+        "p95": 407.3980000000006,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 16.324499999999965,
+        "p95": 19.239999999999924,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 177.0325,
+        "p95": 180.946,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 20064.0,
+        "p95": 20474.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 296.0,
+        "p95": 304.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "friendly-dark",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 986.127999999999,
+        "p95": 1000.928,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 37.992999999999945,
+        "p95": 38.53800000000018,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 374.94099999999975,
+        "p95": 377.88699999999943,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 43.903999999999996,
+        "p95": 47.148999999999994,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 309.948,
+        "p95": 322.902,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 16270.0,
+        "p95": 16314.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 384.0,
+        "p95": 392.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "friendly-dark",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1006.9295,
+        "p95": 1053.1120000000058,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 28.469999999999995,
+        "p95": 31.24899999999986,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 371.4460000000006,
+        "p95": 399.44399999999905,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 37.840000000000096,
+        "p95": 43.48299999999994,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 305.95550000000003,
+        "p95": 335.999,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 16090.0,
+        "p95": 17213.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 368.0,
+        "p95": 416.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "friendly-dark",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 709.9590000000004,
+        "p95": 726.604,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 32.90700000000002,
+        "p95": 38.65600000000002,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 144.0459999999999,
+        "p95": 144.52599999999993,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 14.00800000000002,
+        "p95": 18.35500000000001,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 57.415,
+        "p95": 59.046,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 8436.0,
+        "p95": 8440.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 128.0,
+        "p95": 128.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "friendly-dark",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 796.0615000000004,
+        "p95": 875.9139999999999,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 26.571499999999972,
+        "p95": 30.978999999999868,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 143.68050000000034,
+        "p95": 175.31799999999987,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 9.230000000000016,
+        "p95": 10.977999999999987,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 46.938,
+        "p95": 92.411,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 7822.0,
+        "p95": 8991.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 112.0,
+        "p95": 128.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "friendly-dark",
+    "action": "home-general",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 955.2070000000006,
+        "p95": 1023.2749999999991,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 107.2909999999998,
+        "p95": 112.85599999999995,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 235.19899999999973,
+        "p95": 238.83800000000033,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 23.226000000000024,
+        "p95": 26.202,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 114.846,
+        "p95": 119.073,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 10217.0,
+        "p95": 10234.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 216.0,
+        "p95": 224.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "friendly-dark",
+    "action": "home-general",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 956.0089999999999,
+        "p95": 957.7719999999994,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 99.87800000000003,
+        "p95": 110.88199999999992,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 236.1279999999999,
+        "p95": 248.57299999999992,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 23.29500000000001,
+        "p95": 31.364000000000004,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 111.365,
+        "p95": 119.593,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 10193.0,
+        "p95": 10322.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 200.0,
+        "p95": 232.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "friendly-dark",
+    "action": "settings-entry",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 730.7440000000005,
+        "p95": 785.2519999999998,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 44.47600000000007,
+        "p95": 48.422999999999995,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 131.13200000000003,
+        "p95": 140.409,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 25.658000000000015,
+        "p95": 31.283999999999978,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 54.04,
+        "p95": 54.699,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 4321.0,
+        "p95": 4323.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 96.0,
+        "p95": 112.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "friendly-dark",
+    "action": "settings-entry",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 735.6749999999996,
+        "p95": 758.5870000000003,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 47.24800000000007,
+        "p95": 48.29499999999997,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 124.02900000000017,
+        "p95": 126.13399999999997,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 26.07899999999999,
+        "p95": 27.70599999999998,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 53.763,
+        "p95": 55.951,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 4313.0,
+        "p95": 4323.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 96.0,
+        "p95": 96.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "friendly-dark",
+    "action": "settings-return",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1076.1254999999996,
+        "p95": 1218.2860000000062,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 74.93949999999994,
+        "p95": 93.53199999999973,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 354.27800000000167,
+        "p95": 406.17699999999957,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 17.043999999999947,
+        "p95": 26.703000000000145,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 91.2055,
+        "p95": 104.626,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 12965.0,
+        "p95": 13366.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 172.0,
+        "p95": 224.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "friendly-dark",
+    "action": "settings-return",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1065.1934999999994,
+        "p95": 1177.6589999999985,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 74.24700000000017,
+        "p95": 86.3440000000002,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 351.216,
+        "p95": 379.38700000000034,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 16.708999999999975,
+        "p95": 19.69599999999999,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 88.484,
+        "p95": 93.069,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 13030.0,
+        "p95": 13539.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 168.0,
+        "p95": 192.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "friendly-dark",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1073.9669999999996,
+        "p95": 1116.5350000000008,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 76.13499999999985,
+        "p95": 76.1940000000001,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 397.6929999999994,
+        "p95": 418.6430000000003,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 17.11199999999996,
+        "p95": 17.818,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 177.301,
+        "p95": 184.459,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 20567.0,
+        "p95": 20713.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 304.0,
+        "p95": 304.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "friendly-dark",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1116.7115000000026,
+        "p95": 1273.0899999999963,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 74.39549999999994,
+        "p95": 89.04299999999976,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 394.0030000000014,
+        "p95": 443.0510000000005,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 17.648000000000053,
+        "p95": 24.15900000000004,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 180.4275,
+        "p95": 195.688,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 19749.5,
+        "p95": 19953.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 296.0,
+        "p95": 328.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "friendly-dark",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1038.8520000000003,
+        "p95": 1065.4339999999997,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 71.44499999999998,
+        "p95": 71.50299999999987,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 402.21700000000027,
+        "p95": 404.77199999999993,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 16.30400000000004,
+        "p95": 21.845999999999975,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 173.41,
+        "p95": 173.439,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 21085.0,
+        "p95": 21662.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 288.0,
+        "p95": 296.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "friendly-dark",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1121.898999999999,
+        "p95": 1220.5670000000027,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 72.22600000000011,
+        "p95": 84.19100000000057,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 388.3739999999998,
+        "p95": 410.95299999999924,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 16.771499999999996,
+        "p95": 22.652000000000005,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 176.256,
+        "p95": 187.871,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 19883.0,
+        "p95": 20100.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 288.0,
+        "p95": 304.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "friendly-light",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 937.0719999999988,
+        "p95": 938.270000000001,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 35.514000000000046,
+        "p95": 36.19100000000009,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 351.5339999999996,
+        "p95": 369.7650000000001,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 42.25000000000001,
+        "p95": 44.13099999999998,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 305.393,
+        "p95": 317.329,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 16275.0,
+        "p95": 16291.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 376.0,
+        "p95": 384.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "friendly-light",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 997.9165000000023,
+        "p95": 1186.6559999999993,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 27.67199999999992,
+        "p95": 31.79500000000024,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 368.40550000000064,
+        "p95": 418.84100000000046,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 37.705499999999944,
+        "p95": 44.336000000000155,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 302.9855,
+        "p95": 342.873,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 16162.0,
+        "p95": 18274.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 368.0,
+        "p95": 408.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "friendly-light",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 712.3729999999995,
+        "p95": 768.9999999999992,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 37.79500000000002,
+        "p95": 38.269000000000105,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 147.27900000000017,
+        "p95": 148.10599999999985,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 15.58000000000001,
+        "p95": 15.876000000000001,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 58.76,
+        "p95": 67.515,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 8418.0,
+        "p95": 8443.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 128.0,
+        "p95": 136.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "friendly-light",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 805.1074999999965,
+        "p95": 885.2380000000011,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 26.546999999999876,
+        "p95": 30.66200000000041,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 138.7364999999998,
+        "p95": 174.00700000000046,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 8.622499999999977,
+        "p95": 11.855999999999977,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 45.751000000000005,
+        "p95": 66.832,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 7790.0,
+        "p95": 9985.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 104.0,
+        "p95": 144.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "friendly-light",
+    "action": "home-general",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 879.1340000000005,
+        "p95": 895.9789999999996,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 98.79799999999994,
+        "p95": 106.17599999999993,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 223.325,
+        "p95": 227.89999999999998,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 13.533000000000017,
+        "p95": 17.152,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 107.009,
+        "p95": 121.718,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 9965.0,
+        "p95": 10177.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 200.0,
+        "p95": 216.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "friendly-light",
+    "action": "home-general",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 958.393,
+        "p95": 969.5849999999995,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 104.79099999999997,
+        "p95": 115.90000000000012,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 229.54400000000018,
+        "p95": 249.0920000000001,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 21.68500000000001,
+        "p95": 26.944999999999997,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 113.972,
+        "p95": 118.585,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 10245.0,
+        "p95": 10298.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 208.0,
+        "p95": 208.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "friendly-light",
+    "action": "settings-entry",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 626.6709999999999,
+        "p95": 718.6280000000007,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 43.626000000000055,
+        "p95": 44.41800000000007,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 111.66300000000007,
+        "p95": 114.32399999999987,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 20.950999999999997,
+        "p95": 22.28399999999997,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 48.128,
+        "p95": 48.553,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 4321.0,
+        "p95": 4333.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 88.0,
+        "p95": 88.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "friendly-light",
+    "action": "settings-entry",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 661.9760000000001,
+        "p95": 730.0620000000002,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 42.48799999999997,
+        "p95": 46.67100000000002,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 118.09800000000025,
+        "p95": 132.03299999999984,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 22.574000000000012,
+        "p95": 32.226000000000006,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 49.679,
+        "p95": 49.988,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 4327.0,
+        "p95": 4327.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 88.0,
+        "p95": 88.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "friendly-light",
+    "action": "settings-return",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1061.128499999999,
+        "p95": 1237.6990000000064,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 75.23049999999998,
+        "p95": 84.30000000000004,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 334.2735000000001,
+        "p95": 372.556000000003,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 15.697000000000072,
+        "p95": 17.608999999999988,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 87.3865,
+        "p95": 96.041,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 13082.5,
+        "p95": 13276.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 168.0,
+        "p95": 176.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "friendly-light",
+    "action": "settings-return",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1076.9249999999975,
+        "p95": 1192.4980000000005,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 72.28449999999998,
+        "p95": 88.44300000000027,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 350.365,
+        "p95": 396.5570000000014,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 16.72450000000003,
+        "p95": 21.693999999999992,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 88.919,
+        "p95": 116.087,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 12980.0,
+        "p95": 13693.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 176.0,
+        "p95": 232.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "friendly-light",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 992.1480000000003,
+        "p95": 1039.6380000000001,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 69.89000000000001,
+        "p95": 75.54899999999986,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 404.7409999999996,
+        "p95": 414.0360000000003,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 17.002000000000017,
+        "p95": 19.186000000000035,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 179.387,
+        "p95": 179.819,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 21247.0,
+        "p95": 22168.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 312.0,
+        "p95": 320.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "friendly-light",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1026.8715000000004,
+        "p95": 1270.7610000000002,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 71.37700000000002,
+        "p95": 83.21899999999971,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 396.39799999999957,
+        "p95": 460.4619999999997,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 16.024999999999956,
+        "p95": 22.923999999999943,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 173.19,
+        "p95": 202.573,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 20328.5,
+        "p95": 20746.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 296.0,
+        "p95": 344.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "friendly-light",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1008.7109999999999,
+        "p95": 1091.3260000000005,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 69.38099999999991,
+        "p95": 72.70600000000016,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 407.6120000000003,
+        "p95": 413.96599999999984,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 16.314999999999998,
+        "p95": 18.238000000000003,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 175.491,
+        "p95": 181.613,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 20835.0,
+        "p95": 22049.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 304.0,
+        "p95": 336.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "friendly-light",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1043.6744999999999,
+        "p95": 1198.559000000003,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 67.83949999999983,
+        "p95": 85.7739999999998,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 395.219,
+        "p95": 478.0479999999976,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 16.656000000000006,
+        "p95": 22.72400000000008,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 178.023,
+        "p95": 248.195,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 20402.0,
+        "p95": 21471.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 296.0,
+        "p95": 392.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "glass-dark",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1411.5969999999986,
+        "p95": 1504.1709999999994,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 87.72200000000008,
+        "p95": 93.04099999999993,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 676.8280000000004,
+        "p95": 735.633,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 140.857,
+        "p95": 157.912,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 517.257,
+        "p95": 525.232,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 19919.0,
+        "p95": 20258.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 648.0,
+        "p95": 648.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "glass-dark",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1347.0949999999996,
+        "p95": 1512.6550000000022,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 79.28350000000029,
+        "p95": 89.96199999999988,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 556.9424999999999,
+        "p95": 619.608000000003,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 126.72800000000007,
+        "p95": 153.15299999999965,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 384.6375,
+        "p95": 438.429,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 18721.0,
+        "p95": 18894.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 500.0,
+        "p95": 568.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "glass-dark",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1256.037000000001,
+        "p95": 1534.2169999999999,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 101.221,
+        "p95": 121.06599999999989,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 482.996,
+        "p95": 648.1260000000004,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 50.38900000000002,
+        "p95": 97.18499999999996,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 191.967,
+        "p95": 211.379,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 12622.0,
+        "p95": 12753.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 328.0,
+        "p95": 368.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "glass-dark",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1040.5420000000004,
+        "p95": 1179.4980000000023,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 70.4869999999993,
+        "p95": 91.47600000000011,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 307.730000000003,
+        "p95": 364.65600000000006,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 20.230500000000042,
+        "p95": 22.842000000000027,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 82.10249999999999,
+        "p95": 114.828,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 10961.0,
+        "p95": 10995.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 124.0,
+        "p95": 168.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "glass-dark",
+    "action": "home-general",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1862.0260000000003,
+        "p95": 1902.4910000000004,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 362.22999999999996,
+        "p95": 380.304,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 923.8550000000001,
+        "p95": 932.5259999999997,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 79.882,
+        "p95": 83.88399999999996,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 257.911,
+        "p95": 263.436,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 26366.0,
+        "p95": 26388.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 264.0,
+        "p95": 272.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "glass-dark",
+    "action": "home-general",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1904.8639999999998,
+        "p95": 1938.428,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 364.07299999999987,
+        "p95": 377.60400000000004,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 944.1109999999999,
+        "p95": 967.9250000000006,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 87.57100000000001,
+        "p95": 88.40699999999998,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 264.971,
+        "p95": 271.683,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 26320.0,
+        "p95": 26471.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 272.0,
+        "p95": 288.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "glass-dark",
+    "action": "settings-entry",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1243.7059999999994,
+        "p95": 1281.4689999999996,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 128.94299999999993,
+        "p95": 136.24000000000004,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 476.4739999999996,
+        "p95": 489.274,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 56.10500000000002,
+        "p95": 63.467,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 100.537,
+        "p95": 105.932,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 7656.0,
+        "p95": 7673.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 144.0,
+        "p95": 160.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "glass-dark",
+    "action": "settings-entry",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1280.2360000000003,
+        "p95": 1306.437,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 147.85199999999986,
+        "p95": 152.76900000000003,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 489.26500000000004,
+        "p95": 492.09000000000015,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 67.29600000000002,
+        "p95": 69.558,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 104.588,
+        "p95": 115.224,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 7583.0,
+        "p95": 7655.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 152.0,
+        "p95": 168.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "glass-dark",
+    "action": "settings-return",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1323.4534999999978,
+        "p95": 1384.520000000009,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 115.66349999999991,
+        "p95": 130.82200000000023,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 580.8819999999998,
+        "p95": 591.1120000000026,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 19.99149999999994,
+        "p95": 21.399999999999974,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 137.6475,
+        "p95": 146.442,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 16502.0,
+        "p95": 17577.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 240.0,
+        "p95": 256.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "glass-dark",
+    "action": "settings-return",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1311.269499999998,
+        "p95": 1360.313999999999,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 113.05150000000008,
+        "p95": 132.58700000000002,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 592.7760000000006,
+        "p95": 612.9259999999981,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 19.037000000000138,
+        "p95": 21.678000000000086,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 134.79649999999998,
+        "p95": 150.547,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 17040.0,
+        "p95": 18321.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 236.0,
+        "p95": 264.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "glass-dark",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 2024.1540000000011,
+        "p95": 2353.809,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 295.71100000000007,
+        "p95": 296.26700000000005,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 1153.6219999999994,
+        "p95": 1410.214,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 72.36599999999993,
+        "p95": 126.31800000000004,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 233.28,
+        "p95": 274.653,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 32315.0,
+        "p95": 32354.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 480.0,
+        "p95": 568.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "glass-dark",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1678.085499999998,
+        "p95": 1823.7260000000078,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 230.35650000000007,
+        "p95": 267.68400000000094,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 901.1784999999995,
+        "p95": 936.0939999999971,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 34.21549999999995,
+        "p95": 39.32199999999986,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 231.32150000000001,
+        "p95": 250.066,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 30093.0,
+        "p95": 30481.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 376.0,
+        "p95": 400.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "glass-dark",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1886.4999999999998,
+        "p95": 2031.1830000000004,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 276.89300000000003,
+        "p95": 280.915,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 1077.496,
+        "p95": 1191.0639999999999,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 67.025,
+        "p95": 101.275,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 225.717,
+        "p95": 227.76,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 31147.0,
+        "p95": 31233.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 456.0,
+        "p95": 464.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "glass-dark",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1633.5929999999942,
+        "p95": 1768.4059999999988,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 222.82650000000004,
+        "p95": 242.89200000000034,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 885.4440000000006,
+        "p95": 954.7140000000027,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 34.1459999999999,
+        "p95": 37.61600000000009,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 227.529,
+        "p95": 245.31,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 29367.5,
+        "p95": 30415.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 368.0,
+        "p95": 400.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1423.6459999999997,
+        "p95": 1522.855999999999,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 91.0200000000001,
+        "p95": 100.78199999999993,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 675.5719999999999,
+        "p95": 713.2959999999997,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 144.93399999999994,
+        "p95": 147.92399999999995,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 522.055,
+        "p95": 552.505,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 19953.0,
+        "p95": 20112.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 648.0,
+        "p95": 672.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1350.109999999999,
+        "p95": 1529.3380000000097,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 76.65450000000007,
+        "p95": 83.00100000000032,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 555.7665000000006,
+        "p95": 651.5100000000018,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 126.13099999999977,
+        "p95": 141.1150000000001,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 379.102,
+        "p95": 444.207,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 18725.0,
+        "p95": 18861.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 484.0,
+        "p95": 576.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1214.6980000000003,
+        "p95": 1227.9070000000002,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 85.65899999999993,
+        "p95": 95.16600000000008,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 485.2679999999996,
+        "p95": 487.38999999999953,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 47.87799999999998,
+        "p95": 56.27799999999999,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 186.845,
+        "p95": 188.418,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 12600.0,
+        "p95": 12885.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 312.0,
+        "p95": 320.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1072.0154999999972,
+        "p95": 1189.3959999999986,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 73.1259999999998,
+        "p95": 74.9740000000001,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 322.1189999999972,
+        "p95": 362.2209999999999,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 20.635000000000012,
+        "p95": 21.664000000000016,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 82.641,
+        "p95": 100.285,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 10989.0,
+        "p95": 11031.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 128.0,
+        "p95": 152.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "action": "home-general",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1879.926000000001,
+        "p95": 1959.9329999999995,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 368.827,
+        "p95": 382.06699999999995,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 920.1030000000001,
+        "p95": 963.2620000000003,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 73.64899999999996,
+        "p95": 78.52700000000002,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 247.286,
+        "p95": 263.871,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 26399.0,
+        "p95": 26431.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 264.0,
+        "p95": 272.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "action": "home-general",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1889.6429999999996,
+        "p95": 1968.6260000000004,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 362.46900000000016,
+        "p95": 391.91200000000003,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 952.0819999999994,
+        "p95": 979.3170000000005,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 77.43399999999997,
+        "p95": 82.80099999999999,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 265.934,
+        "p95": 276.737,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 26393.0,
+        "p95": 26457.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 296.0,
+        "p95": 296.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "action": "settings-entry",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1274.2560000000012,
+        "p95": 1343.3770000000002,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 124.907,
+        "p95": 125.39699999999998,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 470.25399999999973,
+        "p95": 486.61500000000046,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 57.25000000000002,
+        "p95": 57.863,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 95.83,
+        "p95": 97.458,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 7644.0,
+        "p95": 7662.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 144.0,
+        "p95": 144.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "action": "settings-entry",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1217.7480000000003,
+        "p95": 1447.4739999999997,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 134.529,
+        "p95": 151.34599999999998,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 474.75200000000007,
+        "p95": 538.8060000000002,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 54.730000000000004,
+        "p95": 62.775999999999996,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 106.128,
+        "p95": 118.058,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 7563.0,
+        "p95": 7710.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 152.0,
+        "p95": 176.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "action": "settings-return",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1311.7735000000011,
+        "p95": 1408.1939999999945,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 117.33100000000007,
+        "p95": 132.85200000000063,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 579.2014999999981,
+        "p95": 632.769999999999,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 20.04299999999992,
+        "p95": 23.077000000000236,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 136.1335,
+        "p95": 149.439,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 16949.5,
+        "p95": 19177.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 232.0,
+        "p95": 248.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "action": "settings-return",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1317.2684999999974,
+        "p95": 1373.1749999999893,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 114.75750000000008,
+        "p95": 143.70699999999914,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 587.3270000000011,
+        "p95": 595.3499999999998,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 19.722000000000016,
+        "p95": 23.730999999999945,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 136.29250000000002,
+        "p95": 156.91,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 16860.5,
+        "p95": 17719.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 236.0,
+        "p95": 280.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1897.5010000000002,
+        "p95": 1944.217,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 254.83300000000008,
+        "p95": 283.5639999999999,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 1098.1959999999997,
+        "p95": 1104.781,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 67.86399999999992,
+        "p95": 70.30899999999995,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 235.197,
+        "p95": 236.703,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 31722.0,
+        "p95": 32007.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 464.0,
+        "p95": 480.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1670.2544999999986,
+        "p95": 1822.497999999996,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 235.1525000000001,
+        "p95": 284.8409999999992,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 901.3314999999996,
+        "p95": 967.8680000000029,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 34.70149999999994,
+        "p95": 42.597999999999914,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 229.061,
+        "p95": 276.777,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 30150.0,
+        "p95": 30964.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 380.0,
+        "p95": 456.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 2035.3060000000003,
+        "p95": 2177.246,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 285.7130000000001,
+        "p95": 310.826,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 1190.4789999999998,
+        "p95": 1250.3099999999997,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 83.49800000000002,
+        "p95": 88.94700000000006,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 226.865,
+        "p95": 251.294,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 31922.0,
+        "p95": 32333.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 472.0,
+        "p95": 568.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1651.8145000000022,
+        "p95": 1756.8430000000035,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 224.7659999999998,
+        "p95": 250.61300000000043,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 905.6079999999972,
+        "p95": 946.7029999999994,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 33.789499999999975,
+        "p95": 38.38899999999978,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 231.7,
+        "p95": 261.899,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 30242.0,
+        "p95": 30873.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 380.0,
+        "p95": 440.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 803.4350000000004,
+        "p95": 883.8950000000008,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 38.86999999999996,
+        "p95": 39.018,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 473.63699999999966,
+        "p95": 569.5900000000007,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 45.134000000000036,
+        "p95": 55.46499999999999,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 447.114,
+        "p95": 491.794,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 13463.0,
+        "p95": 17040.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 496.0,
+        "p95": 576.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 757.4924999999996,
+        "p95": 807.9450000000037,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 26.543000000000095,
+        "p95": 32.41200000000077,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 441.6934999999995,
+        "p95": 478.3299999999997,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 38.01149999999995,
+        "p95": 41.88600000000009,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 407.5775,
+        "p95": 446.35,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 13469.5,
+        "p95": 13703.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 452.0,
+        "p95": 496.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 356.5969999999998,
+        "p95": 369.42200000000014,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 35.83199999999997,
+        "p95": 35.83900000000006,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 82.88600000000001,
+        "p95": 84.62400000000025,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 13.057999999999986,
+        "p95": 13.670999999999989,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 30.407,
+        "p95": 55.912,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 5622.0,
+        "p95": 5670.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 72.0,
+        "p95": 72.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 356.54299999999853,
+        "p95": 374.03899999999624,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 25.59350000000005,
+        "p95": 30.845000000000233,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 75.53200000000172,
+        "p95": 79.34099999999944,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 6.1829999999999945,
+        "p95": 7.1670000000000345,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 27.09,
+        "p95": 29.403,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 5524.0,
+        "p95": 5853.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 56.0,
+        "p95": 56.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "action": "home-general",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 670.7999999999998,
+        "p95": 712.021,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 109.81800000000008,
+        "p95": 111.98599999999992,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 273.83700000000033,
+        "p95": 358.1979999999998,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 23.649999999999977,
+        "p95": 36.11300000000001,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 159.954,
+        "p95": 170.547,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 9663.0,
+        "p95": 10097.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 320.0,
+        "p95": 336.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "action": "home-general",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 665.5329999999999,
+        "p95": 786.8250000000003,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 120.68600000000006,
+        "p95": 130.29800000000003,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 263.3010000000002,
+        "p95": 304.31600000000003,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 31.72,
+        "p95": 33.025,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 140.109,
+        "p95": 176.547,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 8781.0,
+        "p95": 8983.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 280.0,
+        "p95": 328.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "action": "settings-entry",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 640.7889999999999,
+        "p95": 653.6609999999996,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 98.07199999999993,
+        "p95": 117.51899999999993,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 175.55300000000074,
+        "p95": 177.2210000000003,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 22.124000000000006,
+        "p95": 28.663999999999966,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 97.905,
+        "p95": 132.821,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 6993.0,
+        "p95": 7044.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 136.0,
+        "p95": 160.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "action": "settings-entry",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 575.0420000000007,
+        "p95": 601.9600000000005,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 97.10799999999998,
+        "p95": 99.05600000000004,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 160.32800000000003,
+        "p95": 164.34000000000015,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 23.21200000000001,
+        "p95": 25.171,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 95.008,
+        "p95": 98.322,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 6761.0,
+        "p95": 7044.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 136.0,
+        "p95": 136.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "action": "settings-return",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 663.9464999999998,
+        "p95": 918.0410000000023,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 79.21899999999994,
+        "p95": 86.78699999999972,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 290.1264999999995,
+        "p95": 359.3459999999995,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 25.728499999999933,
+        "p95": 31.954999999999956,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 140.0685,
+        "p95": 154.441,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 7535.5,
+        "p95": 12841.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 260.0,
+        "p95": 272.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "action": "settings-return",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 666.2269999999992,
+        "p95": 1120.2879999999986,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 77.57199999999997,
+        "p95": 92.13400000000016,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 287.7700000000001,
+        "p95": 418.59299999999956,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 25.957000000000008,
+        "p95": 37.05900000000001,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 140.32850000000002,
+        "p95": 149.939,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 7516.0,
+        "p95": 15107.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 256.0,
+        "p95": 272.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1364.3919999999987,
+        "p95": 1406.6619999999998,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 74.04999999999995,
+        "p95": 92.13000000000005,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 527.2639999999998,
+        "p95": 621.5840000000004,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 16.259999999999998,
+        "p95": 17.46799999999993,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 240.323,
+        "p95": 294.608,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 24671.0,
+        "p95": 27415.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 352.0,
+        "p95": 456.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1266.4304999999986,
+        "p95": 1332.3890000000063,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 77.56949999999996,
+        "p95": 81.24800000000043,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 498.7514999999991,
+        "p95": 509.52099999999945,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 15.388000000000012,
+        "p95": 17.16299999999982,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 239.0075,
+        "p95": 249.641,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 24251.0,
+        "p95": 25473.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 344.0,
+        "p95": 352.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1262.468,
+        "p95": 1286.6040000000005,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 74.54799999999994,
+        "p95": 78.50999999999996,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 514.24,
+        "p95": 520.9920000000001,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 16.39299999999999,
+        "p95": 16.771000000000008,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 238.047,
+        "p95": 239.749,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 25807.0,
+        "p95": 25923.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 344.0,
+        "p95": 344.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1264.92,
+        "p95": 1329.3139999999967,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 75.05249999999997,
+        "p95": 86.72899999999983,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 488.4144999999993,
+        "p95": 522.0050000000001,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 15.043499999999987,
+        "p95": 18.299999999999983,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 241.643,
+        "p95": 295.829,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 24422.5,
+        "p95": 25611.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 340.0,
+        "p95": 376.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "nier-light",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 813.3439999999998,
+        "p95": 838.7819999999992,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 38.48400000000007,
+        "p95": 39.09299999999993,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 455.90400000000034,
+        "p95": 460.68700000000007,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 43.83199999999998,
+        "p95": 44.66800000000001,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 424.016,
+        "p95": 428.692,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 14434.0,
+        "p95": 15492.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 472.0,
+        "p95": 480.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "nier-light",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 760.9390000000005,
+        "p95": 843.3500000000009,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 26.315499999999716,
+        "p95": 30.545999999999964,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 464.5640000000002,
+        "p95": 490.199999999998,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 38.21199999999992,
+        "p95": 42.37000000000002,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 422.06100000000004,
+        "p95": 446.119,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 13501.5,
+        "p95": 13862.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 468.0,
+        "p95": 496.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "nier-light",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 464.50100000000026,
+        "p95": 486.31899999999996,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 38.40599999999994,
+        "p95": 39.349999999999994,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 100.03000000000029,
+        "p95": 104.12700000000008,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 14.80999999999999,
+        "p95": 15.356999999999982,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 30.344,
+        "p95": 33.019,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 7347.0,
+        "p95": 7358.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 72.0,
+        "p95": 80.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "nier-light",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 346.0400000000021,
+        "p95": 402.23499999999746,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 26.95000000000025,
+        "p95": 29.24199999999999,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 76.1500000000015,
+        "p95": 88.80599999999816,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 6.246000000000029,
+        "p95": 7.431999999999994,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 28.602,
+        "p95": 37.846,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 5417.5,
+        "p95": 5768.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 56.0,
+        "p95": 56.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "nier-light",
+    "action": "home-general",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 667.2630000000001,
+        "p95": 769.196,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 111.309,
+        "p95": 129.78100000000003,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 259.77000000000004,
+        "p95": 316.3229999999997,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 22.738999999999983,
+        "p95": 30.327999999999992,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 133.671,
+        "p95": 186.481,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 9084.0,
+        "p95": 9185.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 280.0,
+        "p95": 336.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "nier-light",
+    "action": "home-general",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 692.0250000000001,
+        "p95": 722.226,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 116.40399999999995,
+        "p95": 121.66,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 260.2169999999999,
+        "p95": 275.06900000000024,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 25.231999999999992,
+        "p95": 25.251999999999995,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 134.346,
+        "p95": 145.361,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 9172.0,
+        "p95": 9243.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 272.0,
+        "p95": 280.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "nier-light",
+    "action": "settings-entry",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 588.8059999999999,
+        "p95": 630.1010000000007,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 97.14,
+        "p95": 98.67499999999995,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 164.28900000000013,
+        "p95": 166.47999999999996,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 19.590999999999998,
+        "p95": 20.366999999999997,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 93.689,
+        "p95": 99.193,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 6985.0,
+        "p95": 7088.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 128.0,
+        "p95": 136.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "nier-light",
+    "action": "settings-entry",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 596.7979999999998,
+        "p95": 620.8330000000002,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 97.03699999999994,
+        "p95": 99.96500000000009,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 163.4500000000001,
+        "p95": 169.76999999999998,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 20.932999999999993,
+        "p95": 22.766999999999996,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 91.036,
+        "p95": 93.446,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 6946.0,
+        "p95": 6992.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 128.0,
+        "p95": 128.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "nier-light",
+    "action": "settings-return",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 668.7980000000025,
+        "p95": 854.515000000001,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 79.9265,
+        "p95": 94.70200000000007,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 287.40050000000036,
+        "p95": 323.8250000000003,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 26.537499999999994,
+        "p95": 32.745999999999995,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 140.359,
+        "p95": 147.159,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 7398.5,
+        "p95": 11064.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 256.0,
+        "p95": 264.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "nier-light",
+    "action": "settings-return",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 672.9904999999992,
+        "p95": 773.5940000000028,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 80.77200000000008,
+        "p95": 91.92900000000037,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 289.3284999999997,
+        "p95": 305.41100000000034,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 26.863999999999972,
+        "p95": 30.254000000000005,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 141.24,
+        "p95": 148.951,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 7512.5,
+        "p95": 9522.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 256.0,
+        "p95": 264.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "nier-light",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1179.4050000000009,
+        "p95": 1382.668,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 74.45399999999991,
+        "p95": 77.63599999999992,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 505.071,
+        "p95": 531.263,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 17.730000000000025,
+        "p95": 18.59099999999997,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 246.187,
+        "p95": 319.396,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 24797.0,
+        "p95": 25192.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 360.0,
+        "p95": 368.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "nier-light",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1296.1335,
+        "p95": 1381.1420000000041,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 75.46350000000012,
+        "p95": 82.89599999999986,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 526.1985000000004,
+        "p95": 550.9950000000003,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 16.239000000000004,
+        "p95": 17.347,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 244.6155,
+        "p95": 252.107,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 24921.0,
+        "p95": 26135.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 364.0,
+        "p95": 376.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "nier-light",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1319.8850000000002,
+        "p95": 1353.2610000000006,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 78.28100000000005,
+        "p95": 98.42300000000004,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 543.4440000000001,
+        "p95": 547.6450000000002,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 19.727999999999994,
+        "p95": 21.633000000000013,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 256.04,
+        "p95": 274.358,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 25177.0,
+        "p95": 25221.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 392.0,
+        "p95": 416.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "nier-light",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1314.2095000000004,
+        "p95": 1384.879999999999,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 73.12399999999997,
+        "p95": 94.18799999999993,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 526.0859999999993,
+        "p95": 543.4609999999989,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 15.275000000000038,
+        "p95": 17.48700000000003,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 241.5935,
+        "p95": 309.982,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 26001.5,
+        "p95": 26367.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 360.0,
+        "p95": 416.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "retro-dark",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1029.2979999999989,
+        "p95": 1054.9769999999992,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 39.00100000000006,
+        "p95": 46.515000000000086,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 386.7279999999997,
+        "p95": 401.6440000000001,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 43.85600000000001,
+        "p95": 49.64799999999997,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 329.93,
+        "p95": 349.458,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 15669.0,
+        "p95": 15686.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 400.0,
+        "p95": 424.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "retro-dark",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 971.6895000000002,
+        "p95": 1093.1850000000054,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 25.89550000000007,
+        "p95": 40.20899999999994,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 333.58849999999984,
+        "p95": 393.93800000000033,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 34.24399999999994,
+        "p95": 42.47599999999996,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 271.846,
+        "p95": 312.471,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 14569.0,
+        "p95": 17023.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 328.0,
+        "p95": 368.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "retro-dark",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 755.4580000000009,
+        "p95": 767.8709999999995,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 36.81899999999993,
+        "p95": 37.91799999999989,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 134.70299999999958,
+        "p95": 148.05400000000014,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 13.380000000000003,
+        "p95": 18.68599999999998,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 55.155,
+        "p95": 58.195,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 7825.0,
+        "p95": 8042.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 112.0,
+        "p95": 120.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "retro-dark",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 784.0655000000006,
+        "p95": 849.3080000000007,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 25.335499999999733,
+        "p95": 29.195000000000082,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 109.21950000000047,
+        "p95": 148.60200000000034,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 7.74749999999999,
+        "p95": 10.106999999999978,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 43.105000000000004,
+        "p95": 51.97,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 6230.0,
+        "p95": 8246.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 72.0,
+        "p95": 88.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "retro-dark",
+    "action": "home-general",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1009.2110000000005,
+        "p95": 1041.5729999999996,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 100.96199999999999,
+        "p95": 109.15499999999989,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 246.13799999999975,
+        "p95": 247.9079999999998,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 15.919000000000016,
+        "p95": 21.092,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 113.64,
+        "p95": 116.225,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 10098.0,
+        "p95": 10271.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 208.0,
+        "p95": 224.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "retro-dark",
+    "action": "home-general",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 951.4209999999998,
+        "p95": 1001.76,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 98.32200000000002,
+        "p95": 104.66400000000009,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 233.36000000000024,
+        "p95": 233.52400000000006,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 17.05300000000001,
+        "p95": 23.269000000000013,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 113.541,
+        "p95": 119.415,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 9978.0,
+        "p95": 10264.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 208.0,
+        "p95": 208.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "retro-dark",
+    "action": "settings-entry",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 796.3670000000001,
+        "p95": 876.5939999999998,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 51.952,
+        "p95": 54.94899999999991,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 135.63100000000006,
+        "p95": 137.21500000000032,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 29.376000000000012,
+        "p95": 33.53800000000001,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 49.639,
+        "p95": 56.604,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 4256.0,
+        "p95": 4279.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 88.0,
+        "p95": 96.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "retro-dark",
+    "action": "settings-entry",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 713.4080000000002,
+        "p95": 756.0509999999994,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 45.05800000000004,
+        "p95": 45.48200000000002,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 117.90399999999978,
+        "p95": 130.166,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 26.451,
+        "p95": 27.701999999999977,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 49.543,
+        "p95": 50.126,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 4254.0,
+        "p95": 4256.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 80.0,
+        "p95": 80.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "retro-dark",
+    "action": "settings-return",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1102.5814999999993,
+        "p95": 1141.216,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 76.50750000000005,
+        "p95": 84.71399999999996,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 350.9979999999988,
+        "p95": 365.9329999999983,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 16.897500000000065,
+        "p95": 17.885999999999846,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 88.8255,
+        "p95": 103.554,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 12985.0,
+        "p95": 13547.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 168.0,
+        "p95": 200.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "retro-dark",
+    "action": "settings-return",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1124.5384999999999,
+        "p95": 1177.9299999999894,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 78.36699999999985,
+        "p95": 93.57199999999999,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 360.8499999999992,
+        "p95": 380.80599999999976,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 18.082000000000043,
+        "p95": 19.62200000000003,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 90.211,
+        "p95": 94.559,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 13065.0,
+        "p95": 13559.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 172.0,
+        "p95": 176.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "retro-dark",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1108.0410000000002,
+        "p95": 1163.2029999999993,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 75.46999999999993,
+        "p95": 88.83699999999983,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 385.5649999999997,
+        "p95": 401.63599999999985,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 17.540999999999972,
+        "p95": 18.873999999999945,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 179.773,
+        "p95": 199.442,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 19940.0,
+        "p95": 19990.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 296.0,
+        "p95": 336.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "retro-dark",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1101.2140000000006,
+        "p95": 1200.8330000000028,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 75.34950000000006,
+        "p95": 81.43600000000006,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 366.6870000000007,
+        "p95": 381.1490000000006,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 17.091999999999995,
+        "p95": 18.907000000000007,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 176.31799999999998,
+        "p95": 184.472,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 18594.5,
+        "p95": 19567.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 284.0,
+        "p95": 296.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "retro-dark",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1054.8319999999994,
+        "p95": 1092.8539999999991,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 76.49499999999998,
+        "p95": 82.19600000000015,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 383.486,
+        "p95": 391.8159999999999,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 16.846,
+        "p95": 23.19099999999996,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 179.976,
+        "p95": 181.143,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 19842.0,
+        "p95": 20258.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 304.0,
+        "p95": 312.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "retro-dark",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1105.9830000000002,
+        "p95": 1177.9930000000008,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 75.6315000000003,
+        "p95": 78.20300000000024,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 371.6075000000005,
+        "p95": 381.9889999999999,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 17.885499999999944,
+        "p95": 22.46100000000001,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 180.474,
+        "p95": 185.148,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 18571.5,
+        "p95": 19715.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 292.0,
+        "p95": 304.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "retro-light",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 906.657000000001,
+        "p95": 916.7180000000012,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 34.32600000000008,
+        "p95": 34.37800000000002,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 348.2680000000005,
+        "p95": 357.9939999999997,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 38.246,
+        "p95": 40.044999999999995,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 306.1,
+        "p95": 316.248,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 15677.0,
+        "p95": 15698.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 368.0,
+        "p95": 376.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "retro-light",
+    "action": "files-search",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 932.6974999999961,
+        "p95": 1038.3829999999996,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 24.474999999999802,
+        "p95": 30.87200000000001,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 328.1455000000015,
+        "p95": 377.2559999999992,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 33.54899999999983,
+        "p95": 37.20599999999996,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 272.8725,
+        "p95": 303.239,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 14583.5,
+        "p95": 16623.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 336.0,
+        "p95": 376.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "retro-light",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 718.6530000000007,
+        "p95": 743.6599999999993,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 33.938000000000024,
+        "p95": 36.138000000000005,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 124.23299999999982,
+        "p95": 140.85199999999975,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 12.410999999999978,
+        "p95": 13.987,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 50.911,
+        "p95": 57.315,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 7787.0,
+        "p95": 7793.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 120.0,
+        "p95": 128.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "retro-light",
+    "action": "files-search",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 722.351999999999,
+        "p95": 801.8080000000011,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 24.023999999999937,
+        "p95": 27.965000000000018,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 100.39249999999899,
+        "p95": 135.33999999999935,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 6.846500000000005,
+        "p95": 9.599000000000025,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 42.2235,
+        "p95": 52.049,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 6129.0,
+        "p95": 8368.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 72.0,
+        "p95": 88.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "retro-light",
+    "action": "home-general",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 984.2309999999994,
+        "p95": 1010.6149999999996,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 103.42799999999986,
+        "p95": 113.05900000000003,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 223.1749999999999,
+        "p95": 243.73900000000015,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 16.799000000000007,
+        "p95": 21.565,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 108.732,
+        "p95": 116.061,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 10267.0,
+        "p95": 10286.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 200.0,
+        "p95": 216.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "retro-light",
+    "action": "home-general",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 926.1750000000006,
+        "p95": 1005.4410000000003,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 102.35600000000001,
+        "p95": 104.73300000000019,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 226.4569999999999,
+        "p95": 246.5130000000002,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 24.12,
+        "p95": 31.249,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 109.959,
+        "p95": 114.903,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 10287.0,
+        "p95": 10384.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 208.0,
+        "p95": 216.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "retro-light",
+    "action": "settings-entry",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 727.6189999999998,
+        "p95": 731.8670000000003,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 45.51599999999989,
+        "p95": 46.25200000000007,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 119.69399999999996,
+        "p95": 122.21299999999991,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 24.775999999999964,
+        "p95": 26.62500000000001,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 48.58,
+        "p95": 51.574,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 4247.0,
+        "p95": 4257.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 88.0,
+        "p95": 88.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "retro-light",
+    "action": "settings-entry",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 667.7520000000002,
+        "p95": 717.3390000000009,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 42.04500000000011,
+        "p95": 43.21600000000003,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 108.36000000000024,
+        "p95": 111.35899999999977,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 21.60099999999998,
+        "p95": 22.636000000000017,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 47.452,
+        "p95": 48.181,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 4252.0,
+        "p95": 4256.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 80.0,
+        "p95": 80.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "retro-light",
+    "action": "settings-return",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1055.593,
+        "p95": 1153.6229999999996,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 75.13399999999982,
+        "p95": 86.42400000000006,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 345.49699999999996,
+        "p95": 380.25600000000014,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 16.37449999999996,
+        "p95": 20.863000000000078,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 85.8395,
+        "p95": 89.77,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 13028.5,
+        "p95": 13440.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 164.0,
+        "p95": 176.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "retro-light",
+    "action": "settings-return",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1036.6999999999998,
+        "p95": 1090.9809999999993,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 70.79950000000034,
+        "p95": 78.69999999999999,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 341.51500000000067,
+        "p95": 356.2580000000004,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 15.243000000000034,
+        "p95": 17.637999999999987,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 85.96199999999999,
+        "p95": 92.298,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 13155.0,
+        "p95": 13589.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 168.0,
+        "p95": 176.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "retro-light",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1031.4540000000002,
+        "p95": 1114.7030000000004,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 89.7779999999999,
+        "p95": 95.28699999999989,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 379.3889999999998,
+        "p95": 391.6509999999995,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 14.981000000000023,
+        "p95": 16.156000000000002,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 173.147,
+        "p95": 178.806,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 20634.0,
+        "p95": 20838.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 312.0,
+        "p95": 336.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "retro-light",
+    "action": "theme-mode",
+    "file": "baseline",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1038.0690000000036,
+        "p95": 1128.580999999997,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 68.5675,
+        "p95": 85.08099999999996,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 368.6959999999999,
+        "p95": 389.111999999999,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 16.066499999999984,
+        "p95": 18.980999999999916,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 175.20749999999998,
+        "p95": 194.445,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 19551.5,
+        "p95": 20551.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 292.0,
+        "p95": 312.0,
+        "n": 10
+      }
+    }
+  },
+  {
+    "look": "retro-light",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "cold",
+    "runs": 3,
+    "metrics": {
+      "task_ms": {
+        "median": 1033.2259999999992,
+        "p95": 1049.1759999999992,
+        "n": 3
+      },
+      "script_ms": {
+        "median": 93.57099999999986,
+        "p95": 96.40799999999983,
+        "n": 3
+      },
+      "style_ms": {
+        "median": 377.7110000000001,
+        "p95": 382.96200000000005,
+        "n": 3
+      },
+      "layout_ms": {
+        "median": 16.927999999999997,
+        "p95": 17.232999999999997,
+        "n": 3
+      },
+      "largest_task_ms": {
+        "median": 172.937,
+        "p95": 175.398,
+        "n": 3
+      },
+      "restyled_elements": {
+        "median": 20136.0,
+        "p95": 20377.0,
+        "n": 3
+      },
+      "click_to_paint_ms": {
+        "median": 328.0,
+        "p95": 328.0,
+        "n": 3
+      }
+    }
+  },
+  {
+    "look": "retro-light",
+    "action": "theme-mode",
+    "file": "m1-final",
+    "phase": "warm",
+    "runs": 10,
+    "metrics": {
+      "task_ms": {
+        "median": 1045.5565000000017,
+        "p95": 1128.7609999999972,
+        "n": 10
+      },
+      "script_ms": {
+        "median": 69.85449999999993,
+        "p95": 76.49099999999987,
+        "n": 10
+      },
+      "style_ms": {
+        "median": 367.6464999999993,
+        "p95": 387.48200000000213,
+        "n": 10
+      },
+      "layout_ms": {
+        "median": 16.445499999999974,
+        "p95": 18.49899999999993,
+        "n": 10
+      },
+      "largest_task_ms": {
+        "median": 174.452,
+        "p95": 184.362,
+        "n": 10
+      },
+      "restyled_elements": {
+        "median": 19663.5,
+        "p95": 20639.0,
+        "n": 10
+      },
+      "click_to_paint_ms": {
+        "median": 288.0,
+        "p95": 296.0,
+        "n": 10
+      }
+    }
+  }
+]

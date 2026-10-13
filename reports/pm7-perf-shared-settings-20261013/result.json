@@ -27,11 +27,16 @@
         "Savings are established for Files\u2192Search across all10looks.",
         "Settings-return and mode-only gains are small or not established.",
         "Family Basic\u2192Friendly and Glass-entry pilots exist; repeated family proof and hardware films remain."
-      ]
+      ],
+      "raw_manifest": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m1-repeated-v2/evidence-manifest.json",
+        "sha256": "06ec67e35534198dc4b5904dfa139b0f34b70686529487180459b9aa2fba6f40"
+      },
+      "phase_measurement_summary": "reports/pm7-perf-shared-settings-20261013/m1-phase-measurements.json"
     },
     {
       "id": "M4",
-      "status": "not_implemented"
+      "status": "private_prototype_correctness_pending"
     },
     {
       "id": "M5",
@@ -52,5 +57,43 @@
     "Settings-entry saving not established.",
     "Films and broader repeated proof pending."
   ],
-  "landing": "coordinator_only"
+  "landing": "coordinator_only",
+  "artifacts": [
+    {
+      "name": "baseline-pm7.html",
+      "sha256": "f2c1c27673c784b34a4c85409d9cf52cd223799583e3e365c77c0e623233cc14",
+      "bytes": 18599906
+    },
+    {
+      "name": "baseline.html",
+      "sha256": "088ef5a26e317eb0f4ace49536915cdba1884deaa8945109561590eaef4967bf",
+      "bytes": 19419775
+    },
+    {
+      "name": "m1-final-pm7.html",
+      "sha256": "994ada7f2709f17eba9e61d47545542507a33c3aaa776cf159b0f8c3c63e3076",
+      "bytes": 18602085
+    },
+    {
+      "name": "m1-final.html",
+      "sha256": "26dfb61122a6178e9af22852ee3613988500e6296596834b202e2cbda7346c6a",
+      "bytes": 19421954
+    },
+    {
+      "name": "m4-proto-pm7.html",
+      "sha256": "af072b1c8e10d32a87ec795fb4071a7da4456b66e8be098168b3dae3ffdd6cc2",
+      "bytes": 18607929
+    },
+    {
+      "name": "m4-proto.html",
+      "sha256": "416cd921b4fb8b57e24ab8837e2248c3f92f714d2572102c33c1c340931085d0",
+      "bytes": 19427798
+    }
+  ],
+  "own_active_browser_sessions": 0,
+  "maintenance_seam": "GPU maintenance complete; panel-dnd Windows filming priority until release",
+  "artifact_manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/artifacts/manifest.json",
+    "sha256": "d3237bbd9a0f754d31ff3b1d540089660a988e84cfb173d020eb6b8ebaa6bdda"
+  }
 }

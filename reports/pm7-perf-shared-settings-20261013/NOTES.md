@@ -2,7 +2,7 @@ PM7 shared and Settings performance — implementation in progress
 
 Branch: `fix/pm7-perf-shared-settings-20261013`. Base and rebased main: `611b2404e4827675a435e7fe3113a0674bae2ed6`. Review and landing belong to home-redesign-planner. No Liquid Glass, wallpaper, terminal, hover, onboarding art, Planning Wizard, or Orchestrator source changes.
 
-M1 is under validation. M4, M5, M6, and M10 are next, in that order. Measurements below are diagnostic pilots; repeated comparisons and films are pending. No aggregate saving is claimed.
+M1 source and repeated timings are pushed to both remotes. M4 remains a private prototype awaiting correctness and timing checks; M5, M6 and M10 follow in that order. M1 family-switch repetitions and films remain open. No aggregate saving is claimed.
 
 The baseline was rebuilt by the onboarding generator, then composed with unchanged Liquid Glass sources by `build_proto.py`. Its PM7 SHA-256 is `f2c1c27673c784b34a4c85409d9cf52cd223799583e3e365c77c0e623233cc14`; its Glass-composed SHA-256 is recorded with the final artifact manifest.
 
@@ -43,4 +43,8 @@ Files → Search medians, before / after (13 samples per artifact and look):
 | nier-dark | 766.5 / 356.6 | 449.2 / 76.9 | 38.1 / 6.5 | 410.9 / 27.4 | 13463.0 / 5579.0 | 456.0 / 56.0 |
 | nier-light | 765.9 / 356.3 | 460.7 / 77.3 | 39.1 / 6.3 | 423.4 / 28.6 | 13523.0 / 5483.0 | 472.0 / 56.0 |
 
-Median and p95 for every action, including cold Settings entry, warm Settings return, General entry and all-look mode switches, are in `m1-measurements.json`. Raw traces and snapshots are in `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m1-repeated-v2`. The raw manifest will supply SHA-256 for every file.
+Median and p95 for every action, including cold Settings entry, warm Settings return, General entry and all-look mode switches, are in `m1-measurements.json`. Raw traces and snapshots are in `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m1-repeated-v2`. The raw manifest below supplies SHA-256 for every file.
+
+Raw M1 evidence manifest: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m1-repeated-v2/evidence-manifest.json`, SHA-256 `06ec67e35534198dc4b5904dfa139b0f34b70686529487180459b9aa2fba6f40`. It covers 1,823 files (9,103,401,283 bytes), including every trace, measurement, snapshot and final summary.
+
+Cold and warm measurements are also separated in `m1-phase-measurements.json` (three cold documents and ten warm repetitions per affected state). Immutable baseline/candidate page copies are under the raw evidence `artifacts/` folder; `artifacts/manifest.json` SHA-256 is `d3237bbd9a0f754d31ff3b1d540089660a988e84cfb173d020eb6b8ebaa6bdda`.
