@@ -1,19 +1,22 @@
-/* Liquid Glass v2: the glass engine and its motion (pm7-liquid-glass, Opus 5.5, 2026-10-11).
+/* Liquid Glass v3: the glass engine and its motion (pm7-liquid-glass, Opus 5.5; v2 2026-10-11, v3 2026-10-13).
  *
- * v1 was rejected ("it does not at all read as glass"): tinted fills over one blurred wallpaper. v2 is optical. Every
- * glass element refracts what is really behind it through its own backdrop filter:
- *   blur(b) url(#refraction) saturate(s)
- * The refraction is an SVG feDisplacementMap whose map is computed per element size from a convex squircle bevel and
- * Snell's law (n = 1.5): the background bends at the rim, and a lens also magnifies at its centre. Small controls and
- * lenses split red, green and blue a little at the rim (chromatic fringing). Over that sit a specular rim, lit from the
- * top left with a fainter return at the bottom right, and a shine layer that brightens the rim nearest the pointer.
- * Motion runs on a damped spring:
- *   - lenses stretch with their speed and wobble when they land, and can be scrubbed;
+ * v1 was rejected ("it does not at all read as glass"): tinted fills over one blurred wallpaper. v2 is optical: sheets
+ * carry baked optics (a frost of the real wallpaper and a refracted rim ring computed from a convex squircle bevel and
+ * Snell's law, n = 1.5), menus blur live, and lenses refract live through an SVG feDisplacementMap. Over that sit a
+ * specular rim, lit from the top left with a fainter return at the bottom right, and a shine layer that brightens the
+ * rim nearest the pointer.
+ * v3 (Jared, 2026-10-13: "reads a little glitchy and chromatic aberration rather than magnification/lenses
+ * effect/reflections"; diagnosed from 60 fps GPU films): lenses no longer split colour or magnify through the map; the
+ * labels under a lens magnify themselves as vector text, keyframed from the lens's path; the lens leaves on the press
+ * instead of after the app's click work; targets are measured without transforms; the hover bead only flows between
+ * neighbours; strip items lose the white press bloom.
+ * Motion runs on damped springs:
+ *   - lenses glide (barely overshooting), stretch with their speed, wobble once as they land, and can be scrubbed;
  *   - menus morph out of the control that opened them;
  *   - glass materializes by ramping its refraction rather than fading;
  *   - presses flex the glass.
  * The CPU path (no GPU) draws the same shapes and rims as frosted glass without refraction.
- * Switches on <html>: data-lg on|off, data-lg-tier gpu|cpu, data-lg-wall ribbons|prism|orbs.
+ * Switches on <html>: data-lg on|off, data-lg-tier gpu|cpu, data-lg-wall <id>.
  * URL: ?lg=off ?lgtier=cpu ?lgwall=. Test hook: window.PM_LG.
  */
 (function () {
@@ -129,53 +132,62 @@
      Live refraction is kept for lenses only (the chosen tab, the hover bead, a switch's knob while held): small, and
      floating over labels that change under them. Chrome re-runs an SVG backdrop filter every frame, so the sheets bake
      theirs instead (below).
-     A lens magnifies across its face and bends at its bevel. Two things keep it reading as glass, not as a glitch:
-       - the colour split happens only in the bevel. Each channel gets its own map in which only the bevel part of the
-         shift is scaled (red less, blue more), so the label in the middle stays one crisp image;
-       - the bevel band is softened by a sub-pixel blur, so the compressed surroundings at the rim read as a smooth
-         reflection rather than as broken letters. */
-  function buildLensMaps(W, H, R, B, T, mag, ca, lightK) {
-    var key = ['lens', W, H, R, B, T, mag, ca, lightK].join('|'), hit = cachedMap(key);
+     Jared, 2026-10-13: the lens read as chromatic aberration and glitch, not as magnification and reflection. Seen in
+     60 fps films: a red/blue split, letters torn where the bevel crossed them, and labels magnified by the displacement
+     map, which Chrome samples nearest-neighbour, so magnified text came out blocky. So the lens is now three plain
+     things:
+       - its bevel bends what is under it by at most 1.4 px, one map for all channels (no colour split),
+         softened by a sub-pixel blur inside the rim only, so a passing letter bends smoothly instead of tearing;
+       - the magnification is done by the labels themselves, scaled as vector text about the lens's centre (see travel),
+         so magnified text stays crisp;
+       - the light is a crisp rim line lit from the top left with a fainter return at the bottom right, a soft Fresnel
+         band, and a caustic: light focused through the drop onto its inner bottom edge.
+     mag > 1 is kept for the switch knob, which lenses a plain track and no text. */
+  function buildLensMaps(W, H, R, B, T, mag, lightK) {
+    var key = ['lens2', W, H, R, B, T, mag, lightK].join('|'), hit = cachedMap(key);
     if (hit) return hit;
-    var n = W * H, ch = [new Float32Array(n), new Float32Array(n), new Float32Array(n), new Float32Array(n), new Float32Array(n), new Float32Array(n)];
+    var n = W * H, dx = new Float32Array(n), dy = new Float32Array(n);
     var rimA = new Float32Array(n), sp = new Float32Array(n), hx = W / 2 - R, hy = H / 2 - R, cx = W / 2, cy = H / 2, L0 = -0.55, L1 = -0.83, max = 0;
-    var cap = Math.min(3.5, B * 0.8), kR = 1 - ca, kB = 1 + ca;
+    var cap = Math.min(1.4, B * 0.45);
     var scratch = [0, 0, 0], bends = new Map(), lights = new Map();
     for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
       var i = y * W + x, px = x + 0.5 - cx, py = y + 0.5 - cy, s0 = sdf(px, py, hx, hy, R, scratch), d = s0[0];
       if (d <= 0) continue;
-      var mx = -px * (1 - 1 / mag), my = -py * (1 - 1 / mag), bx = 0, by = 0;
+      var vx = mag > 1 ? -px * (1 - 1 / mag) : 0, vy = mag > 1 ? -py * (1 - 1 / mag) : 0;
       if (d < B) {
         var bend = bends.get(d);
         if (!bend) {
           var t = d / B, e = 0.002, slope = (profile(Math.min(1, t + e)) - profile(Math.max(0, t - e))) / (2 * e) * (T / B);
-          var a = Math.atan(slope), b = Math.asin(Math.sin(a) / 1.5), m = Math.max(0, Math.min(T * Math.tan(a - b), cap, 0.35 * (Math.min(W, H) / 2 - d)));
-          bend = [m, Math.exp(-d / 1.1), Math.exp(-d / Math.min(5, B * 0.5)) * 0.18]; bends.set(d, bend);
+          var a = Math.atan(slope), b = Math.asin(Math.sin(a) / 1.5), m = Math.max(0, Math.min(T * Math.tan(a - b), cap, 0.3 * (Math.min(W, H) / 2 - d)));
+          bend = [m, Math.exp(-d / 0.85), Math.exp(-d / Math.max(1.5, B * 0.55)) * 0.12]; bends.set(d, bend);
         }
-        bx = -s0[1] * bend[0]; by = -s0[2] * bend[0];
+        vx -= s0[1] * bend[0]; vy -= s0[2] * bend[0];
         var face = s0[1] * L0 + s0[2] * L1, lighting = lights.get(face);
-        if (lighting === undefined) { lighting = Math.pow(Math.max(0, face), 1.4) + Math.pow(Math.max(0, -face), 2.0) * 0.62; lights.set(face, lighting); }
+        if (lighting === undefined) { lighting = Math.pow(Math.max(0, face), 1.25) + Math.pow(Math.max(0, -face), 1.7) * 0.55; lights.set(face, lighting); }
         var line = bend[1], glow = bend[2];
-        sp[i] = Math.min(1, lighting * (line + glow) * lightK + line * 0.12);
+        sp[i] = lighting * (line * 0.9 + glow) * lightK + line * 0.08;
       }
-      var u = Math.min(1, Math.max(0, (d - 0.6) / 2.2)); rimA[i] = 1 - u * u * (3 - 2 * u);
-      ch[0][i] = mx + bx * kR; ch[1][i] = my + by * kR; ch[2][i] = mx + bx; ch[3][i] = my + by; ch[4][i] = mx + bx * kB; ch[5][i] = my + by * kB;
-      for (var c = 0; c < 6; c++) { var v = Math.abs(ch[c][i]); if (v > max) max = v; }
+      /* the caustic: a soft bright band just inside the lower rim */
+      if (s0[2] > 0.2) sp[i] += 0.16 * lightK * s0[2] * Math.exp(-Math.pow(d - Math.min(3, B * 0.7), 2) / 2.2);
+      sp[i] = Math.min(1, sp[i]);
+      var u = Math.min(1, Math.max(0, (d - 0.5) / Math.max(1.5, B))); rimA[i] = 1 - u * u * (3 - 2 * u);
+      dx[i] = vx; dy[i] = vy; var mm = Math.max(Math.abs(vx), Math.abs(vy)); if (mm > max) max = mm;
     }
     var canvas = document.createElement('canvas'); canvas.width = W; canvas.height = H;
     var ctx = canvas.getContext('2d'), pixels = ctx.createImageData(W, H);
     function img(fill) { fill(pixels.data); ctx.putImageData(pixels, 0, 0); return canvas.toDataURL('image/png'); }
     var k = max || 1;
-    function dmap(cx2, cy2) { return img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = 128 + Math.round(cx2[i] / k * 127); D[o + 1] = 128 + Math.round(cy2[i] / k * 127); D[o + 2] = 128; D[o + 3] = 255; } }); }
     var res = {
-      scale: max * 2, maps: [dmap(ch[0], ch[1]), dmap(ch[2], ch[3]), dmap(ch[4], ch[5])],
+      scale: max * 2,
+      map: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = 128 + Math.round(dx[i] / k * 127); D[o + 1] = 128 + Math.round(dy[i] / k * 127); D[o + 2] = 128; D[o + 3] = 255; } }),
       rim: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(rimA[i] * 255); } }),
       spec: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(sp[i] * 255); } }),
     };
     return keepMap(key, res);
   }
-  function lensFilter(W, H, m, rimBlur, id) {
-    var key = id || (m.maps[1].length + ':' + W + 'x' + H + ':' + m.scale.toFixed(2) + ':' + rimBlur);
+  /* one filter per lens size and kind, keyed by what built it (never by an image's length) */
+  function lensFilter(W, H, m, rimBlur, id, key) {
+    key = id || key;
     if (filterByKey.has(key)) {
       var cached = filterByKey.get(key);
       if (!cached.el.isConnected) ensureDefs().appendChild(cached.el);
@@ -184,13 +196,8 @@
     var f = document.createElementNS(SVGNS, 'filter'); id = id || ('lgf' + (fid++));
     f.setAttribute('id', id); f.setAttribute('x', '0'); f.setAttribute('y', '0'); f.setAttribute('width', W); f.setAttribute('height', H);
     f.setAttribute('filterUnits', 'userSpaceOnUse'); f.setAttribute('primitiveUnits', 'userSpaceOnUse'); f.setAttribute('color-interpolation-filters', 'sRGB');
-    var sc = m.scale.toFixed(2), h = '', keep = ['1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0', '0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0', '0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0'];
-    for (var c = 0; c < 3; c++) {
-      h += '<feImage href="' + m.maps[c] + '" x="0" y="0" width="' + W + '" height="' + H + '" preserveAspectRatio="none" result="m' + c + '"/>' +
-        '<feDisplacementMap in="SourceGraphic" in2="m' + c + '" scale="' + sc + '" xChannelSelector="R" yChannelSelector="G" result="d' + c + '"/>' +
-        '<feColorMatrix in="d' + c + '" type="matrix" values="' + keep[c] + '" result="c' + c + '"/>';
-    }
-    h += '<feComposite in="c0" in2="c1" operator="arithmetic" k2="1" k3="1" result="c01"/><feComposite in="c01" in2="c2" operator="arithmetic" k2="1" k3="1" result="D"/>';
+    var h = '<feImage href="' + m.map + '" x="0" y="0" width="' + W + '" height="' + H + '" preserveAspectRatio="none" result="M"/>' +
+      '<feDisplacementMap in="SourceGraphic" in2="M" scale="' + m.scale.toFixed(2) + '" xChannelSelector="R" yChannelSelector="G" result="D"/>';
     if (rimBlur > 0) {
       h += '<feGaussianBlur in="D" stdDeviation="' + rimBlur + '" result="Db"/>' +
         '<feImage href="' + m.rim + '" x="0" y="0" width="' + W + '" height="' + H + '" preserveAspectRatio="none" result="E"/>' +
@@ -199,21 +206,23 @@
     }
     f.innerHTML = h;
     ensureDefs().appendChild(f);
-    var rec = { id: id, el: f, scale: m.scale, displacement: f.querySelectorAll('feDisplacementMap'), writtenScale: sc };
+    var rec = { id: id, el: f, scale: m.scale };
     filterByKey.set(key, rec);
     return rec;
   }
-  function setLensScale(f, k) {
-    var value = (f.scale * k).toFixed(2); if (value === f.writtenScale) return;
-    f.displacement.forEach(function (n) { n.setAttribute('scale', value); }); f.writtenScale = value;
+  /* the filter for a lens kind at a size: built once, shared by every lens of that kind and size */
+  function lensFilterFor(kind, W, H, R) {
+    var k = KINDS[kind], B = Math.max(2, Math.min(k.bezel, Math.min(W, H) / 2 - 1)), T = Math.min(k.thick, B * 2.4);
+    var m = buildLensMaps(W, H, Math.round(R), Math.round(B), Math.round(T), k.mag, k.light);
+    return { m: m, f: lensFilter(W, H, m, k.rimBlur, null, [kind, W, H, Math.round(R)].join('|')) };
   }
-  /* Active filters stay alive; a small inactive pool reuses the same SVG and maps when a bead or tab returns to a
-     previous size. Replaced strips and resize history cannot grow the SVG tree without a bound. */
+  /* Active filters stay alive; an inactive pool keeps the filters of every item size of the strips (prepared before
+     the lens needs them, see syncStrip), so a move never waits for a new map to decode. */
   function pruneLensFilters() {
     var used = new Set(), idle = [];
     glassSet.forEach(function (e) { if (e.isConnected && e.__lgF) used.add(e.__lgF); });
     filterByKey.forEach(function (f, key) { if (f.id !== 'lg-knob' && !used.has(f)) idle.push(key); });
-    for (var i = 0; i < idle.length - 16; i++) { var key = idle[i], f = filterByKey.get(key); f.el.remove(); filterByKey.delete(key); }
+    for (var i = 0; i < idle.length - 48; i++) { var key = idle[i], f = filterByKey.get(key); f.el.remove(); filterByKey.delete(key); }
   }
 
   /* ---- glass kinds -------------------------------------------------------------------------------------------------
@@ -224,10 +233,12 @@
     panel:   { bezel: 32, thick: 80, frost: 'heavy', sat: 1.65, ca: 0.05, mag: 1,    light: 1.05, bake: true, ring: [3, 8] },
     card:    { bezel: 28, thick: 70, frost: 'heavy', sat: 1.65, ca: 0.05, mag: 1,    light: 1.0,  bake: true, ring: [2, 5] },
     bar:     { bezel: 14, thick: 34, frost: 'light', sat: 1.6,  ca: 0.04, mag: 1,    light: 0.95, bake: true, ring: [2, 5] },
-    lens:    { bezel: 4,  thick: 11, sat: 1.3, ca: 0.14, mag: 1.08, light: 1.3, rimBlur: 0.8, lens: true },
-    lensRow: { bezel: 5,  thick: 12, sat: 1.25, ca: 0.14, mag: 1.03, light: 1.2, rimBlur: 0.8, lens: true },
-    lensIcon:{ bezel: 6,  thick: 14, sat: 1.35, ca: 0.16, mag: 1.12, light: 1.3, rimBlur: 0.8, lens: true },
-    bead:    { bezel: 6,  thick: 14, sat: 1.35, ca: 0.14, mag: 1.08, light: 1.2, rimBlur: 0.8, lens: true },
+    /* lenses: no colour split and no magnifying map (the labels magnify themselves); magRest is the chosen label's
+       size under the lens at rest, magLift its size while the lens is lifted and moving */
+    lens:    { bezel: 4,  thick: 10, sat: 1.1,  mag: 1, light: 1.15, rimBlur: 0.6, lens: true, magRest: 1.04, magLift: 1.13 },
+    lensRow: { bezel: 5,  thick: 11, sat: 1.1,  mag: 1, light: 1.05, rimBlur: 0.6, lens: true, magRest: 1,    magLift: 1.03 },
+    lensIcon:{ bezel: 5,  thick: 12, sat: 1.12, mag: 1, light: 1.15, rimBlur: 0.6, lens: true, magRest: 1.08, magLift: 1.2 },
+    bead:    { bezel: 5,  thick: 12, sat: 1.1,  mag: 1, light: 1.05, rimBlur: 0.6, lens: true },
     menu:    { bezel: 18, thick: 56, blur: 30, sat: 1.5, ca: 0,    mag: 1,    light: 0.95, css: true },
   };
   var glassSet = new Set();
@@ -454,12 +465,13 @@
     var B = Math.max(2, Math.min(k.bezel, Math.min(W, H) / 2 - 1)), T = Math.min(k.thick, B * 2.4);
     var sig2 = W + 'x' + H + ':' + R.toFixed(1) + ':' + kind + ':' + gpu();
     if (e.__lgSig === sig2) return e.__lgF;
-    var m = k.lens ? buildLensMaps(W, H, Math.round(R), Math.round(B), Math.round(T), k.mag, k.ca, k.light) : buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), k.mag, k.light);
+    var lf = k.lens ? lensFilterFor(kind, W, H, R) : null;
+    var m = lf ? lf.m : buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), k.mag, k.light);
     e.style.setProperty('--lg-spec', 'url(' + m.spec + ')');
     e.__lgSig = sig2; e.__lgF = null;
     var bf = null;
     if (gpu() && k.css) bf = 'blur(' + k.blur + 'px) saturate(' + k.sat + ')';
-    else if (gpu() && k.lens) { var f = lensFilter(W, H, m, k.rimBlur); e.__lgF = f; bf = 'url(#' + f.id + ') saturate(' + k.sat + ')'; }
+    else if (gpu() && k.lens) { var f = lf.f; e.__lgF = f; bf = 'url(#' + f.id + ') saturate(' + k.sat + ')'; }
     if (bf) { e.style.setProperty('backdrop-filter', bf, 'important'); e.style.setProperty('-webkit-backdrop-filter', bf, 'important'); }
     else { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); }
     return e.__lgF;
@@ -517,29 +529,37 @@
     if (springCache.size >= 16) springCache.delete(springCache.keys().next().value);
     springCache.set(key, out); return out;
   }
-  var LIQUID = [230, 19, 1];   /* a lively spring: one clear overshoot, a small second one */
+  var LIQUID = [230, 19, 1];   /* a lively spring: one clear overshoot, a small second one (menus) */
   var SOFT = [170, 22, 1];
+  var GLIDE = [260, 27, 1];    /* the lens's path: it barely overshoots, so a long jump never sails past its tab */
 
-  /* ---- lenses: the chosen item sits under a clear magnifying lens that moves like a drop -------------------------- */
+  /* ---- lenses: the chosen item sits under a clear lens that moves like a drop and magnifies what it passes ---------
+     Seen frame by frame at 60 fps on the RTX 3090 (2026-10-13), the old lens waited for the app: a page or panel
+     switch keeps the main thread busy for 300 to 700 ms after the click, and the lens's animation, created in that
+     window, only began when it ended, then caught up in a jump. Now the lens leaves on the press (pointerdown),
+     about a tenth of a second before the click starts that work. Targets are measured where they are laid out,
+     ignoring transforms, so a press flex or the rail's bump can no longer give the lens a wrong size that it then
+     corrects with a twitch. */
   var STRIPS = [
     { sel: 'nav.page-tabs', items: '.page-tab', scrub: true, kind: 'lens' },
     { sel: '#pmuRange', items: ':scope > button', scrub: true, kind: 'lens' },
     { sel: '#pmuNav', items: '.pmu-navbtn', vertical: true, kind: 'lensRow' },
     { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true, kind: 'lens' },
-    { sel: '#activityBar', items: '.icon[data-target]', vertical: true, kind: 'lensIcon', pick: railIcon, box: function (i) { return i.querySelector('.symbol') || i; } },
-    { sel: '#pm-o55-onboarding .o55-raillist', items: '.o55-railitem', kind: 'lens', active: '[data-state="current"]', pad: 6,
+    { sel: '#activityBar', items: '.icon[data-target]', vertical: true, kind: 'lensIcon', pick: railIcon,
+      box: function (i) { return i.querySelector('.symbol') || i; }, label: function (i) { return i.querySelector('.symbol'); } },
+    { sel: '#pm-o55-onboarding .o55-raillist', items: '.o55-railitem', kind: 'lens', active: '[data-state="current"]', pad: 6, magRest: 1, magLift: 1,
       box: function (i) { var u = unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); return u || i; } },
-    { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', active: '.o55-on' },
+    { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', active: '.o55-on', magRest: 1 },
   ];
   function railIcon(strip) {
     var sp = document.getElementById('sidePanelSlot'); if (!sp || !visible(sp)) return null;
     var v = sp.querySelector(':scope > .side-panel-view.active');
     var icon = v && strip.querySelector('.icon[data-target="' + v.id + '"]');
     strip.querySelectorAll('.icon[data-lg-current]').forEach(function (i) { if (i !== icon) i.removeAttribute('data-lg-current'); });
-    if (icon) icon.setAttribute('data-lg-current', ''); return icon;
+    if (icon && !icon.hasAttribute('data-lg-current')) icon.setAttribute('data-lg-current', ''); return icon;
   }
   /* Every lens lives in one layer above the strips and the title bar (#lg-lenses), not inside them: from outside it sees
-     the sheet, the wallpaper and the label together and magnifies them as one, and no sheet can cover it. */
+     the sheet, the wallpaper and the label together, and no sheet can cover it. */
   /* one layer per host surface: the app shell, or a window that floats above it (onboarding), so a lens is never
      covered by the surface its strip lives in */
   var lenses = new Map(), layer = null, localLayers = new WeakMap();
@@ -556,15 +576,29 @@
     layer = el('div', { id: 'lg-lenses', 'aria-hidden': 'true' });
     (document.querySelector('.app-shell') || document.body).appendChild(layer); return layer;
   }
-  /* the lens is 2 px larger than the item on every side, so the label never reaches into its bevel: only the strip's
-     own edge and the surroundings bend at the rim, never the letters (they had split into coloured specks) */
+  /* the lens is 2 px larger than the item on every side, so the label never reaches into its bevel at rest */
   function unionRect(list) {
-    var r = null; list.forEach(function (e) { if (!e) return; var b = e.getBoundingClientRect(); if (b.width < 1) return;
-      r = r ? { left: Math.min(r.left, b.left), top: Math.min(r.top, b.top), right: Math.max(r.right, b.right), bottom: Math.max(r.bottom, b.bottom) } : { left: b.left, top: b.top, right: b.right, bottom: b.bottom }; });
+    var r = null; list.forEach(function (e) { if (!e) return; var b = boxRect(e); if (b.width < 1) return;
+      r = r ? { left: Math.min(r.left, b.left), top: Math.min(r.top, b.top), right: Math.max(r.right, b.left + b.width), bottom: Math.max(r.bottom, b.top + b.height) } : { left: b.left, top: b.top, right: b.left + b.width, bottom: b.top + b.height }; });
     if (r) { r.width = r.right - r.left; r.height = r.bottom - r.top; } return r;
   }
+  /* where an element is laid out on screen, without its own transform or those of its transformed ancestors (the
+     first untransformed ancestor's real box anchors it, so scrolling and ordinary layout still count) */
+  function moved(n) { var cs = getComputedStyle(n); return cs.transform !== 'none' || cs.scale !== 'none' || cs.translate !== 'none' || cs.rotate !== 'none'; }
+  function boxRect(e) {
+    var w = e.offsetWidth, h = e.offsetHeight;
+    if (w == null || !e.offsetParent || (!w && !h)) return e.getBoundingClientRect();
+    var x = 0, y = 0, n = e;
+    for (;;) {
+      var p = n.offsetParent; x += n.offsetLeft; y += n.offsetTop;
+      for (var a = n.parentElement; a && a !== p; a = a.parentElement) { x -= a.scrollLeft; y -= a.scrollTop; }
+      if (!p || p === document.body) return { left: x - scrollX, top: y - scrollY, width: w, height: h };
+      if (!moved(p)) { var pr = p.getBoundingClientRect(); return { left: pr.left + p.clientLeft - p.scrollLeft + x, top: pr.top + p.clientTop - p.scrollTop + y, width: w, height: h }; }
+      x += p.clientLeft - p.scrollLeft; y += p.clientTop - p.scrollTop; n = p;
+    }
+  }
   function rectIn(strip, t, pad) {
-    var r = t.getBoundingClientRect ? t.getBoundingClientRect() : t, lr = lensLayer(strip).getBoundingClientRect(); pad = pad || 0;
+    var r = t.getBoundingClientRect ? boxRect(t) : t, lr = lensLayer(strip).getBoundingClientRect(); pad = pad || 0;
     return { x: r.left - lr.left - pad, y: r.top - lr.top - pad, w: r.width + 2 * pad, h: r.height + 2 * pad };
   }
   function lensFor(strip, cfg) {
@@ -573,7 +607,7 @@
     if (L) disposeLens(L);
     var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind }), own = lensLayer(strip);
     own.appendChild(lens);
-    L = { strip: strip, lens: lens, layer: own, rect: null, anim: null, scaleFrame: 0, scaleFilter: null, scrubCleanup: null, cfg: cfg }; lenses.set(strip, L); return L;
+    L = { strip: strip, lens: lens, layer: own, rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '' }; lenses.set(strip, L); return L;
   }
   function setLensBox(L, R) {
     var s = L.lens.style, A = L.rect;
@@ -581,12 +615,21 @@
     if (!A || A.w !== R.w) s.width = R.w + 'px'; if (!A || A.h !== R.h) s.height = R.h + 'px'; L.rect = R;
     mount(L.lens, L.cfg.kind);
   }
-  function stopLensScale(L) {
-    if (L.scaleFrame) cancelAnimationFrame(L.scaleFrame); L.scaleFrame = 0;
-    if (L.scaleFilter) setLensScale(L.scaleFilter, 1); L.scaleFilter = null;
+  /* every item size of a strip gets its lens filter while nothing moves, so a move never waits for a map to decode */
+  function prewarm(L, cfg, strip) {
+    if (!gpu()) return;
+    var pad = cfg.pad == null ? 2 : cfg.pad, sizes = [];
+    strip.querySelectorAll(cfg.items).forEach(function (it) {
+      if (!visible(it)) return; var b = cfg.box ? cfg.box(it) : it; if (!b) return; var r = b.getBoundingClientRect ? boxRect(b) : b;
+      var s = Math.round(r.width + 2 * pad) + 'x' + Math.round(r.height + 2 * pad); if (sizes.indexOf(s) < 0) sizes.push(s);
+    });
+    var key = sizes.join(','); if (L.warm === key) return; L.warm = key;
+    sizes.forEach(function (s) { var wh = s.split('x').map(Number); if (wh[0] >= 4 && wh[1] >= 4) lensFilterFor(cfg.kind, wh[0], wh[1], radiusOf(L.lens, wh[0], wh[1])); });
   }
+  function stopMagnify(L) { if (L.magAnims) { var a = L.magAnims; L.magAnims = null; a.forEach(function (an) { an.cancel(); }); } }
   function stopLensTravel(L) {
-    stopLensScale(L);
+    stopMagnify(L);
+    if (L.glintAnim) { var g = L.glintAnim; L.glintAnim = null; g.cancel(); }
     if (L.anim) { var an = L.anim; L.anim = null; an.onfinish = null; an.cancel(); } L.reducedAnim = false;
   }
   function removeLensElement(e) {
@@ -611,45 +654,92 @@
     pruneLensFilters();
   }
   function suspendLensMotion() {
-    lenses.forEach(function (L) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); });
+    lenses.forEach(function (L) { stopLensTravel(L); L.pending = null; if (L.scrubCleanup) L.scrubCleanup(); });
     if (isGlass() && beadOn && beadOn.isConnected) { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); } else resetBead();
     menuMotions.forEach(function (M, menu) { resetMenuMorph(menu); });
   }
-  /* travel from A to B: the drop lifts (grows a little and magnifies more), stretches along its path with its speed,
-     thins across it, overshoots and wobbles once, all from one spring */
-  function travel(L, A, B, vertical) {
+  /* the lens where it is drawn right now (mid-flight included), so a new move starts from there and never jumps */
+  function visualRect(L) {
+    if (!L.anim || !L.rect) return L.rect;
+    var r = L.lens.getBoundingClientRect(), lr = L.layer.getBoundingClientRect();
+    return { x: r.left - lr.left, y: r.top - lr.top, w: r.width, h: r.height };
+  }
+  /* ---- magnification: the labels a lens passes over swell as vector text, about the lens's centre, so they stay
+     crisp. Each label's scale and shift are keyframed from the lens's own path, so they ride the same clock as the
+     lens and need nothing from the main thread while they play. */
+  function labelsOf(cfg, strip, vertical) {
+    return Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(visible).map(function (it) {
+      var e = cfg.label ? cfg.label(it) : it; if (!e) return null;
+      var r = boxRect(e); return { el: e, c: vertical ? r.top + r.height / 2 : r.left + r.width / 2, half: (vertical ? r.height : r.width) / 2 };
+    }).filter(Boolean);
+  }
+  function magsOf(cfg) { var k = KINDS[cfg.kind] || {}; return { rest: cfg.magRest != null ? cfg.magRest : k.magRest || 1, lift: cfg.magLift != null ? cfg.magLift : k.magLift || 1 }; }
+  /* how much of a label the lens covers: 1 while the label's centre is well inside it, easing to 0 as it leaves */
+  function coverage(c, half, lab) {
+    var d = Math.abs(lab.c - c), a = half - lab.half * 0.55, b = half + lab.half * 0.35;
+    if (d <= a) return 1; if (d >= b) return 0; var u = (d - a) / (b - a); return 1 - u * u * (3 - 2 * u);
+  }
+  function magnified(lab, c, half, lift, mags) {
+    var k = coverage(c, half, lab), m = 1 + k * (mags.rest - 1 + lift * (mags.lift - mags.rest));
+    return { k: k, m: m, d: Math.max(-4, Math.min(4, (lab.c - c) * (m - 1))) };
+  }
+  function magnifyAlong(L, track, dur, o) {
+    stopMagnify(L);
+    if (!o || !o.labels || !o.labels.length || (o.mags.rest === 1 && o.mags.lift === 1)) return;
+    var anims = [];
+    o.labels.forEach(function (lab) {
+      var touched = false, fr = track.map(function (s) {
+        var g = magnified(lab, s.c, s.half, s.lift, o.mags); if (g.k > 0.001) touched = true;
+        return { offset: s.t / dur, scale: g.m.toFixed(4), translate: o.vertical ? '0px ' + g.d.toFixed(2) + 'px' : g.d.toFixed(2) + 'px 0px' };
+      });
+      if (touched) anims.push(lab.el.animate(fr, { duration: dur, easing: 'linear' }));
+    });
+    L.magAnims = anims;
+  }
+  /* travel from A to B: the drop lifts (grows a little, and the labels under it swell more), stretches along its path
+     with its speed and thins across it, lands at most 3 px past its target, and wobbles once as it settles. Its glint
+     slides back against the motion, like light caught on a moving drop. */
+  function travel(L, A, B, vertical, o) {
     stopLensTravel(L);
     setLensBox(L, B);
-    var S = spring.apply(null, LIQUID), dist = vertical ? B.y - A.y : B.x - A.x, frames = [];
-    var sw = A.w / B.w, shh = A.h / B.h;
+    var S = spring.apply(null, GLIDE), dur = S[S.length - 1].t, frames = [], glint = [], track = [];
+    var dist = vertical ? (B.y + B.h / 2) - (A.y + A.h / 2) : (B.x + B.w / 2) - (A.x + A.w / 2), ad = Math.abs(dist), dir = dist < 0 ? -1 : 1;
+    var sw = A.w / B.w, shh = A.h / B.h, land = -1, lr = L.layer.getBoundingClientRect();
+    var cB = vertical ? lr.top + B.y + B.h / 2 : lr.left + B.x + B.w / 2;
     for (var i = 0; i < S.length; i++) {
-      var p = S[i].x, v = S[i].v, sp = Math.min(1, Math.abs(v) * Math.abs(dist) / 2600);
-      var off = (1 - p) * -dist, lift = 1 + 0.10 * Math.sin(Math.min(1, S[i].t / 260) * Math.PI);
-      var w = (sw + (1 - sw) * Math.min(1, p)) * lift, h = (shh + (1 - shh) * Math.min(1, p)) * lift;
-      var along = 1 + sp * 0.55, across = 1 - sp * 0.22;
-      var sx = (vertical ? w * across : w * along), sy = (vertical ? h * along : h * across);
-      frames.push({ offset: S[i].t / S[S.length - 1].t, transform: (vertical ? 'translate3d(0,' : 'translate3d(') + off.toFixed(2) + (vertical ? 'px,0)' : 'px,0,0)') + ' scale(' + sx.toFixed(4) + ',' + sy.toFixed(4) + ')' });
+      var t = S[i].t, p = S[i].x, v = S[i].v, over = (p - 1) * ad;
+      if (over > 0) p = 1 + 3 * Math.tanh(over / 3) / Math.max(1, ad);
+      if (land < 0 && p >= 0.985) land = t;
+      var off = (1 - p) * -dist, lift = Math.max(0, Math.sin(Math.PI * Math.min(1, t / (dur * 0.62))));
+      var sp = Math.min(1, Math.abs(v) * ad / 2400), along = 1 + Math.min(0.24, sp * 0.3), across = 1 - (along - 1) * 0.4;
+      var wob = land < 0 ? 0 : 0.05 * Math.min(1, ad / 120) * Math.exp(-(t - land) / 110) * Math.sin(2 * Math.PI * (t - land) / 190);
+      var q = Math.min(1, Math.max(0, p)), grow = 1 + 0.07 * lift, w = (sw + (1 - sw) * q) * grow, h = (shh + (1 - shh) * q) * grow;
+      var sx = vertical ? w * across * (1 - wob * 0.6) : w * along * (1 + wob), sy = vertical ? h * along * (1 + wob) : h * across * (1 - wob * 0.6);
+      var at = t / dur;
+      frames.push({ offset: at, transform: (vertical ? 'translate3d(0,' + off.toFixed(2) + 'px,0)' : 'translate3d(' + off.toFixed(2) + 'px,0,0)') + ' scale(' + sx.toFixed(4) + ',' + sy.toFixed(4) + ')' });
+      var gl = (-dir * Math.min(6, Math.abs(v) * ad / 900)).toFixed(2);
+      glint.push({ offset: at, transform: vertical ? 'translate3d(0,' + gl + 'px,0)' : 'translate3d(' + gl + 'px,0,0)', opacity: (0.6 + 0.4 * lift).toFixed(3) });
+      track.push({ t: t, c: cB + off, half: (vertical ? B.h * sy : B.w * sx) / 2, lift: lift });
     }
-    var an = L.lens.animate(frames, { duration: S[S.length - 1].t, easing: 'linear' }); L.anim = an;
-    var f = L.lens.__lgF;
-    /* while it travels the drop thickens a little: the refraction rises by up to 15 % and settles with it */
-    if (f) {
-      L.scaleFilter = f; var t0 = performance.now(), dur = S[S.length - 1].t;
-      (function tick() {
-        L.scaleFrame = 0;
-        if (L.anim !== an || !L.strip.isConnected || !L.lens.isConnected || !isGlass() || reduced()) { stopLensTravel(L); return; }
-        if (L.lens.__lgF !== f) { stopLensScale(L); return; }
-        var k = Math.min(1, (performance.now() - t0) / dur); setLensScale(f, 1 + 0.15 * Math.sin(k * Math.PI));
-        if (k < 1) L.scaleFrame = requestAnimationFrame(tick); else stopLensScale(L);
-      })();
-    }
-    an.onfinish = function () { if (L.anim === an) { L.anim = null; stopLensScale(L); } };
+    var an = L.lens.animate(frames, { duration: dur, easing: 'linear' }); L.anim = an;
+    try { L.glintAnim = L.lens.animate(glint, { duration: dur, easing: 'linear', pseudoElement: '::after' }); } catch (e) { L.glintAnim = null; }
+    magnifyAlong(L, track, dur, o);
+    an.onfinish = function () { if (L.anim === an) L.anim = null; };
   }
   function syncStrip(cfg, strip) {
     var L = lensFor(strip, cfg);
     var target = cfg.pick ? cfg.pick(strip) : strip.querySelector(cfg.items + (cfg.active || '.active'));
+    if (L.pending) {
+      /* pressed, not yet chosen by the app: hold the lens there until the app makes any choice. This app switches on
+         the release, after up to a few hundred ms of work, and its click comes later still; a release elsewhere
+         abandons the press. */
+      var now = performance.now(), P = L.pending;
+      if (!P.el.isConnected || target !== P.from || P.away || (P.up && now - P.up > 2500)) L.pending = null;
+      else target = P.el;
+    }
     if (!target || !visible(target) || !visible(strip)) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; return; }
     if (L.lens.style.opacity) L.lens.style.opacity = '';
+    prewarm(L, cfg, strip);
     var R = rectIn(strip, cfg.box ? cfg.box(target) : target, cfg.pad == null ? 2 : cfg.pad), A = L.rect;
     if (L.dragging) return;
     var quiet = reduced();
@@ -661,8 +751,35 @@
       if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } }; }
       setLensBox(L, R); return;
     }
-    travel(L, A, R, !!cfg.vertical || Math.abs(A.y - R.y) > Math.abs(A.x - R.x));
+    var from = visualRect(L) || A, vertical = !!cfg.vertical || Math.abs(from.y - R.y) > Math.abs(from.x - R.x);
+    travel(L, from, R, vertical, { labels: labelsOf(cfg, strip, vertical), mags: magsOf(cfg), vertical: vertical });
   }
+  /* the press: the lens leaves for the pressed item at once; the app's choice (or its absence) settles it */
+  function stripAt(target) {
+    for (var i = 0; i < STRIPS.length; i++) {
+      var cfg = STRIPS[i], strip = target.closest && target.closest(cfg.sel); if (!strip) continue;
+      var item = target.closest(cfg.items); if (!item || !strip.contains(item)) return null;
+      return { cfg: cfg, strip: strip, item: item };
+    }
+    return null;
+  }
+  document.addEventListener('pointerdown', function (e) {
+    if (!isGlass() || e.button !== 0 || reduced()) return;
+    var hit = stripAt(e.target); if (!hit) return;
+    var L = lenses.get(hit.strip); if (!L || !L.rect || L.dragging) return;
+    var cur = hit.cfg.pick ? hit.cfg.pick(hit.strip) : hit.strip.querySelector(hit.cfg.items + (hit.cfg.active || '.active'));
+    if (hit.item === cur) return;
+    L.pending = { el: hit.item, from: cur, up: 0, away: false };
+    syncStrip(hit.cfg, hit.strip);
+  }, true);
+  document.addEventListener('pointerup', function (e) {
+    lenses.forEach(function (L) {
+      var P = L.pending; if (!P || P.up) return;
+      P.up = performance.now(); P.away = !(e.target && P.el.contains(e.target));
+      if (P.away) queueSync(); else setTimeout(queueSync, 2550);
+    });
+  }, true);
+  document.addEventListener('pointercancel', function () { lenses.forEach(function (L) { if (L.pending) { L.pending = null; queueSync(); } }); }, true);
   /* scrubbing: press on a tab strip and slide; the lens lifts and follows the pointer like a drop of water, magnifying
      each tab it passes, and drops into the nearest tab on release (which then becomes the chosen one) */
   function scrubbing(e) {
@@ -672,31 +789,37 @@
       var strip = e.target.closest && e.target.closest(cfg.sel); if (!strip) continue;
       var L = lenses.get(strip); if (!L || !L.rect) return;
       if (L.scrubCleanup) L.scrubCleanup();
-      var sx = e.clientX, moved = false, items = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(visible);
+      var sx = e.clientX, moved2 = false, items = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(visible), labs = null, mags = magsOf(cfg);
       var onMove = function (ev) {
         if (!strip.isConnected || !L.lens.isConnected || !isGlass() || reduced()) { cleanup(); return; }
         var dx = ev.clientX - sx;
-        if (!moved && Math.abs(dx) < 6) return;
-        if (!moved) { moved = true; L.dragging = true; stopLensTravel(L); L.lens.setAttribute('data-lg-lifted', ''); }
+        if (!moved2 && Math.abs(dx) < 6) return;
+        if (!moved2) { moved2 = true; L.dragging = true; L.pending = null; stopLensTravel(L); L.lens.setAttribute('data-lg-lifted', ''); labs = labelsOf(cfg, strip, false); }
         var sr = strip.getBoundingClientRect(), lr = L.layer.getBoundingClientRect(), x = ev.clientX - sr.left - L.rect.w / 2;
         var lo = 0, hi = strip.clientWidth - L.rect.w; if (x < lo) x = lo - Math.sqrt(lo - x) * 2; if (x > hi) x = hi + Math.sqrt(x - hi) * 2;
-        L.lens.style.transform = 'translate3d(' + (sr.left - lr.left + x - L.rect.x).toFixed(1) + 'px,0,0) scale(1.14,1.16)';
+        L.lens.style.transform = 'translate3d(' + (sr.left - lr.left + x - L.rect.x).toFixed(1) + 'px,0,0) scale(1.1,1.12)';
+        var c = sr.left + x + L.rect.w / 2, half = L.rect.w * 1.1 / 2;
+        labs.forEach(function (lab) { var g = magnified(lab, c, half, 1, mags); lab.el.style.scale = g.m.toFixed(4); lab.el.style.translate = g.d.toFixed(2) + 'px 0px'; });
         ev.preventDefault();
       };
       var removeListeners = function () {
         document.removeEventListener('pointermove', onMove, true); document.removeEventListener('pointerup', onUp, true); document.removeEventListener('pointercancel', onUp, true);
         if (L.scrubCleanup === cleanup) L.scrubCleanup = null;
       };
-      var cleanup = function () { removeListeners(); L.lens.style.transform = ''; L.lens.removeAttribute('data-lg-lifted'); L.dragging = false; };
+      var cleanup = function () {
+        removeListeners(); L.lens.style.transform = ''; L.lens.removeAttribute('data-lg-lifted'); L.dragging = false;
+        if (labs) labs.forEach(function (lab) { lab.el.style.removeProperty('scale'); lab.el.style.removeProperty('translate'); });
+      };
       var onUp = function (ev) {
         removeListeners();
-        if (!moved) return;
+        if (!moved2) return;
         if (ev.type === 'pointercancel' || !strip.isConnected || !L.lens.isConnected || !isGlass() || reduced()) { cleanup(); return; }
         var best = null, bd = 1e9;
-        items.forEach(function (it) { var r = it.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - ev.clientX); if (d < bd) { bd = d; best = it; } });
+        items.forEach(function (it) { var r = boxRect(it), d = Math.abs(r.left + r.width / 2 - ev.clientX); if (d < bd) { bd = d; best = it; } });
         var cur = L.lens.getBoundingClientRect(), lr2 = L.layer.getBoundingClientRect(), from = { x: cur.left - lr2.left + (cur.width - L.rect.w) / 2, y: L.rect.y, w: L.rect.w, h: L.rect.h };
         cleanup();
-        if (best && !best.classList.contains('active')) { L.rect = from; best.click(); } else { travel(L, from, L.rect, false); }
+        if (best && !best.classList.contains('active')) { L.rect = from; L.pending = { el: best, from: strip.querySelector(cfg.items + (cfg.active || '.active')), up: performance.now(), away: false }; best.click(); syncStrip(cfg, strip); }
+        else travel(L, from, L.rect, false, { labels: labelsOf(cfg, strip, false), mags: mags, vertical: false });
         var swallow = function (ce) { ce.stopPropagation(); ce.preventDefault(); document.removeEventListener('click', swallow, true); };
         document.addEventListener('click', swallow, true); setTimeout(function () { document.removeEventListener('click', swallow, true); }, 0);
       };
@@ -749,54 +872,62 @@
     if (g && sh.__r) sh.firstChild.style.transform = 'translate3d(' + (ptr.x - sh.__r.left).toFixed(0) + 'px,' + (ptr.y - sh.__r.top).toFixed(0) + 'px,0)';
   }
   document.addEventListener('pointermove', function (e) { ptr = { x: e.clientX, y: e.clientY, t: e.target }; if (!ptrQ) { ptrQ = true; requestAnimationFrame(onPtr); } }, { passive: true });
+  /* the press: buttons flex and a small light blooms under the finger. Strip items and rail icons get neither: their
+     lens is the answer to a press (the white bloom read as a flash in the films). */
   document.addEventListener('pointerdown', function (e) {
     if (!isGlass() || e.button !== 0) return;
-    var g = e.target.closest && e.target.closest('.page-tab, #pmuRange > button, .pmu-navbtn, #activityBar .icon, .pm-segtab-item, .pmu-ctlbtn, .pmu-iconbtn, .o55-btn, .o55-card, .o55-tile, .o55t-btn, .o55t-barbtn');
-    if (!g || reduced()) return;
+    var g = e.target.closest && e.target.closest('.pmu-ctlbtn, .pmu-iconbtn, .o55-btn, .o55-card, .o55-tile, .o55t-btn, .o55t-barbtn');
+    if (!g || reduced() || stripAt(e.target)) return;
     var r = g.getBoundingClientRect(), glow = el('i', { class: 'lg-press', 'aria-hidden': 'true' });
     glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px';
     document.body.appendChild(glow);
-    var S = spring(380, 14, 1), fr = S.map(function (s) { return { offset: s.t / S[S.length - 1].t, transform: 'scale(' + (1 + 0.035 * Math.sin(Math.min(1, s.t / 120) * Math.PI) + 0.02 * (1 - s.x) * Math.sin(s.t / 22)).toFixed(4) + ')' }; });
+    var S = spring(380, 18, 1), fr = S.map(function (s) { return { offset: s.t / S[S.length - 1].t, transform: 'scale(' + (1 + 0.025 * Math.sin(Math.min(1, s.t / 120) * Math.PI) + 0.012 * (1 - s.x) * Math.sin(s.t / 22)).toFixed(4) + ')' }; });
     g.animate(fr, { duration: S[S.length - 1].t, easing: 'linear', composite: 'add' });
-    glow.animate([{ transform: 'translate(-50%,-50%) scale(.2)', opacity: 0.95 }, { transform: 'translate(-50%,-50%) scale(' + (Math.max(r.width, r.height) / 18).toFixed(1) + ')', opacity: 0 }], { duration: 650, easing: 'cubic-bezier(.2,.7,.2,1)' }).onfinish = function () { glow.remove(); };
+    var size = Math.min(Math.max(r.width, r.height), 56) / 36;
+    glow.animate([{ transform: 'translate(-50%,-50%) scale(.3)', opacity: 0.5 }, { transform: 'translate(-50%,-50%) scale(' + size.toFixed(2) + ')', opacity: 0 }], { duration: 420, easing: 'cubic-bezier(.2,.7,.2,1)' }).onfinish = function () { glow.remove(); };
   }, true);
 
   /* ---- the bead: a drop of glass that lifts under the icon button the pointer is on and flows to the next one, so the
      icon swells inside it (the self-reflection Jared liked on the lenses, now on the rail's and toolbars' buttons) ---- */
   var BEADS = '#sidePanelSlot :is(.pm-minibtn, .fm-tbtn, #fmRootBtn, .sh-bhead-acts button), #activityBar .icon:not([data-lg-current]), #activityBarToggle, .pmu-iconbtn, #pm-home-more-btn, #themeSelect, #projectMenuBtn, .pmu-livechev';
-  var bead = null, beadOn = null, beadRect = null, beadAnim = null, beadHide = 0;
+  /* The bead flows only between neighbours (buttons of one toolbar, icons of the rail) and at most 110 px; anything
+     further fades out and lifts in at the new place. In the films a quick pointer crossing the side panel sent it flying
+     across the panel and diving past the rail's edge on the old spring's overshoot. */
+  var bead = null, beadOn = null, beadAt = null, beadRect = null, beadAnim = null, beadHide = 0;
   function stopBeadAnimation() { if (beadAnim) { var an = beadAnim; beadAnim = null; an.onfinish = null; an.cancel(); } }
-  function resetBead() { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); if (bead) bead.classList.remove('on'); beadRect = null; beadOn = null; }
+  function resetBead() { clearTimeout(beadHide); beadHide = 0; stopBeadAnimation(); if (bead) bead.classList.remove('on'); beadRect = null; beadOn = null; beadAt = null; }
   function beadEl() { if (bead && bead.isConnected) return bead; if (bead) { resetBead(); removeLensElement(bead); } bead = el('i', { class: 'lg-lens lg-bead', 'aria-hidden': 'true', 'data-lg-lens': 'bead' }); lensLayer().appendChild(bead); return bead; }
   function beadTo(t) {
     clearTimeout(beadHide); beadHide = 0;
-    var b = beadEl(), lr = lensLayer().getBoundingClientRect(), r = (t.querySelector(':scope > .symbol') || t).getBoundingClientRect(); beadOn = t;
+    var b = beadEl(), lr = lensLayer().getBoundingClientRect(), r = boxRect(t.querySelector(':scope > .symbol') || t); beadOn = t;
     var R = { x: r.left - lr.left - 2, y: r.top - lr.top - 2, w: r.width + 4, h: r.height + 4 }, A = beadRect;
+    var near = A && beadAt && beadAt.isConnected && beadAt.parentElement === t.parentElement && Math.hypot(A.x - R.x, A.y - R.y) < 110;
     var s = b.style; s.left = R.x + 'px'; s.top = R.y + 'px'; s.width = R.w + 'px'; s.height = R.h + 'px'; mount(b, 'bead');
     stopBeadAnimation();
-    if (reduced()) { b.classList.add('on'); beadRect = R; return; }
-    if (A && b.classList.contains('on')) {
-      var S = spring.apply(null, LIQUID), dx = A.x - R.x, dy = A.y - R.y, dist = Math.hypot(dx, dy), fr = [];
-      for (var i = 0; i < S.length; i++) { var p = S[i].x, sp = Math.min(1, Math.abs(S[i].v) * dist / 2400), vert = Math.abs(dy) > Math.abs(dx);
-        fr.push({ offset: S[i].t / S[S.length - 1].t, transform: 'translate3d(' + (dx * (1 - p)).toFixed(2) + 'px,' + (dy * (1 - p)).toFixed(2) + 'px,0) scale(' + (vert ? 1 - sp * 0.15 : 1 + sp * 0.4).toFixed(3) + ',' + (vert ? 1 + sp * 0.4 : 1 - sp * 0.15).toFixed(3) + ')' }); }
+    if (reduced()) { b.classList.add('on'); beadRect = R; beadAt = t; return; }
+    if (near && b.classList.contains('on')) {
+      var S = spring.apply(null, GLIDE), dx = A.x - R.x, dy = A.y - R.y, dist = Math.hypot(dx, dy), fr = [], vert = Math.abs(dy) > Math.abs(dx);
+      for (var i = 0; i < S.length; i++) { var p = S[i].x, over = (p - 1) * dist; if (over > 0) p = 1 + 2 * Math.tanh(over / 2) / Math.max(1, dist);
+        var sp = Math.min(1, Math.abs(S[i].v) * dist / 2400);
+        fr.push({ offset: S[i].t / S[S.length - 1].t, transform: 'translate3d(' + (dx * (1 - p)).toFixed(2) + 'px,' + (dy * (1 - p)).toFixed(2) + 'px,0) scale(' + (vert ? 1 - sp * 0.1 : 1 + sp * 0.25).toFixed(3) + ',' + (vert ? 1 + sp * 0.25 : 1 - sp * 0.1).toFixed(3) + ')' }); }
       beadAnim = b.animate(fr, { duration: S[S.length - 1].t, easing: 'linear' });
     } else {
       b.classList.add('on');
-      beadAnim = b.animate([{ transform: 'scale(.55)', opacity: 0 }, { transform: 'scale(1.06)', opacity: 1, offset: 0.6 }, { transform: 'scale(1)', opacity: 1 }], { duration: 380, easing: 'cubic-bezier(.3,1.3,.5,1)' });
+      beadAnim = b.animate([{ transform: 'scale(.82)', opacity: 0 }, { transform: 'scale(1.02)', opacity: 1, offset: 0.65 }, { transform: 'scale(1)', opacity: 1 }], { duration: 240, easing: 'cubic-bezier(.3,1.1,.5,1)' });
     }
     var an = beadAnim; an.onfinish = function () { if (beadAnim === an) beadAnim = null; };
-    beadRect = R;
+    beadRect = R; beadAt = t;
+  }
+  function beadFade(ms) {
+    if (!bead || !bead.isConnected || !isGlass()) { resetBead(); return; }
+    if (!bead.classList.contains('on')) return;
+    stopBeadAnimation(); var b = bead;
+    var an = b.animate([{ opacity: 1 }, { opacity: 0 }], { duration: ms, easing: 'ease-out' }); beadAnim = an;
+    an.onfinish = function () { if (beadAnim === an && bead === b) { beadAnim = null; b.classList.remove('on'); beadRect = null; beadAt = null; } };
   }
   function beadOff() {
     clearTimeout(beadHide);
-    beadHide = setTimeout(function () {
-      beadHide = 0;
-      if (!bead || !bead.isConnected || !isGlass()) { resetBead(); return; }
-      if (!bead.classList.contains('on')) return;
-      stopBeadAnimation(); var b = bead;
-      var an = b.animate([{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(.6)', opacity: 0 }], { duration: 220, easing: 'ease-in' }); beadAnim = an;
-      an.onfinish = function () { if (beadAnim === an && bead === b) { beadAnim = null; b.classList.remove('on'); beadRect = null; } };
-    }, 140);
+    beadHide = setTimeout(function () { beadHide = 0; beadFade(180); }, 120);
   }
   document.addEventListener('pointerover', function (e) {
     if (!isGlass() || e.pointerType === 'touch') return;
@@ -805,7 +936,8 @@
     beadOn = t;
     if (t && visible(t)) beadTo(t); else beadOff();
   }, true);
-  document.addEventListener('pointerdown', function () { if (beadOn) beadOff(); beadOn = null; }, true);
+  /* a press dissolves the bead at once: the lens (or the button's own flex) takes over */
+  document.addEventListener('pointerdown', function () { clearTimeout(beadHide); beadHide = 0; if (beadOn || beadAt) beadFade(90); beadOn = null; }, true);
 
   /* ---- the switch's knob turns to liquid glass while it is held: it swells, goes clear and lenses the track under
      it, then lands as a solid knob on the other side (iOS 27's switch); the slide itself is slower and springier ---- */
@@ -974,7 +1106,7 @@
 
   function knobFilter() {   /* one shared lens for every switch knob (18 px) */
     if (document.getElementById('lg-knob')) return;
-    var m = buildLensMaps(18, 18, 9, 7, 15, 1.16, 0.3, 1.2); lensFilter(18, 18, m, 0.6, 'lg-knob');
+    var m = buildLensMaps(18, 18, 9, 7, 15, 1.16, 1.2); lensFilter(18, 18, m, 0.6, 'lg-knob');
   }
   function start() {
     ensureDefs(); viewportVars(); knobFilter();
@@ -1002,6 +1134,12 @@
     { id: 'ribbons', name: 'Ribbons', family: 'Glass', default_for: 'glass' },
     { id: 'prism', name: 'Prism', family: 'Glass' },
     { id: 'orbs', name: 'Orbs', family: 'Glass' },
+    /* 2026-10-13: five more for Glass (Jared: "more wallpapers for the glass theme"), any look can use them */
+    { id: 'aurora', name: 'Aurora', family: 'Glass' },
+    { id: 'dunes', name: 'Dunes', family: 'Glass' },
+    { id: 'bloom', name: 'Bloom', family: 'Glass' },
+    { id: 'pool', name: 'Pool', family: 'Glass' },
+    { id: 'facets', name: 'Facets', family: 'Glass' },
   ];
   var WALL_KEY = 'pm-lg-wallpaper';
   function wallChoice() { try { return localStorage.getItem(WALL_KEY) || 'look'; } catch (e) { return 'look'; } }
@@ -1067,7 +1205,7 @@
     document.addEventListener('keydown', function (e) { if (e.altKey && e.shiftKey && (e.code === 'KeyL')) { root.setAttribute('data-lg', root.getAttribute('data-lg') === 'on' ? 'off' : 'on'); render(); e.preventDefault(); } });
   }
 
-  window.PM_LG = { version: 'v2-2026-10-11', sync: syncAll, materialize: function () { materialize(Array.from(glassSet)); }, kinds: KINDS, count: function () { return glassSet.size; },
+  window.PM_LG = { version: 'v3-2026-10-13', sync: syncAll, materialize: function () { materialize(Array.from(glassSet)); }, kinds: KINDS, count: function () { return glassSet.size; },
     set: function (o) { for (var k in o) { if (o[k] == null) root.removeAttribute(k); else root.setAttribute(k, o[k]); } syncAll(); } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
