@@ -161,11 +161,22 @@ html[data-o55-open][data-o55-solid] body > [inert] { visibility: hidden !importa
 .o55-cardtitle { font: 650 15px/1.3 var(--body-font); }
 .o55-cardsub { font: 400 13.5px/1.45 var(--body-font); color: var(--text-secondary); }
 /* a tag is a plain word after a small square mark, never a capsule (Jared 2026-10-11: pill labels go; the pattern is
-   NP-SCOPE's scenario tag and 90-restraint's plain-word tag). Its ink is the accent taken a little toward the text, so
-   the bare word reads at least as well as it did on its tinted capsule. */
+   NP-SCOPE's scenario tag and 90-restraint's plain-word tag). Its ink is --o55-ink-tag, below. */
 .o55-tag { display: inline-flex; align-items: center; gap: 6px; font: 700 10.5px/1 var(--body-font); letter-spacing: 0.06em; text-transform: uppercase; padding: 0; border-radius: 0;
-  color: color-mix(in srgb, var(--o55-accent) 88%, var(--text-primary)); background: none; white-space: nowrap; }
+  color: var(--o55-ink-tag); background: none; white-space: nowrap; }
 .o55-tag::before { content: ""; flex: none; width: 5px; height: 5px; background: currentColor; }
+/* Label inks. A bare label word reads 4.5:1 or more on what it sits on (normal text). It keeps its tone's hue; in a look
+   whose tone is too light for a word, it takes that tone toward black by the least that reads on its darkest ground
+   (measured 2026-10-13: a tag on a chosen card, a status on its row, the route on its line). Elsewhere a tag is the
+   accent taken a little toward the text and a status is its tone. NieR's words keep NieR's inks (11-window-nier.css). */
+#pm-o55-onboarding { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 88%, var(--text-primary)); --o55-ink-wait: var(--o55-accent); --o55-ink-ready: var(--accent-lime);
+  --o55-ink-needs: var(--accent-orange); }
+#pm-o55-onboarding[data-family="basic"][data-mode="light"] { --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 88%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 74%, #000); }
+#pm-o55-onboarding[data-family="friendly"][data-mode="light"] { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 66%, #000); --o55-ink-wait: var(--o55-ink-tag);
+  --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 76%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 66%, #000); }
+#pm-o55-onboarding[data-family="glass"][data-mode="light"] { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 70%, #000); --o55-ink-wait: var(--o55-ink-tag);
+  --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 94%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 88%, #000); }
+#pm-o55-onboarding[data-family="retro"][data-mode="light"] { --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 93%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 61%, #000); }
 .o55-check { width: 20px; height: 20px; border-radius: 50%; border: 1.6px solid var(--o55-line); transition: all 200ms ease; flex: none; }
 .o55-on > .o55-check { border-color: var(--o55-accent); background: var(--o55-accent); box-shadow: inset 0 0 0 4px var(--o55-win-bg); }
 #pm-o55-onboarding[data-family="friendly"] .o55-card { border: 2px solid color-mix(in srgb, var(--o55-ink) 55%, transparent); box-shadow: 3px 4px 0 color-mix(in srgb, var(--text-primary) 12%, transparent); }
@@ -223,10 +234,13 @@ html[data-o55-open][data-o55-solid] body > [inert] { visibility: hidden !importa
 /* a row's status is its mark and a word in the status ink, with no capsule round them (NP-STATUS). The marks (the
    check, the working ring) are the glyph path's and keep their own size and ink; only the box went. */
 .o55-pill { display: inline-flex; align-items: center; gap: 6px; padding: 0; border-radius: 0; font: 700 12px/1.2 var(--body-font); white-space: nowrap; background: none; color: var(--text-secondary); }
-.o55-pill-ready { color: var(--accent-lime); }
-.o55-pill-wait { color: var(--o55-accent); }
-.o55-pill-needs { color: var(--accent-orange); }
+.o55-pill-ready { color: var(--o55-ink-ready, var(--accent-lime)); }
+.o55-pill-wait { color: var(--o55-ink-wait, var(--o55-accent)); }
+.o55-pill-needs { color: var(--o55-ink-needs, var(--accent-orange)); }
 .o55-pill-fail { color: var(--accent-error, #ef5350); }
+/* the marks keep their tone, exactly as before, when the word goes deeper (under NieR they follow NieR's status inks) */
+html:not([data-o55-nier="on"]) #pm-o55-onboarding .o55-pill-ready > .o55-sg { color: var(--accent-lime); }
+html:not([data-o55-nier="on"]) #pm-o55-onboarding .o55-pill-wait > .o55-spin { color: var(--o55-accent); }
 .o55-spin { width: 10px; height: 10px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; animation: o55-spin 0.8s linear infinite; }
 /* Retro never turns anything: a working mark is a whole pixel box with one pixel stepping round its corners (a
    square spun with one side open read as a box with a side cut off) */
