@@ -6509,7 +6509,8 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Rapid Usage room changes in every look satisfy F3-628: the latest change takes over promptly, animations never stack and no shadow trails the selector; Reduced Motion retains its owner behavior.
+- Glass Light hover, GLY-4 scene/control separation and shared font weights have cases against F3-652, F3-656/F3-658 and F3-644; an approved decision alone does not mark the implementation passed.
+- "Rapid Usage room changes in every look satisfy F3-628: the latest change takes over promptly, animations never stack and no shadow trails the selector; retired flights and the pending replacement are tested with explicit implementation status, and Reduced Motion retains its owner behavior."
 - Every cited owner has a matrix case or an explicit unimplemented/held result, never an inferred pass.
 - Static schema/registry/census checks pass before draft review; native evidence is separately required.
 validation_surfaces:
@@ -6527,6 +6528,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LATE-DECISIONS.md, SHA-256 126ae52840c8e5a30d2c1788b5427e6dc219cd2804d7cbd43f94d25aa0de2d07 (Jared decisions at lines 296 and 306; not implementation evidence)"
 - /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-perf-fixes/M4-DESIGN-DECISION.md, SHA-256 df7fa857254291a428bc6d9ef6411e1b586beee52aec8a11557ece98ee257df0

@@ -3851,7 +3851,7 @@ ContractRef: ContractName:Plans/usage-feature.md#UF-095, ContractName:Plans/stor
 - On arrival and on a room change only the hero's number rolls into place; supporting values appear already final with a short fade. Rolls stay for live changes and for range or scope changes.
 - Below the warning line, meters and the skyline towers shade calmly from indigo through cyan to mint by value; above it the Settings thresholds take over as before.
 - The room's key light falls on the hero plate as a soft radial glow from the top left, 16 % on dark themes and 9 % on light ones. It is the one tinted surface the no-tinted-boxes rule allows.
-- Elements that two rooms share fly from one room to the next when switching between them.
+- Superseded 2026-10-14 (DL-191): shared-element flights retire in every look; F3-628 owns the replacement direction and its pending choreography.
 - Every room entrance is visible and rich from every neighbouring room; it may vary with where the viewer comes from, but it is never a plain cut.
 - Facts that do not fit fold behind an N more control that also opens on hover, and stay reachable in Details. Nothing is dropped: facts that the old page showed only in a static list return in their natural widget, labelled as concept fixture data.
 - Every line's end dot sits on its own line's last point, in every chart with more than one line.
@@ -3865,7 +3865,7 @@ ContractRef: ContractName:Plans/usage-feature.md#UF-095, ContractName:Plans/stor
 **What Jared asked (2026-10-02 and 2026-10-09):** on 2026-10-02, yes to only the hero rolling, yes to the calm colour scale below the warning line, and yes to the hero's key light. On 2026-10-09: the fancy entrances did not always trigger, for instance going into Plans & limits, unless they are meant to vary with where the viewer comes from, which is fine; and the dots on the savings trend did not line up with their lines.
 
 **What the spec now says:**
-1. **Heroes, colour, light, entrances and folded facts** (`Plans/FinalGUISpec.md#F3-628`): the explicit hero per room, the hero-only roll, the calm colour ramp below the warning line with the Settings thresholds above it, the hero key light, the shared-element flight, a visible entrance from every neighbour, folded facts behind N more and Details, and each series' end dot on its own last point.
+1. **Heroes, colour, light, entrances and folded facts** (`Plans/FinalGUISpec.md#F3-628`): the explicit hero per room, the hero-only roll, the calm colour ramp below the warning line with the Settings thresholds above it, the hero key light, the room-change presentation amended by DL-191, a visible entrance from every neighbour, folded facts behind N more and Details, and each series' end dot on its own last point.
 2. **The rooms' complete-or-hidden content** (`Plans/FinalGUISpec.md#F3-514`, amended): folding keeps every fact reachable.
 3. **The grammar's single owner** (`Plans/DRY_Rules.md#DR-058`): hero plates, the roll, the colour ramps and folded facts are defined once.
 4. **No fact is dropped** (`Plans/usage-feature.md#UF-107`).
@@ -14508,7 +14508,10 @@ canonical_text: >-
   boundaries. On 2026-10-14 Jared set terminal padding to zero and required more background choices, a
   smaller removable/customizable bezel, a default look without bezel or curvature, and user-saved look
   presets. F3-642/F3-643/F3-650 record the approved direction and the pending detailed contracts; the
-  earlier small catalog and CRT treatment are not final acceptance of those new requirements.
+  earlier small catalog and CRT treatment are not final acceptance of those new requirements. Later
+  on 2026-10-14 Jared reaffirmed JetBrains Mono's full 100–800 range and directed adding the missing
+  upright 100–300 files. F3-644 owns the unchanged range and shared asset delivery; this closes the
+  product question without claiming that the files have landed.
 gui_related: true
 gui_classification_reason: Terminal Customize from the panel and Settings.
 split_recommended: false
@@ -14530,6 +14533,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LATE-DECISIONS.md, SHA-256 126ae52840c8e5a30d2c1788b5427e6dc219cd2804d7cbd43f94d25aa0de2d07 (Jared decisions at lines 296 and 306; not implementation evidence)"
 - /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256 1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
@@ -14610,10 +14614,14 @@ canonical_text: >-
   Glass material constraints. Publishing Glass together with wallpapers remains pending his final review;
   a source-only landing is not publication. His 2026-10-14 review requires the theme-selector lens, placed
   single highlights on entry, coherent Usage/Settings transitions and wallpaper/scroll material, and
-  seamless Settings search fields. F3-652 carries these corrections and leaves the Glass Light hover-light
-  question and final publication held.
+  seamless Settings search fields. Later on 2026-10-14 he chose a Glass Light hover light beneath
+  the content, with readable text and retained edge glow. F3-652 carries that answer; Glass publication
+  remains held, but the under-content hover-light choice is no longer open.
   Jared's Usage room-switching correction applies in every look, not only Glass; F3-628 owns the
-  shared responsive takeover and no-trailing-shadow requirement.
+  shared responsive takeover and no-trailing-shadow requirement. His later Usage #3 direction
+  retires shared-element flights in every look in favour of a different expressive room-change
+  animation. F3-628 owns this supersession of DL-178's flights; replacement details remain pending
+  with the motion owner.
 gui_related: true
 gui_classification_reason: Liquid Glass reads as lenses and reflections.
 split_recommended: false
@@ -14635,6 +14643,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LATE-DECISIONS.md, SHA-256 126ae52840c8e5a30d2c1788b5427e6dc219cd2804d7cbd43f94d25aa0de2d07 (Jared decisions at lines 296 and 306; not implementation evidence)"
 - /mnt/Cursor/share/puppet-master/2026-10-13-glass-v3/README.md, SHA-256 0e424cba2f2d03932159b6e25977959f23d8f65cbcca57ca1d067b505f61db54
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-11-liquid-glass-v2/README.md, SHA-256 ed0f7ebed280627aba47197a0c8a9273bb4b17373f79cd3fcb6c0b44344f6fb9
@@ -14822,8 +14831,9 @@ owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   Jared required polished connected limbs, redesigned art captions and project-name field, shared Glass
   step/choice controls and no temporary theme switch during Create Project. He approved the art and its landing
-  with the no-pill-label work. F3-656 owns this presentation; GLY-4 remains a separate unanswered scene-picture
-  decision.
+  with the no-pill-label work. On 2026-10-14 he answered the separate GLY-4 scene-picture question
+  with option B: keep the art's own drawings, without adopting the neon interface-icon shapes. F3-656
+  owns this presentation and its boundary with the shared interface controls.
 gui_related: true
 gui_classification_reason: Connected onboarding art and Glass.
 split_recommended: false
@@ -14845,6 +14855,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LATE-DECISIONS.md, SHA-256 126ae52840c8e5a30d2c1788b5427e6dc219cd2804d7cbd43f94d25aa0de2d07 (Jared decisions at lines 296 and 306; not implementation evidence)"
 - /mnt/Cursor/share/puppet-master/2026-10-13-onboarding-art-glass/README.md, SHA-256 ce5e5e90df41f180e54b89e4fb3fe0087164039728a902aa481cbcc3adacb088
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
@@ -15127,7 +15138,8 @@ owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   DL-201 records Jared's D44 answer, “i agree,” approving GLY-0 through GLY-3 as recommended: one shared default
   set, warning triangle and failed ring with cross, fitted per-look inks, and shared tube marks replacing the
-  rail's solid badges. F3-658 owns the resulting presentation and registry. GLY-4 is separate and unanswered.
+  rail's solid badges. F3-658 owns the resulting presentation and registry. GLY-4 was a separate
+  question; Jared's 2026-10-14 option B answer is recorded in DL-195 and owned by F3-656.
 gui_related: true
 gui_classification_reason: D44 approves the shared glyph rollout.
 split_recommended: false
@@ -15149,6 +15161,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LATE-DECISIONS.md, SHA-256 126ae52840c8e5a30d2c1788b5427e6dc219cd2804d7cbd43f94d25aa0de2d07 (Jared decisions at lines 296 and 306; not implementation evidence)"
 - /mnt/Cursor/share/puppet-master/2026-10-10-glyph-catalog-addendum/README.md, SHA-256 3d0497f01c878e8aa6f99fa8f602b9b3dbf887aead2a24d62c12969bd47a1d31
   (approved campaign source lineage; not native implementation evidence)
 - Plans/FinalGUISpec.md#F3-658

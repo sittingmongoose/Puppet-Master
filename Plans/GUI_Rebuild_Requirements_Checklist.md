@@ -2226,8 +2226,9 @@ canonical_text: >-
   UI_Command_Catalog UCC-204; Commands_System CS-102; Wiring_Matrix WM-093; UI_Wiring_Rules UIW-043; and
   Automated_Testing_System ATS-077. The linked registry/census/schema companions must agree before
   implementation certification. Decision_Log DL-189 through DL-202 records the decisions and
-  supersessions. Glass remains requirements pending Jared's publication review, GLY-4 remains unanswered,
-  and no concept-only demo or harness becomes a product surface. An approved packet is specification
+  supersessions. Glass publication remains pending Jared's review; F3-652, F3-644 and F3-656 own
+  the settled hover-light, font-range and GLY-4 decisions. No concept-only demo or harness becomes a
+  product surface. An approved packet is specification
   evidence, never native implementation proof.
 gui_related: true
 gui_classification_reason: Appearance And Shell Owner Closure.
@@ -2250,6 +2251,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LATE-DECISIONS.md, SHA-256 126ae52840c8e5a30d2c1788b5427e6dc219cd2804d7cbd43f94d25aa0de2d07 (Jared decisions at lines 296 and 306; not implementation evidence)"
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
   (approved campaign source lineage; not native implementation evidence)
 - Plans/Automated_Testing_System.md#ATS-077

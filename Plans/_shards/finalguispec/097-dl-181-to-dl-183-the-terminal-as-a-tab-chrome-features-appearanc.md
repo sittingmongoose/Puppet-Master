@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46091-L47769
+Source lines: L46094-L47782
 
-Source SHA256: `57aa8ff73cbfa9e250784983681712ff9626ff3466aa3f76478c859cf7f22a55`
+Source SHA256: `c6f37125afe9ba846c7962e48363f4144264f6fdf6220a778b58b0c872cd2f58`
 
 ---
 
@@ -711,13 +711,16 @@ canonical_text: >-
   D17a, and Retro's interface and its code text outside the editor and the terminal stay IBM Plex Mono. The
   system face exposes weights the selected face can draw; a fixed-weight face does not imply distinct variable
   weights. Terminal bold stays heavier: 700, or 800 when regular weight is at least 600, within the supported
-  face range.
+  face range. Jared reaffirmed the full JetBrains Mono 100–800 promise on 2026-10-14: the shared
+  embedding pipeline must supply the missing upright 100–300 weights. The product range is settled;
+  delivery of the font assets is verified separately and is not claimed by this decision.
 gui_related: true
 gui_classification_reason: Defines the built-in faces, defaults and licence rule of the editor's and the terminal's visible text.
 split_recommended: false
 depends_on: [DL-183, DL-161, F3-642, F3-639, DR-050]
 unblocks: [ATS-076]
 acceptance_criteria:
+  - The shared JetBrains Mono assets support the promised upright and italic 100–800 range, including upright 100–300; missing weights are not silently clamped.
   - "The editor draws JetBrains Mono in every look, Retro included."
   - "A new terminal draws JetBrains Mono in every look but Retro and VT323 in Retro, and each face listed above can be chosen."
   - "Each face that has a default size and line height listed above opens at them."
@@ -741,6 +744,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LATE-DECISIONS.md, SHA-256 126ae52840c8e5a30d2c1788b5427e6dc219cd2804d7cbd43f94d25aa0de2d07 (Jared decisions at lines 296 and 306; not implementation evidence)"
 - Plans/Decision_Log.md#DL-183
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
   (D17)
@@ -779,8 +783,8 @@ stale_retired_dispositions:
   pipeline and the terminal carries no font file; the script slices (Latin Extended and Vietnamese among them), JetBrains
   Mono''s italic and the synthesised italic of VT323, Sixtyfour and Departure Mono are stated; the 47,780 bytes of
   non-Latin slices are added to the 84,572 bytes of Latin.'
-- 'Amended 2026-10-14: The campaign prototype cannot draw distinct JetBrains Mono upright weights 100–300. That is
-  an asset implementation gap, not an approved reduction of the promised 100–800 range.'
+- 'Amended 2026-10-14: The reviewed prototype lacked distinct JetBrains Mono upright weights 100–300. Jared
+  reaffirmed 100–800 and directed adding the light files; the asset delivery remains to be verified, not a product question.'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Decision_Log.md
@@ -1196,9 +1200,9 @@ canonical_text: >-
   F3-648. Menus grow from their invoking control; fields such as Find a scope and Find a panel read as one
   seamless field; the theme menu has room for its labels. Usage changes are calm, with no full-board sweep
   or opaque-then-clear flash. Glass Dark’s hover light stays near the shared control scale, about 96 px
-  radius, without veiling text. Glass Light has no lightening pointer light over text; whether a light
-  beneath content returns remains pending Jared. F3-465 owns the subsequent reduction of the pointer’s
-  central glow while retaining edge light. Settings rail/index/sections, onboarding window, tour
+  radius, without veiling text. Jared decided on 2026-10-14 that Glass Light draws its hover light beneath
+  the content, so the text stays readable; the surface-edge glow stays. F3-465 owns the reduction of
+  the pointer’s central glow while retaining that edge light. Settings rail/index/sections, onboarding window, tour
   callout/bar and the Wizard/Orchestrator columns use the same sheet hierarchy; nested cards and controls
   are fills on sheets, not independent full-scene effects. Dense Customize and notification surfaces use
   the more opaque menu material needed for F3-654's settled contrast. Moving/leaning sheets carry coherent
@@ -1227,6 +1231,7 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
+- Glass Light draws its hover light beneath content, retains edge glow and preserves F3-654 text contrast during resting hover.
 - Every named selector has one legible resting and moving lens, with immediate activation feedback and no chromatic
   tearing or duplicate highlight.
 - Dense menus, moving sheets and wallpaper swaps preserve settled contrast and coherent material.
@@ -1250,6 +1255,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LATE-DECISIONS.md, SHA-256 126ae52840c8e5a30d2c1788b5427e6dc219cd2804d7cbd43f94d25aa0de2d07 (Jared decisions at lines 296 and 306; not implementation evidence)"
 - /mnt/Cursor/share/puppet-master/2026-10-13-glass-v3/README.md, SHA-256 0e424cba2f2d03932159b6e25977959f23d8f65cbcca57ca1d067b505f61db54
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-11-liquid-glass-v2/README.md, SHA-256 ed0f7ebed280627aba47197a0c8a9273bb4b17373f79cd3fcb6c0b44344f6fb9
@@ -1509,22 +1515,24 @@ canonical_text: >-
   connected to their shoes; Glass uses ball-jointed crystal marionettes with light through the limbs, layered
   Ribbons-like waves, a glass stage and lens droplets. Waving bends at the elbow and strings remain attached to
   their hooks. Glass captions sit on a shelf of light without capsule boxes, signs are cut-glass plates, and
-  Friendly captions are stitched paper cards and squiggles. Existing Retro and NieR scene drawings remain;
-  GLY-4's proposed replacement of scene pictures is not admitted without its own answer. The project-name field
+  Friendly captions are stitched paper cards and squiggles. Jared chose GLY-4 option B on 2026-10-14:
+  onboarding scenes keep their own drawings in each look's material; the scenes do not adopt the neon
+  interface-icon shapes. Onboarding controls continue to consume F3-658's shared set. The project-name field
   is a large nameplate with centered words and a reserved hint line so typing never shifts the layout. Glass
   main actions, choice rows, step selector, switch, tour bar and callouts consume F3-652. Guided example and
   Teacher tags in practice chat are a small square and plain words on their own line. The chosen onboarding look
   remains in force during Create Project and checks, with no temporary reset of the app's theme; PWIZ-021's
   draft/commit boundary is unchanged. All art captions and Ready states consume F3-654. Motion respects the
   existing skip/end-state and Reduced Motion contracts; connected geometry and meaningful end states remain.
-  This amends the presentation of F3-520, F3-521 and F3-600 without adding onboarding commands, steps, approval
-  or scene-glyph decisions.
+  This amends the presentation of F3-520, F3-521 and F3-600 without adding onboarding commands, steps
+  or approval flows.
 gui_related: true
 gui_classification_reason: Onboarding art and Glass controls.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
+- Scene drawings retain their own shapes and per-look material under GLY-4 option B; interface controls retain the shared glyph set.
 - Every animated and still pose keeps limbs and strings connected in all looks and both motion modes.
 - Name/hint geometry stays stable while typing; Guided example and Teacher are plain labels.
 - Create Project never paints a different look, and settled captions/Ready text meet F3-654.
@@ -1542,6 +1550,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LATE-DECISIONS.md, SHA-256 126ae52840c8e5a30d2c1788b5427e6dc219cd2804d7cbd43f94d25aa0de2d07 (Jared decisions at lines 296 and 306; not implementation evidence)"
 - /mnt/Cursor/share/puppet-master/2026-10-13-onboarding-art-glass/README.md, SHA-256 ce5e5e90df41f180e54b89e4fb3fe0087164039728a902aa481cbcc3adacb088
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-11-onboarding-no-pills/README.md, SHA-256 1ab0aedc5910ab03097439cf9cd48da77eb7cefad458ca705a556727d327fd1a
@@ -1648,8 +1657,8 @@ canonical_text: >-
   cell, solid while the agent types and hollow when a person takes over; terminal command marks use shared
   status marks. Glyph hover ignition follows F3-465's existing card/row/control target, with stepped NieR and
   Retro phosphor power-on, never another hover engine. Reduced Motion keeps a still, lit, recognizable end
-  state. GLY-4's alternate onboarding scene pictures remain unanswered; approving controls does not approve
-  those art replacements.
+  state. Onboarding scene illustrations are outside this interface-glyph vocabulary: F3-656 owns
+  Jared's separate GLY-4 option B decision.
 gui_related: true
 gui_classification_reason: Shared glyph vocabulary and presentation.
 split_recommended: false
@@ -1673,6 +1682,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LATE-DECISIONS.md, SHA-256 126ae52840c8e5a30d2c1788b5427e6dc219cd2804d7cbd43f94d25aa0de2d07 (Jared decisions at lines 296 and 306; not implementation evidence)"
 - /mnt/Cursor/share/puppet-master/2026-10-10-glyph-catalog-addendum/README.md, SHA-256 3d0497f01c878e8aa6f99fa8f602b9b3dbf887aead2a24d62c12969bd47a1d31
   (approved campaign source lineage; not native implementation evidence)
 - Plans/FinalGUISpec.md#F3-585

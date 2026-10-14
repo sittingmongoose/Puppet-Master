@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L13-L4289
 
-Source SHA256: `c65c930722c6d93e31dbf9f843667fcfde8e7a8a5f6e70f50b0a77313ea6f742`
+Source SHA256: `830e7abbf1cb47d68c332d2f2b801027d7228e37c9c3350149fbcb4d18b0e190`
 
 ---
 
@@ -3849,7 +3849,7 @@ ContractRef: ContractName:Plans/usage-feature.md#UF-095, ContractName:Plans/stor
 - On arrival and on a room change only the hero's number rolls into place; supporting values appear already final with a short fade. Rolls stay for live changes and for range or scope changes.
 - Below the warning line, meters and the skyline towers shade calmly from indigo through cyan to mint by value; above it the Settings thresholds take over as before.
 - The room's key light falls on the hero plate as a soft radial glow from the top left, 16 % on dark themes and 9 % on light ones. It is the one tinted surface the no-tinted-boxes rule allows.
-- Elements that two rooms share fly from one room to the next when switching between them.
+- Superseded 2026-10-14 (DL-191): shared-element flights retire in every look; F3-628 owns the replacement direction and its pending choreography.
 - Every room entrance is visible and rich from every neighbouring room; it may vary with where the viewer comes from, but it is never a plain cut.
 - Facts that do not fit fold behind an N more control that also opens on hover, and stay reachable in Details. Nothing is dropped: facts that the old page showed only in a static list return in their natural widget, labelled as concept fixture data.
 - Every line's end dot sits on its own line's last point, in every chart with more than one line.
@@ -3863,7 +3863,7 @@ ContractRef: ContractName:Plans/usage-feature.md#UF-095, ContractName:Plans/stor
 **What Jared asked (2026-10-02 and 2026-10-09):** on 2026-10-02, yes to only the hero rolling, yes to the calm colour scale below the warning line, and yes to the hero's key light. On 2026-10-09: the fancy entrances did not always trigger, for instance going into Plans & limits, unless they are meant to vary with where the viewer comes from, which is fine; and the dots on the savings trend did not line up with their lines.
 
 **What the spec now says:**
-1. **Heroes, colour, light, entrances and folded facts** (`Plans/FinalGUISpec.md#F3-628`): the explicit hero per room, the hero-only roll, the calm colour ramp below the warning line with the Settings thresholds above it, the hero key light, the shared-element flight, a visible entrance from every neighbour, folded facts behind N more and Details, and each series' end dot on its own last point.
+1. **Heroes, colour, light, entrances and folded facts** (`Plans/FinalGUISpec.md#F3-628`): the explicit hero per room, the hero-only roll, the calm colour ramp below the warning line with the Settings thresholds above it, the hero key light, the room-change presentation amended by DL-191, a visible entrance from every neighbour, folded facts behind N more and Details, and each series' end dot on its own last point.
 2. **The rooms' complete-or-hidden content** (`Plans/FinalGUISpec.md#F3-514`, amended): folding keeps every fact reachable.
 3. **The grammar's single owner** (`Plans/DRY_Rules.md#DR-058`): hero plates, the roll, the colour ramps and folded facts are defined once.
 4. **No fact is dropped** (`Plans/usage-feature.md#UF-107`).
