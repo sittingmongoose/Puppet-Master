@@ -188,6 +188,13 @@ html[data-theme^="glass"] .pmw-guide-tile[data-on], html[data-theme^="glass"] .p
     0 0 26px 2px var(--pmw-guide-glow), var(--pmw-guide-shadow);
   transform: scale(1.07);
 }
+/* the carried chip is a pane of the same glass as the tiles and the zone's name: on the reading tint the code under it
+   showed through its label (4.43:1 over the editor in Glass Light, round 3) */
+html[data-theme^="glass"] #pmw-overlay > .pmw-chip {
+  background: var(--lg-tint-menu, var(--pmw-pop));
+  box-shadow: inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .3)), inset 0 -1px 0 var(--lg-edge-bot, rgba(0, 0, 0, .25)),
+    0 0 0 1px var(--pmw-guide-line), var(--pmw-guide-shadow);
+}
 html[data-theme^="glass"] .pmw-guide-cap[data-swap] { transition: translate 280ms cubic-bezier(.16, 1, .3, 1); }
 html[data-theme^="glass"] .pmw-guide-cap {
   border-radius: 10px;
