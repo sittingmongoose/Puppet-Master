@@ -29426,6 +29426,10 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-orchestrator .orch-ta
 html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-orchestrator .orch-tab { transition: none; }
 #panel-orchestrator .orch-tab.active .orch-tab-badge { color: inherit; opacity: .78; }
 
+/* The header wrapper (tools/wizorch_layer.py) exists for Liquid Glass's one header sheet; everywhere else it has no box,
+   so the title row, the scope row, the banners and the tabs lay out exactly as the page's own rows. */
+#panel-orchestrator > .wo-orch-head { display: contents; }
+
 /* ── The plan scope bar (T46 systems projection) in the look's controls ────────────────────────────────────────────
    Its own stylesheet gave its buttons and the chosen plan's name the page's 16 px body text and its selects the
    browser's drawing; they now read as the Orchestrator's own controls at its 12 px control size. */
@@ -29551,16 +29555,32 @@ html[data-lg="on"][data-theme^="glass"] #panel-orchestrator :is(.pm6-orch-widget
 html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-attach-card, .pm6-wiz-choice-card, .pm6-wiz-choice-hybrid, .pm6-wiz-topic-card, .pm6-wiz-drop):hover,
 html[data-lg="on"][data-theme^="glass"] #panel-orchestrator .pm7-nplan-card:hover { background: var(--lg-fill-hover) !important; }
 html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-attach-card, .pm6-wiz-choice-card, .pm6-wiz-choice-hybrid, .pm6-wiz-topic-card, .pm6-wiz-drop):active { background: var(--lg-fill-press) !important; }
-html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-attach-card.selected, .pm6-wiz-topic-card.open) { background: var(--lg-sel) !important; border-color: transparent !important; }
-html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-attach-card.selected, .pm6-wiz-topic-card.open),
-html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-attach-card.selected, .pm6-wiz-topic-card.open) :is(.pm6-ico, .pm6-wiz-attach-name, .pm6-wiz-attach-desc, .pm6-wiz-attach-repo, .pm6-wiz-topic-name, .pm6-wiz-topic-sub, .pm6-wiz-topic-progline) { color: var(--lg-on-sel) !important; }
+/* a chosen card (the project's home, the open topic) keeps its words and takes the press fill with a 2 px ring in the
+   accent and its check, as Settings' wallpaper tiles do: a full selection fill would let the wallpaper move the words'
+   contrast (pm7-liquid-glass's review, 2026-10-13) */
+html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-attach-card.selected, .pm6-wiz-topic-card.open) {
+  background: var(--lg-fill-press) !important; border-color: transparent !important; box-shadow: inset 0 0 0 2px var(--accent-blue) !important;
+}
 /* the page heads sit on the wallpaper as words, not as old Glass's frosted cards; the header strip keeps its words off
    its sheet's edge */
 html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-hero, .pm6-wiz-runhead, .pm6-wiz-prdhead) {
   background: transparent !important; background-image: none !important; border-color: transparent !important; box-shadow: none !important;
   -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
 }
-html[data-lg="on"][data-theme^="glass"] #panel-orchestrator .orch-header[data-lg-surface] { padding: 10px 16px !important; }
+/* the Orchestrator's one header sheet (title row, scope row, banners, the lens's tab strip along its bottom edge) and
+   its board share one column: the same left and right edges */
+html[data-lg="on"][data-theme^="glass"] #panel-orchestrator > .wo-orch-head {
+  display: flex; flex-direction: column; flex: none; gap: 2px; margin: 12px 16px 10px; padding: 12px 16px 8px; border-radius: var(--lg-r-card, 16px);
+}
+html[data-lg="on"][data-theme^="glass"] #panel-orchestrator > .orch-content[data-lg-surface] { margin: 0 16px 16px !important; border-radius: var(--lg-r-card, 16px); }
+html[data-lg="on"][data-theme^="glass"] #panel-orchestrator > .wo-orch-head > :is(.orch-header, #pm7-named-plan-scope, #pm7-named-plan-cards, .pm6-orch-banner, .orch-tabs) {
+  margin-left: 0 !important; margin-right: 0 !important; background: transparent !important; border: 0 !important; box-shadow: none !important;
+}
+html[data-lg="on"][data-theme^="glass"] #panel-orchestrator > .wo-orch-head > .orch-header { margin-top: 0 !important; padding: 0 !important; }
+html[data-lg="on"][data-theme^="glass"] #panel-orchestrator > .wo-orch-head > #pm7-named-plan-scope { padding: 8px 0 !important; }
+html[data-lg="on"][data-theme^="glass"] #panel-orchestrator > .wo-orch-head > .orch-tabs { margin-top: 2px !important; background: var(--lg-fill) !important; }
+/* when the work-type row rides pm7-liquid-glass's lens (glass.js marks it data-lg-lensed), the lens is the only highlight */
+html[data-lg="on"][data-theme^="glass"] #panel-wizard .pm6-wiz-intent-row[data-lg-lensed] .pm6-wiz-intent-chip.sel { background: var(--lg-fill) !important; color: var(--text-primary) !important; border-color: var(--lg-line) !important; }
 html[data-lg="on"][data-theme^="glass"] #panel-orchestrator .pm6-orch-w-head { background: transparent !important; border-bottom: 1px solid var(--lg-line); -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 /* chosen cells and tabs on a sheet: the sheet's selection, with its text */
 html[data-lg="on"][data-theme^="glass"] :is(#panel-wizard, #panel-orchestrator) { --wo-sel-fill: var(--lg-sel); --wo-sel-ink: var(--lg-on-sel); --wo-sel-line: transparent; }
@@ -43500,7 +43520,8 @@ html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-card .pmt-card-glyph 
 
           </div>
           <div class="page page-orchestrator" id="panel-orchestrator">
-            <div data-lg-surface="bar" class="orch-header pm6-orch-header">
+            <div data-lg-surface="bar" class="wo-orch-head">
+            <div class="orch-header pm6-orch-header">
               <span class="orch-title">Orchestrator</span>
               <button type="button" class="pm6-orch-run-chip" id="pm6OrchRunChip" data-demo-action="orch.copyRunId" title="focused_run_id pcr-47 (click to copy)">
                 <span class="pm6-ico" data-ico="bolt" aria-hidden="true"></span>
@@ -43538,6 +43559,7 @@ html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-card .pmt-card-glyph 
               <span class="orch-tab" id="orch-tab-evidence" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-evidence" data-tab="evidence">Evidence<span class="orch-tab-badge" id="orchTabBadgeEvidence" aria-hidden="true"></span></span>
               <span class="orch-tab" id="orch-tab-history" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-history" data-tab="history">History</span>
               <span class="orch-tab" id="orch-tab-ledger" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-ledger" data-tab="ledger">Ledger<span class="orch-tab-badge" id="orchTabBadgeLedger" aria-hidden="true"></span></span>
+            </div>
             </div>
             <div data-lg-surface="panel" class="orch-content pm6-orch-content">
 
@@ -150167,7 +150189,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     var showRun=scopeState.scope==='plan'&&selected&&selected.run==='pcr-47';
     orch.dataset.namedPlanScope=scopeState.scope;
     ['scope','project','plan'].forEach(function(field){bar.querySelector('[data-plan-field="'+field+'"]').value=scopeState[field];});
-    [...orch.children].forEach(function(child){if(child===bar||child===cards||child.classList.contains('orch-header')||child.classList.contains('pm6-orch-modal-scrim'))return;child.hidden=!showRun;});
+    var woHead=orch.querySelector('.wo-orch-head');[...orch.children].concat(woHead?[...woHead.children]:[]).forEach(function(child){if(child===bar||child===cards||child===woHead||child.classList.contains('orch-header'))return;if(!showRun){if(!child.hidden){child.hidden=true;child.dataset.woScopeHid='1';}}else if(child.dataset.woScopeHid){child.hidden=false;delete child.dataset.woScopeHid;}});
     [...orch.querySelectorAll('.orch-header > :not(.orch-title)')].forEach(function(child){child.hidden=!showRun;});
     var shown=scopeState.scope==='all'?planFixtures:scopeState.scope==='project'?planFixtures.filter(function(p){return p.project===scopeState.project;}):showRun?[]:selected?[selected]:[];
     cards.hidden=!!showRun;

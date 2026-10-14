@@ -8,12 +8,18 @@ src/css/27-wizard-orch.css; this module only changes what CSS cannot reach:
 
 1. The Orchestrator's "Retry from safe point" confirmation opened by itself the first time the page was shown. The
    named-plan scope script (T46, systems integration) shows or hides every direct child of #panel-orchestrator with
-   the plan scope, and the confirmation's scrim is one of those children, so `hidden = !showRun` opened it with the
-   fixture's placeholder text (sp-000, n-00). The scrim now keeps its own hidden state; only the confirmation's own
-   Open, Cancel and Confirm actions change it.
+   the plan scope, and its "show" set hidden = false on all of them, including rows that were hidden for their own
+   reasons: the confirmation's scrim (it opened with the fixture's placeholder text, sp-000 and n-00) and, after a
+   scope change, the "Viewing historical run" banner. The loop now hides a row only if it was showing, marks it, and
+   on the way back shows only the rows it hid itself; everything else keeps its own hidden state.
 2. The node graph's problem list wrote "⚠" in front of each node in its chip. The chip is now a status mark and a word
    (DL-184 / F3-648), whose mark already says the same, so the symbol goes; the words are unchanged.
-3. Liquid Glass: the page columns opt in to pm7-liquid-glass's sheets with data-lg-surface (its contract of 2026-10-13:
+3. Liquid Glass wants the Orchestrator's controls on one header sheet (its review of 2026-10-13): the title row, the
+   plan scope row the T46 script inserts after it, the run banners and the view tabs. A wrapper (.wo-orch-head) now
+   holds them; outside Liquid Glass it is display: contents, so every other look lays them out exactly as before. The
+   plan-scope script's show/hide loop reaches into the wrapper, so it treats those rows exactly as it did when they
+   were the page's own children.
+4. Liquid Glass: the page columns opt in to pm7-liquid-glass's sheets with data-lg-surface (its contract of 2026-10-13:
    panel for the big columns, card for a free-standing card, bar for a header strip, menu for anything floating; at
    most about three sheets on screen per page; never a sheet on a sheet). The attribute does nothing until glass.js is
    on the page and Liquid Glass is on in a Glass look; old Glass and every other look ignore it.
@@ -24,19 +30,29 @@ from __future__ import annotations
 
 # (old, new, label)
 PATCHES: list[tuple[str, str, str]] = [
-    # 1. the safe-point confirmation keeps its own hidden state when the plan scope repaints the page
+    # 1. the scope loop shows again only what it hid itself (the confirmation and the banners keep their own state);
+    #    it also reaches the rows inside the header wrapper (3), as it did when they were the page's own children
     ("[...orch.children].forEach(function(child){if(child===bar||child===cards||child.classList.contains('orch-header'))"
      "return;child.hidden=!showRun;});",
-     "[...orch.children].forEach(function(child){if(child===bar||child===cards||child.classList.contains('orch-header')"
-     "||child.classList.contains('pm6-orch-modal-scrim'))return;child.hidden=!showRun;});",
-     'wizorch: the safe-point confirmation is not a plan-scope child'),
+     "var woHead=orch.querySelector('.wo-orch-head');[...orch.children].concat(woHead?[...woHead.children]:[])"
+     ".forEach(function(child){if(child===bar||child===cards||child===woHead||child.classList.contains('orch-header'))"
+     "return;if(!showRun){if(!child.hidden){child.hidden=true;child.dataset.woScopeHid='1';}}"
+     "else if(child.dataset.woScopeHid){child.hidden=false;delete child.dataset.woScopeHid;}});",
+     'wizorch: the scope loop restores only what it hid'),
     # 2. the problem-node chip: its status mark replaces the warning symbol
     ("return chip('⚠ ' + n.id + ' ' + (n.degraded",
      "return chip(n.id + ' ' + (n.degraded",
      'wizorch: problem-node chip without the warning symbol'),
+    # 3. one header for the Orchestrator's controls (title row, scope row, banners, view tabs)
+    ('<div class="orch-header pm6-orch-header">',
+     '<div class="wo-orch-head">\n            <div class="orch-header pm6-orch-header">',
+     'wizorch: header wrapper opens'),
+    ('<div class="orch-content pm6-orch-content">',
+     '</div>\n            <div class="orch-content pm6-orch-content">',
+     'wizorch: header wrapper closes'),
 ]
 
-# 3. Liquid Glass opt-ins: (anchor, attribute added to that start tag, label). Only one Wizard stage shows at a time,
+# 4. Liquid Glass opt-ins: (anchor, attribute added to that start tag, label). Only one Wizard stage shows at a time,
 #    so each stage carries at most three sheets.
 SURFACES: list[tuple[str, str, str]] = [
     # intake and requirements: the form column is one sheet; its cards are plain fills on it
@@ -55,8 +71,8 @@ SURFACES: list[tuple[str, str, str]] = [
     # floating: the expanded document and the safe-point confirmation
     ('<div class="pm6-wiz-doc-overlay-panel" role="dialog"', 'menu', 'expanded document'),
     ('<div class="pm6-orch-modal" role="dialog"', 'menu', 'safe-point confirmation'),
-    # the Orchestrator: its header strip and its board; the tab strip between them is the lens's own
-    ('<div class="orch-header pm6-orch-header">', 'bar', 'orchestrator header'),
+    # the Orchestrator: one header sheet (title, scope row, banners, the lens's tab strip) and its board
+    ('<div class="wo-orch-head">', 'bar', 'orchestrator header'),
     ('<div class="orch-content pm6-orch-content">', 'panel', 'orchestrator board'),
 ]
 
