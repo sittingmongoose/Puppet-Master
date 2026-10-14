@@ -1,0 +1,548 @@
+{
+  "verdict": "FAILED_DO_NOT_SHIP_HAND_BACK_TO_OPUS",
+  "source_iterations": 1,
+  "source_branch": "fix/pm7-perf-shared-settings-20261013",
+  "source_checkpoint_commit": "f4b0f52cfa",
+  "private_baseline": "m4-authorized-proto12",
+  "private_candidate": "m4-astra-one-iteration",
+  "base_limitation": "Frozen predecessor proto12 composition; M5 motion checkpoint reused, NieR source differs from final M10. Built in original review worktree f4b0f52cfa, not current main. No product source committed for M4.",
+  "windows": {
+    "session": "windows-37ea597f59c1",
+    "gpu": "RTX 3090",
+    "browser": "Chrome 155",
+    "acceptance_geometry": "1920x1080 DPR1",
+    "recording": false
+  },
+  "measurements": {
+    "before": [
+      {
+        "look": "basic-dark",
+        "workspace": "notifications",
+        "anchor": "Nightly report readyNormal",
+        "samples": 166,
+        "replaced_anchor_samples": 166,
+        "changed_memory_section_samples": 47,
+        "changed_saved_section_samples": 0,
+        "new_motion_on_instrumented_nodes_samples": 0,
+        "new_will_reveal_mutations": 0,
+        "initial_final_scroll_px": [
+          6535,
+          6040
+        ],
+        "initial_final_anchor_offset_px": [
+          -70.296875,
+          373.3125
+        ],
+        "initial_final_end_space_height_px": [
+          686,
+          960
+        ],
+        "initial_final_memory_section": [
+          {
+            "app-input": "app-theme",
+            "notifications": "notif-destination-list"
+          },
+          {
+            "app-input": "app-theme",
+            "notifications": "notif-destination-list"
+          }
+        ],
+        "initial_final_saved_section": [
+          {
+            "app-input": "app-theme"
+          },
+          {
+            "app-input": "app-theme"
+          }
+        ],
+        "max_fallback_row_geometry_displacement_px": 443.609375,
+        "missing_css_visible_replacement_samples": 0
+      },
+      {
+        "look": "glass-light",
+        "workspace": "notifications",
+        "anchor": "Nightly report readyNormal",
+        "samples": 57,
+        "replaced_anchor_samples": 57,
+        "changed_memory_section_samples": 10,
+        "changed_saved_section_samples": 0,
+        "new_motion_on_instrumented_nodes_samples": 0,
+        "new_will_reveal_mutations": 0,
+        "initial_final_scroll_px": [
+          6914,
+          6455
+        ],
+        "initial_final_anchor_offset_px": [
+          -36.984375,
+          388.015625
+        ],
+        "initial_final_end_space_height_px": [
+          635,
+          942
+        ],
+        "initial_final_memory_section": [
+          {
+            "app-input": "app-theme",
+            "notifications": "notif-destination-list"
+          },
+          {
+            "app-input": "app-theme",
+            "notifications": "notif-destination-list"
+          }
+        ],
+        "initial_final_saved_section": [
+          {
+            "app-input": "app-theme"
+          },
+          {
+            "app-input": "app-theme"
+          }
+        ],
+        "max_fallback_row_geometry_displacement_px": 425.0,
+        "missing_css_visible_replacement_samples": 0
+      },
+      {
+        "look": "nier-dark",
+        "workspace": "notifications",
+        "anchor": "Nightly report readyNormal",
+        "samples": 149,
+        "replaced_anchor_samples": 149,
+        "changed_memory_section_samples": 41,
+        "changed_saved_section_samples": 0,
+        "new_motion_on_instrumented_nodes_samples": 0,
+        "new_will_reveal_mutations": 0,
+        "initial_final_scroll_px": [
+          6803,
+          6461
+        ],
+        "initial_final_anchor_offset_px": [
+          -69.75,
+          396.578125
+        ],
+        "initial_final_end_space_height_px": [
+          686,
+          960
+        ],
+        "initial_final_memory_section": [
+          {
+            "app-input": "app-theme",
+            "notifications": "notif-destination-list"
+          },
+          {
+            "app-input": "app-theme",
+            "notifications": "notif-destination-list"
+          }
+        ],
+        "initial_final_saved_section": [
+          {
+            "app-input": "app-theme"
+          },
+          {
+            "app-input": "app-theme"
+          }
+        ],
+        "max_fallback_row_geometry_displacement_px": 466.328125,
+        "missing_css_visible_replacement_samples": 0
+      }
+    ],
+    "after": [
+      {
+        "look": "basic-dark",
+        "workspace": "notifications",
+        "anchor": "Nightly report readyNormal",
+        "samples": 167,
+        "replaced_anchor_samples": 167,
+        "changed_memory_section_samples": 47,
+        "changed_saved_section_samples": 0,
+        "new_motion_on_instrumented_nodes_samples": 0,
+        "new_will_reveal_mutations": 0,
+        "initial_final_scroll_px": [
+          6535,
+          5874
+        ],
+        "initial_final_anchor_offset_px": [
+          -70.296875,
+          539.3125
+        ],
+        "initial_final_end_space_height_px": [
+          686,
+          960
+        ],
+        "initial_final_memory_section": [
+          {
+            "app-input": "app-theme",
+            "notifications": "notif-destination-list"
+          },
+          {
+            "app-input": "app-theme",
+            "notifications": "notif-destination-list"
+          }
+        ],
+        "initial_final_saved_section": [
+          {
+            "app-input": "app-theme"
+          },
+          {
+            "app-input": "app-theme"
+          }
+        ],
+        "max_fallback_row_geometry_displacement_px": 609.609375,
+        "missing_css_visible_replacement_samples": 0
+      },
+      {
+        "look": "glass-light",
+        "workspace": "notifications",
+        "anchor": "Nightly report readyNormal",
+        "samples": 62,
+        "replaced_anchor_samples": 62,
+        "changed_memory_section_samples": 10,
+        "changed_saved_section_samples": 0,
+        "new_motion_on_instrumented_nodes_samples": 0,
+        "new_will_reveal_mutations": 0,
+        "initial_final_scroll_px": [
+          6914,
+          6271
+        ],
+        "initial_final_anchor_offset_px": [
+          -36.984375,
+          572.015625
+        ],
+        "initial_final_end_space_height_px": [
+          635,
+          942
+        ],
+        "initial_final_memory_section": [
+          {
+            "app-input": "app-theme",
+            "notifications": "notif-destination-list"
+          },
+          {
+            "app-input": "app-theme",
+            "notifications": "notif-destination-list"
+          }
+        ],
+        "initial_final_saved_section": [
+          {
+            "app-input": "app-theme"
+          },
+          {
+            "app-input": "app-theme"
+          }
+        ],
+        "max_fallback_row_geometry_displacement_px": 609.0,
+        "missing_css_visible_replacement_samples": 0
+      },
+      {
+        "look": "nier-dark",
+        "workspace": "notifications",
+        "anchor": "Nightly report readyNormal",
+        "samples": 151,
+        "replaced_anchor_samples": 151,
+        "changed_memory_section_samples": 43,
+        "changed_saved_section_samples": 0,
+        "new_motion_on_instrumented_nodes_samples": 0,
+        "new_will_reveal_mutations": 0,
+        "initial_final_scroll_px": [
+          6803,
+          6294
+        ],
+        "initial_final_anchor_offset_px": [
+          -69.75,
+          563.578125
+        ],
+        "initial_final_end_space_height_px": [
+          686,
+          960
+        ],
+        "initial_final_memory_section": [
+          {
+            "app-input": "app-theme",
+            "notifications": "notif-destination-list"
+          },
+          {
+            "app-input": "app-theme",
+            "notifications": "notif-destination-list"
+          }
+        ],
+        "initial_final_saved_section": [
+          {
+            "app-input": "app-theme"
+          },
+          {
+            "app-input": "app-theme"
+          }
+        ],
+        "max_fallback_row_geometry_displacement_px": 633.328125,
+        "missing_css_visible_replacement_samples": 0
+      }
+    ]
+  },
+  "glass_diagnostic": {
+    "before": {
+      "file": "bundle-916-baseline",
+      "geometry": "1600x900 DPR1; targeted reproduction of Glass owner host-width finding, separate from 1920x1080 acceptance",
+      "first_second_chat_width_px": [
+        515,
+        0
+      ],
+      "first_second_settings_width_px": [
+        751,
+        1278
+      ],
+      "first_second_accent_top_px": [
+        906.71875,
+        611.5
+      ],
+      "first_second_accent_shift_px": -295.21875,
+      "first_second_focus_host": [
+        false,
+        true
+      ],
+      "first_second_scroll_px": [
+        65,
+        65
+      ]
+    },
+    "after": {
+      "file": "m4-astra-one-iteration",
+      "geometry": "1600x900 DPR1; targeted reproduction of Glass owner host-width finding, separate from 1920x1080 acceptance",
+      "first_second_chat_width_px": [
+        0,
+        0
+      ],
+      "first_second_settings_width_px": [
+        1278,
+        1278
+      ],
+      "first_second_accent_top_px": [
+        676.5,
+        676.5
+      ],
+      "first_second_accent_shift_px": 0.0,
+      "first_second_focus_host": [
+        true,
+        true
+      ],
+      "first_second_scroll_px": [
+        0,
+        0
+      ]
+    }
+  },
+  "qualification": {
+    "authoritative_comparison": [
+      "m4-astra-visible-panel-analysis.json with underlying before/after samples and native screenshots"
+    ],
+    "current_workspace": "Notifications at the bottom of General. Fallback .pm51-row Nightly report readyNormal is CSS-visible but does not reach the reading line; Basic/NieR start fully clipped above the scroller. Do not claim strict A1 visible-anchor measurements.",
+    "driver": "Both final runs use the identical driver; settle and same-workspace replacement handling are improved, but checkVisibility does not test viewport clipping or sticky-header occlusion.",
+    "v1": "Exploratory. Setup did not settle the actual bottom; detached original nodes invalidate numeric displacement. No exact v1 driver copy is claimed.",
+    "v2": "Exploratory. Anonymous heading resolution and null arithmetic were invalid. Its earlier assertion of actual first-frame absence is not established. Final samples find the same CSS-visible replacement row; that does not imply it is visible through the scroller clip.",
+    "v3": "Exploratory profile of the visible Alerts that arrive here heading; predates .pm51-row coverage. Useful for manager replacement/end-space changes, not the final reading-row comparison.",
+    "motion_limit": "Zero new measured flags/animations only on instrumented original retained nodes. Replacement nodes are outside that identity set; this does not establish full A4 acceptance.",
+    "saved_section_limit": "Saved projection stayed unchanged during these no-setting-change samples. This is not a navigation-save or next-save test.",
+    "glass_limit": "Separate 1600x900 after-paint width-sequence diagnostic. Baseline bundle-916-baseline and M4 candidate have different compositions and scroll (65 versus 0); not a full same-source parity or speed comparison.",
+    "final_comparison_limit": "Folder names ending qualified predate final screenshot review. Row displacement is a geometry witness only. The same maximum displacement is independently derived for the pm51-detail panel bottom, which stays inside the scroller and is visibly displaced in before/after screenshots. Strict reading-line A1 acceptance is not established."
+  },
+  "not_run_after_reject": [
+    "Full all-ten-look A-F matrix",
+    "P1000",
+    "System/app reduced-motion matrix",
+    "Navigation-save and first-frame acceptance",
+    "Focus and hover acceptance",
+    "Hardware films",
+    "M4 CPU acceptance"
+  ],
+  "remaining": "Opus design pass on manager replacement/anchor lifetime/end-space/section ownership. No second repair iteration authorized.",
+  "visible_panel_analysis": {
+    "scope": "Visible manager panel bottom edge, not strict reading-line A1 anchor acceptance",
+    "sides": {
+      "before": [
+        {
+          "look": "basic-dark",
+          "initial_fallback_row_rect": {
+            "top": 72.703125,
+            "left": 868,
+            "width": 411,
+            "height": 51.96875,
+            "bottom": 124.671875
+          },
+          "initial_scroller_rect": {
+            "top": 143,
+            "left": 627,
+            "width": 685,
+            "height": 912,
+            "bottom": 1055
+          },
+          "initial_fallback_row_intersects_scroller": false,
+          "initial_fallback_row_reaches_reading_line": false,
+          "initial_final_panel_bottom_offset_px": [
+            113.015625,
+            556.625
+          ],
+          "max_panel_bottom_displacement_px": 443.609375,
+          "panel_bottom_in_scroller_all_samples": true,
+          "initial_final_panel_height_px": [
+            1105.703125,
+            1105.703125
+          ]
+        },
+        {
+          "look": "glass-light",
+          "initial_fallback_row_rect": {
+            "top": 115.015625,
+            "left": 894,
+            "width": 372,
+            "height": 51.96875,
+            "bottom": 166.984375
+          },
+          "initial_scroller_rect": {
+            "top": 152,
+            "left": 653,
+            "width": 646,
+            "height": 894,
+            "bottom": 1046
+          },
+          "initial_fallback_row_intersects_scroller": true,
+          "initial_fallback_row_reaches_reading_line": false,
+          "initial_final_panel_bottom_offset_px": [
+            146.328125,
+            571.328125
+          ],
+          "max_panel_bottom_displacement_px": 425.0,
+          "panel_bottom_in_scroller_all_samples": true,
+          "initial_final_panel_height_px": [
+            1105.703125,
+            1105.703125
+          ]
+        },
+        {
+          "look": "nier-dark",
+          "initial_fallback_row_rect": {
+            "top": 73.25,
+            "left": 868,
+            "width": 411,
+            "height": 51.96875,
+            "bottom": 125.21875
+          },
+          "initial_scroller_rect": {
+            "top": 143,
+            "left": 627,
+            "width": 685,
+            "height": 912,
+            "bottom": 1055
+          },
+          "initial_fallback_row_intersects_scroller": false,
+          "initial_fallback_row_reaches_reading_line": false,
+          "initial_final_panel_bottom_offset_px": [
+            113.5625,
+            579.890625
+          ],
+          "max_panel_bottom_displacement_px": 466.328125,
+          "panel_bottom_in_scroller_all_samples": true,
+          "initial_final_panel_height_px": [
+            1129.703125,
+            1129.703125
+          ]
+        }
+      ],
+      "after": [
+        {
+          "look": "basic-dark",
+          "initial_fallback_row_rect": {
+            "top": 72.703125,
+            "left": 868,
+            "width": 411,
+            "height": 51.96875,
+            "bottom": 124.671875
+          },
+          "initial_scroller_rect": {
+            "top": 143,
+            "left": 627,
+            "width": 685,
+            "height": 912,
+            "bottom": 1055
+          },
+          "initial_fallback_row_intersects_scroller": false,
+          "initial_fallback_row_reaches_reading_line": false,
+          "initial_final_panel_bottom_offset_px": [
+            113.015625,
+            722.625
+          ],
+          "max_panel_bottom_displacement_px": 609.609375,
+          "panel_bottom_in_scroller_all_samples": true,
+          "initial_final_panel_height_px": [
+            1105.703125,
+            1105.703125
+          ]
+        },
+        {
+          "look": "glass-light",
+          "initial_fallback_row_rect": {
+            "top": 115.015625,
+            "left": 894,
+            "width": 372,
+            "height": 51.96875,
+            "bottom": 166.984375
+          },
+          "initial_scroller_rect": {
+            "top": 152,
+            "left": 653,
+            "width": 646,
+            "height": 894,
+            "bottom": 1046
+          },
+          "initial_fallback_row_intersects_scroller": true,
+          "initial_fallback_row_reaches_reading_line": false,
+          "initial_final_panel_bottom_offset_px": [
+            146.328125,
+            755.328125
+          ],
+          "max_panel_bottom_displacement_px": 609.0,
+          "panel_bottom_in_scroller_all_samples": true,
+          "initial_final_panel_height_px": [
+            1105.703125,
+            1105.703125
+          ]
+        },
+        {
+          "look": "nier-dark",
+          "initial_fallback_row_rect": {
+            "top": 73.25,
+            "left": 868,
+            "width": 411,
+            "height": 51.96875,
+            "bottom": 125.21875
+          },
+          "initial_scroller_rect": {
+            "top": 143,
+            "left": 627,
+            "width": 685,
+            "height": 912,
+            "bottom": 1055
+          },
+          "initial_fallback_row_intersects_scroller": false,
+          "initial_fallback_row_reaches_reading_line": false,
+          "initial_final_panel_bottom_offset_px": [
+            113.5625,
+            746.890625
+          ],
+          "max_panel_bottom_displacement_px": 633.328125,
+          "panel_bottom_in_scroller_all_samples": true,
+          "initial_final_panel_height_px": [
+            1129.703125,
+            1129.703125
+          ]
+        }
+      ]
+    }
+  },
+  "failure_basis": "Non-navigation render visibly shifts the unchanged manager panel and footer hundreds of pixels. Strict reading-line A1 anchor measurement remains unverified because final probe fallback selection does not account for clipping.",
+  "evidence_manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m4-astra-evidence-manifest.json",
+    "sha256": "1b7f699a02423f9b4499db1ddbc9f923f096c9ce45952a2ec21c5fc311613039"
+  },
+  "cleanup_receipt": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/astra-cleanup-receipt.json",
+    "sha256": "5fe8e467dcafecefe0a90e2fa19fd490b4c278542fd5e6eff4b25ef06f1f5ac2"
+  }
+}
