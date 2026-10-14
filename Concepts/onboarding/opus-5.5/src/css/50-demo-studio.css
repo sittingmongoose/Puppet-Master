@@ -175,7 +175,7 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 #o55-demo .pmds-blead { margin: 3px 0 10px !important; font-size: 12.5px; color: var(--pmds-ink2); }
 #o55-demo .pmds-block > .pmds-btitle + :not(.pmds-blead) { margin-top: 10px; }
 #o55-demo .pmds-gtitle { display: flex; align-items: center; gap: 7px; margin: 0 0 8px !important; font: 650 11px/1.3 var(--pmds-font); letter-spacing: .07em; text-transform: uppercase; color: var(--pmds-mute); }
-#o55-demo .pmds-count { font-variant-numeric: tabular-nums; color: var(--pmds-mute); }
+#o55-demo .pmds-count { color: var(--pmds-mute); }
 #o55-demo .pmds-fine { font-size: 12px; color: var(--pmds-mute); }
 #o55-demo .pmds-empty { color: var(--pmds-mute); }
 #o55-demo .pmds-rowacts { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 12px; margin-top: 12px; }
@@ -194,8 +194,9 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 #o55-demo .pmds-btn-primary { border-color: transparent; background: var(--pmds-acc); color: var(--pmds-acc-ink); }
 #o55-demo .pmds-btn-primary:hover { background: color-mix(in srgb, var(--pmds-acc) 88%, var(--pmds-ink)); }
 #o55-demo .pmds-btn-quiet { border-color: transparent; background: transparent; color: var(--pmds-ink2); }
-#o55-demo .pmds-btn-danger, #o55-demo .pmds-btn-danger:hover { border-color: transparent; background: var(--pmds-danger); color: #fff; }
-#o55-demo .pmds-btn-danger:hover { background: color-mix(in srgb, var(--pmds-danger) 88%, #000); }
+/* the armed Reset: above every look's own button rule (Friendly's and Glass's plates would otherwise whiten it) */
+#o55-demo.pmds .pmds-sheet .pmds-btn.pmds-btn-danger { border-color: transparent; background: var(--pmds-danger); color: #fff; box-shadow: none; }
+#o55-demo.pmds .pmds-sheet .pmds-btn.pmds-btn-danger:hover { background: color-mix(in srgb, var(--pmds-danger) 88%, #000); }
 
 /* tiles */
 #o55-demo .pmds-grid { display: grid; gap: 10px; }

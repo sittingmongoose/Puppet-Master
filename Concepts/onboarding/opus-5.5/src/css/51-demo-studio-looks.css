@@ -35,8 +35,9 @@
   --pmds-acc-ink: #0e3346;
 }
 #o55-demo.pmds[data-pmds-look="friendly"][data-pmds-mode="dark"] {
-  --pmds-ink2: color-mix(in srgb, var(--pmds-ink) 83%, var(--pmds-ref));
-  --pmds-mute: color-mix(in srgb, var(--pmds-ink) 68%, var(--pmds-ref));
+  /* a tier brighter than Basic's: muted words also meet Friendly's light bezel at a scroll edge or a framed row */
+  --pmds-ink2: color-mix(in srgb, var(--pmds-ink) 88%, var(--pmds-ref));
+  --pmds-mute: color-mix(in srgb, var(--pmds-ink) 78%, var(--pmds-ref));
   --pmds-acc-text: var(--pmds-acc);
   --pmds-bezel: color-mix(in srgb, #ffffff 16%, var(--surface));
   --pmds-ground: color-mix(in srgb, var(--background) 88%, #2b3b5c);
@@ -187,9 +188,9 @@
 /* ================================ Glass ================================ */
 #o55-demo.pmds[data-pmds-look="glass"] {
   --pmds-r: 22px; --pmds-r2: 14px;
-  /* a fuller plate than the page's (about 0.73 dark, 0.72 light): small text never sits on whatever wallpaper shows
-     through; the frost and the lit edge stay */
-  --pmds-bg: rgba(var(--glass-tint-rgb, 46, 34, 72), calc(var(--glass-alpha, .6) * 1.22));
+  /* a fuller plate than the page's (about 0.84 dark, 0.72 light): small text never sits on whatever bright part of the
+     app or wallpaper shows through the blur; the frost and the lit edge stay */
+  --pmds-bg: rgba(var(--glass-tint-rgb, 46, 34, 72), calc(var(--glass-alpha, .6) * 1.4));
   --pmds-ref: rgb(var(--glass-tint-rgb, 46, 34, 72));
   --pmds-acc-ink: #1c1236;
   --pmds-bg2: rgba(255, 255, 255, .04);
@@ -255,7 +256,8 @@
   --pmds-bg: var(--o55-nier-raised, var(--surface));
   --pmds-bg2: var(--o55-nier-paper, var(--background));
   --pmds-sel: var(--o55-nier-ink, var(--text-primary));
-  --pmds-wash: var(--o55-nier-hover, transparent);
+  /* the app's own NieR row hover (22-hover.css: ink .10), so the Studio's washes and the engine's hover agree */
+  --pmds-wash: rgba(var(--o55-nier-ink-rgb, 0, 0, 0), .10);
   --pmds-danger: var(--o55-nier-error, var(--text-primary));
   --pmds-shadow: 0 0 0 1px rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .25), 8px 8px 0 rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .18);
   --pmds-font: var(--mono-font, var(--body-font));
@@ -264,6 +266,8 @@
   --pmds-mute: color-mix(in srgb, var(--pmds-ink) 78%, var(--pmds-ref));
 }
 #o55-demo.pmds[data-pmds-look="nier"][data-pmds-mode="dark"] {
+  /* tiles and the sheet on the darker paper: the engine's ink-.10 hover over them still leaves every tier above 4.5 */
+  --pmds-bg: var(--o55-nier-paper, var(--background));
   --pmds-ink2: color-mix(in srgb, var(--pmds-ink) 95%, var(--pmds-ref));
   --pmds-mute: color-mix(in srgb, var(--pmds-ink) 88%, var(--pmds-ref));
 }
@@ -276,6 +280,9 @@
 #o55-demo.pmds[data-pmds-look="nier"] .pmds-switch-key { transition: translate 140ms steps(2, end); }
 #o55-demo.pmds[data-pmds-look="nier"] .pmds-switch::before { transition: clip-path 140ms steps(2, end); }
 #o55-demo.pmds[data-pmds-look="nier"] .pmds-fuse { animation-timing-function: steps(10, end); }
+/* the armed Reset in NieR's own error words: its surface, its text and its rule */
+#o55-demo.pmds[data-pmds-look="nier"] .pmds-sheet .pmds-btn.pmds-btn-danger,
+#o55-demo.pmds[data-pmds-look="nier"] .pmds-sheet .pmds-btn.pmds-btn-danger:hover { background: var(--o55-nier-error-surface); color: var(--o55-nier-error-text); border: 1px solid var(--o55-nier-error); }
 /* square: square hairlines (the part's page-wide rule already squares every corner) */
 html[data-o55-nier-parts~="square"] #o55-demo.pmds[data-pmds-look="nier"] :is(.pmds-frame, .pmds-tile, .pmds-choice, .pmds-laytile, .pmds-looktile, .pmds-chapter, .pmds-reset, .pmds-swrow, .pmds-actrow, .pmds-clock, .pmds-runbar) { border-color: var(--o55-nier-line-strong, var(--pmds-line)); }
 /* headers: the ink title band across the sheet's head and the rule with square caps under each page heading */
@@ -295,7 +302,6 @@ html[data-o55-nier-parts~="headers"] #o55-demo.pmds[data-pmds-look="nier"] .pmds
 html[data-o55-nier-parts~="headers"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-ptitle { text-transform: uppercase; letter-spacing: .12em; font-weight: 500; }
 /* cursor: the chosen section is an ink bar with a square cursor beside it; a hovered row turns to ink */
 html[data-o55-nier-parts~="cursor"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-tab.pmds-on::before { content: ""; position: absolute; left: -7px; top: 50%; width: 6px; height: 6px; margin-top: -3px; background: var(--o55-nier-ink); }
-html[data-o55-nier-parts~="cursor"] #o55-demo.pmds[data-pmds-look="nier"] :is(.pmds-scrow, .pmds-result):hover { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 html:not([data-o55-nier-parts~="cursor"]) #o55-demo.pmds[data-pmds-look="nier"] .pmds-navink { background: var(--o55-nier-selected, var(--pmds-wash)); }
 html:not([data-o55-nier-parts~="cursor"]) #o55-demo.pmds[data-pmds-look="nier"] .pmds-tab.pmds-on, html:not([data-o55-nier-parts~="cursor"]) #o55-demo.pmds[data-pmds-look="nier"] .pmds-tab.pmds-on :is(.pmds-ico, .pmds-tabmeta) { color: var(--pmds-ink); }
 /* ground: the same faint grid the app's own grounds carry (14-nier-parts.css), not dots */
