@@ -77,7 +77,8 @@
   /* the catalog lives in the terminal, which loads after Settings: its schemes join when the row is drawn */
   PM51.moreChoices('code.terminal.theme', () => catalog().map(s => {
     colors.options[s.id] = s.name;
-    return { value: s.id, label: s.name, meta: s.mode === 'light' ? 'Light' : 'Dark' };
+    /* the public catalog (PMT.Appearance.schemes, 90-kind.js) names it mode; a raw scheme names it appearance */
+    return { value: s.id, label: s.name, meta: (s.mode || s.appearance) === 'light' ? 'Light' : 'Dark' };
   }));
   const font = rowOf('code.terminal.font-family');
   font.choices = FACES.map(f => f[0]);
