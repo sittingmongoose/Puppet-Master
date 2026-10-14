@@ -511,7 +511,9 @@
       const at = state.home ? 'home' : `${state.domain}/${state.workspace}`;
       if (at !== settingsAt) {
         const first = !settingsAt; settingsAt = at;
-        if (!first && live.has('decode')) { const h = root.querySelector('.workspace-separator h2'); if (h && h.getClientRects().length) decode(h); }
+        /* a redraw in place is not a page change (the reader scrolled into another page of the chapter): no decode */
+        const inPlace = !!(PM51.place && PM51.place.inPlace);
+        if (!first && !inPlace && live.has('decode')) { const h = root.querySelector('.workspace-separator h2'); if (h && h.getClientRects().length) decode(h); }
       }
     } catch (e) { /* decoration only */ }
     return r;
