@@ -23,7 +23,8 @@
  * spotlight arrived (O55.tour.afterGlide) and the callout, the screen, its words and its scroll unchanged over six reads.
  * A capture is taken again (twice at most, each retry recorded) when a window or tour word moved between the two
  * snapshots around it. --during 400,900,... also measures each screen at those moments (ms after it was asked for),
- * before it settles, for one-shot moments such as Ready's curtain call and its confetti.
+ * before it settles, for one-shot moments such as Ready's curtain call and its confetti. --hover also measures each
+ * screen and tour step with the pointer resting on its main action.
  * Writes <out>/contrast.json and <out>/failures.json, a screenshot per failing view, and prints one line per view.
  * Exits 1 when any text is under its floor. Drives an existing GPU browser over CDP; it never launches one. */
 import { createRequire } from 'node:module';
@@ -50,6 +51,7 @@ const NEEDS_DEVICE = new Set(['nas-identity', 'nas-key', 'nas-signin', 'nas-inst
 const screens = screensOpt === 'all' ? Object.keys(coverage.screens) : screensOpt === 'none' ? [] : screensOpt.split(',');
 const tourOpt = opt('tour', 'all');
 const frames = Number(opt('frames', '3'));
+const hoverMain = argv.includes('--hover');
 const during = String(opt('during', '')).split(',').filter(Boolean).map(Number).sort((x, y) => x - y);
 const [VW, VH] = opt('viewport', '1440x900').split('x').map(Number);
 const out = resolve(opt('out', '/tmp/o55/contrast')); mkdirSync(out, { recursive: true });
@@ -223,6 +225,15 @@ async function measure(page, label, nFrames) {
   for (const r of fails) failures.push(Object.assign({ look: label.look, mode: label.mode, motion: label.motion, view: label.view }, { text: r.text, kind: r.kind, cls: r.cls, parentCls: r.parentCls, floor: r.floor, ratio: +r.worst.ratio.toFixed(3), at: [r.worst.x, r.worst.y], bg: r.worst.bg, fg: r.worst.foreground, ink: r.ink, opacity: r.opacity, fontSize: r.fontSize, frame: r.frame }));
   console.log(`${fails.length ? 'FAIL' : 'pass'} ${label.look}-${label.mode} ${label.motion} ${label.view} (${((Date.now() - tStart) / 1000).toFixed(1)} s): ${rows.length} texts, min ${Number.isFinite(min) ? min.toFixed(2) : '-'}${fails.length ? ' | ' + fails.map((r) => `"${r.text.slice(0, 28)}" ${r.worst.ratio.toFixed(2)}`).join('; ') : ''}${label.theme ? '' : ''}`);
 }
+/* --hover: the main action with the pointer resting on it (where a person's pointer stays after the click before),
+   measured as its own view; the pointer then leaves to the corner */
+async function hovered(page, sel, label) {
+  const box = await page.evaluate((s) => { const e = document.querySelector(s); if (!e) return null; const r = e.getBoundingClientRect(); return r.width ? { x: r.x + r.width / 2, y: r.y + r.height / 2 } : null; }, sel).catch(() => null);
+  if (!box) return;
+  await page.mouse.move(box.x, box.y); await sleep(450);
+  await measure(page, label, 1);
+  await page.mouse.move(2, 2); await sleep(250);
+}
 /* NieR's cold open (its boot log over the first screen) is cancelled by any key or press a person makes; a screen
    changed from here during it leaves the log standing over the next screen, which no person sees. Let it finish. */
 async function coldOpen(page) {
@@ -311,6 +322,7 @@ try {
           const actual = await page.evaluate(() => window.O55.S.sess.screen);
           if (actual !== sc) { unreachable.push({ look, mode, motion, view: sc, why: 'went to ' + actual }); continue; }
           await measure(page, Object.assign({}, label0, { view: sc }));
+          if (hoverMain) await hovered(page, '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-foot .o55-primary:not([aria-disabled="true"]), #pm-o55-onboarding .o55-foot .o55-primary:not([aria-disabled="true"])', Object.assign({}, label0, { view: sc + '+hover' }));
         }
         await page.evaluate(() => { try { window.O55.ui.close && window.O55.ui.close(); } catch (_) {} });
         await sleep(1200);
@@ -327,7 +339,8 @@ try {
           const st = await page.evaluate(() => { const t = window.O55.tour, s = t && t.state ? t.state() : null; return { running: !!(t && t.running), id: s && (s.step || s.id) || (t && t.current && t.current.id) || null }; });
           if (!st.running) break;
           const id = st.id || 'step' + k;
-          if (!seen.has(id) && (!want || want.has(id))) { seen.add(id); await measure(page, Object.assign({}, label0, { view: 'tour:' + id })); }
+          if (!seen.has(id) && (!want || want.has(id))) { seen.add(id); await measure(page, Object.assign({}, label0, { view: 'tour:' + id }));
+            if (hoverMain) await hovered(page, '#pm-o55-tour .o55t-callout .o55t-primary:not([aria-disabled="true"])', Object.assign({}, label0, { view: 'tour:' + id + '+hover' })); }
           const clicked = await page.evaluate(() => { const b = document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="showMe"]') || document.querySelector('#pm-o55-tour .o55t-callout [data-o55t="next"]') || document.querySelector('#pm-o55-tour .o55t-callout .o55t-primary'); if (!b) return false; b.click(); return b.getAttribute('data-o55t') || 'primary'; });
           if (!clicked) break;
           if (clicked === 'showMe') await page.waitForFunction(() => !document.querySelector('#pm-o55-tour .o55t-pointer.o55t-on'), null, { timeout: 25000, polling: 300 }).catch(() => {});
