@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30275-L31374
+Source lines: L30275-L31356
 
-Source SHA256: `f884f6a1d8d9ac7ade3931dca847010cd6a0690faff184e1f7091221a892f2e5`
+Source SHA256: `2fbb46a82dc48c06df2698570d86fea36430c555501760e0328853d3170e9f49`
 
 ---
 
@@ -184,27 +184,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Glass themes composite exactly one in-viewport backdrop blur of 34px with saturate 160% on
-  the app-shell slab, plus one more of the same material on the floating chat slab, which
-  floats outside the pane and is never nested inside it. Interior glass structure is expressed
-  as a four-step transparency scale of plain fills with no additional blur: step one is the
-  clearest see-through region for side panels, step two is the light frost for toolbars,
-  controls, and cards, step three is the lighter frosted selection pill, and the near-opaque
-  reading plate backs code surfaces and popovers. Pane fills derive from the pane k-factors:
-  .73, .57, and .67 for glass-dark and .62, .36, and .47 for glass-light. The cloudscape
-  wallpaper ships as a pre-blurred baked asset; the concept's runtime filter blur over
-  gradient layers is demo technique only.
+  Glass material is owned by F3-652, which replaces the earlier one-shell-blur slab and cloudscape requirements
+  at the coordinated Glass/wallpaper publication. The preceding PMConcept7 appearance remains historical
+  comparison evidence, not an alternative native material contract. F3-653 owns the wallpaper; F3-654 owns
+  readability.
 gui_related: true
 gui_classification_reason: This unit defines the visible glass slab composition, blur budget, and transparency structure of glass themes.
 split_recommended: false
 depends_on: [F3-425]
 unblocks: []
 acceptance_criteria:
-- "Glass themes render exactly one app-shell backdrop blur at 34px with saturate 160% plus one floating-chat blur of the same material, and no other in-viewport backdrop blur inside the pane."
-- "Interior glass surfaces use the four-step transparency scale (step one through step three plus the reading plate) as plain fills without additional blur."
-- "Pane fills use the k-factors .73/.57/.67 for glass-dark and .62/.36/.47 for glass-light."
-- "The glass wallpaper is a pre-blurred baked asset; no wallpaper blur runs at runtime."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The replacement consumes F3-652/F3-653 and SSYS-054 at the combined publication; obsolete Glass blur/background
+  checks are not alternative requirements.
+- Publication remains pending Jared; source availability alone is not implementation proof.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -217,27 +209,27 @@ node_compile_hint:
   mode: glass_composition_single_blur_contract
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:964"
-- "Plans/FinalGUISpec.md:2632"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
-preserved_exact_tokens:
-- "34"
-- "160%"
-- ".73"
-- ".57"
-- ".67"
-- ".62"
-- ".36"
-- ".47"
+- Plans/FinalGUISpec.md:964
+- Plans/FinalGUISpec.md:2632
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/share/puppet-master/2026-10-13-glass-v3/README.md, SHA-256 0e424cba2f2d03932159b6e25977959f23d8f65cbcca57ca1d067b505f61db54
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-11-liquid-glass-v2/README.md, SHA-256 ed0f7ebed280627aba47197a0c8a9273bb4b17373f79cd3fcb6c0b44344f6fb9
+  (approved campaign source lineage; not native implementation evidence)
+preserved_exact_tokens: []
 negative_constraints:
 - "No nested backdrop-filter; no runtime wallpaper blur."
 compatibility_only_notes:
 - "Slint portability: the two permitted blurs map to frosted slabs composited over the known pre-blurred wallpaper asset; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
 stale_retired_dispositions:
-- "The concept's per-zone glass tint casts were retired in the concept itself; the one-pane composition with transparency steps is the promoted model."
+- The concept's per-zone glass tint casts were retired in the concept itself; the one-pane composition with transparency
+  steps is the promoted model.
+- 'Amended 2026-10-14: F3-652 supersedes the fixed 34 px shell-only blur, old k-factor fills and cloudscape background;
+  publication is still pending Jared''s review.'
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
+
 ```
 
 ### F3-428 - Glass Background Modes
@@ -248,24 +240,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Glass themes offer three wallpaper background modes selected through the data-glass-bg
-  state: mesh, depth, and minimal, with mesh as the default. Mesh renders the full cloudscape
-  (base sky plus one billow layer) with one very slow transform-only drift. Depth renders the
-  same cloudscape plus a second parallax billow layer and cloud puffs whose offsets are
-  pointer-driven; depth parallax and all drift animation are disabled under reduced motion.
-  Minimal renders the base gradient sky only, static. The selected mode persists at
-  glass_background_mode:v1.
+  The Glass Mesh, Depth and Minimal background modes and glass_background_mode:v1 are compatibility lineage.
+  F3-653 and SSYS-054 replace them with one Project Wallpaper choice at the combined Glass/wallpaper
+  publication. Until that publication they may remain only in the older concept comparison; they are not extra
+  choices in the new gallery. SP-333 owns migration and cleanup.
 gui_related: true
 gui_classification_reason: This unit defines the visible glass wallpaper modes, their layer inventory, and their motion behavior.
 split_recommended: false
 depends_on: [F3-427, F3-444]
 unblocks: []
 acceptance_criteria:
-- "Glass themes expose exactly the mesh, depth, and minimal background modes with mesh as the default."
-- "Depth mode adds pointer-driven parallax cloud layers, and reduced motion disables parallax and drift."
-- "Minimal mode renders a static base gradient sky with no billow layers."
-- "The selected mode persists at glass_background_mode:v1."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The replacement consumes F3-652/F3-653 and SSYS-054 at the combined publication; obsolete Glass blur/background
+  checks are not alternative requirements.
+- Publication remains pending Jared; source availability alone is not implementation proof.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -278,24 +265,27 @@ node_compile_hint:
   mode: glass_background_modes
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:964"
-- "Plans/FinalGUISpec.md:2292"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
-preserved_exact_tokens:
-- "mesh"
-- "depth"
-- "minimal"
-- "glass_background_mode:v1"
+- Plans/FinalGUISpec.md:964
+- Plans/FinalGUISpec.md:2292
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+  (approved campaign source lineage; not native implementation evidence)
+preserved_exact_tokens: []
 negative_constraints:
 - "Do not run drift or parallax animation under reduced motion."
 compatibility_only_notes:
 - "Slint portability: each background mode renders from pre-blurred baked bitmaps, with depth layers baked separately so parallax offsets remain applicable; no arbitrary-content backdrop blur, no SVG filters, color math is precomputed rather than runtime-mixed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
 stale_retired_dispositions:
-- "The concept localStorage name pm.glassBg is a demo persistence shim; the canonical key is glass_background_mode:v1."
+- The concept localStorage name pm.glassBg is a demo persistence shim; the canonical key is glass_background_mode:v1.
+- 'Amended 2026-10-14: W5 is approved but coordinated with Glass publication; the old three-mode background is not
+  the new product wallpaper model.'
 owner_boundary_notes:
 - "Registration of glass_background_mode:v1 in the section 15.1 storage tables is owned by F3-444; this unit consumes the key."
 owner_hints:
 - "Plans/FinalGUISpec.md"
+
 ```
 
 ### F3-429 - Glass Alpha Transparency Slider
@@ -482,33 +472,24 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Slint theme hazard remediation constraints bind all eight built-in variants. Every
-  color-mix() and alpha-scaling calc() token in the concept CSS is resolved to precomputed
-  per-variant values at build time, matching the precomputed-color constraint already carried
-  by PWIZ-019. All theme fonts are bundled locally. Glass cloudscapes are baked as pre-blurred
-  bitmaps per background mode, with depth-mode parallax layers baked as separate bitmaps so
-  the parallax offset variables continue to operate. The backdrop-filter budget is enumerated
-  and closed: two glass-theme blurs (app shell and floating chat), three friendly-theme blurs
-  (title bar, status bar, bottom panel), and two settings-modal blurs (the bloom backdrop
-  scrim and, under glass, the bloom and project-settings modal slabs), plus the setup-popup sheet blur that DL-139
-  admits on the Skia GPU path only (F3-566). Effects the concept
-  builds with mix-blend-mode or mask-composite, such as the glass pane sheen and gradient
-  hairline rings, are either renderable natively by the toolkit or precomputed into baked
-  assets. The terminal adds no backdrop blur and takes no entry in this budget (DL-183): in Glass it draws its scheme
-  at 70 % (light) and 74 % (dark) opacity over the app shell's existing glass blur, and a terminal background
-  image's blur is baked once into the image (F3-642, F3-643).
+  Slint theme hazard remediation retains bundled local fonts, build-time per-variant color derivation, and
+  native or precomputed equivalents for effects unsupported by the toolkit. F3-652 owns the replacement Glass
+  material's optics budget and F3-653 its wallpaper assets; the earlier closed shell-only blur count,
+  cloudscapes and Mesh/Depth parallax are superseded at that publication. Friendly retains its title-bar,
+  status-bar and bottom-panel blur surfaces, Settings its bloom scrim, and F3-566 its admitted setup-popup sheet
+  on the Skia GPU path. The terminal adds no independent backdrop blur: its scheme shows the existing material
+  beneath, and a terminal background image's blur is prepared on image change. Effects cannot silently create an
+  unbounded nested live-blur workload; static-capability fallbacks preserve readability and selection. Other
+  themes' portability constraints stay in force.
 gui_related: true
 gui_classification_reason: This unit constrains how visible theme effects are produced so every variant renders on the Slint toolkit.
 split_recommended: false
 depends_on: [F3-426, F3-427, F3-430, DL-183]
 unblocks: []
 acceptance_criteria:
-- "No color-mix() or alpha-scaling calc() color derivation survives to runtime; per-variant precomputed values replace them at build time."
-- "All theme fonts are bundled locally and cloudscapes are baked as pre-blurred bitmaps per background mode, with depth parallax layers baked separately."
-- "The backdrop-filter budget is closed at two glass blurs, three friendly blurs, two settings-modal blurs, and the DL-139 setup-popup sheet blur on the Skia GPU path, and no surface adds a blur outside that enumeration."
-- "No terminal tab draws a backdrop blur of its own; Glass terminals show the app shell's blur through their scheme's opacity."
-- "mix-blend-mode and mask-composite effects are renderable natively or precomputed into baked assets."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- Color derivations are resolved per variant and fonts bundled locally.
+- Glass consumes F3-652/F3-653; terminal tabs add no independent backdrop blur.
+- Other families retain the admitted surfaces and unsupported effects have a native or precomputed readable equivalent.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -521,15 +502,15 @@ node_compile_hint:
   mode: slint_theme_hazard_remediation
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:1035"
-- "Plans/FinalGUISpec.md:7699"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
-- "Plans/Decision_Log.md#DL-139 (setup-popup sheet blur admitted on the Skia GPU path, 2026-10-01)"
-preserved_exact_tokens:
-- "color-mix()"
-- "backdrop-filter"
-- "mix-blend-mode"
-- "mask-composite"
+- Plans/FinalGUISpec.md:1035
+- Plans/FinalGUISpec.md:7699
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- Plans/Decision_Log.md#DL-139 (setup-popup sheet blur admitted on the Skia GPU path, 2026-10-01)
+- /mnt/Cursor/share/puppet-master/2026-10-11-liquid-glass-v2/README.md, SHA-256 ed0f7ebed280627aba47197a0c8a9273bb4b17373f79cd3fcb6c0b44344f6fb9
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-glass-v3/README.md, SHA-256 0e424cba2f2d03932159b6e25977959f23d8f65cbcca57ca1d067b505f61db54
+  (approved campaign source lineage; not native implementation evidence)
+preserved_exact_tokens: []
 negative_constraints:
 - "No arbitrary-content backdrop blur except the setup-popup sheet blur that DL-139 admits on the Skia GPU path only (F3-566); no SVG filters; no runtime color math."
 compatibility_only_notes:
@@ -541,6 +522,7 @@ owner_boundary_notes:
 - "The precomputed-color constraint phrasing aligns with PWIZ-019 in Plans/Planning_Wizard.md; that unit remains owner of the embedded-chat surface it constrains."
 owner_hints:
 - "Plans/FinalGUISpec.md"
+
 ```
 
 Settings appearance overrides (2026-09-27): the per-variant tables below are what every variant renders while no appearance setting has been changed. Settings appearance rows (size, text size, line spacing, animation speed, spacing, padding, border width, corner roundness, scrollbar width, app font, high contrast, focus outline, Retro textures, accent) apply as overrides over the active variant's table, write nothing while unchanged, remove exactly what they wrote on reset, and use precomputed per-mode accent values; `Plans/Settings_System.md#SSYS-041` owns that model and this unit's no-runtime-colour-derivation rule still applies.

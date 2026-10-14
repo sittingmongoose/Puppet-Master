@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L27469-L27940
+Source lines: L27469-L27954
 
-Source SHA256: `83ef7894d34fc118940e34a528bb950fab9a6f7cfd82e8d982ed8e454ebe2ed6`
+Source SHA256: `a4d0f9a89ae171184801ffb3e374c7e4179cfc23e07c9c6d520eaa3d033fd4e6`
 
 ---
 
@@ -238,25 +238,29 @@ unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  The terminal's appearance resolves field by field from the look's defaults, which are never stored, then the app
-  default, the project default and the tab override (DL-183, F3-642, DR-068). Until an app-wide Settings store is
-  admitted (SSYS-028), the app default and the project default share one stored value per field: the Settings rows
-  of SSYS-051, held like every Settings value in the open Project's settings snapshot (pm.project_settings_snapshot.v1,
-  Settings custody scd.settings.durable.v1) and written only through Settings transactions, so All terminals reaches
-  the open Project's terminals only and no project field falls through to a separate app value. The per-tab override
-  lives inside the terminal tab's serialized state in the v2 Home record (SP-330), within its 16 KB. Each stored value
-  holds only the fields set there; an unset field falls through to the next value down. When an app-wide store is
-  admitted the app default becomes its own stored level beneath the project default. Every
-  field applies live and nothing stored carries a restart flag. An imported scheme is stored as its parsed colour
-  table, never the file. A custom background image is stored once by content hash with a manifest under SP-222's
-  uploaded-asset pattern and referenced by the layer; dim and blur are fields applied when drawing; an unreferenced
-  asset is deleted. Images an app or project layer references are backed up with Settings; an image only a tab
-  override references follows the Home record, is not backed up, and when missing the tab falls through to the next
-  layer. This replaces SP-122's terminal_font.v1:global and terminal_color.v1:global.
-  The editor's scheme choice is stored as SSYS-050's code.editing.color-scheme row beside the terminal's scheme row, in the
-  same Project settings snapshot through Settings transactions. The code colour-scheme catalog is built in and
-  never stored; each surface stores only its own choice.
-  The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one.
+  The terminal's appearance resolves field by field from the look's defaults, which are never stored, then the
+  app default, the project default and the tab override (DL-183, F3-642, DR-068). Until an app-wide Settings
+  store is admitted (SSYS-028), the app default and the project default share one stored value per field: the
+  Settings rows of SSYS-051, held like every Settings value in the open Project's settings snapshot
+  (pm.project_settings_snapshot.v1, Settings custody scd.settings.durable.v1) and written only through Settings
+  transactions, so All terminals reaches the open Project's terminals only and no project field falls through to
+  a separate app value. The per-tab override lives inside the terminal tab's serialized state in the v2 Home
+  record (SP-330), within its 16 KB. Each stored value holds only the fields set there; an unset field falls
+  through to the next value down. When an app-wide store is admitted the app default becomes its own stored
+  level beneath the project default. Every field applies live and nothing stored carries a restart flag. An
+  imported scheme is stored as its parsed colour table, never the file. A custom background image is stored once
+  by content hash with a manifest under SP-222's uploaded-asset pattern and referenced by the layer; dim and
+  blur are fields applied when drawing; an unreferenced asset is deleted. Images an app or project layer
+  references are backed up with Settings; an image only a tab override references follows the Home record, is
+  not backed up, and when missing the tab falls through to the next layer. This replaces SP-122's
+  terminal_font.v1:global and terminal_color.v1:global. The editor's scheme choice is stored as SSYS-050's
+  code.editing.color-scheme row beside the terminal's scheme row, in the same Project settings snapshot through
+  Settings transactions. The code colour-scheme catalog is built in and never stored; each surface stores only
+  its own choice. The popover's All terminals is enabled and writes the project default row of SSYS-051 through
+  the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its
+  hover tag says in this project; no surface writes an app-wide value until q-035 admits one. The two Customize
+  screens share F3-650's scope/preview rules. SP-333 adds the editor's per-tab appearance and wallpaper binding
+  without changing this terminal model or creating a fifth stored layer.
 gui_related: true
 gui_classification_reason: Decides where each terminal look choice is kept and what survives a move, a reopen and a restore.
 split_recommended: false
@@ -286,12 +290,21 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)"
-  - "Plans/Decision_Log.md#DL-183"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 6, the appearance model; concept lineage only)"
-  - "Plans/storage-plan.md#SP-222"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
+  SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md,
+  SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)
+- Plans/Decision_Log.md#DL-183
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D15)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (section 6, the appearance model; concept
+  lineage only)
+- Plans/storage-plan.md#SP-222
+- /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "scd.settings.durable.v1"
   - "pm.project_settings_snapshot.v1"
@@ -312,6 +325,7 @@ stale_retired_dispositions:
 owner_hints:
   - Plans/storage-plan.md
   - Plans/Settings_System.md
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/DRY_Rules.md#DR-068, ContractName:Plans/Settings_System.md#SSYS-051, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/storage-plan.md#SP-222

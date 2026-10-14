@@ -1885,18 +1885,21 @@ plan_unit_id: PWIZ-021
 unit_type: owner_boundary
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: Product Onboarding owns the reversible draft-first eleven-stage semantic dependency graph and the
-  unchanged six-stage connect-existing shortcut. Before the context-specific reviewed commit, only bounded read-only
-  preflight and individually consented selected-source authentication may run. Project System commits the selected
-  existing owner command and required child receipts once, including Settings-owned exact-ID copy/rebind and readback,
-  before broad provider setup. The actual committed Project then enters provider_setup, optional free_models_setup
-  and truthful Ready. Explicit Project deferral skips both provider phases without inventing a Project. UI choreography
-  remains fourteen typed local actions (ui.onboarding.choose_look added by DL-153), never an Onboarding backend or
-  command family.
-  Each ui.onboarding.choose_look request replaces only the fields it sets in the session's optional
-  look_choice; absent or null fields mean nothing chosen yet. A resumed setup repaints that stored look
-  choice, NieR Mode included, and null fields fall back to F3-520's start rule; this session choice performs
-  no Settings write before commit.
+canonical_text: >-
+  Product Onboarding owns the reversible draft-first eleven-stage semantic dependency graph and the unchanged
+  six-stage connect-existing shortcut. Before the context-specific reviewed commit, only bounded read-only
+  preflight and individually consented selected-source authentication may run. Project System commits the
+  selected existing owner command and required child receipts once, including Settings-owned exact-ID
+  copy/rebind and readback, before broad provider setup. The actual committed Project then enters
+  provider_setup, optional free_models_setup and truthful Ready. Explicit Project deferral skips both provider
+  phases without inventing a Project. UI choreography remains fourteen typed local actions
+  (ui.onboarding.choose_look added by DL-153), never an Onboarding backend or command family. Each
+  ui.onboarding.choose_look request replaces only the fields it sets in the session's optional look_choice;
+  absent or null fields mean nothing chosen yet. A resumed setup repaints that stored look choice, NieR Mode
+  included, and null fields fall back to F3-520's start rule; this session choice performs no Settings write
+  before commit. The 2026-10-14 presentation updates consume FinalGUISpec F3-655 (Planning Wizard theme
+  matching) and F3-656 (onboarding art and the chosen look through Create Project), with no new local action or
+  commit authority.
 gui_related: true
 gui_classification_reason: Defines the complete visible first-run flow, branching, copy density, actions, and state
   presentation.
@@ -1987,6 +1990,10 @@ source_lineage:
 - source_packet:PM_Onboarding_Doctor_Newbie_First_Complete_Handoff_2026-09-03/10_ACCEPTANCE_FAILURE_AND_USABILITY_MATRIX.md:81-83
 - source_report:reports/concept-packet-integration-20260926/project-recovery-owner.md
 - source_report:reports/packet-integration-completion-20260926/project-recovery.md
+- /mnt/Cursor/share/puppet-master/2026-10-13-wizard-orch-theme/NOTES.md, SHA-256 ca7f206e6b92440d26972e4eb4113348722fb45245ba8429dad46633b56b49b8
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-onboarding-art-glass/README.md, SHA-256 ce5e5e90df41f180e54b89e4fb3fe0087164039728a902aa481cbcc3adacb088
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
 - Continue Setup
 - Open Repository
@@ -2004,6 +2011,7 @@ negative_constraints:
 - Do not claim native/runtime, recovery, security, visual or motion proof from static fixtures.
 stale_retired_dispositions:
   - "Amended 2026-10-11 (Jared 2026-10-10 reseal item 2, DL-153): Resumed Product Onboarding repaints its stored look choice, including NieR Mode."
+
 ```
 
 ### PWIZ-022 - Product Onboarding motion, accessibility, and migration
@@ -2013,15 +2021,19 @@ plan_unit_id: PWIZ-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: Product Onboarding uses one bounded modal window over the visibly preserved live application, bounded
-  interruptible Slint-portable motion, deterministic Reduced Motion and low-resource equivalents, exact path-correct
-  progress and keyboard/focus/Back/Close/Escape semantics, no-secret revisioned persistence, and receipt-backed
-  migration from legacy provider-first, five-stage, seven-stage and predecessor nine-stage records without fabricating
-  review or replaying owner mutations; already committed rows resume only after real Project-owner revalidation;
-  it never becomes a full-page route or nested-modal owner branch. A first_run window starts in Basic Dark and a
-  settings_rerun window in the look on screen, each preselected and neither changing a stored value (F3-520,
-  DL-153); its wake, act card and curtain call take five styles, NieR's whenever NieR Mode is painted and otherwise
-  the painted family's own (F3-600), sharing one trigger, end state, snap and sound path and never holding input.
+canonical_text: >-
+  Product Onboarding uses one bounded modal window over the visibly preserved live application, bounded
+  interruptible Slint-portable motion, deterministic Reduced Motion and low-resource equivalents, exact
+  path-correct progress and keyboard/focus/Back/Close/Escape semantics, no-secret revisioned persistence, and
+  receipt-backed migration from legacy provider-first, five-stage, seven-stage and predecessor nine-stage
+  records without fabricating review or replaying owner mutations; already committed rows resume only after real
+  Project-owner revalidation; it never becomes a full-page route or nested-modal owner branch. A first_run
+  window starts in Basic Dark and a settings_rerun window in the look on screen, each preselected and neither
+  changing a stored value (F3-520, DL-153); its wake, act card and curtain call take five styles, NieR's
+  whenever NieR Mode is painted and otherwise the painted family's own (F3-600), sharing one trigger, end state,
+  snap and sound path and never holding input. FinalGUISpec F3-656 owns connected onboarding art and F3-652 the
+  shared Glass material; F3-654 supplies the settled contrast interpretation. These consume the same semantic
+  stages and Reduced Motion boundary.
 gui_related: true
 gui_classification_reason: Defines user-visible motion, responsive layout, focus, copy, error, resume, and migration
   behavior.
@@ -2076,12 +2088,15 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
 - source_report:wave3-lane2.md#S0098
+- /mnt/Cursor/share/puppet-master/2026-10-13-onboarding-art-glass/README.md, SHA-256 ce5e5e90df41f180e54b89e4fb3fe0087164039728a902aa481cbcc3adacb088
+  (approved campaign source lineage; not native implementation evidence)
 negative_constraints:
 - Do not block input on animation.
 - Do not require browser-only effects.
 - Do not overwrite saved Project or application layout.
 - Do not migrate an unresolved draft directly into confirmed Review or Automatic Preparation; do not replay completed
   Project work when a verified committed row resumes provider setup.
+
 ```
 
 ### PWIZ-023 - Guided Tour newbie-first real-application practice
@@ -2092,20 +2107,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
 canonical_text: >-
-  Guided Tour is an optional Onboarding handoff in exact Assistant Chat/Teacher, workspace, Planning Wizard order.
-  The learner sends the supplied local question, reads Teacher's same-conversation answer, and sees it in simple
-  words through Explain this reply simply, which adds one extra, simpler reply and leaves the original unchanged
-  (DL-126); the callout then points to the quick dot by the message box, which makes later replies simple, and
-  names the ELI5 popup behind the wand's ELI5 row, where the chat's choice is set (DL-126, ACD-484, F3-581);
-  practises the workspace panels of PWIZ-035 and performs a real widget action; then describes the book-club goal, answers a meaningful question,
-  reviews the plan, edits an answer, and sees the specific consequence before the approval boundary. Planning owns
-  at least half of meaningful actions and dwell time. Try it and Show Me share each mounted owner's handler and
-  success predicate. Tour state never grants approval or starts work. ELI5, Pause, Skip, Back, safe-step resume,
-  Settings-owned Reduced Motion, measured callouts, and focused headings remain usable. Run Onboarding Again resets
-  the tour completely, and Settings offers Resume Guided Tour and Replay Guided Tour as separate entries. Skip restores captured state;
-  Finish restores temporary layout by default or keeps it only on explicit selection, then lands on the real
-  Planning Wizard with the committed Project selected. While any restore runs, the application's own notices about
-  it stay quiet in every look and the Tour's closing note says what was put back (F3-521, DL-153). Both predecessor controllers remain source lineage only.
+  Guided Tour is an optional Onboarding handoff in exact Assistant Chat/Teacher, workspace, Planning Wizard
+  order. The learner sends the supplied local question, reads Teacher's same-conversation answer, and sees it in
+  simple words through Explain this reply simply, which adds one extra, simpler reply and leaves the original
+  unchanged (DL-126); the callout then points to the quick dot by the message box, which makes later replies
+  simple, and names the ELI5 popup behind the wand's ELI5 row, where the chat's choice is set (DL-126, ACD-484,
+  F3-581); practises the workspace panels of PWIZ-035 and performs a real widget action; then describes the
+  book-club goal, answers a meaningful question, reviews the plan, edits an answer, and sees the specific
+  consequence before the approval boundary. Planning owns at least half of meaningful actions and dwell time.
+  Try it and Show Me share each mounted owner's handler and success predicate. Tour state never grants approval
+  or starts work. ELI5, Pause, Skip, Back, safe-step resume, Settings-owned Reduced Motion, measured callouts,
+  and focused headings remain usable. Run Onboarding Again resets the tour completely, and Settings offers
+  Resume Guided Tour and Replay Guided Tour as separate entries. Skip restores captured state; Finish restores
+  temporary layout by default or keeps it only on explicit selection, then lands on the real Planning Wizard
+  with the committed Project selected. While any restore runs, the application's own notices about it stay quiet
+  in every look and the Tour's closing note says what was put back (F3-521, DL-153). Both predecessor
+  controllers remain source lineage only. Guided example/Teacher presentation is F3-656's; resume prompts and
+  page notes consume F3-447's under-bell staging. No tour action, approval or automatic timeout is added.
 gui_related: true
 gui_classification_reason: Defines the three-chapter practice flow, real-application interactions, motion, controls, callouts, focus, and exit state.
 depends_on: [PWIZ-021, ACD-431, ACD-484]
@@ -2134,14 +2152,19 @@ context_scope: guided_tour_newbie_first_real_application
 implementation_surfaces: [Plans/Planning_Wizard.md, Plans/guided_tour_contracts.schema.json]
 node_compile_hint: {mode: guided_tour_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - "source_report:register-settings-onboarding.md#O-07"
-  - "source_report:wave3-lane2.md#S0095"
-  - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/04_GUIDED_TOUR_REBUILD.md"
-  - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/05_DEMO_SCRIPT_AND_COPY_STANDARD.md"
-  - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/06_IMPLEMENTATION_ACCEPTANCE_AND_IMPACTS.md"
+- source_report:register-settings-onboarding.md#O-07
+- source_report:wave3-lane2.md#S0095
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/04_GUIDED_TOUR_REBUILD.md
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/05_DEMO_SCRIPT_AND_COPY_STANDARD.md
+- source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/06_IMPLEMENTATION_ACCEPTANCE_AND_IMPACTS.md
+- /mnt/Cursor/share/puppet-master/2026-10-13-onboarding-art-glass/README.md, SHA-256 ce5e5e90df41f180e54b89e4fb3fe0087164039728a902aa481cbcc3adacb088
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
+  (approved campaign source lineage; not native implementation evidence)
 negative_constraints: [Do not restore either predecessor controller., Do not restore ui.guided_tour.restore_layout or ui.guided_tour.keep_layout as separate current actions., Do not build a tooltip carousel or parallel demo., Do not use provider credentials or tokens., Do not fabricate action success., "Do not rewrite, regenerate or replace the example answer for ELI5; the simpler version is one extra reply (DL-126).", Do not add a Guided Tour-specific Reduced Motion toggle., Do not let callouts escape the viewport or point at stale geometry., Do not keep a demonstrated layout without explicit selection., Do not leave a partial composer draft after Skip., Do not expose protected authentication content., Do not promote local page/focus presentation into a domain command or handler., Do not treat fixture completion as runtime certification or approval to begin work.]
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): the move-or-dock-chat step retires; the workspace chapter teaches panels (PWIZ-035)."
+
 ```
 
 ## Product Onboarding route-and-review correction addendum - 2026-09-01
@@ -2739,54 +2762,53 @@ status: accepted
 owner_doc: Plans/Planning_Wizard.md
 canonical_text: >-
   The Guided Tour's workspace chapter teaches the panels. The published tour has 18 steps and becomes 20:
-  move_or_dock_chat retires, and workspace_orientation stays, with the panels centre as its spotlight and
-  copy saying the chat stays on the right and moves only by popping out. Three action steps follow it in
-  this order, each finished by what the panels report, never by a timer: open_from_plus opens a tab from a
-  panel's "+" menu, open_file_from_rail opens a file from the left rail into a panel, and split_by_drag
-  drags a tab to a panel edge (the tab menu's Split right / Split down also counts). widget_action stays
-  and first shows the Home dashboard tab. Each step runs the owner command: open_from_plus runs
-  cmd.panel_tab.open, open_file_from_rail runs cmd.file.open with placement, split_by_drag runs
-  cmd.panel_tab.move with an edge split, and widget_action runs cmd.widget.add addressed to a dashboard
-  board; Show Me runs the same owner command. Amended 2026-10-10 (DL-186, Jared's answers P1 and P10): the
-  old Home widgets are gone from Home, and with them the step's Approval queue practice; widget_action now
-  teaches a Usage widget, Upcoming resets (`ov-resets`). It reveals `dashboard:home`, and the learner adds
-  Upcoming resets to the Home board from the tab's Add widget, then drags it up to where they can glance at
-  it. Home's default set already holds Upcoming resets, so the step first takes it off the Home board
-  (cmd.widget.remove) as part of the tour's captured practice layout, then teaches adding it; Back, Skip and Finish
-  restore the captured layout quietly (DL-153), Upcoming resets back on the Home board where it was, unless Finish's
-  explicit Keep keeps the demonstrated layout (amended 2026-10-10, lead ruling; it read: When the Home board already
-  shows Upcoming resets, the step first takes it off the board (cmd.widget.remove) so that it can be added). The step is finished only when, since it began, the Home
-  board reports an accepted cmd.widget.add of `ov-resets` with room `home`, followed by an accepted
-  cmd.widget.move or cmd.widget.resize of that widget there; the tour contract's
-  `predicate:workspace:widget-added` names that whole condition, the add followed by the move or resize, never the
-  add alone. Show Me adds it and moves it to the top of the board through the same board commands. Every widget command of the step names the Home board in its
-  existing room field (Plans/Widget_System.md#WS-030). Saved positions follow the lead ruling of 2026-10-10: a
-  position naming a retired step resumes at the first step of that step's chapter (move_or_dock_chat
-  resumes at workspace_orientation); finished ids of retired steps are dropped; a position saved under
-  another step order resumes at its own step by id; only a position whose chapter is gone starts fresh with
-  the notice; the restore stays quiet (DL-153). Back puts the panels back as they were when the step began;
-  Skip and Finish restore the captured v2 layout. Amended 2026-10-10 (DL-186): the Home board's widgets live
-  in that board's own per-project key, outside the v2 record (WS-030), so the tour's snapshots take the Home
-  board's widgets with the panels through the board owner's own snapshot, per project, and Back, Skip and
-  Finish put the board back as well, unless Finish keeps the demonstrated layout.
-  Every saved tour position is stamped with its step id and the signature of the step order under which it
-  was saved.
-  The workspace chapter has 4 action steps rather than 2, within the 20-step tour rather than 18. Show Me
-  aims the split drop 34 px inside the documents panel's right edge or 30 px above its bottom, clear of the
-  centre's 12 px root-edge band, and proceeds only when a split target is ready. In the source's 1920 × 1080
-  Home layout with the rail open and chat about 600 px, the documents panel is 511 × 598 px against a 280 ×
-  120 px editor minimum, so only Split down fits and the copy names it. The widget action opens dashboard:home and waits at most 1500 ms, checking each frame,
-  for its Home board before it uses Add widget in the tab's header row; the file step
-  waits at most 900 ms for a file row. The tour's estimate is 5 minutes: measured 4.8 minutes at 200 words a minute, with 16 actions;
-  Planning has 7 actions (44 %) and 49 % of the time, and the workspace chapter has 5 actions
-  (the widget step counts two), never a completion deadline. The plus
-  step completes only after the menu is used and a tab is opened or a new tab id appears; the file step
-  requires an editor tab created since the step began; the drag step requires an applied cmd.panel_tab.move
-  with a split and increased panel count, with the menu alternative above retained. Back and Skip/Finish use
-  their respective restore paths.
-  A legacy checkpoint from before the panels that has no step-order stamp is read against the published
-  18-step order, then follows the same saved-id and retired-chapter resume rules; only when its step and
-  chapter are both gone does it start fresh with the notice.
+  move_or_dock_chat retires, and workspace_orientation stays, with the panels centre as its spotlight and copy
+  saying the chat stays on the right and moves only by popping out. Three action steps follow it in this order,
+  each finished by what the panels report, never by a timer: open_from_plus opens a tab from a panel's "+" menu,
+  open_file_from_rail opens a file from the left rail into a panel, and split_by_drag drags a tab to a panel
+  edge (the tab menu's Split right / Split down also counts). widget_action stays and first shows the Home
+  dashboard tab. Each step runs the owner command: open_from_plus runs cmd.panel_tab.open, open_file_from_rail
+  runs cmd.file.open with placement, split_by_drag runs cmd.panel_tab.move with an edge split, and widget_action
+  runs cmd.widget.add addressed to a dashboard board; Show Me runs the same owner command. Amended 2026-10-10
+  (DL-186, Jared's answers P1 and P10): the old Home widgets are gone from Home, and with them the step's
+  Approval queue practice; widget_action now teaches a Usage widget, Upcoming resets (`ov-resets`). It reveals
+  `dashboard:home`, and the learner adds Upcoming resets to the Home board from the tab's Add widget, then drags
+  it up to where they can glance at it. Home's default set already holds Upcoming resets, so the step first
+  takes it off the Home board (cmd.widget.remove) as part of the tour's captured practice layout, then teaches
+  adding it; Back, Skip and Finish restore the captured layout quietly (DL-153), Upcoming resets back on the
+  Home board where it was, unless Finish's explicit Keep keeps the demonstrated layout (amended 2026-10-10, lead
+  ruling; it read: When the Home board already shows Upcoming resets, the step first takes it off the board
+  (cmd.widget.remove) so that it can be added). The step is finished only when, since it began, the Home board
+  reports an accepted cmd.widget.add of `ov-resets` with room `home`, followed by an accepted cmd.widget.move or
+  cmd.widget.resize of that widget there; the tour contract's `predicate:workspace:widget-added` names that
+  whole condition, the add followed by the move or resize, never the add alone. Show Me adds it and moves it to
+  the top of the board through the same board commands. Every widget command of the step names the Home board in
+  its existing room field (Plans/Widget_System.md#WS-030). Saved positions follow the lead ruling of 2026-10-10:
+  a position naming a retired step resumes at the first step of that step's chapter (move_or_dock_chat resumes
+  at workspace_orientation); finished ids of retired steps are dropped; a position saved under another step
+  order resumes at its own step by id; only a position whose chapter is gone starts fresh with the notice; the
+  restore stays quiet (DL-153). Back puts the panels back as they were when the step began; Skip and Finish
+  restore the captured v2 layout. Amended 2026-10-10 (DL-186): the Home board's widgets live in that board's own
+  per-project key, outside the v2 record (WS-030), so the tour's snapshots take the Home board's widgets with
+  the panels through the board owner's own snapshot, per project, and Back, Skip and Finish put the board back
+  as well, unless Finish keeps the demonstrated layout. Every saved tour position is stamped with its step id
+  and the signature of the step order under which it was saved. The workspace chapter has 4 action steps rather
+  than 2, within the 20-step tour rather than 18. Show Me resolves F3-630's current split zones and
+  complete-layout fit rule, then aims at a ready split target clear of Join and outer docks. In the source's
+  1920 × 1080 Home layout with the rail open and chat about 600 px, the documents panel is 511 × 598 px against
+  a 280 × 120 px editor minimum, the earlier local-half rule offered only Split down there; after the 2026-10-14
+  room-fit amendment the ready target decides the direction and the copy names that target. The widget action
+  opens dashboard:home and waits at most 1500 ms, checking each frame, for its Home board before it uses Add
+  widget in the tab's header row; the file step waits at most 900 ms for a file row. The tour's estimate is 5
+  minutes: measured 4.8 minutes at 200 words a minute, with 16 actions; Planning has 7 actions (44 %) and 49 %
+  of the time, and the workspace chapter has 5 actions (the widget step counts two), never a completion
+  deadline. The plus step completes only after the menu is used and a tab is opened or a new tab id appears; the
+  file step requires an editor tab created since the step began; the drag step requires an applied
+  cmd.panel_tab.move with a split and increased panel count, with the menu alternative above retained. Back and
+  Skip/Finish use their respective restore paths. A legacy checkpoint from before the panels that has no
+  step-order stamp is read against the published 18-step order, then follows the same saved-id and
+  retired-chapter resume rules; only when its step and chapter are both gone does it start fresh with the
+  notice.
 gui_related: true
 gui_classification_reason: Defines the workspace chapter's steps, copy, owner commands, completion observation, and saved-position and restore rules.
 split_recommended: false
@@ -2819,13 +2841,20 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - Plans/Decision_Log.md#DL-180
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-52-tour-8571666731.js (SHA-256 433ca7b6d0146c8cb438373c5ebb26df847ad51ef51588d8e80c0484688280c9; concept lineage only)"
-  - Plans/Decision_Log.md#DL-186
-  - "Concepts/home-redesign/src/panels/js/52-tour.js at 339203bd76 on concept/home-panels-20261009, SHA-256 456375285dbe1462e78167c21be04bf6a9b37e13fba17fc54ce9725566cf8afd (the widget step as built: Upcoming resets, its done rule and Show Me; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md, SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (section 5, option B; design lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
+  SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
+- Plans/Decision_Log.md#DL-180
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-52-tour-8571666731.js
+  (SHA-256 433ca7b6d0146c8cb438373c5ebb26df847ad51ef51588d8e80c0484688280c9; concept lineage only)
+- Plans/Decision_Log.md#DL-186
+- 'Concepts/home-redesign/src/panels/js/52-tour.js at 339203bd76 on concept/home-panels-20261009, SHA-256 456375285dbe1462e78167c21be04bf6a9b37e13fba17fc54ce9725566cf8afd
+  (the widget step as built: Upcoming resets, its done rule and Show Me; concept lineage only)'
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/D10-DESIGN-per-instance-boards.md,
+  SHA-256 927d0ed893c513f2f20efa3ff678f19ba785ac43cf84d690412038daa5d41796 (section 5, option B; design lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md,
+  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-13-panel-dnd-resize/NOTES.md, SHA-256 03a80f0dea3235ea637149bbec63626c4a4be8521078f9dd601f2b691f03d2d6
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - move_or_dock_chat
   - workspace_orientation
@@ -2849,17 +2878,28 @@ negative_constraints:
   - Do not keep the demonstrated layout without an explicit Keep selection.
   - Do not teach an old Home widget or the Approval queue in the widget step, or finish it before the board reports the add and the move or resize.
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds workspace action census, split demonstration geometry and bounded reveal waits."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Stamps saved positions with step id and step-order signature."
-  - "Amended 2026-10-10 (DL-186): widget_action teaches Upcoming resets on the Home board (add, then move or resize), and the tour's snapshots and restores cover the Home board's widgets; the old Home widgets and the Approval queue practice are gone."
-  - "Amended 2026-10-10 (DL-186): the tour contract's predicate:workspace:widget-added keeps its name and now means the add followed by a move or resize."
-  - "Amended 2026-10-10 (lead ruling): Home's default set already holds Upcoming resets, so the widget step always first takes it off the Home board as part of the captured practice layout, and Back, Skip and Finish restore that layout quietly (DL-153)."
-  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The tour estimate is the measured 5 minutes and its widget step waits for the Home board."
-  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Legacy unstamped tour checkpoints are interpreted against the earlier 18-step order."
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds workspace action census, split demonstration geometry
+  and bounded reveal waits.'
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Stamps saved positions with step id and step-order signature.'
+- 'Amended 2026-10-10 (DL-186): widget_action teaches Upcoming resets on the Home board (add, then move or resize),
+  and the tour''s snapshots and restores cover the Home board''s widgets; the old Home widgets and the Approval queue
+  practice are gone.'
+- 'Amended 2026-10-10 (DL-186): the tour contract''s predicate:workspace:widget-added keeps its name and now means
+  the add followed by a move or resize.'
+- 'Amended 2026-10-10 (lead ruling): Home''s default set already holds Upcoming resets, so the widget step always
+  first takes it off the Home board as part of the captured practice layout, and Back, Skip and Finish restore that
+  layout quietly (DL-153).'
+- 'Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): The tour estimate is the measured 5 minutes and its widget
+  step waits for the Home board.'
+- 'Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Legacy unstamped tour checkpoints are interpreted against
+  the earlier 18-step order.'
+- 'Amended 2026-10-14: The tour consumes the current split target/fit rule, not fixed pixel coordinates or the retired
+  local-half refusal.'
 owner_hints:
   - Plans/Planning_Wizard.md
   - Plans/guided_tour_contracts.schema.json
   - Plans/guided_tour_contract_fixtures.json
+
 ```
 
 ContractRef: ContractName:Plans/Planning_Wizard.md, ContractName:Plans/guided_tour_contracts.schema.json

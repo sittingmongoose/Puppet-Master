@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L41157-L41562
+Source lines: L41235-L41646
 
-Source SHA256: `f884f6a1d8d9ac7ade3931dca847010cd6a0690faff184e1f7091221a892f2e5`
+Source SHA256: `2fbb46a82dc48c06df2698570d86fea36430c555501760e0328853d3170e9f49`
 
 ---
 
@@ -94,30 +94,33 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  One shared set of 13 status marks draws every status in the assistant chat: thread history rows, the chat header,
-  the activity bar previews, To-Dos, plan steps and module cards (DL-141). Working is a still ring with a bead
-  travelling on the ring, one lap in 9 s. Reviewing is a page with a sweeping lens. Needs you is a speech bubble with
-  a tall question mark that hops twice every 2.4 s while its glow swells. Waiting on a dependency is an hourglass that
-  tips slowly. Idle (Ready) is a small unlit hollow ring. Complete is a bold check that draws once. Blocked is a lock
-  whose shackle drops before a hard double blink. Failed is a warning triangle that stutters on arrival. Paused is two
-  bars. Recovering is two opposed arrow arcs that ratchet counter-clockwise. Pending or queued is a dashed ring.
-  Skipped is a slashed circle. Mixed is a half-lit ring. Tones follow F3-584. Every pair of silhouettes differs
-  without colour, in grayscale and under reduced motion. In a list needs you outshines working, and idle and paused
-  never read more lit than any live status on the same row state (rest, hover, selected). A thread history row shows
-  its mark only while the drawer is wide; the narrow drawer hides it. The chat header shows the thread's mark beside
-  its status word, and the word takes the mark's tone: Ready and Paused muted, Working and Reviewing accent, Waiting
-  and Recovering warning, Complete positive, Blocked and Failed danger. In module cards the marks are lit and still
-  (F3-584).
+  The chat consumes F3-658's one shared status set in thread history rows, the chat header, the activity bar
+  previews, To-Dos, plan steps and module cards (DL-141). Working is a still ring with a bead travelling on the
+  ring, one lap in 9 s. Reviewing is a page with a sweeping lens. Needs you is a speech bubble with a tall
+  question mark that hops twice every 2.4 s while its glow swells. Waiting on a dependency is an hourglass that
+  tips slowly. Idle (Ready) is a small unlit hollow ring. Complete is a bold check that draws once. Blocked is a
+  lock whose shackle drops before a hard double blink. Failed is the shared ring with a cross; the triangle
+  means warning (F3-658, DL-201). Paused is two bars. Recovering is two opposed arrow arcs that ratchet
+  counter-clockwise. Pending or queued is a dashed ring. Skipped is a slashed circle. Mixed is a half-lit ring.
+  Tones follow F3-584. Every pair of silhouettes differs without colour, in grayscale and under reduced motion.
+  In a list needs you outshines working, and idle and paused never read more lit than any live status on the
+  same row state (rest, hover, selected). A thread history row shows its mark only while the drawer is wide; the
+  narrow drawer hides it. The chat header shows the thread's mark beside its status word, and the word takes the
+  mark's tone: Ready and Paused muted, Working and Reviewing accent, Waiting and Recovering warning, Complete
+  positive, Blocked and Failed danger. In module cards the marks are lit and still (F3-584). F3-658 supersedes
+  separate per-surface glyph sets and owns fitted glyph inks; F3-654 governs the status word. This unit retains
+  the chat's placements and domain states.
 gui_related: true
 gui_classification_reason: Defines the assistant chat's icon, status, Send and Stop, or NieR presentation.
 split_recommended: false
 depends_on: [DL-141, F3-584]
 unblocks: []
 acceptance_criteria:
-  - "The 13 marks render with distinct silhouettes in every theme, in grayscale and under reduced motion."
-  - "In the wide thread list needs you moves more than working, and idle and paused never read more lit than a live status."
-  - "Thread history rows show no status mark in the narrow drawer."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+- The shared marks consumed here render with distinct silhouettes in every theme, in grayscale and under reduced motion.
+- In the wide thread list needs you moves more than working, and idle and paused never read more lit than a live status.
+- Thread history rows show no status mark in the narrow drawer.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are
+  created by this unit.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -131,9 +134,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-141"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/JARED-DECISIONS-20261001-07.md, SHA-256 1e43742aab47456f1c6c478106cb2ba8859291bb6a0030fcb70070b7beb30ebf"
-  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; folded on main 7468d1b676)"
+- Plans/Decision_Log.md#DL-141
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/neon-icons-20261001-handoff/JARED-DECISIONS-20261001-07.md, SHA-256 1e43742aab47456f1c6c478106cb2ba8859291bb6a0030fcb70070b7beb30ebf
+- Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; folded on main 7468d1b676)
+- /mnt/Cursor/share/puppet-master/2026-10-10-glyph-catalog-addendum/README.md, SHA-256 3d0497f01c878e8aa6f99fa8f602b9b3dbf887aead2a24d62c12969bd47a1d31
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "13 status marks"
   - "needs you outshines working"
@@ -144,6 +149,7 @@ compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
   - Plans/FinalGUISpec.md
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-141, ContractName:Plans/FinalGUISpec.md#F3-584

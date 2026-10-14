@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32279-L32793
+Source lines: L32271-L32814
 
-Source SHA256: `f884f6a1d8d9ac7ade3931dca847010cd6a0690faff184e1f7091221a892f2e5`
+Source SHA256: `2fbb46a82dc48c06df2698570d86fea36430c555501760e0328853d3170e9f49`
 
 ---
 
@@ -146,25 +146,34 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Ephemeral toast notifications stage beneath the title-bar notification stack with the
-  newest toast on top and show at most 5 concurrent staged toasts; when a new toast would
-  exceed the cap, the oldest toast is dismissed to make room. Each staged toast
-  auto-dismisses after a 3.4s time to live, and dismissal plays a fade exit animation
-  before removal. Ephemeral toasts are never archived to the shared alert store and leave
-  no store entry. Under reduced motion, staged toasts dismiss instantly with no exit
-  animation.
+  All staged notices appear beneath the title-bar bell/stack on every page, including Usage. Four urgency levels
+  share this staging owner: Quiet confirmations last 3.4 s and leave no alert-store entry; Notice lasts 3.4 s,
+  Attention 5.2 s and Blocking 6.8 s before joining F3-453's lasting inbox. Reading timers are not shortened by
+  Animation speed; hovering any toast or focusing within one holds every staged timer, with a visible
+  remaining-time line. Newest is on top and at most five stage together; overflow retires the oldest quiet
+  notice or moves the oldest lasting notice to the inbox immediately. Repeated words count on one card, and
+  duplicate delivery of one event produces one notice. Closing or swiping a staged lasting notice moves it to
+  the inbox and never resolves the underlying work; quiet dismissal removes it. Reduced Motion shows/removes end
+  states immediately and joins the inbox without flight. Settings Notifications off suppresses popup and sound
+  delivery but preserves lasting inbox items. How Alerts Appear selects Toast, Banner under the title bar, or
+  System Tray with no in-page popup; platform delivery retains its own capability/permission rules.
+  Setup/continue-tour prompts are separate pinned cards under the bell, with new toasts above, and tour page
+  notes use this same quiet staging route. F3-460 owns material and F3-453 the lasting store.
 gui_related: true
 gui_classification_reason: This unit defines visible ephemeral toast staging, lifetime, and dismissal behavior.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "At most 5 staged toasts render concurrently beneath the title-bar notification stack; a new toast beyond the cap evicts the oldest."
-- "Each staged toast auto-dismisses after its 3.4s time to live and plays a fade exit animation on dismissal."
-- "The newest toast stages on top of the staged set."
-- "Ephemeral toasts never archive to the shared alert store and leave no store entry."
-- "Under reduced motion, dismissal is instant with no exit animation."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- At most 5 staged toasts render concurrently beneath the title-bar notification stack; a new toast beyond the cap
+  evicts the oldest.
+- Each staged toast auto-dismisses after its 3.4s time to live and plays a fade exit animation on dismissal.
+- The newest toast stages on top of the staged set.
+- Ephemeral toasts never archive to the shared alert store and leave no store entry.
+- Under reduced motion, dismissal is instant with no exit animation.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- Usage has no bottom-right staging exception; every page routes notices beneath the bell.
+- Hover/focus pauses reading time; a sixth lasting notice is retained, never lost.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -177,9 +186,13 @@ node_compile_hint:
   mode: toast_stack_contract
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:1484"
-- "Plans/FinalGUISpec.md:1918"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:1484
+- Plans/FinalGUISpec.md:1918
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
 - "5"
 - "3.4s"
@@ -189,11 +202,15 @@ negative_constraints:
 compatibility_only_notes:
 - "Slint portability: staged toasts render as opaque precomputed surfaces with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
-- "The bottom-right standing toast stack surface is retired per PMConcept7 title-bar notifications; ephemeral toasts now stage beneath the title-bar notification stack owned by F3-460, with the sprout inbox panel owned by F3-461."
+- The bottom-right standing toast stack surface is retired per PMConcept7 title-bar notifications; ephemeral toasts
+  now stage beneath the title-bar notification stack owned by F3-460, with the sprout inbox panel owned by F3-461.
+- 'Amended 2026-10-14: The uniform 3.4 s lifetime for all urgency levels and the Usage bottom-right exception are
+  superseded.'
 owner_boundary_notes:
 - "F3-460 owns the title-bar notification stack and count badge that hosts this staging area; this unit owns the ephemeral staging cap, ordering, time to live, and exit behavior."
 owner_hints:
 - "Plans/FinalGUISpec.md"
+
 ```
 
 ### F3-448 - Status Bar Chip Inventory And Click Behaviors
@@ -473,12 +490,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  This unit owns the shared alert store. Alerts carry an acknowledge (ack) and snooze
-  lifecycle: acknowledging clears an alert's unread state, snoozing hides the alert until
-  its snooze window elapses, and unresolved alerts persist in the store and render in the
-  title-bar sprout inbox list. Unread alerts drive the count badge on the title-bar
-  notification stack (F3-460). The title-bar collapsed stack and the sprout inbox panel
-  render from this one alert store; no surface keeps a private copy of alert state.
+  This unit owns the shared alert store. Alerts carry an acknowledge (ack) and snooze lifecycle: acknowledging
+  clears an alert's unread state, snoozing hides the alert until its snooze window elapses, and unresolved
+  alerts persist in the store and render in the title-bar sprout inbox list. Unread alerts drive the count badge
+  on the title-bar notification stack (F3-460). The title-bar collapsed stack and the sprout inbox panel render
+  from this one alert store; no surface keeps a private copy of alert state. The inbox sorts Needs you first,
+  then groups by source (Usage, Runs, Planning, Agents, Settings, Projects); a group with at least three notices
+  folds to a newest-first deck and opens without changing its underlying work. The badge counts unread, not all
+  retained items. Opening the inbox acknowledges the items actually shown after about one second of reading;
+  hidden/unshown items do not become read by implication. Dismiss/Delete and Clear all remove inbox
+  presentation, never approve, deny or resolve domain work. Clear all leaves reusable headings and rows visible
+  on the next arrival/open. Existing approval, permission, FileSafe and concern actions keep their owner
+  commands, reasons and holds. A blocking item's attention ring remains until its underlying need is resolved;
+  dismissing a card alone is not that resolution.
 gui_related: true
 gui_classification_reason: This unit defines the shared alert store, alert lifecycle controls, and the unread indicator contract.
 split_recommended: false
@@ -501,9 +525,13 @@ node_compile_hint:
   mode: notifications_side_panel_and_alert_lifecycle
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:72"
-- "Plans/FinalGUISpec.md:5854"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:72
+- Plans/FinalGUISpec.md:5854
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
 - "ack"
 - "snooze"
@@ -522,4 +550,5 @@ owner_boundary_notes:
 - "The F3-042 inventory edit (8 panels to 11) landed in the 2026-07-16 seal; the 2026-07-23 PMConcept7 promotion retires the notifications panel from that inventory. This unit references plain F3-042."
 owner_hints:
 - "Plans/FinalGUISpec.md"
+
 ```

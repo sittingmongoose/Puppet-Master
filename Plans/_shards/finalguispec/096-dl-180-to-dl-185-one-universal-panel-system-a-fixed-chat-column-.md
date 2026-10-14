@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43913-L45751
+Source lines: L43982-L45902
 
-Source SHA256: `f884f6a1d8d9ac7ade3931dca847010cd6a0690faff184e1f7091221a892f2e5`
+Source SHA256: `2fbb46a82dc48c06df2698570d86fea36430c555501760e0328853d3170e9f49`
 
 ---
 
@@ -64,94 +64,127 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The home centre, between the left rail and the chat column (F3-637), is one universal panel system (DL-180). Its
-  layout is an n-ary split tree: a split is a row or a column of two or more children, each child a panel or another
-  split, and every leaf is a panel. A panel is a tab group, one tab strip (F3-631) over one body, and any panel can hold
-  any tab kind (F3-635). Every split has its own sizes, stored as proportions of that split, never as pixels, so panel
-  widths and heights are independent. The tree always keeps these invariants: every leaf is a panel; a split has two or
-  more children and never runs in its parent's direction; every size is above 0.02; a tab lives in exactly one panel;
-  pinned tabs come first in their strip; a panel has at most one preview tab. A panel's minimum is the largest content
-  minimum of its tabs (F3-635) and never less than 280 x 120 px. Inserting a panel beside another gives the new panel
-  half of that panel's share and changes no other size; a new panel along the centre's outer edge takes 0.34 of the
-  root. Removing a panel gives its share to its previous sibling, else to the next. Closing the last tab of a panel
-  closes the panel and its neighbour takes the space, unless it is the only panel in the centre or the user locked it:
-  then it stays and shows the empty-panel launcher (F3-632). Closing a panel closes its tabs, each kind asking first
-  where it asks (F3-635). Locking a panel keeps it in place when its last tab closes, and automatic placement skips it
-  (F3-634). Split fit rule: a split, or a new panel, goes to the right when both halves stay at least the larger of the
-  two minimums wide, else below when both halves stay at least that tall, else no split is offered. Panels are 6 px
-  apart, the divider line in the middle of the gap, and the centre is inset 6 px from the rail, the chat and the bars; a
-  divider's hit target is 8 px. Dragging a divider moves only the two neighbours it separates and commits once on
-  release (cmd.workspace_layout.resize_surface); from the keyboard, Tab reaches a divider, arrows move it 8 px,
-  Shift+arrows 48 px, Home and End move it to a neighbour's minimum, and Enter or a double click evens the two sides. A
-  panel dragged below half its minimum along the divider's axis collapses to its 35 px strip and keeps every tab and its
-  state; dragging it out again, or Expand in its panel menu, restores it (cmd.workspace_layout.set_collapsed). This
-  replaces Collapse Bottom Terminal for every panel. Maximize is a flag outside the tree: the maximized panel fills the
-  centre and the tree underneath does not change; Shift+Escape, the panel menu, or Escape while focus is in its strip
-  restores it (ui.workspace_layout.maximize, view state with no receipt and no event). Each panel has a small corner
-  grip and a panel menu (⋮) at the end of its strip: Split right, Split down, Maximize or Restore, Collapse or Expand,
-  Move panel, Lock panel or Unlock panel, Layouts, and Close panel. A whole panel moves by its grip, or by Move panel
-  from the menu or Enter on the grip (cmd.workspace_layout.move_surface): beside another panel on any edge, along the
-  centre's outer edge, or into another panel as its tabs. A tab dragged onto a panel's edge band splits that panel on
-  that side (cmd.panel_tab.move with a split target); dropped on a strip, it moves into that panel at the drop position;
-  pulled off its strip by 14 px vertically or 40 px horizontally beyond the strip band, it tears off and follows the
-  pointer until it lands on a strip, an edge band or the "+N" list (F3-633). Edge bands are clamp(15 % of the body's
-  axis, 32, 72) px deep, and the centre's outer edge band is 12 px; a drag starts after 4 px of travel, a zone is
-  adopted after 100 ms of dwell (skipped on release and under Reduced Motion), and an adopted zone holds while the
-  pointer stays within 12 px of it. Every drag runs the gesture transaction Home already uses and shares with the Usage
-  board's gesture kit (F3-HOME-002, F3-503, DR-066): the preview is local, nothing dispatches while dragging, a changed
-  release commits one command, an unchanged release, Escape, a pointer cancel, a lost pointer capture, a lost window or a drop past the
-  workspace commits nothing and restores the exact earlier picture, and a failed commit rolls back. Every drag outcome
-  also has a menu path and a keyboard path (Move panel, Move to panel, Alt+Shift+arrows; F3-635). Motion: a panel glides
-  into its new place in 180 ms by default, in Friendly 220 ms, Glass 260 ms, Basic 200 ms, Retro 140 ms in steps and
-  NieR Mode 200 ms; the landing preview glides in 160 ms and fades in 140 ms; neighbours slide aside in 250 ms on
-  cubic-bezier(.22,1,.36,1); a tab settles in 160 ms on cubic-bezier(.17,.84,.29,.99); a drop settles on a critically
-  damped spring of stiffness 520 and damping 45.6; a cancel returns in 300 ms; under Reduced Motion every one of these
-  is 0. The default layout, Home, keeps a full-width bottom row where the terminal sat before, 0.4 of the centre's
-  height: an ordinary panel row that holds any tab kind and can be split side by side. Four named layouts ship. Home: a
-  column of a row of 0.6 (a dashboard panel 0.5 holding the pinned Home dashboard, F3-638, and a documents panel 0.5)
-  over a tools row of 0.4 holding terminals and Output. Build: a column of a row of 0.62 (documents 0.66 and a side
-  panel 0.34 for browsers and dashboards) over a row of 0.38 (terminals 0.6 and tools 0.4 holding Output and Problems).
-  Terminals 2x2: a column of two rows of two terminal panels, every size 0.5, one terminal in each, new ones started
-  where fewer than four are open, and every other tab joining the first panel in the background. Focus: one panel
-  holding every tab. Applying a named layout keeps every open tab: no terminal session ends, no unsaved buffer is
-  dropped, and each tab moves to the slot that holds its kind (cmd.workspace_layout.apply_named). Restore home layout
-  (cmd.workspace_layout.reset; the Settings row general.startup.reset-home-layout) applies Home the same way, keeping
-  every tab. A user can save the current arrangement as a named layout (cmd.workspace_layout.save_named); a saved layout
-  keeps its shape, its sizes and the kinds each slot holds, never the tabs themselves. The named and saved layouts, Save
-  this layout... and Restore home layout sit in the panel menu's Layouts submenu and in the title bar's Home options
-  menu (F3-502). The layout persists in the v2 Home layout record
-  `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, the only Home layout authority
-  (Plans/storage-plan.md#SP-330, Plans/home_workspace_layout_v2.schema.json), through F3-HOME-004's write-then-read-back
-  transaction; this unit does not restate its fields. Narrow states (F3-636), menus, overlays and drags are never saved.
-  A layout from before this redesign is converted on first read and never reset: an upgrade never loses a user's tabs or
-  layout. Every committed change emits the one existing event workspace.layout_changed (CV-361); a reveal of an open tab
-  emits nothing. This unit supersedes F3-501 and the composition of F3-HOME-001 (four fixed editor panels, the singleton
-  dashboard, the chat as a movable surface, terminal sections docked at the bottom), the fixed bottom runtime zone of
-  sections 3.1, 3.2, 5 and 7.20 (F3-034, F3-035, F3-060, F3-061, F3-066, F3-151), F3-502's Collapse Bottom Terminal row,
-  the host registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and, for home panels,
-  section 5.8's 240 px panel minimum.
-  A saved named layout also keeps at most 64 KB (65,536 bytes) of its dashboard boards' contents; a larger
-  save keeps the layout without those contents, records boards_skipped_bytes and says so (SP-330).
+  The home centre, between the left rail and the chat column (F3-637), is one universal panel system (DL-180).
+  Its layout is an n-ary split tree: a split is a row or a column of two or more children, each child a panel or
+  another split, and every leaf is a panel. A panel is a tab group, one tab strip (F3-631) over one body, and
+  any panel can hold any tab kind (F3-635). Every split has its own sizes, stored as proportions of that split,
+  never as pixels, so panel widths and heights are independent. The tree always keeps these invariants: every
+  leaf is a panel; a split has two or more children and never runs in its parent's direction; every size is
+  above 0.02; a tab lives in exactly one panel; pinned tabs come first in their strip; a panel has at most one
+  preview tab. A panel's minimum is the largest content minimum of its tabs (F3-635) and never less than 280 x
+  120 px. Inserting a panel starts from half the target's share, redistributing available room from neighbours
+  when necessary to preserve every resulting panel's own minimum; a new panel along the centre's outer edge
+  takes 0.34 of the root. Removing a panel gives its share to its previous sibling, else to the next. Closing
+  the last tab of a panel closes the panel and its neighbour takes the space, unless it is the only panel in the
+  centre or the user locked it: then it stays and shows the empty-panel launcher (F3-632). Closing a panel
+  closes its tabs, each kind asking first where it asks (F3-635). Locking a panel keeps it in place when its
+  last tab closes, and automatic placement skips it (F3-634). Split fit rule: offer a split whenever the
+  complete resulting layout can meet each panel's own minimum, borrowing available room from neighbours; drag,
+  split menus, Move panel and Alt+Shift+arrows use this one rule. For an unspecified side prefer right, then
+  below, else refuse with a reason. Panels are 6 px apart, the divider line in the middle of the gap, and the
+  centre is inset 6 px from the rail, the chat and the bars; a divider's hit target is 8 px. Dragging a divider
+  moves only the two neighbours it separates and commits once on release (cmd.workspace_layout.resize_surface);
+  from the keyboard, Tab reaches a divider, arrows move it 8 px, Shift+arrows 48 px, Home and End move it to a
+  neighbour's minimum, and Enter or a double click evens the two sides. A panel dragged below half its minimum
+  along the divider's axis collapses to its 35 px strip and keeps every tab and its state; dragging it out
+  again, or Expand in its panel menu, restores it (cmd.workspace_layout.set_collapsed). This replaces Collapse
+  Bottom Terminal for every panel. Maximize is a flag outside the tree: the maximized panel fills the centre and
+  the tree underneath does not change; Shift+Escape, the panel menu, or Escape while focus is in its strip
+  restores it (ui.workspace_layout.maximize, view state with no receipt and no event). Each panel has a small
+  corner grip and a panel menu (⋮) at the end of its strip: Split right, Split down, Maximize or Restore,
+  Collapse or Expand, Move panel, Lock panel or Unlock panel, Layouts, and Close panel. A whole panel moves by
+  its grip, or by Move panel from the menu or Enter on the grip (cmd.workspace_layout.move_surface): beside
+  another panel on any edge, along the centre's outer edge, or into another panel as its tabs. A tab dragged
+  into the diagonal region nearest a panel side splits on that side (cmd.panel_tab.move with a split target);
+  dropped on a strip, it moves into that panel at the drop position; pulled off its strip by 14 px vertically or
+  40 px horizontally beyond the strip band, it tears off and follows the pointer until it lands on a strip, an
+  edge band or the "+N" list (F3-633). The panel body is divided along diagonals into four side regions. Only
+  the central Join tile or a strip slot joins as tabs; other body regions split. A central guide shows the four
+  sides around Join, and outer-side dock targets plus thin left/right/bottom edge bands create a full-height or
+  full-width panel; a drag starts after 4 px of travel, a zone is adopted after 100 ms of dwell (skipped on
+  release and under Reduced Motion), and an adopted zone holds while the pointer stays within 12 px of it. Every
+  drag runs the gesture transaction Home already uses and shares with the Usage board's gesture kit
+  (F3-HOME-002, F3-503, DR-066): the preview is local, nothing dispatches while dragging, a changed release
+  commits one command, an unchanged release, Escape, a pointer cancel, a lost pointer capture, a lost window or
+  a drop past the workspace commits nothing and restores the exact earlier picture, and a failed commit rolls
+  back. Every drag outcome also has a menu path and a keyboard path (Move panel, Move to panel,
+  Alt+Shift+arrows; F3-635). Motion: a panel glides into its new place in 180 ms by default, in Friendly 220 ms,
+  Glass 260 ms, Basic 200 ms, Retro 140 ms in steps and NieR Mode 200 ms; the landing preview glides in 160 ms
+  and fades in 140 ms; neighbours slide aside in 250 ms on cubic-bezier(.22,1,.36,1); a tab settles in 160 ms on
+  cubic-bezier(.17,.84,.29,.99); a drop settles on a critically damped spring of stiffness 520 and damping 45.6;
+  a cancel returns in 300 ms; under Reduced Motion every one of these is 0. The default layout, Home, keeps a
+  full-width bottom row where the terminal sat before, 0.4 of the centre's height: an ordinary panel row that
+  holds any tab kind and can be split side by side. Four named layouts ship. Home: a column of a row of 0.6 (a
+  dashboard panel 0.5 holding the pinned Home dashboard, F3-638, and a documents panel 0.5) over a tools row of
+  0.4 holding terminals and Output. Build: a column of a row of 0.62 (documents 0.66 and a side panel 0.34 for
+  browsers and dashboards) over a row of 0.38 (terminals 0.6 and tools 0.4 holding Output and Problems).
+  Terminals 2x2: a column of two rows of two terminal panels, every size 0.5, one terminal in each, new ones
+  started where fewer than four are open, and every other tab joining the first panel in the background. Focus:
+  one panel holding every tab. Applying a named layout keeps every open tab: no terminal session ends, no
+  unsaved buffer is dropped, and each tab moves to the slot that holds its kind
+  (cmd.workspace_layout.apply_named). Restore home layout (cmd.workspace_layout.reset; the Settings row
+  general.startup.reset-home-layout) applies Home the same way, keeping every tab. A user can save the current
+  arrangement as a named layout (cmd.workspace_layout.save_named); a saved layout keeps its shape, its sizes and
+  the kinds each slot holds, never the tabs themselves. The named and saved layouts, Save this layout... and
+  Restore home layout sit in the panel menu's Layouts submenu and in the title bar's Home options menu (F3-502).
+  The layout persists in the v2 Home layout record `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`,
+  the only Home layout authority (Plans/storage-plan.md#SP-330, Plans/home_workspace_layout_v2.schema.json),
+  through F3-HOME-004's write-then-read-back transaction; this unit does not restate its fields. Narrow states
+  (F3-636), menus, overlays and drags are never saved. A layout from before this redesign is converted on first
+  read and never reset: an upgrade never loses a user's tabs or layout. Every committed change emits the one
+  existing event workspace.layout_changed (CV-361); a reveal of an open tab emits nothing. This unit supersedes
+  F3-501 and the composition of F3-HOME-001 (four fixed editor panels, the singleton dashboard, the chat as a
+  movable surface, terminal sections docked at the bottom), the fixed bottom runtime zone of sections 3.1, 3.2,
+  5 and 7.20 (F3-034, F3-035, F3-060, F3-061, F3-066, F3-151), F3-502's Collapse Bottom Terminal row, the host
+  registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and, for home panels,
+  section 5.8's 240 px panel minimum. A saved named layout also keeps at most 64 KB (65,536 bytes) of its
+  dashboard boards' contents; a larger save keeps the layout without those contents, records
+  boards_skipped_bytes and says so (SP-330). The guide responds immediately while a stable-intent gate prevents
+  a passing pointer from repeatedly rearranging the live preview. A split ghost shows the resulting panel/tab,
+  joining opens the destination strip slot, a moving panel leaves an outline, and a source emptied by the move
+  fades back. Escape returns the exact earlier arrangement; release commits precisely the shown result. Every
+  target name remains outside the carried tab, pointer, other docks and preview tab/mark, including a resting
+  pointer at bottom and edge docks. Caption placement changes only when needed, preferring a clear location
+  behind the hand; transient repositioning never becomes a settled occlusion. The guide, captions and preview
+  use each family's motion and material; Reduced Motion keeps the legible end state without spatial travel. The
+  screen reader announces the held destination once its intent settles. F3-657 owns resize feedback.
 gui_related: true
 gui_classification_reason: Defines the home centre's panel model, its layout tree, its named layouts and how panels move, split, collapse and persist.
 split_recommended: false
 depends_on: [DL-180, DL-181, F3-503]
 unblocks: [SP-330, CV-361, UCC-200, CS-100, WM-090, UIW-040, UIW-041, SSYS-050, DR-065, DR-066, ATS-075, GRRC-040]
 acceptance_criteria:
-  - "The layout is an n-ary split tree whose leaves are panels, sizes are proportions per split, and after every commit the invariants hold: every leaf a panel, two or more children per split, no split in its parent's direction, every size above 0.02, each tab in exactly one panel, pinned tabs first, at most one preview tab per panel."
-  - "Inserting a panel beside another gives it half of that panel's share and changes no other size; a new panel at the centre's outer edge takes 0.34 of the root; a removed panel's share goes to its previous sibling, else the next."
-  - "Closing the last tab closes the panel unless it is the only panel or locked, which then shows the empty-panel launcher; a locked panel is skipped by automatic placement."
-  - "A split is offered to the right only when both halves keep the larger minimum width, else below when both keep that height, else not at all."
-  - "A divider drag moves only its two neighbours and commits once on release; the divider keys move 8 px and 48 px, Home and End reach a neighbour's minimum, and Enter or a double click evens the sides."
-  - "A panel dragged below half its minimum collapses to its 35 px strip with every tab and its state kept, and any panel, the bottom row included, can collapse."
-  - "Maximize leaves the tree unchanged and restores with Shift+Escape, the panel menu or Escape in the strip; it emits no event."
-  - "The default layout Home has a full-width bottom row of 0.4 that holds any tab kind, and Home, Build, Terminals 2x2 and Focus build exactly the trees and proportions stated here."
-  - "Applying a named layout or Restore home layout ends no terminal session, drops no unsaved buffer and closes no tab."
-  - "A tab dragged to a panel's edge band splits that panel; a tab pulled 14 px vertically or 40 px horizontally off its strip tears off; a whole panel moves by its grip or Move panel; each drag has a menu and keyboard equivalent."
-  - "During a drag nothing dispatches; a changed release commits one command; Escape, pointer cancel, a lost pointer capture, window blur, a drop past the workspace and an unchanged release restore the exact earlier layout with no command, persistence or event; a failed commit rolls back."
-  - "Under Reduced Motion every glide, slide, settle and cancel duration is 0 and every drag still shows its landing preview."
-  - "An existing Home layout from before this redesign opens converted, with its tabs, on first read; no upgrade resets it."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+- 'The layout is an n-ary split tree whose leaves are panels, sizes are proportions per split, and after every commit
+  the invariants hold: every leaf a panel, two or more children per split, no split in its parent''s direction, every
+  size above 0.02, each tab in exactly one panel, pinned tabs first, at most one preview tab per panel.'
+- Inserting a panel starts with half the target share, then the complete-layout fit allocator redistributes only as
+  needed to satisfy every visible minimum; a new panel at the centre's outer edge takes 0.34 of the root; a removed
+  panel's share goes to its previous sibling, else the next.
+- Closing the last tab closes the panel unless it is the only panel or locked, which then shows the empty-panel launcher;
+  a locked panel is skipped by automatic placement.
+- A requested split is offered when the complete layout can fit all visible minima after allocation; menus, keys and
+  drag previews use the same fit result.
+- A divider drag moves only its two neighbours and commits once on release; the divider keys move 8 px and 48 px,
+  Home and End reach a neighbour's minimum, and Enter or a double click evens the sides.
+- A panel dragged below half its minimum collapses to its 35 px strip with every tab and its state kept, and any panel,
+  the bottom row included, can collapse.
+- Maximize leaves the tree unchanged and restores with Shift+Escape, the panel menu or Escape in the strip; it emits
+  no event.
+- The default layout Home has a full-width bottom row of 0.4 that holds any tab kind, and Home, Build, Terminals 2x2
+  and Focus build exactly the trees and proportions stated here.
+- Applying a named layout or Restore home layout ends no terminal session, drops no unsaved buffer and closes no tab.
+- A tab dragged to one of the panel's diagonal split regions splits that panel; the center Join target and tab strip
+  alone merge; a tab pulled 14 px vertically or 40 px horizontally off its strip tears off; a whole panel moves by
+  its grip or Move panel; each drag has a menu and keyboard equivalent.
+- During a drag nothing dispatches; a changed release commits one command; Escape, pointer cancel, a lost pointer
+  capture, window blur, a drop past the workspace and an unchanged release restore the exact earlier layout with no
+  command, persistence or event; a failed commit rolls back.
+- Under Reduced Motion every glide, slide, settle and cancel duration is 0 and every drag still shows its landing
+  preview.
+- An existing Home layout from before this redesign opens converted, with its tabs, on first read; no upgrade resets
+  it.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are
+  created by this unit.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -168,18 +201,30 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/FinalGUISpec.md F3-HOME-002, F3-HOME-004 and F3-HOME-005 (prose headings with no PlanUnit; cited, not a dependency (lead ruling L22, 2026-10-10))"
-  - "Plans/FinalGUISpec.md#F3-635 (the tab kinds consume this model; cited, not a dependency (lead ruling L22, 2026-10-10))"
-  - "Plans/Decision_Log.md#DL-180"
-  - "Plans/Decision_Log.md#DL-181"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1, D2, D11)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)"
-  - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
+- Plans/FinalGUISpec.md F3-HOME-002, F3-HOME-004 and F3-HOME-005 (prose headings with no PlanUnit; cited, not a dependency
+  (lead ruling L22, 2026-10-10))
+- Plans/FinalGUISpec.md#F3-635 (the tab kinds consume this model; cited, not a dependency (lead ruling L22, 2026-10-10))
+- Plans/Decision_Log.md#DL-180
+- Plans/Decision_Log.md#DL-181
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D1, D2, D11)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md,
+  SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md,
+  SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981
+  (the agreed anatomy; concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8
+  (audit lineage only)
+- Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md,
+  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-13-panel-dnd-resize/NOTES.md, SHA-256 03a80f0dea3235ea637149bbec63626c4a4be8521078f9dd601f2b691f03d2d6
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-resize-glow/NOTES.md, SHA-256 0a20256d730c5b51cda138b14845a5dc2e7dfdda04385a3956721a73fb657c16
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "n-ary split tree"
   - "0.34"
@@ -207,13 +252,17 @@ compatibility_only_notes:
   - "Slint portability: the split tree, the strip, the silhouette and every gesture are projections over the Rust-owned layout model (F3-HOME-005); the concept's DOM and CSS mechanics are not the product mechanism."
   - "The concept seeds its Home layout with demo files, a demo plan and two terminals; the seed contents are illustrative, the tree and proportions are canon."
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (lead ruling L13): Adds a lost pointer capture to the gesture's cancel set, as DR-066 says."
-  - "Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Named-layout saves keep at most 64 KB of dashboard contents and announce a larger save without them."
+- 'Amended 2026-10-10 (lead ruling L13): Adds a lost pointer capture to the gesture''s cancel set, as DR-066 says.'
+- 'Amended 2026-10-11 (wave 2, panels NUMBERS 51c316e18b): Named-layout saves keep at most 64 KB of dashboard contents
+  and announce a larger save without them.'
+- 'Amended 2026-10-14: The thin 15-percent split-band and local-half-only fit rules retire; body-centre merging is
+  now deliberate Join. Alt+Shift+arrows remains the canonical split shortcut, not the early packet''s Ctrl+Alt spelling.'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/storage-plan.md
   - Plans/UI_Command_Catalog.md
   - Plans/DRY_Rules.md
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/DRY_Rules.md#DR-065, ContractName:Plans/DRY_Rules.md#DR-066
@@ -1468,68 +1517,67 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The editor is a document tab kind (F3-635) that keeps the two things Jared likes and polishes them (DL-180, D21): its
-  tabs are the contact-aware strip of F3-631, and its scrollbar is the minimap, the only scrollbar of the code pane,
-  with its change marks. Plans/FileManager.md#F-073 stays the minimap scrollbar's file-side owner (its canvas, its
-  thumb, click to jump, drag to scrub, one scroll authority); this unit owns how it looks in each look (F3-647). The
-  editor adds sticky scroll, so the scopes that enclose the top visible line stay pinned at the top of the code pane;
-  find and replace in the file; go to line; a diff mode that shows the two sides side by side when the tab body is wide
-  and inline when it is narrow, switching by the body's own width (F3-635); preview tabs (F3-634); syntax colours per
-  look from each look's token table (F3-426); and the JetBrains Mono code face in every look, Retro included (D17a;
-  F3-644 owns the face, and DL-161, F3-426 and F3-430 own general code text elsewhere). It uses the shared header row
-  only where it needs one (F3-635). Its settings (scheme choice, font size, minimap, sticky scroll, diff layout, word wrap) are
-  SSYS-050's. This amends F3-140 and section 7.18 (editor groups are now panels, F3-630) and F3-505's editor-only scope.
-  The editor's ⋮ menu opens F3-642's shared Appearance popover, which offers the editor only scheme, font and size. Its own scheme choice defaults to "Follow look",
-  using the per-look syntax colours above, and can select any scheme from the same code colour-scheme catalog.
-  Retro's editor syntax stays monochrome: brightness and weight in dark, the black and red ribbon in light.
-  Its colour follows the terminal's Retro scheme choice, Phosphor Green or Amber; choosing Amber turns Retro's
-  editor syntax amber. That choice is stored once in F3-642's terminal appearance model; the editor reads it
-  and keeps no copy.
+  The editor is a document tab kind (F3-635) that keeps the two things Jared likes and polishes them (DL-180,
+  D21): its tabs are the contact-aware strip of F3-631, and its scrollbar is the minimap, the only scrollbar of
+  the code pane, with its change marks. Plans/FileManager.md#F-073 stays the minimap scrollbar's file-side owner
+  (its canvas, its thumb, click to jump, drag to scrub, one scroll authority); this unit owns how it looks in
+  each look (F3-647). The editor adds sticky scroll, so the scopes that enclose the top visible line stay pinned
+  at the top of the code pane; find and replace in the file; go to line; a diff mode that shows the two sides
+  side by side when the tab body is wide and inline when it is narrow, switching by the body's own width
+  (F3-635); preview tabs (F3-634); syntax colours per look from each look's token table (F3-426); and the
+  JetBrains Mono code face in every look, Retro included (D17a; F3-644 owns the face, and DL-161, F3-426 and
+  F3-430 own general code text elsewhere). It uses the shared header row only where it needs one (F3-635). Its
+  settings (scheme choice, font size, minimap, sticky scroll, diff layout, word wrap) are SSYS-050's. This
+  amends F3-140 and section 7.18 (editor groups are now panels, F3-630) and F3-505's editor-only scope. The
+  editor's ⋮ menu opens the full Customize screen of F3-650; its appearance, caret, token-color and indentation
+  behavior is F3-651's. Its own scheme choice defaults to "Follow look", using the per-look syntax colours
+  above, and can select any scheme from the same code colour-scheme catalog. Retro's editor syntax stays
+  monochrome: brightness and weight in dark, the black and red ribbon in light. Its colour follows the
+  terminal's Retro scheme choice, Phosphor Green or Amber; choosing Amber turns Retro's editor syntax amber.
+  That choice is stored once in F3-642's terminal appearance model; the editor reads it and keeps no copy.
   Selecting a catalog scheme writes all 17 syntax colours and the editor's background, gutter, text, caret,
-  selection, line numbers, current line, find hits, minimap ink and diff tints. Under a scheme, syntax
-  tokens, text, secondary and dim text, line numbers and diff signs keep at least 4.5:1 contrast, and the
-  find-hit ring keeps 3:1. Catalog schemes meet these floors as
-  authored (F3-642), so the editor draws their values as they are; the floor and the catalog's values are one rule. The floors still apply when the editor
-  draws an imported scheme's colours. The ⋮ menu's Appearance... row shows the scheme name or Follow look together with
-  the font and size.
-  Editor measurements: line height is round(font size × line-height multiplier), 20 px at 13 px × 1.55;
-  character width is measured, 7.8 px for JetBrains Mono at 13 px. The line-number gutter is max(3 digits,
-  line-count digits) × character width + 16 px, plus a 16 px sign column, 56 px under 1,000 lines, with 10
-  px between gutter and text. The header plate is a 30 px row and 1 px hairline, with 11 px blur and 140 %
-  saturation at 72 % opacity; Glass uses an unblurred 90 % plate and NieR an unblurred 92 % paper plate. The
-  row hides below 150 px body height. The minimap track is 22 px wide, with a 13 px line lane and 4 px mark
-  lane; below 420 px body width, or with the minimap off, it becomes a 10 px marks-only track. Its thumb is
-  at least 24 px and centred on the exact visible range; the lane maps 80 columns. Files that fit draw at 3
-  px pitch with no thumb; long files aggregate per pixel row. The horizontal thumb is 6 px, appears on hover
-  or scroll, and fades after 900 ms. Sticky scroll shows at most 3 lines, with a 1-5 line range, and turns
-  off below 240 px code-area height. Automatic diff uses side by side at 900 px and returns inline below 852
-  px, with 48 px hysteresis; forced side by side falls back inline below 600 px, and switching waits for the
-  final resize call. Changes show 3 context lines, never fold 1-2 lines at file edges, and mark words only
-  for pairs at least 40 % alike. Find is min(440 px, body minus track minus 24 px), becomes a full-width bar
-  below 440 px, hides toggles below 340 px, uses 24 px targets and caps hits at 9,999, displayed as 9999+.
-  Go to line is min(320 px, body minus 24 px). The focus band uses code.editing.goto-highlight-ms, default
-  5,000 ms, then fades for 600 ms, instantly under Reduced Motion. Reveal is 150 ms per row with an 8 ms
-  stagger capped at 40 rows in the first viewport only; caret blink is 1.06 s and the thumb has no easing.
-  Undo groups changes of one kind on one line within 900 ms and keeps 400 steps. Rendering covers visible
-  lines plus 24 above and below; a far jump guesses when more than 300 lines past the tokenized prefix;
-  background tokenizing processes 1,200 lines per 12 ms slice; brace scopes wait for full tokenizing above
-  3,000 lines. Saved editor state carries path, reveal line, scroll top, mode and optional diff layout;
-  buffer state adds title, language and edit or read-only state; a buffer's text is not saved in the tab state
+  selection, line numbers, current line, find hits, minimap ink and diff tints. Under a scheme, syntax tokens,
+  text, secondary and dim text, line numbers and diff signs keep at least 4.5:1 contrast, and the find-hit ring
+  keeps 3:1. Catalog schemes meet these floors as authored (F3-642), so the editor draws their values as they
+  are; the floor and the catalog's values are one rule. The floors still apply when the editor draws an imported
+  scheme's colours. The ⋮ menu's Appearance... row shows the scheme name or Follow look together with the font
+  and size. Editor measurements: line height is round(font size × line-height multiplier), 20 px at 13 px ×
+  1.55; character width is measured, 7.8 px for JetBrains Mono at 13 px. The line-number gutter is max(3 digits,
+  line-count digits) × character width + 16 px, plus a 16 px sign column, 56 px under 1,000 lines, with 10 px
+  between gutter and text. The header plate is a 30 px row and 1 px hairline, with 11 px blur and 140 %
+  saturation at 72 % opacity; Glass uses an unblurred 90 % plate and NieR an unblurred 92 % paper plate. The row
+  hides below 150 px body height. The minimap track is 22 px wide, with a 13 px line lane and 4 px mark lane;
+  below 420 px body width, or with the minimap off, it becomes a 10 px marks-only track. Its thumb is at least
+  24 px and centred on the exact visible range; the lane maps 80 columns. Files that fit draw at 3 px pitch with
+  no thumb; long files aggregate per pixel row. The horizontal thumb is 6 px, appears on hover or scroll, and
+  fades after 900 ms. Sticky scroll shows at most 3 lines, with a 1-5 line range, and turns off below 240 px
+  code-area height. Automatic diff uses side by side at 900 px and returns inline below 852 px, with 48 px
+  hysteresis; forced side by side falls back inline below 600 px, and switching waits for the final resize call.
+  Changes show 3 context lines, never fold 1-2 lines at file edges, and mark words only for pairs at least 40 %
+  alike. Find is min(440 px, body minus track minus 24 px), becomes a full-width bar below 440 px, hides toggles
+  below 340 px, uses 24 px targets and caps hits at 9,999, displayed as 9999+. Go to line is min(320 px, body
+  minus 24 px). The focus band uses code.editing.goto-highlight-ms, default 5,000 ms, then fades for 600 ms,
+  instantly under Reduced Motion. Reveal is 150 ms per row with an 8 ms stagger capped at 40 rows in the first
+  viewport only; caret blink is 1.06 s and the thumb has no easing. Undo groups changes of one kind on one line
+  within 900 ms and keeps 400 steps. Rendering covers visible lines plus 24 above and below; a far jump guesses
+  when more than 300 lines past the tokenized prefix; background tokenizing processes 1,200 lines per 12 ms
+  slice; brace scopes wait for full tokenizing above 3,000 lines. Saved editor state carries path, reveal line,
+  scroll top, mode, optional diff layout and the bounded appearance override of SP-333; buffer state adds title,
+  language and edit or read-only state; a buffer's text is not saved in the tab state
   (Plans/storage-plan.md#SP-330), and an unsaved buffer's text is kept by unsaved editor recovery
-  (Plans/storage-plan.md#SP-169) (amended 2026-10-10). The line is a
-  reveal target and top restores scroll. Untitled buffers are numbered Untitled 1, Untitled 2 and onward.
-  Editor keys are Ctrl+F, Ctrl+H, Ctrl+G, Ctrl+S, F3/Shift+F3 and Alt+F5/Shift+Alt+F5 for next/previous
-  change; find uses Alt+C and Alt+R, Ctrl+Shift+1 replaces one and Ctrl+Alt+Enter replaces all; Alt+W
-  remains the host close key and whole word has no shortcut. Scheme tints in dark/light are add 12 %/10 %,
-  modified 10 %/8 %, deleted 12 %/9 %, conflict 15 %/12 %, added-word marks 30 %/22 % and deleted-word marks
-  30 %/20 %. Current line is 5 %/6 % of foreground, focus band ANSI blue at 16 %, minimap ink alpha .28/.34.
-  Retro dark Amber uses foreground, caret and selection #ffc25f; keywords and current line numbers #ffedd1;
-  strings, links and code #ffd797; comments and line numbers #c37800; functions, macros and tags #ffdfad;
-  types #ffce7e; numbers, escapes, headings and variables #fff3de; punctuation #e38c00; properties and
-  attributes #ffcc79; current-line wash rgba(255,194,95,.06), focus band .14, find-hit fills
-  rgba(255,243,222,.18/.34) and ring #fff3de. The concept's measured 10,000-line scroll step about 1.2 ms,
-  far jump about 8 ms and keystroke about 8 ms (about 120 ms before isolation) are source measurements, not
-  native certification.
+  (Plans/storage-plan.md#SP-169) (amended 2026-10-10). The line is a reveal target and top restores scroll.
+  Untitled buffers are numbered Untitled 1, Untitled 2 and onward. Editor keys are Ctrl+F, Ctrl+H, Ctrl+G,
+  Ctrl+S, F3/Shift+F3 and Alt+F5/Shift+Alt+F5 for next/previous change; find uses Alt+C and Alt+R, Ctrl+Shift+1
+  replaces one and Ctrl+Alt+Enter replaces all; Alt+W remains the host close key and whole word has no shortcut.
+  Scheme tints in dark/light are add 12 %/10 %, modified 10 %/8 %, deleted 12 %/9 %, conflict 15 %/12 %,
+  added-word marks 30 %/22 % and deleted-word marks 30 %/20 %. Current line is 5 %/6 % of foreground, focus band
+  ANSI blue at 16 %, minimap ink alpha .28/.34. Retro dark Amber uses foreground, caret and selection #ffc25f;
+  keywords and current line numbers #ffedd1; strings, links and code #ffd797; comments and line numbers #c37800;
+  functions, macros and tags #ffdfad; types #ffce7e; numbers, escapes, headings and variables #fff3de;
+  punctuation #e38c00; properties and attributes #ffcc79; current-line wash rgba(255,194,95,.06), focus band
+  .14, find-hit fills rgba(255,243,222,.18/.34) and ring #fff3de. The concept's measured 10,000-line scroll step
+  about 1.2 ms, far jump about 8 ms and keystroke about 8 ms (about 120 ms before isolation) are source
+  measurements, not native certification.
 gui_related: true
 gui_classification_reason: Defines the code editor as a tab kind and the editing features it adds.
 split_recommended: false
@@ -1544,7 +1592,7 @@ acceptance_criteria:
   - "The editor scheme choice defaults to Follow look, can select any catalog scheme and opens the same Appearance popover component from its ⋮ menu."
   - "Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy."
   - "Every scheme supplies 17 syntax tokens, paints all listed editor surfaces and meets the 4.5:1 text and diff-sign floor and 3:1 find-hit ring floor; Appearance... shows the scheme or Follow look, font and size."
-  - "The Appearance popover opened from the editor offers only scheme, font and size, and the editor's 4.5:1 floor for syntax tokens holds when it draws any catalog or imported scheme."
+  - "The editor Appearance entry opens F3-650's full Customize screen, and the editor's 4.5:1 floor for syntax tokens holds when it draws any catalog or imported scheme."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -1560,14 +1608,22 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)"
-  - "Plans/Decision_Log.md#DL-180"
-  - "Plans/Decision_Log.md#DL-183"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D21, D17)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md, SHA-256 1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299 (D17a)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
+  SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md,
+  SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)
+- Plans/Decision_Log.md#DL-180
+- Plans/Decision_Log.md#DL-183
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D21, D17)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md, SHA-256 1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299
+  (D17a)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md,
+  SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md,
+  SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "sticky scroll"
   - "find and replace"
@@ -1581,15 +1637,25 @@ compatibility_only_notes:
   - "The width at which the diff turns inline was a concept number still to come (wave 2); retired 2026-10-10 (R35, panels NUMBERS 6026fa8432): the canonical text now gives side by side at 900 px and inline below 852 px."
   - "The concept saves an untitled buffer's text, up to 12,000 characters, in its tab state (panels NUMBERS 6026fa8432, editor saved state); that is concept lineage only: lead ruling L25 (2026-10-10) keeps buffer text out of the Home record (SP-330)."
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): The editor's Appearance popover offers only scheme, font and size, and catalog schemes meet the editor's 4.5:1 syntax-token floor as authored, so the editor draws their values as they are; the floor and the catalog's values are one rule."
-  - "Amended 2026-10-10 (R35 review, SP-330): A buffer's tab state keeps title, language and edit or read-only state only; its text stays out of the Home record and the concept's 12,000-character text state is lineage (lead ruling L25: SP-330 does not admit buffer text)."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds editor metrics, minimap, sticky scroll, diff, find, rendering, undo, state and scheme tint numbers."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Specifies scheme-painted editor surfaces, contrast floors and Appearance row detail."
-  - "Amended 2026-10-10 (D30, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
-  - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
+- 'Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): The editor''s Appearance popover offers only scheme, font and
+  size, and catalog schemes meet the editor''s 4.5:1 syntax-token floor as authored, so the editor draws their values
+  as they are; the floor and the catalog''s values are one rule.'
+- 'Amended 2026-10-10 (R35 review, SP-330): A buffer''s tab state keeps title, language and edit or read-only state
+  only; its text stays out of the Home record and the concept''s 12,000-character text state is lineage (lead ruling
+  L25: SP-330 does not admit buffer text).'
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds editor metrics, minimap, sticky scroll, diff, find, rendering,
+  undo, state and scheme tint numbers.'
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Specifies scheme-painted editor surfaces, contrast floors
+  and Appearance row detail.'
+- 'Amended 2026-10-10 (D30, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no
+  copy.'
+- 'Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor
+  and terminal.'
+- 'Amended 2026-10-14: The editor-only scheme/font/size popover is replaced by F3-650 and F3-651.'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/FileManager.md
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FileManager.md#F-073, ContractName:Plans/FinalGUISpec.md#F3-644, ContractName:Plans/FinalGUISpec.md#F3-505
@@ -1720,38 +1786,45 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Puppet Master's chrome follows one shell-wide rule (DL-184; the rule is Plans/DRY_Rules.md#DR-069): no box with a
-  coloured border or stripe on one side, no emoji, and no pills, meaning fully rounded capsules used as tabs, tags,
-  badges, buttons or status chips. Keyboard key caps are the one capsule-like shape allowed, and a program's own output
-  in a terminal may contain emoji. This unit owns how the rule looks. Selection is shown by the surface itself: the
-  fused tab silhouette (F3-631), a filled or tinted row, the NieR square cursor, Retro reverse video, or a fill or
-  outline on the element's own box; never an edge stripe. A status is a mark and a word from the one status set (DL-141,
-  F3-585; the rail's glyphs, F3-619), a count is a plain number, and an icon is a bundled SVG icon_id (section 2.6).
-  Where an owner unit says pill, chip or badge for a status or a count, it renders as a mark and a word or a plain
-  number; where a pill was a button or a tab, it renders as the look's own rectangle with the look's inner radius, never
-  a radius of half its height or more. Retired defaults, each amended in place with a dated note: section 3.5's "3px
-  left-edge accent stripe" as the active or selected indicator and F3-039's token for it; Appendix C's and F3-276's
-  accent left border on call-to-action cards; F3-469's 3 px inset left accent bar; the workgroup pill of section 5.1;
-  and the pill skins of F3-422 (the chat footer pill), F3-463 (the Orchestrator strip's pills), F3-464 (the page tabs'
-  frost and mint-mix pills) and F3-467 (Friendly's pill fields). The chat's, Settings' and the left rail's own
-  statements of the rule (APR-034, F3-534, Settings section 22, F3-618, F3-619, DR-057) stay, as instances of this one
-  rule. Checks: F3-619's pill detector (an element whose corner radius is at least half its height and which has a fill
-  or a border, key caps excepted) and a side-border detector (a coloured border, or an inset shadow standing in for one,
-  of 2 px or more on one side only) find nothing in any look except the structural rails of working activities (APR-034, DR-069), and no emoji appears in chrome text or icons.
-  A chosen option is filled on its own box, never underlined. Debug Console sub-tabs and every segmented
-  toggle use each look's neutral selection fill in Friendly, Glass and Basic, never an accent; Glass adds
-  its 1 px rim on the top edge of the filled box, Retro keeps reverse video and NieR its ink block (F3-490).
+  Puppet Master's chrome follows one shell-wide rule (DL-184; the rule is Plans/DRY_Rules.md#DR-069): no box
+  with a coloured border or stripe on one side, no emoji, and no pill-shaped labels, meaning status chips, tags,
+  suggestion chips and state badges. Pill action buttons such as Install and Sign in, and rounded Friendly/Glass
+  action buttons, are allowed; keyboard key caps and non-label progress marks are not labels, and a program's
+  own output in a terminal may contain emoji. This unit owns how the rule looks. Selection is shown by the
+  surface itself: the fused tab silhouette (F3-631), a filled or tinted row, the NieR square cursor, Retro
+  reverse video, or a fill or outline on the element's own box; never an edge stripe. A status is a mark and a
+  word from the one status set (F3-658, consumed by F3-585 and F3-619), a count is a plain number, and an icon
+  is a bundled SVG icon_id (section 2.6). Where an owner unit says pill, chip or badge for a status or a count,
+  it renders as a mark and a word or a plain number; action buttons may retain their approved rounded shape,
+  while tabs and selectors use their specified joined/fused geometry. Retired defaults, each amended in place
+  with a dated note: section 3.5's "3px left-edge accent stripe" as the active or selected indicator and
+  F3-039's token for it; Appendix C's and F3-276's accent left border on call-to-action cards; F3-469's 3 px
+  inset left accent bar; the workgroup pill of section 5.1; and the pill skins of F3-422 (the chat footer pill),
+  F3-463 (the Orchestrator strip's pills), F3-464 (the page tabs' frost and mint-mix pills) and F3-467
+  (Friendly's pill fields). The chat's, Settings' and the left rail's own statements of the rule (APR-034,
+  F3-534, Settings section 22, F3-618, F3-619, DR-057) stay, as instances of this one rule. Checks: F3-619's
+  pill detector (an element whose corner radius is at least half its height and which has a fill or a border,
+  label-like elements only; action buttons, key caps and non-label progress marks excepted) and a side-border
+  detector (a coloured border, or an inset shadow standing in for one, of 2 px or more on one side only) find
+  nothing in any look except the structural rails of working activities (APR-034, DR-069), and no emoji appears
+  in chrome text or icons. A chosen option is filled on its own box, never underlined. Debug Console sub-tabs
+  and every segmented toggle use each look's neutral selection fill in Friendly, Glass and Basic, never an
+  accent; Glass adds its 1 px rim on the top edge of the filled box, Retro keeps reverse video and NieR its ink
+  block (F3-490).
 gui_related: true
 gui_classification_reason: Owns how the shell-wide ban on side stripes, emoji and pills looks, and lists the retired defaults.
 split_recommended: false
 depends_on: [DL-184, DL-141, F3-585, F3-619]
 unblocks: [DR-069, ATS-075]
 acceptance_criteria:
-  - "The pill detector finds nothing on any surface in any look or NieR Mode, key caps excepted; the side-border detector exempts the structural rails of working activities (APR-034, DR-069) and otherwise finds nothing."
-  - "No emoji appears in Puppet Master's chrome; a terminal program's own output is exempt."
-  - "Every retired default listed here carries a dated note in its own unit or section."
-  - "Selection everywhere is shown by the element's own surface, never by an edge stripe."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+- The pill detector finds no pill-shaped status/tag/suggestion/state label in any look; action buttons, key caps,
+  switch keys and non-label progress marks are exempt; the side-border detector exempts the structural rails of working
+  activities (APR-034, DR-069) and otherwise finds nothing.
+- No emoji appears in Puppet Master's chrome; a terminal program's own output is exempt.
+- Every retired default listed here carries a dated note in its own unit or section.
+- Selection everywhere is shown by the element's own surface, never by an edge stripe.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are
+  created by this unit.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -1766,10 +1839,15 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-184"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D22 and Jared's brief)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
+- Plans/Decision_Log.md#DL-184
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D22 and Jared's brief)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md,
+  SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-11-onboarding-no-pills/README.md, SHA-256 1ab0aedc5910ab03097439cf9cd48da77eb7cefad458ca705a556727d327fd1a
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "3px left-edge accent stripe"
   - "accent-left-border"
@@ -1781,12 +1859,16 @@ negative_constraints:
   - "Do not put an emoji in Puppet Master's chrome."
 compatibility_only_notes: []
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (lead ruling L21): The structural-rail carve-out applies to the side-border check only."
-  - "Amended 2026-10-10 (lead ruling L21): The side-border check exempts the structural rails of working activities (APR-034, DR-069)."
-  - "Amended 2026-10-11 (lead ruling 2026-10-11, D29): A chosen option uses its own filled box and never an underline."
+- 'Amended 2026-10-10 (lead ruling L21): The structural-rail carve-out applies to the side-border check only.'
+- 'Amended 2026-10-10 (lead ruling L21): The side-border check exempts the structural rails of working activities
+  (APR-034, DR-069).'
+- 'Amended 2026-10-11 (lead ruling 2026-10-11, D29): A chosen option uses its own filled box and never an underline.'
+- 'Amended 2026-10-14: The earlier blanket button ban and all-elements pill detector are superseded by Jared''s label-only
+  clarification (DL-196).'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-184, ContractName:Plans/DRY_Rules.md#DR-069, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-585

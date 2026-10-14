@@ -13111,23 +13111,25 @@ status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   DL-162 records the owner decision of 2026-10-09 that the left rail takes concept D, "Polish", of the left-rail
-  review copy. The nine rail panels keep the Cozy Shelves structure and coloured shelf boxes with tighter geometry
-  (a 3 px gutter, a 2 px inset, an outer radius R and an inner radius R minus the inset, row names 24 px from the
-  rail edge), one type ladder with nothing under 11 px, and the looks' own faces (F3-618). Statuses are a glyph
-  whose shape is the state plus a coloured word, counts are plain tabular numbers, and nothing is a pill or carries a
-  coloured side bar (F3-619). Text fits by layout and is never abbreviated, tab strips included (F3-620; F3-480 (3),
-  F3-445, CRAU-098, UCC-136 and GI-039 amended). Every rail dropdown is the chat picker, and motion is per theme family:
-  Basic crisp, Friendly springy, Glass gliding with blur only on the shelf boxes, Retro stepped and NieR Mode ink,
-  under the Animation speed and reduced-motion settings (F3-621). The worktree owner filter becomes an Owner
-  dropdown and the publish and review card folds (F3-622, W-075 amended), with no new command. DR-057 keeps the
-  grammar in one owner. The owner answered its two open questions on 2026-10-10, one set of status marks (F3-585's
-  and the rail's) and some frost back on the plates, and the glyph and Liquid Glass design threads carry them; his
-  other answers that day are in the concept: the worktree Owner filter takes several owners (W-075), Current Branch
-  leads Actions & Pipelines (GI-011), the binding picker shows only with several bindings (F3-528) and an expired
-  artifact reads Expired (F3-619). Settled later
-  under this decision: the Jujutsu view's tabs (DL-163), the remaining panels and the bottom Debug tab in their
-  owner units with no new command, action or wiring row, the paused, immutable and errored glyphs (F3-619), and the
-  More tray as the chat picker (F3-625).
+  review copy. The nine rail panels keep the Cozy Shelves structure and coloured shelf boxes with tighter
+  geometry (a 3 px gutter, a 2 px inset, an outer radius R and an inner radius R minus the inset, row names 24
+  px from the rail edge), one type ladder with nothing under 11 px, and the looks' own faces (F3-618). Statuses
+  are a glyph whose shape is the state plus a coloured word, counts are plain tabular numbers, and nothing is a
+  pill or carries a coloured side bar (F3-619). Text fits by layout and is never abbreviated, tab strips
+  included (F3-620; F3-480 (3), F3-445, CRAU-098, UCC-136 and GI-039 amended). Every rail dropdown is the chat
+  picker, and motion is per theme family: Basic crisp, Friendly springy, Glass gliding with blur only on the
+  shelf boxes, Retro stepped and NieR Mode ink, under the Animation speed and reduced-motion settings (F3-621).
+  The worktree owner filter becomes an Owner dropdown and the publish and review card folds (F3-622, W-075
+  amended), with no new command. DR-057 keeps the grammar in one owner. The owner answered its two open
+  questions on 2026-10-10, one set of status marks (F3-585's and the rail's) and some frost back on the plates,
+  and the glyph and Liquid Glass design threads carry them; his other answers that day are in the concept: the
+  worktree Owner filter takes several owners (W-075), Current Branch leads Actions & Pipelines (GI-011), the
+  binding picker shows only with several bindings (F3-528) and an expired artifact reads Expired (F3-619).
+  Settled later under this decision: the Jujutsu view's tabs (DL-163), the remaining panels and the bottom Debug
+  tab in their owner units with no new command, action or wiring row, the paused, immutable and errored glyphs
+  (F3-619), and the More tray as the chat picker (F3-625). Amended 2026-10-14: DL-201 records D44, settling the
+  later shared-glyph decision. F3-658 supersedes this entry's separate chat/rail glyph sets and open unification
+  question; the historical decision remains lineage.
 gui_related: true
 gui_classification_reason: Records an owner decision on the left rail's presentation.
 split_recommended: false
@@ -13158,8 +13160,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06"
-  - "Concepts/leftrail-redesign/src/concepts/d/ at commit c93e341606 (concept lineage only)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06
+- Concepts/leftrail-redesign/src/concepts/d/ at commit c93e341606 (concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-10-glyph-catalog-addendum/README.md, SHA-256 3d0497f01c878e8aa6f99fa8f602b9b3dbf887aead2a24d62c12969bd47a1d31
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "DL-162"
   - "Polish"
@@ -13170,6 +13174,7 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
+
 ```
 
 ### DL-163 - The Jujutsu View Of Source Control Gets Its Own Five Tabs
@@ -14152,13 +14157,16 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  DL-184 records Jared's rule of 2026-10-09, restated for the home redesign, as one shell-wide rule: no box with a
-  coloured border or stripe on one side, no emoji in Puppet Master's own chrome, and no pills (fully rounded capsules
-  used as tabs, tags, badges, buttons or status chips) anywhere in Puppet Master; keyboard key caps stay the one
-  capsule-like shape allowed, and a program's own output in the terminal may contain emoji (DR-069, F3-648). Selection
-  is shown by the surface itself, never by an edge stripe. The shell's default 3 px left-edge selection stripe, the
-  accent left borders and the pill skins on tab-like controls retire; the chat's, Settings' and the left rail's own
-  statements of the rule stay as instances of the one rule.
+  DL-184 records Jared's rule of 2026-10-09, restated for the home redesign, as one shell-wide rule: no box with
+  a coloured border or stripe on one side, no emoji in Puppet Master's own chrome, and no pills (fully rounded
+  capsules used as tabs, tags, badges, buttons or status chips) anywhere in Puppet Master; keyboard key caps
+  stay the one capsule-like shape allowed, and a program's own output in the terminal may contain emoji (DR-069,
+  F3-648). Selection is shown by the surface itself, never by an edge stripe. The shell's default 3 px left-edge
+  selection stripe, the accent left borders and the pill skins on tab-like controls retire; the chat's,
+  Settings' and the left rail's own statements of the rule stay as instances of the one rule. Jared clarified
+  this on 2026-10-11: the prohibition is pill-shaped labels, including status, suggestion and state chips; pill
+  action buttons such as Install/Sign in and Friendly/Glass buttons are fine. DL-196 records this correction;
+  DR-069 and F3-648 carry the current rule.
 gui_related: true
 gui_classification_reason: Records the owner's shell-wide ban on side stripes, emoji and pills.
 split_recommended: false
@@ -14183,7 +14191,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D22 and Jared's brief)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D22 and Jared's brief)
+- /mnt/Cursor/share/puppet-master/2026-10-11-onboarding-no-pills/README.md, SHA-256 1ab0aedc5910ab03097439cf9cd48da77eb7cefad458ca705a556727d327fd1a
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "DL-184"
 negative_constraints:
@@ -14193,6 +14204,7 @@ stale_retired_dispositions:
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
+
 ```
 
 ### DL-185 - One Demo Studio For All Of PMConcept7 And What The 5.6 Pro Chat Needs When It Moves In
@@ -14468,3 +14480,621 @@ These rows are preserved as audit-lineage notes only. They do not prove repair b
 - `registry_line 341` (explicitly_deferred; source line 1152; `sfk-f6f04565ca3fcaa8bf3a4f6d`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] whole doc: steer asks about "decision record schema/GUI" no such schema or GUI exists anywhere in the file; every DL unit is a prose decision statement with governance metadata only.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
+
+## DL-189 — Terminal Customize from the panel and Settings (2026-10-14)
+
+```yaml
+plan_unit_id: DL-189
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared approved both terminal Customize entry points on 2026-10-13. The screen keeps live field editing, quick
+  sets, sample trials and truthful hints; All terminals writes the same Project rows as Settings and This
+  terminal stays an override. F3-650 owns the screen and F3-642/SSYS-051 its fields and persistence boundaries.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The cited owner units reflect this decision and retain its source and later supersessions.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256 1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-650
+- Plans/Settings_System.md#SSYS-051
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/Settings_System.md#SSYS-051
+
+## DL-190 — Full editor Customize and one preview rule (2026-10-14)
+
+```yaml
+plan_unit_id: DL-190
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared requested an editor Customize screen like the terminal/NieR screens on 2026-10-13 and answered its seven
+  cards on 2026-10-14: keep the design, default This editor with All available like the terminal, keep docking
+  under one visibility rule for both screens, build token colors, keep indentation, move the tab rows to Saving
+  & tabs, and keep the caret/motion behavior. His Show spaces correction requires selectors never to wrap.
+  F3-650/F3-651 and SSYS-052 own the resulting requirements.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The cited owner units reflect this decision and retain its source and later supersessions.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-650
+- Plans/FinalGUISpec.md#F3-651
+- Plans/Settings_System.md#SSYS-052
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/FinalGUISpec.md#F3-651, ContractName:Plans/Settings_System.md#SSYS-052
+
+## DL-191 — Liquid Glass reads as lenses and reflections (2026-10-14)
+
+```yaml
+plan_unit_id: DL-191
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared approved the v2/v3 Glass direction and asked for magnification/reflections rather than chromatic
+  corruption, calmer transitions, curved slower switches and coherent controls. F3-652 replaces the old Glass
+  material constraints. Publishing Glass together with wallpapers remains pending his final review; a
+  source-only landing is not publication.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The cited owner units reflect this decision and retain its source and later supersessions.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-glass-v3/README.md, SHA-256 0e424cba2f2d03932159b6e25977959f23d8f65cbcca57ca1d067b505f61db54
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-11-liquid-glass-v2/README.md, SHA-256 ed0f7ebed280627aba47197a0c8a9273bb4b17373f79cd3fcb6c0b44344f6fb9
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-652
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-652
+
+## DL-192 — Wallpapers are selectable from every look (2026-10-14)
+
+```yaml
+plan_unit_id: DL-192
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared approved W1 and retained W2–W4: five wallpapers for each other look, all selectable from any look, one
+  choice across looks, each look keeping its own ground by default and NieR returning to its scenes through
+  Look's own. Ribbons remains Glass's default. W5 retires the old Glass background row at the coordinated
+  Glass/wallpaper publication, held after the 19:25 correction. F3-653, SSYS-054 and DR-073 own the result.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The cited owner units reflect this decision and retain its source and later supersessions.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-653
+- Plans/Settings_System.md#SSYS-054
+- Plans/DRY_Rules.md#DR-073
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/Settings_System.md#SSYS-054, ContractName:Plans/DRY_Rules.md#DR-073
+
+## DL-193 — Notification defaults and Usage under the bell (2026-10-14)
+
+```yaml
+plan_unit_id: DL-193
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared approved the built defaults for notification questions 1–6 and explicitly answered question 7: Usage
+  notices appear under the bell like every other page. F3-447 owns timing/staging, F3-453 the shared inbox and
+  F3-460 material. The unbuilt automatic eight-second terminal-notice dismissal was not adopted by approval of
+  built defaults.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The cited owner units reflect this decision and retain its source and later supersessions.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-447
+- Plans/FinalGUISpec.md#F3-453
+- Plans/FinalGUISpec.md#F3-460
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-447, ContractName:Plans/FinalGUISpec.md#F3-453, ContractName:Plans/FinalGUISpec.md#F3-460
+
+## DL-194 — Wizard and Orchestrator minor theme matching (2026-10-14)
+
+```yaml
+plan_unit_id: DL-194
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared allowed minor/theme-matching fixes while full redesign waits, then answered all three cards: keep
+  Friendly white/plum plates, keep stacked answer options, and make the title-bar Light/Dark/Auto chosen fill
+  match the shared grey. F3-655 owns presentation and the existing planning/execution owners retain behavior.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The cited owner units reflect this decision and retain its source and later supersessions.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-wizard-orch-theme/NOTES.md, SHA-256 ca7f206e6b92440d26972e4eb4113348722fb45245ba8429dad46633b56b49b8
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-655
+- Plans/Planning_Wizard.md#PWIZ-021
+- Plans/Orchestrator_Page.md#OP-033
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-655, ContractName:Plans/Planning_Wizard.md#PWIZ-021, ContractName:Plans/Orchestrator_Page.md#OP-033
+
+## DL-195 — Connected onboarding art and Glass (2026-10-14)
+
+```yaml
+plan_unit_id: DL-195
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared required polished connected limbs, redesigned art captions and project-name field, shared Glass
+  step/choice controls and no temporary theme switch during Create Project. He approved the art and its landing
+  with the no-pill-label work. F3-656 owns this presentation; GLY-4 remains a separate unanswered scene-picture
+  decision.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The cited owner units reflect this decision and retain its source and later supersessions.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-onboarding-art-glass/README.md, SHA-256 ce5e5e90df41f180e54b89e4fb3fe0087164039728a902aa481cbcc3adacb088
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-656
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-656
+
+## DL-196 — The pill ban concerns labels (2026-10-14)
+
+```yaml
+plan_unit_id: DL-196
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared clarified on 2026-10-11 that pill-shaped status labels, suggestion chips and state badges must go, while
+  pill action buttons such as Install/Sign in and rounded Glass/Friendly actions are fine. This supersedes
+  DL-184's blanket action-button language. DR-069 owns the rule and F3-648 its presentation and detector
+  boundary.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The cited owner units reflect this decision and retain its source and later supersessions.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-11-onboarding-no-pills/README.md, SHA-256 1ab0aedc5910ab03097439cf9cd48da77eb7cefad458ca705a556727d327fd1a
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/DRY_Rules.md#DR-069
+- Plans/FinalGUISpec.md#F3-648
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+
+```
+
+ContractRef: ContractName:Plans/DRY_Rules.md#DR-069, ContractName:Plans/FinalGUISpec.md#F3-648
+
+## DL-197 — Settled contrast includes resting hover and placeholders (2026-10-14)
+
+```yaml
+plan_unit_id: DL-197
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  The 2026-10-14 assignment confirms 4.5:1 for settled text, including resting hover and placeholders;
+  transitions under 0.4 s are recorded, not failed, and disabled controls are exempt but legible. The
+  coordinator's earlier 04:18 timing ruling is source lineage, not a claim that every word came directly from
+  Jared. F3-654 is the one owner of this interpretation.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The cited owner units reflect this decision and retain its source and later supersessions.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-654
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-654
+
+## DL-198 — Hover polish and the Friendly breathing ring (2026-10-14)
+
+```yaml
+plan_unit_id: DL-198
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared approved the Basic/Friendly/Retro/NieR hover/press polish on 2026-10-13 and kept Friendly's breathing
+  ring. F3-465 and DR-072 own the shared marker and its reduced-motion form, preserving the earlier
+  stationary-pointer/filtering repairs and leaving Glass optical hover with its own material owner.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The cited owner units reflect this decision and retain its source and later supersessions.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-hover-polish-all-looks/NOTES.md, SHA-256 6a86e56a9edc818c4a6c812e484e40c377cf7657180d652457de64ab82fdb12c
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-465
+- Plans/DRY_Rules.md#DR-072
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/DRY_Rules.md#DR-072
+
+## DL-199 — Clear panel drop zones and polished resize feedback (2026-10-14)
+
+```yaml
+plan_unit_id: DL-199
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared approved panel drag-and-drop and requested further resize-glow polish. F3-630 owns the diagonal
+  split/explicit Join model, complete-layout fit and readable target names; F3-657 owns the polished feedback on
+  all bars. A target name must never be hidden by the carried tab at rest. The caption follow-up and source
+  verification do not change the panel command transaction.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The cited owner units reflect this decision and retain its source and later supersessions.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-panel-dnd-resize/NOTES.md, SHA-256 03a80f0dea3235ea637149bbec63626c4a4be8521078f9dd601f2b691f03d2d6
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-resize-glow/NOTES.md, SHA-256 0a20256d730c5b51cda138b14845a5dc2e7dfdda04385a3956721a73fb657c16
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-630
+- Plans/FinalGUISpec.md#F3-657
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-657
+
+## DL-200 — Settings stays put on updates and enters chapters at the top (2026-10-14)
+
+```yaml
+plan_unit_id: DL-200
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  The approved M4 design, confirmed by the 2026-10-14 assignment, keeps the reader's anchor on in-place updates,
+  restores exact Settings place on return and opens deliberately chosen chapters at the top. Settings occupies
+  its final width from frame one. SSYS-053 owns the behavior; the old jumping baseline and performance-only
+  workarounds are not accepted alternatives.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The cited owner units reflect this decision and retain its source and later supersessions.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-perf-fixes/M4-DESIGN-DECISION.md, SHA-256 df7fa857254291a428bc6d9ef6411e1b586beee52aec8a11557ece98ee257df0
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/Settings_System.md#SSYS-053
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-053
+
+## DL-201 — D44 approves the shared glyph rollout (2026-10-14)
+
+```yaml
+plan_unit_id: DL-201
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-201 records Jared's D44 answer, “i agree,” approving GLY-0 through GLY-3 as recommended: one shared default
+  set, warning triangle and failed ring with cross, fitted per-look inks, and shared tube marks replacing the
+  rail's solid badges. F3-658 owns the resulting presentation and registry. GLY-4 is separate and unanswered.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The current consumers reference F3-658 and historical separate-set assertions are superseded.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-10-glyph-catalog-addendum/README.md, SHA-256 3d0497f01c878e8aa6f99fa8f602b9b3dbf887aead2a24d62c12969bd47a1d31
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-658
+preserved_exact_tokens:
+- DL-201
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-658

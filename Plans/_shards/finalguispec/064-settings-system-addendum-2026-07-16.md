@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31376-L32277
+Source lines: L31358-L32269
 
-Source SHA256: `f884f6a1d8d9ac7ade3931dca847010cd6a0690faff184e1f7091221a892f2e5`
+Source SHA256: `2fbb46a82dc48c06df2698570d86fea36430c555501760e0328853d3170e9f49`
 
 ---
 
@@ -409,20 +409,25 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Setting rows render their control by mapping the inventory type field to a renderer. The
-  renderer set is: toggle, select, radio, slider with a value bubble showing the current
-  value, number, text, path with a Browse control, color, action with working-then-done verb
-  states on invocation, multiselect, list, and keyvalue, where multiselect, list, and
-  keyvalue render as expandable editors that open in place beneath the row. The 824-setting
-  inventory's rows resolve across eleven of these renderer types at promotion; the color
-  renderer is part of the contract and serves color-typed rows. Rows show badges from the
-  vocabulary restart, adjudication, and new; status marks for ok, needs-setup, and attention
-  from the derived-status feed; and scope tags from the six scopes global, project, run,
-  persona, account, and provider. A row whose scope includes both project and global renders
-  an inherit-origin line disclosing that the effective value inherits from the global scope
-  and can be overridden at project scope. Amended 2026-10-10 (DL-184, F3-648): a status
-  renders as a mark and a word, the mark in a 1em glyph slot with no container, never a
-  pill; the toggle renderer draws the look's rectangle with a square key, never a capsule.
+  Setting rows render their control by mapping the inventory type field to a renderer. The renderer set is:
+  toggle, select, radio, slider with a value bubble showing the current value, number, text, path with a Browse
+  control, color, action with working-then-done verb states on invocation, multiselect, list, and keyvalue,
+  where multiselect, list, and keyvalue render as expandable editors that open in place beneath the row. The
+  824-setting inventory's rows resolve across eleven of these renderer types at promotion; the color renderer is
+  part of the contract and serves color-typed rows. Rows show badges from the vocabulary restart, adjudication,
+  and new; status marks for ok, needs-setup, and attention from the derived-status feed; and scope tags from the
+  six scopes global, project, run, persona, account, and provider. A Project row discloses its concrete origin
+  (copied, explicit, reset or imported) under SSYS-002 without continuous global inheritance. Amended 2026-10-10
+  (DL-184, F3-648): a status renders as a mark and a word, the mark in a 1em glyph slot with no container, never
+  a pill; the toggle renderer follows the approved switch grammar below; Glass has F3-652's later curved lens
+  variant. A Settings switch has a gripped key and power marks (bar on, hollow square off); the key slides while
+  color wipes behind it, with stepped reverse-video Retro and ink-block NieR variants. Under Reduced Motion the
+  key goes straight to its place and only color may fade for 160 ms. Joined choices fill their selected cell;
+  meters have square ends and Retro counts in blocks. Non-label switch keys are outside the label-pill detector.
+  The general.visual.wallpaper select renderer is the catalog-backed radio gallery of F3-653; this is a
+  registered presentation of select, not a new inventory type. Scope metadata such as global is interpreted by
+  SSYS-002, never as continuous app-global inheritance. Settings shell navigation, retained updates and
+  first-frame width consume SSYS-053.
 gui_related: true
 gui_classification_reason: This unit defines visible setting row control renderers, badge and status mark vocabulary, scope tags, and the inherit-origin line.
 split_recommended: false
@@ -446,8 +451,12 @@ node_compile_hint:
   mode: setting_row_renderer_badge_and_scope_contract
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:1329"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:1329
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/share/puppet-master/2026-10-11-onboarding-no-pills/README.md, SHA-256 1ab0aedc5910ab03097439cf9cd48da77eb7cefad458ca705a556727d327fd1a
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
 - "toggle"
 - "select"
@@ -480,6 +489,7 @@ owner_boundary_notes:
 - "Scope semantics and concrete Project-value source disclosure remain carried by F3-510/F3-442; badge semantics route to their owner contracts (restart rules and adjudication ownership); this unit owns the visible row presentation vocabulary."
 owner_hints:
 - "Plans/FinalGUISpec.md"
+
 ```
 
 ### F3-439 - Instant Apply Model And Save Exceptions

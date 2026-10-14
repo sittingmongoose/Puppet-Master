@@ -465,31 +465,35 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
-  Each Project independently persists theme family, Light/Dark/Auto presentation mode, Glass background mode, Glass
-  alpha/transparency, tooltip enablement, reduced-motion request and background selection. The chat layout is no longer
-  a Settings value (DL-180): the chat stays fixed on the right, its width and pinned History live in the Project's
-  Home layout record (Plans/storage-plan.md#SP-330), the v2 record keeps no pop-out (a popped-out chat lasts only
-  while the app runs and starts back in its column, D32, SP-330), and general.visual.chat-layout-mode is retired
-  (SSYS-050) (amended 2026-10-10, DL-187; it read: its width, pinned History and popped-out state live in the
-  Project's Home layout record (Plans/storage-plan.md#SP-330)). Amended 2026-10-10 (DL-187, D32): the popped-out state is no longer saved anywhere: a popped-out chat
-  starts back in its column after a restart, and a stored Chat Layout value is ignored and cleared on first read, with
-  no pop-out and no notice (SSYS-050). The eight built-in variants are Friendly Dark, Friendly
-  Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, and Basic Light. Final GUI owns the untouched
-  first-open/fresh-Project Basic Dark factory selection; Settings consumes that seed only when no committed Project theme
-  exists. Existing explicit selections and copied detached snapshots win. No-Project rendering is ephemeral Basic Dark.
-  Theme family plus mode apply as the SSYS-009 atomic pair. Family-specific
-  controls (Glass background and transparency, Retro textures and their strengths, Basic high contrast and the older
-  Basic light/dark choice) show only while that family is active (decided 2026-09-27; they were previously kept visible
-  as `not_applicable`); Glass alpha never drops below 0.35 in Dark or
-  0.45 in Light. Appearance preview is non-persistent and reverts on cancel, close, expiry, route change, or Project switch;
-  apply uses the same preview hash and atomic transaction as every other Settings change. Disabling hover tooltips never
-  removes keyboard-focus accessible descriptions or Help/Details. Effective reduced motion is true when either the Project
-  request or platform preference is true; it calms nonessential entrance, hover, parallax, shimmer, and background motion
-  while retaining focus, progress, error, and state-change feedback. Background and transparency apply to the
-  current Project only and never leak through app-global local storage. The application's first frame shows the
-  committed appearance of the Project it opens on, NieR Mode included, read by the pre-paint layer from that Project's
-  Settings (F3-468, DL-153); the pre-paint keeps no copy, and no app-global or cross-Project theme key or paint hint
-  exists.
+  Each Project independently persists theme family, Light/Dark/Auto presentation mode, the shared Wallpaper
+  choice, Glass alpha/transparency, tooltip enablement, reduced-motion request and background selection. The
+  chat layout is no longer a Settings value (DL-180): the chat stays fixed on the right, its width and pinned
+  History live in the Project's Home layout record (Plans/storage-plan.md#SP-330), the v2 record keeps no
+  pop-out (a popped-out chat lasts only while the app runs and starts back in its column, D32, SP-330), and
+  general.visual.chat-layout-mode is retired (SSYS-050) (amended 2026-10-10, DL-187; it read: its width, pinned
+  History and popped-out state live in the Project's Home layout record (Plans/storage-plan.md#SP-330)). Amended
+  2026-10-10 (DL-187, D32): the popped-out state is no longer saved anywhere: a popped-out chat starts back in
+  its column after a restart, and a stored Chat Layout value is ignored and cleared on first read, with no
+  pop-out and no notice (SSYS-050). The eight built-in variants are Friendly Dark, Friendly Light, Glass Dark,
+  Glass Light, Retro Dark, Retro Light, Basic Dark, and Basic Light. Final GUI owns the untouched
+  first-open/fresh-Project Basic Dark factory selection; Settings consumes that seed only when no committed
+  Project theme exists. Existing explicit selections and copied detached snapshots win. No-Project rendering is
+  ephemeral Basic Dark. Theme family plus mode apply as the SSYS-009 atomic pair. Family-specific controls
+  (Glass transparency, Retro textures and their strengths, Basic high contrast and the older Basic light/dark
+  choice) show only while that family is active (decided 2026-09-27; they were previously kept visible as
+  `not_applicable`); Glass alpha never drops below 0.35 in Dark or 0.45 in Light. Appearance preview is
+  non-persistent and reverts on cancel, close, expiry, route change, or Project switch; apply uses the same
+  preview hash and atomic transaction as every other Settings change. Disabling hover tooltips never removes
+  keyboard-focus accessible descriptions or Help/Details. Effective reduced motion is true when either the
+  Project request or platform preference is true; it calms nonessential entrance, hover, parallax, shimmer, and
+  background motion while retaining focus, progress, error, and state-change feedback. Background and
+  transparency apply to the current Project only and never leak through app-global local storage. The
+  application's first frame shows the committed appearance of the Project it opens on, NieR Mode included, read
+  by the pre-paint layer from that Project's Settings (F3-468, DL-153); the pre-paint keeps no copy, and no
+  app-global or cross-Project theme key or paint hint exists. SSYS-054 replaces the old Glass background row at
+  publication; Wallpaper is visible across all looks. SSYS-053 owns Settings first-frame geometry and in-place
+  update/return behavior. Removing the Preview a theme affordance does not remove the read-only transaction
+  preview stage required for a committed appearance change.
 gui_related: true
 gui_classification_reason: Themes, Glass composition and backgrounds are directly visible.
 depends_on: [SSYS-002, SSYS-009, F3-425, DL-180, DL-187]
@@ -508,12 +512,17 @@ context_scope: project_appearance_settings
 implementation_surfaces: [Plans/Settings_System.md, Plans/FinalGUISpec.md, Plans/assistant-chat-design.md]
 node_compile_hint: {mode: project_appearance_settings_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - Plans/FinalGUISpec.md#F3-425
-  - source_ref:chat:settings-canonical-owner-lane-2026-08-31
+- Plans/FinalGUISpec.md#F3-425
+- source_ref:chat:settings-canonical-owner-lane-2026-08-31
+- /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-perf-fixes/M4-DESIGN-DECISION.md, SHA-256 df7fa857254291a428bc6d9ef6411e1b586beee52aec8a11557ece98ee257df0
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens: [Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, Basic Dark, Basic Light, 0.35, 0.45, tooltips, reduced motion, chat layout]
 negative_constraints: [Do not persist appearance outside the Project settings namespace., Do not store the chat column's width, History or pop-out as a Settings value., Do not hide unavailable Glass controls., Do not make no-Project Basic Dark durable., Do not remove accessible descriptions when hover tooltips are off., Do not suppress progress or error feedback under reduced motion.]
 owner_hints: [Plans/Settings_System.md, Plans/FinalGUISpec.md, Plans/assistant-chat-design.md]
 stale_retired_dispositions: ["Amended 2026-10-09 (DL-180): the chat layout setting retires; the chat column's state is the Home layout record's (SP-330), and SSYS-050 records the retired row. The title's Chat Layout is historical, kept for lineage.", "Amended 2026-10-10 (DL-187, D32): the chat's popped-out state is never saved; a stored Chat Layout value is cleared on first read with no pop-out and no notice.", "Amended 2026-10-10 (DL-187, D32, SP-330): the sentence that put the popped-out state in the Home layout record now says the v2 record keeps no pop-out; a popped-out chat lasts only while the app runs."]
+
 ```
 
 ### SSYS-011 - Provider Installation Actions And Continuation
@@ -3201,52 +3210,59 @@ status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
   Settings binds the universal panels, their tabs, the editor and the chat column through these rows (DL-180,
-  DL-181), each an ordinary Settings value bound to one Project (SSYS-002, SSYS-004) that applies live: it commits
-  through cmd.settings.transaction.preview then cmd.settings.transaction.apply over its exact id, the surfaces
-  that read it take the new value at once, no row carries a restart badge, a row that says how something starts
-  governs the next start, and no Settings change opens, closes, moves or rearranges a panel or tab already open
-  (SSYS-042). Settings never writes the Home layout record (Plans/storage-plan.md#SP-330): the split tree, the
-  tabs, collapse and lock, and the chat column's width and pinned History are layout state; the v2 record keeps no
-  pop-out, and a popped-out chat lasts only while the app runs and starts back in its column (D32, SP-330; amended
-  2026-10-10, DL-187; it read: the chat column's width, pinned History and popped-out state are layout state).
-  Added: general.startup.starting-layout (Home, Build, Terminals 2x2 or Focus; Home), general.interaction.chat-keep-open
-  ("Keep the chat open in narrow windows"; off), general.interaction.chat-history-list (Flyout or Pinned, the
-  start for a workspace with no saved choice; Flyout), general.interaction.preview-tabs (on),
-  general.interaction.tab-sizing (Shrink to fit, F3-631's cascade, or Fixed width; Shrink to fit),
-  code.editing.font-family (JetBrains Mono, Atkinson Hyperlegible Mono or System monospace; JetBrains Mono in every
-  look), code.editing.font-size (13), code.editing.line-height (1.55), code.editing.minimap (on),
-  code.editing.sticky-scroll (on) and code.editing.diff-layout (Automatic, side by side when the tab is wide and
-  inline when narrow, or a fixed choice; Automatic). Amended: general.interaction.dashboard-widgets opens the Home
-  dashboard tab's own widget picker and stores no widget layout, every dashboard tab keeping its own (WS-030);
-  general.interaction.max-editor-tabs (25) counts editor tabs across the workspace and closes only the least
-  recently used editor tab that is not pinned and has no unsaved changes; general.startup.max-persisted-tabs (50)
-  applies to tabs of every kind; general.startup.reset-home-layout reads Restore home layout, the title bar's
-  words, and routes to cmd.workspace_layout.reset, which keeps every open tab; general.startup.window-state is
-  the restore-layout-at-start choice; code.editing.word-wrap applies in every editor tab; code.terminal.layout-restore
-  decides whether a saved layout's terminal tabs come back as SMPFS-180 says, a session verified still running
-  always coming back. Retired, by the inventory's own (Superseded by ...) convention, kept as lineage, drawn
-  nowhere and read by nothing: general.interaction.panel-dock, general.visual.chat-layout-mode (being popped out
-  is a window state of the current run only, which the v2 record does not keep, so the row retires whole; amended
-  2026-10-10, DL-187, D32; it read: being popped out is a window state the layout record keeps), code.terminal.layout-style,
-  code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations (D19, the
-  Teacher persona explains commands in the chat) and code.terminal.tab-role (shell profiles and the tab label), plus code.terminal.search (find is always present, F3-641; DL-181). The chat width, revealing an already open file, an empty panel's
-  fate, what "+" does and the close button's side are not rows. With SSYS-051's thirty-six rows, the inventory
-  holds 964 rows (916 plus 48 added), of which 10 are retired (the eight this unit retires,
-  general.visual.basic-color-scheme and, from 2026-10-10 (USG-1, DL-174), ai.accounts.account-threshold-override), leaving
-  954 live rows.
-  Settings > Editor has code.editing.color-scheme (Editor Colors), a scheme row bound to F3-642's shared code colour-scheme catalog, defaulting to
-  "Follow look" and applying live through the same Settings transaction as the other editor rows.
-  Amended 2026-10-10 (DL-187, D32 and D40; the planning thread's rulings of 2026-10-10): general.visual.chat-layout-mode
-  is retired properly: its row keeps no options and no default, and a stored Overlay or Detached value is ignored and
-  cleared on first read, with no pop-out and no notice; the chat's pop-out is never saved, so the layout record keeps
-  no popped-out state either. general.interaction.chat-keep-open retires too: Keep the chat open in narrow windows is
-  the chat's own preference in its header menu and the title bar's Home options menu (ui.chat_column.keep_open,
-  UCC-203), never a Settings row. The inventory then holds 964 rows, 11 of them retired (the ten above and
-  general.interaction.chat-keep-open), leaving 953 live rows; the published concept's own census is 891 live concept
-  ids plus the retired Chat Layout row (SSYS-035), a separate count of what the concept draws. Amended 2026-10-10
-  (DL-186): general.interaction.dashboard-widgets stays a route to the Home dashboard's Add widget; every board is kept
-  per project (WS-030), and a dashboard's range, scope, starting set and presets are its own Board menu's, never
-  Settings rows.
+  DL-181), each an ordinary Settings value bound to one Project (SSYS-002, SSYS-004) that applies live: it
+  commits through cmd.settings.transaction.preview then cmd.settings.transaction.apply over its exact id, the
+  surfaces that read it take the new value at once, no row carries a restart badge, a row that says how
+  something starts governs the next start, and no Settings change opens, closes, moves or rearranges a panel or
+  tab already open (SSYS-042). Settings never writes the Home layout record (Plans/storage-plan.md#SP-330): the
+  split tree, the tabs, collapse and lock, and the chat column's width and pinned History are layout state; the
+  v2 record keeps no pop-out, and a popped-out chat lasts only while the app runs and starts back in its column
+  (D32, SP-330; amended 2026-10-10, DL-187; it read: the chat column's width, pinned History and popped-out
+  state are layout state). Added: general.startup.starting-layout (Home, Build, Terminals 2x2 or Focus; Home),
+  general.interaction.chat-keep-open ("Keep the chat open in narrow windows"; off),
+  general.interaction.chat-history-list (Flyout or Pinned, the start for a workspace with no saved choice;
+  Flyout), general.interaction.preview-tabs (on), general.interaction.tab-sizing (Shrink to fit, F3-631's
+  cascade, or Fixed width; Shrink to fit), code.editing.font-family (JetBrains Mono, Atkinson Hyperlegible Mono
+  or System monospace; JetBrains Mono in every look), code.editing.font-size (13), code.editing.line-height
+  (1.55), code.editing.minimap (on), code.editing.sticky-scroll (on) and code.editing.diff-layout (Automatic,
+  side by side when the tab is wide and inline when narrow, or a fixed choice; Automatic). Amended:
+  general.interaction.dashboard-widgets opens the Home dashboard tab's own widget picker and stores no widget
+  layout, every dashboard tab keeping its own (WS-030); general.interaction.max-editor-tabs (25) counts editor
+  tabs across the workspace and closes only the least recently used editor tab that is not pinned and has no
+  unsaved changes; general.startup.max-persisted-tabs (50) applies to tabs of every kind;
+  general.startup.reset-home-layout reads Restore home layout, the title bar's words, and routes to
+  cmd.workspace_layout.reset, which keeps every open tab; general.startup.window-state is the
+  restore-layout-at-start choice; code.editing.word-wrap applies in every editor tab;
+  code.terminal.layout-restore decides whether a saved layout's terminal tabs come back as SMPFS-180 says, a
+  session verified still running always coming back. Retired, by the inventory's own (Superseded by ...)
+  convention, kept as lineage, drawn nowhere and read by nothing: general.interaction.panel-dock,
+  general.visual.chat-layout-mode (being popped out is a window state of the current run only, which the v2
+  record does not keep, so the row retires whole; amended 2026-10-10, DL-187, D32; it read: being popped out is
+  a window state the layout record keeps), code.terminal.layout-style, code.terminal.auto-second-pane,
+  code.editing.editor-strip-collapsed, code.terminal.explanations (D19, the Teacher persona explains commands in
+  the chat) and code.terminal.tab-role (shell profiles and the tab label), plus code.terminal.search (find is
+  always present, F3-641; DL-181). The chat width, revealing an already open file, an empty panel's fate, what
+  "+" does and the close button's side are not rows. With SSYS-051's thirty-six rows, the inventory holds 964
+  rows (916 plus 48 added), of which 10 are retired (the eight this unit retires,
+  general.visual.basic-color-scheme and, from 2026-10-10 (USG-1, DL-174),
+  ai.accounts.account-threshold-override), leaving 954 live rows. Settings > Editor has
+  code.editing.color-scheme (Editor Colors), a scheme row bound to F3-642's shared code colour-scheme catalog,
+  defaulting to "Follow look" and applying live through the same Settings transaction as the other editor rows.
+  Amended 2026-10-10 (DL-187, D32 and D40; the planning thread's rulings of 2026-10-10):
+  general.visual.chat-layout-mode is retired properly: its row keeps no options and no default, and a stored
+  Overlay or Detached value is ignored and cleared on first read, with no pop-out and no notice; the chat's
+  pop-out is never saved, so the layout record keeps no popped-out state either.
+  general.interaction.chat-keep-open retires too: Keep the chat open in narrow windows is the chat's own
+  preference in its header menu and the title bar's Home options menu (ui.chat_column.keep_open, UCC-203), never
+  a Settings row. The inventory then holds 964 rows, 11 of them retired (the ten above and
+  general.interaction.chat-keep-open), leaving 953 live rows; the published concept's own census is 891 live
+  concept ids plus the retired Chat Layout row (SSYS-035), a separate count of what the concept draws. Amended
+  2026-10-10 (DL-186): general.interaction.dashboard-widgets stays a route to the Home dashboard's Add widget;
+  every board is kept per project (WS-030), and a dashboard's range, scope, starting set and presets are its own
+  Board menu's, never Settings rows. The 2026-10-14 editor inventory and grouping are SSYS-052's and Wallpaper
+  is SSYS-054's. Earlier inventory counts in this unit are dated census history; the live total is obtained from
+  the registry, not a second hard-coded authority. Preview Tabs and Tab Sizing are drawn in Editor & Terminal >
+  Saving & tabs.
 gui_related: true
 gui_classification_reason: Each row is a visible Settings control for the home panels, tabs, editor or chat column, and the retirements remove visible rows.
 split_recommended: false
@@ -3280,20 +3296,36 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "hpt-plans-lead pm-mail 1010084328-3f4b (2026-10-10): code.editing.color-scheme, Editor Colors, Follow look; existing editing subgroup and neighbouring select-row shape."
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)"
-  - "Plans/Decision_Log.md#DL-180"
-  - "Plans/Decision_Log.md#DL-181"
-  - "Plans/Decision_Log.md#DL-183"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D2, D3, D4, D5, D7, D10, D11, D19, D21)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (settings keys and named layouts; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (section 12, the settings model; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (section 6.4)"
-  - "Plans/Decision_Log.md#DL-186"
-  - "Plans/Decision_Log.md#DL-187"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D35, D40)"
-  - "The planning thread's rulings of 2026-10-10: Chat Layout retired with no options and the first-read clearing rule, the narrow-window pin on the chat's header menu (pm-mail 1010211322-7b6c); the concept census of 891 live ids plus 1 retired row (pm-mail 1010234358-ab8b)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
+  SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
+- 'hpt-plans-lead pm-mail 1010084328-3f4b (2026-10-10): code.editing.color-scheme, Editor Colors, Follow look; existing
+  editing subgroup and neighbouring select-row shape.'
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md,
+  SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)
+- Plans/Decision_Log.md#DL-180
+- Plans/Decision_Log.md#DL-181
+- Plans/Decision_Log.md#DL-183
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D2, D3, D4, D5, D7, D10, D11, D19, D21)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md,
+  SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (settings keys and named layouts; concept
+  lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md,
+  SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (section 12, the settings model; concept
+  lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8
+  (section 6.4)
+- Plans/Decision_Log.md#DL-186
+- Plans/Decision_Log.md#DL-187
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D35, D40)
+- 'The planning thread''s rulings of 2026-10-10: Chat Layout retired with no options and the first-read clearing rule,
+  the narrow-window pin on the chat''s header menu (pm-mail 1010211322-7b6c); the concept census of 891 live ids plus
+  1 retired row (pm-mail 1010234358-ab8b)'
+- /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "953"
   - "891"
@@ -3329,6 +3361,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L18): The 2026-10-09 retirement line below keeps its original seven ids; this L18 line records the search retirement."
   - "Amended 2026-10-10 (D30; R35): The prose Rows added table lists twelve rows with Editor Colors and Editor Line Spacing's 1.55 default."
   - "Retired 2026-10-09 (DL-180, DL-181): general.interaction.panel-dock, general.visual.chat-layout-mode, code.terminal.layout-style, code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations and code.terminal.tab-role."
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Settings_System.md#SSYS-040, ContractName:Plans/Settings_System.md#SSYS-042, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/UI_Command_Catalog.md#UCC-200
@@ -3342,42 +3375,59 @@ status: accepted
 owner_doc: Plans/Settings_System.md
 canonical_text: >-
   Settings > Terminal binds the terminal's one appearance model (Plans/FinalGUISpec.md#F3-642,
-  Plans/DRY_Rules.md#DR-068; DL-183) with one row per field, each applying live with no restart badge: the restart
-  badges on code.terminal.theme and code.terminal.font-family are removed. The model resolves field by field: the
-  look's defaults ("Follow look"), the app default, the project default, then the tab's override. Each row is a
-  field's project default, held, like every Settings value, in the open Project's settings snapshot (SSYS-002), and Settings and the Appearance popover's All terminals write it through cmd.settings.transaction.preview then cmd.settings.transaction.apply over its exact id. The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one. Until an app-wide store is admitted (the open question SSYS-028 records as q-035), a field's app default is the row's bundled inventory default and the app-default edit in Settings > Terminal stays disabled with the Settings owner's reason, its editable requirement kept and no app-wide write admitted from scope metadata alone. The tab's override is the tab's serialized state (SP-331), written by the popover's This
-  terminal, never by Settings. Amended rows carry five fields: code.terminal.theme (Follow look or
-  one of the shared catalog schemes or an imported one; Follow look), code.terminal.font-family (Follow look, JetBrains Mono,
-  Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour, Sixtyfour Raster or System monospace; Follow
-  look), code.terminal.font-size (Font default), code.terminal.copy-on-select (off) and code.terminal.sticky-header
-  (on). Added rows carry the rest: code.terminal.scheme-pair (on), min-contrast (Off, 3:1, 4.5:1 or 7:1; 4.5:1),
-  import-scheme (an action), font-weight (400), line-height (Font default), letter-spacing (0), ligatures (on),
-  bold-bright (off), cursor-shape, cursor-blink (on), cursor-trail, background (Follow look, theme surface,
-  solid, gradient or image) with background-color, background-gradient, background-image, background-image-file,
-  background-dim (0.45) and background-blur (0, made once on the picture), opacity (Glass; Follow look, 70 % light
-  and 74 % dark), padding (8), effects (Follow look, Off or Custom) with scanlines, scan-strength (0.30), glow,
-  glow-strength (0.45), crt (off), curvature (0.08), burn-in (on), noise (0.035), flicker (off) and flicker-amount
-  (0.02, never above 0.03), inactive-dim, smooth-scroll, bell (Follow look, Visual or Off), sixtyfour-scan and
-  sixtyfour-bleed; a field without a settled default falls through to the look. Detail rows show only while the
-  row they depend on makes them apply, and no row turns on what F3-643 keeps off: effects run only in the focused
-  terminal, and every moving part stops under Reduce Animations and on battery saver. The rows sit in SSYS-040's
-  Terminal look group, the finer ones in Terminal look: more options, and F3-121's older group names map onto
-  SSYS-040's groups as this addendum records. Also amended: code.terminal.shell (the default shell profile),
-  code.terminal.allowed-profiles (shells, named profiles and SSH computers, as the "+" menu and New terminal list
-  them), code.terminal.right-click-paste (off; a right click opens the terminal's menu), code.terminal.rendering-mode
-  (render modes only, never colours, fonts or effects), code.terminal.shell-integration (a switch),
-  code.terminal.search (retired: find is always present, F3-641; DL-181) and code.terminal.transcript-retention (Saved Terminal Output: Keep Saved Scrollback, the default, keeps
-  the saved scrollback of Plans/storage-plan.md#SP-332 that restore brings back, or Session Only, which saves none). Degauss and
-  a terminal's Text size zoom are not rows.
-  The terminal scheme row binds the same code colour-scheme catalog as Settings > Editor (SSYS-050, F3-642).
-  Its scheme choice defaults to "Follow look"; this is the per-look scheme previously labelled "Follow theme" (R35 a).
-  Amended 2026-10-10 (DL-187; D36 to D39; lead rulings F4 and F5): the answers add no terminal row.
-  code.terminal.allowed-profiles governs the "+" menu's and New terminal's lists: every shell it allows inline, the SSH
-  computers in their own SSH hosts submenu (D39). code.terminal.transcript-retention's Keep Saved Scrollback also
-  leaves well-known secrets out of the saved copy and keeps saved scrollback within 512 MiB across every terminal, the
-  oldest first, beside each terminal's 64 MiB; the scrub and the 512 MiB total are fixed (D36, D37, SP-332). A
-  terminal's notification mute is that tab's own state (ui.terminal.mute_notifications, D38), and the limit of one
+  Plans/DRY_Rules.md#DR-068; DL-183) with one row per field, each applying live with no restart badge: the
+  restart badges on code.terminal.theme and code.terminal.font-family are removed. The model resolves field by
+  field: the look's defaults ("Follow look"), the app default, the project default, then the tab's override.
+  Each row is a field's project default, held, like every Settings value, in the open Project's settings
+  snapshot (SSYS-002), and Settings and the Appearance popover's All terminals write it through
+  cmd.settings.transaction.preview then cmd.settings.transaction.apply over its exact id. The popover's All
+  terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction
+  Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no
+  surface writes an app-wide value until q-035 admits one. Until an app-wide store is admitted (the open
+  question SSYS-028 records as q-035), a field's app default is the row's bundled inventory default and the
+  app-default edit in Settings > Terminal stays disabled with the Settings owner's reason, its editable
+  requirement kept and no app-wide write admitted from scope metadata alone. The tab's override is the tab's
+  serialized state (SP-331), written by the popover's This terminal, never by Settings. Amended rows carry five
+  fields: code.terminal.theme (Follow look or one of the shared catalog schemes or an imported one; Follow
+  look), code.terminal.font-family (Follow look, JetBrains Mono, Atkinson Hyperlegible Mono, VT323, Departure
+  Mono, Sixtyfour, Sixtyfour Raster or System monospace; Follow look), code.terminal.font-size (Font default),
+  code.terminal.copy-on-select (off) and code.terminal.sticky-header (on). Added rows carry the rest:
+  code.terminal.scheme-pair (on), min-contrast (4.5:1 or 7:1; 4.5:1), import-scheme (an action), font-weight
+  (400), line-height (Font default), letter-spacing (0), ligatures (on), bold-bright (off), cursor-shape,
+  cursor-blink (on), cursor-trail, background (Follow look, theme surface, solid, gradient or image) with
+  background-color, background-gradient, background-image, background-image-file, background-dim (0.45) and
+  background-blur (0, made once on the picture), opacity (Glass; Follow look, 70 % light and 74 % dark), padding
+  (8), effects (Follow look, Off or Custom) with scanlines, scan-strength (0.30), glow, glow-strength (0.45),
+  crt (off), curvature (0.08), burn-in (on), noise (0.035), flicker (off) and flicker-amount (0.02, never above
+  0.03), inactive-dim, smooth-scroll, bell (Follow look, Visual or Off), sixtyfour-scan and sixtyfour-bleed; a
+  field without a settled default falls through to the look. Detail rows show only while the row they depend on
+  makes them apply, and no row turns on what F3-643 keeps off: effects run only in the focused terminal, and
+  every moving part stops under Reduce Animations and on battery saver. The rows sit in SSYS-040's Terminal look
+  group, the finer ones in Terminal look: more options, and F3-121's older group names map onto SSYS-040's
+  groups as this addendum records. Also amended: code.terminal.shell (the default shell profile),
+  code.terminal.allowed-profiles (shells, named profiles and SSH computers, as the "+" menu and New terminal
+  list them), code.terminal.right-click-paste (off; a right click opens the terminal's menu),
+  code.terminal.rendering-mode (render modes only, never colours, fonts or effects),
+  code.terminal.shell-integration (a switch), code.terminal.search (retired: find is always present, F3-641;
+  DL-181) and code.terminal.transcript-retention (Saved Terminal Output: Keep Saved Scrollback, the default,
+  keeps the saved scrollback of Plans/storage-plan.md#SP-332 that restore brings back, or Session Only, which
+  saves none). Degauss and a terminal's Text size zoom are not rows. The terminal scheme row binds the same code
+  colour-scheme catalog as Settings > Editor (SSYS-050, F3-642). Its scheme choice defaults to "Follow look";
+  this is the per-look scheme previously labelled "Follow theme" (R35 a). Amended 2026-10-10 (DL-187; D36 to
+  D39; lead rulings F4 and F5): the answers add no terminal row. code.terminal.allowed-profiles governs the "+"
+  menu's and New terminal's lists: every shell it allows inline, the SSH computers in their own SSH hosts
+  submenu (D39). code.terminal.transcript-retention's Keep Saved Scrollback also leaves well-known secrets out
+  of the saved copy and keeps saved scrollback within 512 MiB across every terminal, the oldest first, beside
+  each terminal's 64 MiB; the scrub and the 512 MiB total are fixed (D36, D37, SP-332). A terminal's
+  notification mute is that tab's own state (ui.terminal.mute_notifications, D38), and the limit of one
   notification every 3 s per terminal is fixed (F3-641). No row sets a terminal tab's colour or icon (D34).
+  F3-650 owns the full Customize screen and its menu/Settings entry scopes; All terminals and Settings are
+  exactly the same Project values. Allowed Shell Profiles' untouched System Default sentinel offers installed
+  shells and configured SSH computers; an explicit allow-list filters both New terminal and the plus menu. An
+  imported scheme survives readback and reload through the existing import owner. Obsolete prototype Custom
+  scheme/font controls and their saved-string repair remain compatibility/source lineage, not new native
+  Settings choices. The drawn face ranges and text-rendering meanings are F3-644/F3-642's. No compatibility
+  local copy becomes a new setting layer or no-Project writer.
 gui_related: true
 gui_classification_reason: Each row is a visible Settings > Terminal control whose change shows at once in every terminal.
 split_recommended: false
@@ -3411,18 +3461,30 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)"
-  - "Plans/storage-plan.md#SP-332 (terminal records consume these rows; cited, not a dependency (lead ruling L22, 2026-10-10))"
-  - "Plans/Decision_Log.md#DL-183"
-  - "Plans/Decision_Log.md#DL-181"
-  - "Plans/Decision_Log.md#DL-182"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D13, D15, D16, D17)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md, SHA-256 1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299 (D17a)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 2, 4, 5 and 6 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3 (Appendix E)"
-  - "Plans/Decision_Log.md#DL-187"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D34, D36 to D39)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
+  SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md,
+  SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)
+- Plans/storage-plan.md#SP-332 (terminal records consume these rows; cited, not a dependency (lead ruling L22, 2026-10-10))
+- Plans/Decision_Log.md#DL-183
+- Plans/Decision_Log.md#DL-181
+- Plans/Decision_Log.md#DL-182
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D13, D15, D16, D17)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md, SHA-256 1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299
+  (D17a)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 2, 4, 5 and 6 (concept lineage
+  only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3
+  (Appendix E)
+- Plans/Decision_Log.md#DL-187
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D34, D36 to D39)
+- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256 1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "512 MiB"
   - "Follow look"
@@ -3453,6 +3515,209 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (R35 a): Terminal Font's default reads Follow look; the scheme note says the per-look scheme was previously labelled Follow theme."
   - "Superseded 2026-10-09 (DL-183): the restart badges on code.terminal.theme and code.terminal.font-family, the six-entry colour list, and Fira Code, SF Mono and Custom as terminal fonts."
   - "Superseded 2026-10-09 (DL-182): code.terminal.transcript-retention's Session Only default and its 24 Hours, 7 Days, 30 Days and Forever choices, which SP-332's saved scrollback rule replaces."
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/FinalGUISpec.md#F3-643, ContractName:Plans/FinalGUISpec.md#F3-644, ContractName:Plans/DRY_Rules.md#DR-068, ContractName:Plans/storage-plan.md#SP-331, ContractName:Plans/storage-plan.md#SP-332, ContractName:Plans/Settings_System.md#SSYS-028, ContractName:Plans/UI_Command_Catalog.md#UCC-201
+
+## SSYS-052 — Editor look rows and shared Customize entry (2026-10-14)
+
+```yaml
+plan_unit_id: SSYS-052
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  Editor & Terminal has Editor look and Editor look: more options, with Open Customize on the owner line, beside
+  the existing Terminal look groups. Everyday rows include scheme, font/size/spacing, ligatures, caret shape,
+  line numbers, minimap, sticky scroll, word wrap, indent guides, bracket colors and color by meaning; finer
+  choices go in the one More options area. Editing retains Diff Layout, Problem Highlighting, Jump Highlight
+  Duration and indentation. Preview Tabs and Tab Sizing belong in Saving & tabs, not App & Input. The inventory
+  admits 31 code.editing rows: scheme-pair, bracket-pair-colors, min-contrast, italic-comments, bold-keywords,
+  font-weight, letter-spacing, ligatures, cursor-shape, cursor-width, cursor-blink, cursor-motion, cursor-trail,
+  relative-line-numbers, line-highlight, indent-guides, indent-guides-active, render-whitespace, rulers,
+  wrap-column, sticky-scroll-lines, smooth-scroll, reveal-lines, scroll-past-end, dim-unfocused, scanlines,
+  text-glow, tab-size, insert-spaces, detect-indentation and token-colors. Plans/settings_inventory.json owns
+  their labels, choices and defaults; F3-651 owns their drawing and editing behavior. All editors and Settings
+  write these exact Project rows through SSYS-009, applying live without restart; This editor is a tab override
+  and never writes a Settings row. Scope metadata does not create an app-wide store. Open Customize is
+  navigation to the existing owner screen, not a stored setting. Token Colors is the scheme/kind map with an
+  empty default; Settings uses its name/value editor and shows None: every scheme's own or the entry count.
+  Editor Colors binds the shared catalog ids with names as labels and reads earlier saved names compatibly. Row
+  bounds include caret width 1–4, sticky lines 1–5, face-dependent weights from F3-644, tab size 2/4/8 and
+  min-contrast 4.5:1 or 7:1. SSYS-050's tab caps retain editor-only versus every-kind meanings at both open and
+  restore; pinned/unsaved protections are unchanged. Retired rows remain absent everywhere. Project Toolchain
+  formatter flags persist through their existing owner projection, never a concept-local fallback.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- All 31 new ids have an inventory row, an exact Settings transaction route, search terms and a bound control.
+- Menu and Settings entry agree on Project values while preserving tab overrides, including token-by-token fallthrough.
+- Saving & tabs owns both tab rows and no retired editor/terminal row is drawn.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/Settings_System.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/Settings_System.md#SSYS-002
+- Plans/Settings_System.md#SSYS-009
+- Plans/Settings_System.md#SSYS-050
+- Plans/FinalGUISpec.md#F3-650
+- Plans/FinalGUISpec.md#F3-651
+preserved_exact_tokens:
+- code.editing.token-colors
+- Saving & tabs
+negative_constraints: []
+owner_hints:
+- Plans/Settings_System.md
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Settings_System.md#SSYS-050, ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/FinalGUISpec.md#F3-651
+
+## SSYS-053 — Settings preserves the reader and opens chapters at the top (2026-10-14)
+
+```yaml
+plan_unit_id: SSYS-053
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  An update that is not navigation never moves what the reader is looking at or replays an entrance. Settings
+  has one placement/active-section authority, including the end spacer. The reading line is 96 px below the
+  scroller top; the anchor is the first setting row or heading whose bottom crosses it, or the row of the
+  control just used. Across every painted frame the anchor's top stays within 1 px relative to the scroller,
+  including look/font/density changes. At scroll zero stay at zero; if the anchor disappears choose the nearest
+  surviving row above; if the document becomes too short settle at the new bottom without bounce. Navigation
+  already in progress takes priority. Returning to Settings from Home, Usage or another app page restores
+  chapter, page, anchor, open settled Details, rail highlight and page-tab selection without a Settings
+  entrance. Choosing a chapter, even a repeat visit, opens the top of its first page in its first painted frame;
+  no old rows or offset flash. Choosing the current chapter scrolls to its top with the existing page-jump
+  motion and no re-entry, doing nothing if already there. A new chapter plays its existing arrival once, with
+  below-fold reveals later, while its rail retains scroll/focus and its initial tab marker is placed, not slid
+  from the old chapter. In-place updates keep existing rows, controls, Details and hover settled; only the
+  changed control's own feedback and appearing/disappearing dependent rows animate. Dependent rows use
+  height/opacity disclosure, with same-frame compensation above the anchor; no row flash, repeated reveal,
+  manager/tab arrival, title decode or Glass re-bake flash occurs on retained content. Details updates its
+  current value in place. The settled reading section is saved; at bottom it is the last section. Explicit
+  navigation saves the target setting's section with the navigation, and a chapter change saves its first
+  section. A retained update never substitutes an unsettled intermediate section. Settings occupies its final
+  full width from its first frame, and look-dependent rows including Wallpaper reserve their final geometry
+  then; later loading must not push content down. Effective Reduced Motion is the app request OR system
+  preference: placement/saving are identical, disclosures, reveals, ink and scroll become immediate. This
+  behavior holds across all ten looks, not only on one machine. Appearance controls remove Preview a theme,
+  apply theme changes through SSYS-009 and provide a bounded typed numeric input beside Glass transparency; the
+  slider and number edit the same value, with no second setting. Keyboard activation of a switch retains its
+  control focus. This unit changes no owner validation, permissions or draft/commit boundary.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- At top, mid-page and bottom, value/host/look updates preserve the anchor within 1 px on every frame, focus, Details
+  and saved section.
+- General → Code → General opens chapter tops; leaving Settings and returning restores its exact place.
+- First visible Settings frame has its final width and row space, with no later wallpaper insertion shift.
+- Repeat the placement cases in all ten looks and app/system Reduced Motion, including a disappearing anchor and document
+  shrink.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/Settings_System.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-perf-fixes/M4-DESIGN-DECISION.md, SHA-256 df7fa857254291a428bc6d9ef6411e1b586beee52aec8a11557ece98ee257df0
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/Settings_System.md#SSYS-009
+- Plans/Settings_System.md#SSYS-010
+- Plans/FinalGUISpec.md#F3-653
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Settings_System.md
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/FinalGUISpec.md#F3-653
+
+## SSYS-054 — Wallpaper setting and replacement of old Glass backgrounds (2026-10-14)
+
+```yaml
+plan_unit_id: SSYS-054
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  general.visual.wallpaper is a Project Settings select value rendered by F3-653's gallery: look is the default,
+  otherwise a stable shared catalog id. It appears after general.visual.theme-mode in Theme & colors for every
+  look, an explicit exception to SSYS-010's family-gated rows. Search includes Wallpaper, background and
+  backdrop. Its choice applies live and before the Project's first paint, with no restart or app-global store.
+  The gallery uses SSYS-009's preview/apply transaction over this exact id, as do any other owner-approved entry
+  points; an unknown requested id is refused without a write, while a stale stored id is drawn using Look's own
+  and disclosed. At coordinated Glass/wallpaper publication, general.visual.glass-background-mode is retired,
+  drawn nowhere and interpreted only by SP-333's migration. The old Mesh/Depth/Minimal choices do not become
+  catalog aliases. Glass transparency stays a separate family-gated value. The wallpaper catalog is DR-073's one
+  registry; its options are not copied into a page-local list. Source availability does not claim the pending
+  combined publication has occurred.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The gallery and search resolve the exact inventory id and Settings transaction in every look.
+- Invalid requested ids refuse without mutation; stale saved ids have the documented fallback.
+- Publication retires the old background row and preserves each Project's independent committed choice.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/Settings_System.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/Settings_System.md#SSYS-010
+- Plans/FinalGUISpec.md#F3-653
+- Plans/DRY_Rules.md#DR-073
+- Plans/storage-plan.md#SP-333
+preserved_exact_tokens:
+- general.visual.wallpaper
+negative_constraints: []
+owner_hints:
+- Plans/Settings_System.md
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/DRY_Rules.md#DR-073, ContractName:Plans/storage-plan.md#SP-333

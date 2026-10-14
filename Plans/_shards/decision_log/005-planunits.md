@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4297-L14442
+Source lines: L4297-L14454
 
-Source SHA256: `b2e1fd90a9af2fe9a453a5e16acace05236f2f53fbcc73c8b0784b7cd699f4b4`
+Source SHA256: `5c46d671ae7d7ac3b244fa3d55edaf0d64cf05251fc7dab8691654c45a4f4fd9`
 
 ---
 
@@ -8825,23 +8825,25 @@ status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   DL-162 records the owner decision of 2026-10-09 that the left rail takes concept D, "Polish", of the left-rail
-  review copy. The nine rail panels keep the Cozy Shelves structure and coloured shelf boxes with tighter geometry
-  (a 3 px gutter, a 2 px inset, an outer radius R and an inner radius R minus the inset, row names 24 px from the
-  rail edge), one type ladder with nothing under 11 px, and the looks' own faces (F3-618). Statuses are a glyph
-  whose shape is the state plus a coloured word, counts are plain tabular numbers, and nothing is a pill or carries a
-  coloured side bar (F3-619). Text fits by layout and is never abbreviated, tab strips included (F3-620; F3-480 (3),
-  F3-445, CRAU-098, UCC-136 and GI-039 amended). Every rail dropdown is the chat picker, and motion is per theme family:
-  Basic crisp, Friendly springy, Glass gliding with blur only on the shelf boxes, Retro stepped and NieR Mode ink,
-  under the Animation speed and reduced-motion settings (F3-621). The worktree owner filter becomes an Owner
-  dropdown and the publish and review card folds (F3-622, W-075 amended), with no new command. DR-057 keeps the
-  grammar in one owner. The owner answered its two open questions on 2026-10-10, one set of status marks (F3-585's
-  and the rail's) and some frost back on the plates, and the glyph and Liquid Glass design threads carry them; his
-  other answers that day are in the concept: the worktree Owner filter takes several owners (W-075), Current Branch
-  leads Actions & Pipelines (GI-011), the binding picker shows only with several bindings (F3-528) and an expired
-  artifact reads Expired (F3-619). Settled later
-  under this decision: the Jujutsu view's tabs (DL-163), the remaining panels and the bottom Debug tab in their
-  owner units with no new command, action or wiring row, the paused, immutable and errored glyphs (F3-619), and the
-  More tray as the chat picker (F3-625).
+  review copy. The nine rail panels keep the Cozy Shelves structure and coloured shelf boxes with tighter
+  geometry (a 3 px gutter, a 2 px inset, an outer radius R and an inner radius R minus the inset, row names 24
+  px from the rail edge), one type ladder with nothing under 11 px, and the looks' own faces (F3-618). Statuses
+  are a glyph whose shape is the state plus a coloured word, counts are plain tabular numbers, and nothing is a
+  pill or carries a coloured side bar (F3-619). Text fits by layout and is never abbreviated, tab strips
+  included (F3-620; F3-480 (3), F3-445, CRAU-098, UCC-136 and GI-039 amended). Every rail dropdown is the chat
+  picker, and motion is per theme family: Basic crisp, Friendly springy, Glass gliding with blur only on the
+  shelf boxes, Retro stepped and NieR Mode ink, under the Animation speed and reduced-motion settings (F3-621).
+  The worktree owner filter becomes an Owner dropdown and the publish and review card folds (F3-622, W-075
+  amended), with no new command. DR-057 keeps the grammar in one owner. The owner answered its two open
+  questions on 2026-10-10, one set of status marks (F3-585's and the rail's) and some frost back on the plates,
+  and the glyph and Liquid Glass design threads carry them; his other answers that day are in the concept: the
+  worktree Owner filter takes several owners (W-075), Current Branch leads Actions & Pipelines (GI-011), the
+  binding picker shows only with several bindings (F3-528) and an expired artifact reads Expired (F3-619).
+  Settled later under this decision: the Jujutsu view's tabs (DL-163), the remaining panels and the bottom Debug
+  tab in their owner units with no new command, action or wiring row, the paused, immutable and errored glyphs
+  (F3-619), and the More tray as the chat picker (F3-625). Amended 2026-10-14: DL-201 records D44, settling the
+  later shared-glyph decision. F3-658 supersedes this entry's separate chat/rail glyph sets and open unification
+  question; the historical decision remains lineage.
 gui_related: true
 gui_classification_reason: Records an owner decision on the left rail's presentation.
 split_recommended: false
@@ -8872,8 +8874,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06"
-  - "Concepts/leftrail-redesign/src/concepts/d/ at commit c93e341606 (concept lineage only)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06
+- Concepts/leftrail-redesign/src/concepts/d/ at commit c93e341606 (concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-10-glyph-catalog-addendum/README.md, SHA-256 3d0497f01c878e8aa6f99fa8f602b9b3dbf887aead2a24d62c12969bd47a1d31
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "DL-162"
   - "Polish"
@@ -8884,6 +8888,7 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
+
 ```
 
 ### DL-163 - The Jujutsu View Of Source Control Gets Its Own Five Tabs
@@ -9866,13 +9871,16 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  DL-184 records Jared's rule of 2026-10-09, restated for the home redesign, as one shell-wide rule: no box with a
-  coloured border or stripe on one side, no emoji in Puppet Master's own chrome, and no pills (fully rounded capsules
-  used as tabs, tags, badges, buttons or status chips) anywhere in Puppet Master; keyboard key caps stay the one
-  capsule-like shape allowed, and a program's own output in the terminal may contain emoji (DR-069, F3-648). Selection
-  is shown by the surface itself, never by an edge stripe. The shell's default 3 px left-edge selection stripe, the
-  accent left borders and the pill skins on tab-like controls retire; the chat's, Settings' and the left rail's own
-  statements of the rule stay as instances of the one rule.
+  DL-184 records Jared's rule of 2026-10-09, restated for the home redesign, as one shell-wide rule: no box with
+  a coloured border or stripe on one side, no emoji in Puppet Master's own chrome, and no pills (fully rounded
+  capsules used as tabs, tags, badges, buttons or status chips) anywhere in Puppet Master; keyboard key caps
+  stay the one capsule-like shape allowed, and a program's own output in the terminal may contain emoji (DR-069,
+  F3-648). Selection is shown by the surface itself, never by an edge stripe. The shell's default 3 px left-edge
+  selection stripe, the accent left borders and the pill skins on tab-like controls retire; the chat's,
+  Settings' and the left rail's own statements of the rule stay as instances of the one rule. Jared clarified
+  this on 2026-10-11: the prohibition is pill-shaped labels, including status, suggestion and state chips; pill
+  action buttons such as Install/Sign in and Friendly/Glass buttons are fine. DL-196 records this correction;
+  DR-069 and F3-648 carry the current rule.
 gui_related: true
 gui_classification_reason: Records the owner's shell-wide ban on side stripes, emoji and pills.
 split_recommended: false
@@ -9897,7 +9905,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D22 and Jared's brief)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D22 and Jared's brief)
+- /mnt/Cursor/share/puppet-master/2026-10-11-onboarding-no-pills/README.md, SHA-256 1ab0aedc5910ab03097439cf9cd48da77eb7cefad458ca705a556727d327fd1a
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "DL-184"
 negative_constraints:
@@ -9907,6 +9918,7 @@ stale_retired_dispositions:
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
+
 ```
 
 ### DL-185 - One Demo Studio For All Of PMConcept7 And What The 5.6 Pro Chat Needs When It Moves In

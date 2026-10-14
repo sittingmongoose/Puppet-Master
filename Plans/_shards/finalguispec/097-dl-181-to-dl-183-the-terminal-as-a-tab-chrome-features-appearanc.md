@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L45753-L46597
+Source lines: L45904-L46817
 
-Source SHA256: `f884f6a1d8d9ac7ade3931dca847010cd6a0690faff184e1f7091221a892f2e5`
+Source SHA256: `2fbb46a82dc48c06df2698570d86fea36430c555501760e0328853d3170e9f49`
 
 ---
 
@@ -319,88 +319,113 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The terminal's appearance is one layered model (DL-183, DR-068), resolved field by field: the look's defaults
-  ("Follow look") under the app default (Settings > Terminal, SSYS-051) under the project default (written through Settings transactions, in the Project's settings) under this tab's override; a field left unset falls through to the layer
-  below. Every field applies live, and no terminal appearance setting carries a restart badge; the terminal draws its
-  own glyphs (DL-035), so section 6.4's restart rule for the app's font families does not reach it. "Follow look"
-  resolves per look, light and dark: Friendly Catppuccin Latte and Mocha; Glass Tokyo Night Day and Storm, drawn at
-  70 % (light) and 74 % (dark) opacity over the shell's existing glass blur, the terminal adding no backdrop blur of
-  its own (F3-431); Retro PM Paper Teletype and PM Phosphor Green, with PM Phosphor Amber as Phosphor Green's
-  sibling; Basic One Half Light and Dark; NieR Mode PM YoRHa Parchment and PM YoRHa Ink. Thirty-four schemes ship: 27
-  third-party schemes in 13 families, each read from the project's own terminal port pinned to a commit, and 7 Puppet
-  Master originals. Puppet Master originals: PM Phosphor Green, PM Phosphor Amber, PM Paper Teletype, PM YoRHa
-  Parchment, PM YoRHa Ink, PM High Contrast Light, PM High Contrast Dark. Catppuccin (MIT): Latte, Frappé, Macchiato,
-  Mocha. Tokyo Night (Apache-2.0): Day, Storm, Night. One Half (MIT): Light, Dark. Rosé Pine (MIT): Dawn, Moon,
-  Main. Solarized (MIT): Light, Dark. Gruvbox (MIT): Light, Dark. Dracula (MIT): Dark. Nord (MIT): Dark. Kanagawa
-  (MIT): Wave, Lotus. Everforest (MIT): Light, Dark. Flexoki (MIT): Light, Dark. GitHub (MIT): Light, Dark. Ayu
-  (MIT): Mirage. Every third-party scheme ships with its licence text and its source address and SHA-256; the
-  iTerm2-Color-Schemes collection (no single licence) and Modus (GPL-3.0) are not bundled, and import covers them.
-  These schemes are one code colour-scheme catalog that serves the editor and the terminal (D30, amending
-  D15 and D21): each of the 34 schemes carries the terminal palette and the editor's 17 syntax tokens. Each catalog scheme's 17
-  editor syntax colours are authored to 4.5:1 for every syntax token, comments included, against the scheme's background (7:1
-  throughout on PM High Contrast Light and Dark), and the editor and the terminal both draw the catalog values as they are; an imported scheme takes its editor syntax colours from its
-  ANSI 16 by a fixed map. Each surface's
-  scheme choice defaults to "Follow look" — the terminal's "Follow look" per-look scheme above, the editor's
-  per-look syntax colours (F3-426, F3-639) — and each surface keeps its own scheme choice. The Appearance popover is
-  one component, opened from the terminal's ⋮ menu and from the editor's ⋮ menu (F3-639); opened from the editor, it offers only
-  scheme, font and size; no surface keeps a scheme
-  list or popover of its own (DR-068).
-  "Switch with light and dark", on by default, swaps a chosen scheme for its family's other appearance when the app
-  changes between light and dark. A minimum-contrast floor applies per cell to the text colour against its cell
-  background by moving OKLab lightness only, keeping hue and chroma: default 4.5:1, with the choices Off, 3:1, 4.5:1
-  and 7:1; block elements, powerline and sextant glyphs are exempt, because they are shapes that meet their
-  neighbours, and a selection uses the scheme's selection text colour. Phosphor schemes (PM Phosphor Green and PM Phosphor Amber)
-  map colours outside their 16 (the 256-colour cube and truecolor), and any colour a program sets (OSC 4, 10, 11 and
-  12), onto the phosphor by brightness, so a program's `38;5;196` never paints red on a green tube; the scheme's own
-  16 stay as authored. Import reads iTerm2 `.itermcolors`, Windows
-  Terminal JSON (one scheme, or a settings file's list of schemes), kitty `.conf`, Ghostty themes, Alacritty TOML and
-  its legacy YAML, base16 and base24 YAML, and Xresources; input is capped at 256 KB, nothing in a file is evaluated,
-  and every error message is fixed and never echoes the file. The fields and their defaults: scheme (Follow look,
-  or a scheme); Switch with light and dark (on); minimum contrast (4.5:1); font (Follow look, JetBrains Mono,
-  Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour, Sixtyfour Raster or the system monospace; F3-644);
-  font size and line height (the face's defaults, F3-644); weight (400); letter spacing (0); ligatures (on); bold as bright (off); cursor
-  shape (Follow look, block, bar or underline); cursor blink (on); cursor trail (Follow look, off, soft, glow,
-  phosphor or trace); background (Follow look, theme surface, solid colour, gradient or image) with its colour, its
-  gradient (dusk, dawn, deep or paper), its image (hills, grid, paper or a custom image), image dim (0.45) and image
-  blur (0 px, baked once into the image and never a backdrop blur); opacity (Glass); padding (8 px across, the
-  vertical padding 60 % of it); effects (Follow look, off or custom) with the effect fields of F3-643; inactive
-  dimming; smooth scrolling; bell (Follow look, visual or off); sticky header (on); copy on select (off); and
-  Sixtyfour's scan and bleed axes. Cell geometry: a cell is a whole number of device pixels, its width
-  round((advance + letter spacing) x device pixel ratio) and its height round(font size in px x line height x device
-  pixel ratio), never less than 90 % of the font's ascent plus descent, with the baseline centred; the padding is
-  painted in the cell background, so the remainder smaller than a cell never shows as a stripe. The Appearance
-  popover (More, Appearance...) previews every change live on the terminal and writes either This terminal (the
-  tab's override) or All terminals (enabled, the project default through the same Settings transaction Settings uses over SSYS-051's rows); This terminal commits with `cmd.terminal.appearance.set` (UCC-201). Settings > Terminal binds the same model with the same fields
-  (SSYS-051) and writes the project layer through that same Settings transaction. The app and project layers are Settings values and the
-  tab's override lives in the terminal tab's serialized state; a custom background image is kept as SP-331 says.
-  There is one model: the look's defaults, the popover and Settings read and write it, and no second terminal theme
-  or font store exists (DR-068).
-  The Retro scheme choice also colours Retro's editor syntax: Phosphor Green or Amber, with Amber turning the
-  Retro editor amber. Retro syntax stays monochrome, using brightness and weight in dark and the black and red
-  ribbon in light. This choice is stored once in the terminal's appearance model; the editor reads it and keeps
-  no copy (F3-639, F3-647).
-  The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one.
-  Hovering a scheme previews it on this terminal only after the pointer rests on that row for 110 ms; arrow
-  keys preview at once, with a 110 ms wait while a key repeats, so passing over rows or scrolling them
-  beneath a stationary pointer never flashes through the schemes.
+  ("Follow look") under the app default (Settings > Terminal, SSYS-051) under the project default (written
+  through Settings transactions, in the Project's settings) under this tab's override; a field left unset falls
+  through to the layer below. Every field applies live, and no terminal appearance setting carries a restart
+  badge; the terminal draws its own glyphs (DL-035), so section 6.4's restart rule for the app's font families
+  does not reach it. "Follow look" resolves per look, light and dark: Friendly Catppuccin Latte and Mocha; Glass
+  Tokyo Night Day and Storm, drawn at 70 % (light) and 74 % (dark) opacity over the shell's existing glass blur,
+  the terminal adding no backdrop blur of its own (F3-431); Retro PM Paper Teletype and PM Phosphor Green, with
+  PM Phosphor Amber as Phosphor Green's sibling; Basic One Half Light and Dark; NieR Mode PM YoRHa Parchment and
+  PM YoRHa Ink. Thirty-four schemes ship: 27 third-party schemes in 13 families, each read from the project's
+  own terminal port pinned to a commit, and 7 Puppet Master originals. Puppet Master originals: PM Phosphor
+  Green, PM Phosphor Amber, PM Paper Teletype, PM YoRHa Parchment, PM YoRHa Ink, PM High Contrast Light, PM High
+  Contrast Dark. Catppuccin (MIT): Latte, Frappé, Macchiato, Mocha. Tokyo Night (Apache-2.0): Day, Storm, Night.
+  One Half (MIT): Light, Dark. Rosé Pine (MIT): Dawn, Moon, Main. Solarized (MIT): Light, Dark. Gruvbox (MIT):
+  Light, Dark. Dracula (MIT): Dark. Nord (MIT): Dark. Kanagawa (MIT): Wave, Lotus. Everforest (MIT): Light,
+  Dark. Flexoki (MIT): Light, Dark. GitHub (MIT): Light, Dark. Ayu (MIT): Mirage. Every third-party scheme ships
+  with its licence text and its source address and SHA-256; the iTerm2-Color-Schemes collection (no single
+  licence) and Modus (GPL-3.0) are not bundled, and import covers them. These schemes are one code colour-scheme
+  catalog that serves the editor and the terminal (D30, amending D15 and D21): each of the 34 schemes carries
+  the terminal palette and the editor's 17 syntax tokens. Each catalog scheme's 17 editor syntax colours are
+  authored to 4.5:1 for every syntax token, comments included, against the scheme's background (7:1 throughout
+  on PM High Contrast Light and Dark), and the editor and the terminal both draw the catalog values as they are;
+  an imported scheme takes its editor syntax colours from its ANSI 16 by a fixed map. Each surface's scheme
+  choice defaults to "Follow look" — the terminal's "Follow look" per-look scheme above, the editor's per-look
+  syntax colours (F3-426, F3-639) — and each surface keeps its own scheme choice. The shared Customize
+  presentation, its two entry points, scope memory, live previews, quick sets, trials and docking rule are
+  F3-650's; the editor's field behavior is F3-651's. No surface keeps a separate scheme catalog (DR-068).
+  "Switch with light and dark", on by default, swaps a chosen scheme for its family's other appearance when the
+  app changes between light and dark. A minimum-contrast floor applies per cell to the text colour against its
+  cell background by moving OKLab lightness only, keeping hue and chroma: default 4.5:1, with the choices 4.5:1
+  and 7:1 under F3-654; block elements, powerline and sextant glyphs are exempt, because they are shapes that
+  meet their neighbours, and a selection uses the scheme's selection text colour. Phosphor schemes (PM Phosphor
+  Green and PM Phosphor Amber) map colours outside their 16 (the 256-colour cube and truecolor), and any colour
+  a program sets (OSC 4, 10, 11 and 12), onto the phosphor by brightness, so a program's `38;5;196` never paints
+  red on a green tube; the scheme's own 16 stay as authored. Import reads iTerm2 `.itermcolors`, Windows
+  Terminal JSON (one scheme, or a settings file's list of schemes), kitty `.conf`, Ghostty themes, Alacritty
+  TOML and its legacy YAML, base16 and base24 YAML, and Xresources; input is capped at 256 KB, nothing in a file
+  is evaluated, and every error message is fixed and never echoes the file. The fields and their defaults:
+  scheme (Follow look, or a scheme); Switch with light and dark (on); minimum contrast (4.5:1); font (Follow
+  look, JetBrains Mono, Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour, Sixtyfour Raster or the
+  system monospace; F3-644); font size and line height (the face's defaults, F3-644); weight (400); letter
+  spacing (0); ligatures (on); bold as bright (off); cursor shape (Follow look, block, bar or underline); cursor
+  blink (on); cursor trail (Follow look, off, soft, glow, phosphor or trace); background (Follow look, theme
+  surface, solid colour, gradient or image) with its colour, its gradient (dusk, dawn, deep or paper), its image
+  (hills, grid, paper or a custom image), image dim (0.45) and image blur (0 px, baked once into the image and
+  never a backdrop blur); opacity (Glass); padding (8 px across, the vertical padding 60 % of it); effects
+  (Follow look, off or custom) with the effect fields of F3-643; inactive dimming; smooth scrolling; bell
+  (Follow look, visual or off); sticky header (on); copy on select (off); and Sixtyfour's scan and bleed axes.
+  Cell geometry: a cell is a whole number of device pixels, its width round((advance + letter spacing) x device
+  pixel ratio) and its height round(font size in px x line height x device pixel ratio), never less than 90 % of
+  the font's ascent plus descent, with the baseline centred; the padding is painted in the cell background, so
+  the remainder smaller than a cell never shows as a stripe. The Appearance popover (More, Appearance...)
+  previews every change live on the terminal and writes either This terminal (the tab's override) or All
+  terminals (enabled, the project default through the same Settings transaction Settings uses over SSYS-051's
+  rows); This terminal commits with `cmd.terminal.appearance.set` (UCC-201). Settings > Terminal binds the same
+  model with the same fields (SSYS-051) and writes the project layer through that same Settings transaction. The
+  app and project layers are Settings values and the tab's override lives in the terminal tab's serialized
+  state; a custom background image is kept as SP-331 says. There is one model: the look's defaults, the popover
+  and Settings read and write it, and no second terminal theme or font store exists (DR-068). The Retro scheme
+  choice also colours Retro's editor syntax: Phosphor Green or Amber, with Amber turning the Retro editor amber.
+  Retro syntax stays monochrome, using brightness and weight in dark and the black and red ribbon in light. This
+  choice is stored once in the terminal's appearance model; the editor reads it and keeps no copy (F3-639,
+  F3-647). The popover's All terminals is enabled and writes the project default row of SSYS-051 through the
+  same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover
+  tag says in this project; no surface writes an app-wide value until q-035 admits one. Hovering a scheme
+  previews it on this terminal only after the pointer rests on that row for 110 ms; arrow keys preview at once,
+  with a 110 ms wait while a key repeats, so passing over rows or scrolling them beneath a stationary pointer
+  never flashes through the schemes. Hover previews a scheme exactly as named, regardless of light/dark pairing.
+  Choosing a scheme of the opposite appearance keeps that scheme and turns pairing off in the chosen scope, with
+  a visible explanation. Scheme hints read the catalog's actual Light/Dark appearance. Font Rendering offers
+  Auto (renderer default), Crisp (whole device-pixel text placement) and Smooth (unhinted outlines); unsupported
+  capabilities are disclosed, not silently mislabeled. Sixtyfour Scanlines and Bleed are static face-axis
+  choices, not a native-only promise. The old Off and 3:1 minimum values resolve to 4.5:1 on read. The look's
+  app-default layer remains the bundled inventory default until an app-wide store is admitted; Project and tab
+  writes keep SSYS-002/SP-331 ownership.
 gui_related: true
 gui_classification_reason: Defines the terminal's visible schemes, contrast floor, import, appearance fields, cell geometry and Appearance popover.
 split_recommended: false
 depends_on: [DL-183, F3-640, F3-431, DR-068, SSYS-051, SP-331]
 unblocks: [F3-643, F3-644, UCC-201, ATS-076]
 acceptance_criteria:
-  - "Every field resolves tab override, then project default, then app default, then the look's default, and an unset field falls through."
-  - "Each look's Follow look scheme is the one listed for its light and dark variant, and Glass draws its scheme at 70 % and 74 % opacity with no backdrop blur of the terminal's own."
-  - "Exactly the 34 schemes listed ship, each third-party scheme with its licence and source record, and the iTerm2-Color-Schemes collection and Modus are not bundled."
-  - "The minimum-contrast floor defaults to 4.5:1, offers Off, 3:1, 4.5:1 and 7:1, changes only OKLab lightness, and leaves block, powerline and sextant glyphs alone."
-  - "Under PM Phosphor Green or Amber, a 256-colour or truecolor colour and a colour a program sets with OSC 4, 10, 11 or 12 draw on the phosphor by brightness, and the scheme's own 16 colours draw as authored."
-  - "Import accepts the seven formats listed, refuses input over 256 KB, evaluates nothing and shows fixed errors that never echo the file."
-  - "Every field changes the terminal at once, from the popover and from Settings, and no terminal appearance setting shows a restart badge."
-  - "Cells are whole device pixels by the geometry rule, and no stripe shows between the last cell and the padding."
-  - "The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "The editor and terminal list the same catalog, each curated scheme carries terminal and syntax colours, both scheme choices default to Follow look and remain separate, and both menus open the same Appearance popover component."
-  - "Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy."
-  - "Every catalog scheme's 17 editor syntax colours meet 4.5:1 for every syntax token, comments included, against its background (7:1 throughout on PM High Contrast Light and Dark), an imported scheme's editor syntax colours come from its ANSI 16 by the fixed map, and the popover opened from the editor offers only scheme, font and size."
+- Every field resolves tab override, then project default, then app default, then the look's default, and an unset
+  field falls through.
+- Each look's Follow look scheme is the one listed for its light and dark variant, and Glass draws its scheme at 70
+  % and 74 % opacity with no backdrop blur of the terminal's own.
+- Exactly the 34 schemes listed ship, each third-party scheme with its licence and source record, and the iTerm2-Color-Schemes
+  collection and Modus are not bundled.
+- The minimum-contrast floor defaults to 4.5:1, offers 4.5:1 and 7:1, changes only OKLab lightness, and leaves block,
+  powerline and sextant glyphs alone.
+- Under PM Phosphor Green or Amber, a 256-colour or truecolor colour and a colour a program sets with OSC 4, 10, 11
+  or 12 draw on the phosphor by brightness, and the scheme's own 16 colours draw as authored.
+- Import accepts the seven formats listed, refuses input over 256 KB, evaluates nothing and shows fixed errors that
+  never echo the file.
+- Every field changes the terminal at once, from the popover and from Settings, and no terminal appearance setting
+  shows a restart badge.
+- Cells are whole device pixels by the geometry rule, and no stripe shows between the last cell and the padding.
+- The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings
+  transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project;
+  no surface writes an app-wide value until q-035 admits one.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are
+  created by this unit.
+- The editor and terminal list the same catalog, each curated scheme carries terminal and syntax colours, both scheme
+  choices default to Follow look and remain separate, and both menus open the same Customize component (F3-650).
+- Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber
+  follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy.
+- Every catalog scheme's 17 editor syntax colours meet 4.5:1 for every syntax token, comments included, against its
+  background (7:1 throughout on PM High Contrast Light and Dark), an imported scheme's editor syntax colours come
+  from its ANSI 16 by the fixed map, and the editor opens F3-650/F3-651's full Customize screen.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -417,13 +442,23 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)"
-  - "Plans/Decision_Log.md#DL-183"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 5 and 6 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md, SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/terminal-SPEC-dbffa7a1b2.md, SHA-256 a9578d34c425186b4213ea2117ac19ea6393220efc173861a7beb4afeb7b12a8 (small-round concept lineage only)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
+  SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md,
+  SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)
+- Plans/Decision_Log.md#DL-183
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D15)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 5 and 6 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md,
+  SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/terminal-SPEC-dbffa7a1b2.md,
+  SHA-256 a9578d34c425186b4213ea2117ac19ea6393220efc173861a7beb4afeb7b12a8 (small-round concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256 1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "Follow look"
   - "Switch with light and dark"
@@ -441,19 +476,32 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's field names and its settings keys under a terminal prefix are lineage only; the product ids are SSYS-051's rows."
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Phosphor schemes map colours outside their 16 and colours a program sets (OSC 4, 10, 11, 12) onto the phosphor by brightness, and the scheme's own 16 stay as authored."
-  - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Catalog editor syntax colours are authored to 4.5:1 for every syntax token, comments included (7:1 on PM High Contrast), and both surfaces draw them as they are, an imported scheme maps its ANSI 16 to editor colours by a fixed map, and the popover opened from the editor offers only scheme, font and size."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): States that each of the 34 shared schemes carries 17 editor syntax tokens."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
-  - "Amended 2026-10-10 (D30, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
-  - "Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
-  - "Amended 2026-10-10 (lead ruling L16): All terminals writes the project default through the Settings transaction and shows in this project; no app-wide value is written until q-035 admits one."
-  - "Makes F3-083's terminal colour-scheme catalogue, preview and instant apply real, and replaces the restart badges on the old terminal theme and font rows (DL-183)."
-  - "Amended 2026-10-11 (wave 2, terminal SPEC dbffa7a1b2): Scheme hover previews wait 110 ms, with immediate arrow-key previews and delayed repeats."
+- 'Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Phosphor schemes map colours outside their 16 and colours a
+  program sets (OSC 4, 10, 11, 12) onto the phosphor by brightness, and the scheme''s own 16 stay as authored.'
+- 'Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Catalog editor syntax colours are authored to 4.5:1 for every
+  syntax token, comments included (7:1 on PM High Contrast), and both surfaces draw them as they are, an imported
+  scheme maps its ANSI 16 to editor colours by a fixed map, and the popover opened from the editor offers only scheme,
+  font and size.'
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): States that each of the 34 shared schemes carries 17 editor
+  syntax tokens.'
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults.'
+- 'Amended 2026-10-10 (D30, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no
+  copy.'
+- 'Amended 2026-10-10 (D30, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor
+  and terminal.'
+- 'Amended 2026-10-10 (lead ruling L16): All terminals writes the project default through the Settings transaction
+  and shows in this project; no app-wide value is written until q-035 admits one.'
+- Makes F3-083's terminal colour-scheme catalogue, preview and instant apply real, and replaces the restart badges
+  on the old terminal theme and font rows (DL-183).
+- 'Amended 2026-10-11 (wave 2, terminal SPEC dbffa7a1b2): Scheme hover previews wait 110 ms, with immediate arrow-key
+  previews and delayed repeats.'
+- 'Amended 2026-10-14: The compact editor popover and below-4.5:1 text choices retire; F3-650 owns both Customize
+  screens.'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
   - Plans/storage-plan.md
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/DRY_Rules.md#DR-068, ContractName:Plans/Settings_System.md#SSYS-051, ContractName:Plans/storage-plan.md#SP-331, ContractName:Plans/FinalGUISpec.md#F3-431, ContractName:Plans/UI_Command_Catalog.md#UCC-201
@@ -566,39 +614,43 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  These are the faces of the home redesign's editor and terminal only (DL-183, with Jared's answer of 2026-10-10 on
-  Retro code text, D17a). The editor's code face is JetBrains Mono in every look, Retro included (F3-639). The
-  terminal's default face is JetBrains Mono in every look except Retro, where it is VT323; Sixtyfour, Sixtyfour
-  Raster and Departure Mono are Retro options and JetBrains Mono stays selectable there; Atkinson Hyperlegible Mono
-  is offered for readability in every look; and the system monospace is also a choice (F3-642). Every one of these
-  faces is the page's own, embedded once through DL-161's pipeline as one set of files shared with the rest of the
-  page (DR-050), and the terminal carries no font file of its own (amended 2026-10-10, DL-183, terminal SPEC 01c5e78c42
-  section 4). JetBrains Mono's upright bytes are NieR Mode's PM NieR Mono files under the general family name
-  'JetBrains Mono', which the 5.6 Pro fonts work builds through DL-161's pipeline, and its italic is JetBrains Mono's
-  own italic, which the page's code face embeds with the same script slices (DL-161, F3-430), so italic code and a
-  program's italic text (SGR 3) are drawn, not slanted; VT323, Sixtyfour and Departure Mono have no italic, and theirs
-  is synthesised. Each face comes as script slices with its Latin file last: JetBrains Mono as per-script slices and
-  Latin, upright and italic; VT323 as Vietnamese, Latin Extended and Latin; Sixtyfour as Latin Extended and Latin;
-  Sixtyfour Raster as Latin only; Atkinson Hyperlegible Mono as Latin Extended and Latin, upright and italic; and
-  Departure Mono as the whole font, 1,186 glyphs, in one file. The faces, with licence, Latin bytes, axes and default
-  size and line height in CSS px: JetBrains Mono, the code face of the editor and the terminal, OFL-1.1, 31,432 bytes
-  upright and 42,964 bytes italic, weight 100 to 800, 13 px and 1.30; VT323, Retro's terminal default, OFL-1.1, 17,936
-  bytes, no axes, 19 px and 1.05; Sixtyfour, a Retro option whose own axes give a CRT look without motion, OFL-1.1,
-  4,236 bytes, SCAN -53 to 100 and BLED 0 to 100, 10 px and 1.45; Sixtyfour Raster, a Retro option that is Sixtyfour
-  baked at SCAN 45 and BLED 40, OFL-1.1, 3,068 bytes, no axes; Atkinson Hyperlegible Mono, for readability, OFL-1.1,
-  17,752 bytes upright and 19,084 bytes italic, weight 200 to 800, 13 px and 1.35; Departure Mono, a Retro option,
-  OFL-1.1 (its v1.500 release ships the SIL Open Font License, not MIT), 22,496 bytes, no axes, 13.75 px and 1.20;
-  and the system monospace, 13 px and 1.30. The terminal-only faces total 84,572 bytes of Latin files before base64,
-  plus 47,780 bytes of Latin Extended and Vietnamese slices. Box drawing
-  (U+2500 to U+257F), block elements (U+2580 to U+259F), braille (U+2800 to U+28FF), powerline (U+E0B0 to U+E0BF)
-  and sextants (U+1FB00 to U+1FB3B) are drawn by the terminal, so no patched font is needed, and the terminal's faces
-  are never mirrored into PM Symbols. Licence rule: only permissively licensed faces are built in, under the SIL Open
-  Font License, Apache or MIT, each with its licence text and its source and SHA-256 record; every terminal face is
-  OFL-1.1. A face change applies live in the terminal (F3-642). Terminal text keeps its own fidelity fixtures,
-  separate from rendered GUI text (F3-414). General code text across the chat and PMConcept7
-  (JetBrains Mono in Basic, Glass and Friendly, IBM Plex Mono in Retro, PM NieR Mono in NieR) is not this unit's: it
-  belongs to DL-161, F3-426 and F3-430 as the 5.6 Pro fonts work amends them under D17a, and Retro's interface and
-  its code text outside the editor and the terminal stay IBM Plex Mono.
+  These are the faces of the home redesign's editor and terminal only (DL-183, with Jared's answer of 2026-10-10
+  on Retro code text, D17a). The editor's code face is JetBrains Mono in every look, Retro included (F3-639).
+  The terminal's default face is JetBrains Mono in every look except Retro, where it is VT323; Sixtyfour,
+  Sixtyfour Raster and Departure Mono are Retro options and JetBrains Mono stays selectable there; Atkinson
+  Hyperlegible Mono is offered for readability in every look; and the system monospace is also a choice
+  (F3-642). Every one of these faces is the page's own, embedded once through DL-161's pipeline as one set of
+  files shared with the rest of the page (DR-050), and the terminal carries no font file of its own (amended
+  2026-10-10, DL-183, terminal SPEC 01c5e78c42 section 4). JetBrains Mono's upright bytes are NieR Mode's PM
+  NieR Mono files under the general family name 'JetBrains Mono', which the 5.6 Pro fonts work builds through
+  DL-161's pipeline, and its italic is JetBrains Mono's own italic, which the page's code face embeds with the
+  same script slices (DL-161, F3-430), so italic code and a program's italic text (SGR 3) are drawn, not
+  slanted; VT323, Sixtyfour and Departure Mono have no italic, and theirs is synthesised. Each face comes as
+  script slices with its Latin file last: JetBrains Mono as per-script slices and Latin, upright and italic;
+  VT323 as Vietnamese, Latin Extended and Latin; Sixtyfour as Latin Extended and Latin; Sixtyfour Raster as
+  Latin only; Atkinson Hyperlegible Mono as Latin Extended and Latin, upright and italic; and Departure Mono as
+  the whole font, 1,186 glyphs, in one file. The faces, with licence, Latin bytes, axes and default size and
+  line height in CSS px: JetBrains Mono, the code face of the editor and the terminal, OFL-1.1, 31,432 bytes
+  upright and 42,964 bytes italic, weight 100 to 800, 13 px and 1.30; VT323, Retro's terminal default, OFL-1.1,
+  17,936 bytes, no axes, 19 px and 1.05; Sixtyfour, a Retro option whose own axes give a CRT look without
+  motion, OFL-1.1, 4,236 bytes, SCAN -53 to 100 and BLED 0 to 100, 10 px and 1.45; Sixtyfour Raster, a Retro
+  option that is Sixtyfour baked at SCAN 45 and BLED 40, OFL-1.1, 3,068 bytes, no axes; Atkinson Hyperlegible
+  Mono, for readability, OFL-1.1, 17,752 bytes upright and 19,084 bytes italic, weight 200 to 800, 13 px and
+  1.35; Departure Mono, a Retro option, OFL-1.1 (its v1.500 release ships the SIL Open Font License, not MIT),
+  22,496 bytes, no axes, 13.75 px and 1.20; and the system monospace, 13 px and 1.30. The terminal-only faces
+  total 84,572 bytes of Latin files before base64, plus 47,780 bytes of Latin Extended and Vietnamese slices.
+  Box drawing (U+2500 to U+257F), block elements (U+2580 to U+259F), braille (U+2800 to U+28FF), powerline
+  (U+E0B0 to U+E0BF) and sextants (U+1FB00 to U+1FB3B) are drawn by the terminal, so no patched font is needed,
+  and the terminal's faces are never mirrored into PM Symbols. Licence rule: only permissively licensed faces
+  are built in, under the SIL Open Font License, Apache or MIT, each with its licence text and its source and
+  SHA-256 record; every terminal face is OFL-1.1. A face change applies live in the terminal (F3-642). Terminal
+  text keeps its own fidelity fixtures, separate from rendered GUI text (F3-414). General code text across the
+  chat and PMConcept7 (JetBrains Mono in Basic, Glass and Friendly, IBM Plex Mono in Retro, PM NieR Mono in
+  NieR) is not this unit's: it belongs to DL-161, F3-426 and F3-430 as the 5.6 Pro fonts work amends them under
+  D17a, and Retro's interface and its code text outside the editor and the terminal stay IBM Plex Mono. The
+  system face exposes weights the selected face can draw; a fixed-weight face does not imply distinct variable
+  weights. Terminal bold stays heavier: 700, or 800 when regular weight is at least 600, within the supported
+  face range.
 gui_related: true
 gui_classification_reason: Defines the built-in faces, defaults and licence rule of the editor's and the terminal's visible text.
 split_recommended: false
@@ -628,11 +680,22 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-183"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D17)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md, SHA-256 1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299 (D17a)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 4 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md, SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc, section 4 (every face the page's own, the slices and the italic; concept lineage only)"
+- Plans/Decision_Log.md#DL-183
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D17)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md, SHA-256 1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299
+  (D17a)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 4 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/terminal-SPEC-01c5e78c42.md,
+  SHA-256 a0723f6663990723fc8bd879610c8dedcf2ef6b19a467a2d5c1e1c6d183aabfc, section 4 (every face the page's own,
+  the slices and the italic; concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256 1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "JetBrains Mono"
   - "VT323"
@@ -651,10 +714,16 @@ compatibility_only_notes:
   - "The concept's font file names are lineage; the product's files are the embedding pipeline's (DL-161, DR-050)."
   - "Terminal SPEC ac63b1f467 gave JetBrains Mono's upright file the weight axis 400 to 800 and its italic 100 to 800; SPEC 01c5e78c42 lists the family as one row with weight 100 to 800, which this unit follows."
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (DL-183; terminal SPEC 01c5e78c42, section 4): every face is the page's own through DL-161's pipeline and the terminal carries no font file; the script slices (Latin Extended and Vietnamese among them), JetBrains Mono's italic and the synthesised italic of VT323, Sixtyfour and Departure Mono are stated; the 47,780 bytes of non-Latin slices are added to the 84,572 bytes of Latin."
+- 'Amended 2026-10-10 (DL-183; terminal SPEC 01c5e78c42, section 4): every face is the page''s own through DL-161''s
+  pipeline and the terminal carries no font file; the script slices (Latin Extended and Vietnamese among them), JetBrains
+  Mono''s italic and the synthesised italic of VT323, Sixtyfour and Departure Mono are stated; the 47,780 bytes of
+  non-Latin slices are added to the 84,572 bytes of Latin.'
+- 'Amended 2026-10-14: The campaign prototype cannot draw distinct JetBrains Mono upright weights 100–300. That is
+  an asset implementation gap, not an approved reduction of the promised 100–800 range.'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Decision_Log.md
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/Decision_Log.md#DL-161, ContractName:Plans/DRY_Rules.md#DR-050, ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/FinalGUISpec.md#F3-639

@@ -3362,19 +3362,20 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
-  PMConcept7's hover grammar has exactly one owner, FinalGUISpec F3-465: the magnet, the pointer light, the emitted
-  glow, the continuous field with its neighbours, the Retro form Raise, the NieR form Lock-on, the Reduced Motion and
-  software-rendered forms, and the boundary. It has one engine, the PMH engine (18-hover.js in the concept), riding
-  the one merged document pointer-move handler F3-446 owns, and one token set (22-hover.css in the concept), with
-  family, kind and family-by-kind rows. There are four kinds, card, row, tile and icon, and every target is one of
-  them. A surface opts in, with its class in the engine's lists or `data-pmh` naming a kind on its markup, and opts
-  out with `data-pmh="off"` or by sitting inside `[data-pm-hover-exempt]`; it never restates the effect: no surface
-  keeps its own hover lift, glow, pointer sheen, magnet, pointer-move listener or animation loop, and a page's own
-  `:hover` lift or ring on a target is cancelled rather than layered under the grammar. A surface that needs a
-  different strength sets a token for its kind and never forks a layer. The boundary is part of the grammar: tab
-  strips, resize dividers and editor and terminal text surfaces are never targets and get at most a static hover tint,
-  and icons get no magnet and keep at most their own quiet tint. Tab silhouettes stay with their tab owners (F3-505,
-  F3-466), and parallax stays with F3-446.
+  PMConcept7's hover grammar has exactly one owner, FinalGUISpec F3-465: the magnet, the pointer light, the
+  emitted glow, the continuous field with its neighbours, the Retro form Raise, the NieR form Lock-on, the
+  Reduced Motion and software-rendered forms, and the boundary. It has one engine, the PMH engine (18-hover.js
+  in the concept), riding the one merged document pointer-move handler F3-446 owns, and one token set
+  (22-hover.css in the concept), with family, kind and family-by-kind rows. There are card, row, tile, icon and
+  small-control kinds; the control marker is the same grammar's bounded extension. A surface opts in, with its
+  class in the engine's lists or `data-pmh` naming a kind on its markup, and opts out with `data-pmh="off"` or
+  by sitting inside `[data-pm-hover-exempt]`; it never restates the effect: no surface keeps its own hover lift,
+  glow, pointer sheen, magnet, pointer-move listener or animation loop, and a page's own `:hover` lift or ring
+  on a target is cancelled rather than layered under the grammar. A surface that needs a different strength sets
+  a token for its kind and never forks a layer. The boundary is part of the grammar: editor and terminal text
+  surfaces never receive card effects; small controls use F3-465's shared marker without card magnet, Glass uses
+  F3-652's optical marker, and dividers use F3-657's one resize grammar. Tab silhouettes stay with their tab
+  owners (F3-505, F3-466), and parallax stays with F3-446.
 gui_related: true
 gui_classification_reason: "Fixes one owner for PMConcept7's hover grammar."
 split_recommended: false
@@ -3399,8 +3400,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-171"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/ENGINE.md, SHA-256 bd3480ac65c053210ebc6d9193480acc3c04c6592276607332817615fd76de5e"
+- Plans/Decision_Log.md#DL-171
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/ENGINE.md, SHA-256 bd3480ac65c053210ebc6d9193480acc3c04c6592276607332817615fd76de5e
+- /mnt/Cursor/share/puppet-master/2026-10-13-hover-polish-all-looks/NOTES.md, SHA-256 6a86e56a9edc818c4a6c812e484e40c377cf7657180d652457de64ab82fdb12c
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-resize-glow/NOTES.md, SHA-256 0a20256d730c5b51cda138b14845a5dc2e7dfdda04385a3956721a73fb657c16
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "F3-465"
   - "data-pmh"
@@ -3412,6 +3417,7 @@ negative_constraints:
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
+
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/FinalGUISpec.md#F3-446, ContractName:Plans/Decision_Log.md#DL-171, ContractName:Plans/FinalGUISpec.md#F3-505, ContractName:Plans/FinalGUISpec.md#F3-466
@@ -3429,33 +3435,33 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
-  Every panel in the home centre is drawn from one grammar, whatever tab kinds it holds (DL-180, D5, D6, D12). There
-  is one tab strip (FinalGUISpec F3-631, F3-505's contact-aware silhouette generalised) with one tab menu, one "+"
-  button and its menu (F3-632), one empty-panel launcher showing that menu's rows (F3-632), one "+N" list of the tabs
-  that do not fit (F3-633), one shared header row for every kind that needs controls above its content (F3-635), and
-  one keyboard table with one web-client mapping rule (F3-635). No tab kind draws its own strip, tab overflow, "+" or
-  menu button, panel menu or header row; a kind draws a row of its own only when nothing in the shared header row
-  fits, and that kind's owner unit records why. The panel keys are F3-635's alone and no kind redefines one: a
-  kind's own keys work only inside its body, and a terminal keeps the shell's keys and gives back the host keys
-  F3-640 lists. A kind supplies its content, its registration (label, group, icon,
-  id prefixes, content minimum, its "+" row, mount, saved state, close check; F3-635) and its marks through the host;
-  every tab mark that names a state comes from the one status set (F3-585, DL-141), and every kind icon is a
-  bundled SVG icon_id (FinalGUISpec section 2.6, F3-417), never an emoji. The dashboard, the terminal and the browser
-  are tab kinds of the one panel model (F3-630); none keeps a second panel model, strip, layout record or placement
-  rule, so the dashboard's own strip, the terminal's sections, workgroups, sub-tabs and in-tab splits, and the
-  editor-only strip and overflow rules are gone (F3-631, F3-633, SMPFS-180). A tab is a view of its owner's object,
-  and the panel adds no session, store or service of its own: a browser tab shows a session of the Browser owner
-  (DR-037), a terminal tab one terminal session (SMPFS-180), and a dashboard tab one widget board hosted through
-  Widget_System (WS-030), never through a new host service (DR-038). The chat column is outside this grammar: never a
-  panel and never a tab (F3-637). Hover on tabs, strip buttons, dividers and header-row buttons stays inside the
-  boundary of the shell's one hover grammar: no magnet, light or glow, a static tint at most (DR-072, F3-465). This rule supersedes the per-surface Home owners of the
-  2026-08-04 Home owner boundary for panel and tab presentation.
-  Amended 2026-10-10 (DL-187): the Debug Console is one tab whose debug sessions are switched inside it by session
-  sub-tabs (D33), the way Output switches its channel inside its one tab: which session shows is view state, never a
-  panel tab, never in the strip and never a second tab model, and the row that switches it is the kind's own row,
-  recorded by its owner units (F3-635, F3-490). The terminal's sub-tabs stay retired. Terminal tabs carry no colour
-  or icon of the person's choosing on the strip until the neon glyph system redesigns them (D34); every tab keeps its
-  kind's bundled icon.
+  Every panel in the home centre is drawn from one grammar, whatever tab kinds it holds (DL-180, D5, D6, D12).
+  There is one tab strip (FinalGUISpec F3-631, F3-505's contact-aware silhouette generalised) with one tab menu,
+  one "+" button and its menu (F3-632), one empty-panel launcher showing that menu's rows (F3-632), one "+N"
+  list of the tabs that do not fit (F3-633), one shared header row for every kind that needs controls above its
+  content (F3-635), and one keyboard table with one web-client mapping rule (F3-635). No tab kind draws its own
+  strip, tab overflow, "+" or menu button, panel menu or header row; a kind draws a row of its own only when
+  nothing in the shared header row fits, and that kind's owner unit records why. The panel keys are F3-635's
+  alone and no kind redefines one: a kind's own keys work only inside its body, and a terminal keeps the shell's
+  keys and gives back the host keys F3-640 lists. A kind supplies its content, its registration (label, group,
+  icon, id prefixes, content minimum, its "+" row, mount, saved state, close check; F3-635) and its marks
+  through the host; every tab mark that names a state comes from the one status set (F3-585, DL-141), and every
+  kind icon is a bundled SVG icon_id (FinalGUISpec section 2.6, F3-417), never an emoji. The dashboard, the
+  terminal and the browser are tab kinds of the one panel model (F3-630); none keeps a second panel model,
+  strip, layout record or placement rule, so the dashboard's own strip, the terminal's sections, workgroups,
+  sub-tabs and in-tab splits, and the editor-only strip and overflow rules are gone (F3-631, F3-633, SMPFS-180).
+  A tab is a view of its owner's object, and the panel adds no session, store or service of its own: a browser
+  tab shows a session of the Browser owner (DR-037), a terminal tab one terminal session (SMPFS-180), and a
+  dashboard tab one widget board hosted through Widget_System (WS-030), never through a new host service
+  (DR-038). The chat column is outside this grammar: never a panel and never a tab (F3-637). Hover on
+  strip/header controls consumes F3-465's shared small-control marker without card magnet; resize bars consume
+  F3-657. DR-072 keeps one owner for each grammar. This rule supersedes the per-surface Home owners of the
+  2026-08-04 Home owner boundary for panel and tab presentation. Amended 2026-10-10 (DL-187): the Debug Console
+  is one tab whose debug sessions are switched inside it by session sub-tabs (D33), the way Output switches its
+  channel inside its one tab: which session shows is view state, never a panel tab, never in the strip and never
+  a second tab model, and the row that switches it is the kind's own row, recorded by its owner units (F3-635,
+  F3-490). The terminal's sub-tabs stay retired. Terminal tabs carry no colour or icon of the person's choosing
+  on the strip until the neon glyph system redesigns them (D34); every tab keeps its kind's bundled icon.
 gui_related: true
 gui_classification_reason: "Fixes one grammar for every panel and tab in the home centre."
 split_recommended: false
@@ -3481,10 +3487,18 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-180"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1, D5, D6, D9, D12, D24)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9, sections 3, 4, 5 and 9 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8, section 6.3, part 1.7 (worklist)"
+- Plans/Decision_Log.md#DL-180
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D1, D5, D6, D9, D12, D24)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md,
+  SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9, sections 3, 4, 5 and 9 (concept lineage
+  only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8,
+  section 6.3, part 1.7 (worklist)
+- /mnt/Cursor/share/puppet-master/2026-10-13-hover-polish-all-looks/NOTES.md, SHA-256 6a86e56a9edc818c4a6c812e484e40c377cf7657180d652457de64ab82fdb12c
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-resize-glow/NOTES.md, SHA-256 0a20256d730c5b51cda138b14845a5dc2e7dfdda04385a3956721a73fb657c16
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "+N"
   - "header row"
@@ -3501,6 +3515,7 @@ stale_retired_dispositions:
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-631, ContractName:Plans/FinalGUISpec.md#F3-632, ContractName:Plans/FinalGUISpec.md#F3-633, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/DRY_Rules.md#DR-072, ContractName:Plans/Decision_Log.md#DL-141
@@ -3659,25 +3674,28 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
-  The terminal has one appearance model (DL-183, D15). Four layers resolve field by field, an unset field falling
-  through: the look's defaults ("Follow look": the current look's scheme, face and effects), then the app default
-  (Settings > Terminal), then the project default, then the per-tab override, each later layer winning (F3-642). The
-  Appearance popover in the terminal's More menu, Settings > Terminal and the per-look defaults read and write this
-  one model: the popover writes This terminal (the tab's override) or All terminals (the project default, written
-  through the same Settings transaction Settings uses over SSYS-051's rows, F3-642), no surface writes an app-wide value
-  until q-035 admits an app-wide store (SSYS-002), and the look layer reads the current look from its one store (SSYS-010, DR-056) and
-  keeps no copy. The fields are F3-642's, the storage SP-331's (the app default in Settings rows, the project default
-  in the Project's Settings, the override inside the terminal tab's saved state) and the Settings rows SSYS-051's; the
-  existing terminal appearance rows, code.terminal.theme and code.terminal.font-family among them, bind the app layer
-  of this model. There is no fifth layer (a shell profile carries no appearance of its own), and no second terminal
+  The terminal has one appearance model (DL-183, D15). Four layers resolve field by field, an unset field
+  falling through: the look's defaults ("Follow look": the current look's scheme, face and effects), then the
+  app default (Settings > Terminal), then the project default, then the per-tab override, each later layer
+  winning (F3-642). The Appearance popover in the terminal's More menu, Settings > Terminal and the per-look
+  defaults read and write this one model: the popover writes This terminal (the tab's override) or All terminals
+  (the project default, written through the same Settings transaction Settings uses over SSYS-051's rows,
+  F3-642), no surface writes an app-wide value until q-035 admits an app-wide store (SSYS-002), and the look
+  layer reads the current look from its one store (SSYS-010, DR-056) and keeps no copy. The fields are F3-642's,
+  the storage SP-331's (the app default in Settings rows, the project default in the Project's Settings, the
+  override inside the terminal tab's saved state) and the Settings rows SSYS-051's; the existing terminal
+  appearance rows, code.terminal.theme and code.terminal.font-family among them, bind the app layer of this
+  model. There is no fifth layer (a shell profile carries no appearance of its own), and no second terminal
   theme, scheme, font, background or effects store or terminal-local settings key outside the model. Every field
-  applies live, and no terminal appearance setting carries a restart badge. The faces are F3-644's and their files
-  DR-050's one set. The effects (F3-643) are paint on the terminal's own screen inside this model, not motion voices:
-  DR-043's per-family motion voices and its accent rule stand, so the scheme colours the screen and the terminal's
-  chrome takes the theme's token roles.
-  One code colour-scheme catalog and one Appearance popover serve the editor and the terminal (F3-642, F3-639).
-  Each curated scheme carries the terminal palette and editor syntax colours. Each surface has its own scheme
-  choice, defaulting to "Follow look"; neither surface keeps its own scheme list or popover.
+  applies live, and no terminal appearance setting carries a restart badge. The faces are F3-644's and their
+  files DR-050's one set. The effects (F3-643) are paint on the terminal's own screen inside this model, not
+  motion voices: DR-043's per-family motion voices and its accent rule stand, so the scheme colours the screen
+  and the terminal's chrome takes the theme's token roles. One code colour-scheme catalog and the shared
+  Customize presentation serve the editor and terminal (F3-642, F3-650, F3-651). Each curated scheme carries the
+  terminal palette and editor syntax colours. Each surface has its own scheme choice, defaulting to "Follow
+  look"; neither surface keeps its own scheme list or duplicate Customize implementation. F3-650 alone owns
+  scope entry, preview docking and selector layout for both screens. F3-651 owns editor field behavior; SSYS-052
+  and SSYS-051 own their Project rows. Compatibility concept keys never authorize a no-Project write.
 gui_related: true
 gui_classification_reason: "Fixes one layered appearance model for every terminal."
 split_recommended: false
@@ -3705,12 +3723,19 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)"
-  - "Plans/Decision_Log.md#DL-183"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15, D16)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 6 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3, Appendix 7, E.3.4 and E.5 (worklist)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
+  SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md,
+  SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)
+- Plans/Decision_Log.md#DL-183
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D15, D16)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 6 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3,
+  Appendix 7, E.3.4 and E.5 (worklist)
+- /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "Follow look"
   - "This terminal"
@@ -3731,6 +3756,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
   - Plans/storage-plan.md
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/FinalGUISpec.md#F3-643, ContractName:Plans/FinalGUISpec.md#F3-644, ContractName:Plans/storage-plan.md#SP-331, ContractName:Plans/Settings_System.md#SSYS-051, ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/DRY_Rules.md#DR-050, ContractName:Plans/DRY_Rules.md#DR-056
@@ -3743,25 +3769,28 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
-  Puppet Master has one rule against side stripes, emoji and pills, for every surface (DL-184, D22; Jared: "Remember,
-  no boxes with side colors, no emojis, no pills are to be used."). No box carries a coloured border or stripe on one
-  side, and no inset accent border, inset shadow or pseudo-element stripe stands in for one. No emoji appears in
-  Puppet Master's chrome; a program's own output in the terminal may contain emoji. No pill: no fully rounded capsule
-  used as a tab, tag, badge, button or status chip; keyboard key caps are the one capsule-like shape allowed.
-  Selection is shown by the surface itself: the fused tab silhouette, a filled or tinted row, the NieR square cursor,
-  Retro reverse video, never an edge stripe. A status is a mark and a word from its owner's status set (F3-585,
-  DL-141; the left rail's F3-619 through DR-057), and a count is a plain number. How the rule looks, and the list of
-  retired defaults it replaces, are F3-648's: section 3.5's 3 px left-edge accent stripe and F3-039's token, Appendix
-  C's and F3-276's accent left border, F3-469's inset left accent bar, the workgroup pill of section 5.1, and the pill
-  skins of F3-422, F3-463, F3-464 and F3-467. The surface statements that came first stay as instances of this one
-  rule and do not narrow it: the chat's and Settings' stripe ban (APR-034, F3-534), Settings' status tokens
-  (Settings_System section 22), the left rail's rules (DL-162, F3-618, F3-619, DR-057), the decision cards' text
-  statuses (DL-036) and the production icon contract with no emoji (FinalGUISpec section 2.6, F3-417); where one of
-  them names only the chat, Settings or the rail, this rule covers every other surface as well. A new surface cites
-  this rule instead of restating it. The checks are F3-648's and the home certification's (ATS-075).
-  A chosen option is filled on its own box, never underlined. Debug Console sub-tabs and every segmented
-  toggle use each look's neutral selection fill in Friendly, Glass and Basic, never an accent; Glass adds
-  its 1 px rim on the top edge of the filled box, Retro keeps reverse video and NieR its ink block (F3-490).
+  Puppet Master has one rule against side stripes, emoji and pills, for every surface (DL-184, D22; Jared:
+  "Remember, no boxes with side colors, no emojis, no pills are to be used."). No box carries a coloured border
+  or stripe on one side, and no inset accent border, inset shadow or pseudo-element stripe stands in for one. No
+  emoji appears in Puppet Master's chrome; a program's own output in the terminal may contain emoji. No
+  pill-shaped label: status chips, tags, suggestion chips and state badges cannot be fully rounded capsules.
+  Pill-shaped action buttons, including Install, Sign in and the rounded Friendly and Glass actions, are
+  allowed; keyboard key caps and non-label progress marks are not labels. Joined selectors and tabs retain their
+  own specified geometry. Selection is shown by the surface itself: the fused tab silhouette, a filled or tinted
+  row, the NieR square cursor, Retro reverse video, never an edge stripe. A status is a mark and a word from its
+  owner's status set (F3-585, DL-141; the left rail's F3-619 through DR-057), and a count is a plain number. How
+  the rule looks, and the list of retired defaults it replaces, are F3-648's: section 3.5's 3 px left-edge
+  accent stripe and F3-039's token, Appendix C's and F3-276's accent left border, F3-469's inset left accent
+  bar, the workgroup pill of section 5.1, and the pill skins of F3-422, F3-463, F3-464 and F3-467. The surface
+  statements that came first stay as instances of this one rule and do not narrow it: the chat's and Settings'
+  stripe ban (APR-034, F3-534), Settings' status tokens (Settings_System section 22), the left rail's rules
+  (DL-162, F3-618, F3-619, DR-057), the decision cards' text statuses (DL-036) and the production icon contract
+  with no emoji (FinalGUISpec section 2.6, F3-417); where one of them names only the chat, Settings or the rail,
+  this rule covers every other surface as well. A new surface cites this rule instead of restating it. The
+  checks are F3-648's and the home certification's (ATS-075). A chosen option is filled on its own box, never
+  underlined. Debug Console sub-tabs and every segmented toggle use each look's neutral selection fill in
+  Friendly, Glass and Basic, never an accent; Glass adds its 1 px rim on the top edge of the filled box, Retro
+  keeps reverse video and NieR its ink block (F3-490).
 gui_related: true
 gui_classification_reason: "Fixes one shell-wide rule against side stripes, emoji and pills."
 split_recommended: false
@@ -3786,10 +3815,15 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-184"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D22 and Jared's brief)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8, sections 2.12 and 7.1 (A11, A12) (worklist)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
+- Plans/Decision_Log.md#DL-184
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D22 and Jared's brief)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8,
+  sections 2.12 and 7.1 (A11, A12) (worklist)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-11-onboarding-no-pills/README.md, SHA-256 1ab0aedc5910ab03097439cf9cd48da77eb7cefad458ca705a556727d327fd1a
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "Remember, no boxes with side colors, no emojis, no pills are to be used."
   - "APR-034"
@@ -3799,10 +3833,13 @@ negative_constraints:
   - "Do not draw a coloured border or stripe on one side of a box, a pill-shaped tab, tag, badge, button or status chip, or an emoji in Puppet Master's chrome."
   - "Do not restate this rule per surface or carve a surface out of it."
 stale_retired_dispositions:
-  - "Amended 2026-10-11 (lead ruling 2026-10-11, D29): A chosen option uses its own filled box and never an underline."
+- 'Amended 2026-10-11 (lead ruling 2026-10-11, D29): A chosen option uses its own filled box and never an underline.'
+- 'Amended 2026-10-14: Jared''s 2026-10-11 clarification limits the capsule ban to labels and explicitly allows pill
+  action buttons; it is not a blanket ban on rounded controls.'
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-184, ContractName:Plans/FinalGUISpec.md#F3-648, ContractName:Plans/FinalGUISpec.md#F3-417, ContractName:Plans/FinalGUISpec.md#F3-534, ContractName:Plans/Settings_System.md, ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/Decision_Log.md#DL-036, ContractName:Plans/DRY_Rules.md#DR-057, ContractName:Plans/Automated_Testing_System.md#ATS-075, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/Decision_Log.md#DL-141
@@ -3940,3 +3977,53 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/Contracts_V0.md#CV-360, ContractName:Plans/FileManager.md#F-090, ContractName:Plans/assistant-chat-design.md#ACD-500, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/DRY_Rules.md#DR-041, ContractName:Plans/DRY_Rules.md#DR-011, ContractName:Plans/DRY_Rules.md#DR-008
+
+## DR-073 — One wallpaper catalog and one writer (2026-10-14)
+
+```yaml
+plan_unit_id: DR-073
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  One wallpaper registry supplies stable ids, family/order, names, dark/light assets, thumbnails and defaults to
+  every wallpaper consumer. Plans/wallpaper_catalog.json is that registry; F3-653 owns presentation, SSYS-054
+  owns the single Project choice and SP-333 owns storage. No theme, Settings gallery, onboarding or native
+  renderer keeps a competing list or default. Picking through any surface uses the Settings transaction, never a
+  wallpaper-specific settings store or duplicate command. The editor and terminal likewise reuse F3-650's
+  Customize presentation and F3-642's scheme catalog while their field values retain separate identities.
+gui_related: true
+gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every wallpaper id/default/asset resolves from the registry and every committed choice uses the same Project transaction.
+- A consumer references the owner and cannot silently add a private wallpaper or background mode.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: pm7_campaign
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-653
+- Plans/Settings_System.md#SSYS-054
+- Plans/storage-plan.md#SP-333
+- Plans/FinalGUISpec.md#F3-650
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/Settings_System.md#SSYS-054, ContractName:Plans/storage-plan.md#SP-333, ContractName:Plans/FinalGUISpec.md#F3-650
