@@ -89,7 +89,8 @@ PM_HOME.boot = function () {
      ['narrow ladder', function () { narrow.install(); }],
      ['stand-in chat', function () { if (PMW.standIn) PMW.standIn.install(); }],
      ['tour', function () { if (PMW.tour) PMW.tour.install(); }],
-     ['status bar dock', function () { if (PMW.pageShell) PMW.pageShell.install(); }]
+     ['status bar dock', function () { if (PMW.pageShell) PMW.pageShell.install(); }],
+     ['grab light', function () { PMW.light.bindShell(); }]
     ].forEach(function (step) {
       try { step[1](); } catch (err) { try { console.error('[pm-home] ' + step[0] + ' failed', err); } catch (_) {} }
     });

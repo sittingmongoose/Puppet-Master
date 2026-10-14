@@ -7,7 +7,7 @@ var state = PMW.state = PMW.state || { layout: null, centre: null, moving: false
 var instances = PMW.instances = {};
 var panelEls = {};     // panelId -> element
 var dividerEls = {};   // splitId:index -> element
-var lastRects = null;
+var lastRects = null, paintedRects = null;
 var paintQueued = false, paintAnimate = false;
 var settleTimer = 0;
 var render = PMW.render = {};
@@ -31,6 +31,8 @@ function centreRect() {
 }
 render.centreRect = function () { return state.centre ? centreRect() : { x: 0, y: 0, w: 0, h: 0 }; };
 render.rects = function () { return lastRects; };
+/* what is painted: the drop preview's rects while a drag previews its result (31-dropview.js), else render.rects() */
+render.paintedRects = function () { return paintedRects || lastRects; };
 
 /* A divider drag's preview (24-dividers.js) is painted over the live layout, never written into it: commits, kind
    updates and saves made during the drag all land on the real layout, and the drag's own sizes reach the model once,
@@ -73,17 +75,27 @@ render.paint = function (opts) {
     narrowFocus: l.view.focus
   });
   lastRects = rects;
-  var animate = !!opts.animate && !state.dragging && dur('med') > 0;
+  // A drag's live preview (31-dropview.js) paints the layout its drop would leave: the panels go where that layout
+  // puts them and their strips fit those widths, while the model, render.rects() and every zone stay on the layout as
+  // it is. Its glides run while the drag is on (a plain drag paints without them).
+  var dv = state.dropPreview, shown = rects;
+  if (dv && dv.layout && dv.layout.root) {
+    shown = geom.layout(dv.layout, centreRect(), { maximized: narrow ? null : dv.layout.view.maximized, narrow: narrow, narrowFocus: dv.layout.view.focus });
+  }
+  paintedRects = dv ? shown : null;
+  var animate = !!opts.animate && (!state.dragging || !!opts.preview) && dur('med') > 0;
   c.setAttribute('data-pmw-mode', rects.mode);
-  c.classList.toggle('pmw-animating', animate);
+  // a paint without motion during a preview's glide leaves the glide running (dropping the class cancels it mid-way)
+  if (animate || !(state.moving && PMW.dropView && PMW.dropView.gliding())) c.classList.toggle('pmw-animating', animate);
+  setAttr(c, 'data-pmw-dv', dv ? 'on' : null);
 
   // panels
   var alive = {};
   model.panels(l).forEach(function (p) {
     alive[p.id] = true;
     var el = panelEls[p.id] || createPanelEl(p);
-    var r = rects.panels[p.id];
-    var hidden = !!rects.hidden[p.id] || !r;
+    var r = shown.panels[p.id];
+    var hidden = !!shown.hidden[p.id] || !r;
     setAttr(el, 'hidden', hidden);
     setAttr(el, 'data-focused', l.view.focus === p.id);
     setAttr(el, 'data-collapsed', p.collapsed ? (collapsedAxis(l, p) || 'col') : null);
@@ -93,7 +105,8 @@ render.paint = function (opts) {
     setAttr(el, 'data-maximized', l.view.maximized === p.id && rects.mode === 'maximized');
     el.setAttribute('aria-label', panelLabel(l, p));
     if (r) placeEl(el, r, animate);
-    PMW.strip.render(el, p, l, { narrow: narrow, rects: rects });
+    setAttr(el, 'data-dv-leaving', dv && dv.leaving && dv.leaving[p.id] ? true : null);
+    PMW.strip.render(el, p, l, { narrow: narrow, rects: shown });
     syncBodies(el, p, l, hidden);
     PMW.renderEmpty(el, p);
   });
@@ -117,6 +130,7 @@ render.paint = function (opts) {
   });
   for (var k in dividerEls) if (!seen[k]) { dividerEls[k].remove(); delete dividerEls[k]; }
 
+  if (dv && PMW.dropView) PMW.dropView.place(shown, animate);
   if (animate) {
     state.moving = true;
     clearTimeout(settleTimer);
@@ -142,7 +156,7 @@ function refitStrips() {
     if (!el || el.hidden) return;
     var host = el.querySelector('.pmw-strip-host'), s = host && host._pmw;
     if (!s || s.dragging || Math.abs(host.clientWidth - (s.fitW || 0)) <= 1) return;
-    PMW.strip.render(el, p, l, { narrow: narrow, rects: lastRects });
+    PMW.strip.render(el, p, l, { narrow: narrow, rects: render.paintedRects() });
   });
 }
 
@@ -156,12 +170,17 @@ function panelLabel(l, p) {
   return what + ' panel, ' + model.describe(l, p.id);
 }
 
+/* an element already headed for this rect is left alone: a paint without motion would otherwise cut a running glide
+   short (a kind's update during a drag preview, a strip refit) */
 function placeEl(el, r, animate) {
   var s = el.style;
+  var x = r.x + 'px', y = r.y + 'px', w = r.w + 'px', hh = r.h + 'px';
+  if (s.left === x && s.top === y && s.width === w && s.height === hh) return;
   if (!animate) s.transition = 'none';
-  s.left = r.x + 'px'; s.top = r.y + 'px'; s.width = r.w + 'px'; s.height = r.h + 'px';
+  s.left = x; s.top = y; s.width = w; s.height = hh;
   if (!animate) { void el.offsetWidth; s.transition = ''; }
 }
+render.placeEl = placeEl;
 
 function createPanelEl(p) {
   var el = h('section', { class: 'pmw-panel', 'data-pmw-panel': p.id, role: 'region' }, [

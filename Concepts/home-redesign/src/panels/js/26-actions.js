@@ -203,26 +203,98 @@ PMW.renameTab = function (tabId, label) {
   label = (label || '').trim().slice(0, 80);
   return commit(CMD.rename, { tabId: tabId, label: label }, function (d) { d.tabs[tabId].userLabel = label || null; return {}; }, { animate: false }).ok;
 };
+/* The moves' mutations, shared by their commands and by PMW.hypo (the drag's live preview), so what a preview shows is
+   exactly what its drop commits. */
+function moveMutate(d, tabId, panelId, index) {
+  var ff = model.panelOf(d, tabId);
+  if (!ff) return false;
+  if (ff.id === panelId) {
+    var cur = ff.tabs.indexOf(tabId);
+    if (index == null) index = ff.tabs.length - 1;
+    if (cur === index) return false;
+    ff.tabs.splice(cur, 1);
+    ff.tabs.splice(index, 0, tabId);
+    ff.active = tabId;
+    if (d.tabs[tabId] && d.tabs[tabId].preview) d.tabs[tabId].preview = false;   // dragging a tab keeps it (D7)
+    return {};
+  }
+  if (!model.moveTab(d, tabId, panelId, index)) return false;
+  d.view.focus = panelId;
+  return {};
+}
+function splitMutate(d, tabId, panelId, edge, ratio) {
+  var np = model.newPanel(d, []);
+  var ok = panelId === '@root' ? model.insertAtRoot(d, edge, np, ratio || 0.34) : model.insertBeside(d, panelId, edge, np, ratio || 0.5);
+  if (!ok) return false;
+  if (!model.moveTab(d, tabId, np.id, 0)) return false;
+  d.view.focus = np.id;
+  return { panelId: np.id };
+}
+function mergePanelMutate(d, panelId, intoId) {
+  var from = model.panel(d, panelId), to = model.panel(d, intoId);
+  if (!from || !to) return false;
+  from.tabs.slice().forEach(function (t) { model.moveTab(d, t, intoId); });
+  d.view.focus = intoId;
+  return {};
+}
+PMW.mergePanelMutate = mergePanelMutate;
+
+/* What a move would leave, built the way commit() builds its draft (a copy, the move, the fold, normalize) and never
+   committed: the drag measures the room rule on these. null when the move is refused or changes nothing.
+   o.preview builds what the drag's live preview paints instead: the place the carried thing leaves is kept (normalize
+   keepEmpty keeps a panel its last tab left; a carried panel leaves a hole, HOLE_ID, where it was), so the panels
+   under the pointer never move away from the zones they are measured by; the drop then closes that place. */
+var HOLE_ID = PMW.HOLE_ID = '~hole';
+function hypoOf(mutate, o) {
+  o = o || {};
+  var before = L();
+  if (!before) return null;
+  var d = model.clone(before);
+  var r;
+  try { r = mutate(d); } catch (_) { return null; }
+  if (r === false || (r && r.ok === false)) return null;
+  if (PMW.foldLayout) PMW.foldLayout(d);
+  model.normalize(d, { keepEmpty: !!o.preview });
+  if (model.validate(d).length || model.same(before, d)) return null;
+  d.revision = (before.revision || 0) + 1;
+  d.hypoResult = r || {};
+  return d;
+}
+/* a carried panel's preview: a hole where it was, the panel itself where it would land */
+function holeMove(d, panelId, targetId, edge) {
+  var f = model.find(d, panelId);
+  if (!f || f.node.t !== 'panel' || panelId === targetId) return false;
+  var hole = { t: 'panel', id: HOLE_ID, tabs: [], active: null, locked: false, collapsed: !!f.node.collapsed };
+  if (f.parent) f.parent.kids[f.index] = hole; else d.root = hole;
+  f.node.collapsed = false;
+  return (targetId === '@root' ? model.insertAtRoot(d, edge, f.node) : model.insertBeside(d, targetId, edge, f.node, 0.5)) ? {} : false;
+}
+PMW.hypo = {
+  move: function (tabId, panelId, index, o) { return hypoOf(function (d) { return moveMutate(d, tabId, panelId, index); }, o); },
+  split: function (tabId, panelId, edge, ratio, o) {
+    var from = model.panelOf(L(), tabId);
+    if (!from || (from.id === panelId && from.tabs.length === 1)) return null;
+    return hypoOf(function (d) { return splitMutate(d, tabId, panelId, edge, ratio); }, o);
+  },
+  movePanel: function (panelId, targetId, edge, o) {
+    return hypoOf(function (d) { return o && o.preview ? holeMove(d, panelId, targetId, edge) : (model.movePanel(d, panelId, targetId, edge) ? {} : false); }, o);
+  },
+  mergePanel: function (panelId, intoId, o) { return hypoOf(function (d) { return mergePanelMutate(d, panelId, intoId); }, o); }
+};
+/* the room rule (geom.resultFits) for a hypothetical layout, against the layout as it is now; in the single-column
+   ladder (narrow) nothing splits, so nothing fits */
+PMW.roomFits = function (after) {
+  if (!after || (PMW.narrow && PMW.narrow.singleColumn())) return false;
+  return geom.resultFits(L(), after, PMW.layoutBox());
+};
+
 PMW.moveTab = function (tabId, panelId, index, opts) {
   opts = opts || {};
   var l = L();
   var from = model.panelOf(l, tabId);
   if (!from) return false;
   var res = commit(CMD.move, { tabId: tabId, panelId: panelId, index: index }, function (d) {
-    var ff = model.panelOf(d, tabId);
-    if (ff.id === panelId) {
-      var cur = ff.tabs.indexOf(tabId);
-      if (index == null) index = ff.tabs.length - 1;
-      if (cur === index) return false;
-      ff.tabs.splice(cur, 1);
-      ff.tabs.splice(index, 0, tabId);
-      ff.active = tabId;
-      if (d.tabs[tabId] && d.tabs[tabId].preview) d.tabs[tabId].preview = false;   // dragging a tab keeps it (D7)
-      return {};
-    }
-    if (!model.moveTab(d, tabId, panelId, index)) return false;
-    d.view.focus = panelId;
-    return {};
+    return moveMutate(d, tabId, panelId, index);
   }, { animate: opts.animate !== false });
   if (res.ok && !res.noChange && !opts.quiet) {
     var to = model.panel(L(), panelId);
@@ -238,21 +310,17 @@ PMW.moveTabToSplit = function (tabId, panelId, edge, opts) {
   var from = model.panelOf(l, tabId);
   if (!from) return false;
   if (from.id === panelId && from.tabs.length === 1) return false;   // splitting a panel by its only tab changes nothing
-  // every caller (menus, keyboard, strip, drag) gets the same fit rule, measured on the tree, not the maximized rects
-  var rects = panelId !== '@root' && !opts.force ? treeRects() : null;
-  if (rects && rects.panels[panelId] && !geom.splitFits(l, panelId, edge, rects, PMW.panelMin(l, { tabs: [tabId] }))) {
+  // every caller (menus, keyboard, strip, drag) gets the same fit rule, the room rule on the move's own result,
+  // measured on the tree, not the maximized rects
+  if (panelId !== '@root' && !opts.force && treeRects() && !PMW.roomFits(PMW.hypo.split(tabId, panelId, edge, opts.ratio))) {
     if (!opts.quiet) PMW.toast(edge === 'left' || edge === 'right' ? 'There is not room to split this panel side by side. Try Split down.' : 'There is not room to split this panel. Try Split right.');
     return null;
   }
   var newId = null;
   var res = commit(CMD.move, { tabId: tabId, split: { panelId: panelId, edge: edge } }, function (d) {
-    var np = model.newPanel(d, []);
-    newId = np.id;
-    var ok = panelId === '@root' ? model.insertAtRoot(d, edge, np, opts.ratio || 0.34) : model.insertBeside(d, panelId, edge, np, opts.ratio || 0.5);
-    if (!ok) return false;
-    if (!model.moveTab(d, tabId, np.id, 0)) return false;
-    d.view.focus = np.id;
-    return { panelId: np.id };
+    var r = splitMutate(d, tabId, panelId, edge, opts.ratio);
+    if (r) newId = r.panelId;
+    return r;
   });
   if (res.ok) announce(tabLabel(l.tabs[tabId]) + ' split ' + (edge === 'left' || edge === 'right' ? edge : edge === 'top' ? 'up' : 'down') + ' into a new panel');
   return res.ok ? newId : null;
