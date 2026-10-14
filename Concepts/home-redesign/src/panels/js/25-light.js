@@ -1,66 +1,436 @@
 /* The grab light on every resizer (Jared, 2026-10-13: "The glowing resize line is missing from most places ... That
-   effect should also be polished more"). One light for the dividers between panels, the chat column's edge
-   (#chatResizer), the rail's edge (#leftPanelResizer) and the browser's DevTools split: it blooms where the pointer
-   is along the bar, brightens and runs the bar's length while the bar is dragged, and on release sends a ripple
-   outward from the grab point as it settles back. The look is drawn per look in css/56-light.css.
-   This module only feeds the CSS: --pm-glow-off (the pointer's offset along the bar from its middle, the same
-   property the page's own resize controller writes for the shell's resizers), a ripple element, and the pmw-settle
-   class for 620 ms after a drag or a keyboard step. A bar's axis is its aria-orientation (vertical unless it says
-   horizontal). */
+   effect should also be polished more", and after the first version: "The resize glow look should be polished").
+   One light for the dividers between panels, the chat column's edge (#chatResizer), the rail's edge
+   (#leftPanelResizer) and the browser's DevTools split, in five moments that every look draws its own way
+   (css/56-light.css):
+   - near: a pointer within reach of a bar raises a faint glint on it at the nearest point (the idle hint);
+   - hover: after a beat the light gathers there and follows the pointer along the bar on a spring, stretching as it
+     is swept;
+   - grab: the light catches, and runs from the grab point out to both ends of the bar;
+   - drag: the bar stays lit and answers its own speed (heat, and a wake on the side it is moving away from), and
+     strains when the pointer pulls past a limit the bar cannot follow;
+   - settle: on release the light drains back along the bar into the point it was held at and seats there.
+   This module only feeds the CSS. Per bar it writes --gl-at (the light's place along the bar, px from its start,
+   sprung), --gl-s and --gl-lag (stretch), --gl-near, --gl-heat, --gl-trail (how far the bar travelled lately, px as a
+   plain number, signed toward its wake; --gl-wl and --gl-wr are its two sides), --gl-strain and --gl-push, --gl-g and
+   --gl-r (grab and release points), --gl-len, --gl-thk and --gl-drain; and the classes pmw-gl-on (lit), pmw-gl-hover, pmw-gl-held, pmw-gl-moving, pmw-gl-still and pmw-settle.
+   A look's motion constants are custom properties read once per engagement: --gl-k and --gl-z (spring stiffness and
+   damping ratio; 0 stiffness is stepped), --gl-snap and --gl-snap-o (a grid the light steps along), --gl-trail-step,
+   --gl-settle-ms, and --gl-dots / --gl-echo (Friendly's dot column, the persistence copies). A bar's axis is its
+   aria-orientation (vertical unless it says horizontal); a horizontal bar's light layer is the vertical one turned,
+   so the CSS is written once, along y. Reduced Motion: no spring, stretch, heat, strain, wake or echoes; the light
+   sits where the pointer is and only fades. */
 
 var light = PMW.light = {};
-var SETTLE_LIGHT_MS = 620;
+var GL_FX_HALF = 140;     // half the light layer's width across the bar (.pmw-gl-fx)
+var GL_NEAR_PX = 36;      // the idle hint answers a pointer this close to a bar's centre line
+var GL_HOVER_MS = 60;     // a pointer that only crosses a bar does not light it
+var GL_TRAIL_MS = 70;     // the wake measures how far the bar moved over this long
+var GL_STILL_MS = 700;    // a light held still this long may idle (Retro's cursor blinks)
+var GL_DOTS = 15;         // Friendly: the dots shown around the pointer (odd)
+var GL_ECHOES = 3;        // persistence copies (Retro phosphor, Friendly bubbles)
+var GL_POP = '[role="menu"], [role="dialog"], [role="listbox"], .pmw-pop, .pmw-menu';
+var glBars = [];
+var glLive = [];
+var glRaf = 0, glLast = 0;
+var glPtr = { x: 0, y: 0, target: null, on: false, dirty: false, buttons: 0 };
+var glRectsAt = 0;
 
-function lightAxisV(el) { return el.getAttribute('aria-orientation') !== 'horizontal'; }
-function lightTrack(el, e) {
-  var r = el._pmwLightRect || el.getBoundingClientRect();
-  var v = lightAxisV(el);
-  var len = (v ? r.height : r.width) || 1;
-  var raw = v ? (e.clientY - r.top) / len : (e.clientX - r.left) / len;
-  el.style.setProperty('--pm-glow-off', ((clamp(raw, 0, 1) - 0.5) * len).toFixed(1) + 'px');
+function glAxisV(el) { return el.getAttribute('aria-orientation') !== 'horizontal'; }
+function glNum(cs, name, dflt) { var v = parseFloat(cs.getPropertyValue(name)); return isFinite(v) ? v : dflt; }
+function glSet(s, name, value) {
+  if (s.out[name] === value) return;
+  s.out[name] = value;
+  s.el.style.setProperty(name, value);
 }
+function glBusy() {
+  var b = doc.body.classList;
+  return b.contains('pmw-dragging') || b.contains('pmw-resizing') || b.contains('pm-resizing') || b.contains('pm-ab-dragging');
+}
+
+/* the light layer: one set of parts per bar; each look shows the ones it draws */
+function glBuild(el) {
+  var fx = h('i', { class: 'pmw-gl-fx', 'aria-hidden': 'true' });
+  ['hint', 'wake', 'rail', 'pool', 'core', 'mark', 'ring', 'flash'].forEach(function (k) { fx.appendChild(h('i', { class: 'pmw-gl-' + k })); });
+  fx.appendChild(h('i', { class: 'pmw-gl-tip', 'data-end': 'a' }));
+  fx.appendChild(h('i', { class: 'pmw-gl-tip', 'data-end': 'b' }));
+  el.appendChild(fx);
+  return fx;
+}
+/* Friendly's dots and the persistence copies are made the first time a look asks for them */
+function glParts(s, cls, n) {
+  var have = s.parts[cls];
+  if (have) return have;
+  have = s.parts[cls] = [];
+  var box = h('i', { class: 'pmw-gl-' + cls + 's' });
+  for (var i = 0; i < n; i++) { var p = h('i', { class: 'pmw-gl-' + cls }); box.appendChild(p); have.push(p); }
+  s.fx.appendChild(box);
+  return have;
+}
+
+/* measure the bar and read the look's constants: once per engagement, and while held (the bar moves across) */
+function glMeasure(s) {
+  var r = s.el.getBoundingClientRect();
+  s.v = glAxisV(s.el);
+  s.rect = r;
+  s.len = (s.v ? r.height : r.width) || 0;
+  s.thk = (s.v ? r.width : r.height) || 0;
+  glSet(s, '--gl-len', s.len.toFixed(1) + 'px');
+  glSet(s, '--gl-thk', s.thk.toFixed(1) + 'px');
+  return r;
+}
+function glEngage(s) {
+  glMeasure(s);
+  var cs = getComputedStyle(s.el);
+  s.rm = PMW.reduced();
+  s.k = glNum(cs, '--gl-k', 900);
+  s.z = glNum(cs, '--gl-z', 1);
+  s.snap = glNum(cs, '--gl-snap', 0);
+  s.snapO = glNum(cs, '--gl-snap-o', 0);
+  s.trailStep = glNum(cs, '--gl-trail-step', 0);
+  s.settleMs = glNum(cs, '--gl-settle-ms', 760);
+  s.dots = glNum(cs, '--gl-dots', 0) > 0 ? glParts(s, 'dot', GL_DOTS) : null;
+  s.echo = glNum(cs, '--gl-echo', 0) > 0 ? glParts(s, 'echo', GL_ECHOES) : null;
+  s.ghosts = glNum(cs, '--gl-ghost', 0) > 0 ? glParts(s, 'ghost', 4) : null;
+  s.dotSp = glNum(cs, '--gl-dot-sp', 9);
+  s.engaged = true;
+}
+function glSnap(s, t) {
+  if (!(s.snap > 0) || s.rm) return t;
+  return clamp(s.snapO + Math.round((t - s.snapO) / s.snap) * s.snap, 0, s.len);
+}
+function glAlong(s, x, y) {
+  var r = s.rect;
+  var raw = s.v ? y - r.top : x - r.left;
+  return clamp(raw, 0, s.len);
+}
+function glLit(s) {
+  if (!s.el.classList.contains('pmw-gl-on')) s.el.classList.add('pmw-gl-on');
+  s.quiet = 0;
+}
+function glWake(s) {
+  if (glLive.indexOf(s) < 0) glLive.push(s);
+  if (!glRaf) { glLast = performance.now(); glRaf = requestAnimationFrame(glTick); }
+}
+
 /* bind(el): once per bar; idempotent */
 light.bind = function (el) {
-  if (!el || el._pmwLight) return;
-  el._pmwLight = true;
+  if (!el || el._gl) return;
+  var s = el._gl = {
+    el: el, fx: null, out: {}, parts: {}, v: true, rect: null, len: 0, thk: 0,
+    at: 0, tAt: 0, va: 0, near: 0, nearT: 0, heat: 0, trail: 0, strain: 0, push: 0,
+    hover: false, held: false, moving: false, settling: false, engaged: false, quiet: 0,
+    hist: [], px: 0, py: 0, sx: 0, sy: 0, hoverT: 0, stillT: 0, settleT: 0, cell: null, ghostI: 0
+  };
   el.classList.add('pmw-gl');
-  if (!el.querySelector(':scope > .pmw-gl-ripple')) el.appendChild(h('i', { class: 'pmw-gl-ripple', 'aria-hidden': 'true' }));
-  if (!el.querySelector(':scope > .pmw-gl-line, :scope > .pmw-divider-line')) el.appendChild(h('i', { class: 'pmw-gl-line', 'aria-hidden': 'true' }));
-  var pressed = false, moved = false, sx = 0, sy = 0;
-  el.addEventListener('pointerenter', function (e) { lightTrack(el, e); });
+  s.fx = glBuild(el);
+  glBars.push(s);
+
+  el.addEventListener('pointerenter', function (e) {
+    if (e.pointerType === 'touch' || (glBusy() && !s.held)) return;
+    clearTimeout(s.hoverT);
+    glEngage(s);
+    s.tAt = glSnap(s, glAlong(s, e.clientX, e.clientY));
+    if (!s.near && !s.hover) { s.at = s.tAt; s.va = 0; }
+    glLit(s);
+    glWake(s);
+    s.hoverT = setTimeout(function () {
+      if (glBusy() && !s.held) return;
+      s.hover = true;
+      el.classList.add('pmw-gl-hover');
+      glWake(s);
+    }, GL_HOVER_MS);
+  });
   el.addEventListener('pointermove', function (e) {
-    lightTrack(el, e);
-    if (pressed && !moved && Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 2) moved = true;
+    if (e.pointerType === 'touch') return;
+    s.px = e.clientX; s.py = e.clientY;
+    if (!s.engaged) glEngage(s);
+    if (s.held && !s.moving && Math.abs(e.clientX - s.sx) + Math.abs(e.clientY - s.sy) > 2) {
+      s.moving = true;
+      el.classList.add('pmw-gl-moving');
+    }
+    var t = glSnap(s, glAlong(s, e.clientX, e.clientY));
+    if (t !== s.tAt) {
+      s.tAt = t;
+      el.classList.remove('pmw-gl-still');
+      clearTimeout(s.stillT);
+      s.stillT = setTimeout(function () { if (s.hover || s.held) el.classList.add('pmw-gl-still'); }, GL_STILL_MS);
+    }
+    glWake(s);
+  });
+  el.addEventListener('pointerleave', function () {
+    clearTimeout(s.hoverT);
+    if (s.held) return;
+    s.hover = false;
+    s.engaged = false;
+    el.classList.remove('pmw-gl-hover', 'pmw-gl-still');
+    s.near = 0;
+    glWake(s);
   });
   el.addEventListener('pointerdown', function (e) {
     if (e.button !== 0) return;
-    lightTrack(el, e);
-    // the rect is held for the drag: a bar only moves across its own axis, so the offset along it stays true
-    el._pmwLightRect = el.getBoundingClientRect();
-    pressed = true; moved = false; sx = e.clientX; sy = e.clientY;
-    el.classList.remove('pmw-settle');
+    clearTimeout(s.hoverT);
+    glEngage(s);
+    s.px = s.sx = e.clientX; s.py = s.sy = e.clientY;
+    s.tAt = glSnap(s, glAlong(s, e.clientX, e.clientY));
+    s.held = true; s.moving = false; s.hover = true;
+    s.hist = [];
+    glSet(s, '--gl-g', s.tAt.toFixed(1) + 'px');
+    glSet(s, '--gl-tip-a', (-s.tAt).toFixed(1) + 'px');
+    glSet(s, '--gl-tip-b', (s.len - s.tAt).toFixed(1) + 'px');
+    clearTimeout(s.settleT);
+    el.classList.remove('pmw-settle', 'pmw-gl-still');
+    glLit(s);
+    el.classList.add('pmw-gl-hover', 'pmw-gl-held');
+    glWake(s);
   });
   function release() {
-    if (!pressed) return;
-    pressed = false;
-    el._pmwLightRect = null;
-    if (moved) light.settle(el);
+    if (!s.held) return;
+    s.held = false;
+    el.classList.remove('pmw-gl-held', 'pmw-gl-moving');
+    if (s.moving) light.settle(el, s.at);
+    s.moving = false;
+    // the bar may have moved out from under the pointer (a limit, a collapse to the strip): only stay lit if it is there
+    var r = glMeasure(s);
+    var over = s.px >= r.left - 1 && s.px <= r.right + 1 && s.py >= r.top - 1 && s.py <= r.bottom + 1;
+    if (!over) { s.hover = false; s.engaged = false; el.classList.remove('pmw-gl-hover'); }
+    glWake(s);
   }
   el.addEventListener('pointerup', release);
   el.addEventListener('pointercancel', release);
   el.addEventListener('lostpointercapture', release);
-  el.addEventListener('focus', function () { if (!pressed) el.style.setProperty('--pm-glow-off', '0px'); });
+  el.addEventListener('focus', function () {
+    if (s.held || s.hover) return;
+    glEngage(s);
+    s.at = s.tAt = glSnap(s, s.len / 2); s.va = 0;
+    glSet(s, '--gl-at', s.at.toFixed(1) + 'px');
+    glLit(s);
+    glWake(s);
+  });
+  el.addEventListener('blur', function () { glWake(s); });
 };
-/* settle(el): the ripple and the light easing back (restarts if it is still running) */
-light.settle = function (el) {
-  if (!el) return;
-  clearTimeout(el._pmwSettleT);
+
+/* settle(el[, at]): the light drains back along the bar into the point and seats there (restarts if running) */
+light.settle = function (el, at) {
+  var s = el && el._gl;
+  if (!s) return;
+  if (!s.engaged || !s.len) glEngage(s);
+  var r = at == null ? (s.hover || s.held ? s.at : glSnap(s, s.len / 2)) : at;
+  if (at == null && !s.hover) { s.at = s.tAt = r; s.va = 0; glSet(s, '--gl-at', r.toFixed(1) + 'px'); }
+  var far = Math.max(r, s.len - r);
+  glSet(s, '--gl-r', r.toFixed(1) + 'px');
+  glSet(s, '--gl-tip-a', (-r).toFixed(1) + 'px');
+  glSet(s, '--gl-tip-b', (s.len - r).toFixed(1) + 'px');
+  glSet(s, '--gl-drain', Math.round(clamp(200 + far * 0.28, 260, 520)) + 'ms');
+  clearTimeout(s.settleT);
   el.classList.remove('pmw-settle');
   void el.offsetWidth;
   el.classList.add('pmw-settle');
-  el._pmwSettleT = setTimeout(function () { el.classList.remove('pmw-settle'); }, SETTLE_LIGHT_MS);
+  s.settling = true;
+  glLit(s);
+  s.settleT = setTimeout(function () { el.classList.remove('pmw-settle'); s.settling = false; glWake(s); }, s.settleMs || 760);
+  glWake(s);
 };
-/* the shell's two resizers, once the page is there */
+
+/* the idle hint: the shared pointermove dispatcher (PM7 T07) feeds it; the nearest bar within reach answers */
+function glProbe(e) {
+  if (e.pointerType === 'touch') return;
+  glPtr.x = e.clientX; glPtr.y = e.clientY; glPtr.target = e.target; glPtr.buttons = e.buttons; glPtr.on = true;
+  glPtr.dirty = true;
+  if (!glRaf) { glLast = performance.now(); glRaf = requestAnimationFrame(glTick); }
+}
+function glNearPass(now) {
+  glPtr.dirty = false;
+  var allow = glPtr.on && !glPtr.buttons && !glBusy() && !doc.hidden;
+  var t = glPtr.target;
+  if (allow && t && t.closest && t.closest(GL_POP)) allow = false;
+  var fresh = now - glRectsAt > 150;
+  if (fresh) glRectsAt = now;
+  var best = null, bestD = GL_NEAR_PX;
+  for (var i = glBars.length - 1; i >= 0; i--) {
+    var s = glBars[i];
+    if (!s.el.isConnected) { glBars.splice(i, 1); continue; }
+    s.nearT = 0;
+    if (!allow || s.hover || s.held) continue;
+    if (fresh || !s.nrect) { s.nrect = s.el.getBoundingClientRect(); s.nv = glAxisV(s.el); }
+    var r = s.nrect;
+    if (!r.width || !r.height) continue;
+    var across = s.nv ? Math.abs(glPtr.x - (r.left + r.width / 2)) : Math.abs(glPtr.y - (r.top + r.height / 2));
+    var along = s.nv ? glPtr.y : glPtr.x, lo = s.nv ? r.top : r.left, hi = s.nv ? r.bottom : r.right;
+    if (across >= bestD || along < lo - 6 || along > hi + 6) continue;
+    var parent = s.el.parentElement;
+    if (!parent || !t || !parent.contains(t)) continue;
+    best = s; bestD = across;
+  }
+  if (best) {
+    var d = 1 - bestD / GL_NEAR_PX;
+    best.nearT = d * d * (3 - 2 * d);
+    if (!best.engaged || fresh) glEngage(best);
+    var was = best.near > 0.01;
+    best.tAt = glSnap(best, glAlong(best, glPtr.x, glPtr.y));
+    if (!was) { best.at = best.tAt; best.va = 0; }
+    glLit(best);
+    glWake(best);
+  }
+  for (var j = 0; j < glBars.length; j++) if (glBars[j].near > 0 && glBars[j] !== best) glWake(glBars[j]);
+}
+
+function glHist(s, now, c) {
+  var hs = s.hist;
+  hs.push({ t: now, c: c });
+  while (hs.length > 2 && now - hs[1].t > 240) hs.shift();
+}
+function glPast(s, now, ago) {
+  var hs = s.hist, want = now - ago;
+  if (!hs.length) return 0;
+  for (var i = hs.length - 1; i > 0; i--) {
+    if (hs[i - 1].t <= want) {
+      var a = hs[i - 1], b = hs[i], f = b.t > a.t ? (want - a.t) / (b.t - a.t) : 1;
+      return a.c + (b.c - a.c) * clamp(f, 0, 1);
+    }
+  }
+  return hs[0].c;
+}
+function glEase(cur, target, dt, tauUp, tauDown) {
+  var tau = target > cur ? tauUp : tauDown;
+  return cur + (target - cur) * (1 - Math.exp(-dt / tau));
+}
+
+function glStep(s, now, dt) {
+  var busy = false;
+  // along the bar: a spring (or a step, or straight to the pointer under Reduced Motion)
+  if (s.rm || !(s.k > 0)) { s.at = s.tAt; s.va = 0; }
+  else {
+    var k = s.k, c = 2 * Math.sqrt(k) * s.z, n = Math.max(1, Math.ceil(dt / 0.004)), hh = dt / n;
+    for (var i = 0; i < n; i++) { var acc = k * (s.tAt - s.at) - c * s.va; s.va += acc * hh; s.at += s.va * hh; }
+    if (Math.abs(s.tAt - s.at) < 0.05 && Math.abs(s.va) < 2) { s.at = s.tAt; s.va = 0; } else busy = true;
+  }
+  var str = s.rm ? 1 : 1 + Math.min(0.9, Math.abs(s.va) / 1700);
+  glSet(s, '--gl-at', s.at.toFixed(1) + 'px');
+  glSet(s, '--gl-s', str.toFixed(3));
+  glSet(s, '--gl-lag', (s.va > 0 ? -1 : 1) * ((str - 1) / 2).toFixed(3) + '');
+
+  // the idle hint
+  s.near = s.rm ? s.nearT : glEase(s.near, s.nearT, dt, 0.07, 0.16);
+  if (s.near < 0.004 && s.nearT === 0) s.near = 0; else busy = true;
+  // a stepped look (no spring) shows the hint in three steps
+  glSet(s, '--gl-near', (s.k > 0 ? s.near : Math.round(s.near * 3) / 3).toFixed(3));
+
+  // across the bar while held: its speed (heat and the wake) and a limit it is held at (strain)
+  var trail = 0, strainT = 0, push = 0;
+  if (s.held && !s.rm) {
+    var r = glMeasure(s);
+    var cpos = s.v ? r.left + r.width / 2 : r.top + r.height / 2;
+    glHist(s, now, cpos);
+    var moved = cpos - glPast(s, now, GL_TRAIL_MS);
+    trail = (s.v ? -moved : moved);
+    var off = (s.v ? s.px : s.py) - cpos;
+    if (s.moving && Math.abs(off) > 9) { strainT = clamp((Math.abs(off) - 9) / 90, 0, 1); push = (s.v ? off : -off) > 0 ? 1 : -1; }
+    busy = true;
+  } else if (s.hist.length && !s.rm) {
+    // after release the copies and the wake fall back onto the bar
+    var nowC = s.hist[s.hist.length - 1].c;
+    glHist(s, now, nowC);
+    trail = s.v ? -(nowC - glPast(s, now, GL_TRAIL_MS)) : (nowC - glPast(s, now, GL_TRAIL_MS));
+    if (now - s.hist[0].t > 260 && Math.abs(trail) < 0.2) s.hist = []; else busy = true;
+  }
+  if (s.trailStep > 0) trail = Math.round(trail / s.trailStep) * s.trailStep;
+  s.trail = Math.abs(trail - s.trail) < 0.05 ? trail : glEase(s.trail, trail, dt, 0.03, 0.05);
+  s.heat = glEase(s.heat, clamp(Math.abs(trail) / 34, 0, 1), dt, 0.04, 0.22);
+  s.strain = glEase(s.strain, strainT, dt, 0.06, 0.12);
+  if (push) s.push = push;
+  if (s.heat < 0.003 && !s.held) s.heat = 0; else busy = true;
+  if (s.strain < 0.003 && !strainT) s.strain = 0; else busy = true;
+  glSet(s, '--gl-trail', s.trail.toFixed(1));
+  glSet(s, '--gl-wl', Math.max(0, -s.trail).toFixed(1));
+  glSet(s, '--gl-wr', Math.max(0, s.trail).toFixed(1));
+  glSet(s, '--gl-heat', s.heat.toFixed(3));
+  glSet(s, '--gl-strain', s.strain.toFixed(3));
+  glSet(s, '--gl-push', (s.push * s.strain).toFixed(3));
+
+  if (s.dots) glDots(s);
+  if (s.echo) glEchoes(s, now);
+  if (s.ghosts) glGhosts(s);
+
+  var lit = s.hover || s.held || s.settling || s.near > 0 || s.el === doc.activeElement;
+  if (lit) s.quiet = 0;
+  else {
+    if (!s.quiet) s.quiet = now;
+    if (now - s.quiet > 460) { s.el.classList.remove('pmw-gl-on'); s.engaged = false; }
+    else busy = true;
+  }
+  return busy || s.hover || s.held || s.settling;
+}
+
+/* Friendly: a column of dots on the bar's grid that swell where the light is (a lens passing over a dot pattern) */
+function glDots(s) {
+  var sp = s.dotSp, base = Math.round(s.at / sp), half = (GL_DOTS - 1) / 2, sigma = 20 + 10 * s.heat;
+  for (var i = 0; i < GL_DOTS; i++) {
+    var y = (base - half + i) * sp;
+    var d = (y - s.at) / sigma, m = Math.exp(-d * d);
+    var p = s.dots[i];
+    var key = y.toFixed(1) + '|' + m.toFixed(3);
+    if (p._k === key) continue;
+    p._k = key;
+    p.style.translate = '-50% ' + (y - 5).toFixed(1) + 'px';
+    p.style.setProperty('--m', m.toFixed(3));
+    p.style.visibility = y < 2 || y > s.len - 2 ? 'hidden' : '';
+  }
+}
+/* persistence copies across the bar: where it was 45, 90 and 135 ms ago (Retro's phosphor, Friendly's bubbles) */
+function glEchoes(s, now) {
+  for (var i = 0; i < GL_ECHOES; i++) {
+    var p = s.echo[i], off = 0;
+    if (s.hist.length > 1 && !s.rm) {
+      var cur = s.hist[s.hist.length - 1].c, then = glPast(s, now, 45 * (i + 1));
+      off = s.v ? then - cur : cur - then;
+    }
+    var key = off.toFixed(1);
+    if (p._k === key) continue;
+    p._k = key;
+    p.style.setProperty('--gl-eo', key);
+    p.style.setProperty('--gl-ea', clamp(Math.abs(off) / 4, 0, 1).toFixed(2));
+  }
+}
+/* Retro's hover cursor steps cell to cell and leaves the cell it left glowing a moment (phosphor persistence) */
+function glGhosts(s) {
+  if (s.cell === s.at) return;
+  var was = s.cell;
+  s.cell = s.at;
+  if (was == null || s.rm || !(s.hover || s.near > 0.2)) return;
+  var g = s.ghosts[s.ghostI = (s.ghostI + 1) % s.ghosts.length];
+  g.style.translate = '-50% calc(' + was.toFixed(1) + 'px - 50%)';
+  if (g._a) g._a.cancel();
+  try { g._a = g.animate([{ opacity: 0.62 }, { opacity: 0.3, offset: 0.4 }, { opacity: 0 }], { duration: 420, easing: 'steps(6, end)' }); } catch (_) {}
+}
+
+function glTick(now) {
+  var dt = clamp((now - glLast) / 1000, 0.001, 0.034);
+  glLast = now;
+  glRaf = 0;
+  if (glPtr.dirty) glNearPass(now);
+  var keep = [];
+  for (var i = 0; i < glLive.length; i++) {
+    var s = glLive[i];
+    if (!s.el.isConnected) continue;
+    if (glStep(s, now, dt)) keep.push(s);
+  }
+  glLive = keep;
+  if (glLive.length || glPtr.dirty) glRaf = requestAnimationFrame(glTick);
+}
+
+/* the shell's two resizers, once the page is there; and the idle hint's feed */
 light.bindShell = function () {
   ['chatResizer', 'leftPanelResizer'].forEach(function (id) { light.bind(doc.getElementById(id)); });
+  if (!light._probe) {
+    light._probe = true;
+    window.PM7_PMOVE = window.PM7_PMOVE || [];
+    window.PM7_PMOVE.push(glProbe);
+    doc.addEventListener('pointerout', function (e) {
+      if (e.relatedTarget) return;
+      glPtr.on = false; glPtr.dirty = true;
+      if (!glRaf) { glLast = performance.now(); glRaf = requestAnimationFrame(glTick); }
+    });
+    window.addEventListener('blur', function () { glPtr.on = false; glPtr.dirty = true; });
+  }
 };

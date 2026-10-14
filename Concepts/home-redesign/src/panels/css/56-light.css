@@ -1,325 +1,689 @@
 /* The grab light (25-light.js) on every resizer: the dividers between panels, the chat column's edge (#chatResizer),
-   the rail's edge (#leftPanelResizer) and the browser's DevTools split. Four parts, all following the pointer along
-   the bar (--pm-glow-off):
-   - the core (::before): a short bright mark where the bar will be taken;
-   - the halo (::after): a streak along the bar that fades with distance from the core, over a soft bloom;
-   - the line (.pmw-divider-line, .pmw-gl-line): the whole bar, lit while it is dragged (Glass: the two plate rims);
-   - the ripple (.pmw-gl-ripple): on release, two sparks run outward from the grab point as the light settles.
-   States: hover (after 60 ms, so a pointer crossing a bar does not flash it), focus (the light at the middle), drag
-   (brighter, the streak longer, the line on), settle (620 ms). Each look draws them in its own grammar; the rail's
-   Retro and NieR marks (Concepts/leftrail-redesign) are the same grammar, so its rules and these agree. The light is
-   pointer-events: none and clipped to the bar's length. Reduced Motion: fades only, nothing scales, drifts, breathes
-   or runs. */
+   the rail's edge (#leftPanelResizer) and the browser's DevTools split. The script feeds numbers and classes; this file
+   draws them, once along y (a horizontal bar's layer is the same one turned a quarter).
+   Parts, all in .pmw-gl-fx (280 px wide, centred on the bar, its ends feathered):
+   - hint: the idle glint where a pointer comes within reach (--gl-near);
+   - pool: the bloom and the streak along the bar around the light;
+   - core: the light itself, sprung along the bar, stretched by a sweep (--gl-s, --gl-lag), squashed by strain;
+   - rail: the whole bar, lit from the grab point outward while held, drained back into the release point;
+   - tip a and b: the two beads that ride the rail's ends out (grab) and back in (settle);
+   - ring: the catch at the grab; flash: the seat at the end of the settle;
+   - wake: the light left on the side the bar is moving away from (--gl-trail, --gl-heat);
+   - mark: a look's own extra (NieR's target brackets, Retro's burst);
+   - dots, echos, ghosts: Friendly's dot column, the persistence copies across the bar, Retro's cell afterglow.
+   States: pmw-gl-on (anything showing; dark looks add their light), pmw-gl-hover (after 60 ms), :focus-visible (the
+   light at the middle), pmw-gl-held (grab and drag), pmw-gl-moving, pmw-gl-still, pmw-settle. Each look draws them in
+   its own grammar; light looks use a deeper colour and normal blending. Reduced Motion: the light only fades, where
+   the pointer is; nothing scales, runs, blinks or trails. */
 
+@property --gl-pop { syntax: '<number>'; inherits: true; initial-value: 0; }
+
+/* Smooth falloffs: a light never ends on a two-stop ramp (that reads as a blob). --gl-s-glow and --gl-s-hot are a
+   Gaussian from the centre out (radial); --gl-s-beam is a line along the bar, bright at the middle with long tails. */
 html[data-pmw-home="on"] {
   --gl-c: var(--accent-primary, #64b5f6);
   --gl-hot: #FFFFFF;
-  --gl-bloom: 38%;
-  --gl-streak: 95%;
-  --gl-line: 58%;
-  --gl-core-w: 3px;
-  --gl-core-l: 64px;
-  --gl-halo-w: 48px;
-  --gl-halo-l: 340px;
+  --gl-blend: plus-lighter;
+  --gl-bloom-a: .24;
+  --gl-beam-a: .9;
+  --gl-beam-w: 1px;
+  --gl-rail-a: 40%;
+  --gl-core-w: 2px;
+  --gl-core-l: 44px;
+  --gl-core-r: 1px;
+  --gl-core-shadow: 0 0 1.5px .5px var(--gl-c), 0 0 6px 1px color-mix(in srgb, var(--gl-c) 66%, transparent), 0 0 18px 3px color-mix(in srgb, var(--gl-c) 24%, transparent);
+  --gl-pool-w: 76px;
+  --gl-pool-l: 400px;
+  --gl-bloom-l: 230px;
   --gl-in: 170ms;
-  --gl-out: 260ms;
-  --gl-delay: 60ms;
+  --gl-out: 300ms;
   --gl-ease: cubic-bezier(.2, .8, .2, 1);
-  --gl-core-shadow: 0 0 6px 1px color-mix(in srgb, var(--gl-c) 85%, transparent), 0 0 18px 3px color-mix(in srgb, var(--gl-c) 42%, transparent);
+  --gl-pop-ease: cubic-bezier(.2, .8, .2, 1);
+  --gl-drain-ease: cubic-bezier(.62, 0, .24, 1);
+  --gl-ignite: 340ms;
+  --gl-k: 1150;
+  --gl-z: 1;
+  --gl-settle-ms: 820;
+  --gl-s-glow: var(--gl-c), color-mix(in srgb, var(--gl-c) 86%, transparent) 12.5%, color-mix(in srgb, var(--gl-c) 61%, transparent) 25%,
+    color-mix(in srgb, var(--gl-c) 36%, transparent) 37.5%, color-mix(in srgb, var(--gl-c) 17%, transparent) 50%,
+    color-mix(in srgb, var(--gl-c) 7%, transparent) 62.5%, color-mix(in srgb, var(--gl-c) 2%, transparent) 75%, transparent 90%;
+  --gl-s-hot: var(--gl-hot), color-mix(in srgb, var(--gl-hot) 86%, transparent) 12.5%, color-mix(in srgb, var(--gl-hot) 61%, transparent) 25%,
+    color-mix(in srgb, var(--gl-hot) 36%, transparent) 37.5%, color-mix(in srgb, var(--gl-hot) 17%, transparent) 50%,
+    color-mix(in srgb, var(--gl-hot) 7%, transparent) 62.5%, color-mix(in srgb, var(--gl-hot) 2%, transparent) 75%, transparent 90%;
+  --gl-s-beam: transparent, color-mix(in srgb, var(--gl-c) 2%, transparent) 10%, color-mix(in srgb, var(--gl-c) 5%, transparent) 20%,
+    color-mix(in srgb, var(--gl-c) 10%, transparent) 28%, color-mix(in srgb, var(--gl-c) 18%, transparent) 35%,
+    color-mix(in srgb, var(--gl-c) 29%, transparent) 40%, color-mix(in srgb, var(--gl-c) 45%, transparent) 44%,
+    color-mix(in srgb, var(--gl-c) 68%, transparent) 47%, var(--gl-c) 50%, color-mix(in srgb, var(--gl-c) 68%, transparent) 53%,
+    color-mix(in srgb, var(--gl-c) 45%, transparent) 56%, color-mix(in srgb, var(--gl-c) 29%, transparent) 60%,
+    color-mix(in srgb, var(--gl-c) 18%, transparent) 65%, color-mix(in srgb, var(--gl-c) 10%, transparent) 72%,
+    color-mix(in srgb, var(--gl-c) 5%, transparent) 80%, color-mix(in srgb, var(--gl-c) 2%, transparent) 90%, transparent;
 }
 html[data-pmw-home="on"][data-theme$="-light"] {
-  --gl-hot: color-mix(in srgb, var(--gl-c) 55%, #FFFFFF);
-  --gl-bloom: 22%;
-  --gl-streak: 72%;
-  --gl-core-shadow: 0 0 4px 1px color-mix(in srgb, var(--gl-c) 70%, transparent), 0 0 12px 2px color-mix(in srgb, var(--gl-c) 30%, transparent);
+  --gl-blend: normal;
+  --gl-hot: color-mix(in srgb, var(--gl-c) 82%, #FFFFFF);
+  --gl-bloom-a: .13;
+  --gl-beam-a: .8;
+  --gl-rail-a: 58%;
+  --gl-core-shadow: 0 0 1px .5px color-mix(in srgb, var(--gl-c) 80%, transparent), 0 0 7px 1px color-mix(in srgb, var(--gl-c) 30%, transparent);
 }
 
 /* ---- the bar ---- */
-html[data-pmw-home="on"] .pmw-gl { clip-path: inset(0 -60px); }
-html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"] { clip-path: inset(-60px 0); }
-html[data-pmw-home="on"] .pmw-br-split.pmw-gl { position: relative; z-index: 2; }
-/* the shell's chat edge drew a flat accent fill on hover: the light replaces it */
+/* the page's own grab glow on the shell's resizers (pm8 ::before and ::after, the rail's Retro and NieR forms) and its
+   flat accent fill give way to this light */
+html[data-pmw-home="on"] .pmw-gl::before, html[data-pmw-home="on"] .pmw-gl::after { content: none !important; }
 html[data-pmw-home="on"] body.pm7-chat-global-owner #chatResizer.pm7-global-chat-resizer.pmw-gl:not(.hidden):is(:hover, .resizing) { background: transparent !important; }
+html[data-pmw-home="on"] .pmw-br-split.pmw-gl { position: relative; z-index: 2; }
+html[data-pmw-home="on"] .pmw-br-split.pmw-gl:is(:hover, :focus-visible, .is-active) { background-color: transparent; }
+/* light adds to what is under it in the dark looks (only while it shows, so an idle bar composites as before) */
+html[data-pmw-home="on"] .pmw-gl.pmw-gl-on { mix-blend-mode: var(--gl-blend); }
 
-/* ---- core and halo ---- */
-html[data-pmw-home="on"] .pmw-gl::before, html[data-pmw-home="on"] .pmw-gl::after {
-  content: '';
+/* ---- the layer and its parts ---- */
+html[data-pmw-home="on"] .pmw-gl-fx {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  margin: 0;
+  left: calc(50% - 140px);
+  top: 0;
+  width: 280px;
+  height: 100%;
+  display: block;
   pointer-events: none;
-  translate: 0 var(--pm-glow-off, 0px);
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(.55);
-  transition: opacity var(--gl-out) linear, transform var(--gl-out) var(--gl-ease);
-  animation: none;
-  filter: none;
+  -webkit-mask: linear-gradient(to bottom, transparent, #000 14px, #000 calc(100% - 14px), transparent);
+  mask: linear-gradient(to bottom, transparent, #000 14px, #000 calc(100% - 14px), transparent);
 }
-html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"]::before, html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"]::after { translate: var(--pm-glow-off, 0px) 0; }
-html[data-pmw-home="on"] .pmw-gl::before {
+html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"] > .pmw-gl-fx {
+  left: 0;
+  top: calc(50% + 140px);
+  height: var(--gl-len, 100%);
+  rotate: -90deg;
+  transform-origin: 0 0;
+}
+html[data-pmw-home="on"] .pmw-gl:not(.pmw-gl-on) > .pmw-gl-fx { visibility: hidden; }
+html[data-pmw-home="on"] :where(.pmw-gl-fx i) { position: absolute; display: block; left: 140px; top: 0; pointer-events: none; opacity: 0; }
+html[data-pmw-home="on"] .pmw-gl-fx > :is(.pmw-gl-dots, .pmw-gl-echos, .pmw-gl-ghosts) { left: 0; width: 100%; height: 100%; display: none; opacity: 1; }
+html[data-pmw-home="on"] :where(.pmw-gl-fx i)::before, html[data-pmw-home="on"] :where(.pmw-gl-fx i)::after { content: ''; position: absolute; pointer-events: none; }
+
+/* the idle hint: a faint line of light along the bar where the pointer is nearest, over a breath of bloom */
+html[data-pmw-home="on"] .pmw-gl-hint {
+  width: 40px;
+  height: 220px;
+  translate: -50% calc(var(--gl-at, 0px) - 50%);
+  opacity: var(--gl-near, 0);
+}
+html[data-pmw-home="on"] .pmw-gl-hint::before { inset: 25% 0; background: radial-gradient(closest-side, var(--gl-s-glow)); opacity: .2; }
+html[data-pmw-home="on"] .pmw-gl-hint::after { left: 50%; top: 0; bottom: 0; width: var(--gl-beam-w); translate: -50% 0; background: linear-gradient(to bottom, var(--gl-s-beam)); opacity: .95; }
+html[data-pmw-home="on"] .pmw-gl:is(.pmw-gl-hover, .pmw-gl-held, :focus-visible) .pmw-gl-hint { opacity: 0; transition: opacity 140ms linear; }
+
+/* the pool: a soft bloom (::before) and the line of light along the bar (::after); heat widens it */
+html[data-pmw-home="on"] .pmw-gl-pool {
+  width: var(--gl-pool-w);
+  height: var(--gl-pool-l);
+  translate: calc(-50% + var(--gl-push, 0) * 3px) calc(var(--gl-at, 0px) - 50%);
+  transform: scale(calc(1 + var(--gl-heat, 0) * .55), calc(1 + var(--gl-heat, 0) * .2));
+  scale: .45 .5;
+  transition: opacity var(--gl-out) linear, scale var(--gl-out) var(--gl-ease);
+}
+html[data-pmw-home="on"] .pmw-gl-pool::before { left: 0; right: 0; top: 50%; height: var(--gl-bloom-l); translate: 0 -50%; background: radial-gradient(closest-side, var(--gl-s-glow)); opacity: var(--gl-bloom-a); }
+html[data-pmw-home="on"] .pmw-gl-pool::after { left: 50%; top: 0; bottom: 0; width: var(--gl-beam-w); translate: -50% 0; background: linear-gradient(to bottom, var(--gl-s-beam)); opacity: var(--gl-beam-a); }
+html[data-pmw-home="on"] .pmw-gl:is(.pmw-gl-hover, :focus-visible) .pmw-gl-pool { opacity: 1; scale: 1; transition: opacity var(--gl-in) linear, scale 380ms var(--gl-pop-ease); }
+html[data-pmw-home="on"] .pmw-gl.pmw-gl-held .pmw-gl-pool { scale: 1.12 1.1; }
+
+/* the core: the light itself */
+html[data-pmw-home="on"] .pmw-gl-core {
   width: var(--gl-core-w);
   height: var(--gl-core-l);
-  border-radius: 3px;
-  background: linear-gradient(to bottom, color-mix(in srgb, var(--gl-c) 0%, transparent), var(--gl-hot) 30%, var(--gl-hot) 70%, color-mix(in srgb, var(--gl-c) 0%, transparent));
+  border-radius: var(--gl-core-r);
+  translate: calc(-50% + var(--gl-push, 0) * 2px) calc(var(--gl-at, 0px) - 50% + var(--gl-lag, 0) * var(--gl-core-l));
+  transform: scale(calc(1 + var(--gl-strain, 0) * .9), calc(var(--gl-s, 1) * (1 - var(--gl-strain, 0) * .4)));
+  scale: .5 .3;
+  background: linear-gradient(to bottom, transparent, var(--gl-hot) 24%, var(--gl-hot) 76%, transparent);
   box-shadow: var(--gl-core-shadow);
+  transition: opacity var(--gl-out) linear, scale var(--gl-out) var(--gl-ease);
 }
-html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"]::before {
-  width: var(--gl-core-l);
-  height: var(--gl-core-w);
-  background: linear-gradient(to right, color-mix(in srgb, var(--gl-c) 0%, transparent), var(--gl-hot) 30%, var(--gl-hot) 70%, color-mix(in srgb, var(--gl-c) 0%, transparent));
-}
-html[data-pmw-home="on"] .pmw-gl::after {
-  width: var(--gl-halo-w);
-  height: var(--gl-halo-l);
-  border-radius: 0;
-  box-shadow: none;
-  background:
-    radial-gradient(ellipse 1.5px 50% at 50% 50%, color-mix(in srgb, var(--gl-c) var(--gl-streak), transparent), color-mix(in srgb, var(--gl-c) 34%, transparent) 50%, transparent 100%),
-    radial-gradient(ellipse 50% 17% at 50% 50%, color-mix(in srgb, var(--gl-c) var(--gl-bloom), transparent), color-mix(in srgb, var(--gl-c) 10%, transparent) 55%, transparent 100%);
-}
-html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"]::after {
-  width: var(--gl-halo-l);
-  height: var(--gl-halo-w);
-  background:
-    radial-gradient(ellipse 50% 1.5px at 50% 50%, color-mix(in srgb, var(--gl-c) var(--gl-streak), transparent), color-mix(in srgb, var(--gl-c) 34%, transparent) 50%, transparent 100%),
-    radial-gradient(ellipse 17% 50% at 50% 50%, color-mix(in srgb, var(--gl-c) var(--gl-bloom), transparent), color-mix(in srgb, var(--gl-c) 10%, transparent) 55%, transparent 100%);
-}
-/* hover (after a moment) and keyboard focus */
-html[data-pmw-home="on"] .pmw-gl:is(:hover, :focus-visible)::before, html[data-pmw-home="on"] .pmw-gl:is(:hover, :focus-visible)::after {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-  transition: opacity var(--gl-in) linear var(--gl-delay), transform 320ms var(--gl-ease) var(--gl-delay);
-}
-/* drag: brighter, the streak longer */
-html[data-pmw-home="on"] .pmw-gl:is(.pmw-active, .resizing, .is-active)::before {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1.15, 1.2);
-  transition: opacity 90ms linear, transform 200ms var(--gl-ease);
-}
-html[data-pmw-home="on"] .pmw-gl:is(.pmw-active, .resizing, .is-active)::after {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1.15, 1.45);
-  transition: opacity 90ms linear, transform 240ms var(--gl-ease);
-}
-html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"]:is(.pmw-active, .resizing, .is-active)::before { transform: translate(-50%, -50%) scale(1.2, 1.15); }
-html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"]:is(.pmw-active, .resizing, .is-active)::after { transform: translate(-50%, -50%) scale(1.45, 1.15); }
-/* settle: the core exhales from its drag size */
-html[data-pmw-home="on"] .pmw-gl.pmw-settle::before { animation: pmw-gl-exhale 420ms var(--gl-ease) both; }
-@keyframes pmw-gl-exhale { from { transform: translate(-50%, -50%) scale(1.3, 1.35); } }
+html[data-pmw-home="on"] .pmw-gl:is(.pmw-gl-hover, :focus-visible) .pmw-gl-core { opacity: 1; scale: 1; transition: opacity var(--gl-in) linear, scale 320ms var(--gl-pop-ease); }
+html[data-pmw-home="on"] .pmw-gl.pmw-gl-held .pmw-gl-core { scale: 1.3 1.12; animation: gl-catch 320ms var(--gl-ease) both; }
+@keyframes gl-catch { 0% { scale: 1 1; } 28% { scale: 1.8 .68; } 100% { scale: 1.3 1.12; } }
 
-/* ---- the line: the whole bar, lit while it is dragged ---- */
-html[data-pmw-home="on"] .pmw-gl-line {
-  position: absolute;
+/* the rail: the whole bar, lit from the grab point outward, drained back into the release point; heat brightens it
+   around the light (::after) */
+html[data-pmw-home="on"] .pmw-gl-rail {
+  height: 100%;
+  width: var(--gl-rail-w, 1px);
+  translate: -50% 0;
+  background:
+    radial-gradient(ellipse 50% 170px at 50% var(--gl-at, 0px), var(--gl-s-hot)),
+    linear-gradient(color-mix(in srgb, var(--gl-c) var(--gl-rail-a), transparent), color-mix(in srgb, var(--gl-c) var(--gl-rail-a), transparent));
+  transition: opacity 200ms linear;
+}
+html[data-pmw-home="on"] .pmw-gl-rail::after {
+  inset: 0 -1px;
+  opacity: var(--gl-heat, 0);
+  background: radial-gradient(ellipse 50% 280px at 50% var(--gl-at, 0px), var(--gl-s-glow));
+}
+html[data-pmw-home="on"] .pmw-gl.pmw-gl-held .pmw-gl-rail { opacity: 1; animation: gl-ignite var(--gl-ignite) var(--gl-ease) both; transition: opacity 60ms linear; }
+html[data-pmw-home="on"] .pmw-gl.pmw-settle .pmw-gl-rail { animation: gl-drain var(--gl-drain, 420ms) var(--gl-drain-ease) both; }
+@keyframes gl-ignite {
+  from { clip-path: inset(var(--gl-g, 50%) -20px calc(var(--gl-len, 100%) - var(--gl-g, 50%)) -20px); }
+  to { clip-path: inset(0 -20px 0 -20px); }
+}
+@keyframes gl-drain {
+  from { opacity: 1; clip-path: inset(0 -20px 0 -20px); }
+  86% { opacity: 1; }
+  to { opacity: 0; clip-path: inset(var(--gl-r, 50%) -20px calc(var(--gl-len, 100%) - var(--gl-r, 50%)) -20px); }
+}
+
+/* the tips ride the rail's ends: out on the grab, back in on the settle */
+html[data-pmw-home="on"] .pmw-gl-tip {
+  width: 2px;
+  height: 18px;
+  border-radius: 1px;
+  translate: -50% -50%;
+  background: linear-gradient(to bottom, transparent, var(--gl-hot) 35%, var(--gl-hot) 65%, transparent);
+  box-shadow: 0 0 3px .5px var(--gl-c), 0 0 10px 1px color-mix(in srgb, var(--gl-c) 45%, transparent);
+}
+html[data-pmw-home="on"] .pmw-gl-tip[data-end="a"] { --gl-tip: var(--gl-tip-a, 0px); }
+html[data-pmw-home="on"] .pmw-gl-tip[data-end="b"] { --gl-tip: var(--gl-tip-b, 0px); }
+html[data-pmw-home="on"] .pmw-gl.pmw-gl-held .pmw-gl-tip { animation: gl-tip-out var(--gl-ignite) var(--gl-ease) both; }
+html[data-pmw-home="on"] .pmw-gl.pmw-settle .pmw-gl-tip { animation: gl-tip-in var(--gl-drain, 420ms) var(--gl-drain-ease) both; }
+@keyframes gl-tip-out {
+  0% { opacity: 0; translate: -50% calc(var(--gl-g, 0px) - 50%); }
+  12% { opacity: 1; }
+  70% { opacity: .9; }
+  100% { opacity: 0; translate: -50% calc(var(--gl-g, 0px) + var(--gl-tip) - 50%); }
+}
+@keyframes gl-tip-in {
+  0% { opacity: 0; translate: -50% calc(var(--gl-r, 0px) + var(--gl-tip) - 50%); }
+  14% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { opacity: 0; translate: -50% calc(var(--gl-r, 0px) - 50%); }
+}
+
+/* the ring: the catch at the grab point */
+html[data-pmw-home="on"] .pmw-gl-ring {
+  width: 12px;
+  height: 34px;
+  border-radius: 50%;
+  translate: -50% calc(var(--gl-g, 0px) - 50%);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--gl-c) 85%, transparent), 0 0 7px 0 color-mix(in srgb, var(--gl-c) 40%, transparent);
+}
+html[data-pmw-home="on"] .pmw-gl.pmw-gl-held .pmw-gl-ring { animation: gl-ring 500ms cubic-bezier(.15, .7, .3, 1) both; }
+@keyframes gl-ring { from { opacity: .95; scale: .55 .5; } to { opacity: 0; scale: 2.5 2.1; } }
+
+/* the flash: the light seats where it was let go, as the drain arrives */
+html[data-pmw-home="on"] .pmw-gl-flash {
+  width: 40px;
+  height: 90px;
+  translate: -50% calc(var(--gl-r, 0px) - 50%);
+  background: radial-gradient(closest-side, var(--gl-s-glow));
+}
+html[data-pmw-home="on"] .pmw-gl-flash::after {
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 1px;
+  translate: -50% -50%;
+  background: linear-gradient(to right, transparent, var(--gl-hot) 30%, var(--gl-hot) 70%, transparent);
+}
+html[data-pmw-home="on"] .pmw-gl.pmw-settle .pmw-gl-flash { animation: gl-seat 460ms cubic-bezier(.2, .7, .3, 1) calc(var(--gl-drain, 420ms) - 110ms) both; }
+@keyframes gl-seat { 0% { opacity: 0; scale: .35 .5; } 26% { opacity: .9; scale: 1 1; } 100% { opacity: 0; scale: 1.6 1.15; } }
+
+/* the wake: light left on the side the bar is moving away from, as long as it has just travelled */
+html[data-pmw-home="on"] .pmw-gl-wake {
+  width: 64px;
+  height: 320px;
+  translate: 0 calc(var(--gl-at, 0px) - 50%);
+  transform-origin: 0 50%;
+  transform: scaleX(calc(var(--gl-trail, 0) / 64));
+  opacity: calc(var(--gl-heat, 0) * .5);
+  background: radial-gradient(ellipse 100% 50% at 0 50%, var(--gl-s-glow));
+}
+html[data-pmw-home="on"] .pmw-gl-mark { display: none; }
+
+/* ---- Basic: clean and precise. A fine white rod on a line of light with long, even tails; the held bar shows its
+   two end ticks like a dimension line; the seat is a fine level mark across the bar ---- */
+html[data-pmw-home="on"][data-theme^="basic"]:not([data-o55-nier="on"]) .pmw-gl-rail::before {
   left: 50%;
   top: 0;
   bottom: 0;
-  width: 1px;
+  width: 9px;
   translate: -50% 0;
-  pointer-events: none;
-}
-html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"] > .pmw-gl-line { left: 0; right: 0; top: 50%; bottom: auto; width: auto; height: 1px; translate: 0 -50%; }
-html[data-pmw-home="on"] .pmw-gl > :is(.pmw-gl-line, .pmw-divider-line)::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 280ms linear;
   background:
-    radial-gradient(ellipse 100% 22% at 50% calc(50% + var(--pm-glow-off, 0px)), var(--gl-hot), transparent 100%),
-    linear-gradient(to bottom, transparent, color-mix(in srgb, var(--gl-c) var(--gl-line), transparent) 10%, color-mix(in srgb, var(--gl-c) var(--gl-line), transparent) 90%, transparent);
+    linear-gradient(var(--gl-hot), var(--gl-hot)) 0 14px / 100% 1px no-repeat,
+    linear-gradient(var(--gl-hot), var(--gl-hot)) 0 calc(100% - 15px) / 100% 1px no-repeat;
+  opacity: .8;
 }
-html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"] > :is(.pmw-gl-line, .pmw-divider-line)::after {
-  background:
-    radial-gradient(ellipse 22% 100% at calc(50% + var(--pm-glow-off, 0px)) 50%, var(--gl-hot), transparent 100%),
-    linear-gradient(to right, transparent, color-mix(in srgb, var(--gl-c) var(--gl-line), transparent) 10%, color-mix(in srgb, var(--gl-c) var(--gl-line), transparent) 90%, transparent);
-}
-html[data-pmw-home="on"] .pmw-gl:is(.pmw-active, .resizing, .is-active) > :is(.pmw-gl-line, .pmw-divider-line)::after { opacity: 1; transition: opacity 120ms linear; }
+html[data-pmw-home="on"][data-theme="basic-light"]:not([data-o55-nier="on"]) { --gl-hot: color-mix(in srgb, var(--gl-c) 92%, #FFFFFF); }
 
-/* ---- the ripple: on release, two sparks run outward along the bar from where it was held ---- */
-html[data-pmw-home="on"] .pmw-gl-ripple {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 2px;
-  height: 720px;
-  pointer-events: none;
-  border-radius: 2px;
-  translate: -50% calc(-50% + var(--pm-glow-off, 0px));
-  transform: scaleY(.06);
-  opacity: 0;
-  background: linear-gradient(to bottom, transparent, var(--gl-hot) 5%, color-mix(in srgb, var(--gl-c) 60%, transparent) 12%, transparent 26%, transparent 74%, color-mix(in srgb, var(--gl-c) 60%, transparent) 88%, var(--gl-hot) 95%, transparent);
-}
-html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"] > .pmw-gl-ripple {
-  width: 720px;
-  height: 2px;
-  translate: calc(-50% + var(--pm-glow-off, 0px)) -50%;
-  transform: scaleX(.06);
-  background: linear-gradient(to right, transparent, var(--gl-hot) 5%, color-mix(in srgb, var(--gl-c) 60%, transparent) 12%, transparent 26%, transparent 74%, color-mix(in srgb, var(--gl-c) 60%, transparent) 88%, var(--gl-hot) 95%, transparent);
-}
-html[data-pmw-home="on"] .pmw-gl.pmw-settle > .pmw-gl-ripple { animation: pmw-gl-ripple 620ms cubic-bezier(.15, .7, .25, 1) both; }
-html[data-pmw-home="on"] .pmw-gl[aria-orientation="horizontal"].pmw-settle > .pmw-gl-ripple { animation-name: pmw-gl-ripple-h; }
-@keyframes pmw-gl-ripple { 0% { opacity: 1; transform: scaleY(.06); } 70% { opacity: .7; } 100% { opacity: 0; transform: scaleY(1); } }
-@keyframes pmw-gl-ripple-h { 0% { opacity: 1; transform: scaleX(.06); } 70% { opacity: .7; } 100% { opacity: 0; transform: scaleX(1); } }
-
-/* ---- Basic: precise; the core is a clean rod, nothing breathes ---- */
-html[data-pmw-home="on"][data-theme^="basic"] { --gl-core-l: 54px; --gl-bloom: 28%; }
-
-/* ---- Friendly: a soft living blob in the look's green that breathes while held in view; the release bounces ---- */
-html[data-pmw-home="on"][data-theme^="friendly"] {
+/* ---- Friendly: DS, 3DS, Wii and Wii U. A glossy bead glides over a column of dots that swell as it passes (the dot
+   pattern under a lens), on a soft bouncy spring; the grab squashes it and the dots pop; a drag trails bubbles; the
+   settle reels the dots in and the bead bounces into place inside a Wii-style ring ---- */
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) {
   --gl-c: var(--accent-lime, #6fdabc);
-  --gl-core-w: 7px;
-  --gl-core-l: 62px;
-  --gl-halo-w: 56px;
-  --gl-bloom: 40%;
-  --gl-hot: color-mix(in srgb, var(--accent-lime, #6fdabc) 45%, #FFFFFF);
+  --gl-hot: color-mix(in srgb, var(--accent-lime, #6fdabc) 30%, #FFFFFF);
+  --gl-blend: normal;
+  --gl-k: 430;
+  --gl-z: .5;
+  --gl-dots: 1;
+  --gl-dot-sp: 10;
+  --gl-echo: 1;
+  --gl-core-w: 13px;
+  --gl-core-l: 13px;
+  --gl-core-r: 50%;
+  --gl-bloom-a: .34;
+  --gl-bloom-l: 120px;
+  --gl-pool-w: 64px;
+  --gl-pop-ease: cubic-bezier(.34, 1.56, .64, 1);
+  --gl-ignite: 420ms;
+  --gl-settle-ms: 980;
 }
-html[data-pmw-home="on"][data-theme="friendly-light"] { --gl-c: color-mix(in srgb, var(--accent-lime, #3aa57f) 80%, #000); --gl-hot: color-mix(in srgb, var(--accent-lime, #3aa57f) 70%, #FFFFFF); }
-html[data-pmw-home="on"][data-theme^="friendly"] .pmw-gl::before {
-  border-radius: 54% 46% 58% 42% / 38% 42% 58% 62%;
-  background: radial-gradient(closest-side, var(--gl-hot), color-mix(in srgb, var(--gl-c) 80%, #FFFFFF) 50%, color-mix(in srgb, var(--gl-c) 0%, transparent) 100%);
-  box-shadow: 0 0 14px 3px color-mix(in srgb, var(--gl-c) 45%, transparent);
+html[data-pmw-home="on"][data-theme="friendly-light"]:not([data-o55-nier="on"]) {
+  --gl-c: color-mix(in srgb, var(--accent-lime, #2fa183) 90%, #000);
+  --gl-hot: color-mix(in srgb, var(--accent-lime, #2fa183) 40%, #FFFFFF);
+  --gl-bloom-a: .22;
 }
-html[data-pmw-home="on"][data-theme^="friendly"] .pmw-gl:is(:hover, :focus-visible)::before { animation: pmw-gl-drift 7s ease-in-out infinite; }
-html[data-pmw-home="on"][data-theme^="friendly"] .pmw-gl:is(:hover, :focus-visible)::after { animation: pmw-gl-breath 2.6s ease-in-out 400ms infinite; }
-html[data-pmw-home="on"][data-theme^="friendly"] .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::before { transition: opacity var(--gl-in) linear var(--gl-delay), transform 460ms cubic-bezier(.34, 1.56, .64, 1) var(--gl-delay); }
-html[data-pmw-home="on"][data-theme^="friendly"] .pmw-gl.pmw-settle::before { animation: pmw-gl-bounce 560ms cubic-bezier(.34, 1.56, .64, 1) both; }
-@keyframes pmw-gl-drift {
-  0%, 100% { border-radius: 54% 46% 58% 42% / 38% 42% 58% 62%; }
-  33% { border-radius: 44% 56% 42% 58% / 56% 34% 66% 44%; }
-  66% { border-radius: 60% 40% 50% 50% / 44% 62% 38% 56%; }
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-core {
+  background: radial-gradient(circle at 36% 30%, #FFFFFF 0 13%, var(--gl-hot) 30%, var(--gl-c) 64%, color-mix(in srgb, var(--gl-c) 70%, #000) 100%);
+  box-shadow: inset 0 -1.5px 2px color-mix(in srgb, var(--gl-c) 60%, #000), 0 0 0 2px color-mix(in srgb, var(--gl-c) 24%, transparent), 0 2px 12px 2px color-mix(in srgb, var(--gl-c) 46%, transparent);
+  transform: scale(calc((1 + var(--gl-strain, 0) * .7) * (1 + var(--gl-heat, 0) * .18)), calc(var(--gl-s, 1) * (1 - var(--gl-strain, 0) * .35) * (1 + var(--gl-heat, 0) * .18)));
 }
-@keyframes pmw-gl-breath { 0%, 100% { opacity: 1; } 50% { opacity: .72; } }
-@keyframes pmw-gl-bounce { 0% { transform: translate(-50%, -50%) scale(1.45, 1.3); } 55% { transform: translate(-50%, -50%) scale(.9, .95); } 100% { transform: translate(-50%, -50%) scale(1); } }
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-held .pmw-gl-core { scale: 1.3; animation: gl-squish 480ms cubic-bezier(.3, 1.4, .5, 1) both; }
+@keyframes gl-squish { 0% { scale: 1; } 22% { scale: 1.6 .7; } 55% { scale: 1.12 1.44; } 100% { scale: 1.3; } }
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-settle .pmw-gl-core { animation: gl-boing 720ms linear calc(var(--gl-drain, 420ms) - 140ms) both; }
+@keyframes gl-boing {
+  0% { scale: 1.3; }
+  18% { scale: .76 1.2; }
+  40% { scale: 1.16 .9; }
+  62% { scale: .96 1.04; }
+  100% { scale: 1; }
+}
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-pool::after { display: none; }
+/* the idle hint is the dot column itself, faint: the pattern wakes where the pointer comes near */
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-hint { display: none; }
+/* the dots: placed and sized by the script (--m, 0 to 1 by nearness to the bead) */
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-fx > .pmw-gl-dots {
+  display: block;
+  opacity: calc(var(--gl-near, 0) * .7);
+  transition: opacity 240ms linear;
+}
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl:is(.pmw-gl-hover, :focus-visible) .pmw-gl-dots { opacity: 1; transition: opacity 180ms linear; }
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-dot {
+  width: 10px;
+  height: 10px;
+  opacity: calc(.3 + var(--m, 0) * .7);
+  border-radius: 50%;
+  scale: calc((.24 + var(--m, 0) * .52) * (1 + var(--gl-pop, 0) * var(--m, 0) * .6));
+  background: radial-gradient(circle at 38% 32%, #FFFFFF 0 11%, var(--gl-hot) 26%, var(--gl-c) 60%, color-mix(in srgb, var(--gl-c) 78%, #000) 100%);
+}
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-held .pmw-gl-dots { animation: gl-pop 560ms linear both; }
+@keyframes gl-pop { 0% { --gl-pop: 0; } 22% { --gl-pop: 1; } 48% { --gl-pop: -.25; } 72% { --gl-pop: .12; } 100% { --gl-pop: 0; } }
+/* the held bar: the whole dot column lights, over a soft glow at the bead */
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-rail {
+  width: 12px;
+  background:
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--gl-c) 85%, transparent) 0 1.7px, transparent 2.4px) 50% -5px / 12px 10px repeat-y,
+    radial-gradient(ellipse 50% 130px at 50% var(--gl-at, 0px), var(--gl-s-glow));
+}
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-rail::after { opacity: calc(var(--gl-heat, 0) * .5); }
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-tip {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, #FFFFFF 0 14%, var(--gl-c) 60%, color-mix(in srgb, var(--gl-c) 75%, #000));
+  box-shadow: 0 0 8px 1px color-mix(in srgb, var(--gl-c) 50%, transparent);
+}
+/* the catch: a round ring; the seat: a Wii-style ring that grows from the bead and fades */
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-ring { width: 18px; height: 18px; box-shadow: 0 0 0 2px color-mix(in srgb, var(--gl-c) 72%, transparent), 0 0 8px 1px color-mix(in srgb, var(--gl-c) 28%, transparent); }
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-held .pmw-gl-ring { animation: gl-ring-round 540ms cubic-bezier(.2, .8, .3, 1) both; }
+@keyframes gl-ring-round { from { opacity: .9; scale: .6; } to { opacity: 0; scale: 2.6; } }
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-flash {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: none;
+  box-shadow: 0 0 0 2.5px color-mix(in srgb, var(--gl-c) 80%, transparent), 0 0 12px 2px color-mix(in srgb, var(--gl-c) 30%, transparent), inset 0 0 8px color-mix(in srgb, var(--gl-c) 30%, transparent);
+}
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-flash::after { display: none; }
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-settle .pmw-gl-flash { animation: gl-seat-round 640ms cubic-bezier(.2, .8, .3, 1) calc(var(--gl-drain, 420ms) - 100ms) both; }
+@keyframes gl-seat-round { 0% { opacity: 0; scale: .4; } 22% { opacity: 1; scale: 1; } 100% { opacity: 0; scale: 2.5; } }
+/* bubbles: where the bead was 45, 90 and 135 ms ago, shrinking */
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-fx > .pmw-gl-echos { display: block; }
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-echo {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  translate: calc(-50% + var(--gl-eo, 0) * 1px) calc(var(--gl-at, 0px) - 50%);
+  background: radial-gradient(circle at 38% 32%, #FFFFFF 0 12%, var(--gl-c) 60%, color-mix(in srgb, var(--gl-c) 75%, transparent));
+  opacity: calc(var(--gl-ea, 0) * .75);
+}
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-echo:nth-child(2) { width: 7px; height: 7px; opacity: calc(var(--gl-ea, 0) * .55); }
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-echo:nth-child(3) { width: 5px; height: 5px; opacity: calc(var(--gl-ea, 0) * .38); }
+html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-wake { display: none; }
 
-/* ---- Glass: light caught in the glass. A white-hot core, the bloom tinted through the slab, and the two plate rims
-   facing the gap lit near the pointer (the whole rims while dragged); the release runs along the rims ---- */
-html[data-pmw-home="on"][data-theme^="glass"] {
+/* ---- Glass: light caught in glass. Neutral white only, tinted by the plate (pm7-liquid-glass, 2026-10-14: the lens's
+   catch light --lg-lens-glint and its blend, no colour splitting, no filter or backdrop here). A sliver of light in the
+   gap; the two plate edges facing it carry it along their length like light trapped in an edge; it scatters a little
+   way into each frosted plate. Held, both edges glow their whole length; the drain runs back along both ---- */
+html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) {
+  --gl-c: #FFFFFF;
   --gl-hot: #FFFFFF;
-  --gl-core-w: 2px;
-  --gl-core-l: 72px;
-  --gl-halo-w: 52px;
-  --gl-bloom: 40%;
-  --gl-streak: 70%;
-  --gl-rim: rgba(255, 255, 255, .78);
-  --gl-core-shadow: 0 0 5px 1px rgba(255, 255, 255, .9), 0 0 14px 3px color-mix(in srgb, var(--gl-c) 75%, transparent), 0 0 30px 6px color-mix(in srgb, var(--gl-c) 32%, transparent);
+  --gl-blend: var(--lg-lens-glint-blend, plus-lighter);
+  --gl-glint: var(--lg-lens-glint, rgba(255, 255, 255, .24));
+  --gl-rim: #FFFFFF;
+  --gl-rim-x: 3.5px;
+  --gl-shade: transparent;
+  --gl-k: 380;
+  --gl-z: .82;
+  --gl-scatter: rgba(255, 255, 255, .26);
+  --gl-core-w: 1px;
+  --gl-core-l: 38px;
+  --gl-core-shadow: 0 0 1.5px .5px rgba(255, 255, 255, .9), 0 0 6px 1px rgba(255, 255, 255, .32);
+  --gl-ignite: 460ms;
+  --gl-drain-ease: cubic-bezier(.55, 0, .2, 1);
+  --gl-rail-a: 30%;
 }
-html[data-pmw-home="on"][data-theme="glass-light"] {
-  --gl-hot: #FFFFFF;
-  --gl-bloom: 30%;
-  --gl-rim: rgba(255, 255, 255, .95);
-  --gl-core-shadow: 0 0 4px 1px color-mix(in srgb, var(--gl-c) 80%, transparent), 0 0 12px 3px color-mix(in srgb, var(--gl-c) 45%, transparent), 0 0 24px 5px color-mix(in srgb, var(--gl-c) 20%, transparent);
+html[data-pmw-home="on"][data-theme="glass-light"]:not([data-o55-nier="on"]) {
+  --gl-blend: var(--lg-lens-glint-blend, normal);
+  --gl-glint: var(--lg-lens-glint, rgba(255, 255, 255, .7));
+  --gl-shade: var(--lg-edge-bot, rgba(48, 36, 84, .22));
+  --gl-scatter: rgba(255, 255, 255, .78);
+  --gl-core-shadow: 0 0 0 .5px var(--gl-shade), 0 0 5px 1px rgba(255, 255, 255, .95), 0 0 14px 3px rgba(255, 255, 255, .55);
+  --gl-rail-a: 70%;
 }
-/* the rims: the line becomes the gap's two plate edges, lit by a pool of light at the pointer */
-html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl > .pmw-gl-line { width: 7px; }
-/* a divider's 8 px box spans its 6 px gap and one pixel of each plate: the rims are those two pixels */
-html[data-pmw-home="on"][data-theme^="glass"] .pmw-divider.pmw-gl[data-dir="row"] > .pmw-divider-line { left: 0; width: 8px; }
-html[data-pmw-home="on"][data-theme^="glass"] .pmw-divider.pmw-gl[data-dir="col"] > .pmw-divider-line { left: 6px; right: 6px; top: 0; height: 8px; }
-html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl[aria-orientation="horizontal"] > .pmw-gl-line { width: auto; height: 7px; }
-html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl > :is(.pmw-gl-line, .pmw-divider-line)::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity var(--gl-out) linear;
-  background: linear-gradient(to right, var(--gl-rim) 0 1px, transparent 1px calc(100% - 1px), var(--gl-rim) calc(100% - 1px));
-  -webkit-mask: radial-gradient(ellipse 100% 90px at 50% calc(50% + var(--pm-glow-off, 0px)), #000, transparent);
-  mask: radial-gradient(ellipse 100% 90px at 50% calc(50% + var(--pm-glow-off, 0px)), #000, transparent);
+/* the two edges: a fine bright line on each, carried along the edge with long tails (::after), and the light
+   scattering a few pixels into each frosted plate beside it, brightest at the edge (::before) */
+html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-pool { --gl-pool-w: 48px; --gl-pool-l: 520px; }
+html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-pool::after {
+  width: calc(var(--gl-rim-x) * 2 + 1px);
+  opacity: 1;
+  background:
+    linear-gradient(to right, var(--gl-shade) 0 .5px, var(--gl-rim) .5px 1.5px, transparent 1.5px calc(100% - 1.5px), var(--gl-rim) calc(100% - 1.5px) calc(100% - .5px), var(--gl-shade) calc(100% - .5px));
+  -webkit-mask: linear-gradient(to bottom, var(--gl-s-beam));
+  mask: linear-gradient(to bottom, var(--gl-s-beam));
 }
-html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl[aria-orientation="horizontal"] > :is(.pmw-gl-line, .pmw-divider-line)::before {
-  background: linear-gradient(to bottom, var(--gl-rim) 0 1px, transparent 1px calc(100% - 1px), var(--gl-rim) calc(100% - 1px));
-  -webkit-mask: radial-gradient(ellipse 90px 100% at calc(50% + var(--pm-glow-off, 0px)) 50%, #000, transparent);
-  mask: radial-gradient(ellipse 90px 100% at calc(50% + var(--pm-glow-off, 0px)) 50%, #000, transparent);
+html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-pool::before {
+  height: 260px;
+  opacity: 1;
+  background:
+    radial-gradient(ellipse 7px 50% at calc(50% - var(--gl-rim-x) - 1px) 50%, var(--gl-scatter), transparent),
+    radial-gradient(ellipse 7px 50% at calc(50% + var(--gl-rim-x) + 1px) 50%, var(--gl-scatter), transparent),
+    radial-gradient(ellipse 3px 22% at 50% 50%, var(--gl-scatter), transparent);
 }
-html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active) > :is(.pmw-gl-line, .pmw-divider-line)::before { opacity: 1; transition: opacity var(--gl-in) linear var(--gl-delay); }
-html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl:is(.pmw-active, .resizing, .is-active) > :is(.pmw-gl-line, .pmw-divider-line)::before {
-  -webkit-mask: linear-gradient(to bottom, transparent, rgba(0, 0, 0, .5) 12%, rgba(0, 0, 0, .5) 88%, transparent), radial-gradient(ellipse 100% 140px at 50% calc(50% + var(--pm-glow-off, 0px)), #000, transparent);
-  mask: linear-gradient(to bottom, transparent, rgba(0, 0, 0, .5) 12%, rgba(0, 0, 0, .5) 88%, transparent), radial-gradient(ellipse 100% 140px at 50% calc(50% + var(--pm-glow-off, 0px)), #000, transparent);
+html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-hint::before { display: none; }
+html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-hint::after {
+  width: calc(var(--gl-rim-x) * 2 + 1px);
+  opacity: .6;
+  background:
+    linear-gradient(to right, var(--gl-shade) 0 .5px, var(--gl-rim) .5px 1.5px, transparent 1.5px calc(100% - 1.5px), var(--gl-rim) calc(100% - 1.5px) calc(100% - .5px), var(--gl-shade) calc(100% - .5px));
+  -webkit-mask: linear-gradient(to bottom, var(--gl-s-beam));
+  mask: linear-gradient(to bottom, var(--gl-s-beam));
 }
-html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl[aria-orientation="horizontal"]:is(.pmw-active, .resizing, .is-active) > :is(.pmw-gl-line, .pmw-divider-line)::before {
-  -webkit-mask: linear-gradient(to right, transparent, rgba(0, 0, 0, .5) 12%, rgba(0, 0, 0, .5) 88%, transparent), radial-gradient(ellipse 140px 100% at calc(50% + var(--pm-glow-off, 0px)) 50%, #000, transparent);
-  mask: linear-gradient(to right, transparent, rgba(0, 0, 0, .5) 12%, rgba(0, 0, 0, .5) 88%, transparent), radial-gradient(ellipse 140px 100% at calc(50% + var(--pm-glow-off, 0px)) 50%, #000, transparent);
+html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-rail {
+  width: calc(var(--gl-rim-x) * 2 + 1px);
+  background:
+    linear-gradient(to right, var(--gl-shade) 0 .5px, var(--gl-rim) .5px 1.5px, transparent 1.5px calc(100% - 1.5px), var(--gl-rim) calc(100% - 1.5px) calc(100% - .5px), var(--gl-shade) calc(100% - .5px));
+  -webkit-mask: linear-gradient(color-mix(in srgb, #000 var(--gl-rail-a), transparent), color-mix(in srgb, #000 var(--gl-rail-a), transparent)), radial-gradient(ellipse 50% 260px at 50% var(--gl-at, 0px), #000, transparent);
+  mask: linear-gradient(color-mix(in srgb, #000 var(--gl-rail-a), transparent), color-mix(in srgb, #000 var(--gl-rail-a), transparent)), radial-gradient(ellipse 50% 260px at 50% var(--gl-at, 0px), #000, transparent);
 }
-html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl:is(.pmw-active, .resizing, .is-active) > :is(.pmw-gl-line, .pmw-divider-line)::after { opacity: .55; }
-html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl-ripple { width: 7px; background: linear-gradient(to bottom, transparent, var(--gl-rim) 5%, transparent 18%, transparent 82%, var(--gl-rim) 95%, transparent); -webkit-mask: linear-gradient(to right, #000 0 1px, transparent 1px calc(100% - 1px), #000 calc(100% - 1px)); mask: linear-gradient(to right, #000 0 1px, transparent 1px calc(100% - 1px), #000 calc(100% - 1px)); }
-html[data-pmw-home="on"][data-theme^="glass"] .pmw-gl[aria-orientation="horizontal"] > .pmw-gl-ripple { width: 720px; height: 7px; background: linear-gradient(to right, transparent, var(--gl-rim) 5%, transparent 18%, transparent 82%, var(--gl-rim) 95%, transparent); -webkit-mask: linear-gradient(to bottom, #000 0 1px, transparent 1px calc(100% - 1px), #000 calc(100% - 1px)); mask: linear-gradient(to bottom, #000 0 1px, transparent 1px calc(100% - 1px), #000 calc(100% - 1px)); }
-
-/* ---- Retro: a hard phosphor block over a dashed streak (the rail's grammar), stepped; the release blinks outward ---- */
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) { --gl-c: var(--accent-lime, #b8d066); }
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl::before {
-  width: 4px;
-  height: 56px;
+html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-rail::after { inset: 0 -12px; background: radial-gradient(ellipse 50% 260px at 50% var(--gl-at, 0px), color-mix(in srgb, var(--gl-glint) 100%, transparent), transparent); }
+/* the glints that run along both edges */
+html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-tip {
+  width: calc(var(--gl-rim-x) * 2 + 1px);
+  height: 54px;
   border-radius: 0;
-  background: var(--gl-c);
-  box-shadow: 2px 2px 0 color-mix(in srgb, var(--gl-c) 40%, transparent);
+  box-shadow: none;
+  background: linear-gradient(to right, var(--gl-hot) 0 1.5px, transparent 1.5px calc(100% - 1.5px), var(--gl-hot) calc(100% - 1.5px));
+  -webkit-mask: linear-gradient(to bottom, var(--gl-s-beam));
+  mask: linear-gradient(to bottom, var(--gl-s-beam));
 }
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl[aria-orientation="horizontal"]::before { width: 56px; height: 4px; }
-/* the rail's own Retro mark (leftrail-redesign d.css) takes the page accent, which is blue in Retro Light: here it takes
-   the phosphor the panels' dividers and the chat edge use, so the three bars light alike */
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #leftPanelResizer.pmw-gl::before { background: var(--gl-c) !important; box-shadow: 2px 2px 0 color-mix(in srgb, var(--gl-c) 40%, transparent) !important; }
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #leftPanelResizer.pmw-gl::after { background: repeating-linear-gradient(180deg, color-mix(in srgb, var(--gl-c) 70%, transparent) 0 4px, transparent 4px 8px) !important; }
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl::after {
-  width: 2px;
-  height: 240px;
-  background: repeating-linear-gradient(180deg, color-mix(in srgb, var(--gl-c) 70%, transparent) 0 4px, transparent 4px 8px);
+html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-ring { display: none; }
+html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-flash { width: 56px; height: 140px; background: radial-gradient(closest-side, color-mix(in srgb, var(--gl-glint) 100%, transparent), transparent); }
+html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-flash::before {
+  left: 50%; top: 20%; bottom: 20%; width: calc(var(--gl-rim-x) * 2 + 1px); translate: -50% 0;
+  background: linear-gradient(to right, var(--gl-hot) 0 1.5px, transparent 1.5px calc(100% - 1.5px), var(--gl-hot) calc(100% - 1.5px));
+  -webkit-mask: linear-gradient(to bottom, var(--gl-s-beam));
+  mask: linear-gradient(to bottom, var(--gl-s-beam));
 }
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl[aria-orientation="horizontal"]::after { width: 240px; height: 2px; background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--gl-c) 70%, transparent) 0 4px, transparent 4px 8px); }
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl::before, html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl::after,
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::before,
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::after {
-  transition: opacity 120ms steps(2, end), transform 120ms steps(2, end);
-}
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl:is(.pmw-active, .resizing, .is-active)::before { transform: translate(-50%, -50%) scale(1.5, 1.15); }
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl > :is(.pmw-gl-line, .pmw-divider-line)::after { background: repeating-linear-gradient(180deg, var(--gl-c) 0 4px, transparent 4px 8px); }
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl[aria-orientation="horizontal"] > :is(.pmw-gl-line, .pmw-divider-line)::after { background: repeating-linear-gradient(90deg, var(--gl-c) 0 4px, transparent 4px 8px); }
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl.pmw-settle::before { animation: pmw-gl-blink 360ms steps(1, end) both; }
-@keyframes pmw-gl-blink { 0%, 50% { opacity: 1; } 25%, 75% { opacity: .2; } 100% { opacity: 1; } }
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-ripple { width: 4px; border-radius: 0; background: linear-gradient(to bottom, transparent, var(--gl-c) 3% 7%, transparent 7% 93%, var(--gl-c) 93% 97%, transparent 97%); }
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl[aria-orientation="horizontal"] > .pmw-gl-ripple { width: 720px; height: 4px; background: linear-gradient(to right, transparent, var(--gl-c) 3% 7%, transparent 7% 93%, var(--gl-c) 93% 97%, transparent 97%); }
-html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl.pmw-settle > .pmw-gl-ripple { animation-timing-function: steps(6, end); }
+html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-flash::after { display: none; }
+html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-wake { background: radial-gradient(ellipse 100% 50% at 0 50%, color-mix(in srgb, var(--gl-glint) 100%, transparent), transparent); opacity: calc(var(--gl-heat, 0) * .8); }
 
-/* ---- NieR: a plain ink mark on a hairline, never a glow; stepped; the release is two ink ticks stepping outward ---- */
-html[data-pmw-home="on"][data-o55-nier="on"] { --gl-c: var(--o55-nier-ink, #211f1b); }
-html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl::before { width: 3px; height: 48px; border-radius: 0; background: var(--gl-c); box-shadow: none; }
-html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl[aria-orientation="horizontal"]::before { width: 48px; height: 3px; }
-html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl::after {
+/* ---- Retro: phosphor on a CRT. A block cursor that steps cell by cell, leaving each cell it left glowing a moment;
+   it blinks once it is still; scanlines run through its bloom. The grab writes the bar out cell by cell as a double
+   line; a drag leaves phosphor copies of the bar where it just was; the settle retraces it into the cursor, which
+   blinks twice. Retro Light is the same in ink on paper: no bloom, a hard dithered shadow ---- */
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) {
+  --gl-c: var(--accent-lime, #86c46a);
+  --gl-hot: color-mix(in srgb, var(--accent-lime, #86c46a) 45%, #FFFFFF);
+  --gl-k: 0;
+  --gl-snap: 8;
+  --gl-snap-o: 4;
+  --gl-ghost: 1;
+  --gl-echo: 1;
+  --gl-core-w: 5px;
+  --gl-core-l: 16px;
+  --gl-core-r: 0;
+  --gl-core-shadow: 0 0 2px 0 var(--gl-c), 0 0 7px 1px color-mix(in srgb, var(--gl-c) 62%, transparent), 0 0 18px 4px color-mix(in srgb, var(--gl-c) 22%, transparent);
+  --gl-bloom-a: .4;
+  --gl-bloom-l: 130px;
+  --gl-pool-w: 50px;
+  --gl-pool-l: 240px;
+  --gl-ignite: 300ms;
+}
+html[data-pmw-home="on"][data-theme="retro-light"]:not([data-o55-nier="on"]) {
+  --gl-c: var(--accent-lime, #2f7a3d);
+  --gl-hot: var(--gl-c);
+  --gl-core-shadow: none;
+}
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-fx i { transition-timing-function: steps(2, end) !important; }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-hint { width: 1px; height: 96px; background: repeating-linear-gradient(to bottom, var(--gl-c) 0 4px, transparent 4px 8px); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-hint::before, html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-hint::after { display: none; }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-hint {
+  -webkit-mask: linear-gradient(to bottom, transparent 0 16%, rgba(0, 0, 0, .4) 16% 33%, #000 33% 67%, rgba(0, 0, 0, .4) 67% 84%, transparent 84%);
+  mask: linear-gradient(to bottom, transparent 0 16%, rgba(0, 0, 0, .4) 16% 33%, #000 33% 67%, rgba(0, 0, 0, .4) 67% 84%, transparent 84%);
+}
+/* the bloom, cut by scanlines that stay level on the screen (a horizontal bar's layer is turned) */
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-pool::before {
+  -webkit-mask: repeating-linear-gradient(to bottom, #000 0 2px, rgba(0, 0, 0, .2) 2px 3px);
+  mask: repeating-linear-gradient(to bottom, #000 0 2px, rgba(0, 0, 0, .2) 2px 3px);
+}
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl[aria-orientation="horizontal"] .pmw-gl-pool::before {
+  -webkit-mask: repeating-linear-gradient(to right, #000 0 2px, rgba(0, 0, 0, .2) 2px 3px);
+  mask: repeating-linear-gradient(to right, #000 0 2px, rgba(0, 0, 0, .2) 2px 3px);
+}
+/* the dashed streak (the box-drawn ┆), stepping down with distance */
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-pool::after {
   width: 1px;
-  height: 240px;
-  background: linear-gradient(180deg, transparent, rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .5) 30%, rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .5) 70%, transparent);
+  opacity: 1;
+  background: repeating-linear-gradient(to bottom, var(--gl-c) 0 4px, transparent 4px 8px);
+  -webkit-mask: linear-gradient(to bottom, transparent 0 8%, rgba(0, 0, 0, .3) 8% 22%, rgba(0, 0, 0, .65) 22% 36%, #000 36% 64%, rgba(0, 0, 0, .65) 64% 78%, rgba(0, 0, 0, .3) 78% 92%, transparent 92%);
+  mask: linear-gradient(to bottom, transparent 0 8%, rgba(0, 0, 0, .3) 8% 22%, rgba(0, 0, 0, .65) 22% 36%, #000 36% 64%, rgba(0, 0, 0, .65) 64% 78%, rgba(0, 0, 0, .3) 78% 92%, transparent 92%);
 }
-html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl[aria-orientation="horizontal"]::after { width: 240px; height: 1px; background: linear-gradient(90deg, transparent, rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .5) 30%, rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .5) 70%, transparent); }
-html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl::before, html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl::after,
-html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::before,
-html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::after {
-  transition: opacity 160ms steps(2, end), transform 160ms steps(2, end);
+/* paper: no bloom; a small dithered shade beside the cursor, offset like a hard shadow */
+html[data-pmw-home="on"][data-theme="retro-light"]:not([data-o55-nier="on"]) .pmw-gl-pool::before {
+  left: calc(50% - 4px);
+  right: auto;
+  width: 13px;
+  height: 22px;
+  translate: 0 -40%;
+  opacity: .7;
+  background: repeating-conic-gradient(var(--gl-c) 0 25%, transparent 0 50%) 0 0 / 2px 2px;
+  -webkit-mask: none;
+  mask: none;
 }
-html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl:is(.pmw-active, .resizing, .is-active)::before { transform: translate(-50%, -50%) scale(1.34, 1); }
-html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl > :is(.pmw-gl-line, .pmw-divider-line)::after { background: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .55); }
-html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl.pmw-settle::before { animation: none; }
-html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-ripple { width: 3px; border-radius: 0; background: linear-gradient(to bottom, transparent 2%, var(--gl-c) 2% 4%, transparent 4% 96%, var(--gl-c) 96% 98%, transparent 98%); }
-html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl[aria-orientation="horizontal"] > .pmw-gl-ripple { width: 720px; height: 3px; background: linear-gradient(to right, transparent 2%, var(--gl-c) 2% 4%, transparent 4% 96%, var(--gl-c) 96% 98%, transparent 98%); }
-html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl.pmw-settle > .pmw-gl-ripple { animation-timing-function: steps(5, end); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-core { background: var(--gl-hot); transform: scale(calc(1 + var(--gl-strain, 0) * .8), calc(1 - var(--gl-strain, 0) * .3)); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-still .pmw-gl-core { animation: gl-blink 1060ms steps(1, end) infinite; }
+@keyframes gl-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: .18; } }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-held .pmw-gl-core { scale: 1.2 1.5; animation: gl-invert 240ms steps(1, end) both; }
+@keyframes gl-invert { 0% { scale: 1.6 2; } 50% { scale: 1.2 1.5; } }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl.pmw-settle .pmw-gl-core { animation: gl-blink2 420ms steps(1, end) calc(var(--gl-drain, 420ms) - 60ms) both; }
+@keyframes gl-blink2 { 0%, 24% { opacity: .15; } 25%, 49% { opacity: 1; } 50%, 74% { opacity: .15; } 75%, 100% { opacity: 1; } }
+/* the cell it left glows a moment (the script restarts each copy's decay) */
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-fx > .pmw-gl-ghosts { display: block; }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-ghost { width: var(--gl-core-w); height: var(--gl-core-l); background: var(--gl-c); box-shadow: 0 0 6px 0 color-mix(in srgb, var(--gl-c) 40%, transparent); }
+html[data-pmw-home="on"][data-theme="retro-light"]:not([data-o55-nier="on"]) .pmw-gl-ghost { box-shadow: none; background: repeating-conic-gradient(var(--gl-c) 0 25%, transparent 0 50%) 0 0 / 2px 2px; }
+/* the held bar: a double line (the box-drawn ║), written out cell by cell */
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-rail {
+  width: 5px;
+  background: linear-gradient(to right, var(--gl-c) 0 1px, transparent 1px 4px, var(--gl-c) 4px);
+  box-shadow: 0 0 6px 0 color-mix(in srgb, var(--gl-c) 32%, transparent);
+}
+html[data-pmw-home="on"][data-theme="retro-light"]:not([data-o55-nier="on"]) .pmw-gl-rail { box-shadow: none; }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-rail::after {
+  inset: 0;
+  opacity: 1;
+  background: linear-gradient(to right, var(--gl-hot) 0 1px, transparent 1px 4px, var(--gl-hot) 4px);
+  -webkit-mask: linear-gradient(to bottom, transparent calc(var(--gl-at, 0px) - 64px), #000 calc(var(--gl-at, 0px) - 64px) calc(var(--gl-at, 0px) + 64px), transparent calc(var(--gl-at, 0px) + 64px));
+  mask: linear-gradient(to bottom, transparent calc(var(--gl-at, 0px) - 64px), #000 calc(var(--gl-at, 0px) - 64px) calc(var(--gl-at, 0px) + 64px), transparent calc(var(--gl-at, 0px) + 64px));
+}
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-held .pmw-gl-rail { animation-timing-function: steps(9, end); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl.pmw-settle .pmw-gl-rail { animation-timing-function: steps(8, end); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-tip { width: 5px; height: 8px; border-radius: 0; background: var(--gl-hot); box-shadow: 0 0 6px 1px color-mix(in srgb, var(--gl-c) 60%, transparent); }
+html[data-pmw-home="on"][data-theme="retro-light"]:not([data-o55-nier="on"]) .pmw-gl-tip { box-shadow: none; }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-held .pmw-gl-tip { animation-timing-function: steps(9, end); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl.pmw-settle .pmw-gl-tip { animation-timing-function: steps(8, end); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-ring { display: none; }
+/* the seat: a square burst, three steps out */
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-flash { width: 13px; height: 25px; background: none; box-shadow: 0 0 0 1px var(--gl-hot), 0 0 8px 0 color-mix(in srgb, var(--gl-c) 40%, transparent); }
+html[data-pmw-home="on"][data-theme="retro-light"]:not([data-o55-nier="on"]) .pmw-gl-flash { box-shadow: 0 0 0 1px var(--gl-c); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-flash::after { display: none; }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl.pmw-settle .pmw-gl-flash { animation: gl-burst 300ms steps(3, end) calc(var(--gl-drain, 420ms) - 40ms) both; }
+@keyframes gl-burst { 0% { opacity: 1; scale: 1; } 100% { opacity: 0; scale: 2.2 1.6; } }
+/* phosphor copies of the bar where it was 45, 90 and 135 ms ago */
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-fx > .pmw-gl-echos { display: block; }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-echo {
+  height: 100%;
+  width: 5px;
+  translate: calc(-50% + var(--gl-eo, 0) * 1px) 0;
+  background: linear-gradient(to right, var(--gl-c) 0 1px, transparent 1px 4px, var(--gl-c) 4px);
+  -webkit-mask: radial-gradient(ellipse 50% 46% at 50% var(--gl-at, 0px), #000 40%, rgba(0, 0, 0, .35));
+  mask: radial-gradient(ellipse 50% 46% at 50% var(--gl-at, 0px), #000 40%, rgba(0, 0, 0, .35));
+  opacity: calc(var(--gl-ea, 0) * .5);
+}
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-echo:nth-child(2) { opacity: calc(var(--gl-ea, 0) * .32); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-echo:nth-child(3) { opacity: calc(var(--gl-ea, 0) * .18); }
+html[data-pmw-home="on"][data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-gl-wake { display: none; }
 
-/* ---- Reduced Motion: the light fades in and out where the pointer is; nothing scales, drifts, breathes or runs; the
-   release is the whole line fading once ---- */
-html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl::before, html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl::after,
-html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::before,
-html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::after {
-  transform: translate(-50%, -50%) !important;
-  animation: none !important;
-  transition: opacity 140ms linear !important;
+/* ---- NieR (NIER-RULES-for-new-surfaces): ink on parchment, never a glow, filter or blur; motion in steps; colours
+   from the NieR tokens. The colour applies whenever NieR is on: an ink block on the hairline where the pointer is,
+   stepping tick to tick (16 px, the square part's ticks), the hairline going to full ink around it; held, the whole
+   hairline is ink; the settle steps two ink squares back into the block. Parts add: square, the ruler's ticks
+   lengthening around the block and a hatched wake; cursor, the YoRHa square beside the block; brackets, target
+   brackets that lock onto the grab ---- */
+html[data-pmw-home="on"][data-o55-nier="on"] {
+  --gl-c: var(--o55-nier-ink, #211f1b);
+  --gl-hot: var(--o55-nier-ink, #211f1b);
+  --gl-blend: normal;
+  --gl-k: 0;
+  --gl-snap: 16;
+  --gl-snap-o: 6.5;
+  --gl-trail-step: 8;
+  --gl-core-w: 3px;
+  --gl-core-l: 32px;
+  --gl-core-r: 0;
+  --gl-core-shadow: none;
+  --gl-ignite: 320ms;
 }
-html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl-ripple { display: none; }
-html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl.pmw-settle > :is(.pmw-gl-line, .pmw-divider-line)::after { animation: pmw-gl-fade 420ms linear both; }
-@keyframes pmw-gl-fade { from { opacity: .8; } to { opacity: 0; } }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-fx i { transition-timing-function: steps(2, end) !important; }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-hint { width: 7px; height: 64px; background: linear-gradient(var(--gl-c), var(--gl-c)) 50% 0 / 1px 100% no-repeat; }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-hint::before, html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-hint::after { display: none; }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-pool { --gl-pool-w: 15px; --gl-pool-l: 112px; transform: none; background: linear-gradient(var(--gl-c), var(--gl-c)) 50% 0 / 1px 100% no-repeat; }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-pool::before, html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-pool::after { display: none; }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-core { background: var(--gl-c); transform: none; }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl.pmw-gl-held .pmw-gl-core { scale: 1.67 1; animation: none; }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-rail { width: 1px; background: var(--gl-c); }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-rail::after { display: none; }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl.pmw-gl-held .pmw-gl-rail { animation-timing-function: steps(6, end); }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl.pmw-settle .pmw-gl-rail { animation-timing-function: steps(6, end); }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-tip { width: 5px; height: 5px; border-radius: 0; background: var(--gl-c); box-shadow: none; }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl.pmw-gl-held .pmw-gl-tip { animation-timing-function: steps(6, end); }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl.pmw-settle .pmw-gl-tip { animation-timing-function: steps(6, end); }
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-ring,
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-flash,
+html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-wake { display: none; }
+/* square: the ruler wakes around the block (longer ticks at the 16 px grid), and a drag hatches its wake */
+html[data-pmw-home="on"][data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-gl-pool {
+  background:
+    linear-gradient(var(--gl-c), var(--gl-c)) 50% 0 / 1px 100% no-repeat,
+    repeating-linear-gradient(to bottom, var(--gl-c) 0 1px, transparent 1px 16px) 50% 7px / 9px 100% no-repeat;
+}
+html[data-pmw-home="on"][data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-gl-pool::before {
+  display: block;
+  left: 50%;
+  top: 32px;
+  bottom: 32px;
+  width: 13px;
+  height: auto;
+  translate: -50% 0;
+  opacity: 1;
+  background: repeating-linear-gradient(to bottom, var(--gl-c) 0 1px, transparent 1px 16px) 0 7px / 100% 100%;
+}
+html[data-pmw-home="on"][data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-gl-hint {
+  background:
+    linear-gradient(var(--gl-c), var(--gl-c)) 50% 0 / 1px 100% no-repeat,
+    repeating-linear-gradient(to bottom, var(--gl-c) 0 1px, transparent 1px 16px) 0 15px / 100% 100%;
+}
+html[data-pmw-home="on"][data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-gl-rail { width: 7px; background: linear-gradient(var(--gl-c), var(--gl-c)) 50% 0 / 1px 100% no-repeat, repeating-linear-gradient(to bottom, var(--gl-c) 0 1px, transparent 1px 16px) 0 6px / 100% 100%; }
+html[data-pmw-home="on"][data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-gl-wake {
+  display: block;
+  left: 76px;
+  width: 128px;
+  height: 64px;
+  transform: none;
+  opacity: 1;
+  clip-path: inset(0 calc(64px - var(--gl-wr, 0) * 1px) 0 calc(64px - var(--gl-wl, 0) * 1px));
+  background: repeating-linear-gradient(45deg, rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .42) 0 1px, transparent 1px 5px);
+}
+/* cursor: the YoRHa square beside the block */
+html[data-pmw-home="on"][data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-gl-core::before {
+  right: calc(100% + 5px);
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  translate: 0 -50%;
+  background: var(--gl-c);
+}
+/* brackets: four corners that step in onto the light and lock tighter on the grab */
+html[data-pmw-home="on"][data-o55-nier="on"][data-o55-nier-parts~="brackets"] .pmw-gl-mark {
+  display: block;
+  width: 17px;
+  height: 46px;
+  translate: -50% calc(var(--gl-at, 0px) - 50%);
+  scale: 1.6 1.3;
+  --b: var(--gl-c);
+  background:
+    linear-gradient(var(--b), var(--b)) 0 0 / 5px 1px no-repeat, linear-gradient(var(--b), var(--b)) 0 0 / 1px 5px no-repeat,
+    linear-gradient(var(--b), var(--b)) 100% 0 / 5px 1px no-repeat, linear-gradient(var(--b), var(--b)) 100% 0 / 1px 5px no-repeat,
+    linear-gradient(var(--b), var(--b)) 0 100% / 5px 1px no-repeat, linear-gradient(var(--b), var(--b)) 0 100% / 1px 5px no-repeat,
+    linear-gradient(var(--b), var(--b)) 100% 100% / 5px 1px no-repeat, linear-gradient(var(--b), var(--b)) 100% 100% / 1px 5px no-repeat;
+  transition: opacity 160ms steps(2, end), scale 160ms steps(2, end);
+}
+html[data-pmw-home="on"][data-o55-nier="on"][data-o55-nier-parts~="brackets"] .pmw-gl:is(.pmw-gl-hover, :focus-visible) .pmw-gl-mark { opacity: 1; scale: 1; }
+html[data-pmw-home="on"][data-o55-nier="on"][data-o55-nier-parts~="brackets"] .pmw-gl.pmw-gl-held .pmw-gl-mark { scale: .82 .9; }
+html[data-pmw-home="on"][data-o55-nier="on"][data-o55-nier-parts~="brackets"] .pmw-gl.pmw-settle .pmw-gl-mark { animation: gl-stamp 320ms steps(2, end) calc(var(--gl-drain, 420ms) - 40ms) both; }
+@keyframes gl-stamp { 0% { scale: .82 .9; } 50% { scale: 1.25 1.15; } 100% { scale: 1; } }
+
+/* ---- Reduced Motion: the light fades in and out where the pointer is; nothing scales, runs, blinks or trails; the
+   held bar fades up, and the settle is the bar fading once. NieR shows its end states at once ---- */
+html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl-fx i:not(.pmw-gl-dot),
+html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl-fx i::before,
+html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl-fx i::after {
+  animation: none !important;
+  scale: 1 !important;
+  transform: none !important;
+  transition: opacity 160ms linear !important;
+}
+html[data-pmw-home="on"][data-motion="reduced"] :is(.pmw-gl-tip, .pmw-gl-ring, .pmw-gl-flash, .pmw-gl-wake, .pmw-gl-echos, .pmw-gl-ghosts) { display: none !important; }
+html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl.pmw-settle .pmw-gl-rail { animation: gl-fade 460ms linear both !important; }
+html[data-pmw-home="on"][data-motion="reduced"] .pmw-gl.pmw-gl-held .pmw-gl-rail { opacity: 1; }
+@keyframes gl-fade { from { opacity: .9; } to { opacity: 0; } }
+html[data-pmw-home="on"][data-motion="reduced"][data-o55-nier="on"] .pmw-gl-fx i { transition: none !important; }
+html[data-pmw-home="on"][data-motion="reduced"][data-o55-nier="on"] .pmw-gl.pmw-settle .pmw-gl-rail { animation: none !important; opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
-  html[data-pmw-home="on"] .pmw-gl::before, html[data-pmw-home="on"] .pmw-gl::after,
-  html[data-pmw-home="on"] .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::before,
-  html[data-pmw-home="on"] .pmw-gl:is(:hover, :focus-visible, .pmw-active, .resizing, .is-active)::after {
-    transform: translate(-50%, -50%) !important;
+  html[data-pmw-home="on"] .pmw-gl-fx i:not(.pmw-gl-dot), html[data-pmw-home="on"] .pmw-gl-fx i::before, html[data-pmw-home="on"] .pmw-gl-fx i::after {
     animation: none !important;
-    transition: opacity 140ms linear !important;
+    scale: 1 !important;
+    transform: none !important;
+    transition: opacity 160ms linear !important;
   }
-  html[data-pmw-home="on"] .pmw-gl-ripple { display: none; }
-  html[data-pmw-home="on"] .pmw-gl.pmw-settle > :is(.pmw-gl-line, .pmw-divider-line)::after { animation: pmw-gl-fade 420ms linear both; }
+  html[data-pmw-home="on"] :is(.pmw-gl-tip, .pmw-gl-ring, .pmw-gl-flash, .pmw-gl-wake, .pmw-gl-echos, .pmw-gl-ghosts) { display: none !important; }
+  html[data-pmw-home="on"] .pmw-gl.pmw-settle .pmw-gl-rail { animation: gl-fade 460ms linear both !important; }
+  html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl-fx i { transition: none !important; }
+  html[data-pmw-home="on"][data-o55-nier="on"] .pmw-gl.pmw-settle .pmw-gl-rail { animation: none !important; opacity: 0; }
 }
