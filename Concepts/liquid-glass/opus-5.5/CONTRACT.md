@@ -21,6 +21,9 @@ Set `data-lg-surface` on the element:
   the wallpaper and clear any filled wrapper between. Never put a sheet on a sheet (one blur, F3-427). Inner cards
   are plain fills (below), with no `backdrop-filter`.
 - Each baked sheet costs a cold bake on first show and on resize. Keep it to about three per page.
+- A large floating dialog full of text (a Customize screen) adds `data-lg-dense` next to `data-lg-surface="menu"`:
+  its tint is heavier, so what is behind never shows through its text. On the CPU tier (no live blur) every menu is
+  near opaque anyway.
 - `data-lg-kind` is my internal mark. Read it as a selector if you need to, but never set it.
 
 ## Ride the lens

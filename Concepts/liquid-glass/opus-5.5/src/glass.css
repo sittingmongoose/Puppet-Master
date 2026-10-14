@@ -143,6 +143,12 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="menu"] {
   background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(var(--lg-tint-menu), var(--lg-tint-menu)) !important; border-radius: var(--lg-r-card) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 30px 60px -20px var(--lg-shadow), 0 4px 14px var(--lg-shadow-near) !important;
 }
+/* A large floating dialog of dense text (a Customize screen) opts into data-lg-dense: on the GPU tier its live blur
+   keeps a heavier tint, so blurred content behind never mottles its body text. Small menus stay lighter. */
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(10, 13, 26, .86); }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(250, 251, 253, .88); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-tier="cpu"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(12, 15, 28, .97); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) [data-lg-kind="menu"][data-lg-dense] { --lg-tint-menu: rgba(252, 253, 255, .97); }
 /* the pointer's light: one soft highlight clipped to the sheet under the pointer, moved on the compositor */
 #lg-shine { display: none; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-shine {
@@ -396,8 +402,10 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-press {
    7. The CPU path (no GPU): the same sheets, rims and shine as frosted glass without refraction or live blur;
       denser so text holds over the crisp wallpaper
    --------------------------------------------------------------------------------------------------------------- */
-html[data-lg="on"][data-theme="glass-dark"][data-lg-tier="cpu"]:not(#lgz) { --lg-tint-panel: rgba(10, 13, 26, .80); --lg-tint-card: rgba(10, 13, 26, .82); --lg-tint-bar: rgba(10, 13, 26, .80); --lg-tint-menu: rgba(12, 15, 28, .92); --lg-tint-lens: rgba(255, 255, 255, .10); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) { --lg-tint-panel: rgba(250, 251, 253, .84); --lg-tint-card: rgba(250, 251, 253, .86); --lg-tint-bar: rgba(250, 251, 253, .84); --lg-tint-menu: rgba(252, 253, 255, .94); --lg-tint-lens: rgba(255, 255, 255, .24); }   /* the CPU lens is a plain tint over its label: light enough to keep the label's contrast */
+/* CPU tier: no live blur, so a menu's translucency is ghost text from whatever is behind it (pm7-editor-customizer,
+   2026-10-14: Usage rows readable through a Customize dialog at .92). Menus are near opaque here (.97). */
+html[data-lg="on"][data-theme="glass-dark"][data-lg-tier="cpu"]:not(#lgz) { --lg-tint-panel: rgba(10, 13, 26, .80); --lg-tint-card: rgba(10, 13, 26, .82); --lg-tint-bar: rgba(10, 13, 26, .80); --lg-tint-menu: rgba(12, 15, 28, .97); --lg-tint-lens: rgba(255, 255, 255, .10); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) { --lg-tint-panel: rgba(250, 251, 253, .84); --lg-tint-card: rgba(250, 251, 253, .86); --lg-tint-bar: rgba(250, 251, 253, .84); --lg-tint-menu: rgba(252, 253, 255, .97); --lg-tint-lens: rgba(255, 255, 255, .24); }   /* the CPU lens is a plain tint over its label: light enough to keep the label's contrast */
 
 /* ---------------------------------------------------------------------------------------------------------------
    8. The concept's own control (status bar), in the same material
