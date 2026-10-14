@@ -172,3 +172,10 @@ html[data-theme^="friendly"][data-motion="reduced"] .pmn-empty-art > i { animati
 @media (prefers-reduced-motion: reduce) { html[data-theme^="friendly"] .pmn-empty-art > i { animation: none; } }
 html[data-theme^="friendly"][data-motion="reduced"] .pmn-item { transition: none; }
 html[data-theme^="friendly"] .pmn-banner { background: var(--pmn-gloss), color-mix(in srgb, var(--pmn-acc) 12%, var(--pmn-surface)); border-width: 1.5px; }
+
+/* Friendly's page rule rounds every button to 14 px ([data-theme^="friendly"] button), which on a 28 px key is a capsule;
+   the notification keys and controls keep their own corners (found by the no-pills geometry audit, 2026-10-13) */
+html[data-theme^="friendly"] :is(.pmn-btn, .pmn-x, .pmn-group-fold) { border-radius: var(--pmn-r-btn); }
+html[data-theme^="friendly"] .pmn-stack { border-radius: 10px; }
+html[data-theme^="friendly"] .pmn-timer { border-radius: 0; }
+html[data-theme^="friendly"] .pmn-tile::after { border-radius: var(--pmn-r-tile) var(--pmn-r-tile) 3px 3px; }
