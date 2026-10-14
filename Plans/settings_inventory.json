@@ -7918,7 +7918,7 @@
   {
    "id": "code.terminal.curvature",
    "label": "Screen Curvature",
-   "desc": "How curved the glass looks in Full CRT; pointing and selecting follow the curve.",
+   "desc": "How curved the glass looks in Full CRT; pointing and selecting follow the curve. The 0.08 value is historical tuning, held for the revised CRT contract (F3-643); it is not acceptance of the criticized curvature.",
    "type": "slider",
    "default": 0.08,
    "scope": [

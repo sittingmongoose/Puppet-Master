@@ -73476,8 +73476,8 @@
         ]
       },
       "accessibility_contract": {
-        "role_or_semantics": "Labelled form fields in the Appearance popover",
-        "keyboard_access": "The popover is a dialog reached from More; Tab moves between fields, Escape reverts a preview and closes",
+        "role_or_semantics": "Labelled form fields in the Customize screen (F3-650)",
+        "keyboard_access": "The Customize screen uses F3-650's dialog and focus contract reached from More; Tab moves between fields, Escape reverts a preview and closes",
         "focus_management": "terminal.appearance.field keeps focus where its owner contract says after an applied, no-change, failed or cancelled result; an agent's open never takes focus.",
         "disabled_announcement": "terminal.appearance.field announces state.terminal_tab.terminal_appearance_field.disabled_reason and dispatches zero commands when unavailable."
       },
@@ -73500,7 +73500,7 @@
         {
           "test_id": "wiring.terminal.appearance.field.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "The rendered terminal.appearance.field control has its accessible name and state, is reachable by keyboard (The popover is a dialog reached from More; Tab moves between fields, Escape reverts a preview and closes) and returns focus as its owner says."
+          "requirement": "The rendered terminal.appearance.field control has its accessible name and state, is reachable by keyboard (The Customize screen uses F3-650's dialog and focus contract reached from More; Tab moves between fields, Escape reverts a preview and closes) and returns focus as its owner says."
         }
       ],
       "event_test_requirements": [
@@ -73534,7 +73534,7 @@
       },
       "accessibility_contract": {
         "role_or_semantics": "A button named Import scheme...",
-        "keyboard_access": "The popover is a dialog; Tab reaches Import scheme..., Enter opens the file picker",
+        "keyboard_access": "The Customize screen uses F3-650's dialog and focus contract; Tab reaches Import scheme..., Enter opens the file picker",
         "focus_management": "terminal.appearance.import_scheme keeps focus where its owner contract says after an applied, no-change, failed or cancelled result; an agent's open never takes focus.",
         "disabled_announcement": "terminal.appearance.import_scheme announces state.terminal_tab.terminal_appearance_import_scheme.disabled_reason and dispatches zero commands when unavailable."
       },
@@ -73557,7 +73557,7 @@
         {
           "test_id": "wiring.terminal.appearance.import_scheme.accessibility",
           "evidence_kind": "accessibility_regression",
-          "requirement": "The rendered terminal.appearance.import_scheme control has its accessible name and state, is reachable by keyboard (The popover is a dialog; Tab reaches Import scheme..., Enter opens the file picker) and returns focus as its owner says."
+          "requirement": "The rendered terminal.appearance.import_scheme control has its accessible name and state, is reachable by keyboard (The Customize screen uses F3-650's dialog and focus contract; Tab reaches Import scheme..., Enter opens the file picker) and returns focus as its owner says."
         }
       ],
       "event_test_requirements": [
