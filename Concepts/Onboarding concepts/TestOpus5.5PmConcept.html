@@ -133969,6 +133969,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const changed = !lastFront || lastFront !== top.id + '|' + top.count;
       if (changed) {
         const roll = frontEl.querySelector('.pmn-front-roll');
+        roll.querySelectorAll('.pmn-roll-out').forEach((x) => { try { x.getAnimations().forEach((a) => a.cancel()); } catch (_) { /* none */ } x.remove(); });
         const oldT = roll.querySelector('.pmn-front-title');
         const t = el('span', 'pmn-front-title'); t.textContent = top.title + (top.count > 1 ? '  ×' + top.count : '');
         frontEl.querySelector('.pmn-front-ico').innerHTML = icon(top.icon);
@@ -134238,7 +134239,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (items.length > MAX_ITEMS) items.length = MAX_ITEMS;
     if (it.lifeMs) it.expires = Date.now() + it.lifeMs;
     renderStack(true, !quietly);
-    if (open) renderPanel(true);
+    if (open && !clearing) renderPanel(true);
   }
   function dismiss(id, how) {
     const rec = staged.get(id);
@@ -134246,12 +134247,25 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const had = items.length;
     items = items.filter((x) => x.id !== id);
     explainOpen.delete(id); patternEdit.delete(id);
-    if (items.length !== had) { renderStack(true); if (open) renderPanel(true, how); }
+    if (items.length !== had) { renderStack(true); if (open && !clearing) renderPanel(true, how); }
   }
+  /* Clear all (F3-461: bottom to top, each row collapsing up, then the panel closes with no empty flash). The rows'
+     exit holds its end state (fill forwards) until the panel has closed, so the list never shows empty; the cached rows,
+     group heads and fold buttons it animated are then dropped, never reused (resetList), so a notice that arrives
+     afterwards, even one that reuses an id, always gets fresh, visible nodes (landing review, 2026-10-14). Only the
+     notices that were there when Clear all was pressed are cleared: one arriving during the exit stays. */
+  let clearing = false, listStale = false;
   function clearAll() {
+    if (clearing) return;
     staged.forEach((rec) => finishStaged(rec, rec.it.durable ? 'join' : 'fade', { instant: true }));
-    if (!open || still()) { items = []; renderStack(true); if (open) closePanel(); return; }
-    /* F3-461: bottom to top, each row collapsing up, then the panel closes with no empty flash */
+    const gone = new Set(items.map((it) => it.id));
+    const forget = () => {
+      items = items.filter((it) => !gone.has(it.id));
+      gone.forEach((id) => { explainOpen.delete(id); patternEdit.delete(id); });
+      listStale = true;
+    };
+    if (!open || still()) { forget(); renderStack(true); if (open) { if (items.length) renderPanel(false); else closePanel(); } return; }
+    clearing = true;
     const rows = Array.prototype.slice.call(listEl.querySelectorAll('.pmn-item, .pmn-group-head, .pmn-fold'));
     const m = motion(), L = look(), n = rows.length;
     panelEl.setAttribute('data-clearing', '');
@@ -134260,17 +134274,34 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       ? [{ clipPath: 'inset(0 0 0 0)', opacity: 1 }, { clipPath: 'inset(0 100% 0 0)', opacity: 1 }]
       : [{ transform: 'none', opacity: 1 }, { transform: 'translateY(-16px) scale(.96)', opacity: 0 }],
       { duration: d, delay: (n - 1 - i) * 34, easing: L === 'retro' || L === 'nier' ? 'steps(4, end)' : m.leave.easing, fill: 'forwards' }));
-    /* the panel starts to close while the top row is still leaving, so it never shows empty (F3-461: no empty flash) */
+    /* the panel starts to close while the top row is still leaving, so it never shows empty */
     const lead = play(panelEl.querySelector('.pmn-head'), [{ opacity: 1 }, { opacity: 1 }], { duration: Math.max(0, (n - 1) * 34 + d * 0.55) });
     done(lead).then(() => {
-      items = []; explainOpen.clear(); patternEdit.clear();
-      closePanel(true);
-      renderStack(true);
+      clearing = false;
       panelEl.removeAttribute('data-clearing');
+      forget();
+      renderStack(true);
       sound('close', 0.35);
+      if (!open) { resetList(); return; }
+      if (items.length) renderPanel(true);   // something arrived while the rows were leaving: it stays, and so does the panel
+      else closePanel(true);
     });
   }
-  function markAllRead() { items.forEach((it) => { it.read = true; }); renderStack(true); if (open) renderPanel(false); }
+  /* the inbox's cached nodes go: every animation on them is cancelled (so no held end state survives) and they leave
+     the DOM; the next render builds fresh ones */
+  function resetList() {
+    listStale = false;
+    const drop = (node) => {
+      if (!node) return;
+      try { node.getAnimations({ subtree: true }).forEach((a) => a.cancel()); } catch (_) { /* no animations API */ }
+      node.remove();
+    };
+    rowEls.forEach(drop); rowEls.clear();
+    groupEls.forEach((G) => { drop(G.more); drop(G.head); drop(G.box); }); groupEls.clear();
+    Array.prototype.slice.call(listEl.children).forEach(drop);
+    focusId = null;
+  }
+  function markAllRead() { items.forEach((it) => { it.read = true; }); renderStack(true); if (open && !clearing) renderPanel(false); }
 
   /* ---------- push: every caller ends here ---------------------------------------------------------------------- */
   function push(input, opts, extra) {
@@ -134284,7 +134315,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       }
     }
     const twin = items.find((x) => sameWords(x, it) && it.createdAt - x.createdAt < MERGE_MS * 5);
-    if (twin && it.durable) { twin.count++; twin.read = false; twin.createdAt = it.createdAt; items = [twin].concat(items.filter((x) => x !== twin)); renderStack(true); if (open) renderPanel(true); return twin.id; }
+    if (twin && it.durable) { twin.count++; twin.read = false; twin.createdAt = it.createdAt; items = [twin].concat(items.filter((x) => x !== twin)); renderStack(true); if (open && !clearing) renderPanel(true); return twin.id; }
     /* one event, two messages (a quick note and a lasting notice): one card, the lasting words win */
     for (const rec of staged.values()) {
       if (!rec.leaving && sameEvent(rec.it, it)) {
@@ -134420,6 +134451,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   }
   function renderPanel(animate, how) {
     if (!panelEl) return;
+    if (listStale) resetList();
     const list = ordered();
     headCount.textContent = unread() ? T('newCount', { n: unread() }) : '';
     panelEl.toggleAttribute('data-empty', !list.length);
@@ -134559,7 +134591,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     stackEl.setAttribute('aria-expanded', 'false');
     panelEl.removeAttribute('data-open');
     pushStage();
-    const finish = () => { panelEl.hidden = true; closing = null; panelEl.querySelector('.pmn-chrome').removeAttribute('data-lg-surface'); };
+    const finish = () => { panelEl.hidden = true; closing = null; panelEl.querySelector('.pmn-chrome').removeAttribute('data-lg-surface'); if (listStale) resetList(); };
     if (panelEl.contains(doc.activeElement) && !keepFocus) stackEl.focus({ preventScroll: true });
     if (still() || quick === 'instant') { finish(); return; }
     const m = motion(), L = look(), chrome = panelEl.querySelector('.pmn-chrome');
@@ -134675,6 +134707,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     /* the inbox */
     panelEl.addEventListener('click', (e) => {
       e.stopPropagation();
+      if (clearing) return;
       const tb = e.target.closest('[data-pmn]');
       if (tb) { const k = tb.getAttribute('data-pmn'); if (k === 'clear') clearAll(); else if (k === 'readall') markAllRead(); return; }
       const fold = e.target.closest('.pmn-group-fold, .pmn-fold');
