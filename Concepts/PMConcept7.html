@@ -192242,6 +192242,8 @@ var T = {};
     var newRows = profiles.filter(function (p) { return p.group !== 'ssh'; }).map(newRow);
     var hosts = profiles.filter(function (p) { return p.group === 'ssh'; }).map(newRow);
     if (hosts.length) newRows.push('-', { id: 'new-ssh', label: 'SSH hosts', sub: hosts });
+    /* Allowed Shell Profiles can name only what this computer lacks (90-kind.js) */
+    if (!newRows.length) newRows.push({ id: 'new-none', label: 'None of the allowed profiles is on this computer', detail: 'Settings › Editor & Terminal', disabled: true });
     var N = window.PMT && window.PMT.notifications, sid = s.id;
     return [
       { id: 'new', label: 'New terminal', sub: newRows },
@@ -192948,6 +192950,9 @@ var T = {};
       else if (effective.motion && /^Battery saver/.test(effective.motion)) eNotes.push('Battery saver is on: nothing moves; still effects stay.');
       if (T.FX && T.FX.gpu && T.FX.gpu() === false) eNotes.push('This computer draws the terminal without the GPU: scanlines and glow are drawn flat, and curvature, burn-in and grain are not drawn.');
       note('[data-note-fx]', eNotes.join(' '));
+      /* All terminals, shown on a terminal with choices of its own: those stay on top on it (the tab comes first) */
+      var tabN = scope === 'app' ? Object.keys(A().FIELDS).filter(function (k) { return A().own('tab', v, k) !== undefined; }).length : 0;
+      note('[data-note-side]', tabN ? 'This terminal keeps ' + (tabN === 1 ? 'one choice of its own, which stays' : tabN + ' choices of its own, which stay') + ' on top of All terminals on it. The preview shows All terminals.' : '');
       var ew = root.querySelector('[data-effects-why]'), etext = val('effects') === 'follow' ? 'The look’s own: ' + lookEffects(R) + '. Turning one on or off switches to Custom.' : val('effects') === 'off' ? 'No effects in this scope.' : '';
       if (ew.textContent !== etext) ew.textContent = etext;
       root.querySelector('[data-act="degauss"]').hidden = look !== 'retro' || isNier;
@@ -194501,14 +194506,30 @@ var T = {};
   var records = new Map();   /* session id -> { session, view, spec } */
   var ICON = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4l4 4-4 4M8 12h5"/></svg>';
 
+  /* Allowed Shell Profiles (code.terminal.allowed-profiles, SSYS: the list the "+" menu and New terminal offer). Once a
+     person has set it, only what it allows is offered: System Default is this computer's default, PowerShell is pwsh,
+     an SSH computer is allowed by its name, and an allowed one this computer lacks (fish here) is not listed. Left as it
+     came, everything on this computer is offered, as before. */
+  var ALLOW_WORDS = { 'system default': 'default', zsh: 'zsh', bash: 'bash', fish: 'fish', powershell: 'pwsh', pwsh: 'pwsh' };
+  function allowedList() {
+    var S = window.PM_TERMINAL_SETTINGS, list;
+    try { list = S && typeof S.values === 'function' ? S.values()['code.terminal.allowed-profiles'] : undefined; } catch (e) { list = undefined; }
+    return Array.isArray(list) ? list.map(function (w) { return String(w).trim().toLowerCase(); }) : null;
+  }
   function profiles() {
-    return [
+    var all = [
       { id: 'zsh', label: 'zsh', detail: 'Default', icon: 'terminal' },
       { id: 'bash', label: 'bash', detail: 'GNU bash 5.2', icon: 'terminal' },
       { id: 'pwsh', label: 'pwsh', detail: 'PowerShell 7.5', icon: 'terminal' },
       /* D39: SSH hosts carry group 'ssh'; the host's '+' menu lists them in an 'SSH hosts' submenu, shells inline */
       { id: 'ssh-devbox', label: 'devbox', detail: 'jared@devbox', icon: 'terminal', group: 'ssh' }
     ];
+    var allow = allowedList();
+    if (!allow) return all;
+    return all.filter(function (p) {
+      if (p.group === 'ssh') return allow.indexOf(p.label.toLowerCase()) >= 0 || allow.indexOf(p.detail.toLowerCase()) >= 0;
+      return allow.some(function (w) { var id = ALLOW_WORDS[w]; return id === p.id || (id === 'default' && p.detail === 'Default'); });
+    });
   }
 
   /* the Home default layout's terminal hints */
