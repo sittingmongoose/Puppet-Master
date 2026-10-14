@@ -82,7 +82,10 @@ var JS_ROOT = [
   [/"(?:[^"\\]|\\.)*"?/y, 'str'], [/'(?:[^'\\]|\\.)*'?/y, 'str'],
   [W(JS_KW), 'kw'], [W('string number boolean any unknown never object'), 'ty'],
   [/0[xX][\da-fA-F_]+n?|\d[\d_]*(?:\.\d[\d_]*)?(?:[eE][+-]?\d+)?n?/y, 'num'],
-  [/[A-Z][\w$]*/y, 'ty'], [/[a-z_$][\w$]*(?=\s*\()/y, 'fn'], [/[A-Za-z_$][\w$]*/y, null],
+  [/[A-Z][\w$]*/y, 'ty'], [/[a-z_$][\w$]*(?=\s*\()/y, 'fn'],
+  // a name bound by const, let or var is a variable; a name after one dot (or ?.) is a property (the customizer audit's
+  // E-TOK: Variables and Properties reached none of their advertised examples)
+  [/(?<=\b(?:const|let|var)\s+)[A-Za-z_$][\w$]*/y, 'var'], [/(?<=(?:^|[^.])\.)[A-Za-z_$][\w$]*/y, 'prop'], [/[A-Za-z_$][\w$]*/y, null],
   [/=>|\?\.|\.\.\.|[{}()\[\];,.:]/y, 'pun'], [/[=+\-*\/%<>!&|^?~@]+/y, 'op'], WS
 ];
 var JS = {
@@ -96,18 +99,21 @@ var RUST = {
   root: [
     [/\/\/.*/y, 'com'], [/\/\*/y, 'com', 'rsCom'],
     [/b?r(#*)"/y, 'str', 'rsRaw'],
-    [/b?"(?:[^"\\]|\\.)*"/y, 'str'], [/b?"(?:[^"\\]|\\.)*$/y, 'str', 'rsStr'],
+    [/b?"/y, 'str', 'rsStr'],
     [/b?'(?:[^'\\]|\\.(?:\{[\da-fA-F]+\})?)'/y, 'str'], [/'[a-z_]\w*/y, 'mac'],
     [/#!?\[[^\]]*\]?/y, 'attr'], [/[a-z_]\w*!/y, 'mac'],
     [W('as async await break const continue crate dyn else enum extern false fn for if impl in let loop match mod move ' +
       'mut pub ref return self Self static struct super trait true type unsafe use where while'), 'kw'],
     [W('u8 u16 u32 u64 u128 usize i8 i16 i32 i64 i128 isize f32 f64 bool char str'), 'ty'],
     [/0x[\da-fA-F_]+|\d[\d_]*(?:\.\d[\d_]*)?(?:[eE][+-]?\d+)?(?:[iuf](?:8|16|32|64|128|size))?/y, 'num'],
-    [/[A-Z][A-Za-z0-9_]*/y, 'ty'], [/[a-z_]\w*(?=\s*(?:::<[^>]*>)?\()/y, 'fn'], [/[A-Za-z_]\w*/y, null],
+    [/[A-Z][A-Za-z0-9_]*/y, 'ty'], [/[a-z_]\w*(?=\s*(?:::<[^>]*>)?\()/y, 'fn'],
+    [/(?<=\blet\s+(?:mut\s+)?)[a-z_]\w*/y, 'var'], [/(?<=\|\s*(?:[a-z_]\w*\s*,\s*)*)[a-z_]\w*(?=\s*[,|:])/y, 'var'],
+    [/(?<=(?:^|[^.])\.)[a-z_]\w*/y, 'prop'], [/[A-Za-z_]\w*/y, null],
     [/::|->|=>|[{}()\[\];,.:]/y, 'pun'], [/[=+\-*\/%<>!&|^?@]+/y, 'op'], WS
   ],
   rsCom: [[/.*?\*\//y, 'com', '@pop'], [/.+/y, 'com']],
-  rsStr: [[/(?:[^"\\]|\\.)*"/y, 'str', '@pop'], [/.+/y, 'str']],
+  // a string's escapes are their own kind (\n, \x7f, \u{1F600}); a string runs on over lines until its quote
+  rsStr: [[/\\(?:x[\da-fA-F]{2}|u\{[\da-fA-F]+\}|.)/y, 'esc'], [/\\/y, 'esc'], [/"/y, 'str', '@pop'], [/[^"\\]+/y, 'str']],
   rsRaw: [[/.*?"#*/y, 'str', '@pop'], [/.+/y, 'str']]
 };
 
@@ -2868,9 +2874,19 @@ function mountEditor(host, st, api) {
     for (var r = s.a.r; r <= s.b.r; r++) {
       var t = V.text(r, side);
       if (t == null) continue;
-      out.push(t.slice(r === s.a.r ? s.a.c : 0, r === s.b.r ? s.b.c : t.length));
+      out.push(withTabs(t, r === s.a.r ? s.a.c : 0, r === s.b.r ? s.b.c : t.length));
     }
     return out.join('\n');
+  }
+  /* copied as drawn: where the indentation is drawn as tabs (tabUnitNow), each whole tab stop of it is copied as a tab
+     character (the customizer audit's E-TABS: Tabs copied spaces); a paste turns tabs back into stops (expandText) */
+  function withTabs(t, c0, c1) {
+    var u = tabUnitNow();
+    if (!u) return t.slice(c0, c1);
+    var lead = t.search(/\S/); if (lead < 0) lead = t.length;
+    var out = '', i = c0, end = Math.min(c1, lead);
+    while (i < end) { if (i % u === 0 && i + u <= end) { out += '\t'; i += u; } else { out += ' '; i++; } }
+    return out + t.slice(i, c1);
   }
   function selectAll() {
     anchor = { r: 0, c: 0 };

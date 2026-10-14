@@ -75,11 +75,11 @@
   },
   "code.editing.insert-spaces": {
    "label": "Indent with",
-   "help": "What a new level is made of in a file that doesn't already say."
+   "help": "What a new level is made of in a file that doesn't already say, and in every file while Follow the file's indentation is off. A tab is drawn and copied as a tab."
   },
   "code.editing.detect-indentation": {
    "label": "Follow the file's indentation",
-   "help": "A file indented with 2 spaces keeps 2; one indented with tabs keeps tabs."
+   "help": "A file indented with 2 spaces keeps 2; one indented with tabs keeps tabs. Off, Indent with and Tab size decide in every file."
   },
   "code.editing.goto-highlight-ms": {
    "label": "How long a jumped-to line stays lit",

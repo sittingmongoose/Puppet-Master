@@ -70,7 +70,7 @@ var PREVIEW = [
   '    }',
   '',
   '    pub fn summary(&self) -> String {',
-  '        format!("{} serves {} in {} steps, about {} minutes from start to finish", self.name, self.serves, self.steps.len(), self.minutes())',
+  '        format!("{} serves {} in {} steps, about {} minutes from start to finish\\n", self.name, self.serves, self.steps.len(), self.minutes())',
   '    }',
   '}'
 ].join('\n');
@@ -369,8 +369,8 @@ function skeleton(name) {
     '<span class="pmt-cz-fhelp">A line opened from the chat, a problem or Go to line is lit this long, then fades.</span></div></div>' +
     '<div data-at="indent"><h4 class="pmt-cz-sub">Indentation</h4>' +
     '<div class="pmt-cz-grid2">' + field('Tab size', seg('tabSize', [['2', '2'], ['4', '4'], ['8', '8']], 'Tab size'), 'Columns in a level of indentation. Tab moves to the next one, and Backspace in the indentation goes back one.') +
-    field('Indent with', seg('insertSpaces', [['true', 'Spaces'], ['false', 'Tabs']], 'Indent with'), 'What a new level is made of in a file that doesn’t say. Show spaces marks a tab as →.') + '</div>' +
-    '<div class="pmt-cz-chips">' + chip('detectIndent', 'Follow the file’s indentation', 'A file indented with 2 spaces keeps 2, and one indented with tabs keeps tabs, whatever the two above say.') + '</div>' +
+    field('Indent with', seg('insertSpaces', [['true', 'Spaces'], ['false', 'Tabs']], 'Indent with'), 'What a new level is made of in a file that doesn’t say, and in every file while Follow the file’s indentation is off. A tab is drawn and copied as a tab; Show spaces marks it →.') + '</div>' +
+    '<div class="pmt-cz-chips">' + chip('detectIndent', 'Follow the file’s indentation', 'A file indented with 2 spaces keeps 2, and one indented with tabs keeps tabs, whatever the two above say. Off, those two decide in every file.') + '</div>' +
     '<p class="pmt-cz-note" data-note-indent hidden></p></div>' +
     '<p class="pmt-cz-fhelp pmt-cz-more">Language servers, formatters, file encoding and big-file limits are in Settings, Editor & Terminal and Toolchain.</p></section>';
   html += '</div>';
@@ -457,7 +457,8 @@ function open(opts) {
     if (!I || !inst.path) return '';
     var name = inst.path.split('/').pop();
     if (I.tabs && I.own === 0 && R.indent.detect && I.tabbed) return name + ' is indented with tabs, so it keeps tabs, ' + I.unit + ' columns wide.';
-    if (I.own) return name + ' is indented with ' + I.own + ' spaces' + (R.indent.detect ? ', so Tab puts in ' + I.own + '.' : '; Follow the file’s indentation is off, so Tab puts in ' + I.unit + '.');
+    if (!R.indent.detect) return 'Follow the file’s indentation is off, so Tab puts in ' + (I.tabs ? 'a tab, ' + I.unit + ' columns wide,' : I.unit + ' spaces') + ' here and in every file.';
+    if (I.own) return name + ' is indented with ' + I.own + ' spaces, so Tab puts in ' + I.own + '.';
     return name + ' has no indentation to follow yet, so Tab puts in ' + (I.tabs ? 'a tab, ' + I.unit + ' columns wide.' : I.unit + ' spaces.');
   }
   function note(sel, text) { var e = root.querySelector(sel); if (!e) return; e.hidden = !text; if (e.textContent !== text) e.textContent = text; }
