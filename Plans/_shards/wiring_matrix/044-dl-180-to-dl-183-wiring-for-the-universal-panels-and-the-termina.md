@@ -4,7 +4,7 @@ Source: `Plans/Wiring_Matrix.md`
 
 Source lines: L5553-L6305
 
-Source SHA256: `9bb21bdf27017e6822c4405d412bd96adc79105a411765fcf2424f774e1ff751`
+Source SHA256: `d15162bb2d7f595df412fc8e30ab0f5b8286ff27f1a342027f10fcd590d0d15b`
 
 ---
 
@@ -721,7 +721,7 @@ canonical_text: >-
   obligation/profile; its rejected packet token is retained and explicitly excluded as lineage
   under UCC-204; this does not exclude either Settings transaction command.
 gui_related: true
-gui_classification_reason: Campaign controls and Settings bindings.
+gui_classification_reason: Appearance controls and Settings bindings.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -735,7 +735,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: campaign_controls_and_settings_bindings
+context_scope: appearance_controls_and_settings_bindings
 implementation_surfaces:
 - Plans/Wiring_Matrix.md
 node_compile_hint:

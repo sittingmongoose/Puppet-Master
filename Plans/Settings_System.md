@@ -1079,9 +1079,11 @@ canonical_text: >-
   Settings never builds, cancels, evicts, or repairs an index. DRY Method projects requested/effective default guard,
   origin, scope, exceptions, owner evidence, consequence disclosure, and availability without weakening any instruction,
   safety, secret, source-authority, governance, permission, or source-control rule. The same machine fixture closes the
-  exact 80-token older-packet command denominator: 41 reuse canonical commands, 7 are superseded by named typed local UI
-  actions, 1 bloom token is retired bakeoff-only, 31 are rejected with exact reasons, and 0 become new or approved alias
-  commands. A disposition is semantic reconciliation only and always carries native_handler_claim=false.
+  exact 80-token older-packet command denominator; the live disposition partition and replacement targets are
+  derived from that authoritative fixture. The former 41 reused, 7 typed-local, 1 bakeoff-only, 31 rejected and
+  0 alias totals are historical lineage from before DL-200's 2026-10-14 theme-preview retirement, not current
+  acceptance counts. No source token becomes a new or approved alias command. A disposition is semantic
+  reconciliation only and always carries native_handler_claim=false.
 gui_related: true
 gui_classification_reason: The three named manager projections and seven typed local presentation actions are visible Settings behavior; exact rejected/reused command state controls whether actions appear enabled.
 depends_on: [SSYS-015, SSYS-018, SSYS-020]
@@ -1089,7 +1091,7 @@ unblocks: [SSYS-017]
 acceptance_criteria:
   - The strict manager registry contains exactly 38 keys and the named projection registry contains exactly teacher-help, project-search-index, and dry-method.
   - The packet disposition registry accepts exactly the 80 source tokens and no omissions, additions, duplicate keys, or unclassified token.
-  - Disposition counts remain 41 reuse_canonical_command, 7 superseded_by_typed_local_ui_action, 1 retired_bakeoff_only, 31 rejected_with_reason, and 0 approved_alias.
+  - The current partition is derived from packet_command_dispositions in Plans/settings_system_contract_fixtures.json; its exact 80 source tokens each have one disposition, and the Touch Closure descriptor binds that same edition.
   - Every reused target names an already admitted canonical command; rejected tokens remain unavailable and are not converted into handlers by Settings.
   - Every typed local UI action validates a payload with domain_mutation_authorized=false, persistence_write_authorized=false, and owner_operation_authorized=false.
   - Missing denominator entries, a Settings runtime-owner claim, a local mutation claim, or native_handler_claim=true fails schema/fixture validation.
@@ -3423,7 +3425,7 @@ canonical_text: >-
   background-image, background-image-file, background-dim (0.45) and background-blur (0, made once on the
   picture), opacity (Glass; Follow look, 70 % light and 74 % dark), padding (0, Jared 2026-10-14), effects
   (Follow look, Off or Custom) with scanlines, scan-strength (0.30), glow, glow-strength (0.45), crt
-  (off), curvature (0.08), burn-in (on), noise (0.035), flicker (off) and flicker-amount (0.02, never
+  (off), curvature (0.08, historical and held for the revised CRT, F3-643), burn-in (on), noise (0.035), flicker (off) and flicker-amount (0.02, never
   above 0.03), inactive-dim, smooth-scroll, bell (Follow look, Visual or Off), sixtyfour-scan and
   sixtyfour-bleed; a field without a settled default falls through to the look. Detail rows show only
   while the row they depend on makes them apply, and no row turns on what F3-643 keeps off: effects run
@@ -3751,6 +3753,8 @@ canonical_text: >-
   second wallpaper value, independent writer or command. The six scene ids and names are approved in
   F3-653; asset packaging and publication remain held. Withdrawn stored print ids use the existing
   disclosed stale-id fallback and are never silently mapped to a different scene.
+  An uncommitted NieR preview changes neither committed setting and does not win precedence. The
+  built concept contract corroborates this direction; coordinated Glass publication remains held.
 gui_related: true
 gui_classification_reason: Wallpaper setting and replacement of old Glass backgrounds.
 split_recommended: false
@@ -3790,6 +3794,7 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-DECISION-20261014.md, SHA-256
   56a7389f1fa9e6f6e0535f09525945f590b6ef44dfd8f72d1f3c844a7e21b816 (decision/source lineage; not native implementation
   evidence)
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-CONTRACT-201d602f7d.md, SHA-256 6550b3e5d31dbeca5e9d5cf11f7c06db13f37e189da270ac25e6504a5ec4a3da (decision/source lineage; publication remains held where specified)"
 preserved_exact_tokens:
 - general.visual.wallpaper
 negative_constraints: []

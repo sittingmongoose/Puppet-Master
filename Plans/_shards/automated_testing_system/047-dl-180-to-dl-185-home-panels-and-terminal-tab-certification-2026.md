@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L5955-L6547
+Source lines: L5955-L6548
 
-Source SHA256: `ab3f92b637118cdc71036e7d44d968bfa6d2ff527dd328e46d5153ade9238738`
+Source SHA256: `6ff7273d4d3c7a26b95af242369de41986337af7c2c77c4798cffba5f3737b1c`
 
 ---
 
@@ -565,6 +565,7 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
+- Rapid Usage room changes in every look satisfy F3-628: the latest change takes over promptly, animations never stack and no shadow trails the selector; Reduced Motion retains its owner behavior.
 - Every cited owner has a matrix case or an explicit unimplemented/held result, never an inferred pass.
 - Static schema/registry/census checks pass before draft review; native evidence is separately required.
 validation_surfaces:

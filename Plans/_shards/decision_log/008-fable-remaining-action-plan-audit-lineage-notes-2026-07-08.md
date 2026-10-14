@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L14489-L15205
+Source lines: L14489-L15208
 
-Source SHA256: `17e8823eca6f596abf837eb7466aee2044c0b647ec5d63fbdec1f47271cd5738`
+Source SHA256: `c65c930722c6d93e31dbf9f843667fcfde8e7a8a5f6e70f50b0a77313ea6f742`
 
 ---
 
@@ -134,6 +134,8 @@ canonical_text: >-
   single highlights on entry, coherent Usage/Settings transitions and wallpaper/scroll material, and
   seamless Settings search fields. F3-652 carries these corrections and leaves the Glass Light hover-light
   question and final publication held.
+  Jared's Usage room-switching correction applies in every look, not only Glass; F3-628 owns the
+  shared responsive takeover and no-trailing-shadow requirement.
 gui_related: true
 gui_classification_reason: Liquid Glass reads as lenses and reflections.
 split_recommended: false
@@ -225,6 +227,7 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-DECISION-20261014.md, SHA-256
   56a7389f1fa9e6f6e0535f09525945f590b6ef44dfd8f72d1f3c844a7e21b816 (decision/source lineage; not native implementation
   evidence)
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-CONTRACT-201d602f7d.md, SHA-256 6550b3e5d31dbeca5e9d5cf11f7c06db13f37e189da270ac25e6504a5ec4a3da (decision/source lineage; publication remains held where specified)"
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:

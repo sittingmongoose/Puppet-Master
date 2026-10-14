@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8613-L9815
+Source lines: L8613-L9817
 
-Source SHA256: `7c85cb4fca1c16969475d5e24f4e190ad30237eed30bbf5341c0d5391e3cc6aa`
+Source SHA256: `5355c00f8a337b798ce2ac34ff1ce361c7b4dc74889a4919dbd81f5d2870cc25`
 
 ---
 
@@ -712,6 +712,8 @@ canonical_text: >-
   The historical spellings receive no primary handler, production-wiring row, or alias. SSYS-023's hash-bound
   80-token disposition registry is transitive catalog input: its canonical targets retain their existing rows, its
   seven typed local actions receive no command rows, and retired or rejected packet spellings remain non-actionable.
+  The earlier 72 non-primary source-spelling count is historical after DL-200; the live
+  direct/non-primary sets are derived from the same fixture.
 gui_related: true
 gui_classification_reason: Registers user-visible typed Settings routing and the transaction composition used by reset and dismissal affordances.
 depends_on: [SSYS-018, SSYS-023, F3-436, F3-437, F3-441]
@@ -722,8 +724,8 @@ acceptance_criteria:
   - Category reset never applies without a current preview, the required confirmation, and exact owner readback.
   - Suggestion dismissal previews and then applies a typed Settings transaction with the F3-437 scoping and expiry and makes no network calls.
   - All three retired local-affordance spellings receive no primary handler, wiring row, or alias.
-  - "The exact 41 canonical reuses, seven typed local actions, one retired bakeoff token, and 31 rejected tokens remain the complete Settings packet partition."
-  - "Every canonical replacement target has one existing catalog identity or remains explicitly blocked; none of the 72 replaced, superseded, retired, or rejected source spellings becomes a command or alias."
+  - "The complete 80-token Settings packet partition is derived from SSYS-023's authoritative fixture; catalog consumers use its current disposition and replacement target for every source token."
+  - "Every canonical replacement target has one existing catalog identity or remains explicitly blocked; every source spelling classified by the fixture as replaced, superseded, retired or rejected stays non-primary and gains no command or alias."
   - "`cmd.artifacts.open_panel` remains command_not_registered until Runtime Artifacts and Commands admit an exact typed route, sole handler, and production-intent row."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate

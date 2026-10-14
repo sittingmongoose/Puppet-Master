@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L14960-L15967
+Source lines: L14962-L15969
 
-Source SHA256: `7c85cb4fca1c16969475d5e24f4e190ad30237eed30bbf5341c0d5391e3cc6aa`
+Source SHA256: `5355c00f8a337b798ce2ac34ff1ce361c7b4dc74889a4919dbd81f5d2870cc25`
 
 ---
 
@@ -971,7 +971,7 @@ canonical_text: >-
   requests cannot open a timed theme trial or create a preview receipt. Activated theme changes retain
   SSYS-010’s internal Settings transaction; code-scheme previews remain CS-102’s typed local actions.
 gui_related: true
-gui_classification_reason: Editor appearance and campaign control dispatch.
+gui_classification_reason: Editor appearance and shared control dispatch.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -986,7 +986,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: editor_appearance_and_campaign_control_dispatch
+context_scope: editor_appearance_and_shared_control_dispatch
 implementation_surfaces:
 - Plans/UI_Command_Catalog.md
 node_compile_hint:

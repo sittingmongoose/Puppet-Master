@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46086-L47764
+Source lines: L46091-L47769
 
-Source SHA256: `5c1d158677d7487d45eabd73d96ec7d687048d2023ca46e04a552f4cdd2b83ec`
+Source SHA256: `57aa8ff73cbfa9e250784983681712ff9626ff3466aa3f76478c859cf7f22a55`
 
 ---
 
@@ -115,8 +115,7 @@ canonical_text: >-
   Clear, Send signal and Restart session map to the ids UCC-201 records. Restart and Restart session start
   a new session in the same tab by the explicit replacement of F3-548, Copy and Paste follow F3-238's
   clipboard rules, and the screen is the terminal core's own grid (F3-193, F3-216). The header row's
-  buttons are the hover engine's icon kind, a static tint only, and the screen is never a hover target
-  (DR-072, F3-465). Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close
+  buttons use F3-465's small-control marker; the screen is never a hover target (DR-072, F3-465). Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close
   tab), as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
 gui_related: true
 gui_classification_reason: Defines the terminal tab's label, header row, notices, gutter, scrollbar, sticky header, menus and keys in the universal panels.
@@ -526,8 +525,8 @@ stale_retired_dispositions:
   on the old terminal theme and font rows (DL-183).
 - 'Amended 2026-10-11 (wave 2, terminal SPEC dbffa7a1b2): Scheme hover previews wait 110 ms, with immediate arrow-key
   previews and delayed repeats.'
-- 'Amended 2026-10-14: The compact editor popover and below-4.5:1 text choices retire; F3-650 owns both Customize
-  screens.'
+- 'Amended 2026-10-14: The compact editor popover retires; F3-650 owns both Customize screens. Off and 3:1 remain
+  program-output choices (DL-197).'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
@@ -563,7 +562,7 @@ canonical_text: >-
   look, and the user turns it on. Flicker is off by default in every look; its amount defaults to 0.02 and
   is capped at 0.03 of relative luminance, against the 0.10 change that WCAG 2.3.1 counts as a flash, so
   flicker can never be a flash. The effect fields (F3-642) default to: effects Follow look; scan strength
-  0.30; glow strength 0.45; Full CRT off; curvature 0.08; burn-in on within Full CRT; noise 0.035; flicker
+  0.30; glow strength 0.45; Full CRT off; curvature 0.08 (historical; held for the revised CRT); burn-in on within Full CRT; noise 0.035; flicker
   off; flicker amount 0.02, capped at 0.03. NieR Mode's terminal has a parchment texture under the text
   and ink focus brackets, and no glow. By the NieR rule for new surfaces (DL-152, SSYS-043, F3-598,
   DR-056), NieR paints the terminal only while NieR Mode is on and each touch only with its own installed
@@ -580,7 +579,7 @@ canonical_text: >-
   parameters, bezel fields and control contract remain held; the old 0.08 tuning is historical, not
   acceptance of the criticized treatment. Degauss is the one-shot action in the Customize screen's effects
   group (F3-650), with the same existing command and no stored setting. The shared Follow look
-  cursor/caret voices are Basic line with on/off blink and no smooth scrolling; Friendly line with smooth
+  cursor/caret voices are Basic line with on/off blink, no trail and no smooth scrolling; Friendly line with smooth
   blink, soft trail and smooth scrolling; Glass line with smooth blink, glow trail and smooth scrolling;
   Retro reverse-video block with stepped blink, phosphor trail and no smooth scrolling; NieR ink line with
   blink, Trace only with its Scan sweep part and no smooth scrolling. F3-651 owns editor-specific jump
@@ -1351,6 +1350,7 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-DECISION-20261014.md, SHA-256
   56a7389f1fa9e6f6e0535f09525945f590b6ef44dfd8f72d1f3c844a7e21b816 (decision/source lineage; not native implementation
   evidence)
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-CONTRACT-201d602f7d.md, SHA-256 6550b3e5d31dbeca5e9d5cf11f7c06db13f37e189da270ac25e6504a5ec4a3da (decision/source lineage; publication remains held where specified)"
 preserved_exact_tokens:
 - Look's own
 - Ribbons

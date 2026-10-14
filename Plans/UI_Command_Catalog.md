@@ -9314,6 +9314,8 @@ canonical_text: >-
   The historical spellings receive no primary handler, production-wiring row, or alias. SSYS-023's hash-bound
   80-token disposition registry is transitive catalog input: its canonical targets retain their existing rows, its
   seven typed local actions receive no command rows, and retired or rejected packet spellings remain non-actionable.
+  The earlier 72 non-primary source-spelling count is historical after DL-200; the live
+  direct/non-primary sets are derived from the same fixture.
 gui_related: true
 gui_classification_reason: Registers user-visible typed Settings routing and the transaction composition used by reset and dismissal affordances.
 depends_on: [SSYS-018, SSYS-023, F3-436, F3-437, F3-441]
@@ -9324,8 +9326,8 @@ acceptance_criteria:
   - Category reset never applies without a current preview, the required confirmation, and exact owner readback.
   - Suggestion dismissal previews and then applies a typed Settings transaction with the F3-437 scoping and expiry and makes no network calls.
   - All three retired local-affordance spellings receive no primary handler, wiring row, or alias.
-  - "The exact 41 canonical reuses, seven typed local actions, one retired bakeoff token, and 31 rejected tokens remain the complete Settings packet partition."
-  - "Every canonical replacement target has one existing catalog identity or remains explicitly blocked; none of the 72 replaced, superseded, retired, or rejected source spellings becomes a command or alias."
+  - "The complete 80-token Settings packet partition is derived from SSYS-023's authoritative fixture; catalog consumers use its current disposition and replacement target for every source token."
+  - "Every canonical replacement target has one existing catalog identity or remains explicitly blocked; every source spelling classified by the fixture as replaced, superseded, retired or rejected stays non-primary and gains no command or alias."
   - "`cmd.artifacts.open_panel` remains command_not_registered until Runtime Artifacts and Commands admit an exact typed route, sole handler, and production-intent row."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -15920,7 +15922,7 @@ canonical_text: >-
   requests cannot open a timed theme trial or create a preview receipt. Activated theme changes retain
   SSYS-010’s internal Settings transaction; code-scheme previews remain CS-102’s typed local actions.
 gui_related: true
-gui_classification_reason: Editor appearance and campaign control dispatch.
+gui_classification_reason: Editor appearance and shared control dispatch.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -15935,7 +15937,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: editor_appearance_and_campaign_control_dispatch
+context_scope: editor_appearance_and_shared_control_dispatch
 implementation_surfaces:
 - Plans/UI_Command_Catalog.md
 node_compile_hint:

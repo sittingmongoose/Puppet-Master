@@ -6509,6 +6509,7 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
+- Rapid Usage room changes in every look satisfy F3-628: the latest change takes over promptly, animations never stack and no shadow trails the selector; Reduced Motion retains its owner behavior.
 - Every cited owner has a matrix case or an explicit unimplemented/held result, never an inferred pass.
 - Static schema/registry/census checks pass before draft review; native evidence is separately required.
 validation_surfaces:

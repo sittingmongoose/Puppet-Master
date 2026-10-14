@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43887-L44069
+Source lines: L43887-L44074
 
-Source SHA256: `5c1d158677d7487d45eabd73d96ec7d687048d2023ca46e04a552f4cdd2b83ec`
+Source SHA256: `57aa8ff73cbfa9e250784983681712ff9626ff3466aa3f76478c859cf7f22a55`
 
 ---
 
@@ -110,6 +110,10 @@ canonical_text: >-
   at its end state, and every close path, Escape included, works under it. The Slint portability limits recorded
   for earlier Usage units do not bind this page's look (DL-173, after DL-139), and framework version pins are
   unchanged.
+  Jared's 2026-10-14 correction applies in every look: switching Usage rooms quickly back and forth
+  stays responsive, each new room change takes over from the one in flight without stacking
+  animations, and no shadow trails the selector. Final motion and optical tuning remain with their
+  existing owners.
 gui_related: true
 gui_classification_reason: Defines the look, menus, marks, heroes, charts, previews, hover and motion of the redesigned Usage page.
 split_recommended: false
@@ -165,6 +169,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/g-fonts-REPORT.md, SHA-256 5886a8634de013933fe565badc478ee439afb232714fcf2bb0e97c3afddd080d (embedded fonts and fit)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/b-fix-REPORT.md, SHA-256 906a62d86051f7dea06d179a072d8cdf1a6af2c10532a6438852e06f98f572a3 (hover lift, blur and card-head actions)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/e-charts-REPORT.md, SHA-256 1c2f643776e5063f92bb62c1216ea5f7a152b1b33f1b8f1bf884471b46f14883 (marks riding the path tween)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6 (decision/source lineage; publication remains held where specified)"
 preserved_exact_tokens:
   - "N more"
   - "16%"

@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L5591-L27100
 
-Source SHA256: `5c1d158677d7487d45eabd73d96ec7d687048d2023ca46e04a552f4cdd2b83ec`
+Source SHA256: `57aa8ff73cbfa9e250784983681712ff9626ff3466aa3f76478c859cf7f22a55`
 
 ---
 
@@ -4632,11 +4632,11 @@ stale_retired_dispositions:
 - 'Amended 2026-10-09 (DL-183): the terminal theme catalogue, preview and instant apply become F3-642''s real appearance
   model; Settings > Terminal binds its app and project layers and the Appearance popover writes This terminal or All
   terminals.'
-- 'Amended 2026-10-14: F3-650 replaces the popover-only entry and F3-654 retires disabling the settled-text contrast
+- 'Amended 2026-10-14: F3-650 replaces the popover-only entry and F3-654 retires disabling the interface-text contrast
   floor.'
 owner_boundary_notes:
 - "Settings > Terminal owns durable terminal appearance/theme/color, default cwd, font, and default behavior controls."
-- "Since DL-183 the durable appearance values are the app and project layers of F3-642's model, bound by SSYS-051 and stored as SP-331 says; the terminal's Appearance popover writes the tab's override or, through All terminals, the project layer by the same Settings transaction Settings uses (F3-642), and no surface writes an app-wide value until q-035 admits one."
+- "Since DL-183 the durable appearance values are the app and project layers of F3-642's model, bound by SSYS-051 and stored as SP-331 says; the Customize screen (F3-650) writes the tab's override or, through All terminals, the project layer by the same Settings transaction Settings uses (F3-642), and no surface writes an app-wide value until q-035 admits one."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 

@@ -10212,11 +10212,11 @@ stale_retired_dispositions:
 - 'Amended 2026-10-09 (DL-183): the terminal theme catalogue, preview and instant apply become F3-642''s real appearance
   model; Settings > Terminal binds its app and project layers and the Appearance popover writes This terminal or All
   terminals.'
-- 'Amended 2026-10-14: F3-650 replaces the popover-only entry and F3-654 retires disabling the settled-text contrast
+- 'Amended 2026-10-14: F3-650 replaces the popover-only entry and F3-654 retires disabling the interface-text contrast
   floor.'
 owner_boundary_notes:
 - "Settings > Terminal owns durable terminal appearance/theme/color, default cwd, font, and default behavior controls."
-- "Since DL-183 the durable appearance values are the app and project layers of F3-642's model, bound by SSYS-051 and stored as SP-331 says; the terminal's Appearance popover writes the tab's override or, through All terminals, the project layer by the same Settings transaction Settings uses (F3-642), and no surface writes an app-wide value until q-035 admits one."
+- "Since DL-183 the durable appearance values are the app and project layers of F3-642's model, bound by SSYS-051 and stored as SP-331 says; the Customize screen (F3-650) writes the tab's override or, through All terminals, the project layer by the same Settings transaction Settings uses (F3-642), and no surface writes an app-wide value until q-035 admits one."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 
@@ -43986,6 +43986,10 @@ canonical_text: >-
   at its end state, and every close path, Escape included, works under it. The Slint portability limits recorded
   for earlier Usage units do not bind this page's look (DL-173, after DL-139), and framework version pins are
   unchanged.
+  Jared's 2026-10-14 correction applies in every look: switching Usage rooms quickly back and forth
+  stays responsive, each new room change takes over from the one in flight without stacking
+  animations, and no shadow trails the selector. Final motion and optical tuning remain with their
+  existing owners.
 gui_related: true
 gui_classification_reason: Defines the look, menus, marks, heroes, charts, previews, hover and motion of the redesigned Usage page.
 split_recommended: false
@@ -44041,6 +44045,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/g-fonts-REPORT.md, SHA-256 5886a8634de013933fe565badc478ee439afb232714fcf2bb0e97c3afddd080d (embedded fonts and fit)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/b-fix-REPORT.md, SHA-256 906a62d86051f7dea06d179a072d8cdf1a6af2c10532a6438852e06f98f572a3 (hover lift, blur and card-head actions)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/e-charts-REPORT.md, SHA-256 1c2f643776e5063f92bb62c1216ea5f7a152b1b33f1b8f1bf884471b46f14883 (marks riding the path tween)"
+  - "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6 (decision/source lineage; publication remains held where specified)"
 preserved_exact_tokens:
   - "N more"
   - "16%"
@@ -46190,8 +46195,7 @@ canonical_text: >-
   Clear, Send signal and Restart session map to the ids UCC-201 records. Restart and Restart session start
   a new session in the same tab by the explicit replacement of F3-548, Copy and Paste follow F3-238's
   clipboard rules, and the screen is the terminal core's own grid (F3-193, F3-216). The header row's
-  buttons are the hover engine's icon kind, a static tint only, and the screen is never a hover target
-  (DR-072, F3-465). Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close
+  buttons use F3-465's small-control marker; the screen is never a hover target (DR-072, F3-465). Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close
   tab), as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
 gui_related: true
 gui_classification_reason: Defines the terminal tab's label, header row, notices, gutter, scrollbar, sticky header, menus and keys in the universal panels.
@@ -46601,8 +46605,8 @@ stale_retired_dispositions:
   on the old terminal theme and font rows (DL-183).
 - 'Amended 2026-10-11 (wave 2, terminal SPEC dbffa7a1b2): Scheme hover previews wait 110 ms, with immediate arrow-key
   previews and delayed repeats.'
-- 'Amended 2026-10-14: The compact editor popover and below-4.5:1 text choices retire; F3-650 owns both Customize
-  screens.'
+- 'Amended 2026-10-14: The compact editor popover retires; F3-650 owns both Customize screens. Off and 3:1 remain
+  program-output choices (DL-197).'
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Settings_System.md
@@ -46638,7 +46642,7 @@ canonical_text: >-
   look, and the user turns it on. Flicker is off by default in every look; its amount defaults to 0.02 and
   is capped at 0.03 of relative luminance, against the 0.10 change that WCAG 2.3.1 counts as a flash, so
   flicker can never be a flash. The effect fields (F3-642) default to: effects Follow look; scan strength
-  0.30; glow strength 0.45; Full CRT off; curvature 0.08; burn-in on within Full CRT; noise 0.035; flicker
+  0.30; glow strength 0.45; Full CRT off; curvature 0.08 (historical; held for the revised CRT); burn-in on within Full CRT; noise 0.035; flicker
   off; flicker amount 0.02, capped at 0.03. NieR Mode's terminal has a parchment texture under the text
   and ink focus brackets, and no glow. By the NieR rule for new surfaces (DL-152, SSYS-043, F3-598,
   DR-056), NieR paints the terminal only while NieR Mode is on and each touch only with its own installed
@@ -46655,7 +46659,7 @@ canonical_text: >-
   parameters, bezel fields and control contract remain held; the old 0.08 tuning is historical, not
   acceptance of the criticized treatment. Degauss is the one-shot action in the Customize screen's effects
   group (F3-650), with the same existing command and no stored setting. The shared Follow look
-  cursor/caret voices are Basic line with on/off blink and no smooth scrolling; Friendly line with smooth
+  cursor/caret voices are Basic line with on/off blink, no trail and no smooth scrolling; Friendly line with smooth
   blink, soft trail and smooth scrolling; Glass line with smooth blink, glow trail and smooth scrolling;
   Retro reverse-video block with stepped blink, phosphor trail and no smooth scrolling; NieR ink line with
   blink, Trace only with its Scan sweep part and no smooth scrolling. F3-651 owns editor-specific jump
@@ -47426,6 +47430,7 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-DECISION-20261014.md, SHA-256
   56a7389f1fa9e6f6e0535f09525945f590b6ef44dfd8f72d1f3c844a7e21b816 (decision/source lineage; not native implementation
   evidence)
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-CONTRACT-201d602f7d.md, SHA-256 6550b3e5d31dbeca5e9d5cf11f7c06db13f37e189da270ac25e6504a5ec4a3da (decision/source lineage; publication remains held where specified)"
 preserved_exact_tokens:
 - Look's own
 - Ribbons
