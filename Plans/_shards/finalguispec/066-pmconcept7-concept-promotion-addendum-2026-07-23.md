@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32827-L33597
+Source lines: L32837-L33611
 
-Source SHA256: `ad093afce0ca7418862e8c4d9bfd4fbb8d1081f379037deb47635caf0ea41254`
+Source SHA256: `f05fb13f82babed54c090bb87736b01c7cbcf535d6c8a49773e2d7d25b8faf98`
 
 ---
 
@@ -472,12 +472,16 @@ preserved_exact_tokens:
 - "bleed"
 - "translate"
 negative_constraints:
-- "Do not compose the magnet through transform-matrix writes that fight entrance animations; use the standalone translate channel."
-- "Do not attach per-element pointer-move listeners; one shared driver services every target through the merged document pointer-move handler."
-- "Do not give icons or the Usage plates a magnet, and do not let the emitted glow move with the magnet."
-- "Do not animate box-shadow or filter on a large element, write an inherited custom property on hover, or keep the driver running at idle."
-- "Do not draw a soft light, glow or blur under Retro or NieR."
-- "Do not give tab strips, resize dividers or editor and terminal text surfaces a magnet, light or glow."
+- Do not compose the magnet through transform-matrix writes that fight entrance animations; use the standalone translate
+  channel.
+- Do not attach per-element pointer-move listeners; one shared driver services every target through the merged document
+  pointer-move handler.
+- Do not give icons or the Usage plates a magnet, and do not let the emitted glow move with the magnet.
+- Do not animate box-shadow or filter on a large element or write an inherited custom property on hover. The only
+  settled-hover loop is this owner's approved Friendly control ring; after leave or hide no hover driver keeps running.
+- Do not draw a soft light, glow or blur under Retro or NieR.
+- Do not give tab strips, resize dividers or editor and terminal text surfaces a card magnet. Small controls use this
+  owner's control hover, dividers use F3-657, and editor/terminal text itself stays outside card hover.
 compatibility_only_notes:
 - "Slint portability: the magnet maps to translate plus an animated spring, and pointer tracking maps to TouchArea.mouse-cursor-position. The concept draws the pointer light as one radial mask over a pre-painted sheen and hairline; Slint has no mask, so the hairline renders as a radial-gradient Rectangle centred on the pointer with an inner cover rectangle over it, inset by the line width and filled with the box's own fill, so that only the border band shows, and the sheen is a second, fainter radial-gradient Rectangle under the content; both are clipped to the box and take the field intensity as opacity. The plate is a drop-shadow on a sibling Rectangle at the rest geometry whose opacity animates (ScrollView clips automatically, with no fixed proxy needed). Retro's Raise is a translate plus a hard offset Rectangle and a 1 px inner border Rectangle; NieR's Lock-on is four corner Rectangles and a 1 px border Rectangle on stepped animations. No blend modes, filters, canvas or arbitrary-content backdrop blur."
 stale_retired_dispositions:

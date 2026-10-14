@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5592-L27068
+Source lines: L5591-L27078
 
-Source SHA256: `ad093afce0ca7418862e8c4d9bfd4fbb8d1081f379037deb47635caf0ea41254`
+Source SHA256: `f05fb13f82babed54c090bb87736b01c7cbcf535d6c8a49773e2d7d25b8faf98`
 
 ---
 
@@ -4559,14 +4559,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Terminal theme selection supports preview before apply, fast switching, search, contrast
-  readability signals, instant apply/revert, and semantic terminal palettes rather than raw
-  ANSI-only theme ownership. Since DL-183 this is real and owned by the one terminal appearance model (F3-642,
-  DR-068): "Follow look" picks a scheme per look, 34 curated schemes ship with their licences in place of the
-  earlier PM-matched, general-purpose and fun or expressive presets, "Switch with light and dark" pairs light and
-  dark, the minimum-contrast floor (4.5:1 by default) adjusts text against its cell background in every scheme
-  unless the user turns it off, common theme files import, and the Appearance popover previews each change live on the terminal. Every change applies at once and
-  reverts the same way, with no restart.
+  Terminal theme selection keeps preview before apply, fast switching, /search, /contrast readability signals
+  and instant apply/revert. Its palette is semantic, not raw ANSI-only. F3-642 owns the shared catalog in place
+  of the earlier /fun/funky and /expressive preset groups; F3-650 owns the full Customize screen and both entry
+  points, and F3-654 owns settled-text contrast. Every committed change applies live with no restart and uses
+  the scope writer owned by SSYS-051/UCC-201. The earlier Appearance popover-only and user-disableable
+  contrast-floor clauses are superseded.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible terminal theme, preview, palette, and readability behavior.
@@ -4574,11 +4572,13 @@ split_recommended: true
 depends_on: [DL-183, F3-642, DR-068]
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
-- "Choosing a terminal scheme in the Appearance popover or in Settings changes the terminal at once, with no restart badge, and the minimum-contrast floor (4.5:1 by default) adjusts text against its cell background in every scheme unless the user turns it off (F3-642)."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- Scheme choices from Customize and Settings apply live through their current scope writers; test the shared screen
+  by F3-650 and the contrast floor by F3-654, including compatibility values from F3-642.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -4609,14 +4609,21 @@ negative_constraints:
 - "No terminal theme or font choice carries a restart badge, and no second terminal theme store exists beside the one appearance model."
 compatibility_only_notes: []
 stale_retired_dispositions:
-- "Amended 2026-10-10 (lead ruling L16): The popover's All terminals writes the project layer through the Settings transaction instead of the app default, and no surface writes an app-wide value until q-035."
-- "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for the terminal appearance default in surviving amendment prose."
-- "Amended 2026-10-09 (DL-183): the terminal theme catalogue, preview and instant apply become F3-642's real appearance model; Settings > Terminal binds its app and project layers and the Appearance popover writes This terminal or All terminals."
+- 'Amended 2026-10-10 (lead ruling L16): The popover''s All terminals writes the project layer through the Settings
+  transaction instead of the app default, and no surface writes an app-wide value until q-035.'
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for the terminal appearance default in surviving
+  amendment prose.'
+- 'Amended 2026-10-09 (DL-183): the terminal theme catalogue, preview and instant apply become F3-642''s real appearance
+  model; Settings > Terminal binds its app and project layers and the Appearance popover writes This terminal or All
+  terminals.'
+- 'Amended 2026-10-14: F3-650 replaces the popover-only entry and F3-654 retires disabling the settled-text contrast
+  floor.'
 owner_boundary_notes:
 - "Settings > Terminal owns durable terminal appearance/theme/color, default cwd, font, and default behavior controls."
 - "Since DL-183 the durable appearance values are the app and project layers of F3-642's model, bound by SSYS-051 and stored as SP-331 says; the terminal's Appearance popover writes the tab's override or, through All terminals, the project layer by the same Settings transaction Settings uses (F3-642), and no surface writes an app-wide value until q-035 admits one."
 owner_hints:
 - "Plans/FinalGUISpec.md"
+
 ```
 
 ### F3-084 - Custom Font Fallback And Theme Preview
@@ -4678,9 +4685,10 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Retro themes may prioritize aesthetic over strict WCAG AA accent compliance, while the Basic
-  theme must meet WCAG 2.1 AA for all text and interactive elements with the specified normal and
-  large-text contrast ratios.
+  All looks, including Retro themes and the Basic theme, consume F3-654's 4.5:1 settled-text rule. WCAG 2.1 AA
+  remains a baseline for interaction accessibility; the earlier ACID_LIME aesthetic waiver and 3:1 large-text
+  allowance do not override the settled-text owner. Non-text status-glyph contrast is separately owned by
+  F3-658.
 gui_related: true
 gui_classification_reason: >-
   WCAG contrast and theme accessibility are user-visible visual presentation requirements even
@@ -4715,11 +4723,14 @@ preserved_exact_tokens:
 - "Basic theme"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-14: The Retro text/accent waiver and the Basic large-text allowance no longer permit below-floor
+  settled text; use F3-654.'
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/FinalGUISpec.md#13, ContractName:Plans/DRY_Rules.md#7"
 owner_hints:
 - "Plans/FinalGUISpec.md"
+
 ```
 
 ### F3-086 - Views Section Owner Boundary

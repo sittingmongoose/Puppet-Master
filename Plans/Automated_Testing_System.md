@@ -6256,15 +6256,14 @@ canonical_text: >-
   never a preview; find with case, whole word, regular expressions, highlight-all and its scrollbar marks; copy mode
   and quick select with their keys; the plain-text buffer; the terminal's keys, the host keys it gives back, and every
   other Ctrl+key reaching the shell; and no explain, fix, suggest or ask action and no inline completion anywhere in
-  the tab. Appearance (F3-642, Plans/storage-plan.md#SP-331, Plans/Settings_System.md#SSYS-051,
-  Plans/DRY_Rules.md#DR-068): each field resolves this tab, then the project default, then the app default, then the
-  look's default, an unset field falling through; every field applies live from the Appearance popover and from
-  Settings and none shows a restart badge; the popover writes This terminal or All terminals, All terminals is enabled
-  and writes the project default through the same Settings transaction Settings uses, its hover tag says in this
-  project, and no surface writes an app-wide value; each look's Follow look scheme in light and dark; the minimum-contrast floor at 4.5:1 by
-  default with Off, 3:1, 4.5:1 and 7:1, moving OKLab lightness only and leaving block, powerline and sextant glyphs
-  alone; import of the seven formats with the 256 KB cap, no evaluation and fixed errors that never echo the file; and
-  cells of whole device pixels with no stripe at the padding. Effects (F3-643): only the focused, visible terminal
+  the tab. Appearance (F3-642, F3-650, Plans/storage-plan.md#SP-331, Plans/Settings_System.md#SSYS-051,
+  Plans/DRY_Rules.md#DR-068): verify layered field resolution, live writes and no-restart behavior against
+  those owners. Both full Customize entry points, This/All scope and preview docking follow F3-650 and
+  ATS-077; All terminals uses the Project Settings transaction, with no app-wide write. Contrast cases
+  consume F3-654 and F3-642's compatibility disposition of legacy Off/3:1 values; import keeps its seven
+  formats, 256 KB cap, no evaluation and fixed errors that never echo the file; cells remain whole device
+  pixels with no stripe at the padding.
+  Effects (F3-643): only the focused, visible terminal
   animates; every effect stops within 10 s of the last output or keystroke, after which no effects frames run
   until the next output or keystroke; an effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware;
   battery saver turns motion off; where no GPU draws the terminal the effects layer stays off, zero effects frames
@@ -6365,9 +6364,9 @@ acceptance_criteria:
   - "Hovering Allow once shows \"<agent> types this one command\" and Allow in this terminal shows \"<agent> may type here until its run ends or you take over. Each command still needs its own approval.\"; while that grant lasts the Driving row stays between commands and More, Agent input lists \"Allowed in this terminal: <agent>\" with Revoke, which ends it; no text in the row, its hover tags or the menu suggests commands are pre-approved (F3-646, SMPFS-182)."
   - "Input protection blocks an agent with an explicit blocked result and zero child writes across tab moves, collapse, maximize, hide, layout apply and restore, and outranks every grant."
   - "Agent reads return rendered text with a read state and never raw bytes or images; the accessible buffer reads images as `[image W×H px]`, `[image]` or the placeholder label."
-  - "Every terminal control has its UCC-201 command, UIW-042 census entry and WM-091 row."
+  - "Terminal mutations keep UCC-201/WM-091 bindings; added Customize controls have UIW-043/WM-093 finite bindings, with each local or non-dispatch control explicitly marked."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "Editor and terminal list the same code colour-scheme catalog and open the same Appearance popover component."
+  - "Editor and terminal consume the same code scheme catalog and F3-650 full Customize screen, entry, scope and preview rules; ATS-077 covers the PM7 additions."
   - "An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware; every effect, including Full CRT ambient noise and flicker, stops within 10 s of the last output or keystroke; without a GPU the effects layer stays off with zero effects frames and plain fallbacks paint."
   - "Amended 2026-10-10 (DL-187): no terminal tab shows a colour or icon of the person's choosing on the strip."
   - "Amended 2026-10-10 (DL-187): every secret format SP-332 lists is replaced in the saved copy before it is written, in place and at the same width, with SP-332's label or mark; a private key keeps its BEGIN and END lines; command lines and link targets are scrubbed too; the live screen is unchanged; and the restore notice counts the secrets left out."
@@ -6440,6 +6439,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The terminal concept's harness hooks and its demo agents are concept lineage and are not product test names."
 stale_retired_dispositions:
+  - "Amended 2026-10-14: The popover-only and Off/3:1 active choices are replaced by the shared Customize and settled-text owners; historical source tokens are not current options."
   - "Amended 2026-10-10 (R36, terminal SPEC e741dfbc6c): Adds criteria for the image placement limits (4,096 per screen buffer, 10,000 cells each) and for the permission row's hover tags, the Driving row kept between commands, the Agent input row with Revoke and no pre-approval wording."
   - "Amended 2026-10-10 (lead ruling L16): Certifies that All terminals is enabled and writes the project default through the Settings transaction with the in this project hover tag and no app-wide value, replacing 'only Settings writes the project default'."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."

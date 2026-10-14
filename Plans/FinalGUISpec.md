@@ -2367,7 +2367,7 @@ border-radius = 4
 - Terminal theme schema is semantic, not raw ANSI-only: it defines background `/foreground`, ANSI `/basic` and bright palettes, cursor and selection colors, search highlight colors, command-block and sticky-header chrome, and badge/status colors for `/failure/running/context` states.
 - Terminal theme catalog includes PM-matched themes, polished general-purpose themes, and `/fun/funky` or `/expressive` presets only when `/contrast` and readability checks pass; previews support `/search/light-dark` pairing, quick `/switching`, instant apply, and easy `/revert`.
 
-Amended 2026-10-09 (DL-183): the terminal's colour scheme, font, cursor, background and effects are one layered appearance model with a live Appearance popover in the terminal's More menu (F3-642, DR-068). Its catalogue is F3-642's 34 curated schemes (27 third-party schemes in 13 families, MIT or Apache-2.0, and 7 Puppet Master originals), which replaces the preset groups above; the minimum-contrast floor (F3-642, 4.5:1 by default) adjusts text against its cell background in every scheme unless the user turns it off; Settings > Terminal binds the model's app and project layers (SSYS-051) while the popover writes This terminal or All terminals; and no terminal appearance change needs a restart.
+Amended 2026-10-14 (DL-189, DL-190, DL-197; superseding the earlier DL-183 entry treatment): F3-642/DR-068 own the layered terminal appearance and shared scheme catalog; F3-650 owns the full Customize screen, its More/Settings entry points, This/All scope and live preview; SSYS-051/UCC-201 own its Project and tab writers; F3-654 owns settled-text contrast. The earlier popover-only and disableable-floor wording is retired. Appearance changes apply live with no restart.
 
 **Custom font support:** Custom themes can reference font files placed in `~/.puppet-master/fonts/`. Font files (.ttf, .otf, .woff2) are loaded at startup. A theme TOML referencing a missing font falls back to the base theme's font and shows a warning toast.
 
@@ -2375,8 +2375,7 @@ Amended 2026-10-09 (DL-183): the terminal's colour scheme, font, cursor, backgro
 
 ### 6.7 WCAG Compliance
 
-- **Retro themes:** Prioritize aesthetic over strict WCAG AA compliance for accent colors (e.g., ACID_LIME on dark backgrounds may not meet 4.5:1)
-- **Basic theme:** MUST meet WCAG 2.1 AA for all text and interactive elements (4.5:1 minimum contrast for normal text, 3:1 for large text). Basic accent colors are muted specifically to meet this requirement
+All looks use the settled-text contrast owner F3-654 and the non-text status-mark owner F3-658. As recorded in DL-197/F3-085, the former Retro aesthetic waiver and Basic large-text allowance are superseded; WCAG 2.1 AA remains the interaction-accessibility baseline.
 ContractRef: ContractName:Plans/FinalGUISpec.md#13, ContractName:Plans/DRY_Rules.md#7
 
 ---
@@ -10140,14 +10139,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Terminal theme selection supports preview before apply, fast switching, search, contrast
-  readability signals, instant apply/revert, and semantic terminal palettes rather than raw
-  ANSI-only theme ownership. Since DL-183 this is real and owned by the one terminal appearance model (F3-642,
-  DR-068): "Follow look" picks a scheme per look, 34 curated schemes ship with their licences in place of the
-  earlier PM-matched, general-purpose and fun or expressive presets, "Switch with light and dark" pairs light and
-  dark, the minimum-contrast floor (4.5:1 by default) adjusts text against its cell background in every scheme
-  unless the user turns it off, common theme files import, and the Appearance popover previews each change live on the terminal. Every change applies at once and
-  reverts the same way, with no restart.
+  Terminal theme selection keeps preview before apply, fast switching, /search, /contrast readability signals
+  and instant apply/revert. Its palette is semantic, not raw ANSI-only. F3-642 owns the shared catalog in place
+  of the earlier /fun/funky and /expressive preset groups; F3-650 owns the full Customize screen and both entry
+  points, and F3-654 owns settled-text contrast. Every committed change applies live with no restart and uses
+  the scope writer owned by SSYS-051/UCC-201. The earlier Appearance popover-only and user-disableable
+  contrast-floor clauses are superseded.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible terminal theme, preview, palette, and readability behavior.
@@ -10155,11 +10152,13 @@ split_recommended: true
 depends_on: [DL-183, F3-642, DR-068]
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
-- "Choosing a terminal scheme in the Appearance popover or in Settings changes the terminal at once, with no restart badge, and the minimum-contrast floor (4.5:1 by default) adjusts text against its cell background in every scheme unless the user turns it off (F3-642)."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- Scheme choices from Customize and Settings apply live through their current scope writers; test the shared screen
+  by F3-650 and the contrast floor by F3-654, including compatibility values from F3-642.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -10190,14 +10189,21 @@ negative_constraints:
 - "No terminal theme or font choice carries a restart badge, and no second terminal theme store exists beside the one appearance model."
 compatibility_only_notes: []
 stale_retired_dispositions:
-- "Amended 2026-10-10 (lead ruling L16): The popover's All terminals writes the project layer through the Settings transaction instead of the app default, and no surface writes an app-wide value until q-035."
-- "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for the terminal appearance default in surviving amendment prose."
-- "Amended 2026-10-09 (DL-183): the terminal theme catalogue, preview and instant apply become F3-642's real appearance model; Settings > Terminal binds its app and project layers and the Appearance popover writes This terminal or All terminals."
+- 'Amended 2026-10-10 (lead ruling L16): The popover''s All terminals writes the project layer through the Settings
+  transaction instead of the app default, and no surface writes an app-wide value until q-035.'
+- 'Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for the terminal appearance default in surviving
+  amendment prose.'
+- 'Amended 2026-10-09 (DL-183): the terminal theme catalogue, preview and instant apply become F3-642''s real appearance
+  model; Settings > Terminal binds its app and project layers and the Appearance popover writes This terminal or All
+  terminals.'
+- 'Amended 2026-10-14: F3-650 replaces the popover-only entry and F3-654 retires disabling the settled-text contrast
+  floor.'
 owner_boundary_notes:
 - "Settings > Terminal owns durable terminal appearance/theme/color, default cwd, font, and default behavior controls."
 - "Since DL-183 the durable appearance values are the app and project layers of F3-642's model, bound by SSYS-051 and stored as SP-331 says; the terminal's Appearance popover writes the tab's override or, through All terminals, the project layer by the same Settings transaction Settings uses (F3-642), and no surface writes an app-wide value until q-035 admits one."
 owner_hints:
 - "Plans/FinalGUISpec.md"
+
 ```
 
 ### F3-084 - Custom Font Fallback And Theme Preview
@@ -10259,9 +10265,10 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Retro themes may prioritize aesthetic over strict WCAG AA accent compliance, while the Basic
-  theme must meet WCAG 2.1 AA for all text and interactive elements with the specified normal and
-  large-text contrast ratios.
+  All looks, including Retro themes and the Basic theme, consume F3-654's 4.5:1 settled-text rule. WCAG 2.1 AA
+  remains a baseline for interaction accessibility; the earlier ACID_LIME aesthetic waiver and 3:1 large-text
+  allowance do not override the settled-text owner. Non-text status-glyph contrast is separately owned by
+  F3-658.
 gui_related: true
 gui_classification_reason: >-
   WCAG contrast and theme accessibility are user-visible visual presentation requirements even
@@ -10296,11 +10303,14 @@ preserved_exact_tokens:
 - "Basic theme"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-14: The Retro text/accent waiver and the Basic large-text allowance no longer permit below-floor
+  settled text; use F3-654.'
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/FinalGUISpec.md#13, ContractName:Plans/DRY_Rules.md#7"
 owner_hints:
 - "Plans/FinalGUISpec.md"
+
 ```
 
 ### F3-086 - Views Section Owner Boundary
@@ -33288,12 +33298,16 @@ preserved_exact_tokens:
 - "bleed"
 - "translate"
 negative_constraints:
-- "Do not compose the magnet through transform-matrix writes that fight entrance animations; use the standalone translate channel."
-- "Do not attach per-element pointer-move listeners; one shared driver services every target through the merged document pointer-move handler."
-- "Do not give icons or the Usage plates a magnet, and do not let the emitted glow move with the magnet."
-- "Do not animate box-shadow or filter on a large element, write an inherited custom property on hover, or keep the driver running at idle."
-- "Do not draw a soft light, glow or blur under Retro or NieR."
-- "Do not give tab strips, resize dividers or editor and terminal text surfaces a magnet, light or glow."
+- Do not compose the magnet through transform-matrix writes that fight entrance animations; use the standalone translate
+  channel.
+- Do not attach per-element pointer-move listeners; one shared driver services every target through the merged document
+  pointer-move handler.
+- Do not give icons or the Usage plates a magnet, and do not let the emitted glow move with the magnet.
+- Do not animate box-shadow or filter on a large element or write an inherited custom property on hover. The only
+  settled-hover loop is this owner's approved Friendly control ring; after leave or hide no hover driver keeps running.
+- Do not draw a soft light, glow or blur under Retro or NieR.
+- Do not give tab strips, resize dividers or editor and terminal text surfaces a card magnet. Small controls use this
+  owner's control hover, dividers use F3-657, and editor/terminal text itself stays outside card hover.
 compatibility_only_notes:
 - "Slint portability: the magnet maps to translate plus an animated spring, and pointer tracking maps to TouchArea.mouse-cursor-position. The concept draws the pointer light as one radial mask over a pre-painted sheen and hairline; Slint has no mask, so the hairline renders as a radial-gradient Rectangle centred on the pointer with an inner cover rectangle over it, inset by the line width and filled with the box's own fill, so that only the border band shows, and the sheen is a second, fainter radial-gradient Rectangle under the content; both are clipped to the box and take the field intensity as opacity. The plate is a drop-shadow on a sibling Rectangle at the rest geometry whose opacity animates (ScrollView clips automatically, with no fixed proxy needed). Retro's Raise is a translate plus a hard offset Rectangle and a 1 px inner border Rectangle; NieR's Lock-on is four corner Rectangles and a 1 px border Rectangle on stepped animations. No blend modes, filters, canvas or arbitrary-content backdrop blur."
 stale_retired_dispositions:
