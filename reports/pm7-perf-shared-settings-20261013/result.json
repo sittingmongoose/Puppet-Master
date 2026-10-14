@@ -86,7 +86,7 @@
     },
     {
       "id": "M5",
-      "status": "primary_and_supplemental_proof_complete_films_running",
+      "status": "review_ready",
       "candidate": "m5-proto4",
       "compatibility_snapshots": 312,
       "compatibility_pairs": 156,
@@ -97,7 +97,7 @@
       "paired_snapshots": 364,
       "snapshot_differences": 0,
       "measurement_summary": "reports/pm7-perf-shared-settings-20261013/m5-measurements.json",
-      "performance_claim": "Mode, Auto and family CPU results are small or mixed; broad whole-action speedup is not established.",
+      "performance_claim": "Lower callback/pass counts; broad whole-action CPU and first-feedback speedups are not established. Single-film observations are reported separately.",
       "mechanism": "Interactive theme changes: synthetic resize1\u21920; scoped geometry event0\u21921. Necessary geometry and dismissal callbacks remain; real resize and initial bootstrap remain.",
       "phase_measurement_summary": "reports/pm7-perf-shared-settings-20261013/m5-phase-measurements.json",
       "auto_system_scheme": {
@@ -144,6 +144,15 @@
           0
         ],
         "source_changed_for_retest": false
+      },
+      "delivered": true,
+      "source_commit": "d61f00ddce88a6dc206b738d6383fd483301e12b",
+      "feedback_summary": "m5-feedback-measurements.json",
+      "raw_manifest": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m5-evidence-manifest.json",
+        "sha256": "e6a42891c04cefb13a5b7b6e5589b688b19235b606b4ded45a17c28a1ca66a77",
+        "files": 2765,
+        "bytes": 15337919024
       }
     },
     {

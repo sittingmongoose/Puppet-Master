@@ -2,7 +2,7 @@ PM7 shared fitting and Settings performance work
 
 Review and landing belong to home-redesign-planner. No main landing is performed by this task. Source is on `fix/pm7-perf-shared-settings-20261013`, from the Settings repair611b2404. M1 also has a separate current-main review branch `fix/pm7-perf-m1-ready-20261014`, final packet c3eef58d7d, so it can land before the remaining work.
 
-M1 is landed by the coordinator’s worker at916059849e on GitHub and NAS. M5 source is committed at d61f00ddce and its repeated main matrix is complete; supplements and films are finishing. M6 and M10 are private candidates. M4’s original PURE-PERF candidate was rejected for different visible rows; the later Opus-approved candidate also fails its reading-anchor contract and is excluded. The coordinator authorized exactly one further focused M4 iteration after M5/M6/M10.
+M1 is landed by the coordinator’s worker at916059849e on GitHub and NAS. M5 source is committed at d61f00ddce and its complete proof is ready for coordinator review. M6 and M10 are private candidates. M4’s original PURE-PERF candidate was rejected for different visible rows; the later Opus-approved candidate also fails its reading-anchor contract and is excluded. The coordinator authorized exactly one further focused M4 iteration after M5/M6/M10.
 
 All authored work stays in the shared build transform, Settings layer and the named Settings fragments. Liquid Glass, wallpaper, terminal, art, hover, Wizard and Orchestrator authored source is untouched. Generated HTML is written only by the three project generators. Per-fix commits are pushed to GitHub and NAS.
 
@@ -75,7 +75,7 @@ M5 primary medians, before / after:
 | retro-light / theme-family | 1139.3 / 1122.5 | 430.5 / 430.3 | 34.7 / 33.4 | 214.0 / 202.9 | 18139.0 / 17743.0 | 368.0 / 352.0 |
 | retro-light / theme-mode | 1142.2 / 1138.4 | 390.6 / 386.8 | 11.4 / 12.2 | 184.2 / 184.2 | 20394.0 / 20723.0 | 304.0 / 312.0 |
 
-Auto responding to actual emulated system Dark→Light→Dark has120 additional CPU windows/60 matching pairs, three cold observations per artifact and look. `m5-scheme-measurements.json` holds all CPU/peak/restyle values; no trusted click exists for that external change. Geometry counters show32→19 event callbacks and2→1 actual sticky-strip geometry passes in BasicDark,GlassLight,NieRDark. This separate instrumented run is not used for CPU savings. Native density/font/resize/popup proof is complete; films are running.
+Auto responding to actual emulated system Dark→Light→Dark has120 additional CPU windows/60 matching pairs, three cold observations per artifact and look. `m5-scheme-measurements.json` holds all CPU/peak/restyle values; no trusted click exists for that external change. Geometry counters show32→19 event callbacks and2→1 actual sticky-strip geometry passes in BasicDark,GlassLight,NieRDark. This separate instrumented run is not used for CPU savings. Native density/font/resize/popup proof and normal/reduced hardware films are complete.
 
 Failed attempts are retained. The first repeated run lost its owned HTTP server at port8879; the cause was not established. Five complete looks and three unmatched baseline windows were retained, and the driver now rejects wrong/error/unready documents. The later M1 priority stop and landing-gap stops preserve every completed action. Final groups are assembled only from complete13-observation look groups. One Auto comparator invocation used its wrong default artifact names and foundzero pairs; the corrected explicit before/after invocation verifies60 pairs withzero differences. No zero-pair run is treated as proof.
 
@@ -94,3 +94,62 @@ Raw evidence is under `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-s
 Density supplement:42 records/21 pairs showed one initial BasicDark title-search width difference of0.11px and one invisible GlassLight inline declaration difference. The first run navigated before clearing previous stored state, so boot inputs were a confound. The BasicDark repeat has14 matching records/7 pairs. A controlled clear-before-load startup matrix adds12 matching records/6 pairs across BasicDark/GlassLight; all six native title-search pixel crops match exactly. No source changed for these retests, and the initial observations are retained. No repeatable M5 title-geometry change is established.
 
 M6 open-Details supplement:6 cases/3 pairs match. During all sampled frames the scroll position stays1200px, the inspector remains settled, its left edge stays962px (BasicLight/NieRLight) or949px (GlassLight), and the layout is retained. Three identical failed saves each attempt storage three times, with no successful receipt; final restored0.55 is persisted and read back identically. Broader UI/CPU/film proof remains pending.
+
+M5 hardware-film first feedback, before / after ms (one observation per artifact; normal bound±42.17ms, application-reduced bound±48.32ms):
+
+| Look / case | Normal | Application reduced | Region |
+|---|---:|---:|---|
+| basic-dark / mode-opposite | 380.0 / 267.9 | 367.3 / 261.9 | main Settings body |
+| basic-dark / mode-auto | 322.9 / 239.5 | 295.5 / 236.7 | main Settings body |
+| basic-dark / scheme-light | 647.4 / 628.2 | 654.6 / 557.5 | main Settings body |
+| basic-dark / scheme-dark | 629.0 / 544.5 | 590.8 / 606.3 | main Settings body |
+| basic-dark / family-next | 870.3 / 568.7 | 825.9 / 463.3 | main Settings body |
+| basic-light / mode-opposite | 385.7 / 306.8 | not sampled | main Settings body |
+| basic-light / mode-auto | 159.7 / 169.9 | not sampled | clicked choice region; unchanged body |
+| basic-light / scheme-light | 682.8 / 596.7 | not sampled | main Settings body |
+| basic-light / scheme-dark | 749.2 / 579.0 | not sampled | main Settings body |
+| basic-light / family-next | 680.9 / 518.2 | not sampled | main Settings body |
+| friendly-dark / mode-opposite | 344.1 / 351.4 | not sampled | main Settings body |
+| friendly-dark / mode-auto | 367.3 / 306.6 | not sampled | main Settings body |
+| friendly-dark / scheme-light | 625.0 / 654.1 | not sampled | main Settings body |
+| friendly-dark / scheme-dark | 641.4 / 604.5 | not sampled | main Settings body |
+| friendly-dark / family-next | 555.2 / 592.2 | not sampled | main Settings body |
+| friendly-light / mode-opposite | 419.9 / 341.5 | not sampled | main Settings body |
+| friendly-light / mode-auto | 152.7 / 156.6 | not sampled | clicked choice region; unchanged body |
+| friendly-light / scheme-light | 667.8 / 636.9 | not sampled | main Settings body |
+| friendly-light / scheme-dark | 733.3 / 701.6 | not sampled | main Settings body |
+| friendly-light / family-next | 601.1 / 562.9 | not sampled | main Settings body |
+| retro-dark / mode-opposite | 427.4 / 370.1 | not sampled | main Settings body |
+| retro-dark / mode-auto | 335.5 / 375.9 | not sampled | main Settings body |
+| retro-dark / scheme-light | 669.4 / 664.0 | not sampled | main Settings body |
+| retro-dark / scheme-dark | 682.5 / 791.2 | not sampled | main Settings body |
+| retro-dark / family-next | 509.4 / 397.9 | not sampled | main Settings body |
+| retro-light / mode-opposite | 382.2 / 376.9 | not sampled | main Settings body |
+| retro-light / mode-auto | 121.4 / 129.4 | not sampled | clicked choice region; unchanged body |
+| retro-light / scheme-light | 702.8 / 635.4 | not sampled | main Settings body |
+| retro-light / scheme-dark | 813.1 / 825.6 | not sampled | main Settings body |
+| retro-light / family-next | 501.5 / 397.4 | not sampled | main Settings body |
+| glass-dark / mode-opposite | 496.9 / 651.9 | not sampled | main Settings body |
+| glass-dark / mode-auto | 420.3 / 476.3 | not sampled | main Settings body |
+| glass-dark / scheme-light | 811.0 / 865.9 | not sampled | main Settings body |
+| glass-dark / scheme-dark | 845.2 / 1013.6 | not sampled | main Settings body |
+| glass-dark / family-next | 660.6 / 672.4 | not sampled | main Settings body |
+| glass-light / mode-opposite | 408.5 / 526.9 | 442.0 / 500.4 | main Settings body |
+| glass-light / mode-auto | 187.4 / 198.6 | 157.7 / 131.6 | clicked choice region; unchanged body |
+| glass-light / scheme-light | 794.9 / 833.3 | 777.7 / 855.4 | main Settings body |
+| glass-light / scheme-dark | 924.2 / 986.4 | 684.1 / 891.6 | main Settings body |
+| glass-light / family-next | 779.3 / 757.4 | 651.6 / 578.6 | main Settings body |
+| nier-dark / mode-opposite | 517.4 / 598.3 | 506.9 / 607.6 | main Settings body |
+| nier-dark / mode-auto | 493.7 / 527.7 | 461.1 / 483.5 | main Settings body |
+| nier-dark / scheme-light | 972.3 / 1059.6 | 941.6 / 992.1 | main Settings body |
+| nier-dark / scheme-dark | 1014.7 / 1151.9 | 929.1 / 1209.8 | main Settings body |
+| nier-light / mode-opposite | 535.5 / 564.2 | not sampled | main Settings body |
+| nier-light / mode-auto | 190.2 / 154.5 | not sampled | clicked choice region; unchanged body |
+| nier-light / scheme-light | 1008.7 / 1092.9 | not sampled | main Settings body |
+| nier-light / scheme-dark | 966.9 / 985.2 | not sampled | main Settings body |
+
+The normal movie contains96 actions/35579 decoded frames across all ten looks. The reduced movie contains28 actions/10899 frames across BasicDark,GlassLight,NieRDark. Both calibrations and all actions are present, both recorder stops are complete, and independent decode passed. Mode/family timing starts at trusted pointerdown; emulated system-scheme timing starts at a browser-clock timestamp before the CDP command and includes transport. When Auto leaves the body unchanged, first feedback is the selected choice indicator; its native crop was reviewed. First,+50,+200,+500ms samples retain the same destination content, first-state fit and transition sequence. Asynchronous row/optical completion varies in phase, so this is not a claim of identical compressed pixels in every frame. No broad feedback speedup is established by these single observations.
+
+The initial body-only analysis found no body change on ten normal/two reduced Auto actions; those analyses and the failed extraction are retained. The action-specific choice-region correction provides measured feedback and is labeled in the table. The lower-memory decoder matches the sealed8100-frame/22-action M1 analysis exactly, including calibration and latency values.
+
+M5 evidence manifest: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m5-evidence-manifest.json`, SHA-256 `e6a42891c04cefb13a5b7b6e5589b688b19235b606b4ded45a17c28a1ca66a77` (2765 files). M5 is ready for coordinator review; M6/M10/M4 work continues. No main landing was performed.
