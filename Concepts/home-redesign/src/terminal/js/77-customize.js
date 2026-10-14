@@ -437,6 +437,9 @@
       else if (effective.motion && /^Battery saver/.test(effective.motion)) eNotes.push('Battery saver is on: nothing moves; still effects stay.');
       if (T.FX && T.FX.gpu && T.FX.gpu() === false) eNotes.push('This computer draws the terminal without the GPU: scanlines and glow are drawn flat, and curvature, burn-in and grain are not drawn.');
       note('[data-note-fx]', eNotes.join(' '));
+      /* All terminals, shown on a terminal with choices of its own: those stay on top on it (the tab comes first) */
+      var tabN = scope === 'app' ? Object.keys(A().FIELDS).filter(function (k) { return A().own('tab', v, k) !== undefined; }).length : 0;
+      note('[data-note-side]', tabN ? 'This terminal keeps ' + (tabN === 1 ? 'one choice of its own, which stays' : tabN + ' choices of its own, which stay') + ' on top of All terminals on it. The preview shows All terminals.' : '');
       var ew = root.querySelector('[data-effects-why]'), etext = val('effects') === 'follow' ? 'The look’s own: ' + lookEffects(R) + '. Turning one on or off switches to Custom.' : val('effects') === 'off' ? 'No effects in this scope.' : '';
       if (ew.textContent !== etext) ew.textContent = etext;
       root.querySelector('[data-act="degauss"]').hidden = look !== 'retro' || isNier;
