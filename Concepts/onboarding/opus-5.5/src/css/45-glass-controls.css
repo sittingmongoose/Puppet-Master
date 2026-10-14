@@ -92,6 +92,10 @@ html:not([data-lg="on"]) .o55t-root[data-family="glass"] .o55t-seg button.o55t-o
   transition: transform 520ms cubic-bezier(0.45, 0, 0.2, 1.15), background 220ms ease; }
 #pm-o55-onboarding[data-family="glass"] .o55-toggle.o55-on .o55-switch span { transform: translateX(16px); }
 
+/* the step rail is the Glass owner's: with the Glass layer on, its lens is the current step's only highlight, so the
+   current node's own halo steps aside (pm7-liquid-glass, 2026-10-13; without the layer the rail is as it was) */
+html[data-lg="on"] #pm-o55-onboarding[data-family="glass"] .o55-railitem[data-state="current"] .o55-railnode { box-shadow: none; }
+
 /* the tour: its callout and bar are glass sheets with concentric corners; the bar's buttons are clear until the pointer
    is on them, as the app's toolbar buttons are */
 .o55t-root[data-family="glass"] :is(.o55t-callout, .o55t-morph) { border-radius: 16px; }

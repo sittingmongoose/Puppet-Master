@@ -8,7 +8,9 @@
    it in its display face; NieR Mode in its ink and mono face, as its tags are. The shell's other runtime tags (on
    ordinary messages) are the Chat's own and are left alone. */
 :is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]) .runtime-snapshot {
-  display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
+  /* its own line above the words (in the person's bubble the message text follows the tag directly; the capsule's
+     padding used to keep them apart) */
+  display: flex; width: fit-content; margin: 0 0 5px; align-items: center; gap: 6px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
   font: 700 10.5px/1.5 var(--body-font, Inter, system-ui, sans-serif); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); }
 :is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]) .runtime-snapshot::before {
   content: ""; flex: none; width: 5px; height: 5px; background: currentColor; }
