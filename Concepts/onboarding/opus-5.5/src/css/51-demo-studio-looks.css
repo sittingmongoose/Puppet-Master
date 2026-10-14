@@ -286,7 +286,7 @@ html[data-o55-nier-parts~="blocks"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-
   background: radial-gradient(120% 90% at 25% 0%, rgba(255, 255, 255, .6), transparent 55%), linear-gradient(160deg, color-mix(in srgb, var(--a-tone) 55%, #fff), var(--a-tone));
 }
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-art :is(.pmds-a-win, .pmds-a-app i, .pmds-a-call, .pmds-a-layer, .pmds-a-turn) { border: 2px solid #fff; border-radius: 9px; box-shadow: 0 4px 0 rgba(40, 60, 100, .14), 0 10px 18px -10px rgba(40, 60, 100, .5); }
-#o55-demo.pmds[data-pmds-look="friendly"] .pmds-art .pmds-a-steps i { height: 7px; border-radius: 3px; }
+#o55-demo.pmds[data-pmds-look="friendly"] .pmds-art .pmds-a-steps i { height: 7px; border-radius: 2px; }
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-art .pmds-a-steps i:nth-child(-n + 2), #o55-demo.pmds[data-pmds-look="friendly"] .pmds-tile:is(:hover, :focus-visible) .pmds-a-steps i { background: #fff; }
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-art .pmds-a-spot { border-radius: 12px; box-shadow: 0 0 0 3px #fff, 0 0 0 999px var(--a-scrim); transition-timing-function: cubic-bezier(.3, 1.6, .45, 1); }
 @keyframes pmds-a-fill-friendly { 0%, 100% { background: rgba(255, 255, 255, .5); } 20%, 70% { background: #fff; } }

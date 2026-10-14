@@ -366,30 +366,52 @@
 
   /* ---- motion: each look's own voice ---- */
   const SPRING = 'linear(0, 0.009, 0.035 2.1%, 0.141 4.4%, 0.723 12.9%, 0.938 16.7%, 1.017 19.4%, 1.067, 1.099 24.3%, 1.108 26%, 1.104, 1.089 30.6%, 1.033 37.2%, 1.002 41.6%, 0.988 46.4%, 0.993 56.2%, 1.001 66.7%, 1)';
+  /* A motion is a list of tracks, [keyframes, ms, easing, delay], played together, so the fade and the travel keep their
+     own timing (one easing over a whole spring put the fade and the overshoot into the first 50 ms, where nobody saw
+     them). Friendly's travel is a real spring (SPRING, overshoot about 11 %); Retro and NieR step; Glass rises with
+     depth; Basic eases. */
+  const fade = (a, b, ms, ease, delay) => [[{ opacity: a }, { opacity: b }], ms, ease || 'linear', delay || 0];
+  const move = (a, b, ms, ease, delay) => [[{ transform: a }, { transform: b }], ms, ease, delay || 0];
   const VOICE = {
-    basic: { open: [{ opacity: 0, transform: 'translateY(12px) scale(.975)' }, { opacity: 1, transform: 'none' }], openMs: 260, openEase: 'cubic-bezier(.2,.8,.2,1)',
-      close: [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(8px) scale(.985)' }], closeMs: 160, closeEase: 'cubic-bezier(.4,0,1,1)',
-      page: [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], pageMs: 220, pageEase: 'cubic-bezier(.2,.8,.2,1)',
-      item: [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], itemMs: 240, stagger: 18, inkMs: 220, inkEase: 'cubic-bezier(.2,.8,.2,1)' },
-    friendly: { open: [{ opacity: 0, transform: 'translateY(26px) scale(.84)' }, { opacity: 1, transform: 'translateY(-4px) scale(1.02)', offset: 0.58 }, { opacity: 1, transform: 'translateY(1px) scale(.997)', offset: 0.8 }, { opacity: 1, transform: 'none' }], openMs: 560, openEase: 'cubic-bezier(.25,.8,.35,1)',
-      close: [{ opacity: 1, transform: 'none' }, { opacity: 1, transform: 'translateY(-3px) scale(1.012)', offset: 0.3 }, { opacity: 0, transform: 'translateY(22px) scale(.86)' }], closeMs: 260, closeEase: 'cubic-bezier(.5,0,.75,0)',
-      page: [{ opacity: 0, transform: 'translateY(var(--pmds-dir, 18px)) scale(.985)' }, { opacity: 1, transform: 'none' }], pageMs: 420, pageEase: SPRING,
-      item: [{ opacity: 0, transform: 'translateY(16px) scale(.9)' }, { opacity: 1, transform: 'translateY(-3px) scale(1.025)', offset: 0.62 }, { opacity: 1, transform: 'none' }], itemMs: 460, stagger: 38, inkMs: 520, inkEase: SPRING },
-    retro: { open: [{ clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], openMs: 300, openEase: 'steps(10, end)',
-      close: [{ clipPath: 'inset(0 0 0 0)' }, { clipPath: 'inset(100% 0 0 0)' }], closeMs: 180, closeEase: 'steps(6, end)',
-      page: [{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], pageMs: 180, pageEase: 'steps(8, end)',
-      item: [{ opacity: 0 }, { opacity: 1 }], itemMs: 1, stagger: 26, itemEase: 'steps(1, end)', inkMs: 120, inkEase: 'steps(3, end)' },
-    glass: { open: [{ opacity: 0, transform: 'translateY(16px) scale(.94)' }, { opacity: 1, transform: 'none' }], openMs: 420, openEase: 'cubic-bezier(.16,1,.3,1)',
-      close: [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(10px) scale(.965)' }], closeMs: 220, closeEase: 'cubic-bezier(.4,0,.8,.4)',
-      page: [{ opacity: 0, transform: 'translateY(10px) scale(.99)' }, { opacity: 1, transform: 'none' }], pageMs: 320, pageEase: 'cubic-bezier(.16,1,.3,1)',
-      item: [{ opacity: 0, transform: 'translateY(8px) scale(.97)' }, { opacity: 1, transform: 'none' }], itemMs: 380, stagger: 22, inkMs: 360, inkEase: 'cubic-bezier(.16,1,.3,1)' },
-    nier: { open: [{ transform: 'scaleY(.012)' }, { transform: 'scaleY(.012)', offset: 0.34 }, { transform: 'none' }], openMs: 320, openEase: 'steps(6, end)',
-      close: [{ transform: 'none' }, { transform: 'scaleY(.012)', offset: 0.66 }, { transform: 'scaleY(.012)', opacity: 0 }], closeMs: 220, closeEase: 'steps(4, end)',
-      page: [{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], pageMs: 200, pageEase: 'steps(5, end)',
-      item: [{ opacity: 0 }, { opacity: 1 }], itemMs: 1, stagger: 30, itemEase: 'steps(1, end)', inkMs: 140, inkEase: 'steps(2, end)' },
-    reduced: { open: [{ opacity: 0 }, { opacity: 1 }], openMs: 140, openEase: 'linear', close: [{ opacity: 1 }, { opacity: 0 }], closeMs: 110, closeEase: 'linear',
-      page: [{ opacity: 0 }, { opacity: 1 }], pageMs: 120, pageEase: 'linear', item: null, stagger: 0, inkMs: 0 }
+    basic: {
+      open: [fade(0, 1, 170, 'cubic-bezier(.3,0,.2,1)'), move('translateY(16px) scale(.965)', 'none', 340, 'cubic-bezier(.2,.8,.2,1)')],
+      close: [fade(1, 0, 150, 'cubic-bezier(.4,0,1,1)', 30), move('none', 'translateY(10px) scale(.98)', 180, 'cubic-bezier(.4,0,1,1)')],
+      page: [fade(0, 1, 180, 'cubic-bezier(.3,0,.2,1)'), move('translateY(var(--pmds-dir, 10px))', 'none', 300, 'cubic-bezier(.2,.8,.2,1)')],
+      item: [fade(0, 1, 200, 'cubic-bezier(.3,0,.2,1)'), move('translateY(8px)', 'none', 320, 'cubic-bezier(.2,.8,.2,1)')], stagger: 20, inkMs: 240, inkEase: 'cubic-bezier(.2,.8,.2,1)' },
+    friendly: {
+      open: [fade(0, 1, 200, 'cubic-bezier(.3,0,.2,1)'), move('translateY(36px) scale(.84)', 'none', 680, SPRING)],
+      close: [move('none', 'translateY(28px) scale(.86)', 260, 'cubic-bezier(.55,0,.8,.4)'), fade(1, 0, 190, 'cubic-bezier(.4,0,1,1)', 70)],
+      page: [fade(0, 1, 170, 'cubic-bezier(.3,0,.2,1)'), move('translateY(var(--pmds-dir, 20px)) scale(.985)', 'none', 560, SPRING)],
+      item: [fade(0, 1, 170, 'cubic-bezier(.3,0,.2,1)'), move('translateY(18px) scale(.9)', 'none', 600, SPRING)], stagger: 36, inkMs: 600, inkEase: SPRING },
+    retro: {
+      open: [[[{ clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], 320, 'steps(10, end)', 0]],
+      close: [[[{ clipPath: 'inset(0 0 0 0)' }, { clipPath: 'inset(100% 0 0 0)' }], 200, 'steps(6, end)', 0]],
+      page: [[[{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], 200, 'steps(8, end)', 0]],
+      item: [fade(0, 1, 1, 'steps(1, end)')], stagger: 26, inkMs: 120, inkEase: 'steps(3, end)' },
+    glass: {
+      open: [fade(0, 1, 260, 'cubic-bezier(.3,0,.2,1)'), move('translateY(22px) scale(.93)', 'none', 560, 'cubic-bezier(.16,1,.3,1)')],
+      close: [fade(1, 0, 200, 'cubic-bezier(.4,0,1,1)', 40), move('none', 'translateY(12px) scale(.96)', 240, 'cubic-bezier(.4,0,.8,.4)')],
+      page: [fade(0, 1, 220, 'cubic-bezier(.3,0,.2,1)'), move('translateY(12px) scale(.985)', 'none', 420, 'cubic-bezier(.16,1,.3,1)')],
+      item: [fade(0, 1, 240, 'cubic-bezier(.3,0,.2,1)'), move('translateY(10px) scale(.97)', 'none', 460, 'cubic-bezier(.16,1,.3,1)')], stagger: 22, inkMs: 380, inkEase: 'cubic-bezier(.16,1,.3,1)' },
+    nier: {
+      open: [[[{ transform: 'scaleY(.012)' }, { transform: 'scaleY(.012)', offset: 0.34 }, { transform: 'none' }], 320, 'steps(6, end)', 0]],
+      close: [[[{ transform: 'none' }, { transform: 'scaleY(.012)', offset: 0.66 }, { transform: 'scaleY(.012)', opacity: 0 }], 220, 'steps(4, end)', 0]],
+      page: [[[{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], 200, 'steps(5, end)', 0]],
+      item: [fade(0, 1, 1, 'steps(1, end)')], stagger: 30, inkMs: 140, inkEase: 'steps(2, end)' },
+    reduced: { open: [fade(0, 1, 140)], close: [fade(1, 0, 110)], page: [fade(0, 1, 120)], item: null, stagger: 0, inkMs: 0 }
   };
+  /* play a motion's tracks on el; o.fill and o.scale (a duration factor) apply to every track, o.delay adds to each */
+  function play(el, tracks, o) {
+    o = o || {};
+    if (!el || !el.animate || !tracks) return null;
+    let last = null;
+    tracks.forEach(([frames, ms, ease, delay]) => {
+      const a = el.animate(frames, { duration: Math.max(1, Math.round(ms * (o.scale || 1))), easing: ease || 'linear', delay: (delay || 0) + (o.delay || 0), fill: o.fill || 'backwards' });
+      ST.anims.push(a); a.finished.then(() => { ST.anims = ST.anims.filter((x) => x !== a); }, () => {});
+      if (!last || ms + (delay || 0) >= last.end) last = { a, end: ms + (delay || 0) };
+    });
+    return last ? last.a : null;
+  }
   function anim(el, frames, ms, ease, o) {
     if (!el || !el.animate || !frames) return null;
     const a = el.animate(frames, Object.assign({ duration: Math.max(1, ms), easing: ease || 'linear', fill: 'backwards' }, o || {}));
@@ -401,7 +423,7 @@
     if (!v.item || !v.stagger) return;
     const items = root.querySelectorAll('.pmds-phead, .pmds-runbar, .pmds-clock, .pmds-tile, .pmds-choice, .pmds-chapter, .pmds-laytile, .pmds-looktile, .pmds-reset, .pmds-swrow, .pmds-actrow, .pmds-point, .pmds-result');
     let i = 0;
-    items.forEach((el) => { if (i > 22) return; anim(el, v.item, v.itemMs, v.itemEase || 'cubic-bezier(.2,.8,.2,1)', { delay: 40 + i * v.stagger, fill: 'backwards' }); i++; });
+    items.forEach((el) => { if (i > 22) return; play(el, v.item, { delay: 40 + i * v.stagger }); i++; });
   }
   function moveInk(instant) {
     if (!ST.sheet) return;
@@ -439,8 +461,9 @@
     renderNow();
     if (!keep && how !== 'none') {
       const v = VOICE[voice()] || VOICE.basic;
-      page.style.setProperty('--pmds-dir', (how === 'up' ? -18 : 18) + 'px');
-      anim(page, v.page, v.pageMs, v.pageEase);
+      /* the page comes from the side of the section it replaces: up the rail, it drops in from above */
+      const dir = (how === 'up' ? -1 : 1) * (voice() === 'friendly' ? 20 : 10) + 'px';
+      play(page, v.page.map(([frames, ms, ease, delay]) => [frames.map((k) => (k.transform ? Object.assign({}, k, { transform: k.transform.replace(/var\(--pmds-dir[^)]*\)/, dir) }) : k)), ms, ease, delay]));
       stagger(page, v);
       const FX = O55.nierFx;
       if (voice() === 'nier' && FX) { const t = page.querySelector('[data-pmds-decode]'); if (t && FX.decode) FX.decode(t, {}); }
@@ -501,9 +524,9 @@
       const v = VOICE[voice()] || VOICE.basic;
       const er = ST.entry.getBoundingClientRect(), sr = ST.sheet.getBoundingClientRect();
       ST.sheet.style.transformOrigin = `${Math.max(0, er.left + er.width / 2 - sr.left)}px ${sr.height}px`;
-      anim(ST.sheet, v.open, v.openMs, v.openEase);
+      play(ST.sheet, v.open);
       stagger(ST.sheet.querySelector('.pmds-page'), v);
-      if (v.item && v.stagger) ST.sheet.querySelectorAll('.pmds-tab').forEach((t, i) => anim(t, v.item, v.itemMs, v.itemEase || 'cubic-bezier(.2,.8,.2,1)', { delay: 60 + i * Math.round(v.stagger * 0.6) }));
+      if (v.item && v.stagger) ST.sheet.querySelectorAll('.pmds-tab').forEach((t, i) => play(t, v.item, { delay: 60 + i * Math.round(v.stagger * 0.6) }));
       if (O55.sound) O55.sound.play('open');
     }
     clearInterval(ST.timer); ST.timer = setInterval(tick, 500);
@@ -523,7 +546,7 @@
     ST.entry.setAttribute('aria-expanded', 'false');
     ST.el.removeAttribute('data-pmds-open');
     const sheet = ST.sheet, v = VOICE[voice()] || VOICE.basic;
-    const a = anim(sheet, v.close, o.launch ? Math.round(v.closeMs * 0.8) : v.closeMs, v.closeEase, { fill: 'forwards' });
+    const a = play(sheet, v.close, { fill: 'forwards', scale: o.launch ? 0.8 : 1 });
     const done = () => { if (!ST.open) { sheet.hidden = true; sheet.getAnimations().forEach((x) => x.cancel()); } };
     if (a) a.finished.then(done, done); else done();
     if (O55.sound && !o.launch) O55.sound.play('close');
