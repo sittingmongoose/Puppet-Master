@@ -91316,6 +91316,13 @@ renderApp = function (options = {}) {
 };
 
 /* ---------- the active section of a navigation is decided with it, and saved with it -------------------------------- */
+/* A page's first section as it is drawn, which is what the tracker judges at the top. The page's own section list says
+   it: a manager page (Memory, Source Control...) is drawn inside its `${ws}:main` section, Projects starts with the
+   settings catalog, a group that has stepped aside is left out, and advanced groups are drawn after the others. */
+const o55cFirstSection = ws => {
+  const list = continuousWorkspaceSections(ws) || [];
+  return list.find(s => !(pm51SectionMeta[s.id] || {}).advanced) || list[0];
+};
 const o55cNavigate = navigate;
 navigate = function (domainId, workspaceId, options = {}) {
   const domain = getDomain(domainId), ws = domain.workspaces.find(w => w.id === workspaceId) || domain.workspaces[0];
@@ -91323,7 +91330,7 @@ navigate = function (domainId, workspaceId, options = {}) {
     const placed = options && options.detailSetting && PM51.placement && PM51.placement.sectionOf(options.detailSetting);
     if (placed) state.activeSection[ws.id] = placed.id;
     else if (state.home || state.domain !== domain.id) {
-      const first = (PM51.placement && PM51.placement.sectionsFor(ws.id, PM51.placement.defaultTab(ws.id))[0]) || (ws.sections || [])[0];
+      const first = o55cFirstSection(ws);
       if (first) state.activeSection[ws.id] = first.id;
     }
   }
@@ -91337,7 +91344,7 @@ dispatchAction = function (action, el, event) {
     const domain = getDomain(ds(el, 'domain'));
     if (domain.id === state.domain) {
       const ws = domain.workspaces.find(w => w.id === domain.defaultWorkspace) || domain.workspaces[0];
-      const first = ws && ((PM51.placement && PM51.placement.sectionsFor(ws.id, PM51.placement.defaultTab(ws.id))[0]) || (ws.sections || [])[0]);
+      const first = ws && o55cFirstSection(ws);
       if (first) state.activeSection[ws.id] = first.id;
     }
   }
