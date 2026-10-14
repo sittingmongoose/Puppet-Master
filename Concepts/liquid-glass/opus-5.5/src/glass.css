@@ -202,6 +202,14 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon:hover .symb
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-lg-current] .symbol { color: var(--accent-blue) !important; background: transparent !important; }   /* the active window's colour, under the lens */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-lg-inactive] #activityBar .icon[data-lg-current] .symbol { color: var(--text-primary) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar :is(.d-abind) { opacity: 0 !important; }
+/* Jared #15 (with pm7-shell-polish, 2026-10-14): while the chat column shows, the rail's Chat icon is lit the way the
+   open panel is - the lens's drop, still, at the icon (the moving lens stays the open panel's), and the accent glyph */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar > .d-abind.d-abind-chat.is-on {
+  opacity: 1 !important; border-radius: var(--pm-ctl-r) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+  background: radial-gradient(70% 100% at 30% 0%, var(--lg-lens-glint), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat, linear-gradient(var(--lg-tint-lens), var(--lg-tint-lens)), linear-gradient(var(--lg-lens-body), var(--lg-lens-body)) !important;
+  box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 0 0 .5px var(--lg-lens-edge), var(--lg-lens-drop) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-ab-id="chat"].active .symbol { color: var(--accent-blue) !important; }
 
 /* ---------------------------------------------------------------------------------------------------------------
    5. Controls on a sheet: vibrant fills, the look's 6 px corners, a quiet hover; text buttons sit in their own fill
@@ -309,6 +317,9 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-modes { dis
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-mode { flex: 1; border: 0 !important; border-radius: var(--pm-ctl-r-in) !important; background: transparent !important; box-shadow: none !important; padding: 5px 8px !important; color: var(--text-secondary) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-mode:is(.is-selected, [aria-pressed="true"], [aria-checked="true"], .active) { background: var(--lg-fill-press) !important; color: var(--text-primary) !important; font-weight: 650; box-shadow: inset 0 1px 0 var(--lg-edge-top) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-divider { margin: 6px 4px !important; }
+/* Jared #14 (2026-10-14): Light / Dark / Auto is a Glass tab switcher, the lens drawn inside the menu (glass.js); the
+   plain chosen fill above stays only for the moment before the lens lands */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-modes[data-lg-lensed] .pm6-tt-mode:is(.is-selected, [aria-pressed="true"], [aria-checked="true"], .active) { background: transparent !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tb-menu-item {
   min-height: 34px; margin: 1px 0 !important; padding: 8px 10px !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important;
   background: transparent !important; box-shadow: none !important; display: flex; align-items: center; gap: 10px;
@@ -387,6 +398,26 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmw-ink-row:not([data-lg-lens
   box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 0 0 .5px var(--lg-lens-edge), var(--lg-lens-drop) !important;
   border-radius: var(--pm-ctl-r) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
 }
+/* Jared #1 (2026-10-14): Home's panel tabs. The chosen tab's plate (the silhouette that makes it one surface with the
+   panel body) was glass on the same glass, so nothing showed. In Glass it is the lens's drop instead, drawn inside the
+   plate: it keeps the plate's own glide and liquid stretch, and follows the panel through drags, resizes and
+   reordering because it is the panel's own element. The plate's silhouette and fill step aside. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmw-plate { clip-path: none !important; background: none !important; filter: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmw-plate::before {
+  content: ''; position: absolute; left: var(--pmw-tab-flare, 22px); right: var(--pmw-tab-flare, 22px); top: 3px; bottom: 5px; pointer-events: none;
+  border-radius: var(--pm-ctl-r);
+  background: radial-gradient(70% 100% at 30% 0%, var(--lg-lens-glint), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat, linear-gradient(var(--lg-tint-lens), var(--lg-tint-lens)), linear-gradient(var(--lg-lens-body), var(--lg-lens-body));
+  box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 0 0 .5px var(--lg-lens-edge), var(--lg-lens-drop);
+}
+/* Jared #2 (2026-10-14): Usage's list has one highlight in Glass, the lens; its own sliding ink steps aside */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-navink { opacity: 0 !important; }
+/* Jared #17 (2026-10-14): a field is one surface. A bar that wraps its input (Settings' rail and main searches, the
+   number steppers, the chat composer, the title-bar search's popover) wears the control fill and hairline, and the
+   input inside it is clear. A lone input wears them itself. Old Glass gave both layers its purple fill, so the input
+   showed as a darker box inside its bar. (Onboarding's and Usage's fields keep their own rules above.) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]), textarea, select) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pm6-tb-search-pop, .pmw-sc-box) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pm6-tb-search-pop, .pmw-sc-box) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]), textarea) { background: transparent !important; border-color: transparent !important; box-shadow: none !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-press {
   display: block; position: fixed; width: 36px; height: 36px; border-radius: 50%; pointer-events: none; z-index: 2147483000;
   background: radial-gradient(closest-side, rgba(255, 255, 255, .6), rgba(255, 255, 255, .16) 55%, transparent); mix-blend-mode: plus-lighter;

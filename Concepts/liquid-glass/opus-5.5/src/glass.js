@@ -633,6 +633,8 @@
     { sel: '.pmt-cz .pmw-ink-row', items: '.pmw-ink-opt', many: true, kind: 'lens', active: ':is([aria-selected="true"], [aria-checked="true"])', magRest: 1, mark: true },
     /* 2026-10-14: the Planning Wizard's work-type choice (pm7-wizard-orch); its own .sel fill steps aside under data-lg-lensed */
     { sel: '#panel-wizard .pm6-wiz-intent-row', items: '.pm6-wiz-intent-chip', kind: 'lens', active: '.sel', magRest: 1, mark: true },
+    /* Jared #14 (2026-10-14): the theme menu's Light / Dark / Auto, drawn inside the menu (LENS_HOSTS) */
+    { sel: '#themeMenu .pm6-tt-modes', items: '.pm6-tt-mode', kind: 'lens', active: '[aria-checked="true"]', magRest: 1, mark: true },
   ];
   function railIcon(strip) {
     var sp = document.getElementById('sidePanelSlot'); if (!sp || !visible(sp)) return null;
@@ -647,7 +649,7 @@
      #pmw-overlay such as the Customize screens, or any element its owner marks data-lg-lens-host), so a lens is never
      covered by the surface its strip lives in. #pmw-overlay sits above the app shell, so a lens in #lg-lenses was
      drawn under those dialogs and never seen (2026-10-14). */
-  var LENS_HOSTS = '#pm-o55-onboarding .o55-win, #pmw-overlay .pmt-cz-dialog, #pmw-overlay [role="dialog"], [data-lg-lens-host]';
+  var LENS_HOSTS = '#pm-o55-onboarding .o55-win, #pmw-overlay .pmt-cz-dialog, #pmw-overlay [role="dialog"], #themeMenu, [data-lg-lens-host]';
   var lenses = new Map(), layer = null, localLayers = new WeakMap();
   function lensLayer(strip) {
     var host = strip && strip.closest && strip.closest(LENS_HOSTS);
@@ -831,6 +833,32 @@
     magnifyAlong(L, track, dur, o);
     an.onfinish = function () { if (L.anim === an) L.anim = null; };
   }
+  /* A strip that is still arriving (its rows sliding in, its bar fading in: Usage's first arrival, a page's entrance)
+     shows its lens as it lands, never ahead of it over a blank bar (Jared #2, 2026-10-14). The arrival is whatever
+     opacity or transform animation is still running on the target or any of its ancestors; the lens fades in over the
+     last 160 ms of the longest one. */
+  var ARRIVAL_PROPS = /^(opacity|transform|translate|scale)$/;
+  function arrivalLeft(el) {
+    var left = 0;
+    for (var e = el; e && e !== document.documentElement; e = e.parentElement) {
+      if (!e.getAnimations) break;
+      var list = e.getAnimations();
+      for (var i = 0; i < list.length; i++) {
+        var a = list[i]; if (a.playState !== 'running' && a.playState !== 'pending') continue;
+        var fx = a.effect; if (!fx || !fx.getComputedTiming) continue;
+        var moving = a.transitionProperty ? ARRIVAL_PROPS.test(a.transitionProperty) : (fx.getKeyframes ? fx.getKeyframes().some(function (k) { return k.opacity != null || k.transform != null || k.translate != null || k.scale != null; }) : false);
+        if (!moving) continue;
+        var t = fx.getComputedTiming(), rate = Math.abs(a.playbackRate || 1);
+        if (t.endTime === Infinity || t.localTime == null) continue;
+        left = Math.max(left, (t.endTime - t.localTime) / rate);
+      }
+    }
+    return left;
+  }
+  function arrive(L, target) {
+    var left = arrivalLeft(target); if (left < 40) return;
+    try { L.lens.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 160, delay: Math.max(0, left - 160), fill: 'backwards', easing: 'ease-out' }); } catch (e) {}
+  }
   function syncStrip(cfg, strip) {
     var L = lensFor(strip, cfg);
     var target = cfg.pick ? cfg.pick(strip) : strip.querySelector(cfg.items + (cfg.active || '.active'));
@@ -861,7 +889,9 @@
     if (!A || quiet || !isGlass()) {
       stopLensTravel(L);
       if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } }; }
-      setLensBox(L, R); return;
+      setLensBox(L, R);
+      if (!A && !quiet && isGlass()) arrive(L, target);
+      return;
     }
     /* the destination moved by a pixel or two (the chosen label turned bold): a move in flight carries on, re-based;
        a lens at rest just takes the new box. Neither starts a new move (it would lift and swell for nothing). */
@@ -1155,7 +1185,8 @@
     lenses.forEach(function (L) {
       if (!L.rect) return;
       if (!menus.length) { if (L.lens.classList.contains('lg-under')) L.lens.classList.remove('lg-under'); return; }
-      var r = L.lens.getBoundingClientRect(), hit = menus.some(function (m) { return r.right > m.left && r.left < m.right && r.bottom > m.top && r.top < m.bottom; });
+      /* a lens drawn inside a menu (the theme menu's Light / Dark / Auto) is on that menu, not under it */
+      var r = L.lens.getBoundingClientRect(), hit = menus.some(function (o) { var m = o.r; return !o.el.contains(L.lens) && r.right > m.left && r.left < m.right && r.bottom > m.top && r.top < m.bottom; });
       if (L.lens.classList.contains('lg-under') !== hit) L.lens.classList.toggle('lg-under', hit);
     });
   }
@@ -1167,7 +1198,7 @@
       if (!m.isConnected) { knownMenus.delete(m); return; }
       var shown = null;
       function isShown() { if (shown === null) shown = visible(m); return shown; }
-      if (m.matches('.pmu-pop.open, .pmr-menu-list, #lg-demo-pop[data-open], .pm6-tb-menu.is-open') && isShown()) open.push(m.getBoundingClientRect());
+      if (m.matches('.pmu-pop.open, .pmr-menu-list, #lg-demo-pop[data-open], .pm6-tb-menu.is-open') && isShown()) open.push({ el: m, r: m.getBoundingClientRect() });
       if (m.id === 'themeMenu') theme.push(m);
       if (m.matches('.pmu-pop')) pops.push(m);
       if (m.matches('.pmr-menu-list')) lists.push(m);
