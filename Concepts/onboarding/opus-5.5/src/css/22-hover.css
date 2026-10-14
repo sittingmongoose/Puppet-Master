@@ -117,7 +117,9 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmh-field: 1; --pmh-near: 1; --pmh-glow: 1; --pmh-frame: 0; --pmh-edge: .4;
   --pmf-ease-out: cubic-bezier(.3, 0, .2, 1);
   /* the light's falloff: a Gaussian exp(-4.5 t^2) tapered to 0 at the radius, sampled every 10 % (hand-set stops left
-     Mach rings in a warm pool). The few-% sheen shows only in the inner third; the hairline reads to about two thirds. */
+     Mach rings in a warm pool). The few-% sheen shows only in the inner third; the hairline reads to about two thirds.
+     Jared's Glass review (2026-10-14, #16): the circle under the pointer was too strong and the edge glow right, so every
+     look's --pmf-sheen below is 0.6 of its 2026-10-10 value and the rim, band, mask and radius are unchanged. */
   --pmf-mask: #000 0, rgb(0 0 0 / .956) 10%, rgb(0 0 0 / .833) 20%, rgb(0 0 0 / .663) 30%, rgb(0 0 0 / .481) 40%, rgb(0 0 0 / .317) 50%, rgb(0 0 0 / .189) 60%, rgb(0 0 0 / .1) 70%, rgb(0 0 0 / .046) 80%, rgb(0 0 0 / .015) 90%, transparent 100%;
 }
 /* Basic: crisp. Critically damped and quick; a cool hairline over a short inner band; a small faint sheen; a tight
@@ -128,7 +130,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmf-r: 90px; --pmf-band: 6px;
   --pmf-rim: color-mix(in srgb, color-mix(in srgb, rgb(var(--accent-primary-rgb)) 70%, #fff) 80%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 40%, transparent);
-  --pmf-sheen: rgb(255 255 255 / .07);
+  --pmf-sheen: rgb(255 255 255 / .042);
   --pmf-in: 90ms; --pmf-out: 220ms;
   --pmf-plate: 0 6px 14px -6px rgba(0, 0, 0, .5);
   --pmf-bloom: 0 0 10px rgba(var(--accent-primary-rgb), .2);
@@ -140,7 +142,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmf-r: 90px; --pmf-band: 6px;
   --pmf-rim: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 80%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 26%, transparent);
-  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 7.5%, transparent);
+  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 4.5%, transparent);
   --pmf-in: 90ms; --pmf-out: 220ms;
   --pmf-plate: 0 6px 14px -6px rgba(16, 24, 40, .2);
   --pmf-bloom: 0 0 10px rgba(var(--accent-primary-rgb), .12);
@@ -152,7 +154,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmh-mag: 2.5; --pmh-mag-k: .03; --pmh-stiff: 170; --pmh-damp: 22;
   --pmh-bleed: 18; --pmh-ramp: 18; --pmh-out-ms: 320; --pmh-glow-reach: 36;
   --pmf-r: 100px; --pmf-band: 16px;
-  --pmf-sheen: rgb(255 228 206 / .1);
+  --pmf-sheen: rgb(255 228 206 / .06);
   --pmf-in: 130ms; --pmf-out: 320ms;
   --pmf-plate: 0 10px 22px -10px rgba(10, 6, 18, .55);
   --pmf-bloom: 0 0 14px color-mix(in srgb, color-mix(in srgb, var(--accent-primary) 55%, #ffc9b0) 18%, transparent);
@@ -162,7 +164,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmh-mag: 2.5; --pmh-mag-k: .03; --pmh-stiff: 170; --pmh-damp: 22;
   --pmh-bleed: 18; --pmh-ramp: 18; --pmh-out-ms: 320; --pmh-glow-reach: 36;
   --pmf-r: 100px; --pmf-band: 16px;
-  --pmf-sheen: color-mix(in srgb, #f07a55 11%, transparent);
+  --pmf-sheen: color-mix(in srgb, #f07a55 6.5%, transparent);
   --pmf-in: 130ms; --pmf-out: 320ms;
   --pmf-plate: 0 10px 22px -10px rgba(122, 109, 140, .32);
   --pmf-bloom: 0 0 14px color-mix(in srgb, color-mix(in srgb, var(--accent-primary) 50%, #f07a55) 11%, transparent);
@@ -177,7 +179,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmf-r: 96px; --pmf-band: 10px;
   --pmf-rim: color-mix(in srgb, color-mix(in srgb, rgb(var(--accent-primary-rgb)) 45%, #fff) 85%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 38%, transparent);
-  --pmf-sheen: rgb(255 255 255 / .11);
+  --pmf-sheen: rgb(255 255 255 / .066);
   --pmf-in: 140ms; --pmf-out: 360ms;
   --pmf-plate: 0 14px 28px -12px rgba(0, 4, 14, .55);
   --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .2);
@@ -189,7 +191,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmf-r: 96px; --pmf-band: 10px;
   --pmf-rim: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 85%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 28%, transparent);
-  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 10%, transparent);
+  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 6%, transparent);
   --pmf-in: 140ms; --pmf-out: 360ms;
   --pmf-plate: 0 12px 24px -12px rgba(30, 40, 60, .18);
   --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .14);
