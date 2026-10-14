@@ -28,7 +28,10 @@
 
   /* ---------------------------------------------------------------- start / remove */
   function activeStage() { const s = document.querySelector('#panel-wizard .pm6-wiz-stage.active'); return s ? s.getAttribute('data-wiz-stage') : 'intake'; }
-  function setStage(name) { document.querySelectorAll('#panel-wizard .pm6-wiz-stage').forEach((s) => s.classList.toggle('active', s.getAttribute('data-wiz-stage') === name)); }
+  function setStage(name) {
+    if (window.PM_WIZARD_STAGES) window.PM_WIZARD_STAGES.prepare(name);
+    document.querySelectorAll('#panel-wizard .pm6-wiz-stage').forEach((s) => s.classList.toggle('active', s.getAttribute('data-wiz-stage') === name));
+  }
   P.start = function start() {
     if (P.active) return;
     const saved = { stage: activeStage(), regions: {}, title: (document.querySelector('#pm6WizRunHead .pm6-wiz-runhead-title') || {}).textContent };

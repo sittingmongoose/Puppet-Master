@@ -30835,6 +30835,22 @@ html[data-theme^="glass"]:not([data-lg="on"]) .title-bar .pm6-tt-mode { backgrou
 html[data-theme^="glass"]:not([data-lg="on"]) .title-bar .pm6-tt-mode[aria-checked="true"] { background: var(--pm-tt-chosen) !important; }
 html[data-theme^="glass"]:not([data-lg="on"]) .title-bar .pm6-tt-mode:not([aria-checked="true"]):hover { background: var(--pm-tt-hover) !important; }
 
+/* ---- css/29-wizard-stage.css ---- */
+/* Keep the previous stage drawn under the existing entrance, including the frames before that entrance is ready.
+   Both stages fill the same page; the outgoing stage takes no space and cannot receive input or accessibility focus. */
+#panel-wizard > .pm6-wiz-stage { position: absolute; inset: 0; }
+#panel-wizard > .pm6-wiz-stage.wo-stage-out {
+  display: flex; z-index: 0;
+  animation: pm-page-in 180ms var(--ease-out) both; pointer-events: none;
+}
+#panel-wizard > .pm6-wiz-stage.wo-stage-in { z-index: 1; }
+html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard > .pm6-wiz-stage.wo-stage-out {
+  animation: wo-fade 140ms ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  #panel-wizard > .pm6-wiz-stage.wo-stage-out { animation: wo-fade 140ms ease-out both; }
+}
+
 /* ---- css/30-art.css ---- */
 /* ---- O55 art: scene layers, family choreography, ambient loops -------------------------------------------------
    Families differ in easing and material, never in waiting time (canon budgets). Retro never scales (steps + cuts).
@@ -118355,6 +118371,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
 
   /* ---------------- stage switching ---------------- */
   function setStage(name) {
+    if (window.PM_WIZARD_STAGES) window.PM_WIZARD_STAGES.prepare(name);
     W.stage = name;
     var r = root();
     if (!r) return;
@@ -119195,7 +119212,8 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
   /* ---------------- render everything ---------------- */
   function renderAll() {
     if (!WS()) return;
-    try { renderPrd(); } catch (e) {}
+    if (W.stage === 'prd_builder') { try { renderPrd(); } catch (e) {} }
+    if (W.stage !== 'workspace') { hydrateIcons(); return; }
     try { renderTopics(); } catch (e) {}
     try { renderDock(); } catch (e) {}
     try { renderStatePill(); } catch (e) {}
@@ -136565,6 +136583,113 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   };
 })();
 
+/* ---- js/27-wizard-stage.js ---- */
+/* A stage's CSS entrance can spend several frames pending at opacity 0 while Chrome prepares its layers. Keep the
+   outgoing stage underneath it until that entrance finishes. The existing entrance still owns its duration,
+   easing and movement (including Reduced Motion); its actual ready/start time also drives the outgoing fade. */
+(function () {
+  'use strict';
+  function boot() {
+    const root = document.getElementById('panel-wizard');
+    if (!root) return;
+    const stages = [...root.querySelectorAll('.pm6-wiz-stage')];
+    let current = stages.find(s => s.classList.contains('active'));
+    let pageShown = root.classList.contains('active');
+    let serial = 0;
+    let watching = null;
+    const leaving = new Map();
+
+    function release(stage) {
+      const exit = leaving.get(stage);
+      leaving.delete(stage);
+      if (exit) exit.cancel();
+      if (stage.classList.contains('wo-stage-out')) stage.classList.remove('wo-stage-out');
+      if (stage.inert) stage.inert = false;
+    }
+    function finish(token, incoming) {
+      if (token !== serial) return;
+      for (const stage of leaving.keys()) release(stage);
+      if (incoming && incoming.classList.contains('wo-stage-in')) incoming.classList.remove('wo-stage-in');
+      watching = null;
+    }
+    function watch(entrance, token, incoming) {
+      if (watching === entrance) return;
+      watching = entrance;
+      entrance.ready.then(() => {
+        if (token !== serial || current !== incoming || watching !== entrance) return;
+        // CSS puts animation-timing-function on each keyframe, not on the effect timing.
+        const frames = entrance.effect.getKeyframes().map(f => ({
+          opacity: 1 - Number(f.opacity), offset: f.computedOffset, easing: f.easing
+        }));
+        for (const [stage, previous] of leaving) {
+          if (previous) previous.cancel();
+          const exit = stage.animate(frames, entrance.effect.getTiming());
+          exit.startTime = entrance.startTime;
+          leaving.set(stage, exit);
+        }
+      }).catch(() => {});
+      entrance.finished.then(() => {
+        if (watching === entrance) finish(token, incoming);
+      }, () => {
+        // A motion-mode change replaces the entrance. Keep the old stage until the replacement is ready too.
+        requestAnimationFrame(() => {
+          if (token !== serial || current !== incoming || watching !== entrance) return;
+          if (!incoming.getAnimations().some(a => a instanceof CSSAnimation && a.playState !== 'idle')) {
+            finish(token, incoming);
+          }
+        });
+      });
+    }
+    // Read animation timing only after the browser prepares it, not during the synchronous stage render.
+    root.addEventListener('animationstart', event => {
+      const incoming = event.target;
+      if (incoming !== current || !incoming.classList.contains('wo-stage-in')) return;
+      const entrance = incoming.getAnimations().find(a => a.animationName === event.animationName);
+      if (entrance) watch(entrance, serial, incoming);
+      else finish(serial, incoming);
+    });
+
+    // Called BEFORE either stage writer removes .active. Renderers can synchronously measure during that write;
+    // an observer would run too late to preserve the outgoing layout and its already-finished CSS entrances.
+    function prepare(name) {
+      const incoming = stages.find(s => s.dataset.wizStage === name);
+      if (!incoming || incoming === current) return;
+      const outgoing = current;
+      const reversing = leaving.has(incoming);
+      current = incoming;
+      const token = ++serial;
+      watching = null;
+      release(incoming);
+      if (!outgoing || !pageShown || !root.classList.contains('active')) {
+        finish(token, incoming);
+        return;
+      }
+      if (outgoing.classList.contains('wo-stage-in')) outgoing.classList.remove('wo-stage-in');
+      outgoing.classList.add('wo-stage-out');
+      outgoing.inert = true;
+      leaving.set(outgoing, null);
+      incoming.classList.add('wo-stage-in');
+      // Returning to a stage that is still underneath the current one can reuse a completed entrance. That has
+      // no new animationstart event, so finish or watch the reused animation on this uncommon reversal path.
+      if (reversing) requestAnimationFrame(() => {
+        if (token !== serial || current !== incoming) return;
+        const entrance = incoming.getAnimations().find(a => a instanceof CSSAnimation);
+        if (!entrance || entrance.playState === 'finished') finish(token, incoming);
+        else watch(entrance, token, incoming);
+      });
+    }
+    window.PM_WIZARD_STAGES = { prepare };
+    const observer = new MutationObserver(() => {
+      pageShown = root.classList.contains('active');
+      if (!pageShown) finish(serial, current);
+    });
+    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
+  }
+  // The authored scripts follow the page markup. Install before the legacy DOMContentLoaded stage writer runs.
+  if (!document.getElementById('panel-wizard')) document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+
 /* ---- js/30-owners.js ---- */
 /* O55.owners — the command table and fixture owner operations. Every control dispatches exactly one command id; each
    row carries the owner phase in which it may run. Before the reviewed commit only bounded read-only preflight and
@@ -150346,7 +150471,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 
   /* ---------------------------------------------------------------- start / remove */
   function activeStage() { const s = document.querySelector('#panel-wizard .pm6-wiz-stage.active'); return s ? s.getAttribute('data-wiz-stage') : 'intake'; }
-  function setStage(name) { document.querySelectorAll('#panel-wizard .pm6-wiz-stage').forEach((s) => s.classList.toggle('active', s.getAttribute('data-wiz-stage') === name)); }
+  function setStage(name) {
+    if (window.PM_WIZARD_STAGES) window.PM_WIZARD_STAGES.prepare(name);
+    document.querySelectorAll('#panel-wizard .pm6-wiz-stage').forEach((s) => s.classList.toggle('active', s.getAttribute('data-wiz-stage') === name));
+  }
   P.start = function start() {
     if (P.active) return;
     const saved = { stage: activeStage(), regions: {}, title: (document.querySelector('#pm6WizRunHead .pm6-wiz-runhead-title') || {}).textContent };
