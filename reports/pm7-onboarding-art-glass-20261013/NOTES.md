@@ -178,8 +178,8 @@ Open, for their owners:
 
 ## Evidence and packet
 
-- Raw evidence: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-art-glass-20261013/` (328 files, 142 MB),
-  `SHA256SUMS` `3dbf6e3d382dfd0e2b3978c7992bbce950b342b829027c109c2948064b620d77`; the capture and film scripts are in
+- Raw evidence: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-art-glass-20261013/` (338 files, 142 MB),
+  `SHA256SUMS` `be04dfdc841049a822cbb8e65ccdbed6c52b93969871970c3242c9b7c8f0585f`; the capture and film scripts are in
   `scripts/` there.
 - Review packet: `/mnt/Cursor/share/puppet-master/2026-10-13-onboarding-art-glass/` (README, previews at `9c28f69792`,
   one under the Glass owner's checkpoint `34e5452f8e`, before/after sheets, both films and their frame sheets).
