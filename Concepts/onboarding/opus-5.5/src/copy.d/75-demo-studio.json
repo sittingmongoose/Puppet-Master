@@ -65,14 +65,38 @@
       "recipesLead": "One click sets the world up and starts the moment."
     },
     "recipes": {
-      "newComputer": { "title": "A brand-new computer", "sub": "Fresh computer, no progress kept, onboarding from the start." },
-      "returningNas": { "title": "Back with a Home NAS", "sub": "A returning user whose key already works with the Home NAS." },
-      "roughDay": { "title": "A rough first day", "sub": "Wrong NAS password, a flaky network and a GitHub name that is taken." },
-      "noAi": { "title": "No AI account yet", "sub": "Nothing signed in anywhere, so onboarding offers Free Models." },
-      "learn": { "title": "Learn the app", "sub": "The Guided Tour from its first step." },
-      "storyFinish": { "title": "Watch a run finish", "sub": "The story jumps to Run #47 complete and plays at 2x." },
-      "busy": { "title": "A busy afternoon", "sub": "Agents open things, notices arrive and Usage plays the next hour." },
-      "nierTour": { "title": "The tour in NieR Mode", "sub": "NieR Mode on, then the Guided Tour with Pod 042." }
+      "newComputer": {
+        "title": "A brand-new computer",
+        "sub": "Fresh computer, no progress kept, onboarding from the start."
+      },
+      "returningNas": {
+        "title": "Back with a Home NAS",
+        "sub": "A returning user whose key already works with the Home NAS."
+      },
+      "roughDay": {
+        "title": "A rough first day",
+        "sub": "Wrong NAS password, a flaky network and a GitHub name that is taken."
+      },
+      "noAi": {
+        "title": "No AI account yet",
+        "sub": "Nothing signed in anywhere, so onboarding offers Free Models."
+      },
+      "learn": {
+        "title": "Learn the app",
+        "sub": "The Guided Tour from its first step."
+      },
+      "storyFinish": {
+        "title": "Watch a run finish",
+        "sub": "The story jumps to Run #47 complete and plays at 2x."
+      },
+      "busy": {
+        "title": "A busy afternoon",
+        "sub": "Agents open things, notices arrive and Usage plays the next hour."
+      },
+      "nierTour": {
+        "title": "The tour in NieR Mode",
+        "sub": "NieR Mode on, then the Guided Tour with Pod 042."
+      }
     },
     "onboarding": {
       "kicker": "Onboarding",
@@ -106,24 +130,78 @@
         "ready": "Ready"
       },
       "situations": {
-        "fresh": { "title": "Fresh computer", "sub": "Nothing set up yet. The usual first run." },
-        "returning": { "title": "Returning user", "sub": "Projects from before are already here." },
-        "lowResource": { "title": "Low-resource computer", "sub": "Effects step down so the window stays smooth." },
-        "noKeys": { "title": "No SSH keys here", "sub": "This computer has no key to offer the Home NAS." },
-        "homeNasPm": { "title": "Home NAS runs Puppet Master", "sub": "Pairing replaces the key steps." },
-        "keyWorks": { "title": "A key already works", "sub": "The Home NAS already trusts a key from this computer." },
-        "hostChanged": { "title": "Home NAS ID changed", "sub": "The NAS answers with a different identity than before." },
-        "wrongPassword": { "title": "Wrong NAS password first", "sub": "The first password is refused; the second works." },
-        "keyRefused": { "title": "NAS refuses the key once", "sub": "Its folder permissions are too open the first time." },
-        "selfKeyMissing": { "title": "Hand-added key not there yet", "sub": "The person says they added the key, but it is missing." },
-        "readOnly": { "title": "Read-only NAS folder", "sub": "The projects folder on the NAS cannot be written." },
-        "nameTaken": { "title": "GitHub name taken", "sub": "The online copy's name is already used at creation." },
-        "flaky": { "title": "Flaky network", "sub": "Making the online copy fails once on the network." },
-        "cliMissing": { "title": "Claude not installed", "sub": "Claude has to be installed before signing in." },
-        "signedOut": { "title": "Claude signed out", "sub": "Claude is installed but nobody is signed in." },
-        "copiedUnavailable": { "title": "Copied account unavailable", "sub": "An account copied from another computer cannot be used here." },
-        "remoteAi": { "title": "AI on a remote Server", "sub": "The AI accounts live on the Server, not here." },
-        "noAi": { "title": "No AI account anywhere", "sub": "Nothing signed in on this computer or the Server." }
+        "fresh": {
+          "title": "Fresh computer",
+          "sub": "Nothing set up yet. The usual first run."
+        },
+        "returning": {
+          "title": "Returning user",
+          "sub": "Projects from before are already here."
+        },
+        "lowResource": {
+          "title": "Low-resource computer",
+          "sub": "Effects step down so the window stays smooth."
+        },
+        "noKeys": {
+          "title": "No SSH keys here",
+          "sub": "This computer has no key to offer the Home NAS."
+        },
+        "homeNasPm": {
+          "title": "Home NAS runs Puppet Master",
+          "sub": "Pairing replaces the key steps."
+        },
+        "keyWorks": {
+          "title": "A key already works",
+          "sub": "The Home NAS already trusts a key from this computer."
+        },
+        "hostChanged": {
+          "title": "Home NAS ID changed",
+          "sub": "The NAS answers with a different identity than before."
+        },
+        "wrongPassword": {
+          "title": "Wrong NAS password first",
+          "sub": "The first password is refused; the second works."
+        },
+        "keyRefused": {
+          "title": "NAS refuses the key once",
+          "sub": "Its folder permissions are too open the first time."
+        },
+        "selfKeyMissing": {
+          "title": "Hand-added key not there yet",
+          "sub": "The person says they added the key, but it is missing."
+        },
+        "readOnly": {
+          "title": "Read-only NAS folder",
+          "sub": "The projects folder on the NAS cannot be written."
+        },
+        "nameTaken": {
+          "title": "GitHub name taken",
+          "sub": "The online copy's name is already used at creation."
+        },
+        "flaky": {
+          "title": "Flaky network",
+          "sub": "Making the online copy fails once on the network."
+        },
+        "cliMissing": {
+          "title": "Claude not installed",
+          "sub": "Claude has to be installed before signing in."
+        },
+        "signedOut": {
+          "title": "Claude signed out",
+          "sub": "Claude is installed but nobody is signed in."
+        },
+        "copiedUnavailable": {
+          "title": "Copied account unavailable",
+          "sub": "An account copied from another computer cannot be used here."
+        },
+        "remoteAi": {
+          "title": "AI on a remote Server",
+          "sub": "The AI accounts live on the Server, not here."
+        },
+        "noAi": {
+          "title": "No AI account anywhere",
+          "sub": "Nothing signed in on this computer or the Server."
+        }
       },
       "screens": {
         "welcome": "Welcome",
@@ -252,12 +330,30 @@
       "kicker": "Notices",
       "title": "Sample notifications",
       "lead": "Each one arrives through the title bar's bell exactly as a real one would.",
-      "quiet": { "title": "A quiet confirmation", "sub": "“Settings saved”" },
-      "run": { "title": "Something finished", "sub": "Run #47 completed" },
-      "usage": { "title": "A usage warning", "sub": "Claude's 5-hour window at 80%" },
-      "approval": { "title": "Needs your approval", "sub": "A builder waits on a decision" },
-      "burst": { "title": "A burst", "sub": "Five notices in two seconds" },
-      "all": { "title": "All four in a row", "sub": "Quiet, finished, warning, approval" },
+      "quiet": {
+        "title": "A quiet confirmation",
+        "sub": "“Settings saved”"
+      },
+      "run": {
+        "title": "Something finished",
+        "sub": "Run #47 completed"
+      },
+      "usage": {
+        "title": "A usage warning",
+        "sub": "Claude's 5-hour window at 80%"
+      },
+      "approval": {
+        "title": "Needs your approval",
+        "sub": "A builder waits on a decision"
+      },
+      "burst": {
+        "title": "A burst",
+        "sub": "Five notices in two seconds"
+      },
+      "all": {
+        "title": "All four in a row",
+        "sub": "Quiet, finished, warning, approval"
+      },
       "clear": "Clear every notice"
     },
     "looks": {
@@ -281,15 +377,36 @@
         "retro": "Retro",
         "glass": "Glass",
         "nier": "NieR"
+      },
+      "lg": {
+        "title": "Liquid Glass",
+        "lead": "Glass's newer material. These change only the Glass look.",
+        "material": "Material",
+        "on": "Liquid Glass",
+        "off": "Today's Glass",
+        "tier": "Drawn by",
+        "gpu": "Graphics card",
+        "cpu": "Processor",
+        "wall": "Wallpaper",
+        "wallLook": "The look's own"
       }
     },
     "reset": {
       "kicker": "Reset",
       "title": "Start the demo over",
       "lead": "Choose how much goes. Nothing outside this concept is touched.",
-      "progress": { "title": "Progress", "sub": "Onboarding, the Guided Tour and the situation go back to a fresh computer. Then onboarding opens." },
-      "layout": { "title": "Workspace layout", "sub": "The Home panels go back to their default layout. Nothing else changes." },
-      "everything": { "title": "Everything", "sub": "All of the above and everything else this concept saved in this browser. Then the page reloads as a first run." },
+      "progress": {
+        "title": "Progress",
+        "sub": "Onboarding, the Guided Tour and the situation go back to a fresh computer. Then onboarding opens."
+      },
+      "layout": {
+        "title": "Workspace layout",
+        "sub": "The Home panels go back to their default layout. Nothing else changes."
+      },
+      "everything": {
+        "title": "Everything",
+        "sub": "All of the above and everything else this concept saved in this browser. Then the page reloads as a first run."
+      },
       "goes": "What goes",
       "stays": "What stays",
       "staysProgress": "The layout, looks and settings.",

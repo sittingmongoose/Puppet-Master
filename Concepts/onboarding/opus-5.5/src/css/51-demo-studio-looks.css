@@ -66,7 +66,7 @@
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-tile { border: 3px solid var(--pmds-bezel); border-radius: 18px; background: var(--pmds-bg); box-shadow: 0 4px 0 color-mix(in srgb, var(--pmds-line) 70%, transparent), 0 10px 20px -14px rgba(60, 80, 130, .45); }
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-tile:active:not([aria-disabled="true"]) { scale: 1; translate: 0 3px; box-shadow: 0 1px 0 color-mix(in srgb, var(--pmds-line) 70%, transparent); }
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-tile-art { border-radius: 13px; color: #fff; background: linear-gradient(160deg, color-mix(in srgb, var(--pmds-tone, var(--pmds-acc)) 70%, #fff), var(--pmds-tone, var(--pmds-acc))); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .5), inset 0 -3px 0 rgba(0, 0, 0, .08); }
-#o55-demo.pmds[data-pmds-look="friendly"] .pmds-tile-hero { padding: 0; gap: 0; overflow: hidden; grid-template-rows: 104px auto; min-height: 0; }
+#o55-demo.pmds[data-pmds-look="friendly"] .pmds-tile-hero { padding: 0; gap: 0; overflow: hidden; grid-template-rows: 104px auto; min-height: 0; align-items: stretch; }
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-tile-hero .pmds-tile-art {
   width: auto; height: auto; border-radius: 0; place-items: center;
   background: radial-gradient(120% 90% at 30% 10%, rgba(255, 255, 255, .55), transparent 55%), linear-gradient(160deg, color-mix(in srgb, var(--pmds-tone) 60%, #fff), var(--pmds-tone));
@@ -277,6 +277,40 @@ html[data-o55-nier-parts~="icons"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-i
 html[data-o55-nier-parts~="blocks"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-fuse { height: 6px; background: repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 6px, transparent 6px 8px); }
 html[data-o55-nier-parts~="blocks"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-timeline::after { height: 4px; top: 14px; background: repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 6px, transparent 6px 8px); }
 
+/* ---- the Start page's scenes in each look ---- */
+/* Friendly: the channel's lit screen, the scene drawn in white on it */
+#o55-demo.pmds[data-pmds-look="friendly"] .pmds-tile-hero.pmds-arty { grid-template-rows: 112px auto; }
+#o55-demo.pmds[data-pmds-look="friendly"] .pmds-art {
+  --a-fill: #fff; --a-line: rgba(80, 90, 120, .22); --a-soft: rgba(255, 255, 255, .5); --a-scrim: rgba(30, 40, 70, .38);
+  height: 112px; border-radius: 0;
+  background: radial-gradient(120% 90% at 25% 0%, rgba(255, 255, 255, .6), transparent 55%), linear-gradient(160deg, color-mix(in srgb, var(--a-tone) 55%, #fff), var(--a-tone));
+}
+#o55-demo.pmds[data-pmds-look="friendly"] .pmds-art :is(.pmds-a-win, .pmds-a-app i, .pmds-a-call, .pmds-a-layer, .pmds-a-turn) { border: 2px solid #fff; border-radius: 9px; box-shadow: 0 4px 0 rgba(40, 60, 100, .14), 0 10px 18px -10px rgba(40, 60, 100, .5); }
+#o55-demo.pmds[data-pmds-look="friendly"] .pmds-art .pmds-a-steps i { height: 7px; border-radius: 3px; }
+#o55-demo.pmds[data-pmds-look="friendly"] .pmds-art .pmds-a-steps i:nth-child(-n + 2), #o55-demo.pmds[data-pmds-look="friendly"] .pmds-tile:is(:hover, :focus-visible) .pmds-a-steps i { background: #fff; }
+#o55-demo.pmds[data-pmds-look="friendly"] .pmds-art .pmds-a-spot { border-radius: 12px; box-shadow: 0 0 0 3px #fff, 0 0 0 999px var(--a-scrim); transition-timing-function: cubic-bezier(.3, 1.6, .45, 1); }
+@keyframes pmds-a-fill-friendly { 0%, 100% { background: rgba(255, 255, 255, .5); } 20%, 70% { background: #fff; } }
+#o55-demo.pmds[data-pmds-look="friendly"] .pmds-page[data-pmds-section="start"] .pmds-a-steps i:nth-child(n + 3) { animation-name: pmds-a-fill-friendly; }
+#o55-demo.pmds[data-pmds-look="friendly"] .pmds-tile-hero .pmds-art + .pmds-tile-text { padding: 12px 14px 14px; }
+/* Retro: hard edges, stepped travel */
+#o55-demo.pmds[data-pmds-look="retro"] .pmds-art { --a-scrim: rgba(0, 0, 0, .62); border-radius: 0; background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--pmds-ink) 6%, transparent) 0 1px, transparent 1px 8px), var(--pmds-bg); border: 1px solid var(--pmds-line); }
+#o55-demo.pmds[data-pmds-look="retro"] .pmds-art :is(.pmds-a-win, .pmds-a-app i, .pmds-a-call, .pmds-a-layer, .pmds-a-turn, .pmds-a-spot, .pmds-a-copy b) { border-radius: 0; box-shadow: none; }
+#o55-demo.pmds[data-pmds-look="retro"] .pmds-art .pmds-a-spot { box-shadow: 0 0 0 2px var(--a-tone), 0 0 0 999px var(--a-scrim); }
+#o55-demo.pmds[data-pmds-look="retro"] .pmds-art :is(.pmds-a-spot, .pmds-a-call, .pmds-a-layer, .pmds-a-turn) { transition-timing-function: steps(6, end); }
+#o55-demo.pmds[data-pmds-look="retro"] .pmds-page[data-pmds-section="start"] :is(.pmds-a-spot, .pmds-a-call, .pmds-a-layer) { animation-timing-function: steps(8, end); }
+#o55-demo.pmds[data-pmds-look="retro"] .pmds-art .pmds-a-hill { clip-path: polygon(0 100%, 0 70%, 12% 70%, 12% 40%, 24% 40%, 24% 18%, 36% 18%, 36% 60%, 52% 60%, 52% 30%, 66% 30%, 66% 74%, 82% 74%, 82% 46%, 100% 46%, 100% 100%); }
+/* Glass: frosted plates in the scene too */
+#o55-demo.pmds[data-pmds-look="glass"] .pmds-art { --a-fill: rgba(255, 255, 255, .1); --a-line: rgba(255, 255, 255, .22); --a-scrim: rgba(10, 6, 30, .45); border-radius: 12px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12); }
+#o55-demo.pmds[data-pmds-look="glass"][data-pmds-mode="light"] .pmds-art { --a-fill: rgba(255, 255, 255, .7); --a-line: rgba(69, 58, 92, .2); --a-scrim: rgba(60, 40, 100, .28); }
+#o55-demo.pmds[data-pmds-look="glass"] .pmds-art :is(.pmds-a-win, .pmds-a-call, .pmds-a-layer, .pmds-a-turn) { border-radius: 9px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), 0 12px 24px -14px rgba(0, 0, 0, .7); }
+/* NieR: ink line work on parchment, travel in steps */
+#o55-demo.pmds[data-pmds-look="nier"] .pmds-art { --a-tone: var(--o55-nier-ink, var(--pmds-ink)); --a-fill: var(--o55-nier-raised, var(--pmds-bg)); --a-line: rgba(var(--o55-nier-ink-rgb, 0, 0, 0), .45); --a-soft: rgba(var(--o55-nier-ink-rgb, 0, 0, 0), .16); --a-scrim: rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .4); border-radius: 0; border: 1px solid var(--o55-nier-line-strong, var(--pmds-line)); background: var(--o55-nier-paper, var(--pmds-bg2)); }
+#o55-demo.pmds[data-pmds-look="nier"] .pmds-art :is(.pmds-a-win, .pmds-a-app i, .pmds-a-call, .pmds-a-layer, .pmds-a-turn, .pmds-a-spot, .pmds-a-copy b) { border-radius: 0; box-shadow: none; }
+#o55-demo.pmds[data-pmds-look="nier"] .pmds-art .pmds-a-spot { box-shadow: 0 0 0 1px var(--a-tone), 0 0 0 999px var(--a-scrim); }
+#o55-demo.pmds[data-pmds-look="nier"] .pmds-art :is(.pmds-a-spot, .pmds-a-call, .pmds-a-layer, .pmds-a-turn) { transition-timing-function: steps(4, end); }
+#o55-demo.pmds[data-pmds-look="nier"] .pmds-page[data-pmds-section="start"] :is(.pmds-a-spot, .pmds-a-call, .pmds-a-layer) { animation-timing-function: steps(5, end); }
+#o55-demo.pmds[data-pmds-look="nier"] .pmds-art .pmds-a-sun { rotate: 0deg; }
+
 /* ================================ Reduced Motion ================================ */
 #o55-demo.pmds[data-pmds-reduced] :is(.pmds-btn, .pmds-tile, .pmds-choice, .pmds-laytile, .pmds-looktile, .pmds-tile-go, .pmds-switch-key, .pmds-entry) { transition-property: background-color, border-color, color, box-shadow, opacity; }
 #o55-demo.pmds[data-pmds-reduced] :is(.pmds-btn, .pmds-tile, .pmds-x):active:not([aria-disabled="true"]) { scale: 1 !important; translate: none !important; }
@@ -286,6 +320,13 @@ html[data-o55-nier-parts~="blocks"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-
 #o55-demo.pmds[data-pmds-reduced] .pmds-tile:hover .pmds-tile-go { translate: none; }
 #o55-demo.pmds[data-pmds-reduced] .pmds-kicker::after { animation: none; }
 #o55-demo.pmds[data-pmds-reduced] .pmds-fuse { animation: none; transform: none; opacity: .7; }
+/* the scenes keep their resting picture: no performance on arrival, no travel on hover (the steps still fill, as colour) */
+#o55-demo.pmds[data-pmds-reduced] :is(.pmds-a-steps i, .pmds-a-spot, .pmds-a-call, .pmds-a-layer, .pmds-a-turn, .pmds-a-copy b) { animation: none !important; transition-property: background-color, opacity !important; }
+#o55-demo.pmds[data-pmds-reduced] .pmds-tile:is(:hover, :focus-visible) :is(.pmds-a-spot, .pmds-a-call) { translate: 0 0; }
+#o55-demo.pmds[data-pmds-reduced] .pmds-tile:is(:hover, :focus-visible) .pmds-a-layer:nth-child(1) { translate: -30px -6px; rotate: -9deg; }
+#o55-demo.pmds[data-pmds-reduced] .pmds-tile:is(:hover, :focus-visible) .pmds-a-layer:nth-child(2) { translate: 0 -12px; }
+#o55-demo.pmds[data-pmds-reduced] .pmds-tile:is(:hover, :focus-visible) .pmds-a-layer:nth-child(3) { translate: 30px -2px; rotate: 9deg; }
+#o55-demo.pmds[data-pmds-reduced] .pmds-tile:is(:hover, :focus-visible) .pmds-a-turn { rotate: 0deg; }
 @media (prefers-reduced-motion: reduce) {
   #o55-demo.pmds .pmds-kicker::after { animation: none; }
 }

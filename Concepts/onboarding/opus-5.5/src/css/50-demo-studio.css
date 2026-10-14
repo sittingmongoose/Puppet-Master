@@ -174,6 +174,71 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 #o55-demo .pmds-tile-hero .pmds-tile-sub { font-size: 12.5px; }
 #o55-demo .pmds-tile-hero .pmds-tile-go { top: 20px; right: 18px; }
 
+/* the Start page's scenes (ART in js/92-demo-studio-ui.js): drawn from the look's tokens, so every look and mode
+   repaints them. They perform once as the page arrives (a 0.5 s wait, then about 1.4 s), and again on hover or focus. */
+#o55-demo .pmds-tile-hero.pmds-arty { grid-template-rows: 100px auto; gap: 14px; }
+#o55-demo .pmds-art {
+  --a-tone: var(--pmds-tone, var(--pmds-acc)); --a-fill: var(--pmds-bg); --a-line: color-mix(in srgb, var(--pmds-ink) 24%, transparent);
+  --a-soft: color-mix(in srgb, var(--pmds-ink) 10%, transparent); --a-scrim: rgba(0, 0, 0, .46);
+  position: relative; display: block; height: 100px; overflow: hidden; border-radius: max(0px, calc(var(--pmds-r2) - 3px));
+  background: radial-gradient(90% 120% at 50% 0%, color-mix(in srgb, var(--a-tone) 16%, transparent), transparent 70%), color-mix(in srgb, var(--a-tone) 7%, var(--pmds-bg2));
+}
+#o55-demo .pmds-art i, #o55-demo .pmds-art b { display: block; font-style: normal; }
+/* onboarding: a small window over its step squares */
+#o55-demo .pmds-a-win { position: absolute; left: 50%; top: 14px; display: grid; grid-template-columns: 58px 1fr; width: 156px; height: 58px; translate: -50% 0; overflow: hidden; border: 1px solid var(--a-line); border-radius: 6px; background: var(--a-fill); box-shadow: 0 10px 20px -14px rgba(0, 0, 0, .6); }
+#o55-demo .pmds-a-stage { position: relative; overflow: hidden; background: color-mix(in srgb, var(--a-tone) 20%, var(--a-fill)); }
+#o55-demo .pmds-a-sun { position: absolute; left: 34px; top: 11px; width: 9px; height: 9px; rotate: 45deg; background: var(--a-tone); }
+#o55-demo .pmds-a-hill { position: absolute; left: -6px; right: -6px; bottom: 0; height: 26px; background: color-mix(in srgb, var(--a-tone) 55%, var(--a-fill)); clip-path: polygon(0 100%, 0 70%, 22% 18%, 40% 64%, 58% 30%, 80% 76%, 100% 44%, 100% 100%); }
+#o55-demo .pmds-a-copy { display: grid; align-content: start; gap: 5px; padding: 9px 9px 0; }
+#o55-demo .pmds-a-copy i { height: 4px; background: var(--a-line); }
+#o55-demo .pmds-a-copy i:nth-child(1) { width: 80%; background: var(--pmds-ink); opacity: .55; }
+#o55-demo .pmds-a-copy i:nth-child(2) { width: 92%; }
+#o55-demo .pmds-a-copy i:nth-child(3) { width: 64%; }
+#o55-demo .pmds-a-copy b { justify-self: end; width: 30px; height: 10px; margin-top: 3px; border-radius: 2px; background: var(--a-tone); }
+#o55-demo .pmds-a-steps { position: absolute; left: 50%; bottom: 13px; display: flex; gap: 5px; translate: -50% 0; }
+#o55-demo .pmds-a-steps i { width: 18px; height: 5px; background: var(--a-soft); transition: background-color 160ms ease; }
+#o55-demo .pmds-a-steps i:nth-child(-n + 2) { background: var(--a-tone); }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-steps i { background: var(--a-tone); }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-steps i:nth-child(3) { transition-delay: 90ms; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-steps i:nth-child(4) { transition-delay: 180ms; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-steps i:nth-child(5) { transition-delay: 270ms; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-copy b { animation: pmds-a-press 900ms 300ms ease both; }
+@keyframes pmds-a-press { 0%, 100% { scale: 1; } 40% { scale: .86; } 60% { scale: 1.08; } }
+/* the tour: a spotlight with its callout moving across a small app */
+#o55-demo .pmds-a-app { position: absolute; inset: 14px 22px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 6px; }
+#o55-demo .pmds-a-app i { position: relative; border: 1px solid var(--a-line); border-radius: 4px; background: var(--a-fill); }
+#o55-demo .pmds-a-app i::after { content: ""; position: absolute; left: 6px; right: 40%; top: 7px; height: 4px; background: var(--a-line); }
+#o55-demo .pmds-a-spot { position: absolute; left: 18px; top: 10px; width: calc(50% - 16px); height: 38px; border-radius: 6px; box-shadow: 0 0 0 2px var(--a-tone), 0 0 0 999px var(--a-scrim); transition: translate 640ms cubic-bezier(.3, 1.25, .45, 1); }
+#o55-demo .pmds-a-call { position: absolute; left: calc(50% + 4px); top: 14px; display: grid; gap: 4px; width: 56px; padding: 6px; border: 1.5px solid var(--a-tone); border-radius: 4px; background: var(--a-fill); box-shadow: 0 8px 18px -10px rgba(0, 0, 0, .7); transition: translate 640ms cubic-bezier(.3, 1.25, .45, 1) 40ms; }
+#o55-demo .pmds-a-call i { height: 3px; background: var(--a-line); }
+#o55-demo .pmds-a-call i:first-child { width: 70%; background: var(--a-tone); }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-spot { translate: calc(100% + 8px) 34px; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-call { translate: -78px 34px; }
+/* reset: three layers fanned out fall back into one, the arrow turns once */
+#o55-demo .pmds-a-layer { position: absolute; left: 50%; top: 50%; width: 78px; height: 46px; margin: -23px 0 0 -39px; border: 1px solid var(--a-line); border-radius: 5px; background: var(--a-fill); box-shadow: 0 10px 18px -14px rgba(0, 0, 0, .7); transition: translate 520ms cubic-bezier(.3, 1.2, .45, 1), rotate 520ms cubic-bezier(.3, 1.2, .45, 1); }
+#o55-demo .pmds-a-layer::after { content: ""; position: absolute; left: 7px; right: 45%; top: 8px; height: 4px; background: var(--a-line); }
+#o55-demo .pmds-a-layer:nth-child(1) { translate: -30px -6px; rotate: -9deg; background: color-mix(in srgb, var(--a-tone) 14%, var(--a-fill)); }
+#o55-demo .pmds-a-layer:nth-child(2) { translate: 0 -12px; rotate: 0deg; }
+#o55-demo .pmds-a-layer:nth-child(3) { translate: 30px -2px; rotate: 9deg; background: color-mix(in srgb, var(--a-tone) 26%, var(--a-fill)); }
+#o55-demo .pmds-a-turn { position: absolute; right: 14px; bottom: 10px; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; color: var(--a-tone); background: var(--a-fill); border: 1px solid var(--a-line); transition: rotate 620ms cubic-bezier(.3, 1.1, .45, 1); }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-layer { translate: 0 0; rotate: 0deg; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-layer:nth-child(2) { transition-delay: 40ms; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-layer:nth-child(3) { transition-delay: 80ms; }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) .pmds-a-turn { rotate: -360deg; }
+/* the once-on-arrival performance */
+#o55-demo .pmds-page[data-pmds-section="start"] .pmds-a-steps i:nth-child(n + 3) { animation: pmds-a-fill 1500ms ease both; }
+#o55-demo .pmds-page[data-pmds-section="start"] .pmds-a-steps i:nth-child(3) { animation-delay: 600ms; }
+#o55-demo .pmds-page[data-pmds-section="start"] .pmds-a-steps i:nth-child(4) { animation-delay: 700ms; }
+#o55-demo .pmds-page[data-pmds-section="start"] .pmds-a-steps i:nth-child(5) { animation-delay: 800ms; }
+@keyframes pmds-a-fill { 0%, 100% { background: var(--a-soft); } 20%, 70% { background: var(--a-tone); } }
+#o55-demo .pmds-page[data-pmds-section="start"] .pmds-a-spot { animation: pmds-a-spot 1600ms 650ms cubic-bezier(.45, 0, .2, 1) both; }
+#o55-demo .pmds-page[data-pmds-section="start"] .pmds-a-call { animation: pmds-a-call 1600ms 690ms cubic-bezier(.45, 0, .2, 1) both; }
+@keyframes pmds-a-spot { 0%, 100% { translate: 0 0; } 40%, 65% { translate: calc(100% + 8px) 34px; } }
+@keyframes pmds-a-call { 0%, 100% { translate: 0 0; } 40%, 65% { translate: -78px 34px; } }
+#o55-demo .pmds-page[data-pmds-section="start"] .pmds-a-layer { animation: pmds-a-stack 1500ms 700ms cubic-bezier(.45, 0, .2, 1) both; }
+@keyframes pmds-a-stack { 40%, 60% { translate: 0 0; rotate: 0deg; } }
+#o55-demo .pmds-tile:is(:hover, :focus-visible) :is(.pmds-a-steps i, .pmds-a-spot, .pmds-a-call, .pmds-a-layer) { animation: none; }
+
 /* choices: a square mark and two lines */
 #o55-demo .pmds-choices { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; }
 #o55-demo .pmds-choices-base { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -336,6 +401,13 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 #o55-demo .pmds-looklabel { display: flex; align-items: center; gap: 6px; font: 600 12.5px/1.2 var(--pmds-font); }
 #o55-demo .pmds-looklabel .pmds-ico { color: var(--pmds-mute); }
 #o55-demo .pmds-lookmode { margin-left: auto; font-weight: 500; font-size: 11.5px; color: var(--pmds-mute); }
+
+/* Liquid Glass's wallpapers */
+#o55-demo .pmds-walls { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 4px 8px; }
+#o55-demo .pmds-wall { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; align-items: center; gap: 8px; min-height: 32px; padding: 4px 8px; border: 0; border-radius: var(--pmds-ctl); background: transparent; text-align: left; cursor: pointer; font-size: 12.5px; }
+#o55-demo .pmds-wall:hover { background: var(--pmds-wash); }
+#o55-demo .pmds-wall .pmds-mark { width: 16px; height: 16px; margin: 0; }
+#o55-demo .pmds-lgrows .pmds-rowacts { margin: 4px 0 14px; }
 
 /* resets */
 #o55-demo .pmds-resets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: start; }

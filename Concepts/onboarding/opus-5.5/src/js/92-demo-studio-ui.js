@@ -79,10 +79,18 @@
     o = o || {};
     return `<button type="button"${at({ class: `pmds-btn pmds-btn-${o.kind || 'secondary'}${o.cls ? ' ' + o.cls : ''}`, 'data-pmds-do': o.do, 'data-arg': o.arg, 'data-key': o.key || (o.do ? `${o.do}:${o.arg || ''}` : null), 'data-pmh': 'ctl', 'aria-disabled': o.off ? 'true' : null, title: o.off ? T('studio.toast.unavailable') : o.title, 'aria-label': o.aria })}>${o.icon ? ico(o.icon, o.iconSize || 15) : ''}<span>${esc(label)}</span></button>`;
   }
+  /* the Start page's three scenes (styles in 50-demo-studio.css, .pmds-art-*): onboarding's window filling its steps,
+     the tour's spotlight gliding to its next target, and stacked layers rewinding into one. They move on hover and
+     focus only, and stand still under Reduced Motion. */
+  const ART = {
+    onb: '<span class="pmds-art pmds-art-onb" aria-hidden="true"><span class="pmds-a-win"><span class="pmds-a-stage"><span class="pmds-a-sun"></span><span class="pmds-a-hill"></span></span><span class="pmds-a-copy"><i></i><i></i><i></i><b></b></span></span><span class="pmds-a-steps"><i></i><i></i><i></i><i></i><i></i></span></span>',
+    tour: '<span class="pmds-art pmds-art-tour" aria-hidden="true"><span class="pmds-a-app"><i></i><i></i><i></i><i></i></span><span class="pmds-a-spot"></span><span class="pmds-a-call"><i></i><i></i></span></span>',
+    reset: '<span class="pmds-art pmds-art-reset" aria-hidden="true"><span class="pmds-a-layer"></span><span class="pmds-a-layer"></span><span class="pmds-a-layer"></span><span class="pmds-a-turn">' + '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4.5v4h4"/></svg></span></span>'
+  };
   /* a big tile (the Start page, recipes, notices) */
   function tile(o) {
-    return `<button type="button"${at({ class: `pmds-tile${o.cls ? ' ' + o.cls : ''}${o.on ? ' pmds-on' : ''}`, 'data-pmds-do': o.do, 'data-arg': o.arg, 'data-key': `${o.do}:${o.arg || ''}`, 'data-pmh': 'tile', 'aria-disabled': o.off ? 'true' : null, 'aria-pressed': o.pressed == null ? null : String(!!o.pressed), title: o.off ? T('studio.toast.unavailable') : null, 'data-pmds-tone': o.tone })}>`
-      + `<span class="pmds-tile-art" aria-hidden="true">${ico(o.icon, o.big ? 30 : 22)}</span><span class="pmds-tile-text"><span class="pmds-tile-title">${esc(o.title)}</span>${o.sub ? `<span class="pmds-tile-sub">${esc(o.sub)}</span>` : ''}</span>`
+    return `<button type="button"${at({ class: `pmds-tile${o.cls ? ' ' + o.cls : ''}${o.art ? ' pmds-arty' : ''}${o.on ? ' pmds-on' : ''}`, 'data-pmds-do': o.do, 'data-arg': o.arg, 'data-key': `${o.do}:${o.arg || ''}`, 'data-pmh': 'tile', 'aria-disabled': o.off ? 'true' : null, 'aria-pressed': o.pressed == null ? null : String(!!o.pressed), title: o.off ? T('studio.toast.unavailable') : null, 'data-pmds-tone': o.tone })}>`
+      + (o.art ? ART[o.art] : `<span class="pmds-tile-art" aria-hidden="true">${ico(o.icon, o.big ? 30 : 22)}</span>`) + `<span class="pmds-tile-text"><span class="pmds-tile-title">${esc(o.title)}</span>${o.sub ? `<span class="pmds-tile-sub">${esc(o.sub)}</span>` : ''}</span>`
       + (o.go ? `<span class="pmds-tile-go" aria-hidden="true">${ico('arrow', 16)}</span>` : '') + '</button>';
   }
   /* a keyed switch row (the Settings switch grammar: the look's rectangle, a lit layer, a square key) */
@@ -104,9 +112,9 @@
   R.start = () => {
     const sit = M.situationLabel(M.currentSituation()), ts = M.tourState();
     const hero = '<div class="pmds-hero">'
-      + tile({ do: 'run-onboarding', icon: 'onboarding', big: true, cls: 'pmds-tile-hero', tone: 'a', title: T('studio.start.runTitle'), sub: T('studio.start.runSub', { situation: sit }), off: !M.onboarding.avail(), go: true })
-      + tile({ do: 'tour-start', icon: 'tour', big: true, cls: 'pmds-tile-hero', tone: 'b', title: T('studio.start.tourTitle'), sub: ts.kind === 'at' ? T('studio.start.tourResumeSub', { n: ts.step, total: ts.total }) : T('studio.start.tourSub', { n: ts.total }), off: !M.tour.avail(), go: true })
-      + tile({ do: 'go', arg: 'reset', icon: 'reset', big: true, cls: 'pmds-tile-hero', tone: 'c', title: T('studio.start.resetTitle'), sub: T('studio.start.resetSub'), go: true })
+      + tile({ do: 'run-onboarding', icon: 'onboarding', art: 'onb', big: true, cls: 'pmds-tile-hero', tone: 'a', title: T('studio.start.runTitle'), sub: T('studio.start.runSub', { situation: sit }), off: !M.onboarding.avail(), go: true })
+      + tile({ do: 'tour-start', icon: 'tour', art: 'tour', big: true, cls: 'pmds-tile-hero', tone: 'b', title: T('studio.start.tourTitle'), sub: ts.kind === 'at' ? T('studio.start.tourResumeSub', { n: ts.step, total: ts.total }) : T('studio.start.tourSub', { n: ts.total }), off: !M.tour.avail(), go: true })
+      + tile({ do: 'go', arg: 'reset', icon: 'reset', art: 'reset', big: true, cls: 'pmds-tile-hero', tone: 'c', title: T('studio.start.resetTitle'), sub: T('studio.start.resetSub'), go: true })
       + '</div>';
     const recipes = '<div class="pmds-grid pmds-grid-recipes">' + M.RECIPES.map((r) => tile({ do: 'recipe', arg: r.id, icon: r.icon, title: T(`studio.recipes.${r.id}.title`), sub: T(`studio.recipes.${r.id}.sub`), off: !r.avail() })).join('') + '</div>';
     return `<header class="pmds-phead"><p class="pmds-kicker">${esc(T('studio.start.kicker'))}</p><h3 class="pmds-ptitle" data-pmds-decode>${esc(T('studio.start.title'))}</h3><p class="pmds-lead">${esc(T('studio.start.lead'))}</p></header>`
@@ -211,7 +219,13 @@
         + `<span class="pmds-looklabel">${ico(m === 'light' ? 'sun' : 'moon', 13)}<span>${esc(T(`studio.looks.families.${f}`))}</span><span class="pmds-lookmode">${esc(T(`studio.looks.${m}`))}</span></span></button>`;
     }).join('')).join('') + '</div>';
     const mode = `<div class="pmds-rowacts"><span class="pmds-btitle">${esc(T('studio.looks.mode'))}</span>${seg({ do: 'look-mode', value: now.setMode, label: T('studio.looks.mode'), off: !ok, items: [{ v: 'light', label: T('studio.looks.light'), icon: 'sun' }, { v: 'dark', label: T('studio.looks.dark'), icon: 'moon' }, { v: 'auto', label: T('studio.looks.auto'), icon: 'auto' }] })}</div>`;
-    return head('looks') + block('', grid + mode)
+    const G = L.lg, lg = G.avail() ? block(T('studio.looks.lg.title'), `<div class="pmds-lgrows">`
+      + `<div class="pmds-rowacts"><span class="pmds-btitle">${esc(T('studio.looks.lg.material'))}</span>${seg({ do: 'lg', value: G.on() ? 'on' : 'off', label: T('studio.looks.lg.material'), items: [{ v: 'on', label: T('studio.looks.lg.on') }, { v: 'off', label: T('studio.looks.lg.off') }] })}`
+      + `<span class="pmds-btitle">${esc(T('studio.looks.lg.tier'))}</span>${seg({ do: 'lg-tier', value: G.tier(), label: T('studio.looks.lg.tier'), items: [{ v: 'gpu', label: T('studio.looks.lg.gpu') }, { v: 'cpu', label: T('studio.looks.lg.cpu') }] })}</div>`
+      + `<h5 class="pmds-gtitle"><span>${esc(T('studio.looks.lg.wall'))}</span></h5><div class="pmds-walls" role="radiogroup" aria-label="${esc(T('studio.looks.lg.wall'))}">`
+      + [{ id: 'look', name: T('studio.looks.lg.wallLook') }].concat(G.walls()).map((w) => `<button type="button" role="radio"${at({ class: `pmds-wall${G.wall() === w.id ? ' pmds-on' : ''}`, 'aria-checked': String(G.wall() === w.id), 'data-pmds-do': 'lg-wall', 'data-arg': w.id, 'data-key': `lg-wall:${w.id}`, 'data-pmh': 'row' })}><span class="pmds-mark" aria-hidden="true">${ico('check', 12)}</span><span>${esc(w.name || w.id)}</span>${w.family ? `<span class="pmds-fine">${esc(w.family)}</span>` : ''}</button>`).join('')
+      + '</div></div>', { lead: T('studio.looks.lg.lead') }) : '';
+    return head('looks') + block('', grid + mode) + lg
       + block('', sw({ id: 'nier', icon: 'pod', title: T('studio.looks.nier'), sub: T('studio.looks.nierSub'), on: L.nierOn(), do: 'nier', off: !L.nierAvail() })
         + (L.nierOn() ? `<div class="pmds-rowacts pmds-indent">${btn(T('studio.looks.nierAdjust'), { do: 'nier-adjust', icon: 'studio' })}</div>` : '')
         + sw({ id: 'reduced', icon: 'motion', title: T('studio.looks.reduced'), sub: T('studio.looks.reducedSub'), on: L.reduced(), do: 'reduced', off: !L.reducedAvail() })
@@ -299,7 +313,7 @@
     return `${ico('studio', 14)}<span class="pmds-entry-label">${esc(T('studio.entry'))}</span><span class="pmds-entry-world" data-pmds-live="entry">${esc(M.situationLabel(M.currentSituation()))}</span>`;
   }
   function sheetHtml() {
-    return `<div class="pmds-frame">`
+    return `<div class="pmds-frame" data-lg-surface="menu">`
       + `<header class="pmds-head"><span class="pmds-brandmark" aria-hidden="true">${ico('studio', 20)}</span><div class="pmds-brand"><p class="pmds-brandkicker">${esc(T('studio.kicker'))}</p><h2 class="pmds-title" id="pmds-title">${esc(T('studio.title'))}</h2></div>`
       + `<label class="pmds-search">${ico('search', 15)}<input type="search" class="pmds-q" placeholder="${esc(T('studio.search'))}" aria-label="${esc(T('studio.searchLabel'))}" autocomplete="off" spellcheck="false"><kbd aria-hidden="true">/</kbd></label>`
       + `<button type="button" class="pmds-x" data-pmds-do="close" data-pmh="icon" aria-label="${esc(T('studio.close'))}">${ico('close', 16)}</button></header>`
@@ -563,6 +577,9 @@
     notice: (arg) => { M.notices.fire(arg); },
     'notices-clear': () => { M.notices.clear(); },
     look: (arg) => { const [f, m] = arg.split(':'); M.looks.set(f, m); real.setTimeout(() => { syncLook(); refresh(); }, 80); },
+    lg: (arg) => { M.looks.lg.set(arg === 'on'); real.setTimeout(refresh, 80); },
+    'lg-tier': (arg) => { M.looks.lg.setTier(arg); real.setTimeout(refresh, 80); },
+    'lg-wall': (arg) => { M.looks.lg.setWall(arg); real.setTimeout(refresh, 80); },
     'look-mode': (arg) => { M.looks.mode(arg); real.setTimeout(() => { syncLook(); refresh(); }, 80); },
     nier: () => { M.looks.setNier(!M.looks.nierOn()); real.setTimeout(() => { syncLook(); refresh(); }, 120); },
     'nier-adjust': (arg, el) => { M.looks.adjust(el); },
@@ -645,6 +662,9 @@
     /* the old item's keys stopped at the item so the shell's shortcuts never saw them; the sheet keeps that */
     ['keydown', 'keyup', 'keypress'].forEach((ev) => el.addEventListener(ev, (e) => { e.stopPropagation(); if (ev === 'keydown' && e.key === 'Escape' && ST.open && !ST.sheet.contains(e.target)) close(); }));
     syncLook();
+    /* Liquid Glass (pm7-liquid-glass): with its engine on the page, its own status-bar button and popover step aside and
+       the Studio's Looks section carries those controls (PM_LG) */
+    if (window.PM_LG) document.documentElement.setAttribute('data-lg-demo-host', '');
   };
   M.open = open; M.close = close; M.toggle = toggle; M.go = (s) => (ST.open ? go(s) : open(s));
   M.isOpen = () => ST.open;

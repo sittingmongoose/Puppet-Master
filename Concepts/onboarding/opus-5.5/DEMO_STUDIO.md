@@ -125,3 +125,40 @@ Ownership: the Studio is new files in the onboarding package (`src/js/9x-demo-st
 `src/css/5x-demo-studio*.css`, `src/copy.d/75-demo-studio.json`) plus a rewrite of `90-demo.js` (agreed with
 pm7-onboarding-art-glass, 2026-10-13). It calls onboarding and the tour through their public APIs and never restyles
 them. Glass joins through pm7-liquid-glass's opt-in (asked).
+
+## How it is built
+
+| Path | What |
+|---|---|
+| `src/js/90-demo.js` | The Concept demo item: `#o55-demo` (a child of `<body>`, the one the onboarding window leaves usable) and its toggle button, which the Home layer docks into the status bar (`Concepts/home-redesign/src/panels/js/50-pageshell.js`). |
+| `src/js/91-demo-studio.js` | `O55.studio`: the model and every action. Each control calls its owner's public API and nothing else; an owner missing from the page makes its control say "Not on this page" instead of failing. |
+| `src/js/92-demo-studio-ui.js` | The sheet: ten sections, search, keyboard, look sync, the motion voices, the Start page's three scenes. |
+| `src/css/50-demo-studio.css` | Structure and the Basic look. |
+| `src/css/51-demo-studio-looks.css` | Friendly, Retro, Glass and NieR, and Reduced Motion. |
+| `src/copy.d/75-demo-studio.json` | Every word (the `studio` key). |
+
+Which owner each section calls:
+
+| Section | Owner and call |
+|---|---|
+| Onboarding | `PM_O55_ONBOARDING.replay` and `.resume`, `O55.ui.open({ fresh, screen })`, `O55.fixtures.make` and `O55.store` `scenario` (a situation is a start plus twists joined by `+`; twists that describe the same thing two ways replace each other) |
+| Guided Tour | `PM7_GUIDED_TOUR.restart`, `.resume`, `.resumable`; a chapter start restarts the tour and then calls `O55.tour.go` on the chapter's first step (internal to the tour, guarded) |
+| Story | `PM_DEMO.clock` (play, pause, speed), `PM_DEMO.director.ensure`, `PM_DEMO.state.story`, `PM_DEMO.log`; Ctrl+Shift+D opens this section instead of the engine's unstyled director box |
+| Workspace | `PMW.NAMED`, `PMW.savedLayouts`, `PMW.applyNamed`, `PMW.resetLayout`; `PM_HOME.settings` `chat.standIn`; the stand-in chat's Agent activity rows; `PMT.agent.open` and `.run` |
+| Usage | `PMU.live.pause`, `.resume`, `.hour.play`, `.hour.back`; `PMU.charts.gallery`; `PM_PAGES.go('usage')` |
+| Notices | `PM_TITLEBAR_NOTIFY.demo(name)` when pm7-notifications' engine is on the page, else `window.toast` and `toast.important` with the same words; `PM_TITLEBAR_NOTIFY.clearAll` |
+| Looks | `PM7_SETTINGS_TOME.setChromeThemeFamily` and `.setChromeThemeMode` (the title-bar menu's path, saved to the Project), `PM_NIER.set`, `PM_NIER_CHIPS.popup`, `PM12_KIMI.setSettingFromHost('general.visual.reduce-animations')`, `O55.sound.setMuted`; with Liquid Glass on the page, `PM_LG.set` and `PM_LG.wall` (and `data-lg-demo-host` on `<html>` so Glass's own status button steps aside) |
+| Reset | Progress: `O55.tour.reset`, then onboarding as a new install in a Fresh computer. Workspace layout: `PMW.resetLayout`. Everything: every key this concept keeps in the browser (`pm…`, `o55…`, `widget_layout:`, `widget_presets:`, `home_workspace_layout:`, not the 5.6 Pro chat's `pm56…`) and the terminal's saved-scrollback database, then a reload without the onboarding switches. Each size asks a second press within five seconds. |
+| Switches | Builds the address from the page's own switches and reloads with it. |
+
+Looks: the sheet carries `data-pmds-look` (basic, friendly, retro, glass, nier) and `data-pmds-mode`. Basic is quiet and
+exact; Friendly draws on the DS, 3DS, Wii and Wii U menus and iisu (a pinstriped ground, channel tiles with a white bezel
+and a lit screen, buttons that sink); Retro is a phosphor terminal (a double rule, scanlines, reverse video, an arcade face);
+Glass is one frosted plate (`data-lg-surface="menu"` for Liquid Glass); NieR follows
+`/mnt/Cursor/share/puppet-master/2026-10-09-home-panels-terminal/NIER-RULES-for-new-surfaces.md`, each touch gated by its
+part. No pills, no side stripes, no emoji: every control is the look's rectangle and every mark a square. Hover is the
+app's engine (`data-pmh`); labelled controls carry `data-pm-hover-exempt` so the page's hover tags do not repeat them.
+
+Motion: each look has its own voice for opening (out of the item, bottom left), closing, changing section and the rail's
+selection (`VOICE` in `92-demo-studio-ui.js`): Basic eases, Friendly springs and lands, Retro reveals in scan steps, Glass
+rises with depth, NieR opens from a line in steps. Under Reduced Motion every one is a short fade with no travel.
