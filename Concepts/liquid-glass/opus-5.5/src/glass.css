@@ -189,6 +189,10 @@ html[data-lg="on"][data-theme^="glass"][data-lg-inactive]:not(#lgz) { --lg-sel: 
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .title-bar { border-radius: var(--lg-r-bar) !important; position: relative; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .title-bar .app-name { color: var(--text-primary) !important; font-weight: 650; letter-spacing: -.01em; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .left-panel { border-radius: var(--lg-r-sheet) !important; position: relative; }
+/* Jared #10 (2026-10-14): the columns sat 18 px apart (the base Glass row's 6 px gap on each side of each resizer, plus
+   each page's own inset), a band of bare wallpaper on both sides of the page. A 2 px gap leaves about 8 px between
+   neighbouring sheets, the same spacing the cards keep; the resizers overlap the gap as before. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .main-area { column-gap: 2px !important; gap: 2px !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #chatPanel { border-radius: var(--lg-r-sheet) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-rail { margin: 0 6px 0 2px; border-radius: var(--lg-r-sheet) !important; position: relative; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-stagehead { margin: 0 6px 6px; border-radius: var(--lg-r-bar) !important; position: relative; z-index: 4; }
