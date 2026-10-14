@@ -17,7 +17,8 @@ looks) is its own section below.
   controls, theme preview hold), `c3d8a095ea` (tour chat labels; the Glass curtain seam and switch timing from the
   frame review), `da3702fa02` (the label on its own line; the step rail's halo under the Glass layer), `3d2b75cc2f` (the
   contrast amendment, its tool and the regenerated pages), `af0d8ae6b7` (Ready's celebration under its lettered emblem,
-  after landing2's stop). This report follows in its own commit. GitHub and NAS tips
+  after landing2's stop), `1e059c334b` (Ready's curtain-call polish: the stamp's exit, ALL CLEAR's type-on). This
+  report follows in its own commit. GitHub and NAS tips
   verified equal after every push.
 - The one source conflict of the rebase was `tools/build.py`: perf M1's `shared_fitting_patch` and this branch's
   `THEME_PREVIEW_PATCHES` are both applied (M1 first; they touch different regions of the base page). Every commit's
@@ -31,9 +32,9 @@ looks) is its own section below.
   - contrast inks: `src/css/10-window.css`, `11-window-nier.css`, `12-components.css`, `40-tour.css`, `41-tour-nier.css`;
   - theme preview hold: `src/js/60-ui-core.js`, `tools/build.py`;
   - tests: `tools/art_joints.mjs` (new), `tools/contrast_worst.mjs` (new); `README.md`;
-  - four generated pages at `af0d8ae6b7`: `PMConcept7.html` = `Onboarding concepts/TestOpus5.5PmConcept.html` =
-    `HomeTestPMConcept7.html` `bd511e019090ffea11ca3a33fa49574aa3d2a8313ab11d6e675553878dbc5059`,
-    `LeftRailPMConcept7.html` `362b24daca57691c57a20d4d365b5a9143c2df96b5133fed0608d1561190e669` (at `3d2b75cc2f`, where the full table below was measured: `9cdead9d…`, `92d0625c…`).
+  - four generated pages at `1e059c334b`: `PMConcept7.html` = `Onboarding concepts/TestOpus5.5PmConcept.html` =
+    `HomeTestPMConcept7.html` `5bcd1987fe4d1a332bdd0d782b698333c7aebe21c70d46f461ca9987c45850e0`,
+    `LeftRailPMConcept7.html` `2c37fcc66f210b48998cab885dae4d9ff3d21b9895b54ed75b1bb3cb20c81cc3` (at `3d2b75cc2f`, where the full table below was measured: `9cdead9d…`, `92d0625c…`).
 - Generators: `build.py --publish-pm7`, `build_home.py`, `build_rail.py`, each `--check` ok. Outside the onboarding's own
   `O55:CSS` and `O55:BODY` blocks, the page differs from `main`'s (and from `fe1dff9bc5`'s) by exactly two lines (the
   `applyPaint` hold below).
@@ -331,11 +332,13 @@ the burst to play under the emblem, and it was drawn over it. Now (`af0d8ae6b7`)
 Ready in all five looks, light and dark, normal and Reduced Motion, measured settled and at eight moments 1.3 to 3.4 s
 into the curtain call (180 views, `contrast/ready-burst/final-ready-*`): no confetti reading, no ALL CLEAR or stamp
 reading after the burst, Glass, NieR and Friendly clean at every moment. Two one-shot moments inside the curtain call
-still read low, both motion rather than ink, and are left for the coordinator's ruling: Basic Light at 1.9 s, the
-stamp flying off up and to the right passes over the control bar's "CONTROL · 224" label (1.00, about 0.2 s); Retro at
-1.3 s, ALL CLEAR's box wipes in with its words for 360 ms, so the strings show inside the words' box until the wipe
-ends (1.04 to 1.25). Neither is a settled state, the same class as a screen fading in; each has a small fix if it is
-ruled in scope (the stamp leaving by fading where it lifted; the box shown whole with only the words typing on).
+still read low, both motion rather than ink: Basic Light at 1.9 s, the stamp flying off up and to the right over the
+control bar's "CONTROL · 224" label (1.00, about 0.2 s); Retro at 1.3 s, ALL CLEAR's box wiping in with its words for
+360 ms, so the strings showed inside the words' box (1.04 to 1.25). The coordinator ruled brief motion moments in a
+one-shot celebration are not contrast failures, and asked for both to be fixed to the polish bar (`1e059c334b`): the
+stamp lifts a little up and to the right and fades out by C+320 ms, near the paper; ALL CLEAR's message box opens
+whole and only its words type on inside it. Ready again in every look, both modes and both motions, settled and at
+eleven moments 1.1 to 3.5 s in: 240 views, none under the floor (`contrast/ready-burst/polish-ready-*`).
 
 ## Not changed, and open items
 
@@ -375,8 +378,8 @@ Open, for their owners:
 
 ## Evidence and packet
 
-- Raw evidence: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-art-glass-20261013/` (965 files, 280 MB),
-  `SHA256SUMS` `ab597a216cef492c7624a5de0c1045224038b95423a88cc0f3a5f6617da4909c`; the capture and film scripts are in
+- Raw evidence: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-art-glass-20261013/` (971 files, 283 MB),
+  `SHA256SUMS` `39ca1dddc91617c77f2dc85d099aefb3910eafa09b0c10abd5ac52bf1fb43790`; the capture and film scripts are in
   `scripts/` there; the contrast amendment's runs, diagnostics, stills, page hashes (`PAGES.sha256`) and scripts are
   under `contrast/` (every failed attempt kept).
 - Review packet: `/mnt/Cursor/share/puppet-master/2026-10-13-onboarding-art-glass/` (README, previews at `9c28f69792`,
