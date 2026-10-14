@@ -6,7 +6,7 @@
   var st = PMU.core.state;
   var app = document.getElementById('pmuApp');
   var nav = document.getElementById('pmuNav'), ink = document.getElementById('pmuNavInk');
-  var inkCtl = null, inkReady = false, lastRoom = null, lastRange = null;
+  var inkReady = false, lastRoom = null, lastRange = null;
   var titleDir = 1;   /* the camera's direction (WOW-SPEC-3 6.1): the titles move with it */
   var ROOM_ORDER = Object.keys(ROOM);
   /* DATA.providers -> the Settings catalog names and ids (PROVIDERS.md; every provider name on the page is the Settings name) */
@@ -31,13 +31,55 @@
   }
   var RANGES = [['5h', 'Last 5 hours', 'Half-hour buckets'], ['24h', 'Last 24 hours', 'Hourly buckets'], ['7d', 'Last 7 days', '6-hour buckets'], ['30d', 'Last 30 days', 'Daily buckets']];
 
-  function syncInk(animate) {
-    if (!inkCtl && window.PM6_LIQUID_INK && nav && ink) {
-      try { inkCtl = window.PM6_LIQUID_INK.attach({ strip: nav, ink: ink, axis: 'v', getActive: function () { return nav.querySelector('.pmu-navbtn[data-room].active'); } }); } catch (error) { inkCtl = null; }
-    }
-    if (!inkCtl) return;
-    requestAnimationFrame(function () { try { inkCtl.resync(!!animate && inkReady); inkReady = true; } catch (error) {} });
+  /* the rail's ink moves on the compositor (Jared #3, 2026-10-14: "a shadow that slowly follows the tab switch animation
+     that lags behind"). PM6_LIQUID_INK's spring ran on the main thread a step per frame, each step capped at 33 ms, so
+     while the new room was built the ink crawled and reached its row 0.8 s (CPU) to 1.7 s (GPU) after the click, a grey
+     box trailing the switch. The same spring (stiffness 500, damping 35, about 370 ms) is now sampled into ONE transform
+     animation, started in the click task from the rows' places read at rest (no layout read in a click), so it lands on
+     time whatever the board is doing. Rows are read again when the rail resizes; Reduce Motion places it. */
+  var inkRows = null, inkAt = null, inkRun = null, INK_SPRING = null;
+  function inkSpring() {
+    if (INK_SPRING) return INK_SPRING;
+    var x = 0, v = 0, dt = 1 / 600, t = 0, pts = [0];
+    while (t < 1) { v += (-500 * (x - 1) - 35 * v) * dt; x += v * dt; t += dt; pts.push(x); if (t > 0.15 && Math.abs(x - 1) < 0.002 && Math.abs(v) < 0.05) break; }
+    var n = pts.length - 1;
+    INK_SPRING = { ms: Math.round(t * 1000), at: function (p) { if (p >= 1) return 1; if (p <= 0) return 0; var q = p * n, i = Math.floor(q); return pts[i] + (pts[i + 1] - pts[i]) * (q - i); } };
+    return INK_SPRING;
   }
+  function inkMeasure() {
+    if (!nav || !nav.offsetHeight) return null;
+    var nr = nav.getBoundingClientRect(), rows = {};
+    Array.prototype.forEach.call(nav.querySelectorAll('.pmu-navbtn[data-room]'), function (b) {
+      var r = b.getBoundingClientRect(); if (r.height) rows[b.getAttribute('data-room')] = { x: r.left - nr.left, y: r.top - nr.top + nav.scrollTop, w: r.width, h: r.height };
+    });
+    return rows;
+  }
+  /* where the ink is now: its running animation's place by its own clock (no style read) */
+  function inkNow() {
+    if (!inkRun) return inkAt;
+    var t = inkRun.a.currentTime, p = t == null ? 1 : Math.min(1, t / inkRun.ms);
+    return { x: inkRun.to.x, y: inkRun.from.y + (inkRun.to.y - inkRun.from.y) * inkSpring().at(p), w: inkRun.to.w, h: inkRun.to.h };
+  }
+  function syncInk(animate) {
+    if (!nav || !ink) return;
+    var on = nav.querySelector('.pmu-navbtn[data-room].active');
+    if (!on) { ink.style.height = '0px'; inkAt = null; return; }
+    var room = on.getAttribute('data-room'), to = inkRows && inkRows[room];
+    if (!to) { inkRows = inkMeasure(); to = inkRows && inkRows[room]; }
+    if (!to) return;
+    var from = inkNow(), move = animate && inkReady && from && Math.abs(from.y - to.y) > 0.5 && !PMU.motion.reduced();
+    if (inkRun) { inkRun.a.cancel(); inkRun = null; }
+    ink.style.width = to.w + 'px'; ink.style.height = to.h + 'px';
+    ink.style.transform = 'translate3d(' + to.x + 'px,' + to.y + 'px,0)';
+    inkAt = to; inkReady = true;
+    if (!move) return;
+    var S = inkSpring(), keys = [];
+    for (var i = 0; i <= 24; i++) { var o = i / 24; keys.push({ offset: o, transform: 'translate3d(' + to.x + 'px,' + (from.y + (to.y - from.y) * S.at(o)).toFixed(2) + 'px,0)' }); }
+    var a = ink.animate(keys, { duration: S.ms, easing: 'linear' });
+    inkRun = { a: a, from: from, to: to, ms: S.ms };
+    a.onfinish = function () { if (inkRun && inkRun.a === a) inkRun = null; };
+  }
+  if (nav && window.ResizeObserver) new ResizeObserver(function () { inkRows = null; syncInk(false); }).observe(nav);
   /* the segmented underline slides between buttons (A1 8.1: 520 ms spring); transform only */
   function syncSegInk(seg, instant) {
     if (!seg) return;
@@ -86,7 +128,7 @@
     head.appendChild(g);
     var stepped = PMU.motion.family() === 'retro';
     var a = PMU.motion.animate(g, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(' + (-8 * titleDir) + 'px)' }],
-      { dur: 120, easing: stepped ? 'steps(2,jump-start)' : 'cubic-bezier(.4,0,1,1)', fill: 'forwards' });
+      { dur: 90, easing: stepped ? 'steps(2,jump-start)' : 'cubic-bezier(.22,.8,.28,1)', fill: 'forwards' });
     if (a) a.finished.then(function () { g.remove(); }, function () { g.remove(); }); else g.remove();
   }
   /* the Animation speed for CSS (WOW-SPEC 9, E-10): every Usage transition duration reads calc(<ms> * var(--pmu-speed));
@@ -127,8 +169,9 @@
     });
     var title = document.getElementById('pmuRoomTitle'), desc = document.getElementById('pmuRoomDesc');
     var changed = lastRoom !== null && lastRoom !== room;
-    /* the room title carries the cut (WOW-SPEC 3.2): the old title slides up 8 px and fades (120 IN) while the new one
-       rises 10 px (260 OUT, from 60); NieR decodes instead (the app's page-title decode on #pmuRoomTitle) */
+    /* the room title carries the cut (WOW-SPEC 3.2): the old title slides up 8 px and fades (90 OUT: all but gone by 60,
+       Jared #3, so no title is drawn over another) while the new one rises 10 px (260 OUT, from 60); NieR decodes instead
+       (the app's page-title decode on #pmuRoomTitle) */
     var tb = title && title.closest('.pmu-titleblock'), animTitle = changed && tb && PMU.motion && !PMU.motion.reduced() && !PMU.theme.look().nier;
     if (animTitle) titleGhost(tb, geo0);
     if (title && title.textContent !== ROOM[room].title) title.textContent = ROOM[room].title;   /* one text node (NieR decode) */
@@ -250,8 +293,6 @@
     /* the camera of the room change travels the rail (MOTION-4 RC1): its direction and how many rooms it passes set the pan */
     if (roomChange && PMU.film && PMU.film.camera) PMU.film.camera({ dir: titleDir, dist: Math.abs(ROOM_ORDER.indexOf(patch.room) - ROOM_ORDER.indexOf(prevRoom)) || 1 });
     titleAnims = [];
-    /* the shared-element flight reads the old room's shares in one batch before anything is written (WOW-SPEC-3 6.2) */
-    if (roomChange && PMU.film && PMU.film.snapShares) { try { PMU.film.snapShares(patch.room); } catch (error) { console.error('[pm-usage] flight read', error); } }
     if (PMU.menu) PMU.menu.close();
     /* the inspector belongs to a panel of the room it was opened from */
     if (roomChange && PMU.inspector && PMU.inspector.isOpen()) PMU.inspector.close(true);
@@ -266,6 +307,8 @@
          fresh copy of the Settings state, 10 ms on the CPU-only VM) */
       if (roomChange) {
         PMU.board.mount(st.room, { dir: ROOM_ORDER.indexOf(st.room) < ROOM_ORDER.indexOf(prevRoom) ? -1 : 1, transition: true });
+        /* Reduce Motion's room change (Jared #3): the new room dissolves in, still (the board makes no transition then) */
+        if (PMU.motion.reduced() && PMU.film && PMU.film.dissolve) PMU.film.dissolve(document.getElementById('pmuBoard'));
         if (titleAnims.length && PMU.film && PMU.film.adopt) PMU.film.adopt(titleAnims);
         titleAnims = [];
       }
