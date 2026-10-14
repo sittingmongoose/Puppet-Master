@@ -17,8 +17,8 @@ looks) is its own section below.
   controls, theme preview hold), `c3d8a095ea` (tour chat labels; the Glass curtain seam and switch timing from the
   frame review), `da3702fa02` (the label on its own line; the step rail's halo under the Glass layer), `3d2b75cc2f` (the
   contrast amendment, its tool and the regenerated pages), `af0d8ae6b7` (Ready's celebration under its lettered emblem,
-  after landing2's stop), `1e059c334b` (Ready's curtain-call polish: the stamp's exit, ALL CLEAR's type-on). This
-  report follows in its own commit. GitHub and NAS tips
+  after landing2's stop), `1e059c334b` (Ready's curtain-call polish: the stamp's exit, ALL CLEAR's type-on), `955216e607` (the
+  hovered main action). This report follows in its own commit. GitHub and NAS tips
   verified equal after every push.
 - The one source conflict of the rebase was `tools/build.py`: perf M1's `shared_fitting_patch` and this branch's
   `THEME_PREVIEW_PATCHES` are both applied (M1 first; they touch different regions of the base page). Every commit's
@@ -32,9 +32,9 @@ looks) is its own section below.
   - contrast inks: `src/css/10-window.css`, `11-window-nier.css`, `12-components.css`, `40-tour.css`, `41-tour-nier.css`;
   - theme preview hold: `src/js/60-ui-core.js`, `tools/build.py`;
   - tests: `tools/art_joints.mjs` (new), `tools/contrast_worst.mjs` (new); `README.md`;
-  - four generated pages at `1e059c334b`: `PMConcept7.html` = `Onboarding concepts/TestOpus5.5PmConcept.html` =
-    `HomeTestPMConcept7.html` `5bcd1987fe4d1a332bdd0d782b698333c7aebe21c70d46f461ca9987c45850e0`,
-    `LeftRailPMConcept7.html` `2c37fcc66f210b48998cab885dae4d9ff3d21b9895b54ed75b1bb3cb20c81cc3` (at `3d2b75cc2f`, where the full table below was measured: `9cdead9d…`, `92d0625c…`).
+  - four generated pages at `955216e607`: `PMConcept7.html` = `Onboarding concepts/TestOpus5.5PmConcept.html` =
+    `HomeTestPMConcept7.html` `47e66524018ab8f9b50ccc2bd34da42dd0f7bf525df14b016c08240151a9b633`,
+    `LeftRailPMConcept7.html` `daff235923fd263383c8a8b8e8248a0a2853bf795391d35725c4c35357c9cb74` (at `3d2b75cc2f`, where the full table below was measured: `9cdead9d…`, `92d0625c…`).
 - Generators: `build.py --publish-pm7`, `build_home.py`, `build_rail.py`, each `--check` ok. Outside the onboarding's own
   `O55:CSS` and `O55:BODY` blocks, the page differs from `main`'s (and from `fe1dff9bc5`'s) by exactly two lines (the
   `applyPaint` hold below).
@@ -340,6 +340,16 @@ stamp lifts a little up and to the right and fades out by C+320 ms, near the pap
 whole and only its words type on inside it. Ready again in every look, both modes and both motions, settled and at
 eleven moments 1.1 to 3.5 s in: 240 views, none under the floor (`contrast/ready-burst/polish-ready-*`).
 
+**Follow-up: the hovered main action (landing2's stop, 2026-10-14).** landing2's real click-through found Friendly
+Light's "Take the Guided Tour" at 2.52:1 with the pointer resting on it after the click before (pointer off: passes).
+The hover lightened the raw accent (`color-mix(accent 91%, #fff)`) under white words, in every light look; the full pass
+never hovered. The hover is now the action's fill mixed 9% away from its words: toward black under Light's white
+words, toward white under Dark's dark ones as before (`955216e607`). `tools/contrast_worst.mjs --hover` measures every
+screen and tour step again with the pointer on its main action: all five looks, light and dark, 920 views (640 as
+before plus 280 hovered), none under the floor (`contrast/hover-pass/`); landing2's case reads 5.24 or more. The hover
+colour does not depend on motion, so the pass ran in normal motion; it is also a second full pass of every screen and
+tour step on this page.
+
 ## Not changed, and open items
 
 Kept exactly as they were:
@@ -378,8 +388,8 @@ Open, for their owners:
 
 ## Evidence and packet
 
-- Raw evidence: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-art-glass-20261013/` (971 files, 283 MB),
-  `SHA256SUMS` `39ca1dddc91617c77f2dc85d099aefb3910eafa09b0c10abd5ac52bf1fb43790`; the capture and film scripts are in
+- Raw evidence: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-art-glass-20261013/` (1002 files, 283 MB),
+  `SHA256SUMS` `d43020bc22a3c961c0482128f5adfc993cf6354fbc4beb36e5f83e281e8e9de6`; the capture and film scripts are in
   `scripts/` there; the contrast amendment's runs, diagnostics, stills, page hashes (`PAGES.sha256`) and scripts are
   under `contrast/` (every failed attempt kept).
 - Review packet: `/mnt/Cursor/share/puppet-master/2026-10-13-onboarding-art-glass/` (README, previews at `9c28f69792`,
