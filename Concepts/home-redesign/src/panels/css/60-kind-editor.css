@@ -468,18 +468,23 @@ html[data-motion="reduced"] .pmw-ed :is(.pmw-ed-scroll, .pmw-ed-sticky) { transi
 html[data-theme^="retro"] .pmw-ed-diagcard, html[data-o55-nier="on"] .pmw-ed-diagcard { border-radius: 0; }
 html[data-o55-nier="on"] .pmw-ed-diagcard { border-color: var(--o55-nier-ink); box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16); }
 /* the recolour sweep (instance.recolorFrom), when a scheme is kept: a plate of the old ground over the code lifts away in
-   the look's motion. Each one is already moving on its first frame, so the code never blinks out whole */
+   the look's motion. Each look's shape (the bloom, the glide, the wipe) runs with a fade the compositor plays on its
+   own: the frames right after a choice can be slow to draw (the new colours restyle and repaint the editors), and a
+   shape alone stood still over a blank editor for four of them on the P1000; the fade keeps opening it meanwhile */
 .pmw-ed-recolor { position: absolute; top: var(--pmw-ed-head, 0px); left: 0; bottom: 0; right: var(--pmw-ed-track, 22px); z-index: 3; pointer-events: none;
+  will-change: opacity; --pmw-ed-r0: 0px; --pmw-ed-r1: 1400px;
   animation: pmw-ed-recolor-fade 200ms cubic-bezier(.2, 0, 0, 1) both; }
-.pmw-ed-recolor { --pmw-ed-r0: 0px; --pmw-ed-r1: 1400px; }
-html[data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-ed-recolor { animation: pmw-ed-recolor-bloom 340ms cubic-bezier(.25, .1, .25, 1) both;
+html[data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-ed-recolor {
+  animation: pmw-ed-recolor-bloom 340ms cubic-bezier(.25, .1, .25, 1) both, pmw-ed-recolor-lift 340ms cubic-bezier(.3, .55, .45, 1) both;
   -webkit-mask: radial-gradient(circle at var(--rx) var(--ry), transparent var(--pmw-ed-rr), #000 calc(var(--pmw-ed-rr) + 2px));
   mask: radial-gradient(circle at var(--rx) var(--ry), transparent var(--pmw-ed-rr), #000 calc(var(--pmw-ed-rr) + 2px)); }
 @property --pmw-ed-rr { syntax: '<length>'; inherits: false; initial-value: 0px; }
-html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-ed-recolor { animation: pmw-ed-recolor-glide 320ms cubic-bezier(.05, .7, .1, 1) both; }
+html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-ed-recolor {
+  animation: pmw-ed-recolor-glide 320ms cubic-bezier(.05, .7, .1, 1) both, pmw-ed-recolor-lift 320ms cubic-bezier(.3, .55, .45, 1) both; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ed-recolor { animation: pmw-ed-recolor-fade 180ms steps(4, start) both; }
-html[data-o55-nier="on"] .pmw-ed-recolor { animation: pmw-ed-recolor-glide 240ms steps(8, start) both; }
+html[data-o55-nier="on"] .pmw-ed-recolor { animation: pmw-ed-recolor-glide 240ms steps(8, start) both, pmw-ed-recolor-lift 240ms steps(8, start) both; }
 @keyframes pmw-ed-recolor-fade { from { opacity: .85; } to { opacity: 0; } }
+@keyframes pmw-ed-recolor-lift { from { opacity: .92; } to { opacity: 0; } }
 @keyframes pmw-ed-recolor-bloom { from { --pmw-ed-rr: var(--pmw-ed-r0); } to { --pmw-ed-rr: var(--pmw-ed-r1); } }
 @keyframes pmw-ed-recolor-glide { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 0 100%); } }
 html[data-motion="reduced"] .pmw-ed-recolor { display: none; }

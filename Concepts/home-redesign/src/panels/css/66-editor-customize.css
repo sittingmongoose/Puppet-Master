@@ -142,3 +142,7 @@ html[data-o55-nier="on"] .pmed-cz .pmed-art-brackets::before { background: linea
 .pmed-cz .pmed-slider-bare .pmt-cz-slabel { display: none; }
 /* drawn once almost clear before the entrance (11-editor-customize.js: the costly first paint happens before it plays) */
 .pmed-cz.pmed-prime { opacity: .001; }
+/* on a Liquid Glass sheet the edges are the sheet's hairline (CONTRACT: --lg-line, white .10 dark, ink .09 light): the
+   plain Glass rims are white, which vanished on the light sheet (a P1000 frame: cards and Try it buttons lost their
+   edges in Glass Light) */
+html[data-lg="on"][data-theme^="glass"] .pmed-cz :is(.pmt-cz-set, .pmt-cz-try .pmt-textbtn, .pmt-cz-search, .pmt-cz-tile, .pmt-cz-chip, .pmt-cz-seg) { border-color: var(--lg-line); }
