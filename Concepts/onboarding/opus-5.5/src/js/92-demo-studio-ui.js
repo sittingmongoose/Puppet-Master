@@ -87,7 +87,7 @@
      hover layer swallows clicks on anything rendered disabled) */
   function btn(label, o) {
     o = o || {};
-    return `<button type="button"${at({ class: `pmds-btn pmds-btn-${o.kind || 'secondary'}${o.cls ? ' ' + o.cls : ''}`, 'data-pmds-do': o.do, 'data-arg': o.arg, 'data-key': o.key || (o.do ? `${o.do}:${o.arg || ''}` : null), 'data-pmh': 'ctl', 'aria-disabled': o.off ? 'true' : null, title: o.off ? T('studio.toast.unavailable') : o.title, 'aria-label': o.aria })}>${o.icon ? ico(o.icon, o.iconSize || 15) : ''}<span>${esc(label)}</span></button>`;
+    return `<button type="button"${at({ class: `pmds-btn pmds-btn-${o.kind || 'secondary'}${o.cls ? ' ' + o.cls : ''}`, 'data-pmds-do': o.do, 'data-arg': o.arg, 'data-key': o.key || (o.do ? `${o.do}:${o.arg || ''}` : null), 'data-pmh': o.off ? null : 'ctl', 'aria-disabled': o.off ? 'true' : null, title: o.off ? T('studio.toast.unavailable') : o.title, 'aria-label': o.aria })}>${o.icon ? ico(o.icon, o.iconSize || 15) : ''}<span>${esc(label)}</span></button>`;
   }
   /* the Start page's three scenes (styles in 50-demo-studio.css, .pmds-art-*): onboarding's window filling its steps,
      the tour's spotlight gliding to its next target, and stacked layers rewinding into one. They move on hover and
@@ -99,18 +99,18 @@
   };
   /* a big tile (the Start page, recipes, notices) */
   function tile(o) {
-    return `<button type="button"${at({ class: `pmds-tile${o.cls ? ' ' + o.cls : ''}${o.art ? ' pmds-arty' : ''}${o.on ? ' pmds-on' : ''}`, 'data-pmds-do': o.do, 'data-arg': o.arg, 'data-key': `${o.do}:${o.arg || ''}`, 'data-pmh': 'tile', 'aria-disabled': o.off ? 'true' : null, 'aria-pressed': o.pressed == null ? null : String(!!o.pressed), title: o.off ? T('studio.toast.unavailable') : null, 'data-pmds-tone': o.tone })}>`
+    return `<button type="button"${at({ class: `pmds-tile${o.cls ? ' ' + o.cls : ''}${o.art ? ' pmds-arty' : ''}${o.on ? ' pmds-on' : ''}`, 'data-pmds-do': o.do, 'data-arg': o.arg, 'data-key': `${o.do}:${o.arg || ''}`, 'data-pmh': o.off ? null : 'tile', 'aria-disabled': o.off ? 'true' : null, 'aria-pressed': o.pressed == null ? null : String(!!o.pressed), title: o.off ? T('studio.toast.unavailable') : null, 'data-pmds-tone': o.tone })}>`
       + (o.art ? ART[o.art] : `<span class="pmds-tile-art" aria-hidden="true">${ico(o.icon, o.big ? 30 : 22)}</span>`) + `<span class="pmds-tile-text"><span class="pmds-tile-title">${esc(o.title)}</span>${o.sub ? `<span class="pmds-tile-sub">${esc(o.sub)}</span>` : ''}</span>`
       + (o.go ? `<span class="pmds-tile-go" aria-hidden="true">${ico('arrow', 16)}</span>` : '') + '</button>';
   }
   /* a keyed switch row (the Settings switch grammar: the look's rectangle, a lit layer, a square key) */
   function sw(o) {
     return `<div class="pmds-swrow${o.off ? ' pmds-unavail' : ''}"><span class="pmds-swart" aria-hidden="true">${ico(o.icon, 18)}</span><span class="pmds-swtext"><span class="pmds-swtitle" id="pmds-sw-${esc(o.id)}">${esc(o.title)}</span>${o.sub ? `<span class="pmds-swsub">${esc(o.sub)}</span>` : ''}</span>`
-      + `<button type="button" role="switch"${at({ class: 'pmds-switch', 'aria-checked': String(!!o.on), 'aria-labelledby': `pmds-sw-${o.id}`, 'data-pmds-do': o.do, 'data-key': `sw:${o.id}`, 'data-pmh': 'ctl', 'aria-disabled': o.off ? 'true' : null, title: o.off ? T('studio.toast.unavailable') : null })}><span class="pmds-switch-key"></span></button></div>`;
+      + `<button type="button" role="switch"${at({ class: 'pmds-switch', 'aria-checked': String(!!o.on), 'aria-labelledby': `pmds-sw-${o.id}`, 'data-pmds-do': o.do, 'data-key': `sw:${o.id}`, 'data-pmh': o.off ? null : 'ctl', 'aria-disabled': o.off ? 'true' : null, title: o.off ? T('studio.toast.unavailable') : null })}><span class="pmds-switch-key"></span></button></div>`;
   }
   /* a joined choice row (NP-CHOICE): one rectangle, thin dividers, the chosen cell filled */
   function seg(o) {
-    return `<div class="pmds-seg" role="radiogroup"${at({ 'aria-label': o.label })}>` + o.items.map((it) => `<button type="button" role="radio"${at({ class: `pmds-segcell${it.v === o.value ? ' pmds-on' : ''}`, 'aria-checked': String(it.v === o.value), 'data-pmds-do': o.do, 'data-arg': it.v, 'data-key': `${o.do}:${it.v}`, 'data-pmh': 'ctl', 'aria-disabled': o.off ? 'true' : null })}>${it.icon ? ico(it.icon, 14) : ''}<span>${esc(it.label)}</span></button>`).join('') + '</div>';
+    return `<div class="pmds-seg" role="radiogroup"${at({ 'aria-label': o.label })}>` + o.items.map((it) => `<button type="button" role="radio"${at({ class: `pmds-segcell${it.v === o.value ? ' pmds-on' : ''}`, 'aria-checked': String(it.v === o.value), 'data-pmds-do': o.do, 'data-arg': it.v, 'data-key': `${o.do}:${it.v}`, 'data-pmh': o.off ? null : 'ctl', 'aria-disabled': o.off ? 'true' : null })}>${it.icon ? ico(it.icon, 14) : ''}<span>${esc(it.label)}</span></button>`).join('') + '</div>';
   }
   function head(sec, extra) {
     return `<header class="pmds-phead"><p class="pmds-kicker">${esc(T(`studio.${sec}.kicker`))}</p><h3 class="pmds-ptitle" data-pmds-decode>${esc(T(`studio.${sec}.title`))}</h3><p class="pmds-lead">${esc(T(`studio.${sec}.lead`))}</p>${extra || ''}</header>`;
@@ -142,7 +142,7 @@
     const twists = M.GROUPS.map((g) => `<div class="pmds-twistgroup"><h5 class="pmds-gtitle">${ico(g.id === 'computer' ? 'computer' : g.id === 'nas' ? 'nas' : g.id === 'online' ? 'cloud' : 'spark', 14)}<span>${esc(T(`studio.onboarding.groups.${g.id}`))}</span></h5><div class="pmds-choices">`
       + g.ids.map((id) => choice(id, p.twists.includes(id), 'checkbox', 'pick-twist')).join('') + '</div></div>').join('');
     const screens = '<div class="pmds-screens">' + M.SCREEN_CHAPTERS.map(([ch, ids]) => `<div class="pmds-scgroup"><h5 class="pmds-gtitle"><span>${esc(T(`studio.onboarding.chapters.${ch}`))}</span><span class="pmds-count">${ids.length}</span></h5><div class="pmds-sclist">`
-      + ids.map((id) => `<button type="button"${at({ class: 'pmds-scrow', 'data-pmds-do': 'open-screen', 'data-arg': id, 'data-key': `open-screen:${id}`, 'data-pmh': 'row', 'aria-disabled': M.hasScreen(id) && M.onboarding.avail() ? null : 'true' })}><span>${esc(T(`studio.onboarding.screens.${id}`))}</span>${ico('chevron', 13)}</button>`).join('') + '</div></div>').join('') + '</div>';
+      + ids.map((id) => `<button type="button"${at({ class: 'pmds-scrow', 'data-pmds-do': 'open-screen', 'data-arg': id, 'data-key': `open-screen:${id}`, 'data-pmh': M.hasScreen(id) && M.onboarding.avail() ? 'row' : null, 'aria-disabled': M.hasScreen(id) && M.onboarding.avail() ? null : 'true' })}><span>${esc(T(`studio.onboarding.screens.${id}`))}</span>${ico('chevron', 13)}</button>`).join('') + '</div></div>').join('') + '</div>';
     return head('onboarding') + runs
       + block(T('studio.onboarding.startAs'), base)
       + block(T('studio.onboarding.twists'), `<div class="pmds-twists">${twists}</div>`)
@@ -224,7 +224,7 @@
     const L = M.looks, now = L.now(), ok = L.avail();
     const grid = `<div class="pmds-looks" role="radiogroup" aria-label="${esc(T('studio.looks.title'))}">` + L.ids.map((f) => ['light', 'dark'].map((m) => {
       const on = now.look === f && now.mode === m, theme = f === 'nier' ? `basic-${m}` : `${f}-${m}`;
-      return `<button type="button" role="radio"${at({ class: `pmds-looktile${on ? ' pmds-on' : ''}`, 'aria-checked': String(on), 'data-pmds-do': 'look', 'data-arg': `${f}:${m}`, 'data-key': `look:${f}:${m}`, 'data-pmh': 'tile', 'aria-disabled': ok && (f !== 'nier' || L.nierAvail()) ? null : 'true' })}>`
+      return `<button type="button" role="radio"${at({ class: `pmds-looktile${on ? ' pmds-on' : ''}`, 'aria-checked': String(on), 'data-pmds-do': 'look', 'data-arg': `${f}:${m}`, 'data-key': `look:${f}:${m}`, 'data-pmh': ok && (f !== 'nier' || L.nierAvail()) ? 'tile' : null, 'aria-disabled': ok && (f !== 'nier' || L.nierAvail()) ? null : 'true' })}>`
         + `<span class="pmds-lookprev" data-theme="${theme}" data-pmds-prev="${f}" aria-hidden="true"><span class="pmds-lp-bar"></span><span class="pmds-lp-body"><span class="pmds-lp-rail"></span><span class="pmds-lp-main"><span class="pmds-lp-card"></span><span class="pmds-lp-card pmds-lp-card2"></span></span></span></span>`
         + `<span class="pmds-looklabel">${ico(m === 'light' ? 'sun' : 'moon', 13)}<span>${esc(T(`studio.looks.families.${f}`))}</span><span class="pmds-lookmode">${esc(T(`studio.looks.${m}`))}</span></span></button>`;
     }).join('')).join('') + '</div>';

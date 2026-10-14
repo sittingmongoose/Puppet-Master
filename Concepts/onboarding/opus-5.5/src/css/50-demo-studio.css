@@ -52,7 +52,9 @@
 }
 #o55-demo .pmds-entry .pmds-ico { color: var(--pmds-acc); flex: none; }
 #o55-demo .pmds-entry-world { color: var(--pmds-ink); font-weight: 500; }
-#o55-demo .pmds-entry-world::before { content: "\00b7"; margin-right: 7px; color: var(--pmds-mute); }
+/* the separator dot is drawn text and wears the full ink of the words it introduces: Glass's status bar shows the window
+   behind it, and with the sheet carried away the muted tier fell to 4.2:1 and the secondary one to 4.4:1 there */
+#o55-demo .pmds-entry-world::before { content: "\00b7"; margin-right: 7px; }
 #o55-demo .pmds-entry:focus-visible { outline: 2px solid var(--pmds-acc); outline-offset: 2px; }
 /* the sliders mark: its two knobs slide apart on hover and while the Studio is open, and slide in as the sheet opens */
 #o55-demo .pmds-ico-studio rect { transition: translate 260ms cubic-bezier(.3, 1.4, .5, 1); }
@@ -81,7 +83,11 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 #o55-demo .pmds-sheet :is(ol, ul) { padding: 0; list-style: none; }
 /* :where() keeps this reset below every control's own colour (a filled button's ink must win over inherit) */
 #o55-demo .pmds-sheet :where(button) { font: inherit; color: inherit; }
-#o55-demo .pmds-sheet [aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+/* unavailable (an owner this build does not carry): the form is under "Unavailable" in 51-demo-studio-looks.css */
+#o55-demo .pmds-sheet [aria-disabled="true"] { position: relative; cursor: not-allowed; }
+/* selected words: the Studio's own ink on an opaque accent wash. The page-wide selection (the theme's ink over a 25 %
+   glow) depends on what shows through a translucent sheet; Retro and NieR reverse instead (51-demo-studio-looks.css) */
+#o55-demo ::selection { background: color-mix(in srgb, var(--pmds-acc) 28%, var(--pmds-ref)); color: var(--pmds-ink); }
 #o55-demo .pmds-sheet :focus-visible { outline: 2px solid var(--pmds-acc); outline-offset: 2px; }
 #o55-demo .pmds-ico { display: block; flex: none; }
 /* every hover target is positioned: the app's hover engine draws its Glass rim (and other looks' marks) as a
@@ -131,6 +137,8 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 #o55-demo .pmds-search:focus-within { border-color: var(--pmds-acc); box-shadow: 0 0 0 3px color-mix(in srgb, var(--pmds-acc) 22%, transparent); }
 #o55-demo .pmds-q { flex: 1; min-width: 0; height: 100%; border: 0; outline: 0; background: transparent; color: var(--pmds-ink); font: 400 13px/1 var(--pmds-font); }
 #o55-demo .pmds-q::-webkit-search-cancel-button { display: none; }
+/* the hint sits on the muted tier, 4.5:1 or more over the field in every look; typed words take the full ink */
+#o55-demo .pmds-q::placeholder { color: var(--pmds-mute); opacity: 1; }
 #o55-demo .pmds-search kbd { display: grid; place-items: center; min-width: 18px; height: 18px; padding: 0 4px; border: 1px solid var(--pmds-line); border-radius: 3px; font: 600 10.5px/1 var(--pmds-mono); color: var(--pmds-mute); }
 #o55-demo .pmds-x { display: grid; place-items: center; width: 34px; height: 34px; border: 0; border-radius: var(--pmds-ctl); background: transparent; color: var(--pmds-ink2); cursor: pointer; }
 #o55-demo .pmds-x:hover { background: var(--pmds-wash); color: var(--pmds-ink); }

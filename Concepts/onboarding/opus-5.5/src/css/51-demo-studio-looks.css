@@ -132,6 +132,8 @@
 }
 /* Retro Light's printed-manual green, a shade deeper so its small text and its filled buttons hold the floor */
 #o55-demo.pmds[data-pmds-look="retro"][data-pmds-mode="light"] { --pmds-acc: color-mix(in srgb, var(--accent-lime) 70%, #000); --pmds-mute: color-mix(in srgb, var(--pmds-ink) 74%, var(--pmds-ref)); }
+/* selected words reverse, as on the Retro terminal surfaces */
+#o55-demo.pmds[data-pmds-look="retro"] ::selection { background: var(--pmds-acc); color: var(--pmds-acc-ink); }
 #o55-demo.pmds[data-pmds-look="retro"] .pmds-frame { border: 2px solid var(--pmds-ink); box-shadow: inset 0 0 0 3px var(--pmds-bg), inset 0 0 0 4px color-mix(in srgb, var(--pmds-ink) 55%, transparent), var(--pmds-shadow); }
 /* the phosphor field: scanlines and a faint bloom at the centre, over everything and never in the way */
 #o55-demo.pmds[data-pmds-look="retro"] .pmds-frame::after {
@@ -179,6 +181,8 @@
 #o55-demo.pmds[data-pmds-look="retro"] .pmds-timeline::after { border-top: 2px solid var(--pmds-acc); }
 #o55-demo.pmds[data-pmds-look="retro"] .pmds-done .pmds-pnode { background: var(--pmds-acc); color: var(--pmds-bg); }
 #o55-demo.pmds[data-pmds-look="retro"] .pmds-steps li::before { content: ">"; width: auto; height: auto; top: 0; left: 0; background: none; color: var(--pmds-tone, var(--pmds-acc)); font-weight: 700; }
+/* on the light ground the prompt is its chapter's tone pressed toward black (the bare orange stood at 2:1, the lime at 4.2:1) */
+#o55-demo.pmds[data-pmds-look="retro"][data-pmds-mode="light"] .pmds-steps li::before { color: color-mix(in srgb, var(--pmds-tone, var(--pmds-acc)) 55%, #000); }
 #o55-demo.pmds[data-pmds-look="retro"] .pmds-now { border-top: 2px solid var(--pmds-ink); background: var(--pmds-bg); text-transform: uppercase; }
 #o55-demo.pmds[data-pmds-look="retro"] .pmds-nowv { color: var(--pmds-acc-text); }
 #o55-demo.pmds[data-pmds-look="retro"] .pmds-lay-slot { border-radius: 0; box-shadow: none; border: 1px solid color-mix(in srgb, var(--pmds-ink) 40%, transparent); background: transparent; }
@@ -235,6 +239,8 @@
 #o55-demo.pmds[data-pmds-look="glass"] .pmds-tile-hero { min-height: 172px; background: linear-gradient(160deg, color-mix(in srgb, var(--pmds-tone) 26%, transparent), transparent 70%), var(--pmds-plate); }
 #o55-demo.pmds[data-pmds-look="glass"] :is(.pmds-tile-art, .pmds-swart, .pmds-chnum) { border-radius: 12px; background: color-mix(in srgb, var(--pmds-tone, var(--pmds-acc)) 22%, rgba(255, 255, 255, .06)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3); }
 #o55-demo.pmds[data-pmds-look="glass"] :is(.pmds-choice, .pmds-laytile).pmds-on { border-color: color-mix(in srgb, var(--pmds-acc) 55%, transparent); background: color-mix(in srgb, var(--pmds-acc) 16%, var(--pmds-plate)); }
+/* the chosen card's lit plate is lighter still under the pointer: its second line steps up to the full ink */
+#o55-demo.pmds[data-pmds-look="glass"] .pmds-choice.pmds-on .pmds-choice-sub { color: var(--pmds-ink); }
 #o55-demo.pmds[data-pmds-look="glass"] .pmds-runbar { background: linear-gradient(90deg, color-mix(in srgb, var(--pmds-acc) 18%, transparent), var(--pmds-plate)); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
 #o55-demo.pmds[data-pmds-look="glass"] .pmds-btn { border-radius: 10px; border-color: var(--pmds-line); background: var(--pmds-plate); box-shadow: inset 0 1px 0 var(--pmds-plate-edge); }
 #o55-demo.pmds[data-pmds-look="glass"] .pmds-btn-primary { border-color: transparent; color: var(--pmds-acc-ink); background: linear-gradient(180deg, color-mix(in srgb, var(--accent-blue) 80%, #fff 20%), color-mix(in srgb, var(--accent-blue) 85%, #000 15%)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 8px 20px -10px color-mix(in srgb, var(--accent-blue) 85%, transparent); }
@@ -293,6 +299,9 @@ html[data-o55-nier-parts~="headers"] #o55-demo.pmds[data-pmds-look="nier"] .pmds
 html[data-o55-nier-parts~="headers"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-head .pmds-q { color: var(--o55-nier-on-ink); }
 html[data-o55-nier-parts~="headers"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-head .pmds-q::placeholder { color: color-mix(in srgb, var(--o55-nier-on-ink) 80%, var(--o55-nier-ink)); }
 html[data-o55-nier-parts~="headers"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-head .pmds-search :is(kbd, .pmds-ico) { color: var(--o55-nier-on-ink); border-color: color-mix(in srgb, var(--o55-nier-on-ink) 60%, transparent); }
+/* selected words reverse (ink and paper), and turn back to paper inside the ink band */
+#o55-demo.pmds[data-pmds-look="nier"] ::selection { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="headers"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-head ::selection { background: var(--o55-nier-paper); color: var(--o55-nier-ink); }
 html[data-o55-nier-parts~="headers"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-title { text-transform: uppercase; letter-spacing: .16em; font-weight: 500; }
 html[data-o55-nier-parts~="headers"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-phead {
   padding-bottom: 12px;
@@ -385,6 +394,24 @@ html[data-o55-nier-parts~="blocks"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-
 /* The demo engine's old unstyled "Demo director" box (Ctrl+Shift+D in the base page) is the Studio's Story section now;
    the key itself is left alone for Readiness & Doctor (Jared, 2026-10-14) */
 .pm6-dev-panel { display: none !important; }
+
+/* ================================ Unavailable ================================
+   A control whose owner this build does not carry (aria-disabled; the renderer also takes it off the hover engine, so
+   it never lights): the plain ground instead of its fill (opaque, so NieR's grid and scene never run under its words), a
+   dashed edge, greyed and faded marks, and its words on the muted tier, which holds 4.5:1 in every look. Fading the whole
+   control to 45 % put those words near 2:1. Above every look's own control rule. */
+html #o55-demo.pmds[data-pmds-look] .pmds-sheet :is(.pmds-btn, .pmds-tile, .pmds-segcell, .pmds-scrow, .pmds-looktile)[aria-disabled="true"] {
+  border-style: dashed; border-color: var(--pmds-line); background: var(--pmds-ref); box-shadow: none; text-shadow: none; color: var(--pmds-mute);
+  translate: none; scale: none; rotate: none;
+}
+html #o55-demo.pmds[data-pmds-look] .pmds-sheet .pmds-segcell[aria-disabled="true"] { background: transparent; }
+html #o55-demo.pmds[data-pmds-look] .pmds-sheet [aria-disabled="true"] :is(.pmds-tile-title, .pmds-tile-sub, .pmds-looklabel, .pmds-lookmode, .pmds-scrow span) { color: var(--pmds-mute); }
+html #o55-demo.pmds[data-pmds-look] .pmds-sheet [aria-disabled="true"] :is(.pmds-tile-art, .pmds-art, .pmds-tile-go, .pmds-lookprev) { opacity: .5; filter: grayscale(1); }
+html #o55-demo.pmds[data-pmds-look] .pmds-sheet [aria-disabled="true"] .pmds-ico:not(.pmds-tile-art *, .pmds-art *, .pmds-tile-go *) { opacity: .5; filter: grayscale(1); }
+html #o55-demo.pmds[data-pmds-look] .pmds-sheet .pmds-switch[aria-disabled="true"] { border-style: dashed; background-color: transparent; }
+html #o55-demo.pmds[data-pmds-look] .pmds-sheet .pmds-switch[aria-disabled="true"]::before { opacity: 0; }
+html #o55-demo.pmds[data-pmds-look] .pmds-sheet .pmds-switch[aria-disabled="true"] .pmds-switch-key { opacity: .5; }
+html #o55-demo.pmds[data-pmds-look] .pmds-sheet .pmds-unavail .pmds-swart { opacity: .5; filter: grayscale(1); }
 
 /* ================================ Reduced Motion ================================ */
 #o55-demo.pmds[data-pmds-reduced] :is(.pmds-btn, .pmds-tile, .pmds-choice, .pmds-laytile, .pmds-looktile, .pmds-tile-go, .pmds-switch-key, .pmds-entry) { transition-property: background-color, border-color, color, box-shadow, opacity; }

@@ -172,3 +172,12 @@ does not move.
 
 Grounds: Friendly's sheet stands on Friendly's own ground (the dot grid and three pastel corner glows of its body and
 chat), and NieR's page carries the app's faint grid with NieR Mode's background scene drawn behind it, as the app does.
+
+Legibility (the landing's floor, 2026-10-14): every word the Studio paints holds 4.5:1 against the worst pixel under it, in
+every look, light and dark, with and without Reduced Motion, at rest, under the pointer and with keyboard focus. Three text
+tiers are each look's ink mixed toward an opaque ground (`--pmds-ref`), never the theme's faint muted grey. The same
+holds for the words outside the text tree: the search field's hint sits on the muted tier, the dot in the status-bar item
+on the secondary one, and Retro's drawn prompts in their chapter's tone, pressed darker on the light ground. Selected words get the Studio's own ink on an opaque
+accent wash, and reverse video in Retro and NieR. A control whose owner the build lacks is shown as unavailable: the plain
+ground with a dashed edge, greyed marks and muted words. It is not faded as a whole, and it does not light under the
+pointer.
