@@ -1,0 +1,486 @@
+/* The drop guide and the docks (31-dropzones.js), and the live preview (31-dropview.js). While a tab or a panel is
+   carried, the panel under the pointer shows
+   four side tiles around its Join tile, the zone's name under them, and the centre's four outer sides show a dock
+   each. The tile under the pointer's zone lights; a side that has no room is dimmed and empty. Each look draws them in
+   its own grammar: Basic crisp, Friendly soft and round, Glass frosted with a specular rim, Retro reverse-video cells
+   with stepped motion, NieR ink squares with no glow. */
+
+#pmw-overlay {
+  --pmw-guide-bg: color-mix(in srgb, var(--pmw-pop) 94%, transparent);
+  --pmw-guide-line: color-mix(in srgb, var(--pmw-text) 16%, transparent);
+  --pmw-guide-ink: var(--pmw-text-2);
+  --pmw-guide-on: var(--pmw-accent);
+  --pmw-guide-on-ink: #0B1220;
+  --pmw-guide-glow: color-mix(in srgb, var(--pmw-accent) 55%, transparent);
+  --pmw-guide-shadow: 0 10px 26px -10px rgba(0, 0, 0, .6), 0 2px 6px -2px rgba(0, 0, 0, .35);
+  --pmw-guide-r: 9px;
+  --pmw-guide-map-r: 2.5px;
+  --pmw-guide-t: 140ms;
+}
+html[data-theme$="-light"] #pmw-overlay {
+  --pmw-guide-on-ink: #FFFFFF;
+  --pmw-guide-shadow: 0 10px 24px -10px rgba(21, 32, 43, .32), 0 2px 6px -2px rgba(21, 32, 43, .16);
+  --pmw-guide-glow: color-mix(in srgb, var(--pmw-accent) 38%, transparent);
+}
+
+.pmw-guide {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1260;
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: repeat(3, var(--pmw-guide-tile, 40px));
+  grid-template-rows: repeat(3, var(--pmw-guide-tile, 40px));
+  gap: var(--pmw-guide-gap, 6px);
+  transition: translate 190ms var(--pmw-ease-slide);
+  font-family: var(--pm-font-ui);
+}
+.pmw-guide[hidden] { display: none; }
+/* the carried chip rides over the guide (a tab clone's own z-index would otherwise put it under the tiles) */
+#pmw-overlay > .pmw-chip { z-index: 1300; }
+.pmw-guide-tile[data-edge="top"] { grid-area: 1 / 2; }
+.pmw-guide-tile[data-edge="left"] { grid-area: 2 / 1; }
+.pmw-guide-tile[data-edge="merge"] { grid-area: 2 / 2; }
+.pmw-guide-tile[data-edge="right"] { grid-area: 2 / 3; }
+.pmw-guide-tile[data-edge="bottom"] { grid-area: 3 / 2; }
+.pmw-guide[data-size="join"] .pmw-guide-tile:not([data-edge="merge"]) { visibility: hidden; }
+
+.pmw-guide-tile, .pmw-dock {
+  position: relative;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  border-radius: var(--pmw-guide-r);
+  background: var(--pmw-guide-bg);
+  color: var(--pmw-guide-ink);
+  box-shadow: 0 0 0 1px var(--pmw-guide-line), var(--pmw-guide-shadow);
+  transition: background-color var(--pmw-guide-t) linear, color var(--pmw-guide-t) linear,
+    box-shadow 180ms var(--pmw-ease), transform 200ms var(--pmw-ease), opacity var(--pmw-guide-t) linear;
+}
+.pmw-guide-tile[data-on], .pmw-dock[data-on] {
+  background: var(--pmw-guide-on);
+  color: var(--pmw-guide-on-ink);
+  box-shadow: 0 0 0 1px var(--pmw-guide-on), 0 0 22px 0 var(--pmw-guide-glow), var(--pmw-guide-shadow);
+  transform: scale(1.08);
+}
+.pmw-guide-tile[data-off], .pmw-dock[data-off] { opacity: .38; }
+.pmw-guide-tile[data-edge="merge"][data-off] { visibility: hidden; }
+
+/* the little map on each tile: the panel, and the part of it the drop fills */
+.pmw-guide-map {
+  position: relative;
+  display: block;
+  width: 56%;
+  height: 46%;
+  box-sizing: border-box;
+  border: 1.5px solid currentColor;
+  border-radius: var(--pmw-guide-map-r);
+}
+.pmw-guide-map::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+  opacity: .62;
+  border-radius: calc(var(--pmw-guide-map-r) - 1px);
+}
+[data-edge="left"] > .pmw-guide-map::after { left: 1px; top: 1px; bottom: 1px; width: calc(50% - 2px); }
+[data-edge="right"] > .pmw-guide-map::after { right: 1px; top: 1px; bottom: 1px; width: calc(50% - 2px); }
+[data-edge="top"] > .pmw-guide-map::after { left: 1px; right: 1px; top: 1px; height: calc(50% - 2px); }
+[data-edge="bottom"] > .pmw-guide-map::after { left: 1px; right: 1px; bottom: 1px; height: calc(50% - 2px); }
+/* the Join tile: a strip with a tab on it, and the tab's place in it */
+[data-edge="merge"] > .pmw-guide-map { border-top-width: 4px; }
+[data-edge="merge"] > .pmw-guide-map::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: -6px;
+  width: 42%;
+  height: 4px;
+  border-radius: 2px 2px 0 0;
+  background: currentColor;
+}
+[data-edge="merge"] > .pmw-guide-map::after { left: 1px; right: 1px; top: 1px; bottom: 1px; opacity: .3; }
+.pmw-guide-tile[data-off] > .pmw-guide-map::after { opacity: 0; }
+
+/* docks: one on each outer side of the centre, its map a full-length band */
+.pmw-dock {
+  position: fixed;
+  z-index: 1255;
+  width: 32px;
+  height: 32px;
+  translate: -50% -50%;
+  pointer-events: none;
+  --pmw-guide-r: 8px;
+}
+.pmw-dock[hidden] { display: none; }
+.pmw-dock[data-edge="left"] > .pmw-guide-map::after { width: calc(36% - 1px); right: auto; }
+.pmw-dock[data-edge="right"] > .pmw-guide-map::after { width: calc(36% - 1px); left: auto; }
+.pmw-dock[data-edge="top"] > .pmw-guide-map::after { height: calc(36% - 1px); bottom: auto; }
+.pmw-dock[data-edge="bottom"] > .pmw-guide-map::after { height: calc(36% - 1px); top: auto; }
+
+/* the zone's name: a layer of its own over the carried chip (1310 over 1300), placed by 31-dropzones.js where it
+   keeps clear of the chip and the pointer: 10 px under the guide, else above it or beside it; on the panel area's
+   side of a dock, else beside it along the edge. Placed with the translate property (glides between places), so the
+   entrance and the duck can scale it with transform about its own centre */
+.pmw-guide-cap {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1310;
+  pointer-events: none;
+  white-space: nowrap;
+  padding: 4px 9px;
+  border-radius: 7px;
+  background: var(--pmw-pop);
+  color: var(--pmw-text);
+  box-shadow: 0 0 0 1px var(--pmw-pop-line), var(--pmw-guide-shadow);
+  font-family: var(--pm-font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: .01em;
+  /* panel to panel it rides with the guide (the guide's own glide) */
+  transition: translate 190ms var(--pmw-ease-slide);
+}
+.pmw-guide-cap[hidden], .pmw-guide-cap:empty { display: none; }
+/* stepping aside from the carry */
+.pmw-guide-cap[data-swap] { transition: translate 240ms cubic-bezier(.2, .8, .2, 1); }
+
+/* ---- per look ---- */
+html[data-theme^="friendly"] #pmw-overlay {
+  --pmw-guide-r: 13px;
+  --pmw-guide-map-r: 4px;
+  --pmw-guide-bg: color-mix(in srgb, var(--pmw-pop) 96%, transparent);
+  --pmw-guide-on: var(--accent-lime, var(--pmw-accent));
+  --pmw-guide-glow: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 45%, transparent);
+}
+html[data-theme="friendly-light"] #pmw-overlay { --pmw-guide-on: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 72%, #000); }
+html[data-theme^="friendly"] .pmw-guide-tile[data-on], html[data-theme^="friendly"] .pmw-dock[data-on] {
+  transform: scale(1.12);
+  transition: background-color var(--pmw-guide-t) linear, color var(--pmw-guide-t) linear, box-shadow 220ms var(--pmw-ease),
+    transform 320ms cubic-bezier(.34, 1.56, .64, 1), opacity var(--pmw-guide-t) linear;
+}
+html[data-theme^="friendly"] .pmw-guide-cap { border-radius: 10px; }
+html[data-theme^="friendly"] .pmw-guide-cap[data-swap] { transition: translate 360ms cubic-bezier(.34, 1.56, .64, 1); }
+
+html[data-theme^="basic"] #pmw-overlay { --pmw-guide-r: 7px; --pmw-guide-map-r: 2px; }
+html[data-theme^="basic"] .pmw-guide-tile[data-on], html[data-theme^="basic"] .pmw-dock[data-on] { transform: none; }
+html[data-theme^="basic"] .pmw-guide-cap[data-swap] { transition: translate 190ms cubic-bezier(.2, .8, .2, 1); }
+
+/* Glass: frosted tiles with the slab's specular rim along the top; the lit tile is the selection glass */
+html[data-theme^="glass"] #pmw-overlay {
+  --pmw-guide-r: 12px;
+  --pmw-guide-map-r: 3px;
+  --pmw-guide-bg: var(--lg-tint-menu, color-mix(in srgb, var(--pmw-pop) 82%, transparent));
+  --pmw-guide-line: var(--rg-rim-low, rgba(255, 255, 255, .14));
+  --pmw-guide-on: var(--lg-sel, color-mix(in srgb, var(--pmw-accent) 70%, transparent));
+  --pmw-guide-on-ink: var(--lg-on-sel, #FFFFFF);
+  --pmw-guide-glow: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 60%, transparent);
+  --pmw-guide-shadow: 0 12px 30px -12px var(--lg-shadow, rgba(0, 2, 12, .55)), 0 3px 8px -3px var(--lg-shadow-near, rgba(0, 2, 12, .3));
+}
+html[data-theme^="glass"] .pmw-guide-tile, html[data-theme^="glass"] .pmw-dock {
+  box-shadow: inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .3)), inset 0 -1px 0 var(--lg-edge-bot, rgba(0, 0, 0, .25)),
+    0 0 0 1px var(--pmw-guide-line), var(--pmw-guide-shadow);
+}
+html[data-theme^="glass"] .pmw-guide-tile[data-on], html[data-theme^="glass"] .pmw-dock[data-on] {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), 0 0 0 1px color-mix(in srgb, var(--pmw-guide-on) 80%, #fff),
+    0 0 26px 2px var(--pmw-guide-glow), var(--pmw-guide-shadow);
+  transform: scale(1.07);
+}
+/* the carried chip is a pane of the same glass as the tiles and the zone's name: on the reading tint the code under it
+   showed through its label (4.43:1 over the editor in Glass Light, round 3) */
+html[data-theme^="glass"] #pmw-overlay > .pmw-chip {
+  background: var(--lg-tint-menu, var(--pmw-pop));
+  box-shadow: inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .3)), inset 0 -1px 0 var(--lg-edge-bot, rgba(0, 0, 0, .25)),
+    0 0 0 1px var(--pmw-guide-line), var(--pmw-guide-shadow);
+}
+html[data-theme^="glass"] .pmw-guide-cap[data-swap] { transition: translate 280ms cubic-bezier(.16, 1, .3, 1); }
+html[data-theme^="glass"] .pmw-guide-cap {
+  border-radius: 10px;
+  background: var(--lg-tint-menu, var(--pmw-pop));
+  box-shadow: inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .3)), 0 0 0 1px var(--pmw-guide-line), var(--pmw-guide-shadow);
+}
+
+/* Retro: box cells; the lit cell is reverse video; stepped */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #pmw-overlay {
+  --pmw-guide-r: 0px;
+  --pmw-guide-map-r: 0px;
+  --pmw-guide-bg: var(--surface);
+  --pmw-guide-line: var(--accent-lime);
+  --pmw-guide-ink: var(--accent-lime);
+  --pmw-guide-on: var(--accent-lime);
+  --pmw-guide-on-ink: var(--surface);
+  --pmw-guide-shadow: 3px 3px 0 rgba(0, 0, 0, .35);
+  --pmw-guide-t: 0ms;
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-tile[data-on], html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dock[data-on] {
+  transform: none;
+  box-shadow: 0 0 0 1px var(--accent-lime), 3px 3px 0 rgba(0, 0, 0, .35);
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide { transition: translate 140ms steps(3, end); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-guide-cap, .pmw-guide-cap[data-swap]) { transition: translate 140ms steps(3, end); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-map { border-width: 1px; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-map::after { opacity: 1; background: repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 3px); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-cap {
+  border-radius: 0;
+  background: var(--accent-lime);
+  color: var(--surface);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, .35);
+  font-family: var(--pm-font-code);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-cap::before { content: "> "; }
+
+/* NieR: ink squares on paper, the lit square solid ink; no glow; stepped */
+html[data-o55-nier="on"] #pmw-overlay {
+  --pmw-guide-r: 0px;
+  --pmw-guide-map-r: 0px;
+  --pmw-guide-bg: var(--o55-nier-overlay, var(--pmw-pop));
+  --pmw-guide-line: var(--o55-nier-ink);
+  --pmw-guide-ink: var(--o55-nier-ink);
+  --pmw-guide-on: var(--o55-nier-ink);
+  --pmw-guide-on-ink: var(--o55-nier-on-ink, var(--o55-nier-paper));
+  --pmw-guide-glow: transparent;
+  --pmw-guide-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .16);
+  --pmw-guide-t: 0ms;
+}
+html[data-o55-nier="on"] .pmw-guide-tile[data-on], html[data-o55-nier="on"] .pmw-dock[data-on] {
+  transform: none;
+  box-shadow: 0 0 0 1px var(--o55-nier-ink), 3px 3px 0 rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .16);
+}
+html[data-o55-nier="on"] .pmw-guide { transition: translate 160ms steps(4, end); }
+html[data-o55-nier="on"] :is(.pmw-guide-cap, .pmw-guide-cap[data-swap]) { transition: translate 160ms steps(4, end); }
+html[data-o55-nier="on"] .pmw-guide-map { border-width: 1px; }
+html[data-o55-nier="on"] .pmw-guide-map::after { opacity: 1; background: repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 3px); }
+html[data-o55-nier="on"] .pmw-guide-tile[data-on] > .pmw-guide-map::after, html[data-o55-nier="on"] .pmw-dock[data-on] > .pmw-guide-map::after { background: currentColor; }
+html[data-o55-nier="on"] .pmw-guide-cap {
+  border-radius: 0;
+  background: var(--o55-nier-ink);
+  color: var(--o55-nier-on-ink, var(--o55-nier-paper));
+  box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .16);
+  font-family: var(--pm-font-code);
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+/* ---- the live preview (31-dropview.js): the ghost panel, the join veil, the hole, a panel the carry empties ---- */
+#pm-home-centre {
+  --pmw-dv-tint: color-mix(in srgb, var(--pmw-accent) 14%, var(--pmw-surface));
+  --pmw-dv-tint-2: color-mix(in srgb, var(--pmw-accent) 6%, var(--pmw-surface));
+  --pmw-dv-ring: color-mix(in srgb, var(--pmw-accent) 78%, transparent);
+  --pmw-dv-tab: color-mix(in srgb, var(--pmw-accent) 24%, var(--pmw-surface));
+  --pmw-dv-glow: 0 22px 48px -20px rgba(0, 0, 0, .7), 0 0 34px -6px color-mix(in srgb, var(--pmw-accent) 40%, transparent);
+  --pmw-dv-sheen: color-mix(in srgb, #fff 16%, transparent);
+  --pmw-dv-veil: color-mix(in srgb, var(--pmw-accent) 11%, transparent);
+}
+html[data-theme$="-light"] #pm-home-centre {
+  --pmw-dv-tint: color-mix(in srgb, var(--pmw-accent) 12%, var(--pmw-surface));
+  --pmw-dv-tint-2: color-mix(in srgb, var(--pmw-accent) 4%, var(--pmw-surface));
+  --pmw-dv-tab: color-mix(in srgb, var(--pmw-accent) 18%, var(--pmw-surface));
+  --pmw-dv-glow: 0 20px 40px -22px rgba(21, 32, 43, .35), 0 0 30px -8px color-mix(in srgb, var(--pmw-accent) 34%, transparent);
+  --pmw-dv-sheen: color-mix(in srgb, #fff 55%, transparent);
+  --pmw-dv-veil: color-mix(in srgb, var(--pmw-accent) 9%, transparent);
+}
+/* while a preview shows, the dividers stand down: they belong to the layout as it is, not the one shown */
+#pm-home-centre[data-pmw-dv] .pmw-divider { opacity: 0; pointer-events: none; }
+.pmw-panel[data-dv-leaving] { opacity: .34; }
+
+.pmw-dv-ghost {
+  position: absolute;
+  z-index: 15;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: var(--pmw-panel-radius);
+  background: linear-gradient(180deg, var(--pmw-dv-tint), var(--pmw-dv-tint-2));
+  box-shadow: inset 0 0 0 1.5px var(--pmw-dv-ring), var(--pmw-dv-glow);
+  opacity: 0;
+  transition: opacity 150ms linear;
+}
+.pmw-dv-ghost.is-in { opacity: 1; }
+#pm-home-centre.pmw-animating .pmw-dv-ghost {
+  transition: left var(--pmw-t-med) var(--pmw-ease-slide), top var(--pmw-t-med) var(--pmw-ease-slide),
+    width var(--pmw-t-med) var(--pmw-ease-slide), height var(--pmw-t-med) var(--pmw-ease-slide), opacity 150ms linear;
+}
+.pmw-dv-ghost.is-out {
+  opacity: 0;
+  transition: left var(--pmw-t-med) var(--pmw-ease-slide), top var(--pmw-t-med) var(--pmw-ease-slide),
+    width var(--pmw-t-med) var(--pmw-ease-slide), height var(--pmw-t-med) var(--pmw-ease-slide), opacity var(--pmw-t-med) linear;
+}
+.pmw-dv-ghost.is-handoff { opacity: 0; transition: opacity 220ms linear; }
+.pmw-dv-ghost-strip { flex: 0 0 var(--pmw-strip-h); display: flex; align-items: flex-end; padding: 0 8px; min-width: 0; }
+.pmw-dv-ghost-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+  height: var(--pmw-tab-h);
+  padding: 0 12px 0 10px;
+  box-sizing: border-box;
+  border-radius: var(--pmw-tab-crown) var(--pmw-tab-crown) 0 0;
+  background: var(--pmw-dv-tab);
+  color: var(--pmw-text);
+  font-size: var(--pmw-tab-font);
+  font-weight: var(--pmw-tab-weight, 600);
+  white-space: nowrap;
+}
+.pmw-dv-ghost-name { overflow: hidden; text-overflow: ellipsis; }
+.pmw-dv-ghost-body { position: relative; flex: 1 1 auto; min-height: 0; display: grid; place-items: center; overflow: hidden; }
+.pmw-dv-ghost-mark {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  color: var(--pmw-accent);
+  background: color-mix(in srgb, var(--pmw-accent) 13%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmw-accent) 30%, transparent);
+}
+.pmw-dv-ghost-mark .pmw-ico { width: 26px; height: 26px; stroke-width: 1.4; }
+.pmw-dv-ghost-mark .pmw-kglyph { font-size: 20px; }
+.pmw-dv-ghost.is-in .pmw-dv-ghost-mark { animation: pmw-dv-mark 420ms cubic-bezier(.2, .9, .25, 1.15) 60ms both; }
+/* one pass of light across the new panel as it opens */
+.pmw-dv-ghost-sheen, .pmw-dv-veil-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 32%, var(--pmw-dv-sheen) 48%, transparent 64%);
+  translate: -110% 0;
+}
+.pmw-dv-ghost.is-in .pmw-dv-ghost-sheen, .pmw-dv-veil.is-in .pmw-dv-veil-sheen { animation: pmw-dv-sheen 900ms cubic-bezier(.3, .6, .2, 1) 90ms 1 both; }
+@keyframes pmw-dv-sheen { from { translate: -110% 0; } to { translate: 110% 0; } }
+@keyframes pmw-dv-mark { from { transform: scale(.6); opacity: 0; } to { transform: none; opacity: 1; } }
+
+.pmw-dv-veil {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--pmw-strip-h);
+  bottom: 0;
+  z-index: 12;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: 0 0 var(--pmw-panel-radius) var(--pmw-panel-radius);
+  background: var(--pmw-dv-veil);
+  box-shadow: inset 0 0 0 1.5px var(--pmw-dv-ring), inset 0 0 40px -10px color-mix(in srgb, var(--pmw-accent) 40%, transparent);
+  opacity: 0;
+  transition: opacity 150ms linear;
+}
+.pmw-dv-veil.is-in { opacity: 1; }
+
+.pmw-dv-hole {
+  position: absolute;
+  z-index: 0;
+  box-sizing: border-box;
+  pointer-events: none;
+  border-radius: var(--pmw-panel-radius);
+  border: 1.5px dashed color-mix(in srgb, var(--pmw-text) 30%, transparent);
+  background: color-mix(in srgb, var(--pmw-text) 4%, transparent);
+  opacity: 0;
+  transition: opacity 150ms linear;
+}
+.pmw-dv-hole.is-in { opacity: 1; }
+#pm-home-centre.pmw-animating .pmw-dv-hole {
+  transition: left var(--pmw-t-med) var(--pmw-ease-slide), top var(--pmw-t-med) var(--pmw-ease-slide),
+    width var(--pmw-t-med) var(--pmw-ease-slide), height var(--pmw-t-med) var(--pmw-ease-slide), opacity 150ms linear;
+}
+
+/* Friendly: soft and round; the mark pops in */
+html[data-theme^="friendly"] #pm-home-centre {
+  --pmw-dv-ring: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 70%, transparent);
+  --pmw-dv-tint: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 13%, var(--pmw-surface));
+  --pmw-dv-tint-2: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 5%, var(--pmw-surface));
+  --pmw-dv-tab: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 22%, var(--pmw-surface));
+  --pmw-dv-veil: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 10%, transparent);
+}
+html[data-theme^="friendly"] .pmw-dv-ghost { box-shadow: inset 0 0 0 2px var(--pmw-dv-ring), var(--pmw-dv-glow); }
+html[data-theme^="friendly"] .pmw-dv-ghost-mark { border-radius: 20px; color: var(--pmw-tab-active, var(--pmw-accent)); background: color-mix(in srgb, var(--accent-lime, var(--pmw-accent)) 16%, transparent); }
+html[data-theme^="friendly"] .pmw-dv-ghost.is-in .pmw-dv-ghost-mark { animation: pmw-dv-mark 520ms cubic-bezier(.34, 1.56, .64, 1) 60ms both; }
+html[data-theme^="friendly"] .pmw-dv-hole { border-width: 2px; }
+
+/* Glass: a pane of the slab's glass, its rim lit, the selection glass glowing through */
+html[data-theme^="glass"] #pm-home-centre {
+  --pmw-dv-tint: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 22%, var(--lg-tint-panel, var(--pmw-strip)));
+  --pmw-dv-tint-2: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 8%, var(--lg-tint-panel, var(--pmw-strip)));
+  --pmw-dv-ring: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 85%, #fff);
+  --pmw-dv-tab: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 30%, var(--lg-tint-card, var(--pmw-surface)));
+  --pmw-dv-glow: 0 24px 56px -22px var(--lg-shadow, rgba(0, 2, 12, .55)), 0 0 44px -6px color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 55%, transparent);
+  --pmw-dv-sheen: rgba(255, 255, 255, .22);
+  --pmw-dv-veil: color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 16%, transparent);
+}
+html[data-theme^="glass"] .pmw-dv-ghost {
+  box-shadow: inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .45)), inset 0 0 0 1px var(--pmw-dv-ring),
+    inset 0 -1px 0 var(--lg-edge-bot, rgba(0, 0, 0, .25)), var(--pmw-dv-glow);
+}
+html[data-theme^="glass"] .pmw-dv-ghost-mark { color: var(--lg-on-sel, #fff); background: var(--lg-sel, var(--pmw-accent)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 8px 24px -8px var(--lg-sel, var(--pmw-accent)); }
+html[data-theme^="glass"] .pmw-dv-veil { box-shadow: inset 0 0 0 1px var(--pmw-dv-ring), inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .45)), inset 0 0 48px -8px color-mix(in srgb, var(--lg-sel, var(--pmw-accent)) 55%, transparent); }
+html[data-theme^="glass"] .pmw-dv-hole { border-color: var(--rg-rim-soft, rgba(255, 255, 255, .3)); }
+
+/* Retro: a dithered phosphor cell, the tab in reverse video, a scanline passing once */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dv-ghost {
+  border-radius: 0;
+  background: repeating-conic-gradient(color-mix(in srgb, var(--accent-lime) 16%, transparent) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px, var(--surface);
+  box-shadow: inset 0 0 0 1px var(--accent-lime), 4px 4px 0 rgba(0, 0, 0, .35);
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dv-ghost-tab { border-radius: 0; background: var(--accent-lime); color: var(--surface); font-family: var(--pm-font-code); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dv-ghost-mark { border-radius: 0; color: var(--surface); background: var(--accent-lime); box-shadow: 3px 3px 0 rgba(0, 0, 0, .35); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dv-ghost.is-in .pmw-dv-ghost-mark { animation: pmw-dv-mark 240ms steps(3, end) 60ms both; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-dv-ghost-sheen, .pmw-dv-veil-sheen) {
+  background: linear-gradient(180deg, transparent 0 46%, color-mix(in srgb, var(--accent-lime) 30%, transparent) 46% 54%, transparent 54%);
+  translate: 0 -110%;
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-dv-ghost.is-in .pmw-dv-ghost-sheen, .pmw-dv-veil.is-in .pmw-dv-veil-sheen) { animation: pmw-dv-scan 720ms steps(9, end) 60ms 1 both; }
+@keyframes pmw-dv-scan { from { translate: 0 -110%; } to { translate: 0 110%; } }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dv-veil {
+  border-radius: 0;
+  background: repeating-conic-gradient(color-mix(in srgb, var(--accent-lime) 18%, transparent) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px;
+  box-shadow: inset 0 0 0 1px var(--accent-lime);
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-dv-hole { border-radius: 0; border: 1px dashed var(--accent-lime); background: none; }
+
+/* NieR: hatched ink, square, no glow or light */
+html[data-o55-nier="on"] .pmw-dv-ghost {
+  border-radius: 0;
+  background: repeating-linear-gradient(45deg, rgba(var(--o55-nier-ink-rgb), .16) 0 1px, transparent 1px 6px), var(--o55-nier-paper, var(--surface));
+  box-shadow: inset 0 0 0 1px var(--o55-nier-ink), 3px 3px 0 rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .16);
+}
+html[data-o55-nier="on"] .pmw-dv-ghost-tab { border-radius: 0; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink, var(--o55-nier-paper)); font-weight: 500; }
+html[data-o55-nier="on"] .pmw-dv-ghost-mark { border-radius: 0; color: var(--o55-nier-on-ink, var(--o55-nier-paper)); background: var(--o55-nier-ink); box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .16); }
+html[data-o55-nier="on"] .pmw-dv-ghost.is-in .pmw-dv-ghost-mark { animation: pmw-dv-mark 200ms steps(2, end) 40ms both; }
+html[data-o55-nier="on"] :is(.pmw-dv-ghost-sheen, .pmw-dv-veil-sheen) { display: none; }
+html[data-o55-nier="on"] .pmw-dv-veil {
+  border-radius: 0;
+  background: repeating-linear-gradient(45deg, rgba(var(--o55-nier-ink-rgb), .14) 0 1px, transparent 1px 6px);
+  box-shadow: inset 0 0 0 1px var(--o55-nier-ink);
+}
+html[data-o55-nier="on"] .pmw-dv-hole { border-radius: 0; border: 1px dashed var(--o55-nier-ink); background: none; }
+
+/* Reduced Motion: the preview appears in place (31-dropview.js waits for the zone to hold); the ghost, the veil and
+   the hole fade, nothing glides, grows, pops or sweeps */
+html[data-motion="reduced"] :is(.pmw-dv-ghost-sheen, .pmw-dv-veil-sheen) { display: none; }
+html[data-motion="reduced"] .pmw-dv-ghost-mark { animation: none !important; }
+html[data-motion="reduced"] #pm-home-centre .pmw-dv-ghost, html[data-motion="reduced"] #pm-home-centre .pmw-dv-hole { transition: opacity 140ms linear !important; }
+@media (prefers-reduced-motion: reduce) {
+  .pmw-dv-ghost-sheen, .pmw-dv-veil-sheen { display: none; }
+  .pmw-dv-ghost-mark { animation: none !important; }
+  #pm-home-centre .pmw-dv-ghost, #pm-home-centre .pmw-dv-hole { transition: opacity 140ms linear !important; }
+}
+
+/* Reduced Motion: the guide, the docks and the zone's name appear and change in place (the name fades out and in
+   again when it steps aside); nothing glides, grows or scales */
+html[data-motion="reduced"] .pmw-guide { transition: none; }
+html[data-motion="reduced"] :is(.pmw-guide-tile, .pmw-dock) { transition: none; }
+html[data-motion="reduced"] :is(.pmw-guide-cap, .pmw-guide-cap[data-swap]) { transition: none !important; }   /* over Retro's and NieR's steps */
+html[data-motion="reduced"] :is(.pmw-guide-tile, .pmw-dock)[data-on] { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .pmw-guide, .pmw-guide-tile, .pmw-dock { transition: none; }
+  .pmw-guide-cap, .pmw-guide-cap[data-swap] { transition: none !important; }
+  .pmw-guide-tile[data-on], .pmw-dock[data-on] { transform: none; }
+}
