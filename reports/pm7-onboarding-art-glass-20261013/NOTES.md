@@ -16,22 +16,24 @@ looks) is its own section below.
   rebased as `fe1dff9bc5`, its own commits unchanged). Source commits: `842e237feb` (art, rig, name field, Glass
   controls, theme preview hold), `c3d8a095ea` (tour chat labels; the Glass curtain seam and switch timing from the
   frame review), `da3702fa02` (the label on its own line; the step rail's halo under the Glass layer), `3d2b75cc2f` (the
-  contrast amendment, its tool and the regenerated pages). This report follows in its own commit. GitHub and NAS tips
+  contrast amendment, its tool and the regenerated pages), `af0d8ae6b7` (Ready's celebration under its lettered emblem,
+  after landing2's stop). This report follows in its own commit. GitHub and NAS tips
   verified equal after every push.
 - The one source conflict of the rebase was `tools/build.py`: perf M1's `shared_fitting_patch` and this branch's
   `THEME_PREVIEW_PATCHES` are both applied (M1 first; they touch different regions of the base page). Every commit's
   pages were regenerated as it was replayed.
-- 28 paths change from `fe1dff9bc5`; no Plans path:
+- 30 paths change from `fe1dff9bc5`; no Plans path:
   - art and rig: `src/js/50-art-core.js`, `51-art-basic.js`, `52-art-friendly.js`, `53-art-glass.js`, `54-art-nier.js`,
-    `54-art-retro.js`, `55-scenes.js`, `58-rig.js`, `66-family-window.js`; `src/css/30-art.css`;
+    `54-art-retro.js`, `55-scenes.js`, `58-rig.js`, `59-cheer.js`, `66-family-window.js`, `74-screens-ready.js`;
+    `src/css/30-art.css`;
   - name field: `src/js/61-components.js`, `69-screens-project.js`, `src/css/10-window.css`;
   - Glass controls: `src/css/45-glass-controls.css` (new); guided-message labels: `src/css/43-chat-labels.css` (new);
   - contrast inks: `src/css/10-window.css`, `11-window-nier.css`, `12-components.css`, `40-tour.css`, `41-tour-nier.css`;
   - theme preview hold: `src/js/60-ui-core.js`, `tools/build.py`;
   - tests: `tools/art_joints.mjs` (new), `tools/contrast_worst.mjs` (new); `README.md`;
-  - four generated pages at `3d2b75cc2f`: `PMConcept7.html` = `Onboarding concepts/TestOpus5.5PmConcept.html` =
-    `HomeTestPMConcept7.html` `9cdead9d9b2a454565e00bf89ef92aba6a642e245bb978c88b397fb19b301c4d`,
-    `LeftRailPMConcept7.html` `92d0625cc759afcdf42395faa168427cd77f1992fa190c56d620b2e6c166ae56`.
+  - four generated pages at `af0d8ae6b7`: `PMConcept7.html` = `Onboarding concepts/TestOpus5.5PmConcept.html` =
+    `HomeTestPMConcept7.html` `bd511e019090ffea11ca3a33fa49574aa3d2a8313ab11d6e675553878dbc5059`,
+    `LeftRailPMConcept7.html` `362b24daca57691c57a20d4d365b5a9143c2df96b5133fed0608d1561190e669` (at `3d2b75cc2f`, where the full table below was measured: `9cdead9d…`, `92d0625c…`).
 - Generators: `build.py --publish-pm7`, `build_home.py`, `build_rail.py`, each `--check` ok. Outside the onboarding's own
   `O55:CSS` and `O55:BODY` blocks, the page differs from `main`'s (and from `fe1dff9bc5`'s) by exactly two lines (the
   `applyPaint` hold below).
@@ -313,6 +315,28 @@ is chosen on that path); a person reaches it with a device.
 - `diagnostics/`: the six SSH steps reached through Find it; Glass Dark's providers list measured alone on Nas1 and on
   the Mac, before and after the grown clip, with the pixel map.
 
+**Follow-up: Ready's celebration (landing2's stop and the coordinator's go, 2026-10-14).** landing2's reader caught
+Ready's curtain-call confetti mid-flight with a cobalt piece inside Retro's ALL CLEAR box: the same cobalt as the
+words, so 1.00. The settled box reads 5.92, and the full pass above measured after the burst. Still, the code meant
+the burst to play under the emblem, and it was drawn over it. Now (`af0d8ae6b7`):
+- the burst's group goes beneath Ready's first lettered emblem (Basic's stamp, Retro's ALL CLEAR and score;
+  `A.famCall.lettered`), in the curtain call and in the Reduced Motion / low-resource celebration on Ready. Checked in
+  the DOM mid-burst: in Retro and Basic the confetti sits in the front layer before the emblem; Friendly and Glass have
+  no lettered emblem and keep theirs as before;
+- Basic's impression shows its words at C+340 ms, once the lifting stamp is clear of them (its edge crossed them,
+  1.07); the word on the stamp's own face is in the solid ink (3:1 in Dark); Retro's SETUP 100% stands on a ground
+  knock-out like its captions;
+- `tools/contrast_worst.mjs --during` measures a screen at set moments before it settles.
+
+Ready in all five looks, light and dark, normal and Reduced Motion, measured settled and at eight moments 1.3 to 3.4 s
+into the curtain call (180 views, `contrast/ready-burst/final-ready-*`): no confetti reading, no ALL CLEAR or stamp
+reading after the burst, Glass, NieR and Friendly clean at every moment. Two one-shot moments inside the curtain call
+still read low, both motion rather than ink, and are left for the coordinator's ruling: Basic Light at 1.9 s, the
+stamp flying off up and to the right passes over the control bar's "CONTROL · 224" label (1.00, about 0.2 s); Retro at
+1.3 s, ALL CLEAR's box wipes in with its words for 360 ms, so the strings show inside the words' box until the wipe
+ends (1.04 to 1.25). Neither is a settled state, the same class as a screen fading in; each has a small fix if it is
+ruled in scope (the stamp leaving by fading where it lifted; the box shown whole with only the words typing on).
+
 ## Not changed, and open items
 
 Kept exactly as they were:
@@ -351,8 +375,8 @@ Open, for their owners:
 
 ## Evidence and packet
 
-- Raw evidence: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-art-glass-20261013/` (941 files, 280 MB),
-  `SHA256SUMS` `8161504441c6bd6a3cf07df143c568c0d1f486c5e5f2f43563cbcde4fc2e3a82`; the capture and film scripts are in
+- Raw evidence: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-onboarding-art-glass-20261013/` (965 files, 280 MB),
+  `SHA256SUMS` `ab597a216cef492c7624a5de0c1045224038b95423a88cc0f3a5f6617da4909c`; the capture and film scripts are in
   `scripts/` there; the contrast amendment's runs, diagnostics, stills, page hashes (`PAGES.sha256`) and scripts are
   under `contrast/` (every failed attempt kept).
 - Review packet: `/mnt/Cursor/share/puppet-master/2026-10-13-onboarding-art-glass/` (README, previews at `9c28f69792`,
