@@ -1,5 +1,5 @@
 {
-  "status": "SOURCE_VERIFIED_MOTION_FILMS_PENDING",
+  "status": "M2_APPROVED_FOR_ADOPTION_M3_DEFERRED",
   "author": "pm7-glass-perf-sol",
   "base": "34e5452f8e74f961a2cb3553f2fb480910460846",
   "branch": "fix/pm7-glass-perf-m2-m3-20261013",
@@ -39,6 +39,149 @@
     "usage_strip_syncs": [
       229,
       40
+    ],
+    "approved_for_adoption": true,
+    "timing_pairs": [
+      {
+        "mode": "Dark",
+        "action": "glass-entry",
+        "task_ms": [
+          1844.21,
+          1911.41
+        ],
+        "style_ms": [
+          848.65,
+          860.13
+        ],
+        "layout_ms": [
+          52.81,
+          52.31
+        ],
+        "largest_task_ms": [
+          258.6,
+          258.33
+        ]
+      },
+      {
+        "mode": "Dark",
+        "action": "cold-code",
+        "task_ms": [
+          1803.66,
+          1605.54
+        ],
+        "style_ms": [
+          685.9,
+          604.66
+        ],
+        "layout_ms": [
+          40.13,
+          33.09
+        ],
+        "largest_task_ms": [
+          134.39,
+          102.37
+        ]
+      },
+      {
+        "mode": "Dark",
+        "action": "theme-into-glass",
+        "task_ms": [
+          2210.57,
+          2242.39
+        ],
+        "style_ms": [
+          1037.74,
+          1032.6
+        ],
+        "layout_ms": [
+          39.99,
+          40.59
+        ],
+        "largest_task_ms": [
+          322.02,
+          314.34
+        ]
+      },
+      {
+        "mode": "Dark",
+        "action": "rail-search",
+        "task_ms": [
+          1987.86,
+          2066.15
+        ],
+        "style_ms": [
+          1033.1,
+          1047.71
+        ],
+        "layout_ms": [
+          59.58,
+          64.84
+        ],
+        "largest_task_ms": [
+          294.34,
+          319.9
+        ]
+      },
+      {
+        "mode": "Dark",
+        "action": "page-orchestrator",
+        "task_ms": [
+          1394.3,
+          1410.96
+        ],
+        "style_ms": [
+          474.54,
+          538.8
+        ],
+        "layout_ms": [
+          32.94,
+          36.79
+        ],
+        "largest_task_ms": [
+          108.03,
+          103.75
+        ]
+      },
+      {
+        "mode": "Dark",
+        "action": "usage-entry",
+        "task_ms": [
+          1793.64,
+          1792.97
+        ],
+        "style_ms": [
+          740.62,
+          731.99
+        ],
+        "layout_ms": [
+          52.79,
+          54.96
+        ],
+        "largest_task_ms": [
+          166.38,
+          144.45
+        ]
+      },
+      {
+        "mode": "Dark",
+        "action": "usage-nav",
+        "task_ms": [
+          1642.67,
+          1578.2
+        ],
+        "style_ms": [
+          561.66,
+          593.33
+        ],
+        "layout_ms": [
+          36.95,
+          41.44
+        ],
+        "largest_task_ms": [
+          57.76,
+          55.69
+        ]
+      }
     ]
   },
   "M3": {
@@ -65,7 +208,8 @@
       "lighting",
       "rim band"
     ],
-    "synthetic_resize_and_same_print_alias_guards": true
+    "synthetic_resize_and_same_print_alias_guards": true,
+    "adopted": false
   },
   "proof": {
     "timing_host": "Mac Apple M3",
@@ -534,7 +678,214 @@
     ],
     "float_and_encoded_input_oracle_cases": 11,
     "owner_film_manifest_verified_entries": 41,
-    "owner_manifest_sha256": "2e264e98727180430aa1789d69ea1922f5a982f6b1197754357fdc634344268d"
+    "owner_manifest_sha256": "2e264e98727180430aa1789d69ea1922f5a982f6b1197754357fdc634344268d",
+    "clean_feedback_pairs": [
+      {
+        "mode": "Dark",
+        "action": "P1 Glass entry",
+        "before_after_ms": [
+          434.2,
+          883.25
+        ],
+        "method": "new-theme page-selector chrome (10% pre/post projection;25/50/75% agree)"
+      },
+      {
+        "mode": "Dark",
+        "action": "P2 cold Code",
+        "before_after_ms": [
+          391.6,
+          448.85
+        ],
+        "method": "first new Code heading text shape"
+      },
+      {
+        "mode": "Dark",
+        "action": "P3 theme into Glass",
+        "before_after_ms": [
+          534.4,
+          679.15
+        ],
+        "method": "new-theme page-selector chrome (10% pre/post projection;25/50/75% agree)"
+      },
+      {
+        "mode": "Dark",
+        "action": "P4 rail search",
+        "before_after_ms": [
+          23.2,
+          24.65
+        ],
+        "method": "first change in selected strip/rail ROI; see click-aligned frames"
+      },
+      {
+        "mode": "Dark",
+        "action": "P5 page selector",
+        "before_after_ms": [
+          2.3,
+          8.35
+        ],
+        "method": "first change in selected strip/rail ROI; see click-aligned frames"
+      },
+      {
+        "mode": "Dark",
+        "action": "P6 Usage entry",
+        "before_after_ms": [
+          15.9,
+          15.45
+        ],
+        "method": "first change in selected strip/rail ROI; see click-aligned frames"
+      },
+      {
+        "mode": "Dark",
+        "action": "P7 Usage nav",
+        "before_after_ms": [
+          9.8,
+          5.75
+        ],
+        "method": "first change in selected strip/rail ROI; see click-aligned frames"
+      },
+      {
+        "mode": "Light",
+        "action": "P1 Glass entry",
+        "before_after_ms": [
+          423.5,
+          442.85
+        ],
+        "method": "new-theme page-selector chrome (10% pre/post projection;25/50/75% agree)"
+      },
+      {
+        "mode": "Light",
+        "action": "P2 cold Code",
+        "before_after_ms": [
+          288.0,
+          406.75
+        ],
+        "method": "first new Code heading text shape"
+      },
+      {
+        "mode": "Light",
+        "action": "P3 theme into Glass",
+        "before_after_ms": [
+          557.6,
+          564.15
+        ],
+        "method": "new-theme page-selector chrome (10% pre/post projection;25/50/75% agree)"
+      },
+      {
+        "mode": "Light",
+        "action": "P4 rail search",
+        "before_after_ms": [
+          1.0,
+          2.65
+        ],
+        "method": "first change in selected strip/rail ROI; see click-aligned frames"
+      },
+      {
+        "mode": "Light",
+        "action": "P5 page selector",
+        "before_after_ms": [
+          14.3,
+          8.95
+        ],
+        "method": "first change in selected strip/rail ROI; see click-aligned frames"
+      },
+      {
+        "mode": "Light",
+        "action": "P6 Usage entry",
+        "before_after_ms": [
+          22.6,
+          14.05
+        ],
+        "method": "first change in selected strip/rail ROI; see click-aligned frames"
+      },
+      {
+        "mode": "Light",
+        "action": "P7 Usage nav",
+        "before_after_ms": [
+          8.8,
+          18.35
+        ],
+        "method": "first change in selected strip/rail ROI; see click-aligned frames"
+      }
+    ],
+    "clean_film_host": "Mac Apple M3",
+    "clean_film_protocol": "Trusted pointerdown,70ms hold;canvas pixel marker with no per-input DOM mutation;two-second canvas barcode before/after;actual source video PTS.",
+    "M2_bisect": [
+      {
+        "action": "P1 Glass entry",
+        "v3_ms": 434.2,
+        "M2_ms": 456.7,
+        "M2_M3_ms": 883.25
+      },
+      {
+        "action": "P3 theme into Glass",
+        "v3_ms": 534.4,
+        "M2_ms": 537.0,
+        "M2_M3_ms": 679.15
+      }
+    ],
+    "film_review": {
+      "clean_Dark_inputs_per_version": 25,
+      "clean_Light_inputs_per_version": 7,
+      "M2_focus_inputs": 3,
+      "all_drivers_complete": true,
+      "first_state": "Decoded optics and observed first new-theme/Code states match; delayed M3 onset fails PURE-PERF acceptance.",
+      "motion": "Clean click-aligned page-selector,rail,Usage,scrub/reversal paths were compared with owner v3c/v3f/v3g references. No intentional path/press/label/spring changes; M3 onset remains unacceptable.",
+      "capture_limit": "Requested1080p60. Mac capture is variable-rate;use actual PTS and 60Hz comparison samples. No claim of60 distinct source frames every second or photon latency.",
+      "marker_correction": "Earlier assertion that style-based marker changes forced Glass MO was wrong: its attributeFilter excludes style. Earlier P1000 DOM-marker films are diagnostic;clean canvas Mac films are the onset basis.",
+      "semantic_correction": "The initial247ms Light Code hit was old General optics. Semantic Code heading onset and new-theme chrome replace generic detector values; originals retained."
+    },
+    "attribution": {
+      "trace": "m3-entry-attribution/after-fixed-dark-0-glass-entry.trace.json",
+      "action_origin": "glass-perf-action-start user timing mark",
+      "events_ms": [
+        {
+          "start": 135.6,
+          "duration": 252.9,
+          "event": "renderer click task"
+        },
+        {
+          "start": 209.7,
+          "duration": 160.9,
+          "event": "Glass MutationObserver callback"
+        },
+        {
+          "start": 433.4,
+          "duration": 256.7,
+          "event": "renderer frame task"
+        },
+        {
+          "start": 446.0,
+          "duration": 239.6,
+          "event": "PMPillFit.run callback",
+          "source": "shared parent HTML, generated line125834",
+          "style_ms": 132.9,
+          "style_elements": 8006
+        },
+        {
+          "start": 697.6,
+          "duration": 37.5,
+          "event": "wallpaper image onload / bake callback"
+        },
+        {
+          "start": 856.0,
+          "duration": 70.3,
+          "event": "frost PNG completion callback",
+          "style_ms": 56.6
+        },
+        {
+          "start": 939.3,
+          "duration": 16.9,
+          "event": "first observed dedicated-worker computation"
+        }
+      ],
+      "conclusion": "M2 clears bisect. M3 onset cause remains unresolved. Shared fitting/style dominates the early frame; one guilty-head trace does not establish what M3 adds against v3. Worker startup/cloning was not demonstrated as the cause. Owner requires a separate matched v3/M3 A/B trace before reopening M3."
+    },
+    "artifact_hashes": {
+      "v3-before.html": "5bdd624d4e8384b6f36505e07f5d03208e2013f6d2428fbfd985a53209bc7f07",
+      "M2-approved.html": "6fc57af546b77885795ab9ead60173f9edc56fe9c19436c1bf32b316dd9bc059",
+      "M3-deferred.html": "e5015565b1d6a9a18d67541cf44e1ff0b44f7506235d4e51960fadc4bc8ed3d2"
+    },
+    "hardware_encoding_verified": true
   },
   "limitations": [
     "Corrected-source timing is one pair per mode; preceding balanced two-pair/mode run is a separately retained earlier snapshot.",
@@ -542,7 +893,12 @@
     "Global entry/rail peaks remain mixed and shared style/fitting work remains; no across-the-board gain or complete12ms/50ms target claim.",
     "RSS sums the own Chromium process tree at0.5s intervals and includes browser caches; retention budgets are not whole-browser RSS limits.",
     "Unmodified v3 Usage lens placement varies within its existing0.5px still tolerance; no corrective motion change.",
-    "Normal60fps and first-visible feedback film proof is pending the coordinated P1000 recording slot. No Mac reserve was lowered."
+    "M3 is not accepted or adopted. Exact final pixels and lower task totals do not compensate for delayed first new-theme/Code feedback.",
+    "Timing tables are independent snapshot pairs,not a repeatable median/p95 campaign. No across-the-board CPU improvement claim.",
+    "M2-only acceptance uses the focused clean bisect and unchanged optics/motion; full clean required-route movies cover the combined candidate.",
+    "Mac source recording is variable-rate. Frame comparisons use source PTS/60Hz samples; onset uncertainty is at least one capture frame plus measured calibration residual.",
+    "The guilty-head trace is not an A/B causal attribution. It does not establish worker startup,buffer cloning,bitmap decode or queue drainage as the cause.",
+    "P1000 DOM-marker movies and generic detector output are retained as diagnostic evidence,not adopted latency proof."
   ],
   "evidence": [
     {
@@ -588,6 +944,115 @@
     {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/rss-corrected.jsonl",
       "sha256": "21cf10a9e6537cb2c800eb63be55d3acbd09a68c82f444f6754d33842c400df3"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/m2-final-timing/summary.json",
+      "sha256": "349a7be1a9560bd495d2e4159d29cd20c2a0843115634f5bb6009db9f2e69325"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/map-oracle.json",
+      "sha256": "cdb5ed6cd59d3b995526599d06532a679a659bc2d9d6073b9a06dd06ca266588"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/clean-film-comparison/semantic-theme-onset.json",
+      "sha256": "ea088a97ad390f51a0b6bde371574624272edcb6885c9f630284417d0e7e7cfe"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/clean-film-comparison/code-onset.json",
+      "sha256": "eac26db2147962a76d493815f3bda8111c50b62d6a3d5142de4be12c4cd2f7fc"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/m3-entry-attribution/after-fixed-dark-0-glass-entry.trace.json",
+      "sha256": "f69b6e408208b33056c4aaca9cb8a3984f3432965b751daec8a6efb5d6c01666"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/m3-entry-attribution/attribution.json",
+      "sha256": "89fcb6c695b463dda10049b945b05cd540f3c61677d4115b2e3d052e3d160965"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/films/clean-capture-receipt.json",
+      "sha256": "726a749c2491e726de572923b30e15f00af15c634c0dba5c65fab5905bdb5135"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/cleanup-receipt.json",
+      "sha256": "484278e407ea9826a79207caca7cca29ad0dde77d0009e2c0d4a1b56e05001a5"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/films/clean-before-dark.mp4",
+      "sha256": "f37295d33506814d3cd5ce4cad8b55f2e59c1d5b32c2edc7723e08f9eb6ccfdc"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/films/clean-before-dark.json",
+      "sha256": "67a33e54da9e2f558241e8c3b0259efa4235a1941573889dace03118dedc3676"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/film-frames/clean-before-dark/index.json",
+      "sha256": "c44e59410dda521db6ed48860d9bfa4ea54062af3b3c1d2e9353f9bf2cfe2a9c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/films/clean-after-dark.mp4",
+      "sha256": "fca8453bce7fb4d6304e0e3a8e78bd6dc3e9ac6a125885fdbc29540adef50f07"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/films/clean-after-dark.json",
+      "sha256": "840606f6d3dd9c9c98ccec95c196e3e4b36aad497e31bd330f1f7a4626f580f6"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/film-frames/clean-after-dark/index.json",
+      "sha256": "d3cc5f572a118b50597a858f3b97b03ad763bb0deee6cdee7cdd627811e7d853"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/films/clean-before-light.mp4",
+      "sha256": "b62ac017e7308b6f7d08d2831faa21a5078e52d00425b63837338969d1d04d42"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/films/clean-before-light.json",
+      "sha256": "6acb76e97275e1854c9bf7fca5bd7caad0034dfd6aa1a36283d7fce11b185441"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/film-frames/clean-before-light/index.json",
+      "sha256": "41080f213bb4bf4e14cb9fa8e6274606d7fd7e9be62c45704160a53ff4667d5c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/films/clean-after-light.mp4",
+      "sha256": "cc6b5f691a2a20da12ce03bb6395a05be2da4c6da70cbe0e4fb2c53f63a4e985"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/films/clean-after-light.json",
+      "sha256": "fb0edaadff5f04be8e46a0f813da8403627751097276a0716dc278e9a645e8cc"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/film-frames/clean-after-light/index.json",
+      "sha256": "a3b37b48cd5b9e9f0467abf1a4d7139e78591a889b0375230c3abba111a067ed"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/films/bisect-m2-dark.mp4",
+      "sha256": "a7b207c620f2e7bda41016f31b40193b7a079acb2e05714ad6d1feaddb8123aa"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/films/bisect-m2-dark.json",
+      "sha256": "6fbc594b4b601c61da82da04f8e4c6a764c7088c024aa54456e225efad02b4b9"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/film-frames/bisect-m2-dark/index.json",
+      "sha256": "fce75d532d19b37607e7b18d7d1e0482e7229ecaa873fecf34b79c6980e42e89"
     }
-  ]
+  ],
+  "M3_commit": "a42e1ee65b7f6547f5f6a3030d7285e80b5f0835",
+  "M2_glass_js_sha256": "06939358984390363856d7477289a0f2aa2f5e60c26e02d15f1e45f8a7f89f0b",
+  "owner_disposition": {
+    "owner": "pm7-liquid-glass",
+    "owner_mail": "1014034735-3a72",
+    "coordinator_mail": "1014034714-81d3",
+    "adopt_only": "d46cd137ec07fcb30e74a94509e1162a45081278",
+    "defer": "a42e1ee65b7f6547f5f6a3030d7285e80b5f0835",
+    "reason": "Clean Mac Dark semantic onset regression; M2-only bisect clears within capture noise. M3 cause remains unresolved.",
+    "next_task": "Matched v3/M3 A/B trace in the same clean scene; shared PMPillFit.run is M1 territory and its guarded transform was not on this pinned baseline.",
+    "main_landing": false
+  },
+  "evidence_manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-glass-perf-m2-m3-20261013/EVIDENCE.sha256",
+    "sha256": "917ef9ec857c3e06acc57a7aae5b677f4f578ded8d18b856d536288a9184fc03",
+    "files": 712
+  }
 }
