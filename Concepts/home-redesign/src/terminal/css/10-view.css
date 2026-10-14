@@ -20,7 +20,10 @@
 .pmt-screen { position: relative; flex: 1 1 auto; min-width: 0; overflow: hidden; cursor: text; outline: none; }
 .pmt-screen.pmt-linkhover { cursor: pointer; }
 .pmt-bglayer { position: absolute; inset: 0; pointer-events: none; background-size: cover; background-position: center; }
-.pmt-bglayer.pmt-bg-image::after { content: ""; position: absolute; inset: 0; background: var(--pmt-bg-solid); opacity: var(--pmt-bg-dim, .35); }
+/* round 2: inside the ground, a moving design's layer and the scrim that keeps the text readable over any design (its
+   opacity is the design's dim, set by the view) */
+.pmt-bgmove { position: absolute; inset: 0; pointer-events: none; background-repeat: no-repeat; background-size: cover; background-position: center; }
+.pmt-bgscrim { position: absolute; inset: 0; pointer-events: none; background: var(--pmt-bg-solid); opacity: 0; }
 .pmt-grid, .pmt-fxcanvas, .pmt-trail { position: absolute; left: var(--pmt-pad-x); top: var(--pmt-pad-y); display: block; image-rendering: auto; }
 .pmt-fxcanvas, .pmt-trail { pointer-events: none; }
 .pmt-overlays { position: absolute; inset: 0; pointer-events: none; }

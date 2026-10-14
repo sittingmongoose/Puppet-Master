@@ -257,6 +257,30 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 /* grounds, gradients and pictures */
 .pmt-cz-gnd { display: block; height: 100%; background-size: cover; background-position: center; }
 .pmt-cz-gnd.pmt-cz-empty { background: repeating-linear-gradient(135deg, transparent 0 6px, color-mix(in srgb, var(--pmw-text, #fff) 9%, transparent) 6px 7px); }
+/* round 2: each background tile is a tiny terminal in this scheme, with a line of its text, so you see what it does to
+   the text before choosing; the kinds are a row of tabs that only filter the tiles */
+.pmt-cz-gtiles { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); }
+.pmt-cz-gtiles .pmt-cz-thumb { height: 64px; }
+.pmt-cz-gtiles .pmt-cz-gnd { position: relative; }
+.pmt-cz-gline { position: absolute; left: 6px; top: 5px; font: 600 9.5px/1.2 var(--pm-font-code, ui-monospace, monospace); white-space: nowrap; }
+.pmt-cz-gline b { font-weight: 650; }
+.pmt-cz-forlook .pmt-cz-gtiles { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); }
+.pmt-cz-forlook .pmt-cz-gtiles .pmt-cz-thumb { height: 52px; }
+.pmt-cz-gcats { overflow-x: auto; scrollbar-width: none; }
+.pmt-cz-gcats::-webkit-scrollbar { display: none; }
+.pmt-cz-gcats .pmt-cz-segopt[aria-selected="true"] { background: var(--pmt-cz-fill); }
+.pmt-cz-gctl[hidden], [data-gctl-sub][hidden], .pmt-cz-bezelmore[hidden] { display: none; }
+.pmt-cz-gctl, .pmt-cz-bezelmore { display: grid; gap: 10px; }
+/* colour swatches: the solid ground's three from the scheme, and the bezel's cases */
+.pmt-cz-swatches { display: inline-flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.pmt-cz .pmt-cz-swatch { position: relative; width: 28px; height: 28px; padding: 3px; border-radius: 8px; border: 1px solid var(--pmt-cz-line); background: transparent; cursor: pointer; }
+.pmt-cz-swatch > i { display: block; width: 100%; height: 100%; border-radius: 5px; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmw-text, #fff) 16%, transparent); }
+.pmt-cz .pmt-cz-swatch:hover { background: var(--pmt-cz-hover); }
+.pmt-cz .pmt-cz-swatch[aria-checked="true"] { border-color: var(--pmt-cz-accent); box-shadow: 0 0 0 1px var(--pmt-cz-accent); }
+.pmt-cz-swatch > i[data-bz="follow"] { background: linear-gradient(135deg, #2b2a28 0 50%, #cfc8b8 50% 100%); }
+.pmt-cz-swatch > i[data-bz="accent"] { background: var(--pmt-cz-accent); }
+.pmt-cz[data-pmt-look="nier"] .pmt-cz-swatch, .pmt-cz[data-pmt-look="nier"] .pmt-cz-swatch > i,
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-swatch, .pmt-cz[data-pmt-look="retro"] .pmt-cz-swatch > i { border-radius: 0; }
 
 /* ---- chips: what they turn on (the Plug-in Chips card) ---- */
 .pmt-cz-chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(228px, 1fr)); gap: 8px; }

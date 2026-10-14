@@ -24,28 +24,46 @@
    downsample to half resolution, separable Gaussian H then V) -> final (curvature and bezel, degauss, burn-in ghost,
    glow (screen blend, so bright text never clips to white), scanlines, vignette, noise, flicker, dim). Colours are
    premultiplied throughout, so translucent (Glass) backgrounds keep their alpha. The shaders are GLSL ES 1.00, so the
-   same program runs on WebGL2 and WebGL1. The
-   effect formulas are PM-authored; the curvature is the classic barrel map p + c(1 + d)d with d = k|c|^2, the same
-   family cool-retro-term uses, and the burn-in decays linearly like its burnIn (minimum fade 0.16 s there). */
+   same program runs on WebGL2 and WebGL1. The burn-in decays linearly like cool-retro-term's burnIn (minimum fade
+   0.16 s there).
+   Round 2 (Jared, 2026-10-14: "not convincing ... too extreme ... look at how emulators do it through their shaders"):
+   the screen follows the emulators' tube (the round 2 RESEARCH.md: crt-lottes, crt-geom, crt-royale, crt-easymode,
+   cool-retro-term). The warp is Timothy Lottes' p *= (1 + p.y^2 wx, 1 + p.x^2 wy) with coefficients normalised to the
+   screen's shape (wx = 2s/A, wy = 2sA for A = W/H), so every edge sags the same fraction s of its own length on any
+   terminal, the centre row and column stay pixel-exact and no text leaves the screen; s is the Curvature field x 0.125
+   (subtle 0.005 by default). Corners are cgwg's rounded mask on the warped coordinate in device px (10 CSS px, a 1 px
+   soft edge), the tube edge darkens 8 % over 4 px as Royale's border does, and the vignette is pow(16uv(1-u)(1-v), e)
+   with e = 0.08. Scanlines live in content space, locked to the text rows (a whole number of lines per row, about 3
+   device px each) and box-filtered against moire, so they curve with the text; the optional phosphor mask is a
+   'lite' aperture grille in screen space, drawn only at a device pixel ratio of 2 or more. Scanlines, mask and
+   vignette multiply in linear light. The bezel is the view's own CSS frame now (30-looks.css): the shader no longer
+   insets the picture for it. (A curved silhouette over flat text, the research's "edges only", would clip the corner
+   cells, since this canvas is exactly the text grid; it is not offered, and uFlat stays 0.) */
 (function () {
   'use strict';
 
   var FLICKER_CAP = 0.03;       // peak relative-luminance modulation; WCAG 2.3.1 counts a change of 0.10 as a flash
   var AMBIENT_FPS = 30;         // noise and flicker pick a new value at most this often
   var DEGAUSS_MS = 600;
-  var BEZEL_CSS = 14;           // bezel thickness, CSS px
-  var SCREEN_RADIUS_CSS = 9;    // rounded screen corner (source CSS px) whenever curvature or the bezel is on
+  var SAG_PER_CURVE = 0.125;    // relative edge sag s per unit of the Curvature field (0.04 -> 0.005, 0.2 -> 0.025)
+  var CORNER_CSS = 10;          // the tube's rounded corner, CSS px, whenever Full CRT is on
+  var EDGE_DARK = 0.08, EDGE_CSS = 4;   // the tube edge: 8 % darker over 4 CSS px inside the glass
+  var MASK_LITE = 0.10;         // the phosphor mask's depth ('lite' grille), only at DPR >= 2
+  var SCAN_REGAIN = 0.5;        // scanlines give back part of the light they take, in linear light
+  var SCAN_TARGET_CSS = 3;      // about one scanline per 3 device px (DPR 1) or 2 CSS px (DPR >= 1.5), whole lines per row
   var BURN_GHOST = 0.65;        // afterglow brightness relative to the content that left (cool-retro-term uses 0.65)
   var GLOW_GAIN = 1.6;          // glow strength 1.0 screens 1.6x the blurred bright pass over the image
-  var SCAN_BOOST = 0.25;        // scanlines give back a quarter of the average light they take
   var GLOW_TAPS = 7;            // centre + 6 per side
 
   var DEFAULTS = {
     scanlines: { on: true, strength: 0.30, period: 3 },
     glow: { on: true, strength: 0.45, radius: 2.5 },
-    curvature: { on: false, amount: 0.08 },
+    curvature: { on: false, amount: 0.04, flatText: false },
     bezel: { on: false },
-    vignette: { on: false, strength: 0.25 },
+    vignette: { on: false, strength: 0.08 },
+    mask: { on: false },
+    rowPx: 0,
+    outside: null,
     burnIn: { on: false, persistMs: 450 },
     noise: { on: false, amount: 0.035 },
     flicker: { on: false, amount: 0.02 },
@@ -54,7 +72,7 @@
   };
   var LIMITS = {
     scanStrength: [0, 0.6], scanPeriod: [2, 8], glowStrength: [0, 1.5], glowRadius: [0.5, 8], curvature: [0, 0.3],
-    vignette: [0, 0.6], persistMs: [50, 1600], noise: [0, 0.12], flicker: [0, FLICKER_CAP], dim: [0, 0.9]
+    vignette: [0, 0.35], persistMs: [50, 1600], noise: [0, 0.12], flicker: [0, FLICKER_CAP], dim: [0, 0.9]
   };
 
   function clamp(v, lo, hi) { v = +v; if (!(v === v)) return lo; return v < lo ? lo : v > hi ? hi : v; }
@@ -73,9 +91,12 @@
         period: clamp(num(sc.period, D.scanlines.period), L.scanPeriod[0], L.scanPeriod[1]) },
       glow: { on: on(gw, D.glow.on), strength: clamp(num(gw.strength, D.glow.strength), L.glowStrength[0], L.glowStrength[1]),
         radius: clamp(num(gw.radius, D.glow.radius), L.glowRadius[0], L.glowRadius[1]) },
-      curvature: { on: on(cv, D.curvature.on), amount: clamp(num(cv.amount, D.curvature.amount), L.curvature[0], L.curvature[1]) },
+      curvature: { on: on(cv, D.curvature.on), amount: clamp(num(cv.amount, D.curvature.amount), L.curvature[0], L.curvature[1]), flatText: !!cv.flatText },
       bezel: { on: on(bz, D.bezel.on), light: !!bz.light },
       vignette: { on: on(vg, D.vignette.on), strength: clamp(num(vg.strength, D.vignette.strength), L.vignette[0], L.vignette[1]) },
+      mask: { on: on(p.mask, D.mask.on) },
+      rowPx: num(p.rowPx, 0) > 0 ? p.rowPx : 0,
+      outside: Array.isArray(p.outside) && p.outside.length === 3 ? p.outside.slice() : null,
       burnIn: { on: on(bi, D.burnIn.on), persistMs: clamp(num(bi.persistMs, D.burnIn.persistMs), L.persistMs[0], L.persistMs[1]) },
       noise: { on: on(nz, D.noise.on), amount: clamp(num(nz.amount, D.noise.amount), L.noise[0], L.noise[1]) },
       flicker: { on: on(fl, D.flicker.on), amount: clamp(num(fl.amount, D.flicker.amount), L.flicker[0], L.flicker[1]) },
@@ -115,18 +136,18 @@
   }
   function degaussEnvelope(t) { return t < 0 || t >= 1 ? 0 : Math.pow(1 - t, 2.2); }
 
-  /* ---- geometry: output uv (top-down) -> source uv; identical maths to the final shader ---- */
+  /* ---- geometry: output uv (top-down) -> source uv; identical maths to the final shader ----
+     The warp is symmetric, so top-down and bottom-up uv give the same map. The bezel is CSS now: nothing is inset. */
   function geometry(p, outW, outH, srcW, srcH, dpr) {
-    var curv = p.curvature.on ? p.curvature.amount : 0;
-    var bpx = p.bezel.on ? Math.round(BEZEL_CSS * dpr) : 0;
-    return { curv: curv, ix: bpx / outW, iy: bpx / outH, radius: (curv > 0 || p.bezel.on) ? SCREEN_RADIUS_CSS * dpr : 0,
-      srcW: srcW, srcH: srcH, bezelPx: bpx };
+    var crt = !!p.curvature.on, s = crt ? p.curvature.amount * SAG_PER_CURVE : 0, A = outW / Math.max(1, outH);
+    return { wx: s > 0 ? 2 * s / A : 0, wy: s > 0 ? 2 * s * A : 0, sag: s, flatText: crt && !!p.curvature.flatText,
+      radius: crt ? CORNER_CSS * dpr : 0, edge: crt ? [EDGE_DARK, EDGE_CSS * dpr] : [0, 0], srcW: srcW, srcH: srcH };
   }
-  function warp(px, py, k) {
-    var cx = px - 0.5, cy = py - 0.5;
-    var d = (cx * cx + cy * cy) * k, f = (1 + d) * d;
-    return [px + cx * f, py + cy * f];
+  function warp(px, py, g) {
+    var x = px * 2 - 1, y = py * 2 - 1;
+    return [x * (1 + y * y * g.wx) * 0.5 + 0.5, y * (1 + x * x * g.wy) * 0.5 + 0.5];
   }
+  function curved(g) { return g.wx > 0 || g.wy > 0; }
   /* signed distance (source device px) from the rounded screen rectangle; < 0 is inside */
   function screenDist(su, sv, g) {
     var hx = g.srcW / 2, hy = g.srcH / 2, r = g.radius;
@@ -135,26 +156,39 @@
     return Math.sqrt(ox * ox + oy * oy) + Math.min(Math.max(qx, qy), 0) - r;
   }
   function mapUV(u, v, g) {
-    var px = (u - g.ix) / (1 - 2 * g.ix), py = (v - g.iy) / (1 - 2 * g.iy);
-    var s = g.curv > 0 ? warp(px, py, g.curv) : [px, py];
-    if (screenDist(s[0], s[1], g) >= 0) return null;
-    return s;
+    var c = curved(g) ? warp(u, v, g) : [u, v];
+    if (g.radius > 0 && screenDist(c[0], c[1], g) >= 0) return null;
+    return g.flatText ? [u, v] : c;
   }
   /* inverse of mapUV (source uv -> output uv), Newton on the warp; null when the source point is not on screen */
   function unmapUV(su, sv, g) {
-    if (screenDist(su, sv, g) >= 0) return null;
-    var px = su, py = sv, k = g.curv;
-    if (k > 0) {
-      for (var i = 0; i < 12; i++) {
-        var cx = px - 0.5, cy = py - 0.5, d = (cx * cx + cy * cy) * k, f = (1 + d) * d;
-        var fx = px + cx * f - su, fy = py + cy * f - sv;
-        if (Math.abs(fx) < 1e-12 && Math.abs(fy) < 1e-12) break;
-        var a = 1 + f, b = 2 * k * (1 + 2 * d);          // J = a I + b c c^T
-        var j11 = a + b * cx * cx, j12 = b * cx * cy, j22 = a + b * cy * cy, det = j11 * j22 - j12 * j12;
-        px -= (j22 * fx - j12 * fy) / det; py -= (j11 * fy - j12 * fx) / det;
-      }
+    if (!curved(g) || g.flatText) {
+      var c0 = curved(g) ? warp(su, sv, g) : [su, sv];
+      if (g.radius > 0 && screenDist(c0[0], c0[1], g) >= 0) return null;
+      return [su, sv];
     }
-    return [px * (1 - 2 * g.ix) + g.ix, py * (1 - 2 * g.iy) + g.iy];
+    if (g.radius > 0 && screenDist(su, sv, g) >= 0) return null;
+    var tx = su * 2 - 1, ty = sv * 2 - 1, X = tx, Y = ty;
+    for (var i = 0; i < 16; i++) {
+      var f1 = X * (1 + g.wx * Y * Y) - tx, f2 = Y * (1 + g.wy * X * X) - ty;
+      if (Math.abs(f1) < 1e-13 && Math.abs(f2) < 1e-13) break;
+      var j11 = 1 + g.wx * Y * Y, j12 = 2 * g.wx * X * Y, j21 = 2 * g.wy * X * Y, j22 = 1 + g.wy * X * X, det = j11 * j22 - j12 * j21;
+      X -= (j22 * f1 - j12 * f2) / det; Y -= (j11 * f2 - j21 * f1) / det;
+    }
+    return [X * 0.5 + 0.5, Y * 0.5 + 0.5];
+  }
+  /* scanlines locked to the text rows: a whole number of lines per row, each about 3 device px (2 CSS px at DPR >= 1.5) */
+  function scanPeriod(rowPx, dpr) {
+    if (!(rowPx > 0)) return SCAN_TARGET_CSS * Math.max(1, dpr);
+    var target = Math.max(3, 2 * dpr), n = Math.max(1, Math.round(rowPx / target));
+    return rowPx / n;
+  }
+  /* the glass beyond the tube: the scheme's ground at a quarter of its light (unlit phosphor), straight sRGB 0..1 */
+  function outsideColor(p) {
+    var o = p.outside; if (!o) return [0, 0, 0];
+    var lin = function (c) { return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
+    var srgb = function (c) { return c <= 0.0031308 ? c * 12.92 : 1.055 * Math.pow(c, 1 / 2.4) - 0.055; };
+    return [srgb(lin(o[0]) * 0.25), srgb(lin(o[1]) * 0.25), srgb(lin(o[2]) * 0.25)];
   }
 
   /* ---- the animation clock: what animating() needs to know about past renders ---- */
@@ -213,58 +247,34 @@
     '}'].join('\n');
   var FS_FINAL = PREC + [
     'uniform sampler2D uSrc; uniform sampler2D uAcc; uniform sampler2D uGlow;',
-    'uniform vec2 uOut; uniform vec2 uSrcPx; uniform float uDpr;',
-    'uniform float uCurv; uniform vec2 uInset; uniform float uRadius; uniform float uBezel; uniform float uBezelPx; uniform float uBezelLight;',
-    'uniform vec2 uScan; uniform float uGlowK; uniform float uBurnK; uniform float uVig;',
+    'uniform vec2 uOut; uniform float uDpr;',
+    'uniform vec2 uWarp; uniform float uFlat; uniform float uRadius; uniform vec2 uEdge; uniform float uVigExp; uniform float uMask; uniform vec3 uOutside;',
+    'uniform vec4 uScan; uniform float uGlowK; uniform float uBurnK;',
     'uniform vec2 uNoise; uniform float uGain; uniform vec2 uDeg; uniform float uDim;',
-    'vec2 warp(vec2 p) { vec2 c = p - 0.5; float d = dot(c, c) * uCurv; return p + c * (1.0 + d) * d; }',
+    /* Lottes' warp with shape-normalised coefficients (round 2): the centre row and column stay where they are */
+    'vec2 warp(vec2 p) { vec2 q = p * 2.0 - 1.0; q *= vec2(1.0 + q.y * q.y * uWarp.x, 1.0 + q.x * q.x * uWarp.y); return q * 0.5 + 0.5; }',
     'float hash12(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }',
     'float lin1(float c) { return c <= 0.04045 ? c / 12.92 : pow((c + 0.055) / 1.055, 2.4); }',
     'float srgb1(float c) { return c <= 0.0031308 ? c * 12.92 : 1.055 * pow(c, 1.0 / 2.4) - 0.055; }',
+    'vec3 lin3(vec3 c) { return vec3(lin1(c.r), lin1(c.g), lin1(c.b)); }',
+    'vec3 srgb3(vec3 c) { return vec3(srgb1(c.r), srgb1(c.g), srgb1(c.b)); }',
     'float luma(vec3 c) { return dot(c, vec3(0.2126, 0.7152, 0.0722)); }',
-    /* The case: moulded plastic (charcoal, or warm beige on a light scheme). The inner 45 % of the bezel is a chamfer
-       sloping down to the tube, lit from above: its lower lip catches the light, its upper lip falls into shadow. The
-       outer edge is rounded over, the plastic has a fine static grain, the screen's own light falls on the chamfer,
-       and the glass sits in a thin contact shadow. Nothing here moves. */
-    'vec3 bezel(vec2 uv, vec2 s, float dist) {',
-    '  float k = clamp(dist / max(uBezelPx, 1.0), 0.0, 1.0);',
-    '  vec3 base = mix(vec3(0.118, 0.113, 0.104), vec3(0.792, 0.760, 0.690), uBezelLight);',
-    '  vec3 col = base * (0.90 + 0.16 * uv.y);',
-    '  vec2 n = normalize((s - 0.5) * uSrcPx + vec2(0.0001));',
-    '  float ch = 1.0 - smoothstep(0.0, 0.45, k);',
-    '  float lit = dot(-n, normalize(vec2(-0.3, 1.0)));',
-    '  col *= 1.0 + ch * lit * mix(1.10, 0.30, uBezelLight);',
-    '  col += ch * max(lit, 0.0) * mix(0.050, 0.045, uBezelLight);',
-    '  vec2 e = min(uv, 1.0 - uv) * uOut / uDpr;',
-    '  float over = 1.0 - smoothstep(0.0, 3.5, min(e.x, e.y));',
-    '  col += over * (uv.y > 0.5 ? mix(0.05, 0.08, uBezelLight) : -mix(0.02, 0.10, uBezelLight));',
-    '  col *= 0.982 + 0.036 * hash12(floor(gl_FragCoord.xy / uDpr));',
-    '  vec2 r = s;',
-    '  r = mix(r, -r, step(r, vec2(0.0)));',
-    '  r = mix(r, 2.0 - r, step(vec2(1.0), r));',
-    '  vec3 refl = texture2D(uSrc, r).rgb * 0.10;',
-    '  if (uGlowK > 0.0) refl += texture2D(uGlow, r).rgb * 0.9;',
-    '  col += refl * ch * ch * mix(0.65, 0.18, uBezelLight);',
-    '  col *= 1.0 - mix(0.65, 0.35, uBezelLight) * (1.0 - smoothstep(0.0, 3.0 * uDpr, dist));',
-    '  return col;',
-    '}',
+    /* signed distance (device px) from the tube's rounded rectangle, < 0 inside */
+    'float sdScreen(vec2 c) { vec2 h = 0.5 * uOut; vec2 q = abs(c * uOut - h) - (h - vec2(uRadius)); return length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - uRadius; }',
     'void main() {',
     '  vec2 uv = gl_FragCoord.xy / uOut;',
-    '  vec2 p = (uv - uInset) / (1.0 - 2.0 * uInset);',
-    '  vec2 s = uCurv > 0.0 ? warp(p) : p;',
-    '  vec2 hs = 0.5 * uSrcPx;',
-    '  vec2 q = abs(s * uSrcPx - hs) - (hs - vec2(uRadius));',
-    '  float dist = length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - uRadius;',
-    '  float inside = clamp(0.5 - dist, 0.0, 1.0);',
+    '  bool curved = uWarp.x + uWarp.y > 0.0;',
+    '  vec2 cw = curved ? warp(uv) : uv;',      // the tube's coordinate
+    '  vec2 s = uFlat > 0.5 ? uv : cw;',        // where the text is sampled (flat text: unwarped)
     '  vec2 t = s;',
     '  vec4 c;',
     '  float e = uDeg.x;',
     '  if (e > 0.0) {',
     '    float ph = uDeg.y;',
-    '    t.x += e * (5.0 * uDpr / uSrcPx.x) * sin(s.y * 21.0 + ph * 38.0);',
-    '    t.y += e * (1.5 * uDpr / uSrcPx.y) * sin(s.x * 13.0 - ph * 29.0);',
+    '    t.x += e * (5.0 * uDpr / uOut.x) * sin(s.y * 21.0 + ph * 38.0);',
+    '    t.y += e * (1.5 * uDpr / uOut.y) * sin(s.x * 13.0 - ph * 29.0);',
     '    float a = ph * 23.0;',
-    '    vec2 f = e * 3.0 * uDpr * vec2(cos(a), sin(a)) / uSrcPx;',
+    '    vec2 f = e * 3.0 * uDpr * vec2(cos(a), sin(a)) / uOut;',
     '    vec4 cg = texture2D(uSrc, t);',
     '    c = vec4(texture2D(uSrc, t + f).r, cg.g, texture2D(uSrc, t - f).b, cg.a);',
     '    c.rgb = min(c.rgb, vec3(c.a));',
@@ -285,17 +295,35 @@
     '    c.rgb = clamp(tinted * (luma(c.rgb) / max(luma(tinted), 0.0001)), 0.0, 1.0);',
     '    c.rgb = min(c.rgb, vec3(c.a));',
     '  }',
+    /* light the screen in linear light: scanlines (content space, locked to the text rows, box-filtered against moire),
+       the phosphor mask (screen space), the vignette and the tube edge (on the tube's coordinate) */
+    '  vec3 k = vec3(1.0);',
+    '  float regain = 1.0;',
     '  if (uScan.x > 0.0) {',
-    // flat, the phase follows the source rows (a degauss wobbles them with the picture). With curvature or the bezel it
-    // follows the output rows from the screen's top edge: the inset and the warp scale a 3 px source period to about
-    // 2.8 output px, which beats with the pixel grid (doubled lines, banding along the curve)
-    '    float row = (uCurv > 0.0 || uBezel > 0.0) ? uOut.y - gl_FragCoord.y - uBezelPx : (1.0 - t.y) * uSrcPx.y;',
-    '    float sl = 0.5 - 0.5 * cos(6.2831853 * row / uScan.y);',
-    '    c.rgb *= (1.0 - uScan.x * sl) * (1.0 + ' + (SCAN_BOOST * 0.5).toFixed(4) + ' * uScan.x);',
+    '    vec2 q = uv * 2.0 - 1.0;',
+    '    float yDev = (1.0 - s.y) * uOut.y - uScan.z;',
+    '    float phase = yDev / uScan.y - 0.5;',
+    '    float dPhase = (1.0 + q.x * q.x * uWarp.y * (1.0 - uFlat)) / uScan.y;',
+    '    float kk = 3.14159265 * dPhase;',
+    '    float sinc = kk < 1e-4 ? 1.0 : sin(kk) / kk;',
+    '    float dark = 0.5 - 0.5 * cos(6.2831853 * phase) * sinc;',
+    '    float st = uScan.x * (1.0 - smoothstep(0.33, 0.5, dPhase));',
+    '    k *= 1.0 - st * dark;',
+    '    regain *= 1.0 + uScan.w * 0.5 * st;',
     '  }',
-    '  if (uVig > 0.0) {',
-    '    float v = clamp(16.0 * s.x * s.y * (1.0 - s.x) * (1.0 - s.y), 0.0, 1.0);',
-    '    c.rgb *= 1.0 - uVig * (1.0 - pow(v, 0.35));',
+    '  if (uMask > 0.0) {',
+    '    float m = mod(floor(gl_FragCoord.x), 3.0);',
+    '    k *= (vec3(1.0) - uMask * vec3(m < 0.5 ? 1.0 : 0.0, m > 0.5 && m < 1.5 ? 1.0 : 0.0, m > 1.5 ? 1.0 : 0.0)) / (1.0 - uMask / 3.0);',
+    '  }',
+    '  if (uVigExp > 0.0) {',
+    '    float v = clamp(16.0 * cw.x * cw.y * (1.0 - cw.x) * (1.0 - cw.y), 0.0, 1.0);',
+    '    k *= pow(v, uVigExp);',
+    '  }',
+    '  float d = sdScreen(cw);',
+    '  if (uEdge.x > 0.0) k *= 1.0 - uEdge.x * (1.0 - smoothstep(0.0, uEdge.y, -d));',
+    '  if (k != vec3(1.0) || regain != 1.0) {',
+    '    vec3 st3 = c.rgb / max(c.a, 0.0001);',
+    '    c.rgb = min(srgb3(lin3(st3) * k * regain), vec3(1.0)) * c.a;',
     '  }',
     '  if (uNoise.x > 0.0) {',
     '    vec2 cell = floor(gl_FragCoord.xy / uDpr);',
@@ -307,22 +335,13 @@
     '    st = vec3(srgb1(lin1(st.r) * uGain), srgb1(lin1(st.g) * uGain), srgb1(lin1(st.b) * uGain));',
     '    c.rgb = st * c.a;',
     '  }',
-    /* the tube's glass, under the case: it darkens into the case at its edge (depth), and a broad soft highlight
-       from the same light as the case sits up and to the left, with a faint glare along the top. Static. */
-    '  if (uBezel > 0.0) {',
-    '    float depth = smoothstep(0.0, 4.0 * uDpr, -dist);',
-    '    c.rgb *= mix(0.80, 0.90, uBezelLight) + mix(0.20, 0.10, uBezelLight) * depth;',
-    '    vec2 hp = (s - vec2(0.24, 0.80)) * vec2(1.0, 1.7);',
-    '    float spec = exp(-dot(hp, hp) * 6.0) * mix(0.11, 0.05, uBezelLight);',
-    '    float arc = s.y - 0.95 + 0.30 * (s.x - 0.5) * (s.x - 0.5);',
-    '    spec += (1.0 - smoothstep(0.0, 0.035, abs(arc))) * smoothstep(0.08, 0.35, s.x) * (1.0 - smoothstep(0.65, 0.92, s.x)) * mix(0.06, 0.025, uBezelLight);',
-    '    c.rgb += spec * (vec3(c.a) - c.rgb) + spec * (1.0 - c.a);',
-    '    c.a = max(c.a, spec);',
-    '  }',
     '  c.rgb = min(c.rgb * (1.0 - uDim), vec3(c.a));',
-    '  vec4 outside = vec4(0.0, 0.0, 0.0, 1.0);',
-    '  if (uBezel > 0.0) outside = vec4(bezel(uv, s, dist) * (1.0 - uDim), 1.0);',
-    '  gl_FragColor = mix(outside, c, inside);',
+    /* the anti-aliased rounded tube (1 device px) over the unlit glass beyond it */
+    '  if (uRadius > 0.0 || curved) {',
+    '    float inside = clamp(0.5 - d, 0.0, 1.0);',
+    '    c = mix(vec4(uOutside * (1.0 - uDim), 1.0), c, inside);',
+    '  }',
+    '  gl_FragColor = c;',
     '}'].join('\n');
 
   var SOFTWARE_RE = /swiftshader|llvmpipe|softpipe|software|microsoft basic render/i;
@@ -597,13 +616,16 @@
     this._bind(0, src, pf, 'uSrc');
     this._bind(1, burnK ? this.targets.accA.tex : null, pf, 'uAcc');
     this._bind(2, this.glowValid ? this.targets.glowA.tex : null, pf, 'uGlow');
-    gl.uniform2f(u.uOut, W, H); gl.uniform2f(u.uSrcPx, W, H); gl.uniform1f(u.uDpr, this.dpr);
-    gl.uniform1f(u.uCurv, g.curv); gl.uniform2f(u.uInset, g.ix, g.iy); gl.uniform1f(u.uRadius, g.radius);
-    gl.uniform1f(u.uBezel, p.bezel.on ? 1 : 0); gl.uniform1f(u.uBezelPx, g.bezelPx); gl.uniform1f(u.uBezelLight, p.bezel.light ? 1 : 0);
-    gl.uniform2f(u.uScan, p.scanlines.on ? p.scanlines.strength : 0, p.scanlines.period);
+    gl.uniform2f(u.uOut, W, H); gl.uniform1f(u.uDpr, this.dpr);
+    gl.uniform2f(u.uWarp, g.wx, g.wy); gl.uniform1f(u.uFlat, g.flatText ? 1 : 0); gl.uniform1f(u.uRadius, g.radius);
+    gl.uniform2f(u.uEdge, g.edge[0], g.edge[1]);
+    var oc = outsideColor(p); gl.uniform3f(u.uOutside, oc[0], oc[1], oc[2]);
+    /* scanlines: locked to the text rows (rowPx, device px) when the view says how tall a row is */
+    gl.uniform4f(u.uScan, p.scanlines.on ? p.scanlines.strength : 0, scanPeriod(p.rowPx, this.dpr), 0, SCAN_REGAIN);
+    gl.uniform1f(u.uMask, p.mask.on && this.dpr >= 2 ? MASK_LITE : 0);
     gl.uniform1f(u.uGlowK, this.glowValid ? p.glow.strength * GLOW_GAIN : 0);
     gl.uniform1f(u.uBurnK, burnK);
-    gl.uniform1f(u.uVig, p.vignette.on ? p.vignette.strength : 0);
+    gl.uniform1f(u.uVigExp, p.vignette.on ? p.vignette.strength : 0);
     gl.uniform2f(u.uNoise, p.noise.on ? p.noise.amount : 0, ambientStep(now) % 997);
     gl.uniform1f(u.uGain, p.flicker.on ? flickerGain(p.flicker.amount, now) : 1);
     var dt = p.degauss ? (now - p.degauss.startMs) / DEGAUSS_MS : -1;
@@ -674,8 +696,7 @@
     FLICKER_CAP: FLICKER_CAP,
     AMBIENT_FPS: AMBIENT_FPS,
     DEGAUSS_MS: DEGAUSS_MS,
-    BEZEL_CSS: BEZEL_CSS,
-    SCREEN_RADIUS_CSS: SCREEN_RADIUS_CSS,
+    CORNER_CSS: CORNER_CSS, SAG_PER_CURVE: SAG_PER_CURVE, scanPeriod: scanPeriod,
     BURN_GHOST: BURN_GHOST,
     GLOW_GAIN: GLOW_GAIN,
     LIMITS: LIMITS

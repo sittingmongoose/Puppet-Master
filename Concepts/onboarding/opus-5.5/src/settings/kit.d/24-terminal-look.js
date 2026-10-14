@@ -80,6 +80,13 @@
     /* the public catalog (PMT.Appearance.schemes, 90-kind.js) names it mode; a raw scheme names it appearance */
     return { value: s.id, label: s.name, meta: (s.mode || s.appearance) === 'light' ? 'Light' : 'Dark' };
   }));
+  /* round 2: the backgrounds (the terminal's 43-grounds.js) join Background Gradient and Background Image by name, each
+     with its kind; the earlier words stay first (the terminal reads them as recipes of the scheme too) */
+  const grounds = () => { try { const A = window.PMT && window.PMT.Appearance; return A && typeof A.grounds === 'function' ? A.grounds() : []; } catch (e) { return []; } };
+  const KIND = { tonal: 'Tonal', wash: 'Wash', pattern: 'Pattern', scene: 'Scene', mark: 'Mark', moving: 'Moving' };
+  const EARLIER = ['dusk', 'dawn', 'deep', 'paper', 'hills', 'grid', 'fibre'];   /* named by the inventory's own words */
+  PM51.moreChoices('code.terminal.background-gradient', () => grounds().filter(g => g.gradient && EARLIER.indexOf(g.id) < 0).map(g => ({ value: g.name, label: g.name, meta: KIND[g.cat] || '' })));
+  PM51.moreChoices('code.terminal.background-image', () => grounds().filter(g => !g.gradient && EARLIER.indexOf(g.id) < 0).map(g => ({ value: g.name, label: g.name, meta: KIND[g.cat] || '' })));
   const font = rowOf('code.terminal.font-family');
   font.choices = FACES.map(f => f[0]);
   font.options = Object.assign({}, font.options || {}, Object.fromEntries(FACES));

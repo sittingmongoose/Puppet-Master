@@ -67,46 +67,68 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-root[data-pmt-look="glass"] { --pmt-glass-veil: color-mix(in srgb, var(--pmw-surface, transparent) 28%, transparent); }
 .pmt-root[data-pmt-look="glass"] .pmt-bglayer.pmt-bg-theme { background: var(--pmt-glass-veil); }
 
-/* ---- the bezel (round 2: off by default, a slim rim or a monitor case, any width from 2 to 16 px) ----
+/* ---- moving grounds (round 2, opt-in): a painted layer moved by transform or opacity only, stepped to about 20 fps
+   (the view sets --pmt-bgm-ms and --pmt-bgm-steps; NieR's steps are its own, slower). It plays only while the terminal
+   is focused, visible and in use (52-fx.js sets .pmt-bg-live; it goes still 10 s after the last output or key), and
+   never under Reduced Motion or a battery saver, where its still frame shows. Rain and snow are tiles twice the
+   terminal's height sliding by one tile; aurora and lava sway inside a slightly larger layer; stars twinkle by opacity */
+.pmt-bgmove[data-anim="pmt-bg-fall"], .pmt-bgmove[data-anim="pmt-bg-snow"] { top: -100%; height: 200%; bottom: auto; background-size: 100% 50%; background-repeat: repeat-y; }
+.pmt-bgmove:is([data-anim="pmt-bg-sway"], [data-anim="pmt-bg-rise"]) { inset: -10%; }
+.pmt-bgmove[data-anim="pmt-bg-fall"] { animation: pmt-bg-fall var(--pmt-bgm-ms, 2400ms) steps(var(--pmt-bgm-steps, 48)) infinite; }
+.pmt-bgmove[data-anim="pmt-bg-snow"] { animation: pmt-bg-fall var(--pmt-bgm-ms, 30000ms) steps(var(--pmt-bgm-steps, 600)) infinite; }
+.pmt-bgmove[data-anim="pmt-bg-sway"] { animation: pmt-bg-sway var(--pmt-bgm-ms, 90000ms) steps(var(--pmt-bgm-steps, 1800)) infinite alternate; }
+.pmt-bgmove[data-anim="pmt-bg-rise"] { animation: pmt-bg-rise var(--pmt-bgm-ms, 80000ms) steps(var(--pmt-bgm-steps, 1600)) infinite alternate; }
+.pmt-bgmove[data-anim="pmt-bg-twinkle"] { animation: pmt-bg-twinkle var(--pmt-bgm-ms, 6000ms) steps(var(--pmt-bgm-steps, 120)) infinite alternate; }
+@keyframes pmt-bg-fall { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, 50%, 0); } }
+@keyframes pmt-bg-sway { from { transform: translate3d(-3%, -2%, 0) scale(1.02); } to { transform: translate3d(3%, 2%, 0) scale(1.05); } }
+@keyframes pmt-bg-rise { from { transform: translate3d(0, 3%, 0); } to { transform: translate3d(0, -5%, 0); } }
+@keyframes pmt-bg-twinkle { from { opacity: .3; } to { opacity: 1; } }
+.pmt-root:not(.pmt-bg-live) .pmt-bgmove { animation-play-state: paused; }
+html[data-motion="reduced"] .pmt-bgmove, .pmt-bgmove[data-anim="still"] { animation: none; }
+@media (prefers-reduced-motion: reduce) { .pmt-bgmove { animation: none; } }
+
+/* ---- the bezel (round 2: off by default, a slim rim or a monitor case, any width from 2 to 24 px) ----
    A frame over the screen's edge; the text is laid out inside it (42-appearance.js adds its width to the padding), so
-   nothing is scaled. A rim is one flat band with a hairline where it meets the glass; a case is moulded plastic lit
-   from above (its top face catches the light, its bottom face falls into shadow) with the tube sitting in a soft
-   recess. The colour follows the look unless one is chosen; NieR's comes only from the theme tokens it repaints.
-   Static: no motion, no blur, no filter. */
+   nothing is scaled. Research (cool-retro-term's frame shading, Mega Bezel, koko-aio): a case is lit from above, so its
+   top face falls into shadow (x 0.33), its sides take some light (x 0.66) and its bottom face catches it (x 1.0); a 1 px
+   outer edge is lighter top-left; a near-black contact line sits where glass meets plastic; corners are concentric with
+   the screen. A rim is one flat band with that contact line. The colour follows the look unless one is chosen: the
+   classic Charcoal, Black, Platinum and Putty cases, or the scheme's accent. Static: no motion, no blur, no filter. */
 .pmt-bezel {
   position: absolute; inset: 0; z-index: 2; pointer-events: none;
   --pmt-bz: var(--pmt-bezel-c, #24262c);
-  border: var(--pmt-bezel-w, 3px) solid var(--pmt-bz); border-radius: calc(var(--pmt-bezel-w, 3px) + 4px);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmt-bz) 55%, #000);
+  border: var(--pmt-bezel-w, 4px) solid var(--pmt-bz); border-radius: calc(var(--pmt-bezel-w, 4px) + 6px);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmt-bz) 40%, #000), inset 1px 1px 0 1px rgb(0 0 0 / .18);
 }
 .pmt-root[data-pmt-bezel="case"] .pmt-bezel {
-  border-radius: calc(var(--pmt-bezel-w, 9px) + 5px);
-  border-top-color: color-mix(in srgb, var(--pmt-bz) 86%, #fff);
-  border-bottom-color: color-mix(in srgb, var(--pmt-bz) 78%, #000);
-  border-left-color: color-mix(in srgb, var(--pmt-bz) 95%, #fff);
-  border-right-color: color-mix(in srgb, var(--pmt-bz) 92%, #000);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmt-bz) 45%, #000), inset 0 2px 5px rgb(0 0 0 / .32), inset 0 -1px 0 rgb(255 255 255 / .05);
+  border-radius: calc(var(--pmt-bezel-w, 10px) + 10px);
+  border-top-color: color-mix(in srgb, var(--pmt-bz) 72%, #000);
+  border-left-color: color-mix(in srgb, var(--pmt-bz) 86%, #000);
+  border-right-color: color-mix(in srgb, var(--pmt-bz) 86%, #000);
+  border-bottom-color: color-mix(in srgb, var(--pmt-bz) 94%, #fff);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--pmt-bz) 80%, #fff) inset, inset 0 0 0 calc(var(--pmt-bezel-w, 10px) * 0 + 1px) rgb(0 0 0 / .55),
+    inset 0 3px 6px rgb(0 0 0 / .35), inset 0 -1px 2px rgb(255 255 255 / .05);
 }
 /* inside the bezel the sticky header starts at the glass, not across the frame (_placeSticky moves it under curvature) */
 .pmt-root:is([data-pmt-bezel="rim"], [data-pmt-bezel="case"]) .pmt-sticky {
   left: var(--pmt-bezel-w); right: var(--pmt-bezel-w); top: var(--pmt-bezel-w); padding-left: calc(var(--pmt-pad-x) - var(--pmt-bezel-w));
 }
 /* the look's own colour: a graphite or light-grey case in Basic, a soft tint of the stage in Friendly, a clear rim in
-   Glass, charcoal or beige plastic in Retro (the two classic monitor cases), ink on paper in NieR */
+   Glass, charcoal or platinum plastic in Retro (the two classic monitor cases), ink on paper in NieR */
 .pmt-root { --pmt-bezel-c: #23252b; }
 .pmt-root[data-pmt-scheme="light"] { --pmt-bezel-c: #c9ccd3; }
 .pmt-root[data-pmt-look="friendly"] { --pmt-bezel-c: color-mix(in srgb, var(--pmt-bg-solid) 62%, #3b3550); }
 .pmt-root[data-pmt-look="friendly"][data-pmt-scheme="light"] { --pmt-bezel-c: color-mix(in srgb, var(--pmt-bg-solid) 70%, #cdb8d6); }
 .pmt-root[data-pmt-look="glass"] { --pmt-bezel-c: rgb(255 255 255 / .16); }
 .pmt-root[data-pmt-look="glass"][data-pmt-scheme="light"] { --pmt-bezel-c: rgb(255 255 255 / .62); }
-.pmt-root[data-pmt-look="retro"] { --pmt-bezel-c: #2b2925; }
-.pmt-root[data-pmt-look="retro"][data-pmt-scheme="light"] { --pmt-bezel-c: #d4cbb5; }
+.pmt-root[data-pmt-look="retro"] { --pmt-bezel-c: #1c1b19; }
+.pmt-root[data-pmt-look="retro"][data-pmt-scheme="light"] { --pmt-bezel-c: #cfc8b8; }
 .pmt-root[data-pmt-look="nier"] { --pmt-bezel-c: color-mix(in srgb, var(--pmt-fg) 24%, var(--pmt-bg-solid)); }
 /* a colour chosen for the bezel, the same in every look */
-.pmt-root[data-pmt-bezel-color="graphite"] { --pmt-bezel-c: #26282e; }
-.pmt-root[data-pmt-bezel-color="black"] { --pmt-bezel-c: #0d0d0f; }
-.pmt-root[data-pmt-bezel-color="beige"] { --pmt-bezel-c: #d6cdb8; }
-.pmt-root[data-pmt-bezel-color="silver"] { --pmt-bezel-c: #c3c6cd; }
+.pmt-root[data-pmt-bezel-color="charcoal"] { --pmt-bezel-c: #1c1b19; }
+.pmt-root[data-pmt-bezel-color="black"] { --pmt-bezel-c: #0d0d0e; }
+.pmt-root[data-pmt-bezel-color="platinum"] { --pmt-bezel-c: #cfc8b8; }
+.pmt-root[data-pmt-bezel-color="putty"] { --pmt-bezel-c: #b8b0a0; }
 .pmt-root[data-pmt-bezel-color="accent"] { --pmt-bezel-c: var(--pmt-accent); }
 /* Glass's rim is a clear band with a lit top edge, not plastic */
 .pmt-root[data-pmt-look="glass"][data-pmt-bezel-color="follow"] .pmt-bezel {

@@ -21,8 +21,10 @@
 .pmt-fx-gl > .pmt-grid { opacity: 0; }
 
 /* ---- static scanlines (CPU path) ---- */
+/* round 2: locked to the text rows like the shader's (52-fx.js sets --pmt-scan-p, a whole number of lines per row),
+   starting at the first row, so every row of text sits on the same lines */
 .pmt-fx-scan {
-  --pmt-fx-scan-px: calc(1px * var(--pmt-scan-period, 3) / var(--pmt-dpr, var(--pmt-fx-dpr, 1)));
+  --pmt-fx-scan-px: var(--pmt-scan-p, calc(1px * var(--pmt-scan-period, 3) / var(--pmt-dpr, var(--pmt-fx-dpr, 1))));
   --pmt-fx-scan-a: var(--pmt-scan-strength, 0.3);
 }
 @media (min-resolution: 1.25dppx) { .pmt-fx-scan { --pmt-fx-dpr: 1.25; } }
@@ -36,6 +38,16 @@
     rgb(0 0 0 / calc(var(--pmt-fx-scan-a) * 0.25)) 0 calc(var(--pmt-fx-scan-px) / 3),
     rgb(0 0 0 / var(--pmt-fx-scan-a)) calc(var(--pmt-fx-scan-px) / 3) calc(var(--pmt-fx-scan-px) * 2 / 3),
     rgb(0 0 0 / calc(var(--pmt-fx-scan-a) * 0.25)) calc(var(--pmt-fx-scan-px) * 2 / 3) var(--pmt-fx-scan-px));
+  background-position: 0 var(--pmt-pad-y, 0px);
+}
+
+/* ---- Full CRT without the GPU (round 2): no fake curvature, which blurs text and costs frames, only the rounded
+   glass (10 px, as the shader's), its edge where glass meets the case, the recess and a faint vignette ---- */
+.pmt-fx-crt { position: relative; border-radius: 10px; }
+.pmt-fx-crt::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / .35), inset 0 0 8px 4px rgb(0 0 0 / .14);
+  background: radial-gradient(ellipse 75% 75% at 50% 50%, transparent 60%, rgb(0 0 0 / .12) 100%);
 }
 
 /* ---- phosphor glow (CPU path). The grid canvas must paint default-background cells transparent (the body behind it

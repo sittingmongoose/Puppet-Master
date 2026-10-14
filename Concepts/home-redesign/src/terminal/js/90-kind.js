@@ -340,6 +340,8 @@
       editorTokens: function (schemeId) { return T.Appearance.editorTokens(schemeId); },
       palette: function (schemeId) { return T.Appearance.palette(schemeId); },
       retroPhosphor: function () { return T.Appearance.retroPhosphor(); },
+      /* round 2: the backgrounds, for Settings' Background Gradient and Background Image rows: [{ id, name, cat, gradient }] */
+      grounds: function () { return T.Grounds ? T.Grounds.list().map(function (d) { return { id: d.id, name: d.name, cat: d.cat, gradient: T.Grounds.isGradient(d.id) }; }) : []; },
       /* 'retro-phosphor' is the one event; the result unsubscribes */
       on: function (name, fn) { return name === 'retro-phosphor' && typeof fn === 'function' ? T.Appearance.on(name, fn) : function () {}; },
       /* Settings' Import a Color Scheme (kit.d/24-terminal-look.js): opens a file chooser (call it from a click) and
