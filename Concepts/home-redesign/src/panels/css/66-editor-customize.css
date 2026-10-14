@@ -149,7 +149,7 @@ html[data-o55-nier="on"] .pmed-cz .pmed-art-brackets::before { background: linea
    and the contrast it reads at. No pills: rows, swatches and tracks are rounded rectangles */
 .pmed-cz .pmed-tok { display: grid; gap: 8px; margin-top: 4px; }
 .pmed-cz .pmed-tok-lead { margin: 0; }
-.pmed-cz .pmed-tok-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 6px; }
+.pmed-cz .pmed-tok-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 6px; }
 .pmed-cz .pmed-tok-row { display: grid; grid-template-columns: minmax(64px, auto) minmax(0, 1fr) auto; grid-template-areas: "word name meta" "word mine meta";
   align-items: center; gap: 0 10px; min-height: 42px; padding: 5px 9px 5px 6px; border: 1px solid var(--pmt-cz-line); border-radius: var(--pmt-cz-r);
   background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; transition: background-color 120ms ease, border-color 120ms ease; }

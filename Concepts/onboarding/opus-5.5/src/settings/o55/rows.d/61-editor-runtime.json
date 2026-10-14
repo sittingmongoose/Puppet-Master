@@ -421,7 +421,9 @@
   "code.editing.token-colors": {
    "label": "Token colours",
    "help": "One kind of word in one scheme, as scheme/kind: #rrggbb. Set them in the editor's Customize screen, under Colors.",
-   "emptyList": "None: every scheme's own"
+   "empty": "None: every scheme's own",
+   "noun": "colour",
+   "nouns": "colours"
   },
   "code.editing.font-weight": {
    "label": "Editor text weight",

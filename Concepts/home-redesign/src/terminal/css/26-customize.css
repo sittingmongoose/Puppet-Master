@@ -59,8 +59,10 @@ html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(-
 .pmt-cz-scope { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; padding-top: 2px; }
 .pmt-cz-scopewhy { font-size: 11px; color: var(--pmw-text-3, var(--text-muted)); }
 .pmt-cz .pmt-cz-x { width: 30px; height: 30px; border-radius: 8px; }
+/* the gutter is kept: a scrollbar measured again on every slider step lays the whole screen out again (about half of
+   each step's cost) */
 .pmt-cz-body { flex: 1 1 auto; min-height: 0; overflow: auto; display: grid; align-content: start; gap: 22px; padding: 16px 20px 22px; scroll-padding-top: 52px;
-  scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--pmw-text, currentColor) 26%, transparent) transparent; }
+  scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--pmw-text, currentColor) 26%, transparent) transparent; scrollbar-gutter: stable; }
 .pmt-cz-foot { flex: none; display: flex; align-items: center; gap: 10px; padding: 11px 16px 11px 20px; border-top: 1px solid var(--pmt-cz-line); }
 .pmt-cz-footn { font-size: 11.5px; color: var(--pmw-text-3, var(--text-muted)); }
 .pmt-cz .pmt-cz-done { height: 32px; padding: 0 18px; font-size: 12.5px; border-radius: 8px; background: var(--pmt-cz-accent); color: var(--pmt-cz-on-accent); border-color: transparent; }

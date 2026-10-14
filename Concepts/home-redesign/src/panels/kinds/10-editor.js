@@ -3538,7 +3538,11 @@ function mountEditor(host, st, api) {
     applyScheme();
     applyAttrs();
     markReduced();
-    if (!firstDone) return;
+    // a token colour is a CSS variable (applyScheme set it above): when nothing else changed, nothing is drawn again, and
+    // a hue slider dragged across its track repaints the words alone, not the rows, the minimap or the scrollbar's marks
+    var dk = JSON.stringify(R, noTokens), same = dk === drawKey;
+    drawKey = dk;
+    if (!firstDone || (same && !reopened)) return;
     var g = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
     var l = JSON.stringify([colorSig(), R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
     if (prev.behavior.diffLayout !== R.behavior.diffLayout && mode === 'diff' && !diffLayoutPick) resolveLayout(true);
@@ -3553,6 +3557,8 @@ function mountEditor(host, st, api) {
   }
   geoSig = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
   lookSig = JSON.stringify([colorSig(), R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
+  function noTokens(k, x) { return k === 'tokens' ? undefined : x; }
+  var drawKey = JSON.stringify(R, noTokens);
   applyAttrs();
   var detachLook = EL ? EL.attach(view) : null;
 

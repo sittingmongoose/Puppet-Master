@@ -396,6 +396,8 @@ function open(opts) {
 
   /* ---- painting: every control shows this scope's value ---- */
   var setA = function (e, n, x) { if (e && e.getAttribute(n) !== x) e.setAttribute(n, x); };
+  // text written only when it differs: a rewrite of the same words still lays the page out again, once per slider step
+  var setT = function (e, x) { if (e && e.textContent !== x) e.textContent = x; };
   function fmt(key, x) {
     if (x === null || x === undefined || x === '' || isNaN(x)) return '';
     if (key === 'lineHeight') return Number(x).toFixed(2) + '×';
@@ -477,10 +479,10 @@ function open(opts) {
     [].forEach.call(root.querySelectorAll('input[type="range"][data-key]'), function (r) {
       var key = r.getAttribute('data-key'), x = val(key);
       if (document.activeElement !== r) r.value = String(x);
-      var out = r.parentNode.querySelector('output'); if (out) out.textContent = fmt(key, Number(r.value));
+      setT(r.parentNode.querySelector('output'), fmt(key, Number(r.value)));
       r.closest('[data-slider]').classList.toggle('pmt-cz-is-mine', mine(key));
     });
-    var fs = root.querySelector('[data-out="fontSize"]'); if (fs) fs.textContent = fmt('fontSize', R.font.size);
+    setT(root.querySelector('[data-out="fontSize"]'), fmt('fontSize', R.font.size));
     setA(root.querySelector('[data-act="default"][data-key="fontSize"]'), 'aria-disabled', String(!mine('fontSize')));
     root.querySelector('[data-when-line]').hidden = R.caret.shape !== 'line';
     root.querySelector('[data-chip="activeIndent"]').hidden = R.lines.guides === 'off';
@@ -520,7 +522,7 @@ function open(opts) {
     [].forEach.call(root.querySelectorAll('.pmt-cz-cells > i'), function (c, i) { c.classList.toggle('pmt-cz-on', mine(COUNTED[i])); });
     var mn = root.querySelector('[data-meter-n]'), mt = n ? n + (n === 1 ? ' change' : ' changes') : 'The look’s own';
     if (mn.textContent !== mt) mn.textContent = mt;
-    root.querySelector('[data-meter-scope]').textContent = scope === 'tab' ? 'This editor' : 'All editors';
+    setT(root.querySelector('[data-meter-scope]'), scope === 'tab' ? 'This editor' : 'All editors');
     GROUPS.forEach(function (gp) {
       var k = GROUP_KEYS[gp[0]].filter(mine).length, t = k ? k + ' changed' : '';
       var c = root.querySelector('[data-count="' + gp[0] + '"]'); if (c.textContent !== t) c.textContent = t;
@@ -529,11 +531,11 @@ function open(opts) {
     });
     var ft = root.querySelector('[data-foot-n]'), ftt = n ? n + (n === 1 ? ' change from the look in ' : ' changes from the look in ') + (scope === 'tab' ? 'this editor' : 'all editors') : 'Following the look';
     if (ft.textContent !== ftt) ft.textContent = ftt;
-    var rb = root.querySelector('[data-act="reset"]'); rb.textContent = scope === 'tab' ? 'Reset this editor' : 'Reset all editors'; setA(rb, 'aria-disabled', String(!n));
+    var rb = root.querySelector('[data-act="reset"]'); setT(rb, scope === 'tab' ? 'Reset this editor' : 'Reset all editors'); setA(rb, 'aria-disabled', String(!n));
     [].forEach.call(root.querySelectorAll('[data-set]'), function (b) { setA(b, 'aria-pressed', String(setPressed(b.getAttribute('data-set'), mineKeys))); });
     var sw = root.querySelector('[data-scope-why]'), swt = scope === 'app' ? (EL().settingsReady() ? 'Saved in this project’s Settings' : 'Saved on this computer') : 'Saved with this tab';
     if (sw.textContent !== swt) sw.textContent = swt;
-    root.querySelector('.pmt-cz-framelabel').textContent = scope === 'tab' ? 'This editor' : 'This editor, like all editors';
+    setT(root.querySelector('.pmt-cz-framelabel'), scope === 'tab' ? 'This editor' : 'This editor, like all editors');
     paintTokens();
     roving();
   }
@@ -694,7 +696,7 @@ function open(opts) {
     if (!key || t.type !== 'range') return;
     var x = parseFloat(t.value);
     EL().live(scope, key, x, v); syncPreview();
-    var out = t.parentNode.querySelector('output'); if (out) out.textContent = fmt(key, x);
+    setT(t.parentNode.querySelector('output'), fmt(key, x));
   });
   root.addEventListener('change', function (e) {
     var t = e.target, key = t.getAttribute('data-key');
@@ -734,7 +736,7 @@ function open(opts) {
   /* ---- Token colours: one kind of word in the scheme this scope draws, picked from the scheme's own colours or by
      hue, saturation and lightness; shown on the preview and on the editor as it changes, and held to the text floor
      there like every scheme colour (the picker says when a colour is drawn lighter or darker to read) ---- */
-  var tokOpen = null, tokPv = null, tokIntent = 0, tokPalSig = '';
+  var tokOpen = null, tokPv = null, tokIntent = 0, tokPalSig = '', tokLive = false;
   var tokList = root.querySelector('.pmed-tok-list'), tokPick = root.querySelector('[data-tok-pick]'), tokSw = root.querySelector('[data-pick-swatches]');
   function tokInfo() { var src = preview && preview.tokenInfo ? preview : inst; try { return src.tokenInfo ? src.tokenInfo() : null; } catch (_) { return null; } }
   function tokMap() { var m = EL().own(scope, v, 'tokenColors'); return m && typeof m === 'object' ? Object.assign({}, m) : {}; }
@@ -753,7 +755,9 @@ function open(opts) {
     }
     if (tokPv !== null) { tokPv = null; EL().endPreview(v); }
     var next = tokNext(tok, hex);
-    if (how === 'live') { EL().live(scope, 'tokenColors', next, v); syncPreview(); paintTokens(); return; }
+    // while a slider is dragged the rows' spoken names wait for the step that keeps it: a new name rewrites its hover
+    // description, which lays the whole page out again on every step
+    if (how === 'live') { EL().live(scope, 'tokenColors', next, v); syncPreview(); tokLive = true; paintTokens(); tokLive = false; return; }
     put('tokenColors', next);
     PMW.announce(TOKEN_NAME[tok][1] + (hex ? ' ' + hex : ': the scheme’s own'));
   }
@@ -797,11 +801,11 @@ function open(opts) {
       var isMine = mine[I.key + '/' + k] !== undefined;
       b.classList.toggle('pmt-cz-is-mine', isMine);
       setA(b, 'aria-expanded', String(tokOpen === k));
-      setA(b, 'aria-label', TOKEN_NAME[k][1] + ', ' + shown + (isMine ? ', changed' : '') + (t.held ? ', drawn at ' + I.floor + ':1' : ''));
+      if (!tokLive) setA(b, 'aria-label', TOKEN_NAME[k][1] + ', ' + shown + (isMine ? ', changed' : '') + (t.held ? ', drawn at ' + I.floor + ':1' : ''));
       if (t.held) held++;
     });
     var anyMine = Object.keys(mine).some(function (k) { return k.indexOf(I.key + '/') === 0; });
-    var rs = root.querySelector('[data-act="tok-reset"]'); rs.hidden = !anyMine; rs.textContent = 'Reset token colours in ' + who.name;
+    var rs = root.querySelector('[data-act="tok-reset"]'); if (rs.hidden !== !anyMine) rs.hidden = !anyMine; setT(rs, 'Reset token colours in ' + who.name);
     if (!tokOpen) return;
     /* the picker */
     var t = I.tokens[tokOpen] || {}, cur = normHex(tokPv || t.set || t.own) || '#888888', hsl = hexHsl(cur) || [0, 0, 50];
