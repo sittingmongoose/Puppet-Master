@@ -37915,8 +37915,9 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-inactive .pmt-body::after { opacity: var(--pmt-dim-amount, 0); }
 .pmt-root[data-pmt-look="retro"] { --pmt-dim-color: #000; }
 .pmt-root[data-pmt-look="glass"] { --pmt-dim-color: transparent; }
-/* an ended session keeps its own, deeper 72 % (10-view.css) */
-.pmt-root[data-pmt-look="glass"].pmt-inactive:not(.pmt-ended) :is(.pmt-grid, .pmt-fxcanvas) { opacity: .8; }
+/* Glass fades the text instead, by the same amount (its own .22 draws about .8); Dim inactive terminals off is 0, so
+   nothing fades. An ended session keeps its own, deeper 72 % (10-view.css) */
+.pmt-root[data-pmt-look="glass"].pmt-inactive:not(.pmt-ended) :is(.pmt-grid, .pmt-fxcanvas) { opacity: calc(1 - var(--pmt-dim-amount, 0)); }
 
 /* ---- bell ---- */
 .pmt-root[data-pmt-bell="flash"].pmt-bell .pmt-body::after { opacity: 0; background: var(--pmt-fg); animation: pmt-bell-flash .4s ease-out; }
@@ -76659,7 +76660,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":958,"inventory_sha256":"be85c
     }catch(_e){base.settingsProjectionSource=window.PM_SETTINGS_REGISTRY?'owner_registry_read_failed':'concept_default_fixture';base.settingsProjectionReadOnly=!!window.PM_SETTINGS_REGISTRY;return base;}
   }
   function save(snapshot){
-    var k=key(),safe=scrubCredentialSettings(snapshot);safe.settings['general.visual.glass-transparency']=clampGlassAlpha(safe.settings,safe.settings['general.visual.glass-transparency']);var owned={schema_version:'pm7.settings.project_projection.v1',settings:safe.settings,changed:clone(snapshot&&snapshot.changed||{}),domain:snapshot&&snapshot.domain,workspace:snapshot&&snapshot.workspace,activeSection:clone(snapshot&&snapshot.activeSection||{}),transferCategories:clone(snapshot&&snapshot.transferCategories||[]),settingsTransferHistory:clone(snapshot&&snapshot.settingsTransferHistory||[]),settingsTransferRollbacks:clone(snapshot&&snapshot.settingsTransferRollbacks||{}),settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null)};
+    var k=key(),safe=scrubCredentialSettings(snapshot);safe.settings['general.visual.glass-transparency']=clampGlassAlpha(safe.settings,safe.settings['general.visual.glass-transparency']);var owned={schema_version:'pm7.settings.project_projection.v1',settings:safe.settings,changed:clone(snapshot&&snapshot.changed||{}),domain:snapshot&&snapshot.domain,workspace:snapshot&&snapshot.workspace,activeSection:clone(snapshot&&snapshot.activeSection||{}),transferCategories:clone(snapshot&&snapshot.transferCategories||[]),settingsTransferHistory:clone(snapshot&&snapshot.settingsTransferHistory||[]),settingsTransferRollbacks:clone(snapshot&&snapshot.settingsTransferRollbacks||{}),settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null)};var o55Typed=snapshot&&snapshot.pm51&&snapshot.pm51.o55Custom;if(o55Typed&&typeof o55Typed==='object'){owned.pm51={o55Custom:{}};Object.keys(o55Typed).forEach(function(id){if(!credentialSettingIds.has(id)&&typeof o55Typed[id]==='string')owned.pm51.o55Custom[id]=o55Typed[id];});}
     if(k&&!window.PM_SETTINGS_REGISTRY&&CONCEPT_FIXTURE_MODE)try{localStorage.setItem(k,JSON.stringify(owned));}catch(_e){}
     if(!bridgeDepth)applyPaint(snapshot);
   }
@@ -156283,6 +156284,14 @@ function syncBodies(panelEl, p, l, panelHidden) {
         catch (err) { try { console.error('[pm-home] show/hide failed', err); } catch (_) {} }
       }
       if (visible) queueResize(tid);
+    }
+    /* onFocus / onBlur (section 3): the shown tab of the focused panel has the focus; with no panel focused yet, none
+       is told it lost it (a terminal dims on onBlur) */
+    var focused = visible && (l.view.focus == null || l.view.focus === p.id);
+    if (rec.instance && focused !== rec.focused) {
+      rec.focused = focused;
+      try { if (focused && rec.instance.onFocus) rec.instance.onFocus(); else if (!focused && rec.instance.onBlur) rec.instance.onBlur(); }
+      catch (err) { try { console.error('[pm-home] focus/blur failed', err); } catch (_) {} }
     }
   }
 }
