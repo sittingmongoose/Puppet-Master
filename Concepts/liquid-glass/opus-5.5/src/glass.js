@@ -1221,7 +1221,7 @@
     if (scopes && !scopes.length && !sheets.size && !strips.size) return;
     pruneGlass();
     if (root.hasAttribute('data-lg-demo-host') && document.getElementById('lg-demo-btn')) demo();
-    applyWall(); mountPicker();
+    applyWall();
     if (!isGlass()) { unmountAll(); return; }
     syncSurfaces(scopes, sheets);
     STRIPS.forEach(function (cfg) {
@@ -1323,62 +1323,41 @@
     demo();
     syncAll(); setTimeout(syncAll, 500); setTimeout(syncAll, 1500);
     if (isGlass()) setTimeout(function () { syncAll(); materialize(Array.from(glassSet)); }, 700);
-    firstVisit();
-  }
-  function firstVisit() {
-    var KEY = 'pm-lg2-concept-seen';
-    try { if (localStorage.getItem(KEY) || q.get('lgkeep') === '1') return; localStorage.setItem(KEY, '1'); } catch (e) { return; }
-    var n = 0; (function go() { if (window.PM12_KIMI && window.PM_PAGES) { if (!/^glass/.test(root.getAttribute('data-theme') || '')) window.PM12_KIMI.setSettingFromHost('general.visual.theme', 'Glass Dark'); window.PM_PAGES.go('usage'); } else if (++n < 60) setTimeout(go, 250); })();
   }
 
   /* ---- wallpapers: any wallpaper for any look (Jared, 2026-10-11) ---------------------------------------------------
-     The choice is one setting: 'look' (each look's own: Glass shows Ribbons, the other looks keep their ground until
-     the wallpaper designer's set is approved) or a wallpaper id, used by every look; its dark or light print follows
-     the look's mode. In this concept the choice lives in localStorage and on <html data-lg-wall>; the product reads
-     general.visual.wallpaper (canon draft). Settings shows it as a gallery under Theme & colors. */
-  var WALLS = [
-    { id: 'ribbons', name: 'Ribbons', family: 'Glass', default_for: 'glass' },
-    { id: 'prism', name: 'Prism', family: 'Glass' },
-    { id: 'orbs', name: 'Orbs', family: 'Glass' },
-    /* 2026-10-13: five more for Glass (Jared: "more wallpapers for the glass theme"), any look can use them */
-    { id: 'aurora', name: 'Aurora', family: 'Glass' },
-    { id: 'dunes', name: 'Dunes', family: 'Glass' },
-    { id: 'bloom', name: 'Bloom', family: 'Glass' },
-    { id: 'pool', name: 'Pool', family: 'Glass' },
-    { id: 'facets', name: 'Facets', family: 'Glass' },
-  ];
+     The choice, the catalog and the Settings gallery belong to the wallpapers package (Concepts/wallpapers/opus-5.5:
+     window.PM_WALLPAPERS_CATALOG and window.PM_WALLPAPERS). This file follows the same rule for <html data-lg-wall> so
+     the two writers always agree, and reads each look's default from the catalog (default_for); without the package
+     (a Glass-only build) Glass shows Ribbons. The choice is 'look' (each look's own) or a wallpaper id, used by every
+     look; its dark or light print follows the look's mode. */
   var WALL_KEY = 'pm-lg-wallpaper';
+  function catalogWalls() {
+    var C = window.PM_WALLPAPERS_CATALOG, out = [];
+    if (C && C.families) C.families.forEach(function (f) { (f.wallpapers || []).forEach(function (w) { out.push({ id: w.id, name: w.name, family: f.label || f.family, default_for: w.default_for || null }); }); });
+    return out;
+  }
+  function lookDefault(fam) {
+    var ws = catalogWalls(); if (!ws.length) return fam === 'glass' ? 'ribbons' : '';
+    for (var i = 0; i < ws.length; i++) if (ws[i].default_for === fam) return ws[i].id;
+    return '';
+  }
   function wallChoice() { try { return localStorage.getItem(WALL_KEY) || 'look'; } catch (e) { return 'look'; } }
   function applyWall() {
-    var c = q.get('lgwall') || wallChoice(), fam = (root.getAttribute('data-theme') || '').split('-')[0];
-    var id = c === 'look' ? (fam === 'glass' ? 'ribbons' : '') : c;
+    var c = q.get('lgwall') || wallChoice(), fam = (root.getAttribute('data-theme') || '').split('-')[0], ws = catalogWalls();
+    if (c !== 'look' && ws.length && !ws.some(function (w) { return w.id === c; })) c = 'look';   /* a stale id: the package resets it */
+    var id = c === 'look' ? lookDefault(fam) : c;
     if (id) { if (root.getAttribute('data-lg-wall') !== id) root.setAttribute('data-lg-wall', id); }
     else if (root.hasAttribute('data-lg-wall')) root.removeAttribute('data-lg-wall');
     /* a non-Glass look shows a chosen wallpaper around and between its opaque panels */
     if (id && fam !== 'glass') { if (!root.hasAttribute('data-lg-wall-any')) root.setAttribute('data-lg-wall-any', ''); }
     else if (root.hasAttribute('data-lg-wall-any')) root.removeAttribute('data-lg-wall-any');
   }
-  function setWall(c) { try { localStorage.setItem(WALL_KEY, c); } catch (e) {} applyWall(); renderPickers(); }
-  function pickerHtml() {
-    var c = wallChoice(), fam = (root.getAttribute('data-theme') || '').split('-')[0], mode = /light$/.test(root.getAttribute('data-theme') || '') ? 'light' : 'dark';
-    var tiles = [{ id: 'look', name: "Each look's own", family: fam === 'glass' ? 'Glass: Ribbons' : 'Its own ground' }].concat(WALLS);
-    return tiles.map(function (w) {
-      var thumb = w.id === 'look' ? (fam === 'glass' ? 'ribbons' : '') : w.id, on = c === w.id;
-      return '<button type="button" class="lg-wtile' + (on ? ' is-on' : '') + '" role="radio" aria-checked="' + on + '" data-lg-wall-pick="' + w.id + '">' +
-        '<span class="lg-wthumb"' + (thumb ? ' style="background-image:var(--lg-wall-' + thumb + '-' + mode + ')"' : '') + '><i class="lg-wcheck" aria-hidden="true"></i></span>' +
-        '<span class="lg-wname">' + w.name + '</span><span class="lg-wfam">' + w.family + '</span></button>';
-    }).join('');
+  /* choosing goes through the package when it is there, so its gallery and its hold stay in step */
+  function setWall(c) {
+    if (window.PM_WALLPAPERS && typeof window.PM_WALLPAPERS.choose === 'function') { window.PM_WALLPAPERS.choose(c); applyWall(); return; }
+    try { localStorage.setItem(WALL_KEY, c); } catch (e) {} applyWall();
   }
-  function renderPickers() { document.querySelectorAll('.lg-wgrid').forEach(function (g) { g.innerHTML = pickerHtml(); }); }
-  function mountPicker() {
-    var themeRow = document.getElementById('setting-general.visual.theme'); if (!themeRow || document.getElementById('setting-general.visual.wallpaper')) return;
-    var row = el('div', { class: 'setting-row o55-row lg-wrow', id: 'setting-general.visual.wallpaper' });
-    row.innerHTML = '<div class="lg-whead setting-copy"><div class="setting-label">Wallpaper</div><div class="setting-description">What shows behind the panels, in any look. Each look has its own unless you pick one; it follows light and dark.</div></div>' +
-      '<div class="lg-wgrid" role="radiogroup" aria-label="Wallpaper">' + pickerHtml() + '</div>';
-    var after = document.getElementById('setting-general.visual.theme-mode') || themeRow;
-    after.parentNode.insertBefore(row, after.nextSibling);
-  }
-  document.addEventListener('click', function (e) { var t = e.target.closest && e.target.closest('[data-lg-wall-pick]'); if (!t) return; setWall(t.getAttribute('data-lg-wall-pick')); e.preventDefault(); e.stopPropagation(); }, true);
 
   /* ---- the concept's own control (status bar) -------------------------------------------------------------------- */
   /* A page that hosts its own demo controls (pm7-demo-studio) sets html[data-lg-demo-host] and drives Glass through
@@ -1401,7 +1380,6 @@
     var rows = [
       row('Liquid Glass', 'data-lg', [['on', 'On', set('data-lg', 'on')], ['off', 'Today', set('data-lg', 'off')]]),
       row('Look', 'data-theme', [['glass-dark', 'Dark', look('Glass Dark')], ['glass-light', 'Light', look('Glass Light')]]),
-      row('Wallpaper', 'data-lg-wall', [['ribbons', 'Ribbons', function () { setWall('ribbons'); }], ['prism', 'Prism', function () { setWall('prism'); }], ['orbs', 'Orbs', function () { setWall('orbs'); }]]),
       row('Path', 'data-lg-tier', [['gpu', 'GPU', set('data-lg-tier', 'gpu')], ['cpu', 'CPU', set('data-lg-tier', 'cpu')]]),
       row('Motion', 'data-motion', [['', 'Full', set('data-motion', null)], ['reduced', 'Reduced', set('data-motion', 'reduced')]]),
     ];
@@ -1418,6 +1396,6 @@
      chooses a wallpaper for every look; walls() lists them; surfaces: data-lg-surface on any element (see syncSurfaces). */
   window.PM_LG = { version: 'v3-2026-10-13', sync: syncAll, materialize: function () { materialize(Array.from(glassSet)); }, kinds: KINDS, count: function () { return glassSet.size; },
     set: function (o) { for (var k in o) { if (o[k] == null) root.removeAttribute(k); else root.setAttribute(k, o[k]); } syncAll(); },
-    wall: function (id) { setWall(id || 'look'); }, walls: function () { return WALLS.map(function (w) { return { id: w.id, name: w.name, family: w.family }; }); } };
+    wall: function (id) { setWall(id || 'look'); }, walls: function () { return catalogWalls().map(function (w) { return { id: w.id, name: w.name, family: w.family }; }); } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();

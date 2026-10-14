@@ -83,12 +83,15 @@ Set `data-lg-demo-host` on `<html>`, and the concept's own status-bar button sta
 - `set({'data-lg': 'on'|'off'})`: Liquid Glass or today's Glass.
 - `set({'data-lg-tier': 'gpu'|'cpu'})`: the rendering path.
 - `set({'data-motion': 'reduced'})`, or `null` to clear it.
-- `wall('look'|id)` and `walls()`.
+- `wall('look'|id)` chooses through the wallpapers package when it is on the page, so its gallery follows; `walls()`
+  lists the package's catalog.
 - `version`.
 
 Glass Dark or Light is the normal theme setting.
 
 ## Wallpapers
 
-The wallpaper choice, its catalog and the Settings gallery follow `Concepts/wallpapers/opus-5.5/CONTRACT.md`. Glass
-owns `catalog.d/10-glass.json`.
+The wallpaper choice, its catalog and the Settings gallery belong to the wallpapers package and follow
+`Concepts/wallpapers/opus-5.5/CONTRACT.md`. Glass owns `catalog.d/10-glass.json`. `glass.js` keeps no list or picker of
+its own: it reads each look's default from `window.PM_WALLPAPERS_CATALOG` (Ribbons for Glass when the package is
+absent) and follows the package's rule for `<html data-lg-wall>`.

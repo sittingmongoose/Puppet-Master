@@ -50,21 +50,8 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) {
   --lg-wall: var(--lg-wall-ribbons-light);
   color-scheme: light;
 }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="prism"]:not(#lgz) { --lg-wall: var(--lg-wall-prism-dark); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="orbs"]:not(#lgz) { --lg-wall: var(--lg-wall-orbs-dark); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="prism"]:not(#lgz) { --lg-wall: var(--lg-wall-prism-light); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="orbs"]:not(#lgz) { --lg-wall: var(--lg-wall-orbs-light); }
-/* the 2026-10-13 set */
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="aurora"]:not(#lgz) { --lg-wall: var(--lg-wall-aurora-dark); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="aurora"]:not(#lgz) { --lg-wall: var(--lg-wall-aurora-light); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="dunes"]:not(#lgz) { --lg-wall: var(--lg-wall-dunes-dark); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="dunes"]:not(#lgz) { --lg-wall: var(--lg-wall-dunes-light); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="bloom"]:not(#lgz) { --lg-wall: var(--lg-wall-bloom-dark); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="bloom"]:not(#lgz) { --lg-wall: var(--lg-wall-bloom-light); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="pool"]:not(#lgz) { --lg-wall: var(--lg-wall-pool-dark); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="pool"]:not(#lgz) { --lg-wall: var(--lg-wall-pool-light); }
-html[data-lg="on"][data-theme="glass-dark"][data-lg-wall="facets"]:not(#lgz) { --lg-wall: var(--lg-wall-facets-dark); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-wall="facets"]:not(#lgz) { --lg-wall: var(--lg-wall-facets-light); }
+/* the chosen wallpaper's print lands on --lg-wall through the rules the wallpapers build generates for every catalog id
+   (Concepts/wallpapers/opus-5.5); Ribbons above is Glass's own, and the default without that package */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) {
   --border-radius: 16px; --pm-ctl-r: 6px; --pm-ctl-r-in: 3px;
   --lg-r-sheet: 18px; --lg-r-card: 16px; --lg-r-bar: 14px;
@@ -430,56 +417,11 @@ html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) { --l
 #lg-demo-pop .lg-seg button:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 1px; }
 
 /* ---------------------------------------------------------------------------------------------------------------
-   9. Wallpapers for every look (Jared, 2026-10-11: "The user should be able to choose any wallpaper for their
-      background"). Settings › App & Input › Theme & colors gets a Wallpaper gallery right after Light or dark; it
-      replaces Glass background, whose Mesh, Depth and Minimal drew the old cloudscape. Glass refracts the chosen
-      wallpaper. Basic, Friendly and Retro show it around and between their opaque panels.
+   9. Wallpapers for every look (Jared, 2026-10-11). The choice, the Settings gallery and the prints for every look
+      belong to the wallpapers package (Concepts/wallpapers/opus-5.5, CONTRACT.md); Glass refracts the print it lands
+      on --lg-wall. Until W5 is on main, the old Glass background row (Mesh, Depth, Minimal) stays hidden here.
    --------------------------------------------------------------------------------------------------------------- */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #setting-general\.visual\.glass-background-mode { display: none !important; }
-html[data-lg-wall="ribbons"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-ribbons-dark); }
-html[data-lg-wall="ribbons"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-ribbons-light); }
-html[data-lg-wall="prism"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-prism-dark); }
-html[data-lg-wall="prism"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-prism-light); }
-html[data-lg-wall="orbs"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-orbs-dark); }
-html[data-lg-wall="orbs"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-orbs-light); }
-html[data-lg-wall="aurora"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-aurora-dark); }
-html[data-lg-wall="aurora"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-aurora-light); }
-html[data-lg-wall="dunes"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-dunes-dark); }
-html[data-lg-wall="dunes"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-dunes-light); }
-html[data-lg-wall="bloom"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-bloom-dark); }
-html[data-lg-wall="bloom"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-bloom-light); }
-html[data-lg-wall="pool"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-pool-dark); }
-html[data-lg-wall="pool"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-pool-light); }
-html[data-lg-wall="facets"][data-theme$="-dark"] { --lg-wall-any: var(--lg-wall-facets-dark); }
-html[data-lg-wall="facets"][data-theme$="-light"] { --lg-wall-any: var(--lg-wall-facets-light); }
-html[data-lg-wall-any]:not([data-theme^="glass"]):not([data-o55-nier="on"]) body { background: var(--background) var(--lg-wall-any) center / cover no-repeat !important; }
-html[data-lg-wall-any]:not([data-theme^="glass"]):not([data-o55-nier="on"]) :is(.app-shell, .main-area) { background: transparent !important; }
-
-/* the gallery: 16:9 tiles, the chosen one ringed in the accent with a glass check */
-.lg-wrow { display: block !important; }
-.lg-wrow .lg-whead { margin-bottom: 10px; }
-.lg-wgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
-.lg-wtile {
-  all: unset; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: column; gap: 3px; padding: 6px 6px 8px;
-  border-radius: 12px; background: var(--lg-fill, color-mix(in srgb, var(--text-primary) 5%, transparent)); color: var(--text-primary);
-  transition: transform 260ms cubic-bezier(.3, 1.3, .5, 1), background-color 160ms ease, box-shadow 160ms ease;
-}
-.lg-wtile:hover { transform: translateY(-2px); background: var(--lg-fill-hover, color-mix(in srgb, var(--text-primary) 9%, transparent)); }
-.lg-wtile:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
-.lg-wthumb {
-  position: relative; display: block; aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background-color: var(--background);
-  background-size: cover; background-position: center; box-shadow: inset 0 0 0 1px var(--border-light), 0 4px 10px -6px rgba(0, 0, 0, .5);
-}
-.lg-wtile:not(:has(.lg-wthumb[style])) .lg-wthumb { background-image: radial-gradient(color-mix(in srgb, var(--text-primary) 18%, transparent) 1px, transparent 1.5px); background-size: 12px 12px; }
-.lg-wtile.is-on { box-shadow: inset 0 0 0 2px var(--accent-blue); }
-.lg-wcheck { position: absolute; right: 6px; bottom: 6px; width: 18px; height: 18px; border-radius: 50%; display: none;
-  background: radial-gradient(120% 90% at 35% 22%, #fff, #e6ecf6); box-shadow: 0 2px 6px rgba(0, 0, 0, .35), inset 0 -1px 1px rgba(20, 30, 60, .15); }
-.lg-wcheck::after { content: ""; position: absolute; left: 6px; top: 4px; width: 4px; height: 8px; border: solid var(--accent-blue); border-width: 0 2px 2px 0; transform: rotate(45deg); }
-.lg-wtile.is-on .lg-wcheck { display: block; }
-.lg-wname { font-weight: 600; font-size: 12.5px; padding: 2px 2px 0; }
-.lg-wfam { font-size: 11.5px; color: var(--text-muted); padding: 0 2px; }
-html[data-theme^="retro"] :is(.lg-wtile, .lg-wthumb), html[data-o55-nier="on"] :is(.lg-wtile, .lg-wthumb) { border-radius: 0; }
-html[data-motion="reduced"] .lg-wtile { transition: none; }
 
 /* Settings under Liquid Glass: sections are cards on the sheet; the active domain is a lens-like fill */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root :is(.pm-shell, .workspace-shell, .workspace-stage, .document-layout, .document-main) { background: transparent !important; }
