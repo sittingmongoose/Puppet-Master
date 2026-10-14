@@ -480,7 +480,9 @@ PM51.settingRows = (ids, { title, help, overrides = {}, cls, id: sectionId } = {
    While the Details panel is open the engine re-rendered the whole of Settings instead (renderApp soft): the panel
    was torn down and sprang back in over a fading scrim, which read as the screen flashing black on every change made
    in it. Now only the row is swapped (focus stays on the control that was used), and the panel updates in place
-   (PM51.syncInspector, kit.d/30-inspector.js). A row in All Settings keeps its list bookkeeping attributes. */
+   (PM51.syncInspector, kit.d/30-inspector.js). A row in All Settings keeps its list bookkeeping attributes.
+   Every row the kit can draw again goes through PM51.swapRow, which patches the row in place (kit.d/28-in-place.js):
+   the control that was used keeps focus and hover and runs its own transition (M4, 2026-10-14). */
 const pm51OriginalRefreshSettingRow = refreshSettingRow;
 const pm51FocusIndex = el => { const act = document.activeElement; if (!act || !el.contains(act)) return -1; return [...el.querySelectorAll('button, input, select, textarea, [tabindex]')].indexOf(act); };
 PM51.swapRow = (el, next) => {
@@ -495,7 +497,7 @@ refreshSettingRow = function (id) {
   const el = root.querySelector(`#setting-${cssEscape(id)}`);
   const inspecting = state.detailSetting === id || detailInspectorVisible;
   const own = !!(override && el && el.closest('.pm51-setting-rows'));
-  if (!own && !inspecting) return pm51OriginalRefreshSettingRow.apply(this, arguments);
+  if (!own && !inspecting && !(el && findSettingGlobal(id))) return pm51OriginalRefreshSettingRow.apply(this, arguments);
   saveState();
   if (el) {
     const found = own ? null : findSettingGlobal(id);

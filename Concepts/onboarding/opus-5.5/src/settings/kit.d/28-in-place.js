@@ -261,6 +261,18 @@ dispatchAction = function (action, el, event) {
   return o55cDispatch.apply(this, arguments);
 };
 
+/* ---------- a row drawn again is patched too -------------------------------------------------------------------------- */
+/* A control on the page (a switch, a stepper, a choice) draws its row again (refreshSettingRow, PM51.swapRow). The row
+   used to be replaced: the control lost focus and hover, and the switch's own transition never ran (26-switch-motion.js
+   bridged that). It is patched now, like the page; a row whose tag changed is still replaced. */
+const o55cSwapRow = PM51.swapRow;
+PM51.swapRow = (el, next) => {
+  if (!el || !next || !el.isConnected || el.tagName !== next.tagName) return o55cSwapRow(el, next);
+  [...el.attributes].forEach(att => { if (att.name.startsWith('data-all-setting') && !next.hasAttribute(att.name)) next.setAttribute(att.name, att.value); });
+  const was = o55cMode; o55cMode = was || 'row';
+  try { o55cNode(el, next); } finally { o55cMode = was; }
+};
+
 /* ---------- an entrance plays once ------------------------------------------------------------------------------------ */
 /* Settings is display:none while another page shows, and a CSS animation starts over when its element is shown again, so
    coming back to Settings replayed the page's arrival, every revealed section's slide and the last manager tab swap.
