@@ -1,0 +1,684 @@
+[
+  {
+    "run": "m10-film-normal-v1",
+    "frames": 12117,
+    "actions": 44,
+    "bound_ms": 32.71671549479167,
+    "samples": [
+      {
+        "look": "nier-dark",
+        "case": "settings-entry",
+        "before_ms": 206.6,
+        "after_ms": 163.3,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "home-general",
+        "before_ms": 357.1,
+        "after_ms": 342.1,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "settings-category-appearance",
+        "before_ms": 143.9,
+        "after_ms": 139.3,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "settings-scroll-down",
+        "before_ms": 51.6,
+        "after_ms": 46.1,
+        "region": "main Settings body",
+        "origin": "trusted wheel",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "settings-scroll-up",
+        "before_ms": 53.1,
+        "after_ms": 56.1,
+        "region": "main Settings body",
+        "origin": "trusted wheel",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "settings-code",
+        "before_ms": 368.4,
+        "after_ms": 414.6,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "settings-home",
+        "before_ms": 165.4,
+        "after_ms": 188.6,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "rail-files",
+        "before_ms": 80.1,
+        "after_ms": 108.1,
+        "region": "Search rail",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "files-changed",
+        "before_ms": 85.1,
+        "after_ms": 79.1,
+        "region": "Search rail",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "files-explorer",
+        "before_ms": 79.1,
+        "after_ms": 90.8,
+        "region": "Search rail",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "files-search",
+        "before_ms": 108.6,
+        "after_ms": 87.6,
+        "region": "Search rail",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "settings-entry",
+        "before_ms": 196.6,
+        "after_ms": 160.6,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "home-general",
+        "before_ms": 388.8,
+        "after_ms": 346.9,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "settings-category-appearance",
+        "before_ms": 175.4,
+        "after_ms": 161.3,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "settings-scroll-down",
+        "before_ms": 50.5,
+        "after_ms": 55.5,
+        "region": "main Settings body",
+        "origin": "trusted wheel",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "settings-scroll-up",
+        "before_ms": 69.8,
+        "after_ms": 43.5,
+        "region": "main Settings body",
+        "origin": "trusted wheel",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "settings-code",
+        "before_ms": 349.1,
+        "after_ms": 357.8,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "settings-home",
+        "before_ms": 164.0,
+        "after_ms": 217.1,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "rail-files",
+        "before_ms": 87.8,
+        "after_ms": 96.1,
+        "region": "Search rail",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "files-changed",
+        "before_ms": 74.0,
+        "after_ms": 59.8,
+        "region": "Search rail",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "files-explorer",
+        "before_ms": 86.0,
+        "after_ms": 86.3,
+        "region": "Search rail",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "files-search",
+        "before_ms": 76.5,
+        "after_ms": 67.8,
+        "region": "Search rail",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      }
+    ],
+    "stop": "complete",
+    "native_review": {
+      "motion": "normal",
+      "actions": 44,
+      "reviewed_native_frames": 176,
+      "review_offsets_frames": [
+        0,
+        3,
+        12,
+        30
+      ],
+      "decoded_frames": 12117,
+      "bound_ms": 32.71671549479167,
+      "reviewed_files": [
+        {
+          "path": "m10-film-normal-v1/review-collages/nier-dark-f3.jpg",
+          "sha256": "5d78676c8bcdf714fe9977563c35d3f58c5a0c02aa0b60ecec962bba88343203"
+        },
+        {
+          "path": "m10-film-normal-v1/review-collages/nier-dark-normal.jpg",
+          "sha256": "29618b6ff3375055d3f7b6fa507147387181e9523573a751f81ffdcc7190c25b"
+        },
+        {
+          "path": "m10-film-normal-v1/review-collages/nier-light-f3.jpg",
+          "sha256": "0e46c1a07dce3281a811d84e547ad5dc12de0b28f8fd87d2de0b1b95110ea5fb"
+        },
+        {
+          "path": "m10-film-normal-v1/review-collages/nier-light-normal.jpg",
+          "sha256": "a5b301837f0254831b7f5c669d453bbf4dfe7888fdac2343ceb22afea187ea76"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-dark-files-changed.jpg",
+          "sha256": "2294c9e817ceff2fcc9a653ca30bab6cf3018f588a410fafbb56eddfebb0e8ff"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-dark-files-explorer.jpg",
+          "sha256": "eb44f23ef025ba10c30f891571ff2350ddc7e6cf187e377b5cbfb4f84eab345e"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-dark-files-search.jpg",
+          "sha256": "47de1e890be3d599dce7392e207091bfb2199bb540403242820b917c07a12672"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-dark-home-general.jpg",
+          "sha256": "2b5b11823fefab0c4de05dd7a3db9b61a91526a1e398cac5c8f27f4e1e7ecc23"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-dark-rail-files.jpg",
+          "sha256": "89217997077df002ac87c062750aaa588b0a88e382589992bc57cbcf133b57fc"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-dark-settings-category-appearance.jpg",
+          "sha256": "6b3bc91f60f4fb5ea15b52378ba60950ad445881b9f1555db972a5007a3dbe71"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-dark-settings-code.jpg",
+          "sha256": "82cd98638bd386584487e4ec77b88d02d730f2117bb82a14982dd087a9d00466"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-dark-settings-entry.jpg",
+          "sha256": "977705dc08e626f8bbbe63a5ed7949ac158b2e81fd198e532f001bf96830d9e8"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-dark-settings-home.jpg",
+          "sha256": "5f65d20ef3a366726106b02bae8a6535b1c96d947dcc073d8fff2a7818f8dfd0"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-dark-settings-scroll-down.jpg",
+          "sha256": "f5dd3154512ef4e700a3d6a8193ae5f965ee96eb646172d5688c36fb79be102a"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-dark-settings-scroll-up.jpg",
+          "sha256": "d8437a1d83e4370a79e569cbe47b749527087e573597231266fdf4ee40c9c0c5"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-light-files-changed.jpg",
+          "sha256": "5c362acf9c70c54ef30ed5520a059f94c1f01b9cfc86252e8ea7b2d35823a8bb"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-light-files-explorer.jpg",
+          "sha256": "2f0694c81b77a58f5b833ff7bf28084529b7c17357b8ef273509afaecc36912b"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-light-files-search.jpg",
+          "sha256": "7460d9aac40a02dada4b109732fcbfe196945e2a284418afa34dfc119c147d99"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-light-home-general.jpg",
+          "sha256": "7a52d945c5b3ff5b7d10ce92fc30c9212888dca87a5234f040d325701bf1737d"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-light-rail-files.jpg",
+          "sha256": "fd52b00ed7a2ee9adfab94f6af8df8c9e3592e60d573e86f9475ad2bee4e347d"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-light-settings-category-appearance.jpg",
+          "sha256": "92a8979f7853085e06fc3ad06ab29fa47b4c14e69b332c443d3bbe624659b756"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-light-settings-code.jpg",
+          "sha256": "0f41aefaf4bbd3b6c1d2f402817d489af752e7ca5e988491f119df6cc2cde5eb"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-light-settings-entry.jpg",
+          "sha256": "9bd9437e11b441cf70fe3cec8f4f59df2c2b3ed24bdb251ac8723a663c6bb768"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-light-settings-home.jpg",
+          "sha256": "8a139dba462588bb0bb7d3f5911011d2386598e1f72cb4f3b0a734160942974a"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-light-settings-scroll-down.jpg",
+          "sha256": "af8203445d0ad5449d6a917fbd9b7da64c1a1d7392a91a65c93e7a754cebdc31"
+        },
+        {
+          "path": "m10-film-normal-v1/review-detail-crops/nier-light-settings-scroll-up.jpg",
+          "sha256": "2aea326653cf08a17f2dde19a4ea1baaeee077c529e600f53e932101aa153c6f"
+        }
+      ],
+      "observations": [
+        "Reticle target positions, corner placement and settled destinations match in Dark and Light.",
+        "Normal sampled entrance vocabulary remains; reduced samples place brackets immediately.",
+        "Some first-feedback samples show the reticle or selection before newly rendered page content. Content and ambient phase differ at some sampled offsets. No missing or displaced target was observed."
+      ],
+      "limits": [
+        "One movie observation per artifact/action does not establish a population first-feedback speedup.",
+        "Not exact encoded-pixel equality or opacity equality at every sampled frame.",
+        "The separate first-frame geometry test found three normal-only animation end-presence differences; durations, easing and keyframe unions match. Reduced animation checks and moving geometry checks pass."
+      ]
+    },
+    "limits": [
+      "Timing estimates use two visible calibration sequences and retain their residual plus one capture frame.",
+      "Detection identifies first changed pixels in the specified action region; frame review must establish semantic feedback.",
+      "No distinct-frame-rate claim is made from encoded fps alone."
+    ]
+  },
+  {
+    "run": "m10-film-reduced-v1",
+    "frames": 11997,
+    "actions": 44,
+    "bound_ms": 33.81681315104167,
+    "samples": [
+      {
+        "look": "nier-dark",
+        "case": "settings-entry",
+        "before_ms": 141.1,
+        "after_ms": 87.5,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "home-general",
+        "before_ms": 381.8,
+        "after_ms": 359.3,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "settings-category-appearance",
+        "before_ms": 134.6,
+        "after_ms": 126.0,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "settings-scroll-down",
+        "before_ms": 23.8,
+        "after_ms": 34.0,
+        "region": "main Settings body",
+        "origin": "trusted wheel",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "settings-scroll-up",
+        "before_ms": 17.1,
+        "after_ms": 9.4,
+        "region": "main Settings body",
+        "origin": "trusted wheel",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "settings-code",
+        "before_ms": 409.9,
+        "after_ms": 381.5,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "settings-home",
+        "before_ms": 186.6,
+        "after_ms": 147.8,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "rail-files",
+        "before_ms": 49.9,
+        "after_ms": 59.9,
+        "region": "Search rail",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "files-changed",
+        "before_ms": 42.6,
+        "after_ms": 38.7,
+        "region": "Search rail",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "files-explorer",
+        "before_ms": 54.4,
+        "after_ms": 75.6,
+        "region": "Search rail",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "files-search",
+        "before_ms": 88.3,
+        "after_ms": 47.9,
+        "region": "Search rail",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "settings-entry",
+        "before_ms": 69.1,
+        "after_ms": 88.4,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "home-general",
+        "before_ms": 332.6,
+        "after_ms": 370.8,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "settings-category-appearance",
+        "before_ms": 124.6,
+        "after_ms": 160.0,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "settings-scroll-down",
+        "before_ms": 30.6,
+        "after_ms": 18.6,
+        "region": "main Settings body",
+        "origin": "trusted wheel",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "settings-scroll-up",
+        "before_ms": 28.4,
+        "after_ms": 15.2,
+        "region": "main Settings body",
+        "origin": "trusted wheel",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "settings-code",
+        "before_ms": 324.9,
+        "after_ms": 325.1,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "settings-home",
+        "before_ms": 140.1,
+        "after_ms": 157.0,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "rail-files",
+        "before_ms": 68.6,
+        "after_ms": 49.2,
+        "region": "Search rail",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "files-changed",
+        "before_ms": 56.7,
+        "after_ms": 24.3,
+        "region": "Search rail",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "files-explorer",
+        "before_ms": 65.4,
+        "after_ms": 41.1,
+        "region": "Search rail",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "files-search",
+        "before_ms": 53.1,
+        "after_ms": 35.9,
+        "region": "Search rail",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      }
+    ],
+    "stop": "complete",
+    "native_review": {
+      "motion": "system and application reduced motion both enabled",
+      "actions": 44,
+      "reviewed_native_frames": 176,
+      "review_offsets_frames": [
+        0,
+        3,
+        12,
+        30
+      ],
+      "decoded_frames": 11997,
+      "bound_ms": 33.81681315104167,
+      "reviewed_files": [
+        {
+          "path": "m10-film-reduced-v1/review-collages/nier-dark-f3.jpg",
+          "sha256": "e658fe11d9f3f55ef8bcb29193da221732c1a08006b7afc813db7da58c3debae"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-collages/nier-dark-normal.jpg",
+          "sha256": "d2b8f8b47f35500cc02d06f440f49f08568f4e1dae86375fc2eb3617f014f9bf"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-collages/nier-light-f3.jpg",
+          "sha256": "c2e32814769c5ca7601bf0875af4dfbbc202f1922b7d8e56e3cfb95084ed5a4b"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-collages/nier-light-normal.jpg",
+          "sha256": "dd37f2635ac3b25a6ff9fe97a4d2cb92134ed0ae17aab3030d0cc01bbacd1554"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-dark-files-changed.jpg",
+          "sha256": "d5ecdb6a2896e8e99421bd6d5dc85ed9706c4d9bb902e66634c7a90146bc7fbd"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-dark-files-explorer.jpg",
+          "sha256": "da60fe20a56efbf03412151a233ae275341a57a075248c5a59343e1d20bcb719"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-dark-files-search.jpg",
+          "sha256": "9d41d4aca99054e10a455d84bc79f90cc54b71271ff9098b2363b175f6f40c6e"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-dark-home-general.jpg",
+          "sha256": "3682ebfb5ba2d592ff6b87e24d496cec3a57e96a6d931687d782bbb85f0a2faf"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-dark-rail-files.jpg",
+          "sha256": "a769a5b6a2bb8a935437d31b71d5fae2ea511ae661ca45b9bc3f35d46e3aa3af"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-dark-settings-category-appearance.jpg",
+          "sha256": "8debc3af3ad0b7474e209938750172346aab1d20c23c13200906055a9f63f6c0"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-dark-settings-code.jpg",
+          "sha256": "820c70e61450d0cb189cbbe5c81b98fda1d9d01b45077066ae7403b37f13d074"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-dark-settings-entry.jpg",
+          "sha256": "fd7a93b7af68d0a07f20370b16b244fb376b2c4eea7c35c6e918c217a83b45cb"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-dark-settings-home.jpg",
+          "sha256": "681d1400659fe4fb4953f53edfb9efd9634929b5afc70577e4bf075c56276f7e"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-dark-settings-scroll-down.jpg",
+          "sha256": "72d01a992dadff77657a2661a1484286cc0d529be312396a1324a664813edffc"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-dark-settings-scroll-up.jpg",
+          "sha256": "016a6cb6fbd8f7267a82e3680ade2de8c7d656718e047f9daaac7049bdde4ca0"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-light-files-changed.jpg",
+          "sha256": "e59fdced33ce3e2629595fce0be17a7782a8fe42ff196aa46a790edccdc9306b"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-light-files-explorer.jpg",
+          "sha256": "c004a142eac41c979ffc5ad6a31ed27c0cba5ac7e15a2170ccd86a16fba279d0"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-light-files-search.jpg",
+          "sha256": "008c16f4048504b0771678b34a3ef24407fae7c7c7c6a9ff4830fcb8865a942c"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-light-home-general.jpg",
+          "sha256": "99f53493b4618e5fa297e03a09db636b000a67574830db0474a529261193dd94"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-light-rail-files.jpg",
+          "sha256": "f587e5f7d32269f8db819276d61acb67a59177a1a7951e2c70f8ceaa597f754f"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-light-settings-category-appearance.jpg",
+          "sha256": "708b01909a95d0a217d01d7ef0ac1a2094a7d1cecd054ef9430e07c073937615"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-light-settings-code.jpg",
+          "sha256": "649ab3778f7932440f88033bc3e2463d361abed040365470ef745e31bab1f92b"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-light-settings-entry.jpg",
+          "sha256": "508511b15a8714b1e79d89e6642d4c1ae1929058ac9e37bbca6c75f0962a316b"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-light-settings-home.jpg",
+          "sha256": "631c4340302d1740bdc7b1eb268cfe8fc1334f16069dd40e31aeecca6486c5a0"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-light-settings-scroll-down.jpg",
+          "sha256": "b768ccdc5480e8d8b31e53aebbf04c44c3f0cf9a0b14b935275c7d6f0e68d407"
+        },
+        {
+          "path": "m10-film-reduced-v1/review-detail-crops/nier-light-settings-scroll-up.jpg",
+          "sha256": "4584ee16a0073c2d8ebc434fc0ca9714ac12f45000a01633dddf38f84e1c190e"
+        }
+      ],
+      "observations": [
+        "Reticle target positions, corner placement and settled destinations match in Dark and Light.",
+        "Normal sampled entrance vocabulary remains; reduced samples place brackets immediately.",
+        "Some first-feedback samples show the reticle or selection before newly rendered page content. Content and ambient phase differ at some sampled offsets. No missing or displaced target was observed."
+      ],
+      "limits": [
+        "One movie observation per artifact/action does not establish a population first-feedback speedup.",
+        "Not exact encoded-pixel equality or opacity equality at every sampled frame.",
+        "The separate first-frame geometry test found three normal-only animation end-presence differences; durations, easing and keyframe unions match. Reduced animation checks and moving geometry checks pass."
+      ]
+    },
+    "limits": [
+      "Timing estimates use two visible calibration sequences and retain their residual plus one capture frame.",
+      "Detection identifies first changed pixels in the specified action region; frame review must establish semantic feedback.",
+      "No distinct-frame-rate claim is made from encoded fps alone."
+    ]
+  }
+]

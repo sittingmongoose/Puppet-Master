@@ -87178,16 +87178,20 @@ window.PM_NIER = Object.freeze({
   }
   /* while the reboot cover is up nothing points through it (the cursor and the reticle sit above the window) */
   let coverUp = false;
-  function curPlace(t) {
+  /* A snapshot is local to one placement callback. Every new callback reads again, so zoom, scrolling,
+     resizing and animated transforms never reuse an older target rectangle. */
+  const targetGeometry = t => ({ r: t.getBoundingClientRect(), z: zoom() });
+  function curPlace(t, geometry) {
     if (!cur) return;
     if (coverUp) { curOff(); return; }
-    const r = t.getBoundingClientRect(), z = zoom();
+    const { r, z } = geometry || targetGeometry(t);
     if (r.width < 4 || r.height < 4 || r.bottom < 0 || r.top > window.innerHeight) { curOff(); return; }
     let x = r.left - 12, y = r.top + r.height / 2 - 4.5, side = 'left';
     if (t.matches(STRIP_SEL)) { x = r.left + r.width / 2 - 4.5; y = r.bottom + 3; side = 'below'; } else if (x < 2) { x = r.right + 5; side = 'right'; }
     const wasOn = cur.hasAttribute('data-on');
     if (!wasOn) { cur.setAttribute('data-jump', ''); frames(2).then(() => { if (cur) cur.removeAttribute('data-jump'); }); }
-    cur.style.transform = `translate(${Math.round(x / z)}px, ${Math.round(y / z)}px)`;
+    const transform = `translate(${Math.round(x / z)}px, ${Math.round(y / z)}px)`;
+    if (cur.style.transform !== transform) cur.style.transform = transform;
     if (cur.dataset.side !== side) cur.dataset.side = side;
     if (!wasOn) cur.setAttribute('data-on', '');
   }
@@ -87231,16 +87235,20 @@ window.PM_NIER = Object.freeze({
 
   /* ---------- target brackets --------------------------------------------------------------------------------------- */
   let ret = null, retT = null, retLock = 0, retScroll = 0;
+  const retChoices = new WeakSet();
   const RET_GAP = 3, RET_S = 10;
-  function retPlace(t) {
+  function retPlace(t, geometry) {
     if (!ret || !t || !t.isConnected || coverUp) { retOff(); return; }
-    const r = t.getBoundingClientRect(), z = zoom();
+    const { r, z } = geometry || targetGeometry(t);
     if (r.width < 2 || r.height < 2 || r.bottom < 0 || r.top > window.innerHeight) { retOff(); return; }
     const l = r.left - RET_GAP, tp = r.top - RET_GAP, rt = r.right + RET_GAP - RET_S, b = r.bottom + RET_GAP - RET_S;
     const pos = [[l, tp, 1, 1], [rt, tp, -1, 1], [l, b, 1, -1], [rt, b, -1, -1]];
     const wasOn = ret.hasAttribute('data-on'), c = ret.children;
     if (!wasOn) { ret.setAttribute('data-jump', ''); frames(2).then(() => { if (ret) ret.removeAttribute('data-jump'); }); }
-    pos.forEach(([x, y, sx, sy], i) => { c[i].style.transform = `translate(${Math.round(x / z)}px, ${Math.round(y / z)}px) scale(${sx}, ${sy})`; });
+    pos.forEach(([x, y, sx, sy], i) => {
+      const transform = `translate(${Math.round(x / z)}px, ${Math.round(y / z)}px) scale(${sx}, ${sy})`;
+      if (c[i].style.transform !== transform) c[i].style.transform = transform;
+    });
     if (!wasOn) {
       ret.setAttribute('data-on', '');
       if (!still()) pos.forEach(([, , sx, sy], i) => c[i].animate([{ translate: `${-sx * 9}px ${-sy * 9}px`, opacity: 0 }, { translate: '0px 0px', opacity: 1 }], { duration: 210, easing: 'steps(3, end)' }));
@@ -87278,14 +87286,24 @@ window.PM_NIER = Object.freeze({
        is still a cursor target; once the chosen item has left the cursor list (a chosen tab) it jumps to the centre of
        the new box and fades out there, so a tab that widens and one that does not behave the same. Everything else is
        placed at once, as before. */
-    if (t.closest('.pmr-lock')) window.requestAnimationFrame(() => {
-      if (retT === t && ret) { ret.removeAttribute('data-on'); retPlace(t); }
-      if (curT === t && cur) {
-        if (t.matches(CURSOR_SEL)) curPlace(t);
-        else { cur.setAttribute('data-jump', ''); curPlace(t); curOff(); frames(2).then(() => { if (cur) cur.removeAttribute('data-jump'); }); }
+    if (t.closest('.pmr-lock')) {
+      if (!retChoices.has(t)) {
+        retChoices.add(t);
+        window.requestAnimationFrame(() => {
+          retChoices.delete(t);
+          let geometry;
+          if (retT === t && ret) {
+            ret.removeAttribute('data-on');
+            if (t.isConnected && !coverUp) geometry = targetGeometry(t);
+            retPlace(t, geometry);
+          }
+          if (curT === t && cur) {
+            if (t.matches(CURSOR_SEL)) curPlace(t, geometry);
+            else { cur.setAttribute('data-jump', ''); curPlace(t, geometry); curOff(); frames(2).then(() => { if (cur) cur.removeAttribute('data-jump'); }); }
+          }
+        });
       }
-    });
-    else retPlace(t);
+    } else retPlace(t);
     retLock = later(() => { retLock = 0; retBlur(); }, 1200);
   }
   function retKey(e) { if (retT && (e.key === 'Tab' || /^Arrow/.test(e.key)) && !retT.isConnected) retOff(); }
