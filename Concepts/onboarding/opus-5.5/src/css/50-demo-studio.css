@@ -84,6 +84,9 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 #o55-demo .pmds-sheet [aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
 #o55-demo .pmds-sheet :focus-visible { outline: 2px solid var(--pmds-acc); outline-offset: 2px; }
 #o55-demo .pmds-ico { display: block; flex: none; }
+/* every hover target is positioned: the app's hover engine draws its Glass rim (and other looks' marks) as a
+   pseudo-element against the target, and an unpositioned tile put that rim around the whole scroll area */
+#o55-demo .pmds-sheet [data-pmh] { position: relative; }
 
 /* header */
 #o55-demo .pmds-head {
