@@ -708,7 +708,8 @@ var SHADOW_CSS = [
   '.pmw-ed-row.is-conf .pmw-ed-gut { background: linear-gradient(var(--pmw-ed-conf-bg), var(--pmw-ed-conf-bg)), var(--pmw-ed-gutbg); }',
   '.pmw-ed-row.is-del .pmw-ed-gut, .pmw-ed-half.is-del .pmw-ed-gut { background: linear-gradient(var(--pmw-ed-del-bg), var(--pmw-ed-del-bg)), var(--pmw-ed-gutbg); }',
   '.pmw-ed-ln { flex: none; width: var(--pmw-ed-lnw, 40px); box-sizing: border-box; padding-right: 6px; text-align: right; color: var(--pmw-ed-ln); font-size: max(11px, calc(var(--pmw-ed-fs, 13px) - 1px)); font-variant-numeric: tabular-nums; }',
-  '.pmw-ed-ln.is-old { opacity: .78; }',
+  // an old side's number is quieter by size, never by fading under the 4.5:1 floor (landing QA EC-08)
+  '.pmw-ed-ln.is-old { font-size: max(10.5px, calc(var(--pmw-ed-fs, 13px) - 2px)); }',
   '.pmw-ed-row.is-cur .pmw-ed-ln { color: var(--pmw-ed-ln-cur); }',
   '.pmw-ed-sg { position: relative; flex: none; width: 16px; text-align: center; font-weight: 700; color: var(--pmw-ed-ln); }',
   '.pmw-ed-row.is-add .pmw-ed-sg, .pmw-ed-half.is-add .pmw-ed-sg { color: var(--pmw-ed-sg-ink, var(--pmw-ed-add-fg)); background: var(--pmw-ed-sg-fill-add, transparent); }',
@@ -1086,7 +1087,26 @@ function legible(c, bg, min) {
   for (var t = 0.05; t <= 1.0001; t += 0.05) { var m = mixRgb(c, to, t); if (contrastOf(m, bg) >= min) return m; }
   return to;
 }
+/* legible() on every background a colour can sit on (the ground, a focused and a blurred selection, the current line;
+   for the gutter's numbers, the gutter and a changed row's tint): it moves until it reads at min:1 on the one it reads
+   least on, its hue kept */
+function legibleOn(c, bgs, min) {
+  if (!c) return null;
+  for (var i = 0; i < 4; i++) {
+    var w = bgs[0];
+    bgs.forEach(function (b) { if (contrastOf(c, b) < contrastOf(c, w)) w = b; });
+    if (contrastOf(c, w) >= min) return c;
+    c = legible(c, w, min);
+  }
+  return c;
+}
 function alphaOf(c, a) { return 'rgba(' + Math.round(c[0]) + ', ' + Math.round(c[1]) + ', ' + Math.round(c[2]) + ', ' + a + ')'; }
+/* the same floor for a colour drawn outside an editor (the Customize screen's bracket picture): hex or rgb() in, hex out */
+PMW.edLegible = function (c, bg, min) {
+  var parse = function (x) { x = String(x || '').trim(); var m = /rgba?\(\s*([\d.]+)[ ,]+([\d.]+)[ ,]+([\d.]+)/.exec(x); return m ? [+m[1], +m[2], +m[3]] : rgbOf(x); };
+  var a = parse(c), b = parse(bg);
+  return a && b ? hexOf(legible(a.slice(0, 3), b.slice(0, 3), min || 4.5)) : c;
+};
 /* the custom properties a scheme writes on the code elements, or null for Follow look (or an unknown id) */
 function schemeVars(id, min) {
   if (!id || id === 'follow') return null;
@@ -1103,24 +1123,33 @@ function schemeVars(id, min) {
   var F = min === 7 ? 7 : 4.5;
   var ansi = Array.isArray(pal.ansi) ? pal.ansi.map(rgbOf) : [];
   function an(i, dflt) { return ansi[i] || ansi[i > 7 ? i - 8 : i + 8] || dflt; }
-  var fg = legible(fg0, bg, F);
   var red = legible(an(1, [224, 108, 117]), bg, F), green = legible(an(2, [152, 195, 121]), bg, F), yellow = legible(an(3, [229, 192, 123]), bg, F);
   var hitC = an(11, an(3, [229, 192, 123]));
   var conf = legible(mixRgb(an(1, red), an(3, yellow), 0.5), bg, F);
-  var blue = an(4, fg);
-  var cursor = rgbOf(pal.cursor) || fg, sel = rgbOf(pal.selection);
+  var blue = an(4, fg0);
   var dark = lumOf(bg) < 0.2;
+  /* the selection a step quieter than the scheme's own (60 %), the blurred one between it and the ground, so a word's
+     colour moves little to read at the floor on all of them (landing QA EC-10: words read 2.4:1 on full selections) */
+  var sel0 = rgbOf(pal.selection), selC = sel0 ? mixRgb(bg, sel0, 0.6) : mixRgb(bg, blue, 0.2), blurC = mixRgb(selC, bg, 0.45);
+  var lineC = mixRgb(bg, fg0, dark ? 0.05 : 0.06);
+  var onGutter = [bg, mixRgb(bg, green, dark ? 0.12 : 0.10), mixRgb(bg, yellow, dark ? 0.10 : 0.08), mixRgb(bg, red, dark ? 0.12 : 0.09), mixRgb(bg, conf, dark ? 0.15 : 0.12)];
+  // every ground a word can sit on: the ground and each changed row's tint, alone and under a focused or blurred selection
+  // and the current line (a selection over a changed row read 3.4:1 in the landing sweep)
+  var onText = [];
+  onGutter.forEach(function (g) { onText.push(g, mixRgb(g, selC, 1), mixRgb(g, blurC, 1), mixRgb(g, fg0, dark ? 0.05 : 0.06)); });
+  var fg = legibleOn(fg0, onText, F);
+  var cursor = rgbOf(pal.cursor) || fg;
   var v = {
     '--pmw-ed-bg': hexOf(bg), '--pmw-ed-gutbg': hexOf(bg), '--pmw-ed-fg': hexOf(fg),
-    '--pmw-ed-ln': hexOf(legible(mixRgb(fg, bg, 0.5), bg, F)), '--pmw-ed-ln-cur': hexOf(fg),
+    '--pmw-ed-ln': hexOf(legibleOn(mixRgb(fg, bg, 0.5), onGutter, F)), '--pmw-ed-ln-cur': hexOf(legibleOn(fg, onGutter, F)),
     '--pmw-ed-line': alphaOf(fg, dark ? 0.05 : 0.06),
-    '--pmw-ed-sel': sel ? hexOf(sel) : alphaOf(blue, 0.32), '--pmw-ed-sel-blur': hexOf(mixRgb(sel || mixRgb(bg, fg, 0.2), bg, 0.45)),
+    '--pmw-ed-sel': hexOf(selC), '--pmw-ed-sel-blur': hexOf(blurC),
     '--pmw-ed-sel-z': '-1', '--pmw-ed-sel-blend': 'normal',
     '--pmw-ed-caret': hexOf(cursor), '--pmw-ed-caret-mark': alphaOf(fg, 0.55), '--pmw-ed-caret-ink': hexOf(bg),
     '--pmw-ed-hit': alphaOf(hitC, 0.26), '--pmw-ed-hit-cur': alphaOf(hitC, 0.5), '--pmw-ed-hit-ring': hexOf(legible(hitC, bg, 3)), '--pmw-ed-hit-mark': hexOf(hitC),
     '--pmw-ed-focus-bg': alphaOf(blue, 0.16),
     '--pmw-ed-mm-ink': hexOf(fg), '--pmw-ed-mm-alpha': dark ? '.28' : '.34',
-    '--pmw-ed-add-fg': hexOf(green), '--pmw-ed-mod-fg': hexOf(yellow), '--pmw-ed-del-fg': hexOf(red), '--pmw-ed-conf-fg': hexOf(conf),
+    '--pmw-ed-add-fg': hexOf(legibleOn(green, onGutter, F)), '--pmw-ed-mod-fg': hexOf(legibleOn(yellow, onGutter, F)), '--pmw-ed-del-fg': hexOf(legibleOn(red, onGutter, F)), '--pmw-ed-conf-fg': hexOf(legibleOn(conf, onGutter, F)),
     '--pmw-ed-add-bg': alphaOf(green, dark ? 0.12 : 0.10), '--pmw-ed-mod-bg': alphaOf(yellow, dark ? 0.10 : 0.08),
     '--pmw-ed-del-bg': alphaOf(red, dark ? 0.12 : 0.09), '--pmw-ed-conf-bg': alphaOf(conf, dark ? 0.15 : 0.12),
     '--pmw-ed-wadd': alphaOf(green, dark ? 0.30 : 0.22), '--pmw-ed-wdel': alphaOf(red, dark ? 0.30 : 0.20),
@@ -1133,15 +1162,17 @@ function schemeVars(id, min) {
     '--pmw-hover': alphaOf(fg, 0.08), '--pmw-line': alphaOf(fg, 0.14),
     '--pmw-ok': hexOf(green), '--pmw-warn': hexOf(yellow), '--pmw-bad': hexOf(red)
   };
-  SYN_KEYS.forEach(function (k) { v['--pmw-ed-s-' + k] = hexOf(legible(rgbOf(toks[k]) || fg, bg, F)); });
+  SYN_KEYS.forEach(function (k) { v['--pmw-ed-s-' + k] = hexOf(legibleOn(rgbOf(toks[k]) || fg, onText, F)); });
   /* bracket pair colours from the scheme's own yellow, magenta, blue, cyan, green and red, at the text floor; indent
      guides take the same six, faint */
   [3, 5, 4, 6, 2, 1].forEach(function (n, i) {
-    var c = legible(an(n, fg), bg, F);
+    var c = legibleOn(an(n, fg), onText, F);
     v['--pmw-ed-bp-' + i] = hexOf(c);
     v['--pmw-ed-ig-' + i] = alphaOf(c, dark ? 0.42 : 0.5);
   });
   v['--pmw-ed-bp-bad'] = hexOf(red);
+  // the backgrounds a chosen token colour is floored on too (applyTokens); not a custom property, so never written
+  Object.defineProperty(v, '_onText', { value: onText, enumerable: false });
   return v;
 }
 /* what an editor draws when the look model is absent (a build without 09-editor-look.js): today's defaults */
@@ -1470,7 +1501,7 @@ function mountEditor(host, st, api) {
     if (vars) Object.keys(vars).forEach(function (n) { if (old[n] !== vars[n]) codeEls.forEach(function (el) { el.style.setProperty(n, vars[n]); }); });
     if (vars) root.setAttribute('data-scheme', id); else root.removeAttribute('data-scheme');
     schemeOn = vars;
-    applyFloor(!vars && !special && R.colors.contrast === 7);
+    applyFloor(!vars && !special ? (R.colors.contrast === 7 ? 7 : 4.5) : 0);
     applyTokens();
     colorCache = null;
   }
@@ -1500,8 +1531,8 @@ function mountEditor(host, st, api) {
   function applyTokens() {
     var ov = special ? {} : (R.colors.tokens || {}), keys = Object.keys(ov), out = {};
     if (keys.length) {
-      var ground = groundNow(), F = R.colors.contrast === 7 ? 7 : 4.5;
-      keys.forEach(function (k) { var c = rgbOf(ov[k]); if (c) out['--pmw-ed-s-' + k] = hexOf(legible(c, ground, F)); });
+      var on = textGrounds(), F = R.colors.contrast === 7 ? 7 : 4.5;
+      keys.forEach(function (k) { var c = rgbOf(ov[k]); if (c) out['--pmw-ed-s-' + k] = hexOf(legibleOn(c, on, F)); });
     }
     var old = tokOn || {};
     Object.keys(old).forEach(function (n) {
@@ -1512,9 +1543,12 @@ function mountEditor(host, st, api) {
     Object.keys(out).forEach(function (n) { codeEls.forEach(function (el) { el.style.setProperty(n, out[n]); }); });
     tokOn = keys.length ? out : null;
   }
-  /* Editor Text Contrast at 7:1 under Follow look: the look's own colours (60-kind-editor.css) are read back and each
-     text colour that falls short of 7:1 on the code's ground moves lighter or darker, its hue kept. A scheme does the
-     same inside schemeVars */
+  /* The text floor under Follow look (a scheme floors its own colours in schemeVars): the look's colours
+     (60-kind-editor.css) are read back, and each that falls short of 4.5:1, or 7:1 when Editor Text Contrast asks for it,
+     moves lighter or darker, its hue kept. A word is floored on every background it can sit on: the ground, a focused and
+     a blurred selection and the current line (landing QA EC-10); a gutter number on the gutter and on a changed row's
+     tint (EC-08). Retro's selection is reverse video (a difference blend), so it is left out there. The reading is kept
+     per look, mode, phosphor and floor: a token colour slider step reads nothing */
   function cssRgb(str) {
     var m = /rgba?\(\s*([\d.]+)[ ,]+([\d.]+)[ ,]+([\d.]+)(?:\s*[,/]\s*([\d.]+%?))?\s*\)/.exec(str || '');
     if (m) return [+m[1], +m[2], +m[3], m[4] == null ? 1 : /%$/.test(m[4]) ? parseFloat(m[4]) / 100 : +m[4]];
@@ -1523,22 +1557,45 @@ function mountEditor(host, st, api) {
     return null;
   }
   function tokenColor(name) { probe.style.color = 'var(' + name + ')'; return cssRgb(getComputedStyle(probe).color); }
-  function applyFloor(on) {
+  var floorRead = { key: '' };
+  function textGrounds() {
+    if (schemeOn) return schemeOn._onText || [groundNow()];
+    return floorOn && floorRead.on ? floorRead.on : [groundNow()];
+  }
+  function applyFloor(F) {
+    var key = F ? [R.lookKey, R.look.mode, root.getAttribute('data-phosphor') || '', F].join('|') : '';
     var old = floorOn || {};
-    Object.keys(old).forEach(function (n) { codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
-    floorOn = null;
-    if (!on) return;
-    var bgc = tokenColor('--pmw-ed-gutbg'), base = [16, 16, 20];
-    if (!bgc) return;
-    var bg = bgc[3] < 1 ? mixRgb(base, bgc, bgc[3]) : bgc.slice(0, 3);
-    var out = {};
-    SYN_KEYS.map(function (k) { return '--pmw-ed-s-' + k; }).concat(['--pmw-ed-fg', '--pmw-ed-ln']).forEach(function (n) {
-      var c = tokenColor(n); if (!c) return;
-      var flat = c[3] < 1 ? mixRgb(bg, c, c[3]) : c.slice(0, 3);
-      if (contrastOf(flat, bg) < 7) out[n] = hexOf(legible(flat, bg, 7));
-    });
-    Object.keys(out).forEach(function (n) { codeEls.forEach(function (el) { el.style.setProperty(n, out[n]); }); });
-    floorOn = out;
+    if (F && floorRead.key !== key) {
+      Object.keys(old).forEach(function (n) { codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
+      old = {}; floorOn = null;
+      var bgc = tokenColor('--pmw-ed-gutbg'), base = [16, 16, 20];
+      if (!bgc) { floorRead = { key: '' }; return; }
+      var bg = bgc[3] < 1 ? mixRgb(base, bgc, bgc[3]) : bgc.slice(0, 3);
+      var on = function (base, c) { return c[3] < 1 ? mixRgb(base, c, c[3]) : c.slice(0, 3); };
+      var blend = getComputedStyle(root).getPropertyValue('--pmw-ed-sel-blend').trim() === 'difference';
+      var layers = (blend ? ['--pmw-ed-line'] : ['--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line']).map(tokenColor).filter(Boolean);
+      var tints = ['--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg'].map(tokenColor).filter(Boolean);
+      // a changed row's tint under a selection is a ground too (the landing sweep found words there at 3.4:1)
+      var grounds = [bg].concat(tints.map(function (t) { return on(bg, t); }));
+      var onText = [], onGutter = grounds.slice();
+      grounds.forEach(function (g) { onText.push(g); layers.forEach(function (l) { onText.push(on(g, l)); }); });
+      var out = {};
+      var GUTTER = /^--pmw-ed-(ln|ln-cur|add-fg|mod-fg|del-fg|conf-fg)$/;
+      SYN_KEYS.map(function (k) { return '--pmw-ed-s-' + k; }).concat(['--pmw-ed-fg', '--pmw-ed-ln', '--pmw-ed-ln-cur', '--pmw-ed-add-fg', '--pmw-ed-mod-fg', '--pmw-ed-del-fg', '--pmw-ed-conf-fg',
+        '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2', '--pmw-ed-bp-3', '--pmw-ed-bp-4', '--pmw-ed-bp-5']).forEach(function (n) {
+        var c = tokenColor(n); if (!c) return;
+        var flat = c[3] < 1 ? mixRgb(bg, c, c[3]) : c.slice(0, 3);
+        var to = legibleOn(flat, GUTTER.test(n) ? onGutter : onText, F);
+        // a see-through colour is written flat and floored: over a selection it would blend darker than it measured here
+        if (to !== flat || c[3] < 1) out[n] = hexOf(to);
+      });
+      floorRead = { key: key, out: out, on: onText };
+    }
+    var next = F ? floorRead.out : {};
+    Object.keys(old).forEach(function (n) { if (!(n in next)) codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
+    Object.keys(next).forEach(function (n) { if (old[n] !== next[n]) codeEls.forEach(function (el) { el.style.setProperty(n, next[n]); }); });
+    floorOn = F && Object.keys(next).length ? next : null;
+    if (F && !floorOn) floorOn = {};
   }
   applyScheme();
 
@@ -3527,7 +3584,9 @@ function mountEditor(host, st, api) {
     setAttr(root, 'data-fx-scan', R.motion.scanlines ? '' : null);
     applyDim();
   }
-  function applyDim() { setAttr(root, 'data-dim', !preview && R.motion.inactiveDim && dimmed ? '' : null); }
+  // the Customize preview steps back only while its Step back plays (demoDim); a real editor while another panel has the focus
+  var demoDim = false;
+  function applyDim() { setAttr(root, 'data-dim', R.motion.inactiveDim && (preview ? demoDim : dimmed) ? '' : null); }
   /* what of the colours needs the rows drawn again: token colours are CSS variables only (applyTokens), so a colour
      slider being dragged repaints without rebuilding a row */
   function colorSig() { var c = R.colors; return [c.syntax, c.bracketPairs, c.contrast, c.italicComments, c.boldKeywords]; }
@@ -3697,14 +3756,18 @@ function mountEditor(host, st, api) {
         jumpSoon(); caret = { r: clamp(r, 0, V.n - 1), c: c }; anchor = null;
         markCurrentRow(); scrollToY(yAt(caret.r, caret.c)); renderOverlays(); updatePos(); queueDraw();
       },
+      // the letters typed so far are kept (typed), so stop() can take them out if another try starts mid-way
       type: function (text, done) {
-        var i = 0, start = { r: caret.r, c: caret.c };
+        var self = this, i = 0, start = { r: caret.r, c: caret.c };
+        clearTimeout(timers.demo);
+        self.typed = { start: start, n: 0 };
         (function next() {
           if (!alive) return;
           if (i >= text.length) { if (done) done(start); return; }
-          var L0 = d.lines; L0[caret.r] = L0[caret.r].slice(0, caret.c) + text.charAt(i) + L0[caret.r].slice(caret.c);
-          invalidateTokens(d, caret.r, 1, 1); d.version++;
-          caret = { r: caret.r, c: caret.c + 1 }; i++;
+          var L0 = d.lines; L0[start.r] = L0[start.r].slice(0, start.c + i) + text.charAt(i) + L0[start.r].slice(start.c + i);
+          invalidateTokens(d, start.r, 1, 1); d.version++;
+          i++; self.typed.n = i;
+          caret = { r: start.r, c: start.c + i };
           typingMove = true; renderRows(true); renderOverlays();
           timers.demo = setTimeout(next, 55);
         })();
@@ -3712,9 +3775,20 @@ function mountEditor(host, st, api) {
       erase: function (start, n) {
         var L0 = d.lines; L0[start.r] = L0[start.r].slice(0, start.c) + L0[start.r].slice(start.c + n);
         invalidateTokens(d, start.r, 1, 1); d.version++;
+        if (this.typed && this.typed.start === start) this.typed = null;
         caret = { r: start.r, c: start.c }; typingMove = true; renderRows(true); renderOverlays();
       },
-      dim: function (on) { dimmed = !!on; setAttr(root, 'data-dim', on ? '' : null); },
+      /* Step back shows an editor you are not in as this scope draws one: faded only when Fade editors I'm not in is on
+         (the customizer audit: it faded with the option off) */
+      dim: function (on) { demoDim = !!on; applyDim(); },
+      /* ends whatever a try left running before the next one starts (the customizer audit: Type then Move typed a stray
+         letter at the moved caret and left // tidy behind): the typing stops, its letters come out, the fade goes */
+      stop: function () {
+        clearTimeout(timers.demo); timers.demo = 0;
+        if (this.typed && this.typed.n) this.erase(this.typed.start, this.typed.n);
+        this.typed = null;
+        if (demoDim) this.dim(false);
+      },
       relayout: function () { if (firstDone) relayoutAll(); else firstPaint(); },
       unmount: function () { instance.unmount(); }
     },

@@ -228,7 +228,7 @@ function slider(key, label, min, max, step, bare) {
 }
 function tile(key, value, label, art, meta) {
   return '<button type="button" class="pmt-cz-tile" role="radio" aria-checked="false" data-key="' + key + '" data-value="' + esc(value) + '" data-pmh="tile"' + NOTAG + '>' +
-    '<span class="pmt-cz-thumb">' + (art || '') + '</span><span class="pmt-cz-tname">' + esc(label) + '</span>' + (meta ? '<span class="pmt-cz-tmeta">' + esc(meta) + '</span>' : '') + '</button>';
+    '<span class="pmt-cz-thumb" aria-hidden="true">' + (art || '') + '</span><span class="pmt-cz-tname">' + esc(label) + '</span>' + (meta ? '<span class="pmt-cz-tmeta">' + esc(meta) + '</span>' : '') + '</button>';
 }
 /* a scheme as a tiny editor: its ground, two lines of code in its syntax colours and its bracket colours */
 function codeArt(c) {
@@ -245,13 +245,13 @@ function schemeColors(s) {
 function schemeTiles() {
   var list = EL().schemes(), out = [], fam = null;
   out.push('<button type="button" class="pmt-cz-tile pmt-cz-scheme" role="radio" aria-checked="false" data-key="scheme" data-value="follow" data-name="follow look" data-pmh="tile"' + NOTAG + '>' +
-    '<span class="pmt-cz-thumb" data-follow-art></span><span class="pmt-cz-tname">Follow look</span><span class="pmt-cz-tmeta" data-follow-meta></span></button>');
+    '<span class="pmt-cz-thumb" aria-hidden="true" data-follow-art></span><span class="pmt-cz-tname">Follow look</span><span class="pmt-cz-tmeta" data-follow-meta></span></button>');
   list.forEach(function (s) {
     var f = EL().familyOf(s);
     if (f !== fam) { fam = f; out.push('<span class="pmt-cz-fam" role="presentation">' + esc(fam) + '</span>'); }
     var c = schemeColors(s);
     out.push('<button type="button" class="pmt-cz-tile pmt-cz-scheme" role="radio" aria-checked="false" data-key="scheme" data-value="' + esc(s.id) + '" data-name="' + esc((s.name + ' ' + f).toLowerCase()) + '" data-pmh="tile"' + NOTAG + '>' +
-      '<span class="pmt-cz-thumb">' + (c ? codeArt(c) : '') + '</span><span class="pmt-cz-tname">' + esc(s.name) + '</span><span class="pmt-cz-tmeta">' + (s.mode === 'light' ? 'Light' : 'Dark') + '</span></button>');
+      '<span class="pmt-cz-thumb" aria-hidden="true">' + (c ? codeArt(c) : '') + '</span><span class="pmt-cz-tname">' + esc(s.name) + '</span><span class="pmt-cz-tmeta">' + (s.mode === 'light' ? 'Light' : 'Dark') + '</span></button>');
   });
   return out.join('');
 }
@@ -463,7 +463,7 @@ function open(opts) {
   function note(sel, text) { var e = root.querySelector(sel); if (!e) return; e.hidden = !text; if (e.textContent !== text) e.textContent = text; }
   /* the look's own code colours (Follow look), read off the editor once per look, colour mode, contrast and phosphor,
      in a frame of its own; until it lands the screen keeps what it drew */
-  var LOOK_TOKENS = ['--pmw-ed-fg', '--pmw-ed-bg', '--pmw-ed-gutbg', '--pmw-ed-s-kw', '--pmw-ed-s-fn', '--pmw-ed-s-str', '--pmw-ed-s-com', '--pmw-ed-bp-0'];
+  var LOOK_TOKENS = ['--pmw-ed-fg', '--pmw-ed-bg', '--pmw-ed-gutbg', '--pmw-ed-s-kw', '--pmw-ed-s-fn', '--pmw-ed-s-str', '--pmw-ed-s-com', '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2'];
   var lookRead = { key: null, v: null }, lookRaf = 0;
   function lookTokens(key) {
     if (lookRead.key === key) return lookRead.v;
@@ -494,6 +494,10 @@ function open(opts) {
     setVar('--pmt-cz-sfg', tok('--pmw-ed-fg') || '#ccc');
     setVar('--pmt-cz-sbg', tok('--pmw-ed-gutbg') || '#111');
     setVar('--pmt-cz-sglow', tok('--pmw-ed-s-str') || '#8f8');
+    /* the bracket picture in this scope's own pair colours, each held at 4.5:1 on the picture's ground (landing QA EC-09:
+       One Dark's yellow on a light ground read 1.46:1) */
+    var leg = PMW.edLegible || function (c) { return c; }, sbg = tok('--pmw-ed-gutbg') || '#111';
+    ['#e5c07b', '#c678dd', '#61afef'].forEach(function (d, i) { setVar('--pmt-cz-sbp' + i, leg(tok('--pmw-ed-bp-' + i) || d, sbg, 4.5)); });
     [].forEach.call(root.querySelectorAll('[role="radio"][data-key]'), function (b) {
       var key = b.getAttribute('data-key');
       setA(b, 'aria-checked', String(String(current(key, R)) === b.getAttribute('data-value')));
@@ -693,7 +697,7 @@ function open(opts) {
   /* Try it: the preview plays a move, some typing, a jump to a problem and how an editor you are not in looks */
   var demoTimers = [];
   function later(ms, fn) { demoTimers.push(setTimeout(fn, ms)); }
-  function stopDemo() { demoTimers.forEach(clearTimeout); demoTimers = []; }
+  function stopDemo() { demoTimers.forEach(clearTimeout); demoTimers = []; if (preview && preview.demo && preview.demo.stop) preview.demo.stop(); }
   function tryMove() {
     if (!preview || !preview.demo) return;
     stopDemo();
@@ -717,6 +721,7 @@ function open(opts) {
   }
   function tryDim() {
     if (!preview || !preview.demo) return;
+    stopDemo();
     preview.demo.dim(true);
     later(1600, function () { if (preview) preview.demo.dim(false); });
   }

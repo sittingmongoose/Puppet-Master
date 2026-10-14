@@ -159,7 +159,7 @@
   }
   function tile(key, value, label, art, meta) {
     return '<button type="button" class="pmt-cz-tile" role="radio" aria-checked="false" data-key="' + key + '" data-value="' + esc(value) + '" data-pmh="tile"' + NOTAG + '>' +
-      '<span class="pmt-cz-thumb">' + (art || '') + '</span><span class="pmt-cz-tname">' + esc(label) + '</span>' + (meta ? '<span class="pmt-cz-tmeta">' + esc(meta) + '</span>' : '') + '</button>';
+      '<span class="pmt-cz-thumb" aria-hidden="true">' + (art || '') + '</span><span class="pmt-cz-tname">' + esc(label) + '</span>' + (meta ? '<span class="pmt-cz-tmeta">' + esc(meta) + '</span>' : '') + '</button>';
   }
   /* a scheme as a tiny terminal: its ground, a prompt line in its colours and eight of its sixteen */
   function schemeArt(sch) {
@@ -170,11 +170,11 @@
   function schemeTiles() {
     var list = A().schemes(), out = [], fam = null;
     out.push('<button type="button" class="pmt-cz-tile pmt-cz-scheme" role="radio" aria-checked="false" data-key="scheme" data-value="follow" data-name="follow look" data-pmh="tile"' + NOTAG + '>' +
-      '<span class="pmt-cz-thumb" data-follow-art></span><span class="pmt-cz-tname">Follow look</span><span class="pmt-cz-tmeta" data-follow-meta></span></button>');
+      '<span class="pmt-cz-thumb" aria-hidden="true" data-follow-art></span><span class="pmt-cz-tname">Follow look</span><span class="pmt-cz-tmeta" data-follow-meta></span></button>');
     list.forEach(function (s) {
       if (s.family !== fam) { fam = s.family; out.push('<span class="pmt-cz-fam" role="presentation">' + esc(fam === 'Puppet Master' ? 'Puppet Master originals' : fam) + '</span>'); }
       out.push('<button type="button" class="pmt-cz-tile pmt-cz-scheme" role="radio" aria-checked="false" data-key="scheme" data-value="' + esc(s.id) + '" data-name="' + esc((s.name + ' ' + s.family).toLowerCase()) + '" data-pmh="tile"' + NOTAG + '>' +
-        '<span class="pmt-cz-thumb">' + schemeArt(s) + '</span><span class="pmt-cz-tname">' + esc(s.name) + '</span><span class="pmt-cz-tmeta">' + (s.appearance === 'light' ? 'Light' : 'Dark') + '</span></button>');
+        '<span class="pmt-cz-thumb" aria-hidden="true">' + schemeArt(s) + '</span><span class="pmt-cz-tname">' + esc(s.name) + '</span><span class="pmt-cz-tmeta">' + (s.appearance === 'light' ? 'Light' : 'Dark') + '</span></button>');
     });
     return out.join('');
   }
