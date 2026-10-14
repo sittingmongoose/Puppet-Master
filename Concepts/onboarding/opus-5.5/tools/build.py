@@ -810,12 +810,50 @@ PATCHES = [
      "      });\n"
      "    }).observe(document.body, { childList: true, subtree: true });\n",
      'home density: enroll only inserted surfaces'),
-    # Settings host width (Glass owner's finding, 2026-10-14). The T46 host observer measured the Settings panel and the
-    # chat on resize, then decided on the next frame whether Settings takes the chat's place (the narrow "focus host").
-    # That frame was painted with the old decision: on entering Settings at 1600 x 900 the first frame still showed
-    # the 515 px chat and a 751 px Settings, the next one 1278 px, so everything in Settings jumped 295 px sideways.
-    # The decision only toggles a body class, so it is made in the observer itself, before that frame is painted.
-    ("assign(width);scheduleSyncHost();", "assign(width);syncHost();", 'settings host: decide focus host before paint'),
+    # Settings host width (Glass owner's finding, 2026-10-14; M4 follow-up). Entering Settings at 1600 x 900 painted one
+    # frame of a 751 px Settings beside the 515 px chat before the narrow "focus host" took over (1278 px): a 295 px
+    # sideways jump. The T46 host already decides when Settings is shown (its panel observer, before layout), but while
+    # Settings is hidden its width is 0, and the stand-in it used (the whole shell less the chat) left out the Files rail,
+    # so it said 1079 px, wide enough. The first fix decided again in the resize observer after layout, which laid the
+    # first frame out twice (+3.6 to 8.6 % task on the P1000). The stand-in is now the width of the column the pages
+    # share, which is laid out whichever page shows, so the decision made when Settings is shown is right and the resize
+    # observer stays deferred as before.
+    ("var reservedChatWidth=0,shellWidth=0,panelWidth=0,chatWidth=0,resizerWidth=5,syncFrame=0;",
+     "var reservedChatWidth=0,shellWidth=0,panelWidth=0,chatWidth=0,resizerWidth=5,syncFrame=0,pagesWidth=0;",
+     'settings host: the pages column width'),
+    ("var width=panelWidth>0?panelWidth:Math.max(0,shellWidth-reservation);",
+     "var width=panelWidth>0?panelWidth:pagesWidth>0?pagesWidth:Math.max(0,shellWidth-reservation);",
+     'settings host: hidden Settings stands in with the pages column'),
+    ("  observeWidth(panel,function(width){panelWidth=width;});\n",
+     "  observeWidth(panel,function(width){panelWidth=width;});\n"
+     "  observeWidth(panel&&panel.parentElement,function(width){pagesWidth=width;});\n",
+     'settings host: observe the pages column'),
+    # Settings updates in place (M4, 2026-10-14). Two seams in the Settings engine: how renderApp() commits the page's
+    # markup, and how the end space under the chapter's last section is sized. Both keep today's behaviour as their
+    # default; the kit takes them over (src/settings/kit.d/28-in-place.js patches the page in place instead of
+    # replacing it, and 27-place.js sizes the end space so it never pulls the page up under the reader).
+    ("  let softRemount = false;\n",
+     "  let softRemount = false;\n"
+     "  let commitSettingsShell = markup => { root.innerHTML = markup; };\n"
+     "  let sizeSettingsEndSpace = (scroller, end, sections) => {\n"
+     "    if (!sections.length) return;\n"
+     "    const last = sections[sections.length - 1];\n"
+     "    end.style.height = `${Math.max(140, scroller.clientHeight - Math.min(last.offsetHeight, scroller.clientHeight * .62) + 48)}px`;\n"
+     "  };\n",
+     'M4: settings commit and end-space seams'),
+    ("    root.innerHTML = `\n      <div class=\"pm-shell ${state.railOpen ? 'rail-open' : ''}\">",
+     "    commitSettingsShell(`\n      <div class=\"pm-shell ${state.railOpen ? 'rail-open' : ''}\">",
+     'M4: renderApp commits through the seam'),
+    ("      <div class=\"toast-stack\" id=\"toast-stack\"></div>`;\n    root.classList.add('is-ready');",
+     "      <div class=\"toast-stack\" id=\"toast-stack\"></div>`);\n    root.classList.add('is-ready');",
+     'M4: renderApp commit seam close'),
+    ("      if (scroller && end && sections.length) {\n"
+     "        const last = sections[sections.length - 1];\n"
+     "        const required = Math.max(140, scroller.clientHeight - Math.min(last.offsetHeight, scroller.clientHeight * .62) + 48);\n"
+     "        end.style.height = `${required}px`;\n"
+     "      }\n",
+     "      if (scroller && end) sizeSettingsEndSpace(scroller, end, sections);\n",
+     'M4: end space through the seam'),
 ]
 
 # Text typed under a Custom choice survives a reload (2026-10-13, pm7-terminal-options-audit-sol on frozen a1ca: Terminal
