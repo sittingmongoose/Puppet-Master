@@ -26,7 +26,9 @@
 §B .icon { z-index: 1; }
 §B .icon .symbol { border-radius: var(--d-Rbar) !important; transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease), transform var(--d-t2) var(--d-spring) !important; }
 §B .icon:is([data-target], [data-ab-id="chat"]) .symbol { width: 28px !important; height: 28px !important; }
-§B .icon[data-target]:hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
+/* Chat takes the bar's own hover too, as it takes the lit tile: the shell's per-look switch hover (Friendly's 1.1 scale
+   and glow) would grow the symbol out from under its tile */
+§B .icon:is([data-target], [data-ab-id="chat"]):hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
 §B .icon:is([data-target], [data-ab-id="chat"]).active .symbol { background: none !important; box-shadow: none !important; }
 §B .icon:is([data-target], [data-ab-id="chat"]).active { color: var(--accent-primary) !important; }
 §R[data-o55-nier="on"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active { color: var(--o55-nier-on-ink) !important; }
