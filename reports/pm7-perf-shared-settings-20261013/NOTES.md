@@ -2,7 +2,7 @@ PM7 shared and Settings performance — implementation in progress
 
 Branch: `fix/pm7-perf-shared-settings-20261013`. Base and rebased main: `611b2404e4827675a435e7fe3113a0674bae2ed6`. Review and landing belong to home-redesign-planner. No Liquid Glass, wallpaper, terminal, hover, onboarding art, Planning Wizard, or Orchestrator source changes.
 
-M1 source and repeated timings are pushed to both remotes. M4 remains a private prototype awaiting correctness and timing checks; M5, M6 and M10 follow in that order. M1 family-switch repetitions and films remain open. No aggregate saving is claimed.
+M1 source and repeated timings are pushed to both remotes. M4 was rejected after visible scroll parity failed; an Opus decision packet is in `M4-OPUS-DECISION.md`; M5, M6 and M10 follow in that order. M1 family-switch repetitions and films remain open. No aggregate saving is claimed.
 
 The baseline was rebuilt by the onboarding generator, then composed with unchanged Liquid Glass sources by `build_proto.py`. Its PM7 SHA-256 is `f2c1c27673c784b34a4c85409d9cf52cd223799583e3e365c77c0e623233cc14`; its Glass-composed SHA-256 is recorded with the final artifact manifest.
 
@@ -48,3 +48,5 @@ Median and p95 for every action, including cold Settings entry, warm Settings re
 Raw M1 evidence manifest: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m1-repeated-v2/evidence-manifest.json`, SHA-256 `06ec67e35534198dc4b5904dfa139b0f34b70686529487180459b9aa2fba6f40`. It covers 1,823 files (9,103,401,283 bytes), including every trace, measurement, snapshot and final summary.
 
 Cold and warm measurements are also separated in `m1-phase-measurements.json` (three cold documents and ten warm repetitions per affected state). Immutable baseline/candidate page copies are under the raw evidence `artifacts/` folder; `artifacts/manifest.json` SHA-256 is `d3237bbd9a0f754d31ff3b1d540089660a988e84cfb173d020eb6b8ebaa6bdda`.
+
+M4 stopped: 100 snapshots / 50 paired steps exposed eight differing fields. Glass Light soft restoration was 1597 → 1200 px; NieR Dark was 1631 → 1200 px. Different rows were visible, so no M4 implementation is delivered. Source and attempts are retained only in external evidence. See `M4-OPUS-DECISION.md` for the cold prototype table and designer decision.

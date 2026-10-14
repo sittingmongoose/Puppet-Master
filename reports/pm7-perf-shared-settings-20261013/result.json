@@ -36,7 +36,31 @@
     },
     {
       "id": "M4",
-      "status": "private_prototype_correctness_pending"
+      "status": "rejected_visible_scroll_regression",
+      "delivered": false,
+      "decision_packet": "reports/pm7-perf-shared-settings-20261013/M4-OPUS-DECISION.md",
+      "correctness_snapshots": 100,
+      "paired_steps": 50,
+      "differing_fields": 8,
+      "visible_scroll_mismatches": [
+        {
+          "look": "glass-light",
+          "baseline": 1597,
+          "candidate": 1200
+        },
+        {
+          "look": "nier-dark",
+          "baseline": 1631,
+          "candidate": 1200
+        }
+      ],
+      "candidate": "m4-proto5",
+      "timed_superseded_candidate": "m4-proto4",
+      "raw_result": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m4-correctness-v2/result.json",
+      "raw_manifest": {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m4-rejected-manifest.json",
+        "sha256": "f042bc4851007fd0b99f67da5aea8dfa1a1255d45df15ad427d72d9a47380156"
+      }
     },
     {
       "id": "M5",
@@ -91,7 +115,7 @@
     }
   ],
   "own_active_browser_sessions": 0,
-  "maintenance_seam": "GPU maintenance complete; panel-dnd Windows filming priority until release",
+  "maintenance_seam": "Windows1.1.1 released; own windows-2f6b33bab484 headless correctness session",
   "artifact_manifest": {
     "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/artifacts/manifest.json",
     "sha256": "d3237bbd9a0f754d31ff3b1d540089660a988e84cfb173d020eb6b8ebaa6bdda"
