@@ -1820,7 +1820,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
       min-width: 70px !important;
     }
     /* Vertical separator between Agent dropdown and ELI5/YOLO/CREW toggles */
-    [data-theme^="glass"] .chat-input-area > div:first-of-type div[style*="gap:var(--md)"] {
+    [data-theme^="glass"] .chat-input-area > div:first-of-type div.pm7-chat-toggle-group {
       border-left: 1px solid var(--border-light);
       padding-left: 14px !important;
     }
@@ -22795,6 +22795,9 @@ html[data-theme^="retro"] .pm7-perf-installation-card { border-radius:0; }
 /* Thousands of persistent accessible descriptions must not form one enormous
    inline formatting row. Keep every role=tooltip node in the accessibility
    tree while giving the hidden owner a bounded, layout-inert paint footprint. */
+/* These owners are already clipped 1px boxes. Keep their layout work inside those boxes without hiding their
+   accessible description nodes or changing the visible tooltip. */
+.pm-hover-sr, .pm-hover-bucket { contain: strict !important; }
 .pm-hover-sr > .pm-hover-bucket,
 .pm-hover-sr .pm-hover-description {
   position: absolute !important; display: block !important;
@@ -60513,12 +60516,12 @@ var PMU_SERIES = {
       });
       return best ? [best.id] : [];
     }
-    /* the board class on the board and the shell: written only when it changes (--pmu-tracks is an inherited custom
-       property: writing it, even with the same value, restyles every element of the board) */
+    /* The tracks belong only to this grid. Writing grid-template-columns directly gives the same track sizes without
+       changing an inherited custom property on every card and chart when the board crosses a width class. */
     function setBoardClass() {
-      var name = current.cls.name, tr = String(current.cls.tracks);
+      var name = current.cls.name, tracks = 'repeat(' + current.cls.tracks + ', minmax(0px, 1fr))';
       if (boardEl.getAttribute('data-cls') !== name) boardEl.setAttribute('data-cls', name);
-      if (boardEl.style.getPropertyValue('--pmu-tracks') !== tr) boardEl.style.setProperty('--pmu-tracks', tr);
+      if (boardEl.style.gridTemplateColumns !== tracks) boardEl.style.gridTemplateColumns = tracks;
       var app = appEl; if (app && app.getAttribute('data-cls') !== name) app.setAttribute('data-cls', name);
     }
     /* the menu open now is this board's (opened from it, or anchored inside it) */
@@ -124855,7 +124858,7 @@ policies for tenant isolation, and add migration script.</textarea>
       '<div class="pm6-chat-composer-foot" style="display:flex; justify-content:space-between; align-items:center; gap:var(--sm); padding:var(--xs) var(--sm); border-top: 1px solid var(--border-light); flex-wrap:wrap;">' +
       '<div style="display:flex; gap:var(--sm); align-items:center; flex-wrap:wrap;">' +
       '<button type="button" title="Attach file or image" data-demo-action="demo.toast" data-demo-arg="Attachments ride along as context — images land in the plan review too." style="background:none; border:none; color:var(--text-secondary); cursor:pointer; padding:4px;">' + SVG.attach + '</button>' +
-      '<div style="display:flex; gap:var(--md); align-items:center; margin-left:var(--sm); font-size:10px;">' +
+      '<div class="pm7-chat-toggle-group" style="display:flex; gap:var(--md); align-items:center; margin-left:var(--sm); font-size:10px;">' +
       '<span class="chat-toggle-btn toggle-eli5" title="Explain Like I\'m 5" onclick="this.classList.toggle(\'active\')">ELI5</span>' +
       '<span class="chat-toggle-btn toggle-yolo" title="Auto-approve eligible tools. Never bypasses FileSafe, permissions, policy, secrets or protected-branch guards." onclick="this.classList.toggle(\'active\')">YOLO</span>' +
       '<span class="chat-toggle-btn toggle-crew" title="Multi-model Crew overlay with an inspectable crew board" onclick="this.classList.toggle(\'active\')">CREW</span>' +
@@ -161132,7 +161135,7 @@ render.paint = function (opts) {
   setAttr(c, 'data-pmw-dv', dv ? 'on' : null);
 
   // panels
-  var alive = {}, panels = [];
+  var alive = {}, panels = [], placedWithoutMotion = [];
   model.panels(l).forEach(function (p) {
     alive[p.id] = true;
     var el = panelEls[p.id] || createPanelEl(p);
@@ -161146,7 +161149,7 @@ render.paint = function (opts) {
     setAttr(el, 'data-role', PMW.panelRole(l, p));
     setAttr(el, 'data-maximized', l.view.maximized === p.id && rects.mode === 'maximized');
     el.setAttribute('aria-label', panelLabel(l, p));
-    if (r) placeEl(el, r, animate);
+    if (r) placeEl(el, r, animate, placedWithoutMotion);
     setAttr(el, 'data-dv-leaving', dv && dv.leaving && dv.leaving[p.id] ? true : null);
     panels.push({ panel: p, el: el, hidden: hidden });
   });
@@ -161165,10 +161168,17 @@ render.paint = function (opts) {
     setAttr(el, 'hidden', d.virtual);
     el.setAttribute('aria-orientation', d.dir === 'row' ? 'vertical' : 'horizontal');
     el._pmwDivider = d;
-    placeEl(el, d.rect, animate);
+    placeEl(el, d.rect, animate, placedWithoutMotion);
     updateDividerAria(el, d, l);
   });
   for (var k in dividerEls) if (!seen[k]) { dividerEls[k].remove(); delete dividerEls[k]; }
+
+  // With motion off, commit every target while transitions are disabled, then restore them after one layout.
+  // No frame can paint between these writes; forcing a layout for each panel/divider only repeats the same work.
+  if (placedWithoutMotion.length) {
+    void c.offsetWidth;
+    placedWithoutMotion.forEach(function (el) { el.style.transition = ''; });
+  }
 
   // Place all panels and dividers before any strip reads layout. Fit every strip before updating tab bodies: a
   // reparented editor or terminal otherwise makes the following strip pay for a full layout of the changed body.
@@ -161221,13 +161231,13 @@ function panelLabel(l, p) {
 
 /* an element already headed for this rect is left alone: a paint without motion would otherwise cut a running glide
    short (a kind's update during a drag preview, a strip refit) */
-function placeEl(el, r, animate) {
+function placeEl(el, r, animate, batch) {
   var s = el.style;
   var x = r.x + 'px', y = r.y + 'px', w = r.w + 'px', hh = r.h + 'px';
   if (s.left === x && s.top === y && s.width === w && s.height === hh) return;
   if (!animate) s.transition = 'none';
   s.left = x; s.top = y; s.width = w; s.height = hh;
-  if (!animate) { void el.offsetWidth; s.transition = ''; }
+  if (!animate) { if (batch) batch.push(el); else { void el.offsetWidth; s.transition = ''; } }
 }
 render.placeEl = placeEl;
 

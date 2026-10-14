@@ -80,10 +80,18 @@ PRESENT = ['body.pm7-chat-global-owner #chatPanel.pm7-global-chat-panel{']
 # App JS patches (guarded, exactly once, like the Usage layer's APP_PATCHES). With the home layer on, the chat is one
 # column on every page: pm7-t23's seatChatForPage treats Home like any other page (no inline flex !important).
 APP_PATCHES = [
+    # Same matched composer elements, specificity and declarations. The old inline-style attribute selector
+    # invalidated unrelated SVG gradient stops after sibling mutations, even when Glass was not active.
+    ('[data-theme^="glass"] .chat-input-area > div:first-of-type div[style*="gap:var(--md)"]',
+     '[data-theme^="glass"] .chat-input-area > div:first-of-type div.pm7-chat-toggle-group',
+     'composer toggle class selector'),
+    ('<div style="display:flex; gap:var(--md); align-items:center; margin-left:var(--sm); font-size:10px;">',
+     '<div class="pm7-chat-toggle-group" style="display:flex; gap:var(--md); align-items:center; margin-left:var(--sm); font-size:10px;">',
+     'composer toggle class anchor'),
     # The published generator starts from the pinned pre-Home page, not build_pm7.py. Mirror the small hidden
     # description grouping change in pm7-tools/global_hover_tags_source.py through these exactly-once anchors.
     ('.pm-hover-sr > .pm-hover-description {',
-     '.pm-hover-sr > .pm-hover-bucket,\n.pm-hover-sr .pm-hover-description {',
+     '/* These owners are already clipped 1px boxes. Keep their layout work inside those boxes without hiding their\n   accessible description nodes or changing the visible tooltip. */\n.pm-hover-sr, .pm-hover-bucket { contain: strict !important; }\n.pm-hover-sr > .pm-hover-bucket,\n.pm-hover-sr .pm-hover-description {',
      'hidden description group styles'),
     ('    this.root=null;this.tag=null;this.descriptions=null;this.active=null;this.activeModel=null;',
      '    this.root=null;this.tag=null;this.descriptions=null;this.descriptionBuckets=[];this.active=null;this.activeModel=null;',

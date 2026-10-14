@@ -91,7 +91,7 @@ render.paint = function (opts) {
   setAttr(c, 'data-pmw-dv', dv ? 'on' : null);
 
   // panels
-  var alive = {}, panels = [];
+  var alive = {}, panels = [], placedWithoutMotion = [];
   model.panels(l).forEach(function (p) {
     alive[p.id] = true;
     var el = panelEls[p.id] || createPanelEl(p);
@@ -105,7 +105,7 @@ render.paint = function (opts) {
     setAttr(el, 'data-role', PMW.panelRole(l, p));
     setAttr(el, 'data-maximized', l.view.maximized === p.id && rects.mode === 'maximized');
     el.setAttribute('aria-label', panelLabel(l, p));
-    if (r) placeEl(el, r, animate);
+    if (r) placeEl(el, r, animate, placedWithoutMotion);
     setAttr(el, 'data-dv-leaving', dv && dv.leaving && dv.leaving[p.id] ? true : null);
     panels.push({ panel: p, el: el, hidden: hidden });
   });
@@ -124,10 +124,17 @@ render.paint = function (opts) {
     setAttr(el, 'hidden', d.virtual);
     el.setAttribute('aria-orientation', d.dir === 'row' ? 'vertical' : 'horizontal');
     el._pmwDivider = d;
-    placeEl(el, d.rect, animate);
+    placeEl(el, d.rect, animate, placedWithoutMotion);
     updateDividerAria(el, d, l);
   });
   for (var k in dividerEls) if (!seen[k]) { dividerEls[k].remove(); delete dividerEls[k]; }
+
+  // With motion off, commit every target while transitions are disabled, then restore them after one layout.
+  // No frame can paint between these writes; forcing a layout for each panel/divider only repeats the same work.
+  if (placedWithoutMotion.length) {
+    void c.offsetWidth;
+    placedWithoutMotion.forEach(function (el) { el.style.transition = ''; });
+  }
 
   // Place all panels and dividers before any strip reads layout. Fit every strip before updating tab bodies: a
   // reparented editor or terminal otherwise makes the following strip pay for a full layout of the changed body.
@@ -180,13 +187,13 @@ function panelLabel(l, p) {
 
 /* an element already headed for this rect is left alone: a paint without motion would otherwise cut a running glide
    short (a kind's update during a drag preview, a strip refit) */
-function placeEl(el, r, animate) {
+function placeEl(el, r, animate, batch) {
   var s = el.style;
   var x = r.x + 'px', y = r.y + 'px', w = r.w + 'px', hh = r.h + 'px';
   if (s.left === x && s.top === y && s.width === w && s.height === hh) return;
   if (!animate) s.transition = 'none';
   s.left = x; s.top = y; s.width = w; s.height = hh;
-  if (!animate) { void el.offsetWidth; s.transition = ''; }
+  if (!animate) { if (batch) batch.push(el); else { void el.offsetWidth; s.transition = ''; } }
 }
 render.placeEl = placeEl;
 

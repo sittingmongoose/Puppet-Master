@@ -1154,12 +1154,12 @@
       });
       return best ? [best.id] : [];
     }
-    /* the board class on the board and the shell: written only when it changes (--pmu-tracks is an inherited custom
-       property: writing it, even with the same value, restyles every element of the board) */
+    /* The tracks belong only to this grid. Writing grid-template-columns directly gives the same track sizes without
+       changing an inherited custom property on every card and chart when the board crosses a width class. */
     function setBoardClass() {
-      var name = current.cls.name, tr = String(current.cls.tracks);
+      var name = current.cls.name, tracks = 'repeat(' + current.cls.tracks + ', minmax(0px, 1fr))';
       if (boardEl.getAttribute('data-cls') !== name) boardEl.setAttribute('data-cls', name);
-      if (boardEl.style.getPropertyValue('--pmu-tracks') !== tr) boardEl.style.setProperty('--pmu-tracks', tr);
+      if (boardEl.style.gridTemplateColumns !== tracks) boardEl.style.gridTemplateColumns = tracks;
       var app = appEl; if (app && app.getAttribute('data-cls') !== name) app.setAttribute('data-cls', name);
     }
     /* the menu open now is this board's (opened from it, or anchored inside it) */

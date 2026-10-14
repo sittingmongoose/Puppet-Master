@@ -122,6 +122,9 @@ HOVER_STYLE = r'''<style id="pm-hover-tags-css">
 /* Thousands of persistent accessible descriptions must not form one enormous
    inline formatting row. Keep every role=tooltip node in the accessibility
    tree while giving the hidden owner a bounded, layout-inert paint footprint. */
+/* These owners are already clipped 1px boxes. Keep their layout work inside those boxes without hiding their
+   accessible description nodes or changing the visible tooltip. */
+.pm-hover-sr, .pm-hover-bucket { contain: strict !important; }
 .pm-hover-sr > .pm-hover-bucket,
 .pm-hover-sr .pm-hover-description {
   position: absolute !important; display: block !important;
