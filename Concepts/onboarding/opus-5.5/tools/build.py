@@ -539,6 +539,46 @@ def theme_geometry_patch(text: str) -> str:
 
 
 
+def atomic_theme_patch(text: str) -> str:
+    """M6: expose the existing NieR-aware apply as one family/mode commit; avoid equal DOM writes."""
+    text = replace_once(text, "    setMode: function (m, opts) {\n      return themeApply(themeState.family, m, opts || {});\n    },",
+                        "    setMode: function (m, opts) {\n      return themeApply(themeState.family, m, opts || {});\n    },\n"
+                        "    setPair: function (family, mode, opts) {\n      return themeApply(family, mode, opts || {});\n    },",
+                        'M6: atomic family and mode API')
+    start = text.index('  function themeApply(family, mode, opts) {')
+    end = text.index('  function tbMenuIsOpen(menu) {', start)
+    old = text[start:end]
+    old_family_mode = '    themeState.family = family;\n    themeState.mode = mode;'
+    new = replace_once(old, old_family_mode,
+                       '    var stateChanged = themeState.family !== family || themeState.mode !== mode;\n' + old_family_mode,
+                       'M6: track Auto or family changes with unchanged painted slug')
+    new = replace_once(new, "    document.documentElement.setAttribute('data-theme', slug);",
+                       "    var paintKey = document.documentElement.getAttribute('data-o55-nier') + '|' + document.documentElement.getAttribute('data-o55-nier-parts');\n"
+                       "    var paintFlagsChanged = lastThemePaintKey !== paintKey; lastThemePaintKey = paintKey;\n"
+                       "    /* The same slug can acquire different NieR typography. Keep its one observer notification. */\n"
+                       "    if (prev !== slug || paintFlagsChanged) document.documentElement.setAttribute('data-theme', slug);", 'M6: equal logical paint write')
+    new = replace_once(new, '    if (window.PM_GLASS_LOCK_REFRESH) {',
+                       '    if (opts.refresh !== false && (prev !== slug || paintFlagsChanged) && window.PM_GLASS_LOCK_REFRESH) {', 'M6: unchanged theme refresh')
+    new = replace_once(new, '    themeSyncChrome();\n',
+                       "    themeSyncChrome();\n    if (prev === slug && !paintFlagsChanged && window.PM7ThemeGeometryRefresh) window.PM7ThemeGeometryRefresh();\n",
+                       'M6: preserve dismissal when Auto resolves to the current painted slug')
+    new = new.replace("btn.setAttribute(", "themeChromeAttr(btn, ").replace("b.setAttribute(", "themeChromeAttr(b, ").replace("row.setAttribute(", "themeChromeAttr(row, ")
+    new = replace_once(new, '      try { btn.value = slug; } catch (e0) {}',
+                       '      try { if (btn.value !== slug) btn.value = slug; } catch (e0) {}', 'M6: equal chrome value')
+    label = "    if (label) label.textContent = (typeof window.PM_THEME_PAINT_LABEL === 'function' && window.PM_THEME_PAINT_LABEL()) || PM_THEME_FAMILIES[family] || family;"
+    new = replace_once(new, label,
+                       "    var chromeLabel = (typeof window.PM_THEME_PAINT_LABEL === 'function' && window.PM_THEME_PAINT_LABEL()) || PM_THEME_FAMILIES[family] || family;\n"
+                       "    if (label && label.textContent !== chromeLabel) label.textContent = chromeLabel;", 'M6: equal NieR-aware chrome label')
+    new = replace_once(new, "        row.classList.toggle('is-selected', on);",
+                       "        if (row.classList.contains('is-selected') !== on) row.classList.toggle('is-selected', on);", 'M6: equal family selected class')
+    new = replace_once(new, "          chip.classList.toggle('is-active', chip.getAttribute('data-chip') === family + '-' + scheme);",
+                       "          var active = chip.getAttribute('data-chip') === family + '-' + scheme;\n"
+                       "          if (chip.classList.contains('is-active') !== active) chip.classList.toggle('is-active', active);", 'M6: equal theme chip class')
+    new = "  var lastThemePaintKey = null;\n  function themeChromeAttr(el, name, value) {\n    if (name === 'title' && !el.hasAttribute('title') && el.getAttribute('data-pm-hover-native-title') === value) return;\n    if (el.getAttribute(name) !== value) el.setAttribute(name, value);\n  }\n" + new
+    return replace_once(text, old, new, 'M6: atomic theme chrome commit')
+
+
+
 PATCHES = [
     # Hover-tag layer: recognise the new overlay roots instead of the removed pm7 ones.
     ("function activeOverlay(){var tour=document.getElementById('pm7-guided-tour'),onboarding=document.getElementById('pm7-onboarding');",
@@ -1133,6 +1173,7 @@ def build_text(usage: bool = True, home: bool = True) -> str:
         text = replace_once(text, old, new, label)
     text = shared_fitting_patch(text)
     text = theme_geometry_patch(text)
+    text = atomic_theme_patch(text)
     text = replace_once(text, SETTINGS_ANCHOR, SETTINGS_EXPOSE + SETTINGS_ANCHOR, 'settings transfer exposure')
     text = replace_once(text, LAYOUT_ANCHOR, LAYOUT_EXPOSE + LAYOUT_ANCHOR, 'layout restore exposure')
 

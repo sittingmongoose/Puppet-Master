@@ -78490,8 +78490,8 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":958,"inventory_sha256":"be85c
     try{
       if(themeKey!==lastPaintThemeKey||currentSlug!==slug||(window.PM_THEME&&typeof window.PM_THEME.getFamily==='function'&&window.PM_THEME.getFamily()!==family)){
         if(window.PM_THEME&&typeof window.PM_THEME.setFamily==='function'&&typeof window.PM_THEME.setMode==='function'){
-          window.PM_THEME.setFamily(family,{persist:false,dispatch:false});
-          window.PM_THEME.setMode(mode,{persist:false,dispatch:false});
+          if(typeof window.PM_THEME.setPair==='function')window.PM_THEME.setPair(family,mode,{persist:false,dispatch:false,refresh:false});
+          else { window.PM_THEME.setFamily(family,{persist:false,dispatch:false}); window.PM_THEME.setMode(mode,{persist:false,dispatch:false}); }
           slug=window.PM_THEME.get();
         }
         else if(currentSlug!==slug)document.documentElement.setAttribute('data-theme',slug);
@@ -78545,12 +78545,25 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":958,"inventory_sha256":"be85c
       return saved;
     }catch(_e){base.settingsProjectionSource=window.PM_SETTINGS_REGISTRY?'owner_registry_read_failed':'concept_default_fixture';base.settingsProjectionReadOnly=!!window.PM_SETTINGS_REGISTRY;return base;}
   }
+  var operationSaveReceipt=null, operationSaveClear=false;
+  function saveUnchanged(receipt){
+    if(!receipt || receipt!==operationSaveReceipt || receipt.key!==key() || receipt.registry!==window.PM_SETTINGS_REGISTRY)return false;
+    if(receipt.persisted){
+      try{if(localStorage.getItem(receipt.key)!==receipt.encoded)return false;}catch(_e){return false;}
+    }
+    if(!bridgeDepth)applyPaint(receipt.snapshot);
+    return true;
+  }
   function save(snapshot){
     var k=key(),safe=scrubCredentialSettings(snapshot);safe.settings['general.visual.glass-transparency']=clampGlassAlpha(safe.settings,safe.settings['general.visual.glass-transparency']);var owned={schema_version:'pm7.settings.project_projection.v1',settings:safe.settings,changed:clone(snapshot&&snapshot.changed||{}),domain:snapshot&&snapshot.domain,workspace:snapshot&&snapshot.workspace,activeSection:clone(snapshot&&snapshot.activeSection||{}),transferCategories:clone(snapshot&&snapshot.transferCategories||[]),settingsTransferHistory:clone(snapshot&&snapshot.settingsTransferHistory||[]),settingsTransferRollbacks:clone(snapshot&&snapshot.settingsTransferRollbacks||{}),settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null)};var o55Typed=snapshot&&snapshot.pm51&&snapshot.pm51.o55Custom;if(o55Typed&&typeof o55Typed==='object'){owned.pm51={o55Custom:{}};Object.keys(o55Typed).forEach(function(id){if(!credentialSettingIds.has(id)&&typeof o55Typed[id]==='string')owned.pm51.o55Custom[id]=o55Typed[id];});}
-    if(k&&!window.PM_SETTINGS_REGISTRY&&CONCEPT_FIXTURE_MODE)try{localStorage.setItem(k,JSON.stringify(owned));}catch(_e){}
+    var encoded=null,persisted=false,ok=true;
+    if(k&&!window.PM_SETTINGS_REGISTRY&&CONCEPT_FIXTURE_MODE)try{encoded=JSON.stringify(owned);localStorage.setItem(k,encoded);persisted=true;}catch(_e){ok=false;}
+    var receipt=ok?{key:k,registry:window.PM_SETTINGS_REGISTRY,encoded:encoded,persisted:persisted,snapshot:snapshot}:null;
+    operationSaveReceipt=receipt;
+    if(!operationSaveClear){operationSaveClear=true;Promise.resolve().then(function(){operationSaveReceipt=null;operationSaveClear=false;});}
     if(!bridgeDepth)applyPaint(snapshot);
   }
-  function reset(){var k=key();if(k)try{localStorage.removeItem(k);}catch(_e){}}
+  function reset(){operationSaveReceipt=null;var k=key();if(k)try{localStorage.removeItem(k);}catch(_e){}}
   function projectSnapshot(projectId){
     var owner=window.PM_SETTINGS_REGISTRY,registry=owner&&owner.getProjectSnapshot;
     if(owner){
@@ -78660,7 +78673,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":958,"inventory_sha256":"be85c
     document.addEventListener('page.changed',closeIfInactive);
     new MutationObserver(function(){closeIfInactive({page:panel.classList.contains('active')?'settings':'inactive'});}).observe(panel,{attributes:true,attributeFilter:['class']});
   }
-  window.PM7_SETTINGS_TOME={load:load,save:save,reset:reset,projectSnapshot:projectSnapshot,dispatch:dispatch,consumeCommandResult:consumeCommandResult,applyPaint:applyPaint,clampGlassAlpha:clampGlassAlpha,configuredThemeSlug:configuredThemeSlug,setChromeThemeFamily:setChromeThemeFamily,setChromeThemeMode:setChromeThemeMode,project:projectRecord,projectLabel:function(){var p=projectRecord();return p?p.label:'No project';},portal:function(){return document.getElementById('pm-settings-portals')||document.getElementById('panel-settings')||document.body;},ownsEvent:function(target){var root=document.getElementById('pm-settings-root'),portal=document.getElementById('pm-settings-portals');return !!(target&&((root&&root.contains(target))||(portal&&portal.contains(target))));},openBloom:openBloom};
+  window.PM7_SETTINGS_TOME={load:load,save:save,saveUnchanged:saveUnchanged,takeSaveReceipt:function(){return operationSaveReceipt;},reset:reset,projectSnapshot:projectSnapshot,dispatch:dispatch,consumeCommandResult:consumeCommandResult,applyPaint:applyPaint,clampGlassAlpha:clampGlassAlpha,configuredThemeSlug:configuredThemeSlug,setChromeThemeFamily:setChromeThemeFamily,setChromeThemeMode:setChromeThemeMode,project:projectRecord,projectLabel:function(){var p=projectRecord();return p?p.label:'No project';},portal:function(){return document.getElementById('pm-settings-portals')||document.getElementById('panel-settings')||document.body;},ownsEvent:function(target){var root=document.getElementById('pm-settings-root'),portal=document.getElementById('pm-settings-portals');return !!(target&&((root&&root.contains(target))||(portal&&portal.contains(target))));},openBloom:openBloom};
   window.PM7_SETTINGS_OPEN_BLOOM=openBloom;
   document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){redirectProjectModal();reloadOnProjectChange();installPanelLifecycle();window.addEventListener('pm7.settings.runtime-context.changed',function(){if(window.PM12_KIMI&&typeof window.PM12_KIMI.renderApp==='function')window.PM12_KIMI.renderApp({soft:true});});if(window.PM12_KIMI)applyPaint(window.PM12_KIMI.getState());},0);});
 })();
@@ -79312,11 +79325,17 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":958,"inventory_sha256":"be85c
 
   let state = loadState();
 
+  let pm7StateSave=null, pm7StateSaveClear=false;
   function saveState() {
     searchIndexDirty = true;
-    const copy = clone(state);
+    const serialized = JSON.stringify(state);
+    if(pm7StateSave && pm7StateSave.serialized===serialized &&
+       typeof window.PM7_SETTINGS_TOME.saveUnchanged==='function' && window.PM7_SETTINGS_TOME.saveUnchanged(pm7StateSave.receipt)) return;
+    const copy = JSON.parse(serialized);
     delete copy.home; delete copy.railOpen; delete copy.resourceRosterOpen;
     window.PM7_SETTINGS_TOME.save(copy);
+    pm7StateSave={serialized,receipt:window.PM7_SETTINGS_TOME.takeSaveReceipt()};
+    if(!pm7StateSaveClear){pm7StateSaveClear=true;Promise.resolve().then(()=>{pm7StateSave=null;pm7StateSaveClear=false;});}
   }
 
 
@@ -87398,8 +87417,8 @@ function o55NierSyncThemeState() {
   const scheme = mode === 'auto' ? (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : mode;
   const quiet = { persist: false, dispatch: false };
   try {
-    if (P.getFamily() !== family || P.getMode() !== mode) P.set(family + '-' + scheme, quiet);
-    if (mode === 'auto') P.setMode('auto', quiet);
+    if (typeof P.setPair === 'function') { if (P.getFamily() !== family || P.getMode() !== mode) P.setPair(family, mode, quiet); }
+    else { if (P.getFamily() !== family || P.getMode() !== mode) P.set(family + '-' + scheme, quiet); if (mode === 'auto') P.setMode('auto', quiet); }
   } catch (e) { /* applyPaint below repaints from the stored values */ }
 }
 const o55NierKeys = keys => { const want = new Set((Array.isArray(keys) ? keys : []).map(String)); return O55_NIER_PARTS.filter(p => want.has(p.key)).map(p => p.key); };
@@ -126156,28 +126175,38 @@ policies for tenant isolation, and add migration script.</textarea>
     return { family: fam, mode: mode };
   }
 
+  var lastThemePaintKey = null;
+  function themeChromeAttr(el, name, value) {
+    if (name === 'title' && !el.hasAttribute('title') && el.getAttribute('data-pm-hover-native-title') === value) return;
+    if (el.getAttribute(name) !== value) el.setAttribute(name, value);
+  }
   function themeApply(family, mode, opts) {
     opts = opts || {};
     if (!PM_THEME_FAMILIES[family]) family = 'friendly';
     if (PM_THEME_MODES.indexOf(mode) < 0) mode = 'dark';
+    var stateChanged = themeState.family !== family || themeState.mode !== mode;
     themeState.family = family;
     themeState.mode = mode;
     var slug = (function(f){try{var p=typeof window.PM_THEME_PAINT_FAMILY==='function'?window.PM_THEME_PAINT_FAMILY(f):f;return /^(friendly|glass|retro|basic)$/.test(p)?p:f;}catch(e){return f;}})(family) + '-' + themeResolveScheme(mode);
     var prev = document.documentElement.getAttribute('data-theme');
-    document.documentElement.setAttribute('data-theme', slug);
+    var paintKey = document.documentElement.getAttribute('data-o55-nier') + '|' + document.documentElement.getAttribute('data-o55-nier-parts');
+    var paintFlagsChanged = lastThemePaintKey !== paintKey; lastThemePaintKey = paintKey;
+    /* The same slug can acquire different NieR typography. Keep its one observer notification. */
+    if (prev !== slug || paintFlagsChanged) document.documentElement.setAttribute('data-theme', slug);
     if (opts.persist !== false) {
       themeLsSet('pm.themeFamily', family);
       themeLsSet('pm.themeMode', mode);
       themeLsSet('pm.theme', slug);
     }
     themeSyncChrome();
+    if (prev === slug && !paintFlagsChanged && window.PM7ThemeGeometryRefresh) window.PM7ThemeGeometryRefresh();
     if (opts.dispatch !== false && prev !== slug) {
       var btn = byId('themeSelect');
       if (btn) {
         try { btn.dispatchEvent(new Event('change', { bubbles: true })); } catch (e0) {}
       }
     }
-    if (window.PM_GLASS_LOCK_REFRESH) {
+    if (opts.refresh !== false && (prev !== slug || paintFlagsChanged) && window.PM_GLASS_LOCK_REFRESH) {
       try { window.PM_GLASS_LOCK_REFRESH(); } catch (e1) {}
     }
     return slug;
@@ -126192,27 +126221,29 @@ policies for tenant isolation, and add migration script.</textarea>
     var label = byId('themeMenuLabel');
     var menu = byId('themeMenu');
     if (btn) {
-      btn.setAttribute('data-value', slug);
-      btn.setAttribute('data-mode-icon', mode === 'light' ? 'sun' : (mode === 'dark' ? 'moon' : 'auto'));
+      themeChromeAttr(btn, 'data-value', slug);
+      themeChromeAttr(btn, 'data-mode-icon', mode === 'light' ? 'sun' : (mode === 'dark' ? 'moon' : 'auto'));
       var paintLabel = typeof window.PM_THEME_PAINT_LABEL === 'function' ? window.PM_THEME_PAINT_LABEL() : '';
       var title = paintLabel ? 'Theme: ' + paintLabel + (mode === 'auto' ? ' (Auto)' : ' (' + (scheme === 'light' ? 'Light' : 'Dark') + ')') :
         'Theme: ' + PM_THEME_FAMILIES[family] +
         (mode === 'auto' ? ' (Auto)' : ' (' + PM_THEME_SLUGS[slug] + ')');
-      btn.setAttribute('title', title);
-      if (btn.hasAttribute('aria-label')) btn.setAttribute('aria-label', title);
-      try { btn.value = slug; } catch (e0) {}
+      themeChromeAttr(btn, 'title', title);
+      if (btn.hasAttribute('aria-label')) themeChromeAttr(btn, 'aria-label', title);
+      try { if (btn.value !== slug) btn.value = slug; } catch (e0) {}
     }
-    if (label) label.textContent = (typeof window.PM_THEME_PAINT_LABEL === 'function' && window.PM_THEME_PAINT_LABEL()) || PM_THEME_FAMILIES[family] || family;
+    var chromeLabel = (typeof window.PM_THEME_PAINT_LABEL === 'function' && window.PM_THEME_PAINT_LABEL()) || PM_THEME_FAMILIES[family] || family;
+    if (label && label.textContent !== chromeLabel) label.textContent = chromeLabel;
     if (menu) {
       menu.querySelectorAll('.pm6-tt-mode').forEach(function (b) {
-        b.setAttribute('aria-checked', b.getAttribute('data-mode-value') === mode ? 'true' : 'false');
+        themeChromeAttr(b, 'aria-checked', b.getAttribute('data-mode-value') === mode ? 'true' : 'false');
       });
       menu.querySelectorAll('.pm6-tt-family').forEach(function (row) {
         var on = row.getAttribute('data-family') === family;
-        row.classList.toggle('is-selected', on);
-        row.setAttribute('aria-checked', on ? 'true' : 'false');
+        if (row.classList.contains('is-selected') !== on) row.classList.toggle('is-selected', on);
+        themeChromeAttr(row, 'aria-checked', on ? 'true' : 'false');
         row.querySelectorAll('.pm6-tt-chip').forEach(function (chip) {
-          chip.classList.toggle('is-active', chip.getAttribute('data-chip') === family + '-' + scheme);
+          var active = chip.getAttribute('data-chip') === family + '-' + scheme;
+          if (chip.classList.contains('is-active') !== active) chip.classList.toggle('is-active', active);
         });
       });
     }
@@ -126262,6 +126293,9 @@ policies for tenant isolation, and add migration script.</textarea>
     },
     setMode: function (m, opts) {
       return themeApply(themeState.family, m, opts || {});
+    },
+    setPair: function (family, mode, opts) {
+      return themeApply(family, mode, opts || {});
     },
     /* legacy/settings path: full slug ('retro-light') parses into
        family + EXPLICIT mode (a slug pick can never mean auto) */
