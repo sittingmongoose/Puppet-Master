@@ -113,7 +113,8 @@
     let tries = 0;
     const go = () => {
       const v = shown();
-      if (v && typeof v.openAppearance === 'function') { v._apScope = 'app'; if (!v.pop) v.openAppearance(); return; }
+      /* All terminals for this visit; the scope picked on the terminal's own screen stays as it was for its menu */
+      if (v && typeof v.openAppearance === 'function') { if (!v.pop) v.openAppearance({ scope: 'app' }); return; }
       if (tries === 3 && typeof P.open === 'function') P.open({ kind: 'terminal' });
       if (++tries < 30) setTimeout(go, 100); else showToast('No terminal to show', 'Open a terminal on Home, then choose Appearance in its menu.', 'info', 3600);
     };

@@ -190,8 +190,9 @@
     var F = A().FIELDS;
     var html = '';
     html += '<div class="pmt-cz-scrim" data-act="scrim" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="pmt-cz-frame" aria-hidden="true"><span class="pmt-cz-framelabel">This terminal</span></div>';
-    /* data-lg-surface="menu": the Liquid Glass layer's opt-in for a floating sheet (its CONTRACT.md); inert without it */
-    html += '<section class="pmt-cz-dialog" role="dialog" aria-modal="true" aria-labelledby="pmt-cz-title" aria-describedby="pmt-cz-lead" tabindex="-1" data-lg-surface="menu">';
+    /* data-lg-surface="menu": the Liquid Glass layer's opt-in for a floating sheet (its CONTRACT.md); data-lg-dense: a
+       large dialog full of text takes its heavier tint (both inert without Liquid Glass) */
+    html += '<section class="pmt-cz-dialog" role="dialog" aria-modal="true" aria-labelledby="pmt-cz-title" aria-describedby="pmt-cz-lead" tabindex="-1" data-lg-surface="menu" data-lg-dense>';
     html += '<header class="pmt-cz-head"><div class="pmt-cz-titles"><p class="pmt-cz-kicker"><span>' + esc('Customize · ' + label) + '</span></p>' +
       '<h2 class="pmt-cz-title" id="pmt-cz-title">Terminal appearance</h2>' +
       '<p class="pmt-cz-lead" id="pmt-cz-lead">Pick what you want to change. The preview and this terminal show it at once, and it is saved.</p></div>' +
@@ -301,7 +302,9 @@
     v.pop = root;
     v._apOnClose = typeof opts.onClose === 'function' ? opts.onClose : null;
     var dialog = root.querySelector('.pmt-cz-dialog'), body = root.querySelector('.pmt-cz-body');
-    var scope = v._apScope || 'tab';
+    /* the scope: All terminals when Settings opens it, for that visit only; otherwise the one last picked on this
+       terminal's screen (remembered while the tab lives), This terminal at first. The editor's screen does the same */
+    var scope = opts.scope === 'app' ? 'app' : v._apScope || 'tab';
     var preview = null;
     try { preview = new Preview(root.querySelector('[data-pv-box]'), v); } catch (e) { console.error('[pmt] the preview could not start', e); }
     var pv = preview && preview.view;
@@ -505,6 +508,7 @@
       var fr = root.querySelector('.pmt-cz-frame'); fr.hidden = !hole;
       if (hole) fr.style.cssText = 'left:' + x0 + 'px;top:' + y0 + 'px;width:' + (x1 - x0) + 'px;height:' + (y1 - y0) + 'px';
       root.classList.toggle('pmt-cz-narrow', narrow);
+      syncDock();
     }
 
     /* ---- events ---- */
@@ -746,9 +750,12 @@
       root.setAttribute('aria-hidden', 'true'); root.inert = true;
       if (noFocus) root.remove(); else T.Motion.leave(root, function () { root.remove(); });
     };
-    /* the preview follows you down the screen: when less than 40 % of its own place shows, the same live view moves
-       into the dock under the group index, and back when its place returns */
-    var dock = root.querySelector('[data-dock]'), dockBox = root.querySelector('[data-dock-box]'), homeBox = root.querySelector('[data-pv-box]'), io = null;
+    /* the preview follows you down the screen only where the real terminal is not beside it (the one rule of both
+       Customize screens, 2026-10-14): when less than 40 % of its own place shows and the screen is not placed beside
+       the terminal (a narrow window, or no room on either side), the same live view moves into the dock under the
+       group index, and back when its place returns. Beside the terminal, the terminal itself is the live preview */
+    var dock = root.querySelector('[data-dock]'), dockBox = root.querySelector('[data-dock-box]'), homeBox = root.querySelector('[data-pv-box]'), io = null, wantDock = false;
+    function syncDock() { if (dock) dockTo(wantDock && !dialog.classList.contains('pmt-cz-beside')); }
     function dockTo(on) {
       if (!pv || !!on === !dock.hidden) return;
       (on ? dockBox : homeBox).appendChild(pv.root);
@@ -757,7 +764,7 @@
       pv.layout(true); preview.select();
     }
     if (pv && typeof IntersectionObserver === 'function') {
-      io = new IntersectionObserver(function (list) { var en = list[list.length - 1]; dockTo(en.intersectionRatio < 0.4); }, { root: body, threshold: [0, 0.4, 1] });
+      io = new IntersectionObserver(function (list) { var en = list[list.length - 1]; wantDock = en.intersectionRatio < 0.4; syncDock(); }, { root: body, threshold: [0, 0.4, 1] });
       io.observe(root.querySelector('.pmt-cz-preview'));
     }
     root._pmtPreview = preview; /* the preview, for checks that read what it draws */

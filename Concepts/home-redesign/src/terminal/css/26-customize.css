@@ -490,3 +490,7 @@ html[data-o55-nier="on"][data-o55-nier-parts~="brackets"] .pmt-cz .pmt-cz-frame 
     linear-gradient(var(--b), var(--b)) left bottom / 14px 2px no-repeat, linear-gradient(var(--b), var(--b)) left bottom / 2px 14px no-repeat,
     linear-gradient(var(--b), var(--b)) right bottom / 14px 2px no-repeat, linear-gradient(var(--b), var(--b)) right bottom / 2px 14px no-repeat; }
 html[data-o55-nier="on"][data-o55-nier-parts~="brackets"] .pmt-cz :is(.pmt-cz-tile, .pmt-cz-chip, .pmt-cz-set, .pmt-cz-segopt):focus-visible { outline: 1.5px solid var(--o55-nier-ink); outline-offset: 3px; }
+/* on a Liquid Glass sheet the edges are the sheet's hairline (its CONTRACT: --lg-line, white .10 dark, ink .09 light):
+   the plain Glass rims are white and vanished on the light sheet (a P1000 frame of the editor's screen, which shares
+   these classes; approved by pm7-liquid-glass 1014044501) */
+html[data-lg="on"][data-theme^="glass"] .pmt-cz :is(.pmt-cz-set, .pmt-cz-try .pmt-textbtn, .pmt-cz-search, .pmt-cz-tile, .pmt-cz-chip, .pmt-cz-seg) { border-color: var(--lg-line); }
