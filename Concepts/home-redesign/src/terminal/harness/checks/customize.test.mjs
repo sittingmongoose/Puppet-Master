@@ -38,10 +38,11 @@ const view = (tab, look) => ({ tabAppearance: tab || {}, previewAppearance: null
 let passed = 0;
 function test(name, fn) { try { fn(); passed++; } catch (e) { console.error('FAIL ' + name); throw e; } }
 
-test('every field has one Settings row, and its words go both ways', () => {
+test('every field has one Settings row, and its words go both ways (round 2 fields with no canon row are listed)', () => {
   const ids = new Set();
   for (const k of Object.keys(A.FIELDS)) {
     if (k === 'scheme' || k === 'font') continue;
+    if (A.LOCAL_FIELDS.includes(k)) { assert.ok(!A.LINK[k], k + ' is listed as local but has a row'); continue; }
     assert.ok(A.LINK[k], 'no row for ' + k);
     assert.ok(!ids.has(A.LINK[k].id), 'row used twice: ' + A.LINK[k].id); ids.add(A.LINK[k].id);
   }
@@ -111,7 +112,7 @@ test('All terminals without Settings goes to this machine; with Settings it clea
   assert.equal(JSON.parse(store.get('pm.home.terminal:v1:app')).padding, undefined);
   A.reset('app', null);
   assert.equal(rows['code.terminal.padding'], undefined);
-  assert.equal(A.get(view(), 'padding'), 8);
+  assert.equal(A.get(view(), 'padding'), 0); // round 2: the default padding is 0 (Jared, 2026-10-14)
 });
 
 test('an effect switched in Settings while Terminal Effects follows the look means Custom', () => {

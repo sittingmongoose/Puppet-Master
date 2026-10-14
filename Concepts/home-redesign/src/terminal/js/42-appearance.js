@@ -108,7 +108,13 @@
     bgDim: { type: 'number', min: 0, max: 0.9, step: 0.05, default: 0.45, label: 'Dim' },
     bgBlur: { type: 'number', min: 0, max: 24, step: 1, default: 0, label: 'Blur' },
     opacity: { type: 'number', min: 0.4, max: 1, step: 0.02, default: null, label: 'Opacity' },
-    padding: { type: 'number', min: 0, max: 24, step: 1, default: 8, label: 'Padding' },
+    /* none by default (Jared, 2026-10-14: "Default padding should be 0"); a bezel brings its own margin */
+    padding: { type: 'number', min: 0, max: 24, step: 1, default: 0, label: 'Padding' },
+    /* the frame round the screen (Jared, 2026-10-14: removable, customizable, much thinner): its own choice, never part
+       of a look's defaults, and drawn with or without the GPU. Width null is the style's own */
+    bezel: { type: 'enum', values: ['off', 'rim', 'case'], default: 'off', label: 'Bezel' },
+    bezelWidth: { type: 'number', min: 2, max: 16, step: 1, default: null, label: 'Bezel width' },
+    bezelColor: { type: 'enum', values: ['follow', 'graphite', 'black', 'beige', 'silver', 'accent'], default: 'follow', label: 'Bezel colour' },
     effects: { type: 'enum', values: ['follow', 'off', 'custom'], default: 'follow', label: 'Effects' },
     scanlines: { type: 'bool', default: null, label: 'Scanlines' },
     scanStrength: { type: 'number', min: 0, max: 0.6, step: 0.05, default: 0.3, label: 'Scanline strength' },
@@ -130,6 +136,9 @@
     sixtyfourBleed: { type: 'number', min: 0, max: 100, step: 1, default: null, label: 'Sixtyfour bleed' }
   };
   var DEFAULTS = {}; Object.keys(FIELDS).forEach(function (k) { DEFAULTS[k] = FIELDS[k].default; });
+  /* round 2 fields Settings has no row for yet (proposed to the Settings owner): "All terminals" keeps them on this
+     computer, beside the earlier copies, until a row exists */
+  var LOCAL_FIELDS = ['bezel', 'bezelWidth', 'bezelColor'];
 
   /* ---- the Settings rows (SSYS-051, the Terminal look groups): one row per field, its stored words to and from the
      field's value. in() returns undefined for a value it cannot read (the field then falls through) and null for an
@@ -551,12 +560,20 @@
       glow: { on: !fxOff && gl('glow', retroDark && !!L.glow), strength: f('glowStrength'), radius: 2.5 },
       crt: crtOn,
       curvature: { on: crtOn, amount: f('curvature') },
-      bezel: { on: crtOn, light: mode === 'light' }, vignette: { on: crtOn, strength: mode === 'light' ? 0.10 : 0.25 },
+      /* the bezel is the view's own frame now (resolve's bezel, 30-looks.css), never drawn by the shader */
+      bezel: { on: false }, vignette: { on: crtOn, strength: mode === 'light' ? 0.10 : 0.25 },
       burnIn: { on: crtOn && f('burnIn') && !reduced, persistMs: 450 },
       noise: { on: crtOn && f('noise') > 0 && !reduced, amount: f('noise') },
       flicker: { on: !fxOff && !follow && !!f('flicker') && !reduced, amount: Math.min(0.03, f('flickerAmount')) },
       glowColor: theme && theme.roles.glow
     };
+    /* the bezel: a rim (3 px) or a monitor case (9 px) unless a width was chosen; the text is laid out inside it, never
+       squeezed into it */
+    var bzStyle = f('bezel'), bezel = { style: 'off', width: 0, color: 'follow' };
+    if (bzStyle === 'rim' || bzStyle === 'case') {
+      var bw = f('bezelWidth');
+      bezel = { style: bzStyle, width: bw === null || bw === undefined ? (bzStyle === 'rim' ? 3 : 9) : bw, color: f('bezelColor') || 'follow' };
+    }
     var bgShow = lk === 'glass' && bgKind === 'theme';
     /* High Contrast schemes keep every cell at 7:1 unless the user chose a floor themselves */
     var floor = f('minContrast');
@@ -566,7 +583,8 @@
       opts: { ligatures: f('ligatures'), minContrast: floor, boldBright: f('boldBright'),
         cursor: { shape: shape, blink: f('cursorBlink') && L.blink !== 'off' }, stickyHeader: f('stickyHeader'), copyOnSelect: f('copyOnSelect'),
         textRendering: drawing === 'smooth' ? 'geometricPrecision' : drawing === 'crisp' ? 'optimizeLegibility' : 'auto' },
-      padding: { x: f('padding'), y: Math.max(2, Math.round(f('padding') * 0.6)) },
+      padding: { x: f('padding') + bezel.width, y: Math.round(f('padding') * 0.6) + bezel.width, own: f('padding') },
+      bezel: bezel,
       sixtyfour: { scan: f('sixtyfourScan'), bleed: f('sixtyfourBleed') }
     };
   }
@@ -664,6 +682,68 @@
     saveLocal();
     refreshAll();
   }
+  /* ---- presets (Jared, 2026-10-14: "a way to save looks as presets"). A preset is a named set of field values, kept on
+     this machine beside imported schemes. It holds every field the scope it was saved from chose (any layer above the
+     look's own), and applying it makes a scope hold exactly those, so it looks the same wherever it is applied; the
+     fields it leaves out follow the look there ---- */
+  var PRESETS_KEY = 'pm.home.terminal:v1:presets', PRESETS_MAX = 40;
+  function presetList() {
+    try {
+      var l = JSON.parse(localStorage.getItem(PRESETS_KEY) || '[]');
+      return Array.isArray(l) ? l.filter(function (p) { return p && typeof p.id === 'string' && typeof p.name === 'string' && p.fields && typeof p.fields === 'object'; }) : [];
+    } catch (e) { return []; }
+  }
+  function presetStore(l) {
+    try { localStorage.setItem(PRESETS_KEY, JSON.stringify(l.slice(0, PRESETS_MAX))); } catch (e) { return false; }
+    changeEvents.emit('change');
+    return true;
+  }
+  /* what a scope chose: This terminal reads through its own choices, All terminals without them; never a preview */
+  function capture(scope, view) {
+    var sv = { api: view && view.api, tabAppearance: scope === 'tab' && view ? view.tabAppearance || {} : {}, previewAppearance: null, state: {} };
+    var out = {};
+    Object.keys(FIELDS).forEach(function (k) {
+      if (layerOf(sv, k) === 'look') return;
+      var v = field(sv, k); if (v !== undefined && v !== null) out[k] = v;
+    });
+    return out;
+  }
+  function presetName(name, l, except) {
+    var base = String(name || '').replace(/\s+/g, ' ').trim().slice(0, 40) || 'My look', n = base, i = 2;
+    var taken = function (x) { return l.some(function (p) { return p.id !== except && p.name.toLowerCase() === x.toLowerCase(); }); };
+    while (taken(n)) n = base + ' ' + i++;
+    return n;
+  }
+  var presets = {
+    list: presetList,
+    capture: capture,
+    save: function (name, scope, view) {
+      var l = presetList();
+      var entry = { id: 'p' + Date.now().toString(36) + Math.floor(Math.random() * 1296).toString(36), name: presetName(name, l), fields: capture(scope, view), at: Date.now() };
+      l.unshift(entry);
+      return presetStore(l) ? entry : null;
+    },
+    rename: function (id, name) {
+      var l = presetList(), p = l.filter(function (x) { return x.id === id; })[0]; if (!p) return null;
+      p.name = presetName(name, l, id);
+      return presetStore(l) ? p : null;
+    },
+    remove: function (id) { var l = presetList(), n = l.filter(function (x) { return x.id !== id; }); return n.length !== l.length && presetStore(n); },
+    /* Undo after a delete: the same preset, back where it was */
+    restore: function (entry, at) {
+      if (!entry || !entry.id) return false;
+      var l = presetList().filter(function (x) { return x.id !== entry.id; });
+      l.splice(Math.max(0, Math.min(at || 0, l.length)), 0, entry);
+      return presetStore(l);
+    },
+    /* every field the preset holds, and null (follow the look) for every other: one write, one transaction */
+    patch: function (fields) { var out = {}; Object.keys(FIELDS).forEach(function (k) { out[k] = fields && has(fields, k) ? fields[k] : null; }); return out; },
+    apply: function (id, scope, view) {
+      var p = presetList().filter(function (x) { return x.id === id; })[0]; if (!p) return false;
+      return setMany(scope, presets.patch(p.fields), view);
+    }
+  };
+
   function preview(view, patch) { view.previewAppearance = patch; view.applyAppearance(resolve(view)); }
   function endPreview(view) { if (!view.previewAppearance) return; view.previewAppearance = null; view.applyAppearance(resolve(view)); }
 
@@ -799,14 +879,14 @@
   }
 
   T.Appearance = {
-    FIELDS: FIELDS, FONTS: FONTS, LOOKS: LOOKS, DEFAULTS: DEFAULTS, GRADIENTS: GRADIENTS, LINK: LINK,
+    FIELDS: FIELDS, FONTS: FONTS, LOOKS: LOOKS, DEFAULTS: DEFAULTS, GRADIENTS: GRADIENTS, LINK: LINK, LOCAL_FIELDS: LOCAL_FIELDS,
     schemes: allSchemes, scheme: scheme, pairOf: pairOf, toTheme: toTheme, fontDef: fontDef, hasLocalFace: hasLocalFace,
     resolve: function (view) { if (view) views.add(view); return resolve(view); },
     /* the same resolution without joining the live terminals (thumbnails and previews that repaint themselves) */
     peek: function (view) { return resolve(view); },
     forget: function (view) { views.delete(view); },
     get: field, layerOf: layerOf, own: own, set: set, setMany: setMany, live: live, commit: commit, reset: resetScope,
-    preview: preview, endPreview: endPreview, settingsReady: settingsReady, settingsValues: settingsLayer,
+    preview: preview, endPreview: endPreview, settingsReady: settingsReady, settingsValues: settingsLayer, presets: presets,
     refreshAll: refreshAll, addUserScheme: addUserScheme, imageUrl: imageUrl, lookKey: lookKey,
     rememberPicture: rememberPicture, pictureName: pictureName, importText: importText, importFile: importFile, canBlur: canFilter,
     onChange: function (fn) { return changeEvents.on('change', fn); },

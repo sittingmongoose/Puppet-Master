@@ -188,6 +188,23 @@
   function cursorArt(shape) { return '<span class="pmt-cz-cur pmt-cz-cur-' + shape + '"><span>$ ls</span><i></i></span>'; }
   function trailArt(kind) { return '<span class="pmt-cz-trail pmt-cz-trail-' + kind + '"><i></i><b></b></span>'; }
 
+  /* a preset as a tiny terminal in its own ground, scheme and face: what putting it on will show */
+  function presetArt(v, fields) {
+    var R = null;
+    try { R = A().peek({ api: v.api, tabAppearance: fields || {}, previewAppearance: null, state: {} }); } catch (e) { R = null; }
+    if (!R || !R.theme) return '<span class="pmt-cz-pswatch"></span>';
+    var C = T.color, th = R.theme, b = R.background || {}, pal = th.palette || [];
+    var ground = b.css ? b.css : b.url ? 'center / cover no-repeat url(&quot;' + esc(b.url) + '&quot;)' : b.color ? b.color : C.toHex(th.bg);
+    var hex = function (i) { return pal[i] !== undefined ? C.toHex(pal[i]) : C.toHex(th.fg); };
+    return '<span class="pmt-cz-pswatch" style="background:' + esc(C.toHex(th.bg)) + ';color:' + esc(C.toHex(th.fg)) + '"><span class="pmt-cz-psground" style="background:' + ground + '"></span>' +
+      '<span class="pmt-cz-psline" style="font-family:' + esc(R.font.family) + '"><b style="color:' + esc(hex(4)) + '">~/api</b> <i style="color:' + esc(hex(2)) + '">ok</i> $</span>' +
+      '<span class="pmt-cz-psdots">' + [1, 3, 5, 6].map(function (i) { return '<i style="background:' + esc(hex(i)) + '"></i>'; }).join('') + '</span></span>';
+  }
+  function sameFields(a, b) {
+    var ka = Object.keys(a || {}).sort(), kb = Object.keys(b || {}).sort();
+    return ka.join('|') === kb.join('|') && ka.every(function (k) { return String(a[k]) === String(b[k]); });
+  }
+
   function skeleton(v) {
     var label = 'Terminal';
     try { label = JSON.parse(v._lsig || '{}').label || label; } catch (e) {}
@@ -208,9 +225,17 @@
       '<div class="pmt-cz-pvbox" data-pv-box inert></div></figure>' +
       '<aside class="pmt-cz-side"><div class="pmt-cz-meter"><div class="pmt-cz-meterhead"><span data-meter-scope>This terminal</span><b data-meter-n></b></div>' +
       '<div class="pmt-cz-cells" aria-hidden="true">' + COUNTED.map(function () { return '<i></i>'; }).join('') + '</div></div>' +
-      '<div class="pmt-cz-sets" role="group" aria-label="Quick sets">' + SETS.map(function (s) {
+      /* presets: the four built in (each changes its own few fields), then yours (each is a whole look), and saving the
+         look this scope shows as a new one */
+      '<div class="pmt-cz-presets" role="group" aria-labelledby="pmt-cz-presets-h"><div class="pmt-cz-presethead"><span class="pmt-cz-trylabel" id="pmt-cz-presets-h">Presets</span>' +
+      '<button type="button" class="pmt-textbtn" data-act="preset-save"' + tagged('Save as a preset', 'Keep this look under a name, to put on any terminal later') + '>Save this look…</button></div>' +
+      '<form class="pmt-cz-psave" data-psave hidden><input type="text" class="pmt-cz-pname-in" data-pname maxlength="40" autocomplete="off" spellcheck="false" aria-label="Preset name" placeholder="Name this look"' + NOTAG + '>' +
+      '<button type="submit" class="pmt-textbtn pmt-cz-psave-go"' + NOTAG + '>Save</button><button type="button" class="pmt-textbtn" data-act="preset-cancel"' + NOTAG + '>Cancel</button></form>' +
+      '<div class="pmt-cz-sets" role="group" aria-label="Built-in presets">' + SETS.map(function (s) {
         return '<button type="button" class="pmt-cz-set" aria-pressed="false" data-set="' + s.id + '" data-pmh="tile"' + NOTAG + '><span>' + esc(s.label) + '</span><small>' + esc(s.help) + '</small></button>';
       }).join('') + '</div>' +
+      '<div class="pmt-cz-mylist" role="group" aria-label="Your presets" data-presets hidden></div>' +
+      '<p class="pmt-cz-pnote" data-pnote role="status" hidden></p></div>' +
       '<div class="pmt-cz-try" role="group" aria-label="Try it in the preview"><span class="pmt-cz-trylabel">Try it</span>' +
       '<button type="button" class="pmt-textbtn" data-act="try-cursor"' + NOTAG + '>Move the cursor</button>' +
       '<button type="button" class="pmt-textbtn" data-act="try-bell"' + NOTAG + '>Ring the bell</button>' +
@@ -332,6 +357,56 @@
       paint();
     }
     function put(key, value) { var p = {}; p[key] = value; write(p); }
+
+    /* ---- your presets: listed with their own little picture; saved, renamed and deleted in place ---- */
+    var presetSig = '', renaming = null, undoPreset = null;
+    function paintPresets() {
+      var box = root.querySelector('[data-presets]'), list = A().presets.list(), mineNow = A().presets.capture(scope, v);
+      var sig = JSON.stringify(list) + '|' + renaming + '|' + JSON.stringify(mineNow) + '|' + eff().look.mode + '|' + eff().lookKey;
+      if (sig === presetSig) return;
+      presetSig = sig;
+      box.hidden = !list.length;
+      box.innerHTML = list.map(function (p) {
+        var on = sameFields(mineNow, p.fields), n = Object.keys(p.fields).length;
+        var label = renaming === p.id ? '<input type="text" class="pmt-cz-pname-in" data-rename="' + esc(p.id) + '" value="' + esc(p.name) + '" maxlength="40" autocomplete="off" spellcheck="false" aria-label="New name for ' + esc(p.name) + '"' + NOTAG + '>' :
+          '<span class="pmt-cz-pname">' + esc(p.name) + '</span>';
+        return '<div class="pmt-cz-mycard" data-pid="' + esc(p.id) + '">' +
+          (renaming === p.id ? '<div class="pmt-cz-set pmt-cz-myset">' + presetArt(v, p.fields) + label + '</div>' :
+          '<button type="button" class="pmt-cz-set pmt-cz-myset" aria-pressed="' + on + '" data-preset="' + esc(p.id) + '" data-pmh="tile"' + tagged('Put on ' + p.name, n ? n + (n === 1 ? ' choice' : ' choices') + '; everything else follows the look' : 'Everything follows the look') + '>' +
+            presetArt(v, p.fields) + label + '<small>' + (n ? n + (n === 1 ? ' choice' : ' choices') : 'The look’s own') + '</small></button>') +
+          '<span class="pmt-cz-pacts"><button type="button" class="pmt-pop-x pmt-cz-pact" data-act="preset-rename" data-pid="' + esc(p.id) + '" aria-label="Rename ' + esc(p.name) + '"' + NOTAG + '><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13l.6-2.6L10.5 3.5l2 2-6.9 6.9z M9.4 4.6l2 2"/></svg></button>' +
+          '<button type="button" class="pmt-pop-x pmt-cz-pact" data-act="preset-delete" data-pid="' + esc(p.id) + '" aria-label="Delete ' + esc(p.name) + '"' + NOTAG + '><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></span></div>';
+      }).join('');
+      if (renaming) { var ri = box.querySelector('[data-rename]'); if (ri && document.activeElement !== ri) { ri.focus(); ri.select(); } }
+    }
+    function presetNote(text, undo) {
+      var n = root.querySelector('[data-pnote]');
+      n.hidden = !text;
+      n.innerHTML = text ? esc(text) + (undo ? ' <button type="button" class="pmt-textbtn" data-act="preset-undo"' + NOTAG + '>Undo</button>' : '') : '';
+    }
+    function presetSaveOpen() {
+      var f = root.querySelector('[data-psave]'), i = f.querySelector('[data-pname]'), R = eff();
+      f.hidden = false;
+      i.value = (R.scheme ? R.scheme.name : 'My look') + (R.font && R.font.label ? ' · ' + R.font.label : '');
+      i.focus(); i.select();
+    }
+    function presetSaveClose(focusBtn) { var f = root.querySelector('[data-psave]'); f.hidden = true; if (focusBtn) { var b = root.querySelector('[data-act="preset-save"]'); if (b) b.focus(); } }
+    function presetSave() {
+      var i = root.querySelector('[data-pname]'), p = A().presets.save(i.value, scope, v);
+      presetSaveClose(false);
+      if (!p) { presetNote('This computer could not keep the preset (its storage is full).'); return; }
+      presetNote('Saved “' + p.name + '”. It holds ' + (Object.keys(p.fields).length || 'none of the') + (Object.keys(p.fields).length === 1 ? ' choice.' : ' choices.'));
+      v.announce('Saved the preset ' + p.name);
+      paint();
+      var card = root.querySelector('[data-preset="' + p.id + '"]'); if (card) card.focus();
+    }
+    function presetRenameEnd(commit, refocus) {
+      var ri = root.querySelector('[data-rename]'), id = renaming;
+      renaming = null;
+      if (commit && ri && id) { var p = A().presets.rename(id, ri.value); if (p) v.announce('Renamed to ' + p.name); }
+      presetSig = ''; paint();
+      var card = refocus !== false && id && root.querySelector('[data-preset="' + id + '"]'); if (card) card.focus();
+    }
 
     /* ---- painting: every control shows this scope's value ---- */
     var setA = function (e, n, x) { if (e.getAttribute(n) !== x) e.setAttribute(n, x); };
@@ -475,6 +550,7 @@
       var sw = root.querySelector('[data-scope-why]'), swt = scope === 'app' ? (A().settingsReady() ? 'Saved in this project’s Settings' : 'Saved on this computer') : 'Saved with this tab';
       if (sw.textContent !== swt) sw.textContent = swt;
       root.querySelector('.pmt-cz-framelabel').textContent = scope === 'tab' ? 'This terminal' : 'This terminal, like all terminals';
+      paintPresets();
       roving();
       fit(root);
     }
@@ -567,6 +643,11 @@
       if (b.getAttribute('role') === 'switch') { toggle(b); return; }
       if (b.hasAttribute('data-step')) { var R = eff(); put('fontSize', T.util.clamp(R.font.size + parseFloat(b.getAttribute('data-step')), 8, 32)); return; }
       if (b.hasAttribute('data-set')) { quickSet(b.getAttribute('data-set')); return; }
+      if (b.hasAttribute('data-preset')) {
+        var pid = b.getAttribute('data-preset'), pp = A().presets.list().filter(function (x) { return x.id === pid; })[0];
+        if (pp && A().presets.apply(pid, scope, v)) { syncPreview(); paint(); presetNote(''); v.announce(pp.name + (scope === 'tab' ? ' is on this terminal' : ' is on all terminals')); }
+        return;
+      }
       if (b.hasAttribute('data-jump')) { var g = root.querySelector('[data-group="' + b.getAttribute('data-jump') + '"]'); if (g) { g.scrollIntoView({ block: 'start', behavior: reducedNow() ? 'auto' : 'smooth' }); var h = g.querySelector('h3'); if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); } } return; }
       var act = b.getAttribute('data-act');
       if (act === 'close') close();
@@ -577,6 +658,17 @@
       else if (act === 'try-cursor') { if (preview) preview.moveCursor(); }
       else if (act === 'try-bell') { if (preview) preview.ring(); }
       else if (act === 'try-dim') { if (preview) preview.dim(); }
+      else if (act === 'preset-save') presetSaveOpen();
+      else if (act === 'preset-cancel') presetSaveClose(true);
+      else if (act === 'preset-rename') { renaming = b.getAttribute('data-pid'); presetSig = ''; paint(); }
+      else if (act === 'preset-delete') {
+        var did = b.getAttribute('data-pid'), all = A().presets.list(), at = -1;
+        all.forEach(function (x, i) { if (x.id === did) at = i; });
+        if (at >= 0 && A().presets.remove(did)) { undoPreset = { entry: all[at], at: at }; presetNote('Deleted “' + all[at].name + '”.', true); paint(); var u = root.querySelector('[data-act="preset-undo"]'); if (u) u.focus(); }
+      }
+      else if (act === 'preset-undo') {
+        if (undoPreset) { A().presets.restore(undoPreset.entry, undoPreset.at); v.announce('Restored ' + undoPreset.entry.name); undoPreset = null; presetNote(''); paint(); }
+      }
       else if (act === 'import') importScheme();
       else if (act === 'upload') uploadImage();
     });
@@ -635,7 +727,19 @@
     schemesEl.addEventListener('mouseleave', function () { endPreview(); });
     /* keyboard: Escape closes, Tab stays inside, arrows move within a group of tiles or a segment (choosing, as radios
        do; in the schemes they preview, and Enter or Space keeps one) */
+    /* naming a preset: Enter keeps it, Escape leaves it (and not the screen) */
+    root.querySelector('[data-psave]').addEventListener('submit', function (e) { e.preventDefault(); presetSave(); });
+    /* leaving the name field keeps the name typed (Enter and Escape have already ended it by then) */
+    root.addEventListener('focusout', function (e) {
+      if (e.target.hasAttribute && e.target.hasAttribute('data-rename')) setTimeout(function () { if (renaming) presetRenameEnd(true, false); }, 0);
+    });
     root.addEventListener('keydown', function (e) {
+      var tg = e.target;
+      if (tg && tg.hasAttribute && tg.hasAttribute('data-rename')) {
+        if (e.key === 'Enter') { e.preventDefault(); e.stopPropagation(); presetRenameEnd(true); return; }
+        if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); presetRenameEnd(false); return; }
+      }
+      if (tg && tg.hasAttribute && tg.hasAttribute('data-pname') && e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); presetSaveClose(true); return; }
       if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); if (previewing !== null) { endPreview(); return; } close(); return; }
       if (e.key === 'Tab') {
         var items = [].filter.call(dialog.querySelectorAll('button, input, select, textarea, [tabindex]'), function (x) {

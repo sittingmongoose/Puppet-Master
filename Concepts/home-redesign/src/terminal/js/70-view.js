@@ -92,6 +92,8 @@
     this.canvas = el('canvas', 'pmt-grid');
     this.fxCanvas = el('canvas', 'pmt-fxcanvas'); this.fxCanvas.hidden = true;
     this.trailCanvas = el('canvas', 'pmt-trail'); this.trailCanvas.hidden = true;
+    /* the bezel: a frame round the screen, over the ground and the canvases' edge (30-looks.css draws each style) */
+    this.bezelEl = el('div', 'pmt-bezel'); this.bezelEl.hidden = true; this.bezelEl.setAttribute('aria-hidden', 'true');
     this.sticky = el('button', 'pmt-sticky'); this.sticky.hidden = true; this.sticky.type = 'button';
     this.overlays = el('div', 'pmt-overlays');
     this.input = el('textarea', 'pmt-input');
@@ -105,7 +107,7 @@
     this.input.setAttribute('autocapitalize', 'off'); this.input.setAttribute('autocomplete', 'off');
     this.input.setAttribute('autocorrect', 'off'); this.input.setAttribute('spellcheck', 'false');
     screen.appendChild(this.canvas); screen.appendChild(this.fxCanvas);
-    screen.appendChild(this.trailCanvas); screen.appendChild(this.sticky); screen.appendChild(this.overlays); screen.appendChild(this.input);
+    screen.appendChild(this.trailCanvas); screen.appendChild(this.bezelEl); screen.appendChild(this.sticky); screen.appendChild(this.overlays); screen.appendChild(this.input);
     this.sb = el('div', 'pmt-scrollbar');
     this.sbMarks = el('canvas', 'pmt-sb-marks');
     this.sbThumb = el('div', 'pmt-sb-thumb');
@@ -202,6 +204,13 @@
     this.root.style.setProperty('--pmt-pad-y', (ap.padding ? ap.padding.y : 6) + 'px');
     this.root.setAttribute('data-pmt-scheme', ap.theme.appearance || '');
     this._applyBackground(ap.background || { kind: 'theme' });
+    var bz = ap.bezel || { style: 'off', width: 0, color: 'follow' };
+    this.bezelEl.hidden = bz.style === 'off';
+    if (this.root.getAttribute('data-pmt-bezel') !== bz.style) this.root.setAttribute('data-pmt-bezel', bz.style);
+    if (this.root.getAttribute('data-pmt-bezel-color') !== bz.color) this.root.setAttribute('data-pmt-bezel-color', bz.color);
+    this.root.style.setProperty('--pmt-bezel-w', (bz.width || 0) + 'px');
+    /* the background's worst pixel for the text's contrast floor (24-renderer.js); none over the scheme's own surface */
+    this.contrastGround = ap.background && typeof ap.background.ground === 'number' ? ap.background.ground : null;
     var f = ap.font, gen = this._fontGen = (this._fontGen || 0) + 1;
     this.fontReady = T.Metrics.ready(f.family, f.size).then(function () {
       if (gen !== self._fontGen) return; /* a later appearance replaced this font before it finished loading */
