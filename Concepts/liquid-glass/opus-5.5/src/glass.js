@@ -564,7 +564,22 @@
     frostJobs.clear();
     if (typeof pruneLensFilters === 'function') pruneLensFilters();
   }
-  /* scrolling moves sheets over the wallpaper: re-anchor their frost in the same frame, re-bake rims once it stops */
+  /* scrolling moves sheets over the wallpaper. Re-anchoring each sheet's frost from here trails the browser's own
+     (threaded) scrolling by one to three frames, and the frost visibly swam under the cards (Jared #13, 2026-10-14:
+     "the card edges seem to rerender"). So while its scroller moves, a sheet whose ancestors carry no transform pins
+     its frost to the viewport with background-attachment: fixed (data-lg-fixed, glass.css), which the browser keeps in
+     step with the content itself; when the scroll settles its frost is anchored where it stopped and the pin lifts, the
+     same pixels either way. A transformed ancestor makes a fixed background element-relative, so those sheets keep the
+     anchored frost. Rims re-bake once it stops, as before. */
+  function fixedSafe(e) {
+    for (var n = e; n && n !== document.documentElement; n = n.parentElement) {
+      var cs = getComputedStyle(n);
+      if (cs.transform !== 'none' || cs.translate !== 'none' || cs.scale !== 'none' || cs.rotate !== 'none' || cs.perspective !== 'none' ||
+          cs.filter !== 'none' || (cs.backdropFilter && cs.backdropFilter !== 'none' && n !== e) || /transform|filter/.test(cs.willChange)) return false;
+    }
+    return true;
+  }
+  function unpin(e) { if (e.hasAttribute('data-lg-fixed')) { anchor(e); e.removeAttribute('data-lg-fixed'); } e.__lgPinTried = false; }
   var scrollQ = false, scrollBoxes = new Set(), settleSheets = new Set(), settleStrips = new Set();
   document.addEventListener('scroll', function (ev) {
     if (!isGlass()) return;
@@ -579,12 +594,27 @@
         if (ss) ss.forEach(function (e) { if (e.isConnected) { sheets.add(e); settleSheets.add(e); } });
         if (ls) ls.forEach(function (s) { if (s.isConnected) { strips.add(s); settleStrips.add(s); } });
       });
-      sheets.forEach(function (e) { positions.set(e, layoutPos(e, offsets)); });
+      sheets.forEach(function (e) {
+        if (e.hasAttribute('data-lg-fixed')) return;
+        if (!e.__lgPinTried) { e.__lgPinTried = true; if (fixedSafe(e)) { e.setAttribute('data-lg-fixed', ''); return; } }
+        positions.set(e, layoutPos(e, offsets));
+      });
       positions.forEach(function (lp, e) { anchor(e, lp); });
       strips.forEach(function (s) { var L = lenses.get(s); if (L && !L.dragging) { L.snap = true; syncStrip(L.cfg, s); } });
     }); }
-    lazySync(false);
+    /* the settle (un-pin, re-bake rims, re-sync strips) runs once the scroll has been still for 160 ms; it used to run
+       140 ms after the scroll began, so a long scroll re-baked every moving card's rims several times on the way */
+    clearTimeout(scrollSettleT); scrollSettleT = setTimeout(function () { scrollSettleT = 0; queueSync(); }, 160);
   }, true);
+  var scrollSettleT = 0;
+  /* a wheel arrives before the scroll it causes: pin that scroller's sheets now, so even its first step moves in step */
+  document.addEventListener('wheel', function (ev) {
+    if (!isGlass()) return;
+    for (var n = ev.target && ev.target.nodeType === 1 ? ev.target : null; n; n = n.parentElement) {
+      var ss = scrollSheets.get(n);
+      if (ss) ss.forEach(function (e) { if (e.isConnected && !e.hasAttribute('data-lg-fixed') && !e.__lgPinTried) { e.__lgPinTried = true; if (fixedSafe(e)) e.setAttribute('data-lg-fixed', ''); settleSheets.add(e); } });
+    }
+  }, { passive: true, capture: true });
 
   /* ---- springs ------------------------------------------------------------------------------------------------------
      A damped spring from 0 to 1 sampled at 60 fps until it rests: the same curve every motion uses, so everything moves
@@ -1247,10 +1277,12 @@
     /* an immediate hot/API sync covers queued work; keep no second callback that can remount it next frame */
     if (syncQ) { cancelAnimationFrame(syncQ); syncQ = 0; }
     if (lazyT) { clearTimeout(lazyT); lazyT = 0; }
-    var scopes = dirtyAll ? null : Array.from(dirtyRoots), sheets = settleSheets, strips = settleStrips;
-    dirtyAll = false; dirtyRoots.clear(); settleSheets = new Set(); settleStrips = new Set();
+    /* while a scroll is still moving, its sheets wait for the settle (they stay pinned and keep their rims) */
+    var scrolling = !!scrollSettleT, scopes = dirtyAll ? null : Array.from(dirtyRoots), sheets = scrolling ? new Set() : settleSheets, strips = settleStrips;
+    dirtyAll = false; dirtyRoots.clear(); if (!scrolling) settleSheets = new Set(); settleStrips = new Set();
     if (scopes && !scopes.length && !sheets.size && !strips.size) return;
     pruneGlass();
+    sheets.forEach(unpin);   /* the scroll has settled: anchored frost again, at the very spot it is pinned */
     if (root.hasAttribute('data-lg-demo-host') && document.getElementById('lg-demo-btn')) demo();
     applyWall();
     if (!isGlass()) { unmountAll(); return; }
