@@ -136,12 +136,16 @@
       '<button type="button" class="pmt-textbtn pmt-cz-greset" data-act="group-reset" data-group="' + id + '" hidden' + NOTAG + '>Reset ' + esc(title.toLowerCase()) + '</button></header>' +
       (lead ? '<p class="pmt-cz-glead">' + esc(lead) + '</p>' : '');
   }
-  /* a one-of-several row in the panels' chosen-fill grammar (45-frames.css), its ink moving between the choices */
+  /* a one-of-several row in the panels' chosen-fill grammar (45-frames.css), its ink moving between the choices; a
+     choice may carry shorter words (o[2]) for a row the panels' PMW.czFit finds too narrow for the full ones */
   function seg(key, opts, label) {
     return '<div class="pmt-cz-seg pmw-ink-row" role="radiogroup" aria-label="' + esc(label) + '" data-seg="' + key + '">' + opts.map(function (o) {
-      return '<button type="button" class="pmt-cz-segopt pmw-ink-opt" role="radio" aria-checked="false" data-key="' + key + '" data-value="' + esc(o[0]) + '"' + NOTAG + '>' + esc(o[1]) + '</button>';
+      return '<button type="button" class="pmt-cz-segopt pmw-ink-opt" role="radio" aria-checked="false" data-key="' + key + '" data-value="' + esc(o[0]) + '"' + NOTAG +
+        (o[2] ? ' aria-label="' + esc(o[1]) + '"><span class="pmt-cz-sl">' + esc(o[1]) + '</span><span class="pmt-cz-ss" aria-hidden="true">' + esc(o[2]) + '</span>' : '>' + esc(o[1])) + '</button>';
     }).join('') + '</div>';
   }
+  /* every one-of-several row on one line (the panels' PMW.czFit, 11-editor-customize.js, shared by both screens) */
+  function fit(root) { if (window.PMW && PMW.czFit) PMW.czFit(root); }
   function chip(key, name, help, extra) {
     return '<div class="pmt-cz-chipbox" data-chip="' + key + '"><button type="button" class="pmt-cz-chip" role="switch" aria-checked="false" data-key="' + key + '" data-pmh="tile"' + NOTAG + '>' +
       '<span class="pmt-cz-pins" aria-hidden="true"><i></i><i></i><i></i></span><span class="pmt-cz-chipcopy"><span class="pmt-cz-chipname">' + esc(name) + '</span>' +
@@ -236,7 +240,7 @@
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Size</span><span class="pmt-stepper pmt-cz-stepper"><button type="button" class="pmt-step" data-step="-0.5" aria-label="Smaller"' + tagged('Smaller', 'Text size half a pixel smaller') + '>−</button>' +
       '<output class="pmt-cz-out" data-out="fontSize"></output><button type="button" class="pmt-step" data-step="0.5" aria-label="Bigger"' + tagged('Bigger', 'Text size half a pixel bigger') + '>+</button></span>' +
       '<button type="button" class="pmt-textbtn pmt-cz-default" data-act="default" data-key="fontSize"' + NOTAG + '>Face default</button></div>' +
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Weight</span>' + seg('fontWeight', [[200, 'Extra light'], [300, 'Light'], [400, 'Regular'], [500, 'Medium'], [600, 'Semibold'], [700, 'Bold'], [800, 'Heavy']], 'Weight') +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Weight</span>' + seg('fontWeight', [[200, 'Extra light', '200'], [300, 'Light', '300'], [400, 'Regular', '400'], [500, 'Medium', '500'], [600, 'Semibold', '600'], [700, 'Bold', '700'], [800, 'Heavy', '800']], 'Weight') +
       '<span class="pmt-cz-fhelp" data-weight-why></span></div>' +
       slider('lineHeight', 'Line height', F.lineHeight.min, F.lineHeight.max, F.lineHeight.step, '×') +
       slider('letterSpacing', 'Letter spacing', F.letterSpacing.min, F.letterSpacing.max, F.letterSpacing.step, ' px') +
@@ -267,7 +271,7 @@
       '<p class="pmt-cz-note" data-note-ground hidden></p></section>';
     /* effects */
     html += '<section class="pmt-cz-group" data-group="effects" aria-labelledby="pmt-cz-g-effects">' + ghead('effects', 'Effects', 'Effects run only in the terminal you are in and stop when it is idle.') +
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Effects</span>' + seg('effects', [['follow', 'Follow look'], ['off', 'Off'], ['custom', 'Custom']], 'Effects') +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Effects</span>' + seg('effects', [['follow', 'Follow look', 'Look'], ['off', 'Off'], ['custom', 'Custom']], 'Effects') +
       '<span class="pmt-cz-fhelp" data-effects-why></span></div>' +
       '<div class="pmt-cz-chips pmt-cz-fxchips">' + EFFECTS.map(function (e) {
         var extra = '';
@@ -278,7 +282,7 @@
       }).join('') + '</div><p class="pmt-cz-note" data-note-fx hidden></p></section>';
     /* behaviour */
     html += '<section class="pmt-cz-group" data-group="behavior" aria-labelledby="pmt-cz-g-behavior">' + ghead('behavior', 'Behavior') +
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bell</span>' + seg('bell', [['follow', 'Follow look'], ['visual', 'Visual'], ['off', 'Off']], 'Bell') +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bell</span>' + seg('bell', [['follow', 'Follow look', 'Look'], ['visual', 'Visual'], ['off', 'Off']], 'Bell') +
       '<span class="pmt-cz-fhelp">What a program’s bell does: the look’s own flash, or nothing.</span></div>' +
       '<div class="pmt-cz-chips">' + chip('stickyHeader', 'Keep command titles visible', 'Pins each command’s line while you scroll its output.') +
       chip('copyOnSelect', 'Copy when I highlight', 'Text you select is copied, ready to paste.') + '</div>' +
@@ -472,6 +476,7 @@
       if (sw.textContent !== swt) sw.textContent = swt;
       root.querySelector('.pmt-cz-framelabel').textContent = scope === 'tab' ? 'This terminal' : 'This terminal, like all terminals';
       roving();
+      fit(root);
     }
     function lookEffects(R) {
       var fx = R.effects, l = [];
@@ -509,6 +514,7 @@
       if (hole) fr.style.cssText = 'left:' + x0 + 'px;top:' + y0 + 'px;width:' + (x1 - x0) + 'px;height:' + (y1 - y0) + 'px';
       root.classList.toggle('pmt-cz-narrow', narrow);
       syncDock();
+      fit(root);
     }
 
     /* ---- events ---- */

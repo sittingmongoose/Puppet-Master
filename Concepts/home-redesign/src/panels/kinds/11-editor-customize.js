@@ -168,12 +168,48 @@ function ghead(id, title, lead) {
     '<button type="button" class="pmt-textbtn pmt-cz-greset" data-act="group-reset" data-group="' + id + '" hidden' + NOTAG + '>Reset ' + esc(title.toLowerCase()) + '</button></header>' +
     (lead ? '<p class="pmt-cz-glead">' + esc(lead) + '</p>' : '');
 }
-/* a one-of-several row in the panels' chosen-fill grammar (45-frames.css), its ink moving between the choices */
+/* a one-of-several row in the panels' chosen-fill grammar (45-frames.css), its ink moving between the choices; a
+   choice may carry shorter words (o[2]) for a row PMW.czFit finds too narrow for the full ones */
 function seg(key, opts, label) {
   return '<div class="pmt-cz-seg pmw-ink-row" role="radiogroup" aria-label="' + esc(label) + '" data-seg="' + key + '">' + opts.map(function (o) {
-    return '<button type="button" class="pmt-cz-segopt pmw-ink-opt" role="radio" aria-checked="false" data-key="' + key + '" data-value="' + esc(o[0]) + '"' + NOTAG + '>' + esc(o[1]) + '</button>';
+    return '<button type="button" class="pmt-cz-segopt pmw-ink-opt" role="radio" aria-checked="false" data-key="' + key + '" data-value="' + esc(o[0]) + '"' + NOTAG +
+      (o[2] ? ' aria-label="' + esc(o[1]) + '"><span class="pmt-cz-sl">' + esc(o[1]) + '</span><span class="pmt-cz-ss" aria-hidden="true">' + esc(o[2]) + '</span>' : '>' + esc(o[1])) + '</button>';
   }).join('') + '</div>';
 }
+/* One line for every one-of-several row in a Customize screen, the editor's and the terminal's (77-customize.js calls
+   this too): a row never wraps, since its ink travels along one line. When a row's choices don't fit beside its
+   neighbour, that pair of fields stacks into one column; when they don't fit the full width either, the row says them
+   shorter (their full words stay their spoken names); in a phone-narrow window it becomes a list, its fill moving at
+   once. Measured when the screen opens or is placed again (a resize), when the look or the shown choices change and
+   when a face finishes loading; the key below is read from attributes only, so an unchanged screen costs no layout. */
+var czFitEpoch = 0;
+PMW.czFit = function (root) {
+  var dialog = root && root.querySelector('.pmt-cz-dialog');
+  if (!dialog || !dialog.style.width) return;               // placed first: the width decides
+  var segs = [].slice.call(root.querySelectorAll('.pmt-cz-seg')).filter(function (s) { return !s.closest('[hidden]'); });
+  var shown = segs.map(function (s) { return s.getAttribute('data-seg') + ':' + s.querySelectorAll('.pmt-cz-segopt:not([hidden])').length; }).join(',');
+  var de = document.documentElement;
+  var key = [dialog.style.width, root.getAttribute('data-pmt-look'), root.getAttribute('data-pmt-mode'), de.getAttribute('data-o55-nier-parts') || '', czFitEpoch, shown].join('|');
+  if (root._czFit === key) return;
+  root._czFit = key;
+  var gridOf = function (s) { var f = s.closest('.pmt-cz-field'), g = f && f.parentElement; return g && (g.classList.contains('pmt-cz-grid2') || g.classList.contains('pmt-cz-row')) ? g : null; };
+  [].forEach.call(root.querySelectorAll('.pmt-cz-grid2[data-cols], .pmt-cz-row[data-cols]'), function (g) { g.removeAttribute('data-cols'); });
+  [].forEach.call(root.querySelectorAll('.pmt-cz-seg[data-fit]'), function (s) { s.removeAttribute('data-fit'); });
+  var over = function (s) { return s.scrollWidth > s.clientWidth + 1; };
+  var left = segs.filter(over);
+  var grids = [];
+  left.forEach(function (s) { var g = gridOf(s); if (g && grids.indexOf(g) < 0) grids.push(g); });
+  grids.forEach(function (g) { g.setAttribute('data-cols', '1'); });
+  if (grids.length) left = left.filter(over);
+  var short = left.filter(function (s) { return s.querySelector('.pmt-cz-ss'); });
+  short.forEach(function (s) { s.setAttribute('data-fit', 'short'); });
+  if (short.length) left = left.filter(over);
+  left.forEach(function (s) { s.setAttribute('data-fit', 'stack'); });
+};
+if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', function () {
+  czFitEpoch += 1;
+  [].forEach.call(document.querySelectorAll('.pmt-cz'), function (r) { PMW.czFit(r); });
+});
 function field(label, ctl, help, attrs) {
   return '<div class="pmt-cz-field"' + (attrs || '') + '><span class="pmt-cz-flabel">' + esc(label) + '</span>' + ctl + (help != null ? '<span class="pmt-cz-fhelp"' + (help === '' ? '' : '') + '>' + esc(help) + '</span>' : '') + '</div>';
 }
@@ -267,8 +303,8 @@ function skeleton(name) {
     chip('syntax', 'Colour code by meaning', 'Keywords, strings, names and comments each in their own colour. Off draws all code in the text colour.', '', 'pmed-art-syntax') +
     chip('bracketPairs', 'Bracket pair colours', 'Matching brackets share a colour, a new one at each depth; a stray closing one shows in red.', '', 'pmed-art-brackets') + '</div>' +
     '<div class="pmt-cz-grid2">' + field('Text contrast', seg('contrast', [[4.5, '4.5:1'], [7, '7:1']], 'Text contrast'), 'Every colour keeps at least this contrast. 7:1 moves dim ones lighter or darker; hue stays.') +
-    field('Comments in italics', seg('italicComments', [['follow', 'Follow look'], ['on', 'On'], ['off', 'Off']], 'Comments in italics')) +
-    field('Keywords in bold', seg('boldKeywords', [['follow', 'Follow look'], ['on', 'On'], ['off', 'Off']], 'Keywords in bold')) + '</div>' +
+    field('Comments in italics', seg('italicComments', [['follow', 'Follow look', 'Look'], ['on', 'On'], ['off', 'Off']], 'Comments in italics')) +
+    field('Keywords in bold', seg('boldKeywords', [['follow', 'Follow look', 'Look'], ['on', 'On'], ['off', 'Off']], 'Keywords in bold')) + '</div>' +
     '<div class="pmed-tok" data-at="tokens"><h4 class="pmt-cz-sub">Token colours</h4><p class="pmt-cz-fhelp pmed-tok-lead" data-tok-lead></p>' +
     '<div class="pmed-tok-list" role="group" aria-label="Token colours">' + tokenRows() + '</div>' + tokenPicker() +
     '<div class="pmed-tok-foot"><button type="button" class="pmt-textbtn" data-act="tok-reset" hidden' + NOTAG + '>Reset token colours</button></div></div>' +
@@ -282,7 +318,7 @@ function skeleton(name) {
     '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Size</span><span class="pmt-stepper pmt-cz-stepper"><button type="button" class="pmt-step" data-step="-0.5" aria-label="Smaller"' + tagged('Smaller', 'Text size half a pixel smaller') + '>−</button>' +
     '<output class="pmt-cz-out" data-out="fontSize"></output><button type="button" class="pmt-step" data-step="0.5" aria-label="Bigger"' + tagged('Bigger', 'Text size half a pixel bigger') + '>+</button></span>' +
     '<button type="button" class="pmt-textbtn pmt-cz-default" data-act="default" data-key="fontSize"' + NOTAG + '>13 px, the default</button></div>' +
-    '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Weight</span>' + seg('fontWeight', [[200, 'Extra light'], [300, 'Light'], [400, 'Regular'], [500, 'Medium'], [600, 'Semibold'], [700, 'Bold'], [800, 'Heavy']], 'Weight') +
+    '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Weight</span>' + seg('fontWeight', [[200, 'Extra light', '200'], [300, 'Light', '300'], [400, 'Regular', '400'], [500, 'Medium', '500'], [600, 'Semibold', '600'], [700, 'Bold', '700'], [800, 'Heavy', '800']], 'Weight') +
     '<span class="pmt-cz-fhelp" data-weight-why></span></div>' +
     slider('lineHeight', 'Line spacing', F.lineHeight.min, F.lineHeight.max, F.lineHeight.step) +
     slider('letterSpacing', 'Letter spacing', F.letterSpacing.min, F.letterSpacing.max, F.letterSpacing.step) +
@@ -302,22 +338,22 @@ function skeleton(name) {
     '<p class="pmt-cz-note" data-note-caret hidden></p></section>';
   /* lines and guides */
   html += '<section class="pmt-cz-group" data-group="lines" aria-labelledby="pmed-cz-g-lines">' + ghead('lines', 'Lines & guides') +
-    '<div class="pmt-cz-grid2">' + field('Line numbers', seg('lineNumberMode', [['on', 'On'], ['relative', 'Count from the caret'], ['off', 'Off']], 'Line numbers')) +
-    field('Highlight the current line', seg('lineHighlight', [['follow', 'Follow look'], ['all', 'Line and number'], ['line', 'Line'], ['gutter', 'Number'], ['off', 'Off']], 'Highlight the current line')) + '</div>' +
+    '<div class="pmt-cz-grid2">' + field('Line numbers', seg('lineNumberMode', [['on', 'On'], ['relative', 'Count from the caret', 'Relative'], ['off', 'Off']], 'Line numbers')) +
+    field('Highlight the current line', seg('lineHighlight', [['follow', 'Follow look', 'Look'], ['all', 'Line and number', 'Both'], ['line', 'Line'], ['gutter', 'Number'], ['off', 'Off']], 'Highlight the current line')) + '</div>' +
     '<h4 class="pmt-cz-sub">Indent guides</h4>' +
     '<div class="pmt-cz-tiles pmt-cz-small" role="radiogroup" aria-label="Indent guides">' + GUIDES.map(function (g) { return tile('indentGuides', g[0], g[1], guideArt(g[0]), g[2]); }).join('') + '</div>' +
     '<div class="pmt-cz-chips">' + chip('activeIndent', 'Light the guide of the block I’m in', 'The guide of the block that holds the caret is drawn brighter.') + '</div>' +
-    '<div class="pmt-cz-grid2">' + field('Show spaces', seg('whitespace', [['off', 'Off'], ['boundary', 'Between words'], ['selection', 'In the selection'], ['trailing', 'At line ends'], ['all', 'Everywhere']], 'Show spaces'), 'Faint dots where the spaces are.') +
-    field('Rulers', seg('rulers', [['', 'Off'], ['80', '80'], ['100', '100'], ['120', '120'], ['80,120', '80 and 120']], 'Rulers'), 'Faint lines at the columns lines should stay within.') + '</div>' +
+    '<div class="pmt-cz-grid2">' + field('Show spaces', seg('whitespace', [['off', 'Off'], ['boundary', 'Between words', 'Between'], ['selection', 'In the selection', 'Selected'], ['trailing', 'At line ends', 'Line ends'], ['all', 'Everywhere', 'All']], 'Show spaces'), 'Faint dots where the spaces are.') +
+    field('Rulers', seg('rulers', [['', 'Off'], ['80', '80'], ['100', '100'], ['120', '120'], ['80,120', '80 and 120', '80, 120']], 'Rulers'), 'Faint lines at the columns lines should stay within.') + '</div>' +
     '<div class="pmt-cz-chips">' + chip('wordWrap', 'Wrap long lines', 'Long lines fold onto the next row, keeping their indent, so you never scroll sideways.', '<div class="pmt-cz-chipmore" data-more="wordWrap">' +
-      field('Wrap at', seg('wrapColumn', [[0, 'Window edge'], [80, '80'], [100, '100'], [120, '120']], 'Wrap at')) + '</div>', 'pmed-art-wrap') +
+      field('Wrap at', seg('wrapColumn', [[0, 'Window edge', 'Edge'], [80, '80'], [100, '100'], [120, '120']], 'Wrap at')) + '</div>', 'pmed-art-wrap') +
     chip('minimap', 'Minimap scrollbar', 'The scrollbar draws a small map of the file with its change marks. Off draws a plain one.', '', 'pmed-art-minimap') +
     chip('stickyScroll', 'Sticky scroll', 'The lines that open the block you are reading stay at the top.', '<div class="pmt-cz-chipmore" data-more="stickyScroll">' + slider('stickyLines', 'Lines', 1, 5, 1) + '</div>', 'pmed-art-sticky') + '</div>' +
     '<p class="pmt-cz-note" data-note-lines hidden></p></section>';
   /* motion and effects */
   html += '<section class="pmt-cz-group" data-group="motion" aria-labelledby="pmed-cz-g-motion">' + ghead('motion', 'Motion & effects', 'Nothing here moves while the editor is idle.') +
-    '<div class="pmt-cz-grid2">' + field('Smooth scrolling', seg('smoothScroll', [['follow', 'Follow look'], ['on', 'On'], ['off', 'Off']], 'Smooth scrolling'), 'A wheel’s notches, a page and a jump to a line glide instead of jumping. A trackpad scrolls as it always does.') +
-    field('Scroll past the last line', seg('scrollPastEnd', [['little', 'A few lines'], ['half', 'Half a page'], ['page', 'A full page']], 'Scroll past the last line')) + '</div>' +
+    '<div class="pmt-cz-grid2">' + field('Smooth scrolling', seg('smoothScroll', [['follow', 'Follow look', 'Look'], ['on', 'On'], ['off', 'Off']], 'Smooth scrolling'), 'A wheel’s notches, a page and a jump to a line glide instead of jumping. A trackpad scrolls as it always does.') +
+    field('Scroll past the last line', seg('scrollPastEnd', [['little', 'A few lines', 'Few lines'], ['half', 'Half a page', 'Half page'], ['page', 'A full page', 'Full page']], 'Scroll past the last line')) + '</div>' +
     '<div class="pmt-cz-chips pmt-cz-fxchips">' +
     chip('reveal', 'Lines arrive when a file opens', 'The first screen of a file arrives line by line from the top, quickly.', '', 'pmed-art-reveal') +
     chip('inactiveDim', 'Fade editors I’m not in', 'While you work in another panel, editors you are not in step back a little.', '', 'pmt-cz-art-inactiveDim') +
@@ -326,9 +362,9 @@ function skeleton(name) {
     '<p class="pmt-cz-note" data-note-motion hidden></p></section>';
   /* behaviour */
   html += '<section class="pmt-cz-group" data-group="behavior" aria-labelledby="pmed-cz-g-behavior">' + ghead('behavior', 'Behavior') +
-    '<div class="pmt-cz-grid2">' + field('Diff layout', seg('diffLayout', [['auto', 'Automatic'], ['side', 'Side by side'], ['inline', 'Inline']], 'Diff layout'), 'Automatic shows the two sides side by side when the tab is wide enough.') +
-    field('Problems to highlight', seg('diagnostics', [['off', 'Off'], ['errors', 'Errors'], ['warnings', 'And warnings'], ['all', 'Everything']], 'Problems to highlight'), 'A wavy line under each one; rest the pointer on it to read it.') +
-    field('Save automatically', seg('autosave', [['off', 'Off'], ['500', 'After 0.5 s'], ['1000', 'After 1 s'], ['focus', 'When I leave']], 'Save automatically'), 'A pause after you stop typing, or when the focus leaves the file.') +
+    '<div class="pmt-cz-grid2">' + field('Diff layout', seg('diffLayout', [['auto', 'Automatic', 'Auto'], ['side', 'Side by side', 'Split'], ['inline', 'Inline']], 'Diff layout'), 'Automatic shows the two sides side by side when the tab is wide enough.') +
+    field('Problems to highlight', seg('diagnostics', [['off', 'Off'], ['errors', 'Errors'], ['warnings', 'And warnings', 'Warnings'], ['all', 'Everything', 'All']], 'Problems to highlight'), 'A wavy line under each one; rest the pointer on it to read it.') +
+    field('Save automatically', seg('autosave', [['off', 'Off'], ['500', 'After 0.5 s', '0.5 s'], ['1000', 'After 1 s', '1 s'], ['focus', 'When I leave', 'On leave']], 'Save automatically'), 'A pause after you stop typing, or when the focus leaves the file.') +
     '<div class="pmt-cz-field"><span class="pmt-cz-flabel">A jumped-to line stays lit</span>' + slider('gotoHighlightMs', 'For', F.gotoHighlightMs.min, F.gotoHighlightMs.max, F.gotoHighlightMs.step, true) +
     '<span class="pmt-cz-fhelp">A line opened from the chat, a problem or Go to line is lit this long, then fades.</span></div></div>' +
     '<div data-at="indent"><h4 class="pmt-cz-sub">Indentation</h4>' +
@@ -538,6 +574,7 @@ function open(opts) {
     setT(root.querySelector('.pmt-cz-framelabel'), scope === 'tab' ? 'This editor' : 'This editor, like all editors');
     paintTokens();
     roving();
+    PMW.czFit(root);
   }
   function setPressed(id, mineKeys) {
     var s = SETS.filter(function (x) { return x.id === id; })[0]; if (!s) return false;
@@ -567,6 +604,7 @@ function open(opts) {
     if (hole) fr.style.cssText = 'left:' + x0 + 'px;top:' + y0 + 'px;width:' + (x1 - x0) + 'px;height:' + (y1 - y0) + 'px';
     root.classList.toggle('pmt-cz-narrow', narrow);
     syncDock();
+    PMW.czFit(root);
   }
 
   /* ---- events ---- */
