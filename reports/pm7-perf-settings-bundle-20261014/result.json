@@ -1,0 +1,16 @@
+{
+  "verdict": "HOLD_NOT_LAND_READY",
+  "source_commit": "fa8fd4235f3b6bd13f7043b1821397f4341a444a",
+  "branch": "fix/pm7-perf-settings-bundle-20261014",
+  "base": "916059849e59917123f726114cc9049596714dc0",
+  "windows": 1308,
+  "pairs": 654,
+  "snapshot_differences": 0,
+  "reason": "Repeatable warm Auto savings coexist with slower cold family changes and cold NieR Light General. The full bundle fails the requirement that no look become slower. No reduced bundle has qualified.",
+  "nier_mode_blocker": "The earlier roughly 588 ms Dark mode rise did not repeat. Warm Dark paired median change is +0.8 ms and 5/10 pairs are faster; Light paired median change is -27.1 ms and 7/10 are faster. This is not a claim of universal equivalence or a dismissal of the prior result. The conditional diagnostic-and-remove-M6 step was not triggered by this run.",
+  "evidence": {
+    "manifest": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/bundle-verdict-manifest.json",
+    "sha256": "31122f09fe2d36ebf9e69b099692a3575722be9b393ed8da78b0d211048ccbf2"
+  },
+  "next": "Exactly one profiled M4 iteration; any remaining contract failure is handed back for Opus design. No main landing."
+}
