@@ -82011,6 +82011,12 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":958,"inventory_sha256":"be85c
   let domainSectionMap = {};
   let pendingScroll = null;
   let softRemount = false;
+  let commitSettingsShell = markup => { root.innerHTML = markup; };
+  let sizeSettingsEndSpace = (scroller, end, sections) => {
+    if (!sections.length) return;
+    const last = sections[sections.length - 1];
+    end.style.height = `${Math.max(140, scroller.clientHeight - Math.min(last.offsetHeight, scroller.clientHeight * .62) + 48)}px`;
+  };
   let preservedScrollTop = null;
   let detailHideTimer = null;
   let detailInspectorVisible = false;
@@ -82541,7 +82547,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":958,"inventory_sha256":"be85c
     }
     const domain = getDomain();
     const workspace = getWorkspace(domain);
-    root.innerHTML = `
+    commitSettingsShell(`
       <div class="pm-shell ${state.railOpen ? 'rail-open' : ''}">
         ${renderDomainRail(domain)}
         <section class="workspace-shell">
@@ -82553,7 +82559,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":958,"inventory_sha256":"be85c
           </div>
         </section>
       </div>
-      <div class="toast-stack" id="toast-stack"></div>`;
+      <div class="toast-stack" id="toast-stack"></div>`);
     root.classList.add('is-ready');
     root.querySelectorAll('.manager-page').forEach(node=>node.classList.toggle('has-manager-tabs',!!node.querySelector(':scope > .manager-tabs')));
     requestAnimationFrame(afterRender);
@@ -83251,11 +83257,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":958,"inventory_sha256":"be85c
       const scroller = root.querySelector('#settings-document');
       const end = scroller?.querySelector('.settings-end-space');
       const sections = scroller ? [...scroller.querySelectorAll('[data-section-id]')] : [];
-      if (scroller && end && sections.length) {
-        const last = sections[sections.length - 1];
-        const required = Math.max(140, scroller.clientHeight - Math.min(last.offsetHeight, scroller.clientHeight * .62) + 48);
-        end.style.height = `${required}px`;
-      }
+      if (scroller && end) sizeSettingsEndSpace(scroller, end, sections);
       if (restoreTop != null) suppressScrollSpyUntil = performance.now() + 180;
       setupScrollSpy();
       if (pendingScroll && restoreTop == null) {
@@ -88052,7 +88054,9 @@ PM51.settingRows = (ids, { title, help, overrides = {}, cls, id: sectionId } = {
    While the Details panel is open the engine re-rendered the whole of Settings instead (renderApp soft): the panel
    was torn down and sprang back in over a fading scrim, which read as the screen flashing black on every change made
    in it. Now only the row is swapped (focus stays on the control that was used), and the panel updates in place
-   (PM51.syncInspector, kit.d/30-inspector.js). A row in All Settings keeps its list bookkeeping attributes. */
+   (PM51.syncInspector, kit.d/30-inspector.js). A row in All Settings keeps its list bookkeeping attributes.
+   Every row the kit can draw again goes through PM51.swapRow, which patches the row in place (kit.d/28-in-place.js):
+   the control that was used keeps focus and hover and runs its own transition (M4, 2026-10-14). */
 const pm51OriginalRefreshSettingRow = refreshSettingRow;
 const pm51FocusIndex = el => { const act = document.activeElement; if (!act || !el.contains(act)) return -1; return [...el.querySelectorAll('button, input, select, textarea, [tabindex]')].indexOf(act); };
 PM51.swapRow = (el, next) => {
@@ -88067,7 +88071,7 @@ refreshSettingRow = function (id) {
   const el = root.querySelector(`#setting-${cssEscape(id)}`);
   const inspecting = state.detailSetting === id || detailInspectorVisible;
   const own = !!(override && el && el.closest('.pm51-setting-rows'));
-  if (!own && !inspecting) return pm51OriginalRefreshSettingRow.apply(this, arguments);
+  if (!own && !inspecting && !(el && findSettingGlobal(id))) return pm51OriginalRefreshSettingRow.apply(this, arguments);
   saveState();
   if (el) {
     const found = own ? null : findSettingGlobal(id);
@@ -88707,34 +88711,9 @@ jumpToWorkspace = function (wsId, behavior) {
 };
 
 /* ---------- re-renders keep the reader's place ------------------------ */
-/* Host-driven setting changes (theme, density, host projections) call renderApp() without a
-   navigation intent. The engine's full remount reset the page to the top of the domain and the
-   scroll spy then reported the first workspace as active. When the rendered domain is unchanged
-   and no navigation scroll is pending, render softly and re-anchor the active workspace block at
-   the same offset it had before. Navigation (pendingScroll), Home, and explicit soft renders are
-   untouched. */
-const pm51OriginalRenderApp = renderApp;
-const pm51DocOffset = (scroller, block) => block.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop;
-let pm51Anchor = null;
-renderApp = function (options = {}) {
-  pm51Anchor = null;
-  if (!state.home && !options.soft && !pendingScroll) {
-    const rendered = root.querySelector('.domain-link.active');
-    const scroller = root.querySelector('#settings-document');
-    const block = scroller && state.workspace ? root.querySelector(`[data-workspace-block="${cssEscape(state.workspace)}"]`) : null;
-    if (rendered && rendered.dataset.domain === state.domain && block) {
-      pm51Anchor = { domain: state.domain, workspace: state.workspace, delta: scroller.scrollTop - pm51DocOffset(scroller, block) };
-      options = Object.assign({}, options, { soft: true });
-    }
-  }
-  return pm51OriginalRenderApp(options);
-};
-/* The engine restores a soft remount numerically (preservedScrollTop) in three consecutive frames,
-   before the blocks above the active workspace exist; that both landed on placeholder heights and
-   clobbered any navigation started in between (same-domain jumps do not re-render, so their smooth
-   scroll was overwritten by the second and third apply). The kit takes the restore over: hydrate the
-   blocks above, apply the exact offset once, re-check once, and yield to any navigation in flight. */
-const pm51OriginalAfterRender = afterRender;
+/* A redraw that is not a navigation updates the page in place (kit.d/28-in-place.js), and the reader's place, the end
+   space and the active section have one owner, kit.d/27-place.js. (This block used to render softly and put the
+   active workspace back at its old offset by number, three times, before late rows had arrived: M4, 2026-10-14.) */
 /* Sticky rosters need the scroller height as a CSS variable (the settings host is only an
    inline-size container, so cqh is unavailable). */
 let pm51RosterFitObserver = null, pm51RosterFitTarget = null;
@@ -88746,32 +88725,11 @@ function installRosterFit() {
   if (pm51RosterFitObserver) pm51RosterFitObserver.disconnect();
   pm51RosterFitObserver = new ResizeObserver(apply); pm51RosterFitObserver.observe(scroller); pm51RosterFitTarget = scroller;
 }
+const pm51OriginalAfterRender = afterRender;
 afterRender = function () {
   popoutClose({ restoreFocus: false });
   try { installRosterFit(); } catch (e) { /* cosmetic */ }
-  const a = pm51Anchor; pm51Anchor = null;
-  let restore = null;
-  if (a) {
-    preservedScrollTop = null;
-    if (softRemount && !state.home && state.domain === a.domain && state.workspace === a.workspace && !pendingScroll) {
-      const scroller = root.querySelector('#settings-document');
-      const block = scroller && root.querySelector(`[data-workspace-block="${cssEscape(a.workspace)}"]`);
-      if (scroller && block) { pm51MountPreceding(a.workspace); restore = { scroller, workspace: a.workspace, wanted: Math.max(0, Math.round(pm51DocOffset(scroller, block) + a.delta)) }; }
-    }
-  }
-  /* the scroll spy would otherwise re-label the active workspace at scrollTop 0 before the restore */
-  if (restore) suppressScrollSpyUntil = Math.max(suppressScrollSpyUntil, performance.now() + 200);
-  const out = pm51OriginalAfterRender.apply(this, arguments);
-  if (restore) {
-    const apply = () => {
-      if (state.workspace !== restore.workspace || pendingScroll || !restore.scroller.isConnected) return;
-      restore.scroller.style.scrollBehavior = 'auto'; restore.scroller.scrollTop = restore.wanted; restore.scroller.style.scrollBehavior = '';
-      suppressScrollSpyUntil = Math.max(suppressScrollSpyUntil, performance.now() + 180);
-    };
-    apply();
-    requestAnimationFrame(() => { if (Math.abs(restore.scroller.scrollTop - restore.wanted) > 1) apply(); });
-  }
-  return out;
+  return pm51OriginalAfterRender.apply(this, arguments);
 };
 if (window.PM12_KIMI && typeof window.PM12_KIMI === 'object') window.PM12_KIMI.renderApp = (...args) => renderApp(...args);
 const pm51OriginalBoot = boot;
@@ -88780,7 +88738,11 @@ boot = function () { const r = pm51OriginalBoot.apply(this, arguments); if (wind
 /* ---------- motion: no blank frames ----------------------------------- */
 armSectionReveal = function () {
   try { PM51.applyFilters(root); } catch (e) { /* filters are a convenience; never block reveal */ }
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  /* reduced motion, the system's or the app's own Reduce motion: every section is simply there */
+  if (o55Still()) {
+    root.querySelectorAll('.will-reveal').forEach(node => { node.classList.remove('will-reveal'); node.classList.add('is-revealed', 'pm51-instant'); });
+    return;
+  }
   const nodes = root.querySelectorAll('.section-block, .settings-section, .manager-section');
   if (!nodes.length) return;
   const scroller = root.querySelector('#settings-document');
@@ -91314,7 +91276,9 @@ window.PM_NIER = Object.freeze({
       const at = state.home ? 'home' : `${state.domain}/${state.workspace}`;
       if (at !== settingsAt) {
         const first = !settingsAt; settingsAt = at;
-        if (!first && live.has('decode')) { const h = root.querySelector('.workspace-separator h2'); if (h && h.getClientRects().length) decode(h); }
+        /* a redraw in place is not a page change (the reader scrolled into another page of the chapter): no decode */
+        const inPlace = !!(PM51.place && PM51.place.inPlace);
+        if (!first && !inPlace && live.has('decode')) { const h = root.querySelector('.workspace-separator h2'); if (h && h.getClientRects().length) decode(h); }
       }
     } catch (e) { /* decoration only */ }
     return r;
@@ -92794,6 +92758,8 @@ setupScrollSpy = function () {
   let raf = 0;
   const update = () => {
     raf = 0;
+    /* an update in place never changes the active section: the tracker judges only a scroll or a landing (27-place.js) */
+    if (PM51.place && !PM51.place.spyMay()) return;
     if (performance.now() < suppressScrollSpyUntil) { raf = requestAnimationFrame(update); return; }
     const blocks = [...scroller.querySelectorAll('[data-workspace-block]')];
     if (!blocks.length) return;
@@ -93585,6 +93551,671 @@ afterRender = function () {
      watcher above catches a row that is drawn later. */
   document.addEventListener('click', settle);
 })();
+
+/* ---- kit.d/27-place.js ---- */
+/* O55 · the reader's place in Settings (M4, 2026-10-14). An update that is not a navigation never moves what the reader
+   is looking at (M4-DESIGN-DECISION.md, share/puppet-master/2026-10-13-perf-fixes). Three things used to be decided by
+   whichever code ran last in a re-render, and each now has one owner, this file:
+   - the anchor: the row at the reading line (96 px below the top of the page, the line the section tracker reads), or
+     the row of the control just used. While the reader is not scrolling and no jump is under way the page holds it:
+     a layout change above it (an update in place, a late row, a font, a dependent row opening, a manager redrawing its
+     body) is taken back in a ResizeObserver, after layout and before that frame is painted. The anchor is found by
+     hit-testing the line, so a row clipped by its own scroller or covered by a sticky strip is never chosen, and rows
+     inside sticky parts (a manager's roster, its tab strip) are skipped: they do not move with the page. It is held by
+     node while the node lives and found again by its path (ids, then keyed children) when a redraw replaced it; if it
+     is gone (a dependent row hidden), the nearest surviving row above it holds instead. Positions are layout positions,
+     never drawn ones (a reveal slide or the hover magnet would otherwise be held). At the top of the page the page
+     stays at the top, except under the control just used: that row holds there too, on a top reserve if need be.
+   - the end space under the chapter's last section: sized from that section (the engine sized it from whichever
+     section happened to be mounted last, so a redraw at the bottom of General shrank it from 686 to 395 px and pulled
+     the page up), and never shrunk by more than the room left below the screen, so it can never move the reader. The
+     rest of a shrink waits until the reader scrolls up.
+   - the active section: the section tracker judges it while the reader scrolls or a jump lands, and is quiet while the
+     page holds, so an update in place never changes it.
+   A navigation (a chapter, a page tab, a section, a search hit, a Details link) owns the scroll until its landing has
+   come to rest; then the place takes the row at the reading line of the settled view. The reader's own wheel, touch,
+   keys or scroll bar hand the page to the reader in the same way. The in-place redraw itself is 28-in-place.js. */
+
+const O55P_LINE = 96;
+const O55P_STICKY = '.manager-tabs, .pm51-roster, .resource-roster, .pm51-facets, .pm51-popout-search, .workspace-tabs';
+const O55P_SCROLL_KEYS = new Set(['PageUp', 'PageDown', 'Home', 'End', 'ArrowUp', 'ArrowDown', ' ', 'Spacebar']);
+const o55pScroller = () => root.querySelector('#settings-document');
+const o55pShown = sc => !!(sc && sc.isConnected && sc.clientHeight > 0 && sc.getClientRects().length);
+const o55pZoom = () => parseFloat(getComputedStyle(document.body).zoom) || 1;
+/* Where a node sits in the page's layout, in scroll pixels from the top of the view. Transforms are left out on purpose:
+   a section still sliding in (its reveal), a row under the hover magnet or a NieR glitch are drawn moved but have not
+   moved, and holding a drawn position would hold an animation's frame and jump when it ends. */
+const o55pDocY = n => { let y = 0; for (; n; n = n.offsetParent) y += n.offsetTop; return y; };
+const o55pTop = (el, sc) => o55pDocY(el) - o55pDocY(sc) - sc.scrollTop;
+
+const PLACE = PM51.place = {
+  mode: 'free',     // free (nothing settled yet) · nav (a jump owns the scroll) · user (the reader scrolls) · hold
+  anchor: null,
+  inPlace: false,   // an in-place redraw is being committed (28-in-place.js)
+  own: null,        // the last scrollTop the place wrote, to tell its own scroll events from anyone else's
+  navAt: 0,
+  spyMay() { return this.mode !== 'hold'; }
+};
+
+/* ---------- finding the row at the reading line --------------------------------------------------------------------- */
+function o55pFixed(el, sc) {
+  for (let n = el; n && n !== sc; n = n.parentElement) {
+    if (n.matches(O55P_STICKY)) return true;
+    const p = getComputedStyle(n).position;
+    if (p === 'sticky' || p === 'fixed') return true;
+  }
+  return false;
+}
+/* the largest box around a point that is still row-sized: a setting row, a manager row or card, a section heading */
+function o55pUnitOf(el, sc) {
+  const cap = Math.min(240, sc.clientHeight * .4);
+  let unit = null;
+  for (let n = el; n && n !== sc; n = n.parentElement) {
+    if (n.nodeType !== 1 || n.matches('[data-workspace-block], [data-continuous-workspace-body], .domain-document')) break;
+    const h = n.offsetHeight;
+    if (h > cap) { if (unit) break; continue; }
+    if (h > 0 && getComputedStyle(n).display.indexOf('inline') !== 0) unit = n;
+  }
+  return unit;
+}
+function o55pUnitAt(sc, y) {
+  const doc = sc.querySelector('.domain-document') || sc, r = doc.getBoundingClientRect();
+  for (const f of [.5, .3, .7, .14, .86]) {
+    const x = r.left + r.width * f;
+    for (const el of document.elementsFromPoint(x, y)) {
+      if (el === sc || !sc.contains(el)) continue;
+      const unit = o55pUnitOf(el, sc);
+      if (unit && !o55pFixed(unit, sc) && unit.getBoundingClientRect().bottom > y) return unit;
+      break;
+    }
+  }
+  return null;
+}
+function o55pPick(sc, from) {
+  const top = sc.getBoundingClientRect().top, z = o55pZoom(), y0 = from == null ? top + O55P_LINE * z : from;
+  for (let dy = 0; dy <= 220; dy += 8) { const u = o55pUnitAt(sc, y0 + dy * z); if (u) return u; }
+  return null;
+}
+/* a node's path from the nearest id: [tag+key, index among same-key siblings] steps, to find it again after a redraw */
+function o55pKey(n) {
+  for (const k of ['data-section-id', 'data-workspace-block', 'data-continuous-workspace-body', 'data-setting', 'data-id', 'data-action'])
+    if (n.hasAttribute(k)) return n.tagName + '[' + k + '=' + n.getAttribute(k) + ']';
+  const c = n.getAttribute('class'); return n.tagName + '.' + (c ? c.trim().split(/\s+/)[0] : '');
+}
+function o55pPath(el, sc) {
+  const steps = [];
+  for (let n = el; n && n !== sc; n = n.parentElement) {
+    if (n.id) { steps.push({ id: n.id }); break; }
+    const k = o55pKey(n); let i = 0;
+    for (let s = n.previousElementSibling; s; s = s.previousElementSibling) if (o55pKey(s) === k) i++;
+    steps.push({ k, i });
+  }
+  return steps.reverse();
+}
+function o55pFind(path, sc) {
+  let n = sc;
+  for (const st of path) {
+    if (st.id) { n = document.getElementById(st.id); if (!n || !sc.contains(n)) return null; continue; }
+    let i = st.i, hit = null;
+    for (let c = n.firstElementChild; c; c = c.nextElementSibling) if (o55pKey(c) === st.k && i-- === 0) { hit = c; break; }
+    if (!hit) return null;
+    n = hit;
+  }
+  return n === sc ? null : n;
+}
+function o55pResolve(a, sc) {
+  if (a.el && a.el.isConnected && sc.contains(a.el) && a.el.getClientRects().length) return a.el;
+  const again = o55pFind(a.path, sc);
+  if (again && again.getClientRects().length) { a.el = again; return again; }
+  return null;
+}
+
+/* ---------- capture, hold, release --------------------------------------------------------------------------------- */
+PLACE.capture = function (kind, from) {
+  const sc = o55pScroller();
+  if (!o55pShown(sc)) { this.anchor = null; return null; }
+  const st = sc.getBoundingClientRect().top, z = o55pZoom();
+  /* the control just used holds even at the top of the page: it never moves out from under the pointer or focus */
+  let unit = from && sc.contains(from) && from !== sc ? o55pUnitOf(from, sc) : null;
+  if (unit && (o55pFixed(unit, sc) || unit.getBoundingClientRect().bottom <= st || unit.getBoundingClientRect().top >= sc.getBoundingClientRect().bottom)) unit = null;
+  if (!unit && sc.scrollTop < 1) { this.anchor = { top: true, kind }; this.own = 0; o55pWatch(sc, null); return this.anchor; }
+  if (!unit) unit = o55pPick(sc);
+  if (!unit) unit = [...sc.querySelectorAll('[data-workspace-block]')].reverse().find(b => b.getBoundingClientRect().top <= st + O55P_LINE * z) || null;
+  if (!unit) { this.anchor = null; return null; }
+  const top = unit.getBoundingClientRect().top;
+  /* rows above it, nearest first, in case it disappears */
+  const near = [];
+  for (let y = top - 6, seen = new Set([unit]); near.length < 3 && y > st - 300 * z; y -= 40 * z) {
+    const u = o55pUnitAt(sc, y);
+    if (u && !seen.has(u) && u.getBoundingClientRect().top < top) { seen.add(u); near.push({ el: u, path: o55pPath(u, sc), offset: o55pTop(u, sc) }); }
+  }
+  this.anchor = { kind, el: unit, path: o55pPath(unit, sc), offset: o55pTop(unit, sc), near };
+  this.own = sc.scrollTop;
+  o55pWatch(sc, unit);
+  return this.anchor;
+};
+/* While the page holds, the place is the scroller's only anchoring: the browser's own scroll anchoring picks its own
+   node (the first one at the top of the view, never the reading line) and, the moment the page left 0, undid the
+   place's correction. It is the browser's again while the reader scrolls or a jump lands. */
+const o55pNative = on => { const sc = o55pScroller(); if (sc && (sc.style.overflowAnchor === 'none') === on) sc.style.overflowAnchor = on ? '' : 'none'; };
+PLACE.hold = function (kind, from) { this.mode = 'hold'; o55pStopSettle(); o55pNative(false); this.capture(kind || 'read', from); };
+PLACE.user = function () {
+  if (this.mode === 'user' && o55pSettle) return;
+  this.mode = 'user'; this.anchor = null; suppressScrollSpyUntil = 0; o55pNative(true); o55pSettleSoon();
+};
+PLACE.nav = function () { this.mode = 'nav'; this.anchor = null; this.navAt = performance.now(); o55pNative(true); o55pSettleSoon(); };
+
+function o55pWrite(sc, top) {
+  sc.scrollTo({ top, behavior: 'instant' });
+  PLACE.own = sc.scrollTop;
+}
+/* The top reserve. At the top of the page a change that makes the rows above the control shorter cannot be taken back by
+   scrolling (there is nothing above 0): Spacing set to Compact at the top of General pulled its own row up 86 px under
+   the pointer. The shortfall becomes blank space above the chapter's title instead; content above that grows again uses
+   it up first, and once the reader has scrolled it out of view it goes (the browser's own anchoring keeps the page still
+   then). A new page never has one. */
+const o55pReserveEl = sc => sc.querySelector(':scope > .domain-document > .o55-top-reserve');
+const o55pReserveH = sc => { const r = o55pReserveEl(sc); return r ? parseFloat(r.style.height) || 0 : 0; };
+function o55pSetReserve(sc, h) {
+  const doc = sc.querySelector(':scope > .domain-document'); if (!doc) return;
+  let r = o55pReserveEl(sc);
+  if (h < .5) { if (r) r.remove(); return; }
+  if (!r) { r = document.createElement('div'); r.className = 'o55-top-reserve'; r.setAttribute('aria-hidden', 'true'); doc.insertBefore(r, doc.firstChild); }
+  r.style.height = Math.round(h * 100) / 100 + 'px';
+}
+/* take back whatever moved the anchor; runs in the ResizeObserver (layout done, frame not yet painted) */
+PLACE.correct = function () {
+  const a = this.anchor, sc = o55pScroller();
+  if (this.mode !== 'hold' || !a || !o55pShown(sc)) return;
+  if (a.top) { if (sc.scrollTop !== 0 && this.own === 0) o55pWrite(sc, 0); return; }
+  let el = o55pResolve(a, sc), want = a.offset;
+  if (!el) {
+    const n = a.near.find(r => o55pResolve(r, sc));
+    if (!n) return;
+    el = n.el; want = n.offset;
+    this.anchor = { kind: a.kind, el, path: n.path, offset: n.offset, near: a.near.slice(a.near.indexOf(n) + 1) };
+    o55pWatch(sc, el);
+  }
+  let d = o55pTop(el, sc) - want;
+  if (Math.abs(d) < .5) return;
+  const reserve = o55pReserveH(sc);
+  if (d > 0 && reserve > 0) { const take = Math.min(reserve, d); o55pSetReserve(sc, reserve - take); d -= take; }
+  if (sc.scrollTop + d < 0) { o55pSetReserve(sc, o55pReserveH(sc) - (sc.scrollTop + d)); if (sc.scrollTop) o55pWrite(sc, 0); return; }
+  if (Math.abs(d) >= .5) o55pWrite(sc, sc.scrollTop + d);   /* at the bottom the rest cannot be taken back */
+};
+
+/* ---------- the end space -------------------------------------------------------------------------------------------- */
+function o55pLastSection(sc) {
+  const blocks = sc.querySelectorAll('[data-workspace-block]'), block = blocks[blocks.length - 1];
+  const body = block && block.querySelector('[data-continuous-workspace-body]');
+  if (!body) return null;
+  if (body.dataset.workspaceMounted === 'false') return body;
+  const own = [...body.querySelectorAll('[data-section-id]')].filter(s => s.parentElement.closest('[data-section-id]') === null && s.offsetHeight > 0);
+  return own[own.length - 1] || body;
+}
+PLACE.sizeEnd = function (sc, end) {
+  sc = sc || o55pScroller(); end = end || (sc && sc.querySelector(':scope > .domain-document > .settings-end-space, .settings-end-space'));
+  if (!sc || !end || !sc.clientHeight) return;
+  const ch = sc.clientHeight, last = o55pLastSection(sc);
+  const want = Math.max(140, ch - Math.min(last ? last.offsetHeight : 0, ch * .62) + 48);
+  const set = parseFloat(end.style.height), cur = Number.isFinite(set) ? set : 0;
+  let next = want;
+  /* shrinking by more than the room below the screen would pull the page up under the reader */
+  if (want < cur) next = Math.max(want, cur - Math.max(0, sc.scrollHeight - ch - sc.scrollTop));
+  end.__o55Want = want;
+  if (!Number.isFinite(set) || Math.abs(next - cur) >= .5) end.style.height = Math.round(next * 100) / 100 + 'px';
+};
+sizeSettingsEndSpace = (scroller, end) => PLACE.sizeEnd(scroller, end);
+
+/* ---------- watching layout: one observer for the page's blocks, sections, the anchor's ancestors ------------------- */
+let o55pObserver = null, o55pWatched = null;
+/* Layout is done when this runs, so reading it costs nothing. The end space is sized here too: nothing the observer
+   watches changes size when it does (the document column and the end space itself are left out on purpose). */
+function o55pOnResize() {
+  if (PLACE.mode !== 'hold' && !o55pSettle) o55pSettleSoon();   /* e.g. Settings shown again while a landing was pending */
+  PLACE.correct();
+  PLACE.sizeEnd();
+}
+function o55pWatch(sc, anchorEl) {
+  if (typeof ResizeObserver !== 'function' || !sc) return;
+  if (!o55pObserver) o55pObserver = new ResizeObserver(o55pOnResize);
+  const want = new Set([sc]);
+  sc.querySelectorAll('[data-workspace-block], [data-section-id]').forEach(n => want.add(n));
+  /* the anchor's ancestors and everything beside them: any size change above the anchor is one of these */
+  for (let n = anchorEl; n && n !== sc; n = n.parentElement) {
+    if (n.classList.contains('domain-document')) break;   /* the place resizes the reserve and the end space in here */
+    want.add(n); for (let c = n.parentElement && n.parentElement.firstElementChild; c; c = c.nextElementSibling) if (!c.matches('.settings-end-space, .o55-top-reserve')) want.add(c);
+  }
+  if (o55pWatched && want.size === o55pWatched.size && [...want].every(n => o55pWatched.has(n))) return;
+  o55pObserver.disconnect();
+  want.forEach(n => o55pObserver.observe(n));
+  o55pWatched = want;
+}
+PLACE.watch = function () { const sc = o55pScroller(); if (sc) o55pWatch(sc, this.anchor && this.anchor.el); };
+
+/* ---------- settling: a jump or the reader's scroll has come to rest -------------------------------------------------- */
+/* Judged from the scroller's own scroll events and a timer, never by reading layout in each frame: on a look whose
+   background animates (Glass, NieR) every frame has fresh style to compute, and polling the scroll position in each one
+   forced an extra style pass per frame for the length of a landing. */
+let o55pSettle = 0, o55pBar = false, o55pScrollAt = 0;
+function o55pStopSettle() { clearTimeout(o55pSettle); o55pSettle = 0; }
+function o55pSettleSoon() {
+  if (o55pSettle) return;
+  const step = () => {
+    o55pSettle = 0;
+    if (PLACE.mode === 'hold') return;
+    const sc = o55pScroller(), now = performance.now();
+    if (!sc || !sc.isConnected) return;   /* no document page (Settings Home): the next arrival starts this again */
+    const busy = pendingScroll || o55pBar || o55Landing || now - PLACE.navAt < 260 || now - o55pScrollAt < 160;
+    if (busy) { o55pSettle = setTimeout(step, 80); return; }
+    if (!o55pShown(sc)) return;   /* hidden: the observer on the scroller restarts this when Settings shows again */
+    PLACE.hold('read');
+  };
+  o55pSettle = setTimeout(step, 80);
+}
+
+/* ---------- who is moving the page --------------------------------------------------------------------------------- */
+const o55pInDoc = t => { const sc = o55pScroller(); return !!(sc && t && t.nodeType === 1 && sc.contains(t)); };
+root.addEventListener('wheel', e => { if (o55pInDoc(e.target)) PLACE.user(); }, { capture: true, passive: true });
+root.addEventListener('touchstart', e => { if (o55pInDoc(e.target)) PLACE.user(); }, { capture: true, passive: true });
+root.addEventListener('pointerdown', e => {
+  const sc = o55pScroller();
+  if (!sc || !e.target || e.target.nodeType !== 1) return;
+  if (e.target === sc) { o55pBar = true; PLACE.user(); return; }   /* its scroll bar */
+  if (sc.contains(e.target) && PLACE.mode !== 'nav') PLACE.hold('control', e.target);
+}, { capture: true, passive: true });
+window.addEventListener('pointerup', () => { o55pBar = false; }, { capture: true, passive: true });
+window.addEventListener('pointercancel', () => { o55pBar = false; }, { capture: true, passive: true });
+root.addEventListener('keydown', e => {
+  const t = e.target, sc = o55pScroller();
+  if (!sc || !t || t.nodeType !== 1) return;
+  const typing = t.matches('input, textarea, select, [contenteditable=""], [contenteditable="true"]');
+  if (O55P_SCROLL_KEYS.has(e.key) && !typing && (t === sc || !sc.contains(t) || !t.closest('[role="radiogroup"], [role="tablist"], [role="listbox"], [role="menu"]'))) {
+    if (t === sc || sc.contains(t) || t === document.body) PLACE.user();
+    return;
+  }
+  if (sc.contains(t) && PLACE.mode !== 'nav') PLACE.hold('control', t);
+}, { capture: true });
+/* a scroll the place did not cause while it holds: someone else moved the page (focus, find in page, a script) */
+root.addEventListener('scroll', e => {
+  const sc = o55pScroller();
+  if (!sc || e.target !== sc) return;
+  o55pScrollAt = performance.now();
+  const end = sc.querySelector('.settings-end-space');
+  if (end && end.__o55Want != null && parseFloat(end.style.height) > end.__o55Want + .5) PLACE.sizeEnd(sc, end);
+  /* the reader has scrolled the top reserve out of view: it goes, and the browser's anchoring keeps the page still */
+  const reserve = PLACE.mode !== 'hold' && o55pReserveEl(sc);
+  if (reserve && reserve.getBoundingClientRect().bottom < sc.getBoundingClientRect().top - 1) reserve.remove();
+  if (PLACE.mode !== 'hold' || !PLACE.anchor || Math.abs(sc.scrollTop - (PLACE.own == null ? sc.scrollTop : PLACE.own)) < 1) return;
+  const a = PLACE.anchor, el = a.top ? null : o55pResolve(a, sc);
+  if (a.top ? sc.scrollTop < 1 : el && Math.abs(o55pTop(el, sc) - a.offset) < 1) { PLACE.own = sc.scrollTop; return; }
+  PLACE.user();
+}, { capture: true, passive: true });
+
+/* ---------- navigation owns the scroll ----------------------------------------------------------------------------- */
+const o55pJump = jumpToWorkspace;
+jumpToWorkspace = function (wsId, behavior) {
+  PLACE.nav();
+  return o55pJump.call(this, wsId, behavior || (o55Still() ? 'auto' : behavior));
+};
+const o55pToSection = scrollToSection;
+scrollToSection = function (sectionId, smooth = true) {
+  PLACE.nav();
+  return o55pToSection.call(this, sectionId, smooth && !o55Still());
+};
+const o55pLand = o55Land;
+o55Land = function () { PLACE.nav(); return o55pLand.apply(this, arguments); };
+/* The section tracker (22-index.js) asks PLACE.spyMay() first: it is quiet while the page holds. */
+
+/* ---- kit.d/28-in-place.js ---- */
+/* O55 · Settings updates in place (M4, 2026-10-14). renderApp() used to replace the whole of Settings (rail, page, rows)
+   on every call: a changed setting, a look or light/dark switch, a host projection, a manager's save. The new page
+   started at the top, the reader's place was restored by number before late rows arrived, revealed sections played
+   their entrance again, the Details panel sprang back in, focus fell to the page and hover was lost.
+   Now a redraw that is not a navigation patches what is on screen: the engine still writes the whole page's markup,
+   and the engine seam commitSettingsShell (build.py) hands it here instead of to innerHTML. Each node is matched with
+   the node that was drawn for it (by id, by its section or workspace, by its action and target, else by tag and first
+   class in order) and only what differs is changed: an attribute, a class, a text, a row that appears or goes. Nodes
+   other owners put on the page are left where they are (the tab ink, Liquid Glass's wallpaper row and segment track,
+   a cross-fade's outgoing copy), and so are classes and attributes that no Settings markup ever writes (reveal state,
+   hover, sticky state, armed disclosures). Mounted workspaces stay mounted and are patched too.
+   A navigation (another chapter, Home, or a jump that needs a fresh page) keeps the rail and the top bar (the rail
+   keeps its scroll, the chapter you chose keeps focus, only its highlight moves) and replaces the page, so the arrival
+   plays exactly as before, from the top of the chapter. The page-tab strip is new on a chapter change, so its ink is
+   placed under the first tab instead of sliding over from an unrelated one.
+   The reader's place, the end space and the active section during either kind of redraw are 27-place.js's. */
+
+let o55cMode = null;            // 'in-place' or 'arrival' while renderApp commits its markup
+let o55cKeepDetail = false;
+const o55cMarkup = [];          // authored markup not yet read into the vocabularies below
+const O55C_CLASSES = new Set(['o55-dep-off', 'o55-sec-off', 'active', 'is-active', 'is-on', 'on', 'is-open', 'is-changed', 'is-selected', 'is-disabled', 'disabled', 'page-enter', 'is-soft-remount', 'inspector-open', 'rail-open']);
+const O55C_ATTRS = new Set(['disabled', 'hidden', 'inert', 'checked', 'selected', 'aria-pressed', 'aria-checked', 'aria-selected', 'aria-expanded', 'aria-current', 'aria-disabled']);
+/* classes Settings markup also writes but that belong to a runtime owner once drawn (reveal, sticky, panel motion) */
+const O55C_RUNTIME = new Set(['is-revealed', 'will-reveal', 'section-block', 'pm51-instant', 'is-stuck', 'is-settled', 'is-closing', 'is-current', 'has-manager-tabs', 'tab-swap', 'tab-swap-a', 'tab-swap-b', 'tab-swap-settled', 'roster-open']);
+const O55C_RUNTIME_ATTR = /^(data-pm-hover-|data-o55-(armed|busy|morph|adopted)|data-pm51-phase|data-pm-swap-|data-lg)/;
+/* the page index adopts a card or row as the anchor of a group the manager drew itself (22-index.js): that id and
+   section id are the index's, not the markup's */
+const o55cAdopted = (n, name) => n.hasAttribute('data-o55-adopted') && (name === 'data-section-id' || (name === 'id' && n.id === 'section-' + n.getAttribute('data-section-id')));
+const O55C_FOREIGN = '.tab-ink, .o55-leaving, .o55np-glitch-slice, .lg-wrow, .pm-segtab-track, .o55-top-reserve, [data-o55-foreign]';
+const O55C_STYLE = new Set(['display', 'visibility', 'min-height']);
+
+/* The vocabularies: every class and attribute name any Settings markup has written; others are never removed. A patch
+   learns them from the fresh nodes it visits; markup that went in another way (the first page, a workspace mounted on
+   scroll, a manager redrawing its body) is read once, and only when a removal has to be decided. */
+const o55cKnows = (set, name) => set.has(name) || (o55cMarkup.length > 0 && (o55cRead(), set.has(name)));
+function o55cRead() {
+  while (o55cMarkup.length) {
+    const html = o55cMarkup.pop();
+    for (const m of html.matchAll(/\sclass="([^"]*)"/g)) for (const c of m[1].split(/\s+/)) if (c) O55C_CLASSES.add(c);
+    for (const m of html.matchAll(/\s([a-zA-Z][\w:-]*)="/g)) O55C_ATTRS.add(m[1].toLowerCase());
+  }
+}
+let o55cReadSoon = 0;
+function o55cKeep(html) {
+  o55cMarkup.push(html);
+  /* bodies drawn while nothing redraws in place are read when the page is idle, so they never pile up */
+  if (o55cMarkup.length > 12 && !o55cReadSoon) o55cReadSoon = (window.requestIdleCallback || setTimeout)(() => { o55cReadSoon = 0; o55cRead(); });
+}
+const o55cBody = renderContinuousWorkspaceBody;
+renderContinuousWorkspaceBody = function () { const html = o55cBody.apply(this, arguments); if (!o55cMode) o55cKeep(html); return html; };
+
+/* ---------- matching ----------------------------------------------------------------------------------------------- */
+function o55cKey(n) {
+  if (n.nodeType === 3) return '#t';
+  if (n.nodeType !== 1) return '#' + n.nodeType;
+  const t = n.tagName;
+  if (n.id && !o55cAdopted(n, 'id')) return t + '#' + n.id;
+  for (const k of ['data-workspace-block', 'data-continuous-workspace-body', 'data-section-id', 'data-acc']) { const v = n.getAttribute(k); if (v !== null && !o55cAdopted(n, k)) return t + '[' + k + '=' + v + ']'; }
+  const act = n.getAttribute('data-action');
+  if (act) {
+    let k = t + '!' + act;
+    for (const f of ['data-domain', 'data-workspace', 'data-setting', 'data-id', 'data-tab', 'data-section', 'data-manager', 'data-provider', 'data-kind', 'data-acc-id']) { const v = n.getAttribute(f); if (v !== null) k += '|' + f.slice(5) + '=' + v; }
+    if (/set-setting-value|toggle-list-value|insp-choose|segment|choose/.test(act)) k += '|v=' + (n.getAttribute('data-value') || '');
+    return k;
+  }
+  const c = n.getAttribute('class');
+  return t + '.' + (c ? c.trim().split(/\s+/)[0] : '') + (n.getAttribute('data-setting-id') ? '|' + n.getAttribute('data-setting-id') : '');
+}
+const o55cForeign = n => n.nodeType === 1 && n.matches(O55C_FOREIGN);
+const o55cOpaque = n => n.id === 'toast-stack' || n.hasAttribute('data-all-settings-window') ||
+  (o55cKeepDetail && (n.classList.contains('detail-inspector') || n.classList.contains('detail-scrim')));
+
+/* ---------- patching ----------------------------------------------------------------------------------------------- */
+function o55cAttrs(live, fresh) {
+  const was = live.getAttribute('class') || '', next = fresh.getAttribute('class') || '';
+  if (was !== next) {
+    const want = new Set(next.split(/\s+/).filter(Boolean));
+    want.forEach(c => O55C_CLASSES.add(c));
+    const add = [...want].filter(c => !live.classList.contains(c));
+    const drop = [...live.classList].filter(c => !want.has(c) && !O55C_RUNTIME.has(c) && o55cKnows(O55C_CLASSES, c));
+    o55cRowMotion(live, add, drop);
+  }
+  for (const at of fresh.attributes) {
+    const name = at.name;
+    O55C_ATTRS.add(name);
+    if (name === 'class') continue;
+    if (name === 'style') { o55cStyle(live, fresh); continue; }
+    if (name === 'title' && live.hasAttribute('data-pm-hover-native-title')) {
+      if (live.getAttribute('data-pm-hover-native-title') !== at.value) live.setAttribute('data-pm-hover-native-title', at.value);
+      continue;
+    }
+    if (live.getAttribute(name) !== at.value) live.setAttribute(name, at.value);
+  }
+  for (const at of [...live.attributes]) {
+    const name = at.name;
+    if (name === 'class' || fresh.hasAttribute(name) || O55C_RUNTIME_ATTR.test(name) || o55cAdopted(live, name) || !o55cKnows(O55C_ATTRS, name)) continue;
+    if (name === 'style') { o55cStyle(live, fresh); continue; }
+    if (name === 'aria-describedby' && live.hasAttribute('data-pm-hover-bound')) continue;
+    if (name === 'open' && live.tagName === 'DETAILS') continue;   /* a disclosure the reader opened stays open */
+    live.removeAttribute(name);
+  }
+}
+function o55cStyle(live, fresh) {
+  const ls = live.style, fs = fresh.style;
+  for (let i = 0; i < fs.length; i++) {
+    const p = fs[i], v = fs.getPropertyValue(p), pr = fs.getPropertyPriority(p);
+    if (ls.getPropertyValue(p) !== v || ls.getPropertyPriority(p) !== pr) ls.setProperty(p, v, pr);
+  }
+  for (const p of [...ls]) if (!fs.getPropertyValue(p) && O55C_STYLE.has(p)) ls.removeProperty(p);
+}
+/* a dependent row that comes or goes opens or closes by height with the kit's disclosure motion (o55SyncDependents) */
+function o55cRowMotion(live, add, drop) {
+  const row = live.matches('.setting-row[id]');
+  const hiding = row && add.includes('o55-dep-off'), showing = row && drop.includes('o55-dep-off');
+  if (!(hiding || showing) || o55Still() || live.getAnimations().length || !live.getClientRects().length && !showing) {
+    add.forEach(c => live.classList.add(c)); drop.forEach(c => live.classList.remove(c)); return;
+  }
+  drop.forEach(c => live.classList.remove(c)); add.filter(c => c !== 'o55-dep-off').forEach(c => live.classList.add(c));
+  if (showing) {
+    const h = live.scrollHeight;
+    live.animate([{ height: '0px', opacity: 0, paddingTop: '0px', paddingBottom: '0px' }, { height: h + 'px', opacity: 1 }], { duration: Math.min(420, 200 + h / 12), easing: o55Ease() });
+  } else {
+    const h = live.offsetHeight, done = () => live.classList.add('o55-dep-off');
+    live.animate([{ height: h + 'px', opacity: 1 }, { height: '0px', opacity: 0, paddingTop: '0px', paddingBottom: '0px' }], { duration: Math.min(420, 200 + h / 12), easing: o55Ease() }).finished.then(done, done);
+  }
+}
+const o55cLeaving = new WeakSet();
+function o55cInsert(parent, node, before) {
+  parent.insertBefore(node, before);
+  if (node.nodeType !== 1 || o55Still() || !node.matches('.setting-row[id]') || node.classList.contains('o55-dep-off') || o55cMode !== 'in-place') return;
+  const h = node.scrollHeight;
+  node.animate([{ height: '0px', opacity: 0, paddingTop: '0px', paddingBottom: '0px', overflow: 'clip' }, { height: h + 'px', opacity: 1, overflow: 'clip' }], { duration: Math.min(420, 200 + h / 12), easing: o55Ease() });
+}
+function o55cRemove(node) {
+  if (o55cLeaving.has(node)) return;
+  if (node.nodeType !== 1 || o55Still() || o55cMode !== 'in-place' || !node.matches('.setting-row[id]') || !node.getClientRects().length) { node.remove(); return; }
+  o55cLeaving.add(node);
+  const h = node.offsetHeight, done = () => node.remove();
+  node.animate([{ height: h + 'px', opacity: 1, overflow: 'clip' }, { height: '0px', opacity: 0, paddingTop: '0px', paddingBottom: '0px', overflow: 'clip' }], { duration: Math.min(420, 200 + h / 12), easing: o55Ease(), fill: 'forwards' }).finished.then(done, done);
+}
+function o55cKids(live, fresh) {
+  const pool = new Map();
+  for (let f = fresh.firstChild; f; f = f.nextSibling) { const k = o55cKey(f); if (!pool.has(k)) pool.set(k, []); pool.get(k).push(f); }
+  const pair = new Map(), gone = [];
+  for (let l = live.firstChild; l; l = l.nextSibling) {
+    if (o55cLeaving.has(l) || o55cForeign(l)) continue;
+    const q = pool.get(o55cKey(l));
+    if (q && q.length) pair.set(q.shift(), l); else gone.push(l);
+  }
+  gone.forEach(o55cRemove);
+  let at = live.firstChild;
+  const skip = () => { while (at && (o55cLeaving.has(at) || o55cForeign(at))) at = at.nextSibling; };
+  for (let f = fresh.firstChild, next; f; f = next) {
+    next = f.nextSibling;
+    const l = pair.get(f);
+    const node = l ? o55cNode(l, f) : f;
+    if (l && node !== l) { if (at === l) at = l.nextSibling; l.remove(); }   /* replaced outright */
+    skip();
+    if (node === at) { at = at.nextSibling; continue; }
+    if (node === l) live.insertBefore(l, at);
+    else o55cInsert(live, node, at);
+  }
+}
+function o55cNode(live, fresh) {
+  if (live.nodeType !== 1) { if (live.nodeValue !== fresh.nodeValue) live.nodeValue = fresh.nodeValue; return live; }
+  if (live.tagName !== fresh.tagName) return fresh;
+  if (o55cOpaque(live)) return live;
+  if (o55cMode === 'arrival' && (live.id === 'workspace-stage' || (live.classList.contains('workspace-tabs') && o55cChapter))) return fresh;
+  if (live.hasAttribute('data-continuous-workspace-body')) return o55cBodyNode(live, fresh);
+  o55cAttrs(live, fresh);
+  if (live.tagName === 'SELECT') { o55cKids(live, fresh); if (live.value !== fresh.value) live.value = fresh.value; return live; }
+  if (live.tagName === 'TEXTAREA') { if (live !== document.activeElement && live.value !== fresh.value) live.value = fresh.value; return live; }
+  if (live.tagName === 'INPUT') {
+    if (live !== document.activeElement && live.value !== fresh.value) live.value = fresh.value;
+    if (live.checked !== fresh.checked) live.checked = fresh.checked;
+    return live;
+  }
+  if (live.tagName === 'DETAILS' && fresh.open && !live.open) live.open = true;
+  o55cKids(live, fresh);
+  return live;
+}
+/* a workspace the reader has already mounted stays mounted: its fresh body is drawn here, then patched */
+function o55cBodyNode(live, fresh) {
+  if (live.dataset.workspaceMounted === 'true' && fresh.dataset.workspaceMounted === 'false') {
+    const domain = getDomain(), ws = domain.workspaces.find(w => w.id === live.dataset.continuousWorkspaceBody);
+    if (!ws) return live;
+    const tpl = document.createElement('template'); tpl.innerHTML = renderContinuousWorkspaceBody(ws, domain);
+    fresh.removeAttribute('style'); fresh.dataset.workspaceMounted = 'true';
+    o55cAttrs(live, fresh);
+    o55cKids(live, tpl.content);
+    return live;
+  }
+  o55cAttrs(live, fresh);
+  o55cKids(live, fresh);
+  return live;
+}
+
+/* ---------- the engine seam ---------------------------------------------------------------------------------------- */
+let o55cChapter = false;
+commitSettingsShell = function (markup) {
+  if (!o55cMode || !root.querySelector(':scope > .pm-shell')) { o55cKeep(markup); root.innerHTML = markup; return; }
+  const tpl = document.createElement('template'); tpl.innerHTML = markup;
+  o55cKids(root, tpl.content);
+  if (o55cMode === 'arrival') tabInkGeometryCache = new WeakMap();
+};
+
+/* ---------- renderApp: in place, or an arrival ---------------------------------------------------------------------- */
+const o55cRender = renderApp;
+renderApp = function (options = {}) {
+  const shell = root.querySelector(':scope > .pm-shell'), place = PM51.place;
+  if (!shell) { place.nav(); return o55cRender.apply(this, arguments); }   /* the first page is an arrival too */
+  const shownHome = !!root.querySelector('#workspace-stage > .home-page');
+  const link = root.querySelector('.domain-link.active'), shownDomain = link ? link.dataset.domain : null;
+  const inPlace = !pendingScroll && !!state.home === shownHome && (state.home || (shownDomain === state.domain && !!root.querySelector('#settings-document')));
+  const held = inPlace ? { workspace: state.workspace, active: Object.assign({}, state.activeSection) } : null;
+  o55cKeepDetail = inPlace && !!state.detailSetting && detailInspectorVisible;
+  o55cMode = inPlace ? 'in-place' : 'arrival';
+  o55cChapter = !inPlace && (!!state.home !== shownHome || shownDomain !== state.domain);
+  place.inPlace = inPlace;
+  if (!inPlace) {
+    place.nav();
+    /* the page is about to be replaced: a control in it that still has focus lets go now, while style is clean. Taking
+       it out with the page made the browser recompute the whole page's style in the middle of the commit (+40 to
+       60 ms before the new chapter's first frame); the focus ends on the page either way, as before. */
+    const stage = root.querySelector('#workspace-stage'), act = document.activeElement;
+    if (stage && act && act !== document.body && stage.contains(act) && typeof act.blur === 'function') act.blur();
+  }
+  let r;
+  try { r = o55cRender.call(this, inPlace && !state.home ? Object.assign({}, options, { soft: true }) : options); }
+  finally { o55cMode = null; place.inPlace = false; }
+  if (inPlace) {
+    preservedScrollTop = null;   /* nothing to restore by number: the page was never replaced */
+    if (o55cKeepDetail) { detailInspectorVisible = true; document.addEventListener('keydown', onDetailEsc, true); if (PM51.syncInspector) PM51.syncInspector(); }
+    state.workspace = held.workspace;
+    state.activeSection = held.active;
+  }
+  o55cKeepDetail = false;
+  place.watch();
+  return r;
+};
+
+/* ---------- the active section of a navigation is decided with it, and saved with it -------------------------------- */
+/* A page's first section as it is drawn, which is what the tracker judges at the top. The page's own section list says
+   it: a manager page (Memory, Source Control...) is drawn inside its `${ws}:main` section, Projects starts with the
+   settings catalog, a group that has stepped aside is left out, and advanced groups are drawn after the others. */
+const o55cFirstSection = ws => {
+  const list = continuousWorkspaceSections(ws) || [];
+  return list.find(s => !(pm51SectionMeta[s.id] || {}).advanced) || list[0];
+};
+const o55cNavigate = navigate;
+navigate = function (domainId, workspaceId, options = {}) {
+  const domain = getDomain(domainId), ws = domain.workspaces.find(w => w.id === workspaceId) || domain.workspaces[0];
+  if (ws && !(options && options.section)) {
+    const placed = options && options.detailSetting && PM51.placement && PM51.placement.sectionOf(options.detailSetting);
+    if (placed) state.activeSection[ws.id] = placed.id;
+    else if (state.home || state.domain !== domain.id) {
+      const first = o55cFirstSection(ws);
+      if (first) state.activeSection[ws.id] = first.id;
+    }
+  }
+  PM51.place.nav();
+  return o55cNavigate.apply(this, arguments);
+};
+const o55cDispatch = dispatchAction;
+dispatchAction = function (action, el, event) {
+  /* choosing the chapter you are in goes to the top of its first page: its first section is the active one */
+  if (action === 'navigate-domain' && !state.home) {
+    const domain = getDomain(ds(el, 'domain'));
+    if (domain.id === state.domain) {
+      const ws = domain.workspaces.find(w => w.id === domain.defaultWorkspace) || domain.workspaces[0];
+      const first = ws && o55cFirstSection(ws);
+      if (first) state.activeSection[ws.id] = first.id;
+    }
+  }
+  return o55cDispatch.apply(this, arguments);
+};
+
+/* ---------- a row drawn again is patched too -------------------------------------------------------------------------- */
+/* A control on the page (a switch, a stepper, a choice) draws its row again (refreshSettingRow, PM51.swapRow). The row
+   used to be replaced: the control lost focus and hover, and the switch's own transition never ran (26-switch-motion.js
+   bridged that). It is patched now, like the page; a row whose tag changed is still replaced. */
+const o55cSwapRow = PM51.swapRow;
+PM51.swapRow = (el, next) => {
+  if (!el || !next || !el.isConnected || el.tagName !== next.tagName) return o55cSwapRow(el, next);
+  [...el.attributes].forEach(att => { if (att.name.startsWith('data-all-setting') && !next.hasAttribute(att.name)) next.setAttribute(att.name, att.value); });
+  const was = o55cMode; o55cMode = was || 'row';
+  try { o55cNode(el, next); } finally { o55cMode = was; }
+};
+
+/* ---------- coming back to Settings never replays an entrance -------------------------------------------------------- */
+/* Settings is display:none while another page shows, and a CSS animation starts over when its element is shown again, so
+   coming back replayed the page's arrival, every revealed section's slide and the last manager tab swap. When Settings
+   is shown again, the entrances that had already played and restarted are finished at once, before the first frame is
+   painted (after its layout, in a ResizeObserver), which leaves them exactly as a finished entrance always is. Two other ways were measured and dropped: taking
+   the classes away, and placing the animations past their end with a negative delay, each changed how Glass is
+   composited (about +300 ms on every action in Glass Light on the RTX 3090). Nothing is looked at unless an entrance
+   has played since Settings was last shown, so the first entry, which plays its arrival as before, costs nothing. */
+const O55C_ENTRANCES = /^(pageIn|sectionReveal|pmSettingsTabSwap[AB])$/;
+const o55cPlayed = new WeakSet();
+let o55cPlayedAny = false;
+root.addEventListener('animationend', e => {
+  if (e.target && O55C_ENTRANCES.test(e.animationName || '')) { o55cPlayed.add(e.target); o55cPlayedAny = true; }
+}, true);
+function o55cWatchReturns() {
+  const panel = document.getElementById('panel-settings');
+  if (!panel || panel.o55cReturns || typeof MutationObserver !== 'function' || typeof ResizeObserver !== 'function') return;
+  panel.o55cReturns = true;
+  /* the restarted entrances are finished in the first frame's ResizeObserver: its style and layout are already done
+     there (finding them any earlier forced a whole extra style pass), an entrance moves nothing in layout, and the frame
+     is not painted yet */
+  let shown = panel.classList.contains('active'), due = false;
+  new MutationObserver(() => {
+    const now = panel.classList.contains('active');
+    if (now && !shown && o55cPlayedAny) due = true;
+    shown = now;
+  }).observe(panel, { attributes: true, attributeFilter: ['class'] });
+  new ResizeObserver(() => {
+    if (!due || !panel.classList.contains('active')) return;
+    due = false;
+    for (const a of root.getAnimations({ subtree: true })) {
+      const t = a.effect && a.effect.target;
+      if (t && o55cPlayed.has(t) && O55C_ENTRANCES.test(a.animationName || '')) a.finish();
+    }
+  }).observe(panel);
+}
+
+/* ---------- leaving Settings and coming back keeps the open Details panel --------------------------------------------- */
+const o55cBoot = boot;
+boot = function () {
+  const r = o55cBoot.apply(this, arguments), api = window.PM12_KIMI;
+  o55cWatchReturns();
+  if (api && typeof api.closeTransientUi === 'function' && !api.closeTransientUi.o55Keeps) {
+    const close = api.closeTransientUi;
+    api.closeTransientUi = function () {
+      const panel = document.getElementById('panel-settings'), leaving = !!(panel && !panel.classList.contains('active'));
+      const detail = state.detailSetting, shown = detailInspectorVisible;
+      const out = close.apply(this, arguments);
+      if (leaving && detail && shown) { state.detailSetting = detail; detailInspectorVisible = true; }
+      return out;
+    };
+    api.closeTransientUi.o55Keeps = true;
+    const panel = document.getElementById('panel-settings');
+    if (panel && typeof MutationObserver === 'function') new MutationObserver(() => {
+      if (panel.classList.contains('active') && state.detailSetting && detailInspectorVisible) document.addEventListener('keydown', onDetailEsc, true);
+    }).observe(panel, { attributes: true, attributeFilter: ['class'] });
+  }
+  return r;
+};
 
 /* ---- kit.d/30-inspector.js ---- */
 /* O55 · the setting Details panel. The panel itself (its spring in and out, its width, the scrim) is the engine's and
@@ -154881,7 +155512,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   'use strict';
   if(window.PM7_SYSTEMS_INTEGRATION)return;
   var shell=document.querySelector('.app-shell'),panel=document.getElementById('panel-settings'),chat=document.getElementById('chatPanel'),resizer=document.getElementById('chatResizer');
-  var reservedChatWidth=0,shellWidth=0,panelWidth=0,chatWidth=0,resizerWidth=5,syncFrame=0;
+  var reservedChatWidth=0,shellWidth=0,panelWidth=0,chatWidth=0,resizerWidth=5,syncFrame=0,pagesWidth=0;
   function settingsActive(){return !!(panel&&panel.classList.contains('active'));}
   function chatReservation(){
     if(!chat||chat.classList.contains('hidden'))return 0;
@@ -154893,7 +155524,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   }
   function hostProjection(){
     var focused=document.body.classList.contains('pm7-settings-focus-host'),reservation=chatReservation();
-    var width=panelWidth>0?panelWidth:Math.max(0,shellWidth-reservation);
+    var width=panelWidth>0?panelWidth:pagesWidth>0?pagesWidth:Math.max(0,shellWidth-reservation);
     return {settings_active:settingsActive(),shell_width:shellWidth,panel_width:width,focused:focused,chat_reservation:reservation,projected_with_chat:focused?Math.max(0,width-reservation):width,threshold:980};
   }
   function syncHost(){
@@ -154910,7 +155541,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   function scheduleSyncHost(){if(syncFrame)return;syncFrame=requestAnimationFrame(function(){syncFrame=0;syncHost();});}
   function observeWidth(element,assign){
     if(!element||typeof ResizeObserver!=='function')return;
-    new ResizeObserver(function(entries){var width=entries[entries.length-1]&&entries[entries.length-1].contentRect?entries[entries.length-1].contentRect.width:0;assign(width);syncHost();}).observe(element);
+    new ResizeObserver(function(entries){var width=entries[entries.length-1]&&entries[entries.length-1].contentRect?entries[entries.length-1].contentRect.width:0;assign(width);scheduleSyncHost();}).observe(element);
   }
   function dispatchSettings(commandId,payload,continuation){
     var tome=window.PM7_SETTINGS_TOME;
@@ -154971,6 +155602,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   shellWidth=shell?shell.clientWidth:0;panelWidth=panel?panel.clientWidth:0;chatWidth=chat?chat.clientWidth:0;resizerWidth=resizer?(resizer.clientWidth||5):5;
   observeWidth(shell,function(width){shellWidth=width;});
   observeWidth(panel,function(width){panelWidth=width;});
+  observeWidth(panel&&panel.parentElement,function(width){pagesWidth=width;});
   observeWidth(chat,function(width){if(width>0)chatWidth=width;});
   observeWidth(resizer,function(width){if(width>0)resizerWidth=width;});
   if(panel&&typeof MutationObserver==='function')new MutationObserver(syncHost).observe(panel,{attributes:true,attributeFilter:['class']});
