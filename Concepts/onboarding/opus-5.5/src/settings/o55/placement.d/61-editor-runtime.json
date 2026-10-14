@@ -29,7 +29,7 @@
   "editor-editing": {
    "to": "editor-runtime",
    "title": "Editing",
-   "help": "Diffs, problems and how long a jumped-to line stays lit.",
+   "help": "Diffs, problems, indentation and how long a jumped-to line stays lit.",
    "order": 30
   },
   "editor-look": {
@@ -127,7 +127,10 @@
    "ids": [
     "code.editing.diff-layout",
     "code.editing.diagnostics-visibility",
-    "code.editing.goto-highlight-ms"
+    "code.editing.goto-highlight-ms",
+    "code.editing.tab-size",
+    "code.editing.insert-spaces",
+    "code.editing.detect-indentation"
    ]
   },
   {

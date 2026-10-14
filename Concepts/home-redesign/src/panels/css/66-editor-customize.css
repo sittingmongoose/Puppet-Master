@@ -8,7 +8,11 @@
 .pmed-cz .pmt-cz-pvbox { height: 262px; min-height: 200px; }
 .pmed-pvhost { position: absolute; inset: 0; container-type: size; container-name: pmw-body; overflow: hidden; }
 .pmed-cz .pmt-cz-dockbox .pmed-pvhost { inset: 0; }
-.pmed-cz .pmt-cz-dock { height: 176px; width: min(44%, 400px); }
+.pmed-cz .pmt-cz-dock { height: 176px; width: min(44%, 400px); transition: opacity 160ms ease; }
+/* it steps aside while the pointer or the focus is on what it floats over (11-editor-customize.js dockAside) */
+.pmed-cz .pmt-cz-dock.is-aside { opacity: .1; }
+@media (prefers-reduced-motion: reduce) { .pmed-cz .pmt-cz-dock { transition: none; } }
+html[data-motion="reduced"] .pmed-cz .pmt-cz-dock { transition: none; }
 @container pmt-cz (max-width: 640px) { .pmed-cz .pmt-cz-dock { width: 42%; height: 140px; } }
 @container pmt-cz (max-width: 640px) { .pmed-cz .pmt-cz-pvbox { height: 226px; } }
 @container pmt-cz (max-width: 440px) { .pmed-cz .pmt-cz-pvbox { height: 200px; } }

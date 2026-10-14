@@ -325,7 +325,36 @@ var BINARY = {
 };
 var DOCS = {};           // path -> doc (one per path, shared, kept for the session so a reopened file keeps its edits)
 
-function splitLines(text) { return String(text == null ? '' : text).replace(/\r\n?/g, '\n').replace(/\t/g, '    ').split('\n'); }
+/* the buffer holds no tab: a tab opens (and pastes) as spaces to the next tab stop of the tab size, from col */
+function expandTabs(l, unit, col) {
+  if (l.indexOf('\t') < 0) return l;
+  var out = '', c = col || 0;
+  for (var i = 0; i < l.length; i++) {
+    var ch = l.charAt(i);
+    if (ch === '\t') { var n = unit - ((c + out.length) % unit); out += '        '.slice(0, n); } else out += ch;
+  }
+  return out;
+}
+function expandText(t, unit, col) { return String(t).replace(/\r\n?/g, '\n').split('\n').map(function (l, i) { return expandTabs(l, unit, i ? 0 : col); }).join('\n'); }
+function splitLines(text, unit) { return expandText(text == null ? '' : text, unit || 4, 0).split('\n'); }
+/* a file indented with tabs (any line that starts with one), read before they become spaces */
+function tabbedText(text) { return /(^|\n)\t/.test(String(text == null ? '' : text)); }
+/* how wide a level of this file's own indentation is: the step between one line's indentation and the next that
+   occurs most (2, 4 or 8 spaces), or 0 when the file has too little indentation to tell */
+function guessIndent(lines) {
+  var n = { 2: 0, 4: 0, 8: 0 }, prev = 0, seen = 0;
+  for (var i = 0; i < lines.length && i < 4000; i++) {
+    var t = lines[i] || '';
+    if (!/\S/.test(t)) continue;
+    var w = indentCols(t), dl = Math.abs(w - prev);
+    if (dl === 2 || dl === 4 || dl === 8) { n[dl]++; seen++; }
+    prev = w;
+  }
+  if (seen < 2) return 0;
+  var best = 4;
+  [2, 4, 8].forEach(function (k) { if (n[k] > n[best]) best = k; });
+  return n[best] ? best : 0;
+}
 
 function newDoc(o) {
   var d = {
@@ -884,6 +913,7 @@ var BR_OPEN = '([{', BR_PAIR = { ')': '(', ']': '[', '}': '{' };
 /* the languages whose brackets are tokens of their own (pun): bracket pair colours apply there */
 var BRACKET_LANGS = { rust: 1, js: 1, ts: 1, css: 1, json: 1, svelte: 1, sql: 1, toml: 1, yaml: 1 };
 var WS_DOT = '·';
+var WS_TAB = '→';                   // a tab's mark in a file indented with tabs (the buffer holds the spaces it opened as)
 /* the brackets still open at the start of line i, as a string of their opening characters (only those in pun
    tokens, so brackets in strings and comments never count); computed forward once and cut back by edits */
 function bracketStack(d, i) {
@@ -903,7 +933,8 @@ function bracketStack(d, i) {
   return d.bst[i];
 }
 /* o: { syntax, stack (the open brackets at the line's start, or null for no bracket colours), ws ('boundary',
-   'trailing', 'all' or off) } -> { text, toks } */
+   'trailing', 'all' or off), tabUnit (in a file indented with tabs, the columns one tab takes: its indentation is
+   marked a tab at a time, not a space at a time) } -> { text, toks } */
 function decorateLine(text, toks, o) {
   var n = text.length;
   var wsMode = o.ws === 'boundary' || o.ws === 'trailing' || o.ws === 'all' ? o.ws : null;
@@ -929,12 +960,18 @@ function decorateLine(text, toks, o) {
   if (wsMode) {
     var first = text.search(/\S/), last = n - 1;
     while (last >= 0 && text.charAt(last) === ' ') last--;
-    var chars = text.split('');
+    var chars = text.split(''), tu = o.tabUnit || 0, lead = first < 0 ? n : first;
     for (i = 0; i < n; i++) {
       if (chars[i] !== ' ') continue;
       var mark = wsMode === 'all' || (wsMode === 'trailing' ? (i > last) :
         (first < 0 || i < first || i > last || chars[i - 1] === ' ' || chars[i + 1] === ' '));
-      if (mark) { chars[i] = WS_DOT; kinds[i] = 'ws'; }
+      if (!mark) continue;
+      if (tu > 1 && i < lead && i % tu === 0 && i + tu <= lead) {
+        chars[i] = WS_TAB; kinds[i] = 'ws';
+        for (var j = 1; j < tu; j++) kinds[i + j] = 'ws';
+        i += tu - 1; continue;
+      }
+      chars[i] = WS_DOT; kinds[i] = 'ws';
     }
     shown = chars.join('');
   }
@@ -945,23 +982,23 @@ function decorateLine(text, toks, o) {
   }
   return { text: shown, toks: out };
 }
-/* indentation: a level is four columns (tabs open as four spaces, splitLines); a blank line takes the smaller of its
-   neighbours' levels so the guides run through it */
+/* indentation: a level is the file's indent unit in columns (the editor's IND.unit: the file's own, or Tab size); a
+   blank line takes the smaller of its neighbours' levels so the guides run through it */
 function indentCols(t) { var m = /^ */.exec(t || ''); return m ? m[0].length : 0; }
-function guideLevel(lines, r) {
-  var t = lines[r];
-  if (t != null && /\S/.test(t)) return Math.floor(indentCols(t) / 4);
+function guideLevel(lines, r, unit) {
+  var t = lines[r], u = unit || 4;
+  if (t != null && /\S/.test(t)) return Math.floor(indentCols(t) / u);
   var up = 0, down = 0, i;
-  for (i = r - 1; i >= 0 && i >= r - 400; i--) if (/\S/.test(lines[i] || '')) { up = Math.floor(indentCols(lines[i]) / 4); break; }
-  for (i = r + 1; i < lines.length && i <= r + 400; i++) if (/\S/.test(lines[i] || '')) { down = Math.floor(indentCols(lines[i]) / 4); break; }
+  for (i = r - 1; i >= 0 && i >= r - 400; i--) if (/\S/.test(lines[i] || '')) { up = Math.floor(indentCols(lines[i]) / u); break; }
+  for (i = r + 1; i < lines.length && i <= r + 400; i++) if (/\S/.test(lines[i] || '')) { down = Math.floor(indentCols(lines[i]) / u); break; }
   return Math.min(up, down);
 }
 /* the guides of one row as a background: one 1 px line per level, every level the same tint or a colour each */
 var guideCache = {};
-function guideImage(levels, rainbow, cw) {
-  var key = levels + '|' + (rainbow ? 1 : 0) + '|' + cw;
+function guideImage(levels, rainbow, cw, unit) {
+  var key = levels + '|' + (rainbow ? 1 : 0) + '|' + cw + '|' + unit;
   if (guideCache[key]) return guideCache[key];
-  var step = cw * 4, stops = [];
+  var step = cw * (unit || 4), stops = [];
   for (var k = 0; k < levels; k++) {
     var x = Math.round(k * step) + 0.5, c = rainbow ? 'var(--pmw-ed-ig-' + (k % 6) + ')' : 'var(--pmw-ed-guide)';
     stops.push('linear-gradient(' + c + ', ' + c + ') ' + x + 'px 0 / 1px 100% no-repeat');
@@ -1116,7 +1153,8 @@ var FALLBACK_LOOK = {
   lines: { numbers: true, relative: false, highlight: 'all', guides: 'off', activeIndent: true, whitespace: 'off', rulers: [], wrap: false,
     wrapColumn: 0, minimap: true, sticky: true, stickyLines: 3 },
   motion: { smoothScroll: false, reveal: true, pastEnd: 'little', inactiveDim: false, scanlines: false, glow: false },
-  behavior: { diffLayout: 'auto', gotoHighlightMs: 5000, autosave: 'off', diagnostics: 'warnings', hoverDelay: 300 }
+  behavior: { diffLayout: 'auto', gotoHighlightMs: 5000, autosave: 'off', diagnostics: 'warnings', hoverDelay: 300 },
+  indent: { size: 4, spaces: true, detect: true }
 };
 /* the problems the Problems tab lists for a file (22-tools.js publishes them), or a preview's own */
 function problemsOf(d) {
@@ -1131,10 +1169,10 @@ function problemsOf(d) {
 var DIAG_SHOW = { off: {}, errors: { error: 1 }, warnings: { error: 1, warn: 1 }, all: { error: 1, warn: 1, info: 1 } };
 
 /* the editor's Appearance... row opens its Customize screen (11-editor-customize.js) for this editor */
-function openCustomize(view, anchor) {
+function openCustomize(view, anchor, group, at) {
   var C = PMW.edCustomize;
   if (!C || typeof C.open !== 'function') return;
-  try { C.open({ view: view, scope: 'tab', anchor: anchor }); }
+  try { C.open({ view: view, scope: 'tab', anchor: anchor, group: group || null, at: at || null }); }
   catch (err) { try { console.error('[pm-home] the editor Customize screen failed', err); } catch (_) {} }
 }
 
@@ -1156,6 +1194,7 @@ function mountEditor(host, st, api) {
     untitled = st.text == null || (st.text === '' && (!title || title === 'Untitled'));
     d = newDoc({ lines: splitLines(st.text || ''), language: st.language || (untitled ? 'text' : null), title: title,
       readOnly: (untitled || st.edit) ? null : (typeof st.readOnly === 'string' ? st.readOnly : 'Read-only') });
+    d.src = st.text || ''; d.tabbed = tabbedText(d.src); d.tabUnit = 4;
     if (untitled) { untitledSeq += 1; d.title = 'Untitled ' + untitledSeq; }
     if (untitled) api.update({ label: d.title, title: d.title });   // labelFor names it before mount; the number comes now
   }
@@ -1174,6 +1213,29 @@ function mountEditor(host, st, api) {
   view.applyLook = function (R2) { onLook(R2); };
   view.editor = function () { return instance; };
   var R = EL ? EL.resolve(view) : FALLBACK_LOOK;
+
+  /* ---- indentation (Tab size, Indent with, Follow the file's indentation): IND.unit is a level in columns, the
+     file's own when it has one; IND.tabs says the file's indentation is tabs, which Show spaces marks as such. A tabbed
+     file, still as it was opened, takes a new Tab size by opening its tabs again at the new width ---- */
+  var IND = { unit: 4, tabs: false, own: 0 };
+  function resolveIndent() {
+    var I = R.indent || FALLBACK_LOOK.indent;
+    if (d.indentGuess == null || (!d.indentGuess && d.indentGuessAt !== d.version)) { d.indentGuess = guessIndent(d.lines); d.indentGuessAt = d.version; }
+    var own = I.detect && !d.tabbed ? d.indentGuess : 0;
+    IND.own = own;
+    IND.unit = own || I.size || 4;
+    IND.tabs = I.detect && d.tabbed ? true : I.detect && own ? false : !I.spaces;
+    if (d.tabbed && d.tabUnit !== IND.unit) {
+      if (d.src != null && d.version === d.savedVersion && !(d.undo && d.undo.length)) {
+        d.lines = splitLines(d.src, IND.unit); d.tabUnit = IND.unit;
+        d.toks = []; d.ends = []; d.tokFrom = 0; d.bst = null; d.version++; d.savedVersion = d.version;
+        return true;
+      }
+      IND.unit = d.tabUnit;           // edited since it opened: its tabs keep the width they opened at until it reopens
+    }
+    return false;
+  }
+  resolveIndent();
 
   /* ---- state ---- */
   var mode = d.chat ? 'diff' : ((st.mode === 'diff' || st.view === 'diff' || st.diff === true) && d.base ? 'diff' : 'file');
@@ -1347,6 +1409,13 @@ function mountEditor(host, st, api) {
       if (PMW.edCustomize) rows.push({ id: 'appearance', label: 'Appearance...', icon: 'edPalette',
         detail: R.schemeName + ' · ' + R.font.label + ' ' + (Math.round(R.font.size * 10) / 10) + ' px',
         run: function () { setTimeout(function () { openCustomize(view, hrow.action('more') || head); }, 0); } });
+      // indentation, as the file has it: the Customize screen opens at the three choices that set it
+      if (PMW.edCustomize && mode === 'file' && !special) {
+        resolveIndent();
+        rows.push({ id: 'indent', label: 'Indentation...', icon: 'edIndent',
+          detail: (IND.tabs ? 'Tabs, ' + IND.unit + ' wide' : IND.unit + ' spaces') + (IND.own || (d.tabbed && R.indent.detect) ? ' · from the file' : ''),
+          run: function () { setTimeout(function () { openCustomize(view, hrow.action('more') || head, 'behavior', 'indent'); }, 0); } });
+      }
       if (isEditable() && isDirty()) { rows.push('-'); rows.push({ id: 'save', label: 'Save', icon: 'check', shortcut: 'Ctrl+S', run: function () { save(); } }); }
     }
     if (path) {
@@ -1776,7 +1845,7 @@ function mountEditor(host, st, api) {
     // text is not the document's) starts from none
     var wantBr = R.colors.bracketPairs && BRACKET_LANGS[d.lang];
     var stack = !wantBr ? null : lineForBrackets != null && !d.chat ? bracketStack(d, lineForBrackets) : '';
-    return decorateLine(text || '', toks, { syntax: R.colors.syntax, stack: stack, ws: R.lines.whitespace });
+    return decorateLine(text || '', toks, { syntax: R.colors.syntax, stack: stack, ws: R.lines.whitespace, tabUnit: d.tabbed ? d.tabUnit : 0 });
   }
   /* the text of a row, piece by piece when it wraps; guides behind it */
   function paintText(el, r, text, toks, words, lineForBrackets) {
@@ -1801,13 +1870,13 @@ function mountEditor(host, st, api) {
   /* Indent guides: one 1 px line per level of indentation behind the text (a blank line takes its neighbours') */
   function addGuides(el, r, text) {
     if (R.lines.guides === 'off' || (V && V.side)) return;
-    var lv = mode === 'file' ? guideLevel(d.lines, r) : Math.floor(indentCols(text || '') / 4);
+    var lv = mode === 'file' ? guideLevel(d.lines, r, IND.unit) : Math.floor(indentCols(text || '') / IND.unit);
     if (lv <= 0) return;
     var g = doc.createElement('span');
     g.className = 'pmw-ed-ig';
     g.style.left = textX + 'px';
-    g.style.width = Math.ceil(lv * 4 * cw) + 'px';
-    g.style.background = guideImage(lv, R.lines.guides === 'rainbow', cw);
+    g.style.width = Math.ceil(lv * IND.unit * cw) + 'px';
+    g.style.background = guideImage(lv, R.lines.guides === 'rainbow', cw, IND.unit);
     el.appendChild(g);
   }
   function makeSourceRow(r) {
@@ -1962,7 +2031,12 @@ function mountEditor(host, st, api) {
   function dotsIn(frag, r, t, c0, c1) {
     spans(r, c0, c1, 'r').forEach(function (p) {
       var from = colAtX(r, p.x0, p.y), to = colAtX(r, p.x1, p.y), piece = '';
-      for (var i = from; i < to; i++) piece += t.charAt(i) === ' ' ? WS_DOT : ' ';
+      var tu = d.tabbed ? d.tabUnit : 0, lead = t.search(/\S/); if (lead < 0) lead = t.length;
+      for (var i = from; i < to; i++) {
+        if (tu > 1 && i < lead && i % tu === 0 && i + tu <= lead) { piece += WS_TAB + '        '.slice(0, Math.min(tu, to - i) - 1); i += tu - 1; continue; }
+        piece += t.charAt(i) === ' ' ? WS_DOT : ' ';
+      }
+      if (piece.length > to - from) piece = piece.slice(0, to - from);
       if (piece.indexOf(WS_DOT) < 0) return;
       frag.appendChild(h('i', { class: 'pmw-ed-wsdots', text: piece, style: { top: p.y + 'px', left: p.x0 + 'px' } }));
     });
@@ -1985,22 +2059,22 @@ function mountEditor(host, st, api) {
   function placeGuide() {
     var on = R.lines.guides !== 'off' && R.lines.activeIndent && mode === 'file' && !special;
     // the block only changes with the caret's line, the text, the layout or the choice: scrolling reuses it
-    var key = on ? caret.r + '|' + d.version + '|' + R.lines.guides + '|' + textX + '|' + cw + '|' + lh + '|' + padT + '|' + vCount() + '|' + (WR ? contentW : 0) : 'off';
+    var key = on ? caret.r + '|' + d.version + '|' + R.lines.guides + '|' + textX + '|' + cw + '|' + lh + '|' + padT + '|' + vCount() + '|' + (WR ? contentW : 0) + '|' + IND.unit : 'off';
     if (key === guideKey) return;
     guideKey = key;
     var lines = d.lines, r = caret.r, a = -1;
     if (on) {
-      var L = guideLevel(lines, r), next = r + 1;
+      var L = guideLevel(lines, r, IND.unit), next = r + 1;
       while (next < lines.length && next < r + 400 && !/\S/.test(lines[next] || '')) next++;
-      a = next < lines.length && guideLevel(lines, next) > L && /\S/.test(lines[r] || '') ? L : L - 1;
+      a = next < lines.length && guideLevel(lines, next, IND.unit) > L && /\S/.test(lines[r] || '') ? L : L - 1;
     }
     if (a < 0) { activeGuide.hidden = true; return; }
     var top = r, bot = r;
-    while (top > 0 && top > r - 2000 && guideLevel(lines, top - 1) > a) top--;
-    while (bot < lines.length - 1 && bot < r + 2000 && guideLevel(lines, bot + 1) > a) bot++;
-    if (top === r && guideLevel(lines, r) <= a) { activeGuide.hidden = true; return; }
+    while (top > 0 && top > r - 2000 && guideLevel(lines, top - 1, IND.unit) > a) top--;
+    while (bot < lines.length - 1 && bot < r + 2000 && guideLevel(lines, bot + 1, IND.unit) > a) bot++;
+    if (top === r && guideLevel(lines, r, IND.unit) <= a) { activeGuide.hidden = true; return; }
     activeGuide.hidden = false;
-    activeGuide.style.left = (Math.round(textX + a * 4 * cw)) + 'px';
+    activeGuide.style.left = (Math.round(textX + a * IND.unit * cw)) + 'px';
     activeGuide.style.top = yRow(top) + 'px';
     activeGuide.style.height = (yRow(bot + 1) - yRow(top)) + 'px';
     activeGuide.style.setProperty('--pmw-ed-ag', R.lines.guides === 'rainbow' ? 'var(--pmw-ed-bp-' + (a % 6) + ')' : 'var(--pmw-ed-guide-active)');
@@ -2806,29 +2880,36 @@ function mountEditor(host, st, api) {
     var opener = /[{(\[]$/.test(before) || (d.lang === 'yaml' && /:$/.test(before)) || (d.lang === 'md' && false);
     var closer = /^\s*[}\])]/.test(after);
     if (opener && closer) {
-      replaceSel('\n' + ind + '    \n' + ind, 'enter');
-      caret = { r: caret.r - 1, c: ind.length + 4 };
+      replaceSel('\n' + ind + unitSpaces() + '\n' + ind, 'enter');
+      caret = { r: caret.r - 1, c: ind.length + unitNow() };
       anchor = null; renderOverlays(); updatePos();
       return;
     }
     var list = d.lang === 'md' && /^(\s*)([-*+]|\d+\.)\s+\S/.exec(t);
     if (list && c === t.length) { replaceSel('\n' + list[1] + (/\d/.test(list[2]) ? (parseInt(list[2], 10) + 1) + '.' : list[2]) + ' ', 'enter'); return; }
-    replaceSel('\n' + ind + (opener ? '    ' : ''), 'enter');
+    replaceSel('\n' + ind + (opener ? unitSpaces() : ''), 'enter');
   }
+  /* the indent unit now: the file's own (guessed again while a new file has none yet), or Tab size */
+  function unitNow() { if (!IND.own) resolveIndent(); return IND.unit; }
+  function unitSpaces() { return '        '.slice(0, unitNow()); }
   function typeTab(outdent) {
     var s = selRange();
-    if (!s && !outdent) { var spaces = 4 - (caret.c % 4); replaceSel(new Array(spaces + 1).join(' '), 'type'); return; }
+    var u = unitNow();
+    /* Indent with Tabs in a file with no indentation yet: its first level is a tab, and from then on it is a file
+       indented with tabs (Show spaces marks them so) */
+    if (IND.tabs && !d.tabbed && !IND.own && !d.lines.some(function (l) { return /^ +\S/.test(l); })) { d.tabbed = true; d.tabUnit = u; d.src = null; renderRows(true); }
+    if (!s && !outdent) { var spaces = u - (caret.c % u); replaceSel(new Array(spaces + 1).join(' '), 'type'); return; }
     var a = s ? s.a : caret, b = s ? s.b : caret;
     var lastLine = b.c === 0 && b.r > a.r ? b.r - 1 : b.r;
     var lines = d.lines.slice(a.r, lastLine + 1).map(function (l) {
-      if (outdent) return l.replace(/^ {1,4}/, '');
-      return l.length ? '    ' + l : l;
+      if (outdent) { var lead = indentCols(l), cut = lead % u || u; return l.slice(Math.min(lead, cut)); }
+      return l.length ? unitSpaces() + l : l;
     });
     var shift0 = lines[0].length - d.lines[a.r].length;
     var shiftN = lines[lines.length - 1].length - d.lines[lastLine].length;
     var keepAnchor = anchor ? { r: anchor.r, c: anchor.c } : null, keepCaret = { r: caret.r, c: caret.c };
     edit({ r: a.r, c: 0 }, { r: lastLine, c: d.lines[lastLine].length }, lines.join('\n'), 'indent');
-    function fix(p) { if (!p) return null; var sh = p.r === a.r ? shift0 : p.r === lastLine ? shiftN : (outdent ? -4 : 4); return { r: p.r, c: Math.max(0, p.c + (p.r >= a.r && p.r <= lastLine ? sh : 0)) }; }
+    function fix(p) { if (!p) return null; var sh = p.r === a.r ? shift0 : p.r === lastLine ? shiftN : (outdent ? -u : u); return { r: p.r, c: Math.max(0, p.c + (p.r >= a.r && p.r <= lastLine ? sh : 0)) }; }
     anchor = fix(keepAnchor); caret = fix(keepCaret);
     if (anchor) { anchor.c = Math.min(anchor.c, d.lines[anchor.r].length); }
     caret.c = Math.min(caret.c, d.lines[caret.r].length);
@@ -2840,7 +2921,7 @@ function mountEditor(host, st, api) {
     if (caret.c === 0) { if (caret.r === 0) return; edit({ r: caret.r - 1, c: d.lines[caret.r - 1].length }, caret, '', 'join'); return; }
     var t = d.lines[caret.r], from = caret.c - 1;
     if (word) from = wordLeft(t, caret.c);
-    else if (/^ +$/.test(t.slice(0, caret.c)) && caret.c % 4 === 0) from = caret.c - 4;
+    else if (/^ +$/.test(t.slice(0, caret.c))) { var bu = unitNow(); from = caret.c - (caret.c % bu || bu); }
     edit({ r: caret.r, c: Math.max(0, from) }, caret, '', 'del');
   }
   function typeDelete(word) {
@@ -2880,7 +2961,7 @@ function mountEditor(host, st, api) {
     e.preventDefault();
     if (t == null) return;
     if (!isEditable()) { noteReadOnly(); return; }
-    replaceSel(t.replace(/\r\n?/g, '\n').replace(/\t/g, '    '), 'paste');
+    replaceSel(expandText(t, unitNow(), caret.c), 'paste');
   });
 
   /* ==== keyboard ==== */
@@ -2930,7 +3011,7 @@ function mountEditor(host, st, api) {
     imeClear();
     if (!text) return;
     if (!isEditable()) { noteReadOnly(); return; }
-    replaceSel(String(text).replace(/\r\n?/g, '\n').replace(/\t/g, '    '), 'type');
+    replaceSel(expandText(text, unitNow(), caret.c), 'type');
   }
   ime.addEventListener('compositionstart', function () {
     composing = true;
@@ -3411,14 +3492,15 @@ function mountEditor(host, st, api) {
   function onLook(R2) {
     var prev = R; R = R2;
     if (!alive) return;
+    var reopened = resolveIndent();
     applyScheme();
     applyAttrs();
     markReduced();
     if (!firstDone) return;
     var g = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
-    var l = JSON.stringify([R.colors, R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics]);
+    var l = JSON.stringify([R.colors, R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
     if (prev.behavior.diffLayout !== R.behavior.diffLayout && mode === 'diff' && !diffLayoutPick) resolveLayout(true);
-    else if (g !== geoSig || head.offsetHeight !== headH) relayoutAll();
+    else if (reopened || g !== geoSig || head.offsetHeight !== headH) relayoutAll();
     else if (l !== lookSig) { renderRows(true); sticky._key = null; updateSticky(); renderOverlays(); }
     geoSig = g; lookSig = l;
     if (R.lines.relative !== prev.lines.relative) markCurrentRow();
@@ -3426,7 +3508,7 @@ function mountEditor(host, st, api) {
     queueDraw();
   }
   geoSig = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
-  lookSig = JSON.stringify([R.colors, R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics]);
+  lookSig = JSON.stringify([R.colors, R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
   applyAttrs();
   var detachLook = EL ? EL.attach(view) : null;
 
@@ -3580,6 +3662,9 @@ function mountEditor(host, st, api) {
       unmount: function () { instance.unmount(); }
     },
     openCustomize: function (o) { openCustomize(view, (o && o.anchor) || hrow.action('more') || head); },
+    // the file's indentation as this editor reads it (the Customize screen's Indentation note)
+    path: path,
+    indent: function () { resolveIndent(); return { unit: IND.unit, tabs: IND.tabs, own: IND.own, tabbed: !!d.tabbed }; },
     focus: function () { if (special) { root.setAttribute('tabindex', '-1'); root.focus({ preventScroll: true }); return; } scroller.focus({ preventScroll: true }); },
     reveal: function (s) { reveal(s || {}); },     // focus is the host's call (D8: an agent's open never takes it)
     wantsKey: function (e) {
@@ -3739,6 +3824,8 @@ function setup() {
   CHAT_CHANGES.forEach(function (c) { CHAT[c.path] = c; });
   // the Appearance row's mark (D30): a painter's palette in the 16 px stroke grammar
   try { PMW.registerIcon('edPalette', 'M8 2.2a5.8 5.8 0 1 0 0 11.6c1 0 1.4-.7 1.1-1.5-.3-.8.3-1.6 1.1-1.6h1.6a2.2 2.2 0 0 0 2.2-2.2C14 5 11.3 2.2 8 2.2zM5 8.3h.01M6.4 5.3h.01M9.7 5.1h.01', '*'); } catch (_) {}
+  // the Indentation row's mark: lines of text, two of them indented, and the tab's arrow into the indent
+  try { PMW.registerIcon('edIndent', 'M2.5 3.5h11M7 6.5h6.5M7 9.5h6.5M2.5 12.5h11M2.5 6.2l2.3 1.8-2.3 1.8', '*'); } catch (_) {}
 
   PM_HOME.registerKind('editor', {
     label: 'Editor',

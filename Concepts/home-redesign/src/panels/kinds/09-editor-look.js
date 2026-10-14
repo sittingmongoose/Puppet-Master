@@ -83,6 +83,10 @@ var FIELDS = {
   gotoHighlightMs: { type: 'number', min: 500, max: 10000, step: 500, default: 5000, label: 'A jumped-to line stays lit' },
   autosave: { type: 'enum', values: ['off', '500', '1000', 'focus'], default: '1000', label: 'Save automatically' },
   diagnostics: { type: 'enum', values: ['off', 'errors', 'warnings', 'all'], default: 'warnings', label: 'Problems to highlight' },
+  /* indentation: how wide a level is, what Tab puts in, and whether a file's own indentation wins over both */
+  tabSize: { type: 'enum', values: [2, 4, 8], default: 4, label: 'Tab size' },
+  insertSpaces: { type: 'bool', default: true, label: 'Indent with spaces' },
+  detectIndent: { type: 'bool', default: true, label: 'Follow the file’s indentation' },
   /* Settings' Hover Tip Delay (Toolchain, language servers): how long the pointer rests on a problem before its card */
   hoverDelay: { type: 'number', min: 0, max: 5000, step: 50, default: 300, label: 'Wait before showing a hover tip' }
 };
@@ -184,7 +188,8 @@ var WORDS = {
   pastEnd: words({ 'A few lines': 'little', 'Half a page': 'half', 'A full page': 'page' }),
   diff: words({ 'Automatic': 'auto', 'Side by side': 'side', 'Inline': 'inline' }),
   autosave: words({ 'Off': 'off', 'After 500 ms': '500', 'After 1 second': '1000', 'On focus change': 'focus' }),
-  problems: words({ 'Off': 'off', 'Errors Only': 'errors', 'Warnings & Errors': 'warnings', 'Everything': 'all' })
+  problems: words({ 'Off': 'off', 'Errors Only': 'errors', 'Warnings & Errors': 'warnings', 'Everything': 'all' }),
+  indentWith: words({ 'Spaces': true, 'Tabs': false })
 };
 var LINK = {
   scheme: { id: S + 'color-scheme', in: schemeIn, out: schemeOut },
@@ -227,6 +232,9 @@ var LINK = {
   gotoHighlightMs: { id: S + 'goto-highlight-ms', in: num(500, 10000, 500), out: numOut },
   autosave: { id: S + 'autosave', in: WORDS.autosave.in, out: WORDS.autosave.out },
   diagnostics: { id: S + 'diagnostics-visibility', in: WORDS.problems.in, out: WORDS.problems.out },
+  tabSize: { id: S + 'tab-size', in: function (v) { var n = Math.round(+v); return n === 2 || n === 4 || n === 8 ? n : undefined; }, out: function (v) { return String(v); } },
+  insertSpaces: { id: S + 'insert-spaces', in: function (v) { return typeof v === 'boolean' ? v : WORDS.indentWith.in(v); }, out: WORDS.indentWith.out },
+  detectIndent: { id: S + 'detect-indentation', in: bool, out: boolOut },
   hoverDelay: { id: S + 'lsp-hover-delay', in: num(0, 5000), out: numOut }
 };
 
@@ -372,7 +380,8 @@ function resolve(view) {
     motion: { smoothScroll: !!smooth, reveal: !!f('reveal') && !L.reduced, pastEnd: f('scrollPastEnd') || 'little', inactiveDim: !!f('inactiveDim'),
       scanlines: !!f('scanlines'), glow: !!f('glow') },
     behavior: { diffLayout: f('diffLayout') || 'auto', gotoHighlightMs: f('gotoHighlightMs') || 5000, autosave: String(f('autosave') || 'off'),
-      diagnostics: f('diagnostics') || 'warnings', hoverDelay: f('hoverDelay') }
+      diagnostics: f('diagnostics') || 'warnings', hoverDelay: f('hoverDelay') },
+    indent: { size: f('tabSize') || 4, spaces: f('insertSpaces') !== false, detect: f('detectIndent') !== false }
   };
 }
 

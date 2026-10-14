@@ -14,8 +14,8 @@
        rows, code.editing.*; the earlier store where Settings is absent). The preview shows that scope's editor
      - the real editor stays visible through a cut-out in the scrim, framed, and changes beside the preview
      - everything applies live and is saved; sliders show while they move and are written when let go
-   It lives in the panels' overlay root (#pmw-overlay, CONTRACT section 14), carries data-lg-surface="menu" for Liquid
-   Glass, and closes on Escape, Done, the close button or the scrim, giving the focus back to the editor. */
+   It lives in the panels' overlay root (#pmw-overlay, CONTRACT section 14), carries data-lg-surface="menu" and data-lg-dense
+   for Liquid Glass (a dense sheet: a heavier tint keeps what is behind from mottling its text), and closes on Escape, Done, the close button or the scrim, giving the focus back to the editor. */
 
 var EL = function () { return PMW.edLook; };
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -108,7 +108,7 @@ var GROUP_KEYS = {
   caret: ['caretShape', 'caretWidth', 'caretBlink', 'caretMotion', 'caretTrail'],
   lines: ['lineNumbers', 'relativeNumbers', 'lineHighlight', 'indentGuides', 'activeIndent', 'whitespace', 'rulers', 'wordWrap', 'wrapColumn', 'minimap', 'stickyScroll', 'stickyLines'],
   motion: ['smoothScroll', 'reveal', 'scrollPastEnd', 'inactiveDim', 'scanlines', 'glow'],
-  behavior: ['diffLayout', 'diagnostics', 'gotoHighlightMs', 'autosave']
+  behavior: ['diffLayout', 'diagnostics', 'gotoHighlightMs', 'autosave', 'tabSize', 'insertSpaces', 'detectIndent']
 };
 var COUNTED = [].concat(GROUP_KEYS.colors, GROUP_KEYS.text, GROUP_KEYS.caret, GROUP_KEYS.lines, GROUP_KEYS.motion, GROUP_KEYS.behavior);
 var GROUPS = [['colors', 'Colors'], ['text', 'Text'], ['caret', 'Caret'], ['lines', 'Lines & guides'], ['motion', 'Motion & effects'], ['behavior', 'Behavior']];
@@ -185,7 +185,7 @@ function guideArt(kind) { return '<span class="pmed-guides pmed-guides-' + kind 
 function skeleton(name) {
   var F = EL().FIELDS, html = '';
   html += '<div class="pmt-cz-scrim" data-act="scrim" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="pmt-cz-frame" aria-hidden="true"><span class="pmt-cz-framelabel">This editor</span></div>';
-  html += '<section class="pmt-cz-dialog" role="dialog" aria-modal="true" aria-labelledby="pmed-cz-title" aria-describedby="pmed-cz-lead" tabindex="-1" data-lg-surface="menu">';
+  html += '<section class="pmt-cz-dialog" role="dialog" aria-modal="true" aria-labelledby="pmed-cz-title" aria-describedby="pmed-cz-lead" tabindex="-1" data-lg-surface="menu" data-lg-dense>';
   html += '<header class="pmt-cz-head"><div class="pmt-cz-titles"><p class="pmt-cz-kicker"><span>' + esc('Customize · ' + name) + '</span></p>' +
     '<h2 class="pmt-cz-title" id="pmed-cz-title">Editor appearance</h2>' +
     '<p class="pmt-cz-lead" id="pmed-cz-lead">Pick what you want to change. The preview and this editor show it at once, and it is saved.</p></div>' +
@@ -279,6 +279,11 @@ function skeleton(name) {
     field('Save automatically', seg('autosave', [['off', 'Off'], ['500', 'After 0.5 s'], ['1000', 'After 1 s'], ['focus', 'When I leave']], 'Save automatically'), 'A pause after you stop typing, or when the focus leaves the file.') +
     '<div class="pmt-cz-field"><span class="pmt-cz-flabel">A jumped-to line stays lit</span>' + slider('gotoHighlightMs', 'For', F.gotoHighlightMs.min, F.gotoHighlightMs.max, F.gotoHighlightMs.step, true) +
     '<span class="pmt-cz-fhelp">A line opened from the chat, a problem or Go to line is lit this long, then fades.</span></div></div>' +
+    '<div data-at="indent"><h4 class="pmt-cz-sub">Indentation</h4>' +
+    '<div class="pmt-cz-grid2">' + field('Tab size', seg('tabSize', [['2', '2'], ['4', '4'], ['8', '8']], 'Tab size'), 'Columns in a level of indentation. Tab moves to the next one, and Backspace in the indentation goes back one.') +
+    field('Indent with', seg('insertSpaces', [['true', 'Spaces'], ['false', 'Tabs']], 'Indent with'), 'What a new level is made of in a file that doesn’t say. Show spaces marks a tab as →.') + '</div>' +
+    '<div class="pmt-cz-chips">' + chip('detectIndent', 'Follow the file’s indentation', 'A file indented with 2 spaces keeps 2, and one indented with tabs keeps tabs, whatever the two above say.') + '</div>' +
+    '<p class="pmt-cz-note" data-note-indent hidden></p></div>' +
     '<p class="pmt-cz-fhelp pmt-cz-more">Language servers, formatters, file encoding and big-file limits are in Settings, Editor & Terminal and Toolchain.</p></section>';
   html += '</div>';
   html += '<footer class="pmt-cz-foot"><button type="button" class="pmt-textbtn" data-act="reset"' + NOTAG + '>Reset this editor</button><span class="pmt-cz-footn" data-foot-n></span>' +
@@ -354,6 +359,15 @@ function open(opts) {
     if (key === 'scheme') return val('scheme') || 'follow';
     return val(key);
   }
+  /* what the file in this editor does with the three choices above (the preview has a file of its own) */
+  function indentNote(R) {
+    var I = inst.indent ? inst.indent() : null;
+    if (!I || !inst.path) return '';
+    var name = inst.path.split('/').pop();
+    if (I.tabs && I.own === 0 && R.indent.detect && I.tabbed) return name + ' is indented with tabs, so it keeps tabs, ' + I.unit + ' columns wide.';
+    if (I.own) return name + ' is indented with ' + I.own + ' spaces' + (R.indent.detect ? ', so Tab puts in ' + I.own + '.' : '; Follow the file’s indentation is off, so Tab puts in ' + I.unit + '.');
+    return name + ' has no indentation to follow yet, so Tab puts in ' + (I.tabs ? 'a tab, ' + I.unit + ' columns wide.' : I.unit + ' spaces.');
+  }
   function note(sel, text) { var e = root.querySelector(sel); if (!e) return; e.hidden = !text; if (e.textContent !== text) e.textContent = text; }
   function paint() {
     var R = eff(), lk = R.lookKey, isNier = lk === 'nier';
@@ -375,7 +389,7 @@ function open(opts) {
     });
     var on = { schemePair: !!val('schemePair'), syntax: R.colors.syntax, bracketPairs: R.colors.bracketPairs, ligatures: R.font.ligaturesAsked,
       activeIndent: R.lines.activeIndent, wordWrap: R.lines.wrap, minimap: R.lines.minimap, stickyScroll: R.lines.sticky,
-      reveal: !!val('reveal'), inactiveDim: R.motion.inactiveDim, scanlines: R.motion.scanlines, glow: R.motion.glow };
+      reveal: !!val('reveal'), inactiveDim: R.motion.inactiveDim, scanlines: R.motion.scanlines, glow: R.motion.glow, detectIndent: R.indent.detect };
     [].forEach.call(root.querySelectorAll('.pmt-cz-chip'), function (c) {
       var key = c.getAttribute('data-key'), o = !!on[key];
       setA(c, 'aria-checked', String(o));
@@ -424,6 +438,7 @@ function open(opts) {
     if (R.lines.rulers.length) ln.push('Rulers sit at column ' + R.lines.rulers.join(' and ') + '; the preview is narrower than that, so look at the editor beside this screen.');
     note('[data-note-lines]', ln.join(' '));
     note('[data-note-motion]', R.look.reduced ? 'Reduce motion is on: nothing moves; still effects stay.' : '');
+    note('[data-note-indent]', indentNote(R));
     var tabN = scope === 'app' ? Object.keys(EL().FIELDS).filter(function (k) { return EL().own('tab', v, k) !== undefined; }).length : 0;
     note('[data-note-side]', tabN ? 'This editor keeps ' + (tabN === 1 ? 'one choice of its own, which stays' : tabN + ' choices of its own, which stay') + ' on top of All editors on it. The preview shows All editors.' : '');
     /* the preview's caption, also its text alternative */
@@ -503,7 +518,8 @@ function open(opts) {
     if (key === 'lineNumberMode') { write({ lineNumbers: raw !== 'off', relativeNumbers: raw === 'relative' }); moveInk(key, before); return; }
     if (key === 'italicComments' || key === 'boldKeywords' || key === 'smoothScroll') { put(key, raw === 'follow' ? null : raw === 'on'); moveInk(key, before); return; }
     var value = raw;
-    if (key === 'contrast' || key === 'fontWeight' || key === 'wrapColumn') value = Number(raw);
+    if (key === 'contrast' || key === 'fontWeight' || key === 'wrapColumn' || key === 'tabSize') value = Number(raw);
+    if (key === 'insertSpaces') value = raw === 'true';
     if (key === 'scheme') {
       clearTimeout(intent); endPreview(); recolor(b);
       /* a scheme of the other appearance (a light one while the app is dark) is shown as picked: Switch with light and
@@ -695,6 +711,22 @@ function open(opts) {
     if (on) Motion.play(dock);
     preview.demo.relayout();
   }
+  /* the docked preview steps aside (it fades nearly clear) while the pointer or the focus is on what it floats over,
+     so a control under it can be read as well as reached; it comes back when they leave */
+  var asideRaf = 0, asideAt = null;
+  function dockAside() {
+    asideRaf = 0;
+    if (dock.hidden || !asideAt) { dock.classList.remove('is-aside'); return; }
+    var r = dock.getBoundingClientRect(), a = asideAt, hit;
+    if (a.el) { var bx = a.el.getBoundingClientRect(); hit = bx.right > r.left && bx.left < r.right && bx.bottom > r.top && bx.top < r.bottom; }
+    else hit = a.x >= r.left - 10 && a.x <= r.right + 10 && a.y >= r.top - 10 && a.y <= r.bottom + 10;
+    dock.classList.toggle('is-aside', hit);
+  }
+  function asideSoon(at) { asideAt = at; if (!asideRaf) asideRaf = requestAnimationFrame(dockAside); }
+  body.addEventListener('pointermove', function (e) { asideSoon({ x: e.clientX, y: e.clientY }); }, { passive: true });
+  body.addEventListener('pointerleave', function () { asideSoon(null); });
+  body.addEventListener('scroll', function () { if (asideAt) asideSoon(asideAt); }, { passive: true });
+  root.addEventListener('focusin', function (e) { if (body.contains(e.target) && !dock.contains(e.target)) asideSoon({ el: e.target }); });
   if (preview && typeof IntersectionObserver === 'function') {
     io = new IntersectionObserver(function (list) { var en = list[list.length - 1]; dockTo(en.intersectionRatio < 0.4); }, { root: body, threshold: [0, 0.4, 1] });
     io.observe(root.querySelector('.pmt-cz-preview'));
@@ -725,6 +757,9 @@ function open(opts) {
   Motion.play(root);
   var first = root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog;
   first.focus({ preventScroll: true });
+  /* opened for one group (the editor menu's Indentation row): that group's heading at the top, and the focus on it */
+  var goTo = opts.group && root.querySelector('[data-group="' + opts.group + '"]' + (opts.at ? ' [data-at="' + opts.at + '"]' : ''));
+  if (goTo) { goTo.scrollIntoView({ block: 'start' }); var gh = goTo.querySelector('h3, h4'); if (gh) { gh.tabIndex = -1; gh.focus({ preventScroll: true }); } }
   return { el: root, close: function () { close(); }, refresh: function () { if (!closed) { syncPreview(); paint(); } }, preview: preview };
 }
 
