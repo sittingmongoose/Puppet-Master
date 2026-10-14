@@ -11,10 +11,11 @@
 (function () {
   var C = T.color;
 
-  /* weights: the range the face is drawn in (Settings' Terminal Text Weight help: JetBrains Mono 400 to 800, Atkinson
-     Hyperlegible Mono 200 to 800); a face without it has one weight */
+  /* weights: the range the face is drawn in (Settings' Terminal Text Weight help: JetBrains Mono 100 to 800, Atkinson
+     Hyperlegible Mono 200 to 800; Jared 2026-10-14: JetBrains Mono keeps its full range, so its Latin file runs 100-800,
+     opus-5.5 src/fonts/SOURCE.md); a face without it has one weight */
   var FONTS = {
-    'jetbrains-mono': { label: 'JetBrains Mono', stack: "'JetBrains Mono', 'PM Symbols Mono', ui-monospace, Menlo, Consolas, monospace", size: 13, lineHeight: 1.3, weights: [400, 800], licence: 'OFL-1.1' },
+    'jetbrains-mono': { label: 'JetBrains Mono', stack: "'JetBrains Mono', 'PM Symbols Mono', ui-monospace, Menlo, Consolas, monospace", size: 13, lineHeight: 1.3, weights: [100, 800], licence: 'OFL-1.1' },
     'atkinson': { label: 'Atkinson Hyperlegible Mono', stack: "'Atkinson Hyperlegible Mono', 'JetBrains Mono', ui-monospace, monospace", size: 13, lineHeight: 1.35, weight: 400, weights: [200, 800], licence: 'OFL-1.1' },
     'vt323': { label: 'VT323', stack: "'VT323', 'JetBrains Mono', ui-monospace, monospace", size: 19, lineHeight: 1.05, licence: 'OFL-1.1' },
     'departure': { label: 'Departure Mono', stack: "'Departure Mono', 'JetBrains Mono', ui-monospace, monospace", size: 13.75, lineHeight: 1.2, licence: 'OFL-1.1' },
@@ -89,7 +90,7 @@
     minContrast: { type: 'enum', values: [1, 3, 4.5, 7], default: 4.5, label: 'Minimum contrast' },
     font: { type: 'enum', values: Object.keys(FONTS).concat(['follow']), default: 'follow', label: 'Font' },
     fontSize: { type: 'number', min: 8, max: 32, step: 0.5, default: null, label: 'Size' },
-    fontWeight: { type: 'number', min: 200, max: 800, step: 100, default: 400, label: 'Weight' },
+    fontWeight: { type: 'number', min: 100, max: 800, step: 100, default: 400, label: 'Weight' },
     lineHeight: { type: 'number', min: 1, max: 2, step: 0.05, default: null, label: 'Line height' },
     letterSpacing: { type: 'number', min: -1, max: 3, step: 0.25, default: 0, label: 'Letter spacing' },
     ligatures: { type: 'bool', default: true, label: 'Ligatures' },
@@ -257,7 +258,7 @@
     font: { id: S + 'font-family', in: fontIn, out: fontOut, custom: true },
     /* no step: a face's own size need not sit on the half pixel (Departure Mono's is 13.75) */
     fontSize: { id: S + 'font-size', in: num(8, 32), out: numOut },
-    fontWeight: { id: S + 'font-weight', in: num(200, 800, 100), out: numOut },
+    fontWeight: { id: S + 'font-weight', in: num(100, 800, 100), out: numOut },
     lineHeight: { id: S + 'line-height', in: num(1, 2, 0.05), out: numOut },
     letterSpacing: { id: S + 'letter-spacing', in: num(-1, 3, 0.25), out: numOut },
     ligatures: { id: S + 'ligatures', in: bool, out: boolOut },

@@ -135,7 +135,10 @@ test('setMany writes one Settings transaction', () => {
 
 test('weights follow the face; bold stays heavier', () => {
   clear();
-  let R = A.resolve(view({ font: 'jetbrains-mono', fontWeight: 200 }));
+  /* JetBrains Mono runs its full 100-800 (Jared, 2026-10-14); the system monospace still starts at 400 */
+  let R = A.resolve(view({ font: 'jetbrains-mono', fontWeight: 100 }));
+  assert.equal(R.font.weight, 100);
+  R = A.resolve(view({ font: 'system', fontWeight: 200 }));
   assert.equal(R.font.weight, 400);
   R = A.resolve(view({ font: 'atkinson', fontWeight: 200 }));
   assert.equal(R.font.weight, 200);
