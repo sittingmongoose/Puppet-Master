@@ -222,6 +222,14 @@ function syncBodies(panelEl, p, l, panelHidden) {
       }
       if (visible) queueResize(tid);
     }
+    /* onFocus / onBlur (section 3): the shown tab of the focused panel has the focus; with no panel focused yet, none
+       is told it lost it (a terminal dims on onBlur) */
+    var focused = visible && (l.view.focus == null || l.view.focus === p.id);
+    if (rec.instance && focused !== rec.focused) {
+      rec.focused = focused;
+      try { if (focused && rec.instance.onFocus) rec.instance.onFocus(); else if (!focused && rec.instance.onBlur) rec.instance.onBlur(); }
+      catch (err) { try { console.error('[pm-home] focus/blur failed', err); } catch (_) {} }
+    }
   }
 }
 

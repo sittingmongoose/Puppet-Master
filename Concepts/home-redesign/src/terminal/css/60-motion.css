@@ -2,7 +2,7 @@
    (both surfaces) and the recolour when a scheme is previewed or chosen. JS only starts things and waits for them
    (T.Motion in 70-view.js): an element plays its entrance under .pmt-in, its exit under .pmt-out, a content change
    under .pmt-swap, a command's end under .pmt-settle. What each of those animates is a token on .pmt-root (and on the
-   editor's floating popover, .pmt-pop-float, which carries the look itself).
+   editor's floating popover, .pmt-pop-float, and the Customize screen, .pmt-cz, which carry the look themselves).
 
    Layers, from the bottom:
    1. calm tokens: what Reduced Motion gets (short opacity cross-fades; nothing travels). Elements whose calm version
@@ -23,7 +23,7 @@
 /* ================================================================================================================
    1. calm tokens (Reduced Motion, and the floor every look starts from)
    ================================================================================================================ */
-.pmt-root, .pmt-pop-float {
+.pmt-root, .pmt-pop-float, .pmt-cz {
   --pmt-ease-move: linear; --pmt-ease-fade: linear; --pmt-ease-exit: linear; --pmt-ease-xf: linear;
   --pmt-t-in: 120ms; --pmt-t-out: 100ms; --pmt-t-swap: 120ms; --pmt-t-xf: 120ms; --pmt-t-tick: 0ms;
   --pmt-t-slide: 0ms; --pmt-t-settle: 120ms; --pmt-t-ring: 520ms; --pmt-t-tint: 0ms;
@@ -42,7 +42,7 @@
    ================================================================================================================ */
 @media (prefers-reduced-motion: no-preference) {
   /* Basic: quiet and exact */
-  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) :is(.pmt-root, .pmt-pop-float) {
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) :is(.pmt-root, .pmt-pop-float, .pmt-cz) {
     --pmt-ease-move: cubic-bezier(0.2, 0, 0, 1); --pmt-ease-fade: cubic-bezier(0.2, 0, 0, 1); --pmt-ease-exit: cubic-bezier(0.4, 0, 1, 1);
     --pmt-ease-xf: cubic-bezier(0.2, 0, 0, 1);
     --pmt-t-in: 180ms; --pmt-t-out: 120ms; --pmt-t-swap: 200ms; --pmt-t-xf: 180ms; --pmt-t-tick: 140ms;
@@ -56,7 +56,7 @@
     --pmt-a-draw: pmt-m-draw; --pmt-a-start: pmt-m-grow;
   }
   /* Friendly: springy, things land with a little give; the recolour blooms out of the scheme under the pointer */
-  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) :is(.pmt-root, .pmt-pop-float)[data-pmt-look="friendly"] {
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) :is(.pmt-root, .pmt-pop-float, .pmt-cz)[data-pmt-look="friendly"] {
     --pmt-ease-move: cubic-bezier(0.34, 1.56, 0.64, 1); --pmt-ease-xf: cubic-bezier(0.25, 0.1, 0.25, 1);
     --pmt-t-in: 260ms; --pmt-t-out: 140ms; --pmt-t-swap: 280ms; --pmt-t-xf: 300ms; --pmt-t-tick: 220ms;
     --pmt-t-slide: 300ms; --pmt-t-settle: 340ms; --pmt-t-ring: 520ms;
@@ -66,7 +66,7 @@
     --pmt-a-pick: pmt-m-pop-soft; --pmt-stagger: 40ms;
   }
   /* Glass: a slow glide; light runs across what arrives; the recolour slides in from the popover's side */
-  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) :is(.pmt-root, .pmt-pop-float)[data-pmt-look="glass"] {
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) :is(.pmt-root, .pmt-pop-float, .pmt-cz)[data-pmt-look="glass"] {
     --pmt-ease-move: cubic-bezier(0.05, 0.7, 0.1, 1); --pmt-ease-fade: cubic-bezier(0.05, 0.7, 0.1, 1); --pmt-ease-xf: cubic-bezier(0.05, 0.7, 0.1, 1);
     --pmt-t-in: 260ms; --pmt-t-out: 160ms; --pmt-t-swap: 300ms; --pmt-t-xf: 320ms; --pmt-t-tick: 220ms;
     --pmt-t-slide: 300ms; --pmt-t-settle: 360ms; --pmt-t-ring: 560ms; --pmt-t-tint: 140ms;
@@ -75,7 +75,7 @@
     --pmt-a-xf: pmt-xf-grow; --pmt-a-ripple: pmt-m-ripple;
   }
   /* Retro: stepped and snappy, like a terminal drawing its own box; reverse video for emphasis */
-  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) :is(.pmt-root, .pmt-pop-float)[data-pmt-look="retro"] {
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) :is(.pmt-root, .pmt-pop-float, .pmt-cz)[data-pmt-look="retro"] {
     --pmt-ease-move: steps(6, end); --pmt-ease-fade: steps(3, end); --pmt-ease-exit: steps(3, end); --pmt-ease-xf: steps(6, end);
     --pmt-t-in: 180ms; --pmt-t-out: 90ms; --pmt-t-swap: 150ms; --pmt-t-xf: 180ms; --pmt-t-tick: 90ms;
     --pmt-t-slide: 0ms; --pmt-t-settle: 160ms; --pmt-t-ring: 420ms; --pmt-t-tint: 0ms;
@@ -92,7 +92,7 @@
 /* ================================================================================================================
    3. NieR: end states at once; each Motion part adds its own stepped motion
    ================================================================================================================ */
-html[data-o55-nier="on"] :is(.pmt-root, .pmt-pop-float) {
+html[data-o55-nier="on"] :is(.pmt-root, .pmt-pop-float, .pmt-cz) {
   --pmt-ease-move: steps(8, end); --pmt-ease-fade: steps(4, end); --pmt-ease-exit: steps(4, end); --pmt-ease-xf: steps(8, end);
   --pmt-t-in: 200ms; --pmt-t-out: 100ms; --pmt-t-swap: 200ms; --pmt-t-xf: 200ms; --pmt-t-tick: 120ms;
   --pmt-t-slide: 0ms; --pmt-t-settle: 150ms; --pmt-t-ring: 480ms; --pmt-t-tint: 0ms;
@@ -105,16 +105,16 @@ html[data-o55-nier="on"] :is(.pmt-root, .pmt-pop-float) {
 @media (prefers-reduced-motion: no-preference) {
   /* slice: the popover and the find bar open from a thin line at their top edge (they hang from their anchor), in
      eight steps */
-  html[data-o55-nier="on"][data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pmt-root, .pmt-pop-float) {
+  html[data-o55-nier="on"][data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pmt-root, .pmt-pop-float, .pmt-cz) {
     --pmt-a-pop-in: pmt-m-slice-in; --pmt-a-pop-out: pmt-m-slice-out;
   }
   /* decode: rows print in as an ink band and their text types on; counts type on; a finished command's square snaps */
-  html[data-o55-nier="on"][data-o55-nier-parts~="decode"]:not([data-motion="reduced"]) :is(.pmt-root, .pmt-pop-float) {
+  html[data-o55-nier="on"][data-o55-nier-parts~="decode"]:not([data-motion="reduced"]) :is(.pmt-root, .pmt-pop-float, .pmt-cz) {
     --pmt-a-row-in: pmt-m-print-in; --pmt-a-row-out: pmt-m-print-out; --pmt-a-new: pmt-m-print-in; --pmt-a-old: pmt-m-gone;
     --pmt-a-tick: pmt-m-print-in; --pmt-a-box: pmt-m-nier-box; --pmt-a-draw: pmt-m-draw;
   }
   /* glitch: a request, a failure and an empty find arrive with a short jitter */
-  html[data-o55-nier="on"][data-o55-nier-parts~="glitch"]:not([data-motion="reduced"]) :is(.pmt-root, .pmt-pop-float) {
+  html[data-o55-nier="on"][data-o55-nier-parts~="glitch"]:not([data-motion="reduced"]) :is(.pmt-root, .pmt-pop-float, .pmt-cz) {
     --pmt-a-ask: pmt-m-jitter; --pmt-a-mark-fail: pmt-m-jitter; --pmt-a-nudge: pmt-m-jitter;
   }
   /* brackets with glitch: the find target's brackets snap in, as the bell's do (40-nier.css) */

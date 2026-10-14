@@ -1,0 +1,8386 @@
+{
+ "head": "077642db7c",
+ "page_sha256": "0931519ed261ea5f08717ab882ca052e16310e833fb30dedb6c75f247d0071b7",
+ "runs": {
+  "basic-dark/tab": true,
+  "basic-dark/app": true,
+  "basic-light/tab": true,
+  "basic-light/app": true,
+  "friendly-dark/tab": true,
+  "friendly-dark/app": true,
+  "friendly-light/tab": true,
+  "friendly-light/app": true,
+  "glass-dark/tab": true,
+  "glass-dark/app": true,
+  "glass-light/tab": true,
+  "glass-light/app": true,
+  "retro-dark/tab": true,
+  "retro-dark/app": true,
+  "retro-light/tab": true,
+  "retro-light/app": true,
+  "nier-dark/tab": true,
+  "nier-dark/app": true,
+  "nier-light/tab": true,
+  "nier-light/app": true
+ },
+ "fields": 40,
+ "status_counts": {
+  "WORKS": 23,
+  "FIXED": 10,
+  "WORKS_GPU": 6,
+  "WORKS_GPU_FILM": 1
+ },
+ "cases": 4176,
+ "extra": {
+  "open via More, Appearance…": {
+   "true": 20
+  },
+  "bgImage:custom": {
+   "MEASURED": 60
+  },
+  "import:valid": {
+   "WORKS": 20
+  },
+  "import:invalid": {
+   "WORKS": 20
+  },
+  "quickSet:calm": {
+   "WORKS": 20
+  },
+  "quickSet:reading": {
+   "WORKS": 20
+  },
+  "quickSet:crt": {
+   "WORKS": 20
+  },
+  "quickSet:look": {
+   "WORKS": 20
+  }
+ },
+ "settings_ui_pass": {
+  "basic-dark": {
+   "WORKS": 47
+  },
+  "glass-dark": {
+   "WORKS": 47
+  },
+  "retro-light": {
+   "WORKS": 47
+  }
+ },
+ "custom_picture_blur": [
+  {
+   "look": "basic-dark",
+   "scope": "tab",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "basic-dark",
+   "scope": "tab",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "basic-dark",
+   "scope": "tab",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "basic-dark",
+   "scope": "app",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "basic-dark",
+   "scope": "app",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "basic-dark",
+   "scope": "app",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "basic-light",
+   "scope": "tab",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "basic-light",
+   "scope": "tab",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "basic-light",
+   "scope": "tab",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "basic-light",
+   "scope": "app",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "basic-light",
+   "scope": "app",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "basic-light",
+   "scope": "app",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "friendly-dark",
+   "scope": "tab",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "friendly-dark",
+   "scope": "tab",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "friendly-dark",
+   "scope": "tab",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "friendly-dark",
+   "scope": "app",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "friendly-dark",
+   "scope": "app",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "friendly-dark",
+   "scope": "app",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "friendly-light",
+   "scope": "tab",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "friendly-light",
+   "scope": "tab",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "friendly-light",
+   "scope": "tab",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "friendly-light",
+   "scope": "app",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "friendly-light",
+   "scope": "app",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "friendly-light",
+   "scope": "app",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "glass-dark",
+   "scope": "tab",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "glass-dark",
+   "scope": "tab",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "glass-dark",
+   "scope": "tab",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "glass-dark",
+   "scope": "app",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "glass-dark",
+   "scope": "app",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "glass-dark",
+   "scope": "app",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "glass-light",
+   "scope": "tab",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "glass-light",
+   "scope": "tab",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "glass-light",
+   "scope": "tab",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "glass-light",
+   "scope": "app",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "glass-light",
+   "scope": "app",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "glass-light",
+   "scope": "app",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "retro-dark",
+   "scope": "tab",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "retro-dark",
+   "scope": "tab",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "retro-dark",
+   "scope": "tab",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "retro-dark",
+   "scope": "app",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "retro-dark",
+   "scope": "app",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "retro-dark",
+   "scope": "app",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "retro-light",
+   "scope": "tab",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "retro-light",
+   "scope": "tab",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "retro-light",
+   "scope": "tab",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "retro-light",
+   "scope": "app",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "retro-light",
+   "scope": "app",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "retro-light",
+   "scope": "app",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "nier-dark",
+   "scope": "tab",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "nier-dark",
+   "scope": "tab",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "nier-dark",
+   "scope": "tab",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "nier-dark",
+   "scope": "app",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "nier-dark",
+   "scope": "app",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "nier-dark",
+   "scope": "app",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "nier-light",
+   "scope": "tab",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "nier-light",
+   "scope": "tab",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "nier-light",
+   "scope": "tab",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  },
+  {
+   "look": "nier-light",
+   "scope": "app",
+   "blur": 0,
+   "terminal_sharpness": 50.79,
+   "preview_sharpness": 50.79
+  },
+  {
+   "look": "nier-light",
+   "scope": "app",
+   "blur": 12,
+   "terminal_sharpness": 14.97,
+   "preview_sharpness": 14.97
+  },
+  {
+   "look": "nier-light",
+   "scope": "app",
+   "blur": 24,
+   "terminal_sharpness": 2.86,
+   "preview_sharpness": 2.86
+  }
+ ],
+ "matrix": [
+  {
+   "field": "scheme",
+   "label": "Colour scheme",
+   "settings_row": "code.terminal.theme",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds; canon choices in Settings; a hovered scheme previews as itself; a scheme of the other appearance is kept as picked",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 37,
+     "verdicts": {
+      "WORKS": 37
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 740
+   }
+  },
+  {
+   "field": "schemePair",
+   "label": "Switch with light and dark",
+   "settings_row": "code.terminal.scheme-pair",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "minContrast",
+   "label": "Minimum contrast",
+   "settings_row": "code.terminal.min-contrast",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 80
+   }
+  },
+  {
+   "field": "font",
+   "label": "Face",
+   "settings_row": "code.terminal.font-family",
+   "before": "WORKS in the popover; Settings row unbound (Fira Code chosen in Settings left JetBrains Mono)",
+   "change": "Settings binds; canon faces offered; Fira Code/SF Mono/Custom read as this computer’s face",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 10,
+     "verdicts": {
+      "WORKS": 10
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 200
+   }
+  },
+  {
+   "field": "fontSize",
+   "label": "Size",
+   "settings_row": "code.terminal.font-size",
+   "before": "WORKS in the popover; Settings saved 24 but the terminal stayed 13 (audit)",
+   "change": "Settings binds (24 draws 24)",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 80
+   }
+  },
+  {
+   "field": "fontWeight",
+   "label": "Weight",
+   "settings_row": "code.terminal.font-weight",
+   "before": "400-600 only; Settings row unbound",
+   "change": "Each face’s own range (JetBrains Mono 400-800, Atkinson 200-800); single-weight faces say so",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 8,
+     "verdicts": {
+      "WORKS": 8
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 160
+   }
+  },
+  {
+   "field": "lineHeight",
+   "label": "Line height",
+   "settings_row": "code.terminal.line-height",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "letterSpacing",
+   "label": "Letter spacing",
+   "settings_row": "code.terminal.letter-spacing",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 80
+   }
+  },
+  {
+   "field": "ligatures",
+   "label": "Ligatures",
+   "settings_row": "code.terminal.ligatures",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "boldBright",
+   "label": "Bold as bright",
+   "settings_row": "code.terminal.bold-bright",
+   "before": "not in the popover; Settings row unbound",
+   "change": "In the screen; Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "fontRendering",
+   "label": "Text drawing",
+   "settings_row": "code.terminal.font-rendering",
+   "before": "did nothing (no field in the model)",
+   "change": "Crisp draws whole device pixels, Smooth unhinted outlines",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 7,
+     "verdicts": {
+      "WORKS": 7
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 140
+   }
+  },
+  {
+   "field": "sixtyfourScan",
+   "label": "Sixtyfour scanlines",
+   "settings_row": "code.terminal.sixtyfour-scan",
+   "before": "stored only (\"native renderer only\")",
+   "change": "Drawn through a FontFace instance with the SCAN axis",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "sixtyfourBleed",
+   "label": "Sixtyfour bleed",
+   "settings_row": "code.terminal.sixtyfour-bleed",
+   "before": "stored only (\"native renderer only\")",
+   "change": "Drawn through a FontFace instance with the BLED axis",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "cursorShape",
+   "label": "Cursor shape",
+   "settings_row": "code.terminal.cursor-shape",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 80
+   }
+  },
+  {
+   "field": "cursorBlink",
+   "label": "Blink",
+   "settings_row": "code.terminal.cursor-blink",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "cursorTrail",
+   "label": "Trail",
+   "settings_row": "code.terminal.cursor-trail",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds; the preview shows it",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 4,
+      "WORKS_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": [
+      "soft: no trail on Nas1 (frame gaps); the RTX 3090 drew 1325 px (trace-gpu-glass-dark.txt)",
+      "trace: no trail on Nas1 (frame gaps); the RTX 3090 drew 161 px (trace-gpu-glass-dark.txt)"
+     ]
+    },
+    "glass-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 4,
+      "WORKS_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": [
+      "soft: no trail on Nas1 (frame gaps); the RTX 3090 drew 1325 px (trace-gpu-glass-dark.txt)",
+      "trace: no trail on Nas1 (frame gaps); the RTX 3090 drew 161 px (trace-gpu-glass-dark.txt)"
+     ]
+    },
+    "glass-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 4,
+      "WORKS_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": [
+      "soft: no trail on Nas1 (frame gaps); the RTX 3090 drew 1328 px (trace-gpu-glass-light.txt)",
+      "trace: no trail on Nas1 (frame gaps); the RTX 3090 drew 162 px (trace-gpu-glass-light.txt)"
+     ]
+    },
+    "glass-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 4,
+      "WORKS_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": [
+      "soft: no trail on Nas1 (frame gaps); the RTX 3090 drew 1328 px (trace-gpu-glass-light.txt)",
+      "trace: no trail on Nas1 (frame gaps); the RTX 3090 drew 162 px (trace-gpu-glass-light.txt)"
+     ]
+    },
+    "retro-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS_GPU",
+   "totals": {
+    "WORKS": 112,
+    "WORKS_GPU": 8
+   }
+  },
+  {
+   "field": "background",
+   "label": "Background",
+   "settings_row": "code.terminal.background",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 120
+   }
+  },
+  {
+   "field": "bgColor",
+   "label": "Solid colour",
+   "settings_row": "code.terminal.background-color",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "bgGradient",
+   "label": "Gradient",
+   "settings_row": "code.terminal.background-gradient",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 80
+   }
+  },
+  {
+   "field": "bgImage",
+   "label": "Picture",
+   "settings_row": "code.terminal.background-image",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds; Settings names a picture by its file name",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 3,
+      "MEASURED": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 60,
+    "MEASURED": 60
+   }
+  },
+  {
+   "field": "bgDim",
+   "label": "Dimming",
+   "settings_row": "code.terminal.background-dim",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "bgBlur",
+   "label": "Blur",
+   "settings_row": "code.terminal.background-blur",
+   "before": "built-in pictures only; your own picture never blurred (audit: identical PNGs at 0 and 24)",
+   "change": "Your own picture blurs (baked once); box-blur fallback where canvas filters are missing",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "opacity",
+   "label": "Opacity (Glass)",
+   "settings_row": "code.terminal.opacity",
+   "before": "applied in every look once set; Settings row unbound",
+   "change": "Glass only (SSYS-051); Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 0,
+     "verdicts": {},
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 0,
+     "verdicts": {},
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 0,
+     "verdicts": {},
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 0,
+     "verdicts": {},
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 0,
+     "verdicts": {},
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 0,
+     "verdicts": {},
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 0,
+     "verdicts": {},
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 0,
+     "verdicts": {},
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 0,
+     "verdicts": {},
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 0,
+     "verdicts": {},
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 0,
+     "verdicts": {},
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 0,
+     "verdicts": {},
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 0,
+     "verdicts": {},
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 0,
+     "verdicts": {},
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 0,
+     "verdicts": {},
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 0,
+     "verdicts": {},
+     "persist": null,
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 12
+   }
+  },
+  {
+   "field": "padding",
+   "label": "Padding",
+   "settings_row": "code.terminal.padding",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "effects",
+   "label": "Effects",
+   "settings_row": "code.terminal.effects",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds; an effect set in Settings means Custom",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 80
+   }
+  },
+  {
+   "field": "scanlines",
+   "label": "Scanlines",
+   "settings_row": "code.terminal.scanlines",
+   "before": "WORKS (layer on/off); Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "scanStrength",
+   "label": "Scanline strength",
+   "settings_row": "code.terminal.scan-strength",
+   "before": "BROKEN on the no-GPU path: stored, always drawn at .30 (audit paint proof)",
+   "change": "The CSS path draws the chosen strength",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "glow",
+   "label": "Phosphor glow",
+   "settings_row": "code.terminal.glow",
+   "before": "WORKS (layer on/off); Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "glowStrength",
+   "label": "Glow strength",
+   "settings_row": "code.terminal.glow-strength",
+   "before": "BROKEN on the no-GPU path: stored, always drawn at .45 (audit paint proof)",
+   "change": "The CSS path draws the chosen strength",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "crt",
+   "label": "Full CRT",
+   "settings_row": "code.terminal.crt",
+   "before": "GPU only; Settings row unbound",
+   "change": "Settings binds; drawn on the GPU host (film)",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS_GPU",
+   "totals": {
+    "UNVERIFIED_GPU": 20,
+    "WORKS": 20
+   }
+  },
+  {
+   "field": "curvature",
+   "label": "Curvature",
+   "settings_row": "code.terminal.curvature",
+   "before": "GPU only; Settings row unbound",
+   "change": "Settings binds; drawn on the GPU host (film)",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS_GPU",
+   "totals": {
+    "UNVERIFIED_GPU": 60
+   }
+  },
+  {
+   "field": "burnIn",
+   "label": "Burn-in",
+   "settings_row": "code.terminal.burn-in",
+   "before": "GPU only; Settings row unbound",
+   "change": "Settings binds; drawn on the GPU host (film)",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS_GPU_FILM",
+   "totals": {
+    "UNVERIFIED_GPU": 40
+   }
+  },
+  {
+   "field": "noise",
+   "label": "Grain",
+   "settings_row": "code.terminal.noise",
+   "before": "GPU only; Settings row unbound",
+   "change": "Settings binds; drawn on the GPU host (film)",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS_GPU",
+   "totals": {
+    "UNVERIFIED_GPU": 60
+   }
+  },
+  {
+   "field": "flicker",
+   "label": "Flicker",
+   "settings_row": "code.terminal.flicker",
+   "before": "GPU only; Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_GPU": 1,
+      "WORKS": 1
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS_GPU",
+   "totals": {
+    "UNVERIFIED_GPU": 20,
+    "WORKS": 20
+   }
+  },
+  {
+   "field": "flickerAmount",
+   "label": "Flicker amount",
+   "settings_row": "code.terminal.flicker-amount",
+   "before": "GPU only; Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "UNVERIFIED_GPU": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS_GPU",
+   "totals": {
+    "UNVERIFIED_GPU": 60
+   }
+  },
+  {
+   "field": "inactiveDim",
+   "label": "Dim terminals I’m not in",
+   "settings_row": "code.terminal.inactive-dim",
+   "before": "BROKEN: never applied, the panel host never told a terminal it lost the focus (audit, two panels); Glass faded at a fixed .8 even when off; Settings row unbound",
+   "change": "The host calls onFocus/onBlur; every look dims by its amount through real focus, off dims nothing (Glass fade follows the field); Settings binds; the preview steps back to show it",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "smoothScroll",
+   "label": "Smooth scrolling",
+   "settings_row": "code.terminal.smooth-scroll",
+   "before": "WORKS in the popover; Settings row unbound",
+   "change": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "UNVERIFIED_MOTION": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "UNVERIFIED_MOTION": 40
+   }
+  },
+  {
+   "field": "bell",
+   "label": "Bell",
+   "settings_row": "code.terminal.bell",
+   "before": "not in the popover; Settings row unbound",
+   "change": "In the screen; Settings binds; the preview rings it",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "stickyHeader",
+   "label": "Keep command titles visible",
+   "settings_row": "code.terminal.sticky-header",
+   "before": "not in the popover; Settings row unbound",
+   "change": "In the screen; Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "copyOnSelect",
+   "label": "Copy when I highlight",
+   "settings_row": "code.terminal.copy-on-select",
+   "before": "not in the popover; Settings row unbound",
+   "change": "In the screen; Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "persist": "PERSISTS",
+     "failures": [],
+     "gpu_verified": []
+    }
+   },
+   "status": "WORKS",
+   "totals": {
+    "WORKS": 40
+   }
+  }
+ ],
+ "films": [
+  {
+   "film": "film-glass-friendly.mp4 (page c2, FAILED ATTEMPT kept in evidence)",
+   "looks": "Glass dark, Friendly light",
+   "gpu": "RTX 3090",
+   "notes": "found: hovering a scheme low in the list scrolled the preview out of view (fixed by the docked preview, 7d525c31f7); a quick set cleared the scope’s other choices (fixed: quick sets are additive)"
+  },
+  {
+   "film": "filmA-basic-retro-nier.mp4 (page c3 = source 7d525c31f7)",
+   "looks": "Basic dark, Retro dark, NieR light",
+   "gpu": "RTX 3090 D3D11; terminal and preview fx.active, curvature/burn-in/grain drawn",
+   "notes": "Basic entrance 7 frames (~115 ms) 5 px drop, clean; Retro scan-in stepped over 9 frames, clean; NieR (old scaleY slice) squashed the text for 5 frames, so it was REPLACED by a clip unroll (606c68f1dd) and re-filmed in B; preview docks with a 2-3 frame fade, no blank frame; Retro phosphor trail decays over ~15 frames per jump; Old monitor on the terminal is a cut with burn-in afterglow ~12 frames (intended persistence)"
+  },
+  {
+   "film": "filmB-glass-friendly-nier.mp4 (page c4 = c3 + NieR clip slice)",
+   "looks": "Glass dark, Friendly light, NieR dark",
+   "gpu": "RTX 3090 D3D11; fx.active on terminal and preview",
+   "notes": "NieR now unrolls from a line in 8 steps, text never squashed; Friendly springs from .92 and lands in ~8 frames; Glass glide ~5 frames visible, no flash"
+  },
+  {
+   "film": "filmC-reduced-glass-retro.mp4 (page c4, html[data-motion=reduced])",
+   "looks": "Glass light, Retro light under Reduced Motion",
+   "gpu": "RTX 3090 D3D11",
+   "notes": "the screen appears at once (end state, no travel); no trail; dims and bells switch without motion"
+  },
+  {
+   "film": "gpu-effects-basic-dark.txt + trace-gpu-glass-dark.txt / trace-gpu-glass-light.txt / trace-gpu-nier-dark.txt / trace-gpu-nier-light.txt (final page 0931519e = source 077642db7c; Windows RTX 3090, preview WebGL read back)",
+   "looks": "Basic dark",
+   "gpu": "measured",
+   "notes": "scanline row modulation 7.3/13.1/23.6 at strength 0/.3/.6; glow mean light 73.7/87.8/103.1 at 0/.45/1; grain frame difference 0.05/1.9/3.8 at 0/.06/.12; flicker deviation 0.51%/1.14% at 0/.03 (cap 3%); curvature mean 60.3/58.0/56.7 at 0/.1/.2 plus the visible curve in stills; every trail paints on the GPU in Glass dark, Glass light, NieR dark and NieR light on the final page (Trace 161 / 162 / 99 / 99 px, others 781-1530 px, Off 0), frame gaps <= 18 ms"
+  }
+ ],
+ "inactive_dim_real_focus": [
+  {
+   "look": "basic-dark",
+   "verdict": "WORKS",
+   "amount": 0,
+   "away_dimmed": true,
+   "off_amount": 0,
+   "on_amount": 0.18
+  },
+  {
+   "look": "basic-light",
+   "verdict": "WORKS",
+   "amount": 0,
+   "away_dimmed": true,
+   "off_amount": 0,
+   "on_amount": 0.18
+  },
+  {
+   "look": "friendly-dark",
+   "verdict": "WORKS",
+   "amount": 0.18,
+   "away_dimmed": true,
+   "off_amount": 0,
+   "on_amount": 0.18
+  },
+  {
+   "look": "friendly-light",
+   "verdict": "WORKS",
+   "amount": 0.18,
+   "away_dimmed": true,
+   "off_amount": 0,
+   "on_amount": 0.18
+  },
+  {
+   "look": "glass-dark",
+   "verdict": "WORKS",
+   "amount": 0.22,
+   "away_dimmed": true,
+   "off_amount": 0,
+   "on_amount": 0.22
+  },
+  {
+   "look": "glass-light",
+   "verdict": "WORKS",
+   "amount": 0.22,
+   "away_dimmed": true,
+   "off_amount": 0,
+   "on_amount": 0.22
+  },
+  {
+   "look": "retro-dark",
+   "verdict": "WORKS",
+   "amount": 0.4,
+   "away_dimmed": true,
+   "off_amount": 0,
+   "on_amount": 0.4
+  },
+  {
+   "look": "retro-light",
+   "verdict": "WORKS",
+   "amount": 0.4,
+   "away_dimmed": true,
+   "off_amount": 0,
+   "on_amount": 0.4
+  },
+  {
+   "look": "nier-dark",
+   "verdict": "WORKS",
+   "amount": 0.32,
+   "away_dimmed": true,
+   "off_amount": 0,
+   "on_amount": 0.32
+  },
+  {
+   "look": "nier-light",
+   "verdict": "WORKS",
+   "amount": 0.32,
+   "away_dimmed": true,
+   "off_amount": 0,
+   "on_amount": 0.32
+  }
+ ],
+ "custom_text_reload": {
+  "before-ef27f4bd": "LOST",
+  "final": "PERSISTS"
+ },
+ "audit_items": {
+  "profiles": "WORKS",
+  "tabNote": "WORKS",
+  "import": "WORKS"
+ }
+}

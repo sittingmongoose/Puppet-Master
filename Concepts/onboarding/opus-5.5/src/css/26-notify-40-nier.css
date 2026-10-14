@@ -1,0 +1,143 @@
+/* PM Notify, NieR Mode (pm7-notifications, Opus 5.5), after NIER-RULES-for-new-surfaces.md (2026-10-09):
+   NieR paints only while html[data-o55-nier="on"]; every touch past the palette is gated by an existing part
+   (square, headers, voice, icons, brackets, ground, empty, blocks, cursor); colours come only from the NieR token
+   tables (--o55-nier-*) or the theme tokens NieR repaints; no glow, no blur, no filter; motion is discrete steps
+   (19-notify.js MOTION.nier: a message unfolds as an ink line that opens into a panel, and folds back the same way).
+   The script parts already decode a card's words, glitch an alert and turn Pod 042 toward each arrival; they find
+   the card as #rsStage's last child, its n-sev-* class and its .n-title / .n-body. */
+
+html[data-o55-nier="on"] {
+  --pmn-r: 0px;
+  --pmn-r-panel: 0px;
+  --pmn-r-item: 0px;
+  --pmn-r-tile: 0px;
+  --pmn-r-btn: 0px;
+  --pmn-surface: var(--o55-nier-raised);
+  --pmn-field: var(--o55-nier-paper);
+  --pmn-line: var(--o55-nier-line-strong);
+  --pmn-line-soft: rgba(var(--o55-nier-ink-rgb), .18);
+  --pmn-text: var(--o55-nier-ink);
+  --pmn-text-2: var(--text-secondary);
+  --pmn-text-3: var(--text-muted);
+  --pmn-hover: var(--o55-nier-hover);
+  --pmn-press: var(--o55-nier-active);
+  --pmn-on-acc: var(--o55-nier-on-ink);
+  --pmn-shadow: 4px 4px 0 rgba(var(--o55-nier-shadow-rgb), .22);
+  --pmn-shadow-panel: 6px 6px 0 rgba(var(--o55-nier-shadow-rgb), .22);
+}
+html[data-o55-nier="on"] :is(.pmn-toast, .pmn-front, .pmn-item, .pmn-banner) { --pmn-acc: var(--o55-nier-ink); }
+html[data-o55-nier="on"] :is(.pmn-toast, .pmn-front, .pmn-item, .pmn-banner).n-sev-success { --pmn-acc: var(--o55-nier-ok-text); }
+html[data-o55-nier="on"] :is(.pmn-toast, .pmn-front, .pmn-item, .pmn-banner).n-sev-warn { --pmn-acc: var(--o55-nier-warn-text); }
+html[data-o55-nier="on"] :is(.pmn-toast, .pmn-front, .pmn-item, .pmn-banner).n-sev-error { --pmn-acc: var(--o55-nier-error-text); }
+html[data-o55-nier="on"] :is(.pmn-front, .pmn-peek, .pmn-badge, .pmn-unread, .pmn-bell, .pmn-x, .pmn-btn, .pmn-item, .pmn-textbtn, .pmn-group-fold .pmn-ico) { transition-timing-function: steps(3, end) !important; }
+
+/* ---- the palette (always) ---- */
+html[data-o55-nier="on"] .pmn-toast, html[data-o55-nier="on"] .pmn-chrome, html[data-o55-nier="on"] .pmn-banner { background: var(--o55-nier-raised); color: var(--o55-nier-ink); border-color: var(--o55-nier-line-strong); }
+html[data-o55-nier="on"] .pmn-toast:is([data-level="attention"], [data-level="blocking"]).n-sev-warn { background: var(--o55-nier-warn-surface); }
+html[data-o55-nier="on"] .pmn-toast:is([data-level="attention"], [data-level="blocking"]).n-sev-error { background: var(--o55-nier-error-surface); }
+html[data-o55-nier="on"] .pmn-tile { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
+html[data-o55-nier="on"] .pmn-toast.n-sev-warn .pmn-tile, html[data-o55-nier="on"] .pmn-item.n-sev-warn .pmn-tile { background: var(--o55-nier-warn); }
+html[data-o55-nier="on"] .pmn-toast.n-sev-error .pmn-tile, html[data-o55-nier="on"] .pmn-item.n-sev-error .pmn-tile { background: var(--o55-nier-error); }
+html[data-o55-nier="on"] .pmn-front { background: var(--o55-nier-raised); border-color: var(--o55-nier-line-strong); box-shadow: 2px 2px 0 rgba(var(--o55-nier-shadow-rgb), .22); }
+html[data-o55-nier="on"] .pmn-peek { background: var(--o55-nier-paper); border-color: rgba(var(--o55-nier-ink-rgb), .45); }
+html[data-o55-nier="on"] .pmn-stack[data-depth="2"] .pmn-peek-1, html[data-o55-nier="on"] .pmn-stack[data-depth="3"] .pmn-peek-1 { transform: translateX(5px); }
+html[data-o55-nier="on"] .pmn-stack[data-depth="3"] .pmn-peek-2 { transform: translateX(10px); }
+html[data-o55-nier="on"] .pmn-stack[data-hover] .pmn-front { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 rgba(var(--o55-nier-shadow-rgb), .3); }
+html[data-o55-nier="on"] .pmn-front-ico { color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmn-badge { border-radius: 0; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: 0 0 0 2px var(--o55-nier-paper); }
+html[data-o55-nier="on"] .pmn-badge[data-sev="warn"] { background: var(--o55-nier-warn); }
+html[data-o55-nier="on"] .pmn-badge[data-sev="error"] { background: var(--o55-nier-error); }
+html[data-o55-nier="on"] .pmn-timer { background: var(--o55-nier-ink); opacity: .7; }
+html[data-o55-nier="on"] .pmn-btn { background: transparent; color: var(--o55-nier-ink); box-shadow: inset 0 0 0 1px var(--o55-nier-line-strong); }
+html[data-o55-nier="on"] .pmn-btn:hover { background: var(--o55-nier-hover); }
+html[data-o55-nier="on"] .pmn-btn-primary { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
+html[data-o55-nier="on"] .pmn-btn-primary:hover { background: var(--o55-nier-active); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmn-btn-danger { color: var(--o55-nier-error-text); box-shadow: inset 0 0 0 1px var(--o55-nier-error); }
+html[data-o55-nier="on"] .pmn-head-count { color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmn-group[data-group="needs"] .pmn-group-head { color: var(--o55-nier-warn-text); }
+html[data-o55-nier="on"] .pmn-unread { border-radius: 0; background: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmn-item-life { color: var(--o55-nier-error-text); }
+html[data-o55-nier="on"] .pmn-explain { background: var(--o55-nier-paper); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .35); }
+html[data-o55-nier="on"] :is(.pmn-pattern input, .pmn-rationale) { background: var(--o55-nier-paper); border-color: var(--o55-nier-line-strong); color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmn-group[data-folded="true"] .pmn-item[data-under] { background: var(--o55-nier-paper); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .4); border-radius: 0; }
+html[data-o55-nier="on"] .pmn-group[data-folded="true"] .pmn-item:not([data-under]) { background: transparent; }
+html[data-o55-nier="on"] .pmn-stack:focus-visible, html[data-o55-nier="on"] :is(.pmn-btn, .pmn-x, .pmn-textbtn):focus-visible { outline: 1px solid var(--o55-nier-ink); outline-offset: 2px; }
+html[data-o55-nier="on"] .pmn-item:focus-visible { box-shadow: inset 0 0 0 1px var(--o55-nier-ink); }
+
+/* ---- square: hairline frames ---- */
+html[data-o55-nier-parts~="square"] .pmn-toast, html[data-o55-nier-parts~="square"] .pmn-chrome { border: 1px solid var(--o55-nier-ink); }
+html[data-o55-nier-parts~="square"] .pmn-toast::after, html[data-o55-nier-parts~="square"] .pmn-chrome::after {
+  content: ""; position: absolute; inset: 3px; border: 1px solid rgba(var(--o55-nier-ink-rgb), .22); pointer-events: none;
+}
+html[data-o55-nier-parts~="square"] .pmn-front { border-color: var(--o55-nier-ink); }
+
+/* ---- headers: the YoRHa band ---- */
+html[data-o55-nier-parts~="headers"] .pmn-toast:not([data-level="quiet"]) .pmn-toast-in { padding-top: 32px; }
+html[data-o55-nier-parts~="headers"] .pmn-toast:not([data-level="quiet"]) .pmn-kicker {
+  position: absolute; left: 0; right: 0; top: 0; height: 21px; margin: 0; padding: 0 34px 0 12px; box-sizing: border-box; align-items: center;
+  background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); text-transform: uppercase; letter-spacing: .14em; font-size: 9.5px; font-weight: 600;
+}
+html[data-o55-nier-parts~="headers"] .pmn-toast.n-sev-warn .pmn-kicker { background: var(--o55-nier-warn); }
+html[data-o55-nier-parts~="headers"] .pmn-toast.n-sev-error .pmn-kicker { background: var(--o55-nier-error); }
+html[data-o55-nier-parts~="headers"] .pmn-toast .pmn-kicker :is(.pmn-src, .pmn-when), html[data-o55-nier-parts~="headers"] .pmn-toast .pmn-when::before { color: inherit; }
+html[data-o55-nier-parts~="headers"] .pmn-toast .pmn-kicker::before { content: ""; width: 7px; height: 7px; margin-right: 4px; background: var(--o55-nier-on-ink); flex: 0 0 auto; align-self: center; }
+html[data-o55-nier-parts~="headers"] .pmn-toast:not([data-level="quiet"]) .pmn-x { position: absolute; top: 0; right: 4px; width: 21px; height: 21px; padding: 4px; color: var(--o55-nier-on-ink); opacity: 1; }
+html[data-o55-nier-parts~="headers"] .pmn-toast:not([data-level="quiet"]) .pmn-x:hover { background: transparent; color: var(--o55-nier-on-ink); outline: 1px solid var(--o55-nier-on-ink); outline-offset: -3px; }
+html[data-o55-nier-parts~="headers"] .pmn-toast:not([data-level="quiet"]) .pmn-count { top: 5px; right: 30px; color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="headers"] .pmn-head { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-bottom: 0; padding: 8px 8px 8px 12px; }
+html[data-o55-nier-parts~="headers"] .pmn-head :is(.pmn-head-ico, .pmn-head-title, .pmn-head-count) { color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="headers"] .pmn-head-title { text-transform: uppercase; letter-spacing: .16em; font-size: 11px; font-weight: 600; }
+html[data-o55-nier-parts~="headers"] .pmn-textbtn { color: var(--o55-nier-on-ink); text-transform: uppercase; letter-spacing: .08em; font-size: 10px; }
+html[data-o55-nier-parts~="headers"] .pmn-textbtn:hover { background: transparent; color: var(--o55-nier-on-ink); outline: 1px solid var(--o55-nier-on-ink); outline-offset: -2px; }
+html[data-o55-nier-parts~="headers"] .pmn-group-head { letter-spacing: .14em; }
+
+/* ---- voice: Report / Alert / Proposal (the words the NieR voice part gives the base cards) ---- */
+html[data-o55-nier-parts~="voice"] :is(.pmn-toast .pmn-title, .pmn-item-title, .pmn-front-title)::before { content: "Report: "; font-weight: 500; }
+html[data-o55-nier-parts~="voice"] :is(.pmn-toast:is(.n-sev-warn, .n-sev-error) .pmn-title, .pmn-item:is(.n-sev-warn, .n-sev-error) .pmn-item-title, .pmn-front:is(.n-sev-warn, .n-sev-error) .pmn-front-title)::before { content: "Alert: "; }
+html[data-o55-nier-parts~="voice"] :is(.pmn-toast[data-level="blocking"]:not(.n-sev-warn):not(.n-sev-error) .pmn-title, .pmn-item[data-level="blocking"]:not(.n-sev-warn):not(.n-sev-error) .pmn-item-title)::before { content: "Proposal: "; }
+
+/* ---- icons: square strokes ---- */
+html[data-o55-nier-parts~="icons"] .pmn-ico { stroke-linecap: square; stroke-linejoin: miter; stroke-width: 1.6; }
+
+/* ---- blocks: the timer is a meter of blocks ---- */
+html[data-o55-nier-parts~="blocks"] .pmn-timer { height: 4px; left: 3px; right: 3px; bottom: 3px; background: repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 10px, transparent 10px 13px); opacity: .55; }
+
+/* ---- ground: the parchment dot grid behind the inbox's rows ---- */
+html[data-o55-nier-parts~="ground"] .pmn-scroll { background: radial-gradient(rgba(var(--o55-nier-ink-rgb), .14) 1px, transparent 1.4px) 0 0 / 12px 12px; }
+
+/* ---- cursor: the hovered or chosen row turns to ink, with the square cursor ahead of it ---- */
+html[data-o55-nier-parts~="cursor"] .pmn-item:is(:hover, .pmh-on, :focus-visible):not([data-under]) { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
+html[data-o55-nier-parts~="cursor"] .pmn-item:is(:hover, .pmh-on, :focus-visible):not([data-under]) :is(.pmn-item-title, .pmn-item-body, .pmn-item-meta, .pmn-x) { color: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] .pmn-item:is(:hover, .pmh-on, :focus-visible):not([data-under]) .pmn-tile { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="cursor"] .pmn-item:is(:hover, .pmh-on, :focus-visible):not([data-under]) .pmn-btn { color: var(--o55-nier-on-ink); box-shadow: inset 0 0 0 1px var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] .pmn-item:is(:hover, .pmh-on, :focus-visible):not([data-under]) .pmn-btn-primary { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="cursor"] .pmn-item:is(:hover, .pmh-on, :focus-visible):not([data-under])::before {
+  content: ""; position: absolute; left: -10px; top: 15px; width: 6px; height: 6px; background: var(--o55-nier-ink); box-shadow: 0 0 0 1px var(--o55-nier-paper);
+}
+html[data-o55-nier-parts~="cursor"] .pmn-item:is(:hover, .pmh-on, :focus-visible) .pmn-unread { background: var(--o55-nier-on-ink); }
+html[data-o55-nier-parts~="cursor"] .pmn-scroll { padding-left: 14px; }
+
+/* ---- brackets: target brackets on the focused row ---- */
+html[data-o55-nier-parts~="brackets"] .pmn-item:focus-visible::after {
+  content: ""; position: absolute; inset: -3px; pointer-events: none;
+  background:
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 9px 1px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 1px 9px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 100% 0 / 9px 1px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 100% 0 / 1px 9px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 100% / 9px 1px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 100% / 1px 9px no-repeat,
+    linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 100% 100% / 9px 1px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 100% 100% / 1px 9px no-repeat;
+}
+
+/* ---- empty: an ink plate ---- */
+html[data-o55-nier="on"] .pmn-empty-art { border-radius: 0; background: transparent; box-shadow: inset 0 0 0 1px var(--o55-nier-line-strong); color: var(--o55-nier-ink); }
+html[data-o55-nier-parts~="empty"] .pmn-empty-art { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: 4px 4px 0 rgba(var(--o55-nier-shadow-rgb), .22); }
+html[data-o55-nier-parts~="empty"] .pmn-empty-title { text-transform: uppercase; letter-spacing: .18em; font-size: 11.5px; }
+html[data-o55-nier-parts~="empty"] .pmn-empty-sub { border-top: 1px solid rgba(var(--o55-nier-ink-rgb), .3); padding-top: 6px; }
+
+/* ---- voice: every staged message comes from Pod 042 (the part's band, which the base cards carried) ---- */
+html[data-o55-nier-parts~="voice"] .pmn-toast .pmn-kicker::after { content: "POD 042"; margin-left: auto; padding-left: 10px; letter-spacing: .14em; opacity: .85; }
+html[data-o55-nier-parts~="voice"][data-o55-nier-parts~="headers"] .pmn-toast[data-level="quiet"] .pmn-toast-in { padding-top: 32px; }
+html[data-o55-nier-parts~="voice"][data-o55-nier-parts~="headers"] .pmn-toast[data-level="quiet"] .pmn-kicker {
+  display: flex; position: absolute; left: 0; right: 0; top: 0; height: 21px; margin: 0; padding: 0 34px 0 12px; box-sizing: border-box; align-items: center;
+  background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); text-transform: uppercase; letter-spacing: .14em; font-size: 9.5px; font-weight: 600;
+}
+html[data-o55-nier-parts~="voice"][data-o55-nier-parts~="headers"] .pmn-toast[data-level="quiet"] .pmn-x { position: absolute; top: 0; right: 4px; width: 21px; height: 21px; padding: 4px; color: var(--o55-nier-on-ink); opacity: 1; }

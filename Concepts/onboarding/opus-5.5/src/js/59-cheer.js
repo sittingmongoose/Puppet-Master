@@ -112,7 +112,8 @@
   };
 
   /* the troupe celebrates, and the family's confetti bursts from the middle of the stage. o: at, count, big, confetti
-     (false: none), sound (false: none), down (the burst fans downward: from a sign hung high). Under NieR's art the
+     (false: none), sound (false: none), down (the burst fans downward: from a sign hung high), under (an element the
+     burst is drawn beneath: Ready's lettered emblem, so no piece crosses its words). Under NieR's art the
      two big moments have performances of their own, and a celebrate asked for there plays them instead: the Created
      scene its act (A.createdAct: the sign stamped, the run's one confetti), Ready its curtain call (A.curtainCall: no
      confetti). */
@@ -134,7 +135,7 @@
       const mid = hs.find((g) => g.getAttribute('data-key') === 'h1'); if (mid) { lockOn(svg, mid, 110); glance(svg, mid); }
     }
     const at = o.at || [240, 300];
-    if (o.confetti !== false) confetti(svg, fam, at, o.count || 34, false, !!o.down);
+    if (o.confetti !== false) confetti(svg, fam, at, o.count || 34, false, !!o.down, o.under ? { under: o.under } : null);
     /* placed where it bursts, as the cheers are (not toward the last click) */
     if (o.sound !== false) O55.sound.play('celebrate', { pan: Math.round(Math.max(-0.7, Math.min(0.7, ((at[0] - 240) / 240) * 0.7)) * 100) / 100 });
     return true;
@@ -188,7 +189,9 @@
     const nt = nier && A.nier && A.nier.tokens ? A.nier.tokens(tok, svg.classList.contains('o55-m-light') ? 'light' : 'dark') : tok, ink = nt.text, rust = nt.error;
     const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'o55-confetti'); g.setAttribute('aria-hidden', 'true');
     const box = src && src.from ? boxOf(src.from) : null;
-    if (box) { at = [(box[0] + box[2]) / 2, (box[1] + box[3]) / 2]; src.from.parentNode.insertBefore(g, src.from); } else fx.appendChild(g);
+    if (box) { at = [(box[0] + box[2]) / 2, (box[1] + box[3]) / 2]; src.from.parentNode.insertBefore(g, src.from); }
+    else if (src && src.under && src.under.parentNode && svg.contains(src.under)) src.under.parentNode.insertBefore(g, src.under);
+    else fx.appendChild(g);
     let longest = 0;
     for (let i = 0; i < count; i++) {
       /* a fleck leaves up and to the right of the word, short and small; a celebration bursts up and all round */

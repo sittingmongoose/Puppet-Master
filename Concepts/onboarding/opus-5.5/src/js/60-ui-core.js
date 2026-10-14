@@ -162,6 +162,22 @@
     tokens._o55Packed = true;
     art.tokens = tokens;
   })();
+  /* While the window owns the look preview (open and shown, read from flags only, no layout) and the draft names a look
+     and Light or Dark, the Settings tome paints that look rather than the selected Project's stored one (tools/build.py,
+     THEME_PREVIEW_PATCHES, inside PM7_SETTINGS_TOME.applyPaint). Create Project selects the new Project and reapplies
+     its Settings, which painted the factory Basic Dark for a moment, and the look's save wrote its family before its
+     mode, which painted the old mode for a moment; syncTheme put each back, but the wrong theme had been written. With
+     the pair the theme never leaves the chosen look while the window is open. Nothing is stored here: the look is still
+     saved at the end as before, NieR Mode's paint hook still applies, and once the window closes the selected Project
+     paints the page again. */
+  const PAINT_FAMILIES = ['basic', 'friendly', 'glass', 'retro'];
+  window.O55_PAINT_PAIR = function paintPair() {
+    const root = S.root;
+    if (!S.open || !root || root.hidden || root.getAttribute('data-open') !== 'true' || !document.documentElement.hasAttribute('data-o55-open')) return null;
+    const d = S.sess && S.sess.drafts && S.sess.drafts.main;
+    if (!d || PAINT_FAMILIES.indexOf(d.theme_family) < 0 || (d.theme_mode !== 'light' && d.theme_mode !== 'dark')) return null;
+    return [d.theme_family, d.theme_mode];
+  };
   function syncTheme(fromObserver) {
     let th = O55.theme();
     /* While the window is open its look is the one chosen here. Settings reapplies a Project's saved theme when a

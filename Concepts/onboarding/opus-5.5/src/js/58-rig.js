@@ -3,7 +3,9 @@
    2. each tied helper hangs from its string: when its point on the bar rises, the helper is lifted with it; when the
       point drops, the helper stays standing and its string goes slack and sags; it swings after its point with a
       spring's lag and leans toward the pull, pivoting on its feet;
-   3. a raised hand tied to the bar rises and falls with its string, with a small wave of its own;
+   3. a raised hand tied to the bar rises and falls with its string, with a small wave of its own; an arm drawn in two
+      parts (.o55-arm holding an .o55-fore, each with a data-pivot in the helper's units: shoulder, elbow) also bends at
+      the elbow, the forearm a quarter cycle behind the upper arm, and the hand's string follows the hand through both;
    4. every string is drawn between its two hook points, so it stays attached through the entrance, beat glides and
       all of the above; a helper can also be made to cheer (A.rig.cheer) and the whole troupe to celebrate.
    Cost: while props are still arriving (an entrance, a beat glide) the hooks are measured, all reads before any
@@ -106,12 +108,13 @@
         const t = { g, from, to, paths: [...g.querySelectorAll('.o55-sp')], hand: th === 'hand', key: tk };
         /* the same string before the re-render: its hook places carry over until they are measured again */
         const was = prev && prev.ties.find((o) => o.g === g || o.g.getAttribute('data-key') === g.getAttribute('data-key'));
-        if (was && was.fromLocal) { t.fromLocal = was.fromLocal; t.toLocal = was.toLocal; t.rest = was.rest; t.armM = was.armM; }
+        if (was && was.fromLocal) { t.fromLocal = was.fromLocal; t.toLocal = was.toLocal; t.inFore = was.inFore; t.rest = was.rest; t.armM = was.armM; }
         /* a head string's rest length from the drawing, when it gives one (NieR) */
         if (!t.hand && g.hasAttribute('data-rest')) { t.rest = +g.getAttribute('data-rest'); t.fixed = true; }
         if (!st.helpers.has(tk)) {
-          const old = prev && prev.helpers.get(tk), arm = hIt.querySelector('.o55-arm');
-          st.helpers.set(tk, { it: hIt, am: am(hIt), pos: parse(hIt), arm, pivot: arm ? (arm.getAttribute('data-pivot') || '0 0').split(/[ ,]+/).map(Number) : null,
+          const old = prev && prev.helpers.get(tk), arm = hIt.querySelector('.o55-arm'), fore = arm && arm.querySelector('.o55-fore');
+          const pv = (el) => (el.getAttribute('data-pivot') || '0 0').split(/[ ,]+/).map(Number);
+          st.helpers.set(tk, { it: hIt, am: am(hIt), pos: parse(hIt), arm, pivot: arm ? pv(arm) : null, fore, elbow: fore ? pv(fore) : null, elb: old ? old.elb || 0 : 0,
             frames: [...hIt.querySelectorAll('.o55-wf')], x: old ? old.x : 0, v: old ? old.v : 0, up: old ? old.up : 0, lean: old ? old.lean : 0, ang: old ? old.ang : 0,
             cheer: old ? old.cheer : null, pl: old ? old.pl : null, still: old ? old.still : null, i: st.helpers.size,
             /* a held arm (asleep: hanging down) and its stepped move; the fly-in height while the ensemble is held */
@@ -122,6 +125,12 @@
         t.h = h;
         return t;
       }).filter(Boolean);
+      /* the rig turns its groups about their own origin (a helper on its feet, the bar on its middle), as the transform
+         attribute does in SVG; the stage's rule for entrance and ambient groups (.o55-in, .o55-am: fill-box, 50% 50%)
+         would turn them about their box centre instead, sliding a leaning helper's feet and taking its string off the
+         point the rig computes. The rig's own groups keep the attribute's meaning. */
+      const own = (el) => { if (el && el.style.transformOrigin !== '0px 0px') { el.style.transformBox = 'view-box'; el.style.transformOrigin = '0px 0px'; } };
+      own(st.bar.am); for (const h of st.helpers.values()) own(h.am);
       rigs.set(svg, st);
       if (!raf) raf = requestAnimationFrame(frame);
     },
@@ -201,7 +210,7 @@
        transforms, its strings and Retro's wave frames back to rest for a frame; hold() returns the restore */
     hold(svg) {
       if (!svg || !rigs.has(svg)) return null;
-      const kept = [...svg.querySelectorAll('.o55-am[transform], .o55-arm[transform]')].map((el) => [el, 'transform', el.getAttribute('transform')])
+      const kept = [...svg.querySelectorAll('.o55-am[transform], .o55-arm[transform], .o55-fore[transform]')].map((el) => [el, 'transform', el.getAttribute('transform')])
         .concat([...svg.querySelectorAll('.o55-tie .o55-sp')].map((el) => [el, 'd', el.getAttribute('d')]))
         .concat([...svg.querySelectorAll('.o55-wf')].map((el) => [el, 'style', el.getAttribute('style')]));
       return () => kept.forEach(([el, name, v]) => { if (el.isConnected && v != null && el.getAttribute(name) !== v) el.setAttribute(name, v); });
@@ -328,7 +337,9 @@
     for (const t of st.ties) {
       t.fromLocal = st.bar.am ? inSpace(st.bar.am, t.from, hookLocal(t.from)) : hookLocal(t.from);
       const h = t.h;
-      t.toLocal = t.hand && h.arm ? inSpace(h.arm, t.to, hookLocal(t.to)) : h.am ? inSpace(h.am, t.to, hookLocal(t.to)) : hookLocal(t.to);
+      /* a hand on a forearm (.o55-fore, which bends at the elbow inside the arm) is kept in the forearm's own space */
+      t.inFore = !!(t.hand && h.fore);
+      t.toLocal = t.inFore ? inSpace(h.fore, t.to, hookLocal(t.to)) : t.hand && h.arm ? inSpace(h.arm, t.to, hookLocal(t.to)) : h.am ? inSpace(h.am, t.to, hookLocal(t.to)) : hookLocal(t.to);
       /* a raised hand turns with its arm group; anything between that group and the helper's moving group (NieR's
          slump while asleep) is carried as a matrix, left out when it is none */
       t.armM = null;
@@ -347,9 +358,12 @@
     const bp = rest ? t.fromLocal : (() => { const r = rot(t.fromLocal, B.tilt); return [r[0], r[1] - B.lift + B.drop]; })();
     const a = [B.pos.x + bs * bp[0], B.pos.y + bs * bp[1]];
     let p = t.toLocal;
+    if (!rest && t.inFore) { const ev = h.elbow, r = rot([p[0] - ev[0], p[1] - ev[1]], h.elb); p = [ev[0] + r[0], ev[1] + r[1]]; }
     if (!rest && t.hand && h.arm) { const pv = h.pivot, r = rot([p[0] - pv[0], p[1] - pv[1]], h.ang); p = [pv[0] + r[0], pv[1] + r[1]]; }
     if (t.armM) { const m = t.armM; p = [m[0] * p[0] + m[2] * p[1] + m[4], m[1] * p[0] + m[3] * p[1] + m[5]]; }
-    if (!rest) { const r = rot(p, h.lean); p = [r[0] + h.x / hs, r[1] - h.up / hs + h.inY]; }
+    /* (Retro hops a prop in its own units, translate(0 -up) on its moving group, where the others move it by up scene units:
+       a prop drawn at twice the size hopped twice as far as its string followed, one hop off the hung computer and sign) */
+    if (!rest) { const r = rot(p, h.lean); p = [r[0] + h.x / hs, r[1] - (st.fam === 'retro' ? h.up : h.up / hs) + h.inY]; }
     return [a, [h.pos.x + hs * p[0], h.pos.y + hs * p[1]]];
   }
   function computed(st) { for (const t of st.ties) { const [a, b] = ends(st, t, false); write(st, t, a, b); } }
@@ -434,8 +448,17 @@
       put(h.am, 'transform', `translate(${(h.x / s).toFixed(2)} ${(-h.up / s).toFixed(2)}) rotate(${h.lean.toFixed(2)})`);
       if (h.arm) {
         const hy = h.handTie && h.handTie.fromLocal ? (() => { const l = h.handTie.fromLocal, rr = rot(l, B.tilt); return rr[1] - l[1] - B.lift + B.drop; })() : 0;
-        h.ang = Math.max(-28, Math.min(22, hy * f.arm)) + (moving ? f.wave * Math.sin(2 * Math.PI * f.waveHz * t) : 0) + (ch ? ch.arm : 0) + h.armOff;
+        const pull = Math.max(-28, Math.min(22, hy * f.arm));
+        h.ang = pull + (moving ? f.wave * Math.sin(2 * Math.PI * f.waveHz * t) : 0) + (ch ? ch.arm : 0) + h.armOff;
         put(h.arm, 'transform', `rotate(${h.ang.toFixed(2)} ${h.pivot[0]} ${h.pivot[1]})`);
+        /* a two-part arm: the forearm bends at the elbow after the upper arm (a quarter cycle late and wider, so the hand
+           draws the wave), takes a little of the string's pull and half of a cheer's lift; the shared elbow joint keeps
+           the two parts together at every angle. With the ambient motion held (Reduced Motion, low-resource) it adds no
+           motion of its own, not even to a cheer: only the string's pull, which holds still too. */
+        if (h.fore) {
+          h.elb = Math.max(-36, Math.min(30, (moving ? f.wave * 1.5 * Math.sin(2 * Math.PI * f.waveHz * t - 1.1) + (ch ? ch.arm * 0.45 : 0) : 0) + pull * 0.35));
+          put(h.fore, 'transform', `rotate(${h.elb.toFixed(2)} ${h.elbow[0]} ${h.elbow[1]})`);
+        }
       }
     }
   }

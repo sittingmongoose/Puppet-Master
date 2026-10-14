@@ -1,0 +1,801 @@
+field	label	settings_row	look	scope	cases	works	unverified_gpu	unverified_motion	broken	persists	failures
+scheme	Colour scheme	code.terminal.theme	basic-dark	tab	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	basic-dark	app	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	basic-light	tab	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	basic-light	app	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	friendly-dark	tab	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	friendly-dark	app	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	friendly-light	tab	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	friendly-light	app	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	glass-dark	tab	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	glass-dark	app	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	glass-light	tab	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	glass-light	app	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	retro-dark	tab	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	retro-dark	app	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	retro-light	tab	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	retro-light	app	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	nier-dark	tab	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	nier-dark	app	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	nier-light	tab	37	37	0	0	0	PERSISTS	
+scheme	Colour scheme	code.terminal.theme	nier-light	app	37	37	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	basic-dark	tab	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	basic-dark	app	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	basic-light	tab	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	basic-light	app	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	friendly-dark	tab	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	friendly-dark	app	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	friendly-light	tab	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	friendly-light	app	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	glass-dark	tab	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	glass-dark	app	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	glass-light	tab	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	glass-light	app	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	retro-dark	tab	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	retro-dark	app	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	retro-light	tab	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	retro-light	app	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	nier-dark	tab	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	nier-dark	app	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	nier-light	tab	2	2	0	0	0	PERSISTS	
+schemePair	Switch with light and dark	code.terminal.scheme-pair	nier-light	app	2	2	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	basic-dark	tab	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	basic-dark	app	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	basic-light	tab	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	basic-light	app	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	friendly-dark	tab	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	friendly-dark	app	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	friendly-light	tab	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	friendly-light	app	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	glass-dark	tab	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	glass-dark	app	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	glass-light	tab	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	glass-light	app	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	retro-dark	tab	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	retro-dark	app	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	retro-light	tab	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	retro-light	app	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	nier-dark	tab	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	nier-dark	app	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	nier-light	tab	4	4	0	0	0	PERSISTS	
+minContrast	Minimum contrast	code.terminal.min-contrast	nier-light	app	4	4	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	basic-dark	tab	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	basic-dark	app	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	basic-light	tab	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	basic-light	app	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	friendly-dark	tab	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	friendly-dark	app	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	friendly-light	tab	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	friendly-light	app	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	glass-dark	tab	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	glass-dark	app	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	glass-light	tab	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	glass-light	app	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	retro-dark	tab	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	retro-dark	app	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	retro-light	tab	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	retro-light	app	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	nier-dark	tab	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	nier-dark	app	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	nier-light	tab	10	10	0	0	0	PERSISTS	
+font	Face	code.terminal.font-family	nier-light	app	10	10	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	basic-dark	tab	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	basic-dark	app	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	basic-light	tab	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	basic-light	app	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	friendly-dark	tab	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	friendly-dark	app	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	friendly-light	tab	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	friendly-light	app	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	glass-dark	tab	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	glass-dark	app	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	glass-light	tab	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	glass-light	app	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	retro-dark	tab	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	retro-dark	app	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	retro-light	tab	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	retro-light	app	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	nier-dark	tab	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	nier-dark	app	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	nier-light	tab	4	4	0	0	0	PERSISTS	
+fontSize	Size	code.terminal.font-size	nier-light	app	4	4	0	0	0	PERSISTS	
+fontWeight	Weight	code.terminal.font-weight	basic-dark	tab	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	basic-dark	app	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	basic-light	tab	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	basic-light	app	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	friendly-dark	tab	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	friendly-dark	app	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	friendly-light	tab	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	friendly-light	app	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	glass-dark	tab	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	glass-dark	app	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	glass-light	tab	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	glass-light	app	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	retro-dark	tab	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	retro-dark	app	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	retro-light	tab	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	retro-light	app	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	nier-dark	tab	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	nier-dark	app	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	nier-light	tab	8	8	0	0	0		
+fontWeight	Weight	code.terminal.font-weight	nier-light	app	8	8	0	0	0		
+lineHeight	Line height	code.terminal.line-height	basic-dark	tab	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	basic-dark	app	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	basic-light	tab	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	basic-light	app	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	friendly-dark	tab	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	friendly-dark	app	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	friendly-light	tab	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	friendly-light	app	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	glass-dark	tab	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	glass-dark	app	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	glass-light	tab	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	glass-light	app	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	retro-dark	tab	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	retro-dark	app	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	retro-light	tab	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	retro-light	app	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	nier-dark	tab	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	nier-dark	app	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	nier-light	tab	3	3	0	0	0	PERSISTS	
+lineHeight	Line height	code.terminal.line-height	nier-light	app	3	3	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	basic-dark	tab	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	basic-dark	app	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	basic-light	tab	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	basic-light	app	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	friendly-dark	tab	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	friendly-dark	app	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	friendly-light	tab	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	friendly-light	app	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	glass-dark	tab	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	glass-dark	app	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	glass-light	tab	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	glass-light	app	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	retro-dark	tab	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	retro-dark	app	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	retro-light	tab	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	retro-light	app	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	nier-dark	tab	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	nier-dark	app	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	nier-light	tab	4	4	0	0	0	PERSISTS	
+letterSpacing	Letter spacing	code.terminal.letter-spacing	nier-light	app	4	4	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	basic-dark	tab	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	basic-dark	app	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	basic-light	tab	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	basic-light	app	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	friendly-dark	tab	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	friendly-dark	app	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	friendly-light	tab	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	friendly-light	app	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	glass-dark	tab	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	glass-dark	app	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	glass-light	tab	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	glass-light	app	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	retro-dark	tab	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	retro-dark	app	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	retro-light	tab	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	retro-light	app	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	nier-dark	tab	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	nier-dark	app	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	nier-light	tab	2	2	0	0	0	PERSISTS	
+ligatures	Ligatures	code.terminal.ligatures	nier-light	app	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	basic-dark	tab	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	basic-dark	app	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	basic-light	tab	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	basic-light	app	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	friendly-dark	tab	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	friendly-dark	app	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	friendly-light	tab	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	friendly-light	app	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	glass-dark	tab	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	glass-dark	app	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	glass-light	tab	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	glass-light	app	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	retro-dark	tab	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	retro-dark	app	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	retro-light	tab	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	retro-light	app	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	nier-dark	tab	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	nier-dark	app	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	nier-light	tab	2	2	0	0	0	PERSISTS	
+boldBright	Bold as bright	code.terminal.bold-bright	nier-light	app	2	2	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	basic-dark	tab	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	basic-dark	app	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	basic-light	tab	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	basic-light	app	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	friendly-dark	tab	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	friendly-dark	app	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	friendly-light	tab	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	friendly-light	app	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	glass-dark	tab	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	glass-dark	app	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	glass-light	tab	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	glass-light	app	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	retro-dark	tab	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	retro-dark	app	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	retro-light	tab	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	retro-light	app	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	nier-dark	tab	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	nier-dark	app	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	nier-light	tab	7	7	0	0	0	PERSISTS	
+fontRendering	Text drawing	code.terminal.font-rendering	nier-light	app	7	7	0	0	0	PERSISTS	
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	basic-dark	tab	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	basic-dark	app	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	basic-light	tab	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	basic-light	app	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	friendly-dark	tab	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	friendly-dark	app	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	friendly-light	tab	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	friendly-light	app	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	glass-dark	tab	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	glass-dark	app	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	glass-light	tab	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	glass-light	app	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	retro-dark	tab	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	retro-dark	app	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	retro-light	tab	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	retro-light	app	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	nier-dark	tab	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	nier-dark	app	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	nier-light	tab	3	3	0	0	0		
+sixtyfourScan	Sixtyfour scanlines	code.terminal.sixtyfour-scan	nier-light	app	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	basic-dark	tab	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	basic-dark	app	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	basic-light	tab	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	basic-light	app	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	friendly-dark	tab	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	friendly-dark	app	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	friendly-light	tab	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	friendly-light	app	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	glass-dark	tab	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	glass-dark	app	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	glass-light	tab	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	glass-light	app	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	retro-dark	tab	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	retro-dark	app	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	retro-light	tab	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	retro-light	app	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	nier-dark	tab	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	nier-dark	app	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	nier-light	tab	3	3	0	0	0		
+sixtyfourBleed	Sixtyfour bleed	code.terminal.sixtyfour-bleed	nier-light	app	3	3	0	0	0		
+cursorShape	Cursor shape	code.terminal.cursor-shape	basic-dark	tab	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	basic-dark	app	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	basic-light	tab	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	basic-light	app	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	friendly-dark	tab	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	friendly-dark	app	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	friendly-light	tab	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	friendly-light	app	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	glass-dark	tab	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	glass-dark	app	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	glass-light	tab	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	glass-light	app	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	retro-dark	tab	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	retro-dark	app	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	retro-light	tab	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	retro-light	app	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	nier-dark	tab	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	nier-dark	app	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	nier-light	tab	4	4	0	0	0	PERSISTS	
+cursorShape	Cursor shape	code.terminal.cursor-shape	nier-light	app	4	4	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	basic-dark	tab	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	basic-dark	app	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	basic-light	tab	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	basic-light	app	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	friendly-dark	tab	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	friendly-dark	app	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	friendly-light	tab	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	friendly-light	app	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	glass-dark	tab	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	glass-dark	app	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	glass-light	tab	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	glass-light	app	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	retro-dark	tab	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	retro-dark	app	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	retro-light	tab	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	retro-light	app	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	nier-dark	tab	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	nier-dark	app	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	nier-light	tab	2	2	0	0	0	PERSISTS	
+cursorBlink	Blink	code.terminal.cursor-blink	nier-light	app	2	2	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	basic-dark	tab	6	6	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	basic-dark	app	6	6	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	basic-light	tab	6	6	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	basic-light	app	6	6	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	friendly-dark	tab	6	6	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	friendly-dark	app	6	6	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	friendly-light	tab	6	6	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	friendly-light	app	6	6	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	glass-dark	tab	6	4	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	glass-dark	app	6	4	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	glass-light	tab	6	4	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	glass-light	app	6	4	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	retro-dark	tab	6	6	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	retro-dark	app	6	6	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	retro-light	tab	6	6	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	retro-light	app	6	6	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	nier-dark	tab	6	6	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	nier-dark	app	6	6	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	nier-light	tab	6	6	0	0	0	PERSISTS	
+cursorTrail	Trail	code.terminal.cursor-trail	nier-light	app	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	basic-dark	tab	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	basic-dark	app	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	basic-light	tab	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	basic-light	app	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	friendly-dark	tab	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	friendly-dark	app	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	friendly-light	tab	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	friendly-light	app	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	glass-dark	tab	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	glass-dark	app	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	glass-light	tab	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	glass-light	app	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	retro-dark	tab	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	retro-dark	app	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	retro-light	tab	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	retro-light	app	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	nier-dark	tab	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	nier-dark	app	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	nier-light	tab	6	6	0	0	0	PERSISTS	
+background	Background	code.terminal.background	nier-light	app	6	6	0	0	0	PERSISTS	
+bgColor	Solid colour	code.terminal.background-color	basic-dark	tab	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	basic-dark	app	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	basic-light	tab	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	basic-light	app	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	friendly-dark	tab	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	friendly-dark	app	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	friendly-light	tab	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	friendly-light	app	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	glass-dark	tab	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	glass-dark	app	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	glass-light	tab	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	glass-light	app	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	retro-dark	tab	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	retro-dark	app	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	retro-light	tab	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	retro-light	app	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	nier-dark	tab	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	nier-dark	app	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	nier-light	tab	2	2	0	0	0		
+bgColor	Solid colour	code.terminal.background-color	nier-light	app	2	2	0	0	0		
+bgGradient	Gradient	code.terminal.background-gradient	basic-dark	tab	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	basic-dark	app	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	basic-light	tab	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	basic-light	app	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	friendly-dark	tab	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	friendly-dark	app	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	friendly-light	tab	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	friendly-light	app	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	glass-dark	tab	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	glass-dark	app	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	glass-light	tab	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	glass-light	app	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	retro-dark	tab	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	retro-dark	app	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	retro-light	tab	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	retro-light	app	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	nier-dark	tab	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	nier-dark	app	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	nier-light	tab	4	4	0	0	0	PERSISTS	
+bgGradient	Gradient	code.terminal.background-gradient	nier-light	app	4	4	0	0	0	PERSISTS	
+bgImage	Picture	code.terminal.background-image	basic-dark	tab	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	basic-dark	app	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	basic-light	tab	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	basic-light	app	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	friendly-dark	tab	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	friendly-dark	app	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	friendly-light	tab	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	friendly-light	app	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	glass-dark	tab	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	glass-dark	app	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	glass-light	tab	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	glass-light	app	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	retro-dark	tab	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	retro-dark	app	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	retro-light	tab	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	retro-light	app	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	nier-dark	tab	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	nier-dark	app	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	nier-light	tab	6	3	0	0	0		
+bgImage	Picture	code.terminal.background-image	nier-light	app	6	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	basic-dark	tab	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	basic-dark	app	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	basic-light	tab	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	basic-light	app	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	friendly-dark	tab	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	friendly-dark	app	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	friendly-light	tab	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	friendly-light	app	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	glass-dark	tab	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	glass-dark	app	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	glass-light	tab	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	glass-light	app	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	retro-dark	tab	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	retro-dark	app	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	retro-light	tab	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	retro-light	app	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	nier-dark	tab	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	nier-dark	app	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	nier-light	tab	3	3	0	0	0		
+bgDim	Dimming	code.terminal.background-dim	nier-light	app	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	basic-dark	tab	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	basic-dark	app	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	basic-light	tab	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	basic-light	app	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	friendly-dark	tab	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	friendly-dark	app	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	friendly-light	tab	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	friendly-light	app	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	glass-dark	tab	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	glass-dark	app	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	glass-light	tab	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	glass-light	app	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	retro-dark	tab	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	retro-dark	app	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	retro-light	tab	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	retro-light	app	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	nier-dark	tab	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	nier-dark	app	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	nier-light	tab	3	3	0	0	0		
+bgBlur	Blur	code.terminal.background-blur	nier-light	app	3	3	0	0	0		
+opacity	Opacity (Glass)	code.terminal.opacity	basic-dark	tab	0	0	0	0	0		
+opacity	Opacity (Glass)	code.terminal.opacity	basic-dark	app	0	0	0	0	0		
+opacity	Opacity (Glass)	code.terminal.opacity	basic-light	tab	0	0	0	0	0		
+opacity	Opacity (Glass)	code.terminal.opacity	basic-light	app	0	0	0	0	0		
+opacity	Opacity (Glass)	code.terminal.opacity	friendly-dark	tab	0	0	0	0	0		
+opacity	Opacity (Glass)	code.terminal.opacity	friendly-dark	app	0	0	0	0	0		
+opacity	Opacity (Glass)	code.terminal.opacity	friendly-light	tab	0	0	0	0	0		
+opacity	Opacity (Glass)	code.terminal.opacity	friendly-light	app	0	0	0	0	0		
+opacity	Opacity (Glass)	code.terminal.opacity	glass-dark	tab	3	3	0	0	0	PERSISTS	
+opacity	Opacity (Glass)	code.terminal.opacity	glass-dark	app	3	3	0	0	0	PERSISTS	
+opacity	Opacity (Glass)	code.terminal.opacity	glass-light	tab	3	3	0	0	0	PERSISTS	
+opacity	Opacity (Glass)	code.terminal.opacity	glass-light	app	3	3	0	0	0	PERSISTS	
+opacity	Opacity (Glass)	code.terminal.opacity	retro-dark	tab	0	0	0	0	0		
+opacity	Opacity (Glass)	code.terminal.opacity	retro-dark	app	0	0	0	0	0		
+opacity	Opacity (Glass)	code.terminal.opacity	retro-light	tab	0	0	0	0	0		
+opacity	Opacity (Glass)	code.terminal.opacity	retro-light	app	0	0	0	0	0		
+opacity	Opacity (Glass)	code.terminal.opacity	nier-dark	tab	0	0	0	0	0		
+opacity	Opacity (Glass)	code.terminal.opacity	nier-dark	app	0	0	0	0	0		
+opacity	Opacity (Glass)	code.terminal.opacity	nier-light	tab	0	0	0	0	0		
+opacity	Opacity (Glass)	code.terminal.opacity	nier-light	app	0	0	0	0	0		
+padding	Padding	code.terminal.padding	basic-dark	tab	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	basic-dark	app	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	basic-light	tab	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	basic-light	app	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	friendly-dark	tab	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	friendly-dark	app	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	friendly-light	tab	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	friendly-light	app	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	glass-dark	tab	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	glass-dark	app	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	glass-light	tab	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	glass-light	app	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	retro-dark	tab	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	retro-dark	app	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	retro-light	tab	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	retro-light	app	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	nier-dark	tab	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	nier-dark	app	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	nier-light	tab	3	3	0	0	0	PERSISTS	
+padding	Padding	code.terminal.padding	nier-light	app	3	3	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	basic-dark	tab	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	basic-dark	app	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	basic-light	tab	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	basic-light	app	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	friendly-dark	tab	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	friendly-dark	app	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	friendly-light	tab	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	friendly-light	app	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	glass-dark	tab	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	glass-dark	app	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	glass-light	tab	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	glass-light	app	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	retro-dark	tab	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	retro-dark	app	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	retro-light	tab	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	retro-light	app	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	nier-dark	tab	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	nier-dark	app	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	nier-light	tab	4	4	0	0	0	PERSISTS	
+effects	Effects	code.terminal.effects	nier-light	app	4	4	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	basic-dark	tab	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	basic-dark	app	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	basic-light	tab	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	basic-light	app	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	friendly-dark	tab	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	friendly-dark	app	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	friendly-light	tab	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	friendly-light	app	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	glass-dark	tab	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	glass-dark	app	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	glass-light	tab	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	glass-light	app	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	retro-dark	tab	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	retro-dark	app	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	retro-light	tab	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	retro-light	app	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	nier-dark	tab	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	nier-dark	app	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	nier-light	tab	2	2	0	0	0	PERSISTS	
+scanlines	Scanlines	code.terminal.scanlines	nier-light	app	2	2	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	basic-dark	tab	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	basic-dark	app	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	basic-light	tab	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	basic-light	app	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	friendly-dark	tab	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	friendly-dark	app	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	friendly-light	tab	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	friendly-light	app	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	glass-dark	tab	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	glass-dark	app	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	glass-light	tab	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	glass-light	app	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	retro-dark	tab	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	retro-dark	app	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	retro-light	tab	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	retro-light	app	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	nier-dark	tab	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	nier-dark	app	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	nier-light	tab	3	3	0	0	0	PERSISTS	
+scanStrength	Scanline strength	code.terminal.scan-strength	nier-light	app	3	3	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	basic-dark	tab	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	basic-dark	app	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	basic-light	tab	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	basic-light	app	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	friendly-dark	tab	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	friendly-dark	app	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	friendly-light	tab	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	friendly-light	app	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	glass-dark	tab	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	glass-dark	app	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	glass-light	tab	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	glass-light	app	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	retro-dark	tab	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	retro-dark	app	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	retro-light	tab	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	retro-light	app	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	nier-dark	tab	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	nier-dark	app	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	nier-light	tab	2	2	0	0	0	PERSISTS	
+glow	Phosphor glow	code.terminal.glow	nier-light	app	2	2	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	basic-dark	tab	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	basic-dark	app	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	basic-light	tab	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	basic-light	app	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	friendly-dark	tab	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	friendly-dark	app	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	friendly-light	tab	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	friendly-light	app	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	glass-dark	tab	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	glass-dark	app	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	glass-light	tab	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	glass-light	app	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	retro-dark	tab	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	retro-dark	app	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	retro-light	tab	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	retro-light	app	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	nier-dark	tab	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	nier-dark	app	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	nier-light	tab	3	3	0	0	0	PERSISTS	
+glowStrength	Glow strength	code.terminal.glow-strength	nier-light	app	3	3	0	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	basic-dark	tab	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	basic-dark	app	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	basic-light	tab	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	basic-light	app	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	friendly-dark	tab	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	friendly-dark	app	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	friendly-light	tab	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	friendly-light	app	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	glass-dark	tab	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	glass-dark	app	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	glass-light	tab	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	glass-light	app	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	retro-dark	tab	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	retro-dark	app	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	retro-light	tab	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	retro-light	app	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	nier-dark	tab	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	nier-dark	app	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	nier-light	tab	2	1	1	0	0	PERSISTS	
+crt	Full CRT	code.terminal.crt	nier-light	app	2	1	1	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	basic-dark	tab	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	basic-dark	app	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	basic-light	tab	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	basic-light	app	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	friendly-dark	tab	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	friendly-dark	app	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	friendly-light	tab	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	friendly-light	app	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	glass-dark	tab	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	glass-dark	app	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	glass-light	tab	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	glass-light	app	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	retro-dark	tab	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	retro-dark	app	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	retro-light	tab	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	retro-light	app	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	nier-dark	tab	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	nier-dark	app	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	nier-light	tab	3	0	3	0	0	PERSISTS	
+curvature	Curvature	code.terminal.curvature	nier-light	app	3	0	3	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	basic-dark	tab	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	basic-dark	app	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	basic-light	tab	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	basic-light	app	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	friendly-dark	tab	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	friendly-dark	app	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	friendly-light	tab	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	friendly-light	app	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	glass-dark	tab	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	glass-dark	app	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	glass-light	tab	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	glass-light	app	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	retro-dark	tab	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	retro-dark	app	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	retro-light	tab	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	retro-light	app	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	nier-dark	tab	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	nier-dark	app	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	nier-light	tab	2	0	2	0	0	PERSISTS	
+burnIn	Burn-in	code.terminal.burn-in	nier-light	app	2	0	2	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	basic-dark	tab	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	basic-dark	app	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	basic-light	tab	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	basic-light	app	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	friendly-dark	tab	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	friendly-dark	app	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	friendly-light	tab	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	friendly-light	app	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	glass-dark	tab	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	glass-dark	app	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	glass-light	tab	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	glass-light	app	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	retro-dark	tab	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	retro-dark	app	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	retro-light	tab	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	retro-light	app	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	nier-dark	tab	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	nier-dark	app	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	nier-light	tab	3	0	3	0	0	PERSISTS	
+noise	Grain	code.terminal.noise	nier-light	app	3	0	3	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	basic-dark	tab	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	basic-dark	app	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	basic-light	tab	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	basic-light	app	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	friendly-dark	tab	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	friendly-dark	app	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	friendly-light	tab	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	friendly-light	app	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	glass-dark	tab	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	glass-dark	app	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	glass-light	tab	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	glass-light	app	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	retro-dark	tab	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	retro-dark	app	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	retro-light	tab	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	retro-light	app	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	nier-dark	tab	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	nier-dark	app	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	nier-light	tab	2	1	1	0	0	PERSISTS	
+flicker	Flicker	code.terminal.flicker	nier-light	app	2	1	1	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	basic-dark	tab	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	basic-dark	app	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	basic-light	tab	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	basic-light	app	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	friendly-dark	tab	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	friendly-dark	app	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	friendly-light	tab	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	friendly-light	app	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	glass-dark	tab	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	glass-dark	app	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	glass-light	tab	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	glass-light	app	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	retro-dark	tab	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	retro-dark	app	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	retro-light	tab	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	retro-light	app	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	nier-dark	tab	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	nier-dark	app	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	nier-light	tab	3	0	3	0	0	PERSISTS	
+flickerAmount	Flicker amount	code.terminal.flicker-amount	nier-light	app	3	0	3	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	basic-dark	tab	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	basic-dark	app	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	basic-light	tab	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	basic-light	app	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	friendly-dark	tab	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	friendly-dark	app	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	friendly-light	tab	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	friendly-light	app	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	glass-dark	tab	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	glass-dark	app	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	glass-light	tab	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	glass-light	app	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	retro-dark	tab	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	retro-dark	app	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	retro-light	tab	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	retro-light	app	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	nier-dark	tab	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	nier-dark	app	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	nier-light	tab	2	2	0	0	0	PERSISTS	
+inactiveDim	Dim terminals I’m not in	code.terminal.inactive-dim	nier-light	app	2	2	0	0	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	basic-dark	tab	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	basic-dark	app	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	basic-light	tab	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	basic-light	app	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	friendly-dark	tab	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	friendly-dark	app	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	friendly-light	tab	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	friendly-light	app	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	glass-dark	tab	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	glass-dark	app	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	glass-light	tab	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	glass-light	app	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	retro-dark	tab	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	retro-dark	app	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	retro-light	tab	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	retro-light	app	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	nier-dark	tab	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	nier-dark	app	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	nier-light	tab	2	0	0	2	0	PERSISTS	
+smoothScroll	Smooth scrolling	code.terminal.smooth-scroll	nier-light	app	2	0	0	2	0	PERSISTS	
+bell	Bell	code.terminal.bell	basic-dark	tab	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	basic-dark	app	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	basic-light	tab	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	basic-light	app	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	friendly-dark	tab	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	friendly-dark	app	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	friendly-light	tab	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	friendly-light	app	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	glass-dark	tab	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	glass-dark	app	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	glass-light	tab	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	glass-light	app	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	retro-dark	tab	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	retro-dark	app	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	retro-light	tab	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	retro-light	app	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	nier-dark	tab	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	nier-dark	app	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	nier-light	tab	3	3	0	0	0	PERSISTS	
+bell	Bell	code.terminal.bell	nier-light	app	3	3	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	basic-dark	tab	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	basic-dark	app	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	basic-light	tab	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	basic-light	app	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	friendly-dark	tab	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	friendly-dark	app	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	friendly-light	tab	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	friendly-light	app	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	glass-dark	tab	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	glass-dark	app	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	glass-light	tab	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	glass-light	app	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	retro-dark	tab	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	retro-dark	app	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	retro-light	tab	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	retro-light	app	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	nier-dark	tab	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	nier-dark	app	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	nier-light	tab	2	2	0	0	0	PERSISTS	
+stickyHeader	Keep command titles visible	code.terminal.sticky-header	nier-light	app	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	basic-dark	tab	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	basic-dark	app	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	basic-light	tab	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	basic-light	app	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	friendly-dark	tab	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	friendly-dark	app	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	friendly-light	tab	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	friendly-light	app	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	glass-dark	tab	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	glass-dark	app	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	glass-light	tab	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	glass-light	app	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	retro-dark	tab	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	retro-dark	app	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	retro-light	tab	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	retro-light	app	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	nier-dark	tab	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	nier-dark	app	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	nier-light	tab	2	2	0	0	0	PERSISTS	
+copyOnSelect	Copy when I highlight	code.terminal.copy-on-select	nier-light	app	2	2	0	0	0	PERSISTS	

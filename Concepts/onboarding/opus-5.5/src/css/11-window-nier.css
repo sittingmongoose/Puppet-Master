@@ -20,6 +20,11 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-foot { background: var(--o55-wi
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-stage { border-right-color: rgba(var(--o55-nier-ink-rgb), .38); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-title { font-weight: 600; letter-spacing: .005em; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-eyebrow { color: var(--o55-nier-ink); }
+/* the quieter ink, one step further from the ground inside the window and the tour: a paragraph crosses the world's
+   grid lines, and on a line the theme's own light secondary ink (#4d4b3f) reads 4.16:1; the tokens stay the theme's */
+html[data-o55-nier="on"] :is(#pm-o55-onboarding[data-mode="light"] > .o55-win, .o55t-root[data-mode="light"] > *) { --text-secondary: #3f3d33; --text-muted: #3f3d33; }
+/* dark: the theme's #a8a593 / #9d9986 read 3.5 to 4.2:1 where a line or a raised panel lifts the ground */
+html[data-o55-nier="on"] :is(#pm-o55-onboarding[data-mode="dark"] > .o55-win, .o55t-root[data-mode="dark"] > *) { --text-secondary: #c0bca7; --text-muted: #c0bca7; }
 
 /* flat ink controls: the primary is an ink block, nothing glows, a hover is a tone of the ground */
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-primary { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); box-shadow: none; text-shadow: none; }
@@ -33,14 +38,16 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-card:hover, html[data-o55-nier=
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-card.o55-on { background: var(--o55-nier-selected); box-shadow: inset 0 0 0 1px var(--o55-nier-ink); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-tile.o55-on { box-shadow: inset 0 0 0 1px var(--o55-nier-ink); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-glyph { color: var(--o55-nier-ink); background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .4); }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-tag { color: var(--o55-nier-ink); background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .5); font-family: var(--mono-font); font-weight: 500; letter-spacing: .14em; }
-/* status in ink: ready is an ink block, waiting a hairline, a problem the error ink */
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill { font: 500 10px/1 var(--mono-font); letter-spacing: .14em; text-transform: uppercase; padding: 5px 8px; background: transparent; color: var(--o55-nier-ink); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .45); }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill-ready { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill-needs { color: var(--o55-nier-warn-text); box-shadow: inset 0 0 0 1px var(--o55-nier-warn); }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill-fail { background: var(--o55-nier-error); color: var(--o55-nier-on-ink); box-shadow: none; }
+/* a tag is a mono word in ink after its square, no frame (no pills) */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-tag { color: var(--o55-nier-ink); background: none; font-family: var(--mono-font); font-weight: 500; letter-spacing: .14em; }
+/* status in ink, mono capitals and its mark, never a box (NP-STATUS): ready the ok ink, waiting the ink, a problem the
+   warning or error ink */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill { font: 500 10.5px/1.2 var(--mono-font); letter-spacing: .14em; text-transform: uppercase; padding: 0; background: none; color: var(--o55-nier-ink); box-shadow: none; }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill-ready { color: var(--o55-nier-ok-text); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill-needs { color: var(--o55-nier-warn-text); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-pill-fail { color: var(--o55-nier-error-text); }
 html[data-o55-nier="on"] #pm-o55-onboarding :is(.o55-hint .o55-sg, .o55-chip .o55-sg, .o55-keep .o55-sg, .o55-note-ok .o55-sg) { color: var(--o55-nier-ok-text); }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-chip-ok { background: transparent; border-color: var(--o55-nier-ink); color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-chip-ok { color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-banner { background: var(--o55-nier-secondary); box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .3); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-banner-warn { background: var(--o55-nier-error-surface); box-shadow: inset 0 0 0 1px var(--o55-nier-error); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-banner-warn .o55-sg, html[data-o55-nier="on"] #pm-o55-onboarding .o55-hint.o55-err { color: var(--o55-nier-error-text); }
@@ -49,6 +56,10 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-field.o55-invalid input { borde
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-phmark { width: 14px; height: 14px; margin: 3px; border: 1px solid rgba(var(--o55-nier-ink-rgb), .5); color: var(--o55-nier-on-ink); font: 700 10px/1 var(--mono-font); }
 html[data-o55-nier="on"] #pm-o55-onboarding :is(.o55-ph-done, .o55-step-done) .o55-phmark { background: var(--o55-nier-ink); border-color: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-ph-failed { color: var(--o55-nier-error-text); }
+/* (the error ink a step further from the ground, as it crosses the world's grid lines: light #7d3427 read 4.2:1 on a
+   line, dark #d98a77 3.9:1) */
+html[data-o55-nier="on"] #pm-o55-onboarding[data-mode="light"] .o55-ph-failed { color: color-mix(in srgb, var(--o55-nier-error-text) 80%, #000); }
+html[data-o55-nier="on"] #pm-o55-onboarding[data-mode="dark"] .o55-ph-failed { color: color-mix(in srgb, var(--o55-nier-error-text) 70%, #fff); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-ph-failed .o55-phmark { background: var(--o55-nier-error); border-color: var(--o55-nier-error); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-step-active .o55-phmark { box-shadow: none; border-color: var(--o55-nier-ink); }
 /* the working mark keeps the ink (the Diamond loaders part turns it into a hollow diamond drawn in currentColor) */
@@ -129,18 +140,20 @@ html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-codeline code { font
 html[data-o55-nier-parts~="square"] #pm-o55-onboarding :is(.o55-routeline, .o55-paircard, .o55-saferow, .o55-summary, .o55-kit, .o55-devicecode, .o55-preview, .o55-install, .o55-identity-chip) { background: var(--o55-nier-raised); }
 html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-suggestchip { border-style: solid; border-color: rgba(var(--o55-nier-ink-rgb), .4); font: 500 11px/1 var(--mono-font); letter-spacing: .08em; }
 html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-suggestchip:is(:hover, .o55-on) { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); }
-html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-routelink::before { border-top: 1px dashed var(--o55-nier-ink); }
-html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-routelink span { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); font-family: var(--mono-font); font-weight: 500; letter-spacing: .14em; }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-routelink::before, html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-routelink::after { border-top: 1px dashed var(--o55-nier-ink); }
+html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-routelink span { background: none; color: var(--o55-nier-ink); font-family: var(--mono-font); font-weight: 500; letter-spacing: .14em; }
 html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-lookmenu { border: 1px solid var(--o55-nier-ink); background: var(--o55-nier-overlay); box-shadow: 4px 4px 0 rgba(var(--o55-nier-shadow-rgb), .28); }
 
 /* ======================================================================================================= Menu cursor */
+/* a look tile's line under its name is NieR's ink, not the previewed look's own text colour (Paper theatre's and Light
+   lab's read 4.0 and 4.4:1 on the parchment); the chosen tile's paper words below still win */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-tile .o55-tilesub { color: color-mix(in srgb, var(--o55-nier-ink) 82%, transparent); }
 /* The chosen card, tile or segment is an inverted ink block with paper words (O55.nierFx.cursor slides the same ink
    in under the pointer and keeps its square stepping beside it). The tile's living art keeps its own look. */
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-card.o55-on,
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-tile.o55-on { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); box-shadow: none; }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-card, .o55-tile).o55-on :where(.o55-cardsub, .o55-tilesub, .o55-tilename, .o55-cardtitle, .o55-glyph, .o55-tag) { color: var(--o55-nier-on-ink); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-card.o55-on .o55-glyph { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
-html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-card.o55-on .o55-tag { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .6); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-on > .o55-check { border-color: var(--o55-nier-on-ink); background: var(--o55-nier-on-ink); box-shadow: inset 0 0 0 3px var(--o55-nier-ink); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-card, .o55-tile).o55-on[data-o55fx-cursor] .o55-glyph { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
 /* One meaning, one treatment (review art-direction-hover-vs-chosen). Chosen is the full ink inversion above; the menu
@@ -164,7 +177,7 @@ html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="tr
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] :is(.o55-niercheck, .o55-niername, .o55-niersub) { color: var(--o55-nier-on-ink); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-nierbox { border-color: var(--o55-nier-on-ink); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-nierbox::after { background: var(--o55-nier-on-ink); }
-html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-niertag { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink) !important; box-shadow: none; }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-niertag { background: none; color: var(--o55-nier-on-ink) !important; }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-nierthumb { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-nieradjust { background: transparent; color: var(--o55-nier-on-ink) !important; border-color: rgba(var(--o55-nier-paper-rgb), .6); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook[data-on="true"] .o55-nieradjust:hover { background: var(--o55-nier-on-ink); color: var(--o55-nier-ink) !important; border-color: var(--o55-nier-on-ink); }
@@ -219,7 +232,7 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-kick { grid-row: 
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-kick > i { display: block; width: 4px; height: 4px; background: currentColor; }
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-kick > i:nth-child(2) { opacity: .6; }
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-kick > i:nth-child(3) { opacity: .3; }
-html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-sub { display: block; font: 500 8.5px/1 var(--mono-font); letter-spacing: .24em; opacity: .72; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-sub { display: block; font: 500 8.5px/1 var(--mono-font); letter-spacing: .24em; opacity: .84; }
 /* the chapter rail: an ink ruler with square caps; strings hang to a tab per chapter; where you are is an ink block,
    a chapter done carries a small square tick, one still to come a hollow square */
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railbar {
@@ -342,8 +355,9 @@ html[data-o55-nier-parts~="pod"]:not([data-motion="reduced"]):not([data-o55-lowr
 @keyframes o55nw-bob { from { transform: translateY(0); } to { transform: translateY(-6px); } }
 @keyframes o55nw-bob-shadow { from { transform: scaleX(1); opacity: .9; } to { transform: scaleX(.7); opacity: .5; } }
 /* -- Drifting particles [particles]: eight small ink squares drifting slowly across the panel -- */
-html[data-o55-nier-parts~="particles"] #pm-o55-onboarding .o55nw-mote { display: block; width: 4px; height: 4px; background: rgba(var(--o55-nier-ink-rgb), .26); will-change: transform; }
-html[data-o55-nier-parts~="particles"] #pm-o55-onboarding .o55nw-mote:nth-of-type(3n) { width: 6px; height: 6px; background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .3); }
+/* (the motes are the ink at 16%: at 26 to 30% a caption a mote drifted onto read 3.7:1 where it lay) */
+html[data-o55-nier-parts~="particles"] #pm-o55-onboarding .o55nw-mote { display: block; width: 4px; height: 4px; background: rgba(var(--o55-nier-ink-rgb), .16); will-change: transform; }
+html[data-o55-nier-parts~="particles"] #pm-o55-onboarding .o55nw-mote:nth-of-type(3n) { width: 6px; height: 6px; background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .18); }
 html[data-o55-nier-parts~="particles"] #pm-o55-onboarding .o55nw-mote:nth-of-type(4n + 1) { width: 3px; height: 3px; }
 .o55nw-mote:nth-of-type(2) { left: 9%; top: 24%; --d: 46s; --dl: -12s; }
 .o55nw-mote:nth-of-type(3) { left: 22%; top: 70%; --d: 58s; --dl: -31s; }

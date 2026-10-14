@@ -355,6 +355,118 @@ def duplicate_keys() -> list[str]:
     return out
 
 
+def shared_fitting_patch(text: str) -> str:
+    """M1: fit visible rail content in place; keep the pinned ladder and pass order.
+
+    The region hash is in addition to the pinned-input and exactly-once guards. Intrinsic probes for one
+    dock strip / breakpoint row share a read phase; dependent controls still run in their original order.
+    No hidden pane is exposed for measurement. Its activation schedules the same pre-paint fit callback.
+    """
+    start = text.index('    function overflows(el) {', text.index('(function pillFit()'))
+    end = text.index('    var scheduled = null, pendingScope = null;', start)
+    old = text[start:end]
+    need(hashlib.sha256(old.encode()).hexdigest() ==
+         '8c2dede5e1d6a51a01c0c5c52a793ab20fad515f7ef4e4eb92c91b20793221be',
+         'M1: pinned shared fitter region drift')
+    # Keep probes local to a single flex row: batching unrelated fit decisions would alter leftover-space fitting.
+    a = old.index('    function preferredWidth(el) {')
+    b = old.index('    function bannerCrowded(st) {', a)
+    intrinsic = r'''    function fitStyle(el, name, value) {
+      if (el.style[name] !== value) el.style[name] = value;
+    }
+    function preferredWidths(elements) {
+      var saved = elements.map(function (el) {
+        return { width: el.style.width, flex: el.style.flex, maxWidth: el.style.maxWidth, minWidth: el.style.minWidth };
+      });
+      elements.forEach(function (el) {
+        fitStyle(el, 'width', 'auto'); fitStyle(el, 'flex', '0 0 auto');
+        fitStyle(el, 'maxWidth', 'none'); fitStyle(el, 'minWidth', '0px');
+      });
+      var widths = elements.map(function (el) { return Math.ceil(el.scrollWidth); });
+      elements.forEach(function (el, i) {
+        Object.keys(saved[i]).forEach(function (name) { fitStyle(el, name, saved[i][name]); });
+      });
+      return widths;
+    }
+    function preferredWidth(el) { return el ? preferredWidths([el])[0] : 0; }
+'''
+    new = old[:a] + intrinsic + old[b:]
+    new = replace_once(new, "      if (fit) el.setAttribute('data-fit', fit);\n      else el.removeAttribute('data-fit');\n      void el.offsetWidth;",
+                       "      if (fit) { if (el.getAttribute('data-fit') !== fit) el.setAttribute('data-fit', fit); }\n"
+                       "      else if (el.hasAttribute('data-fit')) el.removeAttribute('data-fit');",
+                       'M1: equal fit writes and eager flush')
+    new = replace_once(new, "      el.removeAttribute('data-stack');\n      void el.offsetWidth;",
+                       "      if (el.hasAttribute('data-stack')) el.removeAttribute('data-stack');",
+                       'M1: breakpoint reset')
+    new = replace_once(new, "        need += preferredWidth(kids[i]);",
+                       "        need += widths[i];", 'M1: breakpoint intrinsic reads')
+    new = replace_once(new, "      var need = 0;\n      for (var i = 0; i < kids.length; i++) {",
+                       "      var widths = preferredWidths(kids);\n      var need = 0;\n      for (var i = 0; i < kids.length; i++) {",
+                       'M1: breakpoint intrinsic stage')
+    new = replace_once(new, "      btn.style.width = '';\n      btn.style.minWidth = '';\n      btn.style.maxWidth = '';",
+                       "      fitStyle(btn, 'width', '');\n      fitStyle(btn, 'minWidth', '');\n      fitStyle(btn, 'maxWidth', '');",
+                       'M1: equal configuration sizing writes')
+    a = new.index('      var worst = 0;\n', new.index('    function segtabCrushed(el) {'))
+    b = new.index('      return worst > el.clientWidth / items.length + 1;', a)
+    new = new[:a] + r'''      var probes = Array.prototype.slice.call(items);
+      var spans = [], saved = [];
+      probes.forEach(function (it) {
+        Array.prototype.forEach.call(it.querySelectorAll('span'), function (s) {
+          spans.push(s); saved.push(s.style.maxWidth); fitStyle(s, 'maxWidth', 'none');
+        });
+      });
+      var widths = preferredWidths(probes);
+      spans.forEach(function (s, i) { fitStyle(s, 'maxWidth', saved[i]); });
+      var worst = Math.max.apply(Math, widths);
+''' + new[b:]
+    a = new.index('    function fitIn(root) {')
+    new = new[:a] + r'''    var fittedInputs = new WeakMap(), fitFontEpoch = 0;
+    function fitVisible(el) {
+      return !el.closest('.side-panel-view:not(.active), [data-pane].pm-hidden') &&
+        isFittable(el) && !!el.getClientRects().length;
+    }
+    function fitInput(el, slotBox) {
+      var row = el.closest(ROW) || el.parentElement;
+      var box = el.getBoundingClientRect(), cs = getComputedStyle(el);
+      var view = el.closest('.side-panel-view'), pane = el.closest('[data-pane]');
+      return JSON.stringify([
+        document.documentElement.getAttribute('data-theme'), document.documentElement.getAttribute('data-o55-nier'),
+        document.documentElement.getAttribute('data-o55-nier-parts'), document.documentElement.style.cssText,
+        fitFontEpoch, window.devicePixelRatio, document.body.className, slot.className, slot.clientWidth, slotBox.width,
+        view && view.id, pane && pane.getAttribute('data-pane'),
+        el.className, el.style.cssText, el.getAttribute('data-fit'), el.getAttribute('data-stack'),
+        el.getAttribute('data-narrow'), el.innerHTML,
+        cs.fontFamily, cs.fontSize, cs.fontWeight, cs.letterSpacing,
+        el.clientWidth, el.scrollWidth, box.width, box.left - slotBox.left,
+        row && row.clientWidth, row && row.scrollWidth, row && row.innerHTML
+      ]);
+    }
+    function run(scope) {
+      if (!slotPageActive()) return;
+      var root = scope && slot.contains(scope) ? scope : slot;
+      var elements = Array.prototype.filter.call(root.querySelectorAll(SELECT), fitVisible);
+      if (!elements.length) return;
+      var slotBox = slot.getBoundingClientRect();
+      var inputs = elements.map(function (el) { return fitInput(el, slotBox); });
+      if (elements.every(function (el, i) { return fittedInputs.get(el) === inputs[i]; })) return;
+      /* Preserve the original sequential dependencies and the complete second pass. All writes and reads below
+         finish in this callback, before the pane's first paint; fitting never defers a newly shown label. */
+      elements.forEach(function (w) {
+        if (w.matches('.sh-cfgwrap')) { scrubCfgTrigger(w); setFit(w, 'full'); }
+      });
+      elements.forEach(fitOne);
+      elements.filter(function (el) { return el.matches('.sh-launchrow'); }).forEach(fitOne);
+      elements.filter(function (el) { return el.matches('.sh-cfgwrap, .sh-sesswrap, .sh-bpedit'); }).forEach(fitOne);
+      slotBox = slot.getBoundingClientRect();
+      elements.forEach(function (el) { fittedInputs.set(el, fitInput(el, slotBox)); });
+    }
+    if (document.fonts && document.fonts.addEventListener) {
+      document.fonts.addEventListener('loadingdone', function () { fitFontEpoch++; schedule(); });
+    }
+'''
+    return replace_once(text, old, new, 'M1: shared visible control fitting')
+
+
 PATCHES = [
     # Hover-tag layer: recognise the new overlay roots instead of the removed pm7 ones.
     ("function activeOverlay(){var tour=document.getElementById('pm7-guided-tour'),onboarding=document.getElementById('pm7-onboarding');",
@@ -689,6 +801,20 @@ PATCHES = [
      'home density: enroll only inserted surfaces'),
 ]
 
+# Text typed under a Custom choice survives a reload (2026-10-13, pm7-terminal-options-audit-sol on frozen a1ca: Terminal
+# Colors and Terminal Font kept their typed names until a reload, then lost them while every other value came back).
+# The Settings kit keeps that text in state.pm51.o55Custom (src/settings/kit.d/16-pages.js), and the tome's save() wrote
+# only its listed keys. It now writes the typed strings too, never for a credential setting; load() needs nothing, since
+# it merges the saved projection over the defaults and the kit only fills what is missing.
+CUSTOM_TEXT_PATCHES = [
+    ("settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null)};",
+     "settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null)};"
+     "var o55Typed=snapshot&&snapshot.pm51&&snapshot.pm51.o55Custom;"
+     "if(o55Typed&&typeof o55Typed==='object'){owned.pm51={o55Custom:{}};Object.keys(o55Typed).forEach(function(id){"
+     "if(!credentialSettingIds.has(id)&&typeof o55Typed[id]==='string')owned.pm51.o55Custom[id]=o55Typed[id];});}",
+     'typed Custom text in the saved projection'),
+]
+
 
 def nier_paint(var: str) -> str:
     """The family to paint for a chosen `var`: window.PM_THEME_PAINT_FAMILY(var) when the hook is present and answers a
@@ -738,6 +864,22 @@ NIER_PATCHES = [
     ("var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher'];",
      "var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher', 'Pod 042'];",
      'pod 042 persona'),
+]
+
+# The onboarding window's look preview holds the page's theme (2026-10-13, Create Project's theme flicker). While the
+# window owns a preview, PM7_SETTINGS_TOME.applyPaint paints the pair the window names, src/js/60-ui-core.js
+# window.O55_PAINT_PAIR() (the draft's family and Light or Dark, only while the window is open and shown), instead of
+# the selected Project's stored pair: selecting the new Project at Create Project reapplied its Settings and painted
+# the factory Basic Dark for a moment, and the look's save wrote its family before its mode. Loaded Settings, the seed,
+# the save and the NieR paint hook (which runs on the slug below) are unchanged; with no pair, applyPaint is as before.
+THEME_PREVIEW_PATCHES = [
+    ("var mode=p?String(settings['general.visual.theme-mode']||explicitMode).toLowerCase():'dark';\n"
+     "    if(['light','dark','auto'].indexOf(mode)<0)mode=explicitMode;\n",
+     "var mode=p?String(settings['general.visual.theme-mode']||explicitMode).toLowerCase():'dark';\n"
+     "    if(['light','dark','auto'].indexOf(mode)<0)mode=explicitMode;\n"
+     "    var o55Pair=typeof window.O55_PAINT_PAIR==='function'?window.O55_PAINT_PAIR():null;\n"
+     "    if(o55Pair){family=o55Pair[0];mode=o55Pair[1];}\n",
+     'onboarding look preview holds applyPaint'),
 ]
 
 # First paint (2026-10-09). The head boot script painted Basic Dark on every open (T44 had replaced its pm.themeFamily
@@ -933,8 +1075,14 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     # 2. Guarded patches.
     for old, new, label in PATCHES + NIER_PATCHES + first_paint_patches(text):
         text = replace_once(text, old, new, label)
+    text = shared_fitting_patch(text)
+    for old, new, label in THEME_PREVIEW_PATCHES:
+        text = replace_once(text, old, new, label)
     text = replace_once(text, SETTINGS_ANCHOR, SETTINGS_EXPOSE + SETTINGS_ANCHOR, 'settings transfer exposure')
     text = replace_once(text, LAYOUT_ANCHOR, LAYOUT_EXPOSE + LAYOUT_ANCHOR, 'layout restore exposure')
+
+    for old, new, label in CUSTOM_TEXT_PATCHES:
+        text = replace_once(text, old, new, label)
 
     # 2b. Usage: replace the Prism Usage page with the redesign in Concepts/usage-redesign. This runs after the
     # PATCHES loop because the 'usage card cta :has restyle' patch needs the old rule present, and before the O55
@@ -944,6 +1092,10 @@ def build_text(usage: bool = True, home: bool = True) -> str:
         text, SETTINGS_NOTES['usage'] = usage_layer.apply(text, need)
     else:
         SETTINGS_NOTES.pop('usage', None)
+
+    # 2c. Planning Wizard + Orchestrator theme-matching fixes (tools/wizorch_layer.py)
+    import wizorch_layer  # noqa: E402
+    text, SETTINGS_NOTES['wizorch'] = wizorch_layer.apply(text, need)
 
     # 3. Splice the O55 modules.
     css = settings_layer.inline_fonts(read_parts(SRC / 'css', '.css'), SRC / 'fonts')

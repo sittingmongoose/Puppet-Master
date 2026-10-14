@@ -14,9 +14,12 @@
   T.Metrics = {
     font: fontString,
     measure: function (o) {
-      /* o: { family, fontPx, weight, boldWeight, lineHeight, letterSpacing, dpr } */
+      /* o: { family, fontPx, weight, boldWeight, lineHeight, letterSpacing, dpr, crisp } */
       var dpr = o.dpr || 1;
-      var key = [o.family, o.fontPx, o.weight, o.lineHeight, o.letterSpacing, dpr].join('|');
+      /* Crisp (Settings' Font Rendering): the text is drawn at a whole number of device pixels, so a size such as 13.75
+         or a 125 % zoom never draws the glyphs between pixels */
+      if (o.crisp) o = Object.assign({}, o, { fontPx: Math.max(1, Math.round(o.fontPx * dpr)) / dpr });
+      var key = [o.family, o.fontPx, o.weight, o.boldWeight, o.lineHeight, o.letterSpacing, dpr].join('|');
       var hit = cache.get(key); if (hit) return hit;
       var c = ctx();
       c.font = fontString(o, o.weight || 400, false);

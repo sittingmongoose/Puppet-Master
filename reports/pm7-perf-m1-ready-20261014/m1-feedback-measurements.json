@@ -1,0 +1,224 @@
+[
+  {
+    "mode": "normal",
+    "decoded_frames": 8100,
+    "calibration_max_residual_ms": 7.500244140625,
+    "bound_ms": 24.166910807291668,
+    "samples": [
+      {
+        "look": "basic-dark",
+        "case": "settings-entry",
+        "before_ms": 166.0,
+        "after_ms": 130.4,
+        "uncertainty_ms": 24.17,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "home-general",
+        "before_ms": 254.9,
+        "after_ms": 231.8,
+        "uncertainty_ms": 24.17,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "settings-return",
+        "before_ms": 260.5,
+        "after_ms": 205.1,
+        "uncertainty_ms": 24.17,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "files-search",
+        "before_ms": 545.2,
+        "after_ms": 150.2,
+        "uncertainty_ms": 24.17,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "basic-friendly",
+        "before_ms": 717.5,
+        "after_ms": 489.6,
+        "uncertainty_ms": 24.17,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "friendly-glass",
+        "before_ms": 1137.8,
+        "after_ms": 996.0,
+        "uncertainty_ms": 24.17,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "settings-entry",
+        "before_ms": 215.2,
+        "after_ms": 217.6,
+        "uncertainty_ms": 24.17,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "home-general",
+        "before_ms": 316.4,
+        "after_ms": 425.9,
+        "uncertainty_ms": 24.17,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "settings-return",
+        "before_ms": 312.7,
+        "after_ms": 323.4,
+        "uncertainty_ms": 24.17,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "files-search",
+        "before_ms": 763.4,
+        "after_ms": 382.2,
+        "uncertainty_ms": 24.17,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "mode-dark",
+        "before_ms": 538.1,
+        "after_ms": 461.4,
+        "uncertainty_ms": 24.17,
+        "n_per_artifact": 1
+      }
+    ],
+    "first_feedback_definition": "First changed main Settings body for Settings/family/mode actions; visible Search rail change for Files\u2192Search. Trusted pointerdown origin, separate visible start/end calibration; color/press cues in the excluded menu are not counted. Native onset and +50/+200/+500ms frames reviewed to verify action content and transition sequence.",
+    "review": {
+      "native_frames_extracted": 88,
+      "sampled_frames_viewed": 88,
+      "observations": [
+        "Normal Settings entrance and return retain the same fade sequence and final chapter/content.",
+        "Search reveals the same pane and fitted labels, without a different first-show fit or transient text at reviewed samples.",
+        "Friendly and Glass changes show the same destination content and existing optical completion sequence. Bake completion advances earlier in some optimized samples; no alternative optics or changed motion code was introduced.",
+        "Application reduce-animations shows settled content immediately in the sampled entrance frames for both artifacts."
+      ],
+      "limit": "Sampled-frame visual review and DOM/fit assertions support parity; this is not a claim that every compressed pixel of every frame is bit-identical."
+    },
+    "recorder_shutdown": "gpu-browser stop exit1: Recorder did not stop gracefully and was killed; validated recovery clip retained if readable. Both action streams and both calibration sequences are present; independent complete decode passed. Exact owned browser/ffmpeg PID checks returned[] after stop.",
+    "raw_dir": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m1-current-film-normal-v1",
+    "video": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m1-current-film-normal-v1.mp4"
+  },
+  {
+    "mode": "application reduce-animations enabled; OS media not emulated",
+    "decoded_frames": 8040,
+    "calibration_max_residual_ms": 25.000244140625,
+    "bound_ms": 41.66691080729167,
+    "samples": [
+      {
+        "look": "basic-dark",
+        "case": "settings-entry",
+        "before_ms": 76.2,
+        "after_ms": 63.3,
+        "uncertainty_ms": 41.67,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "home-general",
+        "before_ms": 294.8,
+        "after_ms": 222.9,
+        "uncertainty_ms": 41.67,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "settings-return",
+        "before_ms": 164.3,
+        "after_ms": 142.8,
+        "uncertainty_ms": 41.67,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "files-search",
+        "before_ms": 437.5,
+        "after_ms": 110.8,
+        "uncertainty_ms": 41.67,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "basic-friendly",
+        "before_ms": 863.9,
+        "after_ms": 566.3,
+        "uncertainty_ms": 41.67,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "friendly-glass",
+        "before_ms": 1303.3,
+        "after_ms": 1300.9,
+        "uncertainty_ms": 41.67,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "settings-entry",
+        "before_ms": 105.6,
+        "after_ms": 108.3,
+        "uncertainty_ms": 41.67,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "home-general",
+        "before_ms": 440.0,
+        "after_ms": 301.2,
+        "uncertainty_ms": 41.67,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "settings-return",
+        "before_ms": 233.9,
+        "after_ms": 234.6,
+        "uncertainty_ms": 41.67,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "files-search",
+        "before_ms": 802.3,
+        "after_ms": 384.7,
+        "uncertainty_ms": 41.67,
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "mode-dark",
+        "before_ms": 427.8,
+        "after_ms": 359.7,
+        "uncertainty_ms": 41.67,
+        "n_per_artifact": 1
+      }
+    ],
+    "first_feedback_definition": "First changed main Settings body for Settings/family/mode actions; visible Search rail change for Files\u2192Search. Trusted pointerdown origin, separate visible start/end calibration; color/press cues in the excluded menu are not counted. Native onset and +50/+200/+500ms frames reviewed to verify action content and transition sequence.",
+    "review": {
+      "native_frames_extracted": 88,
+      "sampled_frames_viewed": 88,
+      "observations": [
+        "Normal Settings entrance and return retain the same fade sequence and final chapter/content.",
+        "Search reveals the same pane and fitted labels, without a different first-show fit or transient text at reviewed samples.",
+        "Friendly and Glass changes show the same destination content and existing optical completion sequence. Bake completion advances earlier in some optimized samples; no alternative optics or changed motion code was introduced.",
+        "Application reduce-animations shows settled content immediately in the sampled entrance frames for both artifacts."
+      ],
+      "limit": "Sampled-frame visual review and DOM/fit assertions support parity; this is not a claim that every compressed pixel of every frame is bit-identical."
+    },
+    "recorder_shutdown": "gpu-browser stop exit1: Recorder did not stop gracefully and was killed; validated recovery clip retained if readable. Both action streams and both calibration sequences are present; independent complete decode passed. Exact owned browser/ffmpeg PID checks returned[] after stop.",
+    "raw_dir": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m1-current-film-reduced-v1",
+    "video": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m1-current-film-reduced-v1.mp4"
+  }
+]

@@ -1,0 +1,126 @@
+/* PM Notify, Glass (pm7-notifications, Opus 5.5).
+   Plain Glass (html[data-lg] off): reading plates, near-solid tinted fills with the Glass edge light and hairline and no
+   backdrop blur, so the one shell blur stays the only one (F3-427, F3-431); the collapsed stack's mild left-mask peek
+   (F3-460: rgba(0,0,0,.72) to solid by 4 %).
+   Liquid Glass (html[data-lg="on"], Concepts/liquid-glass, owner pm7-liquid-glass): the toasts and the inbox float over
+   content, so they are the material's menu kind: the menu tint, a live blur of what is behind them, the specular rim
+   (--lg-edge-top / --lg-edge-bot), the deep shadow, 16 and 18 px concentric corners and 6 px controls; tinted glass
+   keys; the chosen key is the selection fill. Only the overlay's public tokens are read; glass.js and glass.css are
+   not touched. Motion is the liquid spring: a card condenses out of a blur, the inbox pours out of the stack. */
+
+html[data-theme^="glass"] {
+  --pmn-r: 14px;
+  --pmn-r-panel: 16px;
+  --pmn-r-item: 11px;
+  --pmn-r-tile: 9px;
+  --pmn-r-btn: var(--pm-ctl-r, 6px);
+  --pmn-edge: inset 0 1px 0 var(--glass-edge, rgba(255, 255, 255, .4)), inset 0 0 0 1px var(--glass-hairline, rgba(255, 255, 255, .16));
+}
+html[data-theme="glass-dark"] {
+  --pmn-plate: rgba(40, 30, 64, .94);
+  --pmn-plate-2: rgba(52, 40, 80, .96);
+  --pmn-shadow: 0 18px 44px -14px rgba(10, 5, 25, .7), 0 4px 12px -2px rgba(10, 5, 25, .45);
+  --pmn-shadow-panel: 0 28px 70px -20px rgba(10, 5, 25, .75), 0 8px 20px -6px rgba(10, 5, 25, .5);
+  --pmn-on-acc: #1b1230;
+}
+html[data-theme="glass-light"] {
+  --pmn-plate: rgba(250, 251, 253, .95);
+  --pmn-plate-2: rgba(255, 255, 255, .97);
+  --pmn-shadow: 0 18px 44px -16px rgba(30, 45, 90, .32), 0 3px 10px -2px rgba(30, 45, 90, .14);
+  --pmn-shadow-panel: 0 28px 70px -22px rgba(30, 45, 90, .36), 0 8px 20px -8px rgba(30, 45, 90, .16);
+  --pmn-on-acc: #ffffff;
+}
+
+/* ---- plain Glass: reading plates ---- */
+html[data-theme^="glass"] :is(.pmn-toast, .pmn-chrome, .pmn-banner) { background: linear-gradient(180deg, rgba(255, 255, 255, .06), transparent 40%), var(--pmn-plate); border: 0; box-shadow: var(--pmn-edge), var(--pmn-shadow); }
+html[data-theme^="glass"] .pmn-chrome { box-shadow: var(--pmn-edge), var(--pmn-shadow-panel); }
+html[data-theme^="glass"] .pmn-toast:is([data-level="attention"], [data-level="blocking"]) { background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 16%, transparent), transparent 70%), var(--pmn-plate); box-shadow: var(--pmn-edge), inset 0 0 0 1px color-mix(in srgb, var(--pmn-acc) 40%, transparent), var(--pmn-shadow); }
+html[data-theme^="glass"] .pmn-tile { background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 34%, transparent), color-mix(in srgb, var(--pmn-acc) 16%, transparent)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), inset 0 0 0 1px color-mix(in srgb, var(--pmn-acc) 40%, transparent); }
+html[data-theme^="glass"] .pmn-head { border-bottom-color: var(--glass-hairline, rgba(255, 255, 255, .12)); }
+html[data-theme^="glass"] .pmn-item:hover { background: rgba(255, 255, 255, .07); }
+html[data-theme="glass-light"] .pmn-item:hover { background: rgba(12, 15, 21, .05); }
+html[data-theme^="glass"] .pmn-btn { background: rgba(255, 255, 255, .08); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 0 0 1px var(--glass-hairline, rgba(255, 255, 255, .16)); }
+html[data-theme="glass-light"] .pmn-btn { background: rgba(255, 255, 255, .6); box-shadow: inset 0 1px 0 #fff, inset 0 0 0 1px rgba(12, 15, 21, .12); }
+html[data-theme^="glass"] .pmn-btn:hover { background: rgba(255, 255, 255, .15); }
+html[data-theme="glass-light"] .pmn-btn:hover { background: #fff; }
+/* the primary key: the accent as a lit fill with dark or white text, never the translucent surface colour */
+html[data-theme^="glass"] .pmn-btn-primary { background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 85%, #fff), var(--pmn-acc)); color: var(--pmn-on-acc); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 2px 8px -2px color-mix(in srgb, var(--pmn-acc) 60%, transparent); }
+html[data-theme^="glass"] .pmn-btn-primary:hover { background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 75%, #fff), var(--pmn-acc)); }
+html[data-theme^="glass"] .pmn-timer { background: linear-gradient(90deg, color-mix(in srgb, var(--pmn-acc) 30%, transparent), var(--pmn-acc)); height: 2px; opacity: .9; }
+/* the stack: glass chips; the deck keeps its left-mask peek */
+html[data-theme^="glass"] .pmn-front, html[data-theme^="glass"] .pmn-peek { border: 0; border-radius: 9px; }
+html[data-theme^="glass"] .pmn-front { background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 18%, transparent), transparent), var(--pmn-plate); box-shadow: var(--pmn-edge), 0 2px 8px -2px rgba(0, 0, 0, .3); }
+html[data-theme^="glass"] .pmn-peek { background: var(--pmn-plate); box-shadow: var(--pmn-edge); }
+html[data-theme^="glass"] .pmn-deck { -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, .72), #000 4%); mask-image: linear-gradient(90deg, rgba(0, 0, 0, .72), #000 4%); }
+html[data-theme^="glass"] .pmn-badge { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 0 0 2px rgba(0, 0, 0, .2), 0 2px 8px rgba(0, 0, 0, .3); }
+html[data-theme^="glass"] .pmn-bell { border-radius: 9px; }
+html[data-theme^="glass"] .pmn-group[data-folded="true"] .pmn-item[data-under] { background: var(--pmn-plate-2); box-shadow: var(--pmn-edge); }
+html[data-theme^="glass"] .pmn-group[data-folded="true"] .pmn-item:not([data-under]) { background: rgba(255, 255, 255, .05); box-shadow: var(--pmn-edge); }
+html[data-theme^="glass"] .pmn-empty-art { border-radius: 16px; background: linear-gradient(180deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .04)); box-shadow: var(--pmn-edge); }
+
+/* ---- Liquid Glass: the menu material (P = html[data-lg="on"][data-theme^="glass"]:not(#lgz), as the overlay writes it) ---- */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) {
+  --pmn-r: var(--lg-r-card, 16px);
+  --pmn-r-panel: calc(var(--lg-r-card, 16px) + 2px);
+  --pmn-r-item: 12px;
+  --pmn-r-tile: 9px;
+  --pmn-r-btn: var(--pm-ctl-r, 6px);
+  --pmn-lg-rim: inset 0 1px 0 var(--lg-edge-top, rgba(255, 255, 255, .3)), inset 0 -1px 1px var(--lg-edge-bot, rgba(0, 0, 0, .28));
+  --pmn-lg-depth: 0 30px 60px -20px var(--lg-shadow, rgba(0, 2, 12, .55)), 0 4px 14px var(--lg-shadow-near, rgba(0, 2, 12, .3));
+  --pmn-text: var(--text-primary);
+  --pmn-on-acc: var(--lg-on-sel, #fff);
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmn-toast, .pmn-chrome, .pmn-banner) {
+  background: linear-gradient(var(--lg-tint-menu), var(--lg-tint-menu));
+  -webkit-backdrop-filter: blur(30px) saturate(1.5); backdrop-filter: blur(30px) saturate(1.5);
+  box-shadow: var(--pmn-lg-rim), var(--pmn-lg-depth);
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-toast:is([data-level="attention"], [data-level="blocking"]) {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 18%, transparent), transparent 75%), linear-gradient(var(--lg-tint-menu), var(--lg-tint-menu));
+  box-shadow: var(--pmn-lg-rim), inset 0 0 0 1px color-mix(in srgb, var(--pmn-acc) 34%, transparent), var(--pmn-lg-depth);
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-tile { background: color-mix(in srgb, var(--pmn-acc) 22%, var(--lg-fill, rgba(255, 255, 255, .075))); box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-btn { background: var(--lg-fill); box-shadow: inset 0 1px 0 var(--lg-edge-top); color: var(--text-primary); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-btn:hover { background: var(--lg-fill-hover); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-btn:active { background: var(--lg-fill-press); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-btn-primary { background: var(--lg-sel); color: var(--lg-on-sel, #fff); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), 0 4px 12px -4px var(--lg-sel); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-btn-primary:hover { background: color-mix(in srgb, var(--lg-sel) 88%, #fff); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-item:hover { background: var(--lg-fill-hover); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-head { border-bottom-color: var(--lg-line, rgba(255, 255, 255, .1)); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmn-textbtn, .pmn-group-fold, .pmn-x):hover { background: var(--lg-fill-hover); }
+/* the stack sits on the overlay's title-bar sheet, and glass is never stacked on glass: plain fills and the overlay's line */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-front { background: var(--lg-fill); box-shadow: inset 0 0 0 1px var(--lg-line); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-stack[data-hover] .pmn-front { background: var(--lg-fill-hover); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-stack[data-needs] .pmn-front { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmn-acc) 60%, var(--lg-line)); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-deck { -webkit-mask-image: none; mask-image: none; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-peek { background: var(--lg-fill); box-shadow: inset 0 0 0 1px var(--lg-line); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-badge { background: var(--lg-sel); color: var(--lg-on-sel, #fff); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 2px 8px var(--lg-shadow-near); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-badge[data-sev="warn"] { background: var(--accent-warning); color: #1a1405; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-badge[data-sev="error"] { background: var(--accent-error); color: #fff; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-group[data-folded="true"] .pmn-item[data-under] { background: var(--lg-fill-hover); box-shadow: inset 0 1px 0 var(--lg-edge-top); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-group[data-folded="true"] .pmn-item:not([data-under]) { background: var(--lg-fill); box-shadow: inset 0 1px 0 var(--lg-edge-top); }
+/* Reduce Transparency and Increase Contrast (the overlay's own switches) */
+html[data-lg="on"][data-lg-rt][data-theme^="glass"]:not(#lgz) :is(.pmn-toast, .pmn-chrome, .pmn-banner) { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--pmn-plate); }
+html[data-lg="on"][data-lg-hc][data-theme^="glass"]:not(#lgz) :is(.pmn-toast, .pmn-chrome, .pmn-banner) { box-shadow: inset 0 0 0 1.5px var(--text-primary), var(--pmn-lg-depth); }
+
+/* ---- the title bar's keys: the base Glass draws every button inside .title-bar as a chrome key with !important
+   (pm7-architectural-glass-final: border, background, shadow). The stack, the stage and the inbox live in the title
+   bar's notification slot, so their own keys restate themselves here with !important; that rule is also what hid the
+   old inbox's Approve key in Glass. ---- */
+html[data-theme^="glass"] .title-bar :is(.pmn-stack, .pmn-x, .pmn-textbtn, .pmn-group-fold, .pmn-fold) { border: 0 !important; background: transparent !important; box-shadow: none !important; }
+html[data-theme^="glass"] .title-bar :is(.pmn-x, .pmn-textbtn, .pmn-group-fold):hover { background: var(--pmn-hover) !important; }
+html[data-theme^="glass"] .title-bar .pmn-btn { border: 0 !important; background: rgba(255, 255, 255, .08) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 0 0 1px var(--glass-hairline, rgba(255, 255, 255, .16)) !important; }
+html[data-theme="glass-light"] .title-bar .pmn-btn { background: rgba(255, 255, 255, .62) !important; box-shadow: inset 0 1px 0 #fff, inset 0 0 0 1px rgba(12, 15, 21, .12) !important; }
+html[data-theme^="glass"] .title-bar .pmn-btn:hover { background: rgba(255, 255, 255, .15) !important; }
+html[data-theme="glass-light"] .title-bar .pmn-btn:hover { background: #fff !important; }
+html[data-theme^="glass"] .title-bar .pmn-btn-primary { background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 85%, #fff), var(--pmn-acc)) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 2px 8px -2px color-mix(in srgb, var(--pmn-acc) 60%, transparent) !important; }
+html[data-theme^="glass"] .title-bar .pmn-btn-primary:hover { background: linear-gradient(180deg, color-mix(in srgb, var(--pmn-acc) 72%, #fff), var(--pmn-acc)) !important; }
+html[data-theme^="glass"] .title-bar .pmn-btn-danger { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), inset 0 0 0 1px color-mix(in srgb, var(--accent-error) 50%, transparent) !important; }
+html[data-theme^="glass"] .title-bar #rsStage .o55-resume.pmn-pin button { border: 0 !important; background: transparent !important; box-shadow: none !important; }
+html[data-theme^="glass"] .title-bar #rsStage .o55-resume.pmn-pin button:hover { background: var(--pmn-hover) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .title-bar .pmn-btn { background: var(--lg-fill) !important; box-shadow: inset 0 1px 0 var(--lg-edge-top) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .title-bar .pmn-btn:hover { background: var(--lg-fill-hover) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .title-bar .pmn-btn:active { background: var(--lg-fill-press) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .title-bar .pmn-btn-primary { background: var(--lg-sel) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), 0 4px 12px -4px var(--lg-sel) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .title-bar .pmn-btn-primary:hover { background: color-mix(in srgb, var(--lg-sel) 88%, #fff) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .title-bar :is(.pmn-x, .pmn-textbtn, .pmn-group-fold):hover { background: var(--lg-fill-hover) !important; }

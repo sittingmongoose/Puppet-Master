@@ -109,7 +109,9 @@
       /* the look waiting to be saved (O55.shell.commitLook) is written once Ready's moment and Pod's line are over */
       if (fresh) O55.shell.flushLook(4000);
       if (!fresh || O55.ui.skin('ready', layer, fresh)) return;
-      O55.motion.after(1250, () => { if (S.open && S.sess.screen === 'ready' && O55.art.celebrate) O55.art.celebrate(S.root.querySelector('.o55-stage'), { big: true, count: 46, at: [240, 260] }); });
+      /* (beneath Ready's lettered emblem, as the curtain call's burst is: 66-family-window.js A.famCall.lettered) */
+      O55.motion.after(1250, () => { if (S.open && S.sess.screen === 'ready' && O55.art.celebrate) { const st = S.root.querySelector('.o55-stage'), A = O55.art;
+        O55.art.celebrate(st, { big: true, count: 46, at: [240, 260], under: A.famCall && A.famCall.lettered ? A.famCall.lettered(st && st.querySelector('.o55-scene-wrap:not(.o55-out) svg.o55-scene')) : null }); } });
     },
     eyebrow: () => T('ready.eyebrow'),
     title: () => T('ready.title'),
