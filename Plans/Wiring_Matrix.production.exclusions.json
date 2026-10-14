@@ -346,7 +346,8 @@
     "cmd.browser.devtools.open": "2026-10-09 (DL-180, DL-181): alias of cmd.browser.open_devtools (UCC-202); the canonical id keeps the production row. Listed here so the catalog's lineage mention needs no production row of its own.",
     "cmd.dashboard.add_widget": "2026-10-09 (DL-180, DL-181): alias of cmd.widget.add naming the board in its existing room field inside a dashboard tab (UCC-202, WS-030; amended 2026-10-10, DL-186: it read addressed by board_id); the canonical id keeps the production row. Listed here so the catalog's lineage mention needs no production row of its own.",
     "cmd.terminal.focus_session": "2026-10-09 (DL-180, DL-181): alias of cmd.terminal.focus (UCC-202); the canonical id keeps the production row. Listed here so the catalog's lineage mention needs no production row of its own.",
-    "cmd.workspace_layout.size_surface": "2026-10-09 (DL-180, DL-181): concept-only preset alias that normalizes to cmd.workspace_layout.resize_surface after preset resolution (CS-068, CS-101); never a primary command. Listed here so the catalog's lineage mention needs no production row of its own."
+    "cmd.workspace_layout.size_surface": "2026-10-09 (DL-180, DL-181): concept-only preset alias that normalizes to cmd.workspace_layout.resize_surface after preset resolution (CS-068, CS-101); never a primary command. Listed here so the catalog's lineage mention needs no production row of its own.",
+    "pm7_local_affordances": "WM-093/Plans/pm7_control_bindings.json enumerates ui.appearance.*, ui.notifications.* and non-dispatch picker/focus/preview/feedback controls. They are explicit local dispositions with no production command entry. Active cmd.editor.appearance.set is NOT excluded; the existing cmd.editor exclusion is only a generic family root."
   },
-  "updated_at_utc": "2026-10-10T23:59:00+00:00"
+  "updated_at_utc": "2026-10-14T18:30:00Z"
 }

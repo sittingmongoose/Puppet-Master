@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31358-L32269
+Source lines: L31358-L32275
 
-Source SHA256: `2fbb46a82dc48c06df2698570d86fea36430c555501760e0328853d3170e9f49`
+Source SHA256: `ad093afce0ca7418862e8c4d9bfd4fbb8d1081f379037deb47635caf0ea41254`
 
 ---
 
@@ -860,28 +860,31 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The section 15.1 persistence key tables register four settings-driven keys. The shell and
-  layout key table gains `glass_background_mode:v1` (active glass background mode; write
-  frequency on change) and `glass_alpha:v1` (user glass alpha value within the per-theme
-  clamps; write frequency on change, debounced 300ms). The chat, settings, and review state
-  key table gains `settings_recents:v1` (most-recent-first deduplicated settings recents
-  list, cap 8; write frequency on change, debounced 300ms) and
-  `settings_suggestions_dismissed:v1` (dismissed Suggested-shelf entries with dismissal
-  timestamps and signal scope, entries expiring after 90 days; write frequency on change).
-  The concept localStorage names pm.theme, pm.glassBg, pm.glassAlpha, and
-  pm.activity_bar_order:v2 are demo shims, not canonical keys: the canonical keys remain
-  `theme:v1` and `activity_bar_order:v1`, and this addendum registers no other new storage
-  keys.
+  The section 15.1 persistence key tables register four settings-driven keys. The shell and layout key table
+  gains `glass_background_mode:v1` (retired compatibility input at SSYS-054's coordinated publication,
+  interpreted by SP-333; no active writer after that boundary) and `glass_alpha:v1` (user glass alpha value
+  within the per-theme clamps; write frequency on change, debounced 300ms). The chat, settings, and review state
+  key table gains `settings_recents:v1` (most-recent-first deduplicated settings recents list, cap 8; write
+  frequency on change, debounced 300ms) and `settings_suggestions_dismissed:v1` (dismissed Suggested-shelf
+  entries with dismissal timestamps and signal scope, entries expiring after 90 days; write frequency on
+  change). The concept localStorage names pm.theme, pm.glassBg, pm.glassAlpha, and pm.activity_bar_order:v2 are
+  demo shims, not canonical keys: the canonical keys remain `theme:v1` and `activity_bar_order:v1`, and this
+  addendum registers no other new storage keys. The new Wallpaper choice is an existing Project Settings
+  snapshot value under SP-333, not a new local-storage family.
 gui_related: true
 gui_classification_reason: This unit registers GUI persistence keys and write frequencies for theme and settings state.
 split_recommended: false
 depends_on: [F3-217]
 unblocks: []
 acceptance_criteria:
-- "The shell and layout key table registers glass_background_mode:v1 and glass_alpha:v1 with write frequencies, and the chat, settings, and review state table registers settings_recents:v1 and settings_suggestions_dismissed:v1 with write frequencies."
-- "The concept names pm.theme, pm.glassBg, pm.glassAlpha, and pm.activity_bar_order:v2 are recorded as demo shims only; canonical keys remain theme:v1 and activity_bar_order:v1."
-- "No storage keys other than glass_background_mode:v1, glass_alpha:v1, settings_recents:v1, and settings_suggestions_dismissed:v1 are registered by this addendum."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The shell and layout key table records glass_background_mode:v1 as retired-at-publication compatibility lineage
+  and glass_alpha:v1 with its write frequency, and the chat, settings, and review state table registers settings_recents:v1
+  and settings_suggestions_dismissed:v1 with write frequencies.
+- The concept names pm.theme, pm.glassBg, pm.glassAlpha, and pm.activity_bar_order:v2 are recorded as demo shims only;
+  canonical keys remain theme:v1 and activity_bar_order:v1.
+- No storage keys other than glass_background_mode:v1, glass_alpha:v1, settings_recents:v1, and settings_suggestions_dismissed:v1
+  are registered by this addendum.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -894,10 +897,12 @@ node_compile_hint:
   mode: theme_and_settings_persistence_key_additions
   create_worknodes: false
 source_lineage:
-- "Plans/FinalGUISpec.md:2286"
-- "Plans/FinalGUISpec.md:2301"
-- "Plans/FinalGUISpec.md:15136"
-- "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
+- Plans/FinalGUISpec.md:2286
+- Plans/FinalGUISpec.md:2301
+- Plans/FinalGUISpec.md:15136
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
 - "glass_background_mode:v1"
 - "glass_alpha:v1"
@@ -919,4 +924,5 @@ owner_boundary_notes:
 - "This unit mirrors the F3-217 registration shape; F3-217 remains the owner of the pre-existing shell and layout key list, and Plans/storage-plan.md remains the consumer doc for storage record truth."
 owner_hints:
 - "Plans/FinalGUISpec.md"
+
 ```

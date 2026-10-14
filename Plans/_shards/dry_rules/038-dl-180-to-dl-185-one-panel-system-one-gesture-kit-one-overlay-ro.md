@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3426-L3979
+Source lines: L3437-L3998
 
-Source SHA256: `96a4dedb695e637c0c3f1531f685eda8cb179d0944f149f4d8ee0ec6c04d9b79`
+Source SHA256: `cb8a8d7cf94afeb686726cc1a9ceadc55ba9c47034d300d918c898da0d3f1ada`
 
 ---
 
@@ -269,9 +269,10 @@ canonical_text: >-
   layer reads the current look from its one store (SSYS-010, DR-056) and keeps no copy. The fields are F3-642's,
   the storage SP-331's (the app default in Settings rows, the project default in the Project's Settings, the
   override inside the terminal tab's saved state) and the Settings rows SSYS-051's; the existing terminal
-  appearance rows, code.terminal.theme and code.terminal.font-family among them, bind the app layer of this
-  model. There is no fifth layer (a shell profile carries no appearance of its own), and no second terminal
-  theme, scheme, font, background or effects store or terminal-local settings key outside the model. Every field
+  appearance rows, code.terminal.theme and code.terminal.font-family among them, bind the Project layer under
+  SSYS-002. The app-default layer is reserved compatibility/default lineage, not an admitted writable app store.
+  There is no fifth layer (a shell profile carries no appearance of its own), and no second terminal theme,
+  scheme, font, background or effects store or terminal-local settings key outside the model. Every field
   applies live, and no terminal appearance setting carries a restart badge. The faces are F3-644's and their
   files DR-050's one set. The effects (F3-643) are paint on the terminal's own screen inside this model, not
   motion voices: DR-043's per-family motion voices and its accent rule stand, so the scheme colours the screen
@@ -287,11 +288,15 @@ split_recommended: false
 depends_on: [DL-183]
 unblocks: [F3-642, SSYS-051, SP-331]
 acceptance_criteria:
-  - "The popover, Settings > Terminal and the per-look defaults resolve through one four-layer model field by field, and the popover writes only This terminal or All terminals."
-  - "No terminal theme, font, background or effects value is stored outside SP-331's places, and no shell profile carries an appearance of its own."
-  - "Every terminal appearance field applies live and no terminal setting shows a restart badge."
-  - "Terminal effects stay paint on the terminal's screen; no terminal setting overrides DR-043's motion voices or hard-codes the accent role."
-  - "The editor and terminal read one catalog and use one Appearance popover component; neither has its own scheme list or popover."
+- The popover, Settings > Terminal and the per-look defaults resolve through one four-layer model field by field,
+  and the popover writes only This terminal or All terminals.
+- No terminal theme, font, background or effects value is stored outside SP-331's places, and no shell profile carries
+  an appearance of its own.
+- Every terminal appearance field applies live and no terminal setting shows a restart badge.
+- Terminal effects stay paint on the terminal's screen; no terminal setting overrides DR-043's motion voices or hard-codes
+  the accent role.
+- The editor and terminal read one catalog and use one Customize component (F3-650); neither has its own scheme list
+  or Customize implementation.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -362,30 +367,32 @@ canonical_text: >-
   Pill-shaped action buttons, including Install, Sign in and the rounded Friendly and Glass actions, are
   allowed; keyboard key caps and non-label progress marks are not labels. Joined selectors and tabs retain their
   own specified geometry. Selection is shown by the surface itself: the fused tab silhouette, a filled or tinted
-  row, the NieR square cursor, Retro reverse video, never an edge stripe. A status is a mark and a word from its
-  owner's status set (F3-585, DL-141; the left rail's F3-619 through DR-057), and a count is a plain number. How
-  the rule looks, and the list of retired defaults it replaces, are F3-648's: section 3.5's 3 px left-edge
-  accent stripe and F3-039's token, Appendix C's and F3-276's accent left border, F3-469's inset left accent
-  bar, the workgroup pill of section 5.1, and the pill skins of F3-422, F3-463, F3-464 and F3-467. The surface
-  statements that came first stay as instances of this one rule and do not narrow it: the chat's and Settings'
-  stripe ban (APR-034, F3-534), Settings' status tokens (Settings_System section 22), the left rail's rules
-  (DL-162, F3-618, F3-619, DR-057), the decision cards' text statuses (DL-036) and the production icon contract
-  with no emoji (FinalGUISpec section 2.6, F3-417); where one of them names only the chat, Settings or the rail,
-  this rule covers every other surface as well. A new surface cites this rule instead of restating it. The
-  checks are F3-648's and the home certification's (ATS-075). A chosen option is filled on its own box, never
-  underlined. Debug Console sub-tabs and every segmented toggle use each look's neutral selection fill in
-  Friendly, Glass and Basic, never an accent; Glass adds its 1 px rim on the top edge of the filled box, Retro
-  keeps reverse video and NieR its ink block (F3-490).
+  row, the NieR square cursor, Retro reverse video, never an edge stripe. A status is a mark and a word from the
+  shared F3-658 set consumed by F3-585 and F3-619 through DR-057, and a count is a plain number. How the rule
+  looks, and the list of retired defaults it replaces, are F3-648's: section 3.5's 3 px left-edge accent stripe
+  and F3-039's token, Appendix C's and F3-276's accent left border, F3-469's inset left accent bar, the
+  workgroup pill of section 5.1, and the pill skins of F3-422, F3-463, F3-464 and F3-467. The surface statements
+  that came first stay as instances of this one rule and do not narrow it: the chat's and Settings' stripe ban
+  (APR-034, F3-534), Settings' status tokens (Settings_System section 22), the left rail's rules (DL-162,
+  F3-618, F3-619, DR-057), the decision cards' text statuses (DL-036) and the production icon contract with no
+  emoji (FinalGUISpec section 2.6, F3-417); where one of them names only the chat, Settings or the rail, this
+  rule covers every other surface as well. A new surface cites this rule instead of restating it. The checks are
+  F3-648's and the home certification's (ATS-075). A chosen option is filled on its own box, never underlined.
+  Debug Console sub-tabs and every segmented toggle use each look's neutral selection fill in Friendly, Glass
+  and Basic, never an accent; Glass adds its 1 px rim on the top edge of the filled box, Retro keeps reverse
+  video and NieR its ink block (F3-490).
 gui_related: true
 gui_classification_reason: "Fixes one shell-wide rule against side stripes, emoji and pills."
 split_recommended: false
 depends_on: [DL-184, F3-648, DR-057]
 unblocks: []
 acceptance_criteria:
-  - "No surface in any look or NieR Mode draws a box with a coloured border or stripe on one side, a pill, or an emoji in Puppet Master's chrome; keyboard key caps and a terminal program's own output are the only exceptions."
-  - "Selection is shown by the selected element's own surface, never by an edge stripe."
-  - "The earlier surface statements (APR-034, F3-534, Settings section 22, DL-162, F3-618, F3-619, DR-057, DL-036, F3-417) stay as instances of this rule, and none of them narrows it."
-  - "New surfaces cite this rule instead of restating it."
+- The label-pill detector and side-border detector follow F3-648, with its explicit action-button, key-cap, switch-key,
+  non-label-mark and structural-rail exemptions; no emoji appears in chrome.
+- Selection is shown by the selected element's own surface, never by an edge stripe.
+- The earlier surface statements (APR-034, F3-534, Settings section 22, DL-162, F3-618, F3-619, DR-057, DL-036, F3-417)
+  stay as instances of this rule, and none of them narrows it.
+- New surfaces cite this rule instead of restating it.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -415,8 +422,9 @@ preserved_exact_tokens:
   - "F3-648"
   - "key caps"
 negative_constraints:
-  - "Do not draw a coloured border or stripe on one side of a box, a pill-shaped tab, tag, badge, button or status chip, or an emoji in Puppet Master's chrome."
-  - "Do not restate this rule per surface or carve a surface out of it."
+- Do not draw a coloured border or stripe on one side of a box, a pill-shaped label, tag, suggestion chip or state
+  badge, or an emoji in Puppet Master's chrome.
+- Do not restate this rule per surface or carve a surface out of it.
 stale_retired_dispositions:
 - 'Amended 2026-10-11 (lead ruling 2026-10-11, D29): A chosen option uses its own filled box and never an underline.'
 - 'Amended 2026-10-14: Jared''s 2026-10-11 clarification limits the capsule ban to labels and explicitly allows pill

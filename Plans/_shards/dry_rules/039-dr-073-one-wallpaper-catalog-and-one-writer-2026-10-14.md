@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3981-L4029
+Source lines: L4000-L4048
 
-Source SHA256: `96a4dedb695e637c0c3f1531f685eda8cb179d0944f149f4d8ee0ec6c04d9b79`
+Source SHA256: `cb8a8d7cf94afeb686726cc1a9ceadc55ba9c47034d300d918c898da0d3f1ada`
 
 ---
 

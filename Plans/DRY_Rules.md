@@ -3221,24 +3221,26 @@ status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   The left rail's presentation grammar has exactly one GUI owner, FinalGUISpec F3-618 to F3-622 and F3-625 with
-  F3-472, F3-473 and F3-480, and F3-623's fit rule for the two Source Control strips: the geometry and radii, the shelf tints, the type ladder, the status glyphs and words, plain
-  counts, fitting by layout, the rail dropdown style and the motion of each theme family (DL-162). The panel owner
-  documents (FileManager, Source_Control_System, Jujutsu_Integration, WorktreeGitImprovement, GitHub_Integration
-  and the Forge owners, Containers_Registry_and_Unraid, Automated_Testing_System, Runtime_Artifacts_Panel, and the
-  Run & Debug and Agents units of FinalGUISpec) supply content, state vocabularies and behaviour only, and never
-  restate, fork or restyle that grammar; a chip, pill or badge named by a panel owner is a status or a count drawn
-  through F3-619, the rail's instance of the shell-wide rule against side stripes, emoji and pills (DR-069). Every rail dropdown is the one chat picker primitive with ACD-439's sprout, with no second
-  dropdown style and no native select. The rail's status glyphs (F3-619) and the assistant chat's 13 status marks
-  (F3-585) each have their own owner and neither restates the other; merging them is an open owner question
-  recorded in DL-162.
+  F3-472, F3-473 and F3-480, and F3-623's fit rule for the two Source Control strips: the geometry and radii,
+  the shelf tints, the type ladder, the status glyphs and words, plain counts, fitting by layout, the rail
+  dropdown style and the motion of each theme family (DL-162). The panel owner documents (FileManager,
+  Source_Control_System, Jujutsu_Integration, WorktreeGitImprovement, GitHub_Integration and the Forge owners,
+  Containers_Registry_and_Unraid, Automated_Testing_System, Runtime_Artifacts_Panel, and the Run & Debug and
+  Agents units of FinalGUISpec) supply content, state vocabularies and behaviour only, and never restate, fork
+  or restyle that grammar; a chip, pill or badge named by a panel owner is a status or a count drawn through
+  F3-619, the rail's instance of the shell-wide rule against side stripes, emoji and pills (DR-069). Every rail
+  dropdown is the one chat picker primitive with ACD-439's sprout, with no second dropdown style and no native
+  select. F3-658 now owns the shared glyph vocabulary and fitted inks (D44, DL-201); F3-619 and F3-585 consume
+  it while their domain meanings remain with their owners. DL-162's earlier unification question is settled.
 gui_related: true
 gui_classification_reason: "Fixes one owner for the left rail's presentation grammar."
 split_recommended: false
 depends_on: [DL-162, F3-618, F3-619, F3-620, F3-621, F3-622, F3-625, DL-184]
 unblocks: []
 acceptance_criteria:
-  - "No panel owner document defines its own rail geometry, type size, status capsule, abbreviation rule, dropdown style or motion voice."
-  - "Every rail dropdown is the chat picker primitive."
+- No panel owner document defines its own rail geometry, type size, status capsule, abbreviation rule, dropdown style
+  or motion voice.
+- Every rail dropdown is the chat picker primitive.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -3253,21 +3255,24 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-162"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06"
+- Plans/Decision_Log.md#DL-162
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06
+- /mnt/Cursor/share/puppet-master/2026-10-10-glyph-catalog-addendum/README.md, SHA-256 3d0497f01c878e8aa6f99fa8f602b9b3dbf887aead2a24d62c12969bd47a1d31
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "F3-618"
   - "F3-619"
   - "F3-585"
   - "chat picker primitive"
 negative_constraints:
-  - "Do not restate the rail grammar in a panel owner document."
-  - "Do not add a second dropdown style or a native select to the rail."
+- Do not restate the rail grammar in a panel owner document.
+- Do not add a second dropdown style or a native select to the rail.
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-184): the rail's rule that a chip, pill or badge is drawn as a status or a count is now an instance of the shell-wide DR-069; the rail grammar is unchanged."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-620, ContractName:Plans/FinalGUISpec.md#F3-621, ContractName:Plans/FinalGUISpec.md#F3-622, ContractName:Plans/assistant-chat-design.md#ACD-439, ContractName:Plans/Decision_Log.md#DL-184, ContractName:Plans/DRY_Rules.md#DR-069
@@ -3382,10 +3387,14 @@ split_recommended: false
 depends_on: [F3-465, F3-446, DL-171]
 unblocks: []
 acceptance_criteria:
-  - "Exactly one hover engine and one hover token set exist in PMConcept7; no surface keeps a second engine, its own pointer-move listener or its own hover animation loop."
-  - "Every hover target is a card, row, tile or icon, opted in by class or `data-pmh` and opted out by `data-pmh=\"off\"` or `[data-pm-hover-exempt]`."
-  - "No surface owner restates the hover lift, glow, pointer light or magnet; a different strength is a kind token, not a forked layer."
-  - "Tab strips, resize dividers and editor and terminal text surfaces are never hover targets and show at most a static tint."
+- Exactly one hover engine and one hover token set exist in PMConcept7; no surface keeps a second engine, its own
+  pointer-move listener or its own hover animation loop.
+- Every hover target is a card, row, tile, icon or small control, opted in by class or `data-pmh` and opted out by
+  `data-pmh="off"` or `[data-pm-hover-exempt]`.
+- No surface owner restates the hover lift, glow, pointer light or magnet; a different strength is a kind token, not
+  a forked layer.
+- Tab/header controls use F3-465's small-control marker; editor/terminal text never gets a card magnet, and resize
+  bars consume F3-657.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -3412,8 +3421,10 @@ preserved_exact_tokens:
   - "data-pm-hover-exempt"
   - "card, row, tile and icon"
 negative_constraints:
-  - "Do not restate the hover effect in a surface owner or give a surface its own hover lift, glow, pointer sheen, magnet or animation loop."
-  - "Do not make a tab strip, resize divider or editor or terminal text surface a hover target."
+- Do not restate the hover effect in a surface owner or give a surface its own hover lift, glow, pointer sheen, magnet
+  or animation loop.
+- Do not apply card magnet effects to editor/terminal text or resize bars; controls and dividers use their shared
+  owner grammar.
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
@@ -3684,9 +3695,10 @@ canonical_text: >-
   layer reads the current look from its one store (SSYS-010, DR-056) and keeps no copy. The fields are F3-642's,
   the storage SP-331's (the app default in Settings rows, the project default in the Project's Settings, the
   override inside the terminal tab's saved state) and the Settings rows SSYS-051's; the existing terminal
-  appearance rows, code.terminal.theme and code.terminal.font-family among them, bind the app layer of this
-  model. There is no fifth layer (a shell profile carries no appearance of its own), and no second terminal
-  theme, scheme, font, background or effects store or terminal-local settings key outside the model. Every field
+  appearance rows, code.terminal.theme and code.terminal.font-family among them, bind the Project layer under
+  SSYS-002. The app-default layer is reserved compatibility/default lineage, not an admitted writable app store.
+  There is no fifth layer (a shell profile carries no appearance of its own), and no second terminal theme,
+  scheme, font, background or effects store or terminal-local settings key outside the model. Every field
   applies live, and no terminal appearance setting carries a restart badge. The faces are F3-644's and their
   files DR-050's one set. The effects (F3-643) are paint on the terminal's own screen inside this model, not
   motion voices: DR-043's per-family motion voices and its accent rule stand, so the scheme colours the screen
@@ -3702,11 +3714,15 @@ split_recommended: false
 depends_on: [DL-183]
 unblocks: [F3-642, SSYS-051, SP-331]
 acceptance_criteria:
-  - "The popover, Settings > Terminal and the per-look defaults resolve through one four-layer model field by field, and the popover writes only This terminal or All terminals."
-  - "No terminal theme, font, background or effects value is stored outside SP-331's places, and no shell profile carries an appearance of its own."
-  - "Every terminal appearance field applies live and no terminal setting shows a restart badge."
-  - "Terminal effects stay paint on the terminal's screen; no terminal setting overrides DR-043's motion voices or hard-codes the accent role."
-  - "The editor and terminal read one catalog and use one Appearance popover component; neither has its own scheme list or popover."
+- The popover, Settings > Terminal and the per-look defaults resolve through one four-layer model field by field,
+  and the popover writes only This terminal or All terminals.
+- No terminal theme, font, background or effects value is stored outside SP-331's places, and no shell profile carries
+  an appearance of its own.
+- Every terminal appearance field applies live and no terminal setting shows a restart badge.
+- Terminal effects stay paint on the terminal's screen; no terminal setting overrides DR-043's motion voices or hard-codes
+  the accent role.
+- The editor and terminal read one catalog and use one Customize component (F3-650); neither has its own scheme list
+  or Customize implementation.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -3777,30 +3793,32 @@ canonical_text: >-
   Pill-shaped action buttons, including Install, Sign in and the rounded Friendly and Glass actions, are
   allowed; keyboard key caps and non-label progress marks are not labels. Joined selectors and tabs retain their
   own specified geometry. Selection is shown by the surface itself: the fused tab silhouette, a filled or tinted
-  row, the NieR square cursor, Retro reverse video, never an edge stripe. A status is a mark and a word from its
-  owner's status set (F3-585, DL-141; the left rail's F3-619 through DR-057), and a count is a plain number. How
-  the rule looks, and the list of retired defaults it replaces, are F3-648's: section 3.5's 3 px left-edge
-  accent stripe and F3-039's token, Appendix C's and F3-276's accent left border, F3-469's inset left accent
-  bar, the workgroup pill of section 5.1, and the pill skins of F3-422, F3-463, F3-464 and F3-467. The surface
-  statements that came first stay as instances of this one rule and do not narrow it: the chat's and Settings'
-  stripe ban (APR-034, F3-534), Settings' status tokens (Settings_System section 22), the left rail's rules
-  (DL-162, F3-618, F3-619, DR-057), the decision cards' text statuses (DL-036) and the production icon contract
-  with no emoji (FinalGUISpec section 2.6, F3-417); where one of them names only the chat, Settings or the rail,
-  this rule covers every other surface as well. A new surface cites this rule instead of restating it. The
-  checks are F3-648's and the home certification's (ATS-075). A chosen option is filled on its own box, never
-  underlined. Debug Console sub-tabs and every segmented toggle use each look's neutral selection fill in
-  Friendly, Glass and Basic, never an accent; Glass adds its 1 px rim on the top edge of the filled box, Retro
-  keeps reverse video and NieR its ink block (F3-490).
+  row, the NieR square cursor, Retro reverse video, never an edge stripe. A status is a mark and a word from the
+  shared F3-658 set consumed by F3-585 and F3-619 through DR-057, and a count is a plain number. How the rule
+  looks, and the list of retired defaults it replaces, are F3-648's: section 3.5's 3 px left-edge accent stripe
+  and F3-039's token, Appendix C's and F3-276's accent left border, F3-469's inset left accent bar, the
+  workgroup pill of section 5.1, and the pill skins of F3-422, F3-463, F3-464 and F3-467. The surface statements
+  that came first stay as instances of this one rule and do not narrow it: the chat's and Settings' stripe ban
+  (APR-034, F3-534), Settings' status tokens (Settings_System section 22), the left rail's rules (DL-162,
+  F3-618, F3-619, DR-057), the decision cards' text statuses (DL-036) and the production icon contract with no
+  emoji (FinalGUISpec section 2.6, F3-417); where one of them names only the chat, Settings or the rail, this
+  rule covers every other surface as well. A new surface cites this rule instead of restating it. The checks are
+  F3-648's and the home certification's (ATS-075). A chosen option is filled on its own box, never underlined.
+  Debug Console sub-tabs and every segmented toggle use each look's neutral selection fill in Friendly, Glass
+  and Basic, never an accent; Glass adds its 1 px rim on the top edge of the filled box, Retro keeps reverse
+  video and NieR its ink block (F3-490).
 gui_related: true
 gui_classification_reason: "Fixes one shell-wide rule against side stripes, emoji and pills."
 split_recommended: false
 depends_on: [DL-184, F3-648, DR-057]
 unblocks: []
 acceptance_criteria:
-  - "No surface in any look or NieR Mode draws a box with a coloured border or stripe on one side, a pill, or an emoji in Puppet Master's chrome; keyboard key caps and a terminal program's own output are the only exceptions."
-  - "Selection is shown by the selected element's own surface, never by an edge stripe."
-  - "The earlier surface statements (APR-034, F3-534, Settings section 22, DL-162, F3-618, F3-619, DR-057, DL-036, F3-417) stay as instances of this rule, and none of them narrows it."
-  - "New surfaces cite this rule instead of restating it."
+- The label-pill detector and side-border detector follow F3-648, with its explicit action-button, key-cap, switch-key,
+  non-label-mark and structural-rail exemptions; no emoji appears in chrome.
+- Selection is shown by the selected element's own surface, never by an edge stripe.
+- The earlier surface statements (APR-034, F3-534, Settings section 22, DL-162, F3-618, F3-619, DR-057, DL-036, F3-417)
+  stay as instances of this rule, and none of them narrows it.
+- New surfaces cite this rule instead of restating it.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -3830,8 +3848,9 @@ preserved_exact_tokens:
   - "F3-648"
   - "key caps"
 negative_constraints:
-  - "Do not draw a coloured border or stripe on one side of a box, a pill-shaped tab, tag, badge, button or status chip, or an emoji in Puppet Master's chrome."
-  - "Do not restate this rule per surface or carve a surface out of it."
+- Do not draw a coloured border or stripe on one side of a box, a pill-shaped label, tag, suggestion chip or state
+  badge, or an emoji in Puppet Master's chrome.
+- Do not restate this rule per surface or carve a surface out of it.
 stale_retired_dispositions:
 - 'Amended 2026-10-11 (lead ruling 2026-10-11, D29): A chosen option uses its own filled box and never an underline.'
 - 'Amended 2026-10-14: Jared''s 2026-10-11 clarification limits the capsule ban to labels and explicitly allows pill

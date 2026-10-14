@@ -1,0 +1,233 @@
+{
+  "owner_ref": "Plans/Automated_Testing_System.md#ATS-077",
+  "scope": "Static request/result and registry validation only; native effects remain planned.",
+  "editor_appearance_cases": [
+    {
+      "name": "valid_field_patch",
+      "definition": "request",
+      "valid": true,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.cursor-width": 2
+        }
+      }
+    },
+    {
+      "name": "null_clears_override",
+      "definition": "request",
+      "valid": true,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.cursor-width": null
+        }
+      }
+    },
+    {
+      "name": "token_overlay_and_clear",
+      "definition": "request",
+      "valid": true,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.token-colors": {
+            "look:basic-dark/kw": "#ff00aa",
+            "dracula/com": null
+          }
+        }
+      }
+    },
+    {
+      "name": "unknown_field",
+      "definition": "request",
+      "valid": false,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "run.shell": "rm"
+        }
+      }
+    },
+    {
+      "name": "invalid_token_kind",
+      "definition": "request",
+      "valid": false,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.token-colors": {
+            "dracula/unknown": "#abcdef"
+          }
+        }
+      }
+    },
+    {
+      "name": "invalid_hex",
+      "definition": "request",
+      "valid": false,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.token-colors": {
+            "dracula/kw": "red"
+          }
+        }
+      }
+    },
+    {
+      "name": "below_contrast_floor",
+      "definition": "request",
+      "valid": false,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.min-contrast": "3:1"
+        }
+      }
+    },
+    {
+      "name": "caret_width_out_of_range",
+      "definition": "request",
+      "valid": false,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.cursor-width": 5
+        }
+      }
+    },
+    {
+      "name": "empty_patch",
+      "definition": "request",
+      "valid": false,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {}
+      }
+    },
+    {
+      "name": "malformed_state_hash",
+      "definition": "request",
+      "valid": false,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "old",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.cursor-width": 2
+        }
+      }
+    },
+    {
+      "name": "unexpected_key",
+      "definition": "request",
+      "valid": false,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.cursor-width": 2
+        },
+        "shell_input": "x"
+      }
+    },
+    {
+      "name": "applied_readback",
+      "definition": "result",
+      "valid": true,
+      "value": {
+        "command_id": "cmd.editor.appearance.set",
+        "correlation_id": "c-1",
+        "panel_tab_id": "file:sample.rs",
+        "status": "applied",
+        "reason": null,
+        "state_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "readback_verified": true
+      }
+    },
+    {
+      "name": "false_success_without_readback",
+      "definition": "result",
+      "valid": false,
+      "value": {
+        "command_id": "cmd.editor.appearance.set",
+        "correlation_id": "c-1",
+        "panel_tab_id": "file:sample.rs",
+        "status": "applied",
+        "reason": null,
+        "state_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "readback_verified": false
+      }
+    },
+    {
+      "name": "no_project_refusal",
+      "definition": "result",
+      "valid": true,
+      "value": {
+        "command_id": "cmd.editor.appearance.set",
+        "correlation_id": "c-1",
+        "panel_tab_id": "file:sample.rs",
+        "status": "refused",
+        "reason": "no_project_context",
+        "state_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "readback_verified": false
+      }
+    },
+    {
+      "name": "failed_without_reason",
+      "definition": "result",
+      "valid": false,
+      "value": {
+        "command_id": "cmd.editor.appearance.set",
+        "correlation_id": "c-1",
+        "panel_tab_id": "file:sample.rs",
+        "status": "failed",
+        "reason": null,
+        "state_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "readback_verified": true
+      }
+    }
+  ]
+}

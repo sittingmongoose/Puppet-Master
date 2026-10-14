@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32816-L33580
+Source lines: L32827-L33597
 
-Source SHA256: `2fbb46a82dc48c06df2698570d86fea36430c555501760e0328853d3170e9f49`
+Source SHA256: `ad093afce0ca7418862e8c4d9bfd4fbb8d1081f379037deb47635caf0ea41254`
 
 ---
 
@@ -42,11 +42,17 @@ split_recommended: false
 depends_on: [F3-453]
 unblocks: []
 acceptance_criteria:
-- "The title bar renders the rightward notification stack and count badge between the title-bar page tabs and the title-bar search, exactly centred in that gap (|center(stack) - midpoint(pageTabs.right, search.left)| <= 2 px, including stacked-width animation and page-tab overflow modes), and no other in-app surface offers a standing notification affordance."
-- "Ephemeral toasts stage beneath the stack per the F3-447 contract and never join the stack or leave an alert store entry."
-- "Durable notifications join the collapsed stack with a join animation, and the count badge renders the unread count from the shared alert store."
-- "Glass renders the collapsed-stack left mask as a mild peek from rgba(0,0,0,.72) to solid by 4%, retro renders a hard offset shadow, and friendly renders free-floating cozy solid cards above page content."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The title bar renders the rightward notification stack and count badge between the title-bar page tabs and the title-bar
+  search, exactly centred in that gap (|center(stack) - midpoint(pageTabs.right, search.left)| <= 2 px, including
+  stacked-width animation and page-tab overflow modes), and no other in-app surface offers a standing notification
+  affordance.
+- Ephemeral toasts stage beneath the stack per the F3-447 contract and never join the stack or leave an alert store
+  entry.
+- Durable notifications join the collapsed stack with a join animation, and the count badge renders the unread count
+  from the shared alert store.
+- Each look follows this unit's material; Friendly cards float on the dotted tray, Glass uses F3-652's readable menu
+  material at publication, and Reduced Motion removes spatial/typing effects.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -63,7 +69,7 @@ source_lineage:
 - Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)
 - /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
   (approved campaign source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
   (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
 - "count badge"

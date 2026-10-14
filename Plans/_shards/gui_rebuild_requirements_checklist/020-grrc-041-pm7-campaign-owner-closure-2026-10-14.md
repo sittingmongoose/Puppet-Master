@@ -4,7 +4,7 @@ Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
 Source lines: L2216-L2263
 
-Source SHA256: `c10a48c229b34c7173ae685a24e480acda7a703b9068d896cf5e1bdff256bc1e`
+Source SHA256: `43936fa76f55a2a4a9d8c70f4c5e110dd0829dfca4b292a62aaaf67e4534e905`
 
 ---
 
@@ -44,7 +44,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 e23b8e4d5d0dbbf7d37d025e17f71e3734fbfafc55346184228b20696c540336
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
   (approved campaign source lineage; not native implementation evidence)
 - Plans/Automated_Testing_System.md#ATS-077
 - Plans/UI_Wiring_Rules.md#UIW-043

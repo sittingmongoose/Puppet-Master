@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L7885-L7949
+Source lines: L7885-L7950
 
-Source SHA256: `b51d9c8b5cdff090bdb8936df888e4971452b899d079c5ba7b0a3c1c39f3457b`
+Source SHA256: `afcfab735014b7e0134b33b6de0bc6655e93e2ab53885273798970f3aac36234`
 
 ---
 
@@ -26,15 +26,15 @@ canonical_text: >-
   try_sample are typed local actions, parameterized by editor/terminal and target tab where available;
   Indentation opens the same editor screen at its indentation group. Scope selection is saved tab view state
   only when invoked from that tab; Settings' All entry is temporary. ui.notifications.open, close, expand_group,
-  mark_visible_read and dismiss_toast operate the one shared inbox's presentation/read projection and never
-  resolve its source. Mark_visible_read names only notices actually shown for the F3-453 dwell. No catalog row,
-  dispatcher receipt or domain event belongs to these ui.* ids. Picker/menu openings, hover, keyboard gallery
-  navigation before selection, change-meter display, drag previews, glow and timer suspension dispatch nothing
-  and write nothing. Choosing a background file returns a validated owner asset reference then uses the selected
-  scope's writer; importing a scheme uses the existing import command. Sample cursor/caret, bell, typing,
-  problem and Step back trials affect only isolated sample state. Committed quick sets, reset, fields and token
-  edits always use UCC-204's writers, never a view-local bypass. The production/exclusion census is
-  WM-093/UIW-043 and Plans/pm7_control_bindings.json.
+  mark_visible_read, dismiss_toast and explain_state operate the one shared inbox's presentation/read projection
+  and never resolve its source. Mark_visible_read names only notices actually shown for the F3-453 dwell. No
+  catalog row, dispatcher receipt or domain event belongs to these ui.* ids. Picker/menu openings, hover,
+  keyboard gallery navigation before selection, change-meter display, drag previews, glow and timer suspension
+  dispatch nothing and write nothing. Choosing a background file returns a validated owner asset reference then
+  uses the selected scope's writer; importing a scheme uses the existing import command. Sample cursor/caret,
+  bell, typing, problem and Step back trials affect only isolated sample state. Committed quick sets, reset,
+  fields and token edits always use UCC-204's writers, never a view-local bypass. The production/exclusion
+  census is WM-093/UIW-043 and Plans/pm7_control_bindings.json.
 gui_related: true
 gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
 split_recommended: false
@@ -70,6 +70,7 @@ preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
 - Plans/Commands_System.md
+
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-204, ContractName:Plans/UI_Wiring_Rules.md#UIW-043, ContractName:Plans/Wiring_Matrix.md#WM-093

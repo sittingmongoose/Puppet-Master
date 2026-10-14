@@ -3157,7 +3157,7 @@ SSYS-051's thirty-six, all scope `global` and `project` (applicability metadata;
 | Id | Label | Type and choices | Default |
 |---|---|---|---|
 | `code.terminal.scheme-pair` | Switch With Light and Dark | toggle | on |
-| `code.terminal.min-contrast` | Minimum Text Contrast | select: Off, 3:1, 4.5:1, 7:1 | 4.5:1 |
+| `code.terminal.min-contrast` | Minimum Text Contrast | select: 4.5:1, 7:1 | 4.5:1 |
 | `code.terminal.import-scheme` | Import a Color Scheme | action (`cmd.terminal.appearance.import_scheme`, UCC-201) | none |
 | `code.terminal.font-weight` | Terminal Text Weight | number | 400 |
 | `code.terminal.line-height` | Terminal Line Spacing | slider | Font default |
@@ -3434,18 +3434,31 @@ split_recommended: false
 depends_on: [DL-181, DL-182, DL-183, DL-187, DR-068, SSYS-002, SSYS-009, SSYS-028, SSYS-040, SSYS-050]
 unblocks: [F3-120, F3-121, F3-642, SP-331]
 acceptance_criteria:
-  - "Every field of F3-642 has exactly one inventory row, each with the default listed here, scope global and project, and no terminal row carries a restart badge."
-  - "Changing a row changes every open terminal at once unless that terminal's own override sets the field, and a field left at Follow look, Font default or no default falls through to the look's default."
-  - "Settings and the enabled popover's All terminals write the project default through the same Settings transaction over its exact id; only the popover's This terminal writes a tab override, and Settings never does."
-  - "The popover's All terminals is enabled, writes the SSYS-051 project default through the same Settings transaction Settings uses and changes every terminal while this Project is open; its hover tag says in this project, and no surface writes an app-wide value until q-035 admits one."
-  - "Terminal Colors offers Follow look and the shared catalog of F3-642 plus imported ones; Terminal Font offers Follow look, the six built-in faces and System monospace; Minimum Text Contrast offers Off, 3:1, 4.5:1 and 7:1."
-  - "Each detail row shows only while the row it depends on applies, keeps its stored value while hidden, and Terminal Opacity (Glass) shows only under a Glass theme."
-  - "With any row set, effects stay in the focused terminal and every moving part stops under Reduce Animations and on battery saver."
-  - "Settings shows the terminal rows under SSYS-040's groups and Terminal look: more options, with no row for degauss or the Text size zoom."
-  - "code.terminal.search is retired by SSYS-050: find is always present (F3-641), the row renders nowhere and nothing reads its stored value."
-  - "Saved Terminal Output offers Keep Saved Scrollback (the default) and Session Only; with the default a restored or reopened terminal shows its saved scrollback by SP-332's rule, and no choice keeps it longer than SP-332 allows."
-  - "Settings > Terminal and Settings > Editor bind the same catalog, with each scheme choice defaulting to Follow look."
-  - "No Settings row exists for the saved-scrollback secret scrub, the 512 MiB total, a terminal's notification mute, the notification rate or a terminal tab's colour or icon; Saved Terminal Output's description names the scrub and the 512 MiB total, and Allowed Shell Profiles' names the SSH hosts submenu."
+- Every field of F3-642 has exactly one inventory row, each with the default listed here, scope global and project,
+  and no terminal row carries a restart badge.
+- Changing a row changes every open terminal at once unless that terminal's own override sets the field, and a field
+  left at Follow look, Font default or no default falls through to the look's default.
+- Settings and the enabled popover's All terminals write the project default through the same Settings transaction
+  over its exact id; only the popover's This terminal writes a tab override, and Settings never does.
+- The popover's All terminals is enabled, writes the SSYS-051 project default through the same Settings transaction
+  Settings uses and changes every terminal while this Project is open; its hover tag says in this project, and no
+  surface writes an app-wide value until q-035 admits one.
+- Terminal Colors offers Follow look and the shared catalog of F3-642 plus imported ones; Terminal Font offers Follow
+  look, the six built-in faces and System monospace; Minimum Text Contrast offers 4.5:1 and 7:1.
+- Each detail row shows only while the row it depends on applies, keeps its stored value while hidden, and Terminal
+  Opacity (Glass) shows only under a Glass theme.
+- With any row set, effects stay in the focused terminal and every moving part stops under Reduce Animations and on
+  battery saver.
+- 'Settings shows the terminal rows under SSYS-040''s groups and Terminal look: more options, with no row for degauss
+  or the Text size zoom.'
+- 'code.terminal.search is retired by SSYS-050: find is always present (F3-641), the row renders nowhere and nothing
+  reads its stored value.'
+- Saved Terminal Output offers Keep Saved Scrollback (the default) and Session Only; with the default a restored or
+  reopened terminal shows its saved scrollback by SP-332's rule, and no choice keeps it longer than SP-332 allows.
+- Settings > Terminal and Settings > Editor bind the same catalog, with each scheme choice defaulting to Follow look.
+- No Settings row exists for the saved-scrollback secret scrub, the 512 MiB total, a terminal's notification mute,
+  the notification rate or a terminal tab's colour or icon; Saved Terminal Output's description names the scrub and
+  the 512 MiB total, and Allowed Shell Profiles' names the SSH hosts submenu.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -3546,8 +3559,9 @@ canonical_text: >-
   Editor Colors binds the shared catalog ids with names as labels and reads earlier saved names compatibly. Row
   bounds include caret width 1–4, sticky lines 1–5, face-dependent weights from F3-644, tab size 2/4/8 and
   min-contrast 4.5:1 or 7:1. SSYS-050's tab caps retain editor-only versus every-kind meanings at both open and
-  restore; pinned/unsaved protections are unchanged. Retired rows remain absent everywhere. Project Toolchain
-  formatter flags persist through their existing owner projection, never a concept-local fallback.
+  restore; pinned/unsaved protections are unchanged. Retired rows remain absent everywhere. Toolchain manager
+  configuration remains Project-bound under SSYS-002 and the Formatters_System FS-010 owner; the packet's
+  fixture-only formatter projection repair adds no inventory id, local store or command.
 gui_related: true
 gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
 split_recommended: false
@@ -3584,6 +3598,7 @@ preserved_exact_tokens:
 negative_constraints: []
 owner_hints:
 - Plans/Settings_System.md
+
 ```
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Settings_System.md#SSYS-050, ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/FinalGUISpec.md#F3-651
@@ -3650,7 +3665,7 @@ node_compile_hint:
 source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-13-perf-fixes/M4-DESIGN-DECISION.md, SHA-256 df7fa857254291a428bc6d9ef6411e1b586beee52aec8a11557ece98ee257df0
   (approved campaign source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
   (approved campaign source lineage; not native implementation evidence)
 - Plans/Settings_System.md#SSYS-009
 - Plans/Settings_System.md#SSYS-010
@@ -3707,7 +3722,7 @@ node_compile_hint:
 source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
   (approved campaign source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
   (approved campaign source lineage; not native implementation evidence)
 - Plans/Settings_System.md#SSYS-010
 - Plans/FinalGUISpec.md#F3-653

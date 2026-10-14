@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "schema_id": "pm.wiring_matrix.v0",
   "response_contract_ref": "Plans/ui_command_response.schema.json",
-  "generated_at": "2026-09-03T00:00:00Z",
+  "generated_at": "2026-10-14T18:30:00Z",
   "entries": {
     "assistant.chat.restore_point.create": {
       "ui_element_id": "assistant.chat.restore_point.create",
@@ -7514,7 +7514,7 @@
     },
     "catalog.alert_dismiss": {
       "ui_element_id": "catalog.alert_dismiss",
-      "ui_location": "Attention Center > Alerts > Dismiss",
+      "ui_location": "Attention Center > Alerts > Dismiss; shared inbox X/Delete and Clear all composition (UCC-204); never toast close/swipe",
       "ui_command_id": "cmd.alert.dismiss",
       "handler_location": "handlers::alert::dismiss",
       "expected_event_types": [
@@ -7525,7 +7525,8 @@
         "cmd.alert.dismiss exposes state selector and disabled reason before dispatch.",
         "cmd.alert.dismiss dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
         "cmd.alert.dismiss uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
-        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification.",
+        "Clear all uses captured eligible ids/revisions and preserves later arrivals and per-item refusals; dismissal never resolves the source condition. Toast close/swipe is local staging only."
       ],
       "evidence_required": "Production wiring contract for cmd.alert.dismiss. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.alert_dismiss.availability",
@@ -55956,7 +55957,7 @@
     },
     "catalog.settings_transaction_apply": {
       "ui_element_id": "catalog.settings_transaction_apply",
-      "ui_location": "Settings K3 workspace > confirmed current transaction preview; Project-owner commit chain applying the SSYS-036 explicitly selected settings copy after Project commit; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153); Usage page > Accounts room > provider plate Auto-switch toggle and switch-level stepper and menu (its Shared setting choice sends inherit), and the same controls on the Accounts hero cells and the Overview headroom card, at scope provider (SSYS-044, MA-073); Usage page > Accounts room > each account's switch-level button and menu on its account card (its Follow choice sends inherit) and the Switch at N% used action in that account's Details, at scope account with the account id (SSYS-044, D43 2026-10-10)",
+      "ui_location": "Settings K3 workspace > confirmed current transaction preview; Project-owner commit chain applying the SSYS-036 explicitly selected settings copy after Project commit; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153); Usage page > Accounts room > provider plate Auto-switch toggle and switch-level stepper and menu (its Shared setting choice sends inherit), and the same controls on the Accounts hero cells and the Overview headroom card, at scope provider (SSYS-044, MA-073); Usage page > Accounts room > each account's switch-level button and menu on its account card (its Follow choice sends inherit) and the Switch at N% used action in that account's Details, at scope account with the account id (SSYS-044, D43 2026-10-10); both Customize screens All scope and all exact Settings ids in Plans/pm7_control_bindings.json, including Wallpaper",
       "ui_command_id": "cmd.settings.transaction.apply",
       "handler_location": "handlers::settings::transaction_apply",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request",
@@ -55968,7 +55969,8 @@
         "Return refused, failed, or rollback_required truthfully and never infer success from acknowledgement",
         "Onboarding-selected copy can apply only after SSYS-036 rebind to the actual committed Project and current preview/permission/CAS. It cannot apply an uncreated draft, broaden selected settings, copy secrets or treat command acknowledgement as completion.",
         "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041).",
-        "One Home producer composes cmd.settings.transaction.preview then cmd.settings.transaction.apply: the terminal Appearance popover's fields with All terminals selected (SSYS-051). It has no row of its own (WM-091). (amended 2026-10-10, DL-187: Keep the chat open in narrow windows is ui.chat_column.keep_open, not a Settings write; it read: Two Home producers compose cmd.settings.transaction.preview then cmd.settings.transaction.apply: the title bar Home options menu's Keep the chat open in narrow windows (SSYS-050) and the terminal Appearance popover's fields with All terminals selected (SSYS-051). Neither has a row of its own (WM-090, WM-091).)"
+        "WM-093/pm7_control_bindings.json enumerates every PM7 Settings producer and exact id; preview/apply is the only Project writer, rejects no_project_context, validates catalog wallpaper ids, and keeps the reader anchored under SSYS-053.",
+        "Project reset/look own uses restore_defaults for the exact affected ids; tab overrides remain above the Project result and are disclosed."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, sole-owner routing, CAS/race, idempotent replay, restart, readback, partial-failure, and rollback fixtures are required before certification.",
       "state_selector": "state.commands.settings_transaction_apply.availability",
@@ -56024,7 +56026,7 @@
     },
     "catalog.settings_transaction_preview": {
       "ui_element_id": "catalog.settings_transaction_preview",
-      "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153); Usage page > Accounts room > provider plate Auto-switch toggle and switch-level stepper and menu (its Shared setting choice sends inherit), and the same controls on the Accounts hero cells and the Overview headroom card, at scope provider (SSYS-044, MA-073); Usage page > Accounts room > each account's switch-level button and menu on its account card (its Follow choice sends inherit) and the Switch at N% used action in that account's Details, at scope account with the account id (SSYS-044, D43 2026-10-10)",
+      "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153); Usage page > Accounts room > provider plate Auto-switch toggle and switch-level stepper and menu (its Shared setting choice sends inherit), and the same controls on the Accounts hero cells and the Overview headroom card, at scope provider (SSYS-044, MA-073); Usage page > Accounts room > each account's switch-level button and menu on its account card (its Follow choice sends inherit) and the Switch at N% used action in that account's Details, at scope account with the account id (SSYS-044, D43 2026-10-10); both Customize screens All scope and all exact Settings ids in Plans/pm7_control_bindings.json, including Wallpaper",
       "ui_command_id": "cmd.settings.transaction.preview",
       "handler_location": "handlers::settings::transaction_preview",
       "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request",
@@ -56036,7 +56038,8 @@
         "Return rollback eligibility and migration/readback requirements without claiming a handler ran",
         "Validate the SSYS-036 draft-preview request/result variants without a destination Project, exact current source/draft/explicit setting choices and excluded secrets/local state. Postcommit rebind verifies the actual Project and exact preview/hash, recomputes preview under current ownership/permission, then requires ordinary apply; no precommit write.",
         "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041).",
-        "One Home producer composes cmd.settings.transaction.preview then cmd.settings.transaction.apply: the terminal Appearance popover's fields with All terminals selected (SSYS-051). It has no row of its own (WM-091). (amended 2026-10-10, DL-187: Keep the chat open in narrow windows is ui.chat_column.keep_open, not a Settings write; it read: Two Home producers compose cmd.settings.transaction.preview then cmd.settings.transaction.apply: the title bar Home options menu's Keep the chat open in narrow windows (SSYS-050) and the terminal Appearance popover's fields with All terminals selected (SSYS-051). Neither has a row of its own (WM-090, WM-091).)"
+        "WM-093/pm7_control_bindings.json enumerates every PM7 Settings producer and exact id; preview/apply is the only Project writer, rejects no_project_context, validates catalog wallpaper ids, and keeps the reader anchored under SSYS-053.",
+        "Project reset/look own uses restore_defaults for the exact affected ids; tab overrides remain above the Project result and are disclosed."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, owner-resolution, permission, stale-CAS, and no-write fixtures are required before production certification.",
       "state_selector": "state.commands.settings_transaction_preview.availability",
@@ -73498,7 +73501,7 @@
     },
     "terminal.appearance.field": {
       "ui_element_id": "terminal.appearance.field",
-      "ui_location": "Home > a terminal tab > More > Appearance... popover with This terminal selected > any field (scheme, font, size, weight, line height, letter spacing, ligatures, cursor, background, padding, minimum contrast, effects)",
+      "ui_location": "Terminal More > Customize > This terminal > each field/reset/quick set in Plans/pm7_control_bindings.json",
       "ui_command_id": "cmd.terminal.appearance.set",
       "handler_location": "handlers::terminal::appearance_set",
       "expected_event_types": [],
@@ -73510,7 +73513,8 @@
         "Hovering a scheme is a live preview that Escape reverts and dispatches nothing; the This terminal and All terminals switch, the scheme search, the background image picker and Close are view-local.",
         "With All terminals selected the same fields compose cmd.settings.transaction.preview then cmd.settings.transaction.apply over SSYS-051's rows and never this command; only the Settings transaction writes the project layer.",
         "Opening the menu or row that holds this control dispatches nothing; a refused dispatch changes nothing.",
-        "terminal.appearance.field emits no event and no workspace.layout_changed."
+        "terminal.appearance.field emits no event and no workspace.layout_changed.",
+        "The full F3-650 Customize screen replaces the old compact popover; all controls/scopes/trials are enumerated by WM-093."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-642. Registration: Plans/UI_Command_Catalog.md#UCC-201. Wiring: Plans/Wiring_Matrix.md#WM-091; census: Plans/UI_Wiring_Rules.md#UIW-042. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-076).",
       "state_selector": "state.terminal_tab.terminal_appearance_field.availability",
@@ -75862,6 +75866,64 @@
       "event_test_requirements": [
         "Assert cmd.chat.queue.send_now emits chat.message.submitted with delivery_mode steer, command_id, origin, correlation_id, and handler target, and emits no stop event."
       ]
+    },
+    "editor.appearance.field": {
+      "ui_element_id": "editor.appearance.field",
+      "ui_location": "Editor More > Customize > This editor: each field, quick set, reset and token-color control in pm7_control_bindings.json",
+      "ui_command_id": "cmd.editor.appearance.set",
+      "handler_location": "handlers::editor::appearance_set",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "Each This editor census row dispatches once through the strict typed payload; invalid/stale/no-Project/permission/bounds cases preserve prior state.",
+        "Per-token overlay/reset and sparse field clear fall through without overwriting unrelated entries.",
+        "Reset/quick sets are one atomic patch. All editors uses the Settings transaction pair instead.",
+        "No file, session, layout revision or workspace.layout_changed is changed; receipt is applied only after saved-state readback.",
+        "Sample/hover/scope/close never dispatch this command."
+      ],
+      "evidence_required": "handler_status: planned. UCC-204, CS-102, WM-093 and ATS-077 require native dispatcher, guarded state/readback, token patch/reset, idempotency, no-Project, bounds and accessibility fixtures. Static declarations are not runtime certification.",
+      "state_selector": "state.editor_tab.appearance.availability",
+      "disabled_reason_projection": "state.editor_tab.appearance.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "Nonstructural editor-tab appearance receipt (UCC-204/SP-333); no domain event, layout revision advance, buffer edit or session creation.",
+        "receipt_or_event_refs": [
+          "cmd.editor.appearance.set.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "Labelled form fields and token-color controls in Customize",
+        "keyboard_access": "Keyboard-reachable More and Settings entries; Tab among controls; numeric/text equivalents to color dragging; Escape cancels preview and returns focus",
+        "focus_management": "editor.appearance.field keeps focus where its owner contract says after an applied, no-change, failed or cancelled result; an agent's open never takes focus.",
+        "disabled_announcement": "editor.appearance.field announces state.editor_tab.appearance.disabled_reason and dispatches zero commands when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.editor.appearance.field.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "The visible editor.appearance.field control dispatches cmd.editor.appearance.set exactly once with the typed payload and the handler handlers::editor::appearance_set."
+        },
+        {
+          "test_id": "wiring.editor.appearance.field.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.editor_tab.appearance.availability and the disabled copy reads state.editor_tab.appearance.disabled_reason; a disabled control dispatches nothing."
+        },
+        {
+          "test_id": "wiring.editor.appearance.field.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "Assert the exact effect delta for editor.appearance.field: a dispatch receipt and no event."
+        },
+        {
+          "test_id": "wiring.editor.appearance.field.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "The rendered editor.appearance.field control has its accessible name and state, is reachable by keyboard (Customize is reached from More or Settings; Tab moves between fields, Escape reverts a preview and closes) and returns focus as its owner says."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.editor.appearance.set preserves command_id and correlation_id and records its dispatch receipt.",
+        "Assert editor.appearance.field records a dispatch receipt only, with no workspace.layout_changed and no other event."
+      ],
+      "request_schema_ref": "Plans/editor_appearance.schema.json#/$defs/request",
+      "result_schema_ref": "Plans/editor_appearance.schema.json#/$defs/result"
     }
   }
 }

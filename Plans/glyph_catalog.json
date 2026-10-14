@@ -1,0 +1,1979 @@
+{
+  "schema_id": "pm.glyph_catalog.v1",
+  "owner_ref": "Plans/FinalGUISpec.md#F3-658",
+  "approval": "D44 / GLY-0 through GLY-3; GLY-4 excluded",
+  "status_marks": [
+    {
+      "key": "waiting",
+      "glyph_id": "st-waiting",
+      "meaning": "Needs you: a question, a permission, a sign-in, a choice. Leads every list.",
+      "tone": "attention",
+      "surface_words": {
+        "chat": [
+          "awaiting"
+        ],
+        "panels": [
+          "needs"
+        ],
+        "settings": [
+          "adjudication",
+          "needs-sign-in(remote-link)"
+        ],
+        "terminal": [
+          "attention",
+          "bell",
+          "notification",
+          "permission",
+          "permission ask",
+          "secret",
+          "secret prompt",
+          "waiting"
+        ],
+        "usage": [
+          "needs-seat"
+        ]
+      }
+    },
+    {
+      "key": "blocked",
+      "glyph_id": "st-blocked",
+      "meaning": "Cannot go on until something outside it changes (stalled, locked, no access).",
+      "tone": "blocked",
+      "surface_words": {
+        "chat": [
+          "blocked"
+        ],
+        "orchestrator": [
+          "blocked"
+        ],
+        "panels": [
+          "blocked",
+          "locked",
+          "no access",
+          "stalled"
+        ],
+        "rail": [
+          "blocked",
+          "immutable"
+        ],
+        "settings": [
+          "blocked",
+          "locked"
+        ],
+        "wizard": [
+          "blocked"
+        ]
+      }
+    },
+    {
+      "key": "failed",
+      "glyph_id": "st-failed",
+      "meaning": "Ended in an error. A ring with a cross (GLY-1); the triangle is warning's.",
+      "tone": "blocked",
+      "surface_words": {
+        "chat": [
+          "failed"
+        ],
+        "chrome": [
+          "critical"
+        ],
+        "home": [
+          "is-fail"
+        ],
+        "panels": [
+          "bad",
+          "bad tone",
+          "error",
+          "error line",
+          "fail",
+          "failed",
+          "needs retry",
+          "tool-error"
+        ],
+        "projects": [
+          "error"
+        ],
+        "rail": [
+          "fail"
+        ],
+        "settings": [
+          "error",
+          "failed"
+        ],
+        "terminal": [
+          "error",
+          "exit n",
+          "fail",
+          "failed",
+          "invalid pattern",
+          "markfail"
+        ],
+        "toast": [
+          "error"
+        ],
+        "usage": [
+          "exhausted"
+        ]
+      }
+    },
+    {
+      "key": "warning",
+      "glyph_id": "st-warning",
+      "meaning": "Something needs care, but nothing has failed: degraded, low quota, setup incomplete. The triangle (GLY-1).",
+      "tone": "attention",
+      "surface_words": {
+        "chat": [
+          "degraded"
+        ],
+        "chrome": [
+          "needs-setup",
+          "warning"
+        ],
+        "projects": [
+          "attn"
+        ],
+        "settings": [
+          "attention",
+          "needs attention",
+          "needs sign-in",
+          "needs-attention",
+          "needs-setup",
+          "needs-sign-in",
+          "needs-signin",
+          "problem",
+          "restart",
+          "setup"
+        ],
+        "statusbar": [
+          "attention"
+        ],
+        "toast": [
+          "warn",
+          "warn/info"
+        ],
+        "usage": [
+          "signed-out"
+        ],
+        "wizard": [
+          "impacted",
+          "pack-warn"
+        ]
+      }
+    },
+    {
+      "key": "offline",
+      "glyph_id": "st-offline",
+      "meaning": "A service, provider or machine that should answer cannot be reached.",
+      "tone": "attention",
+      "surface_words": {
+        "chrome": [
+          "disconnected"
+        ],
+        "settings": [
+          "offline",
+          "unavailable"
+        ]
+      }
+    },
+    {
+      "key": "recovering",
+      "glyph_id": "st-recovering",
+      "meaning": "Retrying or taking a fallback route on its own.",
+      "tone": "attention",
+      "surface_words": {
+        "panels": [
+          "fallback route",
+          "rendering",
+          "retrying",
+          "route-change"
+        ],
+        "usage": [
+          "cooldown"
+        ],
+        "wizard": [
+          "reopened"
+        ]
+      }
+    },
+    {
+      "key": "reviewing",
+      "glyph_id": "st-reviewing",
+      "meaning": "Checking or verifying work.",
+      "tone": "working",
+      "surface_words": {
+        "chrome": [
+          "validating"
+        ],
+        "settings": [
+          "checking",
+          "testing"
+        ],
+        "wizard": [
+          "auditing"
+        ]
+      }
+    },
+    {
+      "key": "working",
+      "glyph_id": "st-working",
+      "meaning": "Running now.",
+      "tone": "working",
+      "surface_words": {
+        "chat": [
+          "running",
+          "working"
+        ],
+        "home": [
+          "is-run"
+        ],
+        "orchestrator": [
+          "compiling",
+          "live-run",
+          "planning",
+          "running"
+        ],
+        "panels": [
+          "agent-driven",
+          "busy",
+          "loading",
+          "reading",
+          "rendering",
+          "running",
+          "working"
+        ],
+        "projects": [
+          "running"
+        ],
+        "rail": [
+          "live",
+          "run"
+        ],
+        "settings": [
+          "active",
+          "in use",
+          "running"
+        ],
+        "statusbar": [
+          "running"
+        ],
+        "terminal": [
+          "driving",
+          "indeterminate",
+          "progress",
+          "running",
+          "running command",
+          "value"
+        ],
+        "usage": [
+          "active",
+          "on"
+        ],
+        "wizard": [
+          "active",
+          "interviewing",
+          "ledger_syncing"
+        ]
+      }
+    },
+    {
+      "key": "waiting-dep",
+      "glyph_id": "st-waiting-dep",
+      "meaning": "Waiting on something else to finish first (a dependency or a build window).",
+      "tone": "attention",
+      "surface_words": {
+        "panels": [
+          "wait",
+          "waiting"
+        ]
+      }
+    },
+    {
+      "key": "pending",
+      "glyph_id": "st-pending",
+      "meaning": "Queued or next; it will start on its own.",
+      "tone": "idle",
+      "surface_words": {
+        "chat": [
+          "queued"
+        ],
+        "home": [
+          "is-queue"
+        ],
+        "onboarding": [
+          "next/todo"
+        ],
+        "orchestrator": [
+          "pending-launch"
+        ],
+        "panels": [
+          "attention",
+          "next",
+          "queued",
+          "unverified"
+        ],
+        "rail": [
+          "pending",
+          "unknown"
+        ],
+        "usage": [
+          "unknown"
+        ]
+      }
+    },
+    {
+      "key": "mixed",
+      "glyph_id": "st-mixed",
+      "meaning": "Partly done, partly not (some checks passed, some failed).",
+      "tone": "attention",
+      "surface_words": {
+        "chat": [
+          "wt-dirty"
+        ],
+        "rail": [
+          "dirty",
+          "warn"
+        ]
+      }
+    },
+    {
+      "key": "complete",
+      "glyph_id": "st-complete",
+      "meaning": "Finished successfully.",
+      "tone": "done",
+      "surface_words": {
+        "chat": [
+          "complete",
+          "completed",
+          "wt-clean"
+        ],
+        "chrome": [
+          "healthy",
+          "logged-in"
+        ],
+        "home": [
+          "is-done"
+        ],
+        "onboarding": [
+          "done"
+        ],
+        "orchestrator": [
+          "complete"
+        ],
+        "panels": [
+          "complete",
+          "done",
+          "ok",
+          "ok line",
+          "pass",
+          "verified",
+          "yes"
+        ],
+        "projects": [
+          "healthy"
+        ],
+        "rail": [
+          "ok"
+        ],
+        "settings": [
+          "ok"
+        ],
+        "statusbar": [
+          "complete",
+          "dot-ok"
+        ],
+        "terminal": [
+          "exit 0",
+          "long command done",
+          "markok",
+          "ok"
+        ],
+        "toast": [
+          "success"
+        ],
+        "tour": [
+          "pip-done",
+          "tick-done"
+        ],
+        "wizard": [
+          "approved-ok"
+        ]
+      }
+    },
+    {
+      "key": "paused",
+      "glyph_id": "st-paused",
+      "meaning": "Stopped on purpose; it can resume.",
+      "tone": "paused",
+      "surface_words": {
+        "orchestrator": [
+          "paused"
+        ],
+        "panels": [
+          "paused",
+          "waiting"
+        ],
+        "projects": [
+          "paused"
+        ],
+        "settings": [
+          "paused"
+        ],
+        "terminal": [
+          "paused"
+        ],
+        "usage": [
+          "paused",
+          "standby"
+        ]
+      }
+    },
+    {
+      "key": "skipped",
+      "glyph_id": "st-skipped",
+      "meaning": "Will not run: cancelled, expired, stale or set aside.",
+      "tone": "idle",
+      "surface_words": {
+        "chat": [
+          "cancelled"
+        ],
+        "chrome": [
+          "auth-expired"
+        ],
+        "panels": [
+          "out of date",
+          "set aside",
+          "stale"
+        ],
+        "projects": [
+          "archived",
+          "stale"
+        ],
+        "rail": [
+          "orphan",
+          "stale",
+          "stash"
+        ],
+        "terminal": [
+          "interrupted"
+        ]
+      }
+    },
+    {
+      "key": "off",
+      "glyph_id": "st-off",
+      "meaning": "Not set up, disabled or not installed: nothing is running and nothing is wrong. Drawn as the power symbol; a barred ring reads as no entry (blocked).",
+      "tone": "paused",
+      "surface_words": {
+        "settings": [
+          "disabled",
+          "not installed",
+          "not set up",
+          "not connected",
+          "off"
+        ]
+      }
+    },
+    {
+      "key": "idle",
+      "glyph_id": "st-idle",
+      "meaning": "Ready; nothing is happening.",
+      "tone": "idle",
+      "surface_words": {
+        "chrome": [
+          "ready"
+        ],
+        "orchestrator": [
+          "ready"
+        ],
+        "panels": [
+          "idle",
+          "ready",
+          "waiting"
+        ],
+        "projects": [
+          "idle",
+          "ready"
+        ],
+        "rail": [
+          "idle"
+        ],
+        "settings": [
+          "active",
+          "clean",
+          "enabled",
+          "ok",
+          "ready"
+        ],
+        "terminal": [
+          "idle",
+          "markneutral"
+        ],
+        "wizard": [
+          "pack-ready",
+          "ready"
+        ]
+      }
+    },
+    {
+      "key": "info",
+      "glyph_id": "st-info",
+      "meaning": "A neutral notice: nothing is wrong and nothing is asked.",
+      "tone": "paused",
+      "surface_words": {
+        "chat": [
+          "unread"
+        ],
+        "rail": [
+          "info"
+        ],
+        "settings": [
+          "info",
+          "neutral"
+        ],
+        "toast": [
+          "info"
+        ]
+      }
+    },
+    {
+      "key": "change-added",
+      "glyph_id": "change-added",
+      "meaning": "A new file or item (editor, source control, document history). Not a run state.",
+      "tone": "done",
+      "surface_words": {
+        "rail": [
+          "? (untracked)",
+          "a (added)",
+          "q/? (untracked)"
+        ]
+      }
+    },
+    {
+      "key": "change-modified",
+      "glyph_id": "change-modified",
+      "meaning": "Changed since it was saved or committed; also the dirty tab mark.",
+      "tone": "changed",
+      "surface_words": {
+        "rail": [
+          "m (modified)"
+        ]
+      }
+    },
+    {
+      "key": "change-deleted",
+      "glyph_id": "change-deleted",
+      "meaning": "Removed.",
+      "tone": "blocked",
+      "surface_words": {
+        "rail": [
+          "d (deleted)"
+        ]
+      }
+    },
+    {
+      "key": "change-conflict",
+      "glyph_id": "change-conflict",
+      "meaning": "Two changes collide and someone must choose (a merge conflict). Not a run state.",
+      "tone": "blocked",
+      "surface_words": {
+        "rail": [
+          "c (conflict)",
+          "conflict"
+        ]
+      }
+    },
+    {
+      "key": "change-renamed",
+      "glyph_id": "change-renamed",
+      "meaning": "Renamed or moved.",
+      "tone": "changed",
+      "surface_words": {}
+    }
+  ],
+  "object_control_mappings": [
+    {
+      "semantic_name": "palette",
+      "glyph_id": "palette"
+    },
+    {
+      "semantic_name": "brain",
+      "glyph_id": "brain"
+    },
+    {
+      "semantic_name": "shield",
+      "glyph_id": "shield"
+    },
+    {
+      "semantic_name": "terminal",
+      "glyph_id": "terminal"
+    },
+    {
+      "semantic_name": "puzzle",
+      "glyph_id": "puzzle"
+    },
+    {
+      "semantic_name": "clipboard",
+      "glyph_id": "clipboard"
+    },
+    {
+      "semantic_name": "branch",
+      "glyph_id": "branch"
+    },
+    {
+      "semantic_name": "film",
+      "glyph_id": "film"
+    },
+    {
+      "semantic_name": "globe",
+      "glyph_id": "globe"
+    },
+    {
+      "semantic_name": "masks",
+      "glyph_id": "users"
+    },
+    {
+      "semantic_name": "toolbox",
+      "glyph_id": "wrench"
+    },
+    {
+      "semantic_name": "gear",
+      "glyph_id": "settings"
+    },
+    {
+      "semantic_name": "wave",
+      "glyph_id": "hand"
+    },
+    {
+      "semantic_name": "search",
+      "glyph_id": "search"
+    },
+    {
+      "semantic_name": "star",
+      "glyph_id": "star"
+    },
+    {
+      "semantic_name": "scales",
+      "glyph_id": "scales"
+    },
+    {
+      "semantic_name": "sparkle",
+      "glyph_id": "sparkles"
+    },
+    {
+      "semantic_name": "restart",
+      "glyph_id": "refresh"
+    },
+    {
+      "semantic_name": "check",
+      "glyph_id": "check"
+    },
+    {
+      "semantic_name": "checkCircle",
+      "glyph_id": "check-circle"
+    },
+    {
+      "semantic_name": "close",
+      "glyph_id": "close"
+    },
+    {
+      "semantic_name": "soundOn",
+      "glyph_id": "speaker"
+    },
+    {
+      "semantic_name": "soundOff",
+      "glyph_id": "speaker-off"
+    },
+    {
+      "semantic_name": "folder",
+      "glyph_id": "folder"
+    },
+    {
+      "semantic_name": "home",
+      "glyph_id": "home"
+    },
+    {
+      "semantic_name": "robot",
+      "glyph_id": "robot"
+    },
+    {
+      "semantic_name": "wand",
+      "glyph_id": "wand"
+    },
+    {
+      "semantic_name": "plant",
+      "glyph_id": "sprout"
+    },
+    {
+      "semantic_name": "party",
+      "glyph_id": "party"
+    },
+    {
+      "semantic_name": "plug",
+      "glyph_id": "plug"
+    },
+    {
+      "semantic_name": "bolt",
+      "glyph_id": "lightning"
+    },
+    {
+      "semantic_name": "telescope",
+      "glyph_id": "telescope"
+    },
+    {
+      "semantic_name": "dial",
+      "glyph_id": "gauge"
+    },
+    {
+      "semantic_name": "warning",
+      "glyph_id": "warning"
+    },
+    {
+      "semantic_name": "rocket",
+      "glyph_id": "rocket"
+    },
+    {
+      "semantic_name": "info",
+      "glyph_id": "info"
+    },
+    {
+      "semantic_name": "layers",
+      "glyph_id": "layers"
+    },
+    {
+      "semantic_name": "bell",
+      "glyph_id": "bell"
+    },
+    {
+      "semantic_name": "lock",
+      "glyph_id": "lock"
+    },
+    {
+      "semantic_name": "expand",
+      "glyph_id": "expand"
+    },
+    {
+      "semantic_name": "pen",
+      "glyph_id": "edit"
+    },
+    {
+      "semantic_name": "comment",
+      "glyph_id": "chat"
+    },
+    {
+      "semantic_name": "chevL",
+      "glyph_id": "chevron-left"
+    },
+    {
+      "semantic_name": "scissors",
+      "glyph_id": "scissors"
+    },
+    {
+      "semantic_name": "eyeOff",
+      "glyph_id": "eye-off"
+    },
+    {
+      "semantic_name": "compose",
+      "glyph_id": "compose"
+    },
+    {
+      "semantic_name": "chat",
+      "glyph_id": "chat"
+    },
+    {
+      "semantic_name": "files",
+      "glyph_id": "folder"
+    },
+    {
+      "semantic_name": "source",
+      "glyph_id": "branch"
+    },
+    {
+      "semantic_name": "actions",
+      "glyph_id": "pipeline"
+    },
+    {
+      "semantic_name": "docker",
+      "glyph_id": "container"
+    },
+    {
+      "semantic_name": "tests",
+      "glyph_id": "check-circle"
+    },
+    {
+      "semantic_name": "agents",
+      "glyph_id": "robot"
+    },
+    {
+      "semantic_name": "artifacts",
+      "glyph_id": "archive"
+    },
+    {
+      "semantic_name": "chevD",
+      "glyph_id": "chevron-down"
+    },
+    {
+      "semantic_name": "chevR",
+      "glyph_id": "chevron-right"
+    },
+    {
+      "semantic_name": "x",
+      "glyph_id": "close"
+    },
+    {
+      "semantic_name": "plus",
+      "glyph_id": "plus"
+    },
+    {
+      "semantic_name": "minus",
+      "glyph_id": "minus"
+    },
+    {
+      "semantic_name": "warn",
+      "glyph_id": "warning"
+    },
+    {
+      "semantic_name": "refresh",
+      "glyph_id": "refresh"
+    },
+    {
+      "semantic_name": "external",
+      "glyph_id": "open"
+    },
+    {
+      "semantic_name": "diff",
+      "glyph_id": "diff"
+    },
+    {
+      "semantic_name": "merge",
+      "glyph_id": "merge"
+    },
+    {
+      "semantic_name": "pr",
+      "glyph_id": "pull-request"
+    },
+    {
+      "semantic_name": "trash",
+      "glyph_id": "trash"
+    },
+    {
+      "semantic_name": "play",
+      "glyph_id": "play"
+    },
+    {
+      "semantic_name": "stop",
+      "glyph_id": "stop"
+    },
+    {
+      "semantic_name": "eye",
+      "glyph_id": "eye"
+    },
+    {
+      "semantic_name": "copy",
+      "glyph_id": "copy"
+    },
+    {
+      "semantic_name": "cog",
+      "glyph_id": "settings"
+    },
+    {
+      "semantic_name": "filter",
+      "glyph_id": "filter"
+    },
+    {
+      "semantic_name": "clock",
+      "glyph_id": "clock"
+    },
+    {
+      "semantic_name": "flame",
+      "glyph_id": "flame"
+    },
+    {
+      "semantic_name": "upload",
+      "glyph_id": "upload"
+    },
+    {
+      "semantic_name": "link",
+      "glyph_id": "link"
+    },
+    {
+      "semantic_name": "user",
+      "glyph_id": "user"
+    },
+    {
+      "semantic_name": "spark",
+      "glyph_id": "sparkles"
+    },
+    {
+      "semantic_name": "pull",
+      "glyph_id": "download"
+    },
+    {
+      "semantic_name": "push",
+      "glyph_id": "upload"
+    },
+    {
+      "semantic_name": "fetch",
+      "glyph_id": "swap"
+    },
+    {
+      "semantic_name": "stash",
+      "glyph_id": "stash"
+    },
+    {
+      "semantic_name": "folderOpen",
+      "glyph_id": "folder"
+    },
+    {
+      "semantic_name": "monitor",
+      "glyph_id": "monitor"
+    },
+    {
+      "semantic_name": "pin",
+      "glyph_id": "pin"
+    },
+    {
+      "semantic_name": "key",
+      "glyph_id": "key"
+    },
+    {
+      "semantic_name": "book",
+      "glyph_id": "notebook"
+    },
+    {
+      "semantic_name": "camera",
+      "glyph_id": "camera"
+    },
+    {
+      "semantic_name": "file",
+      "glyph_id": "page"
+    },
+    {
+      "semantic_name": "arrowUp",
+      "glyph_id": "arrow-up"
+    },
+    {
+      "semantic_name": "arrowDn",
+      "glyph_id": "arrow-down"
+    },
+    {
+      "semantic_name": "grip",
+      "glyph_id": "grip"
+    },
+    {
+      "semantic_name": "edit",
+      "glyph_id": "edit"
+    },
+    {
+      "semantic_name": "filePlus",
+      "glyph_id": "file-plus"
+    },
+    {
+      "semantic_name": "folderPlus",
+      "glyph_id": "folder-plus"
+    },
+    {
+      "semantic_name": "boxMinus",
+      "glyph_id": "minus"
+    },
+    {
+      "semantic_name": "boxPlus",
+      "glyph_id": "plus"
+    },
+    {
+      "semantic_name": "pause",
+      "glyph_id": "pause"
+    },
+    {
+      "semantic_name": "stepOver",
+      "glyph_id": "step-over"
+    },
+    {
+      "semantic_name": "stepInto",
+      "glyph_id": "step-into"
+    },
+    {
+      "semantic_name": "stepOut",
+      "glyph_id": "step-out"
+    },
+    {
+      "semantic_name": "bpLine",
+      "glyph_id": "bp-line"
+    },
+    {
+      "semantic_name": "bpCond",
+      "glyph_id": "bp-cond"
+    },
+    {
+      "semantic_name": "bpLog",
+      "glyph_id": "bp-log"
+    },
+    {
+      "semantic_name": "zap",
+      "glyph_id": "lightning"
+    },
+    {
+      "semantic_name": "server",
+      "glyph_id": "server"
+    },
+    {
+      "semantic_name": "box",
+      "glyph_id": "archive"
+    },
+    {
+      "semantic_name": "cpu",
+      "glyph_id": "cpu"
+    },
+    {
+      "semantic_name": "database",
+      "glyph_id": "database"
+    },
+    {
+      "semantic_name": "git",
+      "glyph_id": "branch"
+    },
+    {
+      "semantic_name": "cloud",
+      "glyph_id": "cloud"
+    },
+    {
+      "semantic_name": "hammer",
+      "glyph_id": "hammer"
+    },
+    {
+      "semantic_name": "bug",
+      "glyph_id": "bug"
+    },
+    {
+      "semantic_name": "package",
+      "glyph_id": "container"
+    },
+    {
+      "semantic_name": "radio",
+      "glyph_id": "signal"
+    },
+    {
+      "semantic_name": "wifi",
+      "glyph_id": "signal"
+    },
+    {
+      "semantic_name": "code",
+      "glyph_id": "code"
+    },
+    {
+      "semantic_name": "sparkles",
+      "glyph_id": "sparkles"
+    },
+    {
+      "semantic_name": "split-stacked",
+      "glyph_id": "split-down"
+    },
+    {
+      "semantic_name": "split-side",
+      "glyph_id": "split-right"
+    },
+    {
+      "semantic_name": "workgroup-plus",
+      "glyph_id": "workgroup-new"
+    },
+    {
+      "semantic_name": "usage-grip",
+      "glyph_id": "grip"
+    },
+    {
+      "semantic_name": "usage-kebab",
+      "glyph_id": "more"
+    },
+    {
+      "semantic_name": "usage-resize",
+      "glyph_id": "usage-resize"
+    },
+    {
+      "semantic_name": "editor-x",
+      "glyph_id": "close"
+    },
+    {
+      "semantic_name": "collapse-chevron",
+      "glyph_id": "chevron-down"
+    },
+    {
+      "semantic_name": "chat-check",
+      "glyph_id": "check"
+    },
+    {
+      "semantic_name": "dash-move",
+      "glyph_id": "dash-move"
+    },
+    {
+      "semantic_name": "dash-resize",
+      "glyph_id": "dash-resize"
+    },
+    {
+      "semantic_name": "dash-menu",
+      "glyph_id": "dash-menu"
+    },
+    {
+      "semantic_name": "live",
+      "glyph_id": "st-working"
+    },
+    {
+      "semantic_name": "run",
+      "glyph_id": "st-working"
+    },
+    {
+      "semantic_name": "current",
+      "glyph_id": "ring-dot"
+    },
+    {
+      "semantic_name": "idle",
+      "glyph_id": "st-idle"
+    },
+    {
+      "semantic_name": "pending",
+      "glyph_id": "st-pending"
+    },
+    {
+      "semantic_name": "stale",
+      "glyph_id": "st-skipped"
+    },
+    {
+      "semantic_name": "unknown",
+      "glyph_id": "st-pending"
+    },
+    {
+      "semantic_name": "dirty",
+      "glyph_id": "change-modified"
+    },
+    {
+      "semantic_name": "orphan",
+      "glyph_id": "st-skipped"
+    },
+    {
+      "semantic_name": "undo",
+      "glyph_id": "undo"
+    },
+    {
+      "semantic_name": "oplog",
+      "glyph_id": "history"
+    },
+    {
+      "semantic_name": "seed",
+      "glyph_id": "sprout"
+    },
+    {
+      "semantic_name": "computer",
+      "glyph_id": "monitor"
+    },
+    {
+      "semantic_name": "person",
+      "glyph_id": "user"
+    },
+    {
+      "semantic_name": "vault",
+      "glyph_id": "vault"
+    },
+    {
+      "semantic_name": "rewind",
+      "glyph_id": "history"
+    },
+    {
+      "semantic_name": "power",
+      "glyph_id": "lightning"
+    },
+    {
+      "semantic_name": "history",
+      "glyph_id": "history"
+    },
+    {
+      "semantic_name": "phone",
+      "glyph_id": "phone"
+    },
+    {
+      "semantic_name": "stack",
+      "glyph_id": "layers"
+    },
+    {
+      "semantic_name": "ui-free",
+      "glyph_id": "gift"
+    },
+    {
+      "semantic_name": "ui-local",
+      "glyph_id": "server"
+    },
+    {
+      "semantic_name": "grid",
+      "glyph_id": "grid"
+    },
+    {
+      "semantic_name": "gauge",
+      "glyph_id": "gauge"
+    },
+    {
+      "semantic_name": "wallet",
+      "glyph_id": "wallet"
+    },
+    {
+      "semantic_name": "users",
+      "glyph_id": "users"
+    },
+    {
+      "semantic_name": "ring",
+      "glyph_id": "ring"
+    },
+    {
+      "semantic_name": "chart",
+      "glyph_id": "chart"
+    },
+    {
+      "semantic_name": "list",
+      "glyph_id": "todo"
+    },
+    {
+      "semantic_name": "more",
+      "glyph_id": "more"
+    },
+    {
+      "semantic_name": "tool",
+      "glyph_id": "wrench"
+    },
+    {
+      "semantic_name": "pulse",
+      "glyph_id": "pulse"
+    },
+    {
+      "semantic_name": "drag",
+      "glyph_id": "grip"
+    },
+    {
+      "semantic_name": "dots",
+      "glyph_id": "more"
+    },
+    {
+      "semantic_name": "chev",
+      "glyph_id": "chevron-down"
+    },
+    {
+      "semantic_name": "collapse",
+      "glyph_id": "collapse"
+    },
+    {
+      "semantic_name": "branchSm",
+      "glyph_id": "branch"
+    },
+    {
+      "semantic_name": "duplicate",
+      "glyph_id": "copy"
+    },
+    {
+      "semantic_name": "archive",
+      "glyph_id": "archive"
+    },
+    {
+      "semantic_name": "popout",
+      "glyph_id": "open"
+    },
+    {
+      "semantic_name": "layout",
+      "glyph_id": "layout"
+    },
+    {
+      "semantic_name": "attach",
+      "glyph_id": "attach"
+    },
+    {
+      "semantic_name": "warnDot",
+      "glyph_id": "st-warning"
+    },
+    {
+      "semantic_name": "jump",
+      "glyph_id": "arrow-down"
+    },
+    {
+      "semantic_name": "sendIco",
+      "glyph_id": "send"
+    },
+    {
+      "semantic_name": "stopIco",
+      "glyph_id": "stop"
+    },
+    {
+      "semantic_name": "rewind",
+      "glyph_id": "rewind"
+    },
+    {
+      "semantic_name": "closeX",
+      "glyph_id": "close"
+    },
+    {
+      "semantic_name": "caretDown",
+      "glyph_id": "chevron-down"
+    },
+    {
+      "semantic_name": "lensDefault",
+      "glyph_id": "lens"
+    },
+    {
+      "semantic_name": "lensMuteBtn",
+      "glyph_id": "eye-off"
+    },
+    {
+      "semantic_name": "lensFocusBtn",
+      "glyph_id": "eye"
+    },
+    {
+      "semantic_name": "lensSubBtn",
+      "glyph_id": "collapse"
+    },
+    {
+      "semantic_name": "lensMute",
+      "glyph_id": "eye-off"
+    },
+    {
+      "semantic_name": "lensFocus",
+      "glyph_id": "eye"
+    },
+    {
+      "semantic_name": "lensSub",
+      "glyph_id": "collapse"
+    },
+    {
+      "semantic_name": "list",
+      "glyph_id": "list"
+    },
+    {
+      "semantic_name": "export",
+      "glyph_id": "outbox"
+    },
+    {
+      "semantic_name": "chevron",
+      "glyph_id": "chevron-down"
+    },
+    {
+      "semantic_name": "alert",
+      "glyph_id": "st-warning"
+    },
+    {
+      "semantic_name": "hourglass",
+      "glyph_id": "hourglass"
+    },
+    {
+      "semantic_name": "minusCircle",
+      "glyph_id": "st-off"
+    },
+    {
+      "semantic_name": "slashCircle",
+      "glyph_id": "slash-circle"
+    },
+    {
+      "semantic_name": "dashedCircle",
+      "glyph_id": "ring-dashed"
+    },
+    {
+      "semantic_name": "clockCircle",
+      "glyph_id": "clock"
+    },
+    {
+      "semantic_name": "pencil",
+      "glyph_id": "edit"
+    },
+    {
+      "semantic_name": "xCircle",
+      "glyph_id": "st-failed"
+    },
+    {
+      "semantic_name": "arrowDown",
+      "glyph_id": "arrow-down"
+    },
+    {
+      "semantic_name": "coin",
+      "glyph_id": "coin"
+    },
+    {
+      "semantic_name": "chevronDown",
+      "glyph_id": "chevron-down"
+    },
+    {
+      "semantic_name": "resize",
+      "glyph_id": "expand"
+    },
+    {
+      "semantic_name": "chevronRight",
+      "glyph_id": "chevron-right"
+    },
+    {
+      "semantic_name": "chevronLeft",
+      "glyph_id": "chevron-left"
+    },
+    {
+      "semantic_name": "tidy",
+      "glyph_id": "layout"
+    },
+    {
+      "semantic_name": "size",
+      "glyph_id": "size"
+    },
+    {
+      "semantic_name": "briefcase",
+      "glyph_id": "briefcase"
+    },
+    {
+      "semantic_name": "memory",
+      "glyph_id": "kind-memory"
+    },
+    {
+      "semantic_name": "system",
+      "glyph_id": "cpu"
+    },
+    {
+      "semantic_name": "chevron",
+      "glyph_id": "chevron"
+    },
+    {
+      "semantic_name": "down",
+      "glyph_id": "down"
+    },
+    {
+      "semantic_name": "test",
+      "glyph_id": "flask"
+    },
+    {
+      "semantic_name": "download",
+      "glyph_id": "download"
+    },
+    {
+      "semantic_name": "network",
+      "glyph_id": "signal"
+    },
+    {
+      "semantic_name": "browser",
+      "glyph_id": "browser"
+    },
+    {
+      "semantic_name": "map",
+      "glyph_id": "plan"
+    },
+    {
+      "semantic_name": "brackets",
+      "glyph_id": "code"
+    },
+    {
+      "semantic_name": "image",
+      "glyph_id": "image"
+    },
+    {
+      "semantic_name": "mic",
+      "glyph_id": "mic"
+    },
+    {
+      "semantic_name": "volume",
+      "glyph_id": "speaker"
+    },
+    {
+      "semantic_name": "video",
+      "glyph_id": "video"
+    },
+    {
+      "semantic_name": "file",
+      "glyph_id": "file"
+    },
+    {
+      "semantic_name": "up",
+      "glyph_id": "up"
+    },
+    {
+      "semantic_name": "menu",
+      "glyph_id": "menu"
+    },
+    {
+      "semantic_name": "save",
+      "glyph_id": "save"
+    },
+    {
+      "semantic_name": "settings",
+      "glyph_id": "settings"
+    },
+    {
+      "semantic_name": "route",
+      "glyph_id": "route"
+    },
+    {
+      "semantic_name": "restore",
+      "glyph_id": "restore"
+    },
+    {
+      "semantic_name": "arrowRight",
+      "glyph_id": "arrow-right"
+    },
+    {
+      "semantic_name": "sliders",
+      "glyph_id": "sliders"
+    },
+    {
+      "semantic_name": "helpCircle",
+      "glyph_id": "help"
+    },
+    {
+      "semantic_name": "browser",
+      "glyph_id": "globe"
+    },
+    {
+      "semantic_name": "dashboard",
+      "glyph_id": "widget"
+    },
+    {
+      "semantic_name": "plan",
+      "glyph_id": "plan"
+    },
+    {
+      "semantic_name": "document",
+      "glyph_id": "page"
+    },
+    {
+      "semantic_name": "artifact",
+      "glyph_id": "page"
+    },
+    {
+      "semantic_name": "transcript",
+      "glyph_id": "chat"
+    },
+    {
+      "semantic_name": "context",
+      "glyph_id": "lens"
+    },
+    {
+      "semantic_name": "record",
+      "glyph_id": "bookmark"
+    },
+    {
+      "semantic_name": "output",
+      "glyph_id": "output"
+    },
+    {
+      "semantic_name": "problems",
+      "glyph_id": "warning"
+    },
+    {
+      "semantic_name": "ports",
+      "glyph_id": "plug"
+    },
+    {
+      "semantic_name": "debug",
+      "glyph_id": "bug"
+    },
+    {
+      "semantic_name": "console",
+      "glyph_id": "terminal"
+    },
+    {
+      "semantic_name": "splitRight",
+      "glyph_id": "split-right"
+    },
+    {
+      "semantic_name": "splitDown",
+      "glyph_id": "split-down"
+    },
+    {
+      "semantic_name": "maximize",
+      "glyph_id": "expand"
+    },
+    {
+      "semantic_name": "restore",
+      "glyph_id": "collapse"
+    },
+    {
+      "semantic_name": "moreH",
+      "glyph_id": "more"
+    },
+    {
+      "semantic_name": "reopen",
+      "glyph_id": "reset"
+    },
+    {
+      "semantic_name": "panel",
+      "glyph_id": "panel"
+    },
+    {
+      "semantic_name": "newPanel",
+      "glyph_id": "open"
+    },
+    {
+      "semantic_name": "popOut",
+      "glyph_id": "open"
+    },
+    {
+      "semantic_name": "agent",
+      "glyph_id": "agent"
+    },
+    {
+      "semantic_name": "cross",
+      "glyph_id": "close"
+    },
+    {
+      "semantic_name": "replace",
+      "glyph_id": "swap"
+    },
+    {
+      "semantic_name": "regex",
+      "glyph_id": "use-regex"
+    },
+    {
+      "semantic_name": "caseSense",
+      "glyph_id": "match-case"
+    },
+    {
+      "semantic_name": "wholeWord",
+      "glyph_id": "match-word"
+    },
+    {
+      "semantic_name": "reload",
+      "glyph_id": "refresh"
+    },
+    {
+      "semantic_name": "back",
+      "glyph_id": "reply"
+    },
+    {
+      "semantic_name": "forward",
+      "glyph_id": "arrow-right"
+    },
+    {
+      "semantic_name": "region",
+      "glyph_id": "select-area"
+    },
+    {
+      "semantic_name": "pointer",
+      "glyph_id": "pointer"
+    },
+    {
+      "semantic_name": "devtools",
+      "glyph_id": "terminal"
+    },
+    {
+      "semantic_name": "keep",
+      "glyph_id": "bookmark"
+    },
+    {
+      "semantic_name": "message",
+      "glyph_id": "chat"
+    },
+    {
+      "semantic_name": "widget",
+      "glyph_id": "widget"
+    },
+    {
+      "semantic_name": "rename",
+      "glyph_id": "edit"
+    },
+    {
+      "semantic_name": "target",
+      "glyph_id": "ring-dot"
+    },
+    {
+      "semantic_name": "edPalette",
+      "glyph_id": "settings"
+    },
+    {
+      "semantic_name": "tools-mark:error",
+      "glyph_id": "st-failed"
+    },
+    {
+      "semantic_name": "tools-mark:warn",
+      "glyph_id": "warning"
+    },
+    {
+      "semantic_name": "tools-mark:info",
+      "glyph_id": "info"
+    },
+    {
+      "semantic_name": "tools-mark:ok",
+      "glyph_id": "check"
+    },
+    {
+      "semantic_name": "CLEAR_ICON",
+      "glyph_id": "slash-circle"
+    },
+    {
+      "semantic_name": "FOLLOW_ICON",
+      "glyph_id": "download"
+    },
+    {
+      "semantic_name": "WRAP_ICON",
+      "glyph_id": "wrap"
+    },
+    {
+      "semantic_name": "outputNewTab",
+      "glyph_id": "open"
+    },
+    {
+      "semantic_name": "doc:check",
+      "glyph_id": "check"
+    },
+    {
+      "semantic_name": "doc:checkCircle",
+      "glyph_id": "check-circle"
+    },
+    {
+      "semantic_name": "doc:slashCircle",
+      "glyph_id": "slash-circle"
+    },
+    {
+      "semantic_name": "doc:ring",
+      "glyph_id": "ring-dashed"
+    },
+    {
+      "semantic_name": "doc:cross",
+      "glyph_id": "close"
+    },
+    {
+      "semantic_name": "doc:fileEdit",
+      "glyph_id": "file-edit"
+    },
+    {
+      "semantic_name": "doc:filePlus",
+      "glyph_id": "file-plus"
+    },
+    {
+      "semantic_name": "doc:trash",
+      "glyph_id": "trash"
+    },
+    {
+      "semantic_name": "doc:spark",
+      "glyph_id": "sparkles"
+    },
+    {
+      "semantic_name": "crew",
+      "glyph_id": "kind-crew"
+    },
+    {
+      "semantic_name": "review",
+      "glyph_id": "kind-review"
+    },
+    {
+      "semantic_name": "room",
+      "glyph_id": "kind-chat_room"
+    },
+    {
+      "semantic_name": "brainstorm",
+      "glyph_id": "kind-brainstorm"
+    },
+    {
+      "semantic_name": "step:read",
+      "glyph_id": "page"
+    },
+    {
+      "semantic_name": "step:search",
+      "glyph_id": "search"
+    },
+    {
+      "semantic_name": "step:run",
+      "glyph_id": "terminal"
+    },
+    {
+      "semantic_name": "step:edit",
+      "glyph_id": "edit"
+    },
+    {
+      "semantic_name": "step:check",
+      "glyph_id": "check-circle"
+    },
+    {
+      "semantic_name": "step:test",
+      "glyph_id": "flask"
+    },
+    {
+      "semantic_name": "step:hand",
+      "glyph_id": "hand"
+    },
+    {
+      "semantic_name": "step:agents",
+      "glyph_id": "users"
+    },
+    {
+      "semantic_name": "step:note",
+      "glyph_id": "page"
+    },
+    {
+      "semantic_name": "route-change",
+      "glyph_id": "branch"
+    },
+    {
+      "semantic_name": "ok",
+      "glyph_id": "check"
+    },
+    {
+      "semantic_name": "fail",
+      "glyph_id": "close"
+    },
+    {
+      "semantic_name": "find:prev",
+      "glyph_id": "chevron-up"
+    },
+    {
+      "semantic_name": "find:next",
+      "glyph_id": "chevron-down"
+    },
+    {
+      "semantic_name": "find:close",
+      "glyph_id": "close"
+    },
+    {
+      "semantic_name": "popover:close",
+      "glyph_id": "close"
+    },
+    {
+      "semantic_name": "agent-row:SQ",
+      "glyph_id": "agent-driving"
+    },
+    {
+      "semantic_name": "agent-row:LOCK",
+      "glyph_id": "lock"
+    },
+    {
+      "semantic_name": "card:running",
+      "glyph_id": "st-working"
+    },
+    {
+      "semantic_name": "card:ok",
+      "glyph_id": "check"
+    },
+    {
+      "semantic_name": "card:failed",
+      "glyph_id": "close"
+    },
+    {
+      "semantic_name": "card:interrupted",
+      "glyph_id": "st-skipped"
+    },
+    {
+      "semantic_name": "card:waiting",
+      "glyph_id": "terminal"
+    },
+    {
+      "semantic_name": "card:chevron",
+      "glyph_id": "chevron-down"
+    },
+    {
+      "semantic_name": "terminal-tab",
+      "glyph_id": "terminal"
+    },
+    {
+      "semantic_name": "settings-about",
+      "glyph_id": "help"
+    },
+    {
+      "semantic_name": "usage-panel-options",
+      "glyph_id": "more"
+    },
+    {
+      "semantic_name": "usage-move-panel",
+      "glyph_id": "grip"
+    },
+    {
+      "semantic_name": "usage-panel-size",
+      "glyph_id": "resize"
+    },
+    {
+      "semantic_name": "usage-configure-panel",
+      "glyph_id": "settings"
+    },
+    {
+      "semantic_name": "onboarding-change-look",
+      "glyph_id": "palette"
+    },
+    {
+      "semantic_name": "onboarding-sound-on",
+      "glyph_id": "speaker"
+    },
+    {
+      "semantic_name": "files-rust-source",
+      "glyph_id": "page"
+    },
+    {
+      "semantic_name": "files-svelte",
+      "glyph_id": "page"
+    },
+    {
+      "semantic_name": "files-xml",
+      "glyph_id": "page"
+    },
+    {
+      "semantic_name": "files-markdown",
+      "glyph_id": "page"
+    },
+    {
+      "semantic_name": "files-toml",
+      "glyph_id": "page"
+    },
+    {
+      "semantic_name": "tour-back",
+      "glyph_id": "chevron-left"
+    },
+    {
+      "semantic_name": "onboarding-back",
+      "glyph_id": "chevron-left"
+    },
+    {
+      "semantic_name": "home-forward",
+      "glyph_id": "chevron-right"
+    },
+    {
+      "semantic_name": "home-more-open",
+      "glyph_id": "chevron-right"
+    },
+    {
+      "semantic_name": "chat-edit",
+      "glyph_id": "edit"
+    },
+    {
+      "semantic_name": "nier-adjust",
+      "glyph_id": "menu"
+    },
+    {
+      "semantic_name": "statusbar-project-root",
+      "glyph_id": "folder"
+    },
+    {
+      "semantic_name": "topbar-notifications",
+      "glyph_id": "bell"
+    },
+    {
+      "semantic_name": "settings-choose-widgets",
+      "glyph_id": "layers"
+    },
+    {
+      "semantic_name": "rail-dashboard",
+      "glyph_id": "grid"
+    },
+    {
+      "semantic_name": "home-open-browser",
+      "glyph_id": "globe"
+    },
+    {
+      "semantic_name": "statusbar-source-control",
+      "glyph_id": "branch"
+    },
+    {
+      "semantic_name": "home-share",
+      "glyph_id": "share"
+    },
+    {
+      "semantic_name": "home-pick-element",
+      "glyph_id": "pointer"
+    },
+    {
+      "semantic_name": "home-add-selection",
+      "glyph_id": "select-area"
+    }
+  ],
+  "source_refs": [
+    {
+      "path": "Concepts/glyph-system/opus-5.5/src/data/status.json",
+      "sha256": "419bade657690d8bfb0859629901b41bbc816a72c70257b9374195dc3cf9e33c",
+      "revision": "81617137658b89ace8af7eeac2baf8c5918364f8"
+    },
+    {
+      "path": "Concepts/glyph-system/opus-5.5/src/data/map.json",
+      "sha256": "538a339c907b18cad08cdeed35bcd7cdb8af18d936fdf65574a8b26d77a3066d",
+      "revision": "81617137658b89ace8af7eeac2baf8c5918364f8"
+    }
+  ]
+}

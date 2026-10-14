@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43165-L43608
+Source lines: L43182-L43631
 
-Source SHA256: `2fbb46a82dc48c06df2698570d86fea36430c555501760e0328853d3170e9f49`
+Source SHA256: `ad093afce0ca7418862e8c4d9bfd4fbb8d1081f379037deb47635caf0ea41254`
 
 ---
 
@@ -401,17 +401,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The activity bar's More tray (F3-419) opens as the chat picker of F3-621 beside the More button, under the heading
-  "Hidden from the bar" (DL-162). Each hidden item is a row with the bar's own icon and the item's real name, never
-  its internal id (Actions & Pipelines, not repository_automation). Picking a row restores the item at the end of
-  the bar; pressing a row and dragging it onto the bar restores it at the drop position; dragging a bar icon onto
-  More hides it; a second click on More closes the tray. With nothing hidden, More still opens and says how to hide
-  an icon instead of doing nothing. The tray's keyboard is the picker's (arrows, Enter, Escape with focus back on
-  More), and More itself is reachable by keyboard. The More button shows its hover, open and drop-target states in
-  the look's own treatment, and the drag ghost and drop line use the rail's radii and ink. The rail's resize handle
-  keeps the shell's glow in Basic, Friendly and Glass, is a hard square light in Retro and an ink mark under NieR
-  Mode. The gestures, the activity_bar_order:v1 persistence with its separator position and the hotkey order are
-  F3-419's and are unchanged; no command, action or storage key is added.
+  The activity bar's More tray (F3-419) opens as the chat picker of F3-621 beside the More button, under the
+  heading "Hidden from the bar" (DL-162). Each hidden item is a row with the bar's own icon and the item's real
+  name, never its internal id (Actions & Pipelines, not repository_automation). Picking a row restores the item
+  at the end of the bar; pressing a row and dragging it onto the bar restores it at the drop position; dragging
+  a bar icon onto More hides it; a second click on More closes the tray. With nothing hidden, More still opens
+  and says how to hide an icon instead of doing nothing. The tray's keyboard is the picker's (arrows, Enter,
+  Escape with focus back on More), and More itself is reachable by keyboard. The More button shows its hover,
+  open and drop-target states in the look's own treatment, and the drag ghost and drop line use the rail's radii
+  and ink. The rail's resize handle keeps the shell's glow in Basic, Friendly and Glass, is a hard square light
+  in Retro and an ink mark under NieR Mode. The gestures, the activity_bar_order:v1 persistence with its
+  separator position and the hotkey order are F3-419's and are unchanged; no command, action or storage key is
+  added. F3-657 supersedes the earlier per-rail resize treatment; the rail consumes that shared feedback with
+  its existing resize behavior.
 gui_related: true
 gui_classification_reason: Defines the visible More tray and the rail resize handle in the Polish design.
 split_recommended: false
@@ -436,8 +438,11 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-162"
-  - "Concepts/leftrail-redesign/src/concepts/d/41-more.js, 40-bar.js and css/80-bar.src.css, css/81-more.src.css (lane commit 8d4ce13e3e; concept lineage only)"
+- Plans/Decision_Log.md#DL-162
+- Concepts/leftrail-redesign/src/concepts/d/41-more.js, 40-bar.js and css/80-bar.src.css, css/81-more.src.css (lane
+  commit 8d4ce13e3e; concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-13-resize-glow/NOTES.md, SHA-256 0a20256d730c5b51cda138b14845a5dc2e7dfdda04385a3956721a73fb657c16
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "Hidden from the bar"
   - "activity_bar_order:v1"
@@ -449,6 +454,7 @@ compatibility_only_notes:
 stale_retired_dispositions: []
 owner_hints:
   - Plans/FinalGUISpec.md
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/FinalGUISpec.md#F3-419, ContractName:Plans/FinalGUISpec.md#F3-621

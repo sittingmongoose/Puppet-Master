@@ -4,7 +4,7 @@ Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
 Source lines: L2092-L2214
 
-Source SHA256: `c10a48c229b34c7173ae685a24e480acda7a703b9068d896cf5e1bdff256bc1e`
+Source SHA256: `43936fa76f55a2a4a9d8c70f4c5e110dd0829dfca4b292a62aaaf67e4534e905`
 
 ---
 
@@ -40,7 +40,7 @@ tab marks, notifications, secrets in saved scrollback and the total cap) and the
 | `GUI-PNL-013` | The desktop keyboard map works without Ctrl+1..9 or Ctrl+K, and the web client answers the browser's four chords as Alt+T, Alt+W, Alt+Shift+T and Alt+backtick with every label showing the key that works there. | `Plans/FinalGUISpec.md` F3-635 | future ATS-075 keyboard cases | pending | `NOT_RUN` |
 | `GUI-PNL-014` | A v1 Home layout and the Home part of `layout:v1` become the v2 record on first read with nothing reset and nothing lost; corrupt and unknown inputs follow the record's owner. | `Plans/storage-plan.md` SP-330 | future ATS-075 migration cases | pending | `NOT_RUN` |
 | `GUI-PNL-015` | Every panel surface is drawn in Friendly, Glass, Retro and Basic, light and dark, in NieR Mode with each touch gated by its installed part, and under Reduced Motion with every motion instant. | `Plans/FinalGUISpec.md` F3-647 | future ATS-075 visual matrix | pending | `NOT_RUN` |
-| `GUI-PNL-016` | A lint fails the build on a pill, a coloured side border or inset side shadow of 2 px or wider, or an emoji in Puppet Master's chrome. | `Plans/DRY_Rules.md` DR-069; `Plans/FinalGUISpec.md` F3-648 | future bans lint | pending | `NOT_RUN` |
+| `GUI-PNL-016` | A lint fails the build on a forbidden pill label under F3-648 (action buttons and non-label marks exempt), a coloured side border or inset side shadow of 2 px or wider, or an emoji in Puppet Master's chrome. | `Plans/DRY_Rules.md` DR-069; `Plans/FinalGUISpec.md` F3-648 | future bans lint | pending | `NOT_RUN` |
 | `GUI-PNL-017` | Each structural commit dispatches one command and appends one `workspace.layout_changed`; reveals, `ui.*` actions, menus, hover and drags append nothing; a cancelled or rejected gesture restores the model exactly; every control is in the census with its wiring row. Amended 2026-10-10 (DL-188): each appended `workspace.layout_changed` is at family revision 2.0.0 and validates against its payload. | `Plans/UI_Command_Catalog.md` UCC-200; `Plans/Commands_System.md` CS-100; `Plans/Contracts_V0.md` CV-361; `Plans/UI_Wiring_Rules.md` UIW-040, UIW-041; `Plans/Wiring_Matrix.md` WM-090 | future ATS-075 command and census matrix | pending | `NOT_RUN` |
 | `GUI-PNL-018` | The editor tab keeps the contact-aware strip and the minimap as the only code-pane scrollbar, and adds sticky scroll, find and replace, go to line, preview tabs and the side-by-side or inline diff. | `Plans/FinalGUISpec.md` F3-639; `Plans/FileManager.md` F-073 | future ATS-075 editor tab cases | pending | `NOT_RUN` |
 | `GUI-TRM-001` | Each terminal tab holds one session that survives moving, collapsing, maximizing, hiding and layout changes; Split makes a new panel; closing asks first; Reopen closed tab and restore start a new session in the same folder and profile and say so. | `Plans/Section15_MVP_Promoted_Features_Spec.md` SMPFS-180; `Plans/FinalGUISpec.md` F3-640 | future ATS-076 session matrix | pending | `NOT_RUN` |

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32271-L32814
+Source lines: L32277-L32825
 
-Source SHA256: `2fbb46a82dc48c06df2698570d86fea36430c555501760e0328853d3170e9f49`
+Source SHA256: `ad093afce0ca7418862e8c4d9bfd4fbb8d1081f379037deb47635caf0ea41254`
 
 ---
 
@@ -167,7 +167,8 @@ unblocks: []
 acceptance_criteria:
 - At most 5 staged toasts render concurrently beneath the title-bar notification stack; a new toast beyond the cap
   evicts the oldest.
-- Each staged toast auto-dismisses after its 3.4s time to live and plays a fade exit animation on dismissal.
+- Each urgency uses F3-447's specified lifetime; hover/focus holds every reading timer and Reduced Motion changes
+  only motion.
 - The newest toast stages on top of the staged set.
 - Ephemeral toasts never archive to the shared alert store and leave no store entry.
 - Under reduced motion, dismissal is instant with no exit animation.
@@ -191,14 +192,15 @@ source_lineage:
 - Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
 - /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
   (approved campaign source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
   (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
 - "5"
 - "3.4s"
 negative_constraints:
-- "Do not render more than 5 concurrent staged toasts or let a toast outlive its time to live without an eviction or dismissal path."
-- "Do not archive an ephemeral toast to the shared alert store or leave any store entry for it."
+- Do not render more than 5 concurrent staged toasts or discard a lasting notice on overflow; reading holds suspend
+  the lifetime.
+- Do not archive an ephemeral toast to the shared alert store or leave any store entry for it.
 compatibility_only_notes:
 - "Slint portability: staged toasts render as opaque precomputed surfaces with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
@@ -497,12 +499,15 @@ canonical_text: >-
   from this one alert store; no surface keeps a private copy of alert state. The inbox sorts Needs you first,
   then groups by source (Usage, Runs, Planning, Agents, Settings, Projects); a group with at least three notices
   folds to a newest-first deck and opens without changing its underlying work. The badge counts unread, not all
-  retained items. Opening the inbox acknowledges the items actually shown after about one second of reading;
+  retained items. Opening the inbox marks the items actually shown read after about one second of reading;
   hidden/unshown items do not become read by implication. Dismiss/Delete and Clear all remove inbox
   presentation, never approve, deny or resolve domain work. Clear all leaves reusable headings and rows visible
   on the next arrival/open. Existing approval, permission, FileSafe and concern actions keep their owner
   commands, reasons and holds. A blocking item's attention ring remains until its underlying need is resolved;
-  dismissing a card alone is not that resolution.
+  dismissing a card alone is not that resolution. Read projection is CS-102's
+  ui.notifications.mark_visible_read, distinct from an explicit domain acknowledge action. Dismiss/Delete and
+  Clear all use UCC-204's existing alert-command composition; a refused item remains visible and arrivals after
+  the captured Clear all set are retained.
 gui_related: true
 gui_classification_reason: This unit defines the shared alert store, alert lifecycle controls, and the unread indicator contract.
 split_recommended: false
@@ -530,7 +535,7 @@ source_lineage:
 - Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
 - /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
   (approved campaign source lineage; not native implementation evidence)
-- /mnt/Cursor/share/puppet-master/2026-10-13-pm7-coordinator-handoff/COORDINATOR-LOG.md, SHA-256 2a14a7bdce73196184348fc649a99dbb7ab282d0e0008270b12755b7e756a1bd
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
   (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
 - "ack"

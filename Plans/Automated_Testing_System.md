@@ -6481,7 +6481,9 @@ canonical_text: >-
   state, replay and serialized-state bounds need negative fixtures. The shared status registry needs
   warning/failed distinction, 3:1 marks and 4.5:1 text. Concept source/harness evidence is lineage only; native
   certification remains owed. Pending Glass publication is recorded as pending, never presented as a passed
-  implementation case.
+  implementation case. scripts/pm7-canon-check.py validates the finite companion census, strict editor
+  request/result fixtures, Settings and production wiring schema shapes, shared glyph vocabulary and wallpaper
+  asset pairs. It is static validation only.
 gui_related: true
 gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
 split_recommended: false
@@ -6491,6 +6493,7 @@ acceptance_criteria:
 - Every cited owner has a matrix case or an explicit unimplemented/held result, never an inferred pass.
 - Static schema/registry/census checks pass before draft review; native evidence is separately required.
 validation_surfaces:
+- python3 scripts/pm7-canon-check.py
 - python3 scripts/pm-shard-plans.py --check
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-plans-verify.py run-gates
@@ -6519,6 +6522,7 @@ preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
 - Plans/Automated_Testing_System.md
+
 ```
 
 ContractRef: ContractName:Plans/Automated_Testing_System.md#ATS-075, ContractName:Plans/UI_Wiring_Rules.md#UIW-043, ContractName:Plans/FinalGUISpec.md#F3-654

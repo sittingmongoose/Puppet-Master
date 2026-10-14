@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3353-L3423
+Source lines: L3358-L3434
 
-Source SHA256: `96a4dedb695e637c0c3f1531f685eda8cb179d0944f149f4d8ee0ec6c04d9b79`
+Source SHA256: `cb8a8d7cf94afeb686726cc1a9ceadc55ba9c47034d300d918c898da0d3f1ada`
 
 ---
 
@@ -40,10 +40,14 @@ split_recommended: false
 depends_on: [F3-465, F3-446, DL-171]
 unblocks: []
 acceptance_criteria:
-  - "Exactly one hover engine and one hover token set exist in PMConcept7; no surface keeps a second engine, its own pointer-move listener or its own hover animation loop."
-  - "Every hover target is a card, row, tile or icon, opted in by class or `data-pmh` and opted out by `data-pmh=\"off\"` or `[data-pm-hover-exempt]`."
-  - "No surface owner restates the hover lift, glow, pointer light or magnet; a different strength is a kind token, not a forked layer."
-  - "Tab strips, resize dividers and editor and terminal text surfaces are never hover targets and show at most a static tint."
+- Exactly one hover engine and one hover token set exist in PMConcept7; no surface keeps a second engine, its own
+  pointer-move listener or its own hover animation loop.
+- Every hover target is a card, row, tile, icon or small control, opted in by class or `data-pmh` and opted out by
+  `data-pmh="off"` or `[data-pm-hover-exempt]`.
+- No surface owner restates the hover lift, glow, pointer light or magnet; a different strength is a kind token, not
+  a forked layer.
+- Tab/header controls use F3-465's small-control marker; editor/terminal text never gets a card magnet, and resize
+  bars consume F3-657.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -70,8 +74,10 @@ preserved_exact_tokens:
   - "data-pm-hover-exempt"
   - "card, row, tile and icon"
 negative_constraints:
-  - "Do not restate the hover effect in a surface owner or give a surface its own hover lift, glow, pointer sheen, magnet or animation loop."
-  - "Do not make a tab strip, resize divider or editor or terminal text surface a hover target."
+- Do not restate the hover effect in a surface owner or give a surface its own hover lift, glow, pointer sheen, magnet
+  or animation loop.
+- Do not apply card magnet effects to editor/terminal text or resize bars; controls and dividers use their shared
+  owner grammar.
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md

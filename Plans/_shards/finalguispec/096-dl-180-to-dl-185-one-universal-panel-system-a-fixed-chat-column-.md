@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L43982-L45902
+Source lines: L44005-L45971
 
-Source SHA256: `2fbb46a82dc48c06df2698570d86fea36430c555501760e0328853d3170e9f49`
+Source SHA256: `ad093afce0ca7418862e8c4d9bfd4fbb8d1081f379037deb47635caf0ea41254`
 
 ---
 
@@ -275,53 +275,59 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every panel has the same tab strip, the dashboard's included (DL-180, D5); no panel and no tab kind draws a strip of
-  its own. The strip is 35 px tall in every panel, the change Jared asked for in PMConcept7 revision 19 ("Strips
-  shortened: editor 40 -> 35px") applied to every panel, and its tabs are 31 px tall with 8 px between tabs, 2 px in
-  Retro (the 8 px gap approved by Jared on 2026-10-10, D29). The active tab's plate overlaps the body by 1 px and joins it
-  through the contact-aware silhouette of F3-505, generalised here from the editor and dashboard strips to every panel
-  and every tab kind, so the active tab and its panel read as one shape. That fused shape is the only mark of the active
-  tab: no underline, no accent line, no accent crown strip, no pill. In Friendly, Glass and Basic, light and dark, the
-  plate takes the body's own fill; no look gives the active tab a separately coloured plate, Glass dark included (Jared,
-  2026-10-10, D29: its purple plate is dropped), and Glass keeps only its 1 px glass rim along the plate's crown, part of its
-  material and never in an accent colour. Retro fills the fused shape in reverse video and NieR Mode in ink (F3-647).
-  Contact is measured to the neighbouring content, its box inset by 8 px, with a 20 px linear morph window on each side.
-  Crown, shoulder and flare radii per look: Friendly 16, 16 and 25 px; Glass 16, 16 and 25 px; Basic 9, 14 and 22 px;
-  Retro 6, 8 and 14 px on a stepped profile; NieR Mode 9, 14 and 22 px, or a 6, 0 and 14 px chamfer with a straight foot
-  when its square part is installed. Drag to reorder is the pointer-capture gesture of F3-421 and F3-505, kept and
-  polished in every strip: it starts after 4 px of travel, the carried tab tracks the pointer one to one, the silhouette
-  follows it in the same frame without springing, neighbours slide aside, widths do not reflow while a tab is carried,
-  and a changed release commits one cmd.panel_tab.move; the same gesture carries a tab to another strip, onto a panel's
-  edge or off its strip (F3-630). Under Retro every selection and every reorder rolls one of the three Retro effects of
-  F3-505 (phosphor, CRT and DOS) from a shuffle bag with no immediate repeat, in every strip, and each ends on the
-  steady reverse-video tab; Reduced Motion shows the end at once. Widths: a tab's natural width is 96 to 200 px; when
-  the strip runs short, inactive tabs shrink to 72 px, then become 36 px icon-only tabs; the active tab keeps at least
-  120 px and its label and never hides; after that a contiguous window of tabs around the active tab stays visible and
-  the "+N" of F3-633 counts the rest. A shrunk file name keeps its start and its end and loses its middle (rec…es.rs).
-  Pinned tabs are 36 px, icon only, sit at the left in pin order and never hide; Pin and Unpin are in the tab menu only
-  (cmd.panel_tab.pin, cmd.panel_tab.unpin). Marks: a file with unsaved changes shows a 7 px dot in the close slot until
-  the pointer is over the tab (Retro an asterisk after the label, NieR Mode a 6 px square); a preview tab has an italic
-  label (F3-634); a tab that opened in the background shows a 6 px hollow square until the user activates it; a terminal
-  whose last command failed shows the exit code after its label in the error colour; a tab an agent is using shows the 7
-  px square agent mark and its hover tag names the agent; a running process shows a static busy glyph, never a spinner
-  in Retro or NieR Mode. Every mark that names a state comes from the one status set (DL-141, F3-585), no tab invents
-  its own, and every mark is also in the tab's accessible name. Terminal tabs show no colour or icon of the person's
-  choosing on the strip (D34, DL-187): Jared asked for terminal tab colours and icons to be redesigned within Puppet
-  Master's neon glyph system, and until that redesign they stay off the strip (F3-449, F3-640). The close target is 24 x 24 px with a 12 px glyph; it is
-  hidden on inactive tabs narrower than 96 px, where a middle click and Delete still close. The "+" (F3-632) is 28 x 28
-  px, right after the last visible tab. "+N" is plain text in the strip's own type ("+7"; Retro "[+7]"; NieR Mode small
-  caps after a hairline), never a badge. The strip is an ARIA tablist: arrows move between tabs, Home and End go to the
-  ends, Enter or Space activates, Delete closes, and Shift+F10 opens the tab menu. The tab menu holds Close, Keep open
-  (on a preview tab), Pin or Unpin, Rename..., Move to new panel, Move to panel, and Split right or Split down with this
-  tab, each one command (cmd.panel_tab.close, keep, pin, unpin, rename, move). A kind may add rows of its own at the
-  end of the tab menu, after a hairline, through its registration (F3-635): the terminal adds Mute notifications
-  (F3-641). A kind's rows do what that kind registers for them, which need not be a command: Mute notifications is the
-  typed local action ui.terminal.mute_notifications (F3-640). Rename sets a user label that the kind's
-  own label no longer overrides; an empty name gives the kind's label back. Activating a tab is view state
-  (ui.panel_tab.activate), with no receipt and no event. A tab label never shows an internal id. Tabs, strip buttons and
-  dividers take at most a static tint on hover (F3-647). This unit supersedes the editor-and-dashboard scope of F3-505,
-  the editor-only strip rules of F3-421, the dashboard's own Main, Metrics and Monitoring strip, and Basic's 2 px accent
-  crown strip on the active tab.
+  Every panel has the same tab strip, the dashboard's included (DL-180, D5); no panel and no tab kind draws a
+  strip of its own. The strip is 35 px tall in every panel, the change Jared asked for in PMConcept7 revision 19
+  ("Strips shortened: editor 40 -> 35px") applied to every panel, and its tabs are 31 px tall with 8 px between
+  tabs, 2 px in Retro (the 8 px gap approved by Jared on 2026-10-10, D29). The active tab's plate overlaps the
+  body by 1 px and joins it through the contact-aware silhouette of F3-505, generalised here from the editor and
+  dashboard strips to every panel and every tab kind, so the active tab and its panel read as one shape. That
+  fused shape is the only mark of the active tab: no underline, no accent line, no accent crown strip, no pill.
+  In Friendly, Glass and Basic, light and dark, the plate takes the body's own fill; no look gives the active
+  tab a separately coloured plate, Glass dark included (Jared, 2026-10-10, D29: its purple plate is dropped),
+  and Glass keeps only its 1 px glass rim along the plate's crown, part of its material and never in an accent
+  colour. Retro fills the fused shape in reverse video and NieR Mode in ink (F3-647). Contact is measured to the
+  neighbouring content, its box inset by 8 px, with a 20 px linear morph window on each side. Crown, shoulder
+  and flare radii per look: Friendly 16, 16 and 25 px; Glass 16, 16 and 25 px; Basic 9, 14 and 22 px; Retro 6, 8
+  and 14 px on a stepped profile; NieR Mode 9, 14 and 22 px, or a 6, 0 and 14 px chamfer with a straight foot
+  when its square part is installed. Drag to reorder is the pointer-capture gesture of F3-421 and F3-505, kept
+  and polished in every strip: it starts after 4 px of travel, the carried tab tracks the pointer one to one,
+  the silhouette follows it in the same frame without springing, neighbours slide aside, widths do not reflow
+  while a tab is carried, and a changed release commits one cmd.panel_tab.move; the same gesture carries a tab
+  to another strip, onto a panel's edge or off its strip (F3-630). Under Retro every selection and every reorder
+  rolls one of the three Retro effects of F3-505 (phosphor, CRT and DOS) from a shuffle bag with no immediate
+  repeat, in every strip, and each ends on the steady reverse-video tab; Reduced Motion shows the end at once.
+  Widths: a tab's natural width is 96 to 200 px; when the strip runs short, inactive tabs shrink to 72 px, then
+  become 36 px icon-only tabs; the active tab keeps at least 120 px and its label and never hides; after that a
+  contiguous window of tabs around the active tab stays visible and the "+N" of F3-633 counts the rest. A shrunk
+  file name keeps its start and its end and loses its middle (rec…es.rs). Pinned tabs are 36 px, icon only, sit
+  at the left in pin order and never hide; Pin and Unpin are in the tab menu only (cmd.panel_tab.pin,
+  cmd.panel_tab.unpin). Marks: a file with unsaved changes shows a 7 px dot in the close slot until the pointer
+  is over the tab (Retro an asterisk after the label, NieR Mode a 6 px square); a preview tab has an italic
+  label (F3-634); a tab that opened in the background shows a 6 px hollow square until the user activates it; a
+  terminal whose last command failed shows the exit code after its label in the error colour; a tab an agent is
+  using shows the 7 px square agent mark and its hover tag names the agent; a running process uses F3-658's
+  working glyph with its look and Reduced Motion treatment. Every state mark comes from that shared set and its
+  priority rule, no tab invents its own, and every mark is also in the tab's accessible name. Terminal tabs show
+  no colour or icon of the person's choosing on the strip (D34, DL-187): Jared asked for terminal tab colours
+  and icons to be redesigned within Puppet Master's neon glyph system, and F3-658 now supplies that shared
+  redesign (F3-449, F3-640); this does not enable user-selected tab colors or icons. The close target is 24 x 24
+  px with a 12 px glyph; it is hidden on inactive tabs narrower than 96 px, where a middle click and Delete
+  still close. The "+" (F3-632) is 28 x 28 px, right after the last visible tab. "+N" is plain text in the
+  strip's own type ("+7"; Retro "[+7]"; NieR Mode small caps after a hairline), never a badge. The strip is an
+  ARIA tablist: arrows move between tabs, Home and End go to the ends, Enter or Space activates, Delete closes,
+  and Shift+F10 opens the tab menu. The tab menu holds Close, Keep open (on a preview tab), Pin or Unpin,
+  Rename..., Move to new panel, Move to panel, and Split right or Split down with this tab, each one command
+  (cmd.panel_tab.close, keep, pin, unpin, rename, move). A kind may add rows of its own at the end of the tab
+  menu, after a hairline, through its registration (F3-635): the terminal adds Mute notifications (F3-641). A
+  kind's rows do what that kind registers for them, which need not be a command: Mute notifications is the typed
+  local action ui.terminal.mute_notifications (F3-640). Rename sets a user label that the kind's own label no
+  longer overrides; an empty name gives the kind's label back. Activating a tab is view state
+  (ui.panel_tab.activate), with no receipt and no event. A tab label never shows an internal id. Tabs, strip
+  buttons and dividers take at most a static tint on hover (F3-647). This unit supersedes the
+  editor-and-dashboard scope of F3-505, the editor-only strip rules of F3-421, the dashboard's own Main, Metrics
+  and Monitoring strip, and Basic's 2 px accent crown strip on the active tab. F3-658 supersedes the former
+  square agent and static busy substitutes where a shared mark now applies; the unsaved/preview/background-open
+  placements and accessible state names remain.
 gui_related: true
 gui_classification_reason: Defines the one tab strip every panel uses, its silhouette, widths, marks, reorder and keyboard.
 split_recommended: false
@@ -354,16 +360,25 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Plans/Decision_Log.md#DL-180"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D5, D21, D23)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
-  - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
-  - "Plans/Decision_Log.md#DL-187"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D34)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D29: the 8 px gap and Glass dark's plate)"
-  - "Concepts/home-redesign/CONTRACT.md at c4e32ec0b7 on branch concept/home-panels-20261009, SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9 (section 3, `tabMenu`: the tab-menu rows a kind adds after a hairline; concept lineage only)"
+- Plans/Decision_Log.md#DL-180
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D5, D21, D23)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md,
+  SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md,
+  SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981
+  (the agreed anatomy; concept lineage only)
+- Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)
+- Plans/Decision_Log.md#DL-187
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D34)
+- '/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md,
+  SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D29: the 8 px gap and Glass dark''s plate)'
+- 'Concepts/home-redesign/CONTRACT.md at c4e32ec0b7 on branch concept/home-panels-20261009, SHA-256 8b1222cde3bb53a6ce534f5e436cc20b8829a230612b9e38654f5174e8d013b9
+  (section 3, `tabMenu`: the tab-menu rows a kind adds after a hairline; concept lineage only)'
+- /mnt/Cursor/share/puppet-master/2026-10-10-glyph-catalog-addendum/README.md, SHA-256 3d0497f01c878e8aa6f99fa8f602b9b3dbf887aead2a24d62c12969bd47a1d31
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "35 px"
   - "31 px"
@@ -390,6 +405,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (DL-187, D38): only the tab menu's own rows each dispatch one command; a kind's rows do what the kind registers, and the terminal's Mute notifications is the typed local action ui.terminal.mute_notifications."
 owner_hints:
   - Plans/FinalGUISpec.md
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-505, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/DRY_Rules.md#DR-065, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Decision_Log.md#DL-187, ContractName:Plans/FinalGUISpec.md#F3-449
@@ -1584,15 +1600,23 @@ split_recommended: false
 depends_on: [DL-180, DL-183, F3-505, F3-631, F3-635, F-073]
 unblocks: [SSYS-050, ATS-075]
 acceptance_criteria:
-  - "The editor's tabs use the one strip and silhouette, and the minimap is the only code-pane scrollbar with its change marks."
-  - "Sticky scroll, find and replace, go to line and preview tabs work in every editor tab."
-  - "The diff mode shows side by side when the tab body is wide and inline when it is narrow, decided by the body's width, never the window's."
-  - "With Follow look, syntax colours follow each look's token table, and the code face is JetBrains Mono in every look, Retro included."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "The editor scheme choice defaults to Follow look, can select any catalog scheme and opens the same Appearance popover component from its ⋮ menu."
-  - "Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy."
-  - "Every scheme supplies 17 syntax tokens, paints all listed editor surfaces and meets the 4.5:1 text and diff-sign floor and 3:1 find-hit ring floor; Appearance... shows the scheme or Follow look, font and size."
-  - "The editor Appearance entry opens F3-650's full Customize screen, and the editor's 4.5:1 floor for syntax tokens holds when it draws any catalog or imported scheme."
+- The editor's tabs use the one strip and silhouette, and the minimap is the only code-pane scrollbar with its change
+  marks.
+- Sticky scroll, find and replace, go to line and preview tabs work in every editor tab.
+- The diff mode shows side by side when the tab body is wide and inline when it is narrow, decided by the body's width,
+  never the window's.
+- With Follow look, syntax colours follow each look's token table, and the code face is JetBrains Mono in every look,
+  Retro included.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are
+  created by this unit.
+- The editor scheme choice defaults to Follow look, can select any catalog scheme and opens the shared Customize component
+  (F3-650/F3-651) from its ⋮ menu.
+- Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber
+  follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy.
+- Every scheme supplies 17 syntax tokens, paints all listed editor surfaces and meets the 4.5:1 text and diff-sign
+  floor and 3:1 find-hit ring floor; Appearance... opens the complete F3-650/F3-651 screen.
+- The editor Appearance entry opens F3-650's full Customize screen, and the editor's 4.5:1 floor for syntax tokens
+  holds when it draws any catalog or imported scheme.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -1668,66 +1692,72 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every panel surface, the strip, the "+" menu, the "+N" list, the empty-panel launcher, the panel and tab menus, the
-  dividers, drag ghosts and landing previews, is designed in Friendly, Glass, Retro and Basic, light and dark, and in
-  NieR Mode and Reduced Motion, from the first build (DL-180, D23). Friendly, Glass and Basic draw the fused silhouette
-  with their own crown, shoulder and flare (F3-631), the active tab one surface with its body; Glass keeps its 1 px
-  glass rim on the plate, goes to .92 opacity only while a tab is carried (F3-505), adds no backdrop blur of its own to
-  panels or strips, and F3-431's closed blur budget is unchanged. Retro: reverse-video tabs (the
-  active tab a phosphor-filled block with dark text), bracket glyphs ("[+7]", "[+]"), stepped corners on the silhouette,
-  kind icons as glyphs of at most two cells from the code face (never emoji), the dirty mark an asterisk after the label, box-drawn
-  menus with a hard frame and reverse-video rows, dividers drawn as a single box-drawing line that doubles while
-  hovered or dragged, and a dithered landing preview with a box-drawn outline; Retro motion snaps and never springs, and
-  its three rotating effects play on selection and reorder (F3-631). NieR Mode paints only while NieR Mode is on, and
-  each touch is gated by its own installed part, using the existing part keys only and never a new part (SSYS-043,
-  F3-598, DL-152): square gives the chamfered silhouette with a straight foot (crown 6, shoulder 0, flare 14 px), an ink
-  rule under each strip, square dirty and attention marks, hairline dividers with ticks and a hatched landing preview;
-  cursor fills the active tab and hovered or chosen menu and launcher rows with ink, the YoRHa menu cursor, puts the
-  square list cursor before the focused panel's active label and gives other panels' active tabs the same ink fill as their fused panel;
-  headers sets tab labels, "+N" and menu headings in the YoRHa caption treatment; brackets puts target brackets on the
-  focused or chosen item; icons draws kind icons with square strokes; empty draws the empty-panel launcher's ink empty
-  state; ground shows the parchment dot grid between panels. NieR colours come only from the NieR token tables or the
-  ordinary theme tokens NieR repaints; NieR motion is stepped, with no glow, filter or blur, loops only by transform or
-  opacity, and no surface larger than 340 x 256 px reverses its opacity more than once a second; there is one NieR Mode
-  editor and one reboot plate (DR-056). Reduced Motion: every gesture, glide, settle, spring and effect is instant
-  (every duration of F3-630 and F3-631 is 0), the Retro effects and NieR fills show their end state at once, drags still
-  work and still show their landing previews, and NieR's Still and Colors only presets show end states at once. Hover
-  follows the merged hover system: Plans/DRY_Rules.md#DR-072 owns its grammar and boundary and F3-465 its behaviour.
-  Tabs, strip buttons, dividers and editor or terminal text take at most a static tint; magnet displacement and glow
-  touch cards, rows and tiles only, never a tab, a tab button or a divider; header-row and terminal icon buttons are the
-  icon kind with a static tint; and hover rests while a divider is dragged. No look draws a pill, a coloured side stripe
-  or an emoji (F3-648). This supersedes F3-505's and F3-466's per-theme tab skins where they differ, and gives the home
-  panels the NieR Mode treatment they lacked (DL-144 and DL-152 covered the chat, onboarding and the Tour).
-  Retro's editor syntax stays monochrome: brightness and weight in dark, the black and red ribbon in light.
-  Its colour follows the terminal's Retro scheme choice, Phosphor Green or Amber; choosing Amber turns Retro's
-  editor syntax amber. That choice is stored once in F3-642's terminal appearance model; the editor reads it
-  and keeps no copy.
-  The active tab and its panel are one shape in every look; the shape's fill follows the look's selection grammar: the body's fill in Friendly, Glass and Basic, reverse video in Retro, ink in NieR. Glass's 1 px rim along the crown is material, not an accent.
-  Text and state colours, including dim text, accent, ok, warn, bad and inactive tabs, reach at least 4.5:1
-  in every look and in NieR. They are mixed from the page's own colours so the Settings accent flows
-  through. A primary button chooses black or white ink from the fill's luminance and keeps at least 4.5:1
-  contrast.
-  Kind icons follow the shared 16 px stroke icon grammar, and Retro glyphs are at most 2 cells; this amends the one-cell
-  wording for kinds where needed. Crew, Review, Chat Room and BrainStorm use &, ?, ~ and ^ respectively;
-  Open in new tab uses + and Appearance uses *. Each kind supplies its icon to the strip, +N list, every-tab
-  list and recent-tab switcher through the one registered icon source. Primary-button black/white ink
-  switches at fill luminance Y 0.1791, with a 4.58:1 theoretical floor. Source measurements changed Glass
-  light from 1.75:1 to 4.68:1 (hover 7.3:1), Friendly light from 2.97:1 to 6.79:1, and give at least 4.68:1
-  in every look; the required floor remains 4.5:1.
+  Every panel surface, the strip, the "+" menu, the "+N" list, the empty-panel launcher, the panel and tab
+  menus, the dividers, drag ghosts and landing previews, is designed in Friendly, Glass, Retro and Basic, light
+  and dark, and in NieR Mode and Reduced Motion, from the first build (DL-180, D23). Friendly, Glass and Basic
+  draw the fused silhouette with their own crown, shoulder and flare (F3-631), the active tab one surface with
+  its body; Glass keeps its 1 px glass rim on the plate, goes to .92 opacity only while a tab is carried
+  (F3-505), takes its replacement sheet and lens material from F3-652 at publication; the old closed Glass blur
+  count is superseded. Retro: reverse-video tabs (the active tab a phosphor-filled block with dark text),
+  bracket glyphs ("[+7]", "[+]"), stepped corners on the silhouette, kind icons as glyphs of at most two cells
+  from the code face (never emoji), the dirty mark an asterisk after the label, box-drawn menus with a hard
+  frame and reverse-video rows, dividers drawn as a single box-drawing line that doubles while hovered or
+  dragged, and a dithered landing preview with a box-drawn outline; Retro motion snaps and never springs, and
+  its three rotating effects play on selection and reorder (F3-631). NieR Mode paints only while NieR Mode is
+  on, and each touch is gated by its own installed part, using the existing part keys only and never a new part
+  (SSYS-043, F3-598, DL-152): square gives the chamfered silhouette with a straight foot (crown 6, shoulder 0,
+  flare 14 px), an ink rule under each strip, square dirty and attention marks, hairline dividers with ticks and
+  a hatched landing preview; cursor fills the active tab and hovered or chosen menu and launcher rows with ink,
+  the YoRHa menu cursor, puts the square list cursor before the focused panel's active label and gives other
+  panels' active tabs the same ink fill as their fused panel; headers sets tab labels, "+N" and menu headings in
+  the YoRHa caption treatment; brackets puts target brackets on the focused or chosen item; icons draws kind
+  icons with square strokes; empty draws the empty-panel launcher's ink empty state; ground shows the parchment
+  dot grid between panels. NieR colours come only from the NieR token tables or the ordinary theme tokens NieR
+  repaints; NieR motion is stepped, with no glow, filter or blur, loops only by transform or opacity, and no
+  surface larger than 340 x 256 px reverses its opacity more than once a second; there is one NieR Mode editor
+  and one reboot plate (DR-056). Reduced Motion: every gesture, glide, settle, spring and effect is instant
+  (every duration of F3-630 and F3-631 is 0), the Retro effects and NieR fills show their end state at once,
+  drags still work and still show their landing previews, and NieR's Still and Colors only presets show end
+  states at once. Hover follows the merged hover system: Plans/DRY_Rules.md#DR-072 owns its grammar and boundary
+  and F3-465 its behaviour. Tab, strip/header and terminal icon buttons consume F3-465's small-control marker
+  without card magnet. Dividers use F3-657's shared resize feedback; editor and terminal text stay outside card
+  effects. Card hover rests during a divider drag. No look draws a forbidden pill label, coloured side stripe or
+  chrome emoji under F3-648 and its explicit exemptions. This supersedes F3-505's and F3-466's per-theme tab
+  skins where they differ, and gives the home panels the NieR Mode treatment they lacked (DL-144 and DL-152
+  covered the chat, onboarding and the Tour). Retro's editor syntax stays monochrome: brightness and weight in
+  dark, the black and red ribbon in light. Its colour follows the terminal's Retro scheme choice, Phosphor Green
+  or Amber; choosing Amber turns Retro's editor syntax amber. That choice is stored once in F3-642's terminal
+  appearance model; the editor reads it and keeps no copy. The active tab and its panel are one shape in every
+  look; the shape's fill follows the look's selection grammar: the body's fill in Friendly, Glass and Basic,
+  reverse video in Retro, ink in NieR. Glass's 1 px rim along the crown is material, not an accent. Text and
+  state colours, including dim text, accent, ok, warn, bad and inactive tabs, reach at least 4.5:1 in every look
+  and in NieR. They are mixed from the page's own colours so the Settings accent flows through. A primary button
+  chooses black or white ink from the fill's luminance and keeps at least 4.5:1 contrast. Kind icons consume the
+  shared F3-658 glyph registry; the earlier ASCII kind substitutions are compatibility lineage, not a second
+  icon set. Each kind supplies its icon to the strip, +N list, every-tab list and recent-tab switcher through
+  the one registered icon source. Primary-button black/white ink switches at fill luminance Y 0.1791, with a
+  4.58:1 theoretical floor. Source measurements changed Glass light from 1.75:1 to 4.68:1 (hover 7.3:1),
+  Friendly light from 2.97:1 to 6.79:1, and give at least 4.68:1 in every look; the required floor remains
+  4.5:1.
 gui_related: true
 gui_classification_reason: Defines how panels, strips, menus, dividers and drags render in each look, NieR Mode and Reduced Motion.
 split_recommended: false
 depends_on: [DL-180, DL-152, SSYS-043, F3-598, F3-465, F3-631, F3-632, F3-633]
 unblocks: [ATS-075]
 acceptance_criteria:
-  - "Each panel surface listed here renders in the eight family variants, NieR Mode and Reduced Motion with the treatments stated."
-  - "Retro shows reverse-video tabs, bracket glyphs, stepped corners, box-drawn menus and dividers and kind glyphs of at most two cells, and its motion snaps."
-  - "With NieR Mode off no NieR touch draws; with it on each touch appears only when its part is installed, every colour resolves to NieR or repainted theme tokens, and no glow, filter or blur is used."
-  - "Under Reduced Motion every panel and tab duration is 0 and drags still show landing previews."
-  - "No tab, tab button or divider receives magnet displacement or glow; at most a static tint."
-  - "Glass adds no backdrop blur for panels or strips."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy."
+- Each panel surface listed here renders in the eight family variants, NieR Mode and Reduced Motion with the treatments
+  stated.
+- Retro shows reverse-video tabs, bracket glyphs, stepped corners, box-drawn menus and dividers and kind glyphs of
+  at most two cells, and its motion snaps.
+- With NieR Mode off no NieR touch draws; with it on each touch appears only when its part is installed, every colour
+  resolves to NieR or repainted theme tokens, and no glow, filter or blur is used.
+- Under Reduced Motion every panel and tab duration is 0 and drags still show landing previews.
+- Small controls use F3-465 without card magnet; dividers use F3-657.
+- Glass panels and strips use F3-652 at publication; the old closed blur budget is superseded.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are
+  created by this unit.
+- Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber
+  follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -1741,14 +1771,28 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)"
-  - "Plans/Decision_Log.md#DL-180"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D23, D24)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md, SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728 (the NieR lead's rule for new surfaces)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
-  - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
+  SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md,
+  SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D30)
+- Plans/Decision_Log.md#DL-180
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D23, D24)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md,
+  SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728 (the NieR lead's rule for new surfaces)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md,
+  SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981
+  (the agreed anatomy; concept lineage only)
+- Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-10-glyph-catalog-addendum/README.md, SHA-256 3d0497f01c878e8aa6f99fa8f602b9b3dbf887aead2a24d62c12969bd47a1d31
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-resize-glow/NOTES.md, SHA-256 0a20256d730c5b51cda138b14845a5dc2e7dfdda04385a3956721a73fb657c16
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-hover-polish-all-looks/NOTES.md, SHA-256 6a86e56a9edc818c4a6c812e484e40c377cf7657180d652457de64ab82fdb12c
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-glass-v3/README.md, SHA-256 0e424cba2f2d03932159b6e25977959f23d8f65cbcca57ca1d067b505f61db54
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "NieR Mode"
   - "square"
@@ -1761,10 +1805,10 @@ preserved_exact_tokens:
   - "[+7]"
   - "[+]"
 negative_constraints:
-  - "Do not add a NieR part, or paint a NieR touch while NieR Mode is off or its part is not installed."
-  - "Do not give tabs, tab buttons or dividers magnet displacement or glow."
-  - "Do not add a backdrop blur for panels or strips."
-  - "Do not use an emoji as a kind icon in any look."
+- Do not add a NieR part, or paint a NieR touch while NieR Mode is off or its part is not installed.
+- Small controls use F3-465 without card magnet; dividers use F3-657.
+- Glass panels and strips use F3-652 at publication; the old closed blur budget is superseded.
+- Do not use an emoji as a kind icon in any look.
 compatibility_only_notes:
   - "The concept also gates some touches by its own hook names and by part keys outside this list; only the existing part keys named here are canon."
 stale_retired_dispositions:
@@ -1774,6 +1818,7 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L5): The active tab and its panel share one shape and the look selection fill; the Glass crown rim is material."
 owner_hints:
   - Plans/FinalGUISpec.md
+
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/DRY_Rules.md#DR-072, ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/DRY_Rules.md#DR-056, ContractName:Plans/FinalGUISpec.md#F3-598
@@ -1854,9 +1899,10 @@ preserved_exact_tokens:
   - "pill"
   - "key caps"
 negative_constraints:
-  - "Do not draw a coloured border or stripe on one side of a box, except the structural rails of working activities (APR-034, DR-069)."
-  - "Do not draw a pill-shaped tab, tag, badge, button or status chip."
-  - "Do not put an emoji in Puppet Master's chrome."
+- Do not draw a coloured border or stripe on one side of a box, except the structural rails of working activities
+  (APR-034, DR-069).
+- Do not draw a pill-shaped label, tag, suggestion chip or state badge.
+- Do not put an emoji in Puppet Master's chrome.
 compatibility_only_notes: []
 stale_retired_dispositions:
 - 'Amended 2026-10-10 (lead ruling L21): The structural-rail carve-out applies to the side-border check only.'
