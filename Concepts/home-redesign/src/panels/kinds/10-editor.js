@@ -1267,6 +1267,11 @@ function mountEditor(host, st, api) {
     return false;
   }
   resolveIndent();
+  /* the width a tab stop is drawn at, or 0 where the indentation is spaces: the file's own kind while Follow the file's
+     indentation is on, Indent with's when it is off (the customizer audit: with Follow off, Tabs still drew and typed
+     spaces in a file indented with spaces). The editor keeps indentation as spaces at tab stops; a tab is how it is
+     drawn (Show spaces marks it) and a level Tab and Shift+Tab move by */
+  function tabUnitNow() { return IND.tabs ? (d.tabbed ? d.tabUnit : IND.unit) : 0; }
 
   /* ---- state ---- */
   var mode = d.chat ? 'diff' : ((st.mode === 'diff' || st.view === 'diff' || st.diff === true) && d.base ? 'diff' : 'file');
@@ -1941,7 +1946,7 @@ function mountEditor(host, st, api) {
     // text is not the document's) starts from none
     var wantBr = R.colors.bracketPairs && BRACKET_LANGS[d.lang];
     var stack = !wantBr ? null : lineForBrackets != null && !d.chat ? bracketStack(d, lineForBrackets) : '';
-    return decorateLine(text || '', toks, { syntax: R.colors.syntax, stack: stack, ws: R.lines.whitespace, tabUnit: d.tabbed ? d.tabUnit : 0 });
+    return decorateLine(text || '', toks, { syntax: R.colors.syntax, stack: stack, ws: R.lines.whitespace, tabUnit: tabUnitNow() });
   }
   /* the text of a row, piece by piece when it wraps; guides behind it */
   function paintText(el, r, text, toks, words, lineForBrackets) {
@@ -2127,7 +2132,7 @@ function mountEditor(host, st, api) {
   function dotsIn(frag, r, t, c0, c1) {
     spans(r, c0, c1, 'r').forEach(function (p) {
       var from = colAtX(r, p.x0, p.y), to = colAtX(r, p.x1, p.y), piece = '';
-      var tu = d.tabbed ? d.tabUnit : 0, lead = t.search(/\S/); if (lead < 0) lead = t.length;
+      var tu = tabUnitNow(), lead = t.search(/\S/); if (lead < 0) lead = t.length;
       for (var i = from; i < to; i++) {
         if (tu > 1 && i < lead && i % tu === 0 && i + tu <= lead) { piece += WS_TAB + '        '.slice(0, Math.min(tu, to - i) - 1); i += tu - 1; continue; }
         piece += t.charAt(i) === ' ' ? WS_DOT : ' ';
