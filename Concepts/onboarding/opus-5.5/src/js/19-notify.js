@@ -23,11 +23,12 @@
    src/css/26-notify-*.css. Reduced Motion shows end states at once (arrivals appear, exits are instant, the join swaps).
 
    Contracts kept for other owners:
-     - #rsStage stays the same element: Home (home-redesign 50-pageshell.js) and Usage (usage-redesign 46-shell.js)
-       observe it and move it. A new card is appended as its last child, synchronously, and the stage shows the newest
-       on top with column-reverse, so NieR Mode's parts (src/settings/kit.d/19-nier-parts.js), which wrap window.toast
-       and PM_TITLEBAR_NOTIFY.push once and read the new card as #rsStage's last child, keep their decode, glitch, Pod
-       and voice. The card carries n-sev-<severity>, and .n-title / .n-body hold one text node each (decode's rule).
+     - #rsStage stays the same element: Home (home-redesign 50-pageshell.js) observes it and drops it below its panel
+       strip. Usage (usage-redesign 46-shell.js) still moves it to its stage's bottom right, which 26-notify-00-core.css
+       undoes: on Usage too notices stage under the bell (Jared, 2026-10-13 22:10 ET). A new card is appended as its
+       last child, synchronously, and the stage shows the newest on top with column-reverse, so NieR Mode's parts
+       (src/settings/kit.d/19-nier-parts.js), which wrap window.toast and PM_TITLEBAR_NOTIFY.push once and read the new
+       card as #rsStage's last child, keep their decode, glitch, Pod and voice. The card carries n-sev-<severity>, and .n-title / .n-body hold one text node each (decode's rule).
      - #notifySlot's --rs-stack-w (120..248 px, the title bar's density code) sizes the stack.
      - The tour may set window.toast to a no-op while it restores a layout (80-tour-core.js hushed()).
    Settings: general.interaction.notifications-enabled off is total quiet (nothing pops up or sounds; lasting notices
@@ -986,9 +987,8 @@
     if (open) { const h = panelEl.getBoundingClientRect().height; stageEl.style.setProperty('--pmn-push', Math.round(h + 8) + 'px'); }
     else stageEl.style.removeProperty('--pmn-push');
   }
-  /* keep the stage inside the window (its own place, under the bell; Home and Usage move it themselves) */
+  /* keep the stage inside the window (its place is under the bell on every page; Home drops it below its panel strip) */
   function clampStage() {
-    if (doc.body.classList.contains('pmu-page-active')) return;
     stageEl.style.removeProperty('--pmn-stage-shift');
     const r = stageEl.getBoundingClientRect(), pad = 10;
     let shift = 0;

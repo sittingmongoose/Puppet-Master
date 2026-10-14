@@ -88,7 +88,6 @@ html[data-theme^="friendly"] .pmn-toast:last-child:is([data-level="attention"], 
   background: color-mix(in srgb, var(--pmn-acc) 13%, color-mix(in srgb, #fff 14%, var(--pmn-surface)));
   border-top-color: color-mix(in srgb, var(--pmn-acc) 55%, var(--pmn-surface)); border-left-color: color-mix(in srgb, var(--pmn-acc) 55%, var(--pmn-surface));
 }
-body.pmu-page-active html[data-theme^="friendly"] .pmn-toast::before, html[data-theme^="friendly"] body.pmu-page-active .pmn-toast::before { display: none; }
 html[data-theme^="friendly"] .pmn-toast-in { padding: 13px 12px 15px 13px; gap: 12px; }
 html[data-theme^="friendly"] .pmn-title { font-weight: 600; font-size: 13.5px; }
 html[data-theme^="friendly"] .pmn-kicker { font-family: var(--pmn-font-head); font-weight: 600; letter-spacing: 0; }

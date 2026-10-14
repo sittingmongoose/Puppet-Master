@@ -172,8 +172,11 @@ html[data-theme$="light"] {
 /* an older card joining the stack passes behind the newer cards above it (they sit nearer), then rises into the bell */
 #rsStage.pmn-stage > :not(.pmn-flying) { z-index: 2; }
 #rsStage.pmn-stage > .pmn-toast.pmn-flying { z-index: 0; }
-/* while Usage shows, the notices sit at its stage's bottom right and take no pointer (the Usage owner's rule) */
-body.pmu-page-active #rsStage .pmn-toast { pointer-events: none !important; }
+/* Usage too: notices stage under the bell like on every other page (Jared, 2026-10-13 22:10 ET). Usage's own layer
+   (usage-redesign 10-shell.css and 46-shell.js) moves #rsStage to the bottom right of its stage and makes it
+   pointer-free; this undoes both without touching its files. Usage's own note (.pmu-toast) keeps its place. */
+body.pmu-page-active #rsStage.pmn-stage { translate: none !important; }
+body.pmu-page-active #rsStage.pmn-stage > :is(.pmn-toast, .pmn-pin) { pointer-events: auto !important; }
 
 /* dismiss: always there, quieter until the card is hovered or focused */
 .pmn-x {
