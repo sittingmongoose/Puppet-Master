@@ -1920,6 +1920,11 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # restore_revision (1256 -> 1257). It dispatches an existing catalog command
     # with its existing handler; no command, Touch row, profile, alias,
     # exclusion, handler or proof is added.
+    # 2026-10-14 PM7 editor Customize (UCC-204, WM-093, UIW-043):
+    # +1 production-intent editor.appearance.field for cmd.editor.appearance.set
+    # (1257 -> 1258). This is the typed This editor writer; All editors reuses
+    # the Settings transaction pair. No Touch row/profile, alias, native handler
+    # evidence or closure promotion is added.
     exact_resolved_denominators = {
         "row_count": 682,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
@@ -1927,7 +1932,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         "profile_count": 135,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
-        "production_wiring_entry_count": 1257,
+        "production_wiring_entry_count": 1258,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

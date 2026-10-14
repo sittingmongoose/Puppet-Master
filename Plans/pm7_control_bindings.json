@@ -5923,7 +5923,7 @@
     },
     {
       "control_id": "notifications.approve",
-      "surface": "Notification action row > approve",
+      "surface": "Hosted source approval/workflow card under the bell > approve",
       "owner_ref": "Plans/FinalGUISpec.md#F3-453",
       "disposition": "command",
       "action_ids": [
@@ -5933,12 +5933,12 @@
         "catalog.runtime_approve"
       ],
       "setting_ids": [],
-      "payload": "Current blocked episode, approval_scope_key and owner-admitted allowed_action_ids; never a request-id substitute",
+      "payload": "Current blocked episode, approval_scope_key and owner-admitted allowed_action_ids; never a request-id substitute; retain the source card producer identity and availability/disabled projections (WM-062/UCC-169); notification hosting does not create an independent approval producer",
       "no_production_reason": ""
     },
     {
       "control_id": "notifications.decline",
-      "surface": "Notification action row > decline",
+      "surface": "Hosted source approval/workflow card under the bell > decline",
       "owner_ref": "Plans/FinalGUISpec.md#F3-453",
       "disposition": "command",
       "action_ids": [
@@ -5948,12 +5948,12 @@
         "catalog.runtime_decline"
       ],
       "setting_ids": [],
-      "payload": "Current blocked episode and owner-required reason",
+      "payload": "Current blocked episode and owner-required reason; retain the source card producer identity and availability/disabled projections (WM-062/UCC-169); notification hosting does not create an independent approval producer",
       "no_production_reason": ""
     },
     {
       "control_id": "notifications.permission.once",
-      "surface": "Notification action row > permission.once",
+      "surface": "Hosted source approval/workflow card under the bell > permission.once",
       "owner_ref": "Plans/FinalGUISpec.md#F3-453",
       "disposition": "command",
       "action_ids": [
@@ -5963,12 +5963,12 @@
         "catalog.runtime_approve"
       ],
       "setting_ids": [],
-      "payload": "Owner-admitted approval scope once; current permission request and runtime approval scope identity",
+      "payload": "Owner-admitted approval scope once; current permission request and runtime approval scope identity; retain the source card producer identity and availability/disabled projections (WM-062/UCC-169); notification hosting does not create an independent approval producer",
       "no_production_reason": ""
     },
     {
       "control_id": "notifications.permission.session",
-      "surface": "Notification action row > permission.session",
+      "surface": "Hosted source approval/workflow card under the bell > permission.session",
       "owner_ref": "Plans/FinalGUISpec.md#F3-453",
       "disposition": "command",
       "action_ids": [
@@ -5978,27 +5978,27 @@
         "catalog.runtime_approve"
       ],
       "setting_ids": [],
-      "payload": "Owner-admitted session scope; no approval outside that bound",
+      "payload": "Owner-admitted session scope; no approval outside that bound; retain the source card producer identity and availability/disabled projections (WM-062/UCC-169); notification hosting does not create an independent approval producer",
       "no_production_reason": ""
     },
     {
       "control_id": "notifications.permission.always",
-      "surface": "Notification action row > permission.always",
-      "owner_ref": "Plans/FinalGUISpec.md#F3-453",
+      "surface": "Hosted source approval/workflow card under the bell > permission.always",
+      "owner_ref": "Plans/Permissions_System.md#PS-041",
       "disposition": "command",
       "action_ids": [
-        "cmd.permissions.create_project_rule"
+        "cmd.runtime.approve"
       ],
       "production_entries": [
-        "catalog.permissions_create_project_rule"
+        "catalog.runtime_approve"
       ],
       "setting_ids": [],
-      "payload": "Explicit rule pattern and Project scope; existing owner review/validation before creation; never a generic allow-all",
+      "payload": "The source approval card keeps the PS-041 Always pattern/scope review: Project or Global when valid, Global only without a Project. Its final admitted grant binds the current blocked episode and approval_scope_key through the runtime HITL command; canonical permissions storage owns the durable rule. Keep WM-062/UCC-169 producer identity, current allowed_action_ids and disabled projections; no notification-local allowlist or Project-only shortcut.",
       "no_production_reason": ""
     },
     {
       "control_id": "notifications.permission.deny",
-      "surface": "Notification action row > permission.deny",
+      "surface": "Hosted source approval/workflow card under the bell > permission.deny",
       "owner_ref": "Plans/FinalGUISpec.md#F3-453",
       "disposition": "command",
       "action_ids": [
@@ -6008,23 +6008,19 @@
         "catalog.runtime_decline"
       ],
       "setting_ids": [],
-      "payload": "Exact current permission approval identity",
+      "payload": "Exact current permission approval identity; retain the source card producer identity and availability/disabled projections (WM-062/UCC-169); notification hosting does not create an independent approval producer",
       "no_production_reason": ""
     },
     {
-      "control_id": "notifications.filesafe.hold",
-      "surface": "Notification action row > filesafe.hold",
-      "owner_ref": "Plans/FinalGUISpec.md#F3-453",
-      "disposition": "command",
-      "action_ids": [
-        "cmd.runtime.approve"
-      ],
-      "production_entries": [
-        "catalog.runtime_approve"
-      ],
+      "control_id": "notifications.filesafe.expiry",
+      "surface": "Hosted FileSafe card under the bell > existing expiry window",
+      "owner_ref": "Plans/FileSafe.md#F2-135",
+      "disposition": "non_dispatch",
+      "action_ids": [],
+      "production_entries": [],
       "setting_ids": [],
-      "payload": "FileSafe owner-approved 60-second hold and current approval identity; the notification supplies no bypass",
-      "no_production_reason": ""
+      "payload": "Read the FileSafe owner deadline/outcome for the existing 60-second approval window; a display timer never approves, extends or resolves the blocked episode.",
+      "no_production_reason": "Read-only owner expiry projection, not a Hold approval command; the source owns its timeout outcome."
     },
     {
       "control_id": "notifications.concern.resolve",
@@ -6043,17 +6039,19 @@
     },
     {
       "control_id": "notifications.details",
-      "surface": "Notification action row > details",
+      "surface": "Hosted source approval/workflow card or other notification > Details",
       "owner_ref": "Plans/FinalGUISpec.md#F3-453",
       "disposition": "command",
       "action_ids": [
+        "cmd.permissions.review_request",
         "cmd.alert.open_source"
       ],
       "production_entries": [
+        "catalog.permissions_review_request",
         "catalog.alert_open_source"
       ],
       "setting_ids": [],
-      "payload": "Exact alert source route/OpenSubject; no page-local routing guess",
+      "payload": "Approval-card Details uses the source card identity and cmd.permissions.review_request with approval_scope_key/requesting_context (WM-062/UCC-169/UCC-113); other alerts use cmd.alert.open_source with the exact alert source route/OpenSubject. Choose the owner-admitted route, never dispatch both or invent a page-local route.",
       "no_production_reason": ""
     },
     {
@@ -6068,6 +6066,73 @@
       "setting_ids": [],
       "payload": "Read-only current source reason/validation/allowed-action projection; disclose absent facts; no invented repair or mutation",
       "no_production_reason": "Read-only explanation disclosure; unchanged source authority."
+    },
+    {
+      "control_id": "notifications.permission.pattern",
+      "surface": "Hosted source approval card > suggested pattern",
+      "owner_ref": "Plans/Permissions_System.md#PS-041",
+      "disposition": "non_dispatch",
+      "action_ids": [],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Edit only the source approval card draft; the owner validates the normalized pattern and exact scope before any durable grant.",
+      "no_production_reason": "Draft field only; the owner decision command commits the chosen grant."
+    },
+    {
+      "control_id": "notifications.permission.scope",
+      "surface": "Hosted source approval card > Project / Global",
+      "owner_ref": "Plans/Permissions_System.md#PS-041",
+      "disposition": "non_dispatch",
+      "action_ids": [],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Select only among scopes the source permission owner admits; preserve its no-Project Global-only rule and inspectable pattern.",
+      "no_production_reason": "Draft choice only; choosing a scope alone grants no permission and writes no setting."
+    },
+    {
+      "control_id": "notifications.filesafe.once",
+      "surface": "Hosted source FileSafe approval card under the bell > Approve once",
+      "owner_ref": "Plans/FileSafe.md#F2-183",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.runtime.approve"
+      ],
+      "production_entries": [
+        "catalog.runtime_approve"
+      ],
+      "setting_ids": [],
+      "payload": "FileSafe-local Approve once consumes the currently admitted runtime approval and exact blocked episode/approval_scope_key; preserve the source card producer identity, disabled reasons and guard revalidation. No new shared action enum or bypass.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "notifications.filesafe.deny",
+      "surface": "Hosted source FileSafe approval card under the bell > Deny",
+      "owner_ref": "Plans/FileSafe.md#F2-183",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.runtime.decline"
+      ],
+      "production_entries": [
+        "catalog.runtime_decline"
+      ],
+      "setting_ids": [],
+      "payload": "Use the source card current blocked episode and owner-required reason; retain WM-062/UCC-169 producer identity and allowed-action projection. Dismiss and expiry never substitute for this explicit decision.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "notifications.filesafe.add_rule",
+      "surface": "Hosted source FileSafe approval card under the bell > Approve & add to list",
+      "owner_ref": "Plans/FileSafe.md#F2-183",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.permissions.review_request"
+      ],
+      "production_entries": [
+        "catalog.permissions_review_request"
+      ],
+      "setting_ids": [],
+      "payload": "Enter the existing owner approval/rule review with approval_scope_key and requesting_context when filesafe_add_rule is admitted. That owner validates pattern/scope, persists through its canonical rule commands and makes the final runtime decision; this entry itself opens the review only and never writes an ad-hoc FileSafe allowlist.",
+      "no_production_reason": ""
     }
   ]
 }
