@@ -23,6 +23,8 @@
     var newRows = profiles.filter(function (p) { return p.group !== 'ssh'; }).map(newRow);
     var hosts = profiles.filter(function (p) { return p.group === 'ssh'; }).map(newRow);
     if (hosts.length) newRows.push('-', { id: 'new-ssh', label: 'SSH hosts', sub: hosts });
+    /* Allowed Shell Profiles can name only what this computer lacks (90-kind.js) */
+    if (!newRows.length) newRows.push({ id: 'new-none', label: 'None of the allowed profiles is on this computer', detail: 'Settings › Editor & Terminal', disabled: true });
     var N = window.PMT && window.PMT.notifications, sid = s.id;
     return [
       { id: 'new', label: 'New terminal', sub: newRows },
