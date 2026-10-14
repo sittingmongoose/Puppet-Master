@@ -22,7 +22,8 @@
  * A view is measured once it has settled: one screen layer, entrances finished, NieR's cold-open log gone, the tour's
  * spotlight arrived (O55.tour.afterGlide) and the callout, the screen, its words and its scroll unchanged over six reads.
  * A capture is taken again (twice at most, each retry recorded) when a window or tour word moved between the two
- * snapshots around it.
+ * snapshots around it. --during 400,900,... also measures each screen at those moments (ms after it was asked for),
+ * before it settles, for one-shot moments such as Ready's curtain call and its confetti.
  * Writes <out>/contrast.json and <out>/failures.json, a screenshot per failing view, and prints one line per view.
  * Exits 1 when any text is under its floor. Drives an existing GPU browser over CDP; it never launches one. */
 import { createRequire } from 'node:module';
@@ -49,6 +50,7 @@ const NEEDS_DEVICE = new Set(['nas-identity', 'nas-key', 'nas-signin', 'nas-inst
 const screens = screensOpt === 'all' ? Object.keys(coverage.screens) : screensOpt === 'none' ? [] : screensOpt.split(',');
 const tourOpt = opt('tour', 'all');
 const frames = Number(opt('frames', '3'));
+const during = String(opt('during', '')).split(',').filter(Boolean).map(Number).sort((x, y) => x - y);
 const [VW, VH] = opt('viewport', '1440x900').split('x').map(Number);
 const out = resolve(opt('out', '/tmp/o55/contrast')); mkdirSync(out, { recursive: true });
 
@@ -187,9 +189,9 @@ function movedWords(before, after) {
   return before.items.some((i) => { if (i.kind === 'art') return false; const q = at.get(i.path + '#' + i.node + '#' + i.text); if (!q) return false;
     return i.rects.some((r, k) => !q[k] || Math.abs(r.x - q[k].x) > 0.5 || Math.abs(r.y - q[k].y) > 0.5); });
 }
-async function measure(page, label) {
+async function measure(page, label, nFrames) {
   const best = new Map(), tStart = Date.now();
-  const n = label.motion === 'reduced' ? 1 : frames;
+  const n = nFrames || (label.motion === 'reduced' ? 1 : frames);
   for (let f = 0; f < n; f++) {
     if (f) await sleep(900);
     /* a capture is taken again (up to twice) when a window or tour word moved between the two snapshots around it: the
@@ -302,6 +304,9 @@ try {
             await coldOpen(page);
             continue;
           }
+          /* --during: also measure the screen at these moments after it was asked for (ms), before it settles: the
+             one-shot moments (Ready's curtain call and its confetti) that the settled frames come after */
+          if (during.length) { const t0 = Date.now(); for (const ms of during) { await sleep(Math.max(0, t0 + ms - Date.now())); await measure(page, Object.assign({}, label0, { view: `${sc}@${ms}ms` }), 1); } }
           await settle(page, `${look}-${mode}-${motion}:${sc}`);
           const actual = await page.evaluate(() => window.O55.S.sess.screen);
           if (actual !== sc) { unreachable.push({ look, mode, motion, view: sc, why: 'went to ' + actual }); continue; }

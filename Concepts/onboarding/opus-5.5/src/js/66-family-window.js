@@ -630,8 +630,10 @@
       watch(svg, 900);
       rise();
       if (finale.rise) finale.rise();
-      /* the celebration 140 ms after the resolving sting, under the emblem: a smaller burst, so the emblem leads */
-      p.at(140, () => { if (A.celebrate) A.celebrate(st, { big: true, count: 18, at: [240, band ? 330 : f === 'glass' ? 300 : 250] }); });
+      /* the celebration 140 ms after the resolving sting, under the emblem: a smaller burst, so the emblem leads. It is
+         drawn beneath the lettered emblem (Basic's stamp, Retro's ALL CLEAR and score): drawn on top, a cobalt piece
+         crossing ALL CLEAR read 1.00 */
+      p.at(140, () => { if (A.celebrate) A.celebrate(st, { big: true, count: 18, at: [240, band ? 330 : f === 'glass' ? 300 : 250], under: A.famCall.lettered(svg) }); });
     });
     p.at(cc.end, () => p.finish());
     return true;
@@ -647,8 +649,10 @@
        across the middle of the sheet (on the narrow band, beside h2's head). Measured: nothing overshoots. */
     basic(p, svg, em, els, cc, o) {
       const s = em('stamp'), C = cc.rise + 30;
-      /* (the impression is made at the contact, under the stamp) */
+      /* (the impression is made at the contact, under the stamp; its words show as the stamp, lifting away, is clear of
+         them and fading: shown at the contact, the stamp's edge crossed them for a third of a second as it rose, 1.07:1) */
       s.forEach((el) => p.anim(el, IN, { duration: 1, delay: C, fill: 'backwards' }));
+      s.forEach((el) => el.querySelectorAll('text').forEach((t) => p.anim(t, IN, { duration: 1, delay: C + 340, fill: 'backwards' })));
       const it = s[0] && s[0].closest('.o55-it'), st = o && o.st;
       if (it && st) basicStamp(p, st, svg, it, C);
       return { rise() { p.at(C - cc.rise, () => play('land', { voice: 0, pan: 0 })); } };
@@ -727,7 +731,7 @@
         + `<rect x="${-MW}" y="${-MH}" width="${2 * MW}" height="${2 * MH}" rx="7" fill="${pal.fill2}" stroke="${pal.ink}" stroke-width="1.6"/>`
         + `<rect x="-93" y="-23" width="186" height="46" rx="3" fill="${pal.paper}" stroke="${pal.ink2}" stroke-width="0.8"/>`
         + `<path d="${ch(-1, -1)}${ch(1, -1)}${ch(1, 1)}${ch(-1, 1)}" fill="none" stroke="${pal.ink2}" stroke-width="0.8"/>`
-        + txt('basic', -57, 3, T('call.basic.stamp'), 8.5, { fill: pal.ink2, w: 700, ls: 1.4 })
+        + txt('basic', -57, 3, T('call.basic.stamp'), 8.5, { fill: pal.ink, w: 700, ls: 1.4 }) /* (in the solid ink: the half ink read 3:1 in Dark) */
         + `<circle cx="57" cy="0" r="5" fill="none" stroke="${pal.ink2}" stroke-width="0.8"/><path d="M48 0H66M57 -9V9" stroke="${pal.ink2}" stroke-width="0.8"/>`
         + `<circle r="19" fill="${pal.paper}" stroke="${pal.ink}" stroke-width="1.5"/><circle r="11" fill="${pal.fill2}" stroke="${pal.ink}" stroke-width="1.1"/>`
         + `<path d="M-32 0H32M0 -30V30" fill="none" stroke="${pal.ink2}" stroke-width="0.65" stroke-dasharray="8 2.5 1.5 2.5"/></g>`;
@@ -809,6 +813,8 @@
      the band's top with the arrow by h2's head, Friendly's roses along the band's foot between the troupe (the third
      below h2's pointing hand). */
   A.famCall = {
+    /* Ready's first emblem with words in it, which a celebration is drawn beneath (none in Friendly and Glass) */
+    lettered(svg) { return svg ? svg.querySelector('.o55-it[data-key="fm-stamp"], .o55-it[data-key="fm-clear"], .o55-it[data-key="fm-score"]') : null; },
     /* Basic's Ready drawing inks its troupe faster when its curtain call is about to play (14-family-moments.css
        .o55fm-inkfast), so the first bow comes after every head is drawn; asked by the composition, after claimSting */
     inkFast(ctx) { const R = runState(); return ctx.family === 'basic' && !!R.claim && R.claim.kind === 'call' && R.claim.f === 'basic' && !calm(); },
@@ -872,7 +878,10 @@
     /* the score in the orange deepened toward black on cream (the orange itself read 2:1 there) */
     if (F.retro && !F.retro.props.fmScore) F.retro.props.fmScore = (ctx) => {
       const p = ctx.pal, s = T('call.retro.score', { n: 100 }).toUpperCase();
-      return `<g><text data-fm="score" x="0" y="0" text-anchor="middle" font-family="${esc(FONT.retro)}" font-weight="600" font-size="11" fill="${p.dark ? p.c : A.mix(p.c, '#000', 0.45)}">${esc(s)}</text></g>`;
+      /* (on a knock-out of the ground the width of SETUP 100%, so the celebration's pieces passing beneath never show
+         between its letters) */
+      const w = s.length * 11 * 0.6 + 6;
+      return `<g><rect x="${(-w / 2).toFixed(1)}" y="-12" width="${w.toFixed(1)}" height="16" fill="${p.bg}" class="o55-shade-ko"/><text data-fm="score" x="0" y="0" text-anchor="middle" font-family="${esc(FONT.retro)}" font-weight="600" font-size="11" fill="${p.dark ? p.c : A.mix(p.c, '#000', 0.45)}">${esc(s)}</text></g>`;
     };
     /* an arrow down and to the right, toward the tour button, blinking between the accent and nothing (14-family-
        moments.css .o55fm-blink; still under Reduced Motion and on a low-resource computer) */

@@ -140823,7 +140823,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   };
 
   /* the troupe celebrates, and the family's confetti bursts from the middle of the stage. o: at, count, big, confetti
-     (false: none), sound (false: none), down (the burst fans downward: from a sign hung high). Under NieR's art the
+     (false: none), sound (false: none), down (the burst fans downward: from a sign hung high), under (an element the
+     burst is drawn beneath: Ready's lettered emblem, so no piece crosses its words). Under NieR's art the
      two big moments have performances of their own, and a celebrate asked for there plays them instead: the Created
      scene its act (A.createdAct: the sign stamped, the run's one confetti), Ready its curtain call (A.curtainCall: no
      confetti). */
@@ -140845,7 +140846,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const mid = hs.find((g) => g.getAttribute('data-key') === 'h1'); if (mid) { lockOn(svg, mid, 110); glance(svg, mid); }
     }
     const at = o.at || [240, 300];
-    if (o.confetti !== false) confetti(svg, fam, at, o.count || 34, false, !!o.down);
+    if (o.confetti !== false) confetti(svg, fam, at, o.count || 34, false, !!o.down, o.under ? { under: o.under } : null);
     /* placed where it bursts, as the cheers are (not toward the last click) */
     if (o.sound !== false) O55.sound.play('celebrate', { pan: Math.round(Math.max(-0.7, Math.min(0.7, ((at[0] - 240) / 240) * 0.7)) * 100) / 100 });
     return true;
@@ -140899,7 +140900,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const nt = nier && A.nier && A.nier.tokens ? A.nier.tokens(tok, svg.classList.contains('o55-m-light') ? 'light' : 'dark') : tok, ink = nt.text, rust = nt.error;
     const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'o55-confetti'); g.setAttribute('aria-hidden', 'true');
     const box = src && src.from ? boxOf(src.from) : null;
-    if (box) { at = [(box[0] + box[2]) / 2, (box[1] + box[3]) / 2]; src.from.parentNode.insertBefore(g, src.from); } else fx.appendChild(g);
+    if (box) { at = [(box[0] + box[2]) / 2, (box[1] + box[3]) / 2]; src.from.parentNode.insertBefore(g, src.from); }
+    else if (src && src.under && src.under.parentNode && svg.contains(src.under)) src.under.parentNode.insertBefore(g, src.under);
+    else fx.appendChild(g);
     let longest = 0;
     for (let i = 0; i < count; i++) {
       /* a fleck leaves up and to the right of the word, short and small; a celebration bursts up and all round */
@@ -143695,8 +143698,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       watch(svg, 900);
       rise();
       if (finale.rise) finale.rise();
-      /* the celebration 140 ms after the resolving sting, under the emblem: a smaller burst, so the emblem leads */
-      p.at(140, () => { if (A.celebrate) A.celebrate(st, { big: true, count: 18, at: [240, band ? 330 : f === 'glass' ? 300 : 250] }); });
+      /* the celebration 140 ms after the resolving sting, under the emblem: a smaller burst, so the emblem leads. It is
+         drawn beneath the lettered emblem (Basic's stamp, Retro's ALL CLEAR and score): drawn on top, a cobalt piece
+         crossing ALL CLEAR read 1.00 */
+      p.at(140, () => { if (A.celebrate) A.celebrate(st, { big: true, count: 18, at: [240, band ? 330 : f === 'glass' ? 300 : 250], under: A.famCall.lettered(svg) }); });
     });
     p.at(cc.end, () => p.finish());
     return true;
@@ -143712,8 +143717,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        across the middle of the sheet (on the narrow band, beside h2's head). Measured: nothing overshoots. */
     basic(p, svg, em, els, cc, o) {
       const s = em('stamp'), C = cc.rise + 30;
-      /* (the impression is made at the contact, under the stamp) */
+      /* (the impression is made at the contact, under the stamp; its words show as the stamp, lifting away, is clear of
+         them and fading: shown at the contact, the stamp's edge crossed them for a third of a second as it rose, 1.07:1) */
       s.forEach((el) => p.anim(el, IN, { duration: 1, delay: C, fill: 'backwards' }));
+      s.forEach((el) => el.querySelectorAll('text').forEach((t) => p.anim(t, IN, { duration: 1, delay: C + 340, fill: 'backwards' })));
       const it = s[0] && s[0].closest('.o55-it'), st = o && o.st;
       if (it && st) basicStamp(p, st, svg, it, C);
       return { rise() { p.at(C - cc.rise, () => play('land', { voice: 0, pan: 0 })); } };
@@ -143792,7 +143799,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         + `<rect x="${-MW}" y="${-MH}" width="${2 * MW}" height="${2 * MH}" rx="7" fill="${pal.fill2}" stroke="${pal.ink}" stroke-width="1.6"/>`
         + `<rect x="-93" y="-23" width="186" height="46" rx="3" fill="${pal.paper}" stroke="${pal.ink2}" stroke-width="0.8"/>`
         + `<path d="${ch(-1, -1)}${ch(1, -1)}${ch(1, 1)}${ch(-1, 1)}" fill="none" stroke="${pal.ink2}" stroke-width="0.8"/>`
-        + txt('basic', -57, 3, T('call.basic.stamp'), 8.5, { fill: pal.ink2, w: 700, ls: 1.4 })
+        + txt('basic', -57, 3, T('call.basic.stamp'), 8.5, { fill: pal.ink, w: 700, ls: 1.4 }) /* (in the solid ink: the half ink read 3:1 in Dark) */
         + `<circle cx="57" cy="0" r="5" fill="none" stroke="${pal.ink2}" stroke-width="0.8"/><path d="M48 0H66M57 -9V9" stroke="${pal.ink2}" stroke-width="0.8"/>`
         + `<circle r="19" fill="${pal.paper}" stroke="${pal.ink}" stroke-width="1.5"/><circle r="11" fill="${pal.fill2}" stroke="${pal.ink}" stroke-width="1.1"/>`
         + `<path d="M-32 0H32M0 -30V30" fill="none" stroke="${pal.ink2}" stroke-width="0.65" stroke-dasharray="8 2.5 1.5 2.5"/></g>`;
@@ -143874,6 +143881,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      the band's top with the arrow by h2's head, Friendly's roses along the band's foot between the troupe (the third
      below h2's pointing hand). */
   A.famCall = {
+    /* Ready's first emblem with words in it, which a celebration is drawn beneath (none in Friendly and Glass) */
+    lettered(svg) { return svg ? svg.querySelector('.o55-it[data-key="fm-stamp"], .o55-it[data-key="fm-clear"], .o55-it[data-key="fm-score"]') : null; },
     /* Basic's Ready drawing inks its troupe faster when its curtain call is about to play (14-family-moments.css
        .o55fm-inkfast), so the first bow comes after every head is drawn; asked by the composition, after claimSting */
     inkFast(ctx) { const R = runState(); return ctx.family === 'basic' && !!R.claim && R.claim.kind === 'call' && R.claim.f === 'basic' && !calm(); },
@@ -143937,7 +143946,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     /* the score in the orange deepened toward black on cream (the orange itself read 2:1 there) */
     if (F.retro && !F.retro.props.fmScore) F.retro.props.fmScore = (ctx) => {
       const p = ctx.pal, s = T('call.retro.score', { n: 100 }).toUpperCase();
-      return `<g><text data-fm="score" x="0" y="0" text-anchor="middle" font-family="${esc(FONT.retro)}" font-weight="600" font-size="11" fill="${p.dark ? p.c : A.mix(p.c, '#000', 0.45)}">${esc(s)}</text></g>`;
+      /* (on a knock-out of the ground the width of SETUP 100%, so the celebration's pieces passing beneath never show
+         between its letters) */
+      const w = s.length * 11 * 0.6 + 6;
+      return `<g><rect x="${(-w / 2).toFixed(1)}" y="-12" width="${w.toFixed(1)}" height="16" fill="${p.bg}" class="o55-shade-ko"/><text data-fm="score" x="0" y="0" text-anchor="middle" font-family="${esc(FONT.retro)}" font-weight="600" font-size="11" fill="${p.dark ? p.c : A.mix(p.c, '#000', 0.45)}">${esc(s)}</text></g>`;
     };
     /* an arrow down and to the right, toward the tour button, blinking between the accent and nothing (14-family-
        moments.css .o55fm-blink; still under Reduced Motion and on a low-resource computer) */
@@ -148902,7 +148914,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       /* the look waiting to be saved (O55.shell.commitLook) is written once Ready's moment and Pod's line are over */
       if (fresh) O55.shell.flushLook(4000);
       if (!fresh || O55.ui.skin('ready', layer, fresh)) return;
-      O55.motion.after(1250, () => { if (S.open && S.sess.screen === 'ready' && O55.art.celebrate) O55.art.celebrate(S.root.querySelector('.o55-stage'), { big: true, count: 46, at: [240, 260] }); });
+      /* (beneath Ready's lettered emblem, as the curtain call's burst is: 66-family-window.js A.famCall.lettered) */
+      O55.motion.after(1250, () => { if (S.open && S.sess.screen === 'ready' && O55.art.celebrate) { const st = S.root.querySelector('.o55-stage'), A = O55.art;
+        O55.art.celebrate(st, { big: true, count: 46, at: [240, 260], under: A.famCall && A.famCall.lettered ? A.famCall.lettered(st && st.querySelector('.o55-scene-wrap:not(.o55-out) svg.o55-scene')) : null }); } });
     },
     eyebrow: () => T('ready.eyebrow'),
     title: () => T('ready.title'),
