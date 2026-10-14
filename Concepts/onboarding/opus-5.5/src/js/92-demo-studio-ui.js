@@ -22,7 +22,7 @@
 
   /* ---- icons: one 24 px stroke grammar (NieR's icons part squares their ends in CSS) ---- */
   const PATHS = {
-    studio: '<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><rect x="13" y="5" width="4" height="4" rx="1"/><rect x="7" y="15" width="4" height="4" rx="1"/>',
+    studio: '<path d="M4 7h16M4 17h16"/><rect x="12.5" y="4.5" width="5" height="5" rx="1" fill="currentColor"/><rect x="6.5" y="14.5" width="5" height="5" rx="1" fill="currentColor"/>',
     close: '<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
     search: '<circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/>',
     start: '<path d="M12 3.5l2.5 5.3 5.8.7-4.3 4 1.1 5.7L12 16.4 6.9 19.2 8 13.5l-4.3-4 5.8-.7z"/>',

@@ -45,6 +45,13 @@
 #o55-demo .pmds-entry-world { color: var(--pmds-ink); font-weight: 500; }
 #o55-demo .pmds-entry-world::before { content: "\00b7"; margin-right: 7px; color: var(--pmds-mute); }
 #o55-demo .pmds-entry:focus-visible { outline: 2px solid var(--pmds-acc); outline-offset: 2px; }
+/* the sliders mark: its two knobs slide apart on hover and while the Studio is open, and slide in as the sheet opens */
+#o55-demo .pmds-ico-studio rect { transition: translate 260ms cubic-bezier(.3, 1.4, .5, 1); }
+#o55-demo .pmds-entry:is(:hover, [aria-expanded="true"]) .pmds-ico-studio rect:nth-of-type(1),
+#o55-demo .pmds-sheet:not([hidden]) .pmds-brandmark .pmds-ico-studio rect:nth-of-type(1) { translate: -4px 0; }
+#o55-demo .pmds-entry:is(:hover, [aria-expanded="true"]) .pmds-ico-studio rect:nth-of-type(2),
+#o55-demo .pmds-sheet:not([hidden]) .pmds-brandmark .pmds-ico-studio rect:nth-of-type(2) { translate: 5px 0; }
+#o55-demo .pmds-sheet:not([hidden]) .pmds-brandmark .pmds-ico-studio rect { transition-delay: 160ms; transition-duration: 520ms; }
 #o55-demo[data-o55-narrow] .pmds-entry { width: 20px; height: 44px; padding: 0; justify-content: center; border-left: 0; border-radius: 0 var(--pmds-ctl) var(--pmds-ctl) 0; }
 #o55-demo[data-o55-narrow] .pmds-entry > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 /* docked in the status bar (the Home layer styles the button as a status item): the open state reads as pressed */

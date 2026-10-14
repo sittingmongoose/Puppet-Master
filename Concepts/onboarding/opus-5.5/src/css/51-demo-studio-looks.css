@@ -315,6 +315,8 @@ html[data-o55-nier-parts~="blocks"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-
 #o55-demo.pmds[data-pmds-reduced] :is(.pmds-btn, .pmds-tile, .pmds-choice, .pmds-laytile, .pmds-looktile, .pmds-tile-go, .pmds-switch-key, .pmds-entry) { transition-property: background-color, border-color, color, box-shadow, opacity; }
 #o55-demo.pmds[data-pmds-reduced] :is(.pmds-btn, .pmds-tile, .pmds-x):active:not([aria-disabled="true"]) { scale: 1 !important; translate: none !important; }
 #o55-demo.pmds[data-pmds-reduced] .pmds-switch-key { transition: background-color 160ms ease; }
+#o55-demo.pmds[data-pmds-reduced] .pmds-ico-studio rect { transition: none; }
+#o55-demo.pmds:is([data-pmds-look="retro"], [data-pmds-look="nier"]) .pmds-ico-studio rect { transition-timing-function: steps(3, end); }
 #o55-demo.pmds[data-pmds-reduced] .pmds-switch::before { transition: opacity 160ms ease; clip-path: none; opacity: 0; }
 #o55-demo.pmds[data-pmds-reduced] .pmds-switch[aria-checked="true"]::before { opacity: 1; }
 #o55-demo.pmds[data-pmds-reduced] .pmds-tile:hover .pmds-tile-go { translate: none; }
