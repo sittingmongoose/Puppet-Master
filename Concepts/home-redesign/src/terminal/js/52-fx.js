@@ -64,6 +64,10 @@
     scr.classList.toggle('pmt-fx-glow', !!cpuGlow);
     scr.classList.toggle('pmt-fx-paper', !!e.paper);
     root.style.setProperty('--pmt-glow-color', e.glowColor || '');
+    /* the static fallbacks draw at the chosen strengths too (50-fx.css reads these; the shader takes them from params) */
+    root.style.setProperty('--pmt-scan-strength', String(e.scanlines && isFinite(e.scanlines.strength) ? e.scanlines.strength : 0.3));
+    root.style.setProperty('--pmt-glow-strength', String(e.glow && isFinite(e.glow.strength) ? e.glow.strength : 0.45));
+    root.style.setProperty('--pmt-glow-radius', (e.glow && isFinite(e.glow.radius) ? e.glow.radius : 2.5) + 'px');
     this.effective = {
       gpu: this.active || (gpu === true),
       curvature: e.crt ? (this.active ? 'drawn' : 'not drawn: no GPU on this machine') : 'off',

@@ -1,24 +1,77 @@
-/* T.Appearance: one appearance model (D15). Each field resolves through four layers:
-     1. look defaults ("Follow look"): the per-look scheme, font and effects,
-     2. app default  (settings model key 'terminal.<field>', what Settings > Terminal binds later),
-     3. project default (same keys under 'terminal.project.<field>'; written only by Settings),
-     4. this tab     (the tab's own overrides, saved with the tab).
-   A field left unset falls through. Everything applies live: no field needs a restart. The Appearance popover
-   writes layer 4 ("This terminal") or layer 2 ("All terminals").
+/* T.Appearance: one appearance model (D15, F3-642). Each field resolves through these layers, highest first:
+     1. this tab      (the tab's own overrides, saved with the tab: the Customize screen's "This terminal"),
+     2. Settings      (the Project's Terminal look rows, code.terminal.*, SSYS-051, through window.PM_TERMINAL_SETTINGS:
+                       Settings > Editor & Terminal and the Customize screen's "All terminals" both write them),
+     3. project/app   (the earlier stores: 'terminal.project.<field>' and 'terminal.<field>' in the host settings model,
+                       and this machine's local copy; read beneath Settings, written only where Settings is absent),
+     4. look defaults ("Follow look"): the per-look scheme, font and effects.
+   A field left unset falls through. Everything applies live: no field needs a restart.
    The scheme catalog is shared with the code editor (D30): every scheme carries its 17 editor syntax colours
    (editorTokens), and the Retro look's dark scheme choice is read by the editor through retroPhosphor(). */
 (function () {
   var C = T.color;
 
+  /* weights: the range the face is drawn in (Settings' Terminal Text Weight help: JetBrains Mono 400 to 800, Atkinson
+     Hyperlegible Mono 200 to 800); a face without it has one weight */
   var FONTS = {
-    'jetbrains-mono': { label: 'JetBrains Mono', stack: "'JetBrains Mono', 'PM Symbols Mono', ui-monospace, Menlo, Consolas, monospace", size: 13, lineHeight: 1.3, licence: 'OFL-1.1' },
-    'atkinson': { label: 'Atkinson Hyperlegible Mono', stack: "'Atkinson Hyperlegible Mono', 'JetBrains Mono', ui-monospace, monospace", size: 13, lineHeight: 1.35, weight: 400, licence: 'OFL-1.1' },
+    'jetbrains-mono': { label: 'JetBrains Mono', stack: "'JetBrains Mono', 'PM Symbols Mono', ui-monospace, Menlo, Consolas, monospace", size: 13, lineHeight: 1.3, weights: [400, 800], licence: 'OFL-1.1' },
+    'atkinson': { label: 'Atkinson Hyperlegible Mono', stack: "'Atkinson Hyperlegible Mono', 'JetBrains Mono', ui-monospace, monospace", size: 13, lineHeight: 1.35, weight: 400, weights: [200, 800], licence: 'OFL-1.1' },
     'vt323': { label: 'VT323', stack: "'VT323', 'JetBrains Mono', ui-monospace, monospace", size: 19, lineHeight: 1.05, licence: 'OFL-1.1' },
     'departure': { label: 'Departure Mono', stack: "'Departure Mono', 'JetBrains Mono', ui-monospace, monospace", size: 13.75, lineHeight: 1.2, licence: 'OFL-1.1' },
-    'sixtyfour': { label: 'Sixtyfour', stack: "'Sixtyfour', 'JetBrains Mono', ui-monospace, monospace", size: 10, lineHeight: 1.45, licence: 'OFL-1.1' },
+    'sixtyfour': { label: 'Sixtyfour', stack: "'Sixtyfour', 'JetBrains Mono', ui-monospace, monospace", size: 10, lineHeight: 1.45, axes: true, licence: 'OFL-1.1' },
     'sixtyfour-raster': { label: 'Sixtyfour Raster', stack: "'Sixtyfour Raster', 'Sixtyfour', 'JetBrains Mono', ui-monospace, monospace", size: 10, lineHeight: 1.45, licence: 'OFL-1.1' },
-    'system': { label: 'System monospace', stack: "ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace", size: 13, lineHeight: 1.3, licence: 'system' }
+    'system': { label: 'System monospace', stack: "ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace", size: 13, lineHeight: 1.3, weights: [400, 700], licence: 'system' }
   };
+  /* A face named by an earlier Settings value (Fira Code, SF Mono, or a name typed under Custom...): F3-644 removed them
+     as choices, so nothing offers them, but a stored one is drawn from this computer's own fonts when it has the face,
+     like System monospace, and reads "not on this computer" when it does not (the stack then shows JetBrains Mono) */
+  var localFaces = {};
+  function localFont(name) {
+    var n = String(name || '').replace(/["'\\;{}<>]/g, '').trim().slice(0, 64);
+    if (!n) return null;
+    if (!localFaces[n]) localFaces[n] = { label: n, stack: "'" + n + "', 'JetBrains Mono', 'PM Symbols Mono', ui-monospace, monospace", size: 13, lineHeight: 1.3, weights: [400, 700], local: true, licence: 'system' };
+    return localFaces[n];
+  }
+  function fontDef(id) {
+    if (FONTS[id]) return FONTS[id];
+    if (typeof id === 'string' && id.indexOf('local:') === 0) return localFont(id.slice(6));
+    return null;
+  }
+  /* is a local face installed? its text measures differently from the generic fallback in two generics */
+  var installed = {};
+  function hasLocalFace(name) {
+    if (installed[name] !== undefined) return installed[name];
+    var cv = document.createElement('canvas').getContext('2d'), s = 'mmmmmmmmmmlli10WQ@', w = function (f) { cv.font = '32px ' + f; return cv.measureText(s).width; };
+    var q = "'" + name + "'";
+    installed[name] = w(q + ', monospace') !== w('monospace') || w(q + ', serif') !== w('serif');
+    return installed[name];
+  }
+  /* Sixtyfour's own SCAN and BLED axes (Settings' Sixtyfour Scanlines and Sixtyfour Bleed): an instance of the page's
+     Sixtyfour faces with those axes set, as a FontFace of its own (the grid is a canvas, which reads no
+     font-variation-settings); made once per pair, the faces' own unicode ranges kept */
+  var axisFaces = {};
+  function sixtyfourFamily(scan, bleed) {
+    var s = Math.round(T.util.clamp(scan || 0, -53, 100)), b = Math.round(T.util.clamp(bleed || 0, 0, 100));
+    var fam = 'PMT Sixtyfour S' + (s < 0 ? 'm' + -s : s) + ' B' + b;
+    if (axisFaces[fam] !== undefined) return axisFaces[fam] ? fam : null;
+    axisFaces[fam] = false;
+    if (typeof FontFace === 'undefined' || !document.fonts) return null;
+    var made = 0;
+    try {
+      [].forEach.call(document.styleSheets, function (ss) {
+        var rules; try { rules = ss.cssRules; } catch (e) { return; }
+        [].forEach.call(rules || [], function (r) {
+          if (r.type !== 5 || !/^["']?Sixtyfour["']?$/.test(r.style.getPropertyValue('font-family').trim())) return;
+          var src = r.style.getPropertyValue('src'); if (!src) return;
+          var d = { variationSettings: '"SCAN" ' + s + ', "BLED" ' + b };
+          var ur = r.style.getPropertyValue('unicode-range'); if (ur) d.unicodeRange = ur;
+          try { document.fonts.add(new FontFace(fam, src, d)); made++; } catch (e) {}
+        });
+      });
+    } catch (e) {}
+    axisFaces[fam] = made > 0;
+    return made ? fam : null;
+  }
 
   /* Follow look: per-look defaults (light / dark). The scheme pairs are D15's. */
   var LOOKS = {
@@ -36,11 +89,14 @@
     minContrast: { type: 'enum', values: [1, 3, 4.5, 7], default: 4.5, label: 'Minimum contrast' },
     font: { type: 'enum', values: Object.keys(FONTS).concat(['follow']), default: 'follow', label: 'Font' },
     fontSize: { type: 'number', min: 8, max: 32, step: 0.5, default: null, label: 'Size' },
-    fontWeight: { type: 'number', min: 400, max: 600, step: 100, default: 400, label: 'Weight' },
+    fontWeight: { type: 'number', min: 200, max: 800, step: 100, default: 400, label: 'Weight' },
     lineHeight: { type: 'number', min: 1, max: 2, step: 0.05, default: null, label: 'Line height' },
     letterSpacing: { type: 'number', min: -1, max: 3, step: 0.25, default: 0, label: 'Letter spacing' },
     ligatures: { type: 'bool', default: true, label: 'Ligatures' },
     boldBright: { type: 'bool', default: false, label: 'Bold text in bright colours' },
+    /* Settings' Font Rendering (Text drawing): Crisp draws the text at a whole number of device pixels, Smooth draws the
+       outlines unhinted (canvas textRendering geometricPrecision); Auto is the browser's own */
+    fontRendering: { type: 'enum', values: ['auto', 'crisp', 'smooth'], default: 'auto', label: 'Text drawing' },
     cursorShape: { type: 'enum', values: ['follow', 'block', 'bar', 'underline'], default: 'follow', label: 'Cursor' },
     cursorBlink: { type: 'bool', default: true, label: 'Blink' },
     cursorTrail: { type: 'enum', values: ['follow', 'off', 'soft', 'glow', 'phosphor', 'trace'], default: 'follow', label: 'Trail' },
@@ -69,10 +125,145 @@
     bell: { type: 'enum', values: ['follow', 'visual', 'off'], default: 'follow', label: 'Bell' },
     stickyHeader: { type: 'bool', default: true, label: 'Sticky command header' },
     copyOnSelect: { type: 'bool', default: false, label: 'Copy on select' },
-    sixtyfourScan: { type: 'number', min: -53, max: 100, step: 1, default: 0, label: 'Sixtyfour scan (native renderer only)' },
-    sixtyfourBleed: { type: 'number', min: 0, max: 100, step: 1, default: 0, label: 'Sixtyfour bleed (native renderer only)' }
+    /* Sixtyfour's own axes, drawn through an instance of the face (sixtyfourFamily); none until someone sets them */
+    sixtyfourScan: { type: 'number', min: -53, max: 100, step: 1, default: null, label: 'Sixtyfour scanlines' },
+    sixtyfourBleed: { type: 'number', min: 0, max: 100, step: 1, default: null, label: 'Sixtyfour bleed' }
   };
   var DEFAULTS = {}; Object.keys(FIELDS).forEach(function (k) { DEFAULTS[k] = FIELDS[k].default; });
+
+  /* ---- the Settings rows (SSYS-051, the Terminal look groups): one row per field, its stored words to and from the
+     field's value. in() returns undefined for a value it cannot read (the field then falls through) and null for an
+     explicit Follow look. Rows that never change a look (Rendering Mode, Performance Mode, Shell Integration, the
+     shell, layout and history rows) are not read here. ---- */
+  var S = 'code.terminal.', FOLLOW = 'Follow look';
+  var has = function (o, k) { return Object.prototype.hasOwnProperty.call(o, k); };
+  function num(min, max, step) {
+    return function (v) {
+      if (v === null || v === undefined || v === '' || typeof v === 'boolean') return undefined;
+      var n = typeof v === 'number' ? v : parseFloat(String(v).replace(',', '.'));
+      if (!isFinite(n) || !/^\s*-?[\d.,]+\s*(px|%)?\s*$/.test(String(v))) return undefined;
+      n = Math.min(max, Math.max(min, n));
+      /* to the step, without the binary remainder (1.45 stays 1.45, not 1.4500000000000002) */
+      return +(step ? Math.round(n / step) * step : n).toFixed(4);
+    };
+  }
+  function bool(v) { if (v === true || v === 'true' || v === 'On' || v === 'on') return true; if (v === false || v === 'false' || v === 'Off' || v === 'off') return false; return undefined; }
+  function tri(v) { if (v === FOLLOW || v === 'follow') return null; return bool(v); }
+  function triOut(v) { return v === null || v === undefined ? FOLLOW : v ? 'On' : 'Off'; }
+  function words(map) {
+    var inv = {}; Object.keys(map).forEach(function (k) { if (!has(inv, String(map[k]))) inv[String(map[k])] = k; });
+    return {
+      in: function (v) { var k = String(v); if (has(map, k)) return map[k]; var lo = k.toLowerCase(); for (var m in map) if (m.toLowerCase() === lo) return map[m]; return undefined; },
+      out: function (v) { return has(inv, String(v)) ? inv[String(v)] : undefined; }
+    };
+  }
+  var same = function (v) { return v; };
+  function colorIn(v) { var s = String(v || '').trim(); if (!/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(s)) return undefined; return s.length === 4 ? '#' + s[1] + s[1] + s[2] + s[2] + s[3] + s[3] : s.toLowerCase(); }
+  /* the scheme: Follow look or a catalog id (F3-642); the earlier words still read: Match App Theme is Follow look,
+     Light and Dark are the look's own light or dark scheme whatever the app's mode, Solarized and High Contrast their
+     family (switching with light and dark), a name the scheme's own, and Custom the scheme named under it */
+  function schemeIn(v, custom) {
+    var k = String(v || '').trim();
+    if (!k) return undefined;
+    if (k === FOLLOW || /^match app theme$/i.test(k) || k === 'follow') return 'follow';
+    if (/^light$/i.test(k)) return 'follow:light';
+    if (/^dark$/i.test(k)) return 'follow:dark';
+    if (/^solarized$/i.test(k)) return 'solarized-dark';
+    if (/^high contrast$/i.test(k)) return 'pm-high-contrast-dark';
+    if (/^custom$/i.test(k)) k = String(custom || '').replace(/\.[a-z0-9]+$/i, '').trim();
+    if (!k) return undefined;
+    if (scheme(k)) return k;
+    var lo = k.toLowerCase(), l = allSchemes();
+    for (var i = 0; i < l.length; i++) if (l[i].name.toLowerCase() === lo || l[i].id.toLowerCase() === lo) return l[i].id;
+    return undefined;
+  }
+  function schemeOut(v) { return v === 'follow' ? FOLLOW : v === 'follow:light' ? 'Light' : v === 'follow:dark' ? 'Dark' : scheme(v) ? v : undefined; }
+  var FACE_WORDS = { 'System Monospace': 'system', 'System monospace': 'system', 'JetBrains Mono': 'jetbrains-mono', 'Atkinson Hyperlegible Mono': 'atkinson',
+    'VT323': 'vt323', 'Departure Mono': 'departure', 'Sixtyfour': 'sixtyfour', 'Sixtyfour Raster': 'sixtyfour-raster' };
+  function fontIn(v, custom) {
+    var k = String(v || '').trim();
+    if (!k) return undefined;
+    if (k === FOLLOW || k === 'follow') return 'follow';
+    if (FONTS[k]) return k;
+    if (has(FACE_WORDS, k)) return FACE_WORDS[k];
+    if (/^custom/i.test(k)) return custom ? 'local:' + localFont(custom).label : undefined;
+    return localFont(k) ? 'local:' + localFont(k).label : undefined; /* Fira Code, SF Mono: this computer's own face */
+  }
+  function fontOut(v) { return v === 'follow' ? FOLLOW : FONTS[v] ? v : undefined; }
+  /* a picture is kept on this machine under a hash (76-popover.js); Settings holds the name it was chosen under, and
+     that name finds the copy again. A path typed in Settings names no copy here and falls back to the default picture */
+  var NAMES = 'pm.home.terminal:v1:bg-names';
+  function picNames() { try { return JSON.parse(localStorage.getItem(NAMES) || '{}') || {}; } catch (e) { return {}; } }
+  function pictureIn(v) {
+    var k = String(v || '').trim(); if (!k) return undefined;
+    if (/^img:[0-9a-f]+$/.test(k)) return k;
+    var n = picNames(), base = k.split(/[\\/]/).pop();
+    return has(n, k) ? 'img:' + n[k] : has(n, base) ? 'img:' + n[base] : 'path:' + k;
+  }
+  function pictureOut(v) {
+    var k = String(v || ''); if (k.indexOf('path:') === 0) return k.slice(5);
+    if (k.indexOf('img:') !== 0) return undefined;
+    var n = picNames(), h = k.slice(4);
+    for (var name in n) if (n[name] === h) return name;
+    return k;
+  }
+  var WORDS = {
+    contrast: words({ 'Off': 1, '3:1': 3, '4.5:1': 4.5, '7:1': 7 }),
+    drawing: words({ 'Auto': 'auto', 'Crisp': 'crisp', 'Smooth': 'smooth' }),
+    shape: words({ 'Follow look': 'follow', 'Block': 'block', 'Bar': 'bar', 'Underline': 'underline' }),
+    trail: words({ 'Follow look': 'follow', 'Off': 'off', 'Soft': 'soft', 'Glow': 'glow', 'Phosphor': 'phosphor', 'Trace': 'trace' }),
+    ground: words({ 'Follow look': 'follow', 'Theme surface': 'theme', 'Solid color': 'solid', 'Gradient': 'gradient', 'Image': 'image' }),
+    gradient: words({ 'Dusk': 'dusk', 'Dawn': 'dawn', 'Deep': 'deep', 'Paper': 'paper' }),
+    picture: words({ 'Hills': 'hills', 'Grid': 'grid', 'Paper': 'paper', 'Custom': 'custom' }),
+    effects: words({ 'Follow look': 'follow', 'Off': 'off', 'Custom': 'custom' }),
+    bell: words({ 'Follow look': 'follow', 'Visual': 'visual', 'Off': 'off' })
+  };
+  var numOut = function (v) { return typeof v === 'number' && isFinite(v) ? v : undefined; };
+  var boolOut = function (v) { return typeof v === 'boolean' ? v : undefined; };
+  var LINK = {
+    scheme: { id: S + 'theme', in: schemeIn, out: schemeOut, custom: true },
+    schemePair: { id: S + 'scheme-pair', in: bool, out: boolOut },
+    minContrast: { id: S + 'min-contrast', in: WORDS.contrast.in, out: WORDS.contrast.out },
+    font: { id: S + 'font-family', in: fontIn, out: fontOut, custom: true },
+    /* no step: a face's own size need not sit on the half pixel (Departure Mono's is 13.75) */
+    fontSize: { id: S + 'font-size', in: num(8, 32), out: numOut },
+    fontWeight: { id: S + 'font-weight', in: num(200, 800, 100), out: numOut },
+    lineHeight: { id: S + 'line-height', in: num(1, 2, 0.05), out: numOut },
+    letterSpacing: { id: S + 'letter-spacing', in: num(-1, 3, 0.25), out: numOut },
+    ligatures: { id: S + 'ligatures', in: bool, out: boolOut },
+    boldBright: { id: S + 'bold-bright', in: bool, out: boolOut },
+    fontRendering: { id: S + 'font-rendering', in: WORDS.drawing.in, out: WORDS.drawing.out },
+    cursorShape: { id: S + 'cursor-shape', in: WORDS.shape.in, out: WORDS.shape.out },
+    cursorBlink: { id: S + 'cursor-blink', in: bool, out: boolOut },
+    cursorTrail: { id: S + 'cursor-trail', in: WORDS.trail.in, out: WORDS.trail.out },
+    background: { id: S + 'background', in: WORDS.ground.in, out: WORDS.ground.out },
+    bgColor: { id: S + 'background-color', in: colorIn, out: colorIn },
+    bgGradient: { id: S + 'background-gradient', in: WORDS.gradient.in, out: WORDS.gradient.out },
+    bgImage: { id: S + 'background-image', in: WORDS.picture.in, out: WORDS.picture.out },
+    bgImageData: { id: S + 'background-image-file', in: pictureIn, out: pictureOut },
+    bgDim: { id: S + 'background-dim', in: num(0, 0.9), out: numOut },
+    bgBlur: { id: S + 'background-blur', in: num(0, 24, 1), out: numOut },
+    opacity: { id: S + 'opacity', in: function (v) { return v === FOLLOW ? null : num(0.4, 1)(v); }, out: function (v) { return v === null ? FOLLOW : numOut(v); } },
+    padding: { id: S + 'padding', in: num(0, 24, 1), out: numOut },
+    effects: { id: S + 'effects', in: WORDS.effects.in, out: WORDS.effects.out },
+    scanlines: { id: S + 'scanlines', in: tri, out: triOut, effect: true },
+    scanStrength: { id: S + 'scan-strength', in: num(0, 0.6), out: numOut },
+    glow: { id: S + 'glow', in: tri, out: triOut, effect: true },
+    glowStrength: { id: S + 'glow-strength', in: num(0, 1), out: numOut },
+    crt: { id: S + 'crt', in: bool, out: boolOut, effect: true },
+    curvature: { id: S + 'curvature', in: num(0, 0.2), out: numOut },
+    burnIn: { id: S + 'burn-in', in: bool, out: boolOut },
+    noise: { id: S + 'noise', in: num(0, 0.12), out: numOut },
+    flicker: { id: S + 'flicker', in: bool, out: boolOut, effect: true },
+    flickerAmount: { id: S + 'flicker-amount', in: num(0, 0.03), out: numOut },
+    inactiveDim: { id: S + 'inactive-dim', in: tri, out: triOut, effect: true },
+    smoothScroll: { id: S + 'smooth-scroll', in: tri, out: triOut, effect: true },
+    bell: { id: S + 'bell', in: WORDS.bell.in, out: WORDS.bell.out },
+    stickyHeader: { id: S + 'sticky-header', in: bool, out: boolOut },
+    copyOnSelect: { id: S + 'copy-on-select', in: bool, out: boolOut },
+    sixtyfourScan: { id: S + 'sixtyfour-scan', in: num(-53, 100, 1), out: numOut },
+    sixtyfourBleed: { id: S + 'sixtyfour-bleed', in: num(0, 100, 1), out: numOut }
+  };
 
   /* ---- schemes ---- */
   var user = [];
@@ -188,6 +379,7 @@
   function settings() { return window.PM_HOME && window.PM_HOME.settings ? window.PM_HOME.settings : null; }
   var localApp = {};
   try { localApp = JSON.parse(localStorage.getItem('pm.home.terminal:v1:app') || '{}') || {}; } catch (e) { localApp = {}; }
+  function saveLocal() { try { localStorage.setItem('pm.home.terminal:v1:app', JSON.stringify(localApp)); } catch (e) {} }
   function appGet(key) {
     var s = settings();
     if (s) { try { var v = s.get('terminal.' + key); if (v !== undefined && v !== null) return v; } catch (e) {} }
@@ -198,21 +390,70 @@
     if (s) { try { var v = s.get('terminal.project.' + key); if (v !== undefined && v !== null) return v; } catch (e) {} }
     return undefined;
   }
+  /* Settings (kit.d/24-terminal-look.js publishes window.PM_TERMINAL_SETTINGS while a Project's Settings can be
+     written): the rows a person changed, read through LINK. Read again whenever Settings saved (its version moves) */
+  var linked = false, slCache = null, slVer = -1;
+  function bridge() {
+    var b = window.PM_TERMINAL_SETTINGS;
+    if (!b || typeof b.values !== 'function') return null;
+    if (!linked && typeof b.onChange === 'function') {
+      linked = true;
+      b.onChange(function () { slVer = -1; if (!writing) refreshAll(); });
+    }
+    return b;
+  }
+  function settingsReady() { var b = bridge(); try { return !!(b && b.ready()); } catch (e) { return false; } }
+  function settingsLayer() {
+    var b = bridge(); if (!b) return {};
+    var ver = typeof b.version === 'function' ? b.version() : 0;
+    if (slCache && ver === slVer) return slCache;
+    var raw = {}, out = {};
+    try { raw = b.values() || {}; } catch (e) { raw = {}; }
+    var promote = false;
+    Object.keys(LINK).forEach(function (k) {
+      var L = LINK[k];
+      if (!has(raw, L.id)) return;
+      var v = L.in(raw[L.id], L.custom ? raw[L.id + '#custom'] : undefined);
+      if (v === undefined) return;
+      out[k] = v;
+      /* turning an effect on or off in Settings while Terminal Effects is left on Follow look means Custom, as ticking
+         it in the Customize screen does (Follow look draws the look's own effects whatever those rows hold) */
+      if (L.effect && v !== null) promote = true;
+    });
+    if (promote && !has(out, 'effects')) out.effects = 'custom';
+    slCache = out; slVer = ver;
+    return out;
+  }
+  /* "All terminals" while a slider is being dragged: shown at once, written to Settings when it is let go */
+  var liveApp = {};
   function field(view, key) {
     var t = view && view.tabAppearance;
     if (view && view.previewAppearance && view.previewAppearance[key] !== undefined) return view.previewAppearance[key];
     if (t && t[key] !== undefined && t[key] !== null) return t[key];
+    if (has(liveApp, key)) return liveApp[key];
+    var sl = settingsLayer(); if (has(sl, key)) return sl[key] === null ? DEFAULTS[key] : sl[key];
     var p = projectGet(key); if (p !== undefined) return p;
     var a = appGet(key); if (a !== undefined && a !== null) return a;
     return DEFAULTS[key];
   }
+  /* where a field's value comes from: 'tab', 'settings', 'project' and 'app' (the earlier stores) or 'look' */
   function layerOf(view, key) {
     if (view && view.tabAppearance && view.tabAppearance[key] !== undefined && view.tabAppearance[key] !== null) return 'tab';
+    if (has(liveApp, key) || has(settingsLayer(), key)) return 'settings';
     if (projectGet(key) !== undefined) return 'project';
     /* the host model answers its registered default when nothing is stored there, and that is nobody's choice */
     var a = appGet(key), s = settings(), d = s && s.defaults ? s.defaults()['terminal.' + key] : undefined;
     if (a !== undefined && a !== null && (localApp[key] !== undefined || a !== d)) return 'app';
     return 'look';
+  }
+  /* the value a scope holds itself (undefined when it holds none): 'tab' this terminal's own, 'app' All terminals' */
+  function own(scope, view, key) {
+    if (scope === 'tab') { var t = view && view.tabAppearance; return t && t[key] !== undefined && t[key] !== null ? t[key] : undefined; }
+    if (has(liveApp, key)) return liveApp[key];
+    var sl = settingsLayer(); if (has(sl, key)) return sl[key] === null ? undefined : sl[key];
+    var p = projectGet(key); if (p !== undefined) return p;
+    var l = layerOf(null, key);
+    return l === 'app' ? appGet(key) : undefined;
   }
 
   function lookKey(look) { return look.nier ? 'nier' : (LOOKS[look.family] ? look.family : 'basic'); }
@@ -230,25 +471,41 @@
     if (look.nier) mode = look.mode;
     var f = function (k) { return field(view, k); };
 
-    /* scheme */
+    /* scheme ('follow:light' and 'follow:dark', from Settings' earlier Light and Dark, are the look's own scheme of that
+       appearance whatever the app's mode) */
     var sid = f('scheme'), s;
-    if (sid === 'follow' || !scheme(sid)) s = scheme(L[mode]) || scheme(mode === 'light' ? 'one-half-light' : 'one-half-dark');
-    else { s = scheme(sid); if (f('schemePair')) s = pairOf(s, mode); }
+    if (sid === 'follow:light' || sid === 'follow:dark') s = scheme(L[sid.slice(7)]);
+    else if (sid === 'follow' || !scheme(sid)) s = scheme(L[mode]) || scheme(mode === 'light' ? 'one-half-light' : 'one-half-dark');
+    /* a scheme being previewed (hovered in the Customize screen) shows as it is: "Switch with light and dark" never
+       shows a hovered light scheme as its dark sibling */
+    else { s = scheme(sid); if (f('schemePair') && !(view && view.previewAppearance && view.previewAppearance.scheme !== undefined)) s = pairOf(s, mode); }
     if (!s) s = (T.SCHEMES || [])[0];
     if (s && /^pm-yorha/.test(s.id) && look.nier) s = nierScheme(s, s.appearance === 'dark');
     var bgKind = f('background'); if (bgKind === 'follow') bgKind = L.background === 'soft' || L.background === 'paper' ? 'theme' : L.background;
-    var opacity = f('opacity');
-    if (opacity === null || opacity === undefined) opacity = lk === 'glass' ? (mode === 'light' ? L.opacityLight || L.opacity : L.opacity) : 1;
+    /* Terminal Opacity is Glass's (SSYS-051: "only under a Glass theme"): every other look draws its ground solid */
+    var opacity = lk === 'glass' ? f('opacity') : 1;
+    if (opacity === null || opacity === undefined) opacity = mode === 'light' ? L.opacityLight || L.opacity : L.opacity;
     var theme = s ? toTheme(s, bgKind === 'theme' ? opacity : 0) : null;
     if (theme && bgKind !== 'theme') theme.bgAlpha = 0; /* the background layer shows through default cells */
     if (theme && lk === 'friendly' && bgKind === 'theme' && f('background') === 'follow') theme.bgAlpha = 0; /* Friendly's soft gradient */
 
     /* font */
-    var fid = f('font'); if (fid === 'follow' || !FONTS[fid]) fid = L.font;
-    var FD = FONTS[fid];
+    var fid = f('font'); if (fid === 'follow' || !fontDef(fid)) fid = L.font;
+    var FD = fontDef(fid);
     var size = f('fontSize') || FD.size, lh = f('lineHeight') || FD.lineHeight;
-    var font = { id: fid, family: FD.stack, size: size, weight: f('fontWeight') || FD.weight || 400, boldWeight: 700, lineHeight: lh,
-      letterSpacing: f('letterSpacing') || 0, label: FD.label };
+    /* the weight within the face's own range; a face with one weight draws it. Bold stays visibly heavier */
+    var wt = FD.weights ? T.util.clamp(f('fontWeight') || FD.weight || 400, FD.weights[0], FD.weights[1]) : 400;
+    var family = FD.stack;
+    var axes = null;
+    if (FD.axes && (f('sixtyfourScan') !== null || f('sixtyfourBleed') !== null)) {
+      axes = { scan: f('sixtyfourScan') || 0, bleed: f('sixtyfourBleed') || 0 };
+      var inst = sixtyfourFamily(axes.scan, axes.bleed);
+      if (inst) family = "'" + inst + "', " + FD.stack; else axes.unavailable = true;
+    }
+    var drawing = f('fontRendering');
+    var font = { id: fid, family: family, size: size, weight: wt, boldWeight: FD.weights ? Math.min(FD.weights[1], wt <= 500 ? 700 : 800) : 700,
+      lineHeight: lh, letterSpacing: f('letterSpacing') || 0, label: FD.label, crisp: drawing === 'crisp', axes: axes,
+      local: FD.local ? { name: FD.label, installed: hasLocalFace(FD.label) } : null };
 
     /* cursor */
     var shape = f('cursorShape'); if (shape === 'follow') shape = L.cursorShape;
@@ -307,7 +564,8 @@
     return {
       look: look, lookKey: lk, scheme: s, theme: theme, font: font, background: bg, effects: effects, glassThrough: bgShow,
       opts: { ligatures: f('ligatures'), minContrast: floor, boldBright: f('boldBright'),
-        cursor: { shape: shape, blink: f('cursorBlink') && L.blink !== 'off' }, stickyHeader: f('stickyHeader'), copyOnSelect: f('copyOnSelect') },
+        cursor: { shape: shape, blink: f('cursorBlink') && L.blink !== 'off' }, stickyHeader: f('stickyHeader'), copyOnSelect: f('copyOnSelect'),
+        textRendering: drawing === 'smooth' ? 'geometricPrecision' : drawing === 'crisp' ? 'optimizeLegibility' : 'auto' },
       padding: { x: f('padding'), y: Math.max(2, Math.round(f('padding') * 0.6)) },
       sixtyfour: { scan: f('sixtyfourScan'), bleed: f('sixtyfourBleed') }
     };
@@ -331,29 +589,79 @@
   /* ---- writes ---- */
   var views = new Set();
   var writing = 0; /* inside our own host writes: they refresh once when done, not once per key */
-  function refreshAll() { views.forEach(function (v) { v.applyAppearance(resolve(v)); }); checkRetro(); }
-  function set(scope, key, value, view) {
-    if (scope === 'tab' && view) {
-      view.tabAppearance = view.tabAppearance || {};
-      if (value === null || value === undefined) delete view.tabAppearance[key]; else view.tabAppearance[key] = value;
-      view.state.appearance = view.tabAppearance;
-      view.applyAppearance(resolve(view));
-      return;
-    }
+  var changeEvents = new T.Emitter();
+  function refreshAll() { views.forEach(function (v) { v.applyAppearance(resolve(v)); }); checkRetro(); changeEvents.emit('change'); }
+  /* the earlier stores for one field: the host model's key and this machine's copy */
+  function writeLocal(scope, key, value) {
     var s = settings(), k = scope === 'project' ? 'terminal.project.' + key : 'terminal.' + key;
     if (s) { writing++; try { s.set(k, value); } catch (e) { console.warn('[pmt] settings write failed', e); } writing--; }
-    if (scope !== 'project') {
-      if (value === null || value === undefined) delete localApp[key]; else localApp[key] = value;
-      try { localStorage.setItem('pm.home.terminal:v1:app', JSON.stringify(localApp)); } catch (e) {}
+    if (scope !== 'project') { if (value === null || value === undefined) delete localApp[key]; else localApp[key] = value; }
+  }
+  /* setMany(scope, { field: value | null }, view): one write for several fields (a quick set, an effect and the switch
+     to Custom), so Settings records one transaction and every terminal repaints once. null clears the field in that
+     scope. "All terminals" goes to Settings when a Project's Settings can be written; a value Settings has no words for
+     (none today) and every write without Settings go to the earlier stores */
+  function setMany(scope, patch, view) {
+    var keys = Object.keys(patch || {});
+    if (!keys.length) return true;
+    if (scope === 'tab' && view) {
+      view.tabAppearance = view.tabAppearance || {};
+      keys.forEach(function (k) { var v = patch[k]; if (v === null || v === undefined) delete view.tabAppearance[k]; else view.tabAppearance[k] = v; });
+      view.state.appearance = view.tabAppearance;
+      view.applyAppearance(resolve(view));
+      changeEvents.emit('change');
+      return true;
     }
+    var b = scope === 'app' && settingsReady() ? bridge() : null, rows = {}, rest = {}, ok = true;
+    keys.forEach(function (k) {
+      delete liveApp[k];
+      var L = LINK[k], v = patch[k];
+      if (b && L) {
+        var out = v === null || v === undefined ? null : L.out(v);
+        if (out !== undefined) { rows[L.id] = out; return; }
+      }
+      rest[k] = v;
+    });
+    if (b && Object.keys(rows).length) {
+      writing++;
+      try { ok = b.set(rows) !== false; } catch (e) { ok = false; console.warn('[pmt] Settings write failed', e); }
+      writing--;
+      slVer = -1;
+      if (ok) {
+        /* Settings holds it now: the earlier copy of the same field would only come back when the row is reset */
+        Object.keys(LINK).forEach(function (k) { if (has(rows, LINK[k].id)) writeLocal(scope, k, null); });
+      } else Object.keys(LINK).forEach(function (k) { if (has(rows, LINK[k].id)) rest[k] = patch[k]; });
+    }
+    Object.keys(rest).forEach(function (k) { writeLocal(scope, k, rest[k]); });
+    if (scope !== 'project') saveLocal();
     refreshAll();
+    return ok;
+  }
+  function set(scope, key, value, view) { var p = {}; p[key] = value; return setMany(scope, p, view); }
+  /* a value shown at once while a slider moves; commit() writes it (setMany) when the slider is let go */
+  function live(scope, key, value, view) {
+    if (scope === 'tab' && view) { view.tabAppearance = view.tabAppearance || {}; view.tabAppearance[key] = value; view.state.appearance = view.tabAppearance; view.applyAppearance(resolve(view)); changeEvents.emit('change'); return; }
+    liveApp[key] = value; refreshAll();
+  }
+  function commit(scope, key, view) {
+    if (scope === 'tab') return set('tab', key, view && view.tabAppearance ? view.tabAppearance[key] : null, view);
+    if (!has(liveApp, key)) return true;
+    return set(scope, key, liveApp[key], view);
   }
   function resetScope(scope, view) {
-    if (scope === 'tab' && view) { view.tabAppearance = {}; view.state.appearance = {}; view.applyAppearance(resolve(view)); return; }
+    if (scope === 'tab' && view) { view.tabAppearance = {}; view.state.appearance = {}; view.applyAppearance(resolve(view)); changeEvents.emit('change'); return; }
+    liveApp = {};
+    var b = settingsReady() ? bridge() : null;
     writing++;
+    if (b) {
+      var rows = {}, sl = settingsLayer();
+      Object.keys(LINK).forEach(function (k) { if (has(sl, k)) rows[LINK[k].id] = null; });
+      try { if (Object.keys(rows).length) b.set(rows); } catch (e) { console.warn('[pmt] Settings reset failed', e); }
+      slVer = -1;
+    }
     Object.keys(FIELDS).forEach(function (k) { if (localApp[k] !== undefined) delete localApp[k]; var s = settings(); if (s) try { s.set('terminal.' + k, null); } catch (e) {} });
     writing--;
-    try { localStorage.setItem('pm.home.terminal:v1:app', JSON.stringify(localApp)); } catch (e) {}
+    saveLocal();
     refreshAll();
   }
   function preview(view, patch) { view.previewAppearance = patch; view.applyAppearance(resolve(view)); }
@@ -371,22 +679,72 @@
   /* procedural background images (nothing fetched); blur is baked once into the image (element blur, never a
      backdrop blur, so the closed blur budget F3-431 is untouched) */
   var imgCache = new Map();
+  /* the canvas filter where the browser has it; otherwise three box passes approximate the same Gaussian on the
+     pixels once (Safari before canvas filters), so Blur draws on every browser */
+  var canFilter = (function () { try { var g = document.createElement('canvas').getContext('2d'); g.filter = 'blur(2px)'; return g.filter === 'blur(2px)'; } catch (e) { return false; } })();
+  function boxBlur(g, w, h, sigma) {
+    var n = 3, wIdeal = Math.sqrt((12 * sigma * sigma / n) + 1), wl = Math.floor(wIdeal); if (wl % 2 === 0) wl--;
+    var m = Math.round((12 * sigma * sigma - n * wl * wl - 4 * n * wl - 3 * n) / (-4 * wl - 4)), sizes = [];
+    for (var i = 0; i < n; i++) sizes.push(i < m ? wl : wl + 2);
+    var img = g.getImageData(0, 0, w, h), a = img.data, b = new Uint8ClampedArray(a.length);
+    function pass(src, dst, r, horiz) {
+      var len = horiz ? w : h, lines = horiz ? h : w, step = horiz ? 4 : w * 4, iarr = 1 / (r + r + 1);
+      for (var l = 0; l < lines; l++) {
+        var base = horiz ? l * w * 4 : l * 4;
+        for (var c = 0; c < 4; c++) {
+          var first = src[base + c], last = src[base + (len - 1) * step + c], acc = (r + 1) * first, j;
+          for (j = 0; j < r; j++) acc += src[base + Math.min(j, len - 1) * step + c];
+          for (j = 0; j < len; j++) {
+            acc += (j + r < len ? src[base + (j + r) * step + c] : last) - (j - r - 1 >= 0 ? src[base + (j - r - 1) * step + c] : first);
+            dst[base + j * step + c] = acc * iarr;
+          }
+        }
+      }
+    }
+    sizes.forEach(function (s) { var r = (s - 1) / 2; pass(a, b, r, true); pass(b, a, r, false); });
+    g.putImageData(img, 0, 0);
+  }
+  function blurCanvas(cv, blur) { if (!blur || canFilter) return; boxBlur(cv.getContext('2d'), cv.width, cv.height, blur); }
+  /* a picture of the person's own, blurred once at this blur and cached; until it is ready the sharp copy shows, and
+     every terminal repaints when it is */
+  var pending = {};
+  function blurredPicture(key, url, blur) {
+    if (imgCache.has(key)) return imgCache.get(key);
+    if (pending[key]) return null;
+    pending[key] = true;
+    var im = new Image();
+    im.onload = function () {
+      var cv = document.createElement('canvas'); cv.width = 960; cv.height = 600;
+      var g = cv.getContext('2d'), k = Math.max(960 / im.naturalWidth, 600 / im.naturalHeight);
+      var dw = im.naturalWidth * k, dh = im.naturalHeight * k;
+      if (canFilter) g.filter = 'blur(' + blur + 'px)';
+      g.drawImage(im, (960 - dw) / 2, (600 - dh) / 2, dw, dh);
+      blurCanvas(cv, blur);
+      imgCache.set(key, cv.toDataURL('image/jpeg', 0.86)); delete pending[key];
+      refreshAll();
+    };
+    im.onerror = function () { delete pending[key]; };
+    im.src = url;
+    return null;
+  }
   function imageUrl(name, data, blur) {
-    /* a chosen image is a reference ('img:<hash>') to the copy kept on this machine (76-popover.js); one that is gone
-       (evicted, or named by another machine's settings) falls back to the default image. Resolved before the cache,
-       whose key holds only the data's length, the same for every reference */
+    /* a chosen image is a reference ('img:<hash>') to the copy kept on this machine (77-customize.js); one that is
+       gone (evicted, or named by another machine's settings) falls back to the default image, as does a path typed in
+       Settings ('path:'), which a browser cannot open. Resolved before the cache, whose key holds only the data's
+       length, the same for every reference */
     if (name === 'custom' && data && data.indexOf('img:') === 0) {
       var stored = null;
       try { stored = localStorage.getItem('pm.home.terminal:v1:bg:' + data.slice(4)); } catch (e) {}
-      if (stored) return stored;
+      if (stored) return blur ? blurredPicture(data + '|' + blur, stored, blur) || stored : stored;
       name = 'hills'; data = null;
     }
+    if (name === 'custom' && data && data.indexOf('path:') === 0) { name = 'hills'; data = null; }
     var key = name + '|' + (data ? data.length : 0) + '|' + blur;
     if (imgCache.has(key)) return imgCache.get(key);
     var cv = document.createElement('canvas'); cv.width = 960; cv.height = 600;
     var g = cv.getContext('2d');
     if (name === 'custom' && data) { imgCache.set(key, data); return data; }
-    if (blur) g.filter = 'blur(' + blur + 'px)';
+    if (blur && canFilter) g.filter = 'blur(' + blur + 'px)';
     if (name === 'grid') {
       g.fillStyle = '#10131a'; g.fillRect(0, 0, 960, 600);
       g.strokeStyle = 'rgba(120,160,255,.16)'; g.lineWidth = 1;
@@ -404,18 +762,54 @@
         g.lineTo(960, 600); g.closePath(); g.fill();
       });
     }
+    blurCanvas(cv, blur);
     var url = cv.toDataURL('image/jpeg', 0.86);
     imgCache.set(key, url);
     return url;
   }
+  /* the name a picture was chosen under, so Settings' Custom Background Image can name it and find it again */
+  function rememberPicture(name, ref) {
+    if (!name || !ref || ref.indexOf('img:') !== 0) return;
+    var n = picNames(); n[String(name).split(/[\\/]/).pop().slice(0, 120)] = ref.slice(4);
+    var keys = Object.keys(n); if (keys.length > 16) delete n[keys[0]];
+    try { localStorage.setItem(NAMES, JSON.stringify(n)); } catch (e) {}
+  }
+  function pictureName(ref) { var o = pictureOut(ref); return o && o.indexOf('img:') !== 0 ? o : null; }
+
+  /* import from text (the Customize screen and Settings' Import a Color Scheme): { ok, id, name } or { ok: false, error }
+     with a fixed message that never repeats the file */
+  function importText(text, fileName) {
+    var r = T.SchemeImport ? T.SchemeImport.parse(text, fileName || '') : { ok: false, error: 'Import is not available' };
+    if (!r.ok) return { ok: false, error: r.error };
+    var entry = addUserScheme(r.scheme);
+    return { ok: true, id: entry.id, name: entry.name };
+  }
+  /* importFile({ onDone(result) }): opens a file chooser (call it from a click) */
+  function importFile(opts) {
+    opts = opts || {};
+    var done = function (r) { if (typeof opts.onDone === 'function') { try { opts.onDone(r); } catch (e) { console.error('[pmt] import onDone failed', e); } } };
+    var input = document.createElement('input'); input.type = 'file';
+    input.accept = '.itermcolors,.json,.conf,.toml,.yaml,.yml,.Xresources,.xresources,.txt,.theme';
+    input.addEventListener('change', function () {
+      var f = input.files && input.files[0]; if (!f) return;
+      if (f.size > 256 * 1024) { done({ ok: false, error: 'That file is too large for a colour scheme (256 KB at most).' }); return; }
+      f.text().then(function (text) { done(importText(text, f.name)); }, function () { done({ ok: false, error: 'That file could not be read.' }); });
+    });
+    input.click();
+  }
 
   T.Appearance = {
-    FIELDS: FIELDS, FONTS: FONTS, LOOKS: LOOKS, DEFAULTS: DEFAULTS, GRADIENTS: GRADIENTS,
-    schemes: allSchemes, scheme: scheme, pairOf: pairOf, toTheme: toTheme,
+    FIELDS: FIELDS, FONTS: FONTS, LOOKS: LOOKS, DEFAULTS: DEFAULTS, GRADIENTS: GRADIENTS, LINK: LINK,
+    schemes: allSchemes, scheme: scheme, pairOf: pairOf, toTheme: toTheme, fontDef: fontDef, hasLocalFace: hasLocalFace,
     resolve: function (view) { if (view) views.add(view); return resolve(view); },
+    /* the same resolution without joining the live terminals (thumbnails and previews that repaint themselves) */
+    peek: function (view) { return resolve(view); },
     forget: function (view) { views.delete(view); },
-    get: field, layerOf: layerOf, set: set, reset: resetScope, preview: preview, endPreview: endPreview,
+    get: field, layerOf: layerOf, own: own, set: set, setMany: setMany, live: live, commit: commit, reset: resetScope,
+    preview: preview, endPreview: endPreview, settingsReady: settingsReady, settingsValues: settingsLayer,
     refreshAll: refreshAll, addUserScheme: addUserScheme, imageUrl: imageUrl, lookKey: lookKey,
+    rememberPicture: rememberPicture, pictureName: pictureName, importText: importText, importFile: importFile, canBlur: canFilter,
+    onChange: function (fn) { return changeEvents.on('change', fn); },
     setTabFont: function (view, o) { if (o.size) set('tab', 'fontSize', o.size, view); },
     /* D30: the catalog as the editor reads it (window.PMT.Appearance, 90-kind.js) */
     EDITOR_TOKENS: EDITOR_TOKENS, EDITOR_FROM_ANSI: EDITOR_FROM_ANSI, editorFromAnsi: editorFromAnsi,

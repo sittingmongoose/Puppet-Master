@@ -1,0 +1,59 @@
+{
+ "family": "basic",
+ "label": "Basic",
+ "owner": "pm7-wallpapers",
+ "order": 20,
+ "about": "Calm, work-first structure at low contrast, with its detail at the edges.",
+ "wallpapers": [
+  {
+   "id": "blueprint",
+   "name": "Blueprint",
+   "description": "A drafting sheet: a fine grid, a protractor, a dimensioned part and a title block.",
+   "files": {
+    "dark": "src/walls/blueprint-dark.webp",
+    "light": "src/walls/blueprint-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "contour",
+   "name": "Contour",
+   "description": "A topographic survey with hills at the corners and a flat, quiet valley in the middle.",
+   "files": {
+    "dark": "src/walls/contour-dark.webp",
+    "light": "src/walls/contour-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "folds",
+   "name": "Folds",
+   "description": "A large sheet of paper folded and opened flat, each facet lit from the top left.",
+   "files": {
+    "dark": "src/walls/folds-dark.webp",
+    "light": "src/walls/folds-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "sheets",
+   "name": "Sheets",
+   "description": "Paper on a desk: a stack with a clip, index cards and graph paper at the corners.",
+   "files": {
+    "dark": "src/walls/sheets-dark.webp",
+    "light": "src/walls/sheets-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "arcs",
+   "name": "Arcs",
+   "description": "Fine concentric arcs from beyond two corners that thin out before the middle.",
+   "files": {
+    "dark": "src/walls/arcs-dark.webp",
+    "light": "src/walls/arcs-light.webp"
+   },
+   "default_for": null
+  }
+ ]
+}

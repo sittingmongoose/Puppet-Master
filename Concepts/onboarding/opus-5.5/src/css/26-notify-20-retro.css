@@ -1,0 +1,152 @@
+/* PM Notify, Retro: phosphor and CRT (pm7-notifications, Opus 5.5).
+   Retro Dark is a green-phosphor terminal: a message is a framed console window with scan lines and a soft phosphor
+   bloom, its title types on and a block cursor blinks at its end; it arrives as a CRT line that opens with a flash and
+   leaves the way a set switches off (to a line, then a dot). Retro Light is the same machine's printout: ink on paper
+   slips with perforated edges and no glow. Hard offset shadows (canon F3-460), square corners, bracketed tags,
+   reverse video for the chosen row and the primary key. Motion is discrete steps (19-notify.js MOTION.retro). */
+
+html[data-theme^="retro"] {
+  --pmn-r: 0px;
+  --pmn-r-panel: 0px;
+  --pmn-r-item: 0px;
+  --pmn-r-tile: 0px;
+  --pmn-r-btn: 0px;
+  --pmn-tile: 28px;
+  --pmn-font: var(--body-font, 'IBM Plex Mono', ui-monospace, monospace);
+  --pmn-font-head: var(--body-font, 'IBM Plex Mono', ui-monospace, monospace);
+  --pmn-shadow: var(--pm6-rb-shadow-hard, 3px 3px 0 rgba(224, 224, 224, .55));
+  --pmn-shadow-panel: 5px 5px 0 color-mix(in srgb, var(--text-primary) 45%, transparent);
+  --pmn-phos: var(--accent-lime);
+  --pmn-glow: 0 0 6px color-mix(in srgb, var(--pmn-phos) 55%, transparent);
+  --pmn-scan: repeating-linear-gradient(180deg, rgba(0, 0, 0, .22) 0 1px, transparent 1px 3px);
+  --pmn-hover: color-mix(in srgb, var(--pmn-phos) 12%, transparent);
+}
+html[data-theme="retro-light"] {
+  --pmn-phos: var(--text-primary);
+  --pmn-glow: none;
+  --pmn-scan: none;
+  --pmn-shadow: 3px 3px 0 rgba(26, 26, 26, .55);
+  --pmn-shadow-panel: 5px 5px 0 rgba(26, 26, 26, .5);
+  --pmn-hover: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  --pmn-on-acc: #FAF7F2;
+}
+html[data-theme="retro-dark"] { --pmn-on-acc: #10120e; }
+html[data-theme^="retro"] :is(.pmn-toast, .pmn-front, .pmn-item, .pmn-banner).n-sev-info { --pmn-acc: var(--pmn-phos); }
+html[data-theme="retro-light"] :is(.pmn-toast, .pmn-front, .pmn-item, .pmn-banner).n-sev-info { --pmn-acc: var(--accent-blue); }
+html[data-theme^="retro"] .pmn-ico { stroke-linecap: square; stroke-linejoin: miter; }
+
+/* ---- the stack: square cards with hard shadows, the badge a two-digit counter in reverse video ---- */
+html[data-theme^="retro"] .pmn-front, html[data-theme^="retro"] .pmn-peek { border-radius: 0; border-width: 2px; }
+html[data-theme^="retro"] .pmn-front {
+  background: var(--pmn-surface); border-color: color-mix(in srgb, var(--pmn-acc) 70%, var(--pmn-line));
+  box-shadow: 2px 2px 0 color-mix(in srgb, var(--text-primary) 40%, transparent); padding-left: 7px;
+}
+html[data-theme^="retro"] .pmn-front-title { text-transform: uppercase; font-size: 11px; letter-spacing: .02em; text-shadow: var(--pmn-glow); }
+html[data-theme^="retro"] .pmn-stack[data-hover] .pmn-front { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 color-mix(in srgb, var(--text-primary) 50%, transparent); }
+html[data-theme^="retro"] .pmn-stack[data-depth="2"] .pmn-peek-1, html[data-theme^="retro"] .pmn-stack[data-depth="3"] .pmn-peek-1 { transform: translateX(5px); }
+html[data-theme^="retro"] .pmn-stack[data-depth="3"] .pmn-peek-2 { transform: translateX(10px); }
+html[data-theme^="retro"] .pmn-front, html[data-theme^="retro"] .pmn-peek { transition-timing-function: steps(3, end); }
+html[data-theme^="retro"] .pmn-bell { border-radius: 0; }
+html[data-theme^="retro"] .pmn-badge {
+  border-radius: 0; height: 16px; min-width: 22px; padding: 0 3px; top: -7px; right: -7px;
+  font-family: var(--pmn-font); font-weight: 700; font-size: 10.5px; letter-spacing: .04em;
+  background: var(--pmn-phos); color: var(--pmn-on-acc);
+  box-shadow: 0 0 0 2px var(--background), 2px 2px 0 color-mix(in srgb, var(--text-primary) 45%, transparent);
+  transition: transform 120ms steps(3, end), opacity 0s;
+}
+html[data-theme^="retro"] .pmn-badge[data-sev="warn"] { background: var(--accent-warning); }
+html[data-theme^="retro"] .pmn-badge[data-sev="error"] { background: var(--accent-error); }
+
+/* ---- the toast: a console window ---- */
+html[data-theme^="retro"] .pmn-toast {
+  border: 2px solid color-mix(in srgb, var(--pmn-acc) 72%, var(--pmn-line));
+  background: var(--pmn-surface); box-shadow: var(--pmn-shadow);
+  transform-origin: 50% 50%;
+}
+html[data-theme^="retro"] .pmn-toast::after { content: ""; position: absolute; inset: 0; background: var(--pmn-scan); pointer-events: none; opacity: .55; }
+html[data-theme^="retro"] .pmn-toast[data-level="attention"], html[data-theme^="retro"] .pmn-toast[data-level="blocking"] { background: color-mix(in srgb, var(--pmn-acc) 9%, var(--pmn-surface)); }
+html[data-theme^="retro"] .pmn-toast-in { padding: 10px 8px 12px 10px; gap: 10px; }
+html[data-theme^="retro"] .pmn-tile { background: transparent; box-shadow: inset 0 0 0 2px var(--pmn-acc); padding: 5px; }
+html[data-theme^="retro"] .pmn-tile > .pmn-ico { filter: drop-shadow(0 0 3px color-mix(in srgb, var(--pmn-acc) 50%, transparent)); }
+html[data-theme="retro-light"] .pmn-tile > .pmn-ico { filter: none; }
+/* the tag: [INFO] [OK] [WARN] [STOP], in reverse video, ahead of the source and the time */
+html[data-theme^="retro"] .pmn-kicker { text-transform: uppercase; letter-spacing: .06em; font-size: 10px; font-weight: 700; color: var(--pmn-text-2); }
+html[data-theme^="retro"] .pmn-kicker::before { content: "INFO"; padding: 1px 4px; margin-right: 2px; background: var(--pmn-acc); color: var(--pmn-on-acc); }
+html[data-theme^="retro"] .pmn-toast.n-sev-success .pmn-kicker::before { content: "OK"; }
+html[data-theme^="retro"] .pmn-toast.n-sev-warn .pmn-kicker::before { content: "WARN"; }
+html[data-theme^="retro"] .pmn-toast.n-sev-error .pmn-kicker::before, html[data-theme^="retro"] .pmn-toast[data-level="blocking"] .pmn-kicker::before { content: "STOP"; }
+html[data-theme^="retro"] .pmn-src { color: var(--pmn-text-2); }
+html[data-theme^="retro"] .pmn-title { font-size: 12.5px; font-weight: 600; text-shadow: var(--pmn-glow); letter-spacing: 0; }
+html[data-theme^="retro"] .pmn-toast .pmn-title::after {
+  content: ""; display: inline-block; width: .6em; height: 1.05em; margin-left: 3px; vertical-align: -.18em;
+  background: var(--pmn-phos); box-shadow: var(--pmn-glow); animation: pmn-cursor 1.06s steps(1, end) infinite;
+}
+html[data-theme^="retro"] .pmn-toast.pmn-leaving .pmn-title::after, html[data-theme^="retro"] .pmn-toast.pmn-flying .pmn-title::after { animation: none; opacity: 0; }
+@keyframes pmn-cursor { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+html[data-theme^="retro"] .pmn-body { font-size: 11.5px; }
+html[data-theme^="retro"] .pmn-count { font-family: var(--pmn-font); font-weight: 700; }
+/* the timer: a bar of blocks that runs down */
+html[data-theme^="retro"] .pmn-timer {
+  height: 4px; left: 2px; right: 2px; bottom: 2px; opacity: .9;
+  background: repeating-linear-gradient(90deg, var(--pmn-acc) 0 6px, transparent 6px 8px);
+}
+/* paper: perforated edges top and bottom, ink, no glow, no scan lines */
+html[data-theme="retro-light"] .pmn-toast { border-color: var(--text-primary); background: #FAF7F2; }
+html[data-theme="retro-light"] .pmn-toast::after { background: radial-gradient(circle, var(--background) 2px, transparent 2.4px) 3px -3px / 10px 6px repeat-x, radial-gradient(circle, var(--background) 2px, transparent 2.4px) 3px calc(100% + 3px) / 10px 6px repeat-x; opacity: 1; }
+
+/* ---- keys: [ LABEL ] with reverse video on hover; the primary is reverse video already ---- */
+html[data-theme^="retro"] .pmn-btn {
+  height: 24px; padding: 0 8px; border-radius: 0; text-transform: uppercase; letter-spacing: .04em; font-size: 10.5px; font-weight: 700;
+  background: transparent; color: var(--pmn-text); box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--pmn-acc) 70%, var(--pmn-line));
+  transition: none;
+}
+html[data-theme^="retro"] .pmn-btn::before { content: "["; margin-right: 2px; opacity: .7; }
+html[data-theme^="retro"] .pmn-btn::after { content: "]"; margin-left: 2px; opacity: .7; }
+html[data-theme^="retro"] .pmn-btn:hover, html[data-theme^="retro"] .pmn-btn-primary { background: var(--pmn-acc); color: var(--pmn-on-acc); box-shadow: inset 0 0 0 2px var(--pmn-acc); }
+html[data-theme^="retro"] .pmn-btn-primary:hover { box-shadow: inset 0 0 0 2px var(--pmn-acc), 2px 2px 0 color-mix(in srgb, var(--text-primary) 45%, transparent); }
+html[data-theme^="retro"] .pmn-btn:active { transform: translate(1px, 1px); }
+html[data-theme^="retro"] .pmn-x { border-radius: 0; }
+html[data-theme^="retro"] .pmn-x:hover { background: var(--pmn-acc); color: var(--pmn-on-acc); }
+
+/* ---- the inbox: a terminal session ---- */
+html[data-theme^="retro"] .pmn-chrome { border: 2px solid color-mix(in srgb, var(--pmn-phos) 65%, var(--pmn-line)); box-shadow: var(--pmn-shadow-panel); background: var(--pmn-surface); }
+html[data-theme^="retro"] .pmn-chrome::after { content: ""; position: absolute; inset: 0; background: var(--pmn-scan); opacity: .35; pointer-events: none; }
+html[data-theme^="retro"] .pmn-head { background: var(--pmn-phos); color: var(--pmn-on-acc); border-bottom: 0; padding: 7px 8px 7px 10px; }
+html[data-theme^="retro"] .pmn-head-ico { color: var(--pmn-on-acc); }
+html[data-theme^="retro"] .pmn-head-title { color: var(--pmn-on-acc); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+html[data-theme^="retro"] .pmn-head-count { color: var(--pmn-on-acc); text-transform: uppercase; }
+html[data-theme^="retro"] .pmn-head-count:not(:empty)::before { content: "\2500\2500 "; }
+html[data-theme^="retro"] .pmn-textbtn { color: var(--pmn-on-acc); text-transform: uppercase; font-size: 10.5px; letter-spacing: .04em; border-radius: 0; height: 22px; line-height: 22px; }
+html[data-theme^="retro"] .pmn-textbtn:hover { background: var(--pmn-on-acc); color: var(--pmn-phos); }
+html[data-theme^="retro"] .pmn-textbtn-clear:hover { color: var(--accent-error); }
+html[data-theme^="retro"] .pmn-group-head { font-size: 10.5px; letter-spacing: .08em; padding: 10px 6px 4px 8px; color: var(--pmn-text-2); }
+html[data-theme^="retro"] .pmn-group-head::after { content: ""; flex: 1 1 auto; height: 0; border-top: 1px dashed color-mix(in srgb, var(--pmn-phos) 45%, transparent); order: 3; margin-left: 4px; }
+html[data-theme^="retro"] .pmn-group-fold { order: 4; border-radius: 0; text-transform: uppercase; font-size: 10px; letter-spacing: .04em; }
+html[data-theme^="retro"] .pmn-group-fold .pmn-ico { transition-timing-function: steps(2, end); }
+html[data-theme^="retro"] .pmn-item { padding: 8px 8px 9px 22px; border-bottom: 1px dashed color-mix(in srgb, var(--pmn-line) 80%, transparent); transition: none; }
+html[data-theme^="retro"] .pmn-item:hover, html[data-theme^="retro"] .pmn-item:focus-visible { background: var(--pmn-hover); box-shadow: none; }
+html[data-theme^="retro"] .pmn-item:focus-visible::before, html[data-theme^="retro"] .pmn-item:hover::before { content: ">"; position: absolute; left: 7px; top: 9px; color: var(--pmn-phos); font-weight: 700; text-shadow: var(--pmn-glow); }
+html[data-theme^="retro"] .pmn-unread { border-radius: 0; left: 8px; top: 15px; width: 6px; height: 6px; background: var(--pmn-phos); box-shadow: var(--pmn-glow); }
+html[data-theme^="retro"] .pmn-item:hover .pmn-unread, html[data-theme^="retro"] .pmn-item:focus-visible .pmn-unread { opacity: 0; }
+html[data-theme^="retro"] .pmn-item .pmn-tile { width: 24px; height: 24px; padding: 4px; }
+html[data-theme^="retro"] .pmn-item-title { font-size: 12px; text-shadow: var(--pmn-glow); }
+html[data-theme^="retro"] .pmn-item-meta { text-transform: uppercase; letter-spacing: .05em; }
+html[data-theme^="retro"] .pmn-group[data-folded="true"] .pmn-item[data-under] { border-radius: 0; border-bottom: 0; background: transparent; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmn-phos) 45%, transparent); height: 6px; margin-top: -1px; }
+html[data-theme^="retro"] .pmn-group[data-folded="true"] .pmn-item:not([data-under]) { background: transparent; box-shadow: none; }
+html[data-theme^="retro"] .pmn-explain { border-radius: 0; background: transparent; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmn-acc) 50%, transparent); }
+html[data-theme^="retro"] :is(.pmn-pattern input, .pmn-rationale) { border-radius: 0; border-width: 2px; }
+/* empty: the prompt waits */
+html[data-theme^="retro"] .pmn-empty-art { width: auto; height: auto; background: transparent; padding: 6px 0 0; }
+html[data-theme^="retro"] .pmn-cursor { display: block; width: 14px; height: 22px; background: var(--pmn-phos); box-shadow: var(--pmn-glow); animation: pmn-cursor 1.06s steps(1, end) infinite; }
+html[data-theme^="retro"] .pmn-empty-title { letter-spacing: .1em; text-shadow: var(--pmn-glow); }
+html[data-theme^="retro"] .pmn-empty-sub { text-transform: none; }
+html[data-theme^="retro"] .pmn-scroll { -webkit-mask-image: none; mask-image: none; }
+html[data-theme^="retro"] .pmn-banner { border-width: 2px; border-color: color-mix(in srgb, var(--pmn-acc) 72%, var(--pmn-line)); box-shadow: var(--pmn-shadow); }
+/* Reduced Motion: no blinking (the cursor stays lit) */
+html[data-theme^="retro"][data-motion="reduced"] :is(.pmn-toast .pmn-title::after, .pmn-cursor) { animation: none; }
+@media (prefers-reduced-motion: reduce) { html[data-theme^="retro"] :is(.pmn-toast .pmn-title::after, .pmn-cursor) { animation: none; } }
+
+/* typing: the block cursor rides the typed text; the rest keeps its place, unseen */
+html[data-theme^="retro"] .pmn-title[data-typing]::after { display: none; }
+.pmn-typerest { visibility: hidden; }
+.pmn-typecur { display: inline-block; width: .6em; height: 1.05em; margin: 0 1px; vertical-align: -.18em; background: var(--pmn-phos, currentColor); box-shadow: var(--pmn-glow, none); }

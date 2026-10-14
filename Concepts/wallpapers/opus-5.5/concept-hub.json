@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "topic": "Wallpapers",
+  "model": "Opus 5.5",
+  "presentation": "entries",
+  "order": 100,
+  "widthControl": {
+    "enabled": true,
+    "label": "Component width",
+    "role": "page",
+    "min": 1024,
+    "max": 1920,
+    "step": 10,
+    "default": 1600,
+    "presets": [1024, 1280, 1600, 1920],
+    "previewWidth": "test"
+  },
+  "entries": [
+    {
+      "id": "wallpapers-all-looks",
+      "title": "Wallpapers for every look: the set and the Settings gallery",
+      "path": "index.html",
+      "openPath": "index.html",
+      "openActions": "both",
+      "controlMode": "standard",
+      "tags": ["wallpapers", "settings", "glass", "basic", "friendly", "retro", "nier", "pm7-wallpapers"],
+      "order": 10
+    }
+  ]
+}
