@@ -42803,6 +42803,7 @@ html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(-
 /* ---- presets (round 2): the four built in, then yours, each a tiny terminal in its own colours; saving, renaming and
    deleting happen in place, and a delete can be undone ---- */
 .pmt-cz-presets { display: grid; gap: 6px; min-width: 0; }
+.pmt-cz-presets .pmt-cz-sets { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); }
 .pmt-cz-presethead { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
 .pmt-cz-presethead .pmt-cz-trylabel { width: auto; }
 .pmt-cz-presethead .pmt-textbtn { height: 24px; padding: 0 7px; font-size: 11.5px; border-color: var(--pmt-cz-line); }
@@ -201993,10 +201994,11 @@ var T = {};
     };
     /* the bezel: a rim (4 px) or a monitor case (10 px) unless a width was chosen (research: real cases are far wider,
        right for an emulator's margins, far too big for a pane); the text is laid out inside it, never squeezed */
-    var bzStyle = f('bezel'), bezel = { style: 'off', width: 0, color: 'follow' };
+    var bzStyle = f('bezel'), bezel = { style: 'off', width: 0, gap: 0, color: 'follow' };
     if (bzStyle === 'rim' || bzStyle === 'case') {
       var bw = f('bezelWidth');
-      bezel = { style: bzStyle, width: bw === null || bw === undefined ? (bzStyle === 'rim' ? 4 : 10) : bw, color: f('bezelColor') || 'follow' };
+      /* and a breath of glass inside it (3 px in a rim, 6 px in a case), so no glyph touches the frame */
+      bezel = { style: bzStyle, width: bw === null || bw === undefined ? (bzStyle === 'rim' ? 4 : 10) : bw, gap: bzStyle === 'rim' ? 3 : 6, color: f('bezelColor') || 'follow' };
     }
     var bgShow = lk === 'glass' && bgKind === 'theme';
     /* High Contrast schemes keep every cell at 7:1 unless the user chose a floor themselves */
@@ -202007,7 +202009,7 @@ var T = {};
       opts: { ligatures: f('ligatures'), minContrast: floor, boldBright: f('boldBright'),
         cursor: { shape: shape, blink: f('cursorBlink') && L.blink !== 'off' }, stickyHeader: f('stickyHeader'), copyOnSelect: f('copyOnSelect'),
         textRendering: drawing === 'smooth' ? 'geometricPrecision' : drawing === 'crisp' ? 'optimizeLegibility' : 'auto' },
-      padding: { x: f('padding') + bezel.width, y: Math.round(f('padding') * 0.6) + bezel.width, own: f('padding') },
+      padding: { x: f('padding') + bezel.width + bezel.gap, y: Math.round(f('padding') * 0.6) + bezel.width + bezel.gap, own: f('padding') },
       bezel: bezel,
       sixtyfour: { scan: f('sixtyfourScan'), bleed: f('sixtyfourBleed') }
     };
@@ -202763,16 +202765,31 @@ var T = {};
     g.globalAlpha = 1;
   }
 
+  /* the CSS designs, cached per scheme and size: resolve runs on every change, and an SVG design (contours, halftone)
+     takes a while to write */
+  var cssCache = new Map();
+  function cssFor(id, th, o) {
+    var d = BY[id]; if (!d || !d.css || !th) return null;
+    o = o || {};
+    var key = id + '|' + th.id + '|' + th.bg + '|' + th.fg + '|' + (o.scale || 'medium');
+    if (cssCache.has(key)) return cssCache.get(key);
+    var out = d.css(th, hues(th), o);
+    cssCache.set(key, out);
+    if (cssCache.size > 160) cssCache.delete(cssCache.keys().next().value);
+    return out;
+  }
   /* ---- painted layers, cached per scheme, size step and blur ---- */
-  var cache = new Map(), CACHE_MAX = 40;
+  var cache = new Map(), CACHE_MAX = 40, SOFT = { aurora: 1, lava: 1, bokeh: 1 };
   var canFilter = (function () { try { var g = document.createElement('canvas').getContext('2d'); g.filter = 'blur(2px)'; return g.filter === 'blur(2px)'; } catch (e) { return false; } })();
   function step(n) { return Math.max(160, Math.min(2560, Math.round((n || 960) / 160) * 160)); }
   function paint(id, th, w, h, o) {
     var d = BY[id], name = d && d.cat === 'scene' ? id : d && d.motion ? d.motion.layer : PAINT[id] ? id : null;
     if (!name || !PAINT[name] || !th) return null;
     o = o || {};
-    var big = d && d.motion ? (d.motion.anim === 'pmt-bg-sway' || d.motion.anim === 'pmt-bg-rise' ? 1.5 : 1) : 1;
-    var W = step(w * big), H = step(h * (d && d.motion && d.motion.anim !== 'pmt-bg-twinkle' ? 2 : 1)), blur = o.blur || 0;
+    /* soft layers (washes of light, blurred discs) paint at half size and scale up: the same picture, a quarter of the
+       work (on a software renderer a full-size lava took a third of a second) */
+    var soft = SOFT[name] ? 0.5 : 1;
+    var W = step(w * soft), H = step(h * soft), blur = o.blur || 0;
     var key = name + '|' + th.id + '|' + th.bg + '|' + th.fg + '|' + W + 'x' + H + '|' + blur;
     if (cache.has(key)) { var hit = cache.get(key); cache.delete(key); cache.set(key, hit); return hit; }
     var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
@@ -202812,8 +202829,9 @@ var T = {};
     if (w === null || w === undefined) return 0.45;
     var own = C.contrast(th.fg, th.bg), want = Math.min(own, 4.8);
     if (C.contrast(th.fg, w) >= want) return 0;
-    for (var a = 0.05; a < 0.9; a += 0.05) if (C.contrast(th.fg, C.mix(w, th.bg, a)) >= want) return Math.round(a * 100) / 100;
-    return 0.9;
+    for (var a = 0.05; a < 0.999; a += 0.05) if (C.contrast(th.fg, C.mix(w, th.bg, a)) >= want) return Math.round(a * 100) / 100;
+    /* a scheme with no contrast to spare (Tokyo Night Day's 4.52:1) shows its plain ground */
+    return 1;
   }
 
   T.Grounds = {
@@ -202827,7 +202845,7 @@ var T = {};
     forLook: function (lk) { return LIST.filter(function (d) { return d.looks.indexOf(lk) >= 0; }).map(function (d) { return d.id; }); },
     /* the id an earlier word names: the picture 'paper' is the Paper pattern now */
     alias: function (id) { return id === 'paper-pic' ? 'fibre' : id; },
-    css: function (id, th, o) { var d = BY[id]; return d && d.css && th ? d.css(th, hues(th), o || {}) : null; },
+    css: cssFor,
     paint: paint,
     motion: function (id) { var d = BY[id]; return d && d.motion ? d.motion : null; },
     worst: worst,
@@ -204658,6 +204676,16 @@ var T = {};
     }).catch(function () {});
   } catch (e) {}
 
+  /* is there a GPU at all (asked once, on a scratch canvas, by the same test the effects pass uses) */
+  function hasGpu() {
+    if (gpu !== null) return gpu;
+    if (hasGpu.probe === undefined) {
+      var c = document.createElement('canvas'); c.width = c.height = 1;
+      var fx = T.FXGL ? T.FXGL.create(c) : null;
+      hasGpu.probe = !!fx; if (fx) fx.dispose();
+    }
+    return hasGpu.probe;
+  }
   function Policy(view) {
     this.view = view; this.cfg = {}; this.gl = null; this.trail = null; this.active = false;
     this.lastActivity = T.util.now(); this.raf = 0; this.lastAmbient = 0; this.degaussAt = 0;
@@ -204749,7 +204777,8 @@ var T = {};
     if (!v.root.classList.contains('pmt-bg-moves')) { v.root.classList.remove('pmt-bg-live'); return; }
     now = now || T.util.now();
     var left = IDLE_MS - (now - this.lastActivity);
-    var live = !!(v.focused && v.visible && left > 0 && !this.cfg.reduced && !battery.saver && !(v.term && v.term.buf && v.term.buf.isAlt));
+    /* where no GPU draws the terminal nothing moves (F3-643): the ground shows its still frame */
+    var live = !!(v.focused && v.visible && left > 0 && !this.cfg.reduced && !battery.saver && !(v.term && v.term.buf && v.term.buf.isAlt) && hasGpu());
     v.root.classList.toggle('pmt-bg-live', live);
     clearTimeout(this.liveTimer);
     if (live) this.liveTimer = setTimeout(function () { self.groundLive(); }, left + 20);
@@ -212330,9 +212359,9 @@ var T = {};
   /* quick sets: several existing fields at once, in this scope (NieR's presets, for a terminal) */
   var SETS = [
     { id: 'look', label: 'The look’s own', help: 'Everything follows the look', patch: null },
-    { id: 'calm', label: 'Calm', help: 'Nothing moves', patch: { effects: 'custom', cursorBlink: false, cursorTrail: 'off', smoothScroll: false, flicker: false, crt: false } },
+    { id: 'calm', label: 'Calm', help: 'Nothing moves', patch: { effects: 'custom', cursorBlink: false, cursorTrail: 'off', smoothScroll: false, flicker: false, crt: false, bgMotion: 'off' } },
     { id: 'reading', label: 'Easy reading', help: 'Clear face, high contrast', patch: { font: 'atkinson', minContrast: 7, lineHeight: 1.45, ligatures: false } },
-    { id: 'crt', label: 'Old monitor', help: 'Scanlines, glow, curve', patch: { effects: 'custom', scanlines: true, glow: true, crt: true, cursorTrail: 'phosphor' } }
+    { id: 'crt', label: 'Old monitor', help: 'A tube in a case', patch: { effects: 'custom', scanlines: true, glow: true, crt: true, curvature: 0.06, bezel: 'case', cursorTrail: 'phosphor' } }
   ];
   /* the fields the meter counts, in the order the screen shows them */
   var COUNTED = ['scheme', 'schemePair', 'minContrast', 'font', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing', 'ligatures', 'boldBright',
