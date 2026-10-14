@@ -3,15 +3,17 @@
      follow, cached transform-free midpoints, 250 ms neighbour FLIP on (.22,1,.36,1), a 0.35 rubber band at the strip
      ends, Retro's 8 px cells, the plate under the carried tab in the same frame, a 160 ms (.17,.84,.29,.99) settle the
      plate rides, one cmd.panel_tab.move on release.
-   - torn off (the pointer leaves the strip band by 14 px): a floating chip follows the pointer and the landing preview
-     shows the result: another strip (insert), a panel body's edge (split, only where both halves fit), a body's centre
-     (merge), the centre's outer edge (a new full-height or full-width panel), "+N" (to the end).
+   - torn off (the pointer leaves the strip band by 14 px): a floating chip follows the pointer, the drop guide and the
+     docks come up, and the landing preview shows the result: another strip (insert), a side of a panel's body (split:
+     the body's diagonals give each side a quarter, wherever the result fits), the Join target in the body's centre
+     (merge), a dock on the centre's outer edge (a new full-height or full-width panel), "+N" (to the end). The zones
+     and the guide are 31-dropzones.js.
    Full cancel (Escape, pointercancel, lost capture, blur, a release over the chat or the rail) restores the order and
    the active tab and dispatches nothing. Every outcome also has a menu path (the tab menu) and a keyboard path
-   (Ctrl+Shift+PgUp/PgDn, Ctrl+Alt+arrows). */
+   (Ctrl+Shift+PgUp/PgDn, Alt+Shift+arrows). */
 
 var tabDrag = PMW.tabDrag = {};
-var TEAR_BAND = 14, ROOT_BAND = 12, FLIP_MS = 250, SETTLE_MS = 160;
+var TEAR_BAND = 14, FLIP_MS = 250, SETTLE_MS = 160;
 var SETTLE_EASE = 'cubic-bezier(.17,.84,.29,.99)', FLIP_EASE = 'cubic-bezier(.22,1,.36,1)';
 
 function retroOn() { var lk = look(); return lk.family === 'retro' && !lk.nier; }
@@ -52,22 +54,30 @@ tabDrag.begin = function (ev, tabEl, s) {
       // the carried tab closed or moved away under the drag (an agent, the chat): end it, nothing to put back
       var at = model.panelOf(state.layout, g.tid);
       if (!at || at.id !== g.origin.panelId || !g.tab.isConnected) { g.end('gone'); return; }
-      var hr = host.getBoundingClientRect();
+      // the band is the strip where the layout has it: a preview may have moved the drawn strip under the pointer
+      var hr = homeBand(g);
       var inBand = g.py >= hr.top - TEAR_BAND && g.py <= hr.bottom + TEAR_BAND && g.px >= hr.left - 40 && g.px <= hr.right + 40;
       if (g.mode === 'strip' && !inBand && canTear(g)) tearOff(g);
       else if (g.mode === 'torn' && inBand) rejoin(g);
       if (g.mode === 'strip') followInStrip(g);
-      else followChip(g);
+      else { followChip(g); dropView.tick(g); }
     },
-    probe: function (g) { return g.mode === 'strip' ? { key: 'strip-self', instant: true } : probeZones(g); },
+    probe: function (g) { return g.mode === 'strip' ? { key: 'strip-self', instant: true } : dropZones.probe(g, { strips: true }); },
+    onProbe: function (g, z) { if (g.mode === 'torn') dropGuide.update(g, z); },
     onZone: function (g, z) { showZone(g, z); },
     onDrop: function (g, z) { return drop(g, z); },
     onCancel: function (g, how) { cancel(g, how); },
-    onEnd: function (g) { clearGap(g, false); preview.hide(); }
+    onEnd: function (g) { clearGap(g, false); preview.hide(); dropGuide.end(); if (dropView.active()) dropView.clear({ animate: false }); }
   });
 };
 
 function canTear(g) { return true; }
+/* the origin strip's band in viewport px, on the committed layout (31-dropzones.js base), else as drawn */
+function homeBand(g) {
+  var base = dropView.active() && dropZones.base(), r = base && base.panels[g.origin.panelId];
+  if (!r) return g.host.getBoundingClientRect();
+  return { left: r.x, right: r.x + r.w, top: r.y, bottom: r.y + g.host.offsetHeight };
+}
 
 /* Activate on grab: the same view action as PMW.activateTab (the active tab, the attention mark cleared, the MRU, a
    quiet save, the 'activate' event), minus expanding a collapsed panel, which would move the strip under the pointer.
@@ -179,11 +189,13 @@ function tearOff(g) {
   g.chip = chip;
   g.chipOffX = g.px - r.left; g.chipOffY = g.py - r.top;
   g.chipW = parseFloat(chip.style.width) || r.width;
+  g.chipH = r.height;
   g.tab.style.transform = '';
   g.tab.classList.add('pmw-torn');      // keeps its slot but paints nothing: the strip shows where it came from
   g.liftAt = performance.now();
   shape.snap(g.host);
-  announce('Moving ' + tabLabel(g.rec) + '. Drop it on a tab strip, the edge of a panel to split, or a panel to join it. Escape puts it back.');
+  dropGuide.begin(g);
+  announce('Moving ' + tabLabel(g.rec) + '. Drop it toward a side of a panel to split it, on the middle target or a tab strip to join, or on an outer edge for a full-length panel. Escape puts it back.');
 }
 function rejoin(g) {
   g.mode = 'strip';
@@ -191,6 +203,8 @@ function rejoin(g) {
   g.tab.classList.remove('pmw-torn');
   g.zone = null;
   preview.hide();
+  dropGuide.end();
+  dropView.clear();
   cacheSlots(g);      // the slot it kept while torn; followInStrip then draws it under the pointer again
 }
 function followChip(g) {
@@ -198,91 +212,10 @@ function followChip(g) {
   var k = reducedMotion() ? 1 : motion.curve('cubic-bezier(.2,.8,.2,1)')(Math.min(1, (performance.now() - g.liftAt) / 140));
   var x = g.px - g.chipOffX, y = g.py - g.chipOffY - 4 * k;
   g.chip.style.transform = 'translate3d(' + (x - parseFloat(g.chip.style.left)).toFixed(1) + 'px,' + (y - parseFloat(g.chip.style.top)).toFixed(1) + 'px,0)';
+  g.chipBox = { x: x, y: y, w: g.chipW, h: g.chipH };      // where the chip is this frame: the zone's name keeps clear of it
   setAttr(g.chip, 'data-alt', g.alt);
 }
 
-function bodyRect(panelEl) {
-  var r = panelEl.getBoundingClientRect();
-  var strip = panelEl.querySelector('.pmw-strip');
-  var sh = strip ? strip.offsetHeight : STRIP_H;
-  return { x: r.left, y: r.top + sh, w: r.width, h: r.height - sh, top: r.top, full: { x: r.left, y: r.top, w: r.width, h: r.height } };
-}
-function inRect(x, y, r, pad) { pad = pad || 0; return x >= r.x - pad && x <= r.x + r.w + pad && y >= r.y - pad && y <= r.y + r.h + pad; }
-
-/* the drop zones under the pointer: { key, type, panelId, edge, index, rect, label } */
-function probeZones(g) {
-  var l = state.layout, c = state.centre.getBoundingClientRect();
-  var cr = { x: c.left, y: c.top, w: c.width, h: c.height };
-  var x = g.px, y = g.py;
-  var narrow = PMW.narrow && PMW.narrow.singleColumn();
-  var inCentre = inRect(x, y, cr, 0);
-  // the centre's outer edge: a new panel along the whole side. Checked before the hysteresis below, so the outer 12 px
-  // band takes over from any zone the pointer arrives from
-  if (inCentre && !narrow) {
-    var edges = [['left', x - cr.x], ['right', cr.x + cr.w - x], ['top', y - cr.y], ['bottom', cr.y + cr.h - y]];
-    for (var e = 0; e < edges.length; e++) {
-      if (edges[e][1] <= ROOT_BAND && geom.rootFits(l, edges[e][0], render.centreRect(), g.kindMin)) {
-        var ed = edges[e][0];
-        return { key: 'root-' + ed, type: 'root', edge: ed, rect: rootRect(cr, ed), hit: edgeBand(cr, ed, ROOT_BAND), label: rootLabel(ed) };
-      }
-    }
-  }
-  // keep the current zone while the pointer is still within 12 px of it (hysteresis); a merge zone's hit leaves out the
-  // edge bands that offer a split, so carrying a tab from a panel's middle toward its edge turns the preview into
-  // the split 12 px into the band, whatever the path
-  if (g.zone && g.zone.hit && inRect(x, y, g.zone.hit, 12) && g.zone.type !== 'strip') return g.zone;
-  if (!inCentre) return null;                                     // over the chat, the rail: no drop
-  var panels = model.panels(l);
-  for (var i = 0; i < panels.length; i++) {
-    var p = panels[i];
-    var el = render.panelEl(p.id);
-    if (!el || el.hidden) continue;
-    var full = el.getBoundingClientRect();
-    if (!inRect(x, y, { x: full.left, y: full.top, w: full.width, h: full.height }, 0)) continue;
-    var stripEl = el.querySelector('.pmw-strip');
-    var sr = stripEl.getBoundingClientRect();
-    var own = p.id === g.origin.panelId;
-    // a strip: insert at an index ("+N" appends)
-    if (y <= sr.bottom + 4) {
-      var st = stripEl._pmw;
-      var moreR = st.more.hidden ? null : st.more.getBoundingClientRect();
-      if (moreR && x >= moreR.left - 4 && x <= moreR.right + 4) {
-        return { key: 'more-' + p.id, type: 'strip', panelId: p.id, index: p.tabs.length, rect: { x: moreR.left, y: sr.top + 3, w: moreR.width, h: sr.height - 3 }, hit: { x: moreR.left, y: sr.top, w: moreR.width, h: sr.height }, label: 'To the end' };
-      }
-      if (own) return null;     // the origin strip is handled in strip mode
-      var ins = insertionIn(st, p, x);
-      return { key: 'strip-' + p.id + '-' + ins.index, type: 'strip', panelId: p.id, index: ins.index, gap: true,
-        rect: { x: ins.x, y: sr.top + 3, w: g.chipW, h: sr.height - 3 }, hit: null, label: '' };
-    }
-    if (p.collapsed) return { key: 'merge-' + p.id, type: 'merge', panelId: p.id, rect: rectOf(stripEl), hit: rectOf(stripEl), label: 'Join this panel' };
-    var b = bodyRect(el);
-    var band = function (len) { return clamp(len * 0.15, 32, 72); };
-    var dl = x - b.x, dr = b.x + b.w - x, dt = y - b.y, db = b.y + b.h - y;
-    var rects = render.rects();
-    var cands = [];
-    if (!narrow) {
-      if (dl <= band(b.w)) cands.push(['left', dl]);
-      if (dr <= band(b.w)) cands.push(['right', dr]);
-      if (dt <= band(b.h)) cands.push(['top', dt]);
-      if (db <= band(b.h)) cands.push(['bottom', db]);
-    }
-    cands.sort(function (a, c2) { return a[1] - c2[1]; });
-    var soleTab = own && p.tabs.length === 1;
-    for (var k = 0; k < cands.length; k++) {
-      var edge = cands[k][0];
-      if (soleTab) break;
-      if (!geom.splitFits(l, p.id, edge, rects, g.kindMin)) continue;
-      return { key: 'split-' + p.id + '-' + edge, type: 'split', panelId: p.id, edge: edge, rect: halfRect(b.full, edge), hit: edgeHit(b, edge, band), label: splitLabel(edge) };
-    }
-    if (own) return null;    // merging into its own panel changes nothing
-    var fitsEdge = function (ed) { return !narrow && geom.splitFits(l, p.id, ed, rects, g.kindMin); };
-    var il = fitsEdge('left') ? band(b.w) : 0, ir = fitsEdge('right') ? band(b.w) : 0;
-    var it = fitsEdge('top') ? band(b.h) : 0, ib = fitsEdge('bottom') ? band(b.h) : 0;
-    var mhit = { x: b.x + il, y: b.y + it, w: Math.max(0, b.w - il - ir), h: Math.max(0, b.h - it - ib) };
-    return { key: 'merge-' + p.id, type: 'merge', panelId: p.id, rect: { x: b.x, y: b.y, w: b.w, h: b.h }, hit: mhit, label: 'Join this panel' };
-  }
-  return null;
-}
 /* where a torn tab would go in another strip: measured at the tabs' resting places (layoutX), never where the gap the
    strip opens for it (setGap) draws them, so the index does not chase the slide */
 function insertionIn(st, p, x) {
@@ -295,6 +228,7 @@ function insertionIn(st, p, x) {
   var last = st.tabEls[tabs[tabs.length - 1]];
   return { index: p.tabs.length, x: layoutX(last) + last.offsetWidth + stripGap(st) };
 }
+tabDrag.insertionIn = insertionIn;
 function stripGap(st) { return parseFloat(getComputedStyle(st.tabsEl).columnGap) || 0; }
 /* the strip a torn tab hovers opens a gap at the insert index: the tabs from there slide right by the chip's width (the
    250 ms neighbour slide; instant under Reduced Motion), so the slot is drawn in the gap and covers no label */
@@ -331,44 +265,34 @@ function clearGap(g, animate) {
     else setTimeout(function () { if (!el.style.transform) el.style.transition = ''; }, FLIP_MS + 40);
   });
 }
-function halfRect(r, edge) {
-  var hw = (r.w - GAP) / 2, hh = (r.h - GAP) / 2;
-  if (edge === 'left') return { x: r.x, y: r.y, w: hw, h: r.h };
-  if (edge === 'right') return { x: r.x + r.w - hw, y: r.y, w: hw, h: r.h };
-  if (edge === 'top') return { x: r.x, y: r.y, w: r.w, h: hh };
-  return { x: r.x, y: r.y + r.h - hh, w: r.w, h: hh };
-}
-function edgeHit(b, edge, band) {
-  if (edge === 'left') return { x: b.x, y: b.y, w: band(b.w), h: b.h };
-  if (edge === 'right') return { x: b.x + b.w - band(b.w), y: b.y, w: band(b.w), h: b.h };
-  if (edge === 'top') return { x: b.x, y: b.y, w: b.w, h: band(b.h) };
-  return { x: b.x, y: b.y + b.h - band(b.h), w: b.w, h: band(b.h) };
-}
-function edgeBand(r, edge, w) {
-  if (edge === 'left') return { x: r.x, y: r.y, w: w, h: r.h };
-  if (edge === 'right') return { x: r.x + r.w - w, y: r.y, w: w, h: r.h };
-  if (edge === 'top') return { x: r.x, y: r.y, w: r.w, h: w };
-  return { x: r.x, y: r.y + r.h - w, w: r.w, h: w };
-}
-function rootRect(r, edge) {
-  var f = 0.34;
-  if (edge === 'left') return { x: r.x, y: r.y, w: r.w * f, h: r.h };
-  if (edge === 'right') return { x: r.x + r.w * (1 - f), y: r.y, w: r.w * f, h: r.h };
-  if (edge === 'top') return { x: r.x, y: r.y, w: r.w, h: r.h * f };
-  return { x: r.x, y: r.y + r.h * (1 - f), w: r.w, h: r.h * f };
-}
-function splitLabel(edge) { return { left: 'Split left', right: 'Split right', top: 'Split up', bottom: 'Split down' }[edge]; }
-function rootLabel(edge) { return { left: 'New panel along the left', right: 'New panel along the right', top: 'New row across the top', bottom: 'New row across the bottom' }[edge]; }
-
+/* a zone shows as its result (31-dropview.js); a strip slot also as the slot the strip opens, and a panel the tab joins
+   opens its slot at the end of its strip */
 function showZone(g, z) {
-  setGap(g, z && z.key !== 'strip-self' ? z : null);
-  if (!z || z.type === undefined || z.key === 'strip-self') {
+  var real = z && z.key !== 'strip-self' ? z : null;
+  setGap(g, real && real.type === 'merge' ? joinGap(real) : real);
+  dropView.show(g, real);
+  if (!real || real.type === undefined) {
     preview.hide();
     if (g.chip) setAttr(g.chip, 'data-nodrop', g.mode === 'torn' && !z);
     return;
   }
   if (g.chip) setAttr(g.chip, 'data-nodrop', null);
-  preview.show(z.rect, z.label, z.type);
+  // "+N" names itself in the guide's caption, which keeps clear of the chip and the pointer (31-dropzones.js)
+  if (real.type === 'strip') preview.show(real.rect, '', real.type);
+  else preview.hide();
+  sayZone(g, z);
+}
+function joinGap(z) {
+  var p = model.panel(state.layout, z.panelId);
+  return p && !p.collapsed ? { gap: true, panelId: p.id, index: p.tabs.length } : null;
+}
+/* the zone in words for a screen reader, once it has held a moment (crossing zones says nothing) */
+function sayZone(g, z) {
+  clearTimeout(g.sayTimer);
+  if (!z || !z.label || z.type === 'strip') return;
+  var where = z.panelId ? model.describe(state.layout, z.panelId) : '';
+  var text = z.type === 'split' ? z.label + ', beside the ' + where : z.type === 'merge' ? z.label + ' in the ' + where : z.label;
+  g.sayTimer = setTimeout(function () { if (g.zone === z && !g.done) announce(text); }, 450);
 }
 
 /* ---- release ---- */
@@ -409,12 +333,14 @@ function drop(g, z) {
   // tab's neighbour there
   var src = model.panel(state.layout, g.origin.panelId);
   if (g.activated && src && src.active === g.tid && src.tabs.indexOf(g.origin.active) >= 0) src.active = g.origin.active;
+  // the preview already shows this result: the commit paints it, the ghost hands over to the real panel
+  dropView.clear({ handoff: true, paint: false });
   var ok;
   if (z.type === 'strip') ok = PMW.moveTab(g.tid, z.panelId, z.index);
   else if (z.type === 'merge') ok = PMW.moveTab(g.tid, z.panelId, null);
-  else if (z.type === 'split') ok = !!PMW.moveTabToSplit(g.tid, z.panelId, z.edge);
+  else if (z.type === 'split') ok = !!PMW.moveTabToSplit(g.tid, z.panelId, z.edge, { ratio: 0.5 });
   else if (z.type === 'root') ok = !!PMW.moveTabToSplit(g.tid, '@root', z.edge, { ratio: 0.34 });
-  if (!ok) { restore(g); if (g.chip) { g.chip.remove(); g.chip = null; } return true; }
+  if (!ok) { dropView.glideHome(); restore(g); if (g.chip) { g.chip.remove(); g.chip = null; } return true; }
   // what listeners heard at the grab is no longer true: the source shows its previous tab, the carried tab is the
   // active tab of the panel it landed in
   var srcNow = model.panel(state.layout, g.origin.panelId), landedP = model.panelOf(state.layout, g.tid);
@@ -502,6 +428,7 @@ function restore(g, o) {
   render.now({ animate: false });
 }
 function cancel(g, how) {
+  dropView.clear();      // the panels glide home from the preview first; restore's paint then finds them on their way
   clearGap(g, true);
   var tabRect = g.tab.getBoundingClientRect();
   var chip = g.chip;
@@ -538,36 +465,32 @@ panelDrag.begin = function (ev, panelId, gripEl) {
       g.chip = h('div', { class: 'pmw-chip pmw-chip-panel', 'aria-hidden': 'true' }, [icon('panel', { size: 14 }), h('span', { text: (rec ? tabLabel(rec) : 'Empty') + (p.tabs.length > 1 ? ' and ' + (p.tabs.length - 1) + ' more' : '') })]);
       g.chip.style.left = (g.px + 12) + 'px'; g.chip.style.top = (g.py + 10) + 'px';
       overlay().appendChild(g.chip);
-      announce('Moving the ' + model.describe(state.layout, panelId) + '. Drop it beside another panel or on a panel to join its tabs. Escape puts it back.');
+      var cb = g.chip.getBoundingClientRect();      // once: its words set its width
+      g.chipL = cb.left - g.sx; g.chipT = cb.top - g.sy; g.chipW = cb.width; g.chipH = cb.height;
+      dropGuide.begin(g);
+      announce('Moving the ' + model.describe(state.layout, panelId) + '. Drop it toward a side of another panel, or on its middle target to join its tabs. Escape puts it back.');
       return true;
     },
     onFrame: function (g) {
       g.chip.style.transform = 'translate3d(' + (g.px - g.sx).toFixed(1) + 'px,' + (g.py - g.sy).toFixed(1) + 'px,0)';
+      g.chipBox = { x: g.chipL + g.px, y: g.chipT + g.py, w: g.chipW, h: g.chipH };
+      dropView.tick(g);
     },
-    probe: function (g) {
-      var z = probePanelZones(g);
-      return z;
-    },
-    onZone: function (g, z) { if (z) preview.show(z.rect, z.label, z.type); else preview.hide(); setAttr(g.chip, 'data-nodrop', !z); },
+    probe: function (g) { return dropZones.probe(g, {}); },
+    onProbe: function (g, z) { dropGuide.update(g, z); },
+    onZone: function (g, z) { dropView.show(g, z); setAttr(g.chip, 'data-nodrop', !z); sayZone(g, z); },
     onDrop: function (g, z) {
       if (!z) return false;
-      if (z.type === 'merge') return PMW.mergePanel(g.panelId, z.panelId);
-      if (z.type === 'root') return PMW.movePanel(g.panelId, '@root', z.edge);
-      return PMW.movePanel(g.panelId, z.panelId, z.edge);
+      dropView.clear({ handoff: true, paint: false });
+      var ok = z.type === 'merge' ? PMW.mergePanel(g.panelId, z.panelId)
+        : PMW.movePanel(g.panelId, z.type === 'root' ? '@root' : z.panelId, z.edge);
+      if (!ok) dropView.glideHome();
+      return ok;
     },
-    onCancel: function (g, how) { if (how !== 'drop') announce('The panel is back where it was'); },
-    onEnd: function (g) { preview.hide(); if (g.chip) g.chip.remove(); if (g.panelEl) g.panelEl.classList.remove('pmw-panel-lifted'); }
+    onCancel: function (g, how) { dropView.clear(); if (how !== 'drop') announce('The panel is back where it was'); },
+    onEnd: function (g) { preview.hide(); dropGuide.end(); if (dropView.active()) dropView.clear({ animate: false }); if (g.chip) g.chip.remove(); if (g.panelEl) g.panelEl.classList.remove('pmw-panel-lifted'); }
   });
 };
-function probePanelZones(g) {
-  // the same zones a torn tab sees, minus strips; never the panel itself
-  var fake = { px: g.px, py: g.py, zone: g.zone, origin: { panelId: g.panelId }, kindMin: g.kindMin, chipW: 120 };
-  var z = probeZones(fake);
-  if (!z) return null;
-  if (z.panelId === g.panelId) return null;
-  if (z.type === 'strip') return { key: 'merge-' + z.panelId, type: 'merge', panelId: z.panelId, rect: rectOf(render.panelEl(z.panelId)), hit: rectOf(render.panelEl(z.panelId)), label: 'Join this panel' };
-  return z;
-}
 /* the grip's keyboard path: Enter opens the Move panel menu (every drag outcome has a menu and keyboard path) */
 panelDrag.keyboard = function (panelId, gripEl) {
   if (model.panels(state.layout).length < 2) { announce('This is the only panel'); return; }

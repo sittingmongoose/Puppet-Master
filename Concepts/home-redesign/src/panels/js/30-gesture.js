@@ -18,7 +18,7 @@ function suppressClick() {
 }
 
 /* start(event, spec): spec = { el, threshold, onStart(g) -> false to abort, onFrame(g), probe(g) -> zone|null,
-   onZone(g, zone, prev), onDrop(g, zone) -> truthy when it committed, onCancel(g, reason), onEnd(g), cursor } */
+   onProbe(g, zone) (each frame), onZone(g, zone, prev) (after the dwell), onDrop(g, zone) -> truthy when it committed, onCancel(g, reason), onEnd(g), cursor } */
 gesture.start = function (ev, spec) {
   if (gesture.active || ev.button !== 0) return null;
   var g = {
@@ -100,6 +100,7 @@ gesture.start = function (ev, spec) {
     if (spec.onFrame) spec.onFrame(g);
     if (g.done || !spec.probe) return;      // onFrame may end the gesture (its tab closed under it)
     var z = spec.probe(g);
+    if (spec.onProbe) spec.onProbe(g, z);      // every frame, before the dwell: what a release here would do
     var same = (z && g.zone && z.key === g.zone.key) || (!z && !g.zone);
     if (same) { g.cand = null; return; }
     var now = performance.now();
