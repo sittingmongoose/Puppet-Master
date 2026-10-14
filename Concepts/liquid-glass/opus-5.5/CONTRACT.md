@@ -30,6 +30,10 @@ me. Mail me the strip's selector, its items' selector, how the chosen item is ma
 can be refused (a progress rail takes no press). Paint no highlight of your own behind the chosen item: the lens is the
 highlight.
 
+A strip inside a window that floats above the app (`#pmw-overlay`, onboarding's window) needs a lens layer of its
+own in that window. Onboarding's has one. Strips in `#pmw-overlay` wear the lens's material in place until theirs
+lands (after M3).
+
 ## Public tokens
 
 | Token | Dark | Light | Use |
@@ -56,8 +60,9 @@ Private, do not read: `--lg-ring`, `--lg-frost-*`, `--lg-fx` / `--lg-fy`, `--lg-
 
 - Every light is neutral white, tinted only by the glass it passes through. No colour split or rainbow edge: Jared
   rejected chromatic fringing.
-- Never put `filter` or `backdrop-filter` on a sheet, and never transform one. Its frost is anchored to its layout
-  position.
+- Never put `filter` or `backdrop-filter` on a sheet. Never transform a baked sheet (`panel`, `card`, `bar`): its
+  frost is anchored to its layout position. A `menu` sheet blurs live, so it may scale or slide in and out (Glass's
+  own menus grow out of their button).
 - Layers: the lens layer `#lg-lenses` sits at z-index 45, above the title bar's 40, and lenses stay on top. The
   pointer light `#lg-shine` is at 2, clipped to the sheet under the pointer and off everywhere else.
 - Reduced motion (`html[data-motion="reduced"]`, `data-reduced-motion="1"` or `prefers-reduced-motion`): no travel,

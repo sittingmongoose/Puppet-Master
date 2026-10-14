@@ -287,7 +287,8 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-lg-tier="gpu"] #panel-usa
 html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-lg-tier="gpu"] #panel-usage .pmu-wswitch.on .pmu-wswitch-track[data-lg-held] > i { transform: translateX(16px) scale(1.28, 1.18) !important; }
 html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-switch-off: rgba(255, 255, 255, .16); }
 html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-switch-off: rgba(12, 15, 21, .14); }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-motion="reduced"] #panel-usage :is(.pmu-toggle::after, .pmu-wswitch-track > i) { transition: background 160ms ease !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-motion="reduced"] #panel-usage .pmu-toggle::after,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz)[data-motion="reduced"] #panel-usage .pmu-wswitch-track > i { transition: background 160ms ease !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-card :is(.pmu-meter, .pmu-track, .pmu-bar, [class*="meter"] > i, [class*="track"]) { border-radius: 1px !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuRoomTitle, html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-rail h1 { color: var(--text-primary) !important; font-weight: 700; letter-spacing: -.015em; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-pop, .pmr-menu-list) :is(.pmu-poprow, .pmu-mitem, .pmr-menu-item, [role="menuitem"], [role="option"]) { border-radius: var(--pm-ctl-r) !important; }
@@ -367,14 +368,18 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lens[data-lg-lifted]::afte
 /* The Orchestrator's views ride the same lens (a theme match, not its redesign): its capsule fill steps aside. */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .orch-tabs .orch-tab { box-shadow: none !important; }
 /* A strip the lens has taken over (data-lg-lensed, set by glass.js) hides its own chosen fill and its moving ink. */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmw-ink-row[data-lg-lensed] > .pmw-ink, .pmw-ink-row[data-lg-lensed] > .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after) { opacity: 0 !important; }
+/* (A pseudo-element cannot sit inside :is(), so the fill and the ink are listed apart.) Rows inside #pmw-overlay keep
+   their own fill, in the lens's material below, until the lens layer can draw above that overlay. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmw-ink-row[data-lg-lensed]:not(#pmw-overlay .pmw-ink-row) > .pmw-ink,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmw-ink-row[data-lg-lensed]:not(#pmw-overlay .pmw-ink-row) > .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after { opacity: 0 !important; }
 /* In-flow indicators that move with their own content (every other segmented choice row and its travelling ink) take
    the lens's material where they are: a clear drop with a hairline edge, a top catch light, a glint, a bottom shade and
    a soft drop shadow, the same tokens as .lg-lens, so they read as one glass. The home panels' document tabs are not
    indicators: their plate is the open document's own surface, one piece with the panel body, and keeps its shape. */
 html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-lens-body: rgba(255, 255, 255, .055); }
 html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(255, 255, 255, .5); }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmw-ink-row:not([data-lg-lensed]) > .pmw-ink, .pmw-ink-row:not([data-lg-lensed]) > .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after) {
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmw-ink-row:not([data-lg-lensed]), #pmw-overlay .pmw-ink-row) > .pmw-ink,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmw-ink-row:not([data-lg-lensed]), #pmw-overlay .pmw-ink-row) > .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after {
   background: radial-gradient(70% 100% at 30% 0%, var(--lg-lens-glint), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat, linear-gradient(var(--lg-tint-lens), var(--lg-tint-lens)), linear-gradient(var(--lg-lens-body), var(--lg-lens-body)) !important;
   box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 0 0 .5px var(--lg-lens-edge), var(--lg-lens-drop) !important;
   border-radius: var(--pm-ctl-r) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
