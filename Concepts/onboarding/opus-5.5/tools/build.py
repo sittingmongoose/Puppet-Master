@@ -467,6 +467,78 @@ def shared_fitting_patch(text: str) -> str:
     return replace_once(text, old, new, 'M1: shared visible control fitting')
 
 
+def theme_geometry_patch(text: str) -> str:
+    """M5: a theme is not a viewport resize. Keep necessary geometry and dismissal consumers explicitly.
+
+    Settings and page-tab inks already observe the theme; their resize geometry pass was a duplicate. The
+    untouched Wizard, Orchestrator and onboarding/tour routes retain their original event while active.
+    """
+    start = text.index('/* Keep title-bar search width in sync when theme flips (friendly + glass). */')
+    end = text.index('\n</script>', start)
+    old = text[start:end]
+    need(hashlib.sha256(old.encode()).hexdigest() ==
+         'b3934159a8a58c19f910689ce904c440b42f6ea922c2afe090f41a66d764b257',
+         'M5: title search theme invalidation drift')
+    new = old.replace('  function kickSearchDensity() {', r'''  window.PM7ThemeGeometryListen = function (type, callback, options) {
+    window.addEventListener(type, callback, options);
+    window.addEventListener('pm7:theme-geometry', callback, options);
+  };
+  var themeGeometryInteractive = false;
+  document.addEventListener('pointerdown', function () { themeGeometryInteractive = true; }, { capture: true, once: true });
+  document.addEventListener('keydown', function () { themeGeometryInteractive = true; }, { capture: true, once: true });
+  function kickSearchDensity(themeChange) {''', 1)
+    new = new.replace("      window.dispatchEvent(new Event('resize'));", r'''      var page = window.PM_PAGES && window.PM_PAGES.current;
+      var overlay = document.documentElement.hasAttribute('data-o55-open') ||
+        !!document.querySelector('#pm-o55-tour[data-open="true"], #pm-o55-onboarding[data-open="true"]');
+      /* Initial projections keep the original complete bootstrap while geometry owners enrol. */
+      var legacy = !themeChange || !themeGeometryInteractive || page === 'wizard' || page === 'orchestrator' || overlay;
+      window.dispatchEvent(new Event(legacy ? 'resize' : 'pm7:theme-geometry'));''', 1)
+    new = new.replace("{ kickSearchDensity(); break; }", "{ kickSearchDensity(true); break; }", 1)
+    # DOMContentLoaded passes an Event object; it is an initial resize, not a theme invalidation.
+    new = new.replace("document.addEventListener('DOMContentLoaded', kickSearchDensity);",
+                      "document.addEventListener('DOMContentLoaded', function () { kickSearchDensity(false); });", 1)
+    new = new.replace("  if (typeof MutationObserver === 'function') {", r'''  var themeGeometryQueued = false;
+  window.PM7ThemeGeometryRefresh = function () {
+    if (themeGeometryQueued) return;
+    themeGeometryQueued = true;
+    Promise.resolve().then(function () { if (!themeGeometryQueued) return; themeGeometryQueued = false; kickSearchDensity(true); });
+  };
+  if (typeof MutationObserver === 'function') {''', 1)
+    new = new.replace('{ kickSearchDensity(true); break; }', '{ themeGeometryQueued = false; kickSearchDensity(true); break; }', 1)
+    text = replace_once(text, old, new, 'M5: scoped theme invalidation')
+    old_settings = "    window.addEventListener('resize',()=>{hideTooltip();closeSearch();portalRoot().querySelectorAll('.popover').forEach(el=>closePopover(el,false));moveTabInks();});"
+    text = replace_once(text, old_settings, old_settings +
+                        "\n    window.addEventListener('pm7:theme-geometry',()=>{hideTooltip();closeSearch();portalRoot().querySelectorAll('.popover').forEach(el=>closePopover(el,false));});",
+                        'M5: Settings dismissal without duplicate ink geometry')
+    consumers = [
+        ("window.addEventListener('resize', () => popoutClose({ restoreFocus: false }));", 1, 'Settings popout dismissal'),
+        ("window.addEventListener('resize', onResize, { passive: true });", 1, 'shared scroll edge geometry'),
+        ("window.addEventListener('resize', function () { syncAll(false); });", 1, 'editor tab shapes'),
+        ("window.addEventListener('resize', edScheduleFit);", 1, 'first editor fit'),
+        ("window.addEventListener('resize', ed2ScheduleFit);", 1, 'second editor fit'),
+        ('window.addEventListener("resize", function () {\n      if (!gesture && committed)', 1, 'Home host geometry'),
+        ("window.addEventListener('resize', fabPosition);", 1, 'floating action position'),
+        ("window.addEventListener('resize', closeAll);", 1, 'sprout dismissal'),
+        ("window.addEventListener('resize', function () { closeAll(true); });", 1, 'rail menu dismissal'),
+        ("window.addEventListener('resize', function () { remeasureOpenAccordions(); });", 1, 'accordion geometry'),
+        ("window.addEventListener('resize', function () { moveInk(false); });", 2, 'rail tab inks'),
+        ("window.addEventListener('resize', fit);", 1, 'Files geometry'),
+        ("window.addEventListener('resize', close);", 1, 'context menu dismissal'),
+        ("window.addEventListener('resize',viewportChanged);", 1, 'hover tag dismissal and geometry'),
+    ]
+    for anchor, count, label in consumers:
+        need(text.count(anchor) == count, f'M5: {label} resize registration drift')
+        text = text.replace(anchor, anchor.replace('window.addEventListener', 'window.PM7ThemeGeometryListen'))
+    text = replace_once(text, "        bloomHost = null;   /* radius may change with the theme */",
+                        "        baseDirty = true; elsDirty = true;\n        bloomHost = null;   /* radius may change with the theme */",
+                        'M5: magnet geometry invalidated by its existing theme observer')
+    text = replace_once(text, 'fitFontEpoch, window.devicePixelRatio, document.body.className,',
+                        'fitFontEpoch, window.devicePixelRatio, window.innerWidth, window.innerHeight, document.body.className,',
+                        'M5: conservative viewport signature for shared fitting')
+    return text
+
+
+
 PATCHES = [
     # Hover-tag layer: recognise the new overlay roots instead of the removed pm7 ones.
     ("function activeOverlay(){var tour=document.getElementById('pm7-guided-tour'),onboarding=document.getElementById('pm7-onboarding');",
@@ -1060,6 +1132,7 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     for old, new, label in PATCHES + NIER_PATCHES + first_paint_patches(text):
         text = replace_once(text, old, new, label)
     text = shared_fitting_patch(text)
+    text = theme_geometry_patch(text)
     text = replace_once(text, SETTINGS_ANCHOR, SETTINGS_EXPOSE + SETTINGS_ANCHOR, 'settings transfer exposure')
     text = replace_once(text, LAYOUT_ANCHOR, LAYOUT_EXPOSE + LAYOUT_ANCHOR, 'layout restore exposure')
 

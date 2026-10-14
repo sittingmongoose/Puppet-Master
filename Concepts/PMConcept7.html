@@ -22018,22 +22018,40 @@ html[data-theme^="basic"] :is(.editor-pane, .dashboard-view):has(.ed-shape-on) {
 <script>
 /* Keep title-bar search width in sync when theme flips (friendly + glass). */
 (function () {
-  function kickSearchDensity() {
+  window.PM7ThemeGeometryListen = function (type, callback, options) {
+    window.addEventListener(type, callback, options);
+    window.addEventListener('pm7:theme-geometry', callback, options);
+  };
+  var themeGeometryInteractive = false;
+  document.addEventListener('pointerdown', function () { themeGeometryInteractive = true; }, { capture: true, once: true });
+  document.addEventListener('keydown', function () { themeGeometryInteractive = true; }, { capture: true, once: true });
+  function kickSearchDensity(themeChange) {
     try {
       var wrap = document.getElementById('tbSearchWrap');
       if (wrap) wrap.style.removeProperty('--tb-search-w');
-      window.dispatchEvent(new Event('resize'));
+      var page = window.PM_PAGES && window.PM_PAGES.current;
+      var overlay = document.documentElement.hasAttribute('data-o55-open') ||
+        !!document.querySelector('#pm-o55-tour[data-open="true"], #pm-o55-onboarding[data-open="true"]');
+      /* Initial projections keep the original complete bootstrap while geometry owners enrol. */
+      var legacy = !themeChange || !themeGeometryInteractive || page === 'wizard' || page === 'orchestrator' || overlay;
+      window.dispatchEvent(new Event(legacy ? 'resize' : 'pm7:theme-geometry'));
     } catch (e) {}
   }
+  var themeGeometryQueued = false;
+  window.PM7ThemeGeometryRefresh = function () {
+    if (themeGeometryQueued) return;
+    themeGeometryQueued = true;
+    Promise.resolve().then(function () { if (!themeGeometryQueued) return; themeGeometryQueued = false; kickSearchDensity(true); });
+  };
   if (typeof MutationObserver === 'function') {
     new MutationObserver(function (muts) {
       for (var i = 0; i < muts.length; i++) {
-        if (muts[i].attributeName === 'data-theme') { kickSearchDensity(); break; }
+        if (muts[i].attributeName === 'data-theme') { themeGeometryQueued = false; kickSearchDensity(true); break; }
       }
     }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', kickSearchDensity);
+    document.addEventListener('DOMContentLoaded', function () { kickSearchDensity(false); });
   } else {
     kickSearchDensity();
   }
@@ -84285,6 +84303,7 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
     /* PM7 owns popstate. */
     /* PM7 owns hashchange. */
     window.addEventListener('resize',()=>{hideTooltip();closeSearch();portalRoot().querySelectorAll('.popover').forEach(el=>closePopover(el,false));moveTabInks();});
+    window.addEventListener('pm7:theme-geometry',()=>{hideTooltip();closeSearch();portalRoot().querySelectorAll('.popover').forEach(el=>closePopover(el,false));});
   }
 
   function runCompletenessAudit() {
@@ -84910,7 +84929,7 @@ assistantPick = function (anchor, kind, current, onPick) {
   }, true);
   document.addEventListener('pointerdown', e => { const p = pmActive; if (!p) return; if (p.el.contains(e.target) || (p.trigger && p.trigger.contains && p.trigger.contains(e.target)) || (p.anchor && p.anchor.contains && p.anchor.contains(e.target))) return; popoutClose({ restoreFocus: false }); }, true);
   document.addEventListener('scroll', e => { const p = pmActive; if (!p) return; if (p.el.contains(e.target)) return; if (p.kind === 'menu' || !p.anchor || !p.anchor.isConnected) { popoutClose({ restoreFocus: false }); return; } positionPopout(p.el, p.anchor, { align: p.align, width: p.width }); }, true);
-  window.addEventListener('resize', () => popoutClose({ restoreFocus: false }));
+  window.PM7ThemeGeometryListen('resize', () => popoutClose({ restoreFocus: false }));
   document.addEventListener('focusin', e => { const p = pmActive; if (!p) return; if (p.el.contains(e.target) || e.target === p.trigger || (p.anchor && p.anchor.contains && p.anchor.contains(e.target))) return; popoutClose({ restoreFocus: false }); });
 })();
 /* Every engine path that still emits a native <select> is upgraded on the way out. */
@@ -88943,7 +88962,8 @@ root.addEventListener('keydown', e => {
 function o55MarkStuck() {
   const scroller = root.querySelector('#settings-document'); if (!scroller) return;
   const top = scroller.getBoundingClientRect().top + 1;
-  scroller.querySelectorAll('.pm51-mgr.has-manager-tabs > .pm51-tabs').forEach(nav => nav.classList.toggle('is-stuck', nav.getBoundingClientRect().top <= top));
+  const rows = [...scroller.querySelectorAll('.pm51-mgr.has-manager-tabs > .pm51-tabs')].map(nav => ({ nav, stuck: nav.getBoundingClientRect().top <= top }));
+  rows.forEach(({ nav, stuck }) => { if (nav.classList.contains('is-stuck') !== stuck) nav.classList.toggle('is-stuck', stuck); });
 }
 let o55StuckFrame = 0;
 document.addEventListener('scroll', e => {
@@ -105024,6 +105044,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       var themeFrame = 0;
       new MutationObserver(function () {
         if (!themeFrame) themeFrame = requestAnimationFrame(function () { themeFrame = 0; readTheme(); });
+        baseDirty = true; elsDirty = true;
         bloomHost = null;   /* radius may change with the theme */
         if (reduced()) { killAll(); return; }
         if (havePointer) start();
@@ -105429,7 +105450,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         enrolled.forEach(function (el) { try { ro.observe(el); } catch (e) {} });
       }
       document.addEventListener('scroll', onScroll, { capture: true, passive: true });
-      window.addEventListener('resize', onResize, { passive: true });
+      window.PM7ThemeGeometryListen('resize', onResize, { passive: true });
       /* markAll as well as geomDirty: a band parked at the pre-drag width
          is a 30px defocus strip sitting in the wrong place, and its on/off
          class was decided against the old client box too. */
@@ -111866,7 +111887,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
     }, true);
     /* (the old dragover snap hook is gone: tab reorder is pointer-capture
        driven and part 25 calls sync(strip, false) itself on every move) */
-    window.addEventListener('resize', function () { syncAll(false); });
+    window.PM7ThemeGeometryListen('resize', function () { syncAll(false); });
     document.addEventListener('pm6:theme-changed', function () { syncAll(false); });
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(function () { syncAll(false); }).catch(function () {});
@@ -112348,7 +112369,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         new ResizeObserver(function () { edMeasureActions(strip); edScheduleFit(); }).observe(strip);
       } catch (e) {}
     }
-    window.addEventListener('resize', edScheduleFit);
+    window.PM7ThemeGeometryListen('resize', edScheduleFit);
     /* pane 2 overflow: observe its strip (parity with pane 1 — same target,
        same fit-on-resize contract). */
     var strip2 = ed2Strip();
@@ -112357,7 +112378,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
         new ResizeObserver(function () { edMeasureActions(strip2); ed2ScheduleFit(); }).observe(strip2);
       } catch (e) {}
     }
-    window.addEventListener('resize', ed2ScheduleFit);
+    window.PM7ThemeGeometryListen('resize', ed2ScheduleFit);
     window.addEventListener('resize', edEnrolStrips);
     /* strips created later (Home panels 3/4, browser tabs) enrol themselves */
     if (typeof MutationObserver === 'function') {
@@ -117372,7 +117393,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       else if (gesture && gesture.kind === "workgroup") finishWorkgroupDrag(false);
       else if (gesture && gesture.kind === "resize") cancelResizeGesture();
     }, true);
-    window.addEventListener("resize", function () {
+    window.PM7ThemeGeometryListen("resize", function () {
       if (!gesture && committed) { normalizeMainRowBases(committed); syncHostGeometry(committed); }
     });
     /* One render, inside DOMContentLoaded, before first paint. The old 250ms
@@ -122510,7 +122531,7 @@ policies for tenant isolation, and add migration script.</textarea>
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') fabClose();
     });
-    window.addEventListener('resize', fabPosition);
+    window.PM7ThemeGeometryListen('resize', fabPosition);
     window.addEventListener('scroll', fabPosition, true);
   }
 
@@ -125127,7 +125148,7 @@ policies for tenant isolation, and add migration script.</textarea>
       if (e.target.closest && (e.target.closest('.msg-runtime-popover') || e.target.closest('.info-icon'))) return;
       closeAll();
     });
-    window.addEventListener('resize', closeAll);
+    window.PM7ThemeGeometryListen('resize', closeAll);
   })();
 
   /* ---------- wizard-embedded adapter (all chrome flags off) ---------- */
@@ -127165,7 +127186,7 @@ policies for tenant isolation, and add migration script.</textarea>
       if (!ev.target.closest('.pm6-tb-menu, .pm6-chat-more-menu, .pm6-tb-menu-trigger, .pm-ctx-menu')) closeAll();
     });
     document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') closeAll(); });
-    window.addEventListener('resize', function () { closeAll(true); });
+    window.PM7ThemeGeometryListen('resize', function () { closeAll(true); });
     window.addEventListener('scroll', function () {
       openMenus.forEach(function (m) { if (m._pmRailHome) positionRail(m); else if (m._pmBottomHome) positionBottom(m); });
     }, true);
@@ -127228,7 +127249,7 @@ policies for tenant isolation, and add migration script.</textarea>
       if (head && !ev.target.closest('button, a, input, .pm6-tb-menu-trigger, .pm-minibtn')) { ev.preventDefault(); accToggle(head); }
     });
     document.addEventListener('mouseup', function () { remeasureOpenAccordions(); });
-    window.addEventListener('resize', function () { remeasureOpenAccordions(); });
+    window.PM7ThemeGeometryListen('resize', function () { remeasureOpenAccordions(); });
   }
   function wireTabber() {
     document.querySelectorAll('.side-panel-view [role="tab"][data-tab]').forEach(function (t) {
@@ -127472,7 +127493,7 @@ policies for tenant isolation, and add migration script.</textarea>
       return JSON.stringify([
         document.documentElement.getAttribute('data-theme'), document.documentElement.getAttribute('data-o55-nier'),
         document.documentElement.getAttribute('data-o55-nier-parts'), document.documentElement.style.cssText,
-        fitFontEpoch, window.devicePixelRatio, document.body.className, slot.className, slot.clientWidth, slotBox.width,
+        fitFontEpoch, window.devicePixelRatio, window.innerWidth, window.innerHeight, document.body.className, slot.className, slot.clientWidth, slotBox.width,
         view && view.id, pane && pane.getAttribute('data-pane'),
         el.className, el.style.cssText, el.getAttribute('data-fit'), el.getAttribute('data-stack'),
         el.getAttribute('data-narrow'), el.innerHTML,
@@ -127776,7 +127797,7 @@ policies for tenant isolation, and add migration script.</textarea>
         }
       }
       st.addEventListener('click', function () { requestAnimationFrame(function () { moveInk(true); }); });
-      window.addEventListener('resize', function () { moveInk(false); });
+      window.PM7ThemeGeometryListen('resize', function () { moveInk(false); });
       if (window.ResizeObserver) new ResizeObserver(function () { moveInk(false); }).observe(st);
       var inkSlot = typeof slotEl === 'function' ? slotEl() : document.getElementById('sidePanelSlot');
       if (inkSlot) inkSlot.addEventListener('transitionend', function (e) { if (e.propertyName === 'width') moveInk(false); });
@@ -127972,7 +127993,7 @@ policies for tenant isolation, and add migration script.</textarea>
       }
       fit();
       if ('ResizeObserver' in window) new ResizeObserver(fit).observe(tb);
-      window.addEventListener('resize', fit);
+      window.PM7ThemeGeometryListen('resize', fit);
       window.__fmToolbarFit = fit;
     })();
     (function fmInk() {
@@ -127996,7 +128017,7 @@ policies for tenant isolation, and add migration script.</textarea>
         }
       }
       segtab.addEventListener('click', function () { requestAnimationFrame(function () { moveInk(true); }); });
-      window.addEventListener('resize', function () { moveInk(false); });
+      window.PM7ThemeGeometryListen('resize', function () { moveInk(false); });
       if ('ResizeObserver' in window) new ResizeObserver(function () { moveInk(false); }).observe(segtab);
       var inkSlot = slotEl();
       if (inkSlot) inkSlot.addEventListener('transitionend', function (e) { if (e.propertyName === 'width') moveInk(false); });
@@ -129318,7 +129339,7 @@ policies for tenant isolation, and add migration script.</textarea>
       }
       if (!event.target.closest || !event.target.closest('.pm7-dash-size-pop')) close();
     }, true);
-    window.addEventListener('resize', close);
+    window.PM7ThemeGeometryListen('resize', close);
   }
 
   function dashGridMetrics(grid) {
@@ -152530,7 +152551,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     },true);
     BLOCKED_EVENTS.forEach(function(type){document.addEventListener(type,function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-was-disabled="true"]');if(el){event.preventDefault();event.stopImmediatePropagation();}},true);});
     var viewportChanged=function(){if(self.pendingOpenSource==='pointer')self.resetPointerStationary(null,anchorGeometry(self.pendingOpenTarget));self.position();};
-    window.addEventListener('resize',viewportChanged);if(window.visualViewport){window.visualViewport.addEventListener('resize',viewportChanged);window.visualViewport.addEventListener('scroll',viewportChanged);}
+    window.PM7ThemeGeometryListen('resize',viewportChanged);if(window.visualViewport){window.visualViewport.addEventListener('resize',viewportChanged);window.visualViewport.addEventListener('scroll',viewportChanged);}
     window.addEventListener('scroll',function(){if(self.pendingOpenSource==='pointer')self.cancelPendingOpen();if(self.active&&self.tag&&self.tag.getAttribute('data-source')==='pointer')self.close(true);else self.position();},true);
     document.addEventListener('input',function(event){self.syncVisualSetting();if(event.target&&event.target.nodeType===1)self.enqueueLive(event.target,false);},true);document.addEventListener('change',function(event){self.syncVisualSetting();if(event.target&&event.target.nodeType===1)self.enqueueLive(event.target,false);},true);
     var pageChanged=function(payload){
