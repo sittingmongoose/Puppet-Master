@@ -97,7 +97,7 @@ function moveTabToward(dir) {
   if (other) { PMW.moveTab(p.active, other, null); return; }
   var edge = { left: 'left', right: 'right', up: 'top', down: 'bottom' }[dir];
   var rects = keyRects();
-  if (p.tabs.length > 1 && rects && geom.splitFits(l, p.id, edge, rects)) PMW.moveTabToSplit(p.active, p.id, edge);
+  if (p.tabs.length > 1 && rects && PMW.roomFits(PMW.hypo.split(p.active, p.id, edge))) PMW.moveTabToSplit(p.active, p.id, edge);
   else announce('There is no panel ' + (dir === 'up' ? 'above' : dir === 'down' ? 'below' : 'to the ' + dir));
 }
 function focusPanelN(n) {

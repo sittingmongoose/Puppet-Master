@@ -252,23 +252,20 @@ menus.moveTargets = function (panelId) {
     if (q.id === panelId) return;
     var name = tabLabel(l.tabs[q.active]) + ' panel';
     [['left', 'Left of '], ['right', 'Right of '], ['top', 'Above '], ['bottom', 'Below ']].forEach(function (e) {
-      var fits = rects && geom.splitFits(l, q.id, e[0], rects, PMW.panelMin(l, model.panel(l, panelId)));
+      var fits = rects && PMW.roomFits(PMW.hypo.movePanel(panelId, q.id, e[0]));
       if (fits) rows.push({ id: q.id + e[0], label: e[1] + name, icon: e[0] === 'left' || e[0] === 'right' ? 'splitRight' : 'splitDown', run: function () { PMW.movePanel(panelId, q.id, e[0]); } });
     });
     rows.push({ id: q.id + 'merge', label: 'Into ' + name + ' (as tabs)', icon: 'panel', run: function () { PMW.mergePanel(panelId, q.id); } });
   });
   [['left', 'Left edge of the centre'], ['right', 'Right edge of the centre'], ['top', 'Top of the centre'], ['bottom', 'Bottom of the centre']].forEach(function (e) {
+    if (!PMW.roomFits(PMW.hypo.movePanel(panelId, '@root', e[0]))) return;
     rows.push({ id: 'root' + e[0], label: e[1], icon: 'layout', run: function () { PMW.movePanel(panelId, '@root', e[0]); } });
   });
   return { id: 'move:' + panelId, title: 'Move panel', search: { placeholder: 'Find a place' }, rows: rows };
 };
 PMW.mergePanel = function (panelId, intoId) {
   var res = commit(CMD.movePanel, { panelId: panelId, target: { panelId: intoId, edge: 'center' } }, function (d) {
-    var from = model.panel(d, panelId), to = model.panel(d, intoId);
-    if (!from || !to) return false;
-    from.tabs.slice().forEach(function (t) { model.moveTab(d, t, intoId); });
-    d.view.focus = intoId;
-    return {};
+    return PMW.mergePanelMutate(d, panelId, intoId);
   });
   if (res.ok) announce('Tabs moved into the ' + model.describe(state.layout, intoId));
   return res.ok;

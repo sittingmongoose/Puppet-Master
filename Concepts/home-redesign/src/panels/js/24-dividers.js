@@ -119,6 +119,7 @@ function commitPair(info, res, kind) {
 }
 
 dividers.bind = function (el) {
+  PMW.light.bind(el);
   el.addEventListener('pointerdown', function (ev) {
     if (ev.button !== 0) return;
     var d = el._pmwDivider;
@@ -187,7 +188,7 @@ dividers.bind = function (el) {
     if (!info) return;
     var half = (info.a + info.b) / 2;
     var res = solve(Object.assign({}, info, { canCollapseA: false, canCollapseB: false }), half);
-    if (res && commitPair(info, res, 'key').ok) announce('Panels evened');
+    if (res && commitPair(info, res, 'key').ok) { announce('Panels evened'); nextFrame(function () { var again = qs('.pmw-divider[data-key="' + d.split + ':' + d.index + '"]'); if (again) PMW.light.settle(again); }); }
   });
   el.addEventListener('keydown', function (e) {
     var d = el._pmwDivider;
@@ -214,6 +215,6 @@ dividers.bind = function (el) {
     var res = solve(Object.assign({}, info, { canCollapseA: false, canCollapseB: false, a: a, b: info.collapsedB ? STRIP_H : info.b }), want);
     if (!res) return;
     commitPair(info, res, 'key');
-    nextFrame(function () { var again = qs('.pmw-divider[data-key="' + d.split + ':' + d.index + '"]'); if (again) again.focus(); });
+    nextFrame(function () { var again = qs('.pmw-divider[data-key="' + d.split + ':' + d.index + '"]'); if (again) { again.focus(); PMW.light.settle(again); } });
   });
 };
