@@ -799,6 +799,12 @@ PATCHES = [
      "      });\n"
      "    }).observe(document.body, { childList: true, subtree: true });\n",
      'home density: enroll only inserted surfaces'),
+    # Settings host width (Glass owner's finding, 2026-10-14). The T46 host observer measured the Settings panel and the
+    # chat on resize, then decided on the next frame whether Settings takes the chat's place (the narrow "focus host").
+    # That frame was painted with the old decision: on entering Settings at 1600 x 900 the first frame still showed
+    # the 515 px chat and a 751 px Settings, the next one 1278 px, so everything in Settings jumped 295 px sideways.
+    # The decision only toggles a body class, so it is made in the observer itself, before that frame is painted.
+    ("assign(width);scheduleSyncHost();", "assign(width);syncHost();", 'settings host: decide focus host before paint'),
 ]
 
 # Text typed under a Custom choice survives a reload (2026-10-13, pm7-terminal-options-audit-sol on frozen a1ca: Terminal

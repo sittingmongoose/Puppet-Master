@@ -154910,7 +154910,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   function scheduleSyncHost(){if(syncFrame)return;syncFrame=requestAnimationFrame(function(){syncFrame=0;syncHost();});}
   function observeWidth(element,assign){
     if(!element||typeof ResizeObserver!=='function')return;
-    new ResizeObserver(function(entries){var width=entries[entries.length-1]&&entries[entries.length-1].contentRect?entries[entries.length-1].contentRect.width:0;assign(width);scheduleSyncHost();}).observe(element);
+    new ResizeObserver(function(entries){var width=entries[entries.length-1]&&entries[entries.length-1].contentRect?entries[entries.length-1].contentRect.width:0;assign(width);syncHost();}).observe(element);
   }
   function dispatchSettings(commandId,payload,continuation){
     var tome=window.PM7_SETTINGS_TOME;
