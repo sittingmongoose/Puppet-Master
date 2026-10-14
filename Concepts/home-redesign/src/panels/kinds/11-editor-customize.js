@@ -653,6 +653,9 @@ function open(opts) {
     put(key, value);
     moveInk(key, before);
     if ((key === 'caretShape' || key === 'caretMotion' || key === 'caretTrail' || key === 'caretBlink') && preview) tryMove();
+    /* the current line's band shows on a caret, not under a selection: the preview drops its selection to show the choice
+       (Sol's review of the customizer audit: the selection hid the difference) */
+    if (key === 'lineHighlight' && preview && preview.demo) { stopDemo(); preview.demo.place(PV_SEL.r, PV_SEL.b); }
   }
   function toggle(c) {
     var key = c.getAttribute('data-key'), next = c.getAttribute('aria-checked') !== 'true';

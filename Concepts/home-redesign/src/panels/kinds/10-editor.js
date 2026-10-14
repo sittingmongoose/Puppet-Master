@@ -79,7 +79,7 @@ var JS_KW = 'import export from as default const let var function return if else
   'instanceof void delete this super null undefined true false static readonly declare';
 var JS_ROOT = [
   [/\/\/.*/y, 'com'], [/\/\*/y, 'com', 'jsCom'], [/`/y, 'str', 'jsTpl'],
-  [/"(?:[^"\\]|\\.)*"?/y, 'str'], [/'(?:[^'\\]|\\.)*'?/y, 'str'],
+  [/["']$/y, 'str'], [/"/y, 'str', 'jsDq'], [/'/y, 'str', 'jsSq'],
   [W(JS_KW), 'kw'], [W('string number boolean any unknown never object'), 'ty'],
   [/0[xX][\da-fA-F_]+n?|\d[\d_]*(?:\.\d[\d_]*)?(?:[eE][+-]?\d+)?n?/y, 'num'],
   [/[A-Z][\w$]*/y, 'ty'], [/[a-z_$][\w$]*(?=\s*\()/y, 'fn'],
@@ -88,10 +88,19 @@ var JS_ROOT = [
   [/(?<=\b(?:const|let|var)\s+)[A-Za-z_$][\w$]*/y, 'var'], [/(?<=(?:^|[^.])\.)[A-Za-z_$][\w$]*/y, 'prop'], [/[A-Za-z_$][\w$]*/y, null],
   [/=>|\?\.|\.\.\.|[{}()\[\];,.:]/y, 'pun'], [/[=+\-*\/%<>!&|^?~@]+/y, 'op'], WS
 ];
+function jsQuoted(q) {
+  var esc = '\\\\(?:x[\\da-fA-F]{2}|u\\{[\\da-fA-F]+\\}|u[\\da-fA-F]{4}|.)', body = '[^' + q + '\\\\]+';
+  return [[new RegExp(q, 'y'), 'str', '@pop'], [new RegExp(esc + '$', 'y'), 'esc', '@pop'], [new RegExp(esc, 'y'), 'esc'],
+    [/\\$/y, 'esc'], [new RegExp(body + '$', 'y'), 'str', '@pop'], [new RegExp(body, 'y'), 'str']];
+}
 var JS = {
   root: JS_ROOT,
   jsCom: [[/.*?\*\//y, 'com', '@pop'], [/.+/y, 'com']],
   jsTpl: [[/\\./y, 'esc'], [/\$\{/y, 'pun', 'jsExpr'], [/`/y, 'str', '@pop'], [/[^`\\$]+/y, 'str'], [/\$/y, 'str']],
+  // a quoted string's escapes are their own kind (\n, \x7f, \u00e9, \u{1F600}), as in Rust; the string ends with its line
+  // unless the line ends in a backslash (the customizer audit's E-TOK: Escapes reached no JavaScript example)
+  jsDq: jsQuoted('"'),
+  jsSq: jsQuoted("'"),
   jsExpr: [[/\}/y, 'pun', '@pop'], [/\{/y, 'pun', 'jsExpr']].concat(JS_ROOT)
 };
 
@@ -161,7 +170,7 @@ function markup(svelte) {
     st.mkScript = [[/<\/script>/y, 'tag', '@pop'], [/\/\*/y, 'com', 'jsCom'], [/`/y, 'str', 'jsTpl']].concat(JS_ROOT);
     st.mkStyleTag = [[/>/y, 'tag', '@swap:mkStyle']].concat(attrs);
     st.mkStyle = [[/<\/style>/y, 'tag', '@pop']].concat(CSS.root);
-    st.jsCom = JS.jsCom; st.jsTpl = JS.jsTpl; st.jsExpr = JS.jsExpr;
+    st.jsCom = JS.jsCom; st.jsTpl = JS.jsTpl; st.jsExpr = JS.jsExpr; st.jsDq = JS.jsDq; st.jsSq = JS.jsSq;
     st.cssBlock = CSS.cssBlock; st.cssCom = CSS.cssCom;
   }
   return st;
