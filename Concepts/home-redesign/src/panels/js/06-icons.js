@@ -34,7 +34,9 @@ var ICON_PATHS = {
   chevronRight: 'M6 3.5 10.5 8 6 12.5',
   chevronDown: 'M3.5 6 8 10.5 12.5 6',
   chevronLeft: 'M10 3.5 5.5 8l4.5 4.5',
-  grip: 'M2.5 8.5 8.5 2.5M5.5 8.5l3-3',
+  // the panel's corner grip: two strokes across the top right corner, the short one nearest it, so the narrow end points
+  // into the corner the grip sits in. Drawn at full icon size for the Move panel menu row; the corner draws it at 6 px
+  grip: 'M3.5 3.5l9 9M8 3.5l4.5 4.5',
   reopen: 'M3.5 6.5h6.5a3 3 0 0 1 0 6H6M5.5 4.2 3.2 6.5l2.3 2.3',
   panel: 'M2.5 3h11v10h-11zM2.5 6h11',
   newPanel: 'M2.5 3h11v10h-11zM8 3v10M10.8 6.2v3.6M9 8h3.6',
