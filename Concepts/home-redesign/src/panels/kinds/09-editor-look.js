@@ -45,6 +45,9 @@ var FIELDS = {
   contrast: { type: 'enum', values: [4.5, 7], default: 4.5, label: 'Text contrast' },
   italicComments: { type: 'tri', default: null, label: 'Comments in italics' },
   boldKeywords: { type: 'tri', default: null, label: 'Keywords in bold' },
+  /* one kind of word in one scheme: { '<scheme key>/<token>': '#rrggbb' } (tokenKey below); merged token by token,
+     This editor's over All editors', so a colour set for one editor leaves the others' alone */
+  tokenColors: { type: 'map', default: null, label: 'Token colours' },
   /* text */
   font: { type: 'enum', values: Object.keys(FACES), default: 'jetbrains-mono', label: 'Face' },
   fontSize: { type: 'number', min: 10, max: 24, step: 0.5, default: 13, label: 'Size' },
@@ -98,6 +101,18 @@ Object.keys(FIELDS).forEach(function (k) { DEFAULTS[k] = FIELDS[k].default; });
    (SSYS-050, Plans/settings_inventory.json) keep their stored words; the proposed rows' words are this model's
    (src/settings/proposed.d/25-editor-look.json). ---- */
 var S = 'code.editing.', FOLLOW = 'Follow look';
+/* the seventeen kinds of word the editor colours (F3-639; 10-editor.js SYN_KEYS), in the order the screen lists them */
+var TOKEN_KEYS = ['kw', 'fn', 'ty', 'var', 'prop', 'str', 'num', 'esc', 'com', 'op', 'pun', 'mac', 'tag', 'attr', 'head', 'link', 'code'];
+var TOKEN_RE = /^([a-z0-9][a-z0-9:._-]*)\/(kw|str|num|com|fn|ty|var|prop|op|pun|tag|attr|esc|mac|link|head|code)$/;
+/* Token Colors' stored words: a key and value map; anything that is not '<scheme key>/<token>' and a #rrggbb colour is
+   left out, and an empty map is no choice */
+function tokensIn(v) {
+  if (!v || typeof v !== 'object' || Array.isArray(v)) return undefined;
+  var out = {}, n = 0;
+  Object.keys(v).forEach(function (k) { var c = String(v[k] || '').trim().toLowerCase(); if (TOKEN_RE.test(k) && /^#[0-9a-f]{6}$/.test(c)) { out[k] = c; n++; } });
+  return n ? out : undefined;
+}
+function tokensOut(v) { var m = tokensIn(v); return m || undefined; }
 var has = function (o, k) { return !!o && Object.prototype.hasOwnProperty.call(o, k); };
 function num(min, max, step) {
   return function (v) {
@@ -196,6 +211,7 @@ var LINK = {
   schemePair: { id: S + 'scheme-pair', in: bool, out: boolOut },
   syntax: { id: S + 'syntax-highlighting', in: bool, out: boolOut },
   bracketPairs: { id: S + 'bracket-pair-colors', in: bool, out: boolOut },
+  tokenColors: { id: S + 'token-colors', in: tokensIn, out: tokensOut },
   contrast: { id: S + 'min-contrast', in: WORDS.contrast.in, out: WORDS.contrast.out },
   italicComments: { id: S + 'italic-comments', in: tri, out: triOut },
   boldKeywords: { id: S + 'bold-keywords', in: tri, out: triOut },
@@ -366,11 +382,12 @@ function resolve(view) {
   var smooth = f('smoothScroll'); if (smooth === null || smooth === undefined) smooth = lk.smoothScroll;
   if (L.reduced) { blink = 'solid'; motion = 'instant'; trail = 'off'; smooth = false; }
   var hl = f('lineHighlight'); if (hl === 'follow') hl = 'all';
+  var tKey = tokenKey(sch, L);
   return {
     look: L, lookKey: L.key,
     scheme: sch ? sch.id : 'follow', schemeName: sch ? sch.name : 'Follow look', schemeObj: sch, followScheme: followScheme(L),
     colors: { syntax: !!f('syntax'), bracketPairs: !!f('bracketPairs'), contrast: f('contrast') === 7 ? 7 : 4.5,
-      italicComments: f('italicComments'), boldKeywords: f('boldKeywords') },
+      italicComments: f('italicComments'), boldKeywords: f('boldKeywords'), tokenKey: tKey, tokens: tokensFor(view, tKey) },
     font: { id: face, label: FD.label, stack: FD.stack, size: f('fontSize') || 13, weight: weight, weights: FD.weights,
       lineHeight: f('lineHeight') || 1.55, letterSpacing: f('letterSpacing') || 0, ligatures: !!f('ligatures') && FD.ligatures, ligaturesAsked: !!f('ligatures') },
     caret: { shape: shape, width: f('caretWidth') || 2, blink: blink, motion: motion, trail: trail },
@@ -383,6 +400,22 @@ function resolve(view) {
       diagnostics: f('diagnostics') || 'warnings', hoverDelay: f('hoverDelay') },
     indent: { size: f('tabSize') || 4, spaces: f('insertSpaces') !== false, detect: f('detectIndent') !== false }
   };
+}
+
+/* the scheme a token colour belongs to: the scheme drawn (after Switch with light and dark), or the look's own table
+   in its mode for Follow look ('look:friendly-dark') */
+function tokenKey(sch, L) { return sch ? sch.id : 'look:' + L.key + '-' + (L.mode === 'light' ? 'light' : 'dark'); }
+/* one scheme's token colours, token by token: a preview (a swatch hovered, a slider moving) over this editor's own over
+   All editors' (Settings, the earlier store) */
+function tokensFor(view, key) {
+  var app = own('app', null, 'tokenColors') || {}, tab = (view && view.tabAppearance && view.tabAppearance.tokenColors) || {};
+  var pv = (view && view.previewAppearance && view.previewAppearance.tokenColors) || {};
+  var out = {};
+  TOKEN_KEYS.forEach(function (t) {
+    var k = key + '/' + t, c = has(pv, k) ? pv[k] : has(tab, k) ? tab[k] : has(app, k) ? app[k] : null;
+    if (c) out[t] = c;
+  });
+  return out;
 }
 
 /* ---- the views (the editor instances and the Customize preview) ---- */
@@ -481,6 +514,7 @@ PMW.edLook = {
   get: field, own: own, layerOf: layerOf, set: set, setMany: setMany, live: live, commit: commit, reset: resetScope,
   preview: preview, endPreview: endPreview, refreshAll: refreshAll, settingsReady: settingsReady, settingsValues: settingsLayer,
   catalog: catalogApi, schemes: catalogList, scheme: schemeById, pairOf: pairOf, familyOf: familyOf,
+  TOKEN_KEYS: TOKEN_KEYS, tokenKey: function (view) { var R = resolve(view); return R.colors.tokenKey; },
   followScheme: function () { return followScheme(lookNow()); }, look: lookNow,
   onChange: function (fn) { return events.on('change', fn); }
 };

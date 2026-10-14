@@ -103,7 +103,7 @@ var SETS = [
 ];
 /* the fields the meter counts, in the order the screen shows them */
 var GROUP_KEYS = {
-  colors: ['scheme', 'schemePair', 'syntax', 'bracketPairs', 'contrast', 'italicComments', 'boldKeywords'],
+  colors: ['scheme', 'schemePair', 'syntax', 'bracketPairs', 'contrast', 'italicComments', 'boldKeywords', 'tokenColors'],
   text: ['font', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing', 'ligatures'],
   caret: ['caretShape', 'caretWidth', 'caretBlink', 'caretMotion', 'caretTrail'],
   lines: ['lineNumbers', 'relativeNumbers', 'lineHighlight', 'indentGuides', 'activeIndent', 'whitespace', 'rulers', 'wordWrap', 'wrapColumn', 'minimap', 'stickyScroll', 'stickyLines'],
@@ -111,6 +111,55 @@ var GROUP_KEYS = {
   behavior: ['diffLayout', 'diagnostics', 'gotoHighlightMs', 'autosave', 'tabSize', 'insertSpaces', 'detectIndent']
 };
 var COUNTED = [].concat(GROUP_KEYS.colors, GROUP_KEYS.text, GROUP_KEYS.caret, GROUP_KEYS.lines, GROUP_KEYS.motion, GROUP_KEYS.behavior);
+/* colour arithmetic for the token picker: #rrggbb to hue (degrees), saturation and lightness (percent), and back */
+function hexHsl(hex) {
+  var m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim()); if (!m) return null;
+  var n = parseInt(m[1], 16), r = (n >> 16 & 255) / 255, g = (n >> 8 & 255) / 255, b = (n & 255) / 255;
+  var mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn, h = 0, sat = 0;
+  if (d) {
+    sat = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn);
+    h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    h *= 60;
+  }
+  return [Math.round(h), Math.round(sat * 100), Math.round(l * 100)];
+}
+function hslHex(h, sat, l) {
+  sat /= 100; l /= 100;
+  var k = function (n) { return (n + h / 30) % 12; }, a = sat * Math.min(l, 1 - l);
+  var f = function (n) { return l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1))); };
+  return '#' + [f(0), f(8), f(4)].map(function (x) { return ('0' + Math.round(Math.max(0, Math.min(1, x)) * 255).toString(16)).slice(-2); }).join('');
+}
+function normHex(v) { var m = /^#?([0-9a-f]{6}|[0-9a-f]{3})$/i.exec(String(v || '').trim()); if (!m) return null; var x = m[1].toLowerCase(); if (x.length === 3) x = x.replace(/./g, '$&$&'); return '#' + x; }
+/* Token colours: the seventeen kinds of word, each with a word to show it by */
+var TOKENS = [['kw', 'Keywords', 'fn'], ['fn', 'Functions', 'scale()'], ['ty', 'Types', 'Recipe'], ['var', 'Variables', 'steps'],
+  ['prop', 'Properties', '.serves'], ['str', 'Strings', '"cups"'], ['num', 'Numbers', '42'], ['esc', 'Escapes', '\\n'],
+  ['com', 'Comments', '// note'], ['op', 'Operators', '+='], ['pun', 'Punctuation', '{ }'], ['mac', 'Macros', 'vec!'],
+  ['tag', 'Tags', '<div>'], ['attr', 'Attributes', 'class='], ['head', 'Headings', '## Usage'], ['link', 'Links', 'docs.rs'], ['code', 'Inline code', '`cargo`']];
+var TOKEN_NAME = {}; TOKENS.forEach(function (t) { TOKEN_NAME[t[0]] = t; });
+function tokenRows() {
+  return TOKENS.map(function (t) {
+    return '<button type="button" class="pmed-tok-row" data-tok="' + t[0] + '" aria-expanded="false" aria-controls="pmed-tok-pick"' + NOTAG + '>' +
+      '<span class="pmed-tok-word" aria-hidden="true">' + esc(t[2]) + '</span><span class="pmed-tok-name">' + esc(t[1]) + '</span>' +
+      '<span class="pmed-tok-meta"><i class="pmed-tok-sw" aria-hidden="true"></i><code class="pmed-tok-hex"></code></span><span class="pmt-cz-mine">Changed</span></button>';
+  }).join('');
+}
+function tokenPicker() {
+  var sl = function (k, label, max) {
+    return '<label class="pmed-tok-slider" data-hsl="' + k + '"><span class="pmed-tok-slabel">' + label + '</span>' +
+      '<input type="range" min="0" max="' + max + '" step="1" data-hsl-in="' + k + '" aria-label="' + label + '"' + NOTAG + '><output data-hsl-out="' + k + '"></output></label>';
+  };
+  return '<div class="pmed-tok-pick" id="pmed-tok-pick" data-tok-pick role="group" aria-labelledby="pmed-tok-pick-title" hidden>' +
+    '<div class="pmed-tok-pickhead"><span class="pmed-tok-big" data-pick-word aria-hidden="true"></span>' +
+    '<div class="pmed-tok-picktitles"><h5 id="pmed-tok-pick-title" data-pick-title></h5><span class="pmed-tok-ratio" data-pick-ratio></span></div>' +
+    '<button type="button" class="pmt-pop-x pmed-tok-x" data-act="tok-close" aria-label="Close the colour picker"' + NOTAG + '><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>' +
+    '<span class="pmed-tok-cap">The scheme’s colours</span>' +
+    '<div class="pmed-tok-swatches" role="radiogroup" aria-label="The scheme’s colours" data-pick-swatches></div>' +
+    '<div class="pmed-tok-sliders">' + sl('h', 'Hue', 360) + sl('s', 'Saturation', 100) + sl('l', 'Lightness', 100) + '</div>' +
+    '<div class="pmed-tok-actions"><label class="pmed-tok-hexlabel"><span>Hex</span><input class="pmed-tok-hexin" data-pick-hex maxlength="7" spellcheck="false" autocomplete="off" aria-label="Colour as hex"' + NOTAG + '></label>' +
+    '<span class="pmt-pop-spacer"></span><button type="button" class="pmt-textbtn" data-act="tok-own"' + NOTAG + '>The scheme’s own</button>' +
+    '<button type="button" class="pmt-textbtn pmt-textbtn-primary" data-act="tok-close"' + NOTAG + '>Done</button></div>' +
+    '<p class="pmt-cz-note" data-pick-note hidden></p></div>';
+}
 var GROUPS = [['colors', 'Colors'], ['text', 'Text'], ['caret', 'Caret'], ['lines', 'Lines & guides'], ['motion', 'Motion & effects'], ['behavior', 'Behavior']];
 
 /* ---------------- markup ---------------- */
@@ -220,6 +269,9 @@ function skeleton(name) {
     '<div class="pmt-cz-grid2">' + field('Text contrast', seg('contrast', [[4.5, '4.5:1'], [7, '7:1']], 'Text contrast'), 'Every colour keeps at least this contrast. 7:1 moves dim ones lighter or darker; hue stays.') +
     field('Comments in italics', seg('italicComments', [['follow', 'Follow look'], ['on', 'On'], ['off', 'Off']], 'Comments in italics')) +
     field('Keywords in bold', seg('boldKeywords', [['follow', 'Follow look'], ['on', 'On'], ['off', 'Off']], 'Keywords in bold')) + '</div>' +
+    '<div class="pmed-tok" data-at="tokens"><h4 class="pmt-cz-sub">Token colours</h4><p class="pmt-cz-fhelp pmed-tok-lead" data-tok-lead></p>' +
+    '<div class="pmed-tok-list" role="group" aria-label="Token colours">' + tokenRows() + '</div>' + tokenPicker() +
+    '<div class="pmed-tok-foot"><button type="button" class="pmt-textbtn" data-act="tok-reset" hidden' + NOTAG + '>Reset token colours</button></div></div>' +
     '<div class="pmt-cz-import"><button type="button" class="pmt-textbtn" data-act="import"' + tagged('Import a scheme', 'Adds a colour scheme from a file to the catalog the editor and the terminal share') + '>Import a scheme…</button>' +
     '<span class="pmt-cz-fhelp">iTerm2, Windows Terminal, kitty, Ghostty, Alacritty, base16 or base24, Xresources</span>' +
     '<p class="pmt-cz-error" data-import-error role="alert" hidden></p></div></section>';
@@ -309,7 +361,9 @@ function open(opts) {
   overlay.appendChild(root);
   openRoot = root;
   var dialog = root.querySelector('.pmt-cz-dialog'), body = root.querySelector('.pmt-cz-body');
-  var scope = opts.scope === 'app' ? 'app' : 'tab';
+  /* the scope, as the terminal's screen keeps it: All editors when Settings opens it, for that visit only; otherwise
+     the one last picked on this editor's screen (remembered while the tab lives), This editor at first */
+  var scope = opts.scope === 'app' ? 'app' : v._apScope || 'tab';
   var anchor = opts.anchor || null;
   var inks = {};
   [].forEach.call(root.querySelectorAll('.pmw-ink-row'), function (row) { try { if (PMW.frames && PMW.frames.ink) inks[row.getAttribute('data-seg')] = PMW.frames.ink(row); } catch (_) {} });
@@ -480,6 +534,7 @@ function open(opts) {
     var sw = root.querySelector('[data-scope-why]'), swt = scope === 'app' ? (EL().settingsReady() ? 'Saved in this project’s Settings' : 'Saved on this computer') : 'Saved with this tab';
     if (sw.textContent !== swt) sw.textContent = swt;
     root.querySelector('.pmt-cz-framelabel').textContent = scope === 'tab' ? 'This editor' : 'This editor, like all editors';
+    paintTokens();
     roving();
   }
   function setPressed(id, mineKeys) {
@@ -509,6 +564,7 @@ function open(opts) {
     var fr = root.querySelector('.pmt-cz-frame'); fr.hidden = !hole;
     if (hole) fr.style.cssText = 'left:' + x0 + 'px;top:' + y0 + 'px;width:' + (x1 - x0) + 'px;height:' + (y1 - y0) + 'px';
     root.classList.toggle('pmt-cz-narrow', narrow);
+    syncDock();
   }
 
   /* ---- events ---- */
@@ -526,7 +582,7 @@ function open(opts) {
     var before = prevChosen(b.closest('.pmw-ink-row'));
     if (key === 'scope') {
       if (raw === scope) return;
-      scope = raw; endPreview(); syncPreview(); paint(); moveInk('scope', before);
+      scope = v._apScope = raw; endPreview(); syncPreview(); paint(); moveInk('scope', before);
       Motion.play(body, 'pmt-rescope');
       return;
     }
@@ -563,6 +619,8 @@ function open(opts) {
     if (t.closest('.pmt-cz-scrim, .pmt-cz-frame')) { close(); return; }
     var b = t.closest('button, [role="radio"], [role="switch"]'); if (!b || !root.contains(b)) return;
     if (b.getAttribute('aria-disabled') === 'true') return;
+    if (b.classList.contains('pmed-tok-row')) { openPick(b.getAttribute('data-tok')); return; }
+    if (b.classList.contains('pmed-tok-swatch')) { if (tokOpen) tokSet(tokOpen, b.getAttribute('data-c'), 'keep'); return; }
     if (b.getAttribute('role') === 'radio' && b.hasAttribute('data-key')) { choose(b); return; }
     if (b.getAttribute('role') === 'switch') { toggle(b); return; }
     if (b.hasAttribute('data-step')) { var R = eff(); put('fontSize', Math.min(24, Math.max(10, R.font.size + parseFloat(b.getAttribute('data-step'))))); return; }
@@ -578,6 +636,13 @@ function open(opts) {
     else if (act === 'try-problem') tryProblem();
     else if (act === 'try-dim') tryDim();
     else if (act === 'import') importScheme();
+    else if (act === 'tok-close') closePick(true);
+    else if (act === 'tok-own') { if (tokOpen) tokSet(tokOpen, null, 'keep'); }
+    else if (act === 'tok-reset') {
+      var I = tokInfo(); if (!I) return;
+      var m = tokMap(); Object.keys(m).forEach(function (k) { if (k.indexOf(I.key + '/') === 0) delete m[k]; });
+      put('tokenColors', Object.keys(m).length ? m : null); PMW.announce('Token colours in ' + tokOwner(I).name + ': ' + tokOwner(I).own.toLowerCase());
+    }
   });
   function quickSet(id) {
     var s = SETS.filter(function (x) { return x.id === id; })[0]; if (!s) return;
@@ -619,13 +684,23 @@ function open(opts) {
   root.addEventListener('input', function (e) {
     var t = e.target, key = t.getAttribute('data-key');
     if (t.classList.contains('pmt-cz-search')) { filter(t.value); return; }
+    if (t.hasAttribute('data-hsl-in') && tokOpen) { tokSet(tokOpen, tokFromSliders(), 'live'); return; }
+    if (t.hasAttribute('data-pick-hex') && tokOpen) {
+      var hx = normHex(t.value), note = root.querySelector('[data-pick-note]');
+      note.hidden = !!hx || t.value.length < 4; note.textContent = 'A colour like #ff79c6.';
+      if (hx && hx.length === 7 && /^#?[0-9a-f]{6}$/i.test(t.value.trim())) tokSet(tokOpen, hx, 'preview');
+      return;
+    }
     if (!key || t.type !== 'range') return;
     var x = parseFloat(t.value);
     EL().live(scope, key, x, v); syncPreview();
     var out = t.parentNode.querySelector('output'); if (out) out.textContent = fmt(key, x);
   });
   root.addEventListener('change', function (e) {
-    var t = e.target, key = t.getAttribute('data-key'); if (!key) return;
+    var t = e.target, key = t.getAttribute('data-key');
+    if (t.hasAttribute('data-hsl-in') && tokOpen) { EL().commit(scope, 'tokenColors', v); syncPreview(); paint(); return; }
+    if (t.hasAttribute('data-pick-hex') && tokOpen) { var hx = normHex(t.value); if (hx) tokSet(tokOpen, hx, 'keep'); else tokEndPreview(); return; }
+    if (!key) return;
     if (t.type === 'range') { EL().commit(scope, key, v); syncPreview(); paint(); }
   });
   function filter(q) {
@@ -656,10 +731,124 @@ function open(opts) {
   var schemesEl = root.querySelector('.pmt-cz-schemes');
   schemesEl.addEventListener('mouseover', function (e) { var o = e.target.closest('.pmt-cz-scheme'); if (o) previewSoon(o, INTENT_MS); });
   schemesEl.addEventListener('mouseleave', function () { endPreview(); });
+  /* ---- Token colours: one kind of word in the scheme this scope draws, picked from the scheme's own colours or by
+     hue, saturation and lightness; shown on the preview and on the editor as it changes, and held to the text floor
+     there like every scheme colour (the picker says when a colour is drawn lighter or darker to read) ---- */
+  var tokOpen = null, tokPv = null, tokIntent = 0, tokPalSig = '';
+  var tokList = root.querySelector('.pmed-tok-list'), tokPick = root.querySelector('[data-tok-pick]'), tokSw = root.querySelector('[data-pick-swatches]');
+  function tokInfo() { var src = preview && preview.tokenInfo ? preview : inst; try { return src.tokenInfo ? src.tokenInfo() : null; } catch (_) { return null; } }
+  function tokMap() { var m = EL().own(scope, v, 'tokenColors'); return m && typeof m === 'object' ? Object.assign({}, m) : {}; }
+  function tokNext(tok, hex) {
+    var I = tokInfo(); if (!I) return null;
+    var m = tokMap(), k = I.key + '/' + tok;
+    if (hex) m[k] = hex; else delete m[k];
+    return Object.keys(m).length ? m : null;
+  }
+  /* how: 'live' while a slider moves (shown, not written), 'keep' (written), 'preview' (a swatch the pointer rests on) */
+  function tokSet(tok, hex, how) {
+    if (how === 'preview') {
+      var I = tokInfo(); if (!I) return;
+      var pv = {}; pv[I.key + '/' + tok] = hex;
+      tokPv = hex; EL().preview(v, { tokenColors: pv }); syncPreview(); paintTokens(); return;
+    }
+    if (tokPv !== null) { tokPv = null; EL().endPreview(v); }
+    var next = tokNext(tok, hex);
+    if (how === 'live') { EL().live(scope, 'tokenColors', next, v); syncPreview(); paintTokens(); return; }
+    put('tokenColors', next);
+    PMW.announce(TOKEN_NAME[tok][1] + (hex ? ' ' + hex : ': the scheme’s own'));
+  }
+  function tokEndPreview() { clearTimeout(tokIntent); if (tokPv === null) return; tokPv = null; EL().endPreview(v); syncPreview(); paintTokens(); }
+  function openPick(tok) {
+    if (tokOpen === tok) { closePick(true); return; }
+    tokEndPreview();
+    tokOpen = tok; tokPalSig = '';
+    tokPick.hidden = false;
+    paintTokens();
+    if (!reducedNow()) Motion.play(tokPick);
+    tokPick.scrollIntoView({ block: 'nearest', behavior: reducedNow() ? 'auto' : 'smooth' });
+    var first = tokSw.querySelector('[aria-checked="true"]') || tokSw.querySelector('[role="radio"]') || tokPick.querySelector('[data-hsl-in="h"]');
+    if (first) first.focus({ preventScroll: true });
+  }
+  function closePick(focusRow) {
+    if (!tokOpen) return;
+    tokEndPreview();
+    var row = tokList.querySelector('[data-tok="' + tokOpen + '"]');
+    tokOpen = null; tokPick.hidden = true; paintTokens();
+    if (focusRow && row) row.focus({ preventScroll: true });
+  }
+  /* the name a token colour belongs to: the scheme's, or the look's own colours under Follow look ('Basic dark') */
+  var LOOK_NAME = { basic: 'Basic', friendly: 'Friendly', glass: 'Glass', retro: 'Retro', nier: 'NieR Mode' };
+  function tokOwner(I) {
+    var m = /^look:([a-z]+)-(light|dark)$/.exec(I.key);
+    return m ? { name: (LOOK_NAME[m[1]] || m[1]) + ' ' + m[2], own: 'The look’s own', lead: (LOOK_NAME[m[1]] || m[1]) + ' ' + m[2] + '’s own colours' } : { name: I.scheme, own: 'The scheme’s own', lead: I.scheme };
+  }
+  function paintTokens() {
+    if (!tokList) return;
+    var I = tokInfo(); if (!I) return;
+    var mine = tokMap(), held = 0, who = tokOwner(I);
+    var lead = root.querySelector('[data-tok-lead]'), ltxt = 'Change one kind of word in ' + who.lead +
+      '. A colour that would read under ' + I.floor + ':1 on this ground is drawn a little lighter or darker, its hue kept.';
+    if (lead.textContent !== ltxt) lead.textContent = ltxt;
+    tokList.style.setProperty('--pmed-tok-ground', I.ground);
+    [].forEach.call(tokList.querySelectorAll('.pmed-tok-row'), function (b) {
+      var k = b.getAttribute('data-tok'), t = I.tokens[k] || {}, shown = t.set || t.own || '';
+      b.style.setProperty('--pmed-tok-c', t.drawn || shown);
+      var hx = b.querySelector('.pmed-tok-hex'); if (hx.textContent !== shown) hx.textContent = shown;
+      var isMine = mine[I.key + '/' + k] !== undefined;
+      b.classList.toggle('pmt-cz-is-mine', isMine);
+      setA(b, 'aria-expanded', String(tokOpen === k));
+      setA(b, 'aria-label', TOKEN_NAME[k][1] + ', ' + shown + (isMine ? ', changed' : '') + (t.held ? ', drawn at ' + I.floor + ':1' : ''));
+      if (t.held) held++;
+    });
+    var anyMine = Object.keys(mine).some(function (k) { return k.indexOf(I.key + '/') === 0; });
+    var rs = root.querySelector('[data-act="tok-reset"]'); rs.hidden = !anyMine; rs.textContent = 'Reset token colours in ' + who.name;
+    if (!tokOpen) return;
+    /* the picker */
+    var t = I.tokens[tokOpen] || {}, cur = normHex(tokPv || t.set || t.own) || '#888888', hsl = hexHsl(cur) || [0, 0, 50];
+    tokPick.style.setProperty('--pmed-tok-ground', I.ground);
+    tokPick.style.setProperty('--pmed-tok-c', tokPv ? cur : t.drawn || cur);
+    var w = tokPick.querySelector('[data-pick-word]'); if (w.textContent !== TOKEN_NAME[tokOpen][2]) w.textContent = TOKEN_NAME[tokOpen][2];
+    var ti = tokPick.querySelector('[data-pick-title]'), tt = TOKEN_NAME[tokOpen][1] + ' in ' + who.name; if (ti.textContent !== tt) ti.textContent = tt;
+    var ra = tokPick.querySelector('[data-pick-ratio]'), rt = t.held && !tokPv ? t.ratio + ':1 on this ground. Drawn at ' + I.floor + ':1, as ' + t.drawn + ', so it reads' : t.ratio + ':1 on this ground';
+    if (ra.textContent !== rt) ra.textContent = rt;
+    ra.classList.toggle('is-held', !!t.held && !tokPv);
+    var palSig = I.key + '|' + I.palette.join(',');
+    if (palSig !== tokPalSig) {
+      tokPalSig = palSig;
+      tokSw.innerHTML = I.palette.map(function (c) { return '<button type="button" class="pmed-tok-swatch" role="radio" aria-checked="false" data-c="' + c + '" aria-label="' + c + '" style="--sw:' + c + '"' + NOTAG + '></button>'; }).join('');
+    }
+    [].forEach.call(tokSw.querySelectorAll('.pmed-tok-swatch'), function (b) { setA(b, 'aria-checked', String(b.getAttribute('data-c') === cur)); });
+    ['h', 's', 'l'].forEach(function (k, i) {
+      var inp = tokPick.querySelector('[data-hsl-in="' + k + '"]'); if (document.activeElement !== inp) inp.value = hsl[i];
+      var out = tokPick.querySelector('[data-hsl-out="' + k + '"]'), ot = hsl[i] + (k === 'h' ? '°' : '%'); if (out.textContent !== ot) out.textContent = ot;
+    });
+    tokPick.style.setProperty('--pmed-h', hsl[0]); tokPick.style.setProperty('--pmed-s', hsl[1] + '%'); tokPick.style.setProperty('--pmed-l', hsl[2] + '%');
+    var hx2 = tokPick.querySelector('[data-pick-hex]'); if (document.activeElement !== hx2 && hx2.value !== cur) hx2.value = cur;
+    var ob = tokPick.querySelector('[data-act="tok-own"]'); setA(ob, 'aria-disabled', String(!t.set)); if (ob.textContent !== who.own) ob.textContent = who.own;
+  }
+  function tokFromSliders() {
+    var g = function (k) { return parseFloat(tokPick.querySelector('[data-hsl-in="' + k + '"]').value) || 0; };
+    return hslHex(g('h'), g('s'), g('l'));
+  }
+  tokSw.addEventListener('mouseover', function (e) {
+    var sw = e.target.closest('.pmed-tok-swatch'); if (!sw || !tokOpen) return;
+    clearTimeout(tokIntent);
+    tokIntent = setTimeout(function () { if (tokOpen) tokSet(tokOpen, sw.getAttribute('data-c'), 'preview'); }, 90);
+  });
+  tokSw.addEventListener('mouseleave', function () { tokEndPreview(); });
   /* keyboard: Escape closes, Tab stays inside, arrows move within a group of tiles or a segment (choosing, as radios
      do; in the schemes they preview, and Enter or Space keeps one) */
   root.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); if (previewing !== null) { endPreview(); return; } close(); return; }
+    if (e.key === 'Escape') {
+      e.preventDefault(); e.stopPropagation();
+      if (previewing !== null) { endPreview(); return; }
+      if (tokPv !== null) { tokEndPreview(); return; }
+      if (tokOpen && tokPick.contains(document.activeElement)) { closePick(true); return; }
+      close(); return;
+    }
+    if (e.key === 'Enter' && e.target.hasAttribute && e.target.hasAttribute('data-pick-hex')) {
+      e.preventDefault(); e.stopPropagation(); var hx = normHex(e.target.value); if (hx && tokOpen) tokSet(tokOpen, hx, 'keep'); return;
+    }
     if (e.key === 'Tab') {
       var items = [].filter.call(dialog.querySelectorAll('button, input, select, textarea, [tabindex]'), function (x) {
         return !x.disabled && x.tabIndex >= 0 && !x.closest('[hidden], [inert]') && x.getClientRects().length && x.getAttribute('aria-hidden') !== 'true';
@@ -685,10 +874,12 @@ function open(opts) {
       if (!nx || nx === r) return;
       nx.focus();
       if (nx.classList.contains('pmt-cz-scheme')) previewSoon(nx, e.repeat ? INTENT_MS : 0);
+      else if (nx.classList.contains('pmed-tok-swatch')) { if (tokOpen) tokSet(tokOpen, nx.getAttribute('data-c'), 'preview'); }
       else choose(nx);
       return;
     }
     if (r && (e.key === 'Enter' || e.key === ' ') && r.classList.contains('pmt-cz-scheme')) { e.preventDefault(); choose(r); }
+    if (r && (e.key === 'Enter' || e.key === ' ') && r.classList.contains('pmed-tok-swatch')) { e.preventDefault(); if (tokOpen) tokSet(tokOpen, r.getAttribute('data-c'), 'keep'); }
     e.stopPropagation();
   });
   function roving() {
@@ -718,9 +909,12 @@ function open(opts) {
     list.forEach(function (en) { if (en.target === inst.root) place(); else if (preview && preview.demo) preview.demo.relayout(); });
   }) : null;
   if (ro) { if (inst.root) ro.observe(inst.root); ro.observe(homeBox); ro.observe(dockBox); }
-  /* the preview follows you down the screen: when less than 40 % of its own place shows, the same live editor moves
-     into the dock under the group index, and back when its place returns */
-  var io = null;
+  /* the preview follows you down the screen only where the real editor is not beside it (the one rule of both
+     Customize screens, 2026-10-14): when less than 40 % of its own place shows and the screen is not placed beside the
+     editor (a narrow window, or no room on either side), the same live editor moves into the dock under the group
+     index, and back when its place returns. Beside the editor, the editor itself is the live preview */
+  var io = null, wantDock = false;
+  function syncDock() { if (dock) dockTo(wantDock && !dialog.classList.contains('pmt-cz-beside')); }
   function dockTo(on) {
     if (!preview || !!on === !dock.hidden) return;
     (on ? dockBox : homeBox).appendChild(pvHost);
@@ -745,14 +939,14 @@ function open(opts) {
   body.addEventListener('scroll', function () { if (asideAt) asideSoon(asideAt); }, { passive: true });
   root.addEventListener('focusin', function (e) { if (body.contains(e.target) && !dock.contains(e.target)) asideSoon({ el: e.target }); });
   if (preview && typeof IntersectionObserver === 'function') {
-    io = new IntersectionObserver(function (list) { var en = list[list.length - 1]; dockTo(en.intersectionRatio < 0.4); }, { root: body, threshold: [0, 0.4, 1] });
+    io = new IntersectionObserver(function (list) { var en = list[list.length - 1]; wantDock = en.intersectionRatio < 0.4; syncDock(); }, { root: body, threshold: [0, 0.4, 1] });
     io.observe(root.querySelector('.pmt-cz-preview'));
   }
   var closed = false;
   function close(noFocus) {
     if (closed) return;
     closed = true;
-    stopDemo(); endPreview();
+    stopDemo(); endPreview(); tokEndPreview();
     if (offChange) offChange();
     window.removeEventListener('resize', onResize);
     if (ro) ro.disconnect();

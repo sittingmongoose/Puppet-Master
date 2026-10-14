@@ -1147,7 +1147,7 @@ function schemeVars(id, min) {
 /* what an editor draws when the look model is absent (a build without 09-editor-look.js): today's defaults */
 var FALLBACK_LOOK = {
   look: { key: 'basic', mode: 'dark', reduced: false }, lookKey: 'basic', scheme: 'follow', schemeName: 'Follow look', schemeObj: null,
-  colors: { syntax: true, bracketPairs: false, contrast: 4.5, italicComments: null, boldKeywords: null },
+  colors: { syntax: true, bracketPairs: false, contrast: 4.5, italicComments: null, boldKeywords: null, tokenKey: 'look:basic-dark', tokens: {} },
   font: { id: 'jetbrains-mono', label: 'JetBrains Mono', stack: '', size: 13, weight: 400, weights: [400, 800], lineHeight: 1.55, letterSpacing: 0, ligatures: false },
   caret: { shape: 'line', width: 2, blink: 'blink', motion: 'instant', trail: 'off' },
   lines: { numbers: true, relative: false, highlight: 'all', guides: 'off', activeIndent: true, whitespace: 'off', rulers: [], wrap: false,
@@ -1172,7 +1172,7 @@ var DIAG_SHOW = { off: {}, errors: { error: 1 }, warnings: { error: 1, warn: 1 }
 function openCustomize(view, anchor, group, at) {
   var C = PMW.edCustomize;
   if (!C || typeof C.open !== 'function') return;
-  try { C.open({ view: view, scope: 'tab', anchor: anchor, group: group || null, at: at || null }); }
+  try { C.open({ view: view, anchor: anchor, group: group || null, at: at || null }); }
   catch (err) { try { console.error('[pm-home] the editor Customize screen failed', err); } catch (_) {} }
 }
 
@@ -1471,7 +1471,46 @@ function mountEditor(host, st, api) {
     if (vars) root.setAttribute('data-scheme', id); else root.removeAttribute('data-scheme');
     schemeOn = vars;
     applyFloor(!vars && !special && R.colors.contrast === 7);
+    applyTokens();
     colorCache = null;
+  }
+  /* Token colours (Customize, Colors): one kind of word in this scheme, drawn over the scheme's own (or the look's), at
+     the text floor with its hue kept like every scheme colour. Set after the scheme and the floor, every time, so
+     neither leaves its own value over a chosen one; a colour no longer chosen gets the scheme's (or floor's) back */
+  var tokOn = null, lookRead = { key: '', ground: null, tokens: null };
+  var lookProbe = null;
+  function lookTokens() {
+    // the look's own token table (Follow look), read through a probe on the editor's root, which no scheme or choice
+    // writes on (the code elements carry those); once per look, colour mode and phosphor
+    var key = R.lookKey + '|' + R.look.mode + '|' + (root.getAttribute('data-phosphor') || '');
+    if (lookRead.key !== key) {
+      if (!lookProbe) { lookProbe = h('i', { class: 'pmw-ed-probe', 'aria-hidden': 'true' }); root.appendChild(lookProbe); }
+      var read = function (n) { lookProbe.style.color = 'var(' + n + ')'; var c = cssRgb(getComputedStyle(lookProbe).color); return c ? hexOf(c.slice(0, 3)) : ''; };
+      var t = {};
+      SYN_KEYS.forEach(function (k) { t['--pmw-ed-s-' + k] = read('--pmw-ed-s-' + k); });
+      var g = read('--pmw-ed-gutbg') || read('--pmw-ed-bg');
+      lookRead = { key: key, ground: rgbOf(g), tokens: t };
+    }
+    return lookRead;
+  }
+  function groundNow() {
+    var g = schemeOn ? rgbOf(schemeOn['--pmw-ed-bg']) : lookTokens().ground;
+    return g ? g.slice(0, 3) : [16, 16, 20];
+  }
+  function applyTokens() {
+    var ov = special ? {} : (R.colors.tokens || {}), keys = Object.keys(ov), out = {};
+    if (keys.length) {
+      var ground = groundNow(), F = R.colors.contrast === 7 ? 7 : 4.5;
+      keys.forEach(function (k) { var c = rgbOf(ov[k]); if (c) out['--pmw-ed-s-' + k] = hexOf(legible(c, ground, F)); });
+    }
+    var old = tokOn || {};
+    Object.keys(old).forEach(function (n) {
+      if (n in out) return;
+      var base = (schemeOn && schemeOn[n]) || (floorOn && floorOn[n]);
+      codeEls.forEach(function (el) { if (base) el.style.setProperty(n, base); else el.style.removeProperty(n); });
+    });
+    Object.keys(out).forEach(function (n) { codeEls.forEach(function (el) { el.style.setProperty(n, out[n]); }); });
+    tokOn = keys.length ? out : null;
   }
   /* Editor Text Contrast at 7:1 under Follow look: the look's own colours (60-kind-editor.css) are read back and each
      text colour that falls short of 7:1 on the code's ground moves lighter or darker, its hue kept. A scheme does the
@@ -3489,6 +3528,9 @@ function mountEditor(host, st, api) {
     applyDim();
   }
   function applyDim() { setAttr(root, 'data-dim', !preview && R.motion.inactiveDim && dimmed ? '' : null); }
+  /* what of the colours needs the rows drawn again: token colours are CSS variables only (applyTokens), so a colour
+     slider being dragged repaints without rebuilding a row */
+  function colorSig() { var c = R.colors; return [c.syntax, c.bracketPairs, c.contrast, c.italicComments, c.boldKeywords]; }
   function onLook(R2) {
     var prev = R; R = R2;
     if (!alive) return;
@@ -3498,7 +3540,7 @@ function mountEditor(host, st, api) {
     markReduced();
     if (!firstDone) return;
     var g = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
-    var l = JSON.stringify([R.colors, R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
+    var l = JSON.stringify([colorSig(), R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
     if (prev.behavior.diffLayout !== R.behavior.diffLayout && mode === 'diff' && !diffLayoutPick) resolveLayout(true);
     // the header's height can only change with the look (its face and spacing), never with colours: reading it forces
     // the whole page to restyle and lay out at once, so it is read only when the look itself changed
@@ -3510,7 +3552,7 @@ function mountEditor(host, st, api) {
     queueDraw();
   }
   geoSig = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
-  lookSig = JSON.stringify([R.colors, R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
+  lookSig = JSON.stringify([colorSig(), R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
   applyAttrs();
   var detachLook = EL ? EL.attach(view) : null;
 
@@ -3674,6 +3716,25 @@ function mountEditor(host, st, api) {
     // the scheme's colours as set on the code (null under Follow look, whose colours are the look's CSS): read without
     // asking the page for computed style
     schemeVarsNow: function () { return schemeOn ? Object.assign({}, schemeOn) : null; },
+    /* the token colours as this editor draws them, for the Customize screen's Token colours: each kind of word's own
+       colour (the scheme's, or the look's under Follow look), the one chosen, the one drawn (held to the floor), its
+       contrast on the ground, and a palette to pick from (the scheme's sixteen and its own token colours) */
+    tokenInfo: function () {
+      var ground = groundNow(), F = R.colors.contrast === 7 ? 7 : 4.5, lt = schemeOn ? null : lookTokens();
+      var set = R.colors.tokens || {}, toks = {}, pal = [];
+      SYN_KEYS.forEach(function (k) {
+        var n = '--pmw-ed-s-' + k;
+        var own = (schemeOn && schemeOn[n]) || (floorOn && floorOn[n]) || (lt && lt.tokens[n]) || '';
+        var drawn = (tokOn && tokOn[n]) || own, pick = set[k] || null, src = rgbOf(pick || own);
+        toks[k] = { own: own, set: pick, drawn: drawn, ratio: src ? Math.round(contrastOf(src.slice(0, 3), ground) * 10) / 10 : 0, held: !!(pick && drawn && drawn.toLowerCase() !== pick.toLowerCase()) };
+        if (own) pal.push(own.toLowerCase());
+      });
+      var A = edAppearance(), sid = R.scheme !== 'follow' ? R.scheme : (R.followScheme && R.followScheme.id);
+      try { var p = A && sid ? A.palette(sid) : null; if (p && Array.isArray(p.ansi)) p.ansi.forEach(function (c) { var x = rgbOf(c); if (x) pal.push(hexOf(x.slice(0, 3))); }); } catch (_) {}
+      var seen = {};
+      pal = pal.filter(function (c) { if (!c || seen[c]) return false; seen[c] = true; var x = rgbOf(c); return !!x && contrastOf(x.slice(0, 3), ground) >= 1.6; });
+      return { key: R.colors.tokenKey, scheme: R.schemeName, ground: hexOf(ground), floor: F, tokens: toks, palette: pal };
+    },
     // the file's indentation as this editor reads it (the Customize screen's Indentation note)
     path: path,
     indent: function () { resolveIndent(); return { unit: IND.unit, tabs: IND.tabs, own: IND.own, tabbed: !!d.tabbed }; },

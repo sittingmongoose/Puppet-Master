@@ -142,7 +142,81 @@ html[data-o55-nier="on"] .pmed-cz .pmed-art-brackets::before { background: linea
 .pmed-cz .pmed-slider-bare .pmt-cz-slabel { display: none; }
 /* drawn once almost clear before the entrance (11-editor-customize.js: the costly first paint happens before it plays) */
 .pmed-cz.pmed-prime { opacity: .001; }
-/* on a Liquid Glass sheet the edges are the sheet's hairline (CONTRACT: --lg-line, white .10 dark, ink .09 light): the
-   plain Glass rims are white, which vanished on the light sheet (a P1000 frame: cards and Try it buttons lost their
-   edges in Glass Light) */
-html[data-lg="on"][data-theme^="glass"] .pmed-cz :is(.pmt-cz-set, .pmt-cz-try .pmt-textbtn, .pmt-cz-search, .pmt-cz-tile, .pmt-cz-chip, .pmt-cz-seg) { border-color: var(--lg-line); }
+
+/* ---- Token colours (11-editor-customize.js: tokenRows, tokenPicker, paintTokens) ----
+   Each kind of word is shown by a word in its colour on the code's own ground; the picker opens under the list: the
+   scheme's colours as swatches, hue, saturation and lightness on tracks drawn in the colour being made, a hex field,
+   and the contrast it reads at. No pills: rows, swatches and tracks are rounded rectangles */
+.pmed-cz .pmed-tok { display: grid; gap: 8px; margin-top: 4px; }
+.pmed-cz .pmed-tok-lead { margin: 0; }
+.pmed-cz .pmed-tok-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 6px; }
+.pmed-cz .pmed-tok-row { display: grid; grid-template-columns: minmax(64px, auto) minmax(0, 1fr) auto; grid-template-areas: "word name meta" "word mine meta";
+  align-items: center; gap: 0 10px; min-height: 42px; padding: 5px 9px 5px 6px; border: 1px solid var(--pmt-cz-line); border-radius: var(--pmt-cz-r);
+  background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; transition: background-color 120ms ease, border-color 120ms ease; }
+.pmed-cz .pmed-tok-row:hover { background: var(--pmt-cz-hover); }
+.pmed-cz .pmed-tok-row[aria-expanded="true"] { background: var(--pmt-cz-fill); border-color: var(--pmt-cz-line-2); }
+.pmed-cz .pmed-tok-row:focus-visible { outline: 2px solid var(--pmt-cz-ring); outline-offset: 2px; }
+.pmed-cz .pmed-tok-word { grid-area: word; align-self: stretch; display: flex; align-items: center; justify-content: center; padding: 0 8px; border-radius: var(--pmt-cz-r-in);
+  background: var(--pmed-tok-ground, #111); color: var(--pmed-tok-c, currentColor); font: 500 12.5px/1 var(--pmw-ed-font, var(--pm-font-code, ui-monospace, monospace));
+  white-space: pre; transition: color 140ms ease; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmw-text, #888) 12%, transparent); }
+.pmed-cz .pmed-tok-name { grid-area: name; font-size: 12.5px; line-height: 1.25; color: var(--pmw-text, inherit); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pmed-cz .pmed-tok-row .pmt-cz-mine { grid-area: mine; display: none; font-size: 10.5px; line-height: 1.2; color: var(--pmw-text-2, inherit); }
+.pmed-cz .pmed-tok-row.pmt-cz-is-mine .pmt-cz-mine { display: block; }
+.pmed-cz .pmed-tok-row:not(.pmt-cz-is-mine) .pmed-tok-name { grid-row: 1 / span 2; align-self: center; }
+.pmed-cz .pmed-tok-row.pmt-cz-is-mine .pmed-tok-name { align-self: end; }
+.pmed-cz .pmed-tok-row.pmt-cz-is-mine .pmt-cz-mine { align-self: start; }
+.pmed-cz .pmed-tok-meta { grid-area: meta; display: inline-flex; align-items: center; gap: 6px; }
+.pmed-cz .pmed-tok-sw { width: 10px; height: 10px; border-radius: 2px; background: var(--pmed-tok-c, currentColor); box-shadow: 0 0 0 1px color-mix(in srgb, var(--pmw-text, #888) 25%, transparent); }
+.pmed-cz .pmed-tok-hex { font: 11px/1 var(--pm-font-code, ui-monospace, monospace); color: var(--pmw-text-2, inherit); letter-spacing: .01em; }
+.pmed-cz .pmed-tok-foot { display: flex; justify-content: flex-end; min-height: 0; }
+.pmed-cz .pmed-tok-pick { display: grid; gap: 12px; padding: 14px; border: 1px solid var(--pmt-cz-line-2); border-radius: var(--pmt-cz-r);
+  background: color-mix(in srgb, var(--pmt-cz-plate) 94%, var(--pmw-text, #888) 3%); }
+.pmed-cz .pmed-tok-pickhead { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; }
+.pmed-cz .pmed-tok-big { display: inline-flex; align-items: center; min-width: 96px; min-height: 44px; padding: 0 14px; border-radius: var(--pmt-cz-r-in);
+  background: var(--pmed-tok-ground, #111); color: var(--pmed-tok-c, currentColor); font: 600 18px/1 var(--pmw-ed-font, var(--pm-font-code, ui-monospace, monospace));
+  white-space: pre; transition: color 140ms ease; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmw-text, #888) 14%, transparent); }
+.pmed-cz .pmed-tok-picktitles { display: grid; gap: 3px; min-width: 0; }
+.pmed-cz .pmed-tok-picktitles h5 { margin: 0; font-size: 13.5px; font-weight: 650; }
+.pmed-cz .pmed-tok-ratio { font-size: 12px; color: var(--pmw-text-2, inherit); }
+.pmed-cz .pmed-tok-ratio.is-held { color: var(--pmw-text, inherit); font-weight: 600; }
+.pmed-cz .pmed-tok-cap { font: 650 10px/1 var(--pm-font-ui, system-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--pmw-text-2, inherit); }
+.pmed-cz .pmed-tok-swatches { display: flex; flex-wrap: wrap; gap: 7px; margin-top: -4px; }
+.pmed-cz .pmed-tok-swatch { width: 26px; height: 26px; padding: 0; border: 1px solid color-mix(in srgb, var(--pmw-text, #888) 22%, transparent); border-radius: 6px;
+  background: var(--sw); cursor: pointer; transition: transform 120ms ease, box-shadow 120ms ease; }
+.pmed-cz .pmed-tok-swatch:hover { transform: translateY(-1px); }
+.pmed-cz .pmed-tok-swatch[aria-checked="true"] { box-shadow: 0 0 0 2px var(--pmt-cz-plate), 0 0 0 4px var(--pmt-cz-ink); }
+.pmed-cz .pmed-tok-swatch:focus-visible { outline: 2px solid var(--pmt-cz-ring); outline-offset: 4px; }
+.pmed-cz .pmed-tok-sliders { display: grid; gap: 8px; }
+.pmed-cz .pmed-tok-slider { display: grid; grid-template-columns: 84px minmax(0, 1fr) 46px; align-items: center; gap: 10px; font-size: 12px; }
+.pmed-cz .pmed-tok-slider output { font: 11.5px var(--pm-font-code, ui-monospace, monospace); color: var(--pmw-text-2, inherit); text-align: right; }
+.pmed-cz .pmed-tok-slider input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 12px; margin: 0; border-radius: 4px; cursor: pointer;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmw-text, #888) 18%, transparent); background: var(--track); }
+.pmed-cz [data-hsl="h"] input { --track: linear-gradient(to right, hsl(0 var(--pmed-s) var(--pmed-l)), hsl(60 var(--pmed-s) var(--pmed-l)), hsl(120 var(--pmed-s) var(--pmed-l)),
+  hsl(180 var(--pmed-s) var(--pmed-l)), hsl(240 var(--pmed-s) var(--pmed-l)), hsl(300 var(--pmed-s) var(--pmed-l)), hsl(360 var(--pmed-s) var(--pmed-l))); }
+.pmed-cz [data-hsl="s"] input { --track: linear-gradient(to right, hsl(var(--pmed-h) 0% var(--pmed-l)), hsl(var(--pmed-h) 100% var(--pmed-l))); }
+.pmed-cz [data-hsl="l"] input { --track: linear-gradient(to right, hsl(var(--pmed-h) var(--pmed-s) 0%), hsl(var(--pmed-h) var(--pmed-s) 50%), hsl(var(--pmed-h) var(--pmed-s) 100%)); }
+.pmed-cz .pmed-tok-slider input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+  background: hsl(var(--pmed-h) var(--pmed-s) var(--pmed-l)); border: 2px solid #fff; box-shadow: 0 0 0 1px rgb(0 0 0 / .45), 0 1px 3px rgb(0 0 0 / .35); }
+.pmed-cz .pmed-tok-slider input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: hsl(var(--pmed-h) var(--pmed-s) var(--pmed-l));
+  border: 2px solid #fff; box-shadow: 0 0 0 1px rgb(0 0 0 / .45); }
+.pmed-cz .pmed-tok-slider input[type="range"]:focus-visible { outline: 2px solid var(--pmt-cz-ring); outline-offset: 3px; }
+.pmed-cz .pmed-tok-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.pmed-cz .pmed-tok-hexlabel { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; }
+.pmed-cz .pmed-tok-hexin { width: 92px; height: 30px; padding: 0 8px; border: 1px solid var(--pmt-cz-line-2); border-radius: var(--pmt-cz-r-in); background: var(--pmt-cz-ground);
+  color: inherit; font: 12.5px var(--pm-font-code, ui-monospace, monospace); }
+.pmed-cz .pmed-tok-hexin:focus-visible { outline: 2px solid var(--pmt-cz-ring); outline-offset: 1px; }
+@container pmt-cz (max-width: 520px) { .pmed-cz .pmed-tok-slider { grid-template-columns: 1fr 46px; } .pmed-cz .pmed-tok-slider .pmed-tok-slabel { grid-column: 1 / -1; } }
+/* each look: Friendly rounder, Retro square with 2 px rules and reverse video for the open row, NieR ink and parchment,
+   Glass the sheet's hairline under Liquid Glass */
+.pmt-cz[data-pmt-look="friendly"] .pmed-tok-row, .pmt-cz[data-pmt-look="friendly"] .pmed-tok-pick { border-radius: 12px; }
+.pmt-cz[data-pmt-look="retro"] :is(.pmed-tok-row, .pmed-tok-pick, .pmed-tok-word, .pmed-tok-big, .pmed-tok-swatch, .pmed-tok-hexin, .pmed-tok-slider input) { border-radius: 0; }
+.pmt-cz[data-pmt-look="retro"] .pmed-tok-row, .pmt-cz[data-pmt-look="retro"] .pmed-tok-pick { border-width: 2px; }
+.pmt-cz[data-pmt-look="retro"] .pmed-tok-row[aria-expanded="true"] { background: var(--pmt-cz-ink); color: var(--pmt-cz-plate); }
+.pmt-cz[data-pmt-look="retro"] .pmed-tok-row[aria-expanded="true"] :is(.pmed-tok-name, .pmed-tok-hex, .pmt-cz-mine) { color: var(--pmt-cz-plate); }
+html[data-o55-nier="on"] .pmt-cz :is(.pmed-tok-row, .pmed-tok-pick) { border-radius: 0; border-color: rgba(var(--o55-nier-ink-rgb), .35); }
+html[data-o55-nier="on"] .pmt-cz .pmed-tok-row[aria-expanded="true"] { background: var(--o55-nier-ink); color: var(--o55-nier-paper, #e9e2cf); }
+html[data-o55-nier="on"] .pmt-cz .pmed-tok-row[aria-expanded="true"] :is(.pmed-tok-name, .pmed-tok-hex, .pmt-cz-mine) { color: var(--o55-nier-paper, #e9e2cf); }
+html[data-lg="on"][data-theme^="glass"] .pmed-cz :is(.pmed-tok-row, .pmed-tok-pick, .pmed-tok-hexin) { border-color: var(--lg-line); }
+@media (prefers-reduced-motion: reduce) { .pmed-cz :is(.pmed-tok-row, .pmed-tok-word, .pmed-tok-big, .pmed-tok-swatch) { transition: none; } }
+html[data-motion="reduced"] .pmed-cz :is(.pmed-tok-row, .pmed-tok-word, .pmed-tok-big, .pmed-tok-swatch) { transition: none; }
+
