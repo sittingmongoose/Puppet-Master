@@ -1,0 +1,83 @@
+{
+  "status": "final_current_main_supplement_in_progress",
+  "branch": "fix/pm7-perf-m1-ready-20261014",
+  "base_commit": "b94e6183b1",
+  "scope": [
+    "M1 shared PMPillFit only"
+  ],
+  "authored_paths": [
+    "Concepts/onboarding/opus-5.5/tools/build.py"
+  ],
+  "legacy_measurement_base": "611b2404e4827675a435e7fe3113a0674bae2ed6",
+  "legacy_proof": {
+    "id": "M1",
+    "status": "implementation_committed_repeated_traces_passed_films_pending",
+    "commit": "9d77f51feb",
+    "action_windows": 840,
+    "paired_snapshots": 420,
+    "snapshot_differences": 0,
+    "measurement_summary": "reports/pm7-perf-shared-settings-20261013/m1-measurements.json",
+    "metric_semantics": {
+      "task_style_layout": "CDP cumulative duration deltas over action plus fixed3s settlement",
+      "largest_task": "page renderer traced RunTask wall duration",
+      "elements_restyled": "summed visits across style passes, not unique elements",
+      "click_to_paint": "trusted-click Event Timing duration,8ms quantization; film-based semantic first feedback pending"
+    },
+    "limitations": [
+      "Savings are established for Files\u2192Search across all10looks.",
+      "Settings-return and mode-only gains are small or not established.",
+      "Family Basic\u2192Friendly and Glass-entry pilots exist; repeated family proof and hardware films remain."
+    ],
+    "raw_manifest": {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m1-repeated-v2/evidence-manifest.json",
+      "sha256": "06ec67e35534198dc4b5904dfa139b0f34b70686529487180459b9aa2fba6f40"
+    },
+    "phase_measurement_summary": "reports/pm7-perf-shared-settings-20261013/m1-phase-measurements.json"
+  },
+  "current_main_supplement": {
+    "run": "m1-current-ready-v1",
+    "host": "Windows RTX3090 Chrome155.0.8059.40",
+    "geometry": [
+      1920,
+      1080,
+      1
+    ],
+    "looks": [
+      "basic-dark",
+      "basic-light"
+    ],
+    "repetitions": "three cold documents and ten warm repetitions",
+    "cases": [
+      "cold Settings entry",
+      "warm Settings return",
+      "Home\u2192General cold",
+      "Files\u2192Search",
+      "Basic\u2192Friendly",
+      "Friendly\u2192Glass entry"
+    ]
+  },
+  "landing": "coordinator_only",
+  "raw_root": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013",
+  "artifacts": [
+    {
+      "name": "m1-current-baseline-pm7.html",
+      "bytes": 18940612,
+      "sha256": "f8a555e588a040c7f6c7606ed5de0b67ca556c07b775318df9e6b3e1832bbff5"
+    },
+    {
+      "name": "m1-current-after-pm7.html",
+      "bytes": 18942791,
+      "sha256": "e4e2e2f0709afc411e3ebcc2da235a325ba70aaac18b87841522304996075e05"
+    },
+    {
+      "name": "m1-current-baseline.html",
+      "bytes": 21045524,
+      "sha256": "3eeb8c10f2c9f90204d1fbd817fcf4edc58644b8a0c907daa3d9cf494528c9b4"
+    },
+    {
+      "name": "m1-current-after.html",
+      "bytes": 21047703,
+      "sha256": "72694247fed1f95c992de2ddddf088b7192506dedc0087f5f5bf75889cb4ccfa"
+    }
+  ]
+}
