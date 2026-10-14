@@ -91360,7 +91360,7 @@ PM51.swapRow = (el, next) => {
 /* Settings is display:none while another page shows, and a CSS animation starts over when its element is shown again, so
    coming back replayed the page's arrival, every revealed section's slide and the last manager tab swap. When Settings
    is shown again, the entrances that had already played and restarted are finished at once, before the first frame is
-   painted, which leaves them exactly as a finished entrance always is. Two other ways were measured and dropped: taking
+   painted (after its layout, in a ResizeObserver), which leaves them exactly as a finished entrance always is. Two other ways were measured and dropped: taking
    the classes away, and placing the animations past their end with a negative delay, each changed how Glass is
    composited (about +300 ms on every action in Glass Light on the RTX 3090). Nothing is looked at unless an entrance
    has played since Settings was last shown, so the first entry, which plays its arrival as before, costs nothing. */
@@ -91372,17 +91372,25 @@ root.addEventListener('animationend', e => {
 }, true);
 function o55cWatchReturns() {
   const panel = document.getElementById('panel-settings');
-  if (!panel || panel.o55cReturns || typeof MutationObserver !== 'function') return;
+  if (!panel || panel.o55cReturns || typeof MutationObserver !== 'function' || typeof ResizeObserver !== 'function') return;
   panel.o55cReturns = true;
-  let shown = panel.classList.contains('active');
+  /* the restarted entrances are finished in the first frame's ResizeObserver: its style and layout are already done
+     there (finding them any earlier forced a whole extra style pass), an entrance moves nothing in layout, and the frame
+     is not painted yet */
+  let shown = panel.classList.contains('active'), due = false;
   new MutationObserver(() => {
     const now = panel.classList.contains('active');
-    if (now && !shown && o55cPlayedAny) for (const a of root.getAnimations({ subtree: true })) {
+    if (now && !shown && o55cPlayedAny) due = true;
+    shown = now;
+  }).observe(panel, { attributes: true, attributeFilter: ['class'] });
+  new ResizeObserver(() => {
+    if (!due || !panel.classList.contains('active')) return;
+    due = false;
+    for (const a of root.getAnimations({ subtree: true })) {
       const t = a.effect && a.effect.target;
       if (t && o55cPlayed.has(t) && O55C_ENTRANCES.test(a.animationName || '')) a.finish();
     }
-    shown = now;
-  }).observe(panel, { attributes: true, attributeFilter: ['class'] });
+  }).observe(panel);
 }
 
 /* ---------- leaving Settings and coming back keeps the open Details panel --------------------------------------------- */
