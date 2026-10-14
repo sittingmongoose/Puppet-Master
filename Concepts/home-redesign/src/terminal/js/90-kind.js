@@ -7,14 +7,30 @@
   var records = new Map();   /* session id -> { session, view, spec } */
   var ICON = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4l4 4-4 4M8 12h5"/></svg>';
 
+  /* Allowed Shell Profiles (code.terminal.allowed-profiles, SSYS: the list the "+" menu and New terminal offer). Once a
+     person has set it, only what it allows is offered: System Default is this computer's default, PowerShell is pwsh,
+     an SSH computer is allowed by its name, and an allowed one this computer lacks (fish here) is not listed. Left as it
+     came, everything on this computer is offered, as before. */
+  var ALLOW_WORDS = { 'system default': 'default', zsh: 'zsh', bash: 'bash', fish: 'fish', powershell: 'pwsh', pwsh: 'pwsh' };
+  function allowedList() {
+    var S = window.PM_TERMINAL_SETTINGS, list;
+    try { list = S && typeof S.values === 'function' ? S.values()['code.terminal.allowed-profiles'] : undefined; } catch (e) { list = undefined; }
+    return Array.isArray(list) ? list.map(function (w) { return String(w).trim().toLowerCase(); }) : null;
+  }
   function profiles() {
-    return [
+    var all = [
       { id: 'zsh', label: 'zsh', detail: 'Default', icon: 'terminal' },
       { id: 'bash', label: 'bash', detail: 'GNU bash 5.2', icon: 'terminal' },
       { id: 'pwsh', label: 'pwsh', detail: 'PowerShell 7.5', icon: 'terminal' },
       /* D39: SSH hosts carry group 'ssh'; the host's '+' menu lists them in an 'SSH hosts' submenu, shells inline */
       { id: 'ssh-devbox', label: 'devbox', detail: 'jared@devbox', icon: 'terminal', group: 'ssh' }
     ];
+    var allow = allowedList();
+    if (!allow) return all;
+    return all.filter(function (p) {
+      if (p.group === 'ssh') return allow.indexOf(p.label.toLowerCase()) >= 0 || allow.indexOf(p.detail.toLowerCase()) >= 0;
+      return allow.some(function (w) { var id = ALLOW_WORDS[w]; return id === p.id || (id === 'default' && p.detail === 'Default'); });
+    });
   }
 
   /* the Home default layout's terminal hints */
