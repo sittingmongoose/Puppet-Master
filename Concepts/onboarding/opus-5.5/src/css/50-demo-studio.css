@@ -419,7 +419,7 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 
 /* Liquid Glass's wallpapers */
 #o55-demo .pmds-walls { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 4px 8px; }
-#o55-demo .pmds-wall { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; align-items: center; gap: 8px; min-height: 32px; padding: 4px 8px; border: 0; border-radius: var(--pmds-ctl); background: transparent; text-align: left; cursor: pointer; font-size: 12.5px; }
+#o55-demo .pmds-wall { display: grid; grid-template-columns: 18px minmax(0, 1fr); align-items: center; gap: 8px; min-height: 32px; padding: 4px 8px; border: 0; border-radius: var(--pmds-ctl); background: transparent; text-align: left; cursor: pointer; font-size: 12.5px; }
 #o55-demo .pmds-wall:hover { background: var(--pmds-wash); }
 #o55-demo .pmds-wall .pmds-mark { width: 16px; height: 16px; margin: 0; }
 #o55-demo .pmds-lgrows .pmds-rowacts { margin: 4px 0 14px; }
