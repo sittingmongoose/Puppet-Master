@@ -151,7 +151,9 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-shine > i {
   position: absolute; left: calc(var(--pmf-r, 96px) * -1); top: calc(var(--pmf-r, 96px) * -1); width: calc(var(--pmf-r, 96px) * 2); height: calc(var(--pmf-r, 96px) * 2); border-radius: 50%;
   background: radial-gradient(closest-side, var(--lg-shine-c), transparent); will-change: transform;
 }
-html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-shine-c: rgba(255, 255, 255, .10); }
+/* Jared #16 (2026-10-14): the circle right under the pointer turned down; the shared hover sheen (pm7-shell-polish)
+   drops to about 0.6x at the same time, the edge light stays */
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-shine-c: rgba(255, 255, 255, .06); }
 /* light: no pointer light. Any lightening blend lifts the dark letters under the pointer as much as the glass: an
    additive light washed them to 3.6:1, and the overlay that replaced it (it roughly doubles dark values) still took a
    chosen tab from 8.0:1 to 5.1:1 while the white-on-white glass around it showed no change at all (2026-10-14).
