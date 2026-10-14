@@ -1,0 +1,1933 @@
+[
+  {
+    "look": "basic-dark",
+    "case": "alpha56",
+    "before": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.8999999985098839,
+      "stringifyBytes": 343285,
+      "parseCalls": 9,
+      "parseMs": 1,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.3999999985098839,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.3000000044703484,
+      "stringifyBytes": 343285,
+      "parseCalls": 9,
+      "parseMs": 1.2999999970197678,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.3999999985098839,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "basic-dark",
+    "case": "alpha55",
+    "before": {
+      "active": false,
+      "stringifyCalls": 15,
+      "stringifyMs": 0.8999999985098839,
+      "stringifyBytes": 343181,
+      "parseCalls": 9,
+      "parseMs": 1.1000000014901161,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.2999999970197678,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 15,
+      "stringifyMs": 1.2000000029802322,
+      "stringifyBytes": 343181,
+      "parseCalls": 9,
+      "parseMs": 1.1999999955296516,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.3999999985098839,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "basic-dark",
+    "case": "mode-opposite",
+    "before": {
+      "active": false,
+      "stringifyCalls": 90,
+      "stringifyMs": 5.299999997019768,
+      "stringifyBytes": 1521004,
+      "parseCalls": 35,
+      "parseMs": 4.899999998509884,
+      "saveCalls": 4,
+      "saveInclusiveMs": 5.100000001490116,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 2,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 74,
+      "stringifyMs": 4.500000014901161,
+      "stringifyBytes": 1133010,
+      "parseCalls": 19,
+      "parseMs": 3.100000001490116,
+      "saveCalls": 2,
+      "saveInclusiveMs": 3.4000000059604645,
+      "saveReuseCalls": 2,
+      "successfulReuse": 2,
+      "themeWrites": 1,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "case": "auto",
+    "before": {
+      "active": false,
+      "stringifyCalls": 92,
+      "stringifyMs": 6.100000008940697,
+      "stringifyBytes": 1521316,
+      "parseCalls": 34,
+      "parseMs": 4.399999998509884,
+      "saveCalls": 4,
+      "saveInclusiveMs": 5.299999989569187,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 2,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 74,
+      "stringifyMs": 4.4000000059604645,
+      "stringifyBytes": 1133044,
+      "parseCalls": 18,
+      "parseMs": 2.6999999955296516,
+      "saveCalls": 2,
+      "saveInclusiveMs": 2.9000000059604645,
+      "saveReuseCalls": 2,
+      "successfulReuse": 2,
+      "themeWrites": 1,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "case": "same-state-api",
+    "before": {
+      "active": false,
+      "stringifyCalls": 54,
+      "stringifyMs": 3.6999999955296516,
+      "stringifyBytes": 1028903,
+      "parseCalls": 24,
+      "parseMs": 2.5999999940395355,
+      "saveCalls": 3,
+      "saveInclusiveMs": 3.8999999910593033,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 4,
+      "stringifyMs": 0,
+      "stringifyBytes": 564,
+      "parseCalls": 0,
+      "parseMs": 0,
+      "saveCalls": 0,
+      "saveInclusiveMs": 0,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "case": "rapid-accepted",
+    "before": {
+      "active": false,
+      "stringifyCalls": 34,
+      "stringifyMs": 3.5999999940395355,
+      "stringifyBytes": 1028572,
+      "parseCalls": 27,
+      "parseMs": 3.2000000029802322,
+      "saveCalls": 3,
+      "saveInclusiveMs": 3.8999999910593033,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 34,
+      "stringifyMs": 3.399999998509884,
+      "stringifyBytes": 1028572,
+      "parseCalls": 27,
+      "parseMs": 3,
+      "saveCalls": 3,
+      "saveInclusiveMs": 3.9999999925494194,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "basic-dark",
+    "case": "trusted-settings-family",
+    "before": {
+      "active": false,
+      "stringifyCalls": 93,
+      "stringifyMs": 5.9000000059604645,
+      "stringifyBytes": 1566149,
+      "parseCalls": 37,
+      "parseMs": 4.600000008940697,
+      "saveCalls": 4,
+      "saveInclusiveMs": 5.299999997019768,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 76,
+      "stringifyMs": 4.4000000059604645,
+      "stringifyBytes": 1177929,
+      "parseCalls": 21,
+      "parseMs": 3.100000001490116,
+      "saveCalls": 2,
+      "saveInclusiveMs": 2.7999999970197678,
+      "saveReuseCalls": 2,
+      "successfulReuse": 2,
+      "themeWrites": 1,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "case": "trusted-settings-auto",
+    "before": {
+      "active": false,
+      "stringifyCalls": 89,
+      "stringifyMs": 5.699999988079071,
+      "stringifyBytes": 1714079,
+      "parseCalls": 37,
+      "parseMs": 5.400000020861626,
+      "saveCalls": 4,
+      "saveInclusiveMs": 5.0999999940395355,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 41,
+      "stringifyMs": 2.4000000059604645,
+      "stringifyBytes": 685999,
+      "parseCalls": 13,
+      "parseMs": 2.399999998509884,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.5,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "case": "trusted-settings-family-restore",
+    "before": {
+      "active": false,
+      "stringifyCalls": 92,
+      "stringifyMs": 6.299999997019768,
+      "stringifyBytes": 1713874,
+      "parseCalls": 38,
+      "parseMs": 5.600000008940697,
+      "saveCalls": 4,
+      "saveInclusiveMs": 5.100000001490116,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 77,
+      "stringifyMs": 4.699999995529652,
+      "stringifyBytes": 1177775,
+      "parseCalls": 21,
+      "parseMs": 3.200000010430813,
+      "saveCalls": 2,
+      "saveInclusiveMs": 2.7000000029802322,
+      "saveReuseCalls": 2,
+      "successfulReuse": 2,
+      "themeWrites": 1,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "case": "nier-opposite",
+    "before": {
+      "active": false,
+      "stringifyCalls": 131,
+      "stringifyMs": 8.400000005960464,
+      "stringifyBytes": 2296412,
+      "parseCalls": 54,
+      "parseMs": 7.500000007450581,
+      "saveCalls": 6,
+      "saveInclusiveMs": 7.400000013411045,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 1,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 110,
+      "stringifyMs": 7.9000000059604645,
+      "stringifyBytes": 1759341,
+      "parseCalls": 32,
+      "parseMs": 5.999999992549419,
+      "saveCalls": 3,
+      "saveInclusiveMs": 4.600000001490116,
+      "saveReuseCalls": 3,
+      "successfulReuse": 3,
+      "themeWrites": 1,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "case": "nier-restored",
+    "before": {
+      "active": false,
+      "stringifyCalls": 133,
+      "stringifyMs": 8.900000013411045,
+      "stringifyBytes": 2295727,
+      "parseCalls": 54,
+      "parseMs": 8.799999989569187,
+      "saveCalls": 6,
+      "saveInclusiveMs": 8.5,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 1,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 107,
+      "stringifyMs": 7.199999988079071,
+      "stringifyBytes": 1713909,
+      "parseCalls": 30,
+      "parseMs": 4.900000013411045,
+      "saveCalls": 3,
+      "saveInclusiveMs": 4.299999997019768,
+      "saveReuseCalls": 3,
+      "successfulReuse": 3,
+      "themeWrites": 1,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "case": "owner-three-equal-commands",
+    "before": {
+      "active": false,
+      "stringifyCalls": 34,
+      "stringifyMs": 2.7000000029802322,
+      "stringifyBytes": 893463,
+      "parseCalls": 30,
+      "parseMs": 2.899999998509884,
+      "saveCalls": 3,
+      "saveInclusiveMs": 3.100000001490116,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 20,
+      "stringifyMs": 2.600000001490116,
+      "stringifyBytes": 595277,
+      "parseCalls": 14,
+      "parseMs": 1.2000000029802322,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.3999999985098839,
+      "saveReuseCalls": 2,
+      "successfulReuse": 2,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "basic-dark",
+    "case": "owner-family-batch",
+    "before": {
+      "active": false,
+      "stringifyCalls": 86,
+      "stringifyMs": 4.399999998509884,
+      "stringifyBytes": 1193171,
+      "parseCalls": 35,
+      "parseMs": 4,
+      "saveCalls": 4,
+      "saveInclusiveMs": 4.0999999940395355,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 2,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 74,
+      "stringifyMs": 2.9999999925494194,
+      "stringifyBytes": 895145,
+      "parseCalls": 19,
+      "parseMs": 2.3000000044703484,
+      "saveCalls": 2,
+      "saveInclusiveMs": 2.0999999940395355,
+      "saveReuseCalls": 2,
+      "successfulReuse": 2,
+      "themeWrites": 1,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "basic-dark",
+    "case": "owner-refused",
+    "before": {
+      "active": false,
+      "stringifyCalls": 5,
+      "stringifyMs": 0,
+      "stringifyBytes": 568,
+      "parseCalls": 1,
+      "parseMs": 0,
+      "saveCalls": 0,
+      "saveInclusiveMs": 0,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 5,
+      "stringifyMs": 0,
+      "stringifyBytes": 568,
+      "parseCalls": 1,
+      "parseMs": 0,
+      "saveCalls": 0,
+      "saveInclusiveMs": 0,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "basic-dark",
+    "case": "failed-storage-retries",
+    "before": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.4000000059604645,
+      "stringifyBytes": 343300,
+      "parseCalls": 9,
+      "parseMs": 1.1999999955296516,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.5,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.3000000044703484,
+      "stringifyBytes": 343300,
+      "parseCalls": 9,
+      "parseMs": 1.1000000014901161,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.1000000014901161,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "basic-dark",
+    "case": "post-failure-final-persistence",
+    "before": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.2999999970197678,
+      "stringifyBytes": 343136,
+      "parseCalls": 9,
+      "parseMs": 1,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.3999999985098839,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.2000000029802322,
+      "stringifyBytes": 343136,
+      "parseCalls": 9,
+      "parseMs": 1,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.3999999985098839,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "basic-dark",
+    "case": "refused",
+    "before": {
+      "active": false,
+      "stringifyCalls": 4,
+      "stringifyMs": 0,
+      "stringifyBytes": 564,
+      "parseCalls": 0,
+      "parseMs": 0,
+      "saveCalls": 0,
+      "saveInclusiveMs": 0,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 4,
+      "stringifyMs": 0.10000000149011612,
+      "stringifyBytes": 564,
+      "parseCalls": 0,
+      "parseMs": 0,
+      "saveCalls": 0,
+      "saveInclusiveMs": 0,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "alpha56",
+    "before": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.3999999985098839,
+      "stringifyBytes": 343291,
+      "parseCalls": 9,
+      "parseMs": 1.2999999970197678,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.5999999940395355,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.3999999985098839,
+      "stringifyBytes": 343291,
+      "parseCalls": 9,
+      "parseMs": 1.1000000014901161,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.2999999970197678,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "alpha55",
+    "before": {
+      "active": false,
+      "stringifyCalls": 15,
+      "stringifyMs": 1.0999999940395355,
+      "stringifyBytes": 343187,
+      "parseCalls": 9,
+      "parseMs": 1.1000000014901161,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.1999999955296516,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 15,
+      "stringifyMs": 1.0999999940395355,
+      "stringifyBytes": 343187,
+      "parseCalls": 9,
+      "parseMs": 1.1000000014901161,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.2999999970197678,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "mode-opposite",
+    "before": {
+      "active": false,
+      "stringifyCalls": 90,
+      "stringifyMs": 5.9000000059604645,
+      "stringifyBytes": 1520408,
+      "parseCalls": 35,
+      "parseMs": 4.499999992549419,
+      "saveCalls": 4,
+      "saveInclusiveMs": 5.4000000059604645,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 2,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 74,
+      "stringifyMs": 4.5,
+      "stringifyBytes": 1132620,
+      "parseCalls": 19,
+      "parseMs": 2.7999999970197678,
+      "saveCalls": 2,
+      "saveInclusiveMs": 2.600000001490116,
+      "saveReuseCalls": 2,
+      "successfulReuse": 2,
+      "themeWrites": 1,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "auto",
+    "before": {
+      "active": false,
+      "stringifyCalls": 88,
+      "stringifyMs": 6.100000001490116,
+      "stringifyBytes": 1520681,
+      "parseCalls": 34,
+      "parseMs": 4.600000001490116,
+      "saveCalls": 4,
+      "saveInclusiveMs": 5.200000010430813,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 38,
+      "stringifyMs": 2.2999999970197678,
+      "stringifyBytes": 492352,
+      "parseCalls": 10,
+      "parseMs": 1.7000000029802322,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.3999999985098839,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "same-state-api",
+    "before": {
+      "active": false,
+      "stringifyCalls": 54,
+      "stringifyMs": 3.6000000089406967,
+      "stringifyBytes": 1028893,
+      "parseCalls": 24,
+      "parseMs": 2.899999998509884,
+      "saveCalls": 3,
+      "saveInclusiveMs": 3.9000000059604645,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 4,
+      "stringifyMs": 0.10000000149011612,
+      "stringifyBytes": 564,
+      "parseCalls": 0,
+      "parseMs": 0,
+      "saveCalls": 0,
+      "saveInclusiveMs": 0,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "rapid-accepted",
+    "before": {
+      "active": false,
+      "stringifyCalls": 34,
+      "stringifyMs": 3.5000000074505806,
+      "stringifyBytes": 1028563,
+      "parseCalls": 27,
+      "parseMs": 3.3999999910593033,
+      "saveCalls": 3,
+      "saveInclusiveMs": 3.4999999925494194,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 34,
+      "stringifyMs": 4.100000016391277,
+      "stringifyBytes": 1028563,
+      "parseCalls": 27,
+      "parseMs": 3.699999988079071,
+      "saveCalls": 3,
+      "saveInclusiveMs": 4.700000002980232,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "trusted-settings-family",
+    "before": {
+      "active": false,
+      "stringifyCalls": 94,
+      "stringifyMs": 6.100000001490116,
+      "stringifyBytes": 1566208,
+      "parseCalls": 37,
+      "parseMs": 4.699999995529652,
+      "saveCalls": 4,
+      "saveInclusiveMs": 5.500000007450581,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 78,
+      "stringifyMs": 5.100000016391277,
+      "stringifyBytes": 1178210,
+      "parseCalls": 21,
+      "parseMs": 2.999999985098839,
+      "saveCalls": 2,
+      "saveInclusiveMs": 2.8000000044703484,
+      "saveReuseCalls": 2,
+      "successfulReuse": 2,
+      "themeWrites": 1,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "trusted-settings-auto",
+    "before": {
+      "active": false,
+      "stringifyCalls": 89,
+      "stringifyMs": 6.299999989569187,
+      "stringifyBytes": 1714079,
+      "parseCalls": 37,
+      "parseMs": 5.899999998509884,
+      "saveCalls": 4,
+      "saveInclusiveMs": 5.5999999940395355,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 39,
+      "stringifyMs": 2.600000001490116,
+      "stringifyBytes": 685717,
+      "parseCalls": 13,
+      "parseMs": 2.7000000029802322,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.5,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "trusted-settings-family-restore",
+    "before": {
+      "active": false,
+      "stringifyCalls": 93,
+      "stringifyMs": 6.5,
+      "stringifyBytes": 1566131,
+      "parseCalls": 37,
+      "parseMs": 4.800000011920929,
+      "saveCalls": 4,
+      "saveInclusiveMs": 5.199999995529652,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 2,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 76,
+      "stringifyMs": 3.3999999910593033,
+      "stringifyBytes": 1029574,
+      "parseCalls": 20,
+      "parseMs": 2.5000000074505806,
+      "saveCalls": 2,
+      "saveInclusiveMs": 2.6999999955296516,
+      "saveReuseCalls": 2,
+      "successfulReuse": 2,
+      "themeWrites": 1,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "trusted-alpha-plus",
+    "before": {
+      "active": false,
+      "stringifyCalls": 18,
+      "stringifyMs": 2.600000001490116,
+      "stringifyBytes": 640547,
+      "parseCalls": 11,
+      "parseMs": 2.2000000029802322,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.2999999970197678,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 20,
+      "stringifyMs": 2.5,
+      "stringifyBytes": 640829,
+      "parseCalls": 11,
+      "parseMs": 2.2999999970197678,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.2000000029802322,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "trusted-alpha-minus",
+    "before": {
+      "active": false,
+      "stringifyCalls": 17,
+      "stringifyMs": 1.7999999970197678,
+      "stringifyBytes": 491971,
+      "parseCalls": 10,
+      "parseMs": 1.8999999985098839,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.2999999970197678,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 15,
+      "stringifyMs": 1.8000000044703484,
+      "stringifyBytes": 491689,
+      "parseCalls": 10,
+      "parseMs": 1.8999999985098839,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.2999999970197678,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "nier-opposite",
+    "before": {
+      "active": false,
+      "stringifyCalls": 131,
+      "stringifyMs": 8.899999998509884,
+      "stringifyBytes": 2297217,
+      "parseCalls": 54,
+      "parseMs": 7.899999991059303,
+      "saveCalls": 6,
+      "saveInclusiveMs": 7.799999997019768,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 1,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setFamily": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 107,
+      "stringifyMs": 6.699999995529652,
+      "stringifyBytes": 1714944,
+      "parseCalls": 30,
+      "parseMs": 4.800000011920929,
+      "saveCalls": 3,
+      "saveInclusiveMs": 3.9999999925494194,
+      "saveReuseCalls": 3,
+      "successfulReuse": 3,
+      "themeWrites": 1,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setFamily": 1
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "nier-restored",
+    "before": {
+      "active": false,
+      "stringifyCalls": 132,
+      "stringifyMs": 10.600000008940697,
+      "stringifyBytes": 2445001,
+      "parseCalls": 55,
+      "parseMs": 9.600000016391277,
+      "saveCalls": 6,
+      "saveInclusiveMs": 9.49999999254942,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 1,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setFamily": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 108,
+      "stringifyMs": 7.199999988079071,
+      "stringifyBytes": 1863010,
+      "parseCalls": 31,
+      "parseMs": 5.700000017881393,
+      "saveCalls": 3,
+      "saveInclusiveMs": 3.8000000044703484,
+      "saveReuseCalls": 3,
+      "successfulReuse": 3,
+      "themeWrites": 1,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setFamily": 1
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "owner-three-equal-commands",
+    "before": {
+      "active": false,
+      "stringifyCalls": 34,
+      "stringifyMs": 3.1999999955296516,
+      "stringifyBytes": 893727,
+      "parseCalls": 30,
+      "parseMs": 3.1000000089406967,
+      "saveCalls": 3,
+      "saveInclusiveMs": 3.100000001490116,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 20,
+      "stringifyMs": 2.5,
+      "stringifyBytes": 595425,
+      "parseCalls": 14,
+      "parseMs": 1.2000000029802322,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.1999999955296516,
+      "saveReuseCalls": 2,
+      "successfulReuse": 2,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "owner-family-batch",
+    "before": {
+      "active": false,
+      "stringifyCalls": 88,
+      "stringifyMs": 4.800000004470348,
+      "stringifyBytes": 1193453,
+      "parseCalls": 35,
+      "parseMs": 4.800000004470348,
+      "saveCalls": 4,
+      "saveInclusiveMs": 4.600000001490116,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 72,
+      "stringifyMs": 3.600000001490116,
+      "stringifyBytes": 894863,
+      "parseCalls": 19,
+      "parseMs": 2.2999999970197678,
+      "saveCalls": 2,
+      "saveInclusiveMs": 2.399999998509884,
+      "saveReuseCalls": 2,
+      "successfulReuse": 2,
+      "themeWrites": 1,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "owner-refused",
+    "before": {
+      "active": false,
+      "stringifyCalls": 5,
+      "stringifyMs": 0.09999999403953552,
+      "stringifyBytes": 568,
+      "parseCalls": 1,
+      "parseMs": 0,
+      "saveCalls": 0,
+      "saveInclusiveMs": 0,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 5,
+      "stringifyMs": 0.10000000149011612,
+      "stringifyBytes": 568,
+      "parseCalls": 1,
+      "parseMs": 0,
+      "saveCalls": 0,
+      "saveInclusiveMs": 0,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "failed-storage-retries",
+    "before": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.3999999985098839,
+      "stringifyBytes": 343300,
+      "parseCalls": 9,
+      "parseMs": 1,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.2999999970197678,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.3999999985098839,
+      "stringifyBytes": 343300,
+      "parseCalls": 9,
+      "parseMs": 1,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.2999999970197678,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "post-failure-final-persistence",
+    "before": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.1999999955296516,
+      "stringifyBytes": 343136,
+      "parseCalls": 9,
+      "parseMs": 1.2000000029802322,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.3999999985098839,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.1000000014901161,
+      "stringifyBytes": 343136,
+      "parseCalls": 9,
+      "parseMs": 1.2000000029802322,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.2999999970197678,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "glass-light",
+    "case": "refused",
+    "before": {
+      "active": false,
+      "stringifyCalls": 4,
+      "stringifyMs": 0.10000000149011612,
+      "stringifyBytes": 564,
+      "parseCalls": 0,
+      "parseMs": 0,
+      "saveCalls": 0,
+      "saveInclusiveMs": 0,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 4,
+      "stringifyMs": 0,
+      "stringifyBytes": 564,
+      "parseCalls": 0,
+      "parseMs": 0,
+      "saveCalls": 0,
+      "saveInclusiveMs": 0,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "alpha56",
+    "before": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.3999999985098839,
+      "stringifyBytes": 343282,
+      "parseCalls": 9,
+      "parseMs": 1.1000000014901161,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.6000000014901161,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.4999999925494194,
+      "stringifyBytes": 343282,
+      "parseCalls": 9,
+      "parseMs": 1.2000000029802322,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.7000000029802322,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "alpha55",
+    "before": {
+      "active": false,
+      "stringifyCalls": 15,
+      "stringifyMs": 1.3999999985098839,
+      "stringifyBytes": 343178,
+      "parseCalls": 9,
+      "parseMs": 1.1000000014901161,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.1999999955296516,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 15,
+      "stringifyMs": 1.4000000059604645,
+      "stringifyBytes": 343178,
+      "parseCalls": 9,
+      "parseMs": 1.2999999970197678,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.6000000014901161,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "mode-opposite",
+    "before": {
+      "active": false,
+      "stringifyCalls": 90,
+      "stringifyMs": 5.000000014901161,
+      "stringifyBytes": 1520988,
+      "parseCalls": 35,
+      "parseMs": 5.299999989569187,
+      "saveCalls": 4,
+      "saveInclusiveMs": 5.600000008940697,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 2,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 74,
+      "stringifyMs": 4.300000004470348,
+      "stringifyBytes": 1132998,
+      "parseCalls": 19,
+      "parseMs": 2.7000000029802322,
+      "saveCalls": 2,
+      "saveInclusiveMs": 3.100000001490116,
+      "saveReuseCalls": 2,
+      "successfulReuse": 2,
+      "themeWrites": 1,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "auto",
+    "before": {
+      "active": false,
+      "stringifyCalls": 92,
+      "stringifyMs": 5.5999999940395355,
+      "stringifyBytes": 1521300,
+      "parseCalls": 34,
+      "parseMs": 5.300000004470348,
+      "saveCalls": 4,
+      "saveInclusiveMs": 5.399999991059303,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 2,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 76,
+      "stringifyMs": 4.400000013411045,
+      "stringifyBytes": 1133314,
+      "parseCalls": 18,
+      "parseMs": 2.5000000074505806,
+      "saveCalls": 2,
+      "saveInclusiveMs": 2.8000000044703484,
+      "saveReuseCalls": 2,
+      "successfulReuse": 2,
+      "themeWrites": 1,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "same-state-api",
+    "before": {
+      "active": false,
+      "stringifyCalls": 54,
+      "stringifyMs": 4.000000007450581,
+      "stringifyBytes": 1028892,
+      "parseCalls": 24,
+      "parseMs": 2.9999999925494194,
+      "saveCalls": 3,
+      "saveInclusiveMs": 4,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 4,
+      "stringifyMs": 0.10000000149011612,
+      "stringifyBytes": 564,
+      "parseCalls": 0,
+      "parseMs": 0,
+      "saveCalls": 0,
+      "saveInclusiveMs": 0,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "rapid-accepted",
+    "before": {
+      "active": false,
+      "stringifyCalls": 34,
+      "stringifyMs": 4.300000004470348,
+      "stringifyBytes": 1028563,
+      "parseCalls": 27,
+      "parseMs": 3.0999999940395355,
+      "saveCalls": 3,
+      "saveInclusiveMs": 4.200000002980232,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 35,
+      "stringifyMs": 3.7000000029802322,
+      "stringifyBytes": 1028623,
+      "parseCalls": 27,
+      "parseMs": 3.1999999955296516,
+      "saveCalls": 3,
+      "saveInclusiveMs": 4,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "trusted-settings-family",
+    "before": {
+      "active": false,
+      "stringifyCalls": 92,
+      "stringifyMs": 6.800000004470348,
+      "stringifyBytes": 1655257,
+      "parseCalls": 41,
+      "parseMs": 5.699999988079071,
+      "saveCalls": 4,
+      "saveInclusiveMs": 5.400000013411045,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 42,
+      "stringifyMs": 2.5000000074505806,
+      "stringifyBytes": 626909,
+      "parseCalls": 17,
+      "parseMs": 3.100000001490116,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.6000000014901161,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "trusted-settings-auto",
+    "before": {
+      "active": false,
+      "stringifyCalls": 93,
+      "stringifyMs": 7.500000014901161,
+      "stringifyBytes": 1803964,
+      "parseCalls": 41,
+      "parseMs": 6.599999971687794,
+      "saveCalls": 4,
+      "saveInclusiveMs": 5.700000002980232,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 42,
+      "stringifyMs": 3.399999998509884,
+      "stringifyBytes": 775475,
+      "parseCalls": 17,
+      "parseMs": 2.7999999970197678,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.3999999985098839,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "trusted-settings-family-restore",
+    "before": {
+      "active": false,
+      "stringifyCalls": 92,
+      "stringifyMs": 8.200000002980232,
+      "stringifyBytes": 1803210,
+      "parseCalls": 42,
+      "parseMs": 8.100000001490116,
+      "saveCalls": 4,
+      "saveInclusiveMs": 6.700000002980232,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 46,
+      "stringifyMs": 2.5000000074505806,
+      "stringifyBytes": 671854,
+      "parseCalls": 19,
+      "parseMs": 3.5999999940395355,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.3000000044703484,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "nier-opposite",
+    "before": {
+      "active": false,
+      "stringifyCalls": 133,
+      "stringifyMs": 9.400000013411045,
+      "stringifyBytes": 2295695,
+      "parseCalls": 54,
+      "parseMs": 8.799999997019768,
+      "saveCalls": 6,
+      "saveInclusiveMs": 8.300000004470348,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 1,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 107,
+      "stringifyMs": 7.5,
+      "stringifyBytes": 1713877,
+      "parseCalls": 30,
+      "parseMs": 5.100000008940697,
+      "saveCalls": 3,
+      "saveInclusiveMs": 4.299999997019768,
+      "saveReuseCalls": 3,
+      "successfulReuse": 3,
+      "themeWrites": 1,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "nier-restored",
+    "before": {
+      "active": false,
+      "stringifyCalls": 131,
+      "stringifyMs": 9.299999974668026,
+      "stringifyBytes": 2296412,
+      "parseCalls": 54,
+      "parseMs": 8.200000017881393,
+      "saveCalls": 6,
+      "saveInclusiveMs": 7.899999991059303,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 1,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 107,
+      "stringifyMs": 6.799999982118607,
+      "stringifyBytes": 1714403,
+      "parseCalls": 30,
+      "parseMs": 5.000000014901161,
+      "saveCalls": 3,
+      "saveInclusiveMs": 4,
+      "saveReuseCalls": 3,
+      "successfulReuse": 3,
+      "themeWrites": 1,
+      "changedThemeWrites": 0,
+      "themeApi": {
+        "setFamily": 1
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "owner-three-equal-commands",
+    "before": {
+      "active": false,
+      "stringifyCalls": 34,
+      "stringifyMs": 2.7999999970197678,
+      "stringifyBytes": 893745,
+      "parseCalls": 30,
+      "parseMs": 3,
+      "saveCalls": 3,
+      "saveInclusiveMs": 2.6999999955296516,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 20,
+      "stringifyMs": 2.2000000029802322,
+      "stringifyBytes": 595433,
+      "parseCalls": 14,
+      "parseMs": 1,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1,
+      "saveReuseCalls": 2,
+      "successfulReuse": 2,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "owner-family-batch",
+    "before": {
+      "active": false,
+      "stringifyCalls": 86,
+      "stringifyMs": 4.5999999940395355,
+      "stringifyBytes": 1193541,
+      "parseCalls": 35,
+      "parseMs": 4.799999989569187,
+      "saveCalls": 4,
+      "saveInclusiveMs": 4.4000000059604645,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 2,
+      "changedThemeWrites": 2,
+      "themeApi": {
+        "setFamily": 1,
+        "setMode": 1
+      }
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 72,
+      "stringifyMs": 3.600000001490116,
+      "stringifyBytes": 895107,
+      "parseCalls": 19,
+      "parseMs": 2.100000001490116,
+      "saveCalls": 2,
+      "saveInclusiveMs": 2.2000000029802322,
+      "saveReuseCalls": 2,
+      "successfulReuse": 2,
+      "themeWrites": 1,
+      "changedThemeWrites": 1,
+      "themeApi": {
+        "setPair": 1
+      }
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "owner-refused",
+    "before": {
+      "active": false,
+      "stringifyCalls": 6,
+      "stringifyMs": 0.3999999985098839,
+      "stringifyBytes": 44910,
+      "parseCalls": 2,
+      "parseMs": 0.29999999701976776,
+      "saveCalls": 0,
+      "saveInclusiveMs": 0,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 6,
+      "stringifyMs": 0.29999999701976776,
+      "stringifyBytes": 44910,
+      "parseCalls": 2,
+      "parseMs": 0.20000000298023224,
+      "saveCalls": 0,
+      "saveInclusiveMs": 0,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "failed-storage-retries",
+    "before": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.4000000059604645,
+      "stringifyBytes": 343425,
+      "parseCalls": 9,
+      "parseMs": 1.0999999940395355,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.3000000044703484,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.3999999985098839,
+      "stringifyBytes": 343425,
+      "parseCalls": 9,
+      "parseMs": 1.1000000014901161,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.3999999985098839,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "post-failure-final-persistence",
+    "before": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.4000000059604645,
+      "stringifyBytes": 343261,
+      "parseCalls": 9,
+      "parseMs": 1,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.3999999985098839,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 14,
+      "stringifyMs": 1.3999999985098839,
+      "stringifyBytes": 343261,
+      "parseCalls": 9,
+      "parseMs": 1.1000000014901161,
+      "saveCalls": 1,
+      "saveInclusiveMs": 1.5,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  },
+  {
+    "look": "nier-dark",
+    "case": "refused",
+    "before": {
+      "active": false,
+      "stringifyCalls": 6,
+      "stringifyMs": 0.3999999985098839,
+      "stringifyBytes": 90324,
+      "parseCalls": 4,
+      "parseMs": 1,
+      "saveCalls": 0,
+      "saveInclusiveMs": 0,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    },
+    "after": {
+      "active": false,
+      "stringifyCalls": 6,
+      "stringifyMs": 0.4000000059604645,
+      "stringifyBytes": 90324,
+      "parseCalls": 4,
+      "parseMs": 0.7999999895691872,
+      "saveCalls": 0,
+      "saveInclusiveMs": 0,
+      "saveReuseCalls": 0,
+      "successfulReuse": 0,
+      "themeWrites": 0,
+      "changedThemeWrites": 0,
+      "themeApi": {}
+    }
+  }
+]

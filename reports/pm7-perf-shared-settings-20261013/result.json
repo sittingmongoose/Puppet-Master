@@ -11,7 +11,7 @@
   "fixes": [
     {
       "id": "M1",
-      "status": "implementation_committed_repeated_traces_passed_films_pending",
+      "status": "landed_by_coordinator_worker",
       "commit": "9d77f51feb",
       "action_windows": 840,
       "paired_snapshots": 420,
@@ -24,15 +24,19 @@
         "click_to_paint": "trusted-click Event Timing duration,8ms quantization; film-based semantic first feedback pending"
       },
       "limitations": [
-        "Savings are established for Files\u2192Search across all10looks.",
-        "Settings-return and mode-only gains are small or not established.",
-        "Family Basic\u2192Friendly and Glass-entry pilots exist; repeated family proof and hardware films remain."
+        "Frozen611-base all10look table is separately labeled.",
+        "Current-main CPU benefit established for Files\u2192Search and Basic\u2192Friendly; coldSettings/General/warmreturn gains unestablished.",
+        "Currentnormal/reducedfilms are complete decoded recovery clips after stopfailures, with sampledsemanticreview and timingbounds."
       ],
       "raw_manifest": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m1-repeated-v2/evidence-manifest.json",
         "sha256": "06ec67e35534198dc4b5904dfa139b0f34b70686529487180459b9aa2fba6f40"
       },
-      "phase_measurement_summary": "reports/pm7-perf-shared-settings-20261013/m1-phase-measurements.json"
+      "phase_measurement_summary": "reports/pm7-perf-shared-settings-20261013/m1-phase-measurements.json",
+      "current_review_branch": "fix/pm7-perf-m1-ready-20261014",
+      "current_report_commit": "c3eef58d7d",
+      "current_packet": "reports/pm7-perf-m1-ready-20261014/NOTES.md",
+      "main_commit": "916059849e59917123f726114cc9049596714dc0"
     },
     {
       "id": "M4",
@@ -76,32 +80,106 @@
         "failure_packet": "reports/pm7-perf-shared-settings-20261013/M4-APPROVED-CONTRACT-FAILURES.md",
         "probe_host": "P1000 Quadro ANGLE/OpenGL4.5.0",
         "actual_bottom_drift_px": 10,
-        "harness_limitation": "Retained-motion flags include pre-existing will-reveal nodes; qualify before judging replay."
+        "harness_limitation": "Retained-motion flags include pre-existing will-reveal nodes; qualify before judging replay.",
+        "followup_iteration": "Coordinator1014050140 authorizes exactlyonefocusediteration afterM5/M6/M10; notstarted."
       }
     },
     {
       "id": "M5",
-      "status": "implementation_validated_complete_measurements_in_progress",
+      "status": "primary_and_supplemental_proof_complete_films_running",
       "candidate": "m5-proto4",
       "compatibility_snapshots": 312,
       "compatibility_pairs": 156,
       "visible_fit_focus_saved_differences": 0,
       "auxiliary_inline_declaration_differences": 1,
-      "repeated_complete_looks": 5,
-      "repeated_windows": 390,
-      "paired_snapshots": 195,
+      "repeated_complete_looks": 10,
+      "repeated_windows": 728,
+      "paired_snapshots": 364,
       "snapshot_differences": 0,
-      "measurement_summary": "reports/pm7-perf-shared-settings-20261013/m5-partial-measurements.json",
-      "performance_claim": "No material whole-action CPU improvement established in the first five looks.",
-      "mechanism": "Interactive theme changes: synthetic resize1\u21920; scoped geometry event0\u21921. Necessary geometry and dismissal callbacks remain; real resize and initial bootstrap remain."
+      "measurement_summary": "reports/pm7-perf-shared-settings-20261013/m5-measurements.json",
+      "performance_claim": "Mode, Auto and family CPU results are small or mixed; broad whole-action speedup is not established.",
+      "mechanism": "Interactive theme changes: synthetic resize1\u21920; scoped geometry event0\u21921. Necessary geometry and dismissal callbacks remain; real resize and initial bootstrap remain.",
+      "phase_measurement_summary": "reports/pm7-perf-shared-settings-20261013/m5-phase-measurements.json",
+      "auto_system_scheme": {
+        "windows": 120,
+        "pairs": 60,
+        "differences": 0,
+        "n_per_direction_artifact_look": 3,
+        "metrics": "m5-scheme-measurements.json"
+      },
+      "geometry_mechanism": {
+        "looks": [
+          "basic-dark",
+          "glass-light",
+          "nier-dark"
+        ],
+        "event_callbacks": [
+          32,
+          19
+        ],
+        "sticky_passes": [
+          2,
+          1
+        ],
+        "instrumentation": "Separate mechanism run; no CPU saving inferred from counters."
+      },
+      "density": {
+        "initial_snapshots": 42,
+        "initial_pairs": 21,
+        "raw_differences": 2,
+        "visible_difference": "One startup BasicDark width0.11px; GlassLight inline declaration differed without rendered change.",
+        "boot_state_limit": "Initial run navigated before clearing previous stored state; unequal boot inputs were a confound.",
+        "repeat_snapshots": 14,
+        "repeat_pairs": 7,
+        "repeat_differences": 0,
+        "controlled_startup_snapshots": 12,
+        "controlled_startup_pairs": 6,
+        "controlled_differences": 0,
+        "native_title_crops_changed_pixels": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "source_changed_for_retest": false
+      }
     },
     {
       "id": "M6",
-      "status": "not_implemented"
+      "status": "private_candidate_mechanism_passed_UI_motion_and_CPU_pending",
+      "candidate": "m6-proto7",
+      "mechanism_cases": 106,
+      "paired_states": 53,
+      "states_returns_saved_differences": 0,
+      "mechanism_summary": "reports/pm7-perf-shared-settings-20261013/m6-mechanism-measurements.json",
+      "open_inspector": {
+        "cases": 6,
+        "pairs": 3,
+        "differences": 0,
+        "scroll_during_all_sampled_frames": 1200,
+        "inspector_left_positions": {
+          "basic-light": 962,
+          "glass-light": 949,
+          "nier-light": 962
+        },
+        "layout_remounts": 0
+      },
+      "failed_storage": {
+        "same_identical_attempts_before_after": [
+          3,
+          3
+        ],
+        "receipt_after_failure": false,
+        "final_saved_value": 0.55,
+        "readback_equal": true
+      }
     },
     {
       "id": "M10",
-      "status": "not_implemented"
+      "status": "private_candidate_checks_pending",
+      "candidate": "m10-proto2"
     }
   ],
   "evidence_root": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013",
@@ -144,7 +222,7 @@
     }
   ],
   "own_active_browser_sessions": 1,
-  "maintenance_seam": "Recovered own HTTP server after unreachable port; five unfinished M5 looks resume in same-host fresh browser.",
+  "maintenance_seam": "Windows recorder1.1.2 deployed in actualOWN0 seam; old failuresretained. Fresh Windows022 afterseparateM1 landinggapwithdrawn; no sourceownerhostoverlap.",
   "artifact_manifest": {
     "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/artifacts/manifest.json",
     "sha256": "d3237bbd9a0f754d31ff3b1d540089660a988e84cfb173d020eb6b8ebaa6bdda"
