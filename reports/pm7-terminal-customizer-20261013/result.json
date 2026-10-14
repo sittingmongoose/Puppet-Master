@@ -1,0 +1,81 @@
+{
+ "thread": "pm7-terminal-customizer",
+ "branch": "concept/pm7-terminal-customizer-20261013",
+ "base": "611b2404e4827675a435e7fe3113a0674bae2ed6",
+ "origin_main_at_report": "d6afa4b281 (touches the four generated pages and two onboarding sources; a rebase regenerates the pages)",
+ "source_head": "077642db7c",
+ "branch_head_with_pages": "e495aad159",
+ "landed": false,
+ "published_page_sha256": "0931519ed261ea5f08717ab882ca052e16310e833fb30dedb6c75f247d0071b7",
+ "generated_pages_sha256": {
+  "PMConcept7.html": "0931519ed261ea5f08717ab882ca052e16310e833fb30dedb6c75f247d0071b7",
+  "HomeTestPMConcept7.html": "0931519ed261ea5f08717ab882ca052e16310e833fb30dedb6c75f247d0071b7",
+  "LeftRailPMConcept7.html": "1b8190c9a1ee3214befe0f77bb0bb6385548a42215d05a1a045ef40bc134762e",
+  "Onboarding concepts/TestOpus5.5PmConcept.html": "0931519ed261ea5f08717ab882ca052e16310e833fb30dedb6c75f247d0071b7"
+ },
+ "generators": [
+  "Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7",
+  "Concepts/home-redesign/tools/build_home.py",
+  "Concepts/leftrail-redesign/tools/build_rail.py"
+ ],
+ "generator_checks": "all three --check pass",
+ "evidence": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-terminal-customizer-20261013/",
+ "share": "/mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/",
+ "matrix": {
+  "options": 40,
+  "runs": 20,
+  "cases": 4176,
+  "status_counts": {
+   "WORKS": 23,
+   "FIXED": 10,
+   "WORKS_GPU": 6,
+   "WORKS_GPU_FILM": 1
+  },
+  "failures": 0,
+  "gpu_verified_cells": 8,
+  "reload_bundle_values": "644 of 644 persisted"
+ },
+ "settings_ui_pass": {
+  "basic-dark": {
+   "WORKS": 47
+  },
+  "glass-dark": {
+   "WORKS": 47
+  },
+  "retro-light": {
+   "WORKS": 47
+  }
+ },
+ "inactive_dim_real_focus": {
+  "basic-dark": "WORKS",
+  "basic-light": "WORKS",
+  "friendly-dark": "WORKS",
+  "friendly-light": "WORKS",
+  "glass-dark": "WORKS",
+  "glass-light": "WORKS",
+  "retro-dark": "WORKS",
+  "retro-light": "WORKS",
+  "nier-dark": "WORKS",
+  "nier-light": "WORKS"
+ },
+ "custom_text_reload": {
+  "before-ef27f4bd": "LOST",
+  "final": "PERSISTS"
+ },
+ "audit_items": {
+  "profiles": "WORKS",
+  "tabNote": "WORKS",
+  "import": "WORKS"
+ },
+ "keyboard": "47 tab stops, trapped and wrapping; consecutive keys keep focus; Escape returns focus to the terminal (keyboard-final.txt)",
+ "narrow": "1280/980/700/420/360 px in Glass dark and NieR light: opens, no sideways scroll, nothing outside (narrow-final-*.txt)",
+ "gpu": "Windows RTX 3090 on the final page: effect numbers and trail traces (gpu-effects-basic-dark.txt, trace-gpu-*.txt); films on earlier pages, frame-reviewed (films/FILMS.md)",
+ "not_verified": [
+  "Safari (no automation here)",
+  "smooth scrolling motion (state and resolution verified)",
+  "behaviour rows outside this look work except Allowed Shell Profiles"
+ ],
+ "audit": "pm7-terminal-options-audit-sol final NOTES.md 60827c18...; all ten diagnostics covered on this branch",
+ "proposals": "/mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md (10 canon, 2 source notes)",
+ "no_plans_canon_reseal_landing": true
+}
