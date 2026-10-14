@@ -326,7 +326,7 @@ function drop(g, z) {
     return true;
   }
   if (!z) return false;
-  var chipRect = g.chip ? g.chip.getBoundingClientRect() : null;
+  var chipRect = g.releaseChipRect || (g.chip ? g.chip.getBoundingClientRect() : null);
   clearGap(g, false);
   finishStrip(g);
   // the source panel goes back to the tab it showed before the grab; model.moveTab would otherwise show the carried
@@ -346,15 +346,18 @@ function drop(g, z) {
   var srcNow = model.panel(state.layout, g.origin.panelId), landedP = model.panelOf(state.layout, g.tid);
   if (g.activated && srcNow && srcNow.active && srcNow !== landedP) bus.emit('activate', { tabId: srcNow.active, panelId: srcNow.id, kind: state.layout.tabs[srcNow.active].kind, reason: 'drag' });
   if (landedP && landedP.id !== g.origin.panelId) bus.emit('activate', { tabId: g.tid, panelId: landedP.id, kind: g.rec.kind, reason: 'drag' });
-  render.now({ animate: true });
-  var landed = strip.tabEl(g.tid);
-  if (landed && chipRect && !reducedMotion()) {
-    var lr = landed.getBoundingClientRect();
-    var st = motion.settle();
-    motion.animate(landed, [{ transform: 'translate(' + (chipRect.left - lr.left) + 'px,' + (chipRect.top - lr.top) + 'px)' }, { transform: 'none' }], { dur: st.dur, easing: st.easing });
-    var host2 = landed.closest('.pmw-strip');
-    if (host2) rideShape(host2, st.dur);
-  }
+  render.now({ animate: true, centreRect: g.releaseCentreRect, afterStrips: function () {
+    // The strip's box is independent of its absolutely placed tab bodies. Read the landing and its shape together
+    // while strip layout is current, before the moved editor/terminal body invalidates layout again.
+    var landed = strip.tabEl(g.tid);
+    if (landed && chipRect && !reducedMotion()) {
+      var lr = landed.getBoundingClientRect();
+      var st = motion.settle();
+      motion.animate(landed, [{ transform: 'translate(' + (chipRect.left - lr.left) + 'px,' + (chipRect.top - lr.top) + 'px)' }, { transform: 'none' }], { dur: st.dur, easing: st.easing });
+      var host2 = landed.closest('.pmw-strip');
+      if (host2) rideShape(host2, st.dur);
+    }
+  } });
   if (g.chip) { g.chip.remove(); g.chip = null; }
   nextFrame(function () { var t = strip.tabEl(g.tid); if (t) t.focus({ preventScroll: true }); });
   return true;

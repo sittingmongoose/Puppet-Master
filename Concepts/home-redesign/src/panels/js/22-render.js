@@ -17,12 +17,13 @@ render.schedule = function (opts) {
   if (paintQueued) return;
   paintQueued = true;
   nextFrame(function () {
+    if (!paintQueued) return;   // a synchronous paint already consumed this request
     paintQueued = false;
     var anim = paintAnimate; paintAnimate = false;
     try { render.paint({ animate: anim }); } catch (err) { try { console.error('[pm-home] paint failed', err); } catch (_) {} }
   });
 };
-render.now = function (opts) { paintQueued = false; render.paint(opts || {}); };
+render.now = function (opts) { paintQueued = false; paintAnimate = false; render.paint(opts || {}); };
 
 var CENTRE_PAD = PMW.CENTRE_PAD = 6;   // the same 6 px gap between the panels and the rail, the chat and the bars
 function centreRect() {
@@ -66,10 +67,10 @@ render.paint = function (opts) {
   // retire tab instances whose tabs are gone, even while Home is hidden: a tab closed from the chat or by an agent on
   // another page must release its session and timers now (CONTRACT section 3), not when Home is next shown
   for (var tid in instances) if (!l.tabs[tid]) unmountTab(tid);
-  if (c.offsetParent === null && !c.getClientRects().length) return;   // Home not shown: paint when it is
+  if (!opts.centreRect && c.offsetParent === null && !c.getClientRects().length) return;   // Home not shown: paint when it is
   l = viewOf(l);
   var narrow = PMW.narrow && PMW.narrow.singleColumn();
-  var rects = geom.layout(l, centreRect(), {
+  var rects = geom.layout(l, opts.centreRect || centreRect(), {
     maximized: narrow ? null : l.view.maximized,
     narrow: narrow,
     narrowFocus: l.view.focus
@@ -90,7 +91,7 @@ render.paint = function (opts) {
   setAttr(c, 'data-pmw-dv', dv ? 'on' : null);
 
   // panels
-  var alive = {};
+  var alive = {}, panels = [];
   model.panels(l).forEach(function (p) {
     alive[p.id] = true;
     var el = panelEls[p.id] || createPanelEl(p);
@@ -106,9 +107,7 @@ render.paint = function (opts) {
     el.setAttribute('aria-label', panelLabel(l, p));
     if (r) placeEl(el, r, animate);
     setAttr(el, 'data-dv-leaving', dv && dv.leaving && dv.leaving[p.id] ? true : null);
-    PMW.strip.render(el, p, l, { narrow: narrow, rects: shown });
-    syncBodies(el, p, l, hidden);
-    PMW.renderEmpty(el, p);
+    panels.push({ panel: p, el: el, hidden: hidden });
   });
   for (var id in panelEls) {
     if (!alive[id]) { var gone = panelEls[id]; delete panelEls[id]; retirePanelEl(gone, animate); }
@@ -129,6 +128,15 @@ render.paint = function (opts) {
     updateDividerAria(el, d, l);
   });
   for (var k in dividerEls) if (!seen[k]) { dividerEls[k].remove(); delete dividerEls[k]; }
+
+  // Place all panels and dividers before any strip reads layout. Fit every strip before updating tab bodies: a
+  // reparented editor or terminal otherwise makes the following strip pay for a full layout of the changed body.
+  var strips = panels.map(function (p) { return PMW.strip.prepare(p.el, p.panel, l, { narrow: narrow, rects: shown }); });
+  strips.forEach(function (s) { s.measure(); });
+  strips.forEach(function (s) { s.place(); });
+  strips.forEach(function (s) { s.finish(); });
+  if (opts.afterStrips) opts.afterStrips();
+  panels.forEach(function (p) { syncBodies(p.el, p.panel, l, p.hidden); PMW.renderEmpty(p.el, p.panel); });
 
   if (dv && PMW.dropView) PMW.dropView.place(shown, animate);
   if (animate) {
@@ -282,17 +290,23 @@ var bodyObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(fun
   }
 }) : null;
 function observeBody(entry) { if (bodyObserver) bodyObserver.observe(entry.host); }
-var resizePending = {}, resizeQueued = false;
+var resizePending = {}, resizeQueued = false, resizeAll = false;
 function queueResize(tid) {
-  resizePending[tid] = true;
+  if (tid) resizePending[tid] = true;
   if (resizeQueued) return;
   resizeQueued = true;
-  nextFrame(function () { resizeQueued = false; flushResizes(false); });
+  nextFrame(function () {
+    resizeQueued = false;
+    var all = resizeAll; resizeAll = false;
+    flushResizes(all);
+  });
 }
+render.flushResizesSoon = function () { resizeAll = true; queueResize(); };
 function flushResizes(forceFinal) {
   var ids = forceFinal ? Object.keys(instances) : Object.keys(resizePending);
   resizePending = {};
   var final = !state.moving && !state.dragging && !state.resizing;
+  var sized = [];
   for (var i = 0; i < ids.length; i++) {
     var e = instances[ids[i]];
     if (!e || !e.visible || !e.instance || !e.instance.onResize) continue;
@@ -301,8 +315,12 @@ function flushResizes(forceFinal) {
     var key = w + 'x' + hh + (final ? 'f' : '');
     if (e.size === key) continue;
     e.size = key;
-    try { e.instance.onResize({ w: w, h: hh, final: final }); } catch (err) { try { console.error('[pm-home] onResize failed', err); } catch (_) {} }
+    sized.push({ entry: e, size: { w: w, h: hh, final: final } });
   }
+  sized.forEach(function (s) {
+    if (instances[s.entry.id] !== s.entry || !s.entry.visible) return;
+    try { s.entry.instance.onResize(s.size); } catch (err) { try { console.error('[pm-home] onResize failed', err); } catch (_) {} }
+  });
 }
 render.flushResizes = flushResizes;
 
