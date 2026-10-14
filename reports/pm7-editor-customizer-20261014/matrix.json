@@ -1,0 +1,6647 @@
+{
+ "head": "3eefd923e7",
+ "page_sha256": "fc1e2db43b1fc37e",
+ "runs": {
+  "basic-dark/tab": true,
+  "basic-dark/app": true,
+  "basic-light/tab": true,
+  "basic-light/app": true,
+  "friendly-dark/tab": true,
+  "friendly-dark/app": true,
+  "friendly-light/tab": true,
+  "friendly-light/app": true,
+  "glass-dark/tab": true,
+  "glass-dark/app": true,
+  "glass-light/tab": true,
+  "glass-light/app": true,
+  "retro-dark/tab": true,
+  "retro-dark/app": true,
+  "retro-light/tab": true,
+  "retro-light/app": true,
+  "nier-dark/tab": true,
+  "nier-dark/app": true,
+  "nier-light/tab": true,
+  "nier-light/app": true
+ },
+ "fields": 39,
+ "status_counts": {
+  "FIXED": 15,
+  "NEW": 24
+ },
+ "cases": 2420,
+ "failures": 0,
+ "open_and_set": {
+  "_open:WORKS": 20,
+  "_set:WORKS": 80
+ },
+ "settings_pass": {
+  "basic-dark": {
+   "rows": 48,
+   "works": 48,
+   "broken": [],
+   "errors": [],
+   "behave": {
+    "B": {
+     "editorTabs": 3,
+     "savedTabs": 6,
+     "allTabs": 9
+    },
+    "C": {
+     "preview": false,
+     "minTabWidth": 36,
+     "plusN": 3
+    }
+   }
+  },
+  "basic-light": {
+   "rows": 48,
+   "works": 48,
+   "broken": [],
+   "errors": [],
+   "behave": {
+    "B": {
+     "editorTabs": 3,
+     "savedTabs": 6,
+     "allTabs": 9
+    },
+    "C": {
+     "preview": false,
+     "minTabWidth": 36,
+     "plusN": 3
+    }
+   }
+  },
+  "friendly-dark": {
+   "rows": 48,
+   "works": 48,
+   "broken": [],
+   "errors": [],
+   "behave": {
+    "B": {
+     "editorTabs": 3,
+     "savedTabs": 6,
+     "allTabs": 9
+    },
+    "C": {
+     "preview": false,
+     "minTabWidth": 36,
+     "plusN": 3
+    }
+   }
+  },
+  "friendly-light": {
+   "rows": 48,
+   "works": 48,
+   "broken": [],
+   "errors": [],
+   "behave": {
+    "B": {
+     "editorTabs": 3,
+     "savedTabs": 6,
+     "allTabs": 9
+    },
+    "C": {
+     "preview": false,
+     "minTabWidth": 36,
+     "plusN": 3
+    }
+   }
+  },
+  "glass-dark": {
+   "rows": 48,
+   "works": 48,
+   "broken": [],
+   "errors": [],
+   "behave": {
+    "B": {
+     "editorTabs": 3,
+     "savedTabs": 6,
+     "allTabs": 9
+    },
+    "C": {
+     "preview": false,
+     "minTabWidth": 36,
+     "plusN": 3
+    }
+   }
+  },
+  "glass-light": {
+   "rows": 48,
+   "works": 48,
+   "broken": [],
+   "errors": [],
+   "behave": {
+    "B": {
+     "editorTabs": 3,
+     "savedTabs": 6,
+     "allTabs": 9
+    },
+    "C": {
+     "preview": false,
+     "minTabWidth": 36,
+     "plusN": 3
+    }
+   }
+  },
+  "retro-dark": {
+   "rows": 48,
+   "works": 48,
+   "broken": [],
+   "errors": [],
+   "behave": {
+    "B": {
+     "editorTabs": 3,
+     "savedTabs": 6,
+     "allTabs": 9
+    },
+    "C": {
+     "preview": false,
+     "minTabWidth": 36,
+     "plusN": 3
+    }
+   }
+  },
+  "retro-light": {
+   "rows": 48,
+   "works": 48,
+   "broken": [],
+   "errors": [],
+   "behave": {
+    "B": {
+     "editorTabs": 3,
+     "savedTabs": 6,
+     "allTabs": 9
+    },
+    "C": {
+     "preview": false,
+     "minTabWidth": 36,
+     "plusN": 3
+    }
+   }
+  },
+  "nier-dark": {
+   "rows": 48,
+   "works": 48,
+   "broken": [],
+   "errors": [],
+   "behave": {
+    "B": {
+     "editorTabs": 3,
+     "savedTabs": 6,
+     "allTabs": 9
+    },
+    "C": {
+     "preview": false,
+     "minTabWidth": 36,
+     "plusN": 3
+    }
+   }
+  },
+  "nier-light": {
+   "rows": 48,
+   "works": 48,
+   "broken": [],
+   "errors": [],
+   "behave": {
+    "B": {
+     "editorTabs": 3,
+     "savedTabs": 6,
+     "allTabs": 9
+    },
+    "C": {
+     "preview": false,
+     "minTabWidth": 36,
+     "plusN": 3
+    }
+   }
+  }
+ },
+ "journeys": {
+  "keyboard": {
+   "menuItem": "Appearance...Follow look · JetBrains Mon",
+   "opened": {
+    "open": true,
+    "scope": "tab",
+    "focusInside": true,
+    "focus": "This editor"
+   },
+   "tabTrap": {
+    "stops": 52,
+    "leftDialog": 0
+   },
+   "arrows": {
+    "before": "follow",
+    "after": {
+     "field": "line",
+     "focused": "line",
+     "checked": "true"
+    },
+    "back": "follow"
+   },
+   "closed": {
+    "open": false
+   },
+   "focusAfterClose": {
+    "inEditor": true,
+    "what": "pmw-hbtn"
+   },
+   "ok": true
+  },
+  "persist-set": {
+   "set": {
+    "scheme": [
+     "dracula",
+     "tab"
+    ],
+    "caret": [
+     "block",
+     "tab"
+    ],
+    "font": [
+     "atkinson",
+     "settings"
+    ]
+   }
+  },
+  "persist-check": {
+   "got": {
+    "scheme": [
+     "dracula",
+     "tab"
+    ],
+    "caret": [
+     "block",
+     "tab"
+    ],
+    "font": [
+     "atkinson",
+     "settings"
+    ],
+    "drawn": {
+     "scheme": "dracula",
+     "caret": "block",
+     "family": "\"Atkinson Hyperlegible Mono\", \"J"
+    },
+    "row": "Atkinson Hyperlegible Mono",
+    "other": null
+   },
+   "otherEditor": {
+    "scheme": "look",
+    "font": [
+     "atkinson",
+     "settings"
+    ]
+   },
+   "ok": true
+  },
+  "settings-entry": {
+   "buttonText": "Open Customize",
+   "state": {
+    "open": true,
+    "scope": "app",
+    "focusInside": true,
+    "focus": "All editors"
+   },
+   "home": true,
+   "ok": true
+  },
+  "narrow": {
+   "sizes": [
+    {
+     "w": 1280,
+     "h": 800,
+     "dialog": [
+      180,
+      48,
+      920,
+      722
+     ],
+     "inView": true,
+     "pageHScroll": false,
+     "dialogHScroll": false,
+     "overflowing": [],
+     "preview": [
+      640,
+      308
+     ],
+     "docked": false
+    },
+    {
+     "w": 1024,
+     "h": 768,
+     "dialog": [
+      52,
+      46,
+      920,
+      692
+     ],
+     "inView": true,
+     "pageHScroll": false,
+     "dialogHScroll": false,
+     "overflowing": [],
+     "preview": [
+      640,
+      308
+     ],
+     "docked": false
+    },
+    {
+     "w": 768,
+     "h": 1024,
+     "dialog": [
+      12,
+      56,
+      744,
+      938
+     ],
+     "inView": true,
+     "pageHScroll": false,
+     "dialogHScroll": false,
+     "overflowing": [],
+     "preview": [
+      464,
+      308
+     ],
+     "docked": false
+    },
+    {
+     "w": 480,
+     "h": 900,
+     "dialog": [
+      8,
+      8,
+      464,
+      862
+     ],
+     "inView": true,
+     "pageHScroll": false,
+     "dialogHScroll": false,
+     "overflowing": [],
+     "preview": [
+      424,
+      259
+     ],
+     "docked": false
+    },
+    {
+     "w": 360,
+     "h": 740,
+     "dialog": [
+      8,
+      8,
+      344,
+      702
+     ],
+     "inView": true,
+     "pageHScroll": false,
+     "dialogHScroll": false,
+     "overflowing": [],
+     "preview": [
+      304,
+      233
+     ],
+     "docked": false
+    }
+   ],
+   "ok": true
+  },
+  "reduced": {
+   "editor": {
+    "reduced": true,
+    "blink": "solid",
+    "motion": "instant",
+    "caretAnim": "none",
+    "trails": 0
+   },
+   "customize": {
+    "notes": [
+     "Reduce motion is on, so the caret does not blink, glide or leave a trail.",
+     "Reduce motion is on: nothing moves; still effects stay.",
+     "main.rs is indented with 4 spaces, so Tab puts in 4."
+    ],
+    "anim": 0
+   },
+   "ok": true
+  },
+  "glass": {
+   "state": {
+    "surface": "menu",
+    "attrs": [
+     "data-lg-surface=menu",
+     "data-lg-dense="
+    ],
+    "backdrop": "none",
+    "bg": "rgba(25, 17, 40, 0.98)",
+    "radius": "20px",
+    "kind": null,
+    "lgChildren": 1,
+    "lgLayers": 0,
+    "lgOn": null,
+    "previewBg": "color(srgb 0.0470588 0.0352941 0.0862745 / 0.704863)",
+    "previewBorder": "rgba(222, 205, 250, 0.25)"
+   },
+   "ok": true
+  }
+ },
+ "glass_v3_merge": {},
+ "indentation": {
+  "units": {
+   "src/main.rs": {
+    "unit": 4,
+    "tabs": false,
+    "own": 4,
+    "tabbed": false
+   },
+   "web/src/routes/+page.svelte": {
+    "unit": 2,
+    "tabs": false,
+    "own": 2,
+    "tabbed": false
+   },
+   "docker-compose.yml": {
+    "unit": 2,
+    "tabs": false,
+    "own": 2,
+    "tabbed": false
+   },
+   "migrations/0001_init.sql": {
+    "unit": 2,
+    "tabs": false,
+    "own": 2,
+    "tabbed": false
+   },
+   "README.md": {
+    "unit": 4,
+    "tabs": false,
+    "own": 0,
+    "tabbed": false
+   },
+   "Cargo.toml": {
+    "unit": 4,
+    "tabs": false,
+    "own": 0,
+    "tabbed": false
+   }
+  },
+  "keys2": {
+   "start": {
+    "r": 2,
+    "c": 0
+   },
+   "afterTab": {
+    "r": 2,
+    "c": 2
+   },
+   "afterBackspace": {
+    "r": 2,
+    "c": 0
+   }
+  },
+  "guides2": [
+   2,
+   2,
+   2,
+   2,
+   2,
+   2
+  ],
+  "off": {
+   "indent": {
+    "unit": 8,
+    "tabs": true,
+    "own": 0,
+    "tabbed": false
+   },
+   "tabMarks": 0,
+   "dots": 203
+  },
+  "tabbed": {
+   "indent": {
+    "unit": 4,
+    "tabs": true,
+    "own": 0,
+    "tabbed": true
+   },
+   "line2": null,
+   "leadAt4": [
+    "",
+    "→   ",
+    "→   →   ",
+    "→   "
+   ],
+   "indentAt2": {
+    "unit": 2,
+    "tabs": true,
+    "own": 0,
+    "tabbed": true
+   },
+   "leadAt2": [
+    "",
+    "→ ",
+    "→ → ",
+    "→ "
+   ],
+   "fresh": {
+    "unit": 4,
+    "tabs": true,
+    "own": 0,
+    "tabbed": false
+   }
+  },
+  "freshAfter": {
+   "indent": {
+    "unit": 4,
+    "tabs": true,
+    "own": 0,
+    "tabbed": true
+   },
+   "rows": [
+    "one",
+    "two",
+    "→   x"
+   ]
+  },
+  "menuRow": "Indentation...2 spaces · from the file",
+  "customize": {
+   "open": true,
+   "inView": true,
+   "note": "docker-compose.yml is indented with 2 spaces, so Tab puts in 2.",
+   "tab": "2:false 4:true 8:false",
+   "detect": "true",
+   "focus": "Indentation"
+  },
+  "ok": true
+ },
+ "audit_defects": {
+  "switchFocus": {
+   "before": "false",
+   "afterSpace": {
+    "tag": "BUTTON",
+    "action": "toggle-setting",
+    "row": "setting-code.editing.ligatures",
+    "checked": "true",
+    "visible": true
+   },
+   "afterSecondSpace": {
+    "tag": "BUTTON",
+    "row": "setting-code.editing.ligatures",
+    "checked": "false"
+   },
+   "ok": true
+  },
+  "goto": {
+   "500": {
+    "at200": true,
+    "at1500": false,
+    "field": 500
+   },
+   "10000": {
+    "at200": true,
+    "at6500": true,
+    "at10800": false,
+    "field": 10000
+   },
+   "ok": true
+  },
+  "autosave": {
+   "After 500 ms": {
+    "typed": true,
+    "after1500": false,
+    "afterLeaving": false
+   },
+   "After 1 second": {
+    "typed": true,
+    "after1500": false,
+    "afterLeaving": false
+   },
+   "On focus change": {
+    "typed": true,
+    "after1500": true,
+    "afterLeaving": false
+   },
+   "Off": {
+    "typed": true,
+    "after1500": true,
+    "afterLeaving": true
+   },
+   "ok": true
+  },
+  "flagsBefore": [
+   "prettier.onSave=true",
+   "prettier.onPaste=false",
+   "prettier.changedLines=false"
+  ],
+  "flagsFlipped": [
+   "prettier.onSave=false",
+   "prettier.onPaste=true",
+   "prettier.changedLines=true"
+  ],
+  "flagsAfterReload": [
+   "prettier.onSave=false",
+   "prettier.onPaste=true",
+   "prettier.changedLines=true"
+  ],
+  "flagsOk": true
+ },
+ "films": [
+  {
+   "film": "1-menu.mp4 (45.8 s)",
+   "looks": "Friendly dark",
+   "gpu": "P1000, Chrome, 1080p60 H.264, 60.0 distinct-frame rate decoded",
+   "notes": "More, Appearance...; the entrance draws 10 changing frames of 10 (19.15-19.30 s); hovering four schemes previews each at once on the preview and the editor, with no sweep; keeping Catppuccin Mocha sweeps (Friendly's bloom with the compositor fade) with no frozen frame (27.88-27.98 s); Block caret, Glow trail, Move the caret, Show structure, Done; two jumps with the trail. Take 1 found a blank-plate stall and a skipped entrance; take 2 found the sweep frozen four frames; both are fixed in 8f47cc7868 and 36da4c5329"
+  },
+  {
+   "film": "2-settings.mp4 (38.7 s)",
+   "looks": "Basic light",
+   "gpu": "P1000, 1080p60 H.264",
+   "notes": "Settings, Editor & Terminal, the Editor look group's Open Customize: Home with the screen on All editors; Text: Atkinson Hyperlegible Mono; quick set Easy reading; Done; the editor keeps the new face and spacing"
+  },
+  {
+   "film": "3-looks.mp4 (58.5 s)",
+   "looks": "Retro dark, Glass light, Friendly light, Glass dark, NieR dark",
+   "gpu": "P1000, 1080p60 H.264",
+   "notes": "the same screen in five looks, each drawing it in its own grammar; NieR's own boot (about 3 s) is NieR Mode's, left in"
+  },
+  {
+   "film": "4-motion.mp4 (34.0 s)",
+   "looks": "Friendly dark",
+   "gpu": "P1000, 1080p60 H.264",
+   "notes": "gliding caret on arrow keys; typing lands at once; Go to line 30 with the trail (20 of 21 frames change); four wheel notches down and four up, each glide 11 to 15 changing frames with 0 to 4 repeated frames on the P1000; README and Cargo.toml open with their lines arriving (every frame moves, done in about 120 ms)"
+  },
+  {
+   "film": "5-reduced-motion.mp4 (34.1 s)",
+   "looks": "Friendly dark, Reduce motion",
+   "gpu": "P1000, 1080p60 H.264",
+   "notes": "the same actions under Reduce motion: a solid caret, no glide, no trail, scrolling lands at once, files open at once"
+  }
+ ],
+ "matrix": [
+  {
+   "field": "scheme",
+   "label": "Code colours",
+   "settings_row": "code.editing.color-scheme",
+   "before": "Home popover painted it; Settings saved a name the editor never read (audit item 1)",
+   "now": "One model: Settings, All editors and This editor; the shared catalog by id; hover previews on both editors",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 80
+   }
+  },
+  {
+   "field": "schemePair",
+   "label": "Switch with light and dark",
+   "settings_row": "code.editing.scheme-pair",
+   "before": "not in the editor before this branch",
+   "now": "A picked scheme swaps for its family's other version with the app",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "syntax",
+   "label": "Colour code by meaning",
+   "settings_row": "code.editing.syntax-highlighting",
+   "before": "Settings saved it; tokens were always coloured (audit item 4)",
+   "now": "Off draws plain text",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "bracketPairs",
+   "label": "Bracket pair colours",
+   "settings_row": "code.editing.bracket-pair-colors",
+   "before": "not in the editor before this branch",
+   "now": "Six depth colours from the scheme, at the contrast floor; an unmatched bracket in the error colour",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "contrast",
+   "label": "Text contrast",
+   "settings_row": "code.editing.min-contrast",
+   "before": "not in the editor before this branch",
+   "now": "7:1 lifts dim tokens, hue kept",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "italicComments",
+   "label": "Comments in italics",
+   "settings_row": "code.editing.italic-comments",
+   "before": "not in the editor before this branch",
+   "now": "Follow look, On, Off",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "boldKeywords",
+   "label": "Keywords in bold",
+   "settings_row": "code.editing.bold-keywords",
+   "before": "not in the editor before this branch",
+   "now": "Follow look, On, Off",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "font",
+   "label": "Face",
+   "settings_row": "code.editing.font-family",
+   "before": "Four of eight popover faces drew JetBrains Mono; Settings separate (audit item 2)",
+   "now": "Canon's three faces, each drawn; a stored family name or terminal id still reads",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "fontSize",
+   "label": "Size",
+   "settings_row": "code.editing.font-size",
+   "before": "Popover 8-32, renderer clamped 10-22; Settings ignored (audit item 3)",
+   "now": "10-24 px in half pixels everywhere: Settings bounds, model and renderer agree",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "fontWeight",
+   "label": "Weight",
+   "settings_row": "code.editing.font-weight",
+   "before": "not in the editor before this branch",
+   "now": "Each face's drawn range (JetBrains Mono 400-800, Atkinson 200-800, system 400-700)",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "lineHeight",
+   "label": "Line spacing",
+   "settings_row": "code.editing.line-height",
+   "before": "Settings saved it; the editor ignored it (audit item 1)",
+   "now": "Settings binds; 1.2-2",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "letterSpacing",
+   "label": "Letter spacing",
+   "settings_row": "code.editing.letter-spacing",
+   "before": "not in the editor before this branch",
+   "now": "-0.5 to 2 px",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "ligatures",
+   "label": "Ligatures",
+   "settings_row": "code.editing.ligatures",
+   "before": "not in the editor before this branch (disabled in CSS)",
+   "now": "JetBrains Mono joins -> and !=; faces without ligatures say so",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "caretShape",
+   "label": "Caret shape",
+   "settings_row": "code.editing.cursor-shape",
+   "before": "not in the editor before this branch",
+   "now": "Follow look, Line, Block, Underline",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 80
+   }
+  },
+  {
+   "field": "caretWidth",
+   "label": "Caret width",
+   "settings_row": "code.editing.cursor-width",
+   "before": "not in the editor before this branch",
+   "now": "1-4 px for the line caret",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "caretBlink",
+   "label": "Blink",
+   "settings_row": "code.editing.cursor-blink",
+   "before": "not in the editor before this branch (canon fixed 1.06 s)",
+   "now": "Follow look, Blink, Smooth, Expand, Solid",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 100
+   }
+  },
+  {
+   "field": "caretMotion",
+   "label": "Caret movement",
+   "settings_row": "code.editing.cursor-motion",
+   "before": "not in the editor before this branch",
+   "now": "Instant, Snappy 80 ms, Gliding 150 ms; typing never waits",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 80
+   }
+  },
+  {
+   "field": "caretTrail",
+   "label": "Trail",
+   "settings_row": "code.editing.cursor-trail",
+   "before": "not in the editor before this branch",
+   "now": "A trail on jumps the person did not point at; NieR's Trace with the Scan sweep part",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 6,
+     "verdicts": {
+      "WORKS": 6
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 120
+   }
+  },
+  {
+   "field": "lineNumberMode",
+   "label": "Line numbers",
+   "settings_row": "code.editing.line-numbers",
+   "before": "Settings saved it; numbers always drawn (audit item 4)",
+   "now": "On, Off, and counting from the caret (relative-line-numbers)",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "lineHighlight",
+   "label": "Current line",
+   "settings_row": "code.editing.line-highlight",
+   "before": "not in the editor before this branch",
+   "now": "Line and number, Line only, Number only, Off",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 100
+   }
+  },
+  {
+   "field": "indentGuides",
+   "label": "Indent guides",
+   "settings_row": "code.editing.indent-guides",
+   "before": "not in the editor before this branch",
+   "now": "Lines or Rainbow, at the file's own indent unit",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "activeIndent",
+   "label": "Light the block I'm in",
+   "settings_row": "code.editing.indent-guides-active",
+   "before": "not in the editor before this branch",
+   "now": "The guide of the caret's block lit",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "whitespace",
+   "label": "Show spaces",
+   "settings_row": "code.editing.render-whitespace",
+   "before": "not in the editor before this branch",
+   "now": "Between words, In the selection, At line ends, Everywhere; tabs as an arrow",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 5,
+     "verdicts": {
+      "WORKS": 5
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 100
+   }
+  },
+  {
+   "field": "rulers",
+   "label": "Rulers",
+   "settings_row": "code.editing.rulers",
+   "before": "not in the editor before this branch",
+   "now": "80, 100, 120, 80 and 120",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "wordWrap",
+   "label": "Wrap long lines",
+   "settings_row": "code.editing.word-wrap",
+   "before": "Registered, no renderer: a 777 px line overflowed a 489 px view (audit item 4)",
+   "now": "Wraps at word breaks with the line's indent; Up/Down by visual rows",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "wrapColumn",
+   "label": "Wrap at",
+   "settings_row": "code.editing.wrap-column",
+   "before": "not in the editor before this branch",
+   "now": "Window edge, 80, 100, 120 (bounded by the edge)",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "minimap",
+   "label": "Minimap scrollbar",
+   "settings_row": "code.editing.minimap",
+   "before": "Home toggle only; Settings separate (audit item 1)",
+   "now": "Settings binds; off keeps the marks-only scrollbar",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "stickyScroll",
+   "label": "Sticky scroll",
+   "settings_row": "code.editing.sticky-scroll",
+   "before": "Home toggle only; Settings separate (audit item 1)",
+   "now": "Settings binds",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "stickyLines",
+   "label": "Sticky lines",
+   "settings_row": "code.editing.sticky-scroll-lines",
+   "before": "Not exposed (F3-639 gives 1-5)",
+   "now": "1-5",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "smoothScroll",
+   "label": "Smooth scrolling",
+   "settings_row": "code.editing.smooth-scroll",
+   "before": "not in the editor before this branch",
+   "now": "Wheel notches, pages and jumps glide on the clock; a scroll from elsewhere wins",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "reveal",
+   "label": "Lines arrive when a file opens",
+   "settings_row": "code.editing.reveal-lines",
+   "before": "Cut short, or never shown on a new tab, by the first resize",
+   "now": "Runs its course across redraws; off draws at once",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "scrollPastEnd",
+   "label": "Scroll past the last line",
+   "settings_row": "code.editing.scroll-past-end",
+   "before": "not in the editor before this branch",
+   "now": "A few lines, Half a page, A full page",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "inactiveDim",
+   "label": "Fade editors I'm not in",
+   "settings_row": "code.editing.dim-unfocused",
+   "before": "not in the editor before this branch",
+   "now": "Through real focus",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "scanlines",
+   "label": "Scanlines",
+   "settings_row": "code.editing.scanlines",
+   "before": "not in the editor before this branch",
+   "now": "A still effect; stays under Reduced Motion",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "glow",
+   "label": "Text glow",
+   "settings_row": "code.editing.text-glow",
+   "before": "not in the editor before this branch",
+   "now": "A still effect",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    }
+   },
+   "status": "NEW",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "diffLayout",
+   "label": "Diff layout",
+   "settings_row": "code.editing.diff-layout",
+   "before": "Per-tab worked; Settings ignored (audit item 1)",
+   "now": "Settings binds; the per-tab pick still wins",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 3,
+     "verdicts": {
+      "WORKS": 3
+     },
+     "failures": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 60
+   }
+  },
+  {
+   "field": "diagnostics",
+   "label": "Problems to highlight",
+   "settings_row": "code.editing.diagnostics-visibility",
+   "before": "Settings saved it; nothing drawn",
+   "now": "Wavy lines from the Problems list, a card after Hover Tip Delay, minimap marks",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 80
+   }
+  },
+  {
+   "field": "gotoHighlightMs",
+   "label": "A jumped-to line stays lit",
+   "settings_row": "code.editing.goto-highlight-ms",
+   "before": "Fixed 5 s: 500 still lit at 1.5 s, 10000 gone at 6.5 s (audit item 5)",
+   "now": "The row's time, 0.5-10 s",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 2,
+     "verdicts": {
+      "WORKS": 2
+     },
+     "failures": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 40
+   }
+  },
+  {
+   "field": "autosave",
+   "label": "Save automatically",
+   "settings_row": "code.editing.autosave",
+   "before": "The three automatic modes left the file unsaved (audit item 6)",
+   "now": "After 0.5 s, After 1 s, On focus change; never an untitled or read-only buffer",
+   "cells": {
+    "basic-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "basic-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "basic-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "basic-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "friendly-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "glass-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "retro-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-dark/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-dark/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-light/tab": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    },
+    "nier-light/app": {
+     "cases": 4,
+     "verdicts": {
+      "WORKS": 4
+     },
+     "failures": []
+    }
+   },
+   "status": "FIXED",
+   "totals": {
+    "WORKS": 80
+   }
+  }
+ ]
+}

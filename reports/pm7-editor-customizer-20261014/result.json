@@ -1,0 +1,104 @@
+{
+ "thread": "pm7-editor-customizer",
+ "branch": "concept/pm7-editor-customizer-20261014",
+ "base": "b94e6183b1 (origin/main after the terminal customizer landed)",
+ "source_head": "36da4c5329",
+ "branch_head_with_pages": "3eefd923e7 (this report is committed after it)",
+ "landed": false,
+ "published_page_sha256": "fc1e2db43b1fc37e6ce5556604f561a1d96fb84380f8e261d421755491fd10f7",
+ "generated_pages_sha256": {
+  "PMConcept7.html": "fc1e2db43b1fc37e6ce5556604f561a1d96fb84380f8e261d421755491fd10f7",
+  "HomeTestPMConcept7.html": "fc1e2db43b1fc37e6ce5556604f561a1d96fb84380f8e261d421755491fd10f7",
+  "LeftRailPMConcept7.html": "0de286f020bffb7014cc255b1bb32015eaec788c8253ad783b2e2af4a95a51fc",
+  "Onboarding concepts/TestOpus5.5PmConcept.html": "fc1e2db43b1fc37e6ce5556604f561a1d96fb84380f8e261d421755491fd10f7"
+ },
+ "generators": [
+  "Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7",
+  "Concepts/home-redesign/tools/build_home.py",
+  "Concepts/leftrail-redesign/tools/build_rail.py"
+ ],
+ "generator_checks": "all three --check pass",
+ "evidence": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-editor-customizer-20261014/",
+ "share": "/mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/",
+ "matrix": {
+  "options": 39,
+  "runs": 20,
+  "cases": 2420,
+  "status_counts": {
+   "FIXED": 15,
+   "NEW": 24
+  },
+  "failures": 0
+ },
+ "settings_ui_pass": {
+  "basic-dark": {
+   "WORKS": 48,
+   "rows": 48
+  },
+  "basic-light": {
+   "WORKS": 48,
+   "rows": 48
+  },
+  "friendly-dark": {
+   "WORKS": 48,
+   "rows": 48
+  },
+  "friendly-light": {
+   "WORKS": 48,
+   "rows": 48
+  },
+  "glass-dark": {
+   "WORKS": 48,
+   "rows": 48
+  },
+  "glass-light": {
+   "WORKS": 48,
+   "rows": 48
+  },
+  "retro-dark": {
+   "WORKS": 48,
+   "rows": 48
+  },
+  "retro-light": {
+   "WORKS": 48,
+   "rows": 48
+  },
+  "nier-dark": {
+   "WORKS": 48,
+   "rows": 48
+  },
+  "nier-light": {
+   "WORKS": 48,
+   "rows": 48
+  }
+ },
+ "journeys": {
+  "keyboard": true,
+  "persist-check": true,
+  "settings-entry": true,
+  "narrow": true,
+  "reduced": true,
+  "glass": true
+ },
+ "indentation_probe": true,
+ "audit_defects": {
+  "switch_focus": true,
+  "goto_highlight": true,
+  "autosave_real_typing": true,
+  "formatter_flags_reload": true,
+  "tab_caps_on_load": "15 saved, caps 2/4, loaded 4 (2 editors)"
+ },
+ "scheme_click_script_ms_nas1": {
+  "before": "387-463",
+  "after": "14-21"
+ },
+ "films": {
+  "host": "P1000 (ubuntuserver), 1080p60 H.264",
+  "count": 5,
+  "reviewed": "frame by frame (segments.py, 60 fps sheets)",
+  "limit": "wheel glides drop 0-4 of 11-15 frames on the P1000"
+ },
+ "proposed_rows": 30,
+ "plans_edited": false,
+ "liquid_glass": "data-lg-surface=menu + data-lg-dense; GPU frames approved by pm7-liquid-glass (1014044501)"
+}

@@ -1,0 +1,781 @@
+field	label	settings_row	look	scope	cases	works	fails	failures
+scheme	Code colours	code.editing.color-scheme	basic-dark	tab	4	4	0	
+scheme	Code colours	code.editing.color-scheme	basic-dark	app	4	4	0	
+scheme	Code colours	code.editing.color-scheme	basic-light	tab	4	4	0	
+scheme	Code colours	code.editing.color-scheme	basic-light	app	4	4	0	
+scheme	Code colours	code.editing.color-scheme	friendly-dark	tab	4	4	0	
+scheme	Code colours	code.editing.color-scheme	friendly-dark	app	4	4	0	
+scheme	Code colours	code.editing.color-scheme	friendly-light	tab	4	4	0	
+scheme	Code colours	code.editing.color-scheme	friendly-light	app	4	4	0	
+scheme	Code colours	code.editing.color-scheme	glass-dark	tab	4	4	0	
+scheme	Code colours	code.editing.color-scheme	glass-dark	app	4	4	0	
+scheme	Code colours	code.editing.color-scheme	glass-light	tab	4	4	0	
+scheme	Code colours	code.editing.color-scheme	glass-light	app	4	4	0	
+scheme	Code colours	code.editing.color-scheme	retro-dark	tab	4	4	0	
+scheme	Code colours	code.editing.color-scheme	retro-dark	app	4	4	0	
+scheme	Code colours	code.editing.color-scheme	retro-light	tab	4	4	0	
+scheme	Code colours	code.editing.color-scheme	retro-light	app	4	4	0	
+scheme	Code colours	code.editing.color-scheme	nier-dark	tab	4	4	0	
+scheme	Code colours	code.editing.color-scheme	nier-dark	app	4	4	0	
+scheme	Code colours	code.editing.color-scheme	nier-light	tab	4	4	0	
+scheme	Code colours	code.editing.color-scheme	nier-light	app	4	4	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	basic-dark	tab	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	basic-dark	app	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	basic-light	tab	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	basic-light	app	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	friendly-dark	tab	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	friendly-dark	app	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	friendly-light	tab	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	friendly-light	app	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	glass-dark	tab	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	glass-dark	app	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	glass-light	tab	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	glass-light	app	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	retro-dark	tab	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	retro-dark	app	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	retro-light	tab	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	retro-light	app	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	nier-dark	tab	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	nier-dark	app	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	nier-light	tab	2	2	0	
+schemePair	Switch with light and dark	code.editing.scheme-pair	nier-light	app	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	basic-dark	tab	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	basic-dark	app	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	basic-light	tab	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	basic-light	app	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	friendly-dark	tab	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	friendly-dark	app	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	friendly-light	tab	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	friendly-light	app	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	glass-dark	tab	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	glass-dark	app	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	glass-light	tab	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	glass-light	app	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	retro-dark	tab	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	retro-dark	app	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	retro-light	tab	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	retro-light	app	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	nier-dark	tab	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	nier-dark	app	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	nier-light	tab	2	2	0	
+syntax	Colour code by meaning	code.editing.syntax-highlighting	nier-light	app	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	basic-dark	tab	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	basic-dark	app	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	basic-light	tab	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	basic-light	app	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	friendly-dark	tab	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	friendly-dark	app	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	friendly-light	tab	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	friendly-light	app	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	glass-dark	tab	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	glass-dark	app	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	glass-light	tab	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	glass-light	app	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	retro-dark	tab	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	retro-dark	app	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	retro-light	tab	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	retro-light	app	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	nier-dark	tab	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	nier-dark	app	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	nier-light	tab	2	2	0	
+bracketPairs	Bracket pair colours	code.editing.bracket-pair-colors	nier-light	app	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	basic-dark	tab	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	basic-dark	app	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	basic-light	tab	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	basic-light	app	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	friendly-dark	tab	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	friendly-dark	app	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	friendly-light	tab	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	friendly-light	app	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	glass-dark	tab	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	glass-dark	app	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	glass-light	tab	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	glass-light	app	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	retro-dark	tab	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	retro-dark	app	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	retro-light	tab	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	retro-light	app	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	nier-dark	tab	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	nier-dark	app	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	nier-light	tab	2	2	0	
+contrast	Text contrast	code.editing.min-contrast	nier-light	app	2	2	0	
+italicComments	Comments in italics	code.editing.italic-comments	basic-dark	tab	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	basic-dark	app	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	basic-light	tab	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	basic-light	app	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	friendly-dark	tab	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	friendly-dark	app	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	friendly-light	tab	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	friendly-light	app	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	glass-dark	tab	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	glass-dark	app	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	glass-light	tab	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	glass-light	app	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	retro-dark	tab	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	retro-dark	app	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	retro-light	tab	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	retro-light	app	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	nier-dark	tab	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	nier-dark	app	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	nier-light	tab	3	3	0	
+italicComments	Comments in italics	code.editing.italic-comments	nier-light	app	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	basic-dark	tab	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	basic-dark	app	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	basic-light	tab	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	basic-light	app	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	friendly-dark	tab	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	friendly-dark	app	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	friendly-light	tab	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	friendly-light	app	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	glass-dark	tab	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	glass-dark	app	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	glass-light	tab	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	glass-light	app	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	retro-dark	tab	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	retro-dark	app	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	retro-light	tab	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	retro-light	app	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	nier-dark	tab	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	nier-dark	app	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	nier-light	tab	3	3	0	
+boldKeywords	Keywords in bold	code.editing.bold-keywords	nier-light	app	3	3	0	
+font	Face	code.editing.font-family	basic-dark	tab	3	3	0	
+font	Face	code.editing.font-family	basic-dark	app	3	3	0	
+font	Face	code.editing.font-family	basic-light	tab	3	3	0	
+font	Face	code.editing.font-family	basic-light	app	3	3	0	
+font	Face	code.editing.font-family	friendly-dark	tab	3	3	0	
+font	Face	code.editing.font-family	friendly-dark	app	3	3	0	
+font	Face	code.editing.font-family	friendly-light	tab	3	3	0	
+font	Face	code.editing.font-family	friendly-light	app	3	3	0	
+font	Face	code.editing.font-family	glass-dark	tab	3	3	0	
+font	Face	code.editing.font-family	glass-dark	app	3	3	0	
+font	Face	code.editing.font-family	glass-light	tab	3	3	0	
+font	Face	code.editing.font-family	glass-light	app	3	3	0	
+font	Face	code.editing.font-family	retro-dark	tab	3	3	0	
+font	Face	code.editing.font-family	retro-dark	app	3	3	0	
+font	Face	code.editing.font-family	retro-light	tab	3	3	0	
+font	Face	code.editing.font-family	retro-light	app	3	3	0	
+font	Face	code.editing.font-family	nier-dark	tab	3	3	0	
+font	Face	code.editing.font-family	nier-dark	app	3	3	0	
+font	Face	code.editing.font-family	nier-light	tab	3	3	0	
+font	Face	code.editing.font-family	nier-light	app	3	3	0	
+fontSize	Size	code.editing.font-size	basic-dark	tab	3	3	0	
+fontSize	Size	code.editing.font-size	basic-dark	app	3	3	0	
+fontSize	Size	code.editing.font-size	basic-light	tab	3	3	0	
+fontSize	Size	code.editing.font-size	basic-light	app	3	3	0	
+fontSize	Size	code.editing.font-size	friendly-dark	tab	3	3	0	
+fontSize	Size	code.editing.font-size	friendly-dark	app	3	3	0	
+fontSize	Size	code.editing.font-size	friendly-light	tab	3	3	0	
+fontSize	Size	code.editing.font-size	friendly-light	app	3	3	0	
+fontSize	Size	code.editing.font-size	glass-dark	tab	3	3	0	
+fontSize	Size	code.editing.font-size	glass-dark	app	3	3	0	
+fontSize	Size	code.editing.font-size	glass-light	tab	3	3	0	
+fontSize	Size	code.editing.font-size	glass-light	app	3	3	0	
+fontSize	Size	code.editing.font-size	retro-dark	tab	3	3	0	
+fontSize	Size	code.editing.font-size	retro-dark	app	3	3	0	
+fontSize	Size	code.editing.font-size	retro-light	tab	3	3	0	
+fontSize	Size	code.editing.font-size	retro-light	app	3	3	0	
+fontSize	Size	code.editing.font-size	nier-dark	tab	3	3	0	
+fontSize	Size	code.editing.font-size	nier-dark	app	3	3	0	
+fontSize	Size	code.editing.font-size	nier-light	tab	3	3	0	
+fontSize	Size	code.editing.font-size	nier-light	app	3	3	0	
+fontWeight	Weight	code.editing.font-weight	basic-dark	tab	3	3	0	
+fontWeight	Weight	code.editing.font-weight	basic-dark	app	3	3	0	
+fontWeight	Weight	code.editing.font-weight	basic-light	tab	3	3	0	
+fontWeight	Weight	code.editing.font-weight	basic-light	app	3	3	0	
+fontWeight	Weight	code.editing.font-weight	friendly-dark	tab	3	3	0	
+fontWeight	Weight	code.editing.font-weight	friendly-dark	app	3	3	0	
+fontWeight	Weight	code.editing.font-weight	friendly-light	tab	3	3	0	
+fontWeight	Weight	code.editing.font-weight	friendly-light	app	3	3	0	
+fontWeight	Weight	code.editing.font-weight	glass-dark	tab	3	3	0	
+fontWeight	Weight	code.editing.font-weight	glass-dark	app	3	3	0	
+fontWeight	Weight	code.editing.font-weight	glass-light	tab	3	3	0	
+fontWeight	Weight	code.editing.font-weight	glass-light	app	3	3	0	
+fontWeight	Weight	code.editing.font-weight	retro-dark	tab	3	3	0	
+fontWeight	Weight	code.editing.font-weight	retro-dark	app	3	3	0	
+fontWeight	Weight	code.editing.font-weight	retro-light	tab	3	3	0	
+fontWeight	Weight	code.editing.font-weight	retro-light	app	3	3	0	
+fontWeight	Weight	code.editing.font-weight	nier-dark	tab	3	3	0	
+fontWeight	Weight	code.editing.font-weight	nier-dark	app	3	3	0	
+fontWeight	Weight	code.editing.font-weight	nier-light	tab	3	3	0	
+fontWeight	Weight	code.editing.font-weight	nier-light	app	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	basic-dark	tab	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	basic-dark	app	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	basic-light	tab	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	basic-light	app	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	friendly-dark	tab	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	friendly-dark	app	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	friendly-light	tab	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	friendly-light	app	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	glass-dark	tab	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	glass-dark	app	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	glass-light	tab	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	glass-light	app	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	retro-dark	tab	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	retro-dark	app	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	retro-light	tab	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	retro-light	app	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	nier-dark	tab	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	nier-dark	app	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	nier-light	tab	3	3	0	
+lineHeight	Line spacing	code.editing.line-height	nier-light	app	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	basic-dark	tab	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	basic-dark	app	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	basic-light	tab	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	basic-light	app	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	friendly-dark	tab	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	friendly-dark	app	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	friendly-light	tab	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	friendly-light	app	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	glass-dark	tab	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	glass-dark	app	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	glass-light	tab	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	glass-light	app	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	retro-dark	tab	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	retro-dark	app	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	retro-light	tab	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	retro-light	app	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	nier-dark	tab	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	nier-dark	app	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	nier-light	tab	3	3	0	
+letterSpacing	Letter spacing	code.editing.letter-spacing	nier-light	app	3	3	0	
+ligatures	Ligatures	code.editing.ligatures	basic-dark	tab	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	basic-dark	app	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	basic-light	tab	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	basic-light	app	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	friendly-dark	tab	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	friendly-dark	app	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	friendly-light	tab	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	friendly-light	app	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	glass-dark	tab	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	glass-dark	app	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	glass-light	tab	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	glass-light	app	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	retro-dark	tab	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	retro-dark	app	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	retro-light	tab	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	retro-light	app	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	nier-dark	tab	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	nier-dark	app	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	nier-light	tab	2	2	0	
+ligatures	Ligatures	code.editing.ligatures	nier-light	app	2	2	0	
+caretShape	Caret shape	code.editing.cursor-shape	basic-dark	tab	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	basic-dark	app	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	basic-light	tab	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	basic-light	app	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	friendly-dark	tab	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	friendly-dark	app	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	friendly-light	tab	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	friendly-light	app	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	glass-dark	tab	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	glass-dark	app	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	glass-light	tab	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	glass-light	app	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	retro-dark	tab	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	retro-dark	app	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	retro-light	tab	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	retro-light	app	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	nier-dark	tab	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	nier-dark	app	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	nier-light	tab	4	4	0	
+caretShape	Caret shape	code.editing.cursor-shape	nier-light	app	4	4	0	
+caretWidth	Caret width	code.editing.cursor-width	basic-dark	tab	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	basic-dark	app	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	basic-light	tab	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	basic-light	app	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	friendly-dark	tab	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	friendly-dark	app	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	friendly-light	tab	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	friendly-light	app	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	glass-dark	tab	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	glass-dark	app	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	glass-light	tab	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	glass-light	app	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	retro-dark	tab	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	retro-dark	app	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	retro-light	tab	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	retro-light	app	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	nier-dark	tab	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	nier-dark	app	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	nier-light	tab	3	3	0	
+caretWidth	Caret width	code.editing.cursor-width	nier-light	app	3	3	0	
+caretBlink	Blink	code.editing.cursor-blink	basic-dark	tab	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	basic-dark	app	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	basic-light	tab	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	basic-light	app	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	friendly-dark	tab	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	friendly-dark	app	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	friendly-light	tab	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	friendly-light	app	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	glass-dark	tab	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	glass-dark	app	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	glass-light	tab	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	glass-light	app	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	retro-dark	tab	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	retro-dark	app	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	retro-light	tab	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	retro-light	app	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	nier-dark	tab	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	nier-dark	app	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	nier-light	tab	5	5	0	
+caretBlink	Blink	code.editing.cursor-blink	nier-light	app	5	5	0	
+caretMotion	Caret movement	code.editing.cursor-motion	basic-dark	tab	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	basic-dark	app	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	basic-light	tab	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	basic-light	app	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	friendly-dark	tab	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	friendly-dark	app	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	friendly-light	tab	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	friendly-light	app	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	glass-dark	tab	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	glass-dark	app	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	glass-light	tab	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	glass-light	app	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	retro-dark	tab	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	retro-dark	app	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	retro-light	tab	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	retro-light	app	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	nier-dark	tab	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	nier-dark	app	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	nier-light	tab	4	4	0	
+caretMotion	Caret movement	code.editing.cursor-motion	nier-light	app	4	4	0	
+caretTrail	Trail	code.editing.cursor-trail	basic-dark	tab	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	basic-dark	app	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	basic-light	tab	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	basic-light	app	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	friendly-dark	tab	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	friendly-dark	app	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	friendly-light	tab	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	friendly-light	app	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	glass-dark	tab	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	glass-dark	app	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	glass-light	tab	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	glass-light	app	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	retro-dark	tab	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	retro-dark	app	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	retro-light	tab	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	retro-light	app	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	nier-dark	tab	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	nier-dark	app	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	nier-light	tab	6	6	0	
+caretTrail	Trail	code.editing.cursor-trail	nier-light	app	6	6	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	basic-dark	tab	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	basic-dark	app	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	basic-light	tab	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	basic-light	app	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	friendly-dark	tab	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	friendly-dark	app	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	friendly-light	tab	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	friendly-light	app	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	glass-dark	tab	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	glass-dark	app	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	glass-light	tab	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	glass-light	app	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	retro-dark	tab	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	retro-dark	app	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	retro-light	tab	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	retro-light	app	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	nier-dark	tab	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	nier-dark	app	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	nier-light	tab	3	3	0	
+lineNumberMode	Line numbers	code.editing.line-numbers	nier-light	app	3	3	0	
+lineHighlight	Current line	code.editing.line-highlight	basic-dark	tab	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	basic-dark	app	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	basic-light	tab	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	basic-light	app	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	friendly-dark	tab	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	friendly-dark	app	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	friendly-light	tab	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	friendly-light	app	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	glass-dark	tab	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	glass-dark	app	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	glass-light	tab	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	glass-light	app	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	retro-dark	tab	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	retro-dark	app	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	retro-light	tab	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	retro-light	app	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	nier-dark	tab	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	nier-dark	app	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	nier-light	tab	5	5	0	
+lineHighlight	Current line	code.editing.line-highlight	nier-light	app	5	5	0	
+indentGuides	Indent guides	code.editing.indent-guides	basic-dark	tab	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	basic-dark	app	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	basic-light	tab	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	basic-light	app	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	friendly-dark	tab	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	friendly-dark	app	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	friendly-light	tab	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	friendly-light	app	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	glass-dark	tab	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	glass-dark	app	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	glass-light	tab	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	glass-light	app	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	retro-dark	tab	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	retro-dark	app	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	retro-light	tab	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	retro-light	app	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	nier-dark	tab	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	nier-dark	app	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	nier-light	tab	3	3	0	
+indentGuides	Indent guides	code.editing.indent-guides	nier-light	app	3	3	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	basic-dark	tab	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	basic-dark	app	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	basic-light	tab	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	basic-light	app	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	friendly-dark	tab	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	friendly-dark	app	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	friendly-light	tab	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	friendly-light	app	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	glass-dark	tab	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	glass-dark	app	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	glass-light	tab	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	glass-light	app	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	retro-dark	tab	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	retro-dark	app	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	retro-light	tab	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	retro-light	app	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	nier-dark	tab	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	nier-dark	app	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	nier-light	tab	2	2	0	
+activeIndent	Light the block I'm in	code.editing.indent-guides-active	nier-light	app	2	2	0	
+whitespace	Show spaces	code.editing.render-whitespace	basic-dark	tab	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	basic-dark	app	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	basic-light	tab	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	basic-light	app	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	friendly-dark	tab	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	friendly-dark	app	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	friendly-light	tab	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	friendly-light	app	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	glass-dark	tab	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	glass-dark	app	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	glass-light	tab	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	glass-light	app	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	retro-dark	tab	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	retro-dark	app	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	retro-light	tab	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	retro-light	app	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	nier-dark	tab	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	nier-dark	app	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	nier-light	tab	5	5	0	
+whitespace	Show spaces	code.editing.render-whitespace	nier-light	app	5	5	0	
+rulers	Rulers	code.editing.rulers	basic-dark	tab	3	3	0	
+rulers	Rulers	code.editing.rulers	basic-dark	app	3	3	0	
+rulers	Rulers	code.editing.rulers	basic-light	tab	3	3	0	
+rulers	Rulers	code.editing.rulers	basic-light	app	3	3	0	
+rulers	Rulers	code.editing.rulers	friendly-dark	tab	3	3	0	
+rulers	Rulers	code.editing.rulers	friendly-dark	app	3	3	0	
+rulers	Rulers	code.editing.rulers	friendly-light	tab	3	3	0	
+rulers	Rulers	code.editing.rulers	friendly-light	app	3	3	0	
+rulers	Rulers	code.editing.rulers	glass-dark	tab	3	3	0	
+rulers	Rulers	code.editing.rulers	glass-dark	app	3	3	0	
+rulers	Rulers	code.editing.rulers	glass-light	tab	3	3	0	
+rulers	Rulers	code.editing.rulers	glass-light	app	3	3	0	
+rulers	Rulers	code.editing.rulers	retro-dark	tab	3	3	0	
+rulers	Rulers	code.editing.rulers	retro-dark	app	3	3	0	
+rulers	Rulers	code.editing.rulers	retro-light	tab	3	3	0	
+rulers	Rulers	code.editing.rulers	retro-light	app	3	3	0	
+rulers	Rulers	code.editing.rulers	nier-dark	tab	3	3	0	
+rulers	Rulers	code.editing.rulers	nier-dark	app	3	3	0	
+rulers	Rulers	code.editing.rulers	nier-light	tab	3	3	0	
+rulers	Rulers	code.editing.rulers	nier-light	app	3	3	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	basic-dark	tab	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	basic-dark	app	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	basic-light	tab	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	basic-light	app	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	friendly-dark	tab	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	friendly-dark	app	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	friendly-light	tab	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	friendly-light	app	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	glass-dark	tab	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	glass-dark	app	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	glass-light	tab	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	glass-light	app	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	retro-dark	tab	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	retro-dark	app	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	retro-light	tab	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	retro-light	app	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	nier-dark	tab	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	nier-dark	app	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	nier-light	tab	2	2	0	
+wordWrap	Wrap long lines	code.editing.word-wrap	nier-light	app	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	basic-dark	tab	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	basic-dark	app	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	basic-light	tab	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	basic-light	app	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	friendly-dark	tab	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	friendly-dark	app	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	friendly-light	tab	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	friendly-light	app	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	glass-dark	tab	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	glass-dark	app	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	glass-light	tab	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	glass-light	app	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	retro-dark	tab	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	retro-dark	app	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	retro-light	tab	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	retro-light	app	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	nier-dark	tab	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	nier-dark	app	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	nier-light	tab	2	2	0	
+wrapColumn	Wrap at	code.editing.wrap-column	nier-light	app	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	basic-dark	tab	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	basic-dark	app	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	basic-light	tab	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	basic-light	app	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	friendly-dark	tab	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	friendly-dark	app	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	friendly-light	tab	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	friendly-light	app	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	glass-dark	tab	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	glass-dark	app	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	glass-light	tab	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	glass-light	app	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	retro-dark	tab	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	retro-dark	app	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	retro-light	tab	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	retro-light	app	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	nier-dark	tab	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	nier-dark	app	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	nier-light	tab	2	2	0	
+minimap	Minimap scrollbar	code.editing.minimap	nier-light	app	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	basic-dark	tab	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	basic-dark	app	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	basic-light	tab	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	basic-light	app	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	friendly-dark	tab	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	friendly-dark	app	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	friendly-light	tab	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	friendly-light	app	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	glass-dark	tab	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	glass-dark	app	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	glass-light	tab	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	glass-light	app	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	retro-dark	tab	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	retro-dark	app	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	retro-light	tab	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	retro-light	app	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	nier-dark	tab	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	nier-dark	app	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	nier-light	tab	2	2	0	
+stickyScroll	Sticky scroll	code.editing.sticky-scroll	nier-light	app	2	2	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	basic-dark	tab	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	basic-dark	app	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	basic-light	tab	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	basic-light	app	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	friendly-dark	tab	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	friendly-dark	app	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	friendly-light	tab	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	friendly-light	app	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	glass-dark	tab	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	glass-dark	app	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	glass-light	tab	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	glass-light	app	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	retro-dark	tab	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	retro-dark	app	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	retro-light	tab	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	retro-light	app	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	nier-dark	tab	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	nier-dark	app	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	nier-light	tab	3	3	0	
+stickyLines	Sticky lines	code.editing.sticky-scroll-lines	nier-light	app	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	basic-dark	tab	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	basic-dark	app	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	basic-light	tab	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	basic-light	app	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	friendly-dark	tab	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	friendly-dark	app	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	friendly-light	tab	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	friendly-light	app	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	glass-dark	tab	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	glass-dark	app	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	glass-light	tab	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	glass-light	app	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	retro-dark	tab	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	retro-dark	app	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	retro-light	tab	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	retro-light	app	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	nier-dark	tab	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	nier-dark	app	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	nier-light	tab	3	3	0	
+smoothScroll	Smooth scrolling	code.editing.smooth-scroll	nier-light	app	3	3	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	basic-dark	tab	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	basic-dark	app	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	basic-light	tab	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	basic-light	app	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	friendly-dark	tab	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	friendly-dark	app	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	friendly-light	tab	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	friendly-light	app	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	glass-dark	tab	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	glass-dark	app	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	glass-light	tab	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	glass-light	app	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	retro-dark	tab	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	retro-dark	app	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	retro-light	tab	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	retro-light	app	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	nier-dark	tab	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	nier-dark	app	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	nier-light	tab	2	2	0	
+reveal	Lines arrive when a file opens	code.editing.reveal-lines	nier-light	app	2	2	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	basic-dark	tab	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	basic-dark	app	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	basic-light	tab	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	basic-light	app	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	friendly-dark	tab	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	friendly-dark	app	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	friendly-light	tab	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	friendly-light	app	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	glass-dark	tab	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	glass-dark	app	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	glass-light	tab	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	glass-light	app	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	retro-dark	tab	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	retro-dark	app	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	retro-light	tab	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	retro-light	app	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	nier-dark	tab	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	nier-dark	app	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	nier-light	tab	3	3	0	
+scrollPastEnd	Scroll past the last line	code.editing.scroll-past-end	nier-light	app	3	3	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	basic-dark	tab	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	basic-dark	app	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	basic-light	tab	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	basic-light	app	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	friendly-dark	tab	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	friendly-dark	app	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	friendly-light	tab	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	friendly-light	app	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	glass-dark	tab	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	glass-dark	app	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	glass-light	tab	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	glass-light	app	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	retro-dark	tab	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	retro-dark	app	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	retro-light	tab	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	retro-light	app	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	nier-dark	tab	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	nier-dark	app	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	nier-light	tab	2	2	0	
+inactiveDim	Fade editors I'm not in	code.editing.dim-unfocused	nier-light	app	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	basic-dark	tab	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	basic-dark	app	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	basic-light	tab	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	basic-light	app	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	friendly-dark	tab	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	friendly-dark	app	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	friendly-light	tab	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	friendly-light	app	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	glass-dark	tab	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	glass-dark	app	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	glass-light	tab	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	glass-light	app	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	retro-dark	tab	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	retro-dark	app	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	retro-light	tab	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	retro-light	app	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	nier-dark	tab	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	nier-dark	app	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	nier-light	tab	2	2	0	
+scanlines	Scanlines	code.editing.scanlines	nier-light	app	2	2	0	
+glow	Text glow	code.editing.text-glow	basic-dark	tab	2	2	0	
+glow	Text glow	code.editing.text-glow	basic-dark	app	2	2	0	
+glow	Text glow	code.editing.text-glow	basic-light	tab	2	2	0	
+glow	Text glow	code.editing.text-glow	basic-light	app	2	2	0	
+glow	Text glow	code.editing.text-glow	friendly-dark	tab	2	2	0	
+glow	Text glow	code.editing.text-glow	friendly-dark	app	2	2	0	
+glow	Text glow	code.editing.text-glow	friendly-light	tab	2	2	0	
+glow	Text glow	code.editing.text-glow	friendly-light	app	2	2	0	
+glow	Text glow	code.editing.text-glow	glass-dark	tab	2	2	0	
+glow	Text glow	code.editing.text-glow	glass-dark	app	2	2	0	
+glow	Text glow	code.editing.text-glow	glass-light	tab	2	2	0	
+glow	Text glow	code.editing.text-glow	glass-light	app	2	2	0	
+glow	Text glow	code.editing.text-glow	retro-dark	tab	2	2	0	
+glow	Text glow	code.editing.text-glow	retro-dark	app	2	2	0	
+glow	Text glow	code.editing.text-glow	retro-light	tab	2	2	0	
+glow	Text glow	code.editing.text-glow	retro-light	app	2	2	0	
+glow	Text glow	code.editing.text-glow	nier-dark	tab	2	2	0	
+glow	Text glow	code.editing.text-glow	nier-dark	app	2	2	0	
+glow	Text glow	code.editing.text-glow	nier-light	tab	2	2	0	
+glow	Text glow	code.editing.text-glow	nier-light	app	2	2	0	
+diffLayout	Diff layout	code.editing.diff-layout	basic-dark	tab	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	basic-dark	app	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	basic-light	tab	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	basic-light	app	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	friendly-dark	tab	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	friendly-dark	app	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	friendly-light	tab	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	friendly-light	app	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	glass-dark	tab	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	glass-dark	app	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	glass-light	tab	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	glass-light	app	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	retro-dark	tab	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	retro-dark	app	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	retro-light	tab	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	retro-light	app	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	nier-dark	tab	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	nier-dark	app	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	nier-light	tab	3	3	0	
+diffLayout	Diff layout	code.editing.diff-layout	nier-light	app	3	3	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	basic-dark	tab	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	basic-dark	app	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	basic-light	tab	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	basic-light	app	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	friendly-dark	tab	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	friendly-dark	app	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	friendly-light	tab	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	friendly-light	app	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	glass-dark	tab	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	glass-dark	app	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	glass-light	tab	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	glass-light	app	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	retro-dark	tab	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	retro-dark	app	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	retro-light	tab	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	retro-light	app	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	nier-dark	tab	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	nier-dark	app	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	nier-light	tab	4	4	0	
+diagnostics	Problems to highlight	code.editing.diagnostics-visibility	nier-light	app	4	4	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	basic-dark	tab	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	basic-dark	app	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	basic-light	tab	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	basic-light	app	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	friendly-dark	tab	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	friendly-dark	app	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	friendly-light	tab	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	friendly-light	app	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	glass-dark	tab	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	glass-dark	app	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	glass-light	tab	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	glass-light	app	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	retro-dark	tab	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	retro-dark	app	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	retro-light	tab	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	retro-light	app	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	nier-dark	tab	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	nier-dark	app	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	nier-light	tab	2	2	0	
+gotoHighlightMs	A jumped-to line stays lit	code.editing.goto-highlight-ms	nier-light	app	2	2	0	
+autosave	Save automatically	code.editing.autosave	basic-dark	tab	4	4	0	
+autosave	Save automatically	code.editing.autosave	basic-dark	app	4	4	0	
+autosave	Save automatically	code.editing.autosave	basic-light	tab	4	4	0	
+autosave	Save automatically	code.editing.autosave	basic-light	app	4	4	0	
+autosave	Save automatically	code.editing.autosave	friendly-dark	tab	4	4	0	
+autosave	Save automatically	code.editing.autosave	friendly-dark	app	4	4	0	
+autosave	Save automatically	code.editing.autosave	friendly-light	tab	4	4	0	
+autosave	Save automatically	code.editing.autosave	friendly-light	app	4	4	0	
+autosave	Save automatically	code.editing.autosave	glass-dark	tab	4	4	0	
+autosave	Save automatically	code.editing.autosave	glass-dark	app	4	4	0	
+autosave	Save automatically	code.editing.autosave	glass-light	tab	4	4	0	
+autosave	Save automatically	code.editing.autosave	glass-light	app	4	4	0	
+autosave	Save automatically	code.editing.autosave	retro-dark	tab	4	4	0	
+autosave	Save automatically	code.editing.autosave	retro-dark	app	4	4	0	
+autosave	Save automatically	code.editing.autosave	retro-light	tab	4	4	0	
+autosave	Save automatically	code.editing.autosave	retro-light	app	4	4	0	
+autosave	Save automatically	code.editing.autosave	nier-dark	tab	4	4	0	
+autosave	Save automatically	code.editing.autosave	nier-dark	app	4	4	0	
+autosave	Save automatically	code.editing.autosave	nier-light	tab	4	4	0	
+autosave	Save automatically	code.editing.autosave	nier-light	app	4	4	0	
