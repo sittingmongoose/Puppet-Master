@@ -323,6 +323,20 @@
     if (frostKey === rec.key) return;
     frosts = rec.urls; frostKey = rec.key;
     Object.keys(frosts).forEach(function (name) { root.style.setProperty('--lg-frost-' + name, 'url(' + frosts[name] + ')'); });
+    releaseWallHold();
+  }
+  /* A wallpaper or mode change shows the new print at once, but the sheets' frost is encoded from it a few hundred ms
+     later (17-30 frames in pm7-wallpapers' RTX 3090 film), so the glass showed the old picture over the new one. The
+     page keeps painting the old print until the new frost is in, then both change in the same task. */
+  var wallHoldT = 0;
+  function holdWall(url) {
+    if (!url) return;
+    root.style.setProperty('--lg-wall-hold', 'url("' + url + '")'); root.setAttribute('data-lg-wall-hold', '');
+    clearTimeout(wallHoldT); wallHoldT = setTimeout(releaseWallHold, 2000);
+  }
+  function releaseWallHold() {
+    clearTimeout(wallHoldT); wallHoldT = 0;
+    if (root.hasAttribute('data-lg-wall-hold')) { root.removeAttribute('data-lg-wall-hold'); root.style.removeProperty('--lg-wall-hold'); }
   }
   function makeFrosts(im, done) {
     var c = cover(im), u = im.__lgWallUrl || wallUrl, key = u + ':' + c.vw + 'x' + c.vh, epoch = bakeEpoch;
@@ -508,6 +522,10 @@
       scrollQ = false; var boxes = Array.from(scrollBoxes); scrollBoxes.clear();
       if (!isGlass()) return;
       glassSet.forEach(function (e) { if (e.isConnected && KINDS[e.getAttribute('data-lg-kind')] && KINDS[e.getAttribute('data-lg-kind')].bake && boxes.some(function (b) { return b.contains(e); })) anchor(e); });
+      if (typeof lenses !== 'undefined') lenses.forEach(function (L) {
+        if (L.dragging || !L.strip.isConnected || !boxes.some(function (b) { return b.contains(L.strip); })) return;
+        L.snap = true; syncStrip(L.cfg, L.strip);
+      });
     }); }
     lazySync();
   }, true);
@@ -550,6 +568,12 @@
     { sel: '#pm-o55-onboarding .o55-raillist', items: '.o55-railitem', kind: 'lens', active: '[data-state="current"]', pad: 6, magRest: 1, magLift: 1,
       box: function (i) { var u = unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); return u || i; } },
     { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', active: '.o55-on', magRest: 1 },
+    /* 2026-10-13: every Glass tab indicator (Jared): the Orchestrator's views, and the terminal Customize screen's
+       choices (pm7-terminal-customizer). In-flow indicators that slide with their own content (the home panels'
+       plate, every other .pmw-ink-row) take the lens's material in glass.css instead, so they stay right through
+       scrolling, reordering and closing. mark: the strip carries data-lg-lensed, so its own fill steps aside. */
+    { sel: '.orch-tabs', items: '.orch-tab', kind: 'lens' },
+    { sel: '.pmt-cz .pmw-ink-row', items: '.pmw-ink-opt', many: true, kind: 'lens', active: ':is([aria-selected="true"], [aria-checked="true"])', magRest: 1, mark: true },
   ];
   function railIcon(strip) {
     var sp = document.getElementById('sidePanelSlot'); if (!sp || !visible(sp)) return null;
@@ -607,7 +631,18 @@
     if (L) disposeLens(L);
     var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind }), own = lensLayer(strip);
     own.appendChild(lens);
-    L = { strip: strip, lens: lens, layer: own, rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '' }; lenses.set(strip, L); return L;
+    L = { strip: strip, lens: lens, layer: own, rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '', scroller: scrollerOf(strip) }; lenses.set(strip, L);
+    if (cfg.mark && !strip.hasAttribute('data-lg-lensed')) strip.setAttribute('data-lg-lensed', '');
+    return L;
+  }
+  /* the nearest ancestor that scrolls this strip: its lens follows it at once while it scrolls, and steps out of
+     sight when its target leaves the visible part (the lens layer is not clipped by the strip's container) */
+  function scrollerOf(e) {
+    for (var a = e.parentElement; a && a !== document.body; a = a.parentElement) {
+      var cs = getComputedStyle(a);
+      if (/(auto|scroll|hidden)/.test(cs.overflowX + cs.overflowY) && (a.scrollWidth > a.clientWidth + 1 || a.scrollHeight > a.clientHeight + 1)) return a;
+    }
+    return null;
   }
   function setLensBox(L, R) {
     var s = L.lens.style, A = L.rect;
@@ -744,10 +779,17 @@
       else target = P.el;
     }
     if (!target || !visible(target) || !visible(strip)) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; return; }
+    if (L.scroller && L.scroller.isConnected) {
+      var sr = L.scroller.getBoundingClientRect(), tr = boxRect(cfg.box ? (cfg.box(target).getBoundingClientRect ? cfg.box(target) : target) : target);
+      if (tr.left < sr.left - 1 || tr.left + tr.width > sr.right + 1 || tr.top < sr.top - 1 || tr.top + tr.height > sr.bottom + 1) {
+        stopLensTravel(L); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; return;
+      }
+    }
     if (L.lens.style.opacity) L.lens.style.opacity = '';
     prewarm(L, cfg, strip);
     var R = rectIn(strip, cfg.box ? cfg.box(target) : target, cfg.pad == null ? 2 : cfg.pad), A = L.rect;
     if (L.dragging) return;
+    if (L.snap) { L.snap = false; stopLensTravel(L); setLensBox(L, R); return; }
     var quiet = reduced();
     var still = A && (quiet ? A.x === R.x && A.y === R.y && A.w === R.w && A.h === R.h : Math.abs(A.x - R.x) < 0.5 && Math.abs(A.y - R.y) < 0.5 && Math.abs(A.w - R.w) < 0.5 && Math.abs(A.h - R.h) < 0.5);
     if ((quiet && !L.reducedAnim) || !isGlass()) stopLensTravel(L);
@@ -1108,6 +1150,10 @@
     var th = root.getAttribute('data-theme'), lg = root.getAttribute('data-lg');
     var tier = root.getAttribute('data-lg-tier'), wall = root.getAttribute('data-lg-wall'), motion = root.getAttribute('data-motion');
     if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
+    /* the print is about to change under glass that stays glass: hold the one the current frost was made from */
+    var wasGlass = lastLg === 'on' && /^glass/.test(lastTheme || '');
+    if (wasGlass && isGlass() && wall !== lastWall && th === lastTheme && wallSourceUrl) holdWall(wallSourceUrl);
+    else if (!isGlass()) releaseWallHold();
     if (motion !== lastMotion && reduced() && typeof suspendLensMotion === 'function') suspendLensMotion();
     lastTier = tier; lastWall = wall; lastMotion = motion;
     if (th !== lastTheme || lg !== lastLg) {

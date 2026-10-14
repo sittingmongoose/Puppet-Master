@@ -77,6 +77,8 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) {
       and opaque shell are forced off (its pm7-architectural-glass-final block uses !important).
    --------------------------------------------------------------------------------------------------------------- */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) body { background: var(--background) var(--lg-wall) center / cover no-repeat fixed !important; }
+/* while the sheets' frost catches up with a new wallpaper, the page keeps the print that frost was made from (glass.js) */
+html[data-lg="on"][data-theme^="glass"][data-lg-wall-hold]:not(#lgz) body { background-image: var(--lg-wall-hold) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #glass-bg { display: none !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .app-shell,
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .main-area,
@@ -220,19 +222,19 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmu-livechev) { border-ra
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuRefresh { border-radius: var(--pm-ctl-r) 0 0 var(--pm-ctl-r) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuExport { border-radius: 0 var(--pm-ctl-r) var(--pm-ctl-r) 0 !important; margin-left: -5px; }
 /* the tab strips: a fill track on the sheet; the lens does the choosing */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(nav.page-tabs, #pmuRange) {
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(nav.page-tabs, #pmuRange, .orch-tabs) {
   background: var(--lg-fill) !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important; box-shadow: none !important;
   -webkit-backdrop-filter: none !important; backdrop-filter: none !important; position: relative;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.page-tab-ink, .pmu-seg-ink, .pm-segtab-ink) { opacity: 0 !important; }
 /* a drag across a strip scrubs its lens; it must not select the labels' text on the way */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(nav.page-tabs, #pmuRange, #sidePanelSlot .pm-segtab) { -webkit-user-select: none; user-select: none; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item) {
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(nav.page-tabs, #pmuRange, #sidePanelSlot .pm-segtab, .orch-tabs) { -webkit-user-select: none; user-select: none; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab) {
   background: transparent !important; box-shadow: none !important; border-radius: var(--pm-ctl-r-in) !important;
   color: var(--text-secondary) !important; position: relative; z-index: 1;
 }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item):hover { color: var(--text-primary) !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item).active { color: var(--text-primary) !important; font-weight: 600; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab):hover { color: var(--text-primary) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab).active { color: var(--text-primary) !important; font-weight: 600; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot .pm-segtab { position: relative; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot .pm-segtab > .pm-segtab-track {
   display: block; position: absolute; left: 6px; right: 6px; top: 3px; height: 34px; border-radius: var(--pm-ctl-r);
@@ -354,7 +356,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lens::after {
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead::after { opacity: .45; }
 /* the chosen label rests a little larger under its lens (glass.js keyframes the swell while the lens moves; these match
    KINDS.lens.magRest and KINDS.lensIcon.magRest) */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(nav.page-tabs .page-tab, #pmuRange > button, #sidePanelSlot .pm-segtab-item).active { scale: 1.04; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(nav.page-tabs .page-tab, #pmuRange > button, #sidePanelSlot .pm-segtab-item, .orch-tabs .orch-tab).active { scale: 1.04; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-lg-current] .symbol { scale: 1.08; }
 /* the hover bead: lighter than a lens, gone the moment a press lands or a menu opens */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead { opacity: 0; box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 0 0 .5px var(--lg-lens-edge), 0 3px 8px -3px var(--lg-shadow); }
@@ -362,6 +364,21 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.on { opacity: 1; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead.lg-under { opacity: 0 !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lens[data-lg-lifted] { box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), 0 0 0 .5px var(--lg-lens-edge), 0 10px 24px -6px var(--lg-shadow), 0 2px 4px var(--lg-shadow-near); transition: none; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lens[data-lg-lifted]::after { opacity: 1; }
+/* The Orchestrator's views ride the same lens (a theme match, not its redesign): its capsule fill steps aside. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .orch-tabs .orch-tab { box-shadow: none !important; }
+/* A strip the lens has taken over (data-lg-lensed, set by glass.js) hides its own chosen fill and its moving ink. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmw-ink-row[data-lg-lensed] > .pmw-ink, .pmw-ink-row[data-lg-lensed] > .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after) { opacity: 0 !important; }
+/* In-flow indicators that move with their own content (every other segmented choice row and its travelling ink) take
+   the lens's material where they are: a clear drop with a hairline edge, a top catch light, a glint, a bottom shade and
+   a soft drop shadow, the same tokens as .lg-lens, so they read as one glass. The home panels' document tabs are not
+   indicators: their plate is the open document's own surface, one piece with the panel body, and keeps its shape. */
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-lens-body: rgba(255, 255, 255, .055); }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(255, 255, 255, .5); }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmw-ink-row:not([data-lg-lensed]) > .pmw-ink, .pmw-ink-row:not([data-lg-lensed]) > .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after) {
+  background: radial-gradient(70% 100% at 30% 0%, var(--lg-lens-glint), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat, linear-gradient(var(--lg-tint-lens), var(--lg-tint-lens)), linear-gradient(var(--lg-lens-body), var(--lg-lens-body)) !important;
+  box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 0 0 .5px var(--lg-lens-edge), var(--lg-lens-drop) !important;
+  border-radius: var(--pm-ctl-r) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+}
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-press {
   display: block; position: fixed; width: 36px; height: 36px; border-radius: 50%; pointer-events: none; z-index: 2147483000;
   background: radial-gradient(closest-side, rgba(255, 255, 255, .6), rgba(255, 255, 255, .16) 55%, transparent); mix-blend-mode: plus-lighter;
