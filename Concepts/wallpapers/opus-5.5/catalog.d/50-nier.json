@@ -3,55 +3,65 @@
  "label": "NieR",
  "owner": "pm7-wallpapers",
  "order": 50,
- "about": "Ink on parchment, or parchment on ink: rules, brackets, square marks, hatching and line drawings. NieR Mode's eight ink scenes stay its own background choice.",
+ "about": "NieR Mode's own six ink scenes, drawn from the same art as its Background setting (Concepts/onboarding/opus-5.5/src/settings/nier/scenes, by tools/nier_prints.mjs), ink on parchment and parchment on ink, as faint as NieR Mode shows them. Jared, 2026-10-14 (#11): these replace Archive, Signal, Fragments, Hatch and Flora.",
  "wallpapers": [
   {
-   "id": "archive",
-   "name": "Archive",
-   "description": "An archive page: a hatched header, a menu list, a level gauge and corner brackets.",
+   "id": "city",
+   "name": "City Ruins",
+   "description": "Toppled towers, broken walkways and the trees that took them back.",
    "files": {
-    "dark": "src/walls/archive-dark.webp",
-    "light": "src/walls/archive-light.webp"
+    "dark": "src/walls/city-dark.webp",
+    "light": "src/walls/city-light.webp"
    },
    "default_for": null
   },
   {
-   "id": "signal",
-   "name": "Signal",
-   "description": "A scanner's rings, ticks and sweep at the lower right, crosshairs across the sheet.",
+   "id": "bunker",
+   "name": "The Bunker",
+   "description": "The orbital base: a hexagon shell around the command deck, a star-shaped beacon above it.",
    "files": {
-    "dark": "src/walls/signal-dark.webp",
-    "light": "src/walls/signal-light.webp"
+    "dark": "src/walls/bunker-dark.webp",
+    "light": "src/walls/bunker-light.webp"
    },
    "default_for": null
   },
   {
-   "id": "fragments",
-   "name": "Fragments",
-   "description": "Squares streaming from two corners as something comes apart.",
+   "id": "desert",
+   "name": "Desert",
+   "description": "Half-buried housing blocks and broken arches in the dunes, under a pale sun.",
    "files": {
-    "dark": "src/walls/fragments-dark.webp",
-    "light": "src/walls/fragments-light.webp"
+    "dark": "src/walls/desert-dark.webp",
+    "light": "src/walls/desert-light.webp"
    },
    "default_for": null
   },
   {
-   "id": "hatch",
-   "name": "Hatch",
-   "description": "Two bands of diagonal hatching across opposite corners over a dotted grid.",
+   "id": "forest",
+   "name": "Forest Castle",
+   "description": "A castle on the hill above a forest that hides the old roads.",
    "files": {
-    "dark": "src/walls/hatch-dark.webp",
-    "light": "src/walls/hatch-light.webp"
+    "dark": "src/walls/forest-dark.webp",
+    "light": "src/walls/forest-light.webp"
    },
    "default_for": null
   },
   {
-   "id": "flora",
-   "name": "Flora",
-   "description": "Line drawings of grass, flowers, ferns and a vine along the edges, seeds drifting.",
+   "id": "park",
+   "name": "Amusement Park",
+   "description": "A big wheel, a coaster loop and the big top, with fireworks over them.",
    "files": {
-    "dark": "src/walls/flora-dark.webp",
-    "light": "src/walls/flora-light.webp"
+    "dark": "src/walls/park-dark.webp",
+    "light": "src/walls/park-light.webp"
+   },
+   "default_for": null
+  },
+  {
+   "id": "flooded",
+   "name": "Flooded City",
+   "description": "Leaning towers standing in still water, a small boat between them.",
+   "files": {
+    "dark": "src/walls/flooded-dark.webp",
+    "light": "src/walls/flooded-light.webp"
    },
    "default_for": null
   }

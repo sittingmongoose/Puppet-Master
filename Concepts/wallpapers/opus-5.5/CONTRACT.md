@@ -46,10 +46,32 @@ owners in `reports/pm7-all-look-wallpapers-20261013/OWNER-PROPOSAL.md`.
 | Basic, Friendly, Retro | `--lg-wall-any` takes the print. The body carries it, and the shell's grounds go clear around the panels. The Usage board and Settings Home show it under a light veil of the look's ground. |
 | NieR Mode | As the other looks, and the wallpaper takes the place of NieR's ground and its ink scene. "Look's own" brings NieR's background setting back. |
 | Stale choice | A saved id that this build lacks is set back to `'look'` when the page loads. Nothing paints a missing image, and `glass.js` agrees at its next pass. |
+| Most recent wins (Jared #18, 2026-10-14) | Two controls decide what shows behind NieR Mode: this gallery (`general.visual.wallpaper`) and NieR Mode's customizer (`general.visual.nier-background`). The most recent change wins, from either control. This package is the only writer of the wallpaper choice. A gallery pick sets it to the id. When the committed NieR background changes (`PM_NIER.onChange`, reason `background`), the package sets the choice to `'look'`, so NieR's choice shows. The customizer writes only `general.visual.nier-background`. A NieR preview is not a change. |
 
 Both writers compute `data-lg-wall` and `data-lg-wall-any` with the same rule. This package rewrites them only when
 the look changes or a choice is made, and never in answer to the other writer, so the two can never answer each
 other in a loop.
+
+## The NieR family
+
+Jared #11 (2026-10-14): Archive, Signal, Fragments, Hatch and Flora left the catalog; their files stay in `src/walls`.
+The NieR family is NieR Mode's own six scenes, with the same ids as its scene sources
+(`Concepts/onboarding/opus-5.5/src/settings/nier/scenes/<id>.svg`) and the customizer's names:
+
+| id | Name |
+|---|---|
+| `city` | City Ruins |
+| `bunker` | The Bunker |
+| `desert` | Desert |
+| `forest` | Forest Castle |
+| `park` | Amusement Park |
+| `flooded` | Flooded City |
+
+`tools/nier_prints.mjs` draws their prints and thumbnails from those SVGs.
+- Prints are drawn the way NieR's scene layer shows a scene: the parchment ground, the ink at 15 % in light or 20 % in
+  dark, and the paper fade at the top. So the same scene looks the same whether it was chosen here or in the customizer.
+- Thumbnails are drawn in full ink, like the customizer's own scene tiles.
+- Edit a scene in its SVG, then run the tool again. Never edit the prints by hand.
 
 ## The gallery
 
