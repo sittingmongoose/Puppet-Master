@@ -2390,33 +2390,45 @@ function mountEditor(host, st, api) {
   /* Smooth scrolling (Editor look): a mouse wheel's notches, a page and a jump to a line glide to where they lead, an
      eased approach that settles in about 150 ms and takes a new target at once; off, they land at once. A trackpad's
      own fine-grained scrolling is the browser's and is never animated again. Reduced Motion: off */
-  var glide = { raf: 0, top: 0, left: null };
+  var glide = { raf: 0, top: 0, left: null, mineTop: 0, mineLeft: 0 };
+  // a scroll the glide did not make since its last step (the scrollbar dragged, a find, a page key)
+  function glideOverruled() { return !!glide.raf && (Math.abs(scroller.scrollTop - glide.mineTop) > 1.5 || (glide.left != null && Math.abs(scroller.scrollLeft - glide.mineLeft) > 1.5)); }
   function notch(e) { return e.deltaMode !== 0 || (Math.abs(e.deltaY) >= 50 && Math.round(e.deltaY) === e.deltaY); }
   function glideTo(top, left) {
     var tTop = clamp(top, 0, Math.max(0, geo.sh - geo.ch));
     var tLeft = left == null ? null : clamp(left, 0, Math.max(0, geo.sw - geo.cwid));
     if (!R.motion.smoothScroll || !visible) { cancelAnimationFrame(glide.raf); glide.raf = 0; setTop(tTop); if (tLeft != null) setLeft(tLeft); return; }
+    if (glideOverruled()) { glide.mineTop = scroller.scrollTop; glide.mineLeft = scroller.scrollLeft; }
     glide.top = tTop; glide.left = tLeft;
     if (glide.raf) return;
-    var last = performance.now();
+    /* the approach runs on the clock, not the frame count: a slow frame (a busy machine, a software-drawn Glass) moves
+       as far as the time it took, so the glide still settles in about 150 ms. A scroll from anywhere else meanwhile (the
+       scrollbar dragged, a find, a page key) wins, and the glide lets go */
+    var last = -1;
+    glide.mineTop = scroller.scrollTop; glide.mineLeft = scroller.scrollLeft;
     var step = function (now) {
       if (!alive) return;
-      var dt = Math.min(64, now - last); last = now;
+      if (glideOverruled()) { glide.raf = 0; glide.left = null; return; }
+      var cur = scroller.scrollTop, cl = scroller.scrollLeft;
+      var dt = last < 0 ? 16 : Math.min(1000, Math.max(0, now - last)); last = now;
       var k = 1 - Math.exp(-dt / 48);
-      var cur = scroller.scrollTop, dy = glide.top - cur, done = Math.abs(dy) < 0.6;
+      var dy = glide.top - cur, done = Math.abs(dy) < 0.6;
       setTop(done ? glide.top : cur + dy * k);
       if (glide.left != null) {
-        var cl = scroller.scrollLeft, dx = glide.left - cl;
+        var dx = glide.left - cl;
         if (Math.abs(dx) < 0.6) { setLeft(glide.left); glide.left = null; } else { setLeft(cl + dx * k); done = false; }
       }
+      glide.mineTop = scroller.scrollTop; glide.mineLeft = scroller.scrollLeft;
       if (done) { glide.raf = 0; return; }
       glide.raf = requestAnimationFrame(step);
     };
     glide.raf = requestAnimationFrame(step);
   }
   function wheelGlide(e, unit) {
-    var baseTop = glide.raf ? glide.top : geo.st;
-    var baseLeft = glide.raf && glide.left != null ? glide.left : geo.sl;
+    // notches add up while a glide runs; after a scroll from elsewhere they start from where the view is now
+    var own = glide.raf && !glideOverruled();
+    var baseTop = own ? glide.top : scroller.scrollTop;
+    var baseLeft = own && glide.left != null ? glide.left : scroller.scrollLeft;
     glideTo(baseTop + e.deltaY * unit, e.deltaX ? baseLeft + e.deltaX * unit : null);
   }
   scroller.addEventListener('wheel', function (e) {
