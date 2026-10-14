@@ -331,10 +331,11 @@ dropGuide.end = function () {
      heading for (the chip's path for the next 140 px, or 450 ms at its speed), so it steps out behind the hand
      rather than in front of it;
      once the hand has rested 200 ms, it settles into the first place that has stayed clear 160 ms;
-   - the docks and the preview give way first: with no place clear of everything, it keeps or takes one clear of the
-     carry; when every clear place lies in the chip's path, or none is clear (a cramped panel area), it stands just
-     past the chip on its own side and rides along with it; it is drawn above the chip in any case, so a passing
-     overlap never hides its words;
+   - with no place clear of everything, it stands just past the chip on its own side if that is clear of everything
+     (the side docks: the chip covers the place above, the place below would cover the preview's mark); else the
+     docks and the preview give way: it keeps or takes a place clear of the carry; when every clear place lies in the
+     chip's path, or none is clear (a cramped panel area), it stands just past the chip and rides along with it; it
+     is drawn above the chip in any case, so a passing overlap never hides its words;
    - it steps aside with a short glide in the look's own motion and a slight duck (Retro and NieR stepped, no duck);
      Reduced Motion: it fades out and in again at its new place, nothing travels. Panel to panel it rides with the
      guide's glide; anything else comes in where it lands.
@@ -470,11 +471,13 @@ function capSolve(a, size, carry, soft) {
   var bare = function (q, m) { return !capHit(q, carry, m); };
   if (cur && full(cur, CAP_STAY)) return capSettle(cands, cur, full);
   cap.backSince = 0;
-  // the carry reached it (or nothing is held yet): a clear place the carry is not heading for; else keep a place that
-  // is clear of the carry and only near a dock or the preview; else just past the chip, following it; else anything clear
-  return capFirst(cands, cur, full, carry, true) || (cur && bare(cur, CAP_STAY) ? cur : null) || capFirst(cands, cur, bare, carry, true)
-    || capPast(cands, carry) || capFirst(cands, cur, full, carry, false) || capFirst(cands, cur, bare, carry, false)
-    || capAny(cands, cur, bare) || cur || cands[0];
+  // the carry reached it (or nothing is held yet): a clear place the carry is not heading for; else just past the chip
+  // where that is clear of everything too (at the side docks the chip covers "above" and "below" would cover the
+  // preview's mark: the name stands over the chip instead, as at the bottom dock); else keep a place that is clear of
+  // the carry and only near a dock or the preview; else just past the chip, following it; else anything clear
+  return capFirst(cands, cur, full, carry, true) || capPast(cands, carry, soft) || (cur && bare(cur, CAP_STAY) ? cur : null)
+    || capFirst(cands, cur, bare, carry, true) || capPast(cands, carry) || capFirst(cands, cur, full, carry, false)
+    || capFirst(cands, cur, bare, carry, false) || capAny(cands, cur, bare) || cur || cands[0];
 }
 /* held while it stays clear; a better place only once the hand rests and that place has stayed clear a moment */
 function capSettle(cands, cur, clear) {
@@ -525,9 +528,10 @@ function capPastOn(cands, side, carry) {
   }
   return null;
 }
-/* nothing clear: just past the carry on a side, the first that stays in the panel area */
-function capPast(cands, carry) {
-  for (var i = 0; i < cands.length; i++) { var c = capPastOn(cands, cands[i].side, carry); if (c) return c; }
+/* just past the carry on a side, the first that stays in the panel area (and, given soft, clear of the docks and the
+   preview's marks too) */
+function capPast(cands, carry, soft) {
+  for (var i = 0; i < cands.length; i++) { var c = capPastOn(cands, cands[i].side, carry); if (c && !(soft && capHit(c, soft, CAP_STAY))) return c; }
   return null;
 }
 /* the hand's recent velocity (px/ms over the last 120 ms) and when it last moved */
