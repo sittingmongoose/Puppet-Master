@@ -106,6 +106,7 @@ html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(-
 /* ---- presets (round 2): the four built in, then yours, each a tiny terminal in its own colours; saving, renaming and
    deleting happen in place, and a delete can be undone ---- */
 .pmt-cz-presets { display: grid; gap: 6px; min-width: 0; }
+.pmt-cz-presets .pmt-cz-sets { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); }
 .pmt-cz-presethead { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
 .pmt-cz-presethead .pmt-cz-trylabel { width: auto; }
 .pmt-cz-presethead .pmt-textbtn { height: 24px; padding: 0 7px; font-size: 11.5px; border-color: var(--pmt-cz-line); }

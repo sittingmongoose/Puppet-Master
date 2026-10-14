@@ -623,10 +623,11 @@
     };
     /* the bezel: a rim (4 px) or a monitor case (10 px) unless a width was chosen (research: real cases are far wider,
        right for an emulator's margins, far too big for a pane); the text is laid out inside it, never squeezed */
-    var bzStyle = f('bezel'), bezel = { style: 'off', width: 0, color: 'follow' };
+    var bzStyle = f('bezel'), bezel = { style: 'off', width: 0, gap: 0, color: 'follow' };
     if (bzStyle === 'rim' || bzStyle === 'case') {
       var bw = f('bezelWidth');
-      bezel = { style: bzStyle, width: bw === null || bw === undefined ? (bzStyle === 'rim' ? 4 : 10) : bw, color: f('bezelColor') || 'follow' };
+      /* and a breath of glass inside it (3 px in a rim, 6 px in a case), so no glyph touches the frame */
+      bezel = { style: bzStyle, width: bw === null || bw === undefined ? (bzStyle === 'rim' ? 4 : 10) : bw, gap: bzStyle === 'rim' ? 3 : 6, color: f('bezelColor') || 'follow' };
     }
     var bgShow = lk === 'glass' && bgKind === 'theme';
     /* High Contrast schemes keep every cell at 7:1 unless the user chose a floor themselves */
@@ -637,7 +638,7 @@
       opts: { ligatures: f('ligatures'), minContrast: floor, boldBright: f('boldBright'),
         cursor: { shape: shape, blink: f('cursorBlink') && L.blink !== 'off' }, stickyHeader: f('stickyHeader'), copyOnSelect: f('copyOnSelect'),
         textRendering: drawing === 'smooth' ? 'geometricPrecision' : drawing === 'crisp' ? 'optimizeLegibility' : 'auto' },
-      padding: { x: f('padding') + bezel.width, y: Math.round(f('padding') * 0.6) + bezel.width, own: f('padding') },
+      padding: { x: f('padding') + bezel.width + bezel.gap, y: Math.round(f('padding') * 0.6) + bezel.width + bezel.gap, own: f('padding') },
       bezel: bezel,
       sixtyfour: { scan: f('sixtyfourScan'), bleed: f('sixtyfourBleed') }
     };

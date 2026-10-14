@@ -23,6 +23,16 @@
     }).catch(function () {});
   } catch (e) {}
 
+  /* is there a GPU at all (asked once, on a scratch canvas, by the same test the effects pass uses) */
+  function hasGpu() {
+    if (gpu !== null) return gpu;
+    if (hasGpu.probe === undefined) {
+      var c = document.createElement('canvas'); c.width = c.height = 1;
+      var fx = T.FXGL ? T.FXGL.create(c) : null;
+      hasGpu.probe = !!fx; if (fx) fx.dispose();
+    }
+    return hasGpu.probe;
+  }
   function Policy(view) {
     this.view = view; this.cfg = {}; this.gl = null; this.trail = null; this.active = false;
     this.lastActivity = T.util.now(); this.raf = 0; this.lastAmbient = 0; this.degaussAt = 0;
@@ -114,7 +124,8 @@
     if (!v.root.classList.contains('pmt-bg-moves')) { v.root.classList.remove('pmt-bg-live'); return; }
     now = now || T.util.now();
     var left = IDLE_MS - (now - this.lastActivity);
-    var live = !!(v.focused && v.visible && left > 0 && !this.cfg.reduced && !battery.saver && !(v.term && v.term.buf && v.term.buf.isAlt));
+    /* where no GPU draws the terminal nothing moves (F3-643): the ground shows its still frame */
+    var live = !!(v.focused && v.visible && left > 0 && !this.cfg.reduced && !battery.saver && !(v.term && v.term.buf && v.term.buf.isAlt) && hasGpu());
     v.root.classList.toggle('pmt-bg-live', live);
     clearTimeout(this.liveTimer);
     if (live) this.liveTimer = setTimeout(function () { self.groundLive(); }, left + 20);

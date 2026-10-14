@@ -393,16 +393,31 @@
     g.globalAlpha = 1;
   }
 
+  /* the CSS designs, cached per scheme and size: resolve runs on every change, and an SVG design (contours, halftone)
+     takes a while to write */
+  var cssCache = new Map();
+  function cssFor(id, th, o) {
+    var d = BY[id]; if (!d || !d.css || !th) return null;
+    o = o || {};
+    var key = id + '|' + th.id + '|' + th.bg + '|' + th.fg + '|' + (o.scale || 'medium');
+    if (cssCache.has(key)) return cssCache.get(key);
+    var out = d.css(th, hues(th), o);
+    cssCache.set(key, out);
+    if (cssCache.size > 160) cssCache.delete(cssCache.keys().next().value);
+    return out;
+  }
   /* ---- painted layers, cached per scheme, size step and blur ---- */
-  var cache = new Map(), CACHE_MAX = 40;
+  var cache = new Map(), CACHE_MAX = 40, SOFT = { aurora: 1, lava: 1, bokeh: 1 };
   var canFilter = (function () { try { var g = document.createElement('canvas').getContext('2d'); g.filter = 'blur(2px)'; return g.filter === 'blur(2px)'; } catch (e) { return false; } })();
   function step(n) { return Math.max(160, Math.min(2560, Math.round((n || 960) / 160) * 160)); }
   function paint(id, th, w, h, o) {
     var d = BY[id], name = d && d.cat === 'scene' ? id : d && d.motion ? d.motion.layer : PAINT[id] ? id : null;
     if (!name || !PAINT[name] || !th) return null;
     o = o || {};
-    var big = d && d.motion ? (d.motion.anim === 'pmt-bg-sway' || d.motion.anim === 'pmt-bg-rise' ? 1.5 : 1) : 1;
-    var W = step(w * big), H = step(h * (d && d.motion && d.motion.anim !== 'pmt-bg-twinkle' ? 2 : 1)), blur = o.blur || 0;
+    /* soft layers (washes of light, blurred discs) paint at half size and scale up: the same picture, a quarter of the
+       work (on a software renderer a full-size lava took a third of a second) */
+    var soft = SOFT[name] ? 0.5 : 1;
+    var W = step(w * soft), H = step(h * soft), blur = o.blur || 0;
     var key = name + '|' + th.id + '|' + th.bg + '|' + th.fg + '|' + W + 'x' + H + '|' + blur;
     if (cache.has(key)) { var hit = cache.get(key); cache.delete(key); cache.set(key, hit); return hit; }
     var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
@@ -442,8 +457,9 @@
     if (w === null || w === undefined) return 0.45;
     var own = C.contrast(th.fg, th.bg), want = Math.min(own, 4.8);
     if (C.contrast(th.fg, w) >= want) return 0;
-    for (var a = 0.05; a < 0.9; a += 0.05) if (C.contrast(th.fg, C.mix(w, th.bg, a)) >= want) return Math.round(a * 100) / 100;
-    return 0.9;
+    for (var a = 0.05; a < 0.999; a += 0.05) if (C.contrast(th.fg, C.mix(w, th.bg, a)) >= want) return Math.round(a * 100) / 100;
+    /* a scheme with no contrast to spare (Tokyo Night Day's 4.52:1) shows its plain ground */
+    return 1;
   }
 
   T.Grounds = {
@@ -457,7 +473,7 @@
     forLook: function (lk) { return LIST.filter(function (d) { return d.looks.indexOf(lk) >= 0; }).map(function (d) { return d.id; }); },
     /* the id an earlier word names: the picture 'paper' is the Paper pattern now */
     alias: function (id) { return id === 'paper-pic' ? 'fibre' : id; },
-    css: function (id, th, o) { var d = BY[id]; return d && d.css && th ? d.css(th, hues(th), o || {}) : null; },
+    css: cssFor,
     paint: paint,
     motion: function (id) { var d = BY[id]; return d && d.motion ? d.motion : null; },
     worst: worst,

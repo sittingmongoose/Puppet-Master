@@ -131,9 +131,9 @@
   /* quick sets: several existing fields at once, in this scope (NieR's presets, for a terminal) */
   var SETS = [
     { id: 'look', label: 'The look’s own', help: 'Everything follows the look', patch: null },
-    { id: 'calm', label: 'Calm', help: 'Nothing moves', patch: { effects: 'custom', cursorBlink: false, cursorTrail: 'off', smoothScroll: false, flicker: false, crt: false } },
+    { id: 'calm', label: 'Calm', help: 'Nothing moves', patch: { effects: 'custom', cursorBlink: false, cursorTrail: 'off', smoothScroll: false, flicker: false, crt: false, bgMotion: 'off' } },
     { id: 'reading', label: 'Easy reading', help: 'Clear face, high contrast', patch: { font: 'atkinson', minContrast: 7, lineHeight: 1.45, ligatures: false } },
-    { id: 'crt', label: 'Old monitor', help: 'Scanlines, glow, curve', patch: { effects: 'custom', scanlines: true, glow: true, crt: true, cursorTrail: 'phosphor' } }
+    { id: 'crt', label: 'Old monitor', help: 'A tube in a case', patch: { effects: 'custom', scanlines: true, glow: true, crt: true, curvature: 0.06, bezel: 'case', cursorTrail: 'phosphor' } }
   ];
   /* the fields the meter counts, in the order the screen shows them */
   var COUNTED = ['scheme', 'schemePair', 'minContrast', 'font', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing', 'ligatures', 'boldBright',
