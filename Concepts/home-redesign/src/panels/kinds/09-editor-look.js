@@ -122,7 +122,13 @@ function words(map) {
 function catalogApi() {
   try { var A = window.PMT && window.PMT.Appearance; return A && typeof A.schemes === 'function' && typeof A.editorTokens === 'function' ? A : null; } catch (_) { return null; }
 }
-function catalogList() { var A = catalogApi(); try { var l = A ? A.schemes() : []; return Array.isArray(l) ? l : []; } catch (_) { return []; } }
+/* a raw scheme names its appearance "appearance"; the public catalog names it "mode", which is what the editor reads */
+function catalogList() {
+  var A = catalogApi(); var l;
+  try { l = A ? A.schemes() : []; } catch (_) { return []; }
+  if (!Array.isArray(l)) return [];
+  return l.map(function (s) { return s && !s.mode && s.appearance ? Object.assign({}, s, { mode: s.appearance }) : s; });
+}
 function schemeById(id) { var l = catalogList(); for (var i = 0; i < l.length; i++) if (l[i] && l[i].id === id) return l[i]; return null; }
 /* the sibling of the other appearance, or the scheme itself (an imported one has none) */
 function pairOf(s, mode) { if (!s || s.mode === mode || !s.pair) return s; return schemeById(s.pair) || s; }

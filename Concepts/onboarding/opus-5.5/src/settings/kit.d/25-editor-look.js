@@ -67,7 +67,8 @@
   colors.options = Object.assign({}, colors.options || {});
   PM51.moreChoices('code.editing.color-scheme', () => catalog().map(s => {
     colors.options[s.id] = s.name;
-    return { value: s.id, label: s.name, meta: s.mode === 'light' ? 'Light' : 'Dark' };
+    /* the public catalog (PMT.Appearance.schemes) names it mode; a raw scheme names it appearance */
+    return { value: s.id, label: s.name, meta: (s.mode || s.appearance) === 'light' ? 'Light' : 'Dark' };
   }));
 
   /* ---------- the Customize screen from Settings: the Editor look group's owner line ----------

@@ -1186,7 +1186,7 @@ function mountEditor(host, st, api) {
   var lnW = 40, gutW = 54, textX = 64, contentW = 0, trackW = 22, half = 0, gutS = 54;
   var sxl = 0, sxr = 0;                             // side by side: each side's own horizontal offset
   var rowEls = new Map(), rendered = { a: -1, b: -1 };
-  var revealPending = !!R.motion.reveal && !preview;
+  var revealPending = !!R.motion.reveal && !preview, revealAt = 0, revealTop = 0;
   var WR = null;                                    // the wrap map while long lines wrap (buildWrap), else null
   var diagRects = [];                               // the problems drawn now, for the card under the pointer
   var stickyH = 0, stickyRows = [];
@@ -1717,13 +1717,22 @@ function mountEditor(host, st, api) {
     if (!force && rg.a === rendered.a && rg.b === rendered.b) return;
     rowEls.forEach(function (el, r) { if (r < rg.a || r > rg.b) { el.remove(); rowEls.delete(r); } });
     var frag = doc.createDocumentFragment(), first = -1;
-    var revealTop = revealPending ? rowAt(Math.max(0, Math.floor((geo.st - padT) / lh))) : 0;
+    /* the reveal (Lines arrive when a file opens): it starts with the first rows drawn and runs its course even when
+       the rows are drawn again meanwhile (the tab's first resize, a font arriving): a row made again mid-reveal picks
+       its animation up where it was (a negative delay), so nothing restarts or vanishes */
+    if (revealPending) {
+      revealPending = false;
+      revealAt = nowMs(); revealTop = rowAt(Math.max(0, Math.floor((geo.st - padT) / lh)));
+      clearTimeout(timers.reveal);
+      timers.reveal = setTimeout(function () { revealAt = 0; rowsEl.querySelectorAll('.is-reveal').forEach(function (x) { x.classList.remove('is-reveal'); x.style.animationDelay = ''; }); }, 900);
+    }
+    var since = revealAt ? nowMs() - revealAt : -1;
     for (var r = rg.a; r <= rg.b && V.n; r++) {
       if (rowEls.has(r)) continue;
       var el = mode === 'diff' ? (V.side ? makeSideRow(r) : makeInlineRow(r)) : makeSourceRow(r);
-      if (revealPending && r >= revealTop) {
+      if (since >= 0 && since < 900 && r >= revealTop) {
         var k = r - Math.max(0, revealTop);
-        if (k < 60) { el.classList.add('is-reveal'); el.style.animationDelay = (Math.min(k, 40) * 8) + 'ms'; }
+        if (k < 60) { el.classList.add('is-reveal'); el.style.animationDelay = (Math.min(k, 40) * 8 - since) + 'ms'; }
       }
       rowEls.set(r, el);
       frag.appendChild(el);
@@ -1731,7 +1740,6 @@ function mountEditor(host, st, api) {
     }
     rowsEl.appendChild(frag);
     rendered = rg;
-    if (revealPending) { revealPending = false; clearTimeout(timers.reveal); timers.reveal = setTimeout(function () { rowsEl.querySelectorAll('.is-reveal').forEach(function (x) { x.classList.remove('is-reveal'); x.style.animationDelay = ''; }); }, 900); }
   }
   function rowBase(r, cls) {
     var el = doc.createElement('div');
@@ -1973,8 +1981,13 @@ function mountEditor(host, st, api) {
   }
   /* Light the guide of the block I'm in: the guide one level left of the caret's text, over the lines around it that
      sit deeper (a line that opens a block lights the block it opens) */
+  var guideKey = '';
   function placeGuide() {
     var on = R.lines.guides !== 'off' && R.lines.activeIndent && mode === 'file' && !special;
+    // the block only changes with the caret's line, the text, the layout or the choice: scrolling reuses it
+    var key = on ? caret.r + '|' + d.version + '|' + R.lines.guides + '|' + textX + '|' + cw + '|' + lh + '|' + padT + '|' + vCount() + '|' + (WR ? contentW : 0) : 'off';
+    if (key === guideKey) return;
+    guideKey = key;
     var lines = d.lines, r = caret.r, a = -1;
     if (on) {
       var L = guideLevel(lines, r), next = r + 1;
