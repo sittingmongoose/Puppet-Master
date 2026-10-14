@@ -61,7 +61,9 @@
       dark, nier: true,
       /* lines: ink (coats, visors, outlines, ink blocks, You), secondary (strings, leaders), mono labels, seams and
          hatching, the far ruins, the dot grid */
-      ink, ink2, lab: A.rgba(ink, 0.62), faint: A.rgba(ink, 0.2), hatch: A.rgba(ink, 0.09), grid: A.rgba(ink, 0.12),
+      /* (the mono labels are the ink at 90%: a step under the drawing's solid ink, and 4.5:1 or more on the ground and on
+         a grid line in both modes; at 62% they read about 3.6:1, at 80% 4.15:1 on a dark grid line) */
+      ink, ink2, lab: A.rgba(ink, 0.9), faint: A.rgba(ink, 0.2), hatch: A.rgba(ink, 0.09), grid: A.rgba(ink, 0.12),
       /* paper: the scene ground, knock-outs and display faces; raised faces (pins, hands, prop bodies, the column, the
          machine); the stage top; text and detail on an ink block */
       ground: t.bg, raised: t.raised || t.surface, surface: t.surface, onInk: t.onInk || t.bg,
@@ -110,7 +112,11 @@
   }
   /* a prop's caption: an ink square bullet and mono caps. The bullet is left out of the prop's measured outline
      (A.box drops [class*="shade"]), like the text, so strings and connectors end on the drawing itself. */
-  const caption = (K, y, s) => K.SQ(-(s.length * 3.1) - 6, y - 2.3, 3, 'i', null, 'o55-nier-shade-lbl') + K.T(3, y, s, { size: 6.6, role: 'txi' });
+  /* (the words stand on a knock-out of the ground the width of their line, so a line, a mark or a ruin drawn under them
+     never shows between the letters: one did, between THIS and COMPUTER, at 3.7:1; mono caps advance 0.6 em plus the
+     1.3 tracking) */
+  const caption = (K, y, s) => { const w = s.length * (6.6 * 0.6 + 1.3) + 4;
+    return K.SQ(-(s.length * 3.1) - 6, y - 2.3, 3, 'i', null, 'o55-nier-shade-lbl') + K.R(3 - w / 2, y - 7.6, w, 9.6, 'g', null, 'o55-nier-shade-ko') + K.T(3, y, s, { size: 6.6, role: 'txi' }); };
   const say = (key, fb) => { const v = O55.t(key); return v === key ? fb : v; };
   const L = (k, fb) => say('art.labels.' + k, fb), NT = (k, fb) => say('art.nier.' + k, fb);
   /* Ochre once per scene: the one item that holds it, chosen from the whole composition (ctx.items, set by the core
@@ -495,7 +501,9 @@
       const K = kit(ctx.pal), o = item.opts || {}, id = A.identity(o.seed || 'nas');
       const cells = id.cells.map(([x, y]) => K.R(-20 + x * 8, -20 + y * 8, 8, 8, 'i')).join('');
       return `${G}>${K.R(-32, -32, 64, 64, 'p s', 1.2)}${K.P(brackets(27, 7), 's2', 0.9)}<g shape-rendering="crispEdges">${cells}</g>`
-        + `${o.words ? K.T(0, 46, o.words, { size: 6, role: 'txi' }) : ''}</g>`;
+        /* its words over the card, under the kicker's rule, and marked for Pod 042 to keep clear of (data-o55fx-avoid,
+           read by O55.nierFx's narrator lanes): under the card they ran beneath Pod and its speech box (1.00) */
+        + `${o.words ? K.T(0, -40, o.words, { size: 6, role: 'txi', extra: ' data-o55fx-avoid=""' }) : ''}</g>`;
     },
     /* a badge and the name sign: a raised box, an ink kicker block with a paper diamond, mono caps with wide tracking,
        an underline; accent (on): inverted, an ink box beside a paper kicker block outlined in ink, so the sign reads as

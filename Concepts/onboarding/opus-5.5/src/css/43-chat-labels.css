@@ -1,0 +1,24 @@
+/* The labels on the tour's guided messages in the shell's Chat (Jared via the coordinator, 2026-10-13: the no-pills
+   rule covers the "Guided example" and "Teacher message" tags too). The Teacher adapter (81-tour-chat.js) and Pod 042
+   (84-pod042-chat.js) relabel the message's runtime tag and mark the message (data-o55-guided, data-o55-pod042); here
+   that tag loses the shell's capsule and becomes a label in the approved no-pills vocabulary, as the onboarding's own
+   tags are (.o55-tag, .o55t-trylabel): the word, small and set in capitals, after a 5 px square in the word's own ink,
+   with no box, border or fill. On the reply the ink is the secondary text colour; inside the person's own bubble it
+   is the bubble's text colour (Retro Light keeps its approved readable ink, 03-retro-light-readability.css); Retro sets
+   it in its display face; NieR Mode in its ink and mono face, as its tags are. The shell's other runtime tags (on
+   ordinary messages) are the Chat's own and are left alone. */
+:is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]) .runtime-snapshot {
+  /* its own line above the words (in the person's bubble the message text follows the tag directly; the capsule's
+     padding used to keep them apart) */
+  display: flex; width: fit-content; margin: 0 0 5px; align-items: center; gap: 6px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
+  font: 700 10.5px/1.5 var(--body-font, Inter, system-ui, sans-serif); letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); }
+:is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]) .runtime-snapshot::before {
+  content: ""; flex: none; width: 5px; height: 5px; background: currentColor; }
+:is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]).user .runtime-snapshot { color: inherit; }
+[data-theme^="retro"] :is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]) .runtime-snapshot {
+  font-family: var(--display-font-sm, 'Rajdhani', sans-serif); letter-spacing: 0.08em; }
+html[data-o55-nier="on"] :is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]) .runtime-snapshot {
+  color: var(--o55-nier-ink); font-family: var(--mono-font, 'IBM Plex Mono', monospace); font-weight: 500; letter-spacing: 0.14em; }
+/* inside the person's own bubble NieR inverts the bubble (ink on parchment in Dark, parchment on ink in Light), so the
+   label takes the bubble's own text colour there too; in NieR's ink it vanished into the bubble (1.00) */
+html[data-o55-nier="on"] :is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]).user .runtime-snapshot { color: inherit; }

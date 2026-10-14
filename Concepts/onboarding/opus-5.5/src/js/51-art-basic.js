@@ -16,6 +16,10 @@
       grid: A.rgba(ink, dark ? 0.06 : 0.08), gridMajor: A.rgba(ink, dark ? 0.12 : 0.15),
       fill: A.rgba(ink, dark ? 0.07 : 0.06), fill2: A.rgba(ink, dark ? 0.14 : 0.12),
       accent: tok.orange, accentFill: A.rgba(tok.orange, 0.14), text: tok.text, dim: A.rgba(tok.text, 0.6),
+      /* the inks words are lettered in: the drawing's lines stay faint, but a word is lettered in solid ink so it reads
+         4.5:1 or more on the paper (the half-strength ink2 read about 2.5:1); a small word in the accent is the accent
+         deepened toward the text on light paper, where the orange itself reads about 2.6:1 */
+      inkText: ink, accentInk: dark ? tok.orange : A.mix(tok.orange, tok.text, 0.42),
       tones: [ink, tok.orange, ink, tok.orange]
     };
   };
@@ -23,7 +27,7 @@
   const S = (p, w, color) => `fill="none" stroke="${color || p.ink}" stroke-width="${w || 1.5}" stroke-linecap="round" stroke-linejoin="round" pathLength="1" class="o55-draw"`;
   const SD = (p, w, color) => `fill="none" stroke="${color || p.ink}" stroke-width="${w || 1.5}" stroke-linecap="round" stroke-linejoin="round" class="o55-fadeline"`;
   const F = (p, fill, w, color) => `fill="${fill}" stroke="${color || p.ink}" stroke-width="${w || 1.5}" stroke-linejoin="round" pathLength="1" class="o55-draw"`;
-  const txt = (p, x, y, s, size, anchor, color, extra) => `<text x="${x}" y="${y}" font-size="${size || 7}" letter-spacing="1.1" font-family="Inter, system-ui, sans-serif" font-weight="600" text-anchor="${anchor || 'middle'}" fill="${color || p.ink2}"${extra || ''}>${U.esc(String(s).toUpperCase())}</text>`;
+  const txt = (p, x, y, s, size, anchor, color, extra) => `<text x="${x}" y="${y}" font-size="${size || 7}" letter-spacing="1.1" font-family="Inter, system-ui, sans-serif" font-weight="600" text-anchor="${anchor || 'middle'}" fill="${color || p.inkText}"${extra || ''}>${U.esc(String(s).toUpperCase())}</text>`;
   /* dimension line with end ticks and a centred label */
   const dim = (p, x1, y1, x2, y2, label) => {
     const mx = (x1 + x2) / 2, my = (y1 + y2) / 2, horiz = Math.abs(y2 - y1) < Math.abs(x2 - x1);
@@ -43,14 +47,19 @@
       point: 'M-12 -40 L-17 -29 L-18 -19 M12 -40 L23 -37 L33 -36'
     }[pose] || '';
     const joint = ([x, y]) => `<circle cx="${x}" cy="${y}" r="1.7" fill="${p.paper}" stroke="${p.ink}" stroke-width="1"/>`;
-    const shoulders = [[-12, -40], [12, -40]].map(joint).join(''), hipsKnees = [[-8, -18], [8, -18], [-6, -9], [6, -9]].map(joint).join('');
+    /* every joint is drawn, the elbows too, so each part of a limb visibly turns on the one before it */
+    const elbows = ({ stand: [[-17, -29], [17, -29]], wave: [[-17, -29]], carry: [[-10, -30], [10, -30]], bow: [[-14, -30], [14, -30]], point: [[-17, -29], [23, -37]] }[pose] || []).map(joint).join('');
+    const shoulders = [[-12, -40], [12, -40]].map(joint).join('') + elbows, hipsKnees = [[-8, -18], [8, -18], [-6, -9], [6, -9]].map(joint).join('');
     /* a hand at the end of every arm (the waving hand is drawn with its arm) */
     const hands = ({ stand: [[-18, -19], [18, -19]], wave: [[-18, -19]], carry: [[-3, -27], [3, -27]], bow: [[-12, -21], [12, -21]], point: [[-18, -19], [33, -36]] }[pose] || [])
       .map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.9" fill="${p.paper}" stroke="${p.ink}" stroke-width="1"/>`).join('');
     const str = o.anchor ? (() => { const dx = (o.anchor[0] - item.x) / s, dy = (o.anchor[1] - item.y) / s; return `<path d="M0 -64 L${dx.toFixed(1)} ${dy.toFixed(1)}" ${S(p, 0.8, p.ink2)}/><circle cx="0" cy="-64" r="1.6" fill="${p.ink}"/>`; })() : '';
     /* tied to the bar: a knot where the string meets the head; a waving arm is its own group (the rig lifts it) */
     const knot = o.rig ? `<g class="o55-hd"><circle cx="0" cy="-63" r="1.7" fill="${p.ink}"/></g>` : '';
-    const waveArm = pose === 'wave' ? `<g class="o55-arm" data-pivot="12 -40"><path d="M12 -40 L20 -50 L24 -61" ${S(p, 1.4)}/><circle cx="24" cy="-61" r="1.9" fill="${p.paper}" stroke="${p.ink}" stroke-width="1"/><circle class="o55-hook" data-hook="hand" cx="24" cy="-61" r="0.01" fill="none"/></g>` : '';
+    /* a waving arm is the rig's .o55-arm (pivot: the shoulder) holding an .o55-fore (pivot: the elbow), so the forearm
+       bends on its joint while the arm swings */
+    const waveArm = pose === 'wave' ? `<g class="o55-arm" data-pivot="12 -40"><g class="o55-fore" data-pivot="20 -50"><path d="M20 -50 L24 -61" ${S(p, 1.4)}/><circle cx="24" cy="-61" r="1.9" fill="${p.paper}" stroke="${p.ink}" stroke-width="1"/><circle class="o55-hook" data-hook="hand" cx="24" cy="-61" r="0.01" fill="none"/></g>`
+      + `<path d="M12 -40 L20 -50" ${S(p, 1.4)}/>${joint([20, -50])}</g>` : '';
     const carry = pose === 'carry' ? `<rect x="-9" y="-34" width="18" height="12" rx="1" ${F(p, p.accentFill, 1.2, p.accent)}/><path d="M-5 -30H5M-5 -26.5H2" ${S(p, 0.8, p.accent)}/>` : '';
     /* the upper body (head, torso, arms) is two .o55-up groups around the legs, in the drawing's own paint order, so a
        bow can pitch it toward the audience about the hips (66-family-window.js) while the legs stand; the head and the
@@ -116,7 +125,7 @@
       const on = o.state === 'on' || o.accent;
       return `<g><circle r="26" ${F(p, on ? p.accentFill : p.fill, 1.5, on ? p.accent : p.ink)}/><path d="${ticks}" ${S(p, 0.8, p.ink2)}/>`
         + `<g transform="translate(-12 -12)" class="o55-draw-g" style="color:${on ? p.accent : p.ink}">${A.glyph(o.icon || 'spark', 'currentColor', 1.6)}</g>`
-        + (o.label ? txt(p, 0, 46, o.label, 7, 'middle', p.ink) : '') + (o.sub ? txt(p, 0, 57, o.sub, 5.8, 'middle', p.ink2) : '') + '</g>';
+        + (o.label ? txt(p, 0, 46, o.label, 7, 'middle', p.ink) : '') + (o.sub ? txt(p, 0, 57, o.sub, 5.8, 'middle', p.inkText) : '') + '</g>';
     },
     pathline(ctx, item) {
       const p = ctx.pal, pts = (item.opts || {}).pts || [];
@@ -150,7 +159,7 @@
       const tw = String(o.label || '').length * 6.1, gw = o.glyph ? 18 : 0, w = Math.max(88, Math.ceil(tw + gw + 20)), x0 = -w / 2;
       return `<g><rect x="${x0}" y="-15" width="${w}" height="30" rx="3" fill="${p.paper}" stroke="${o.accent ? p.accent : p.ink}" stroke-width="1.2"/>`
         + (o.glyph ? `<g transform="translate(${x0 + 6} -9) scale(0.75)" style="color:${o.accent ? p.accent : p.ink}">${A.glyph(o.glyph)}</g>` : '')
-        + txt(p, gw / 2, 3, o.label || '', 6.8, 'middle', o.accent ? p.accent : p.ink) + '</g>';
+        + txt(p, gw / 2, 3, o.label || '', 6.8, 'middle', o.accent ? p.accentInk : p.inkText) + '</g>';
     },
     identity(ctx, item) {
       const p = ctx.pal, o = item.opts || {};
