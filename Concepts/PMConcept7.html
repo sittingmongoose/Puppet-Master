@@ -29127,21 +29127,23 @@ html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pm
      concept's one chosen fill (the canon lead's ruling of 2026-10-11, F3-648 / F3-490, as the Home panels draw it in
      Concepts/home-redesign/src/panels/css/45-frames.css): each look's NEUTRAL selection fill, flat, never an accent and
      never a ring; a hover is about half its step. */
-  --wo-sel-fill: color-mix(in srgb, var(--text-primary) 11%, transparent);
+  --wo-sel-c: color-mix(in srgb, var(--text-primary) 11%, transparent);
+  /* an image, so it can lie over a cell's own ground as one more layer */
+  --wo-sel-fill: linear-gradient(var(--wo-sel-c), var(--wo-sel-c));
   --wo-hover-fill: color-mix(in srgb, var(--text-primary) 5%, transparent);
   --wo-press-fill: color-mix(in srgb, var(--text-primary) 8%, transparent);
   --wo-sel-line: var(--border);
   --wo-sel-ink: var(--text-primary);
 }
 /* in the light modes that surface is too faint for a 30 px box, so they take the next step of the same ladder */
-html[data-theme="basic-light"] :is(#panel-wizard, #panel-orchestrator) { --wo-sel-fill: color-mix(in srgb, var(--text-primary) 17%, transparent); }
-html[data-theme="friendly-light"] :is(#panel-wizard, #panel-orchestrator) { --wo-sel-fill: color-mix(in srgb, var(--text-primary) 20%, transparent); }
+html[data-theme="basic-light"] :is(#panel-wizard, #panel-orchestrator) { --wo-sel-c: color-mix(in srgb, var(--text-primary) 17%, transparent); }
+html[data-theme="friendly-light"] :is(#panel-wizard, #panel-orchestrator) { --wo-sel-c: color-mix(in srgb, var(--text-primary) 20%, transparent); }
 /* Glass: its own selection frost with its 1 px rim along the top edge; Glass Light takes its near-opaque reading plate */
 html[data-theme^="glass"] :is(#panel-wizard, #panel-orchestrator) {
-  --wo-sel-fill: linear-gradient(var(--glass-edge), var(--glass-edge)) 0 0 / 100% 1px no-repeat, var(--pm6-glass-step-3);
+  --wo-sel-fill: linear-gradient(var(--glass-edge), var(--glass-edge)) 0 0 / 100% 1px no-repeat, linear-gradient(var(--pm6-glass-step-3), var(--pm6-glass-step-3));
   --wo-hover-fill: var(--pm6-glass-step-1); --wo-press-fill: var(--pm6-glass-step-2); }
 html[data-theme="glass-light"] :is(#panel-wizard, #panel-orchestrator) {
-  --wo-sel-fill: linear-gradient(var(--glass-edge), var(--glass-edge)) 0 0 / 100% 1px no-repeat, var(--pm6-glass-plate, var(--pm6-glass-step-3));
+  --wo-sel-fill: linear-gradient(var(--glass-edge), var(--glass-edge)) 0 0 / 100% 1px no-repeat, linear-gradient(var(--pm6-glass-plate, var(--pm6-glass-step-3)), var(--pm6-glass-plate, var(--pm6-glass-step-3)));
   --wo-hover-fill: var(--pm6-glass-step-2); --wo-press-fill: var(--pm6-glass-step-3); }
 /* Light looks' hues are light enough that a bare word needs a deeper ink than its capsule did. Each tone is taken
    toward black by the least that keeps every look's word at 4.8:1 or more on its card and page (measured 2026-10-13 on
@@ -29170,10 +29172,10 @@ html[data-o55-nier="on"] :is(#panel-wizard, #panel-orchestrator) {
   --wo-magenta: var(--o55-nier-ink); --wo-mut: color-mix(in srgb, var(--o55-nier-ink) 86%, transparent);
   --wo-run: var(--o55-nier-ink); --wo-done: color-mix(in srgb, var(--o55-nier-ok-text) 72%, var(--o55-nier-ink)); --wo-plan: var(--o55-nier-ink);
   --wo-label-font: 500 10.5px/1.25 var(--mono-font, 'IBM Plex Mono', monospace); --wo-label-track: .14em;
-  --wo-sel-fill: var(--o55-nier-ink); --wo-sel-line: var(--o55-nier-ink); --wo-sel-ink: var(--o55-nier-on-ink);
+  --wo-sel-fill: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)); --wo-sel-line: var(--o55-nier-ink); --wo-sel-ink: var(--o55-nier-on-ink);
 }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(#panel-wizard, #panel-orchestrator) {
-  --wo-sel-fill: var(--text-primary); --wo-sel-line: var(--text-primary); --wo-sel-ink: var(--surface);
+  --wo-sel-fill: linear-gradient(var(--text-primary), var(--text-primary)); --wo-sel-line: var(--text-primary); --wo-sel-ink: var(--surface);
 }
 
 /* ── Cards: the current looks' plate ───────────────────────────────────────────────────────────────────────────────
@@ -29302,7 +29304,7 @@ html:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier="on"
 #panel-wizard .pm6-wiz-intent-chip:first-child { border-radius: var(--pm-ctl-r) 0 0 var(--pm-ctl-r); }
 #panel-wizard .pm6-wiz-intent-chip:last-child { border-radius: 0 var(--pm-ctl-r) var(--pm-ctl-r) 0; }
 #panel-wizard .pm6-wiz-intent-chip:hover:not(.sel) { z-index: 1; color: var(--text-primary); border-color: var(--border); background: linear-gradient(var(--wo-hover-fill), var(--wo-hover-fill)), color-mix(in srgb, var(--surface-elevated) 60%, transparent); }
-#panel-wizard .pm6-wiz-intent-chip.sel { z-index: 2; color: var(--wo-sel-ink); font-weight: 700; border-color: var(--wo-sel-line); background: var(--wo-sel-fill); }
+#panel-wizard .pm6-wiz-intent-chip.sel { z-index: 2; color: var(--wo-sel-ink); font-weight: 700; border-color: var(--wo-sel-line); background: var(--wo-sel-fill), color-mix(in srgb, var(--surface-elevated) 60%, transparent); }
 #panel-wizard .pm6-wiz-intent-chip:focus-visible { z-index: 3; outline: 2px solid var(--accent-primary); outline-offset: 1px; }
 
 #panel-wizard :is(.pm6-wiz-quickchips, .pm6-wiz-opts) { gap: 0; padding-top: 1px; flex-direction: column; align-items: stretch; }
@@ -29323,7 +29325,7 @@ html:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier="on"
 }
 #panel-wizard .pm6-wiz-opt:hover:not(:disabled):not(.sel) { z-index: 1; transform: none; color: var(--text-primary); background: linear-gradient(var(--wo-hover-fill), var(--wo-hover-fill)), color-mix(in srgb, var(--surface-elevated) 60%, transparent); }
 #panel-wizard .pm6-wiz-opt:hover:not(:disabled)::before { opacity: 1; color: var(--wo-accent); }
-#panel-wizard .pm6-wiz-opt.sel { z-index: 2; color: var(--wo-sel-ink); border-color: var(--wo-sel-line); background: var(--wo-sel-fill); }
+#panel-wizard .pm6-wiz-opt.sel { z-index: 2; color: var(--wo-sel-ink); border-color: var(--wo-sel-line); background: var(--wo-sel-fill), color-mix(in srgb, var(--surface-elevated) 60%, transparent); }
 #panel-wizard .pm6-wiz-opt.something { border-style: solid; color: var(--text-secondary); font-weight: 500; }
 #panel-wizard .pm6-wiz-opt:focus-visible { z-index: 3; outline: 2px solid var(--accent-primary); outline-offset: -2px; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-wizard :is(.pm6-wiz-opt, .pm6-wiz-intent-chip) { transition: none; }
@@ -29363,8 +29365,9 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-orchestrator .pm6-orc
   font: var(--wo-label-font); letter-spacing: var(--wo-label-track); color: var(--wo-ok);
 }
 #panel-orchestrator .pm6-orch-run-mode::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-/* a live run's mark sends out a slow ring, like a recording light; transform and opacity only, so it never repaints */
-#panel-orchestrator .pm6-orch-run-mode[data-mode="live"]::after {
+/* while the live run is running, its mark sends out a slow ring, like a recording light (not while it is paused or done);
+   transform and opacity only, so it never repaints */
+#panel-orchestrator .orch-header:has(.pm6-orch-status[data-state="running"]) .pm6-orch-run-mode[data-mode="live"]::after {
   content: ""; position: absolute; left: 0; top: 50%; width: 6px; height: 6px; margin-top: -3px; border-radius: 50%;
   box-sizing: border-box; border: 1px solid currentColor; opacity: 0; pointer-events: none;
   animation: wo-live 2.4s cubic-bezier(.2, .7, .3, 1) infinite;
@@ -29593,7 +29596,7 @@ html[data-lg="on"][data-theme^="glass"] #panel-wizard .pm6-wiz-expandbtn { posit
 html[data-lg="on"][data-theme^="glass"] #panel-wizard .pm6-wiz-intent-row[data-lg-lensed] .pm6-wiz-intent-chip.sel { background: var(--lg-fill) !important; color: var(--text-primary) !important; border-color: var(--lg-line) !important; }
 html[data-lg="on"][data-theme^="glass"] #panel-orchestrator .pm6-orch-w-head { background: transparent !important; border-bottom: 1px solid var(--lg-line); -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 /* chosen cells and tabs on a sheet: the sheet's selection, with its text */
-html[data-lg="on"][data-theme^="glass"] :is(#panel-wizard, #panel-orchestrator) { --wo-sel-fill: var(--lg-sel); --wo-sel-ink: var(--lg-on-sel); --wo-sel-line: transparent; }
+html[data-lg="on"][data-theme^="glass"] :is(#panel-wizard, #panel-orchestrator) { --wo-sel-fill: linear-gradient(var(--lg-sel), var(--lg-sel)); --wo-sel-ink: var(--lg-on-sel); --wo-sel-line: transparent; }
 html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-intent-chip, .pm6-wiz-opt):not(.sel) { background: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
 html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-intent-chip, .pm6-wiz-opt):not(.sel):hover { background: var(--lg-fill-hover) !important; }
 html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-bigbtn, .pm6-wiz-ghostbtn, .pm6-wiz-btn),
