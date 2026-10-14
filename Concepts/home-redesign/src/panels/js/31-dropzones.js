@@ -15,7 +15,7 @@
    what is painted, so a preview that moves the panels never moves the zones under the pointer. Hysteresis: a side
    holds until another is nearer by 5 % of the body; the Join target holds 12 px past its slack; a dock 12 px past its
    band. The guide floats over the target panel's committed body: four side tiles around the Join tile, the zone's
-   name under them. */
+   name under them, or wherever beside them keeps it clear of what is carried (the caption rule, below). */
 
 var dropZones = PMW.dropZones = {};
 var DOCK_BAND = 18, JOIN_SLACK = 8, HOLD_PX = 12, HOLD_SHARE = 0.05;
@@ -207,8 +207,6 @@ function ensureGuide() {
     guideTiles[k] = t;
     guideEl.appendChild(t);
   });
-  guideCap = h('span', { class: 'pmw-guide-cap' });
-  guideEl.appendChild(guideCap);
   overlay().appendChild(guideEl);
   dockEls = {};
   SIDES.forEach(function (e) {
@@ -216,6 +214,9 @@ function ensureGuide() {
     dockEls[e] = d;
     overlay().appendChild(d);
   });
+  // the zone's name is a layer of its own, over the carried chip, so it can keep clear of what is carried (below)
+  guideCap = h('span', { class: 'pmw-guide-cap', 'aria-hidden': 'true', hidden: true });
+  overlay().appendChild(guideCap);
   return guideEl;
 }
 /* the docks come up with the carry (a torn tab, a lifted panel) */
@@ -223,10 +224,12 @@ dropGuide.begin = function (g) {
   ensureGuide();
   var base = baseRects();
   var on = !!base && dropZones.docksOn(g);
+  cap.docks = [];
   SIDES.forEach(function (e) {
     var d = dockEls[e];
     if (!on) { d.hidden = true; return; }
     var p = dockPoint(base.centre, e);
+    cap.docks.push({ edge: e, x: p.x - 16, y: p.y - 16, w: 32, h: 32 });
     d.style.left = p.x + 'px'; d.style.top = p.y + 'px';
     setAttr(d, 'data-off', !dropZones.rootFits(g, e));
     setAttr(d, 'data-on', null);
@@ -234,34 +237,36 @@ dropGuide.begin = function (g) {
     if (d.hidden) { d.hidden = false; motion.animate(d, [{ opacity: 0 }, { opacity: 1 }], { dur: 160, easing: motion.ease('out') }); }
   });
 };
+/* every frame of a carry: the zone's guide and name when the zone changes, and the name kept clear of the carry */
 dropGuide.update = function (g, z) {
   ensureGuide();
   var sig = z ? z.key : '';
-  if (guideEl._pmwSig === sig) return;
-  guideEl._pmwSig = sig;
-  SIDES.forEach(function (e) { setAttr(dockEls[e], 'data-on', !!z && z.type === 'root' && z.edge === e); });
-  var gd = z && z.guide;
-  if (!gd) {
-    hideGuide();
-    if (z && z.type === 'root') showCaptionAtDock(z);
-    return;
+  if (guideEl._pmwSig !== sig) {
+    guideEl._pmwSig = sig;
+    SIDES.forEach(function (e) { setAttr(dockEls[e], 'data-on', !!z && z.type === 'root' && z.edge === e); });
+    var tiles = null;
+    if (z && z.guide) tiles = showTiles(z.guide);
+    else hideTiles();
+    capTarget(z, tiles);
   }
+  capPlace(g);
+};
+/* the guide's tiles over the target panel's body; returns how it moved there and the box its name sits by */
+function showTiles(gd) {
   var b = gd.body, s = gd.size;
   var ext = s.tile * 3 + s.gap * 2;
   var x = Math.round(b.x + b.w / 2 - ext / 2), y = Math.round(b.y + b.h / 2 - ext / 2);
-  var el = guideEl, first = el.hidden || guideFade;
+  var el = guideEl, first = el.hidden || guideFade, how = 'held';
   if (guideFade) { try { guideFade.cancel(); } catch (_) {} guideFade = null; }
   el.style.setProperty('--pmw-guide-tile', s.tile + 'px');
   el.style.setProperty('--pmw-guide-gap', s.gap + 'px');
   setAttr(el, 'data-size', s.mode);
-  setAttr(el, 'data-dock-cap', null);
   SIDES.forEach(function (e) {
     setAttr(guideTiles[e], 'data-off', !gd.fits[e]);
     setAttr(guideTiles[e], 'data-on', gd.active === e);
   });
   setAttr(guideTiles.merge, 'data-off', !gd.join);
   setAttr(guideTiles.merge, 'data-on', gd.active === 'merge');
-  setText(guideCap, z.label || '');
   var moved = guideFor !== gd.panelId;
   guideFor = gd.panelId;
   el.hidden = false;
@@ -272,30 +277,15 @@ dropGuide.update = function (g, z) {
     void el.offsetWidth;
     el.style.transition = '';
     if (first) motion.animate(el, [{ opacity: 0, transform: 'scale(.9)' }, { opacity: 1, transform: 'none' }], { dur: 170, easing: motion.ease('out') });
+    how = 'snap';
   } else if (moved) {
     el.style.translate = x + 'px ' + y + 'px';     // glides (CSS) to the next panel's centre
+    how = 'glide';
   }
-};
-function showCaptionAtDock(z) {
-  // the root zone names itself beside its dock (the guide's caption, moved there; the tiles hidden)
-  var base = baseRects();
-  if (!base) return;
-  var p = dockPoint(base.centre, z.edge);
-  var el = guideEl;
-  if (guideFade) { try { guideFade.cancel(); } catch (_) {} guideFade = null; }
-  setAttr(el, 'data-dock-cap', z.edge);
-  setText(guideCap, z.label || '');
-  el.style.setProperty('--pmw-guide-tile', '32px');
-  el.style.setProperty('--pmw-guide-gap', '0px');
-  el.style.transition = 'none';
-  el.style.translate = Math.round(p.x - 48) + 'px ' + Math.round(p.y - 48) + 'px';
-  void el.offsetWidth;
-  el.style.transition = '';
-  guideFor = null;
-  if (el.hidden) { el.hidden = false; motion.animate(el, [{ opacity: 0 }, { opacity: 1 }], { dur: 140, easing: motion.ease('out') }); }
+  var t = s.tile, gp = s.gap;
+  return { how: how, rect: s.mode === 'join' ? { x: x + t + gp, y: y + t + gp, w: t, h: t } : { x: x, y: y, w: ext, h: ext } };
 }
-function hideGuide() {
-  if (guideEl) guideEl._pmwSig = null;
+function hideTiles() {
   if (!guideEl || guideEl.hidden || guideFade) return;
   guideFor = null;
   var el = guideEl;
@@ -305,12 +295,16 @@ function hideGuide() {
   a.onfinish = function () { if (guideFade !== a) return; guideFade = null; el.hidden = true; };
 }
 dropGuide.hide = function () {
-  hideGuide();
+  if (guideEl) guideEl._pmwSig = null;
+  hideTiles();
+  capHide();
   if (dockEls) SIDES.forEach(function (e) { setAttr(dockEls[e], 'data-on', null); });
 };
 dropGuide.end = function () {
   if (!guideEl) return;
-  hideGuide();
+  guideEl._pmwSig = null;
+  hideTiles();
+  capHide();
   SIDES.forEach(function (e) {
     var d = dockEls[e];
     if (d.hidden) return;
@@ -322,3 +316,222 @@ dropGuide.end = function () {
     setAttr(d, 'data-on', null);
   });
 };
+
+/* ---- the zone's name, never under what is carried (landing round 2, 2026-10-14: in Basic dark the bottom dock's
+   "New row across the bottom" lay under the carried tab, at rest, on two routes). The chip rides where the tab tore
+   off, often above the pointer, which is exactly where that name sat. The rule, at every zone that names itself (a
+   panel's guide, a dock, "+N", a strip a carried panel joins through):
+   - the name has places round its anchor, in order: a guide below, above, right, left of its tiles; a dock on the
+     panel area's side of it, then beside it along the edge, either way; a strip below, left, right, above;
+   - it takes the first place clear of the carry (the chip and the pointer, and the other docks) by 12 px; the place it
+     holds keeps it while 4 px stay clear, and an earlier place is taken back once it has stayed clear 160 ms, so the
+     name does not hop about while the hand wanders;
+   - with no place clear (a cramped panel area) it stands just past the chip on its own side; it is drawn above the
+     chip in any case, so a passing overlap never hides its words;
+   - it steps aside with a short glide in the look's own motion and a slight duck (Retro and NieR stepped, no duck);
+     Reduced Motion: it fades out and in again at its new place, nothing travels. Panel to panel it rides with the
+     guide's glide; anything else comes in where it lands.
+   The carry's boxes come from the gesture (no layout read per frame); the name's own size is read once per words and
+   look. */
+var CAP_GAP = 10, CAP_STAY = 4, CAP_ENTER = 12, CAP_BACK_MS = 160, CAP_SWAP_MS = 400;
+var CAP_SIDES = {
+  guide: ['below', 'above', 'right', 'left'],
+  strip: ['below', 'left', 'right', 'above'],
+  dock: { bottom: ['above', 'left', 'right'], top: ['below', 'left', 'right'], left: ['right', 'above', 'below'], right: ['left', 'above', 'below'] }
+};
+var cap = { anchor: null, label: '', side: null, x: null, y: null, shown: false, enter: false, glide: false, backSince: 0,
+  fade: null, swap: null, pend: null, swapTimer: 0, snapRaf: 0, sizes: {}, docks: [], bounds: null };
+dropGuide.caption = function () { return { anchor: cap.anchor && cap.anchor.key, side: cap.side, x: cap.x, y: cap.y, shown: cap.shown }; };
+
+/* what the name sits by for a zone, and its places; null: the zone has no name */
+function capAnchor(z, tiles) {
+  var base = baseRects();
+  if (!base) return null;
+  var cr = base.centre;
+  cap.bounds = { x: cr.x + 4, y: cr.y + 4, w: cr.w - 8, h: cr.h - 8 };
+  if (tiles) return { kind: 'guide', key: 'guide-' + z.guide.panelId + '-' + z.guide.size.mode, rect: tiles.rect, sides: CAP_SIDES.guide };
+  if (z.type === 'root') {
+    var p = dockPoint(cr, z.edge);
+    return { kind: 'dock', key: 'dock-' + z.edge, edge: z.edge, rect: { x: p.x - 16, y: p.y - 16, w: 32, h: 32 }, sides: CAP_SIDES.dock[z.edge] };
+  }
+  if (z.type === 'strip' && z.rect) return { kind: 'strip', key: z.key, rect: z.rect, sides: CAP_SIDES.strip };
+  if (z.type === 'merge' && z.viaStrip) {
+    var r = base.panels[z.panelId], pp = model.panel(state.layout, z.panelId);
+    if (!r) return null;
+    var sh = pp && pp.collapsed ? r.h : Math.min(r.h, stripHeight(render.panelEl(z.panelId)));
+    return { kind: 'strip', key: 'join-' + z.panelId, rect: { x: r.x, y: r.y, w: r.w, h: sh }, sides: CAP_SIDES.guide };
+  }
+  return null;
+}
+function capTarget(z, tiles) {
+  var a = z && z.label ? capAnchor(z, tiles) : null;
+  if (!a) { capHide(); return; }
+  var prev = cap.anchor;
+  cap.anchor = a;
+  if (!prev || prev.key !== a.key) {
+    cap.side = null;
+    cap.backSince = 0;
+    cap.glide = !!prev && cap.shown && prev.kind === 'guide' && a.kind === 'guide' && !!tiles && tiles.how === 'glide';
+    cap.enter = !cap.glide;
+  }
+  if (cap.label !== z.label) { cap.label = z.label; setText(guideCap, z.label); }
+}
+function capShow() {
+  if (cap.fade) { try { cap.fade.cancel(); } catch (_) {} cap.fade = null; }
+  guideCap.hidden = false;
+  cap.shown = true;
+  cap.enter = true;
+}
+function capHide() {
+  cap.anchor = null; cap.side = null; cap.backSince = 0; cap.pend = null; cap.glide = false;
+  if (!guideCap) return;
+  if (cap.swap) { try { cap.swap.cancel(); } catch (_) {} cap.swap = null; }
+  if (!cap.shown) return;
+  cap.shown = false;
+  var el = guideCap;
+  var a = motion.animate(el, [{ opacity: 1 }, { opacity: 0 }], { dur: 120, easing: motion.ease('out') });
+  if (!a) { el.hidden = true; return; }
+  cap.fade = a;
+  a.onfinish = function () { if (cap.fade !== a) return; cap.fade = null; el.hidden = true; };
+}
+/* the name's size, read once per words and look (it has to be showing to be measured) */
+function capSize() {
+  var key = cap.label + '|' + (root.getAttribute('data-theme') || '') + '|' + (root.getAttribute('data-o55-nier') || '');
+  var s = cap.sizes[key];
+  if (s) return s;
+  if (guideCap.hidden) return null;
+  s = { w: guideCap.offsetWidth, h: guideCap.offsetHeight };
+  if (!s.w || !s.h) return null;
+  cap.sizes[key] = s;
+  return s;
+}
+/* what the name keeps clear of: the pointer (the grabbing hand round its hot spot), the chip, the other docks */
+function capKeep(g, a) {
+  var out = [{ x: g.px - 12, y: g.py - 12, w: 24, h: 26 }];
+  if (g.chipBox) out.push(g.chipBox);
+  for (var i = 0; i < cap.docks.length; i++) if (!(a.kind === 'dock' && cap.docks[i].edge === a.edge)) out.push(cap.docks[i]);
+  return out;
+}
+function capHit(c, keep, m) {
+  for (var i = 0; i < keep.length; i++) {
+    var k = keep[i];
+    if (c.x < k.x + k.w + m && c.x + c.w > k.x - m && c.y < k.y + k.h + m && c.y + c.h > k.y - m) return k;
+  }
+  return null;
+}
+function capInside(c, b) { return !b || (c.x >= b.x - 0.5 && c.y >= b.y - 0.5 && c.x + c.w <= b.x + b.w + 0.5 && c.y + c.h <= b.y + b.h + 0.5); }
+/* a place on one side of the anchor; it slides along that side to stay in the panel area, and is out if it cannot */
+function capSideRect(r, side, size, b) {
+  var w = size.w, hh = size.h, x, y;
+  if (side === 'below') { x = r.x + r.w / 2 - w / 2; y = r.y + r.h + CAP_GAP; }
+  else if (side === 'above') { x = r.x + r.w / 2 - w / 2; y = r.y - CAP_GAP - hh; }
+  else if (side === 'right') { x = r.x + r.w + CAP_GAP; y = r.y + r.h / 2 - hh / 2; }
+  else { x = r.x - CAP_GAP - w; y = r.y + r.h / 2 - hh / 2; }
+  if (b) {
+    if (side === 'below' || side === 'above') x = clamp(x, b.x, Math.max(b.x, b.x + b.w - w));
+    else y = clamp(y, b.y, Math.max(b.y, b.y + b.h - hh));
+  }
+  var c = { side: side, x: Math.round(x), y: Math.round(y), w: w, h: hh };
+  return capInside(c, b) ? c : null;
+}
+function capSolve(a, size, keep) {
+  var cands = [], cur = null, i, c, now = performance.now();
+  for (i = 0; i < a.sides.length; i++) {
+    c = capSideRect(a.rect, a.sides[i], size, cap.bounds);
+    if (!c) continue;
+    cands.push(c);
+    if (c.side === cap.side) cur = c;
+  }
+  if (!cands.length) { c = capSideRect(a.rect, a.sides[0], size, null); cap.backSince = 0; return c; }
+  var ci = cur ? cands.indexOf(cur) : -1;
+  var curClear = !!cur && !capHit(cur, keep, CAP_STAY);
+  // an earlier place, well clear: at once when nothing holds a place yet or the one held is covered, else after a moment
+  for (i = 0; i < (ci < 0 ? cands.length : ci); i++) {
+    if (capHit(cands[i], keep, CAP_ENTER)) continue;
+    if (ci < 0 || !curClear) { cap.backSince = 0; return cands[i]; }
+    if (!cap.backSince) cap.backSince = now;
+    if (now - cap.backSince >= CAP_BACK_MS * motion.speed()) { cap.backSince = 0; return cands[i]; }
+    return cur;
+  }
+  cap.backSince = 0;
+  if (curClear) return cur;
+  for (i = ci + 1; i < cands.length; i++) if (!capHit(cands[i], keep, CAP_ENTER)) return cands[i];
+  for (i = 0; i < cands.length; i++) if (cands[i] !== cur && !capHit(cands[i], keep, CAP_STAY)) return cands[i];
+  // nothing clear: just past the carry on a side, the first that stays in the panel area
+  for (i = 0; i < cands.length; i++) {
+    c = { side: cands[i].side + '-past', x: cands[i].x, y: cands[i].y, w: cands[i].w, h: cands[i].h };
+    for (var n = 0, k; n < 4 && (k = capHit(c, keep, CAP_ENTER)); n++) {
+      var s = cands[i].side;
+      if (s === 'above') c.y = Math.round(k.y - CAP_ENTER - c.h);
+      else if (s === 'below') c.y = Math.round(k.y + k.h + CAP_ENTER);
+      else if (s === 'left') c.x = Math.round(k.x - CAP_ENTER - c.w);
+      else c.x = Math.round(k.x + k.w + CAP_ENTER);
+    }
+    if (capInside(c, cap.bounds) && !capHit(c, keep, CAP_STAY)) return c;
+  }
+  return cur || cands[0];
+}
+function capPlace(g) {
+  var a = cap.anchor;
+  if (!a) return;
+  if (!cap.shown) capShow();
+  var size = capSize();
+  if (!size) return;
+  var c = capSolve(a, size, capKeep(g, a));
+  if (c) capMove(c);
+}
+function capSet(c) { cap.x = c.x; cap.y = c.y; guideCap.style.translate = c.x + 'px ' + c.y + 'px'; }
+/* placed with no transition (cleared on the next frame, after this one's style has been taken) */
+function capSnap(c) {
+  var el = guideCap;
+  el.style.transition = 'none';
+  capSet(c);
+  if (cap.snapRaf) cancelAnimationFrame(cap.snapRaf);
+  cap.snapRaf = requestAnimationFrame(function () { cap.snapRaf = 0; el.style.transition = ''; });
+}
+function capMove(c) {
+  var el = guideCap, prevSide = cap.side;
+  if (cap.enter) {
+    cap.enter = false; cap.glide = false; cap.pend = null; cap.side = c.side;
+    if (cap.swap) { try { cap.swap.cancel(); } catch (_) {} cap.swap = null; }
+    capSnap(c);
+    motion.animate(el, [{ opacity: 0, transform: 'scale(.94)' }, { opacity: 1, transform: 'none' }], { dur: 150, easing: motion.ease('out') });
+    return;
+  }
+  if (cap.pend) { cap.pend = c; cap.side = c.side; return; }      // fading out under Reduced Motion: comes in there
+  cap.side = c.side;
+  if (c.x === cap.x && c.y === cap.y) return;
+  if (cap.glide) { cap.glide = false; capSet(c); return; }        // with the guide, on the name's own transition
+  if (prevSide && prevSide !== c.side) { capSwap(c); return; }
+  if (/-past$/.test(c.side) && !reducedMotion()) { capSet(c); return; }   // following the chip past it
+  capSnap(c);                                                     // new words, re-centred where they were
+}
+/* stepping aside: a short glide with a slight duck; Reduced Motion: out where it was, in where it goes */
+function capSwap(c) {
+  var el = guideCap;
+  if (cap.swap) { try { cap.swap.cancel(); } catch (_) {} cap.swap = null; }
+  if (reducedMotion()) {
+    if (!el.animate) { capSnap(c); return; }
+    cap.pend = c;
+    var out = el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 90, easing: 'linear', fill: 'forwards' });
+    cap.swap = out;
+    out.onfinish = function () {
+      if (cap.swap !== out || !cap.pend) return;
+      capSnap(cap.pend);
+      cap.pend = null;
+      var inn = el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 130, easing: 'linear' });
+      try { out.cancel(); } catch (_) {}
+      cap.swap = inn;
+      inn.onfinish = function () { if (cap.swap === inn) cap.swap = null; };
+    };
+    return;
+  }
+  setAttr(el, 'data-swap', true);
+  capSet(c);
+  clearTimeout(cap.swapTimer);
+  cap.swapTimer = setTimeout(function () { setAttr(el, 'data-swap', null); }, CAP_SWAP_MS);
+  var fam = motion.family();
+  if (fam !== 'retro' && fam !== 'nier') {
+    cap.swap = motion.animate(el, [{ opacity: 1, transform: 'none' }, { opacity: .82, transform: 'scale(.96)', offset: .4 }, { opacity: 1, transform: 'none' }], { dur: 260, easing: 'ease-in-out' });
+  }
+}

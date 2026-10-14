@@ -10,7 +10,7 @@
      and the guide are 31-dropzones.js.
    Full cancel (Escape, pointercancel, lost capture, blur, a release over the chat or the rail) restores the order and
    the active tab and dispatches nothing. Every outcome also has a menu path (the tab menu) and a keyboard path
-   (Ctrl+Shift+PgUp/PgDn, Ctrl+Alt+arrows). */
+   (Ctrl+Shift+PgUp/PgDn, Alt+Shift+arrows). */
 
 var tabDrag = PMW.tabDrag = {};
 var TEAR_BAND = 14, FLIP_MS = 250, SETTLE_MS = 160;
@@ -189,6 +189,7 @@ function tearOff(g) {
   g.chip = chip;
   g.chipOffX = g.px - r.left; g.chipOffY = g.py - r.top;
   g.chipW = parseFloat(chip.style.width) || r.width;
+  g.chipH = r.height;
   g.tab.style.transform = '';
   g.tab.classList.add('pmw-torn');      // keeps its slot but paints nothing: the strip shows where it came from
   g.liftAt = performance.now();
@@ -211,6 +212,7 @@ function followChip(g) {
   var k = reducedMotion() ? 1 : motion.curve('cubic-bezier(.2,.8,.2,1)')(Math.min(1, (performance.now() - g.liftAt) / 140));
   var x = g.px - g.chipOffX, y = g.py - g.chipOffY - 4 * k;
   g.chip.style.transform = 'translate3d(' + (x - parseFloat(g.chip.style.left)).toFixed(1) + 'px,' + (y - parseFloat(g.chip.style.top)).toFixed(1) + 'px,0)';
+  g.chipBox = { x: x, y: y, w: g.chipW, h: g.chipH };      // where the chip is this frame: the zone's name keeps clear of it
   setAttr(g.chip, 'data-alt', g.alt);
 }
 
@@ -275,7 +277,8 @@ function showZone(g, z) {
     return;
   }
   if (g.chip) setAttr(g.chip, 'data-nodrop', null);
-  if (real.type === 'strip') preview.show(real.rect, real.label, real.type);
+  // "+N" names itself in the guide's caption, which keeps clear of the chip and the pointer (31-dropzones.js)
+  if (real.type === 'strip') preview.show(real.rect, '', real.type);
   else preview.hide();
   sayZone(g, z);
 }
@@ -462,12 +465,15 @@ panelDrag.begin = function (ev, panelId, gripEl) {
       g.chip = h('div', { class: 'pmw-chip pmw-chip-panel', 'aria-hidden': 'true' }, [icon('panel', { size: 14 }), h('span', { text: (rec ? tabLabel(rec) : 'Empty') + (p.tabs.length > 1 ? ' and ' + (p.tabs.length - 1) + ' more' : '') })]);
       g.chip.style.left = (g.px + 12) + 'px'; g.chip.style.top = (g.py + 10) + 'px';
       overlay().appendChild(g.chip);
+      var cb = g.chip.getBoundingClientRect();      // once: its words set its width
+      g.chipL = cb.left - g.sx; g.chipT = cb.top - g.sy; g.chipW = cb.width; g.chipH = cb.height;
       dropGuide.begin(g);
       announce('Moving the ' + model.describe(state.layout, panelId) + '. Drop it toward a side of another panel, or on its middle target to join its tabs. Escape puts it back.');
       return true;
     },
     onFrame: function (g) {
       g.chip.style.transform = 'translate3d(' + (g.px - g.sx).toFixed(1) + 'px,' + (g.py - g.sy).toFixed(1) + 'px,0)';
+      g.chipBox = { x: g.chipL + g.px, y: g.chipT + g.py, w: g.chipW, h: g.chipH };
       dropView.tick(g);
     },
     probe: function (g) { return dropZones.probe(g, {}); },

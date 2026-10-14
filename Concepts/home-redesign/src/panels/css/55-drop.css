@@ -45,7 +45,6 @@ html[data-theme$="-light"] #pmw-overlay {
 .pmw-guide-tile[data-edge="right"] { grid-area: 2 / 3; }
 .pmw-guide-tile[data-edge="bottom"] { grid-area: 3 / 2; }
 .pmw-guide[data-size="join"] .pmw-guide-tile:not([data-edge="merge"]) { visibility: hidden; }
-.pmw-guide[data-dock-cap] .pmw-guide-tile { visibility: hidden; }
 
 .pmw-guide-tile, .pmw-dock {
   position: relative;
@@ -120,28 +119,33 @@ html[data-theme$="-light"] #pmw-overlay {
 .pmw-dock[data-edge="top"] > .pmw-guide-map::after { height: calc(36% - 1px); bottom: auto; }
 .pmw-dock[data-edge="bottom"] > .pmw-guide-map::after { height: calc(36% - 1px); top: auto; }
 
-/* the zone's name, under the guide (beside the dock for a dock) */
+/* the zone's name: a layer of its own over the carried chip (1310 over 1300), placed by 31-dropzones.js where it
+   keeps clear of the chip and the pointer: 10 px under the guide, else above it or beside it; on the panel area's
+   side of a dock, else beside it along the edge. Placed with the translate property (glides between places), so the
+   entrance and the duck can scale it with transform about its own centre */
 .pmw-guide-cap {
-  position: absolute;
-  left: 50%;
-  top: calc(100% + 10px);
-  translate: -50% 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1310;
+  pointer-events: none;
   white-space: nowrap;
   padding: 4px 9px;
   border-radius: 7px;
   background: var(--pmw-pop);
   color: var(--pmw-text);
   box-shadow: 0 0 0 1px var(--pmw-pop-line), var(--pmw-guide-shadow);
+  font-family: var(--pm-font-ui);
   font-size: 12px;
   font-weight: 600;
   line-height: 16px;
   letter-spacing: .01em;
+  /* panel to panel it rides with the guide (the guide's own glide) */
+  transition: translate 190ms var(--pmw-ease-slide);
 }
-.pmw-guide-cap:empty { display: none; }
-.pmw-guide[data-dock-cap="left"] .pmw-guide-cap { left: calc(50% + 26px); top: 50%; translate: 0 -50%; }
-.pmw-guide[data-dock-cap="right"] .pmw-guide-cap { left: auto; right: calc(50% + 26px); top: 50%; translate: 0 -50%; }
-.pmw-guide[data-dock-cap="top"] .pmw-guide-cap { top: calc(50% + 26px); }
-.pmw-guide[data-dock-cap="bottom"] .pmw-guide-cap { top: auto; bottom: calc(50% + 26px); }
+.pmw-guide-cap[hidden], .pmw-guide-cap:empty { display: none; }
+/* stepping aside from the carry */
+.pmw-guide-cap[data-swap] { transition: translate 240ms cubic-bezier(.2, .8, .2, 1); }
 
 /* ---- per look ---- */
 html[data-theme^="friendly"] #pmw-overlay {
@@ -158,9 +162,11 @@ html[data-theme^="friendly"] .pmw-guide-tile[data-on], html[data-theme^="friendl
     transform 320ms cubic-bezier(.34, 1.56, .64, 1), opacity var(--pmw-guide-t) linear;
 }
 html[data-theme^="friendly"] .pmw-guide-cap { border-radius: 10px; }
+html[data-theme^="friendly"] .pmw-guide-cap[data-swap] { transition: translate 360ms cubic-bezier(.34, 1.56, .64, 1); }
 
 html[data-theme^="basic"] #pmw-overlay { --pmw-guide-r: 7px; --pmw-guide-map-r: 2px; }
 html[data-theme^="basic"] .pmw-guide-tile[data-on], html[data-theme^="basic"] .pmw-dock[data-on] { transform: none; }
+html[data-theme^="basic"] .pmw-guide-cap[data-swap] { transition: translate 190ms cubic-bezier(.2, .8, .2, 1); }
 
 /* Glass: frosted tiles with the slab's specular rim along the top; the lit tile is the selection glass */
 html[data-theme^="glass"] #pmw-overlay {
@@ -182,6 +188,7 @@ html[data-theme^="glass"] .pmw-guide-tile[data-on], html[data-theme^="glass"] .p
     0 0 26px 2px var(--pmw-guide-glow), var(--pmw-guide-shadow);
   transform: scale(1.07);
 }
+html[data-theme^="glass"] .pmw-guide-cap[data-swap] { transition: translate 280ms cubic-bezier(.16, 1, .3, 1); }
 html[data-theme^="glass"] .pmw-guide-cap {
   border-radius: 10px;
   background: var(--lg-tint-menu, var(--pmw-pop));
@@ -205,6 +212,7 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-tile[data-on], ht
   box-shadow: 0 0 0 1px var(--accent-lime), 3px 3px 0 rgba(0, 0, 0, .35);
 }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide { transition: translate 140ms steps(3, end); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-guide-cap, .pmw-guide-cap[data-swap]) { transition: translate 140ms steps(3, end); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-map { border-width: 1px; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-map::after { opacity: 1; background: repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 3px); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-guide-cap {
@@ -236,6 +244,7 @@ html[data-o55-nier="on"] .pmw-guide-tile[data-on], html[data-o55-nier="on"] .pmw
   box-shadow: 0 0 0 1px var(--o55-nier-ink), 3px 3px 0 rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .16);
 }
 html[data-o55-nier="on"] .pmw-guide { transition: translate 160ms steps(4, end); }
+html[data-o55-nier="on"] :is(.pmw-guide-cap, .pmw-guide-cap[data-swap]) { transition: translate 160ms steps(4, end); }
 html[data-o55-nier="on"] .pmw-guide-map { border-width: 1px; }
 html[data-o55-nier="on"] .pmw-guide-map::after { opacity: 1; background: repeating-linear-gradient(45deg, currentColor 0 1px, transparent 1px 3px); }
 html[data-o55-nier="on"] .pmw-guide-tile[data-on] > .pmw-guide-map::after, html[data-o55-nier="on"] .pmw-dock[data-on] > .pmw-guide-map::after { background: currentColor; }
@@ -457,11 +466,14 @@ html[data-motion="reduced"] #pm-home-centre .pmw-dv-ghost, html[data-motion="red
   #pm-home-centre .pmw-dv-ghost, #pm-home-centre .pmw-dv-hole { transition: opacity 140ms linear !important; }
 }
 
-/* Reduced Motion: the guide and the docks appear and change in place; nothing glides, grows or scales */
+/* Reduced Motion: the guide, the docks and the zone's name appear and change in place (the name fades out and in
+   again when it steps aside); nothing glides, grows or scales */
 html[data-motion="reduced"] .pmw-guide { transition: none; }
 html[data-motion="reduced"] :is(.pmw-guide-tile, .pmw-dock) { transition: none; }
+html[data-motion="reduced"] :is(.pmw-guide-cap, .pmw-guide-cap[data-swap]) { transition: none !important; }   /* over Retro's and NieR's steps */
 html[data-motion="reduced"] :is(.pmw-guide-tile, .pmw-dock)[data-on] { transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .pmw-guide, .pmw-guide-tile, .pmw-dock { transition: none; }
+  .pmw-guide-cap, .pmw-guide-cap[data-swap] { transition: none !important; }
   .pmw-guide-tile[data-on], .pmw-dock[data-on] { transform: none; }
 }
