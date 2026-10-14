@@ -140,3 +140,5 @@ html[data-o55-nier="on"] .pmed-cz .pmed-art-brackets::before { background: linea
 /* a slider under its own heading: no label in front of it */
 .pmed-cz .pmed-slider-bare { grid-template-columns: minmax(0, 1fr) 54px; }
 .pmed-cz .pmed-slider-bare .pmt-cz-slabel { display: none; }
+/* drawn once almost clear before the entrance (11-editor-customize.js: the costly first paint happens before it plays) */
+.pmed-cz.pmed-prime { opacity: .001; }

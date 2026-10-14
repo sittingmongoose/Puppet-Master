@@ -369,20 +369,39 @@ function open(opts) {
     return name + ' has no indentation to follow yet, so Tab puts in ' + (I.tabs ? 'a tab, ' + I.unit + ' columns wide.' : I.unit + ' spaces.');
   }
   function note(sel, text) { var e = root.querySelector(sel); if (!e) return; e.hidden = !text; if (e.textContent !== text) e.textContent = text; }
+  /* the look's own code colours (Follow look), read off the editor once per look, colour mode, contrast and phosphor,
+     in a frame of its own; until it lands the screen keeps what it drew */
+  var LOOK_TOKENS = ['--pmw-ed-fg', '--pmw-ed-bg', '--pmw-ed-gutbg', '--pmw-ed-s-kw', '--pmw-ed-s-fn', '--pmw-ed-s-str', '--pmw-ed-s-com', '--pmw-ed-bp-0'];
+  var lookRead = { key: null, v: null }, lookRaf = 0;
+  function lookTokens(key) {
+    if (lookRead.key === key) return lookRead.v;
+    if (!lookRaf) lookRaf = requestAnimationFrame(function () {
+      lookRaf = 0;
+      if (!root.isConnected || !inst.root) return;
+      var rs = getComputedStyle(inst.root), v = {};
+      LOOK_TOKENS.forEach(function (n) { v[n] = rs.getPropertyValue(n).trim(); });
+      lookRead = { key: key, v: v };
+      paint();
+    });
+    return lookRead.v;
+  }
+  var varsSet = {};
+  function setVar(n, val) { if (varsSet[n] === val) return; varsSet[n] = val; root.style.setProperty(n, val); }
   function paint() {
     var R = eff(), lk = R.lookKey, isNier = lk === 'nier';
     root.setAttribute('data-pmt-look', lk);
     root.setAttribute('data-pmt-mode', R.look.mode === 'light' ? 'light' : 'dark');
     root.setAttribute('data-scope', scope);
     root.classList.toggle('pmt-cz-reduced', !!R.look.reduced);
-    /* the effect pictures are drawn in this scope's own colours (the terminal's art reads these) */
-    var codeEl = inst.root && inst.root.querySelector('.pmw-ed-scroll');
-    if (codeEl) {
-      var cs = getComputedStyle(codeEl);
-      root.style.setProperty('--pmt-cz-sfg', cs.getPropertyValue('--pmw-ed-fg').trim() || '#ccc');
-      root.style.setProperty('--pmt-cz-sbg', cs.getPropertyValue('--pmw-ed-gutbg').trim() || '#111');
-      root.style.setProperty('--pmt-cz-sglow', cs.getPropertyValue('--pmw-ed-s-str').trim() || '#8f8');
-    }
+    /* the effect pictures are drawn in this scope's own colours (the terminal's art reads these): a scheme's from the
+       editor's own variables, the look's from a reading taken once per look (lookTokens); never a computed-style read
+       inside a choice, which made the page restyle everything at once and froze the sweep (a GPU film) */
+    var lkKey = lk + '|' + R.look.mode + '|' + R.colors.contrast + '|' + (inst.root && inst.root.getAttribute('data-phosphor') || '');
+    var sv = inst.schemeVarsNow ? inst.schemeVarsNow() : null, lt = lookTokens(lkKey);
+    var tok = function (n) { return (sv && sv[n]) || (lt && lt[n]) || ''; };
+    setVar('--pmt-cz-sfg', tok('--pmw-ed-fg') || '#ccc');
+    setVar('--pmt-cz-sbg', tok('--pmw-ed-gutbg') || '#111');
+    setVar('--pmt-cz-sglow', tok('--pmw-ed-s-str') || '#8f8');
     [].forEach.call(root.querySelectorAll('[role="radio"][data-key]'), function (b) {
       var key = b.getAttribute('data-key');
       setA(b, 'aria-checked', String(String(current(key, R)) === b.getAttribute('data-value')));
@@ -418,13 +437,10 @@ function open(opts) {
     if (why.textContent !== wtxt) why.textContent = wtxt;
     /* the Follow look tile: the look's own colours, read from the editor's own tokens */
     var fa = root.querySelector('[data-follow-art]');
-    if (fa && inst.root) {
-      var rs = getComputedStyle(inst.root), g = function (n) { return rs.getPropertyValue(n).trim(); };
-      var sig = lk + R.look.mode + g('--pmw-ed-s-kw');
-      if (fa.getAttribute('data-for') !== sig) {
-        fa.innerHTML = codeArt({ bg: g('--pmw-ed-gutbg') || g('--pmw-ed-bg'), fg: g('--pmw-ed-fg'), kw: g('--pmw-ed-s-kw'), fn: g('--pmw-ed-s-fn'), str: g('--pmw-ed-s-str'), com: g('--pmw-ed-s-com'), b0: g('--pmw-ed-bp-0'), word: 'the look' });
-        fa.setAttribute('data-for', sig);
-      }
+    if (fa && lt && fa.getAttribute('data-for') !== lkKey) {
+      var g = function (n) { return lt[n] || ''; };
+      fa.innerHTML = codeArt({ bg: g('--pmw-ed-gutbg') || g('--pmw-ed-bg'), fg: g('--pmw-ed-fg'), kw: g('--pmw-ed-s-kw'), fn: g('--pmw-ed-s-fn'), str: g('--pmw-ed-s-str'), com: g('--pmw-ed-s-com'), b0: g('--pmw-ed-bp-0'), word: 'the look' });
+      fa.setAttribute('data-for', lkKey);
     }
     var fm = root.querySelector('[data-follow-meta]'), fs2 = EL().followScheme(), ftxt = fs2 ? 'Like ' + fs2.name : 'The look’s own';
     if (fm.textContent !== ftxt) fm.textContent = ftxt;
@@ -622,16 +638,17 @@ function open(opts) {
     if (fam) fam.hidden = !famHas;
     var fn = root.querySelector('[data-find-n]'); fn.textContent = ql ? (n ? n + (n === 1 ? ' scheme' : ' schemes') : 'No scheme matches') : '';
   }
-  /* a scheme previews when the pointer rests on it (110 ms) or the arrow keys reach it, on the preview and on the
-     editor; leaving the list or Escape puts the chosen one back */
-  var INTENT_MS = 110, intent = 0, previewing = null;
+  /* a scheme previews when the pointer rests on it (160 ms, so crossing the grid previews nothing on the way) or the
+     arrow keys reach it, on the preview and on the editor, at once and without the sweep (the sweep is for keeping
+     one); leaving the list or Escape puts the chosen one back */
+  var INTENT_MS = 160, intent = 0, previewing = null;
   function previewSoon(tileEl, ms) {
     clearTimeout(intent);
     var id = tileEl.getAttribute('data-value');
     if (previewing === id) return;
     intent = setTimeout(function () {
       if (!root.isConnected || openRoot !== root) return;
-      previewing = id; recolor(tileEl);
+      previewing = id;
       EL().preview(v, { scheme: id }); syncPreview();
     }, ms);
   }
@@ -677,7 +694,7 @@ function open(opts) {
   function roving() {
     [].forEach.call(root.querySelectorAll('[role="radiogroup"]'), function (g) {
       var opts2 = g.querySelectorAll('[role="radio"]'), chosen = g.querySelector('[role="radio"][aria-checked="true"]:not([hidden])') || [].filter.call(opts2, function (o) { return !o.hidden; })[0];
-      [].forEach.call(opts2, function (o) { o.tabIndex = o === chosen ? 0 : -1; });
+      [].forEach.call(opts2, function (o) { var t = o === chosen ? 0 : -1; if (o.tabIndex !== t) o.tabIndex = t; });   // a write only where it changes: each one restyles
     });
   }
   function importScheme() {
@@ -754,7 +771,15 @@ function open(opts) {
   syncPreview();
   paint();
   filter('');
-  Motion.play(root);
+  /* the entrance plays once the screen has been drawn: its first style, layout and paint (37 code tiles, the live
+     preview) are the costly frame, and taken during the entrance they made it skip (a GPU film showed the scrim pop
+     in after five frozen frames). The screen is drawn first almost clear, and the entrance starts two frames later */
+  root.classList.add('pmed-prime');
+  requestAnimationFrame(function () { requestAnimationFrame(function () {
+    if (!root.isConnected) return;
+    root.classList.remove('pmed-prime');
+    Motion.play(root);
+  }); });
   var first = root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog;
   first.focus({ preventScroll: true });
   /* opened for one group (the editor menu's Indentation row): that group's heading at the top, and the focus on it */

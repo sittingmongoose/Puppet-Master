@@ -3500,7 +3500,9 @@ function mountEditor(host, st, api) {
     var g = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
     var l = JSON.stringify([R.colors, R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
     if (prev.behavior.diffLayout !== R.behavior.diffLayout && mode === 'diff' && !diffLayoutPick) resolveLayout(true);
-    else if (reopened || g !== geoSig || head.offsetHeight !== headH) relayoutAll();
+    // the header's height can only change with the look (its face and spacing), never with colours: reading it forces
+    // the whole page to restyle and lay out at once, so it is read only when the look itself changed
+    else if (reopened || g !== geoSig || ((R.lookKey !== prev.lookKey || R.look.mode !== prev.look.mode) && head.offsetHeight !== headH)) relayoutAll();
     else if (l !== lookSig) { renderRows(true); sticky._key = null; updateSticky(); renderOverlays(); }
     geoSig = g; lookSig = l;
     if (R.lines.relative !== prev.lines.relative) markCurrentRow();
@@ -3627,10 +3629,17 @@ function mountEditor(host, st, api) {
     recolorFrom: function (x, y) {
       if (reduced() || special) return;
       var bgc = tokenColor('--pmw-ed-gutbg'); if (!bgc) return;
-      var r0 = root.getBoundingClientRect();
-      var plate = h('i', { class: 'pmw-ed-recolor', 'aria-hidden': 'true', style: { background: 'rgb(' + bgc.slice(0, 3).map(Math.round).join(',') + ')',
-        '--rx': Math.round((x == null ? r0.left : x) - r0.left) + 'px', '--ry': Math.round((y == null ? r0.top : y) - r0.top) + 'px' } });
+      var plate = h('i', { class: 'pmw-ed-recolor', 'aria-hidden': 'true', style: { background: 'rgb(' + bgc.slice(0, 3).map(Math.round).join(',') + ')' } });
       root.appendChild(plate);
+      /* Friendly's bloom grows from the point of the choice (often a tile beside the editor), measured on the plate: it
+         starts at the plate's nearest edge and ends at its farthest corner, so the first frame already shows the new
+         colours */
+      var r0 = plate.getBoundingClientRect();
+      var px = (x == null ? r0.left : x) - r0.left, py = (y == null ? r0.top : y) - r0.top, w = r0.width, hh = r0.height;
+      var near = Math.hypot(Math.max(0, -px, px - w), Math.max(0, -py, py - hh));
+      var far = Math.max(Math.hypot(px, py), Math.hypot(px - w, py), Math.hypot(px, py - hh), Math.hypot(px - w, py - hh));
+      plate.style.setProperty('--rx', Math.round(px) + 'px'); plate.style.setProperty('--ry', Math.round(py) + 'px');
+      plate.style.setProperty('--pmw-ed-r0', Math.round(near + 12) + 'px'); plate.style.setProperty('--pmw-ed-r1', Math.ceil(far + 4) + 'px');
       setTimeout(function () { plate.remove(); }, 700);
     },
     /* the Customize screen's preview: scripted moves for its Try it row */
@@ -3662,6 +3671,9 @@ function mountEditor(host, st, api) {
       unmount: function () { instance.unmount(); }
     },
     openCustomize: function (o) { openCustomize(view, (o && o.anchor) || hrow.action('more') || head); },
+    // the scheme's colours as set on the code (null under Follow look, whose colours are the look's CSS): read without
+    // asking the page for computed style
+    schemeVarsNow: function () { return schemeOn ? Object.assign({}, schemeOn) : null; },
     // the file's indentation as this editor reads it (the Customize screen's Indentation note)
     path: path,
     indent: function () { resolveIndent(); return { unit: IND.unit, tabs: IND.tabs, own: IND.own, tabbed: !!d.tabbed }; },

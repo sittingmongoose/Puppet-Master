@@ -467,18 +467,20 @@ html[data-motion="reduced"] .pmw-ed :is(.pmw-ed-scroll, .pmw-ed-sticky) { transi
 .pmw-ed-dsrc { grid-column: 2; font-size: 11px; color: var(--pmw-text-3); }
 html[data-theme^="retro"] .pmw-ed-diagcard, html[data-o55-nier="on"] .pmw-ed-diagcard { border-radius: 0; }
 html[data-o55-nier="on"] .pmw-ed-diagcard { border-color: var(--o55-nier-ink); box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16); }
-/* the recolour sweep (instance.recolorFrom): a plate of the old ground over the code lifts away in the look's motion */
+/* the recolour sweep (instance.recolorFrom), when a scheme is kept: a plate of the old ground over the code lifts away in
+   the look's motion. Each one is already moving on its first frame, so the code never blinks out whole */
 .pmw-ed-recolor { position: absolute; top: var(--pmw-ed-head, 0px); left: 0; bottom: 0; right: var(--pmw-ed-track, 22px); z-index: 3; pointer-events: none;
   animation: pmw-ed-recolor-fade 200ms cubic-bezier(.2, 0, 0, 1) both; }
+.pmw-ed-recolor { --pmw-ed-r0: 0px; --pmw-ed-r1: 1400px; }
 html[data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-ed-recolor { animation: pmw-ed-recolor-bloom 340ms cubic-bezier(.25, .1, .25, 1) both;
   -webkit-mask: radial-gradient(circle at var(--rx) var(--ry), transparent var(--pmw-ed-rr), #000 calc(var(--pmw-ed-rr) + 2px));
   mask: radial-gradient(circle at var(--rx) var(--ry), transparent var(--pmw-ed-rr), #000 calc(var(--pmw-ed-rr) + 2px)); }
 @property --pmw-ed-rr { syntax: '<length>'; inherits: false; initial-value: 0px; }
 html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-ed-recolor { animation: pmw-ed-recolor-glide 320ms cubic-bezier(.05, .7, .1, 1) both; }
-html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ed-recolor { animation: pmw-ed-recolor-fade 180ms steps(4, end) both; }
-html[data-o55-nier="on"] .pmw-ed-recolor { animation: pmw-ed-recolor-glide 240ms steps(8, end) both; }
-@keyframes pmw-ed-recolor-fade { from { opacity: 1; } to { opacity: 0; } }
-@keyframes pmw-ed-recolor-bloom { from { --pmw-ed-rr: 0px; } to { --pmw-ed-rr: 1400px; } }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ed-recolor { animation: pmw-ed-recolor-fade 180ms steps(4, start) both; }
+html[data-o55-nier="on"] .pmw-ed-recolor { animation: pmw-ed-recolor-glide 240ms steps(8, start) both; }
+@keyframes pmw-ed-recolor-fade { from { opacity: .85; } to { opacity: 0; } }
+@keyframes pmw-ed-recolor-bloom { from { --pmw-ed-rr: var(--pmw-ed-r0); } to { --pmw-ed-rr: var(--pmw-ed-r1); } }
 @keyframes pmw-ed-recolor-glide { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 0 100%); } }
 html[data-motion="reduced"] .pmw-ed-recolor { display: none; }
 @media (prefers-reduced-motion: reduce) { .pmw-ed-recolor { display: none; } }
