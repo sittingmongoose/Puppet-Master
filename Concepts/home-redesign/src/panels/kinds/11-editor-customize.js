@@ -633,7 +633,11 @@ function open(opts) {
     }
     pairNote = '';
     if (key === 'lineNumberMode') { write({ lineNumbers: raw !== 'off', relativeNumbers: raw === 'relative' }); moveInk(key, before); return; }
-    if (key === 'italicComments' || key === 'boldKeywords' || key === 'smoothScroll') { put(key, raw === 'follow' ? null : raw === 'on'); moveInk(key, before); return; }
+    if (key === 'italicComments' || key === 'boldKeywords' || key === 'smoothScroll') {
+      put(key, raw === 'follow' ? null : raw === 'on'); moveInk(key, before);
+      if (key === 'smoothScroll') tryScroll();
+      return;
+    }
     var value = raw;
     if (key === 'contrast' || key === 'fontWeight' || key === 'wrapColumn' || key === 'tabSize') value = Number(raw);
     if (key === 'insertSpaces') value = raw === 'true';
@@ -722,6 +726,14 @@ function open(opts) {
     var p = previewProblems()[1];
     preview.demo.jump(p.line - 1, p.col - 1);
     later(1400, function () { preview.demo.place(PV_SEL.r, PV_SEL.b, PV_SEL.r, PV_SEL.a); });
+  }
+  /* a Smooth scrolling choice: the preview goes to its last line and back, gliding or jumping as the choice says */
+  function tryScroll() {
+    if (!preview || !preview.demo || !preview.demo.goTo) return;
+    stopDemo();
+    later(60, function () { preview.demo.goTo(PV_LINES.length - 1); });
+    later(1000, function () { preview.demo.goTo(0); });
+    later(1800, function () { preview.demo.place(PV_SEL.r, PV_SEL.b, PV_SEL.r, PV_SEL.a); });
   }
   function tryDim() {
     if (!preview || !preview.demo) return;

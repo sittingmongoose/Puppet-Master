@@ -173725,6 +173725,12 @@ function mountEditor(host, st, api) {
         jumpSoon(); caret = { r: clamp(r, 0, V.n - 1), c: c }; anchor = null;
         markCurrentRow(); scrollToY(yAt(caret.r, caret.c)); renderOverlays(); updatePos(); queueDraw();
       },
+      /* a jump to a line as Go to line makes one, centred: it glides with Smooth scrolling and jumps without (Sol's review
+         of the customizer audit: the preview showed no difference between the Smooth scrolling choices) */
+      goTo: function (r) {
+        jumpSoon(); caret = { r: clamp(r, 0, V.n - 1), c: 0 }; anchor = null;
+        markCurrentRow(); scrollToRow(caret.r, 'center'); renderOverlays(); updatePos(); queueDraw();
+      },
       // the letters typed so far are kept (typed), so stop() can take them out if another try starts mid-way
       type: function (text, done) {
         var self = this, i = 0, start = { r: caret.r, c: caret.c };
@@ -176404,7 +176410,11 @@ function open(opts) {
     }
     pairNote = '';
     if (key === 'lineNumberMode') { write({ lineNumbers: raw !== 'off', relativeNumbers: raw === 'relative' }); moveInk(key, before); return; }
-    if (key === 'italicComments' || key === 'boldKeywords' || key === 'smoothScroll') { put(key, raw === 'follow' ? null : raw === 'on'); moveInk(key, before); return; }
+    if (key === 'italicComments' || key === 'boldKeywords' || key === 'smoothScroll') {
+      put(key, raw === 'follow' ? null : raw === 'on'); moveInk(key, before);
+      if (key === 'smoothScroll') tryScroll();
+      return;
+    }
     var value = raw;
     if (key === 'contrast' || key === 'fontWeight' || key === 'wrapColumn' || key === 'tabSize') value = Number(raw);
     if (key === 'insertSpaces') value = raw === 'true';
@@ -176493,6 +176503,14 @@ function open(opts) {
     var p = previewProblems()[1];
     preview.demo.jump(p.line - 1, p.col - 1);
     later(1400, function () { preview.demo.place(PV_SEL.r, PV_SEL.b, PV_SEL.r, PV_SEL.a); });
+  }
+  /* a Smooth scrolling choice: the preview goes to its last line and back, gliding or jumping as the choice says */
+  function tryScroll() {
+    if (!preview || !preview.demo || !preview.demo.goTo) return;
+    stopDemo();
+    later(60, function () { preview.demo.goTo(PV_LINES.length - 1); });
+    later(1000, function () { preview.demo.goTo(0); });
+    later(1800, function () { preview.demo.place(PV_SEL.r, PV_SEL.b, PV_SEL.r, PV_SEL.a); });
   }
   function tryDim() {
     if (!preview || !preview.demo) return;

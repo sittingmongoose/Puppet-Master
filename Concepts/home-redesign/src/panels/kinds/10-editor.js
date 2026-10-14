@@ -3786,6 +3786,12 @@ function mountEditor(host, st, api) {
         jumpSoon(); caret = { r: clamp(r, 0, V.n - 1), c: c }; anchor = null;
         markCurrentRow(); scrollToY(yAt(caret.r, caret.c)); renderOverlays(); updatePos(); queueDraw();
       },
+      /* a jump to a line as Go to line makes one, centred: it glides with Smooth scrolling and jumps without (Sol's review
+         of the customizer audit: the preview showed no difference between the Smooth scrolling choices) */
+      goTo: function (r) {
+        jumpSoon(); caret = { r: clamp(r, 0, V.n - 1), c: 0 }; anchor = null;
+        markCurrentRow(); scrollToRow(caret.r, 'center'); renderOverlays(); updatePos(); queueDraw();
+      },
       // the letters typed so far are kept (typed), so stop() can take them out if another try starts mid-way
       type: function (text, done) {
         var self = this, i = 0, start = { r: caret.r, c: caret.c };
