@@ -27,13 +27,14 @@ var GL_NEAR_PX = 36;      // the idle hint answers a pointer this close to a bar
 var GL_HOVER_MS = 60;     // a pointer that only crosses a bar does not light it
 var GL_TRAIL_MS = 70;     // the wake measures how far the bar moved over this long
 var GL_STILL_MS = 700;    // a light held still this long may idle (Retro's cursor blinks)
+var GL_REST_MS = 1400;    // a pointer resting near a bar this long lets the hint sink to a trace
 var GL_DOTS = 15;         // Friendly: the dots shown around the pointer (odd)
 var GL_ECHOES = 3;        // persistence copies (Retro phosphor, Friendly bubbles)
 var GL_POP = '[role="menu"], [role="dialog"], [role="listbox"], .pmw-pop, .pmw-menu';
 var glBars = [];
 var glLive = [];
 var glRaf = 0, glLast = 0;
-var glPtr = { x: 0, y: 0, target: null, on: false, dirty: false, buttons: 0 };
+var glPtr = { x: 0, y: 0, target: null, on: false, dirty: false, buttons: 0, rest: false, restT: 0 };
 var glRectsAt = 0;
 
 function glAxisV(el) { return el.getAttribute('aria-orientation') !== 'horizontal'; }
@@ -236,7 +237,12 @@ light.settle = function (el, at) {
 function glProbe(e) {
   if (e.pointerType === 'touch') return;
   glPtr.x = e.clientX; glPtr.y = e.clientY; glPtr.target = e.target; glPtr.buttons = e.buttons; glPtr.on = true;
-  glPtr.dirty = true;
+  glPtr.dirty = true; glPtr.rest = false;
+  clearTimeout(glPtr.restT);
+  glPtr.restT = setTimeout(function () {
+    glPtr.rest = true; glPtr.dirty = true;
+    if (!glRaf) { glLast = performance.now(); glRaf = requestAnimationFrame(glTick); }
+  }, GL_REST_MS);
   if (!glRaf) { glLast = performance.now(); glRaf = requestAnimationFrame(glTick); }
 }
 function glNearPass(now) {
@@ -264,7 +270,7 @@ function glNearPass(now) {
   }
   if (best) {
     var d = 1 - bestD / GL_NEAR_PX;
-    best.nearT = d * d * (3 - 2 * d);
+    best.nearT = d * d * (3 - 2 * d) * (glPtr.rest ? 0.3 : 1);
     if (!best.engaged || fresh) glEngage(best);
     var was = best.near > 0.01;
     best.tAt = glSnap(best, glAlong(best, glPtr.x, glPtr.y));
