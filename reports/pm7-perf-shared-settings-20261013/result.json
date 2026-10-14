@@ -60,11 +60,32 @@
       "raw_manifest": {
         "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m4-rejected-manifest.json",
         "sha256": "f042bc4851007fd0b99f67da5aea8dfa1a1255d45df15ad427d72d9a47380156"
+      },
+      "new_scope": {
+        "status": "approved_design_wiring_after_M5_M6_M10",
+        "authorization_mail_id": "1014005302-af53",
+        "standing_rule": "Jared design decisions belong to Opus5.5xhigh; Sol wires approved designs",
+        "decision_path": "/mnt/Cursor/share/puppet-master/2026-10-13-perf-fixes/M4-DESIGN-DECISION.md",
+        "decision_sha256": "df7fa857254291a428bc6d9ef6411e1b586beee52aec8a11557ece98ee257df0",
+        "visible_exceptions": 8,
+        "required_checks": "A-F Windows, marked checks also P1000 after clearance"
       }
     },
     {
       "id": "M5",
-      "status": "not_implemented"
+      "status": "implementation_validated_complete_measurements_in_progress",
+      "candidate": "m5-proto4",
+      "compatibility_snapshots": 312,
+      "compatibility_pairs": 156,
+      "visible_fit_focus_saved_differences": 0,
+      "auxiliary_inline_declaration_differences": 1,
+      "repeated_complete_looks": 5,
+      "repeated_windows": 390,
+      "paired_snapshots": 195,
+      "snapshot_differences": 0,
+      "measurement_summary": "reports/pm7-perf-shared-settings-20261013/m5-partial-measurements.json",
+      "performance_claim": "No material whole-action CPU improvement established in the first five looks.",
+      "mechanism": "Interactive theme changes: synthetic resize1\u21920; scoped geometry event0\u21921. Necessary geometry and dismissal callbacks remain; real resize and initial bootstrap remain."
     },
     {
       "id": "M6",
@@ -114,8 +135,8 @@
       "bytes": 19427798
     }
   ],
-  "own_active_browser_sessions": 0,
-  "maintenance_seam": "Windows1.1.1 released; own windows-2f6b33bab484 headless correctness session",
+  "own_active_browser_sessions": 1,
+  "maintenance_seam": "Recovered own HTTP server after unreachable port; five unfinished M5 looks resume in same-host fresh browser.",
   "artifact_manifest": {
     "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/artifacts/manifest.json",
     "sha256": "d3237bbd9a0f754d31ff3b1d540089660a988e84cfb173d020eb6b8ebaa6bdda"

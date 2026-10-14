@@ -126,7 +126,8 @@ root.addEventListener('keydown', e => {
 function o55MarkStuck() {
   const scroller = root.querySelector('#settings-document'); if (!scroller) return;
   const top = scroller.getBoundingClientRect().top + 1;
-  scroller.querySelectorAll('.pm51-mgr.has-manager-tabs > .pm51-tabs').forEach(nav => nav.classList.toggle('is-stuck', nav.getBoundingClientRect().top <= top));
+  const rows = [...scroller.querySelectorAll('.pm51-mgr.has-manager-tabs > .pm51-tabs')].map(nav => ({ nav, stuck: nav.getBoundingClientRect().top <= top }));
+  rows.forEach(({ nav, stuck }) => { if (nav.classList.contains('is-stuck') !== stuck) nav.classList.toggle('is-stuck', stuck); });
 }
 let o55StuckFrame = 0;
 document.addEventListener('scroll', e => {
