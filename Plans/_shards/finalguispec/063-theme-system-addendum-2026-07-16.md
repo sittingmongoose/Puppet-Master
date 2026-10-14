@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30285-L31366
+Source lines: L30307-L31388
 
-Source SHA256: `f05fb13f82babed54c090bb87736b01c7cbcf535d6c8a49773e2d7d25b8faf98`
+Source SHA256: `2a1856fd7af3e23554fe8fdb9a987825496f0a6c519ec4f5bb053780596b1feb`
 
 ---
 
@@ -240,10 +240,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The Glass Mesh, Depth and Minimal background modes and glass_background_mode:v1 are compatibility lineage.
-  F3-653 and SSYS-054 replace them with one Project Wallpaper choice at the combined Glass/wallpaper
-  publication. Until that publication they may remain only in the older concept comparison; they are not extra
-  choices in the new gallery. SP-333 owns migration and cleanup.
+  The Glass Mesh, Depth and Minimal background modes and glass_background_mode:v1 are compatibility
+  lineage. F3-653 and SSYS-054 replace them with one Project Wallpaper choice at the combined
+  Glass/wallpaper publication. They are historical lineage, not extra native choices or an alternative
+  material contract. SP-333 owns migration and cleanup.
 gui_related: true
 gui_classification_reason: This unit defines the visible glass wallpaper modes, their layer inventory, and their motion behavior.
 split_recommended: false

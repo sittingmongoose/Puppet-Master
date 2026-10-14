@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L14961-L15881
+Source lines: L14961-L15964
 
-Source SHA256: `cdd1dd4ca4b3ebd5ab26f34d954d0f8323bf1ea54aa1eb55e596e7df80aac388`
+Source SHA256: `98de231c4fbadcc305e8525a7aa2ad8d7a8ad3ff4ec34e2b6bf94b52a9c0a34f`
 
 ---
 
@@ -517,7 +517,7 @@ The terminal is now an ordinary tab kind with one session per tab (`Plans/Sectio
 | `ui.terminal.mark.open_output` | Dispatches `cmd.panel_tab.open` with an editor buffer spec (`kind: editor`, the command's output as `text`, its command line as `title`, read-only, `mode: keep`); never a preview | command-mark menu Open output in an editor tab |
 | `ui.terminal.a11y_buffer` | Opens the plain-text buffer for screen readers | More menu Plain-text buffer; Alt+F2 |
 | `ui.terminal.zoom` | Text size Bigger, Smaller or Reset for this terminal, a view zoom over the appearance size; Reset returns to the appearance size | More menu Text size; Ctrl+= / Ctrl+- / Ctrl+0 (Cmd+= / Cmd+- / Cmd+0) |
-| `ui.terminal.degauss` | Runs the on-demand Retro degauss once (`Plans/FinalGUISpec.md#F3-643`); nothing under Reduced Motion | Appearance popover Degauss, Retro only |
+| `ui.terminal.degauss` | Runs the on-demand Retro degauss once (`Plans/FinalGUISpec.md#F3-643`); nothing under Reduced Motion | Customize screen (F3-650) Degauss, Retro only |
 | `ui.terminal.mute_notifications` | Turns this terminal's notifications off or on: that tab's own state, saved with the tab (`Plans/FinalGUISpec.md#F3-641`); a muted terminal raises no system notification. Absent where the platform has no system notifications (added 2026-10-10, DL-187, D38; lead ruling F5) | More menu Mute notifications (a check); the tab menu's Mute notifications, after a hairline; the notification permission notice's Mute this terminal |
 
 Scrolling a page, to the top or to the bottom (Shift+PageUp / Shift+PageDown, Ctrl+Shift+Home / Ctrl+Shift+End) and the find bar's own keys are scrolling and input inside the terminal (SMPFS-183), not actions.
@@ -532,7 +532,7 @@ Scrolling a page, to the top or to the bottom (Shift+PageUp / Shift+PageDown, Ct
 | Header row | More (the ⋮ menu) | view-local |
 | More menu | New terminal, then a profile (zsh, bash, pwsh, an SSH host) | `cmd.panel_tab.open` with `{ kind: terminal, profile }` and `where: tab` (amended 2026-10-10, DL-187, D39: the submenu lists every installed shell, then, after a hairline, an SSH hosts submenu whose hosts dispatch the same with that host's `profile`) |
 | More menu | Split down | `cmd.workspace_layout.split` with the terminal spec and `direction: down` |
-| More menu | Appearance... | opens the popover (view-local) |
+| More menu | Appearance... | opens the Customize screen (F3-650; view-local) |
 | More menu | Text size: Bigger, Smaller, Reset | `ui.terminal.zoom` |
 | More menu | Copy mode / Quick select / Select all | `ui.terminal.copy_mode` / `ui.terminal.quick_select` / `ui.terminal.select_all` |
 | More menu | Clear | `cmd.terminal.clear`; Ctrl+Shift+K (Cmd+K) |
@@ -564,12 +564,12 @@ Scrolling a page, to the top or to the bottom (Shift+PageUp / Shift+PageDown, Ct
 | Agent row, Secret input | Type it | `ui.panel_tab.activate` with `focus: true` on this terminal |
 | Session ended row | Restart / Close tab | `cmd.terminal.restart_replace` / `cmd.panel_tab.close` |
 | Close-a-running-terminal row | Close terminal / Keep it open | completes the pending `cmd.panel_tab.close` (its `two_step` confirmation) / cancels it, dispatching nothing |
-| Appearance popover | This terminal / All terminals switch, scheme search, hovering a scheme (a live preview that Escape reverts), Close | view-local |
-| Appearance popover | any field, with This terminal | `cmd.terminal.appearance.set` |
-| Appearance popover | any field, with All terminals | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` over SSYS-051's rows |
-| Appearance popover | Import scheme... | `cmd.terminal.appearance.import_scheme` |
-| Appearance popover | Background image Choose... | a file picker (view-local); the chosen image is a background value written like any field |
-| Appearance popover | Degauss (Retro) | `ui.terminal.degauss` |
+| Customize screen (F3-650) | This terminal / All terminals switch, scheme search, hovering a scheme (a live preview that Escape reverts), Close | view-local |
+| Customize screen (F3-650) | any field, with This terminal | `cmd.terminal.appearance.set` |
+| Customize screen (F3-650) | any field, with All terminals | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` over SSYS-051's rows |
+| Customize screen (F3-650) | Import scheme... | `cmd.terminal.appearance.import_scheme` |
+| Customize screen (F3-650) | Background image Choose... | a file picker (view-local); the chosen image is a background value written like any field |
+| Customize screen (F3-650) | Degauss (Retro) | `ui.terminal.degauss` |
 
 Keys a focused terminal gives back to the host (the revised terminal SPEC section 3, re-pinned at e741dfbc6c): Alt+1..9, Alt+Shift+1..9, Alt+arrows, Alt+Shift+arrows, Ctrl+PgUp / Ctrl+PgDn, Ctrl+Shift+PgUp / Ctrl+Shift+PgDn, Alt+PgUp / Alt+PgDn (next and previous tab in a browser, where Chrome keeps Ctrl+PgUp / Ctrl+PgDn), Ctrl+\\ and Ctrl+Shift+\\ (Ctrl+\\ is SIGQUIT in shells; a program that needs it gets it from Send signal), Shift+Escape, Ctrl+Shift+Space, Ctrl+Shift+\`, Ctrl+Tab, and the web client's stand-ins Alt+T, Alt+W, Alt+Shift+T and Alt+\`. Every other Ctrl+key belongs to the shell (Ctrl+W, Ctrl+K, Ctrl+T and the rest). The host takes F6 and Shift+F6 before the terminal sees them (the region cycle above), and ignores keys during IME composition (terminal SPEC e741dfbc6c). The shell loses zsh's Alt+digit arguments, Alt+arrow word moves (Ctrl+Left and Ctrl+Right still move by word) and Alt+T / Alt+W; that is the accepted cost.
 
@@ -608,54 +608,64 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  The terminal is one session per tab (DL-181, SMPFS-180), so a terminal tab is opened, moved, closed, renamed and
-  pinned by the cmd.panel_tab.* commands and split by cmd.workspace_layout.split with a terminal spec, and every
-  command that addressed a section, workgroup, sub-tab, pane or the editor's terminal stack retires:
-  cmd.terminal.move_workgroup, cmd.terminal.reattach_section, cmd.terminal.detach_section, cmd.terminal.detach,
-  cmd.terminal.split_pane, cmd.terminal.add_leaf, cmd.terminal.move_pane, cmd.terminal.close_pane,
-  cmd.terminal.new_tab, the workgroup and sub-tab activate and reorder ids, cmd.terminal.move_tab_to_section, the
-  editor terminal stack trio, cmd.terminal.rename_tab, cmd.terminal.pin_tab and cmd.terminal.close_tab, each with
-  the replacement this addendum names; none of the fourteen ids that existed only in the Wiring_Matrix terminal table
-  is promoted. The Home producers new_section, move_workgroup, split_pane, bottom_toggle and collapse_bottom retire.
-  Kept: cmd.terminal.open (reveals the exact session's tab, or opens it through the one opening module),
-  cmd.terminal.show, cmd.terminal.focus (no pane argument), cmd.terminal.rerun, cmd.terminal.restart_replace,
-  cmd.terminal.terminate_session, cmd.terminal.kill_session, cmd.terminal.clear_scrollback (now with its row) and
-  DL-035's six candidates. cmd.terminal.reveal reveals the session's tab wherever it is, never the bottom panel.
-  New rows: cmd.terminal.take_over (a human keystroke is the same transition), cmd.terminal.hand_back,
-  cmd.terminal.interrupt (SIGINT to the foreground job), cmd.terminal.stop_agent, cmd.terminal.allow_agent_input
-  (grant once or this_terminal), cmd.terminal.deny_agent_input, cmd.terminal.revoke_agent_input, cmd.terminal.clear,
+  The terminal is one session per tab (DL-181, SMPFS-180), so a terminal tab is opened, moved, closed,
+  renamed and pinned by the cmd.panel_tab.* commands and split by cmd.workspace_layout.split with a
+  terminal spec, and every command that addressed a section, workgroup, sub-tab, pane or the editor's
+  terminal stack retires: cmd.terminal.move_workgroup, cmd.terminal.reattach_section,
+  cmd.terminal.detach_section, cmd.terminal.detach, cmd.terminal.split_pane, cmd.terminal.add_leaf,
+  cmd.terminal.move_pane, cmd.terminal.close_pane, cmd.terminal.new_tab, the workgroup and sub-tab
+  activate and reorder ids, cmd.terminal.move_tab_to_section, the editor terminal stack trio,
+  cmd.terminal.rename_tab, cmd.terminal.pin_tab and cmd.terminal.close_tab, each with the replacement this
+  addendum names; none of the fourteen ids that existed only in the Wiring_Matrix terminal table is
+  promoted. The Home producers new_section, move_workgroup, split_pane, bottom_toggle and collapse_bottom
+  retire. Kept: cmd.terminal.open (reveals the exact session's tab, or opens it through the one opening
+  module), cmd.terminal.show, cmd.terminal.focus (no pane argument), cmd.terminal.rerun,
+  cmd.terminal.restart_replace, cmd.terminal.terminate_session, cmd.terminal.kill_session,
+  cmd.terminal.clear_scrollback (now with its row) and DL-035's six candidates. cmd.terminal.reveal
+  reveals the session's tab wherever it is, never the bottom panel. New rows: cmd.terminal.take_over (a
+  human keystroke is the same transition), cmd.terminal.hand_back, cmd.terminal.interrupt (SIGINT to the
+  foreground job), cmd.terminal.stop_agent, cmd.terminal.allow_agent_input (grant once or this_terminal),
+  cmd.terminal.deny_agent_input, cmd.terminal.revoke_agent_input, cmd.terminal.clear,
   cmd.terminal.send_signal (SIGTERM or SIGKILL), cmd.terminal.appearance.set (This terminal; All terminals
   composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over SSYS-051's rows) and
-  cmd.terminal.appearance.import_scheme. Allow in this terminal decides who may type, never what may run. Typed local
-  actions: ui.terminal.find, ui.terminal.copy_mode, ui.terminal.quick_select, ui.terminal.select_all,
-  ui.terminal.copy, ui.terminal.paste, ui.terminal.jump_to_command, ui.terminal.mark.copy_command,
-  ui.terminal.mark.copy_output, ui.terminal.mark.select_output, ui.terminal.mark.rerun (dispatches
-  cmd.terminal.rerun), ui.terminal.mark.insert (dispatches cmd.terminal.insert_command), ui.terminal.mark.open_output
-  (dispatches cmd.panel_tab.open with an editor buffer spec), ui.terminal.a11y_buffer, ui.terminal.zoom and
-  ui.terminal.degauss. Every control of the header row, the More menu, the context menu, the command-mark menu, the
-  agent row, the ended and closing rows, links and the Appearance popover maps to one of these as the mapping table
-  says, and a focused terminal gives the host keys back as that table lists.
-  Amended 2026-10-10 (DL-187; D34, D38, D39; lead ruling F5): Mute notifications, in the More menu and at the end of
-  the tab's menu, is the typed local action ui.terminal.mute_notifications, that tab's own state saved with the tab,
-  absent where the platform has no system notifications; the permission notice's Mute this terminal dispatches it
-  too, its Allow asks the platform and Not now dispatches nothing; a click on a system notification brings the
-  terminal forward with ui.panel_tab.activate. New terminal lists every installed shell, then an SSH hosts submenu,
-  each a cmd.panel_tab.open with its profile. No command sets a terminal tab's colour or icon (D34).
+  cmd.terminal.appearance.import_scheme. Allow in this terminal decides who may type, never what may run.
+  Typed local actions: ui.terminal.find, ui.terminal.copy_mode, ui.terminal.quick_select,
+  ui.terminal.select_all, ui.terminal.copy, ui.terminal.paste, ui.terminal.jump_to_command,
+  ui.terminal.mark.copy_command, ui.terminal.mark.copy_output, ui.terminal.mark.select_output,
+  ui.terminal.mark.rerun (dispatches cmd.terminal.rerun), ui.terminal.mark.insert (dispatches
+  cmd.terminal.insert_command), ui.terminal.mark.open_output (dispatches cmd.panel_tab.open with an editor
+  buffer spec), ui.terminal.a11y_buffer, ui.terminal.zoom and ui.terminal.degauss. Every control of the
+  header row, the More menu, the context menu, the command-mark menu, the agent row, the ended and closing
+  rows, links and the Customize screen (F3-650) maps to one of these as the mapping table says, and a
+  focused terminal gives the host keys back as that table lists. Amended 2026-10-10 (DL-187; D34, D38,
+  D39; lead ruling F5): Mute notifications, in the More menu and at the end of the tab's menu, is the
+  typed local action ui.terminal.mute_notifications, that tab's own state saved with the tab, absent where
+  the platform has no system notifications; the permission notice's Mute this terminal dispatches it too,
+  its Allow asks the platform and Not now dispatches nothing; a click on a system notification brings the
+  terminal forward with ui.panel_tab.activate. New terminal lists every installed shell, then an SSH hosts
+  submenu, each a cmd.panel_tab.open with its profile. No command sets a terminal tab's colour or icon
+  (D34).
 gui_related: true
 gui_classification_reason: "Owns the command ids and local actions of every terminal tab control and retires the section, workgroup and pane commands."
 split_recommended: false
 depends_on: [DL-181, DL-183, DL-187, SMPFS-180, SMPFS-182, SMPFS-183, F3-640, F3-641, F3-642, F3-646, CV-362, UCC-160, UCC-200]
 unblocks: [WM-091, UIW-042, ATS-076]
 acceptance_criteria:
-  - "No catalog row, wiring row or producer addresses a terminal section, workgroup, sub-tab, pane or editor terminal stack; each retired id resolves to the replacement in the retired-id table."
-  - "cmd.terminal.reveal, cmd.terminal.open, cmd.terminal.show and cmd.terminal.focus find the session's tab wherever it is and never spawn a duplicate shell or assume a bottom panel."
-  - "Every More menu, context menu, command-mark menu, agent row, ended row, closing row, link and Appearance popover control maps to exactly one command or typed local action in the mapping table."
-  - "Send signal's Interrupt and the agent row's Interrupt both dispatch cmd.terminal.interrupt; cmd.terminal.send_signal carries only SIGTERM or SIGKILL."
-  - "cmd.terminal.allow_agent_input never bypasses the Tools policy engine or a secret prompt, and an agent's write after a human keystroke is refused as preempted."
-  - "The appearance All terminals choice composes the Settings transaction pair and never dispatches cmd.terminal.appearance.set."
-  - "No terminal command adds an event family; only commands that add, close or move a tab emit workspace.layout_changed."
-  - "Mute notifications in the More menu, the tab menu and the permission notice dispatches only ui.terminal.mute_notifications, with no command, receipt or event, and is absent where the platform has no system notifications."
-  - "No command or control sets a terminal tab's colour or icon."
+- No catalog row, wiring row or producer addresses a terminal section, workgroup, sub-tab, pane or editor terminal
+  stack; each retired id resolves to the replacement in the retired-id table.
+- cmd.terminal.reveal, cmd.terminal.open, cmd.terminal.show and cmd.terminal.focus find the session's tab wherever
+  it is and never spawn a duplicate shell or assume a bottom panel.
+- Every More menu, context menu, command-mark menu, agent row, ended row, closing row, link and Customize screen
+  (F3-650) control maps to exactly one command or typed local action in the mapping table.
+- Send signal's Interrupt and the agent row's Interrupt both dispatch cmd.terminal.interrupt; cmd.terminal.send_signal
+  carries only SIGTERM or SIGKILL.
+- cmd.terminal.allow_agent_input never bypasses the Tools policy engine or a secret prompt, and an agent's write
+  after a human keystroke is refused as preempted.
+- The appearance All terminals choice composes the Settings transaction pair and never dispatches cmd.terminal.appearance.set.
+- No terminal command adds an event family; only commands that add, close or move a tab emit workspace.layout_changed.
+- Mute notifications in the More menu, the tab menu and the permission notice dispatches only ui.terminal.mute_notifications,
+  with no command, receipt or event, and is absent where the platform has no system notifications.
+- No command or control sets a terminal tab's colour or icon.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -929,3 +939,76 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/UI_Command_Catalog.md#UCC-138, ContractName:Plans/Commands_System.md#CS-061
+
+### UCC-204 - Editor Appearance And Campaign Control Dispatch
+
+```yaml
+plan_unit_id: UCC-204
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.editor.appearance.set is a shell_view command with normalization.kind none, normalizes_to_contract F3-651
+  and no alias. Its typed request/result are Plans/editor_appearance.schema.json; it changes only an existing
+  editor tab's sparse appearance fields under the Project/workspace context and owner-state guard. A null field
+  clears its override; a token-map null entry clears that key, revealing the next layer. Reset and quick sets
+  are one atomic patch, never one dispatch per field. The result is a bounded applied/no_change/refused/failed
+  receipt with owner readback, no domain event and no workspace.layout_changed. No Project returns
+  no_project_context and no write. All editors and All terminals, Settings fields, wallpaper selection and
+  resetting those Project values compose the existing cmd.settings.transaction.preview and
+  cmd.settings.transaction.apply with exact inventory ids; the same CAS/permission/readback rules apply and no
+  app-global fallback is admitted. This terminal retains cmd.terminal.appearance.set and import retains
+  cmd.terminal.appearance.import_scheme. CS-102 and WM-093 enumerate typed local affordances and producer
+  bindings; local previews never run a shell command or modify a real file. No new shortcut is added for
+  Customize: More, Open Customize and Indentation are keyboard-reachable entry points. Panel split/move keys
+  retain UCC-200's Alt+Shift+arrows; the earlier concept Ctrl+Alt claim is retired. Notification toast dismissal
+  is view-local and moves a lasting notice into the inbox without resolving it; inbox dismissal uses
+  cmd.alert.dismiss, and Clear all composes that existing command for the captured eligible ids/revisions,
+  preserving truthful per-item refusals and keeping arrivals after the capture. Existing notice action commands
+  retain domain approval semantics. This unit creates no bulk resolve or dismiss-all command.
+gui_related: true
+gui_classification_reason: Editor appearance and campaign control dispatch.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- A This editor patch cannot change another tab, Project setting, file or structural layout revision.
+- Each durable producer maps to the one writer for its selected scope; no local action also has a catalog command
+  row.
+- Clear all cannot resolve a domain condition, clear new arrivals or hide a refused dismissal.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: editor_appearance_and_campaign_control_dispatch
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-panel-dnd-resize/NOTES.md, SHA-256 03a80f0dea3235ea637149bbec63626c4a4be8521078f9dd601f2b691f03d2d6
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/Commands_System.md#CS-102
+- Plans/Wiring_Matrix.md#WM-093
+- Plans/Settings_System.md#SSYS-009
+- Plans/storage-plan.md#SP-333
+preserved_exact_tokens:
+- cmd.editor.appearance.set
+negative_constraints: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+ContractRef: ContractName:Plans/Commands_System.md#CS-102, ContractName:Plans/Wiring_Matrix.md#WM-093, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/storage-plan.md#SP-333
+
+| command_id | Label | Arguments | Preconditions | command_kind | normalization.kind | normalizes_to_contract | alias_of_command_id | Event |
+|---|---|---|---|---|---|---|---|---|
+| `cmd.editor.appearance.set` | Customize this editor | `project_id`, `workspace_tab_id`, `panel_tab_id`, `expected_state_hash`, `idempotency_key`, `fields` (strict field patch; null clears) | Current Project and existing editor tab, matching saved-state hash, permitted write, serialized state within SP-330 bound; schema `Plans/editor_appearance.schema.json#/$defs/request` | `shell_view` | `none` | `F3-651` | null | none; nonstructural receipt |

@@ -2328,31 +2328,34 @@ unit_type: wiring_rule
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
-  The terminal tab's census is a closed list, and every control on it resolves to exactly one wiring row in WM-091's
-  tables. The header row: Find, Split, Maximize or Restore, and More. The More menu in the revised terminal SPEC's
-  order: New terminal with each shell profile and SSH host, Split down, Appearance..., Text size (Bigger, Smaller,
-  Reset), Copy mode, Quick select, Select all, Clear, Clear scrollback, Plain-text buffer, Agent input (Ask each time,
-  and one row per agent allowed in this terminal, each of which revokes), Send signal (Interrupt, Terminate, Kill) and
-  Restart session. The screen's context menu: Open in editor or Open link, Copy path or Copy link, Copy, Paste, Select
-  all, Find, Clear. The command-mark menu: its header row (the command, its state, duration and who typed it), Copy
-  command, Copy output, Rerun, Insert command, Open output in an editor tab, Select output; and the sticky command
-  header. The find bar, copy mode and quick select with their keys; links (a plain click selects, Ctrl+click or
-  Cmd+click opens a file reference in the panel's preview tab, Ctrl+double-click keeps it, Ctrl+Alt+click opens it in
-  a new panel, a URL opens a Browser tab). The agent rows: Driving (Take over, Interrupt, Stop), Paused after a
-  take-over (Hand back, Stop <agent>), Permission (Allow once, Allow in this terminal, Deny), Secret input (Type it),
-  and a person's keystroke in a terminal an agent is driving. The Session ended row (Restart, Close tab) and Enter in an
-  ended terminal; the close-a-running-terminal row (Close terminal, Keep it open); the restored notice and the notice
-  that saved scrollback could not load. The Appearance popover: the This terminal or All terminals switch, the scheme
-  list and its search, each field of F3-642 (scheme, font family, size, weight, line height, letter spacing,
-  ligatures, cursor shape, blink and trail, background, padding, minimum contrast, effects), Import scheme... and, in
-  Retro, Degauss. A refused image has no control: the program gets SMPFS-181's fixed reply. Not on the list, and never
-  wired: a split inside a terminal, a section, workgroup or sub-tab control, a terminal pop-out, the per-tab role
-  setting and any AI control in the terminal (Explain What Commands Do leaves for the chat's Teacher).
-  Amended 2026-10-10 (DL-187; D34, D38, D39): New terminal lists every installed shell, then an SSH hosts submenu with
-  each host; Mute notifications sits in the More menu between Agent input and Send signal and at the end of the tab's
-  menu after a hairline (absent where the platform has no system notifications); a click on a system notification a
-  program raised; the notification permission notice (Allow, Mute this terminal, Not now). Not on the list: any
-  control that gives a terminal tab a colour or icon (D34).
+  The terminal tab's census is a closed list, and every control on it resolves to exactly one wiring row
+  in WM-091's tables. The header row: Find, Split, Maximize or Restore, and More. The More menu in the
+  revised terminal SPEC's order: New terminal with each shell profile and SSH host, Split down,
+  Appearance..., Text size (Bigger, Smaller, Reset), Copy mode, Quick select, Select all, Clear, Clear
+  scrollback, Plain-text buffer, Agent input (Ask each time, and one row per agent allowed in this
+  terminal, each of which revokes), Send signal (Interrupt, Terminate, Kill) and Restart session. The
+  screen's context menu: Open in editor or Open link, Copy path or Copy link, Copy, Paste, Select all,
+  Find, Clear. The command-mark menu: its header row (the command, its state, duration and who typed it),
+  Copy command, Copy output, Rerun, Insert command, Open output in an editor tab, Select output; and the
+  sticky command header. The find bar, copy mode and quick select with their keys; links (a plain click
+  selects, Ctrl+click or Cmd+click opens a file reference in the panel's preview tab, Ctrl+double-click
+  keeps it, Ctrl+Alt+click opens it in a new panel, a URL opens a Browser tab). The agent rows: Driving
+  (Take over, Interrupt, Stop), Paused after a take-over (Hand back, Stop <agent>), Permission (Allow
+  once, Allow in this terminal, Deny), Secret input (Type it), and a person's keystroke in a terminal an
+  agent is driving. The Session ended row (Restart, Close tab) and Enter in an ended terminal; the
+  close-a-running-terminal row (Close terminal, Keep it open); the restored notice and the notice that
+  saved scrollback could not load. The Customize screen (F3-650): the This terminal or All terminals
+  switch, the scheme list and its search, each field of F3-642 (scheme, font family, size, weight, line
+  height, letter spacing, ligatures, cursor shape, blink and trail, background, padding, minimum contrast,
+  effects), Import scheme... and, in Retro, Degauss. A refused image has no control: the program gets
+  SMPFS-181's fixed reply. Not on the list, and never wired: a split inside a terminal, a section,
+  workgroup or sub-tab control, a terminal pop-out, the per-tab role setting and any AI control in the
+  terminal (Explain What Commands Do leaves for the chat's Teacher). Amended 2026-10-10 (DL-187; D34, D38,
+  D39): New terminal lists every installed shell, then an SSH hosts submenu with each host; Mute
+  notifications sits in the More menu between Agent input and Send signal and at the end of the tab's menu
+  after a hairline (absent where the platform has no system notifications); a click on a system
+  notification a program raised; the notification permission notice (Allow, Mute this terminal, Not now).
+  Not on the list: any control that gives a terminal tab a colour or icon (D34).
 gui_related: true
 gui_classification_reason: "The closed list of visible controls inside a terminal tab that the wiring must cover, one row each."
 split_recommended: false
@@ -2406,7 +2409,7 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Wiring_Matrix.md#WM-091, ContractName:Plans/UI_Command_Catalog.md#UCC-201, ContractName:Plans/FinalGUISpec.md#F3-640
 
-## UIW-043 — PM7 campaign control census (2026-10-14)
+### UIW-043 - Appearance And Shell Control Census
 
 ```yaml
 plan_unit_id: UIW-043
@@ -2414,21 +2417,27 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
 canonical_text: >-
-  Plans/pm7_control_bindings.json is the finite PM7 campaign producer census, extending UIW-040 through UIW-042.
-  Each row names the visible control, owner unit, setting/field payload, exact command path or typed local
-  action/non-dispatch disposition, and the corresponding production entry or reason it has none. Each admitted
-  editor setting and every retained customizer field has its own row; aliases and view-local affordances never
-  become invented cmd.* ids. Plans/Wiring_Matrix.production.json remains the runtime command wiring inventory; a
-  producer binding can reuse its canonical command entry only when the census names that entry and exact
-  argument mapping. Its schema is not relaxed for local controls: local exclusions are explicit in the census
-  and the production exclusions notes. Required evidence includes the rendered pointer/keyboard path, projected
-  availability and disabled reason, request/result, readback, receipt/event delta, focus and accessible names.
-  Static source declarations certify neither native handlers nor the complete rendered census. Every PM7 control
-  must be classified, including Settings entry/scope/reset, token color channels/hex/reset, preview/sample
-  actions, wallpaper keys/default, notifications, DnD and each resize surface. Demo-only controls and preview
-  harnesses are outside the product census.
+  Plans/pm7_control_bindings.json is the finite appearance and shell producer census, extending UIW-040
+  through UIW-042. Each row names the visible control, owner unit, setting/field payload, exact command
+  path or typed local action/non-dispatch disposition, and the corresponding production entry or reason it
+  has none. Each admitted editor setting and every retained customizer field has its own row; aliases and
+  view-local affordances never become invented cmd.* ids. Plans/Wiring_Matrix.production.json remains the
+  runtime command wiring inventory; a producer binding can reuse its canonical command entry only when the
+  census names that entry and exact argument mapping. Its schema is not relaxed for local controls: local
+  exclusions are explicit in the census and the production exclusions notes. Required evidence includes
+  the rendered pointer/keyboard path, projected availability and disabled reason, request/result,
+  readback, receipt/event delta, focus and accessible names. Static source declarations certify neither
+  native handlers nor the complete rendered census. Every PM7 control must be classified, including
+  Settings entry/scope/reset, token color channels/hex/reset, preview/sample actions, wallpaper
+  keys/default, notifications, DnD and each resize surface. Demo-only controls and preview harnesses are
+  outside the product census. Composite quick-set rows reference the one exact field/value patch in
+  Plans/appearance_quick_sets.json, list only its affected setting ids in either scope, and adapt it
+  atomically to the existing writer. Reset/restore-default operations have an explicit exact id set
+  distinct from value patches. A binding cannot substitute all editor or terminal fields for a smaller
+  quick set. Controls whose final contract is held, including the new saved terminal presets and bezel
+  choices, remain disclosed owner holds rather than fabricated executable bindings.
 gui_related: true
-gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+gui_classification_reason: Appearance And Shell Control Census.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -2442,7 +2451,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: pm7_campaign
+context_scope: appearance_and_shell_control_census
 implementation_surfaces:
 - Plans/UI_Wiring_Rules.md
 node_compile_hint:

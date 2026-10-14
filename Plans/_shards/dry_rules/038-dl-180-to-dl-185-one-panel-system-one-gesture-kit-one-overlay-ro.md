@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3437-L3998
+Source lines: L3437-L4054
 
-Source SHA256: `cb8a8d7cf94afeb686726cc1a9ceadc55ba9c47034d300d918c898da0d3f1ada`
+Source SHA256: `4aa7bd6ee1af112ccab687f9529d837be981b39a8c7c6161cc351b914e590cae`
 
 ---
 
@@ -20,33 +20,35 @@ unit_type: invariant
 status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
-  Every panel in the home centre is drawn from one grammar, whatever tab kinds it holds (DL-180, D5, D6, D12).
-  There is one tab strip (FinalGUISpec F3-631, F3-505's contact-aware silhouette generalised) with one tab menu,
-  one "+" button and its menu (F3-632), one empty-panel launcher showing that menu's rows (F3-632), one "+N"
-  list of the tabs that do not fit (F3-633), one shared header row for every kind that needs controls above its
-  content (F3-635), and one keyboard table with one web-client mapping rule (F3-635). No tab kind draws its own
-  strip, tab overflow, "+" or menu button, panel menu or header row; a kind draws a row of its own only when
-  nothing in the shared header row fits, and that kind's owner unit records why. The panel keys are F3-635's
-  alone and no kind redefines one: a kind's own keys work only inside its body, and a terminal keeps the shell's
-  keys and gives back the host keys F3-640 lists. A kind supplies its content, its registration (label, group,
-  icon, id prefixes, content minimum, its "+" row, mount, saved state, close check; F3-635) and its marks
-  through the host; every tab mark that names a state comes from the one status set (F3-585, DL-141), and every
-  kind icon is a bundled SVG icon_id (FinalGUISpec section 2.6, F3-417), never an emoji. The dashboard, the
-  terminal and the browser are tab kinds of the one panel model (F3-630); none keeps a second panel model,
-  strip, layout record or placement rule, so the dashboard's own strip, the terminal's sections, workgroups,
-  sub-tabs and in-tab splits, and the editor-only strip and overflow rules are gone (F3-631, F3-633, SMPFS-180).
-  A tab is a view of its owner's object, and the panel adds no session, store or service of its own: a browser
-  tab shows a session of the Browser owner (DR-037), a terminal tab one terminal session (SMPFS-180), and a
+  Every panel in the home centre is drawn from one grammar, whatever tab kinds it holds (DL-180, D5, D6,
+  D12). There is one tab strip (FinalGUISpec F3-631, F3-505's contact-aware silhouette generalised) with
+  one tab menu, one "+" button and its menu (F3-632), one empty-panel launcher showing that menu's rows
+  (F3-632), one "+N" list of the tabs that do not fit (F3-633), one shared header row for every kind that
+  needs controls above its content (F3-635), and one keyboard table with one web-client mapping rule
+  (F3-635). No tab kind draws its own strip, tab overflow, "+" or menu button, panel menu or header row; a
+  kind draws a row of its own only when nothing in the shared header row fits, and that kind's owner unit
+  records why. The panel keys are F3-635's alone and no kind redefines one: a kind's own keys work only
+  inside its body, and a terminal keeps the shell's keys and gives back the host keys F3-640 lists. A kind
+  supplies its content, its registration (label, group, icon, id prefixes, content minimum, its "+" row,
+  mount, saved state, close check; F3-635) and its marks through the host; every tab mark that names a
+  state comes from the one status set (F3-658, consumed by F3-585), and every kind icon is a bundled SVG
+  icon_id (FinalGUISpec section 2.6, F3-417), never an emoji. The dashboard, the terminal and the browser
+  are tab kinds of the one panel model (F3-630); none keeps a second panel model, strip, layout record or
+  placement rule, so the dashboard's own strip, the terminal's sections, workgroups, sub-tabs and in-tab
+  splits, and the editor-only strip and overflow rules are gone (F3-631, F3-633, SMPFS-180). A tab is a
+  view of its owner's object, and the panel adds no session, store or service of its own: a browser tab
+  shows a session of the Browser owner (DR-037), a terminal tab one terminal session (SMPFS-180), and a
   dashboard tab one widget board hosted through Widget_System (WS-030), never through a new host service
   (DR-038). The chat column is outside this grammar: never a panel and never a tab (F3-637). Hover on
-  strip/header controls consumes F3-465's shared small-control marker without card magnet; resize bars consume
-  F3-657. DR-072 keeps one owner for each grammar. This rule supersedes the per-surface Home owners of the
-  2026-08-04 Home owner boundary for panel and tab presentation. Amended 2026-10-10 (DL-187): the Debug Console
-  is one tab whose debug sessions are switched inside it by session sub-tabs (D33), the way Output switches its
-  channel inside its one tab: which session shows is view state, never a panel tab, never in the strip and never
-  a second tab model, and the row that switches it is the kind's own row, recorded by its owner units (F3-635,
-  F3-490). The terminal's sub-tabs stay retired. Terminal tabs carry no colour or icon of the person's choosing
-  on the strip until the neon glyph system redesigns them (D34); every tab keeps its kind's bundled icon.
+  strip/header controls consumes F3-465's shared small-control marker without card magnet; resize bars
+  consume F3-657. DR-072 keeps one owner for each grammar. This rule supersedes the per-surface Home
+  owners of the 2026-08-04 Home owner boundary for panel and tab presentation. Amended 2026-10-10
+  (DL-187): the Debug Console is one tab whose debug sessions are switched inside it by session sub-tabs
+  (D33), the way Output switches its channel inside its one tab: which session shows is view state, never
+  a panel tab, never in the strip and never a second tab model, and the row that switches it is the kind's
+  own row, recorded by its owner units (F3-635, F3-490). The terminal's sub-tabs stay retired. Terminal
+  tabs carry no colour or icon of the person's choosing on the strip until the neon glyph system redesigns
+  them (D34); every tab keeps its kind's bundled icon.
 gui_related: true
 gui_classification_reason: "Fixes one grammar for every panel and tab in the home centre."
 split_recommended: false
@@ -55,7 +57,7 @@ unblocks: []
 acceptance_criteria:
   - "No tab kind or panel owner defines its own tab strip, tab overflow, \"+\" button, menu button, panel menu or header row, and every kind-specific row is justified in its owner unit."
   - "The dashboard, the terminal and the browser are tab kinds of F3-630's one panel model, with no second panel model, layout record, strip or placement rule."
-  - "Every tab state mark comes from the one status set of F3-585 and every kind icon is a bundled SVG icon_id."
+  - "Every tab state mark comes from the one status set of F3-658 and every kind icon is a bundled SVG icon_id."
   - "One keyboard table and one web-client mapping rule serve every panel; no kind redefines a panel key."
   - "Amended 2026-10-10 (DL-187): the Debug Console's session sub-tabs switch a view inside its one tab and never act as panel tabs; no terminal tab shows a colour or icon of the person's choosing on the strip."
 validation_surfaces:
@@ -260,43 +262,47 @@ status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   The terminal has one appearance model (DL-183, D15). Four layers resolve field by field, an unset field
-  falling through: the look's defaults ("Follow look": the current look's scheme, face and effects), then the
-  app default (Settings > Terminal), then the project default, then the per-tab override, each later layer
-  winning (F3-642). The Appearance popover in the terminal's More menu, Settings > Terminal and the per-look
-  defaults read and write this one model: the popover writes This terminal (the tab's override) or All terminals
-  (the project default, written through the same Settings transaction Settings uses over SSYS-051's rows,
-  F3-642), no surface writes an app-wide value until q-035 admits an app-wide store (SSYS-002), and the look
-  layer reads the current look from its one store (SSYS-010, DR-056) and keeps no copy. The fields are F3-642's,
-  the storage SP-331's (the app default in Settings rows, the project default in the Project's Settings, the
-  override inside the terminal tab's saved state) and the Settings rows SSYS-051's; the existing terminal
-  appearance rows, code.terminal.theme and code.terminal.font-family among them, bind the Project layer under
-  SSYS-002. The app-default layer is reserved compatibility/default lineage, not an admitted writable app store.
-  There is no fifth layer (a shell profile carries no appearance of its own), and no second terminal theme,
-  scheme, font, background or effects store or terminal-local settings key outside the model. Every field
-  applies live, and no terminal appearance setting carries a restart badge. The faces are F3-644's and their
-  files DR-050's one set. The effects (F3-643) are paint on the terminal's own screen inside this model, not
-  motion voices: DR-043's per-family motion voices and its accent rule stand, so the scheme colours the screen
-  and the terminal's chrome takes the theme's token roles. One code colour-scheme catalog and the shared
-  Customize presentation serve the editor and terminal (F3-642, F3-650, F3-651). Each curated scheme carries the
-  terminal palette and editor syntax colours. Each surface has its own scheme choice, defaulting to "Follow
-  look"; neither surface keeps its own scheme list or duplicate Customize implementation. F3-650 alone owns
-  scope entry, preview docking and selector layout for both screens. F3-651 owns editor field behavior; SSYS-052
-  and SSYS-051 own their Project rows. Compatibility concept keys never authorize a no-Project write.
+  falling through: the look's defaults ("Follow look": the current look's scheme, face and effects), then
+  the app default (Settings > Terminal), then the project default, then the per-tab override, each later
+  layer winning (F3-642). The Customize screen (F3-650) in the terminal's More menu, Settings > Terminal
+  and the per-look defaults read and write this one model: the Customize screen writes This terminal (the
+  tab's override) or All terminals (the project default, written through the same Settings transaction
+  Settings uses over SSYS-051's rows, F3-642), no surface writes an app-wide value until q-035 admits an
+  app-wide store (SSYS-002), and the look layer reads the current look from its one store (SSYS-010,
+  DR-056) and keeps no copy. The fields are F3-642's, the storage SP-331's (the app default in Settings
+  rows, the project default in the Project's Settings, the override inside the terminal tab's saved state)
+  and the Settings rows SSYS-051's; the existing terminal appearance rows, code.terminal.theme and
+  code.terminal.font-family among them, bind the Project layer under SSYS-002. The app-default layer is
+  reserved compatibility/default lineage, not an admitted writable app store. There is no fifth layer (a
+  shell profile carries no appearance of its own), and no second terminal theme, scheme, font, background
+  or effects store or terminal-local settings key outside the model. Every field applies live, and no
+  terminal appearance setting carries a restart badge. The faces are F3-644's and their files DR-050's one
+  set. The effects (F3-643) are paint on the terminal's own screen inside this model, not motion voices:
+  DR-043's per-family motion voices and its accent rule stand, so the scheme colours the screen and the
+  terminal's chrome takes the theme's token roles. One code colour-scheme catalog and the shared Customize
+  presentation serve the editor and terminal (F3-642, F3-650, F3-651). Each curated scheme carries the
+  terminal palette and editor syntax colours. Each surface has its own scheme choice, defaulting to
+  "Follow look"; neither surface keeps its own scheme list or duplicate Customize implementation. F3-650
+  alone owns scope entry and preview docking for both screens; F3-438 owns the shared selector layout.
+  F3-651 owns editor field behavior; SSYS-052 and SSYS-051 own their Project rows. Compatibility concept
+  keys never authorize a no-Project write. Each kind’s quick sets resolve from
+  Plans/appearance_quick_sets.json; This and All adapt the same exact patch to their existing writers,
+  never maintain their own patch copies. Separate editor/terminal field identities remain intact.
 gui_related: true
 gui_classification_reason: "Fixes one layered appearance model for every terminal."
 split_recommended: false
 depends_on: [DL-183]
 unblocks: [F3-642, SSYS-051, SP-331]
 acceptance_criteria:
-- The popover, Settings > Terminal and the per-look defaults resolve through one four-layer model field by field,
-  and the popover writes only This terminal or All terminals.
-- No terminal theme, font, background or effects value is stored outside SP-331's places, and no shell profile carries
-  an appearance of its own.
+- Customize, Settings > Terminal and the per-look defaults resolve through one four-layer model field by field,
+  and the Customize screen writes only This terminal or All terminals.
+- No terminal theme, font, background or effects value is stored outside SP-331's places, and no shell profile
+  carries an appearance of its own.
 - Every terminal appearance field applies live and no terminal setting shows a restart badge.
-- Terminal effects stay paint on the terminal's screen; no terminal setting overrides DR-043's motion voices or hard-codes
-  the accent role.
-- The editor and terminal read one catalog and use one Customize component (F3-650); neither has its own scheme list
-  or Customize implementation.
+- Terminal effects stay paint on the terminal's screen; no terminal setting overrides DR-043's motion voices
+  or hard-codes the accent role.
+- The editor and terminal read one catalog and use one Customize component (F3-650); neither has its own scheme
+  list or Customize implementation.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -334,9 +340,10 @@ preserved_exact_tokens:
   - "code.terminal.theme"
   - "code.terminal.font-family"
 negative_constraints:
-  - "Do not keep a second terminal theme, scheme, font, background or effects store."
-  - "Do not mark a terminal appearance setting as needing a restart."
-  - "Do not let the popover or any other surface write an app-wide terminal appearance value until q-035 admits an app-wide store."
+- Do not keep a second terminal theme, scheme, font, background or effects store.
+- Do not mark a terminal appearance setting as needing a restart.
+- Do not let the Customize screen or any other surface write an app-wide terminal appearance value until q-035
+  admits an app-wide store.
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
   - "Amended 2026-10-10 (lead ruling L16): The popover's All terminals writes the project default through the Settings transaction (F3-642, SSYS-051), replacing the app default and the rule that only Settings writes the project default; no surface writes an app-wide value until q-035."
@@ -570,3 +577,52 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/Contracts_V0.md#CV-360, ContractName:Plans/FileManager.md#F-090, ContractName:Plans/assistant-chat-design.md#ACD-500, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/DRY_Rules.md#DR-041, ContractName:Plans/DRY_Rules.md#DR-011, ContractName:Plans/DRY_Rules.md#DR-008
+
+### DR-073 - One Wallpaper Catalog And One Writer
+
+```yaml
+plan_unit_id: DR-073
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  One wallpaper registry supplies stable ids, family/order, names, dark/light assets, thumbnails and
+  defaults to every wallpaper consumer. Plans/wallpaper_catalog.json is that registry; F3-653 owns
+  presentation, SSYS-054 owns the single Project choice and SP-333 owns storage. No theme, Settings
+  gallery, onboarding or native renderer keeps a competing list or default. Picking through any surface
+  uses the Settings transaction, never a wallpaper-specific settings store or duplicate command.
+gui_related: true
+gui_classification_reason: One wallpaper catalog and one writer.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every wallpaper id/default/asset resolves from the registry and every committed choice uses the same Project transaction.
+- A consumer references the owner and cannot silently add a private wallpaper or background mode.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: one_wallpaper_catalog_and_one_writer
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-653
+- Plans/Settings_System.md#SSYS-054
+- Plans/storage-plan.md#SP-333
+- Plans/FinalGUISpec.md#F3-650
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/Settings_System.md#SSYS-054, ContractName:Plans/storage-plan.md#SP-333, ContractName:Plans/FinalGUISpec.md#F3-650

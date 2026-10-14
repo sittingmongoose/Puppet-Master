@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L276-L1405
 
-Source SHA256: `f05fb13f82babed54c090bb87736b01c7cbcf535d6c8a49773e2d7d25b8faf98`
+Source SHA256: `2a1856fd7af3e23554fe8fdb9a987825496f0a6c519ec4f5bb053780596b1feb`
 
 ---
 
@@ -199,7 +199,7 @@ unchanged drop, the rule that loss of pointer capture alone is not a cancellatio
 the `invalid_target` result for a pointer past the workspace, the keyboard path with
 polite announcements, and adjacent-pair resize. What it moves changes: a whole panel
 by its grip or Move panel (`cmd.workspace_layout.move_surface`) and a tab by its
-strip (`cmd.panel_tab.move`), onto a panel's edge band, a strip, the centre's outer
+strip (`cmd.panel_tab.move`), into a panel's diagonal split region or explicit Join target (F3-630), a strip, the centre's outer
 edge or the "+N" list, with F3-630's edge bands, thresholds, dwell, hysteresis and
 motion; the Usage board's gesture kit is the same kit (DR-066). Retired with this
 dated disposition: the five host registries and host adjacency for the keyboard

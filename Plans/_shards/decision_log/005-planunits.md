@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4297-L14454
+Source lines: L4297-L14467
 
-Source SHA256: `af7a8532a57650bb86cfe68b2fc8bbf3c7762fe1531128234e15ba648c70ad60`
+Source SHA256: `17e8823eca6f596abf837eb7466aee2044c0b647ec5d63fbdec1f47271cd5738`
 
 ---
 
@@ -9791,37 +9791,50 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  DL-183 records Jared's decisions of 2026-10-09 on the terminal's appearance. The terminal follows the theme by
-  default with a colour scheme chosen per look (Friendly Catppuccin, Glass Tokyo Night, Retro Puppet Master's Phosphor
-  Green and Amber and Paper Teletype, Basic One Half, NieR Mode's YoRHa Parchment and Ink), offers about 30 curated
-  schemes with clear licences, imports common theme files, and keeps a minimum-contrast floor. Cursor, background,
-  padding, line height, letter spacing, ligatures and weight are choices, every one applying live with no restart. One
-  layered appearance model resolves field by field from the look's defaults, the app default, a project default and a
-  per-tab override; one code colour-scheme catalog serves the editor and the terminal, each scheme carrying the
-  terminal palette and the editor's syntax colours, each surface defaulting to Follow look with its own scheme choice
-  and the editor reusing the terminal's Appearance popover, and Retro's monochrome editor syntax takes its colour from
-  the terminal's Retro scheme choice, stored once in the terminal's appearance model (Jared, 2026-10-10); the terminal's Appearance popover and Settings > Terminal bind the same model (F3-642, DR-068,
-  SSYS-051, SP-331). Effects run only on the focused terminal, stop when idle, turn off on battery saver and where
-  costly without a graphics card, and stop moving under Reduced Motion; the Full CRT tier is opt-in and flicker is off
-  by default and capped below WCAG 2.3.1 (F3-643). The editor's code face is JetBrains Mono in every look, Retro
-  included; the terminal defaults to JetBrains Mono except in Retro, where it defaults to VT323 with Sixtyfour and
-  Departure Mono as options and JetBrains Mono selectable; Atkinson Hyperlegible Mono is offered for readability; only
-  permissively licensed fonts (SIL Open Font License, Apache, MIT) are built in, through DL-161's pipeline (F3-644).
-  General code text across the chat and PMConcept7 (JetBrains Mono in Basic, Glass and Friendly, IBM Plex Mono in
-  Retro, PM NieR Mono in NieR; Jared, 2026-10-09 and 2026-10-10, D17a) belongs to DL-161, F3-426 and F3-430 and is not amended by
-  this record. The 34 schemes, the 4.5:1 default contrast floor and the terminal's own font files are the terminal concept's.
+  DL-183 records Jared's decisions of 2026-10-09 on the terminal's appearance. The terminal follows the
+  theme by default with a colour scheme chosen per look (Friendly Catppuccin, Glass Tokyo Night, Retro
+  Puppet Master's Phosphor Green and Amber and Paper Teletype, Basic One Half, NieR Mode's YoRHa Parchment
+  and Ink), offers about 30 curated schemes with clear licences, imports common theme files, and keeps a
+  minimum-contrast floor. Cursor, background, padding, line height, letter spacing, ligatures and weight
+  are choices, every one applying live with no restart. One layered appearance model resolves field by
+  field from the look's defaults, the app default, a project default and a per-tab override; one code
+  colour-scheme catalog serves the editor and the terminal, each scheme carrying the terminal palette and
+  the editor's syntax colours, each surface defaulting to Follow look with its own scheme choice and the
+  editor reusing the terminal's Appearance popover, and Retro's monochrome editor syntax takes its colour
+  from the terminal's Retro scheme choice, stored once in the terminal's appearance model (Jared,
+  2026-10-10); the terminal's Appearance popover and Settings > Terminal bind the same model (F3-642,
+  DR-068, SSYS-051, SP-331). Effects run only on the focused terminal, stop when idle, turn off on battery
+  saver and where costly without a graphics card, and stop moving under Reduced Motion; the Full CRT tier
+  is opt-in and flicker is off by default and capped below WCAG 2.3.1 (F3-643). The editor's code face is
+  JetBrains Mono in every look, Retro included; the terminal defaults to JetBrains Mono except in Retro,
+  where it defaults to VT323 with Sixtyfour and Departure Mono as options and JetBrains Mono selectable;
+  Atkinson Hyperlegible Mono is offered for readability; only permissively licensed fonts (SIL Open Font
+  License, Apache, MIT) are built in, through DL-161's pipeline (F3-644). General code text across the
+  chat and PMConcept7 (JetBrains Mono in Basic, Glass and Friendly, IBM Plex Mono in Retro, PM NieR Mono
+  in NieR; Jared, 2026-10-09 and 2026-10-10, D17a) belongs to DL-161, F3-426 and F3-430 and is not amended
+  by this record. The 34 schemes, the 4.5:1 default contrast floor and the terminal's own font files are
+  the terminal concept's. Superseded in presentation on 2026-10-14 by DL-189/DL-190: F3-650’s full
+  Customize screens replace the earlier Appearance popover, retaining this decision’s shared catalog and
+  scope writers. DL-197 records the later program-output/interface contrast distinction.
 gui_related: true
 gui_classification_reason: Records the owner decision on the terminal's schemes, backgrounds, effects and built-in code fonts.
 split_recommended: false
 depends_on: [DL-181]
 unblocks: [F3-642, F3-643, F3-644, DR-068, SSYS-051, SP-331]
 acceptance_criteria:
-  - "One code colour-scheme catalog and one Appearance popover serve the editor and the terminal, each surface defaulting to Follow look with its own scheme choice, and Retro's monochrome editor syntax reads the terminal's Retro scheme choice from the terminal's appearance model with no second stored copy (F3-642, F3-639, DR-068)."
-  - "One terminal appearance model exists with four layers resolved field by field, and every field applies live with no restart badge (F3-642, DR-068, SSYS-051)."
-  - "Each look has its default scheme, and the curated schemes carry their licences."
-  - "Effects follow the focused-only, idle-stop, battery, no-GPU and Reduced Motion policy, with Full CRT opt-in and flicker off by default (F3-643)."
-  - "The editor's code face is JetBrains Mono in every look and the terminal's default face is JetBrains Mono except VT323 in Retro, and every built-in font is under the SIL Open Font License, Apache or MIT (F3-644)."
-  - "DL-161, F3-426 and F3-430 are cited for general code text and are not amended by this record."
+- One code colour-scheme catalog and one Appearance popover serve the editor and the terminal, each surface
+  defaulting to Follow look with its own scheme choice, and Retro's monochrome editor syntax reads the terminal's
+  Retro scheme choice from the terminal's appearance model with no second stored copy (F3-642, F3-639, DR-068).
+- One terminal appearance model exists with four layers resolved field by field, and every field applies live
+  with no restart badge (F3-642, DR-068, SSYS-051).
+- Each look has its default scheme, and the curated schemes carry their licences.
+- Effects follow the focused-only, idle-stop, battery, no-GPU and Reduced Motion policy, with Full CRT opt-in
+  and flicker off by default (F3-643).
+- The editor's code face is JetBrains Mono in every look and the terminal's default face is JetBrains Mono except
+  VT323 in Retro, and every built-in font is under the SIL Open Font License, Apache or MIT (F3-644).
+- DL-161, F3-426 and F3-430 are cited for general code text and are not amended by this record.
+- Apply this historical catalog/layer decision with the later full Customize entry and contrast supersessions
+  in DL-189/DL-190/DL-197.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate

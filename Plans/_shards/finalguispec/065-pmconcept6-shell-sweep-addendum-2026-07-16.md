@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32287-L32835
+Source lines: L32325-L32880
 
-Source SHA256: `f05fb13f82babed54c090bb87736b01c7cbcf535d6c8a49773e2d7d25b8faf98`
+Source SHA256: `2a1856fd7af3e23554fe8fdb9a987825496f0a6c519ec4f5bb053780596b1feb`
 
 ---
 
@@ -146,27 +146,31 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  All staged notices appear beneath the title-bar bell/stack on every page, including Usage. Four urgency levels
-  share this staging owner: Quiet confirmations last 3.4 s and leave no alert-store entry; Notice lasts 3.4 s,
-  Attention 5.2 s and Blocking 6.8 s before joining F3-453's lasting inbox. Reading timers are not shortened by
-  Animation speed; hovering any toast or focusing within one holds every staged timer, with a visible
-  remaining-time line. Newest is on top and at most five stage together; overflow retires the oldest quiet
-  notice or moves the oldest lasting notice to the inbox immediately. Repeated words count on one card, and
-  duplicate delivery of one event produces one notice. Closing or swiping a staged lasting notice moves it to
-  the inbox and never resolves the underlying work; quiet dismissal removes it. Reduced Motion shows/removes end
-  states immediately and joins the inbox without flight. Settings Notifications off suppresses popup and sound
-  delivery but preserves lasting inbox items. How Alerts Appear selects Toast, Banner under the title bar, or
-  System Tray with no in-page popup; platform delivery retains its own capability/permission rules.
-  Setup/continue-tour prompts are separate pinned cards under the bell, with new toasts above, and tour page
-  notes use this same quiet staging route. F3-460 owns material and F3-453 the lasting store.
+  All staged notices appear beneath the title-bar bell/stack on every page, including Usage. Four urgency
+  levels share this staging owner: Quiet confirmations last 3.4 s and leave no alert-store entry; Notice
+  lasts 3.4 s, Attention 5.2 s and Blocking 6.8 s before joining F3-453's lasting inbox. Reading timers
+  are not shortened by Animation speed; hovering any toast or focusing within one holds every staged
+  timer, with a visible remaining-time line. Newest is on top and at most five stage together; overflow
+  retires the oldest quiet notice or moves the oldest lasting notice to the inbox immediately. Repeated
+  words count on one card, and duplicate delivery of one event produces one notice. Closing or swiping a
+  staged lasting notice moves it to the inbox and never resolves the underlying work; quiet dismissal
+  removes it. Reduced Motion shows/removes end states immediately and joins the inbox without flight.
+  Settings Notifications off suppresses popup and sound delivery but preserves lasting inbox items. How
+  Alerts Appear selects Toast, Banner under the title bar, or System Tray with no in-page popup; platform
+  delivery retains its own capability/permission rules. Setup/continue-tour prompts are separate pinned
+  cards under the bell, with new toasts above, and tour page notes use this same quiet staging route.
+  F3-460 owns material and F3-453 the lasting store. Activating a toast’s body opens what it is about
+  through the existing source action and marks that notice read. Activating its action button runs that
+  owner action and files any lasting notice quietly; it never also invokes the body’s source-opening
+  action. Read and filing do not acknowledge or resolve underlying work by implication.
 gui_related: true
 gui_classification_reason: This unit defines visible ephemeral toast staging, lifetime, and dismissal behavior.
 split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- At most 5 staged toasts render concurrently beneath the title-bar notification stack; a new toast beyond the cap
-  evicts the oldest.
+- At most 5 staged toasts render concurrently beneath the title-bar notification stack; a new toast beyond the
+  cap evicts the oldest.
 - Each urgency uses F3-447's specified lifetime; hover/focus holds every reading timer and Reduced Motion changes
   only motion.
 - The newest toast stages on top of the staged set.
@@ -175,6 +179,8 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 - Usage has no bottom-right staging exception; every page routes notices beneath the bell.
 - Hover/focus pauses reading time; a sixth lasting notice is retained, never lost.
+- Toast body activation opens its source and marks it read; action activation dispatches only its own action
+  and quietly files a lasting notice, without resolving the source by dismissal.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -492,22 +498,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  This unit owns the shared alert store. Alerts carry an acknowledge (ack) and snooze lifecycle: acknowledging
-  clears an alert's unread state, snoozing hides the alert until its snooze window elapses, and unresolved
-  alerts persist in the store and render in the title-bar sprout inbox list. Unread alerts drive the count badge
-  on the title-bar notification stack (F3-460). The title-bar collapsed stack and the sprout inbox panel render
-  from this one alert store; no surface keeps a private copy of alert state. The inbox sorts Needs you first,
-  then groups by source (Usage, Runs, Planning, Agents, Settings, Projects); a group with at least three notices
-  folds to a newest-first deck and opens without changing its underlying work. The badge counts unread, not all
-  retained items. Opening the inbox marks the items actually shown read after about one second of reading;
-  hidden/unshown items do not become read by implication. Dismiss/Delete and Clear all remove inbox
-  presentation, never approve, deny or resolve domain work. Clear all leaves reusable headings and rows visible
-  on the next arrival/open. Existing approval, permission, FileSafe and concern actions keep their owner
-  commands, reasons and holds. A blocking item's attention ring remains until its underlying need is resolved;
-  dismissing a card alone is not that resolution. Read projection is CS-102's
-  ui.notifications.mark_visible_read, distinct from an explicit domain acknowledge action. Dismiss/Delete and
-  Clear all use UCC-204's existing alert-command composition; a refused item remains visible and arrivals after
-  the captured Clear all set are retained.
+  This unit owns the shared alert store. Alerts carry an acknowledge (ack) and snooze lifecycle:
+  acknowledging clears an alert's unread state, snoozing hides the alert until its snooze window elapses,
+  and unresolved alerts persist in the store and render in the title-bar sprout inbox list. Unread alerts
+  drive the count badge on the title-bar notification stack (F3-460). The title-bar collapsed stack and
+  the sprout inbox panel render from this one alert store; no surface keeps a private copy of alert state.
+  The inbox sorts Needs you first, then groups by source (Usage, Runs, Planning, Agents, Settings,
+  Projects); a group with at least three notices folds to a newest-first deck and opens without changing
+  its underlying work. The badge counts unread, not all retained items. Opening the inbox marks the items
+  actually shown read after about one second of reading; hidden/unshown items do not become read by
+  implication. Dismiss/Delete and Clear all remove inbox presentation, never approve, deny or resolve
+  domain work. After Clear all, later arrivals and a reopened inbox show their headings and rows normally.
+  Existing approval, permission, FileSafe and concern actions keep their owner commands, reasons and
+  holds. A blocking item's attention ring remains until its underlying need is resolved; dismissing a card
+  alone is not that resolution. Read projection is CS-102's ui.notifications.mark_visible_read, distinct
+  from an explicit domain acknowledge action. Dismiss/Delete and Clear all use UCC-204's existing
+  alert-command composition; a refused item remains visible and arrivals after the captured Clear all set
+  are retained.
 gui_related: true
 gui_classification_reason: This unit defines the shared alert store, alert lifecycle controls, and the unread indicator contract.
 split_recommended: false

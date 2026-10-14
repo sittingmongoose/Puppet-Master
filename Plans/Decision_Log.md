@@ -14077,37 +14077,50 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  DL-183 records Jared's decisions of 2026-10-09 on the terminal's appearance. The terminal follows the theme by
-  default with a colour scheme chosen per look (Friendly Catppuccin, Glass Tokyo Night, Retro Puppet Master's Phosphor
-  Green and Amber and Paper Teletype, Basic One Half, NieR Mode's YoRHa Parchment and Ink), offers about 30 curated
-  schemes with clear licences, imports common theme files, and keeps a minimum-contrast floor. Cursor, background,
-  padding, line height, letter spacing, ligatures and weight are choices, every one applying live with no restart. One
-  layered appearance model resolves field by field from the look's defaults, the app default, a project default and a
-  per-tab override; one code colour-scheme catalog serves the editor and the terminal, each scheme carrying the
-  terminal palette and the editor's syntax colours, each surface defaulting to Follow look with its own scheme choice
-  and the editor reusing the terminal's Appearance popover, and Retro's monochrome editor syntax takes its colour from
-  the terminal's Retro scheme choice, stored once in the terminal's appearance model (Jared, 2026-10-10); the terminal's Appearance popover and Settings > Terminal bind the same model (F3-642, DR-068,
-  SSYS-051, SP-331). Effects run only on the focused terminal, stop when idle, turn off on battery saver and where
-  costly without a graphics card, and stop moving under Reduced Motion; the Full CRT tier is opt-in and flicker is off
-  by default and capped below WCAG 2.3.1 (F3-643). The editor's code face is JetBrains Mono in every look, Retro
-  included; the terminal defaults to JetBrains Mono except in Retro, where it defaults to VT323 with Sixtyfour and
-  Departure Mono as options and JetBrains Mono selectable; Atkinson Hyperlegible Mono is offered for readability; only
-  permissively licensed fonts (SIL Open Font License, Apache, MIT) are built in, through DL-161's pipeline (F3-644).
-  General code text across the chat and PMConcept7 (JetBrains Mono in Basic, Glass and Friendly, IBM Plex Mono in
-  Retro, PM NieR Mono in NieR; Jared, 2026-10-09 and 2026-10-10, D17a) belongs to DL-161, F3-426 and F3-430 and is not amended by
-  this record. The 34 schemes, the 4.5:1 default contrast floor and the terminal's own font files are the terminal concept's.
+  DL-183 records Jared's decisions of 2026-10-09 on the terminal's appearance. The terminal follows the
+  theme by default with a colour scheme chosen per look (Friendly Catppuccin, Glass Tokyo Night, Retro
+  Puppet Master's Phosphor Green and Amber and Paper Teletype, Basic One Half, NieR Mode's YoRHa Parchment
+  and Ink), offers about 30 curated schemes with clear licences, imports common theme files, and keeps a
+  minimum-contrast floor. Cursor, background, padding, line height, letter spacing, ligatures and weight
+  are choices, every one applying live with no restart. One layered appearance model resolves field by
+  field from the look's defaults, the app default, a project default and a per-tab override; one code
+  colour-scheme catalog serves the editor and the terminal, each scheme carrying the terminal palette and
+  the editor's syntax colours, each surface defaulting to Follow look with its own scheme choice and the
+  editor reusing the terminal's Appearance popover, and Retro's monochrome editor syntax takes its colour
+  from the terminal's Retro scheme choice, stored once in the terminal's appearance model (Jared,
+  2026-10-10); the terminal's Appearance popover and Settings > Terminal bind the same model (F3-642,
+  DR-068, SSYS-051, SP-331). Effects run only on the focused terminal, stop when idle, turn off on battery
+  saver and where costly without a graphics card, and stop moving under Reduced Motion; the Full CRT tier
+  is opt-in and flicker is off by default and capped below WCAG 2.3.1 (F3-643). The editor's code face is
+  JetBrains Mono in every look, Retro included; the terminal defaults to JetBrains Mono except in Retro,
+  where it defaults to VT323 with Sixtyfour and Departure Mono as options and JetBrains Mono selectable;
+  Atkinson Hyperlegible Mono is offered for readability; only permissively licensed fonts (SIL Open Font
+  License, Apache, MIT) are built in, through DL-161's pipeline (F3-644). General code text across the
+  chat and PMConcept7 (JetBrains Mono in Basic, Glass and Friendly, IBM Plex Mono in Retro, PM NieR Mono
+  in NieR; Jared, 2026-10-09 and 2026-10-10, D17a) belongs to DL-161, F3-426 and F3-430 and is not amended
+  by this record. The 34 schemes, the 4.5:1 default contrast floor and the terminal's own font files are
+  the terminal concept's. Superseded in presentation on 2026-10-14 by DL-189/DL-190: F3-650’s full
+  Customize screens replace the earlier Appearance popover, retaining this decision’s shared catalog and
+  scope writers. DL-197 records the later program-output/interface contrast distinction.
 gui_related: true
 gui_classification_reason: Records the owner decision on the terminal's schemes, backgrounds, effects and built-in code fonts.
 split_recommended: false
 depends_on: [DL-181]
 unblocks: [F3-642, F3-643, F3-644, DR-068, SSYS-051, SP-331]
 acceptance_criteria:
-  - "One code colour-scheme catalog and one Appearance popover serve the editor and the terminal, each surface defaulting to Follow look with its own scheme choice, and Retro's monochrome editor syntax reads the terminal's Retro scheme choice from the terminal's appearance model with no second stored copy (F3-642, F3-639, DR-068)."
-  - "One terminal appearance model exists with four layers resolved field by field, and every field applies live with no restart badge (F3-642, DR-068, SSYS-051)."
-  - "Each look has its default scheme, and the curated schemes carry their licences."
-  - "Effects follow the focused-only, idle-stop, battery, no-GPU and Reduced Motion policy, with Full CRT opt-in and flicker off by default (F3-643)."
-  - "The editor's code face is JetBrains Mono in every look and the terminal's default face is JetBrains Mono except VT323 in Retro, and every built-in font is under the SIL Open Font License, Apache or MIT (F3-644)."
-  - "DL-161, F3-426 and F3-430 are cited for general code text and are not amended by this record."
+- One code colour-scheme catalog and one Appearance popover serve the editor and the terminal, each surface
+  defaulting to Follow look with its own scheme choice, and Retro's monochrome editor syntax reads the terminal's
+  Retro scheme choice from the terminal's appearance model with no second stored copy (F3-642, F3-639, DR-068).
+- One terminal appearance model exists with four layers resolved field by field, and every field applies live
+  with no restart badge (F3-642, DR-068, SSYS-051).
+- Each look has its default scheme, and the curated schemes carry their licences.
+- Effects follow the focused-only, idle-stop, battery, no-GPU and Reduced Motion policy, with Full CRT opt-in
+  and flicker off by default (F3-643).
+- The editor's code face is JetBrains Mono in every look and the terminal's default face is JetBrains Mono except
+  VT323 in Retro, and every built-in font is under the SIL Open Font License, Apache or MIT (F3-644).
+- DL-161, F3-426 and F3-430 are cited for general code text and are not amended by this record.
+- Apply this historical catalog/layer decision with the later full Customize entry and contrast supersessions
+  in DL-189/DL-190/DL-197.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -14481,7 +14494,7 @@ These rows are preserved as audit-lineage notes only. They do not prove repair b
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
 
-## DL-189 — Terminal Customize from the panel and Settings (2026-10-14)
+### DL-189 - Terminal Customize From The Panel And Settings
 
 ```yaml
 plan_unit_id: DL-189
@@ -14489,11 +14502,15 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Jared approved both terminal Customize entry points on 2026-10-13. The screen keeps live field editing, quick
-  sets, sample trials and truthful hints; All terminals writes the same Project rows as Settings and This
-  terminal stays an override. F3-650 owns the screen and F3-642/SSYS-051 its fields and persistence boundaries.
+  Jared approved both terminal Customize entry points on 2026-10-13. The screen keeps live field editing,
+  quick sets, sample trials and truthful hints; All terminals writes the same Project rows as Settings and
+  This terminal stays an override. F3-650 owns the screen and F3-642/SSYS-051 its fields and persistence
+  boundaries. On 2026-10-14 Jared set terminal padding to zero and required more background choices, a
+  smaller removable/customizable bezel, a default look without bezel or curvature, and user-saved look
+  presets. F3-642/F3-643/F3-650 record the approved direction and the pending detailed contracts; the
+  earlier small catalog and CRT treatment are not final acceptance of those new requirements.
 gui_related: true
-gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+gui_classification_reason: Terminal Customize from the panel and Settings.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -14505,7 +14522,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: pm7_campaign
+context_scope: terminal_customize_from_the_panel_and_settings
 implementation_surfaces:
 - Plans/Decision_Log.md
 node_compile_hint:
@@ -14519,6 +14536,8 @@ source_lineage:
   (approved campaign source lineage; not native implementation evidence)
 - Plans/FinalGUISpec.md#F3-650
 - Plans/Settings_System.md#SSYS-051
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
+  (decision/source lineage; not native implementation evidence)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
@@ -14528,7 +14547,7 @@ owner_hints:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/Settings_System.md#SSYS-051
 
-## DL-190 — Full editor Customize and one preview rule (2026-10-14)
+### DL-190 - Full Editor Customize And One Preview Rule
 
 ```yaml
 plan_unit_id: DL-190
@@ -14542,7 +14561,7 @@ canonical_text: >-
   & tabs, and keep the caret/motion behavior. His Show spaces correction requires selectors never to wrap.
   F3-650/F3-651 and SSYS-052 own the resulting requirements.
 gui_related: true
-gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+gui_classification_reason: Full editor Customize and one preview rule.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -14554,7 +14573,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: pm7_campaign
+context_scope: full_editor_customize_and_one_preview_rule
 implementation_surfaces:
 - Plans/Decision_Log.md
 node_compile_hint:
@@ -14578,7 +14597,7 @@ owner_hints:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/FinalGUISpec.md#F3-651, ContractName:Plans/Settings_System.md#SSYS-052
 
-## DL-191 — Liquid Glass reads as lenses and reflections (2026-10-14)
+### DL-191 - Liquid Glass Reads As Lenses And Reflections
 
 ```yaml
 plan_unit_id: DL-191
@@ -14587,11 +14606,14 @@ status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   Jared approved the v2/v3 Glass direction and asked for magnification/reflections rather than chromatic
-  corruption, calmer transitions, curved slower switches and coherent controls. F3-652 replaces the old Glass
-  material constraints. Publishing Glass together with wallpapers remains pending his final review; a
-  source-only landing is not publication.
+  corruption, calmer transitions, curved slower switches and coherent controls. F3-652 replaces the old
+  Glass material constraints. Publishing Glass together with wallpapers remains pending his final review;
+  a source-only landing is not publication. His 2026-10-14 review requires the theme-selector lens, placed
+  single highlights on entry, coherent Usage/Settings transitions and wallpaper/scroll material, and
+  seamless Settings search fields. F3-652 carries these corrections and leaves the Glass Light hover-light
+  question and final publication held.
 gui_related: true
-gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+gui_classification_reason: Liquid Glass reads as lenses and reflections.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -14603,7 +14625,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: pm7_campaign
+context_scope: liquid_glass_reads_as_lenses_and_reflections
 implementation_surfaces:
 - Plans/Decision_Log.md
 node_compile_hint:
@@ -14618,6 +14640,8 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
   (approved campaign source lineage; not native implementation evidence)
 - Plans/FinalGUISpec.md#F3-652
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
+  (decision/source lineage; not native implementation evidence)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
@@ -14627,7 +14651,7 @@ owner_hints:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-652
 
-## DL-192 — Wallpapers are selectable from every look (2026-10-14)
+### DL-192 - Wallpapers Are Selectable From Every Look
 
 ```yaml
 plan_unit_id: DL-192
@@ -14635,12 +14659,19 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Jared approved W1 and retained W2–W4: five wallpapers for each other look, all selectable from any look, one
-  choice across looks, each look keeping its own ground by default and NieR returning to its scenes through
-  Look's own. Ribbons remains Glass's default. W5 retires the old Glass background row at the coordinated
-  Glass/wallpaper publication, held after the 19:25 correction. F3-653, SSYS-054 and DR-073 own the result.
+  Jared initially approved W1 and retained W2–W4: five wallpapers for each other look, all selectable from
+  any look, one choice across looks, each look keeping its own ground by default and NieR returning to its
+  scenes through Look's own. Ribbons remains Glass's default. W5 retires the old Glass background row at
+  the coordinated Glass/wallpaper publication, held after the 19:25 correction. F3-653, SSYS-054 and
+  DR-073 own the result. On 2026-10-14 his review item 11 withdrew Archive, Signal, Fragments, Hatch and
+  Flora and replaced that direction with the NieR customizer’s own ink scenes available in the shared
+  gallery. His same-day item 18 says the most recent change wins from either control. The approved owner
+  contract names city, bunker, desert, forest, park and flooded; a gallery pick sets the shared wallpaper
+  id and a NieR background change sets the shared choice to look through its one owner. F3-653/SSYS-054
+  own those details; final assets/publication remain held. The five withdrawn prints are no longer an
+  accepted selectable set.
 gui_related: true
-gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+gui_classification_reason: Wallpapers are selectable from every look.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -14652,7 +14683,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: pm7_campaign
+context_scope: wallpapers_are_selectable_from_every_look
 implementation_surfaces:
 - Plans/Decision_Log.md
 node_compile_hint:
@@ -14667,6 +14698,11 @@ source_lineage:
 - Plans/FinalGUISpec.md#F3-653
 - Plans/Settings_System.md#SSYS-054
 - Plans/DRY_Rules.md#DR-073
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
+  (decision/source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-DECISION-20261014.md, SHA-256
+  56a7389f1fa9e6f6e0535f09525945f590b6ef44dfd8f72d1f3c844a7e21b816 (decision/source lineage; not native implementation
+  evidence)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
@@ -14676,7 +14712,7 @@ owner_hints:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/Settings_System.md#SSYS-054, ContractName:Plans/DRY_Rules.md#DR-073
 
-## DL-193 — Notification defaults and Usage under the bell (2026-10-14)
+### DL-193 - Notification Defaults And Usage Under The Bell
 
 ```yaml
 plan_unit_id: DL-193
@@ -14689,7 +14725,7 @@ canonical_text: >-
   F3-460 material. The unbuilt automatic eight-second terminal-notice dismissal was not adopted by approval of
   built defaults.
 gui_related: true
-gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+gui_classification_reason: Notification defaults and Usage under the bell.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -14701,7 +14737,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: pm7_campaign
+context_scope: notification_defaults_and_usage_under_the_bell
 implementation_surfaces:
 - Plans/Decision_Log.md
 node_compile_hint:
@@ -14725,7 +14761,7 @@ owner_hints:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-447, ContractName:Plans/FinalGUISpec.md#F3-453, ContractName:Plans/FinalGUISpec.md#F3-460
 
-## DL-194 — Wizard and Orchestrator minor theme matching (2026-10-14)
+### DL-194 - Wizard And Orchestrator Minor Theme Matching
 
 ```yaml
 plan_unit_id: DL-194
@@ -14737,7 +14773,7 @@ canonical_text: >-
   Friendly white/plum plates, keep stacked answer options, and make the title-bar Light/Dark/Auto chosen fill
   match the shared grey. F3-655 owns presentation and the existing planning/execution owners retain behavior.
 gui_related: true
-gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+gui_classification_reason: Wizard and Orchestrator minor theme matching.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -14749,7 +14785,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: pm7_campaign
+context_scope: wizard_and_orchestrator_minor_theme_matching
 implementation_surfaces:
 - Plans/Decision_Log.md
 node_compile_hint:
@@ -14773,7 +14809,7 @@ owner_hints:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-655, ContractName:Plans/Planning_Wizard.md#PWIZ-021, ContractName:Plans/Orchestrator_Page.md#OP-033
 
-## DL-195 — Connected onboarding art and Glass (2026-10-14)
+### DL-195 - Connected Onboarding Art And Glass
 
 ```yaml
 plan_unit_id: DL-195
@@ -14786,7 +14822,7 @@ canonical_text: >-
   with the no-pill-label work. F3-656 owns this presentation; GLY-4 remains a separate unanswered scene-picture
   decision.
 gui_related: true
-gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+gui_classification_reason: Connected onboarding art and Glass.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -14798,7 +14834,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: pm7_campaign
+context_scope: connected_onboarding_art_and_glass
 implementation_surfaces:
 - Plans/Decision_Log.md
 node_compile_hint:
@@ -14820,7 +14856,7 @@ owner_hints:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-656
 
-## DL-196 — The pill ban concerns labels (2026-10-14)
+### DL-196 - The Pill Ban Concerns Labels
 
 ```yaml
 plan_unit_id: DL-196
@@ -14833,7 +14869,7 @@ canonical_text: >-
   DL-184's blanket action-button language. DR-069 owns the rule and F3-648 its presentation and detector
   boundary.
 gui_related: true
-gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+gui_classification_reason: The pill ban concerns labels.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -14845,7 +14881,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: pm7_campaign
+context_scope: the_pill_ban_concerns_labels
 implementation_surfaces:
 - Plans/Decision_Log.md
 node_compile_hint:
@@ -14866,7 +14902,7 @@ owner_hints:
 
 ContractRef: ContractName:Plans/DRY_Rules.md#DR-069, ContractName:Plans/FinalGUISpec.md#F3-648
 
-## DL-197 — Settled contrast includes resting hover and placeholders (2026-10-14)
+### DL-197 - Settled Contrast Includes Resting Hover And Placeholders
 
 ```yaml
 plan_unit_id: DL-197
@@ -14874,12 +14910,16 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  The 2026-10-14 assignment confirms 4.5:1 for settled text, including resting hover and placeholders;
-  transitions under 0.4 s are recorded, not failed, and disabled controls are exempt but legible. The
-  coordinator's earlier 04:18 timing ruling is source lineage, not a claim that every word came directly from
-  Jared. F3-654 is the one owner of this interpretation.
+  Jared’s 2026-10-14 assignment sets 4.5:1 for all settled interface text at any size, including resting
+  hover and placeholders; transitions under 0.4 s are recorded rather than failed solely for an
+  intermediate reading. His later same-day clarification keeps terminal Minimum Text Contrast
+  user-selectable for program output only, default 4.5:1, while interface text retains its floor. Disabled
+  controls are exempt from 4.5:1 but must be legible at at least 3:1. Scheme thumbnails count as imagery
+  only when hidden from assistive technology and their scheme-name labels meet 4.5:1. F3-654 owns the
+  shared rule and F3-642/SSYS-051 the program-output setting; this explicit clarification resolves the
+  earlier draft’s mandatory-output-floor interpretation.
 gui_related: true
-gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+gui_classification_reason: Settled contrast includes resting hover and placeholders.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -14891,7 +14931,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: pm7_campaign
+context_scope: settled_contrast_includes_resting_hover_and_placeholders
 implementation_surfaces:
 - Plans/Decision_Log.md
 node_compile_hint:
@@ -14903,6 +14943,9 @@ source_lineage:
   (approved campaign source lineage; not native implementation evidence)
 - Plans/FinalGUISpec.md#F3-654
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/ASSIGNMENT-CONTRAST.md, SHA-256 ce5acb947b15065d1193ca5eff1f43a9f1bc82ad7e8f3a230f7377fb18504044
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/CONTRAST-CLARIFICATION-20261014.md, SHA-256
+  1c5654b46b6ed160a34466c9df083681cc179815b658c0acce593698680b8493 (decision/source lineage; not native implementation
+  evidence)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
@@ -14912,7 +14955,7 @@ owner_hints:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-654
 
-## DL-198 — Hover polish and the Friendly breathing ring (2026-10-14)
+### DL-198 - Hover Polish And The Friendly Breathing Ring
 
 ```yaml
 plan_unit_id: DL-198
@@ -14920,11 +14963,13 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  Jared approved the Basic/Friendly/Retro/NieR hover/press polish on 2026-10-13 and kept Friendly's breathing
-  ring. F3-465 and DR-072 own the shared marker and its reduced-motion form, preserving the earlier
-  stationary-pointer/filtering repairs and leaving Glass optical hover with its own material owner.
+  Jared approved the Basic/Friendly/Retro/NieR hover/press polish on 2026-10-13 and kept Friendly's
+  breathing ring. F3-465 and DR-072 own the shared marker and its reduced-motion form, preserving the
+  earlier stationary-pointer/filtering repairs and leaving Glass optical hover with its own material
+  owner. His 2026-10-14 review reduces only the central pointer spotlight, retaining the surface-edge
+  glow; F3-465 owns that pending tuning.
 gui_related: true
-gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+gui_classification_reason: Hover polish and the Friendly breathing ring.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -14936,7 +14981,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: pm7_campaign
+context_scope: hover_polish_and_the_friendly_breathing_ring
 implementation_surfaces:
 - Plans/Decision_Log.md
 node_compile_hint:
@@ -14950,6 +14995,8 @@ source_lineage:
   (approved campaign source lineage; not native implementation evidence)
 - Plans/FinalGUISpec.md#F3-465
 - Plans/DRY_Rules.md#DR-072
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
+  (decision/source lineage; not native implementation evidence)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
@@ -14959,7 +15006,7 @@ owner_hints:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/DRY_Rules.md#DR-072
 
-## DL-199 — Clear panel drop zones and polished resize feedback (2026-10-14)
+### DL-199 - Clear Panel Drop Zones And Polished Resize Feedback
 
 ```yaml
 plan_unit_id: DL-199
@@ -14972,7 +15019,7 @@ canonical_text: >-
   all bars. A target name must never be hidden by the carried tab at rest. The caption follow-up and source
   verification do not change the panel command transaction.
 gui_related: true
-gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+gui_classification_reason: Clear panel drop zones and polished resize feedback.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -14984,7 +15031,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: pm7_campaign
+context_scope: clear_panel_drop_zones_and_polished_resize_feedback
 implementation_surfaces:
 - Plans/Decision_Log.md
 node_compile_hint:
@@ -14992,7 +15039,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- /mnt/Cursor/share/puppet-master/2026-10-13-panel-dnd-resize/NOTES.md, SHA-256 03a80f0dea3235ea637149bbec63626c4a4be8521078f9dd601f2b691f03d2d6
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/DND-NOTES-20261014-FOLLOWUP.md, SHA-256 b5b883caeef6d774fbca250e5c7b6c82dd31eee05af8da207727179baa21b5c3
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-resize-glow/NOTES.md, SHA-256 0a20256d730c5b51cda138b14845a5dc2e7dfdda04385a3956721a73fb657c16
   (approved campaign source lineage; not native implementation evidence)
@@ -15009,7 +15056,7 @@ owner_hints:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-657
 
-## DL-200 — Settings stays put on updates and enters chapters at the top (2026-10-14)
+### DL-200 - Settings Stays Put On Updates And Enters Chapters At The Top
 
 ```yaml
 plan_unit_id: DL-200
@@ -15017,12 +15064,17 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
-  The approved M4 design, confirmed by the 2026-10-14 assignment, keeps the reader's anchor on in-place updates,
-  restores exact Settings place on return and opens deliberately chosen chapters at the top. Settings occupies
-  its final width from frame one. SSYS-053 owns the behavior; the old jumping baseline and performance-only
-  workarounds are not accepted alternatives.
+  The approved M4 design, confirmed by the 2026-10-14 assignment, keeps the reader's anchor on in-place
+  updates, restores exact Settings place on return and opens deliberately chosen chapters at the top.
+  Settings occupies its final width from frame one. SSYS-053 owns the behavior; the old jumping baseline
+  and performance-only workarounds are not accepted alternatives. Jared expressly kept the M4 top reserve
+  on 2026-10-14: the temporary blank space above the chapter title is intended behavior. SSYS-053 owns its
+  shrink/grow/scroll-away lifetime. His assignment also expressly requires a chapter to open at its top;
+  the frozen assignment is its direct source. The earlier 2026-10-13 Settings correction also retired
+  general.visual.theme-preview and its visible timed preview; SSYS-010 owns that retirement separately
+  from the internal transaction preview/apply protocol.
 gui_related: true
-gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+gui_classification_reason: Settings stays put on updates and enters chapters at the top.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -15034,7 +15086,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: pm7_campaign
+context_scope: settings_stays_put_on_updates_and_enters_chapters_at_the_top
 implementation_surfaces:
 - Plans/Decision_Log.md
 node_compile_hint:
@@ -15047,6 +15099,12 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
   (approved campaign source lineage; not native implementation evidence)
 - Plans/Settings_System.md#SSYS-053
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/M4-TOP-RESERVE-DECISION.md, SHA-256 851b64ffa9c2664540864c28b46b351f7ac75d6d6cea75e9290d21d84a5a77b7
+  (decision/source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/ASSIGNMENT-SETTINGS.md, SHA-256 fe8b2ad2d1014520753b65e6ef6e717d140ad7577a0238099714cd3b887e134a
+  (decision/source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/SETTINGS-PREVIEW-RETIREMENT.md, SHA-256 327f4021cf41f627abcc2634af4e7ee2473ba75006dbb05d88dd5d8c4578ecb4
+  (decision/source lineage; not native implementation evidence)
 preserved_exact_tokens: []
 negative_constraints: []
 owner_hints:
@@ -15056,7 +15114,7 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-053
 
-## DL-201 — D44 approves the shared glyph rollout (2026-10-14)
+### DL-201 - D44 Approves The Shared Glyph Rollout
 
 ```yaml
 plan_unit_id: DL-201
@@ -15068,7 +15126,7 @@ canonical_text: >-
   set, warning triangle and failed ring with cross, fitted per-look inks, and shared tube marks replacing the
   rail's solid badges. F3-658 owns the resulting presentation and registry. GLY-4 is separate and unanswered.
 gui_related: true
-gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+gui_classification_reason: D44 approves the shared glyph rollout.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -15080,7 +15138,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: pm7_campaign
+context_scope: d44_approves_the_shared_glyph_rollout
 implementation_surfaces:
 - Plans/Decision_Log.md
 node_compile_hint:
@@ -15099,3 +15157,49 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-658
+
+### DL-202 - Shell Spacing, Panel Grip And Rail Controls
+
+```yaml
+plan_unit_id: DL-202
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: Jared’s 2026-10-14 review puts the panel grip’s narrow end in the top-right corner, reduces
+  excess spacing beside the rail and chat, reaffirms the rail’s visible Chat state and removes its Dashboard
+  button. F3-630, F3-637 and F3-042 own those changes. The existing panel/chat commands and dashboard content
+  remain; final spacing dimensions are held for the shell/Glass owners. F3-465 and DL-198 separately own the
+  reduced central pointer spotlight.
+gui_related: true
+gui_classification_reason: Records approved panel-grip, shell-spacing and rail-control presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The current consumers reference F3-658 and historical separate-set assertions are superseded.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: shell_presentation
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/FinalGUISpec.md#F3-630
+- Plans/FinalGUISpec.md#F3-637
+- Plans/FinalGUISpec.md#F3-042
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
+  (decision/source lineage; not native implementation evidence)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/FinalGUISpec.md#F3-042

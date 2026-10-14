@@ -7882,7 +7882,7 @@ owner_hints:
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/UI_Command_Catalog.md#UCC-201, ContractName:Plans/UI_Command_Catalog.md#UCC-202, ContractName:Plans/UI_Command_Catalog.md#UCC-203, ContractName:Plans/Commands_System.md#CS-100
 
-## CS-102 — Customize and notification local actions (2026-10-14)
+### CS-102 - Customize And Notification Local Actions
 
 ```yaml
 plan_unit_id: CS-102
@@ -7910,7 +7910,7 @@ canonical_text: >-
   fields and token edits always use UCC-204's writers, never a view-local bypass. The production/exclusion
   census is WM-093/UIW-043 and Plans/pm7_control_bindings.json.
 gui_related: true
-gui_classification_reason: Defines or binds user-visible PM7 campaign behavior.
+gui_classification_reason: Customize and notification local actions.
 split_recommended: false
 depends_on: []
 unblocks: []
@@ -7923,7 +7923,7 @@ validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: high
-context_scope: pm7_campaign
+context_scope: customize_and_notification_local_actions
 implementation_surfaces:
 - Plans/Commands_System.md
 node_compile_hint:

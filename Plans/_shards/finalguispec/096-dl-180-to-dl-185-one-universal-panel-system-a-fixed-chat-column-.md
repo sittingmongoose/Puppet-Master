@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44019-L45985
+Source lines: L44073-L46084
 
-Source SHA256: `f05fb13f82babed54c090bb87736b01c7cbcf535d6c8a49773e2d7d25b8faf98`
+Source SHA256: `2a1856fd7af3e23554fe8fdb9a987825496f0a6c519ec4f5bb053780596b1feb`
 
 ---
 
@@ -64,90 +64,100 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The home centre, between the left rail and the chat column (F3-637), is one universal panel system (DL-180).
-  Its layout is an n-ary split tree: a split is a row or a column of two or more children, each child a panel or
-  another split, and every leaf is a panel. A panel is a tab group, one tab strip (F3-631) over one body, and
-  any panel can hold any tab kind (F3-635). Every split has its own sizes, stored as proportions of that split,
-  never as pixels, so panel widths and heights are independent. The tree always keeps these invariants: every
-  leaf is a panel; a split has two or more children and never runs in its parent's direction; every size is
-  above 0.02; a tab lives in exactly one panel; pinned tabs come first in their strip; a panel has at most one
-  preview tab. A panel's minimum is the largest content minimum of its tabs (F3-635) and never less than 280 x
-  120 px. Inserting a panel starts from half the target's share, redistributing available room from neighbours
-  when necessary to preserve every resulting panel's own minimum; a new panel along the centre's outer edge
-  takes 0.34 of the root. Removing a panel gives its share to its previous sibling, else to the next. Closing
-  the last tab of a panel closes the panel and its neighbour takes the space, unless it is the only panel in the
-  centre or the user locked it: then it stays and shows the empty-panel launcher (F3-632). Closing a panel
-  closes its tabs, each kind asking first where it asks (F3-635). Locking a panel keeps it in place when its
-  last tab closes, and automatic placement skips it (F3-634). Split fit rule: offer a split whenever the
-  complete resulting layout can meet each panel's own minimum, borrowing available room from neighbours; drag,
-  split menus, Move panel and Alt+Shift+arrows use this one rule. For an unspecified side prefer right, then
-  below, else refuse with a reason. Panels are 6 px apart, the divider line in the middle of the gap, and the
-  centre is inset 6 px from the rail, the chat and the bars; a divider's hit target is 8 px. Dragging a divider
-  moves only the two neighbours it separates and commits once on release (cmd.workspace_layout.resize_surface);
-  from the keyboard, Tab reaches a divider, arrows move it 8 px, Shift+arrows 48 px, Home and End move it to a
-  neighbour's minimum, and Enter or a double click evens the two sides. A panel dragged below half its minimum
-  along the divider's axis collapses to its 35 px strip and keeps every tab and its state; dragging it out
-  again, or Expand in its panel menu, restores it (cmd.workspace_layout.set_collapsed). This replaces Collapse
-  Bottom Terminal for every panel. Maximize is a flag outside the tree: the maximized panel fills the centre and
-  the tree underneath does not change; Shift+Escape, the panel menu, or Escape while focus is in its strip
-  restores it (ui.workspace_layout.maximize, view state with no receipt and no event). Each panel has a small
-  corner grip and a panel menu (⋮) at the end of its strip: Split right, Split down, Maximize or Restore,
-  Collapse or Expand, Move panel, Lock panel or Unlock panel, Layouts, and Close panel. A whole panel moves by
-  its grip, or by Move panel from the menu or Enter on the grip (cmd.workspace_layout.move_surface): beside
-  another panel on any edge, along the centre's outer edge, or into another panel as its tabs. A tab dragged
-  into the diagonal region nearest a panel side splits on that side (cmd.panel_tab.move with a split target);
-  dropped on a strip, it moves into that panel at the drop position; pulled off its strip by 14 px vertically or
-  40 px horizontally beyond the strip band, it tears off and follows the pointer until it lands on a strip, an
-  edge band or the "+N" list (F3-633). The panel body is divided along diagonals into four side regions. Only
-  the central Join tile or a strip slot joins as tabs; other body regions split. A central guide shows the four
-  sides around Join, and outer-side dock targets plus thin left/right/bottom edge bands create a full-height or
-  full-width panel; a drag starts after 4 px of travel, a zone is adopted after 100 ms of dwell (skipped on
-  release and under Reduced Motion), and an adopted zone holds while the pointer stays within 12 px of it. Every
-  drag runs the gesture transaction Home already uses and shares with the Usage board's gesture kit
-  (F3-HOME-002, F3-503, DR-066): the preview is local, nothing dispatches while dragging, a changed release
-  commits one command, an unchanged release, Escape, a pointer cancel, a lost pointer capture, a lost window or
-  a drop past the workspace commits nothing and restores the exact earlier picture, and a failed commit rolls
-  back. Every drag outcome also has a menu path and a keyboard path (Move panel, Move to panel,
-  Alt+Shift+arrows; F3-635). Motion: a panel glides into its new place in 180 ms by default, in Friendly 220 ms,
-  Glass 260 ms, Basic 200 ms, Retro 140 ms in steps and NieR Mode 200 ms; the landing preview glides in 160 ms
-  and fades in 140 ms; neighbours slide aside in 250 ms on cubic-bezier(.22,1,.36,1); a tab settles in 160 ms on
-  cubic-bezier(.17,.84,.29,.99); a drop settles on a critically damped spring of stiffness 520 and damping 45.6;
-  a cancel returns in 300 ms; under Reduced Motion every one of these is 0. The default layout, Home, keeps a
-  full-width bottom row where the terminal sat before, 0.4 of the centre's height: an ordinary panel row that
-  holds any tab kind and can be split side by side. Four named layouts ship. Home: a column of a row of 0.6 (a
-  dashboard panel 0.5 holding the pinned Home dashboard, F3-638, and a documents panel 0.5) over a tools row of
-  0.4 holding terminals and Output. Build: a column of a row of 0.62 (documents 0.66 and a side panel 0.34 for
+  The home centre, between the left rail and the chat column (F3-637), is one universal panel system
+  (DL-180). Its layout is an n-ary split tree: a split is a row or a column of two or more children, each
+  child a panel or another split, and every leaf is a panel. A panel is a tab group, one tab strip
+  (F3-631) over one body, and any panel can hold any tab kind (F3-635). Every split has its own sizes,
+  stored as proportions of that split, never as pixels, so panel widths and heights are independent. The
+  tree always keeps these invariants: every leaf is a panel; a split has two or more children and never
+  runs in its parent's direction; every size is above 0.02; a tab lives in exactly one panel; pinned tabs
+  come first in their strip; a panel has at most one preview tab. A panel's minimum is the largest content
+  minimum of its tabs (F3-635) and never less than 280 x 120 px. Inserting a panel starts from half the
+  target's share, redistributing available room from neighbours when necessary to preserve every resulting
+  panel's own minimum; a new panel along the centre's outer edge takes 0.34 of the root. Removing a panel
+  gives its share to its previous sibling, else to the next. Closing the last tab of a panel closes the
+  panel and its neighbour takes the space, unless it is the only panel in the centre or the user locked
+  it: then it stays and shows the empty-panel launcher (F3-632). Closing a panel closes its tabs, each
+  kind asking first where it asks (F3-635). Locking a panel keeps it in place when its last tab closes,
+  and automatic placement skips it (F3-634). Split fit rule: offer a split whenever the complete resulting
+  layout can meet each panel's own minimum, borrowing available room from neighbours; drag, split menus,
+  Move panel and Alt+Shift+arrows use this one rule. For an unspecified side prefer right, then below,
+  else refuse with a reason. Panels are 6 px apart, the divider line in the middle of the gap, and the
+  centre is inset 6 px from the rail, the chat and the bars; a divider's hit target is 8 px. Dragging a
+  divider moves only the two neighbours it separates and commits once on release
+  (cmd.workspace_layout.resize_surface); from the keyboard, Tab reaches a divider, arrows move it 8 px,
+  Shift+arrows 48 px, Home and End move it to a neighbour's minimum, and Enter or a double click evens the
+  two sides. A panel dragged below half its minimum along the divider's axis collapses to its 35 px strip
+  and keeps every tab and its state; dragging it out again, or Expand in its panel menu, restores it
+  (cmd.workspace_layout.set_collapsed). This replaces Collapse Bottom Terminal for every panel. Maximize
+  is a flag outside the tree: the maximized panel fills the centre and the tree underneath does not
+  change; Shift+Escape, the panel menu, or Escape while focus is in its strip restores it
+  (ui.workspace_layout.maximize, view state with no receipt and no event). Each panel has a small corner
+  grip and a panel menu (⋮) at the end of its strip: Split right, Split down, Maximize or Restore,
+  Collapse or Expand, Move panel, Lock panel or Unlock panel, Layouts, and Close panel. A whole panel
+  moves by its grip, or by Move panel from the menu or Enter on the grip
+  (cmd.workspace_layout.move_surface): beside another panel on any edge, along the centre's outer edge, or
+  into another panel as its tabs. A tab dragged into the diagonal region nearest a panel side splits on
+  that side (cmd.panel_tab.move with a split target); dropped on a strip, it moves into that panel at the
+  drop position; pulled off its strip by 14 px vertically or 40 px horizontally beyond the strip band, it
+  tears off and follows the pointer until it lands on a strip, an edge band or the "+N" list (F3-633). The
+  panel body is divided along diagonals into four side regions. Only the central Join tile or a strip slot
+  joins as tabs; other body regions split. A central guide shows the four sides around Join, and
+  outer-side dock targets plus thin left/right/bottom edge bands create a full-height or full-width panel;
+  a drag starts after 4 px of travel, a zone is adopted after 100 ms of dwell (skipped on release;
+  retained under Reduced Motion, which removes travel), and an adopted zone holds while the pointer stays
+  within 12 px of it. Every drag runs the gesture transaction Home already uses and shares with the Usage
+  board's gesture kit (F3-HOME-002, F3-503, DR-066): the preview is local, nothing dispatches while
+  dragging, a changed release commits one command, an unchanged release, Escape, a pointer cancel, a lost
+  pointer capture, a lost window or a drop past the workspace commits nothing and restores the exact
+  earlier picture, and a failed commit rolls back. Every drag outcome also has a menu path and a keyboard
+  path (Move panel, Move to panel, Alt+Shift+arrows; F3-635). Motion: a panel glides into its new place in
+  180 ms by default, in Friendly 220 ms, Glass 260 ms, Basic 200 ms, Retro 140 ms in steps and NieR Mode
+  200 ms; the landing preview glides in 160 ms and fades in 140 ms; neighbours slide aside in 250 ms on
+  cubic-bezier(.22,1,.36,1); a tab settles in 160 ms on cubic-bezier(.17,.84,.29,.99); a drop settles on a
+  critically damped spring of stiffness 520 and damping 45.6; a cancel returns in 300 ms; under Reduced
+  Motion every one of these is 0. The default layout, Home, keeps a full-width bottom row where the
+  terminal sat before, 0.4 of the centre's height: an ordinary panel row that holds any tab kind and can
+  be split side by side. Four named layouts ship. Home: a column of a row of 0.6 (a dashboard panel 0.5
+  holding the pinned Home dashboard, F3-638, and a documents panel 0.5) over a tools row of 0.4 holding
+  terminals and Output. Build: a column of a row of 0.62 (documents 0.66 and a side panel 0.34 for
   browsers and dashboards) over a row of 0.38 (terminals 0.6 and tools 0.4 holding Output and Problems).
-  Terminals 2x2: a column of two rows of two terminal panels, every size 0.5, one terminal in each, new ones
-  started where fewer than four are open, and every other tab joining the first panel in the background. Focus:
-  one panel holding every tab. Applying a named layout keeps every open tab: no terminal session ends, no
-  unsaved buffer is dropped, and each tab moves to the slot that holds its kind
+  Terminals 2x2: a column of two rows of two terminal panels, every size 0.5, one terminal in each, new
+  ones started where fewer than four are open, and every other tab joining the first panel in the
+  background. Focus: one panel holding every tab. Applying a named layout keeps every open tab: no
+  terminal session ends, no unsaved buffer is dropped, and each tab moves to the slot that holds its kind
   (cmd.workspace_layout.apply_named). Restore home layout (cmd.workspace_layout.reset; the Settings row
-  general.startup.reset-home-layout) applies Home the same way, keeping every tab. A user can save the current
-  arrangement as a named layout (cmd.workspace_layout.save_named); a saved layout keeps its shape, its sizes and
-  the kinds each slot holds, never the tabs themselves. The named and saved layouts, Save this layout... and
-  Restore home layout sit in the panel menu's Layouts submenu and in the title bar's Home options menu (F3-502).
-  The layout persists in the v2 Home layout record `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`,
-  the only Home layout authority (Plans/storage-plan.md#SP-330, Plans/home_workspace_layout_v2.schema.json),
-  through F3-HOME-004's write-then-read-back transaction; this unit does not restate its fields. Narrow states
-  (F3-636), menus, overlays and drags are never saved. A layout from before this redesign is converted on first
-  read and never reset: an upgrade never loses a user's tabs or layout. Every committed change emits the one
-  existing event workspace.layout_changed (CV-361); a reveal of an open tab emits nothing. This unit supersedes
-  F3-501 and the composition of F3-HOME-001 (four fixed editor panels, the singleton dashboard, the chat as a
-  movable surface, terminal sections docked at the bottom), the fixed bottom runtime zone of sections 3.1, 3.2,
-  5 and 7.20 (F3-034, F3-035, F3-060, F3-061, F3-066, F3-151), F3-502's Collapse Bottom Terminal row, the host
-  registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503, and, for home panels,
-  section 5.8's 240 px panel minimum. A saved named layout also keeps at most 64 KB (65,536 bytes) of its
-  dashboard boards' contents; a larger save keeps the layout without those contents, records
-  boards_skipped_bytes and says so (SP-330). The guide responds immediately while a stable-intent gate prevents
-  a passing pointer from repeatedly rearranging the live preview. A split ghost shows the resulting panel/tab,
-  joining opens the destination strip slot, a moving panel leaves an outline, and a source emptied by the move
-  fades back. Escape returns the exact earlier arrangement; release commits precisely the shown result. Every
-  target name remains outside the carried tab, pointer, other docks and preview tab/mark, including a resting
-  pointer at bottom and edge docks. Caption placement changes only when needed, preferring a clear location
-  behind the hand; transient repositioning never becomes a settled occlusion. The guide, captions and preview
-  use each family's motion and material; Reduced Motion keeps the legible end state without spatial travel. The
-  screen reader announces the held destination once its intent settles. F3-657 owns resize feedback.
+  general.startup.reset-home-layout) applies Home the same way, keeping every tab. A user can save the
+  current arrangement as a named layout (cmd.workspace_layout.save_named); a saved layout keeps its shape,
+  its sizes and the kinds each slot holds, never the tabs themselves. The named and saved layouts, Save
+  this layout... and Restore home layout sit in the panel menu's Layouts submenu and in the title bar's
+  Home options menu (F3-502). The layout persists in the v2 Home layout record
+  `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, the only Home layout authority
+  (Plans/storage-plan.md#SP-330, Plans/home_workspace_layout_v2.schema.json), through F3-HOME-004's
+  write-then-read-back transaction; this unit does not restate its fields. Narrow states (F3-636), menus,
+  overlays and drags are never saved. A layout from before this redesign is converted on first read and
+  never reset: an upgrade never loses a user's tabs or layout. Every committed change emits the one
+  existing event workspace.layout_changed (CV-361); a reveal of an open tab emits nothing. This unit
+  supersedes F3-501 and the composition of F3-HOME-001 (four fixed editor panels, the singleton dashboard,
+  the chat as a movable surface, terminal sections docked at the bottom), the fixed bottom runtime zone of
+  sections 3.1, 3.2, 5 and 7.20 (F3-034, F3-035, F3-060, F3-061, F3-066, F3-151), F3-502's Collapse Bottom
+  Terminal row, the host registries, host caps and per-kind fair-share minimums of F3-HOME-002 and F3-503,
+  and, for home panels, section 5.8's 240 px panel minimum. A saved named layout also keeps at most 64 KB
+  (65,536 bytes) of its dashboard boards' contents; a larger save keeps the layout without those contents,
+  records boards_skipped_bytes and says so (SP-330). The guide responds immediately while a stable-intent
+  gate prevents a passing pointer from repeatedly rearranging the live preview. A split ghost shows the
+  resulting panel/tab, joining opens the destination strip slot, a moving panel leaves an outline, and a
+  source emptied by the move fades back. Escape returns the exact earlier arrangement; release commits
+  precisely the shown result. Every target name remains outside the carried tab, pointer, other docks and
+  preview tab/mark, including a resting pointer at bottom and edge docks. Each zone has an ordered list of
+  caption positions: choose the first with 12 px clearance from the carried tab and pointer, retain it
+  while at least 4 px remains clear, and return to an earlier place only after 160 ms. Captions draw above
+  the carried tab; a place past the tab is the landed last resort. The approved past-first polish is a
+  held follow-up until its packet is verified; neither order may permit a resting occlusion. The guide,
+  captions and preview use each family's motion and material; Reduced Motion keeps the legible end state
+  without spatial travel. The screen reader announces the held destination once its intent settles. F3-657
+  owns resize feedback. Jared’s 2026-10-14 grip correction puts the grip’s narrow end in the panel’s
+  top-right corner. Orientation changes no drag threshold, menu route or command.
 gui_related: true
 gui_classification_reason: Defines the home centre's panel model, its layout tree, its named layouts and how panels move, split, collapse and persist.
 split_recommended: false
@@ -201,9 +211,10 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-- Plans/FinalGUISpec.md F3-HOME-002, F3-HOME-004 and F3-HOME-005 (prose headings with no PlanUnit; cited, not a dependency
-  (lead ruling L22, 2026-10-10))
-- Plans/FinalGUISpec.md#F3-635 (the tab kinds consume this model; cited, not a dependency (lead ruling L22, 2026-10-10))
+- Plans/FinalGUISpec.md F3-HOME-002, F3-HOME-004 and F3-HOME-005 (prose headings with no PlanUnit; cited, not
+  a dependency (lead ruling L22, 2026-10-10))
+- Plans/FinalGUISpec.md#F3-635 (the tab kinds consume this model; cited, not a dependency (lead ruling L22,
+  2026-10-10))
 - Plans/Decision_Log.md#DL-180
 - Plans/Decision_Log.md#DL-181
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
@@ -221,10 +232,12 @@ source_lineage:
   SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
   SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
-- /mnt/Cursor/share/puppet-master/2026-10-13-panel-dnd-resize/NOTES.md, SHA-256 03a80f0dea3235ea637149bbec63626c4a4be8521078f9dd601f2b691f03d2d6
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/DND-NOTES-20261014-FOLLOWUP.md, SHA-256 b5b883caeef6d774fbca250e5c7b6c82dd31eee05af8da207727179baa21b5c3
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-13-resize-glow/NOTES.md, SHA-256 0a20256d730c5b51cda138b14845a5dc2e7dfdda04385a3956721a73fb657c16
   (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
+  (decision/source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "n-ary split tree"
   - "0.34"
@@ -275,59 +288,63 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every panel has the same tab strip, the dashboard's included (DL-180, D5); no panel and no tab kind draws a
-  strip of its own. The strip is 35 px tall in every panel, the change Jared asked for in PMConcept7 revision 19
-  ("Strips shortened: editor 40 -> 35px") applied to every panel, and its tabs are 31 px tall with 8 px between
-  tabs, 2 px in Retro (the 8 px gap approved by Jared on 2026-10-10, D29). The active tab's plate overlaps the
-  body by 1 px and joins it through the contact-aware silhouette of F3-505, generalised here from the editor and
-  dashboard strips to every panel and every tab kind, so the active tab and its panel read as one shape. That
-  fused shape is the only mark of the active tab: no underline, no accent line, no accent crown strip, no pill.
-  In Friendly, Glass and Basic, light and dark, the plate takes the body's own fill; no look gives the active
-  tab a separately coloured plate, Glass dark included (Jared, 2026-10-10, D29: its purple plate is dropped),
-  and Glass keeps only its 1 px glass rim along the plate's crown, part of its material and never in an accent
-  colour. Retro fills the fused shape in reverse video and NieR Mode in ink (F3-647). Contact is measured to the
-  neighbouring content, its box inset by 8 px, with a 20 px linear morph window on each side. Crown, shoulder
-  and flare radii per look: Friendly 16, 16 and 25 px; Glass 16, 16 and 25 px; Basic 9, 14 and 22 px; Retro 6, 8
-  and 14 px on a stepped profile; NieR Mode 9, 14 and 22 px, or a 6, 0 and 14 px chamfer with a straight foot
-  when its square part is installed. Drag to reorder is the pointer-capture gesture of F3-421 and F3-505, kept
-  and polished in every strip: it starts after 4 px of travel, the carried tab tracks the pointer one to one,
-  the silhouette follows it in the same frame without springing, neighbours slide aside, widths do not reflow
-  while a tab is carried, and a changed release commits one cmd.panel_tab.move; the same gesture carries a tab
-  to another strip, onto a panel's edge or off its strip (F3-630). Under Retro every selection and every reorder
-  rolls one of the three Retro effects of F3-505 (phosphor, CRT and DOS) from a shuffle bag with no immediate
-  repeat, in every strip, and each ends on the steady reverse-video tab; Reduced Motion shows the end at once.
-  Widths: a tab's natural width is 96 to 200 px; when the strip runs short, inactive tabs shrink to 72 px, then
-  become 36 px icon-only tabs; the active tab keeps at least 120 px and its label and never hides; after that a
-  contiguous window of tabs around the active tab stays visible and the "+N" of F3-633 counts the rest. A shrunk
-  file name keeps its start and its end and loses its middle (rec…es.rs). Pinned tabs are 36 px, icon only, sit
-  at the left in pin order and never hide; Pin and Unpin are in the tab menu only (cmd.panel_tab.pin,
-  cmd.panel_tab.unpin). Marks: a file with unsaved changes shows a 7 px dot in the close slot until the pointer
-  is over the tab (Retro an asterisk after the label, NieR Mode a 6 px square); a preview tab has an italic
-  label (F3-634); a tab that opened in the background shows a 6 px hollow square until the user activates it; a
-  terminal whose last command failed shows the exit code after its label in the error colour; a tab an agent is
-  using shows the 7 px square agent mark and its hover tag names the agent; a running process uses F3-658's
-  working glyph with its look and Reduced Motion treatment. Every state mark comes from that shared set and its
-  priority rule, no tab invents its own, and every mark is also in the tab's accessible name. Terminal tabs show
-  no colour or icon of the person's choosing on the strip (D34, DL-187): Jared asked for terminal tab colours
-  and icons to be redesigned within Puppet Master's neon glyph system, and F3-658 now supplies that shared
-  redesign (F3-449, F3-640); this does not enable user-selected tab colors or icons. The close target is 24 x 24
-  px with a 12 px glyph; it is hidden on inactive tabs narrower than 96 px, where a middle click and Delete
+  Every panel has the same tab strip, the dashboard's included (DL-180, D5); no panel and no tab kind
+  draws a strip of its own. The strip is 35 px tall in every panel, the change Jared asked for in
+  PMConcept7 revision 19 ("Strips shortened: editor 40 -> 35px") applied to every panel, and its tabs are
+  31 px tall with 8 px between tabs, 2 px in Retro (the 8 px gap approved by Jared on 2026-10-10, D29).
+  The active tab's plate overlaps the body by 1 px and joins it through the contact-aware silhouette of
+  F3-505, generalised here from the editor and dashboard strips to every panel and every tab kind, so the
+  active tab and its panel read as one shape. That fused shape is the only mark of the active tab: no
+  underline, no accent line, no accent crown strip, no pill. In Friendly, Glass and Basic, light and dark,
+  the plate takes the body's own fill; no look gives the active tab a separately coloured plate, Glass
+  dark included (Jared, 2026-10-10, D29: its purple plate is dropped), and Glass keeps only its 1 px glass
+  rim along the plate's crown, part of its material and never in an accent colour. Retro fills the fused
+  shape in reverse video and NieR Mode in ink (F3-647). Contact is measured to the neighbouring content,
+  its box inset by 8 px, with a 20 px linear morph window on each side. Crown, shoulder and flare radii
+  per look: Friendly 16, 16 and 25 px; Glass 16, 16 and 25 px; Basic 9, 14 and 22 px; Retro 6, 8 and 14 px
+  on a stepped profile; NieR Mode 9, 14 and 22 px, or a 6, 0 and 14 px chamfer with a straight foot when
+  its square part is installed. Drag to reorder is the pointer-capture gesture of F3-421 and F3-505, kept
+  and polished in every strip: it starts after 4 px of travel, the carried tab tracks the pointer one to
+  one, the silhouette follows it in the same frame without springing, neighbours slide aside, widths do
+  not reflow while a tab is carried, and a changed release commits one cmd.panel_tab.move; the same
+  gesture carries a tab to another strip, into a panel's diagonal split region or explicit Join target
+  (F3-630) or off its strip (F3-630). Under Retro every selection and every reorder rolls one of the three
+  Retro effects of F3-505 (phosphor, CRT and DOS) from a shuffle bag with no immediate repeat, in every
+  strip, and each ends on the steady reverse-video tab; Reduced Motion shows the end at once. Widths: a
+  tab's natural width is 96 to 200 px; when the strip runs short, inactive tabs shrink to 72 px, then
+  become 36 px icon-only tabs; the active tab keeps at least 120 px and its label and never hides; after
+  that a contiguous window of tabs around the active tab stays visible and the "+N" of F3-633 counts the
+  rest. A shrunk file name keeps its start and its end and loses its middle (rec…es.rs). Pinned tabs are
+  36 px, icon only, sit at the left in pin order and never hide; Pin and Unpin are in the tab menu only
+  (cmd.panel_tab.pin, cmd.panel_tab.unpin). Marks: a file with unsaved changes shows a 7 px dot in the
+  close slot until the pointer is over the tab (Retro an asterisk after the label, NieR Mode a 6 px
+  square); a preview tab has an italic label (F3-634); a tab that opened in the background shows a 6 px
+  hollow square until the user activates it; a terminal whose last command failed shows the exit code
+  after its label in the error colour; a tab an agent is using shows the 7 px square agent mark and its
+  hover tag names the agent; a running process uses F3-658's working glyph with its look and Reduced
+  Motion treatment. Every state mark comes from that shared set and its priority rule, no tab invents its
+  own, and every mark is also in the tab's accessible name. Terminal tabs show no colour or icon of the
+  person's choosing on the strip (D34, DL-187): Jared asked for terminal tab colours and icons to be
+  redesigned within Puppet Master's neon glyph system, and F3-658 now supplies that shared redesign
+  (F3-449, F3-640); this does not enable user-selected tab colors or icons. The close target is 24 x 24 px
+  with a 12 px glyph; it is hidden on inactive tabs narrower than 96 px, where a middle click and Delete
   still close. The "+" (F3-632) is 28 x 28 px, right after the last visible tab. "+N" is plain text in the
-  strip's own type ("+7"; Retro "[+7]"; NieR Mode small caps after a hairline), never a badge. The strip is an
-  ARIA tablist: arrows move between tabs, Home and End go to the ends, Enter or Space activates, Delete closes,
-  and Shift+F10 opens the tab menu. The tab menu holds Close, Keep open (on a preview tab), Pin or Unpin,
-  Rename..., Move to new panel, Move to panel, and Split right or Split down with this tab, each one command
-  (cmd.panel_tab.close, keep, pin, unpin, rename, move). A kind may add rows of its own at the end of the tab
-  menu, after a hairline, through its registration (F3-635): the terminal adds Mute notifications (F3-641). A
-  kind's rows do what that kind registers for them, which need not be a command: Mute notifications is the typed
-  local action ui.terminal.mute_notifications (F3-640). Rename sets a user label that the kind's own label no
-  longer overrides; an empty name gives the kind's label back. Activating a tab is view state
-  (ui.panel_tab.activate), with no receipt and no event. A tab label never shows an internal id. Tabs, strip
-  buttons and dividers take at most a static tint on hover (F3-647). This unit supersedes the
-  editor-and-dashboard scope of F3-505, the editor-only strip rules of F3-421, the dashboard's own Main, Metrics
-  and Monitoring strip, and Basic's 2 px accent crown strip on the active tab. F3-658 supersedes the former
-  square agent and static busy substitutes where a shared mark now applies; the unsaved/preview/background-open
-  placements and accessible state names remain.
+  strip's own type ("+7"; Retro "[+7]"; NieR Mode small caps after a hairline), never a badge. The strip
+  is an ARIA tablist: arrows move between tabs, Home and End go to the ends, Enter or Space activates,
+  Delete closes, and Shift+F10 opens the tab menu. The tab menu holds Close, Keep open (on a preview tab),
+  Pin or Unpin, Rename..., Move to new panel, Move to panel, and Split right or Split down with this tab,
+  each one command (cmd.panel_tab.close, keep, pin, unpin, rename, move). A kind may add rows of its own
+  at the end of the tab menu, after a hairline, through its registration (F3-635): the terminal adds Mute
+  notifications (F3-641). A kind's rows do what that kind registers for them, which need not be a command:
+  Mute notifications is the typed local action ui.terminal.mute_notifications (F3-640). Rename sets a user
+  label that the kind's own label no longer overrides; an empty name gives the kind's label back.
+  Activating a tab is view state (ui.panel_tab.activate), with no receipt and no event. A tab label never
+  shows an internal id. Tabs and strip buttons consume F3-465's shared small-control marker; dividers
+  consume F3-657's resize feedback. This unit supersedes the editor-and-dashboard scope of F3-505, the
+  editor-only strip rules of F3-421, the dashboard's own Main, Metrics and Monitoring strip, and Basic's 2
+  px accent crown strip on the active tab. F3-658 supersedes the former square agent and static busy
+  substitutes where a shared mark now applies; the unsaved/preview/background-open placements and
+  accessible state names remain.
 gui_related: true
 gui_classification_reason: Defines the one tab strip every panel uses, its silhouette, widths, marks, reorder and keyboard.
 split_recommended: false
@@ -1115,81 +1132,92 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The chat is a fixed column on the right of the window (DL-180, D3). It runs from the title bar to the status bar,
-  which both stay full width (Jared, 2026-08-13, PMConcept7 revision 15: "The chat assistant window should be full
-  vertical height, unless it pops out, then the user can adjust it."). It is never a tab and never in the split tree,
-  and it is never moved, docked, grabbed or floated inside the window: it carries no grip and no surface menu of the
-  home centre. Its default width follows the window: clamp(400, 0.26667 x window width + 88, 640) px, so 480 px on a
-  1470 px window, 600 px at 1920 px and 640 px from 2070 px. The user drags the column's inner edge between 400 and 760
-  px, never so wide that the centre drops below 960 px, and on the Usage page never so wide that the Usage board drops
-  below 400 px (below); the drag previews locally and commits once on release as
-  cmd.workspace_layout.resize_surface with the surface chat and its width, kept in the v2 layout record (SP-330), and a
-  width the user never set follows the window. Showing and hiding the chat stay cmd.panel.switch with chat, and the
-  left rail's Chat entry shows or hides the column on every page without changing the page in front (F3-042, D40). The
-  narrow ladder (F3-636) eases it toward 400 px and, below a centre width of 480 px, folds it to a 32 px edge strip that
-  opens it again; "Keep the chat open in narrow windows" keeps it open instead. That toggle is the chat's own
-  preference, not a Settings row: it sits in the chat header's menu (ACD-442) and in the title bar's Home options menu
-  (the planning thread's ruling of 2026-10-10 under D4). Amended 2026-10-10 (lead ruling): it is a check in the chat
-  header's menu, and the concept also offers it in the Home options menu; both dispatch the same typed local action,
-  ui.chat_column.keep_open with its argument keep_open, whose value is saved in the v2 record's chat column as
-  keep_open (Plans/storage-plan.md#SP-330), never a Settings row. Pop out is the only way
-  to move it (D3: the desktop app). In the desktop app Pop out opens the same chat, with its History and Activity
-  Detail, in its own window that the user sizes and places (cmd.panel.undock with chat; panel.undocked, F3-527), and
-  Dock back returns it to its column (cmd.panel.redock; panel.redocked); exactly one chat exists at a time. The web client offers no Pop out; the chat stays in its column. The title bar's Home options menu carries Show the chat or Hide the chat, and in the desktop app Pop out the chat or Dock the chat back, and Keep the chat open in narrow windows (F3-502). The 5.6 Pro chat's
-  History list is a flyout over the chat by default; pinning it widens the chat by the list's own width instead of
-  squeezing the messages. Activity Detail stays inside the chat as the 5.6 Pro chat designs it (APR-001), never a panel
-  tab. One thread-history list survives, the 5.6 Pro one. The chat sizes itself by its own column, never by the window
-  (ACD-501). Everything the chat opens lands in the centre through F3-634 (ACD-500). This supersedes chat docking to any
-  host, the chat's grip, its grab and keyboard move, floating it inside the window and its Dock back to a host
-  (F3-HOME-001, F3-HOME-002 and F3-HOME-003 as they apply to the chat; F3-516's saved dock), and the four different chat
-  minimums: F3-HOME-002's 260 px nominal minimum, F3-423's floating floor (it now holds only for the desktop app's
-  popped-out chat window), F3-565's narrowest chat (its resilience rules now hold for a popped-out window narrower than 400 px),
-  and the 360 px chat beside an open document of APR-038 and F3-569.
-  After a restart the chat starts in its column, also when it was popped out as the app closed (Jared, D32; F3-504):
-  the pop-out is never saved, while the column's visibility and width are (SP-330). A Chat Layout value saved before
-  this redesign, Overlay or Detached, never pops the chat out at start: general.visual.chat-layout-mode retires, and a
-  stored value is ignored and cleared on first read, with no pop-out and no notice (SSYS-050).
-  On the Usage page the chat never squeezes the Usage board below 400 px, the narrowest board every Usage widget's
-  smallest preset is checked at (Plans/Widget_System.md#WS-017; the planning thread's ruling of 2026-10-10): a pinned
-  History drops back to its flyout first, then the column gives way down to its 400 px minimum, and it grows back
-  toward the person's width as the board gets room again; a width drag there stops where the board would drop below
-  400 px. None of this is saved beyond the width the person dragged to. The narrow ladder of F3-636 runs only while
-  Home is the page shown; on any other page the column is the person's width, plus a pinned History.
-  ui.chat_column.pin_history is a typed local action (view state); its value is saved in the v2 record's chat column as history_pinned, with no workspace.layout_changed event, revision advance or receipt, like ui.workspace_layout.maximize.
-  The saved width and the 400-760 px drag range describe the message area. Pinning History adds 240 px to
-  the column, or 200 px while the whole column is under 540 px; the messages keep their width. The pinned
-  column's minimum is 640 px; its drag range is 640 to 760 + 240 px, capped by the 960 px centre budget. A
-  folded chat always has History dropped to a flyout, so its peek opens at 400 px; with History pinned in the
-  peek it is 640 px, capped at the row width minus 48 px.
-  Measured History cases: at 1920 px in Friendly dark, the flyout column is 600 px, the pinned column 666 px
-  (History 240 px, messages 425 px) and C 960 px; at 1920 px in NieR, flyout is 600 px and pinned 681 px
-  (History 240 px, messages 440 px), with C 960 px. At 1470 px in Glass light with the rail folded, flyout
-  is 434 px with C 960 px, and pinned is 640 px (History 240 px, messages 399 px), with C 754 px. At 900 px
-  in Retro dark the chat folds to 32 px, with a 400 px flyout peek or 640 px pinned peek. These measurements
-  include centre-budget clamping, while the saved width remains the message-area preference.
-  The v2 layout record's chat_column keeps width_px, history_pinned and keep_open (defaults null, false and
-  false), in addition to its shown state; none is a Settings value. width_px is the message area's width,
-  rounded to an integer in 400-760 px, with an out-of-range finite number stored at the nearer bound and
-  null following the window's default; other values are refused. The resize command is
-  cmd.workspace_layout.resize_surface { surface: 'chat', width }: a changed release commits once with one
-  receipt, one workspace.layout_changed and a new revision; Escape or release with no movement commits
-  nothing. Double-clicking the resizer commits once with width null. The two pin actions accept their named
-  boolean or toggle when it is absent, and save like view state with no receipt, event or revision;
-  History's button, the pin in its list header and Keep History open in More dispatch
-  ui.chat_column.pin_history. A named layout and Restore home layout keep all three fields; a project switch
-  shows that project's own record, or the defaults if none exists. Once at boot, the former stored
-  chat.width (finite, rounded and clamped to 400-760), chat.history value pinned and chat.pinOpen true copy
-  into this project's layout and every other project's saved layout only where the target field still holds
-  its default; existing non-default fields stay. The three old keys are dropped only after this project's
-  layout is written, never while an unreadable record waits to be set aside; stored defaults (null, flyout
-  and false) are just dropped. The chat's More menu rows, in order, are Show the current chat, Pop out or
-  Dock back where supported, Keep History open (checked, ui.chat_column.pin_history), Keep the chat open in
-  narrow windows (checked, ui.chat_column.keep_open), and Clear what you sent. Keep open's second line says
-  Instead of folding to a strip at the edge. At 1920 px with width_px 500, History pinning grows the column
-  from 500 to 681 px (History 240 px, centre 960 px) and unpinning returns it to 500; dragging the 600 px
-  column's inner edge 100 px right stores width_px 500, and double-click resets it to 600 with width_px
-  null. At 900 x 700, keep_open on keeps the chat at 400 px with centre 443 px; off it folds to the strip
-  with centre 811 px.
+  The chat is a fixed column on the right of the window (DL-180, D3). It runs from the title bar to the
+  status bar, which both stay full width (Jared, 2026-08-13, PMConcept7 revision 15: "The chat assistant
+  window should be full vertical height, unless it pops out, then the user can adjust it."). It is never a
+  tab and never in the split tree, and it is never moved, docked, grabbed or floated inside the window: it
+  carries no grip and no surface menu of the home centre. Its default width follows the window: clamp(400,
+  0.26667 x window width + 88, 640) px, so 480 px on a 1470 px window, 600 px at 1920 px and 640 px from
+  2070 px. The user drags the column's inner edge between 400 and 760 px, never so wide that the centre
+  drops below 960 px, and on the Usage page never so wide that the Usage board drops below 400 px (below);
+  the drag previews locally and commits once on release as cmd.workspace_layout.resize_surface with the
+  surface chat and its width, kept in the v2 layout record (SP-330), and a width the user never set
+  follows the window. Showing and hiding the chat stay cmd.panel.switch with chat, and the left rail's
+  Chat entry shows or hides the column on every page without changing the page in front (F3-042, D40). The
+  narrow ladder (F3-636) eases it toward 400 px and, below a centre width of 480 px, folds it to a 32 px
+  edge strip that opens it again; "Keep the chat open in narrow windows" keeps it open instead. That
+  toggle is the chat's own preference, not a Settings row: it sits in the chat header's menu (ACD-442) and
+  in the title bar's Home options menu (the planning thread's ruling of 2026-10-10 under D4). Amended
+  2026-10-10 (lead ruling): it is a check in the chat header's menu, and the concept also offers it in the
+  Home options menu; both dispatch the same typed local action, ui.chat_column.keep_open with its argument
+  keep_open, whose value is saved in the v2 record's chat column as keep_open
+  (Plans/storage-plan.md#SP-330), never a Settings row. Pop out is the only way to move it (D3: the
+  desktop app). In the desktop app Pop out opens the same chat, with its History and Activity Detail, in
+  its own window that the user sizes and places (cmd.panel.undock with chat; panel.undocked, F3-527), and
+  Dock back returns it to its column (cmd.panel.redock; panel.redocked); exactly one chat exists at a
+  time. The web client offers no Pop out; the chat stays in its column. The title bar's Home options menu
+  carries Show the chat or Hide the chat, and in the desktop app Pop out the chat or Dock the chat back,
+  and Keep the chat open in narrow windows (F3-502). The 5.6 Pro chat's History list is a flyout over the
+  chat by default; pinning it widens the chat by the list's own width instead of squeezing the messages.
+  Activity Detail stays inside the chat as the 5.6 Pro chat designs it (APR-001), never a panel tab. One
+  thread-history list survives, the 5.6 Pro one. The chat sizes itself by its own column, never by the
+  window (ACD-501). Everything the chat opens lands in the centre through F3-634 (ACD-500). This
+  supersedes chat docking to any host, the chat's grip, its grab and keyboard move, floating it inside the
+  window and its Dock back to a host (F3-HOME-001, F3-HOME-002 and F3-HOME-003 as they apply to the chat;
+  F3-516's saved dock), and the four different chat minimums: F3-HOME-002's 260 px nominal minimum,
+  F3-423's floating floor (it now holds only for the desktop app's popped-out chat window), F3-565's
+  narrowest chat (its resilience rules now hold for a popped-out window narrower than 400 px), and the 360
+  px chat beside an open document of APR-038 and F3-569. After a restart the chat starts in its column,
+  also when it was popped out as the app closed (Jared, D32; F3-504): the pop-out is never saved, while
+  the column's visibility and width are (SP-330). A Chat Layout value saved before this redesign, Overlay
+  or Detached, never pops the chat out at start: general.visual.chat-layout-mode retires, and a stored
+  value is ignored and cleared on first read, with no pop-out and no notice (SSYS-050). On the Usage page
+  the chat never squeezes the Usage board below 400 px, the narrowest board every Usage widget's smallest
+  preset is checked at (Plans/Widget_System.md#WS-017; the planning thread's ruling of 2026-10-10): a
+  pinned History drops back to its flyout first, then the column gives way down to its 400 px minimum, and
+  it grows back toward the person's width as the board gets room again; a width drag there stops where the
+  board would drop below 400 px. None of this is saved beyond the width the person dragged to. The narrow
+  ladder of F3-636 runs only while Home is the page shown; on any other page the column is the person's
+  width, plus a pinned History. ui.chat_column.pin_history is a typed local action (view state); its value
+  is saved in the v2 record's chat column as history_pinned, with no workspace.layout_changed event,
+  revision advance or receipt, like ui.workspace_layout.maximize. The saved width and the 400-760 px drag
+  range describe the message area. Pinning History adds 240 px to the column, or 200 px while the whole
+  column is under 540 px; the messages keep their width. The pinned column's minimum is 640 px; its drag
+  range is 640 to 760 + 240 px, capped by the 960 px centre budget. A folded chat always has History
+  dropped to a flyout, so its peek opens at 400 px; with History pinned in the peek it is 640 px, capped
+  at the row width minus 48 px. Measured History cases: at 1920 px in Friendly dark, the flyout column is
+  600 px, the pinned column 666 px (History 240 px, messages 425 px) and C 960 px; at 1920 px in NieR,
+  flyout is 600 px and pinned 681 px (History 240 px, messages 440 px), with C 960 px. At 1470 px in Glass
+  light with the rail folded, flyout is 434 px with C 960 px, and pinned is 640 px (History 240 px,
+  messages 399 px), with C 754 px. At 900 px in Retro dark the chat folds to 32 px, with a 400 px flyout
+  peek or 640 px pinned peek. These measurements include centre-budget clamping, while the saved width
+  remains the message-area preference. The v2 layout record's chat_column keeps width_px, history_pinned
+  and keep_open (defaults null, false and false), in addition to its shown state; none is a Settings
+  value. width_px is the message area's width, rounded to an integer in 400-760 px, with an out-of-range
+  finite number stored at the nearer bound and null following the window's default; other values are
+  refused. The resize command is cmd.workspace_layout.resize_surface { surface: 'chat', width }: a changed
+  release commits once with one receipt, one workspace.layout_changed and a new revision; Escape or
+  release with no movement commits nothing. Double-clicking the resizer commits once with width null. The
+  two pin actions accept their named boolean or toggle when it is absent, and save like view state with no
+  receipt, event or revision; History's button, the pin in its list header and Keep History open in More
+  dispatch ui.chat_column.pin_history. A named layout and Restore home layout keep all three fields; a
+  project switch shows that project's own record, or the defaults if none exists. Once at boot, the former
+  stored chat.width (finite, rounded and clamped to 400-760), chat.history value pinned and chat.pinOpen
+  true copy into this project's layout and every other project's saved layout only where the target field
+  still holds its default; existing non-default fields stay. The three old keys are dropped only after
+  this project's layout is written, never while an unreadable record waits to be set aside; stored
+  defaults (null, flyout and false) are just dropped. The chat's More menu rows, in order, are Show the
+  current chat, Pop out or Dock back where supported, Keep History open (checked,
+  ui.chat_column.pin_history), Keep the chat open in narrow windows (checked, ui.chat_column.keep_open),
+  and Clear what you sent. Keep open's second line says Instead of folding to a strip at the edge. At 1920
+  px with width_px 500, History pinning grows the column from 500 to 681 px (History 240 px, centre 960
+  px) and unpinning returns it to 500; dragging the 600 px column's inner edge 100 px right stores
+  width_px 500, and double-click resets it to 600 with width_px null. At 900 x 700, keep_open on keeps the
+  chat at 400 px with centre 443 px; off it folds to the strip with centre 811 px. Jared’s 2026-10-14
+  shell-spacing direction reduces excess space between the left rail and page content and between content
+  and the chat column on all pages. Glass needs the larger reduction; other looks retain their grammar
+  with smaller adjustments where needed. Final dimensions remain with the shell/Glass owners and are not
+  invented here. This changes no chat or panel minimum, collapse threshold or persistence boundary.
 gui_related: true
 gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout and Activity Detail.
 split_recommended: false
@@ -1226,21 +1254,36 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "Plans/FinalGUISpec.md#F3-636 (the narrow ladder consumes the chat column; cited, not a dependency (lead ruling L22, 2026-10-10))"
-  - "Plans/Decision_Log.md#DL-180"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5 (sections 9 and 10; audit lineage only)"
-  - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
-  - "Plans/Decision_Log.md#DL-187"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D40)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (chat column, D32 and D40; concept lineage only)"
-  - "The planning thread's rulings of 2026-10-10: the Usage board's 400 px floor (pm-mail 1010142236-fced) and Chat Layout's retirement with the narrow-window pin on the chat's header menu (pm-mail 1010211322-7b6c)"
-  - "Concepts/home-redesign/src/panels/js/44-narrow.js and 46-chat.js at 7ad8442ad4 on branch concept/home-panels-20261009 (the Usage board floor as built; concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md, SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md, SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
+  SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
+- Plans/FinalGUISpec.md#F3-636 (the narrow ladder consumes the chat column; cited, not a dependency (lead ruling
+  L22, 2026-10-10))
+- Plans/Decision_Log.md#DL-180
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D3, D4)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md,
+  SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981
+  (the agreed anatomy; concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5
+  (sections 9 and 10; audit lineage only)
+- Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)
+- Plans/Decision_Log.md#DL-187
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D32, D40)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md,
+  SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (chat column, D32 and D40; concept
+  lineage only)
+- 'The planning thread''s rulings of 2026-10-10: the Usage board''s 400 px floor (pm-mail 1010142236-fced) and
+  Chat Layout''s retirement with the narrow-window pin on the chat''s header menu (pm-mail 1010211322-7b6c)'
+- Concepts/home-redesign/src/panels/js/44-narrow.js and 46-chat.js at 7ad8442ad4 on branch concept/home-panels-20261009
+  (the Usage board floor as built; concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-NUMBERS-51c316e18b.md,
+  SHA-256 a9c42b88e5cb50706ff1716a254cb68e026a538bb7a0c840905779a9a482cff2 (small-round concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/panels-CONTRACT-2926ad987e.md,
+  SHA-256 c579d0dfef41fd1fc7327d14c2adb9e2b101c24b216ff64a9db5fc19895ad989 (small-round concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
+  (decision/source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "clamp(400, 0.26667 x window width + 88, 640)"
   - "400"
@@ -1831,31 +1874,33 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Puppet Master's chrome follows one shell-wide rule (DL-184; the rule is Plans/DRY_Rules.md#DR-069): no box
-  with a coloured border or stripe on one side, no emoji, and no pill-shaped labels, meaning status chips, tags,
-  suggestion chips and state badges. Pill action buttons such as Install and Sign in, and rounded Friendly/Glass
-  action buttons, are allowed; keyboard key caps and non-label progress marks are not labels, and a program's
-  own output in a terminal may contain emoji. This unit owns how the rule looks. Selection is shown by the
-  surface itself: the fused tab silhouette (F3-631), a filled or tinted row, the NieR square cursor, Retro
-  reverse video, or a fill or outline on the element's own box; never an edge stripe. A status is a mark and a
-  word from the one status set (F3-658, consumed by F3-585 and F3-619), a count is a plain number, and an icon
-  is a bundled SVG icon_id (section 2.6). Where an owner unit says pill, chip or badge for a status or a count,
-  it renders as a mark and a word or a plain number; action buttons may retain their approved rounded shape,
-  while tabs and selectors use their specified joined/fused geometry. Retired defaults, each amended in place
-  with a dated note: section 3.5's "3px left-edge accent stripe" as the active or selected indicator and
-  F3-039's token for it; Appendix C's and F3-276's accent left border on call-to-action cards; F3-469's 3 px
-  inset left accent bar; the workgroup pill of section 5.1; and the pill skins of F3-422 (the chat footer pill),
-  F3-463 (the Orchestrator strip's pills), F3-464 (the page tabs' frost and mint-mix pills) and F3-467
-  (Friendly's pill fields). The chat's, Settings' and the left rail's own statements of the rule (APR-034,
-  F3-534, Settings section 22, F3-618, F3-619, DR-057) stay, as instances of this one rule. Checks: F3-619's
-  pill detector (an element whose corner radius is at least half its height and which has a fill or a border,
-  label-like elements only; action buttons, key caps and non-label progress marks excepted) and a side-border
-  detector (a coloured border, or an inset shadow standing in for one, of 2 px or more on one side only) find
-  nothing in any look except the structural rails of working activities (APR-034, DR-069), and no emoji appears
-  in chrome text or icons. A chosen option is filled on its own box, never underlined. Debug Console sub-tabs
-  and every segmented toggle use each look's neutral selection fill in Friendly, Glass and Basic, never an
-  accent; Glass adds its 1 px rim on the top edge of the filled box, Retro keeps reverse video and NieR its ink
-  block (F3-490).
+  Puppet Master's chrome follows one shell-wide rule (DL-184; the rule is Plans/DRY_Rules.md#DR-069): no
+  box with a coloured border or stripe on one side, no emoji, and no pill-shaped labels, meaning status
+  chips, tags, suggestion chips and state badges. Pill action buttons such as Install and Sign in, and
+  rounded Friendly/Glass action buttons, are allowed; keyboard key caps and non-label progress marks are
+  not labels, and a program's own output in a terminal may contain emoji. This unit owns how the rule
+  looks. Selection is shown by the surface itself: the fused tab silhouette (F3-631), a filled or tinted
+  row, the NieR square cursor, Retro reverse video, or a fill or outline on the element's own box; never
+  an edge stripe. A status is a mark and a word from the one status set (F3-658, consumed by F3-585 and
+  F3-619), a count is a plain number, and an icon is a bundled SVG icon_id (section 2.6). Where an owner
+  unit says pill, chip or badge for a status or a count, it renders as a mark and a word or a plain
+  number; action buttons may retain their approved rounded shape, while tabs and selectors use their
+  specified joined/fused geometry. Retired defaults, each amended in place with a dated note: section
+  3.5's "3px left-edge accent stripe" as the active or selected indicator and F3-039's token for it;
+  Appendix C's and F3-276's accent left border on call-to-action cards; F3-469's 3 px inset left accent
+  bar; the workgroup pill of section 5.1; and the pill skins of F3-422 (the chat footer pill), F3-463 (the
+  Orchestrator strip's pills), F3-464 (the page tabs' frost and mint-mix pills) and F3-467 (Friendly's
+  pill fields). The chat's, Settings' and the left rail's own statements of the rule (APR-034, F3-534,
+  Settings section 22, F3-618, F3-619, DR-057) stay, as instances of this one rule. Checks: F3-619's pill
+  detector (an element whose corner radius is at least half its height and which has a fill or a border,
+  label-like elements only; action buttons, key caps and non-label progress marks excepted) and a
+  side-border detector (a coloured border, or an inset shadow standing in for one, of 2 px or more on one
+  side only) find nothing in any look except the structural rails of working activities (APR-034, DR-069),
+  and no emoji appears in chrome text or icons. A chosen option is filled on its own box, never
+  underlined. Debug Console sub-tabs and every segmented toggle use each look's neutral selection fill in
+  Friendly, Glass and Basic, never an accent; Glass adds its 1 px rim on the top edge of the filled box,
+  Retro keeps reverse video and NieR its ink block (F3-490). Every joined/segmented choice consumes
+  F3-438's shared fitting, motion and keyboard-focus grammar.
 gui_related: true
 gui_classification_reason: Owns how the shell-wide ban on side stripes, emoji and pills looks, and lists the retired defaults.
 split_recommended: false

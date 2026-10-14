@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L5591-L27078
+Source lines: L5591-L27100
 
-Source SHA256: `f05fb13f82babed54c090bb87736b01c7cbcf535d6c8a49773e2d7d25b8faf98`
+Source SHA256: `2a1856fd7af3e23554fe8fdb9a987825496f0a6c519ec4f5bb053780596b1feb`
 
 ---
 
@@ -2290,16 +2290,19 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The canonical side-panel inventory and labels are search, chat, files, source_control,
-  repository_automation, docker_manager, artifacts, run_debug, testing, and agents with
-  matching labels, tooltips, shortcuts, and command IDs. The testing and agents
-  panels joined the inventory per the 2026-07-16 shell sweep promotion (F3-451, F3-452).
-  Amended 2026-10-10 (DL-187, D40): `chat` stays an activity-bar entry but opens no side panel. A click on it, or
-  Enter or Space where the entry takes focus, shows the chat column (F3-637) when the chat is not on screen and hides
-  it when it is, on every page, and never changes the page in front; where the narrow ladder has folded the chat to
-  its strip, the entry opens the chat over the centre (F3-636). Each show or hide is one cmd.panel.switch with chat
-  and one receipt. A press that moves 4 px or more, or ends as the rail's own drag, reorders the rail (or moves the
-  entry into More) and shows or hides nothing. The entry is lit while the column is shown, its folded strip included,
-  and its hover tag reads Chat, "Shows or hides the chat column".
+  repository_automation, docker_manager, artifacts, run_debug, testing, and agents with matching labels,
+  tooltips, shortcuts, and command IDs. The testing and agents panels joined the inventory per the
+  2026-07-16 shell sweep promotion (F3-451, F3-452). Amended 2026-10-10 (DL-187, D40): `chat` stays an
+  activity-bar entry but opens no side panel. A click on it, or Enter or Space where the entry takes
+  focus, shows the chat column (F3-637) when the chat is not on screen and hides it when it is, on every
+  page, and never changes the page in front; where the narrow ladder has folded the chat to its strip, the
+  entry opens the chat over the centre (F3-636). Each show or hide is one cmd.panel.switch with chat and
+  one receipt. A press that moves 4 px or more, or ends as the rail's own drag, reorders the rail (or
+  moves the entry into More) and shows or hides nothing. The entry is lit while the column is shown, its
+  folded strip included, and its hover tag reads Chat, "Shows or hides the chat column". Jared reaffirmed
+  the shown-chat indicator on 2026-10-14 and removed the separate Dashboard activity-bar button. Dashboard
+  remains a Home panel/tab kind; removal does not delete dashboard content or its existing commands. The
+  bar and More tray offer no removed Dashboard button.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -2307,12 +2310,18 @@ split_recommended: true
 depends_on: [DL-187]
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "The side-panel inventory is canonical at 10 panels."
-- "The activity bar's Chat entry opens no side panel: on every page a click, Enter or Space shows or hides the chat column with one cmd.panel.switch and receipt, never changes the page in front, opens a folded chat over the centre, and is lit while the column is shown; a press that moves 4 px or more is the rail's reorder and toggles nothing."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
-- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage.
+- The side-panel inventory is canonical at 10 panels.
+- 'The activity bar''s Chat entry opens no side panel: on every page a click, Enter or Space shows or hides
+  the chat column with one cmd.panel.switch and receipt, never changes the page in front, opens a folded chat
+  over the centre, and is lit while the column is shown; a press that moves 4 px or more is the rail''s reorder
+  and toggles nothing.'
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired
+  dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- Chat is visibly selected whenever its column or folded strip is shown on any page; no Dashboard activity-bar
+  or More-tray button remains.
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -2325,11 +2334,18 @@ node_compile_hint:
   mode: canonical_side_panel_inventory
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0036"
-- "Plans/Decision_Log.md#DL-187"
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D40)"
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md, SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the rail's Chat entry; concept lineage only)"
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-CONTRACT-339203bd76.md, SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 6.1 and 6.3; concept lineage only)"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0036
+- Plans/Decision_Log.md#DL-187
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md,
+  SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D40)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-NUMBERS-339203bd76.md,
+  SHA-256 2e2c2a95819842cd5cbcc108ed302460ddea3ed0a98be7dfe4f1b78507660ce6 (the rail's Chat entry; concept lineage
+  only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-CONTRACT-339203bd76.md,
+  SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (sections 6.1 and 6.3; concept lineage
+  only)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
+  (decision/source lineage; not native implementation evidence)
 preserved_exact_tokens:
 - "search"
 - "chat"
@@ -4559,12 +4575,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Terminal theme selection keeps preview before apply, fast switching, /search, /contrast readability signals
-  and instant apply/revert. Its palette is semantic, not raw ANSI-only. F3-642 owns the shared catalog in place
-  of the earlier /fun/funky and /expressive preset groups; F3-650 owns the full Customize screen and both entry
-  points, and F3-654 owns settled-text contrast. Every committed change applies live with no restart and uses
-  the scope writer owned by SSYS-051/UCC-201. The earlier Appearance popover-only and user-disableable
-  contrast-floor clauses are superseded.
+  Terminal theme selection keeps preview before apply, fast switching, /search, /contrast readability
+  signals and instant apply/revert. Its palette is semantic, not raw ANSI-only. F3-642 owns the shared
+  catalog in place of the earlier /fun/funky and /expressive preset groups; F3-650 owns the full Customize
+  screen and both entry points, and F3-654 owns settled-text contrast. Every committed change applies live
+  with no restart and uses the scope writer owned by SSYS-051/UCC-201. The earlier popover-only entry is
+  superseded. F3-642 retains the user-selectable program-output floor; it never lowers interface contrast.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible terminal theme, preview, palette, and readability behavior.
@@ -4634,8 +4650,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Custom themes may reference user font files, missing fonts fall back to the base theme with a
-  warning toast, and hovering a theme entry shows a live preview widget card before click-to-apply.
+  Custom themes may reference user font files; missing fonts fall back to the base theme with a warning
+  toast. Jared's 2026-10-13 preview removal retires the theme selector's hover-applied widget-card preview
+  as well as the Settings preference (SSYS-010): theme rows retain their static identifying swatches and
+  apply on activation through the Settings transaction. This does not remove F3-650's separately approved
+  editor/terminal scheme previews.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible custom font fallback and theme preview presentation.
@@ -4659,7 +4678,9 @@ node_compile_hint:
   mode: custom_font_fallback_and_theme_preview
   create_worknodes: false
 source_lineage:
-- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0064"
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0064
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/SETTINGS-PREVIEW-RETIREMENT.md, SHA-256 327f4021cf41f627abcc2634af4e7ee2473ba75006dbb05d88dd5d8c4578ecb4
+  (decision/source lineage; not native implementation evidence)
 preserved_exact_tokens:
 - "~/.puppet-master/fonts/"
 - ".ttf"
@@ -6616,14 +6637,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Settings > Terminal is the in-product cheat sheet and durable preferences owner for terminal
-  defaults, high-frequency preview/change controls, shortcut mappings, conflict explanations,
-  terminal appearance, profile/cwd, transcript retention, performance, diagnostics, and
-  project/workspace scope labels. Its appearance rows bind the one terminal appearance model (F3-642, DR-068):
-  the app default as Settings rows (SSYS-051) and the project default in the Project's settings, which only Settings
-  writes; the per-tab override is not a Settings row but lives in the terminal tab and is written by the Appearance
-  popover's This terminal (SP-331). Every terminal appearance row applies live, with no restart badge. Shell profiles
-  and SSH hosts replace the retired per-tab role setting (DL-181), and the terminal tab's own actions stay in the tab.
+  Settings > Terminal is the in-product cheat sheet and durable preferences owner for terminal defaults,
+  high-frequency preview/change controls, shortcut mappings, conflict explanations, terminal appearance,
+  profile/cwd, transcript retention, performance, diagnostics, and project/workspace scope labels. Its
+  appearance rows bind the one terminal appearance model (F3-642, DR-068): the app default as Settings
+  rows (SSYS-051) and the project default in the Project's settings, which only Settings writes; the
+  per-tab override is not a Settings row but lives in the terminal tab and is written by the Customize
+  screen (F3-650)'s This terminal (SP-331). Every terminal appearance row applies live, with no restart
+  badge. Shell profiles and SSH hosts replace the retired per-tab role setting (DL-181), and the terminal
+  tab's own actions stay in the tab.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible Terminal Settings surfaces, labels, preferences, and explanations.

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L45987-L46900
+Source lines: L46086-L47759
 
-Source SHA256: `f05fb13f82babed54c090bb87736b01c7cbcf535d6c8a49773e2d7d25b8faf98`
+Source SHA256: `2a1856fd7af3e23554fe8fdb9a987825496f0a6c519ec4f5bb053780596b1feb`
 
 ---
 
@@ -22,92 +22,102 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  A terminal is one tab kind of F3-635 with one session per tab (DL-181, SMPFS-180): the terminal kind mints the
-  session, the tab id is `terminal:<session>`, and moving, collapsing, maximizing or hiding the tab never touches its
-  session. There are no splits, sections, workgroups or sub-tabs inside a terminal. Split opens a new panel beside
-  this one holding a new terminal in the same folder and shell profile (`cmd.workspace_layout.split` with a terminal
-  spec), placed by F3-630's split fit rule; the More menu adds Split down. The tab label is `<process> · <folder>`:
-  the foreground program, else `ssh` inside an SSH session, else the shell's name, then the last component of the
-  folder. A failed last command adds its exit code after the label, a terminal an agent is driving shows the 7 px
-  square agent mark, and a running process shows the static busy mark, all from the strip's one mark set (F3-631,
-  DL-141). The hover tag is the label, plus "(ended)" once the session has ended and "· <agent> is driving" while an
-  agent drives it. A label the user sets with `cmd.panel_tab.rename` replaces the label until it is cleared. No colour
-  or icon of the person's choosing is drawn on a terminal tab (D34): terminal tab colours and icons wait for their
-  redesign within Puppet Master's neon glyph system (F3-449, F3-631). Under the
-  strip the tab draws F3-635's shared header row with no terminal-specific thresholds: 30 px tall, 24 px targets,
-  12 px text and 11 px for secondary facts, labels when the tab body is at least 520 px wide and icons with hover tags
-  below that, and the row hidden when the body is under 150 px tall. Its left side shows the folder in the code face
-  with `~` for home, the branch when the folder is in a repository, and, only while a command runs, that command cut
-  at 48 characters with an ellipsis (the full text in its hover tag) and its elapsed time as `m:ss`. Its right side
-  shows Find, Split, Maximize (Restore while maximized; `ui.workspace_layout.maximize`) and More. Nothing is drawn
-  below the screen: there is no bottom bar. No session id, tab id or nonce ever appears as text. Notices are inline
-  rows above the screen, never modals: at least 30 px tall, with 12 px text and 24 px text buttons, a warning shown as
-  a tinted surface and never as a side stripe. An ended session shows the row "Session ended" (with "with exit code
-  N" when the code is not zero), Restart and Close tab, and dims the screen to 72 % opacity; Enter in an ended
-  terminal restarts it. Closing a terminal whose process still runs asks inline, through the kind's close check:
-  "Close this terminal? <process> is still running and will be stopped.", with Close terminal and Keep it open. A tab
-  with no live session (restored after a restart or a reload, or a closed tab reopened) loads its saved scrollback
-  before its new session starts (F3-645, SP-332), draws the dim rule `── Restored <time> · the earlier session ended ──`
-  above the new prompt, starts a new session in the same folder and shell profile (at once for a local profile; a tab
-  whose profile is an SSH host asks first, Reconnect / Close tab, as below), never presents itself as the old
-  session (F3-226, F3-228), and says so: "This terminal was restored with its scrollback (N images were not kept).
-  Its earlier session ended when the page reloaded; this is a new session.", the parenthesis shown only when images
-  were dropped, and for a reopened tab "This terminal was reopened with its scrollback" with "Its earlier session
-  ended when the tab closed; this is a new session.". When well-known secrets were left out of the saved copy
-  (D36; the saved copy and its scrub are SP-332's), the notice ends "N secrets were left out of the saved copy.", and in
-  the restored lines each left-out secret reads `[API key · not saved]` (or token, secret or private key) in its own
-  cells, followed by blank cells, or `•` where the secret was shorter than that label, so the line keeps its width and
-  every mark and image stays where it was; a private key keeps its BEGIN and END lines, its first body line carrying
-  the label and the rest of its body empty. The live screen never shows these labels: it keeps what the program
-  printed. A command still running when the earlier session ended comes
-  back ended and indeterminate, "ended with the earlier session", never as done. When the saved scrollback cannot be
-  loaded within its load budget (SP-332), a local terminal tab starts without it and says so; an SSH-host tab still waits for Reconnect / Close tab. The gutter is 20 px wide (18 px
-  when the body is under 400 px wide) and draws one 12 px glyph per prompt line with a 20 x 24 px hit target, never
-  a stripe (F3-641). The scrollbar is 14 px wide (10 px when the body is under 400 px wide) and speaks the editor
-  minimap's language: a viewport box with a 2 px radius and a 1 px border, command marks 55 % of the track wide in a
-  neutral tone, failed commands the full width in the failure colour, find matches 45 % wide in the search colour
-  and the current match in the link colour; marks widen on hover. The sticky command header: when the top of the
-  view is inside a command's output, a one-line header one cell plus 8 px tall shows that command's prompt line and
-  its state (Running, Exit 0, Exit N), and clicking it jumps to the command; it hides when the body is under 150 px
-  tall and in the alternate screen. The More menu, in order: New terminal (a submenu of the shell profiles and SSH
-  hosts), Split down, a hairline, Appearance..., Text size (Bigger, Smaller, Reset), a hairline, Copy mode, Quick
-  select, Select all, Clear, Clear scrollback, Plain-text buffer, a hairline, Agent input (Ask each time, then one
-  row per agent allowed in this terminal, each of which revokes that agent's grant), Mute notifications (a check,
-  absent where the platform has no system notifications; F3-641), Send signal (Interrupt SIGINT, Terminate SIGTERM,
-  Kill SIGKILL), Restart session. New terminal's submenu lists the installed shells, then, after a hairline, SSH
-  hosts, a submenu of the hosts (D39). The tab's menu ends, after a hairline, with Mute notifications too (F3-631). The screen's context menu opens on a right click, or a
-  Shift+right click while a program reports the mouse: Open in editor and Copy path on a file reference, Open link
-  and Copy link on a URL, then Copy, Paste, Select all, Find and Clear. The command-mark menu opens on a click on a
-  gutter glyph: a header row with the command, its state, its duration and who typed it ("You typed this" or
-  "<agent> typed this"), then Copy command, Copy output, Rerun, Insert command (without Enter), Open output in an
-  editor tab and Select output. Every menu opens in the one overlay root (DR-067). Keys while a terminal has focus,
-  macOS in brackets: Find Ctrl+Shift+F (Cmd+F), and in the find bar Enter for the previous match (upward),
-  Shift+Enter for the next, Alt+C case, Alt+W whole word, Alt+R regular expression and Esc to close; Copy and Paste
-  Ctrl+Shift+C and Ctrl+Shift+V (Cmd+C, Cmd+V); Select all (Cmd+A), from the menu on other platforms; previous and
-  next command Ctrl+Up and Ctrl+Down (Cmd+Up, Cmd+Down); a page Shift+PageUp and Shift+PageDown; top and bottom
-  Ctrl+Shift+Home and Ctrl+Shift+End (Cmd+Home, Cmd+End); Copy mode Ctrl+Shift+X (Cmd+Shift+X); Quick select
-  Ctrl+Shift+E (Cmd+Shift+E); the plain-text buffer Alt+F2; text size Ctrl+=, Ctrl+- and Ctrl+0 (Cmd+=, Cmd+-,
-  Cmd+0); Clear Ctrl+Shift+K (Cmd+K); Split Ctrl+Shift+5 (Cmd+D). A focused terminal gives these keys back to the
-  host (F3-635): Alt+1..9, Alt+Shift+1..9, Alt+arrows, Alt+Shift+arrows, Ctrl+PageUp and Ctrl+PageDown,
-  Ctrl+Shift+PageUp and Ctrl+Shift+PageDown, Alt+PageUp and Alt+PageDown (next and previous tab in a browser, where
-  Chrome keeps Ctrl+PageUp and Ctrl+PageDown), Ctrl+\ and Ctrl+Shift+\, Shift+Escape,
-  Ctrl+Shift+Space, Ctrl+Shift+`, Ctrl+Tab, and in a browser the stand-ins Alt+T, Alt+W, Alt+Shift+T and Alt+`. The
-  host takes F6 and Shift+F6 before the terminal sees them, and ignores keys during IME composition. The
-  shell therefore loses zsh's Alt+digit arguments, Alt+arrow word moves (Ctrl+Left and Ctrl+Right still move by
-  word), Alt+T and Alt+W, and a program that needs Ctrl+\ (SIGQUIT) gets it from Send signal; every other Ctrl+key
-  belongs to the shell. Split dispatches `cmd.workspace_layout.split` with a terminal spec and Clear scrollback
-  `cmd.terminal.clear_scrollback`; Appearance... opens the Appearance popover (F3-642); Find, Copy mode, Quick
-  select, Plain-text buffer and Text size are the typed local actions `ui.terminal.find`, `ui.terminal.copy_mode`,
-  `ui.terminal.quick_select`, `ui.terminal.a11y_buffer` and `ui.terminal.zoom`; Mute notifications is the typed local
-  action `ui.terminal.mute_notifications`, that tab's own state with no command (F3-641); the command-mark items are
-  `ui.terminal.mark.copy_command`, `ui.terminal.mark.copy_output`, `ui.terminal.mark.rerun` (which dispatches the
-  catalogue's rerun command), `ui.terminal.mark.insert` and `ui.terminal.mark.open_output` (which dispatches
-  `cmd.panel_tab.open` with an editor buffer); the agent controls are F3-646's; New terminal, Select all, Clear, Send
-  signal and Restart session map to the ids UCC-201 records. Restart and Restart session start a new session in the
-  same tab by the explicit replacement of F3-548, Copy and Paste follow F3-238's clipboard rules, and the screen is
-  the terminal core's own grid (F3-193, F3-216). The header row's buttons are the hover engine's icon kind, a static
-  tint only, and the screen is never a hover target (DR-072, F3-465).
-  Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close tab), as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
+  A terminal is one tab kind of F3-635 with one session per tab (DL-181, SMPFS-180): the terminal kind
+  mints the session, the tab id is `terminal:<session>`, and moving, collapsing, maximizing or hiding the
+  tab never touches its session. There are no splits, sections, workgroups or sub-tabs inside a terminal.
+  Split opens a new panel beside this one holding a new terminal in the same folder and shell profile
+  (`cmd.workspace_layout.split` with a terminal spec), placed by F3-630's split fit rule; the More menu
+  adds Split down. The tab label is `<process> · <folder>`: the foreground program, else `ssh` inside an
+  SSH session, else the shell's name, then the last component of the folder. A failed last command adds
+  its exit code after the label, a terminal an agent is driving shows the 7 px square agent mark, and a
+  running process shows the static busy mark, all from the strip's one mark set (F3-631, DL-141). The
+  hover tag is the label, plus "(ended)" once the session has ended and "· <agent> is driving" while an
+  agent drives it. A label the user sets with `cmd.panel_tab.rename` replaces the label until it is
+  cleared. No colour or icon of the person's choosing is drawn on a terminal tab (D34): terminal tab
+  colours and icons wait for their redesign within Puppet Master's neon glyph system (F3-449, F3-631).
+  Under the strip the tab draws F3-635's shared header row with no terminal-specific thresholds: 30 px
+  tall, 24 px targets, 12 px text and 11 px for secondary facts, labels when the tab body is at least 520
+  px wide and icons with hover tags below that, and the row hidden when the body is under 150 px tall. Its
+  left side shows the folder in the code face with `~` for home, the branch when the folder is in a
+  repository, and, only while a command runs, that command cut at 48 characters with an ellipsis (the full
+  text in its hover tag) and its elapsed time as `m:ss`. Its right side shows Find, Split, Maximize
+  (Restore while maximized; `ui.workspace_layout.maximize`) and More. Nothing is drawn below the screen:
+  there is no bottom bar. No session id, tab id or nonce ever appears as text. Notices are inline rows
+  above the screen, never modals: at least 30 px tall, with 12 px text and 24 px text buttons, a warning
+  shown as a tinted surface and never as a side stripe. An ended session shows the row "Session ended"
+  (with "with exit code N" when the code is not zero), Restart and Close tab, and dims the screen to 72 %
+  opacity; Enter in an ended terminal restarts it. Closing a terminal whose process still runs asks
+  inline, through the kind's close check: "Close this terminal? <process> is still running and will be
+  stopped.", with Close terminal and Keep it open. A tab with no live session (restored after a restart or
+  a reload, or a closed tab reopened) loads its saved scrollback before its new session starts (F3-645,
+  SP-332), draws the dim rule `── Restored <time> · the earlier session ended ──` above the new prompt,
+  starts a new session in the same folder and shell profile (at once for a local profile; a tab whose
+  profile is an SSH host asks first, Reconnect / Close tab, as below), never presents itself as the old
+  session (F3-226, F3-228), and says so: "This terminal was restored with its scrollback (N images were
+  not kept). Its earlier session ended when the page reloaded; this is a new session.", the parenthesis
+  shown only when images were dropped, and for a reopened tab "This terminal was reopened with its
+  scrollback" with "Its earlier session ended when the tab closed; this is a new session.". When
+  well-known secrets were left out of the saved copy (D36; the saved copy and its scrub are SP-332's), the
+  notice ends "N secrets were left out of the saved copy.", and in the restored lines each left-out secret
+  reads `[API key · not saved]` (or token, secret or private key) in its own cells, followed by blank
+  cells, or `•` where the secret was shorter than that label, so the line keeps its width and every mark
+  and image stays where it was; a private key keeps its BEGIN and END lines, its first body line carrying
+  the label and the rest of its body empty. The live screen never shows these labels: it keeps what the
+  program printed. A command still running when the earlier session ended comes back ended and
+  indeterminate, "ended with the earlier session", never as done. When the saved scrollback cannot be
+  loaded within its load budget (SP-332), a local terminal tab starts without it and says so; an SSH-host
+  tab still waits for Reconnect / Close tab. The gutter is 20 px wide (18 px when the body is under 400 px
+  wide) and draws one 12 px glyph per prompt line with a 20 x 24 px hit target, never a stripe (F3-641).
+  The scrollbar is 14 px wide (10 px when the body is under 400 px wide) and speaks the editor minimap's
+  language: a viewport box with a 2 px radius and a 1 px border, command marks 55 % of the track wide in a
+  neutral tone, failed commands the full width in the failure colour, find matches 45 % wide in the search
+  colour and the current match in the link colour; marks widen on hover. The sticky command header: when
+  the top of the view is inside a command's output, a one-line header one cell plus 8 px tall shows that
+  command's prompt line and its state (Running, Exit 0, Exit N), and clicking it jumps to the command; it
+  hides when the body is under 150 px tall and in the alternate screen. The More menu, in order: New
+  terminal (a submenu of the shell profiles and SSH hosts), Split down, a hairline, Appearance..., Text
+  size (Bigger, Smaller, Reset), a hairline, Copy mode, Quick select, Select all, Clear, Clear scrollback,
+  Plain-text buffer, a hairline, Agent input (Ask each time, then one row per agent allowed in this
+  terminal, each of which revokes that agent's grant), Mute notifications (a check, absent where the
+  platform has no system notifications; F3-641), Send signal (Interrupt SIGINT, Terminate SIGTERM, Kill
+  SIGKILL), Restart session. New terminal's submenu lists the installed shells, then, after a hairline,
+  SSH hosts, a submenu of the hosts (D39). The tab's menu ends, after a hairline, with Mute notifications
+  too (F3-631). The screen's context menu opens on a right click, or a Shift+right click while a program
+  reports the mouse: Open in editor and Copy path on a file reference, Open link and Copy link on a URL,
+  then Copy, Paste, Select all, Find and Clear. The command-mark menu opens on a click on a gutter glyph:
+  a header row with the command, its state, its duration and who typed it ("You typed this" or "<agent>
+  typed this"), then Copy command, Copy output, Rerun, Insert command (without Enter), Open output in an
+  editor tab and Select output. Every menu opens in the one overlay root (DR-067). Keys while a terminal
+  has focus, macOS in brackets: Find Ctrl+Shift+F (Cmd+F), and in the find bar Enter for the previous
+  match (upward), Shift+Enter for the next, Alt+C case, Alt+W whole word, Alt+R regular expression and Esc
+  to close; Copy and Paste Ctrl+Shift+C and Ctrl+Shift+V (Cmd+C, Cmd+V); Select all (Cmd+A), from the menu
+  on other platforms; previous and next command Ctrl+Up and Ctrl+Down (Cmd+Up, Cmd+Down); a page
+  Shift+PageUp and Shift+PageDown; top and bottom Ctrl+Shift+Home and Ctrl+Shift+End (Cmd+Home, Cmd+End);
+  Copy mode Ctrl+Shift+X (Cmd+Shift+X); Quick select Ctrl+Shift+E (Cmd+Shift+E); the plain-text buffer
+  Alt+F2; text size Ctrl+=, Ctrl+- and Ctrl+0 (Cmd+=, Cmd+-, Cmd+0); Clear Ctrl+Shift+K (Cmd+K); Split
+  Ctrl+Shift+5 (Cmd+D). A focused terminal gives these keys back to the host (F3-635): Alt+1..9,
+  Alt+Shift+1..9, Alt+arrows, Alt+Shift+arrows, Ctrl+PageUp and Ctrl+PageDown, Ctrl+Shift+PageUp and
+  Ctrl+Shift+PageDown, Alt+PageUp and Alt+PageDown (next and previous tab in a browser, where Chrome keeps
+  Ctrl+PageUp and Ctrl+PageDown), Ctrl+\ and Ctrl+Shift+\, Shift+Escape, Ctrl+Shift+Space, Ctrl+Shift+`,
+  Ctrl+Tab, and in a browser the stand-ins Alt+T, Alt+W, Alt+Shift+T and Alt+`. The host takes F6 and
+  Shift+F6 before the terminal sees them, and ignores keys during IME composition. The shell therefore
+  loses zsh's Alt+digit arguments, Alt+arrow word moves (Ctrl+Left and Ctrl+Right still move by word),
+  Alt+T and Alt+W, and a program that needs Ctrl+\ (SIGQUIT) gets it from Send signal; every other
+  Ctrl+key belongs to the shell. Split dispatches `cmd.workspace_layout.split` with a terminal spec and
+  Clear scrollback `cmd.terminal.clear_scrollback`; Appearance... opens the Customize screen (F3-650)
+  (F3-642); Find, Copy mode, Quick select, Plain-text buffer and Text size are the typed local actions
+  `ui.terminal.find`, `ui.terminal.copy_mode`, `ui.terminal.quick_select`, `ui.terminal.a11y_buffer` and
+  `ui.terminal.zoom`; Mute notifications is the typed local action `ui.terminal.mute_notifications`, that
+  tab's own state with no command (F3-641); the command-mark items are `ui.terminal.mark.copy_command`,
+  `ui.terminal.mark.copy_output`, `ui.terminal.mark.rerun` (which dispatches the catalogue's rerun
+  command), `ui.terminal.mark.insert` and `ui.terminal.mark.open_output` (which dispatches
+  `cmd.panel_tab.open` with an editor buffer); the agent controls are F3-646's; New terminal, Select all,
+  Clear, Send signal and Restart session map to the ids UCC-201 records. Restart and Restart session start
+  a new session in the same tab by the explicit replacement of F3-548, Copy and Paste follow F3-238's
+  clipboard rules, and the screen is the terminal core's own grid (F3-193, F3-216). The header row's
+  buttons are the hover engine's icon kind, a static tint only, and the screen is never a hover target
+  (DR-072, F3-465). Restoring a terminal tab whose profile is an SSH host asks first (Reconnect / Close
+  tab), as privileged attachments do (F3-228); a restore never reconnects to a remote host by itself.
 gui_related: true
 gui_classification_reason: Defines the terminal tab's label, header row, notices, gutter, scrollbar, sticky header, menus and keys in the universal panels.
 split_recommended: false
@@ -318,114 +328,129 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The terminal's appearance is one layered model (DL-183, DR-068), resolved field by field: the look's defaults
-  ("Follow look") under the app default (Settings > Terminal, SSYS-051) under the project default (written
-  through Settings transactions, in the Project's settings) under this tab's override; a field left unset falls
-  through to the layer below. Every field applies live, and no terminal appearance setting carries a restart
-  badge; the terminal draws its own glyphs (DL-035), so section 6.4's restart rule for the app's font families
-  does not reach it. "Follow look" resolves per look, light and dark: Friendly Catppuccin Latte and Mocha; Glass
-  Tokyo Night Day and Storm, drawn at 70 % (light) and 74 % (dark) opacity over the shell's existing glass blur,
-  the terminal adding no backdrop blur of its own (F3-431); Retro PM Paper Teletype and PM Phosphor Green, with
-  PM Phosphor Amber as Phosphor Green's sibling; Basic One Half Light and Dark; NieR Mode PM YoRHa Parchment and
-  PM YoRHa Ink. Thirty-four schemes ship: 27 third-party schemes in 13 families, each read from the project's
-  own terminal port pinned to a commit, and 7 Puppet Master originals. Puppet Master originals: PM Phosphor
-  Green, PM Phosphor Amber, PM Paper Teletype, PM YoRHa Parchment, PM YoRHa Ink, PM High Contrast Light, PM High
-  Contrast Dark. Catppuccin (MIT): Latte, Frappé, Macchiato, Mocha. Tokyo Night (Apache-2.0): Day, Storm, Night.
-  One Half (MIT): Light, Dark. Rosé Pine (MIT): Dawn, Moon, Main. Solarized (MIT): Light, Dark. Gruvbox (MIT):
-  Light, Dark. Dracula (MIT): Dark. Nord (MIT): Dark. Kanagawa (MIT): Wave, Lotus. Everforest (MIT): Light,
-  Dark. Flexoki (MIT): Light, Dark. GitHub (MIT): Light, Dark. Ayu (MIT): Mirage. Every third-party scheme ships
-  with its licence text and its source address and SHA-256; the iTerm2-Color-Schemes collection (no single
-  licence) and Modus (GPL-3.0) are not bundled, and import covers them. These schemes are one code colour-scheme
-  catalog that serves the editor and the terminal (D30, amending D15 and D21): each of the 34 schemes carries
-  the terminal palette and the editor's 17 syntax tokens. Each catalog scheme's 17 editor syntax colours are
-  authored to 4.5:1 for every syntax token, comments included, against the scheme's background (7:1 throughout
-  on PM High Contrast Light and Dark), and the editor and the terminal both draw the catalog values as they are;
-  an imported scheme takes its editor syntax colours from its ANSI 16 by a fixed map. Each surface's scheme
-  choice defaults to "Follow look" — the terminal's "Follow look" per-look scheme above, the editor's per-look
-  syntax colours (F3-426, F3-639) — and each surface keeps its own scheme choice. The shared Customize
+  The terminal's appearance is one layered model (DL-183, DR-068), resolved field by field: the look's
+  defaults ("Follow look") under the app default (Settings > Terminal, SSYS-051) under the project default
+  (written through Settings transactions, in the Project's settings) under this tab's override; a field
+  left unset falls through to the layer below. Every field applies live, and no terminal appearance
+  setting carries a restart badge; the terminal draws its own glyphs (DL-035), so section 6.4's restart
+  rule for the app's font families does not reach it. "Follow look" resolves per look, light and dark:
+  Friendly Catppuccin Latte and Mocha; Glass Tokyo Night Day and Storm, drawn at 70 % (light) and 74 %
+  (dark) opacity over the shell's existing glass blur, the terminal adding no backdrop blur of its own
+  (F3-431); Retro PM Paper Teletype and PM Phosphor Green, with PM Phosphor Amber as Phosphor Green's
+  sibling; Basic One Half Light and Dark; NieR Mode PM YoRHa Parchment and PM YoRHa Ink. Thirty-four
+  schemes ship: 27 third-party schemes in 13 families, each read from the project's own terminal port
+  pinned to a commit, and 7 Puppet Master originals. Puppet Master originals: PM Phosphor Green, PM
+  Phosphor Amber, PM Paper Teletype, PM YoRHa Parchment, PM YoRHa Ink, PM High Contrast Light, PM High
+  Contrast Dark. Catppuccin (MIT): Latte, Frappé, Macchiato, Mocha. Tokyo Night (Apache-2.0): Day, Storm,
+  Night. One Half (MIT): Light, Dark. Rosé Pine (MIT): Dawn, Moon, Main. Solarized (MIT): Light, Dark.
+  Gruvbox (MIT): Light, Dark. Dracula (MIT): Dark. Nord (MIT): Dark. Kanagawa (MIT): Wave, Lotus.
+  Everforest (MIT): Light, Dark. Flexoki (MIT): Light, Dark. GitHub (MIT): Light, Dark. Ayu (MIT): Mirage.
+  Every third-party scheme ships with its licence text and its source address and SHA-256; the
+  iTerm2-Color-Schemes collection (no single licence) and Modus (GPL-3.0) are not bundled, and import
+  covers them. These schemes are one code colour-scheme catalog that serves the editor and the terminal
+  (D30, amending D15 and D21): each of the 34 schemes carries the terminal palette and the editor's 17
+  syntax tokens. Each catalog scheme's 17 editor syntax colours are authored to 4.5:1 for every syntax
+  token, comments included, against the scheme's background (7:1 throughout on PM High Contrast Light and
+  Dark), and the editor and the terminal both draw the catalog values as they are; an imported scheme
+  takes its editor syntax colours from its ANSI 16 by a fixed map. Each surface's scheme choice defaults
+  to "Follow look" — the terminal's "Follow look" per-look scheme above, the editor's per-look syntax
+  colours (F3-426, F3-639) — and each surface keeps its own scheme choice. The shared Customize
   presentation, its two entry points, scope memory, live previews, quick sets, trials and docking rule are
   F3-650's; the editor's field behavior is F3-651's. No surface keeps a separate scheme catalog (DR-068).
-  "Switch with light and dark", on by default, swaps a chosen scheme for its family's other appearance when the
-  app changes between light and dark. A minimum-contrast floor applies per cell to the text colour against its
-  cell background by moving OKLab lightness only, keeping hue and chroma: default 4.5:1, with the choices 4.5:1
-  and 7:1 under F3-654; block elements, powerline and sextant glyphs are exempt, because they are shapes that
-  meet their neighbours, and a selection uses the scheme's selection text colour. Phosphor schemes (PM Phosphor
-  Green and PM Phosphor Amber) map colours outside their 16 (the 256-colour cube and truecolor), and any colour
-  a program sets (OSC 4, 10, 11 and 12), onto the phosphor by brightness, so a program's `38;5;196` never paints
-  red on a green tube; the scheme's own 16 stay as authored. Import reads iTerm2 `.itermcolors`, Windows
-  Terminal JSON (one scheme, or a settings file's list of schemes), kitty `.conf`, Ghostty themes, Alacritty
-  TOML and its legacy YAML, base16 and base24 YAML, and Xresources; input is capped at 256 KB, nothing in a file
-  is evaluated, and every error message is fixed and never echoes the file. The fields and their defaults:
-  scheme (Follow look, or a scheme); Switch with light and dark (on); minimum contrast (4.5:1); font (Follow
-  look, JetBrains Mono, Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour, Sixtyfour Raster or the
-  system monospace; F3-644); font size and line height (the face's defaults, F3-644); weight (400); letter
-  spacing (0); ligatures (on); bold as bright (off); cursor shape (Follow look, block, bar or underline); cursor
-  blink (on); cursor trail (Follow look, off, soft, glow, phosphor or trace); background (Follow look, theme
-  surface, solid colour, gradient or image) with its colour, its gradient (dusk, dawn, deep or paper), its image
-  (hills, grid, paper or a custom image), image dim (0.45) and image blur (0 px, baked once into the image and
-  never a backdrop blur); opacity (Glass); padding (8 px across, the vertical padding 60 % of it); effects
-  (Follow look, off or custom) with the effect fields of F3-643; inactive dimming; smooth scrolling; bell
-  (Follow look, visual or off); sticky header (on); copy on select (off); and Sixtyfour's scan and bleed axes.
-  Cell geometry: a cell is a whole number of device pixels, its width round((advance + letter spacing) x device
-  pixel ratio) and its height round(font size in px x line height x device pixel ratio), never less than 90 % of
-  the font's ascent plus descent, with the baseline centred; the padding is painted in the cell background, so
-  the remainder smaller than a cell never shows as a stripe. The Appearance popover (More, Appearance...)
-  previews every change live on the terminal and writes either This terminal (the tab's override) or All
-  terminals (enabled, the project default through the same Settings transaction Settings uses over SSYS-051's
-  rows); This terminal commits with `cmd.terminal.appearance.set` (UCC-201). Settings > Terminal binds the same
-  model with the same fields (SSYS-051) and writes the project layer through that same Settings transaction. The
-  app and project layers are Settings values and the tab's override lives in the terminal tab's serialized
-  state; a custom background image is kept as SP-331 says. There is one model: the look's defaults, the popover
-  and Settings read and write it, and no second terminal theme or font store exists (DR-068). The Retro scheme
-  choice also colours Retro's editor syntax: Phosphor Green or Amber, with Amber turning the Retro editor amber.
-  Retro syntax stays monochrome, using brightness and weight in dark and the black and red ribbon in light. This
-  choice is stored once in the terminal's appearance model; the editor reads it and keeps no copy (F3-639,
-  F3-647). The popover's All terminals is enabled and writes the project default row of SSYS-051 through the
-  same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover
-  tag says in this project; no surface writes an app-wide value until q-035 admits one. Hovering a scheme
-  previews it on this terminal only after the pointer rests on that row for 110 ms; arrow keys preview at once,
-  with a 110 ms wait while a key repeats, so passing over rows or scrolling them beneath a stationary pointer
-  never flashes through the schemes. Hover previews a scheme exactly as named, regardless of light/dark pairing.
-  Choosing a scheme of the opposite appearance keeps that scheme and turns pairing off in the chosen scope, with
-  a visible explanation. Scheme hints read the catalog's actual Light/Dark appearance. Font Rendering offers
-  Auto (renderer default), Crisp (whole device-pixel text placement) and Smooth (unhinted outlines); unsupported
-  capabilities are disclosed, not silently mislabeled. Sixtyfour Scanlines and Bleed are static face-axis
-  choices, not a native-only promise. The old Off and 3:1 minimum values resolve to 4.5:1 on read. The look's
-  app-default layer remains the bundled inventory default until an app-wide store is admitted; Project and tab
-  writes keep SSYS-002/SP-331 ownership.
+  "Switch with light and dark", on by default, swaps a chosen scheme for its family's other appearance
+  when the app changes between light and dark. A minimum-contrast floor applies per cell to the text
+  colour against its cell background by moving OKLab lightness only, keeping hue and chroma: default
+  4.5:1, with Off, 3:1, 4.5:1 and the existing higher 7:1 choice for program output only under F3-654;
+  block elements, powerline and sextant glyphs are exempt, because they are shapes that meet their
+  neighbours, and a selection uses the scheme's selection text colour. Phosphor schemes (PM Phosphor Green
+  and PM Phosphor Amber) map colours outside their 16 (the 256-colour cube and truecolor), and any colour
+  a program sets (OSC 4, 10, 11 and 12), onto the phosphor by brightness, so a program's `38;5;196` never
+  paints red on a green tube; the scheme's own 16 stay as authored. Import reads iTerm2 `.itermcolors`,
+  Windows Terminal JSON (one scheme, or a settings file's list of schemes), kitty `.conf`, Ghostty themes,
+  Alacritty TOML and its legacy YAML, base16 and base24 YAML, and Xresources; input is capped at 256 KB,
+  nothing in a file is evaluated, and every error message is fixed and never echoes the file. The fields
+  and their defaults: scheme (Follow look, or a scheme); Switch with light and dark (on); minimum contrast
+  (4.5:1); font (Follow look, JetBrains Mono, Atkinson Hyperlegible Mono, VT323, Departure Mono,
+  Sixtyfour, Sixtyfour Raster or the system monospace; F3-644); font size and line height (the face's
+  defaults, F3-644); weight (400); letter spacing (0); ligatures (on); bold as bright (off); cursor shape
+  (Follow look, block, bar or underline); cursor blink (on); cursor trail (Follow look, off, soft, glow,
+  phosphor or trace); background (Follow look, theme surface, solid colour, gradient or image) with its
+  colour, its gradient (dusk, dawn, deep or paper), its image (hills, grid, paper or a custom image),
+  image dim (0.45) and image blur (0 px, baked once into the image and never a backdrop blur); opacity
+  (Glass); padding (0 px by default, the vertical padding 60 % of the selected horizontal padding);
+  effects (Follow look, off or custom) with the effect fields of F3-643; inactive dimming; smooth
+  scrolling; bell (Follow look, visual or off); sticky header (on); copy on select (off); and Sixtyfour's
+  scan and bleed axes. Cell geometry: a cell is a whole number of device pixels, its width round((advance
+  + letter spacing) x device pixel ratio) and its height round(font size in px x line height x device
+  pixel ratio), never less than 90 % of the font's ascent plus descent, with the baseline centred; the
+  padding is painted in the cell background, so the remainder smaller than a cell never shows as a stripe.
+  The Customize screen (F3-650) (More, Appearance...) previews every change live on the terminal and
+  writes either This terminal (the tab's override) or All terminals (enabled, the project default through
+  the same Settings transaction Settings uses over SSYS-051's rows); This terminal commits with
+  `cmd.terminal.appearance.set` (UCC-201). Settings > Terminal binds the same model with the same fields
+  (SSYS-051) and writes the project layer through that same Settings transaction. The app and project
+  layers are Settings values and the tab's override lives in the terminal tab's serialized state; a custom
+  background image is kept as SP-331 says. There is one model: the look's defaults, the Customize screen
+  and Settings read and write it, and no second terminal theme or font store exists (DR-068). The Retro
+  scheme choice also colours Retro's editor syntax: Phosphor Green or Amber, with Amber turning the Retro
+  editor amber. Retro syntax stays monochrome, using brightness and weight in dark and the black and red
+  ribbon in light. This choice is stored once in the terminal's appearance model; the editor reads it and
+  keeps no copy (F3-639, F3-647). The Customize screen’s All terminals is enabled and writes the project
+  default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every
+  terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide
+  value until q-035 admits one. Hovering a scheme previews it on this terminal only after the pointer
+  rests on that row for 110 ms; arrow keys preview at once, with a 110 ms wait while a key repeats, so
+  passing over rows or scrolling them beneath a stationary pointer never flashes through the schemes.
+  Hover previews a scheme exactly as named, regardless of light/dark pairing. Choosing a scheme of the
+  opposite appearance keeps that scheme and turns pairing off in the chosen scope, with a visible
+  explanation. Scheme hints read the catalog's actual Light/Dark appearance. Font Rendering offers Auto
+  (renderer default), Crisp (whole device-pixel text placement) and Smooth (unhinted outlines);
+  unsupported capabilities are disclosed, not silently mislabeled. Sixtyfour Scanlines and Bleed are
+  static face-axis choices, not a native-only promise. Off and 3:1 remain valid program-output choices and
+  are not rewritten on read. The look's app-default layer remains the bundled inventory default until an
+  app-wide store is admitted; Project and tab writes keep SSYS-002/SP-331 ownership. Jared's 2026-10-14
+  review requires substantially more terminal backgrounds, with a researched replacement selection rather
+  than declaring the current small set final. The terminal owner is still defining the expanded catalog;
+  final choices and bindings remain held. F3-643 owns the revised bezel/curvature direction and F3-650 the
+  requested saved presets.
 gui_related: true
-gui_classification_reason: Defines the terminal's visible schemes, contrast floor, import, appearance fields, cell geometry and Appearance popover.
+gui_classification_reason: >-
+  Defines the terminal's visible schemes, contrast floor, import, appearance fields, cell geometry and
+  Customize screen (F3-650).
 split_recommended: false
 depends_on: [DL-183, F3-640, F3-431, DR-068, SSYS-051, SP-331]
 unblocks: [F3-643, F3-644, UCC-201, ATS-076]
 acceptance_criteria:
-- Every field resolves tab override, then project default, then app default, then the look's default, and an unset
-  field falls through.
-- Each look's Follow look scheme is the one listed for its light and dark variant, and Glass draws its scheme at 70
-  % and 74 % opacity with no backdrop blur of the terminal's own.
+- Every field resolves tab override, then project default, then app default, then the look's default, and an
+  unset field falls through.
+- Each look's Follow look scheme is the one listed for its light and dark variant, and Glass draws its scheme
+  at 70 % and 74 % opacity with no backdrop blur of the terminal's own.
 - Exactly the 34 schemes listed ship, each third-party scheme with its licence and source record, and the iTerm2-Color-Schemes
   collection and Modus are not bundled.
-- The minimum-contrast floor defaults to 4.5:1, offers 4.5:1 and 7:1, changes only OKLab lightness, and leaves block,
-  powerline and sextant glyphs alone.
-- Under PM Phosphor Green or Amber, a 256-colour or truecolor colour and a colour a program sets with OSC 4, 10, 11
-  or 12 draw on the phosphor by brightness, and the scheme's own 16 colours draw as authored.
-- Import accepts the seven formats listed, refuses input over 256 KB, evaluates nothing and shows fixed errors that
-  never echo the file.
-- Every field changes the terminal at once, from the popover and from Settings, and no terminal appearance setting
+- The program-output minimum defaults to 4.5:1, offers Off, 3:1, 4.5:1 and 7:1, changes only OKLab lightness
+  when enabled, and leaves block, powerline and sextant glyphs alone; interface text still consumes F3-654.
+- Under PM Phosphor Green or Amber, a 256-colour or truecolor colour and a colour a program sets with OSC 4,
+  10, 11 or 12 draw on the phosphor by brightness, and the scheme's own 16 colours draw as authored.
+- Import accepts the seven formats listed, refuses input over 256 KB, evaluates nothing and shows fixed errors
+  that never echo the file.
+- Every field changes the terminal at once, from Customize and from Settings, and no terminal appearance setting
   shows a restart badge.
 - Cells are whole device pixels by the geometry rule, and no stripe shows between the last cell and the padding.
-- The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings
-  transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project;
-  no surface writes an app-wide value until q-035 admits one.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are
-  created by this unit.
-- The editor and terminal list the same catalog, each curated scheme carries terminal and syntax colours, both scheme
-  choices default to Follow look and remain separate, and both menus open the same Customize component (F3-650).
-- Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green or Amber
-  follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores no copy.
-- Every catalog scheme's 17 editor syntax colours meet 4.5:1 for every syntax token, comments included, against its
-  background (7:1 throughout on PM High Contrast Light and Dark), an imported scheme's editor syntax colours come
-  from its ANSI 16 by the fixed map, and the editor opens F3-650/F3-651's full Customize screen.
+- The Customize screen’s All terminals is enabled and writes the project default row of SSYS-051 through the
+  same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover
+  tag says in this project; no surface writes an app-wide value until q-035 admits one.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
+  are created by this unit.
+- The editor and terminal list the same catalog, each curated scheme carries terminal and syntax colours, both
+  scheme choices default to Follow look and remain separate, and both menus open the same Customize component
+  (F3-650).
+- Retro editor syntax remains monochrome in dark and keeps the black and red ribbon in light; Phosphor Green
+  or Amber follows the one terminal Retro scheme choice, Amber turns the editor amber, and the editor stores
+  no copy.
+- Every catalog scheme's 17 editor syntax colours meet 4.5:1 for every syntax token, comments included, against
+  its background (7:1 throughout on PM High Contrast Light and Dark), an imported scheme's editor syntax colours
+  come from its ANSI 16 by the fixed map, and the editor opens F3-650/F3-651's full Customize screen.
+- A fresh terminal has zero padding; unfinished replacement-background choices are not certified as complete.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -450,7 +475,8 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
   (D15)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
-  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 5 and 6 (concept lineage only)
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 5 and 6 (concept lineage
+  only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-e741dfbc6c.md,
   SHA-256 5fe7d1e04e5e54c47013c503254527265b94420239772ac711f760f43f96674d (R36; concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/terminal-SPEC-dbffa7a1b2.md,
@@ -459,6 +485,11 @@ source_lineage:
   (approved campaign source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
   (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/CONTRAST-CLARIFICATION-20261014.md, SHA-256
+  1c5654b46b6ed160a34466c9df083681cc179815b658c0acce593698680b8493 (decision/source lineage; not native implementation
+  evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
+  (decision/source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "Follow look"
   - "Switch with light and dark"
@@ -514,49 +545,70 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The terminal's effects are Puppet Master's own (DL-183) and follow one policy. They are event-driven: the effect
-  pass runs only after the screen repainted or while something is still animating. Only the focused, visible
-  terminal animates; every effect goes idle within 10 s of the last output or keystroke; motion is off on battery
-  saver; and where no GPU draws the terminal (on the desktop, the Skia CPU raster of F3-582), the effects layer
-  stays off, no effects frames run, and plain static fallbacks paint (a static
-  scanline pattern and a static glow), curvature, burn-in and noise are not drawn, and the Appearance popover says
-  what it could not draw. Under Reduced Motion every moving part is off (cursor blink, cursor trail, smooth
-  scrolling, burn-in, noise, flicker, degauss, bell flashes, progress sweeps and image animation) and the static looks
-  stay (scanlines, glow, curvature and the parchment grain). The catalogue: inactive dimming, the focus ring, cursor
-  blink and trail, smooth scrolling, backgrounds (F3-642), Glass's blur (the shell's existing blur; the terminal adds
-  none, F3-431), Retro scanlines and phosphor glow, an opt-in Full CRT tier (curvature, burn-in and noise), flicker,
-  the visual bell, progress (F3-546), attention marks, and an on-demand Retro degauss, an action in the Appearance
-  popover rather than a setting, which runs to its end and stops. Scanlines and phosphor glow are Retro's: on by
-  default in Retro dark and off by default elsewhere. Full CRT is off by default in every look, and the user turns it
-  on. Flicker is off by default in every look; its amount defaults to 0.02 and is capped at 0.03 of relative
-  luminance, against the 0.10 change that WCAG 2.3.1 counts as a flash, so flicker can never be a flash. The effect
-  fields (F3-642) default to: effects Follow look; scan strength 0.30; glow strength 0.45; Full CRT off; curvature
-  0.08; burn-in on within Full CRT; noise 0.035; flicker off; flicker amount 0.02, capped at 0.03. NieR Mode's
-  terminal has a parchment texture under the text and ink focus brackets, and no glow. By the NieR rule for new
-  surfaces (DL-152, SSYS-043, F3-598, DR-056), NieR paints the terminal only while NieR Mode is on and each touch only
-  with its own installed part: the parchment with the `ground` part and the focus brackets with the `brackets` part,
-  never a new part; its colours come only from NieR's token tables or the theme tokens NieR repaints; its motion is
-  stepped, with no glow, filter or blur, and loops only by transform or opacity; no surface larger than 340x256 px
-  reverses its opacity more than once a second; and Reduced Motion and the Still and Colors only presets show end
-  states at once. Motion voices belong to the theme family (DR-043).
-  An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware (R34).
-  The cursor trail never fires while a program hides the cursor, including while a progress bar redraws its
-  line.
+  The terminal's effects are Puppet Master's own (DL-183) and follow one policy. They are event-driven:
+  the effect pass runs only after the screen repainted or while something is still animating. Only the
+  focused, visible terminal animates; every effect goes idle within 10 s of the last output or keystroke;
+  motion is off on battery saver; and where no GPU draws the terminal (on the desktop, the Skia CPU raster
+  of F3-582), the effects layer stays off, no effects frames run, and plain static fallbacks paint (a
+  static scanline pattern and a static glow), curvature, burn-in and noise are not drawn, and the
+  Customize screen (F3-650) says what it could not draw. Under Reduced Motion every moving part is off
+  (cursor blink, cursor trail, smooth scrolling, burn-in, noise, flicker, degauss, bell flashes, progress
+  sweeps and image animation) and the static looks stay (scanlines, glow, curvature and the parchment
+  grain). The catalogue: inactive dimming, the focus ring, cursor blink and trail, smooth scrolling,
+  backgrounds (F3-642), Glass's blur (the shell's existing blur; the terminal adds none, F3-431), Retro
+  scanlines and phosphor glow, an opt-in Full CRT tier (curvature, burn-in and noise), flicker, the visual
+  bell, progress (F3-546), attention marks, and an on-demand Retro degauss, an action in the Customize
+  screen (F3-650) rather than a setting, which runs to its end and stops. Scanlines and phosphor glow are
+  Retro's: on by default in Retro dark and off by default elsewhere. Full CRT is off by default in every
+  look, and the user turns it on. Flicker is off by default in every look; its amount defaults to 0.02 and
+  is capped at 0.03 of relative luminance, against the 0.10 change that WCAG 2.3.1 counts as a flash, so
+  flicker can never be a flash. The effect fields (F3-642) default to: effects Follow look; scan strength
+  0.30; glow strength 0.45; Full CRT off; curvature 0.08; burn-in on within Full CRT; noise 0.035; flicker
+  off; flicker amount 0.02, capped at 0.03. NieR Mode's terminal has a parchment texture under the text
+  and ink focus brackets, and no glow. By the NieR rule for new surfaces (DL-152, SSYS-043, F3-598,
+  DR-056), NieR paints the terminal only while NieR Mode is on and each touch only with its own installed
+  part: the parchment with the `ground` part and the focus brackets with the `brackets` part, never a new
+  part; its colours come only from NieR's token tables or the theme tokens NieR repaints; its motion is
+  stepped, with no glow, filter or blur, and loops only by transform or opacity; no surface larger than
+  340x256 px reverses its opacity more than once a second; and Reduced Motion and the Still and Colors
+  only presets show end states at once. Motion voices belong to the theme family (DR-043). An effects
+  frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware (R34). The cursor trail never fires
+  while a program hides the cursor, including while a progress bar redraws its line. Jared's 2026-10-14
+  review supersedes the old curvature tuning as a finished design: the default look has neither bezel nor
+  visible curvature; a chosen bezel must be removable, customizable and smaller, and opt-in CRT curvature
+  must be less extreme and read convincingly as a curved screen. The terminal owner's revised effect
+  parameters, bezel fields and control contract remain held; the old 0.08 tuning is historical, not
+  acceptance of the criticized treatment. Degauss is the one-shot action in the Customize screen's effects
+  group (F3-650), with the same existing command and no stored setting. The shared Follow look
+  cursor/caret voices are Basic line with on/off blink and no smooth scrolling; Friendly line with smooth
+  blink, soft trail and smooth scrolling; Glass line with smooth blink, glow trail and smooth scrolling;
+  Retro reverse-video block with stepped blink, phosphor trail and no smooth scrolling; NieR ink line with
+  blink, Trace only with its Scan sweep part and no smooth scrolling. F3-651 owns editor-specific jump
+  motion and trail triggers; this shared voice never forces terminal output to animate.
 gui_related: true
 gui_classification_reason: Defines the terminal's visible effects, their defaults and the policy that limits when they run.
 split_recommended: false
 depends_on: [DL-183, F3-642, F3-431, F3-582, DR-043, DL-152, DR-056]
 unblocks: [ATS-076]
 acceptance_criteria:
-  - "Only the focused, visible terminal animates; an idle terminal draws no ambient frames; battery saver turns motion off."
-  - "Where no GPU draws the terminal, the effects layer stays off with zero effects frames, plain static scanlines and glow are drawn, curvature, burn-in and noise are not, and the Appearance popover names what it could not draw."
-  - "Under Reduced Motion no part of the terminal moves, and the static looks stay."
-  - "A fresh Retro dark terminal shows scanlines and phosphor glow; no other look shows them by default; Full CRT and flicker are off by default in every look."
-  - "The flicker amount defaults to 0.02 and cannot exceed 0.03 of relative luminance."
-  - "Degauss is a one-shot action in Retro, not a setting, and stops at its end."
-  - "With NieR Mode on, the parchment shows only with the ground part and the focus brackets only with the brackets part, NieR's own terminal look has no glow, filter or blur, and no surface larger than 340x256 px reverses its opacity more than once a second."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware; every effect, including Full CRT ambient noise and flicker, stops within 10 s of the last output or keystroke; without a GPU the effects layer stays off with zero effects frames and plain fallbacks paint."
+- Only the focused, visible terminal animates; an idle terminal draws no ambient frames; battery saver turns
+  motion off.
+- Where no GPU draws the terminal, the effects layer stays off with zero effects frames, plain static scanlines
+  and glow are drawn, curvature, burn-in and noise are not, and the Customize screen (F3-650) names what it
+  could not draw.
+- Under Reduced Motion no part of the terminal moves, and the static looks stay.
+- A fresh Retro dark terminal shows scanlines and phosphor glow; no other look shows them by default; Full CRT
+  and flicker are off by default in every look.
+- The flicker amount defaults to 0.02 and cannot exceed 0.03 of relative luminance.
+- Degauss is a one-shot action in Retro, not a setting, and stops at its end.
+- With NieR Mode on, the parchment shows only with the ground part and the focus brackets only with the brackets
+  part, NieR's own terminal look has no glow, filter or blur, and no surface larger than 340x256 px reverses
+  its opacity more than once a second.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
+  are created by this unit.
+- An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware; every effect, including Full
+  CRT ambient noise and flicker, stops within 10 s of the last output or keystroke; without a GPU the effects
+  layer stays off with zero effects frames and plain fallbacks paint.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -570,14 +622,24 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-wave2-numbers-5e549d6961.md, SHA-256 f9d7756f94f26c5285b35400a380afed57fb27dfaee6d29683c3916604b4a15a (R34, adopted effects budgets; concept lineage only)"
-  - "Plans/Decision_Log.md#DL-183"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D16)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 6 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md, SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476, section 6 (concept lineage only)"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md, SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728"
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/terminal-SPEC-dbffa7a1b2.md, SHA-256 a9578d34c425186b4213ea2117ac19ea6393220efc173861a7beb4afeb7b12a8 (small-round concept lineage only)"
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
+  SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-wave2-numbers-5e549d6961.md,
+  SHA-256 f9d7756f94f26c5285b35400a380afed57fb27dfaee6d29683c3916604b4a15a (R34, adopted effects budgets; concept
+  lineage only)
+- Plans/Decision_Log.md#DL-183
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64
+  (D16)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md,
+  SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 6 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md,
+  SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476, section 6 (concept lineage only)
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/NIER-RULES-for-new-surfaces.md,
+  SHA-256 4634aba3abe147493c0f71de49419e63ba667a6784ca4b36967b537abb231728
+- /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/small-round/terminal-SPEC-dbffa7a1b2.md,
+  SHA-256 a9578d34c425186b4213ea2117ac19ea6393220efc173861a7beb4afeb7b12a8 (small-round concept lineage only)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
+  (decision/source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "10 s"
   - "P1000-class"
@@ -922,3 +984,701 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-024, ContractName:Plans/Permissions_System.md#PS-041, ContractName:Plans/Contracts_V0.md#CV-362, ContractName:Plans/UI_Command_Catalog.md#UCC-201
+
+### F3-650 - The Editor And Terminal Customize Screens
+
+```yaml
+plan_unit_id: F3-650
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The editor and terminal share one Customize presentation and the code scheme catalog of F3-642. Their
+  More menu's Appearance... and Settings > Editor & Terminal > Editor look or Terminal look > Open
+  Customize reach the corresponding screen. The menu defaults to This editor or This terminal and
+  remembers the scope last chosen for that tab; Settings opens All editors or All terminals for that visit
+  only and never overwrites the tab's remembered scope. All means the open Project, disclosed as in this
+  project; a tab's own overrides remain above it and the screen explains when they mask an All change.
+  SSYS-002 forbids a persistent write without a Project. The screen has a live preview rendered by the
+  real editor or terminal renderer, a change meter, quick sets, Try it actions and grouped controls. It
+  sits beside the real surface without covering it and frames the live target. One rule decides docking on
+  both screens: the preview follows scrolling only when the real editor or terminal is not visible beside
+  the screen, including narrow or maximized layouts. Settings entry routes to Home beside the real target;
+  origin in Settings alone does not force docking. Opening the screen never starts a shell, runs a command
+  or changes a file. Without a suitable target the All scope remains useful through the isolated renderer
+  preview, and This is unavailable with a reason. Close and Escape undo uncommitted previews, keep
+  committed choices and return focus to the invoking control. Quick sets change only their named fields
+  through the selected scope's writer, as one atomic change. Plans/appearance_quick_sets.json is the
+  single exact field/value patch registry for Calm, Easy reading, Old monitor (terminal) and Show
+  structure (editor), plus the exact reset field sets. This scope clears only the registered overrides;
+  All uses SSYS-009 restore_defaults over that same exact set. A set patch never resets an unmentioned
+  token map, indentation, autosave or behavior value. The look's own is a reset, not a set patch. Old
+  monitor remains an explicit opt-in, subject to F3-643's held CRT redesign. Try it moves the sample
+  cursor/caret, rings the sample bell or types and visits a sample problem; Step back restores the sample,
+  never the real buffer or session. The editor groups are Colors, Text, Caret, Lines & guides, Motion &
+  effects and Behavior. Every selector consumes F3-438; neither Customize screen defines another fitting
+  or highlight grammar. Scope, search, scrolling, sample trials and hover are view-local; committed fields
+  and reset/quick sets use UCC-204's writers. Schemes and fonts have truthful names, Light/Dark hints and
+  supported capabilities. Dense Glass controls use F3-652's readable menu material. Each look draws the
+  screen with its own material and motion. Reduced Motion shows end states and explains which movement it
+  calms. While the screen is open, Tab and Shift+Tab wrap within it; arrows choose within one-of-several
+  groups, and Escape closes it and returns focus. Its layout remains usable down to 360 px, including
+  beside-target and narrow states. Scheme-hover intent is deliberately surface-specific: terminal F3-642
+  waits 110 ms and editor F3-651 waits 160 ms; keyboard and cancellation use those owners. Jared approved
+  saving terminal looks as user presets on 2026-10-14. This is distinct from the shipped fixed quick sets.
+  Naming, storage/scope, import/export and final save/apply controls remain with the terminal owner's
+  pending contract; no new preset command, storage family or fabricated binding is admitted here.
+gui_related: true
+gui_classification_reason: The editor and terminal Customize screens.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Both entry points use the same screen, model and scope writers; Settings entry never changes a tab's remembered
+  scope.
+- At narrow, maximized and beside-target widths the shared visibility rule alone decides whether the preview
+  docks.
+- Every selector fits without clipped words or a highlight spanning lines in every look and both motion modes.
+- Sample trials, hover, close and Escape never modify a real file or send terminal input.
+- Tab wraps inside the open screen, group arrows work, Escape restores invoking focus and the layout holds to
+  360 px in every look and Reduced Motion.
+- Both scopes adapt each quick set from the same exact registry patch and leave all unrelated values unchanged;
+  reset is distinguished from setting values.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: the_editor_and_terminal_customize_screens
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256 1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-642
+- Plans/Settings_System.md#SSYS-002
+- Plans/UI_Command_Catalog.md#UCC-204
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/EDITOR-QUICKSETS.js, SHA-256 3e41e8ae1594be81401985bebaa2a4917e066593236fca04e54f02f9b7e7f7f6
+  (decision/source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/TERMINAL-QUICKSETS.js, SHA-256 351b7a4234021f745188a26cb97f8f6a1402235267596c47059e25c76e532879
+  (decision/source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
+  (decision/source lineage; not native implementation evidence)
+preserved_exact_tokens:
+- This editor
+- All editors
+- This terminal
+- All terminals
+- Open Customize
+negative_constraints: []
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-642, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/UI_Command_Catalog.md#UCC-204
+
+### F3-651 - Editor Appearance, Token Colors, Caret And Indentation
+
+```yaml
+plan_unit_id: F3-651
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Each editor appearance field resolves from this tab's appearance override, then the open Project's
+  code.editing rows, then Follow look. All editors and Settings write the same rows (SSYS-052); This
+  editor writes through cmd.editor.appearance.set. SP-333 owns storage. The 17 token kinds are kw, fn, ty,
+  var, prop, str, num, esc, com, op, pun, mac, tag, attr, head, link and code. Token Colors maps <scheme
+  key>/<kind> to #rrggbb; a catalog scheme uses its resolved id after light/dark pairing and Follow look
+  uses look:<look>-<mode>. A tab's map overlays the Project map token by token; clearing a tab entry
+  reveals the Project entry and clearing that entry reveals the scheme. Colors > Token colours offers the
+  scheme's kinds, hue, saturation, lightness and hex, with labelled numeric/text equivalents to color
+  dragging. The stored requested color remains available for editing; drawing adjusts lightness with hue
+  retained to the selected 4.5:1 or 7:1 floor and explains any adjustment. The floor also covers Follow
+  look and dimmed inactive editors. Scheme hover after 160 ms rest, or keyboard selection, previews
+  without transition on the sample and real editor; leaving or Escape restores the committed scheme. A
+  commit uses Basic fade, Friendly bloom from the tile, Glass glide, Retro steps or NieR wipe, with
+  continuous readable code even on slow frames. Follow look consumes the shared cursor/caret voices in
+  F3-643. Editor movement is instant in Basic and Retro, gliding in Friendly and Glass, and instant with
+  an eight-step jump treatment in NieR. Snappy movement lasts 80 ms and Gliding 150 ms; typing and undo
+  land immediately. A trail marks only a non-pointer jump of at least three rows or 24 columns, such as
+  find, Go to line, changes or page navigation, and is clipped to the visible area. Typing and clicks make
+  none. Reduced Motion suppresses blink, glide, trails, smooth scrolling and line reveal; still guides,
+  scanlines and glow retain their state. Lines Arrive When a File Opens continues across resize and redraw
+  instead of restarting or vanishing. Indentation reads applicable .editorconfig first, otherwise the
+  file's dominant step of 2, 4 or 8 and its spaces/tabs while detection is on; absent a file choice, Tab
+  Size and Indent With supply defaults. Guides, active guide, Tab, Shift+Tab, Backspace in leading
+  whitespace and Enter after an opener share that unit. Real tabs remain tabs and display to the next tab
+  stop, including pasted tabs; Show Spaces marks tabs with an arrow. Indentation... in More names the
+  file's unit and provenance and opens these choices. Wrap Long Lines applies to ordinary files and inline
+  diff, never side-by-side diff; the chosen column is bounded by the viewport, breaks prefer a space after
+  one third of the width, continuation indent is capped at one third, and vertical movement follows visual
+  rows. Problem Highlighting draws the file's Problems entries as severity-filtered wavy underlines with
+  minimap marks and a message/source card after Hover Tip Delay. Automatic save uses the chosen pause (500
+  ms or 1 s), focus exit or tab hide, never saves untitled or read-only buffers, clears the dirty mark and
+  announces saved without a toast.
+gui_related: true
+gui_classification_reason: Editor appearance, token colors, caret and indentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every one of the 17 kinds can be edited independently for two schemes and both scopes, survives reload and falls
+  through token by token when cleared.
+- All effective text colors meet the selected floor, including Follow look, comments, selection and inactive dimming.
+- Typing and undo never wait for caret motion; Reduced Motion removes every moving caret/reveal effect.
+- Spaces, tabs, pasted tabs, .editorconfig and 2/4/8-space files share one indentation rule without converting file
+  bytes.
+- Wrap, problems and automatic save respect the named exceptions and preserve input/focus.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: editor_appearance_token_colors_caret_and_indentation
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-639
+- Plans/FinalGUISpec.md#F3-650
+- Plans/Settings_System.md#SSYS-052
+- Plans/storage-plan.md#SP-333
+- Plans/UI_Command_Catalog.md#UCC-204
+preserved_exact_tokens:
+- Token Colors
+- 4.5:1
+- '7:1'
+- cmd.editor.appearance.set
+negative_constraints: []
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-639, ContractName:Plans/FinalGUISpec.md#F3-650, ContractName:Plans/Settings_System.md#SSYS-052, ContractName:Plans/storage-plan.md#SP-333, ContractName:Plans/UI_Command_Catalog.md#UCC-204
+
+### F3-652 - Liquid Glass Material And Motion
+
+```yaml
+plan_unit_id: F3-652
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Liquid Glass is the approved replacement direction for the Glass look in Light and Dark, not a new theme
+  family. Its publication into the reviewed PMConcept7 is pending Jared's review; this unit specifies
+  product behavior and does not claim implementation or native certification. Sheets read as glass over
+  the chosen wallpaper: a refracting rounded bevel, a frosted readable core, a top-left specular rim and a
+  quieter exit light. Selection lenses enlarge sharp text, carry moving reflections and gently bend their
+  rim; color fringing, tearing letters and opaque flashes are defects. One shared lens grammar serves page
+  selection, rail and panel tabs, Usage, onboarding steps, Orchestrator views, customizer choice rows and,
+  by Jared’s 2026-10-14 direction, the title-bar theme selector. It starts on activation without waiting
+  for content work, never doubles or reverses mid-flight, and keeps its resting glass. Scrubbing is
+  selection, never text selection. Pointer beads travel only between neighbouring controls. Switches use
+  curved ends and a rounded lens knob with slower, settling movement; action buttons may be rounded under
+  F3-648. Menus grow from their invoking control; fields such as Find a scope and Find a panel read as one
+  seamless field; the theme menu has room for its labels. Usage changes are calm, with no full-board sweep
+  or opaque-then-clear flash. Glass Dark’s hover light stays near the shared control scale, about 96 px
+  radius, without veiling text. Glass Light has no lightening pointer light over text; whether a light
+  beneath content returns remains pending Jared. F3-465 owns the subsequent reduction of the pointer’s
+  central glow while retaining edge light. Settings rail/index/sections, onboarding window, tour
+  callout/bar and the Wizard/Orchestrator columns use the same sheet hierarchy; nested cards and controls
+  are fills on sheets, not independent full-scene effects. Dense Customize and notification surfaces use
+  the more opaque menu material needed for F3-654's settled contrast. Moving/leaning sheets carry coherent
+  frost, and wallpaper, refraction and frost change together (F3-653). The renderer may precompute static
+  wallpaper optics and use bounded live optics on small lenses and menus; F3-427's old one-shell-blur and
+  F3-431's blanket Glass restrictions are superseded for this material. It must not create arbitrary
+  nested live blur or redraw idle static sheets every frame. Reduced Motion preserves end-state material,
+  selection and focus without spring, sweep, magnification travel or condensation; a renderer without
+  live-optics capability uses a truthful static readable equivalent. Publication of this look and the
+  wallpaper gallery is one coordinated boundary, including retiring F3-428's old background modes. A
+  standalone selection such as the activity bar or Usage navigation uses accent glass with white ink while
+  the window is focused and grey treatment while unfocused; the whole glass treatment recedes when the
+  window becomes inactive. Press feedback flexes/glows from the press point; a moving lens stretches with
+  speed and settles on arrival, with press-and-drag settling into the nearest available choice.
+  Unavailable, disabled or non-interactive items never capture the lens; onboarding progress moves it only
+  when the selected step changes. Existing selection is placed before the first visible frame on page
+  entry; navigation produces one highlight, with no slow reset, duplicate lens or trailing shadow that
+  lags behind it. Settings chapter changes do not flash the chrome, wallpaper changes keep the chosen
+  print and frost coherent, and ordinary scrolling does not visibly rebuild card edges. Both Settings
+  search bars, in the left rail and centre, have a seamless input field that blends into their containing
+  bar. These 2026-10-14 corrections are approved direction under the publication hold; no final optical
+  tuning or completed implementation is claimed.
+gui_related: true
+gui_classification_reason: Liquid Glass material and motion.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every named selector has one legible resting and moving lens, with immediate activation feedback and no chromatic
+  tearing or duplicate highlight.
+- Dense menus, moving sheets and wallpaper swaps preserve settled contrast and coherent material.
+- All material and selection remain usable in Light, Dark, Reduced Motion and the static capability fallback.
+- The specification does not assert that a source-only Glass landing published the look.
+- Focused/unfocused standalone selections, inactive windows, press-origin feedback and unavailable steps obey
+  the shared state rules in both motion modes.
+- Entering Usage/Settings starts with one placed selector; subsequent tab changes, scrolling and wallpaper changes
+  show no duplicate lens, chrome flash, lagging shadow or rebuilding edge.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: liquid_glass_material_and_motion
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-glass-v3/README.md, SHA-256 0e424cba2f2d03932159b6e25977959f23d8f65cbcca57ca1d067b505f61db54
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-11-liquid-glass-v2/README.md, SHA-256 ed0f7ebed280627aba47197a0c8a9273bb4b17373f79cd3fcb6c0b44344f6fb9
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-427
+- Plans/FinalGUISpec.md#F3-431
+- Plans/FinalGUISpec.md#F3-653
+- Plans/FinalGUISpec.md#F3-654
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
+  (decision/source lineage; not native implementation evidence)
+preserved_exact_tokens:
+- Liquid Glass
+negative_constraints: []
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-427, ContractName:Plans/FinalGUISpec.md#F3-431, ContractName:Plans/FinalGUISpec.md#F3-653, ContractName:Plans/FinalGUISpec.md#F3-654
+
+### F3-653 - One Wallpaper Gallery For Every Look
+
+```yaml
+plan_unit_id: F3-653
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Wallpaper is one Project choice for every look, not one stored choice per theme. Settings > App & Input
+  > Theme & colors places its gallery immediately after Light or dark. Look's own comes first, followed by
+  families in the shared catalog's order; thumbnails have names, checked state and full accessible names.
+  It is one radiogroup: arrows move among choices, Home and End reach the ends, Space selects; pointer and
+  keyboard write the same value. Five columns reduce to two where needed, with the look's control corners
+  and no animated tiles. Basic offers Blueprint, Contour, Folds, Sheets and Arcs; Friendly offers Dot
+  Wave, Channels, Bubbles, Hills and Soft Stripes, each with its dot pattern; Retro offers Horizon, Peaks,
+  Circuit, Dither and Stars; Jared withdrew NieR’s Archive, Signal, Fragments, Hatch and Flora on
+  2026-10-14. The approved replacement family is the NieR customizer’s six ink scenes: city (City Ruins),
+  bunker (The Bunker), desert (Desert), forest (Forest Castle), park (Amusement Park) and flooded (Flooded
+  City), selectable from every look. None becomes a family default. Their final packaged assets and
+  publication remain held for the Glass/wallpaper packet. Glass's catalog includes Ribbons, Prism, Orbs,
+  Aurora, Dunes, Bloom, Pool and Facets. Every item has a Dark and Light print selected by effective mode
+  and every item is selectable in every look. Look's own means Ribbons in Glass and the existing ground in
+  Basic, Friendly and Retro; in NieR it restores the selected ink-scene background. An explicit gallery
+  choice replaces the currently displayed background without erasing the NieR background preference.
+  Jared’s same-day follow-up requires the most recent accepted change to win from either control:
+  selecting a gallery wallpaper sets general.visual.wallpaper; selecting a NieR background resets that
+  shared choice to look so the chosen NieR scene shows. SSYS-054 owns the one-writer transaction; SP-333
+  owns persistence. Wallpapers show around opaque panels in the other looks; Usage and Settings Home may
+  use the approved light veil. Glass optics derive from the same chosen print and swap in the same painted
+  frame. The gallery's final space is present in Settings' first frame; thumbnail loading never displaces
+  following rows. Missing/stale stored catalog ids display Look's own with a clear fallback, never a
+  broken image. The Project's committed wallpaper applies with its look before first paint. Prints and
+  thumbnails are shared packaged assets, not per-surface embedded copies. SSYS-054 owns the setting and
+  SP-333 its storage boundary; DR-073 owns catalog reuse. W1 through W4 remain approved except for the
+  withdrawn NieR print set; W5 retires Mesh/Depth/Minimal at the combined Glass/wallpaper publication,
+  which still awaits Jared. Friendly's content ground extends its dot pattern through Settings, Usage,
+  rail panels and the chat transcript, moving with content rather than as a second fixed overlay.
+gui_related: true
+gui_classification_reason: One wallpaper gallery for every look.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every catalog wallpaper works in every look and both modes; Look's own restores the correct default and NieR
+  preference.
+- Keyboard selection, reload, Project switching and unknown stored ids preserve the one-setting contract.
+- A wallpaper swap never paints new wallpaper behind old frost, and gallery loading never shifts a reader's
+  anchor.
+- The five withdrawn prints are not offered; the six replacement scene ids/names and both selection orders follow
+  SSYS-054. Final assets and publication remain explicitly held until verified.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: one_wallpaper_gallery_for_every_look
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-11-liquid-glass-v2/README.md, SHA-256 ed0f7ebed280627aba47197a0c8a9273bb4b17373f79cd3fcb6c0b44344f6fb9
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/Settings_System.md#SSYS-054
+- Plans/storage-plan.md#SP-333
+- Plans/DRY_Rules.md#DR-073
+- Plans/FinalGUISpec.md#F3-652
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
+  (decision/source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-DECISION-20261014.md, SHA-256
+  56a7389f1fa9e6f6e0535f09525945f590b6ef44dfd8f72d1f3c844a7e21b816 (decision/source lineage; not native implementation
+  evidence)
+preserved_exact_tokens:
+- Look's own
+- Ribbons
+negative_constraints: []
+owner_hints:
+- Plans/FinalGUISpec.md
+
+```
+
+ContractRef: ContractName:Plans/Settings_System.md#SSYS-054, ContractName:Plans/storage-plan.md#SP-333, ContractName:Plans/DRY_Rules.md#DR-073, ContractName:Plans/FinalGUISpec.md#F3-652
+
+### F3-654 - Settled Text Contrast
+
+```yaml
+plan_unit_id: F3-654
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Every enabled settled interface text state, at any size, reads at least 4.5:1 against the actual
+  composited background. Placeholder text, captions, hints, secondary text, editor token colors, selected
+  states and a pointer resting on a hovered control all count; a resting hover is not an animation
+  exemption. Disabled controls are exempt from 4.5:1 but their text remains legible at at least 3:1
+  against its actual background; their disabled state and reason remain accessible. A scheme thumbnail is
+  illustrative imagery, exempt from the text floor, only when hidden from assistive technology and
+  accompanied by its scheme name label at at least 4.5:1; it cannot replace readable control labels or
+  convey necessary text available nowhere else. The terminal's Minimum Text Contrast choice governs
+  program output only, defaulting to 4.5:1 and permitting the user's lower choice under F3-642. Terminal
+  chrome, hints, labels and Customize controls retain the interface floor. Editor token colors retain
+  F3-651's selected floor. A brief transition under 0.4 s is recorded with its duration and frames rather
+  than failed solely for an intermediate contrast/overlap reading; an incorrect end state, a longer
+  transition or a looping low-contrast resting state still fails. Tests use the worst background beneath
+  the glyph, including wallpaper, transparency, hover tint and glow, rather than comparing text to a
+  nominal surface token. Color and semantic marks retain their applicable non-text contrast and redundant
+  shape/name requirements. This is the shared contrast interpretation consumed by acceptance checks, not
+  permission to conceal controls or omit hard-to-measure looks.
+gui_related: true
+gui_classification_reason: Settled text contrast.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Contrast is measured in all ten looks with normal and Reduced Motion at rest, selection and resting hover,
+  including placeholders.
+- Under-0.4-second intermediate states are recorded separately; disabled text is separately tested at 3:1, never
+  counted as passing enabled text.
+- A translucent or dimmed enabled label is tested against its actual worst background.
+- Program-output Off and 3:1 choices never lower interface contrast; scheme thumbnails qualify as imagery only
+  with hidden decorative content and a readable scheme-name label.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: settled_text_contrast
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-648
+- Plans/Automated_Testing_System.md#ATS-077
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/ASSIGNMENT-CONTRAST.md, SHA-256 ce5acb947b15065d1193ca5eff1f43a9f1bc82ad7e8f3a230f7377fb18504044
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/CONTRAST-CLARIFICATION-20261014.md, SHA-256
+  1c5654b46b6ed160a34466c9df083681cc179815b658c0acce593698680b8493 (decision/source lineage; not native implementation
+  evidence)
+preserved_exact_tokens:
+- 4.5:1
+- 0.4 s
+negative_constraints: []
+owner_hints:
+- Plans/FinalGUISpec.md
+
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-648, ContractName:Plans/Automated_Testing_System.md#ATS-077
+
+### F3-655 - Planning Wizard And Orchestrator Match The Look
+
+```yaml
+plan_unit_id: F3-655
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Planning Wizard and Orchestrator receive minor fixes and theme matching while their full redesign
+  remains deferred. Their layout, planning/execution owners and flows are not replaced. Statuses are a
+  mark and word, facts a small square and words, and counts plain numbers under F3-648. Work types use
+  joined cells with a filled choice; answers remain the approved stacked reply rows in one box. Friendly
+  widgets keep the white Light and plum Dark plates shared by Home and Usage. Chosen views fill their own
+  boxes, stronger than hover, using the neutral family selection grammar; the title-bar Light/Dark/Auto
+  menu shares that grey chosen fill, with Glass frost/rim, Retro reverse video and NieR ink. Primary
+  actions and complete text remain readable; placeholders stay inside rows and inputs do not clip their
+  hints. Reduced Motion removes moving, popping and blinking treatments. LIVE pulses only while the run is
+  running. Liquid Glass columns are sheets with inner-card fills, and Orchestrator title, plan picker and
+  tabs share an aligned header sheet under F3-652. OP-033 owns explicit retry confirmation and OP-037 owns
+  current/historical scope truth; choosing a page or scope must not open a retry confirmation or fabricate
+  a historical banner. Jared's three answers retain the Friendly plates, retain the answer rows and adopt
+  the neutral mode-menu selection. Its joined work-type and view choices consume F3-438's shared no-wrap
+  selector grammar.
+gui_related: true
+gui_classification_reason: Planning Wizard and Orchestrator match the look.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- All ten looks render the two pages with readable actions, no pill labels and a chosen state stronger than hover.
+- Opening Orchestrator or changing scope does not open retry confirmation; paused runs have no LIVE pulse.
+- All three recorded answers are preserved without a full page redesign.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: planning_wizard_and_orchestrator_match_the_look
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-wizard-orch-theme/NOTES.md, SHA-256 ca7f206e6b92440d26972e4eb4113348722fb45245ba8429dad46633b56b49b8
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/Planning_Wizard.md#PWIZ-021
+- Plans/Orchestrator_Page.md#OP-033
+- Plans/Orchestrator_Page.md#OP-037
+- Plans/FinalGUISpec.md#F3-648
+- Plans/FinalGUISpec.md#F3-652
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Planning_Wizard.md#PWIZ-021, ContractName:Plans/Orchestrator_Page.md#OP-033, ContractName:Plans/Orchestrator_Page.md#OP-037, ContractName:Plans/FinalGUISpec.md#F3-648, ContractName:Plans/FinalGUISpec.md#F3-652
+
+### F3-656 - Onboarding Art And Glass Controls
+
+```yaml
+plan_unit_id: F3-656
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Onboarding's art has connected bodies, limbs, joints and strings through the whole motion, not merely a
+  correct resting pose. Basic draws the joints; Friendly uses felt/paper puppets with two-part sleeves and legs
+  connected to their shoes; Glass uses ball-jointed crystal marionettes with light through the limbs, layered
+  Ribbons-like waves, a glass stage and lens droplets. Waving bends at the elbow and strings remain attached to
+  their hooks. Glass captions sit on a shelf of light without capsule boxes, signs are cut-glass plates, and
+  Friendly captions are stitched paper cards and squiggles. Existing Retro and NieR scene drawings remain;
+  GLY-4's proposed replacement of scene pictures is not admitted without its own answer. The project-name field
+  is a large nameplate with centered words and a reserved hint line so typing never shifts the layout. Glass
+  main actions, choice rows, step selector, switch, tour bar and callouts consume F3-652. Guided example and
+  Teacher tags in practice chat are a small square and plain words on their own line. The chosen onboarding look
+  remains in force during Create Project and checks, with no temporary reset of the app's theme; PWIZ-021's
+  draft/commit boundary is unchanged. All art captions and Ready states consume F3-654. Motion respects the
+  existing skip/end-state and Reduced Motion contracts; connected geometry and meaningful end states remain.
+  This amends the presentation of F3-520, F3-521 and F3-600 without adding onboarding commands, steps, approval
+  or scene-glyph decisions.
+gui_related: true
+gui_classification_reason: Onboarding art and Glass controls.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Every animated and still pose keeps limbs and strings connected in all looks and both motion modes.
+- Name/hint geometry stays stable while typing; Guided example and Teacher are plain labels.
+- Create Project never paints a different look, and settled captions/Ready text meet F3-654.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: onboarding_art_and_glass_controls
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-onboarding-art-glass/README.md, SHA-256 ce5e5e90df41f180e54b89e4fb3fe0087164039728a902aa481cbcc3adacb088
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-11-onboarding-no-pills/README.md, SHA-256 1ab0aedc5910ab03097439cf9cd48da77eb7cefad458ca705a556727d327fd1a
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG.md, SHA-256 82267ce22bcc9c7d17d9f19ad806902718e1978555ada3559d24558baabbdd4f
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-520
+- Plans/FinalGUISpec.md#F3-521
+- Plans/FinalGUISpec.md#F3-600
+- Plans/Planning_Wizard.md#PWIZ-021
+- Plans/FinalGUISpec.md#F3-654
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/FinalGUISpec.md#F3-521, ContractName:Plans/FinalGUISpec.md#F3-600, ContractName:Plans/Planning_Wizard.md#PWIZ-021, ContractName:Plans/FinalGUISpec.md#F3-654
+
+### F3-657 - Resize Feedback On Every Divider
+
+```yaml
+plan_unit_id: F3-657
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Every resizer shares one feedback grammar: panel dividers in both directions, panel/chat and panel/rail edges
+  and the browser DevTools split. Near a bar a faint glint invites then relaxes; on it a weighted light follows
+  the pointer and stretches with speed; pressing catches it and lights the whole held bar; fast motion warms it
+  and leaves a short wake; pushing a minimum-size limit strains the mark; release drains to the release point
+  and settles once. Focus places the mark at the middle and each keyboard resize step settles it. Basic is a
+  precise fine rod and endpoint ticks; Friendly a mint bead over swelling dots with bubbles and a settling ring;
+  Glass neutral white light caught on both facing panel edges, with dark refraction beside the Light highlight
+  and no color splitting or extra bar blur; Retro a cell-stepped cursor and phosphor persistence, ink/dither in
+  Light; NieR an ink ruler, gated square/brackets and stepped ticks with no glow. Reduced Motion keeps calm
+  appearance/disappearance and held/released state, without spring, streak, trail, blink or bounce; NieR snaps
+  to its end state. The light tracks the actual resize lifecycle even if the bar's owner captures input
+  elsewhere. It never changes the resize command, minimum or transaction, and does no animation work when idle
+  away from a bar. This replaces the older unrelated per-divider hover line and first-pass blob/release-sparks
+  treatment.
+gui_related: true
+gui_classification_reason: Resize feedback on every divider.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- All five bar classes show hover, grab, held, limit and release feedback in all ten looks and both motion modes,
+  including the chat edge.
+- Keyboard steps and cancellation leave correct state, and idle bars do no animation work.
+- Glass and NieR obey their material constraints; feedback never changes geometry or command counts.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: resize_feedback_on_every_divider
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-13-resize-glow/NOTES.md, SHA-256 0a20256d730c5b51cda138b14845a5dc2e7dfdda04385a3956721a73fb657c16
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/DND-NOTES-20261014-FOLLOWUP.md, SHA-256 b5b883caeef6d774fbca250e5c7b6c82dd31eee05af8da207727179baa21b5c3
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-630
+- Plans/FinalGUISpec.md#F3-652
+- Plans/UI_Wiring_Rules.md#UIW-012
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-652, ContractName:Plans/UI_Wiring_Rules.md#UIW-012
+
+### F3-658 - Shared Glyph Vocabulary And Presentation
+
+```yaml
+plan_unit_id: F3-658
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The chat's neon/tube glyph language is the default shared set for the rail, Settings, Usage, chat, panel and
+  terminal tabs, notifications and onboarding controls (D44, GLY-0 through GLY-3). Plans/glyph_catalog.json owns
+  the status keys, meanings, tones and mappings; object/control/panel glyphs use the same shared catalog grammar
+  and no surface draws a competing icon for the same meaning. Planning Wizard and Orchestrator may consume the
+  catalog but this approval does not require their full glyph adoption or redesign. Warning is the triangle;
+  failed is a ring with a cross everywhere. The rail's solid badges become these shared tube marks. Changed is
+  violet in every look. Status glyph inks preserve each look's hue, moving lightness to meet at least 3:1
+  against their actual composited field in all ten looks; labels remain text governed by F3-654. Shape plus the
+  accessible state name carries meaning without color. Working, reviewing, needs-you, dependency-wait, idle,
+  complete, blocked, failed, paused, recovering, queued, skipped and mixed keep the shared semantics; warning,
+  offline, off, info and five file-change marks complete the vocabulary. Off is the power symbol for
+  disabled/not configured, never the blocked mark; file-change marks describe changes, not execution state.
+  Domains keep their status words and resolution authority and map them to the shared presentation. A busy tab
+  uses working; competing tab marks rank waiting, failed, agent driving, agent at the keyboard, working, info,
+  preserving the other states in the accessible description. The terminal agent cursor is a spark and cursor
+  cell, solid while the agent types and hollow when a person takes over; terminal command marks use shared
+  status marks. Glyph hover ignition follows F3-465's existing card/row/control target, with stepped NieR and
+  Retro phosphor power-on, never another hover engine. Reduced Motion keeps a still, lit, recognizable end
+  state. GLY-4's alternate onboarding scene pictures remain unanswered; approving controls does not approve
+  those art replacements.
+gui_related: true
+gui_classification_reason: Shared glyph vocabulary and presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- All consumers use the same shape for the same state; warning and failed are distinct in grayscale.
+- Every status mark meets 3:1 in all ten looks; its label meets F3-654.
+- Tab priority, agent cursor, hover and Reduced Motion preserve state names and domain authority.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: shared_glyph_vocabulary_and_presentation
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-10-glyph-catalog-addendum/README.md, SHA-256 3d0497f01c878e8aa6f99fa8f602b9b3dbf887aead2a24d62c12969bd47a1d31
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/FinalGUISpec.md#F3-585
+- Plans/FinalGUISpec.md#F3-619
+- Plans/FinalGUISpec.md#F3-465
+- Plans/FinalGUISpec.md#F3-654
+preserved_exact_tokens:
+- GLY-4
+negative_constraints: []
+owner_hints:
+- Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/FinalGUISpec.md#F3-654

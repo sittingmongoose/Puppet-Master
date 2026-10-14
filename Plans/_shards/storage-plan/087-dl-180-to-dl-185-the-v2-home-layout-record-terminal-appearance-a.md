@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L27469-L27954
+Source lines: L27469-L28038
 
-Source SHA256: `a4d0f9a89ae171184801ffb3e374c7e4179cfc23e07c9c6d520eaa3d033fd4e6`
+Source SHA256: `33a1af46a73cc13657067e0839954d673d6a2e02b8e6d8f6af8e1a07a4b9c244`
 
 ---
 
@@ -221,8 +221,8 @@ The terminal's appearance is one model resolved field by field: the look's defau
 
 | Layer | Where it is stored | Written by |
 |---|---|---|
-| App default and project default (one shared value) | The Settings rows of `Plans/Settings_System.md#SSYS-051`, held like every Settings value in the open Project's settings snapshot (`pm.project_settings_snapshot.v1`, Settings custody `scd.settings.durable.v1`): one stored value per row over the row's bundled default. "All terminals" therefore reaches the terminals of the open Project only, and there is no separate app-level value for a project-level value to fall through to. | Settings > Terminal, and the Appearance popover's "All terminals", only through Settings transactions |
-| This terminal | The terminal tab's serialized state in the v2 Home record (SP-330), inside its 16 KB | The Appearance popover's "This terminal" |
+| App default and project default (one shared value) | The Settings rows of `Plans/Settings_System.md#SSYS-051`, held like every Settings value in the open Project's settings snapshot (`pm.project_settings_snapshot.v1`, Settings custody `scd.settings.durable.v1`): one stored value per row over the row's bundled default. "All terminals" therefore reaches the terminals of the open Project only, and there is no separate app-level value for a project-level value to fall through to. | Settings > Terminal, and the Customize screen (F3-650)'s "All terminals", only through Settings transactions |
+| This terminal | The terminal tab's serialized state in the v2 Home record (SP-330), inside its 16 KB | The Customize screen (F3-650)'s "This terminal" |
 
 Each stored value holds only the fields the user set there; an unset field is absent and falls through, never a copy: the tab override to the shared Settings value, and that to the look's defaults. When an app-wide store is admitted, the app default moves into it as its own level, the project default stays in the Project's settings snapshot, and a project field that is cleared falls through to the app default; until then that step does not exist. The field list is `Plans/FinalGUISpec.md#F3-642`'s. Every field applies live; nothing stored carries a restart flag. A terminal tab moved to another panel keeps its override, because the override is part of the tab; a terminal reopened from the closed-tab stack keeps it too. An imported scheme (`Plans/FinalGUISpec.md#F3-642` lists the formats) is stored as its parsed colour table in Settings custody, never as the imported file.
 
@@ -238,43 +238,52 @@ unit_type: storage_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  The terminal's appearance resolves field by field from the look's defaults, which are never stored, then the
-  app default, the project default and the tab override (DL-183, F3-642, DR-068). Until an app-wide Settings
-  store is admitted (SSYS-028), the app default and the project default share one stored value per field: the
-  Settings rows of SSYS-051, held like every Settings value in the open Project's settings snapshot
-  (pm.project_settings_snapshot.v1, Settings custody scd.settings.durable.v1) and written only through Settings
-  transactions, so All terminals reaches the open Project's terminals only and no project field falls through to
-  a separate app value. The per-tab override lives inside the terminal tab's serialized state in the v2 Home
-  record (SP-330), within its 16 KB. Each stored value holds only the fields set there; an unset field falls
-  through to the next value down. When an app-wide store is admitted the app default becomes its own stored
-  level beneath the project default. Every field applies live and nothing stored carries a restart flag. An
-  imported scheme is stored as its parsed colour table, never the file. A custom background image is stored once
-  by content hash with a manifest under SP-222's uploaded-asset pattern and referenced by the layer; dim and
-  blur are fields applied when drawing; an unreferenced asset is deleted. Images an app or project layer
-  references are backed up with Settings; an image only a tab override references follows the Home record, is
-  not backed up, and when missing the tab falls through to the next layer. This replaces SP-122's
-  terminal_font.v1:global and terminal_color.v1:global. The editor's scheme choice is stored as SSYS-050's
-  code.editing.color-scheme row beside the terminal's scheme row, in the same Project settings snapshot through
-  Settings transactions. The code colour-scheme catalog is built in and never stored; each surface stores only
-  its own choice. The popover's All terminals is enabled and writes the project default row of SSYS-051 through
-  the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its
-  hover tag says in this project; no surface writes an app-wide value until q-035 admits one. The two Customize
-  screens share F3-650's scope/preview rules. SP-333 adds the editor's per-tab appearance and wallpaper binding
-  without changing this terminal model or creating a fifth stored layer.
+  The terminal's appearance resolves field by field from the look's defaults, which are never stored, then
+  the app default, the project default and the tab override (DL-183, F3-642, DR-068). Until an app-wide
+  Settings store is admitted (SSYS-028), the app default and the project default share one stored value
+  per field: the Settings rows of SSYS-051, held like every Settings value in the open Project's settings
+  snapshot (pm.project_settings_snapshot.v1, Settings custody scd.settings.durable.v1) and written only
+  through Settings transactions, so All terminals reaches the open Project's terminals only and no project
+  field falls through to a separate app value. The per-tab override lives inside the terminal tab's
+  serialized state in the v2 Home record (SP-330), within its 16 KB. Each stored value holds only the
+  fields set there; an unset field falls through to the next value down. When an app-wide store is
+  admitted the app default becomes its own stored level beneath the project default. Every field applies
+  live and nothing stored carries a restart flag. An imported scheme is stored as its parsed colour table,
+  never the file. A custom background image is stored once by content hash with a manifest under SP-222's
+  uploaded-asset pattern and referenced by the layer; dim and blur are fields applied when drawing; an
+  unreferenced asset is deleted. Images an app or project layer references are backed up with Settings; an
+  image only a tab override references follows the Home record, is not backed up, and when missing the tab
+  falls through to the next layer. This replaces SP-122's terminal_font.v1:global and
+  terminal_color.v1:global. The editor's scheme choice is stored as SSYS-050's code.editing.color-scheme
+  row beside the terminal's scheme row, in the same Project settings snapshot through Settings
+  transactions. The code colour-scheme catalog is built in and never stored; each surface stores only its
+  own choice. The Customize screen’s All terminals is enabled and writes the project default row of
+  SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this
+  Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035
+  admits one. The two Customize screens share F3-650's scope/preview rules. SP-333 adds the editor's
+  per-tab appearance and wallpaper binding without changing this terminal model or creating a fifth stored
+  layer.
 gui_related: true
 gui_classification_reason: Decides where each terminal look choice is kept and what survives a move, a reopen and a restore.
 split_recommended: false
 depends_on: [DL-183, DR-068, SSYS-051, SSYS-028, SP-330, SP-222]
 unblocks: []
 acceptance_criteria:
-  - "The app and project defaults are stored only as SSYS-051's Settings rows in the Project's settings snapshot, as one shared value per field until an app-wide store is admitted (SSYS-028); the tab override only in the tab's state; the look's defaults are not stored."
-  - "A stored value holds only the fields set in it; clearing a tab override field shows the Settings value, and clearing a Settings field shows the look's default."
-  - "Moving, collapsing or reopening a terminal tab keeps its override; Settings and the popover's All terminals write the project layer through the same Settings transaction."
-  - "No appearance value is stored with a restart flag."
-  - "A background image is stored once by content hash and referenced, never inlined in a settings row or tab state; an unreferenced image is deleted."
-  - "Backup includes images the app or project layer references and excludes images only a tab override references."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "The editor scheme choice is a Settings row stored beside the terminal scheme choice in the same way, and the built-in catalog itself is never stored."
+- The app and project defaults are stored only as SSYS-051's Settings rows in the Project's settings snapshot,
+  as one shared value per field until an app-wide store is admitted (SSYS-028); the tab override only in the
+  tab's state; the look's defaults are not stored.
+- A stored value holds only the fields set in it; clearing a tab override field shows the Settings value, and
+  clearing a Settings field shows the look's default.
+- Moving, collapsing or reopening a terminal tab keeps its override; Settings and the Customize screen’s All
+  terminals write the project layer through the same Settings transaction.
+- No appearance value is stored with a restart flag.
+- A background image is stored once by content hash and referenced, never inlined in a settings row or tab state;
+  an unreferenced image is deleted.
+- Backup includes images the app or project layer references and excludes images only a tab override references.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks
+  are created by this unit.
+- The editor scheme choice is a Settings row stored beside the terminal scheme choice in the same way, and the
+  built-in catalog itself is never stored.
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -494,3 +503,78 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Decision_Log.md#DL-182, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181, ContractName:Plans/storage-plan.md#SP-125, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/Contracts_V0.md#CV-362, SchemaID:pm.storage_value.terminal_session_record.v2
+
+### SP-333 - Editor Appearance And Wallpaper Remain Project-Owned
+
+```yaml
+plan_unit_id: SP-333
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  Editor appearance overrides are optional appearance fields inside the existing editor tab state of
+  SP-330, within its 16 KB serialized-state bound; no new physical family or buffer copy is created.
+  Absent fields fall through to the Project code.editing rows and then F3-651's defaults. The token-colors
+  map is keyed by scheme/kind and overlays the Project map per entry; null in a field patch clears that
+  override, never copies all effective defaults into the tab. A tab-scoped appearance command returns a
+  bounded receipt and saves/readbacks this nonstructural state without a layout revision advance or
+  workspace.layout_changed event. All editors and All terminals write only the Project Settings snapshot
+  through SSYS-009; no compatibility editor/terminal key authorizes app-global or no-Project persistence.
+  The customizer's remembered tab scope is view state separate from the appearance fields; entering from
+  Settings is temporary and does not overwrite it. No preview, sample, dock position or hover color is
+  stored. Wallpaper is the same Project Settings snapshot's general.visual.wallpaper value; assets are
+  immutable packaged catalog assets, not copied into settings. At the publication migration, an old
+  concept wallpaper preference may seed the current Project only when its canonical value is absent and
+  its id is valid; an explicit Project choice wins and no other Project is modified. Old
+  glass_background_mode:v1 and Mesh/Depth/Minimal do not map to images; they retire to look when no new
+  choice exists. Legacy keys are cleared only after successful owner write/readback, never before, and
+  no-Project rendering performs no migration write. Import remains SP-331's parsed scheme/asset custody;
+  this unit adds no secret, session, event family or governance authority. SSYS-054’s most-recent-change
+  rule uses the existing Project transaction revision as its order: a NieR background edit commits its
+  background value and wallpaper=look together; a later gallery edit commits the chosen wallpaper id. The
+  existing NieR background preference is retained beneath an explicit gallery choice. No timestamp record,
+  extra inheritance layer or second wallpaper store is created.
+gui_related: true
+gui_classification_reason: Editor appearance and wallpaper remain Project-owned.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Tab override/reset and reload preserve sparse fields and token fallthrough inside 16 KB; an over-bound mutation
+  refuses without losing prior state.
+- An appearance update emits no structural layout event and never changes another Project.
+- Migration preserves an explicit Project choice, does not fan out an old key, and clears legacy data only after verified
+  write.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: editor_appearance_and_wallpaper_remain_project_owned
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-wallpapers/OWNER-PROPOSAL.md, SHA-256 07778e16e4bc6082aa1d56435a826692662718069ceaaa2f20e37ae56984ba2d
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/storage-plan.md#SP-330
+- Plans/storage-plan.md#SP-331
+- Plans/Settings_System.md#SSYS-009
+- Plans/FinalGUISpec.md#F3-651
+- Plans/Settings_System.md#SSYS-054
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/NIER-WALLPAPER-DECISION-20261014.md, SHA-256
+  56a7389f1fa9e6f6e0535f09525945f590b6ef44dfd8f72d1f3c844a7e21b816 (decision/source lineage; not native implementation
+  evidence)
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/storage-plan.md#SP-331, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/FinalGUISpec.md#F3-651, ContractName:Plans/Settings_System.md#SSYS-054
