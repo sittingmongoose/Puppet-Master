@@ -17,8 +17,9 @@
    and pmw-settle. A look's motion constants are custom properties read once per engagement: --gl-k and --gl-z (spring
    stiffness and damping ratio; 0 stiffness steps), --gl-snap and --gl-snap-o (a grid the light steps along),
    --gl-trail-step, --gl-settle-ms, and --gl-dots, --gl-echo and --gl-ghost (Friendly's dot lens, the persistence
-   copies across the bar, Retro's cell afterglow). The idle hint rides the page's shared pointermove dispatcher
-   (PM7_PMOVE, T07): no document listener of its own. A bar's axis is its aria-orientation (vertical unless it says
+   copies across the bar, Retro's cell afterglow). The idle hint and the held bar's pointer ride the page's shared
+   pointermove dispatcher (PM7_PMOVE, T07): no pointermove listener on document of its own. The grab never depends on
+   the bar receiving its own pointerdown (see glGrab). A bar's axis is its aria-orientation (vertical unless it says
    horizontal); a horizontal bar's layer is the vertical one turned, so the CSS is written once, along y. Reduced
    Motion: no spring, stretch, heat, strain, wake or copies; the light sits where the pointer is and only fades. */
 
@@ -31,10 +32,15 @@ var GL_REST_MS = 1400;    // a pointer resting near a bar this long lets the hin
 var GL_DOTS = 15;         // Friendly: the dots shown around the pointer (odd)
 var GL_ECHOES = 3;        // persistence copies (Retro phosphor, Friendly bubbles)
 var GL_POP = '[role="menu"], [role="dialog"], [role="listbox"], .pmw-pop, .pmw-menu';
+/* the class each drag owner puts on its bar while it is dragged: the shell's resizers and the chat column's
+   (resizing), the panel dividers (pmw-active), the DevTools split (is-active) */
+var GL_ACTIVE = ['resizing', 'pmw-active', 'is-active'];
 var glBars = [];
 var glLive = [];
 var glRaf = 0, glLast = 0;
 var glPtr = { x: 0, y: 0, target: null, on: false, dirty: false, buttons: 0, rest: false, restT: 0 };
+var glHeld = null;        // the bar being dragged, if any
+var glWired = false;
 var glRectsAt = 0;
 
 function glAxisV(el) { return el.getAttribute('aria-orientation') !== 'horizontal'; }
@@ -114,6 +120,81 @@ function glWake(s) {
   if (!glRaf) { glLast = performance.now(); glRaf = requestAnimationFrame(glTick); }
 }
 
+function glActive(el) {
+  for (var i = 0; i < GL_ACTIVE.length; i++) if (el.classList.contains(GL_ACTIVE[i])) return true;
+  return false;
+}
+/* The grab and the release. A drag owner may keep the press from the bar (the chat column takes its resizer's
+   pointerdown on window, in the capture phase, and stops it there), so the light never depends on the bar's own
+   pointerdown: it is fed by a capture listener on window (stopPropagation there does not stop other listeners on
+   window), by the bar's own events, and by the drag owner's active class on the bar (GL_ACTIVE). Each path is
+   idempotent; whichever comes first grabs, and whichever comes first releases. */
+function glGrab(s, x, y) {
+  if (s.held) return;
+  var el = s.el;
+  clearTimeout(s.hoverT);
+  glEngage(s);
+  s.px = s.sx = x; s.py = s.sy = y;
+  s.tAt = glSnap(s, glAlong(s, x, y));
+  if (!s.hover && !s.near) { s.at = s.tAt; s.va = 0; }
+  s.held = true; s.moving = false; s.hover = true;
+  s.hist = [];
+  glHeld = s;
+  glSet(s, '--gl-g', s.tAt.toFixed(1) + 'px');
+  glSet(s, '--gl-tip-a', (-s.tAt).toFixed(1) + 'px');
+  glSet(s, '--gl-tip-b', (s.len - s.tAt).toFixed(1) + 'px');
+  clearTimeout(s.settleT);
+  el.classList.remove('pmw-settle', 'pmw-gl-still');
+  glLit(s);
+  el.classList.add('pmw-gl-hover', 'pmw-gl-held');
+  glWake(s);
+}
+/* the pointer while it is over a bar or holding it (the bar's own pointermove, and the shared feed while held) */
+function glPointer(s, x, y) {
+  s.px = x; s.py = y;
+  if (!s.engaged) glEngage(s);
+  if (s.held && !s.moving && Math.abs(x - s.sx) + Math.abs(y - s.sy) > 2) {
+    s.moving = true;
+    s.el.classList.add('pmw-gl-moving');
+  }
+  var t = glSnap(s, glAlong(s, x, y));
+  if (t !== s.tAt) {
+    s.tAt = t;
+    s.el.classList.remove('pmw-gl-still');
+    clearTimeout(s.stillT);
+    s.stillT = setTimeout(function () { if (s.hover || s.held) s.el.classList.add('pmw-gl-still'); }, GL_STILL_MS);
+  }
+  glWake(s);
+}
+function glRelease(s) {
+  if (!s.held) return;
+  var el = s.el;
+  s.held = false;
+  if (glHeld === s) glHeld = null;
+  el.classList.remove('pmw-gl-held', 'pmw-gl-moving');
+  if (s.moving) light.settle(el, s.at);
+  s.moving = false;
+  // the bar may have moved out from under the pointer (a limit, a collapse to the strip): only stay lit if it is there
+  var r = glMeasure(s);
+  var over = s.px >= r.left - 1 && s.px <= r.right + 1 && s.py >= r.top - 1 && s.py <= r.bottom + 1;
+  if (!over) { s.hover = false; s.engaged = false; el.classList.remove('pmw-gl-hover'); }
+  glWake(s);
+}
+/* window listeners, once: the press and the end of it, in the capture phase */
+function glWire() {
+  if (glWired) return;
+  glWired = true;
+  window.addEventListener('pointerdown', function (e) {
+    if (e.button !== 0 || e.pointerType === 'touch') return;
+    var bar = e.target && e.target.closest ? e.target.closest('.pmw-gl') : null;
+    if (bar && bar._gl) glGrab(bar._gl, e.clientX, e.clientY);
+  }, true);
+  function end() { if (glHeld) glRelease(glHeld); }
+  window.addEventListener('pointerup', end, true);
+  window.addEventListener('pointercancel', end, true);
+  window.addEventListener('blur', end);
+}
+
 /* bind(el): once per bar; idempotent */
 light.bind = function (el) {
   if (!el || el._gl) return;
@@ -126,6 +207,18 @@ light.bind = function (el) {
   el.classList.add('pmw-gl');
   s.fx = glBuild(el);
   glBars.push(s);
+  glWire();
+  // the drag owner's active class: grabs when it appears (if no press was seen) and releases when it goes
+  s.active = glActive(el);
+  try {
+    new MutationObserver(function () {
+      var now = glActive(el);
+      if (now === s.active) return;
+      s.active = now;
+      if (now) glGrab(s, glPtr.on ? glPtr.x : s.px, glPtr.on ? glPtr.y : s.py);
+      else glRelease(s);
+    }).observe(el, { attributes: true, attributeFilter: ['class'] });
+  } catch (_) {}
 
   el.addEventListener('pointerenter', function (e) {
     if (e.pointerType === 'touch' || (glBusy() && !s.held)) return;
@@ -144,20 +237,7 @@ light.bind = function (el) {
   });
   el.addEventListener('pointermove', function (e) {
     if (e.pointerType === 'touch') return;
-    s.px = e.clientX; s.py = e.clientY;
-    if (!s.engaged) glEngage(s);
-    if (s.held && !s.moving && Math.abs(e.clientX - s.sx) + Math.abs(e.clientY - s.sy) > 2) {
-      s.moving = true;
-      el.classList.add('pmw-gl-moving');
-    }
-    var t = glSnap(s, glAlong(s, e.clientX, e.clientY));
-    if (t !== s.tAt) {
-      s.tAt = t;
-      el.classList.remove('pmw-gl-still');
-      clearTimeout(s.stillT);
-      s.stillT = setTimeout(function () { if (s.hover || s.held) el.classList.add('pmw-gl-still'); }, GL_STILL_MS);
-    }
-    glWake(s);
+    glPointer(s, e.clientX, e.clientY);
   });
   el.addEventListener('pointerleave', function () {
     clearTimeout(s.hoverT);
@@ -169,34 +249,10 @@ light.bind = function (el) {
     glWake(s);
   });
   el.addEventListener('pointerdown', function (e) {
-    if (e.button !== 0) return;
-    clearTimeout(s.hoverT);
-    glEngage(s);
-    s.px = s.sx = e.clientX; s.py = s.sy = e.clientY;
-    s.tAt = glSnap(s, glAlong(s, e.clientX, e.clientY));
-    s.held = true; s.moving = false; s.hover = true;
-    s.hist = [];
-    glSet(s, '--gl-g', s.tAt.toFixed(1) + 'px');
-    glSet(s, '--gl-tip-a', (-s.tAt).toFixed(1) + 'px');
-    glSet(s, '--gl-tip-b', (s.len - s.tAt).toFixed(1) + 'px');
-    clearTimeout(s.settleT);
-    el.classList.remove('pmw-settle', 'pmw-gl-still');
-    glLit(s);
-    el.classList.add('pmw-gl-hover', 'pmw-gl-held');
-    glWake(s);
+    if (e.button !== 0 || e.pointerType === 'touch') return;
+    glGrab(s, e.clientX, e.clientY);
   });
-  function release() {
-    if (!s.held) return;
-    s.held = false;
-    el.classList.remove('pmw-gl-held', 'pmw-gl-moving');
-    if (s.moving) light.settle(el, s.at);
-    s.moving = false;
-    // the bar may have moved out from under the pointer (a limit, a collapse to the strip): only stay lit if it is there
-    var r = glMeasure(s);
-    var over = s.px >= r.left - 1 && s.px <= r.right + 1 && s.py >= r.top - 1 && s.py <= r.bottom + 1;
-    if (!over) { s.hover = false; s.engaged = false; el.classList.remove('pmw-gl-hover'); }
-    glWake(s);
-  }
+  function release() { glRelease(s); }
   el.addEventListener('pointerup', release);
   el.addEventListener('pointercancel', release);
   el.addEventListener('lostpointercapture', release);
@@ -237,6 +293,7 @@ light.settle = function (el, at) {
 function glProbe(e) {
   if (e.pointerType === 'touch') return;
   glPtr.x = e.clientX; glPtr.y = e.clientY; glPtr.target = e.target; glPtr.buttons = e.buttons; glPtr.on = true;
+  if (glHeld) glPointer(glHeld, e.clientX, e.clientY);
   glPtr.dirty = true; glPtr.rest = false;
   clearTimeout(glPtr.restT);
   glPtr.restT = setTimeout(function () {
