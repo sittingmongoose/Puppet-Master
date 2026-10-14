@@ -74,14 +74,16 @@
     out = out || [0, 0, 0]; out[0] = d; out[1] = nx; out[2] = ny; return out;
   }
   function profile(t) { return Math.pow(1 - Math.pow(1 - t, 4), 0.25); }
-  function buildMaps(W, H, R, B, T, mag, lightK, ring, specOnly) {
-    ring = ring || [3, 8];
-    var key = [W, H, R, B, T, mag, lightK, ring, !!specOnly].join('|'), hit = cachedMap(key);
-    if (hit) return hit;
+  function mapKey(W, H, R, B, T, mag, lightK, ring, specOnly) { return [W, H, R, B, T, mag, lightK, ring || [3, 8], !!specOnly].join('|'); }
+  function mapPixels(W, H, R, B, T, mag, lightK, ring, specOnly) {
     var n = W * H, dx = new Float32Array(n), dy = new Float32Array(n), sp = new Float32Array(n), edge = new Float32Array(n), active = [];
     var hx = W / 2 - R, hy = H / 2 - R, cx = W / 2, cy = H / 2, L0 = -0.55, L1 = -0.83, max = 0;
     var scratch = [0, 0, 0], bends = new Map(), lights = new Map();
+    /* In a sheet's flat interior, displacement, light and ring alpha are exactly zero. Leave the zero-filled
+       arrays alone there. The inset lies inside all four straight sides, so no rounded-corner sample is skipped. */
+    var inset = specOnly && mag === 1 ? Math.ceil(Math.max(R, B)) : 0;
     for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
+      if (inset && y >= inset && y < H - inset && x === inset && x < W - inset) x = W - inset;
       var i = y * W + x, px = x + 0.5 - cx, py = y + 0.5 - cy, s = sdf(px, py, hx, hy, R, scratch), d = s[0];
       if (d <= 0) continue;
       /* only the outer few pixels stay sharp: text near an edge must sit on frost, never on raw refracted lines */
@@ -108,12 +110,19 @@
       }
       dx[i] = vx; dy[i] = vy; var mm = Math.max(Math.abs(vx), Math.abs(vy)); if (mm > max) max = mm;
     }
+    return { max: max, raw: { dx: dx, dy: dy, edge: edge, active: new Uint32Array(active) }, sp: sp };
+  }
+  function buildMaps(W, H, R, B, T, mag, lightK, ring, specOnly) {
+    ring = ring || [3, 8];
+    var key = mapKey(W, H, R, B, T, mag, lightK, ring, specOnly), hit = cachedMap(key);
+    if (hit) return hit;
+    var p = mapPixels(W, H, R, B, T, mag, lightK, ring, specOnly), n = W * H, max = p.max, dx = p.raw.dx, dy = p.raw.dy, sp = p.sp;
     var canvas = document.createElement('canvas'); canvas.width = W; canvas.height = H;
     var ctx = canvas.getContext('2d'), pixels = ctx.createImageData(W, H);
     function img(fill) { fill(pixels.data); ctx.putImageData(pixels, 0, 0); return canvas.toDataURL('image/png'); }
     var k = max || 1;
     var res = {
-      scale: max * 2, max: max, raw: { dx: dx, dy: dy, edge: edge, active: new Uint32Array(active) },
+      scale: max * 2, max: max, raw: p.raw,
       disp: specOnly ? null : img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = 128 + Math.round(dx[i] / k * 127); D[o + 1] = 128 + Math.round(dy[i] / k * 127); D[o + 2] = 128; D[o + 3] = 255; } }),
       spec: img(function (D) { for (var i = 0; i < n; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(sp[i] * 255); } }),
     };
@@ -281,7 +290,57 @@
      and draw the same with or without a GPU. */
   var wallUrl = '', wallSources = new Map(), wallSourceKey = null, wallSourceUrl = '', wallSourceId = 0;
   var frosts = {}, frostKey = '', frostCache = new Map(), frostBytes = 0, frostJobs = new Map(), FROST_BYTES = 32 * 1024 * 1024;
-  var bakeQ = new Map(), bakeT = 0, bakeFrame = 0, bakeFlight = null, bakeEpoch = 0;
+  var bakeQ = new Map(), bakeT = 0, bakeFrame = 0, bakeFlight = null, bakeEpoch = 0, bakeWake = null;
+  /* Completed optics can be reused across rebuilt sheets and wallpaper returns. The cache owns only bounded idle
+     retention; an evicted image stays alive while an actual sheet displays it, then releases on replacement/prune. */
+  var ringCache = new Map(), ringBytes = 0, RING_BYTES = 32 * 1024 * 1024, RING_COUNT = 80;
+  var ringPrints = new Map(), ringImages = new WeakMap(), ringPrintId = 0;
+  function printIdentity(im) {
+    var u = im.__lgWallUrl || wallUrl, immutable = /^data:image\//.test(u), table = immutable ? ringPrints : ringImages, key = immutable ? u : im;
+    var id = table.get(key);
+    if (!id) { id = ++ringPrintId; table.set(key, id); }
+    if (immutable) {
+      table.delete(key); table.set(key, id);
+      while (table.size > RING_COUNT) table.delete(table.keys().next().value);
+    }
+    return id;
+  }
+  function ringKey(im, s, k) {
+    return [printIdentity(im), innerWidth, innerHeight, im.naturalWidth, im.naturalHeight, s.W, s.H, s.lp.x, s.lp.y,
+      Math.round(s.R), Math.round(s.B), Math.round(s.T), 1, k.sat, k.ca || 0, k.light, k.ring].join('|');
+  }
+  function cachedRing(key) {
+    var rec = ringCache.get(key); if (!rec) return null;
+    ringCache.delete(key); ringCache.set(key, rec); return rec;
+  }
+  function releaseRing(rec) { if (rec && !rec.cached && !rec.users.size) URL.revokeObjectURL(rec.url); }
+  function dropSheetRing(e) {
+    var rec = e.__lgRingRec;
+    if (rec) { rec.users.delete(e); releaseRing(rec); }
+    else if (e.__lgRing) URL.revokeObjectURL(e.__lgRing);
+    e.__lgRingRec = null; e.__lgRing = null;
+  }
+  function keepRing(key, blob, spec, W, H, priority) {
+    var hit = cachedRing(key); if (hit) return hit;
+    /* Include the two decoded RGBA images as well as encoded retention; spec may also be shared by mapCache. */
+    var rec = { key: key, url: URL.createObjectURL(blob), spec: spec, bytes: blob.size + spec.length * 2 + W * H * 8, priority: priority || 0, users: new Set(), cached: false };
+    if (rec.bytes > RING_BYTES) return rec;
+    while (ringCache.size && (ringCache.size >= RING_COUNT || ringBytes + rec.bytes > RING_BYTES)) {
+      /* Speculative offscreen retention must not evict the visible/near-visible return set. All sheets still get
+         their finished output; a lower-priority result can simply remain owned by its displayed sheet. */
+      var oldest = null;
+      ringCache.forEach(function (v, key) { if (oldest === null && v.priority >= rec.priority) oldest = key; });
+      if (oldest === null) return rec;
+      var old = ringCache.get(oldest);
+      ringBytes -= old.bytes; ringCache.delete(oldest); old.cached = false; releaseRing(old);
+    }
+    rec.cached = true; ringCache.set(key, rec); ringBytes += rec.bytes; return rec;
+  }
+  function showRing(e, rec) {
+    if (e.__lgRingRec !== rec) { dropSheetRing(e); e.__lgRingRec = rec; e.__lgRing = rec.url; rec.users.add(e); }
+    e.style.setProperty('--lg-spec', 'url(' + rec.spec + ')');
+    e.style.setProperty('--lg-ring', 'url(' + rec.url + ')');
+  }
   function currentWallUrl(refresh) {
     /* The source's wallpaper variables are selected only by these attributes. Keep the large data URL out of each
        surface signature and resolve the computed variable once per choice, with a fresh read before loading it. */
@@ -416,12 +475,23 @@
       job.e.getAttribute('data-lg-kind') === job.kind && job.wall === wallSourceId && job.theme === root.getAttribute('data-theme') &&
       job.vw === innerWidth && job.vh === innerHeight && (!im || im.__lgWallUrl === currentWallUrl());
   }
-  function bakeRing(e, kind, im, job) {
-    if (!currentBake(job, im)) return;
+  function bakeGeometry(e, kind) {
     var k = KINDS[kind], W = Math.round(e.offsetWidth), H = Math.round(e.offsetHeight);
-    if (W < 4 || H < 4) return;
-    var r = anchor(e); r = { left: r.x, top: r.y };
-    var R = radiusOf(e, W, H), B = Math.max(2, Math.min(k.bezel, Math.min(W, H) / 2 - 1)), T = Math.min(k.thick, B * 2.4);
+    if (W < 4 || H < 4) return null;
+    var lp = layoutPos(e), R = radiusOf(e, W, H), B = Math.max(2, Math.min(k.bezel, Math.min(W, H) / 2 - 1)), T = Math.min(k.thick, B * 2.4);
+    return { W: W, H: H, lp: lp, R: R, B: B, T: T };
+  }
+  function sameBakeGeometry(e, s) {
+    var lp = layoutPos(e);
+    return Math.round(e.offsetWidth) === s.W && Math.round(e.offsetHeight) === s.H && Math.round(lp.x) === Math.round(s.lp.x) && Math.round(lp.y) === Math.round(s.lp.y);
+  }
+  function bakeRingSync(e, kind, im, job, measured) {
+    if (!currentBake(job, im)) return;
+    var k = KINDS[kind], s = measured || bakeGeometry(e, kind); if (!s) return;
+    var W = s.W, H = s.H, R = s.R, B = s.B, T = s.T, r = { left: s.lp.x, top: s.lp.y }, key = ringKey(im, s, k);
+    anchor(e, s.lp);
+    var cached = e.__lgRingRec && e.__lgRingRec.key === key ? e.__lgRingRec : cachedRing(key);
+    if (cached) { showRing(e, cached); return; }
     var m = buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), 1, k.light, k.ring, true), raw = m.raw, c = cover(im);
     var p = Math.ceil(m.max) + 3, SW = W + 2 * p, SH = H + 2 * p;
     var sc = document.createElement('canvas'); sc.width = SW; sc.height = SH; var g = sc.getContext('2d');
@@ -443,21 +513,182 @@
     oc.toBlob(function (b) {
       if (!currentBake(job, im)) return;
       if (!b) { e.__lgSig = null; return; }
-      var lp = layoutPos(e);
-      if (Math.round(e.offsetWidth) !== W || Math.round(e.offsetHeight) !== H || Math.round(lp.x) !== Math.round(r.left) || Math.round(lp.y) !== Math.round(r.top)) {
+      if (!sameBakeGeometry(e, s)) {
         e.__lgSig = null; mount(e, kind); return;
       }
-      if (e.__lgRing) URL.revokeObjectURL(e.__lgRing);
-      e.__lgRing = URL.createObjectURL(b); e.style.setProperty('--lg-ring', 'url(' + e.__lgRing + ')');
+      showRing(e, keepRing(key, b, m.spec, W, H, job.priority));
     }, 'image/png');
   }
+  /* Large sheet pixels and PNGs run in one worker. Lenses and menu optics remain on the synchronous path, and a
+     sheet keeps its existing output until the same spec/ring publication stages finish. No visibility culling. */
+  function sheetWorkerMain(sdf, profile, mapPixels) {
+    var walls = new Map();
+    self.onmessage = function (event) {
+      var d = event.data;
+      if (d.type === 'wall') {
+        var old = walls.get(d.wall); if (old) old.close();
+        walls.delete(d.wall); walls.set(d.wall, d.bitmap);
+        while (walls.size > 2) { var k = walls.keys().next().value; walls.get(k).close(); walls.delete(k); }
+        return;
+      }
+      if (d.type !== 'ring') return;
+      (async function () {
+        var im = walls.get(d.wall); if (!im) throw new Error('sheet wallpaper unavailable');
+        walls.delete(d.wall); walls.set(d.wall, im);
+        var s = d.s, W = s.W, H = s.H, k = d.k, m = d.map, madeMap = !m;
+        if (!m) {
+          var pix = mapPixels(W, H, Math.round(s.R), Math.round(s.B), Math.round(s.T), 1, k.light, k.ring, true);
+          var spec = new OffscreenCanvas(W, H), ctx = spec.getContext('2d'), pixels = ctx.createImageData(W, H), D = pixels.data;
+          for (var i = 0; i < W * H; i++) { var o = i * 4; D[o] = D[o + 1] = D[o + 2] = 255; D[o + 3] = Math.round(pix.sp[i] * 255); }
+          ctx.putImageData(pixels, 0, 0);
+          var blob = await spec.convertToBlob({ type: 'image/png' });
+          m = { scale: pix.max * 2, max: pix.max, raw: pix.raw, disp: null, spec: new FileReaderSync().readAsDataURL(blob) };
+        }
+        var raw = m.raw, active = raw ? raw.active : m.indices, samples = m.samples, c = d.cover, p = Math.ceil(m.max) + 3, SW = W + 2 * p, SH = H + 2 * p;
+        var src = new OffscreenCanvas(SW, SH), g = src.getContext('2d');
+        g.filter = 'saturate(' + k.sat + ')';
+        g.setTransform(c.s, 0, 0, c.s, c.ox - (s.lp.x - p), c.oy - (s.lp.y - p)); g.drawImage(im, 0, 0); g.setTransform(1, 0, 0, 1, 0, 0);
+        var S = g.getImageData(0, 0, SW, SH).data, out = new ImageData(W, H), O = out.data, ca = k.ca || 0;
+        function at(x, y, ch) {
+          x = Math.max(0, Math.min(SW - 1.001, x)); y = Math.max(0, Math.min(SH - 1.001, y));
+          var x0 = x | 0, y0 = y | 0, fx = x - x0, fy = y - y0, i00 = (y0 * SW + x0) * 4 + ch, i10 = i00 + 4, i01 = i00 + SW * 4, i11 = i01 + 4;
+          return (S[i00] * (1 - fx) + S[i10] * fx) * (1 - fy) + (S[i01] * (1 - fx) + S[i11] * fx) * fy;
+        }
+        for (var j = 0; j < active.length; j++) {
+          var i = active[j], x = i % W, y = (i / W) | 0, a = raw ? raw.edge[i] : samples[j * 3 + 2], vx = raw ? raw.dx[i] : samples[j * 3], vy = raw ? raw.dy[i] : samples[j * 3 + 1], bx = x + p + 0.5, by = y + p + 0.5, o = i * 4;
+          O[o] = at(bx + vx * (1 - ca), by + vy * (1 - ca), 0); O[o + 1] = at(bx + vx, by + vy, 1); O[o + 2] = at(bx + vx * (1 + ca), by + vy * (1 + ca), 2); O[o + 3] = a * 255;
+        }
+        var canvas = new OffscreenCanvas(W, H); canvas.getContext('2d').putImageData(out, 0, 0);
+        /* Same publication point as the synchronous implementation: spec after sampling, ring after PNG encoding.
+           Raw arrays transfer back to the existing bounded map cache only after the worker has finished using them. */
+        self.postMessage({ type: 'spec', id: d.id, spec: m.spec, map: madeMap ? m : null }, madeMap ? [raw.dx.buffer, raw.dy.buffer, raw.edge.buffer, raw.active.buffer] : []);
+        /* Only the finished canvas is needed by the encoder; release the large temporary pixel planes/readback. */
+        pix = spec = ctx = pixels = D = src = g = S = out = O = raw = active = samples = m = null;
+        var ring = await canvas.convertToBlob({ type: 'image/png' });
+        self.postMessage({ type: 'ring', id: d.id, blob: ring });
+      })().catch(function (error) { self.postMessage({ type: 'error', id: d.id, message: String(error) }); });
+    };
+    var test = new OffscreenCanvas(1, 1).getContext('2d');
+    if (!('filter' in test)) throw new Error('sheet canvas filter unavailable');
+    self.postMessage({ type: 'ready' });
+  }
+  var bakeWorker = null, bakeWorkerUrl = null, bakeWorkerFailed = false, bakeWorkerSeq = 0, bakeWorkerJob = null, bakeWorkerJobs = new Map(), workerWalls = new Map();
+  function finishWorkerJob(rec, error) {
+    if (!rec || !rec.done) return;
+    var done = rec.done; rec.done = null;
+    if (bakeWorkerJob === rec) bakeWorkerJob = null;
+    bakeWorkerJobs.delete(rec.id); done(error);
+  }
+  function stopBakeWorker(cancelled) {
+    if (bakeWorker) { bakeWorker.onmessage = bakeWorker.onerror = null; bakeWorker.terminate(); bakeWorker = null; }
+    if (bakeWorkerUrl) { URL.revokeObjectURL(bakeWorkerUrl); bakeWorkerUrl = null; }
+    workerWalls.clear(); Array.from(bakeWorkerJobs.values()).forEach(function (rec) { finishWorkerJob(rec, { cancelled: !!cancelled }); });
+  }
+  function ensureBakeWorker() {
+    if (bakeWorker) return bakeWorker;
+    if (bakeWorkerFailed || !window.Worker || !window.OffscreenCanvas || !window.createImageBitmap || !OffscreenCanvas.prototype.convertToBlob) return null;
+    try {
+      var script = sdf.toString() + '\n' + profile.toString() + '\n' + mapPixels.toString() + '\n(' + sheetWorkerMain.toString() + ')(sdf, profile, mapPixels);';
+      bakeWorkerUrl = URL.createObjectURL(new Blob([script], { type: 'text/javascript' }));
+      var worker = new Worker(bakeWorkerUrl); bakeWorker = worker;
+      worker.onerror = function (event) { event.preventDefault(); bakeWorkerFailed = true; stopBakeWorker(false); };
+      worker.onmessage = function (event) {
+        if (bakeWorker !== worker) return;
+        var d = event.data;
+        if (d.type === 'ready') { if (bakeWorkerUrl) URL.revokeObjectURL(bakeWorkerUrl); bakeWorkerUrl = null; return; }
+        var rec = bakeWorkerJobs.get(d.id); if (!rec) return;
+        if (d.type === 'error') { bakeWorkerFailed = true; stopBakeWorker(false); return; }
+        if (d.type === 'spec') {
+          rec.spec = d.spec;
+          var map = d.map || rec.existingMap;
+          if (map && !mapCache.has(rec.mapKey)) keepMap(rec.mapKey, map);
+          if (currentBake(rec.job, rec.im) && sameBakeGeometry(rec.job.e, rec.s)) rec.job.e.style.setProperty('--lg-spec', 'url(' + rec.spec + ')');
+          if (bakeWorkerJob === rec) bakeWorkerJob = null;
+          rec.resume(); return;
+        }
+        if (d.type === 'ring') {
+          var e = rec.job.e;
+          if (currentBake(rec.job, rec.im)) {
+            if (!sameBakeGeometry(e, rec.s)) { e.__lgSig = null; mount(e, rec.job.kind); }
+            else if (d.blob && rec.spec) showRing(e, keepRing(rec.key, d.blob, rec.spec, rec.s.W, rec.s.H, rec.job.priority));
+            else e.__lgSig = null;
+          }
+          finishWorkerJob(rec, null);
+        }
+      };
+      return worker;
+    } catch (e) { bakeWorkerFailed = true; stopBakeWorker(false); return null; }
+  }
+  function rimSamples(m) {
+    /* A warm map needs only its active rim samples in the worker. Keep the existing full map untouched in its
+       cache; transfer a small ordered copy instead of cloning three full-size float planes in both directions. */
+    var a = m.raw.active, indices = new Uint32Array(a), samples = new Float32Array(a.length * 3);
+    for (var j = 0; j < a.length; j++) { var i = a[j]; samples[j * 3] = m.raw.dx[i]; samples[j * 3 + 1] = m.raw.dy[i]; samples[j * 3 + 2] = m.raw.edge[i]; }
+    return { max: m.max, scale: m.scale, spec: m.spec, indices: indices, samples: samples };
+  }
+  function bakeRing(e, kind, im, job, done) {
+    if (!currentBake(job, im)) return false;
+    var k = KINDS[kind], s = bakeGeometry(e, kind); if (!s) return false;
+    anchor(e, s.lp);
+    var key = ringKey(im, s, k), cached = e.__lgRingRec && e.__lgRingRec.key === key ? e.__lgRingRec : cachedRing(key);
+    if (cached) { showRing(e, cached); return false; }
+    /* Small work preserves the synchronous path; large sheet allocation, sampling and encoding never occupy a UI
+       task. One computation and at most two PNG encoders bound temporary pixels, with the original caches intact. */
+    var worker = s.W * s.H > 65536 ? ensureBakeWorker() : null;
+    if (!worker) { bakeRingSync(e, kind, im, job, s); return false; }
+    if (bakeWorkerJobs.size >= 2) return 'busy';
+    var mk = mapKey(s.W, s.H, Math.round(s.R), Math.round(s.B), Math.round(s.T), 1, k.light, k.ring, true), map = cachedMap(mk);
+    var optics = { sat: k.sat, ca: k.ca, light: k.light, ring: k.ring ? k.ring.slice() : [3, 8] }, packed = map ? rimSamples(map) : null;
+    var rec = { id: ++bakeWorkerSeq, job: job, im: im, s: s, key: key, mapKey: mk, spec: null, existingMap: map, resume: done, done: function (error) {
+      if (error && !error.cancelled && currentBake(job, im)) bakeRingSync(e, kind, im, job);
+      done();
+    } }; bakeWorkerJob = rec; bakeWorkerJobs.set(rec.id, rec);
+    var wall = printIdentity(im), bitmap;
+    try { bitmap = workerWalls.has(wall) ? Promise.resolve(null) : createImageBitmap(im); }
+    catch (error) { bakeWorkerFailed = true; stopBakeWorker(false); return true; }
+    bitmap.then(function (image) {
+      if (bakeWorker !== worker || !rec.done || !currentBake(job, im)) { if (image) image.close(); finishWorkerJob(rec, { cancelled: true }); return; }
+      try {
+        if (image) worker.postMessage({ type: 'wall', wall: wall, bitmap: image }, [image]);
+        workerWalls.delete(wall); workerWalls.set(wall, true);
+        while (workerWalls.size > 2) workerWalls.delete(workerWalls.keys().next().value);
+        worker.postMessage({ type: 'ring', id: rec.id, wall: wall, s: s, k: optics, cover: cover(im), map: packed }, packed ? [packed.indices.buffer, packed.samples.buffer] : []);
+      } catch (error) { if (image) { try { image.close(); } catch (e2) {} } bakeWorkerFailed = true; stopBakeWorker(false); }
+    }, function () { bakeWorkerFailed = true; stopBakeWorker(false); });
+    return true;
+  }
+  window.addEventListener('pagehide', function () { stopBakeWorker(true); });
+
+  function prioritizeBakes(list) {
+    var rects = new Map(), styles = new Map();
+    function rect(e) { var r = rects.get(e); if (!r) { r = e.getBoundingClientRect(); rects.set(e, r); } return r; }
+    function style(e) { var s = styles.get(e); if (!s) { s = getComputedStyle(e); styles.set(e, s); } return s; }
+    var ranked = list.map(function (job, i) {
+      var r = rect(job.e), left = 0, top = 0, right = innerWidth, bottom = innerHeight;
+      var ancestors = sheetAncestors.get(job.e) || [];
+      ancestors.forEach(function (a) {
+        if (a === document.body || a === root) return;
+        var cs = style(a), clipX = /(auto|scroll|hidden|clip)/.test(cs.overflowX), clipY = /(auto|scroll|hidden|clip)/.test(cs.overflowY);
+        if (!clipX && !clipY) return;
+        var ar = rect(a);
+        if (clipX) { left = Math.max(left, ar.left); right = Math.min(right, ar.right); }
+        if (clipY) { top = Math.max(top, ar.top); bottom = Math.min(bottom, ar.bottom); }
+      });
+      var live = r.width > 1 && r.height > 1 && r.right > left && r.left < right && r.bottom > top && r.top < bottom;
+      var near = r.width > 1 && r.height > 1 && r.right > left - innerWidth && r.left < right + innerWidth && r.bottom > top - innerHeight && r.top < bottom + innerHeight;
+      return { job: job, order: i, rank: live ? 0 : near ? 1 : 2 };
+    });
+    ranked.sort(function (a, b) { return a.rank - b.rank || a.order - b.order; });
+    return ranked.map(function (r) { r.job.priority = r.rank; return r.job; });
+  }
+
   function scheduleBakes() { if (!bakeT && !bakeFlight && bakeQ.size && isGlass()) bakeT = setTimeout(flushBakes, 60); }
   function flushBakes() {
     bakeT = 0; if (!isGlass() || !bakeQ.size || bakeFlight) return;
     var flight = { epoch: bakeEpoch }; bakeFlight = flight;
     function finish(failed) {
       if (bakeFlight !== flight) return;
-      bakeFlight = null;
+      bakeFlight = null; bakeWake = null;
       if (failed) { bakeQ.forEach(function (job) { if (job.e.__lgBake === job) job.e.__lgSig = null; }); bakeQ.clear(); }
       scheduleBakes();
     }
@@ -471,12 +702,19 @@
       makeFrosts(im, function (ok) {
         if (bakeFlight !== flight) return;
         if (!ok) { finish(im.__lgWallUrl === currentWallUrl() && innerWidth === flight.vw && innerHeight === flight.vh); return; }
-        var list = Array.from(bakeQ.values()), next = 0; bakeQ.clear();
+        var list = prioritizeBakes(Array.from(bakeQ.values())), next = 0; bakeQ.clear();
         (function step() {
           bakeFrame = 0;
           if (bakeFlight !== flight || flight.epoch !== bakeEpoch || !isGlass()) { finish(false); return; }
+          bakeWake = function () { if (bakeFlight === flight && !bakeFrame) bakeFrame = requestAnimationFrame(step); };
           var t0 = performance.now();
-          while (next < list.length && performance.now() - t0 < 12) { var job = list[next++]; if (currentBake(job, im)) bakeRing(job.e, job.kind, im, job); }
+          while (next < list.length && performance.now() - t0 < 12) {
+            var job = list[next++];
+            if (!currentBake(job, im)) continue;
+            var pending = bakeRing(job.e, job.kind, im, job, function () { if (bakeWake) bakeWake(); });
+            if (pending === 'busy') { next--; return; }
+            if (pending) return;
+          }
           if (next < list.length) bakeFrame = requestAnimationFrame(step); else finish(false);
         })();
       });
@@ -545,13 +783,13 @@
     forgetAncestors(e, scrollSheets, sheetAncestors);
     bakeQ.delete(e); e.__lgBake = null; e.__lgSig = null; e.__lgF = null;
     if (!bakeQ.size && !bakeFlight && bakeT) { clearTimeout(bakeT); bakeT = 0; }
-    if (e.__lgRing) { URL.revokeObjectURL(e.__lgRing); e.__lgRing = null; }
+    dropSheetRing(e);
     ['backdrop-filter', '-webkit-backdrop-filter', '--lg-ring', '--lg-spec'].forEach(function (name) { e.style.removeProperty(name); });
     if (sizeWatch) sizeWatch.unobserve(e); glassSet.delete(e);
   }
   function unmountAll() {
     if (typeof suspendLensMotion === 'function') suspendLensMotion();
-    bakeEpoch++; bakeFlight = null; bakeQ.clear();
+    bakeEpoch++; bakeFlight = null; bakeWake = null; bakeQ.clear(); stopBakeWorker(true);
     if (bakeT) { clearTimeout(bakeT); bakeT = 0; }
     if (bakeFrame) { cancelAnimationFrame(bakeFrame); bakeFrame = 0; }
     /* Keep connected sheets' finished images, as before: returning to Glass paints immediately while a changed
@@ -1283,8 +1521,10 @@
     if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
     /* the print is about to change under glass that stays glass: hold the one the current frost was made from */
     var wasGlass = lastLg === 'on' && /^glass/.test(lastTheme || '');
-    if (wasGlass && isGlass() && wall !== lastWall && th === lastTheme && wallSourceUrl) holdWall(wallSourceUrl);
+    var previousWall = wallSourceUrl;
+    if (wasGlass && isGlass() && wall !== lastWall && th === lastTheme && previousWall) holdWall(previousWall);
     else if (!isGlass()) releaseWallHold();
+    if (th !== lastTheme || lg !== lastLg || (wall !== lastWall && currentWallUrl() !== previousWall)) stopBakeWorker(true);
     if (motion !== lastMotion && reduced() && typeof suspendLensMotion === 'function') suspendLensMotion();
     lastTier = tier; lastWall = wall; lastMotion = motion;
     if (th !== lastTheme || lg !== lastLg) {
@@ -1305,7 +1545,13 @@
   }
   function start() {
     ensureDefs(); viewportVars(); knobFilter();
-    window.addEventListener('resize', viewportVars);
+    window.addEventListener('resize', function () {
+      viewportVars();
+      /* Shared shell consumers also dispatch synthetic resize. Equal viewport input must not cancel a valid
+         cold job whose unchanged signature would otherwise suppress its replacement. */
+      var changed = false; bakeWorkerJobs.forEach(function (rec) { if (rec.job.vw !== innerWidth || rec.job.vh !== innerHeight) changed = true; });
+      if (changed) stopBakeWorker(true);
+    });
     mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface'] });
     if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
     window.addEventListener('resize', lazySync);
