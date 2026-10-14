@@ -390,7 +390,10 @@ html[data-pmw-home="on"][data-theme="glass-light"]:not([data-o55-nier="on"]) {
   --gl-ref: rgba(38, 44, 66, .42);
   --gl-sc: rgba(255, 255, 255, .8);
   --gl-ch: #FFFFFF;
-  --gl-core-shadow: 0 0 0 1px rgba(38, 44, 66, .38), 0 0 5px 1px rgba(255, 255, 255, .95), 0 0 14px 3px rgba(255, 255, 255, .55);
+  /* no dark ring on the core: wrapped in one it read as a small grey capsule, an object rather than light
+     (pm7-liquid-glass's review, 2026-10-14); the edge lines carry the contrast */
+  --gl-core-shadow: 0 0 5px 1px rgba(255, 255, 255, .95), 0 0 14px 3px rgba(255, 255, 255, .55);
+  --gl-core-r: 0;
   --gl-rail-a: 70%;
 }
 /* the two edges: a fine bright line on each, carried along the edge with long tails (::after), and the light
