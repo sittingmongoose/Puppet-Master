@@ -520,6 +520,8 @@
     const was = ST.open;
     ST.open = true; ST.pick = null; ST.sw = null; ST.confirm = null;
     ST.entry.setAttribute('aria-expanded', 'true');
+    /* while the Studio is open, the item's hover tag would sit over the Studio's foot and say "Hide the related choices" */
+    ST.entry.setAttribute('data-pm-hover-exempt', 'true');
     ST.el.setAttribute('data-pmds-open', '');
     const q = ST.sheet.querySelector('.pmds-q'); if (q && !was) { q.value = ''; ST.q = ''; }
     ST.sheet.hidden = false;
@@ -549,6 +551,7 @@
     ST.open = false; ST.confirm = null;
     clearInterval(ST.timer); ST.timer = 0;
     ST.entry.setAttribute('aria-expanded', 'false');
+    ST.entry.removeAttribute('data-pm-hover-exempt');
     ST.el.removeAttribute('data-pmds-open');
     const sheet = ST.sheet, v = VOICE[voice()] || VOICE.basic;
     const a = play(sheet, v.close, { fill: 'forwards', scale: o.launch ? 0.8 : 1 });
