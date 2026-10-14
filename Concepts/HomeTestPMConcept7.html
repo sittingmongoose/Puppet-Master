@@ -29086,6 +29086,469 @@ html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pm
   box-shadow: inset 0 0 0 1px var(--o55-nier-ink) !important;
 }
 
+/* ---- css/27-wizard-orch.css ---- */
+/* The Planning Wizard and the Orchestrator, matched to the rest of the concept (Jared, 2026-10-13: "Minor fixes and fixes
+   to match the theme with the rest of the concept can be done to the orchestration and planning wizard pages"). Both
+   pages get their full redesign later, so their layout, structure, copy and flows stay; only the drawing changes. The
+   vocabulary is the approved no-pills one (DL-184 / F3-648; cards NP-STATUS, NP-CHOICE, NP-BARS, NP-SCOPE and
+   NP-CORNERS, as Settings, the title bar and the onboarding window already draw it):
+   - a status is a mark and a word, never a capsule: the 6 px status dot, then the word in the status's ink;
+   - a tag or a fact is a plain word after a 5 px square in the word's own ink;
+   - a count is a plain number;
+   - one-of-several choices are joined cells in the look's rectangle, the chosen one filled;
+   - meters have square ends, and Retro counts in blocks;
+   - controls are the look's rectangle (--pm-ctl-r outside, --pm-ctl-r-in inside); pill-shaped ACTION buttons stay
+     where the look draws them (Jared, 2026-10-11: Friendly's and Glass's rounded buttons are fine);
+   - a chosen tab is filled on its own box, never underlined (F3-648, F3-490).
+   The bugs this pass fixes in JS or markup are in tools/wizorch_layer.py. Liquid Glass's sheets (pm7-liquid-glass's
+   data-lg-surface contract) are opted in there; the fills inside them are at the end of this file.
+   Everything is scoped to the two pages (#panel-wizard, #panel-orchestrator), so no other surface changes. The tour's
+   own bar, callout and labels over the Wizard are the tour's (src/css/40-tour.css) and are not touched here. */
+
+/* ── Inks ──────────────────────────────────────────────────────────────────────────────────────────────────────────
+   A word that loses its tinted capsule keeps its tone's hue, taken a little toward the text colour so the bare word
+   reads at least as well as it did on its capsule (the onboarding's label inks, 2026-10-13). The page-scoped colours of
+   Glass Light (pm7-t37-contrast) feed these too, since they are declared on the same page element. */
+:is(#panel-wizard, #panel-orchestrator) {
+  --wo-ok: color-mix(in srgb, var(--accent-lime) 86%, var(--text-primary));
+  --wo-warn: color-mix(in srgb, var(--accent-warning) 86%, var(--text-primary));
+  --wo-busy: color-mix(in srgb, var(--accent-orange) 86%, var(--text-primary));
+  --wo-err: color-mix(in srgb, var(--accent-error) 86%, var(--text-primary));
+  --wo-info: color-mix(in srgb, var(--accent-blue) 86%, var(--text-primary));
+  --wo-accent: color-mix(in srgb, var(--accent-primary) 86%, var(--text-primary));
+  --wo-magenta: color-mix(in srgb, var(--accent-magenta, var(--accent-primary)) 86%, var(--text-primary));
+  --wo-mut: var(--text-secondary);
+  --wo-run: color-mix(in srgb, var(--graph-running, var(--accent-blue)) 86%, var(--text-primary));
+  --wo-done: color-mix(in srgb, var(--graph-passed, var(--accent-lime)) 86%, var(--text-primary));
+  --wo-plan: color-mix(in srgb, var(--graph-planning, var(--accent-primary)) 86%, var(--text-primary));
+  --wo-label-font: 700 10.5px/1.25 var(--body-font);
+  --wo-label-track: .06em;
+  /* the chosen cell of a joined row: the theme menu's chosen fill (24-no-pills.css), with a hairline in its tone */
+  --wo-sel-fill: var(--accent-soft, color-mix(in srgb, var(--accent-primary) 14%, transparent));
+  --wo-sel-line: color-mix(in srgb, var(--accent-primary) 55%, var(--border));
+  --wo-sel-ink: var(--text-primary);
+}
+/* Light looks' hues are light enough that a bare word needs a deeper ink than its capsule did */
+html[data-theme$="-light"] :is(#panel-wizard, #panel-orchestrator) {
+  --wo-ok: color-mix(in srgb, var(--accent-lime) 72%, #000);
+  --wo-warn: color-mix(in srgb, var(--accent-warning) 64%, #000);
+  --wo-busy: color-mix(in srgb, var(--accent-orange) 70%, #000);
+  --wo-err: color-mix(in srgb, var(--accent-error) 80%, #000);
+  --wo-info: color-mix(in srgb, var(--accent-blue) 82%, #000);
+  --wo-accent: color-mix(in srgb, var(--accent-primary) 80%, #000);
+  --wo-run: color-mix(in srgb, var(--graph-running, var(--accent-blue)) 80%, #000);
+  --wo-done: color-mix(in srgb, var(--graph-passed, var(--accent-lime)) 72%, #000);
+  --wo-plan: color-mix(in srgb, var(--graph-planning, var(--accent-primary)) 80%, #000);
+}
+/* Retro sets its labels in its own face; NieR in its ink and mono face, as its tags are */
+html[data-theme^="retro"] :is(#panel-wizard, #panel-orchestrator) { --wo-label-font: 700 10.5px/1.25 var(--display-font-sm, var(--body-font)); --wo-label-track: .08em; }
+html[data-o55-nier="on"] :is(#panel-wizard, #panel-orchestrator) {
+  --wo-ok: var(--o55-nier-ok-text); --wo-warn: var(--o55-nier-warn-text); --wo-busy: var(--o55-nier-warn-text);
+  --wo-err: var(--o55-nier-error-text); --wo-info: var(--o55-nier-ink); --wo-accent: var(--o55-nier-ink);
+  --wo-magenta: var(--o55-nier-ink); --wo-mut: color-mix(in srgb, var(--o55-nier-ink) 74%, transparent);
+  --wo-run: var(--o55-nier-ink); --wo-done: var(--o55-nier-ok-text); --wo-plan: var(--o55-nier-ink);
+  --wo-label-font: 500 10.5px/1.25 var(--mono-font, 'IBM Plex Mono', monospace); --wo-label-track: .14em;
+  --wo-sel-fill: var(--o55-nier-ink); --wo-sel-line: var(--o55-nier-ink); --wo-sel-ink: var(--o55-nier-on-ink);
+}
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(#panel-wizard, #panel-orchestrator) {
+  --wo-sel-fill: var(--text-primary); --wo-sel-line: var(--text-primary); --wo-sel-ink: var(--surface);
+}
+
+/* ── Cards: the current looks' plate ───────────────────────────────────────────────────────────────────────────────
+   Home and Usage draw every card as one plate per look (the Usage board's .pmu-card tokens): Basic 12 px with a soft
+   rim and a lit top edge, Friendly 16 px on plain white or plum, Retro square with a 2 px edge and a hard drop. The two
+   pages still drew the older plates (Basic 4 to 8 px with hard #333 edges, the Orchestrator's widgets a step lighter
+   than every other card; Friendly's widgets tinted sky blue). Static plates take the whole plate; cards you pick (the
+   project homes, the requirement choices, the topic cards) take its corner, ground and edge, and keep their own hover
+   and chosen states. Glass keeps its own material (and Liquid Glass's sheets); NieR already draws the same plate. */
+html[data-theme="basic-dark"] :is(#panel-wizard, #panel-orchestrator) { --wo-card: #1E1E1E; --wo-rule: rgba(255,255,255,.075); --wo-r-card: 12px; --wo-r-inner: 8px; --wo-bw: 1px;
+  --wo-plate: inset 0 1px 0 rgba(255,255,255,.08), 0 18px 40px -18px rgba(0,0,0,.45); }
+html[data-theme="basic-light"] :is(#panel-wizard, #panel-orchestrator) { --wo-card: #FFFFFF; --wo-rule: #D9DEE3; --wo-r-card: 12px; --wo-r-inner: 8px; --wo-bw: 1px;
+  --wo-plate: inset 0 1px 0 rgba(255,255,255,.7), 0 10px 26px -14px rgba(21,32,43,.14); }
+html[data-theme="friendly-dark"] :is(#panel-wizard, #panel-orchestrator) { --wo-card: #2A2731; --wo-rule: #3A3642; --wo-r-card: 16px; --wo-r-inner: 12px; --wo-bw: 1px;
+  --wo-plate: inset 0 1px 0 rgba(255,255,255,.08), 0 18px 40px -18px rgba(0,0,0,.45); }
+html[data-theme="friendly-light"] :is(#panel-wizard, #panel-orchestrator) { --wo-card: #FFFFFF; --wo-rule: #EAE2EE; --wo-r-card: 16px; --wo-r-inner: 12px; --wo-bw: 1px;
+  --wo-plate: inset 0 1px 0 rgba(255,255,255,.75), 0 10px 26px -14px rgba(92,64,51,.16); }
+html[data-theme^="retro"] :is(#panel-wizard, #panel-orchestrator) { --wo-card: var(--surface); --wo-rule: var(--border); --wo-r-card: 0px; --wo-r-inner: 0px; --wo-bw: 2px;
+  --wo-plate: 3px 3px 0 color-mix(in srgb, var(--text-primary) 25%, transparent); }
+html:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="retro"]):not([data-o55-nier="on"]) #panel-wizard :is(.pm6-wiz-imported, .pm6-wiz-thread, .pm6-wiz-prdrail,
+  .pm6-wiz-prdchat-wrap, .pm6-wiz-prdpreview, .pm6-wiz-preview, .pm6-wiz-rail, .pm6-wiz-disc-card),
+html:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="retro"]):not([data-o55-nier="on"]) #panel-orchestrator :is(.pm6-orch-widget, .pm6-orch-seam-card,
+  .pm6-orch-ledger-wrap, .pm6-orch-pc-feedcol, .pm6-orch-pc-stat, .pm6-orch-webop) {
+  border-radius: var(--wo-r-card); background-color: var(--wo-card); background-image: none; border: var(--wo-bw) solid var(--wo-rule); box-shadow: var(--wo-plate);
+}
+html:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="retro"]):not([data-o55-nier="on"]) #panel-wizard :is(.pm6-wiz-attach-card, .pm6-wiz-choice-card, .pm6-wiz-topic-card) {
+  border-radius: var(--wo-r-inner); background-color: var(--wo-card);
+}
+html:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="retro"]):not([data-o55-nier="on"]) #panel-wizard :is(.pm6-wiz-attach-card, .pm6-wiz-choice-card, .pm6-wiz-topic-card):not(.selected):not(.open):not(:hover) {
+  border-color: var(--wo-rule);
+}
+/* a plate's own inner boxes (the live preview's document, the evidence receipt) sit one corner step inside it */
+html:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier="on"]) #panel-wizard :is(.pm6-wiz-evd, .pm6-wiz-ans, .pm6-wiz-choice-hybrid, .pm6-wiz-drop) { border-radius: var(--wo-r-inner); }
+
+/* ── Status: a mark and a word (NP-STATUS) ────────────────────────────────────────────────────────────────────────
+   The topic state on each topic card and thread head, its Locked state, the page's run state, the PRD's readiness, a
+   document's parse and trust state, a reason code and an evidence card's state. Each loses its box; the 6 px dot the
+   chips already carried (or one drawn here) is the mark, and the word takes the status's ink. */
+#panel-wizard :is(.pm6-wiz-schip, .pm6-wiz-lockchip) {
+  gap: 6px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
+  font: var(--wo-label-font); letter-spacing: var(--wo-label-track); text-transform: uppercase; color: var(--wo-mut);
+}
+#panel-wizard .pm6-wiz-schip .pm6-wiz-sdot { flex: none; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+#panel-wizard .pm6-wiz-schip[data-state="ready"] { color: var(--wo-ok); background: none; }
+#panel-wizard .pm6-wiz-schip[data-state="active"] { color: var(--wo-accent); background: none; }
+#panel-wizard .pm6-wiz-schip:is([data-state="auditing"], [data-state="compiling"], [data-state="repairing"]) { color: var(--wo-busy); background: none; }
+#panel-wizard .pm6-wiz-schip:is([data-state="impacted"], [data-state="review-impact"]) { color: var(--wo-warn); background: none; }
+#panel-wizard .pm6-wiz-schip[data-state="blocked"] { color: var(--wo-err); background: none; }
+#panel-wizard .pm6-wiz-schip[data-state="ledger_syncing"] { color: var(--wo-info); background: none; }
+#panel-wizard .pm6-wiz-schip[data-state="reopened"] { color: var(--wo-magenta); background: none; }
+/* Not started: a hollow mark, so a topic that has not begun reads apart from one that is working */
+#panel-wizard .pm6-wiz-schip:is([data-state="not_started"], [data-state="deferred"]) .pm6-wiz-sdot { background: none; box-shadow: inset 0 0 0 1.5px currentColor; }
+/* Locked keeps its padlock as the mark */
+#panel-wizard .pm6-wiz-lockchip .pm6-ico { font-size: 11px; }
+#panel-wizard .pm6-wiz-lockchip svg { width: 11px; height: 11px; }
+
+/* the page's run state, the PRD's readiness and the approved-pack marker: a sentence with a status dot before it */
+#panel-wizard :is(.pm6-wiz-statepill, .pm6-wiz-readychip, .pm6-wiz-prdpack-chip) {
+  display: inline-flex; align-items: center; gap: 8px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
+  font: 600 12.5px/1.35 var(--body-font); letter-spacing: 0; text-transform: none; color: var(--wo-accent); white-space: normal;
+}
+#panel-wizard :is(.pm6-wiz-statepill, .pm6-wiz-readychip, .pm6-wiz-prdpack-chip)::before {
+  content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: currentColor;
+}
+#panel-wizard .pm6-wiz-statepill.ok, #panel-wizard .pm6-wiz-readychip[data-ready="ok"], #panel-wizard .pm6-wiz-prdpack-chip { color: var(--wo-ok); background: none; }
+#panel-wizard .pm6-wiz-statepill.warn, #panel-wizard .pm6-wiz-readychip[data-ready="warn"] { color: var(--wo-warn); background: none; }
+#panel-wizard .pm6-wiz-readychip[data-ready="blocked"] { color: var(--wo-err); background: none; }
+
+/* a document's parse and trust states, and the evidence card's state */
+#panel-wizard :is(.pm6-wiz-doc-status, .pm6-wiz-secbadge, .pm6-wiz-evd-state) {
+  display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; border-radius: 0; background: none;
+  font: var(--wo-label-font); letter-spacing: var(--wo-label-track); text-transform: uppercase; color: var(--wo-mut);
+}
+#panel-wizard :is(.pm6-wiz-doc-status, .pm6-wiz-secbadge, .pm6-wiz-evd-state)::before {
+  content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: currentColor;
+}
+#panel-wizard .pm6-wiz-doc-status:is([data-docstate="parsed"]), #panel-wizard .pm6-wiz-secbadge[data-sec="cleared"], #panel-wizard .pm6-wiz-evd-state { color: var(--wo-ok); background: none; border: 0; }
+#panel-wizard .pm6-wiz-doc-status:is([data-docstate="preflight"], [data-docstate="parsed_warn"]), #panel-wizard .pm6-wiz-secbadge[data-sec="untrusted"] { color: var(--wo-warn); background: none; border: 0; }
+#panel-wizard .pm6-wiz-doc-status[data-docstate="extracting"], #panel-wizard .pm6-wiz-evd-state.busy { color: var(--wo-busy); background: none; }
+
+/* a reason code ("Blocked", "Busy", "Done") before its explanation: the word in its ink after its status dot */
+#panel-wizard .pm6-wiz-reason .pm6-wiz-reason-code, #panel-wizard .pm6-wiz-blockbar .pm6-wiz-reason-code {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 0; padding: 0; border-radius: 0; background: none;
+  font: var(--wo-label-font); letter-spacing: var(--wo-label-track); text-transform: uppercase; color: var(--wo-warn); line-height: 1.75;
+}
+#panel-wizard :is(.pm6-wiz-reason, .pm6-wiz-blockbar) .pm6-wiz-reason-code::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+#panel-wizard .pm6-wiz-blockbar .pm6-wiz-reason-code { color: var(--wo-err); }
+#panel-wizard .pm6-wiz-reason .pm6-wiz-reason-code.ok { color: var(--wo-ok); background: none; }
+
+/* ── Facts and tags: a plain word after a small square (NP-SCOPE's tag) ──────────────────────────────────────────
+   The facts under the imported goal and the requirement seeds, the evidence receipts, the source confidence and the
+   discovery's READ-ONLY marker. Facts in a row sit apart instead of in boxes. */
+#panel-wizard :is(.pm6-wiz-imported-chips, .pm6-wiz-seedchips) { gap: 6px 20px; }
+#panel-wizard .pm6-wiz-mchip {
+  gap: 7px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
+  font: 600 12.5px/1.4 var(--body-font); color: var(--wo-mut);
+}
+#panel-wizard .pm6-wiz-mchip::before { content: ""; flex: none; width: 5px; height: 5px; background: currentColor; }
+#panel-wizard .pm6-wiz-mchip.ok { color: var(--wo-ok); background: none; }
+#panel-wizard .pm6-wiz-mchip.warn { color: var(--wo-warn); background: none; }
+#panel-wizard .pm6-wiz-mchip.sel { color: var(--wo-accent); background: none; }
+/* the Final Plan Pack line under the topic map is a whole-width fact, centred as its box was */
+#panel-wizard .pm6-wiz-integrate-dock .pm6-wiz-mchip { justify-content: center; white-space: normal; text-align: center; }
+#panel-wizard :is(.pm6-wiz-tbadge, .pm6-wiz-conf, .pm6-wiz-ro-badge) {
+  display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; border-radius: 0; background: none;
+  font: var(--wo-label-font); letter-spacing: var(--wo-label-track); text-transform: uppercase; color: var(--wo-mut);
+}
+#panel-wizard :is(.pm6-wiz-tbadge, .pm6-wiz-conf, .pm6-wiz-ro-badge)::before { content: ""; flex: none; width: 5px; height: 5px; background: currentColor; }
+#panel-wizard .pm6-wiz-tbadge { text-transform: none; letter-spacing: .01em; font-weight: 600; }
+#panel-wizard .pm6-wiz-evd-receipts { gap: 4px 14px; }
+#panel-wizard .pm6-wiz-conf { color: var(--wo-ok); }
+#panel-wizard .pm6-wiz-conf.medium { color: var(--wo-warn); }
+#panel-wizard .pm6-wiz-ro-badge { color: var(--wo-ok); margin-right: 6px; }
+
+/* ── Choices: joined cells in the look's rectangle (NP-CHOICE) ─────────────────────────────────────────────────────
+   "What kind of work is this?" is one choice of five: the cells share one rectangle with hairlines between them, the
+   chosen one filled. Each cell draws its own hairline over its neighbour's (-1 px), so a row that wraps in a narrow
+   column is still joined cells. The answer options under a question in the PRD Builder and in a topic's interview are
+   the same choice, stacked: one rectangle of rows, the "attach a document instead" row last and set apart in quiet ink. */
+#panel-wizard .pm6-wiz-intent-row { gap: 0; padding: 1px 0 0 1px; justify-content: flex-start; }
+#panel-wizard .pm6-wiz-intent-chip {
+  position: relative; margin: -1px 0 0 -1px; border-radius: 0; border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-elevated) 60%, transparent); color: var(--text-secondary);
+  transition: background var(--motion-fast, 120ms) var(--ease-default, ease), color var(--motion-fast, 120ms) var(--ease-default, ease), border-color var(--motion-fast, 120ms) var(--ease-default, ease);
+}
+#panel-wizard .pm6-wiz-intent-chip:first-child { border-radius: var(--pm-ctl-r) 0 0 var(--pm-ctl-r); }
+#panel-wizard .pm6-wiz-intent-chip:last-child { border-radius: 0 var(--pm-ctl-r) var(--pm-ctl-r) 0; }
+#panel-wizard .pm6-wiz-intent-chip:hover { z-index: 1; color: var(--text-primary); border-color: var(--border); background: color-mix(in srgb, var(--accent-primary) 7%, var(--surface-elevated)); }
+#panel-wizard .pm6-wiz-intent-chip.sel { z-index: 2; color: var(--wo-sel-ink); border-color: var(--wo-sel-line); background: var(--wo-sel-fill); }
+#panel-wizard .pm6-wiz-intent-chip:focus-visible { z-index: 3; outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+
+#panel-wizard :is(.pm6-wiz-quickchips, .pm6-wiz-opts) { gap: 0; padding-top: 1px; flex-direction: column; align-items: stretch; }
+#panel-wizard .pm6-wiz-quickchips:empty { display: none; }
+#panel-wizard .pm6-wiz-opt {
+  position: relative; display: flex; align-items: center; gap: 10px; width: 100%; margin: -1px 0 0; padding: 8px 12px;
+  border-radius: 0; border: 1px solid var(--border); text-align: left; line-height: 1.35;
+  background: color-mix(in srgb, var(--surface-elevated) 60%, transparent); color: var(--text-primary);
+  transition: background var(--motion-fast, 120ms) var(--ease-default, ease), border-color var(--motion-fast, 120ms) var(--ease-default, ease);
+}
+#panel-wizard .pm6-wiz-opt:first-child { border-radius: var(--pm-ctl-r) var(--pm-ctl-r) 0 0; }
+#panel-wizard .pm6-wiz-opt:last-child { border-radius: 0 0 var(--pm-ctl-r) var(--pm-ctl-r); }
+#panel-wizard .pm6-wiz-opt:only-child { border-radius: var(--pm-ctl-r); }
+/* each row reads as a reply: a small arrow mark before the words, the accent's ink on hover */
+#panel-wizard .pm6-wiz-opt::before {
+  content: ""; flex: none; width: 6px; height: 6px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor;
+  transform: rotate(45deg); margin-left: -1px; opacity: .55;
+}
+#panel-wizard .pm6-wiz-opt:hover:not(:disabled) { z-index: 1; transform: none; color: var(--text-primary); background: color-mix(in srgb, var(--accent-primary) 8%, var(--surface-elevated)); }
+#panel-wizard .pm6-wiz-opt:hover:not(:disabled)::before { opacity: 1; color: var(--wo-accent); }
+#panel-wizard .pm6-wiz-opt.sel { z-index: 2; color: var(--wo-sel-ink); border-color: var(--wo-sel-line); background: var(--wo-sel-fill); }
+#panel-wizard .pm6-wiz-opt.something { border-style: solid; color: var(--text-secondary); font-weight: 500; }
+#panel-wizard .pm6-wiz-opt:focus-visible { z-index: 3; outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-wizard :is(.pm6-wiz-opt, .pm6-wiz-intent-chip) { transition: none; }
+
+/* ── Meters: square ends (NP-BARS) ─────────────────────────────────────────────────────────────────────────────────
+   A topic's progress, the discovery scan, a thread's activity and the Orchestrator's lane bars get flat ends with a
+   1 px corner and a little more weight so the end reads as meant; Retro counts in blocks like its other meters. NieR's
+   own block meters (its "blocks" part, in the Settings layer) are left as they are. */
+html:not([data-o55-nier="on"]) #panel-wizard :is(.pm6-wiz-topic-prog, .pm6-wiz-scanbar, .pm6-wiz-activity-bar),
+html:not([data-o55-nier="on"]) #panel-orchestrator .pm6-orch-bar { border-radius: 1px; }
+html:not([data-o55-nier="on"]) #panel-wizard :is(.pm6-wiz-topic-prog-fill, .pm6-wiz-scanbar-fill, .pm6-wiz-activity-bar > *),
+html:not([data-o55-nier="on"]) #panel-orchestrator .pm6-orch-bar > i { border-radius: 1px; }
+#panel-wizard .pm6-wiz-topic-prog { height: 5px; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-wizard :is(.pm6-wiz-topic-prog, .pm6-wiz-scanbar, .pm6-wiz-activity-bar),
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-orchestrator .pm6-orch-bar { height: 6px; border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-wizard :is(.pm6-wiz-topic-prog-fill, .pm6-wiz-scanbar-fill, .pm6-wiz-activity-bar > *),
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-orchestrator .pm6-orch-bar > i {
+  border-radius: 0;
+  -webkit-mask: repeating-linear-gradient(90deg, #000 0 5px, transparent 5px 7px);
+  mask: repeating-linear-gradient(90deg, #000 0 5px, transparent 5px 7px);
+}
+/* the PRD's waiting lines: square placeholders that stay inside their row (they ran past the outline's right edge) */
+#panel-wizard .pm6-wiz-skel-line { border-radius: 2px; max-width: 100%; }
+#panel-wizard .pm6-wiz-prd-sec { min-width: 0; overflow: hidden; }
+#panel-wizard .pm6-wiz-prd-sec .pm6-wiz-skel-line { flex: 0 1 auto; min-width: 0; }
+
+/* ── The Orchestrator's header ─────────────────────────────────────────────────────────────────────────────────────
+   The run id is a button (it copies the id): the look's rectangle. Its LIVE / HISTORICAL mode, the run's state and the
+   projection's freshness are statuses: a mark and a word. */
+#panel-orchestrator .pm6-orch-run-chip { border-radius: var(--pm-ctl-r); padding: 3px 9px; background: color-mix(in srgb, var(--accent-primary) 9%, var(--surface-elevated)); }
+#panel-orchestrator .pm6-orch-run-chip:hover { transform: none; border-color: var(--border); background: color-mix(in srgb, var(--accent-primary) 15%, var(--surface-elevated)); }
+#panel-orchestrator .pm6-orch-run-mode {
+  position: relative; display: inline-flex; align-items: center; gap: 5px; margin-left: 2px; padding: 0; border-radius: 0; background: none;
+  font: var(--wo-label-font); letter-spacing: var(--wo-label-track); color: var(--wo-ok);
+}
+#panel-orchestrator .pm6-orch-run-mode::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+/* a live run's mark sends out a slow ring, like a recording light; transform and opacity only, so it never repaints */
+#panel-orchestrator .pm6-orch-run-mode[data-mode="live"]::after {
+  content: ""; position: absolute; left: 0; top: 50%; width: 6px; height: 6px; margin-top: -3px; border-radius: 50%;
+  box-sizing: border-box; border: 1px solid currentColor; opacity: 0; pointer-events: none;
+  animation: wo-live 2.4s cubic-bezier(.2, .7, .3, 1) infinite;
+}
+#panel-orchestrator .pm6-orch-run-mode[data-mode="historical"] { color: var(--wo-busy); background: none; }
+@keyframes wo-live { 0% { opacity: .7; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(2.8); } }
+#panel-orchestrator .orch-status-badge {
+  display: inline-flex; align-items: center; gap: 6px; padding: 0 2px; border: 0; border-radius: 0; background: none; box-shadow: none;
+  font: var(--wo-label-font); letter-spacing: var(--wo-label-track); text-transform: uppercase; color: var(--wo-mut);
+}
+#panel-orchestrator .orch-status-badge::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+#panel-orchestrator .pm6-orch-status[data-state="running"] { color: var(--wo-run); }
+#panel-orchestrator .pm6-orch-status[data-state="complete"] { color: var(--wo-done); }
+#panel-orchestrator .pm6-orch-status[data-state="blocked"] { color: var(--wo-err); }
+#panel-orchestrator .pm6-orch-status:is([data-state="pending-launch"], [data-state="compiling"]) { color: var(--wo-plan); }
+#panel-orchestrator .pm6-orch-status[data-state="paused"]::before { border-radius: 0; width: 6px; background: linear-gradient(90deg, currentColor 0 2px, transparent 2px 4px, currentColor 4px 6px); }
+#panel-orchestrator .orch-elapsed { font-variant-numeric: tabular-nums; }
+#panel-orchestrator .pm6-orch-fresh-chip { gap: 6px; padding: 0; border: 0; border-radius: 0; background: none; font-size: 12px; color: var(--text-secondary); }
+
+/* ── Chips across the board: a mark and a word, or a plain count ─────────────────────────────────────────────────
+   The renderer's one chip() carries lane counts ("5/20 nodes"), node and gate states and the evidence receipts. Each
+   loses its capsule: a toned chip is its status dot and its words in the tone's ink, a quiet one (metadata, receipts)
+   is its words after a small square. Counts read in tabular figures. */
+#panel-orchestrator .pm6-orch-chip {
+  gap: 6px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
+  font: 600 11.5px/1.3 var(--body-font); font-variant-numeric: tabular-nums; color: var(--text-secondary);
+}
+#panel-orchestrator .pm6-orch-chip::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+#panel-orchestrator .pm6-orch-chip[data-tone="ok"] { color: var(--wo-done); }
+#panel-orchestrator .pm6-orch-chip[data-tone="run"] { color: var(--wo-run); }
+#panel-orchestrator .pm6-orch-chip[data-tone="warn"] { color: var(--wo-warn); }
+#panel-orchestrator .pm6-orch-chip[data-tone="err"] { color: var(--wo-err); }
+#panel-orchestrator .pm6-orch-chip[data-tone="mut"], #panel-orchestrator .pm6-orch-chip:not([data-tone]) { color: var(--wo-mut); }
+#panel-orchestrator .pm6-orch-chip:is([data-tone="mut"], :not([data-tone]))::before { width: 5px; height: 5px; border-radius: 0; opacity: .8; }
+#panel-orchestrator .pm6-orch-chip + .pm6-orch-chip { margin-left: 8px; }
+
+/* the node graph: its search field is the look's rectangle; its legend is a quiet row of marks and words on the canvas */
+#panel-orchestrator .pm6-orch-graph-search { border-radius: var(--pm-ctl-r); height: 26px; }
+#panel-orchestrator .pm6-orch-legend { gap: 4px 12px; border-radius: var(--pm-ctl-r); background: color-mix(in srgb, var(--surface-elevated) 88%, transparent); }
+/* the evidence filter ("node n-13 ×") is a control: the look's rectangle with its clear button */
+#panel-orchestrator .pm6-orch-evfilter-chip { border-radius: var(--pm-ctl-r); border: 1px solid var(--wo-sel-line); padding: 2px 6px 2px 8px; }
+/* banner buttons are actions: the look's own button corner where the look's buttons are rectangles */
+html:is([data-theme^="basic"], [data-theme^="retro"], [data-o55-nier="on"]) #panel-orchestrator .pm6-orch-banner-btn { border-radius: var(--pm-ctl-r); }
+
+/* ── The Orchestrator's views: a chosen tab is filled on its own box, never underlined (F3-648, F3-490) ────────────
+   Basic, Friendly and Glass fill the chosen tab with the look's selection fill; Retro shows it in reverse video and NieR
+   as its ink block. The strip keeps its height and its scroll; the counts stay plain numbers. Under Liquid Glass the lens
+   does the choosing (pm7-liquid-glass's glass.css), so these give way to it there. */
+html:not([data-lg="on"]) #panel-orchestrator .orch-tabs { gap: 2px; padding-block: 4px; }
+html:not([data-lg="on"]) #panel-orchestrator .orch-tab {
+  height: 28px; align-self: center; padding: 0 12px; border: 0; border-bottom: 0; border-radius: var(--pm-ctl-r); box-shadow: none;
+  transition: background var(--motion-fast, 120ms) var(--ease-default, ease), color var(--motion-fast, 120ms) var(--ease-default, ease);
+}
+html:not([data-lg="on"]) #panel-orchestrator .orch-tab:hover:not(.active) { background: color-mix(in srgb, var(--text-primary) 6%, transparent); }
+html:not([data-lg="on"]) #panel-orchestrator .orch-tab.active {
+  border-bottom: 0; color: var(--wo-sel-ink); background: var(--wo-sel-fill); box-shadow: inset 0 0 0 1px var(--wo-sel-line);
+}
+/* Glass adds its 1 px rim on the top edge of the filled box */
+html[data-theme^="glass"]:not([data-lg="on"]) #panel-orchestrator .orch-tab.active { box-shadow: inset 0 1px 0 var(--glass-edge, rgba(255,255,255,.35)), inset 0 0 0 1px var(--wo-sel-line); }
+/* Friendly's strip loses its capsule tabs and its mint glow for the look's rectangle */
+html[data-theme^="friendly"] #panel-orchestrator .orch-tab.active { box-shadow: inset 0 0 0 1px var(--wo-sel-line); }
+/* Retro: reverse video, no ring */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-orchestrator .orch-tab.active { box-shadow: none; font-weight: 700; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-orchestrator .orch-tab { transition: none; }
+/* NieR: the ink block */
+html[data-o55-nier="on"] #panel-orchestrator .orch-tab.active { box-shadow: none; }
+#panel-orchestrator .orch-tab.active .orch-tab-badge { color: inherit; opacity: .78; }
+
+/* ── The plan scope bar (T46 systems projection) in the look's controls ────────────────────────────────────────────
+   Its own stylesheet gave its buttons and the chosen plan's name the page's 16 px body text and its selects the
+   browser's drawing; they now read as the Orchestrator's own controls at its 12 px control size. */
+#panel-orchestrator #pm7-named-plan-scope { gap: 8px 10px; padding: 8px 16px 10px; font: 500 12px/1.3 var(--body-font); color: var(--text-secondary); border-bottom-color: var(--border-light); }
+#panel-orchestrator #pm7-named-plan-scope label { gap: 6px; font: 600 11px/1 var(--body-font); letter-spacing: .04em; text-transform: uppercase; color: var(--text-muted); }
+#panel-orchestrator #pm7-named-plan-scope :is(select, button) {
+  height: 28px; padding: 0 10px; font: 600 12px/1 var(--body-font); letter-spacing: 0; text-transform: none; color: var(--text-primary);
+  background-color: var(--surface-elevated); border: 1px solid var(--border); border-radius: var(--pm-ctl-r); cursor: pointer;
+  transition: border-color var(--motion-fast, 120ms) var(--ease-default, ease), background-color var(--motion-fast, 120ms) var(--ease-default, ease);
+}
+#panel-orchestrator #pm7-named-plan-scope select {
+  -webkit-appearance: none; appearance: none; padding-right: 26px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 9px center; background-size: 10px 6px;
+}
+html[data-theme$="-dark"] #panel-orchestrator #pm7-named-plan-scope select { color-scheme: dark; }
+#panel-orchestrator #pm7-named-plan-scope :is(select, button):hover { border-color: color-mix(in srgb, var(--accent-primary) 45%, var(--border)); }
+#panel-orchestrator #pm7-named-plan-scope :is(select, button):focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+#panel-orchestrator #pm7-named-plan-scope button[data-availability="handler_unavailable"] { color: var(--text-secondary); border-style: dashed; background-color: transparent; }
+#panel-orchestrator #pm7-named-plan-scope [data-plan-selected-label] { font: 700 13px/1.3 var(--display-font, var(--body-font)); color: var(--text-primary); margin-left: 4px; }
+#panel-orchestrator #pm7-named-plan-cards { gap: 12px; padding: 14px 16px; }
+#panel-orchestrator .pm7-nplan-card {
+  gap: 4px; padding: 14px 16px; font: 500 12.5px/1.4 var(--body-font); color: var(--text-secondary);
+  background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: var(--radius-lg, 8px);
+  transition: border-color var(--motion-fast, 120ms) var(--ease-default, ease), background var(--motion-fast, 120ms) var(--ease-default, ease);
+}
+#panel-orchestrator .pm7-nplan-card strong { font: 700 14px/1.3 var(--display-font, var(--body-font)); color: var(--text-primary); }
+#panel-orchestrator .pm7-nplan-card:hover { border-color: color-mix(in srgb, var(--accent-primary) 45%, var(--border)); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-orchestrator #pm7-named-plan-scope :is(select, button),
+html[data-o55-nier="on"] #panel-orchestrator #pm7-named-plan-scope :is(select, button) { border-radius: 0; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-orchestrator #pm7-named-plan-scope :is(select, button) { border-width: 2px; border-color: var(--text-primary); box-shadow: 2px 2px 0 var(--text-primary); }
+html[data-o55-nier="on"] #panel-orchestrator #pm7-named-plan-scope :is(select, button) { font-family: var(--mono-font, monospace); letter-spacing: .06em; background-color: transparent; border-color: var(--o55-nier-ink); color: var(--o55-nier-ink); }
+html[data-theme^="glass"] #panel-orchestrator #pm7-named-plan-scope :is(select, button) { background-color: color-mix(in srgb, var(--surface-elevated) 70%, transparent); border-color: var(--glass-hairline, var(--border)); }
+
+/* ── Friendly's leftover capsules ──────────────────────────────────────────────────────────────────────────────────
+   Friendly rounds most small controls to a capsule. The demo files under the drop zone read as file tags and the node
+   graph's "Problems only" is a toggle, so both take the look's rectangle; the Orchestrator's tab strip loses its capsule
+   ends with its tabs. Friendly's rounded ACTION buttons (Pause, Resume, Approve and build) stay, as Jared asked. */
+html[data-theme^="friendly"] #panel-wizard .pm6-wiz-sampledoc,
+html[data-theme^="friendly"] #panel-orchestrator .pm6-orch-graph-filterbtn { border-radius: var(--pm-ctl-r); }
+html[data-theme^="friendly"]:not([data-lg="on"]) #panel-orchestrator .orch-tabs { border-radius: calc(var(--pm-ctl-r) + 4px); }
+
+/* ── Glass's primary buttons ───────────────────────────────────────────────────────────────────────────────────────
+   Old Glass gives the Wizard's big buttons its neutral chrome, and its primary buttons set their words in the page's
+   --surface, which in Glass is a see-through tint: "Continue — provide requirements", "Start discovery" and "Next: 3 ·
+   Editor & media upload" read at well under 2:1 in both Glass looks. They now draw as Glass's own primary button does
+   elsewhere (the chat's and the Orchestrator's confirmation): the accent fill, dark ink on Glass Dark's light accent and
+   white on Glass Light's deep one. Disabled states keep their quiet fill. */
+html[data-theme^="glass"] #panel-wizard :is(.pm6-wiz-bigbtn, .pm6-wiz-btn.primary, .pm6-wiz-integrate-btn:not(:disabled):not([aria-disabled="true"])) {
+  background: var(--accent-primary) !important; border-color: transparent !important; color: #191128 !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 6px 18px color-mix(in srgb, var(--accent-primary) 28%, transparent) !important;
+}
+html[data-theme="glass-light"] #panel-wizard :is(.pm6-wiz-bigbtn, .pm6-wiz-btn.primary, .pm6-wiz-integrate-btn:not(:disabled):not([aria-disabled="true"])) { color: #fff !important; }
+html[data-theme^="glass"] #panel-wizard :is(.pm6-wiz-bigbtn, .pm6-wiz-btn.primary, .pm6-wiz-integrate-btn) .pm6-wiz-glyph { color: inherit; }
+
+/* ── Small fixes ───────────────────────────────────────────────────────────────────────────────────────────────────
+   - the PRD chat's question bubble: the shared chat bubble's 2 px coloured left edge is a side stripe (DL-184); here it
+     is the bubble's own hairline all round;
+   - the PRD and interview composers: the field is one line tall but its hint wraps to two in the narrow chat column,
+     so the second line was cut in half; the field now sizes to its hint (and to what is typed, up to its 120 px cap);
+   - the PRD outline's column head ("PRD outline / PRD ledger · updated every turn") broke into a four-line staircase
+     in its narrow column; the meta line now sits under the title. */
+#panel-wizard .pm6-wiz-prd-chat .msg-body, #panel-wizard .pm6-wiz-chat .msg-body { border-left-width: 1px; border-left-color: var(--border-light); }
+#panel-wizard .pm6-wiz-composer textarea { field-sizing: content; min-height: 38px; }
+#panel-wizard .pm6-wiz-prdrail .pm6-wiz-col-head { flex-direction: column; align-items: flex-start; gap: 2px; }
+#panel-wizard .pm6-wiz-prdrail .pm6-wiz-col-meta { white-space: normal; }
+
+/* ── Reduced Motion and NieR's Still ───────────────────────────────────────────────────────────────────────────────
+   Nothing on either page answered Reduced Motion: under it, every card, heading and widget still rose 12 px into place,
+   each Wizard stage slid in from the side, checkmarks and banners popped, waiting marks blinked, hovered buttons lifted
+   and pressed ones shrank. Here, as in Settings (a calm version rather than none): what appears fades in over 140 ms
+   without moving, marks and banners simply appear, blinking and shimmering stop, nothing lifts or shrinks, bars step
+   to their new length, and colours still change with a short fade. */
+@keyframes wo-fade { from { opacity: 0; } }
+html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard :is(.pm-enter-up, .pm-enter-scale, .pm6-wiz-stage.active, .pm6-wiz-evd, .pm6-wiz-doc-sec.fresh, .message),
+html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator :is(.pm-enter-up, .pm-enter-scale, .pm6-orch-widget) {
+  animation-name: wo-fade !important; animation-duration: 140ms !important; animation-delay: 0ms !important; animation-timing-function: ease-out !important;
+}
+html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard :is(.pm-pop, .pm6-wiz-gate-mark, .pm6-wiz-approved-banner, .pm6-wiz-prdpack-chip, .pm6-wiz-approve.armed,
+  .pm6-wiz-schip.busy .pm6-wiz-sdot, .pm6-wiz-skel-line, .pm6-wiz-doc-status, .pm6-wiz-disc-spin, .pm6-wiz-pulse),
+html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator :is(.pm-pop, .pm6-orch-dot, .pm6-orch-fresh-dot, .pm6-orch-pc-ring span) { animation: none !important; }
+html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator .pm6-orch-run-mode::after { animation: none !important; }
+html:is([data-motion="reduced"], [data-o55-still]) :is(#panel-wizard, #panel-orchestrator) :is(button, .pm-press, .pm6-wiz-topic-card, .pm6-wiz-attach-card, .pm6-wiz-choice-card):is(:hover, :active) { transform: none !important; }
+html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard :is(.pm6-wiz-topic-prog-fill, .pm6-wiz-scanbar-fill),
+html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator .pm6-orch-bar > i { transition: background-color 140ms ease !important; }
+@media (prefers-reduced-motion: reduce) {
+  #panel-wizard :is(.pm-enter-up, .pm-enter-scale, .pm6-wiz-stage.active, .pm6-wiz-evd, .pm6-wiz-doc-sec.fresh, .message),
+  #panel-orchestrator :is(.pm-enter-up, .pm-enter-scale, .pm6-orch-widget) {
+    animation-name: wo-fade !important; animation-duration: 140ms !important; animation-delay: 0ms !important; animation-timing-function: ease-out !important;
+  }
+  #panel-wizard :is(.pm-pop, .pm6-wiz-gate-mark, .pm6-wiz-approved-banner, .pm6-wiz-prdpack-chip, .pm6-wiz-approve.armed,
+    .pm6-wiz-schip.busy .pm6-wiz-sdot, .pm6-wiz-skel-line, .pm6-wiz-doc-status, .pm6-wiz-disc-spin, .pm6-wiz-pulse),
+  #panel-orchestrator :is(.pm-pop, .pm6-orch-dot, .pm6-orch-fresh-dot, .pm6-orch-pc-ring span) { animation: none !important; }
+  #panel-orchestrator .pm6-orch-run-mode::after { animation: none !important; }
+  :is(#panel-wizard, #panel-orchestrator) :is(button, .pm-press, .pm6-wiz-topic-card, .pm6-wiz-attach-card, .pm6-wiz-choice-card):is(:hover, :active) { transform: none !important; }
+  #panel-wizard :is(.pm6-wiz-topic-prog-fill, .pm6-wiz-scanbar-fill), #panel-orchestrator .pm6-orch-bar > i { transition: background-color 140ms ease !important; }
+}
+
+/* ── Liquid Glass (pm7-liquid-glass's contract, 2026-10-13) ────────────────────────────────────────────────────────
+   tools/wizorch_layer.py opts the columns in as sheets (data-lg-surface). A sheet must sit on the wallpaper itself, so
+   the page wrappers around those columns lose their fill; inside a sheet nothing is a second sheet: the cards are plain
+   fills (the --lg-fill family), with no blur of their own (old Glass's backdrop-filter on them would be a second blur).
+   Only under html[data-lg="on"] in a Glass look; old Glass and every other look ignore all of this. */
+html[data-lg="on"][data-theme^="glass"] :is(#panel-wizard, #panel-orchestrator, #panel-wizard .pm6-wiz-stage, #panel-wizard :is(.pm6-wiz-workgrid, .pm6-wiz-prdgrid, .pm6-wiz-disc-wrap)) {
+  background: transparent !important; background-image: none !important;
+}
+html[data-lg="on"][data-theme^="glass"] :is(#panel-wizard, #panel-orchestrator) [data-lg-surface] {
+  background: transparent !important; background-image: none !important; border-color: transparent !important; box-shadow: none !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+}
+html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-imported, .pm6-wiz-attach-card, .pm6-wiz-choice-card, .pm6-wiz-choice-hybrid,
+  .pm6-wiz-topic-card, .pm6-wiz-preview, .pm6-wiz-rail, .pm6-wiz-evd, .pm6-wiz-doc, .pm6-wiz-drop, .pm6-wiz-docrow, .pm6-wiz-prd-sec,
+  .pm6-wiz-thread-head, .pm6-wiz-ans, .pm6-wiz-gate, .pm6-wiz-activity, .msg-body),
+html[data-lg="on"][data-theme^="glass"] #panel-orchestrator :is(.pm6-orch-widget, .pm6-orch-hist-row, .pm6-orch-seam-card, .pm6-orch-minimap, .pm6-orch-table, .pm6-orch-kpi, .pm6-orch-stream, .pm7-nplan-card) {
+  background: var(--lg-fill) !important; background-image: none !important; border: 1px solid var(--lg-line) !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important; box-shadow: none !important;
+}
+html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-attach-card, .pm6-wiz-choice-card, .pm6-wiz-topic-card, .pm6-wiz-preview, .pm6-wiz-rail, .pm6-wiz-evd, .pm6-wiz-imported, .pm6-wiz-doc),
+html[data-lg="on"][data-theme^="glass"] #panel-orchestrator :is(.pm6-orch-widget, .pm6-orch-seam-card, .pm7-nplan-card) { border-radius: var(--lg-r-card, 16px) !important; }
+html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-attach-card, .pm6-wiz-choice-card, .pm6-wiz-choice-hybrid, .pm6-wiz-topic-card, .pm6-wiz-drop):hover,
+html[data-lg="on"][data-theme^="glass"] #panel-orchestrator .pm7-nplan-card:hover { background: var(--lg-fill-hover) !important; }
+html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-attach-card, .pm6-wiz-choice-card, .pm6-wiz-choice-hybrid, .pm6-wiz-topic-card, .pm6-wiz-drop):active { background: var(--lg-fill-press) !important; }
+html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-attach-card.selected, .pm6-wiz-topic-card.open) { background: var(--lg-sel) !important; border-color: transparent !important; }
+html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-attach-card.selected, .pm6-wiz-topic-card.open),
+html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-attach-card.selected, .pm6-wiz-topic-card.open) :is(.pm6-ico, .pm6-wiz-attach-name, .pm6-wiz-attach-desc, .pm6-wiz-attach-repo, .pm6-wiz-topic-name, .pm6-wiz-topic-sub, .pm6-wiz-topic-progline) { color: var(--lg-on-sel) !important; }
+/* the page heads sit on the wallpaper as words, not as old Glass's frosted cards; the header strip keeps its words off
+   its sheet's edge */
+html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-hero, .pm6-wiz-runhead, .pm6-wiz-prdhead) {
+  background: transparent !important; background-image: none !important; border-color: transparent !important; box-shadow: none !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+}
+html[data-lg="on"][data-theme^="glass"] #panel-orchestrator .orch-header[data-lg-surface] { padding: 10px 16px !important; }
+/* chosen cells and tabs on a sheet: the sheet's selection, with its text */
+html[data-lg="on"][data-theme^="glass"] :is(#panel-wizard, #panel-orchestrator) { --wo-sel-fill: var(--lg-sel); --wo-sel-ink: var(--lg-on-sel); --wo-sel-line: transparent; }
+html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-intent-chip, .pm6-wiz-opt):not(.sel) { background: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
+html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-intent-chip, .pm6-wiz-opt):not(.sel):hover { background: var(--lg-fill-hover) !important; }
+html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-bigbtn, .pm6-wiz-ghostbtn, .pm6-wiz-btn),
+html[data-lg="on"][data-theme^="glass"] #panel-orchestrator :is(.pm6-orch-ctl, .pm6-orch-mini-btn, .pm6-orch-run-chip, #pm7-named-plan-scope :is(select, button)) {
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+}
+
 /* ---- css/30-art.css ---- */
 /* ---- O55 art: scene layers, family choreography, ambient loops -------------------------------------------------
    Families differ in easing and material, never in waiting time (canon budgets). Retro never scales (steps + cuts).
@@ -41181,7 +41644,7 @@ html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-card .pmt-card-glyph 
 
             <!-- STAGE 1: INTAKE ------------------------------------------------>
             <section class="pm6-wiz-stage pm6-wiz-stage-intake active" id="pm6WizStageIntake" data-wiz-stage="intake">
-              <div class="pm6-wiz-intake-scroll">
+              <div data-lg-surface="panel" class="pm6-wiz-intake-scroll">
                 <div class="pm6-wiz-hero pm-enter-up">
                   <div class="pm6-wiz-kicker">Planning Wizard</div>
                   <h1 class="pm6-wiz-hero-title">Let&rsquo;s plan something great.</h1>
@@ -41253,7 +41716,7 @@ html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-card .pmt-card-glyph 
 
             <!-- STAGE 2: REQUIREMENTS (attach docs + PRD builder) --------------->
             <section class="pm6-wiz-stage pm6-wiz-stage-reqs" id="pm6WizStageReqs" data-wiz-stage="requirements">
-              <div class="pm6-wiz-intake-scroll pm6-wiz-reqs-scroll">
+              <div data-lg-surface="panel" class="pm6-wiz-intake-scroll pm6-wiz-reqs-scroll">
                 <div class="pm6-wiz-hero pm-enter-up">
                   <div class="pm6-wiz-kicker">Provide requirements</div>
                   <h1 class="pm6-wiz-hero-title">Ground the plan in a PRD.</h1>
@@ -41303,7 +41766,7 @@ html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-card .pmt-card-glyph 
                 <div class="pm6-wiz-prdhead-state" id="pm6WizPrdReady"></div>
               </div>
               <div class="pm6-wiz-prdgrid">
-                <aside class="pm6-wiz-prdrail" id="pm6WizPrdRail">
+                <aside data-lg-surface="panel" class="pm6-wiz-prdrail" id="pm6WizPrdRail">
                   <div class="pm6-wiz-col-head">
                     <span class="pm6-wiz-col-title">PRD outline</span>
                     <span class="pm6-wiz-col-meta">PRD ledger &middot; updated every turn</span>
@@ -41326,10 +41789,10 @@ html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-card .pmt-card-glyph 
                   </div>
                   <div class="pm6-wiz-docrows" id="pm6WizReqDocs"></div>
                 </aside>
-                <main class="pm6-wiz-prdchat-wrap">
+                <main data-lg-surface="panel" class="pm6-wiz-prdchat-wrap">
                   <div class="pm6-wiz-prd-chat" id="pm6WizPrdChat"></div>
                 </main>
-                <aside class="pm6-wiz-prdpreview">
+                <aside data-lg-surface="panel" class="pm6-wiz-prdpreview">
                   <div class="pm6-wiz-col-head">
                     <span class="pm6-wiz-col-title">PRD &mdash; live projection</span>
                     <button class="pm6-wiz-expandbtn" type="button" data-demo-action="wizard.doc_expand" data-demo-arg="prd" title="Expand the PRD projection" aria-label="Expand the PRD projection"><span class="pm6-ico" data-pm6-icon="expand"></span></button>
@@ -41343,7 +41806,7 @@ html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-card .pmt-card-glyph 
             <!-- STAGE 3: DISCOVERY --------------------------------------------->
             <section class="pm6-wiz-stage pm6-wiz-stage-discovery" id="pm6WizStageDiscovery" data-wiz-stage="discovery">
               <div class="pm6-wiz-disc-wrap">
-                <div class="pm6-wiz-disc-card pm-enter-scale">
+                <div data-lg-surface="card" class="pm6-wiz-disc-card pm-enter-scale">
                   <div class="pm6-wiz-disc-spin" aria-hidden="true"></div>
                   <div class="pm6-wiz-disc-title">Reading your project&hellip;</div>
                   <div class="pm6-wiz-disc-sub"><span class="pm6-wiz-ro-badge">READ-ONLY</span> Looking, not touching. This takes a few seconds.</div>
@@ -41375,7 +41838,7 @@ html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-card .pmt-card-glyph 
 
               <div class="pm6-wiz-workgrid">
 
-                <aside class="pm6-wiz-topics">
+                <aside data-lg-surface="panel" class="pm6-wiz-topics">
                   <div class="pm6-wiz-col-head">
                     <span class="pm6-wiz-col-title">Topic map</span>
                     <span class="pm6-wiz-col-meta" id="pm6WizTopicCount"></span>
@@ -41384,9 +41847,9 @@ html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-card .pmt-card-glyph 
                   <div class="pm6-wiz-integrate-dock" id="pm6WizIntegrateDock"></div>
                 </aside>
 
-                <main class="pm6-wiz-thread" id="pm6WizThread"></main>
+                <main data-lg-surface="panel" class="pm6-wiz-thread" id="pm6WizThread"></main>
 
-                <aside class="pm6-wiz-right">
+                <aside data-lg-surface="panel" class="pm6-wiz-right">
                   <div class="pm6-wiz-preview">
                     <div class="pm6-wiz-col-head">
                       <span class="pm6-wiz-col-title" id="pm6WizDocTitle">Live plan preview</span>
@@ -41406,7 +41869,7 @@ html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-card .pmt-card-glyph 
                  stage sections so it can front either one. ------------------- -->
             <div class="pm6-wiz-doc-overlay" id="pm6WizDocOverlay" hidden style="display:none">
               <div class="pm6-wiz-doc-overlay-scrim" data-demo-action="wizard.doc_close"></div>
-              <div class="pm6-wiz-doc-overlay-panel" role="dialog" aria-label="Expanded document view">
+              <div data-lg-surface="menu" class="pm6-wiz-doc-overlay-panel" role="dialog" aria-label="Expanded document view">
                 <div class="pm6-wiz-doc-overlay-head">
                   <div class="pm6-wiz-doc-overlay-title" id="pm6WizDocOverlayHead"></div>
                   <button class="pm6-wiz-ghostbtn pm6-wiz-doc-overlay-close" type="button" data-demo-action="wizard.doc_close">Close</button>
@@ -41434,7 +41897,7 @@ html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-card .pmt-card-glyph 
 
           </div>
           <div class="page page-orchestrator" id="panel-orchestrator">
-            <div class="orch-header pm6-orch-header">
+            <div data-lg-surface="bar" class="orch-header pm6-orch-header">
               <span class="orch-title">Orchestrator</span>
               <button type="button" class="pm6-orch-run-chip" id="pm6OrchRunChip" data-demo-action="orch.copyRunId" title="focused_run_id pcr-47 (click to copy)">
                 <span class="pm6-ico" data-ico="bolt" aria-hidden="true"></span>
@@ -41473,7 +41936,7 @@ html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-card .pmt-card-glyph 
               <span class="orch-tab" id="orch-tab-history" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-history" data-tab="history">History</span>
               <span class="orch-tab" id="orch-tab-ledger" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-ledger" data-tab="ledger">Ledger<span class="orch-tab-badge" id="orchTabBadgeLedger" aria-hidden="true"></span></span>
             </div>
-            <div class="orch-content pm6-orch-content">
+            <div data-lg-surface="panel" class="orch-content pm6-orch-content">
 
               <!-- ============ PROGRESS (widget-composed) ============ -->
               <div class="orch-tab-content active pm6-orch-pane" id="orch-panel-progress" data-tab="progress">
@@ -41738,7 +42201,7 @@ html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-card .pmt-card-glyph 
 
             <!-- safe-point retry confirmation -->
             <div class="pm6-orch-modal-scrim" id="pm6OrchSpModal" hidden>
-              <div class="pm6-orch-modal" role="dialog" aria-modal="true" aria-labelledby="pm6OrchSpModalTitle">
+              <div data-lg-surface="menu" class="pm6-orch-modal" role="dialog" aria-modal="true" aria-labelledby="pm6OrchSpModalTitle">
                 <div class="pm6-orch-modal-title" id="pm6OrchSpModalTitle"><span class="pm6-ico" data-ico="restart" aria-hidden="true"></span>Retry from safe point</div>
                 <div class="pm6-orch-modal-body" id="pm6OrchSpModalBody">
                   Restore <b id="pm6OrchSpModalSp">sp-000</b> and retry node <b id="pm6OrchSpModalNode">n-00</b>? Work after the safe point is discarded; everything before it is kept.
@@ -117880,7 +118343,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
       var sealed = tot > 0 && done === tot;
       var probHtml = problems.length
         ? '<div class="pm6-orch-seam-problems">' + problems.map(function (n) {
-            return chip('⚠ ' + n.id + ' ' + (n.degraded && n.state === 'complete' ? 'degraded' : n.state), n.state === 'blocked' ? 'err' : 'warn');
+            return chip(n.id + ' ' + (n.degraded && n.state === 'complete' ? 'degraded' : n.state), n.state === 'blocked' ? 'err' : 'warn');
           }).join('') + '</div>'
         : '';
       return '<div class="pm6-orch-seam-card' + (seamOpen[sm.id] ? ' is-open' : '') + '" data-seam="' + esc(sm.id) + '" style="--i:' + si + '">' +
@@ -148101,7 +148564,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     var showRun=scopeState.scope==='plan'&&selected&&selected.run==='pcr-47';
     orch.dataset.namedPlanScope=scopeState.scope;
     ['scope','project','plan'].forEach(function(field){bar.querySelector('[data-plan-field="'+field+'"]').value=scopeState[field];});
-    [...orch.children].forEach(function(child){if(child===bar||child===cards||child.classList.contains('orch-header'))return;child.hidden=!showRun;});
+    [...orch.children].forEach(function(child){if(child===bar||child===cards||child.classList.contains('orch-header')||child.classList.contains('pm6-orch-modal-scrim'))return;child.hidden=!showRun;});
     [...orch.querySelectorAll('.orch-header > :not(.orch-title)')].forEach(function(child){child.hidden=!showRun;});
     var shown=scopeState.scope==='all'?planFixtures:scopeState.scope==='project'?planFixtures.filter(function(p){return p.project===scopeState.project;}):showRun?[]:selected?[selected]:[];
     cards.hidden=!!showRun;
