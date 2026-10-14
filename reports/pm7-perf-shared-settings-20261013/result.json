@@ -707,14 +707,15 @@
         "inputs": "Normal application and system motion explicitly reset and asserted on every cold document."
       },
       "mechanism": "Files Changed and Explorer placement rect reads 3 to 2; General and Code remain 3. Separate instrumentation, not timed.",
-      "performance_claim": "Whole-action CPU mixed: Dark Files Changed warm Task338.0 to319.1ms and Explorer358.0 to337.4ms; Light Changed321.7 to330.4ms and Explorer344.0 to343.8ms. No broad standalone or population feedback gain established."
+      "performance_claim": "Whole-action CPU mixed: Dark Files Changed warm Task338.0 to319.1ms and Explorer358.0 to337.4ms; Light Changed321.7 to330.4ms and Explorer344.0 to343.8ms. No broad standalone or population feedback gain established.",
+      "source_commit": "b331e41f8f8654781ef6200398ca666dc969a277"
     }
   ],
   "evidence_root": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013",
   "limitations": [
-    "Single pilots do not establish repeated savings.",
-    "Settings-entry saving not established.",
-    "Films and broader repeated proof pending."
+    "M5, M6 and M10 CPU results are mixed; no broad standalone or population first-feedback gain is established.",
+    "Individual correctness and hardware-film proof is complete, with the qualifications recorded per fix.",
+    "The combined current-main measured bundle verdict and one focused M4 iteration remain pending."
   ],
   "landing": "coordinator_only",
   "artifacts": [

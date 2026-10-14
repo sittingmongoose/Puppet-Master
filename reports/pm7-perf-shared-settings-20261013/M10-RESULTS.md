@@ -1,6 +1,6 @@
 M10 matched results
 
-Before `m6-proto7`; after `m10-proto2`. Windows RTX 3090, Chrome 155, 1920×1080, DPR 1. Three cold documents and ten warm repetitions per primary look/action; scheme supplement has three cold repetitions. Artifact order alternates. The action includes a fixed three-second settlement. CPU categories overlap. Event Timing is distinct from filmed first feedback.
+Before `m6-proto7`; after `m10-proto2`. Windows RTX 3090, Chrome 155, 1920×1080, DPR 1. Three cold documents and ten warm repetitions per primary look/action. Artifact order alternates. The action includes a fixed three-second settlement. CPU categories overlap. Event Timing is distinct from filmed first feedback.
 
 | Run / look / action / phase | Pairs | Task median before / after | Task p95 | Style median | Layout median | Largest-task median | Lower Task pairs |
 |---|---:|---:|---:|---:|---:|---:|---:|
