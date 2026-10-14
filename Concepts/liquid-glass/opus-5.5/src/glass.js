@@ -996,7 +996,15 @@
     if (t && visible(t)) beadTo(t); else beadOff();
   }, true);
   /* a press dissolves the bead at once: the lens (or the button's own flex) takes over */
-  document.addEventListener('pointerdown', function () { clearTimeout(beadHide); beadHide = 0; if (beadOn || beadAt) beadFade(90); beadOn = null; }, true);
+  document.addEventListener('pointerdown', function (e) {
+    clearTimeout(beadHide); beadHide = 0;
+    /* the press sends a lens to the item the bead is on: the lens picks the bead up (two boxes overlapped for ~50 ms
+       in the films while the bead faded under the arriving lens) */
+    var hit = isGlass() && e.button === 0 ? stripAt(e.target) : null;
+    if (hit && beadAt && hit.item.contains(beadAt)) { stopBeadAnimation(); if (bead) bead.classList.remove('on'); beadRect = null; beadAt = null; }
+    else if (beadOn || beadAt) beadFade(90);
+    beadOn = null;
+  }, true);
 
   /* ---- the switch's knob turns to liquid glass while it is held: it swells, goes clear and lenses the track under
      it, then lands as a solid knob on the other side (iOS 27's switch); the slide itself is slower and springier ---- */
