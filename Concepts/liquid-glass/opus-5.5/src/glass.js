@@ -242,9 +242,32 @@
     menu:    { bezel: 18, thick: 56, blur: 30, sat: 1.5, ca: 0,    mag: 1,    light: 0.95, css: true },
   };
   var glassSet = new Set();
+  /* Index DOM ancestry, without measuring overflow: a captured scroll identifies exactly the sheets and strips it
+     can move. Reindex on refresh as app code may reparent a still-connected surface. */
+  var scrollSheets = new Map(), scrollStrips = new Map(), sheetAncestors = new Map(), stripAncestors = new Map();
+  function forgetAncestors(e, index, reverse) {
+    var old = reverse.get(e); if (!old) return;
+    old.forEach(function (a) { var set = index.get(a); if (set) { set.delete(e); if (!set.size) index.delete(a); } }); reverse.delete(e);
+  }
+  function indexAncestors(e, index, reverse) {
+    var ancestors = [], old = reverse.get(e);
+    for (var a = e.parentElement; a; a = a.parentElement) ancestors.push(a);
+    if (old && old.length === ancestors.length && old.every(function (a, i) { return a === ancestors[i]; })) return;
+    forgetAncestors(e, index, reverse); reverse.set(e, ancestors);
+    ancestors.forEach(function (a) { var set = index.get(a); if (!set) index.set(a, set = new Set()); set.add(e); });
+  }
   /* every glass element's optics are sized to it: when the board or a panel resizes one, it is measured again */
   var sizeWatch = window.ResizeObserver ? new ResizeObserver(function (entries) {
-    entries.forEach(function (en) { var e = en.target, k = e.getAttribute('data-lg-kind'); if (k && isGlass() && e.isConnected) mount(e, k); });
+    if (!isGlass()) return;
+    var targets = new Map(); entries.forEach(function (en) {
+      var e = en.target, k = e.getAttribute('data-lg-kind');
+      if (!k || !e.isConnected) return;
+      targets.set(e, k);
+      /* Size changes can move siblings without resizing them. Their positions belong to the same settle scope. */
+      var box = en.borderBoxSize && en.borderBoxSize[0];
+      if (KINDS[k] && KINDS[k].bake && e.__lgSize && (!box || e.__lgSize !== Math.round(box.inlineSize) + 'x' + Math.round(box.blockSize))) { dirtyScope(e.parentElement); lazySync(false); }
+    });
+    mountMeasured(targets);
   }) : null;
   function radiusOf(e, W, H) { var r = parseFloat(getComputedStyle(e).borderTopLeftRadius) || 0; return Math.max(0, Math.min(r, W / 2 - 0.5, H / 2 - 0.5)); }
   /* ---- baked optics -------------------------------------------------------------------------------------------------
@@ -297,20 +320,25 @@
      transforms (a board sliding in, a card leaning toward the pointer, a lifted card). The frost and the rim are
      sampled from the wallpaper at that position, so a sheet carries its own glass with it while it moves and nothing
      re-anchors or pops when it lands. */
-  function layoutPos(e) {
+  function layoutPos(e, cache) {
+    function offsets(n) {
+      var v = cache && cache.get(n); if (v) return v;
+      v = { left: n.offsetLeft, top: n.offsetTop, parent: n.offsetParent, x: n.scrollLeft, y: n.scrollTop, cl: n.clientLeft, ct: n.clientTop };
+      if (cache) cache.set(n, v); return v;
+    }
     var x = 0, y = 0, n = e;
     while (n && n !== document.body && n !== document.documentElement) {
-      x += n.offsetLeft; y += n.offsetTop;
-      var p = n.offsetParent;
-      for (var a = n.parentElement; a && a !== p; a = a.parentElement) { x -= a.scrollLeft; y -= a.scrollTop; }
+      var o = offsets(n); x += o.left; y += o.top;
+      var p = o.parent;
+      for (var a = n.parentElement; a && a !== p; a = a.parentElement) { var ao = offsets(a); x -= ao.x; y -= ao.y; }
       if (!p) break;
-      x += p.clientLeft - p.scrollLeft; y += p.clientTop - p.scrollTop;
+      var po = offsets(p); x += po.cl - po.x; y += po.ct - po.y;
       n = p;
     }
     return { x: x, y: y };
   }
-  function anchor(e) {
-    var lp = layoutPos(e), fx = Math.round(-lp.x) + 'px', fy = Math.round(-lp.y) + 'px';
+  function anchor(e, lp) {
+    lp = lp || layoutPos(e); var fx = Math.round(-lp.x) + 'px', fy = Math.round(-lp.y) + 'px';
     if (e.__lgFx !== fx) { e.__lgFx = fx; e.style.setProperty('--lg-fx', fx); }
     if (e.__lgFy !== fy) { e.__lgFy = fy; e.style.setProperty('--lg-fy', fy); }
     return lp;
@@ -460,17 +488,19 @@
   }
 
   /* mount or refresh one glass element; sheets bake, menus blur live (fast CSS blur), lenses refract live */
-  function mount(e, kind) {
-    var k = KINDS[kind] || KINDS.panel, r = e.getBoundingClientRect();
-    var W = Math.round(e.offsetWidth || r.width), H = Math.round(e.offsetHeight || r.height);
+  function mount(e, kind, measured) {
+    var k = KINDS[kind] || KINDS.panel, r = measured ? measured.rect : e.getBoundingClientRect();
+    var W = measured ? measured.W : Math.round(e.offsetWidth || r.width), H = measured ? measured.H : Math.round(e.offsetHeight || r.height);
     if (W < 4 || H < 4) return null;
     /* marked by our own attribute only: app code owns its elements' class lists (the Usage menus rewrite theirs, and a
        class added here started an endless observer ping-pong that froze the page) */
     if (e.getAttribute('data-lg-kind') !== kind) e.setAttribute('data-lg-kind', kind);
     if (!glassSet.has(e)) { glassSet.add(e); if (sizeWatch) sizeWatch.observe(e); }
-    var R = radiusOf(e, W, H);
+    e.__lgSize = W + 'x' + H;
+    var R = measured ? measured.R : radiusOf(e, W, H);
     if (k.bake) {
-      var lp = anchor(e);
+      indexAncestors(e, scrollSheets, sheetAncestors);
+      var lp = anchor(e, measured && measured.lp);
       currentWallUrl();
       var sig = W + 'x' + H + '@' + Math.round(lp.x) + ',' + Math.round(lp.y) + ':' + R.toFixed(1) + ':' + kind + ':' + wallSourceId + ':' + innerWidth + 'x' + innerHeight + ':' + root.getAttribute('data-theme');
       if (e.__lgSig !== sig) { e.__lgSig = sig; queueBake(e, kind); }
@@ -490,7 +520,29 @@
     else { e.style.removeProperty('backdrop-filter'); e.style.removeProperty('-webkit-backdrop-filter'); }
     return e.__lgF;
   }
+  /* Read every candidate before committing its optics. New kind attributes are a single preliminary style change:
+     dimensions retain the mount's original pre-kind measurement, radius/position use the resulting Glass style.
+     Connected, already-mounted sheets need only one geometry and computed-radius snapshot. */
+  function mountMeasured(targets, requireVisible) {
+    var measured = new Map(), offsets = new Map();
+    targets.forEach(function (kind, e) {
+      if (!e.isConnected) return;
+      var r = e.getBoundingClientRect(), W = Math.round(e.offsetWidth || r.width), H = Math.round(e.offsetHeight || r.height);
+      if (W < 4 || H < 4 || (requireVisible && (r.width <= 1 || r.height <= 1))) return;
+      var cs = getComputedStyle(e), shown = cs.visibility !== 'hidden';
+      if (requireVisible && !shown) return;
+      measured.set(e, { rect: r, W: W, H: H, radius: parseFloat(cs.borderTopLeftRadius) || 0, kind: kind, fresh: e.getAttribute('data-lg-kind') !== kind });
+    });
+    measured.forEach(function (m, e) { if (m.fresh) e.setAttribute('data-lg-kind', m.kind); });
+    measured.forEach(function (m, e) {
+      if (m.fresh) m.radius = parseFloat(getComputedStyle(e).borderTopLeftRadius) || 0;
+      m.R = Math.max(0, Math.min(m.radius, m.W / 2 - 0.5, m.H / 2 - 0.5));
+      if (KINDS[m.kind] && KINDS[m.kind].bake) m.lp = layoutPos(e, offsets);
+    });
+    measured.forEach(function (m, e) { mount(e, m.kind, m); });
+  }
   function unmount(e) {
+    forgetAncestors(e, scrollSheets, sheetAncestors);
     bakeQ.delete(e); e.__lgBake = null; e.__lgSig = null; e.__lgF = null;
     if (!bakeQ.size && !bakeFlight && bakeT) { clearTimeout(bakeT); bakeT = 0; }
     if (e.__lgRing) { URL.revokeObjectURL(e.__lgRing); e.__lgRing = null; }
@@ -513,7 +565,7 @@
     if (typeof pruneLensFilters === 'function') pruneLensFilters();
   }
   /* scrolling moves sheets over the wallpaper: re-anchor their frost in the same frame, re-bake rims once it stops */
-  var scrollQ = false, scrollBoxes = new Set();
+  var scrollQ = false, scrollBoxes = new Set(), settleSheets = new Set(), settleStrips = new Set();
   document.addEventListener('scroll', function (ev) {
     if (!isGlass()) return;
     var box = ev.target && ev.target.nodeType === 1 ? ev.target : document.documentElement;
@@ -521,13 +573,17 @@
     if (!scrollQ) { scrollQ = true; requestAnimationFrame(function () {
       scrollQ = false; var boxes = Array.from(scrollBoxes); scrollBoxes.clear();
       if (!isGlass()) return;
-      glassSet.forEach(function (e) { if (e.isConnected && KINDS[e.getAttribute('data-lg-kind')] && KINDS[e.getAttribute('data-lg-kind')].bake && boxes.some(function (b) { return b.contains(e); })) anchor(e); });
-      if (typeof lenses !== 'undefined') lenses.forEach(function (L) {
-        if (L.dragging || !L.strip.isConnected || !boxes.some(function (b) { return b.contains(L.strip); })) return;
-        L.snap = true; syncStrip(L.cfg, L.strip);
+      var sheets = new Set(), strips = new Set(), positions = new Map(), offsets = new Map();
+      boxes.forEach(function (b) {
+        var ss = scrollSheets.get(b), ls = scrollStrips.get(b);
+        if (ss) ss.forEach(function (e) { if (e.isConnected) { sheets.add(e); settleSheets.add(e); } });
+        if (ls) ls.forEach(function (s) { if (s.isConnected) { strips.add(s); settleStrips.add(s); } });
       });
+      sheets.forEach(function (e) { positions.set(e, layoutPos(e, offsets)); });
+      positions.forEach(function (lp, e) { anchor(e, lp); });
+      strips.forEach(function (s) { var L = lenses.get(s); if (L && !L.dragging) { L.snap = true; syncStrip(L.cfg, s); } });
     }); }
-    lazySync();
+    lazySync(false);
   }, true);
 
   /* ---- springs ------------------------------------------------------------------------------------------------------
@@ -627,8 +683,9 @@
   }
   function lensFor(strip, cfg) {
     var L = lenses.get(strip);
-    if (L && L.lens.isConnected) return L;
+    if (L && L.lens.isConnected) { indexAncestors(strip, scrollStrips, stripAncestors); return L; }
     if (L) disposeLens(L);
+    indexAncestors(strip, scrollStrips, stripAncestors);
     var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind }), own = lensLayer(strip);
     own.appendChild(lens);
     L = { strip: strip, lens: lens, layer: own, rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '', scroller: scrollerOf(strip) }; lenses.set(strip, L);
@@ -673,6 +730,7 @@
     e.remove();
   }
   function disposeLens(L) {
+    forgetAncestors(L.strip, scrollStrips, stripAncestors);
     stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup();
     removeLensElement(L.lens); L.rect = null;
     if (L.layer && L.layer.classList.contains('lg-lenses-local') && !L.layer.children.length) {
@@ -830,10 +888,10 @@
     lenses.forEach(function (L) {
       var P = L.pending; if (!P || P.up) return;
       P.up = performance.now(); P.away = !(e.target && P.el.contains(e.target));
-      if (P.away) queueSync(); else setTimeout(queueSync, 2550);
+      if (P.away) queueSync(L.strip); else setTimeout(function () { queueSync(L.strip); }, 2550);
     });
   }, true);
-  document.addEventListener('pointercancel', function () { lenses.forEach(function (L) { if (L.pending) { L.pending = null; queueSync(); } }); }, true);
+  document.addEventListener('pointercancel', function () { lenses.forEach(function (L) { if (L.pending) { L.pending = null; queueSync(L.strip); } }); }, true);
   /* scrubbing: press on a tab strip and slide; the lens lifts and follows the pointer like a drop of water, magnifying
      each tab it passes, and drops into the nearest tab on release (which then becomes the chosen one) */
   function scrubbing(e) {
@@ -895,8 +953,17 @@
        callout and bar blur what is behind them */
     ['#pm-o55-onboarding .o55-win', 'panel'], ['.o55t-callout', 'menu'], ['.o55t-bar', 'menu'],
   ];
-  function segTracks() {   /* the rail's tab strips get a track element to be the glass (the strip itself is a full-width plate) */
-    document.querySelectorAll('#sidePanelSlot .pm-segtab').forEach(function (s) {
+  function scopedNodes(selector, scopes) {
+    if (!scopes) return Array.prototype.slice.call(document.querySelectorAll(selector));
+    var found = new Set(); scopes.forEach(function (s) {
+      if (!s.isConnected) return;
+      if (s.matches(selector)) found.add(s);
+      s.querySelectorAll(selector).forEach(function (e) { found.add(e); });
+      for (var p = s.parentElement; p; p = p.parentElement) if (p.matches(selector)) found.add(p);
+    }); return Array.from(found);
+  }
+  function segTracks(scopes) {   /* the rail's tab strips get a track element to be the glass (the strip itself is a full-width plate) */
+    scopedNodes('#sidePanelSlot .pm-segtab', scopes).forEach(function (s) {
       if (!s.querySelector(':scope > .pm-segtab-track')) { var t = el('i', { class: 'pm-segtab-track', 'aria-hidden': 'true' }); s.insertBefore(t, s.firstChild); }
     });
   }
@@ -904,10 +971,15 @@
      toasts, popovers), "card", "bar" or "panel" (baked sheets over the wallpaper). The attribute is theirs to set and
      remove; glass.js only mounts what carries it, so no owner's selectors live in this file. */
   var OPT_IN = { menu: 1, card: 1, bar: 1, panel: 1 };
-  function syncSurfaces() {
-    segTracks();
-    SURFACES.forEach(function (p) { document.querySelectorAll(p[0]).forEach(function (e) { if (visible(e)) mount(e, p[1]); }); });
-    document.querySelectorAll('[data-lg-surface]').forEach(function (e) { var k = e.getAttribute('data-lg-surface'); if (OPT_IN[k] && visible(e)) { e.__lgOpt = true; mount(e, k); } });
+  var SURFACE_SELECTOR = SURFACES.map(function (p) { return p[0]; }).concat('[data-lg-surface]').join(', ');
+  function syncSurfaces(scopes, extra) {
+    segTracks(scopes);
+    var found = scopedNodes(SURFACE_SELECTOR, scopes), targets = new Map();
+    /* Retain the owner's mount order (also the materialize stagger order) while discovering each subtree once. */
+    SURFACES.forEach(function (p) { found.forEach(function (e) { if (e.matches(p[0])) targets.set(e, p[1]); }); });
+    found.forEach(function (e) { var k = e.getAttribute('data-lg-surface'); if (OPT_IN[k]) { e.__lgOpt = true; targets.set(e, k); } });
+    if (extra) extra.forEach(function (e) { var k = e.getAttribute('data-lg-kind'); if (KINDS[k] && KINDS[k].bake && !targets.has(e)) targets.set(e, k); });
+    mountMeasured(targets, true);
   }
 
   /* ---- light: the pointer's shine on the rims, and the press ------------------------------------------------------- */
@@ -1076,13 +1148,24 @@
       if (L.lens.classList.contains('lg-under') !== hit) L.lens.classList.toggle('lg-under', hit);
     });
   }
-  function scanMenus() {
-    var open = Array.prototype.slice.call(document.querySelectorAll('.pmu-pop.open, .pmr-menu-list, #lg-demo-pop[data-open], .pm6-tb-menu.is-open')).filter(visible).map(function (m) { return m.getBoundingClientRect(); });
-    if (bead) bead.classList.toggle('lg-under', open.length > 0);
-    document.querySelectorAll('#themeMenu').forEach(function (m) { if (m.classList.contains('is-open') && visible(m)) { mount(m, 'menu'); morph(m, document.getElementById('themeSelect')); } else resetMenuMorph(m); });
+  var MENU_SELECTOR = '.pmu-pop, .pmr-menu-list, #lg-demo-pop, .pm6-tb-menu, #themeMenu', knownMenus = new Set();
+  function scanMenus(scopes) {
+    scopedNodes(MENU_SELECTOR, scopes).forEach(function (m) { knownMenus.add(m); });
+    var open = [], theme = [], pops = [], lists = [];
+    knownMenus.forEach(function (m) {
+      if (!m.isConnected) { knownMenus.delete(m); return; }
+      var shown = null;
+      function isShown() { if (shown === null) shown = visible(m); return shown; }
+      if (m.matches('.pmu-pop.open, .pmr-menu-list, #lg-demo-pop[data-open], .pm6-tb-menu.is-open') && isShown()) open.push(m.getBoundingClientRect());
+      if (m.id === 'themeMenu') theme.push(m);
+      if (m.matches('.pmu-pop')) pops.push(m);
+      if (m.matches('.pmr-menu-list')) lists.push(m);
+    });
+    if (bead && bead.classList.contains('lg-under') !== (open.length > 0)) bead.classList.toggle('lg-under', open.length > 0);
+    theme.forEach(function (m) { if (m.classList.contains('is-open') && visible(m)) { mount(m, 'menu'); morph(m, document.getElementById('themeSelect')); } else resetMenuMorph(m); });
     lensesUnder(open);
-    document.querySelectorAll('.pmu-pop').forEach(function (m) { if (m.classList.contains('open')) { mount(m, 'menu'); morph(m, document.querySelector('.pmu-menu-anchor-open') || lastPress); } else resetMenuMorph(m); });
-    document.querySelectorAll('.pmr-menu-list').forEach(function (m) { if (visible(m)) { mount(m, 'menu'); morph(m, lastPress); } else resetMenuMorph(m); });
+    pops.forEach(function (m) { if (m.classList.contains('open')) { mount(m, 'menu'); morph(m, document.querySelector('.pmu-menu-anchor-open') || lastPress); } else resetMenuMorph(m); });
+    lists.forEach(function (m) { if (visible(m)) { mount(m, 'menu'); morph(m, lastPress); } else resetMenuMorph(m); });
   }
 
   /* ---- materialize: glass arrives by ramping its refraction and its frost, not by fading ---------------------------- */
@@ -1094,7 +1177,20 @@
   }
 
   /* ---- sync -------------------------------------------------------------------------------------------------------- */
-  var syncQ = 0, lazyT = 0;
+  var syncQ = 0, lazyT = 0, pageT = 0, hotReset = 0, hotDone = false, dirtyAll = false, dirtyRoots = new Set();
+  function dirtyScope(e) {
+    if (!e || e.nodeType !== 1) return;
+    if (e === document.body || e === root) { dirtyAll = true; return; }
+    /* A changed section can move the following sections, even without resizing them. Read their common layout
+       owner, not the rest of the app. Rail selection also drives the lens in the adjacent activity bar. */
+    var sheet = e.closest('[data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"]');
+    var s = sheet && sheet !== e && !sheet.matches('.title-bar, .left-panel, #chatPanel, #pm7GlobalStatusBar') ? sheet : e;
+    if (!s) s = e;
+    var covered = false;
+    dirtyRoots.forEach(function (p) { if (p.contains(s)) covered = true; else if (s.contains(p)) dirtyRoots.delete(p); });
+    if (!covered) dirtyRoots.add(s);
+    if (e.closest('#sidePanelSlot')) { var rail = document.getElementById('activityBar'); if (rail) dirtyRoots.add(rail); }
+  }
   function pruneGlass() {
     glassSet.forEach(function (e) {
       if (e.isConnected && e.__lgOpt && !OPT_IN[e.getAttribute('data-lg-surface')]) { e.__lgOpt = false; unmount(e); e.removeAttribute('data-lg-kind'); return; }
@@ -1104,29 +1200,44 @@
     });
     if (typeof pruneLenses === 'function') pruneLenses();
   }
-  function syncAll() {
+  function syncAll() { dirtyAll = true; syncPending(); }
+  function syncPending() {
     /* an immediate hot/API sync covers queued work; keep no second callback that can remount it next frame */
     if (syncQ) { cancelAnimationFrame(syncQ); syncQ = 0; }
     if (lazyT) { clearTimeout(lazyT); lazyT = 0; }
+    var scopes = dirtyAll ? null : Array.from(dirtyRoots), sheets = settleSheets, strips = settleStrips;
+    dirtyAll = false; dirtyRoots.clear(); settleSheets = new Set(); settleStrips = new Set();
+    if (scopes && !scopes.length && !sheets.size && !strips.size) return;
     pruneGlass();
     if (root.hasAttribute('data-lg-demo-host') && document.getElementById('lg-demo-btn')) demo();
     applyWall(); mountPicker();
     if (!isGlass()) { unmountAll(); return; }
-    syncSurfaces();
-    STRIPS.forEach(function (cfg) { (cfg.many ? document.querySelectorAll(cfg.sel) : [document.querySelector(cfg.sel)]).forEach(function (s) { if (s) syncStrip(cfg, s); }); });
-    scanMenus();
+    syncSurfaces(scopes, sheets);
+    STRIPS.forEach(function (cfg) {
+      var found = cfg.many ? scopedNodes(cfg.sel, scopes) : [document.querySelector(cfg.sel)].filter(function (s) {
+        return s && (!scopes || scopes.some(function (p) { return p.contains(s) || s.contains(p); }));
+      });
+      strips.forEach(function (s) { if (s.matches(cfg.sel) && found.indexOf(s) < 0) found.push(s); });
+      found.forEach(function (s) { syncStrip(cfg, s); });
+    });
+    scanMenus(scopes);
   }
-  function queueSync() { if (!syncQ) syncQ = requestAnimationFrame(function () { syncQ = 0; syncAll(); }); }
-  /* a hot change (a tab chosen, a menu opened) syncs at once so the lens and the morph start in the next frame; more
-     than three in one frame means something is answering our own changes, so the rest wait for the frame */
-  var hotN = 0, hotFrame = 0;
+  function queueSync(scope) {
+    if (scope && scope.nodeType === 1) dirtyScope(scope);
+    if (!syncQ) syncQ = requestAnimationFrame(function () { syncQ = 0; syncPending(); });
+  }
+  /* One immediate input sync per actual frame; later genuine changes share the next before-paint pass. A newly
+     opened menu still gets its held first keyframe immediately, and pointerdown lens travel stays synchronous. */
   function hotSync() {
-    var f = Math.floor(performance.now() / 16);
-    if (f !== hotFrame) { hotFrame = f; hotN = 0; }
-    if (++hotN > 3) { queueSync(); return; }
-    syncAll();
+    if (hotDone) { scanMenus(dirtyAll ? null : Array.from(dirtyRoots)); queueSync(); return; }
+    hotDone = true;
+    if (!hotReset) hotReset = requestAnimationFrame(function () { hotReset = 0; hotDone = false; });
+    syncPending();
   }
-  function lazySync() { if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140); }
+  function lazySync(scope) {
+    if (scope !== false) { if (scope && scope.nodeType === 1) dirtyScope(scope); else dirtyAll = true; }
+    if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140);
+  }
   var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, .o55-win, .o55t-callout, .o55t-bar';
   var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, #lg-shine, .lg-press, .pm-segtab-track';
   function generatedMutation(rec) {
@@ -1144,18 +1255,27 @@
   var lastTier = root.getAttribute('data-lg-tier'), lastWall = root.getAttribute('data-lg-wall'), lastMotion = root.getAttribute('data-motion');
   var mo = new MutationObserver(function (recs) {
     var hot = false, relevant = false;
-    for (var i = 0; i < recs.length && !hot; i++) {
+    for (var i = 0; i < recs.length; i++) {
       /* optics, lenses and light are outputs of sync, never inputs that should schedule it again */
       if (generatedMutation(recs[i])) continue;
+      if (recs[i].type === 'attributes' && recs[i].oldValue === recs[i].target.getAttribute(recs[i].attributeName)) continue;
       relevant = true;
       var t = recs[i].target; if (t.nodeType !== 1) continue;
+      dirtyScope(recs[i].type === 'attributes' ? t.parentElement || t : t);
       if (t.matches(HOT)) hot = true;
       else for (var j = 0; j < recs[i].addedNodes.length; j++) { var nd = recs[i].addedNodes[j]; if (nd.nodeType === 1 && (nd.matches(HOT) || nd.matches('.pmu-card') || (nd.querySelector && nd.querySelector('.pmr-menu-list, .pmu-card')))) { hot = true; break; } }
     }
     if (!relevant) return;
     var page = document.querySelector('.page-tabs .page-tab.active'); page = page && page.id;
-    if (hot && isGlass()) hotSync(); else lazySync();
-    if (page !== lastPage) { var first = lastPage === null; lastPage = page; if (!first) setTimeout(syncAll, 30); }
+    var changed = Array.from(dirtyRoots), full = dirtyAll;
+    if (hot && isGlass()) hotSync(); else lazySync(false);
+    if (page !== lastPage) {
+      var first = lastPage === null; lastPage = page;
+      if (pageT) { clearTimeout(pageT); pageT = 0; }
+      if (!first) pageT = setTimeout(function () {
+        pageT = 0; if (full) dirtyAll = true; else changed.forEach(dirtyScope); queueSync();
+      }, 30);
+    }
   });
   new MutationObserver(function () {
     var th = root.getAttribute('data-theme'), lg = root.getAttribute('data-lg');
@@ -1173,7 +1293,7 @@
       glassSet.forEach(function (e) { e.__lgSig = null; });
       syncAll(); lastWall = root.getAttribute('data-lg-wall');
       if (enter) materialize(Array.from(glassSet));
-    } else queueSync();
+    } else { dirtyAll = true; queueSync(); }
   }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-lg-tier', 'data-lg-wall', 'data-motion'] });
   applyWall();
   window.addEventListener('blur', function () { root.setAttribute('data-lg-inactive', ''); });
@@ -1186,8 +1306,8 @@
   function start() {
     ensureDefs(); viewportVars(); knobFilter();
     window.addEventListener('resize', viewportVars);
-    mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface'] });
-    if (window.ResizeObserver) { var ro = new ResizeObserver(lazySync); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
+    mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface'] });
+    if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
     window.addEventListener('resize', lazySync);
     demo();
     syncAll(); setTimeout(syncAll, 500); setTimeout(syncAll, 1500);
