@@ -90,6 +90,13 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.app-shell, .title-bar, #a
       behind them live (they float over content), and lenses refract live. --lg-mat condenses the glass as it arrives.
    --------------------------------------------------------------------------------------------------------------- */
 @property --lg-mat { syntax: '<number>'; inherits: false; initial-value: 1; }
+/* the per-sheet bakes are read only by the sheet's own background, so they do not inherit: a scroll that moves a sheet's
+   frost (--lg-fx / --lg-fy, every frame) and a new ring or spec map restyle that sheet alone, not every element inside it
+   (a Usage card holds 100 to 400; Jared #3 and #13, 2026-10-14) */
+@property --lg-fx { syntax: '*'; inherits: false; }
+@property --lg-fy { syntax: '*'; inherits: false; }
+@property --lg-ring { syntax: '*'; inherits: false; }
+@property --lg-spec { syntax: '*'; inherits: false; }
 /* how see-through the sheets are. Settings' panel transparency (public --glass-alpha, from its floor, .35 dark and .45
    light, to 1) moves each sheet's tint around today's look, which is the setting's default .55: up to a near-opaque .94
    at 100 %, and down by at most a quarter of the tint at the floor, so the frost keeps text readable. --lg-ga is
@@ -323,7 +330,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-msearchin::placeholder { 
 /* the title-bar look menu, spaced as one glass menu: a joined Light/Dark/Auto row, then quiet rows (pm7-no-pills owns
    its shapes in every look; this is Glass's material and spacing only) */
 /* a hover tag never sits on top of an open title-bar menu */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz):has(.pm6-tb-menu.is-open) #pm-hover-tag-root { opacity: 0 !important; }
+html[data-lg="on"][data-theme^="glass"][data-lg-tbmenu]:not(#lgz) #pm-hover-tag-root { opacity: 0 !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu.is-open { padding: 8px !important; min-width: 236px; border: 0 !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-modes { display: flex; gap: 0; margin: 0 0 8px !important; padding: 2px !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important; background: var(--lg-fill) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-mode { flex: 1; border: 0 !important; border-radius: var(--pm-ctl-r-in) !important; background: transparent !important; box-shadow: none !important; padding: 5px 8px !important; color: var(--text-secondary) !important; }

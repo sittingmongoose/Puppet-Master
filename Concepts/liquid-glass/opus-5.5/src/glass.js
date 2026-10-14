@@ -416,6 +416,29 @@
       job.e.getAttribute('data-lg-kind') === job.kind && job.wall === wallSourceId && job.theme === root.getAttribute('data-theme') &&
       job.vw === innerWidth && job.vh === innerHeight && (!im || im.__lgWallUrl === currentWallUrl());
   }
+  /* rings kept by signature (Jared #3, 2026-10-14: Usage room changes lagged in Glass). A Usage room builds new cards on
+     every visit, and each new card baked its ring again: 12 to 16 bakes of 20 to 40 ms each, inside the room change. A ring
+     depends only on what its signature holds (size, place, radius, kind, wallpaper, viewport, look), so a card that comes
+     back to the same place takes the ring it had, in the same frame, with no bake. The cache owns the rings' URLs; an
+     element only points at one, and a URL is revoked when it has left the cache and no sheet shows it. */
+  var ringCache = new Map(), ringUrls = new Set(), RING_COUNT = 128;
+  function ringShown(url, except) { var on = false; glassSet.forEach(function (x) { if (x !== except && x.__lgRing === url) on = true; }); return on; }
+  function releaseRing(e) {
+    var url = e.__lgRing; e.__lgRing = null;
+    if (url && !ringUrls.has(url) && !ringShown(url, e)) URL.revokeObjectURL(url);
+  }
+  function keepRing(sig, url, spec) {
+    ringCache.delete(sig); ringCache.set(sig, { url: url, spec: spec }); ringUrls.add(url);
+    while (ringCache.size > RING_COUNT) {
+      var old = ringCache.keys().next().value, rec = ringCache.get(old);
+      ringCache.delete(old); ringUrls.delete(rec.url); if (!ringShown(rec.url)) URL.revokeObjectURL(rec.url);
+    }
+  }
+  function useRing(e, rec) {
+    if (e.__lgBake) { bakeQ.delete(e); e.__lgBake = null; }
+    if (e.__lgRing !== rec.url) { releaseRing(e); e.__lgRing = rec.url; }
+    e.style.setProperty('--lg-spec', 'url(' + rec.spec + ')'); e.style.setProperty('--lg-ring', 'url(' + rec.url + ')');
+  }
   function bakeRing(e, kind, im, job) {
     if (!currentBake(job, im)) return;
     var k = KINDS[kind], W = Math.round(e.offsetWidth), H = Math.round(e.offsetHeight);
@@ -424,7 +447,8 @@
     var R = radiusOf(e, W, H), B = Math.max(2, Math.min(k.bezel, Math.min(W, H) / 2 - 1)), T = Math.min(k.thick, B * 2.4);
     var m = buildMaps(W, H, Math.round(R), Math.round(B), Math.round(T), 1, k.light, k.ring, true), raw = m.raw, c = cover(im);
     var p = Math.ceil(m.max) + 3, SW = W + 2 * p, SH = H + 2 * p;
-    var sc = document.createElement('canvas'); sc.width = SW; sc.height = SH; var g = sc.getContext('2d');
+    /* read back on the CPU: a GPU canvas paid a readback in getImageData and again in toBlob (about 20 ms a card) */
+    var sc = document.createElement('canvas'); sc.width = SW; sc.height = SH; var g = sc.getContext('2d', { willReadFrequently: true });
     g.filter = 'saturate(' + k.sat + ')';
     g.setTransform(c.s, 0, 0, c.s, c.ox - (r.left - p), c.oy - (r.top - p)); g.drawImage(im, 0, 0); g.setTransform(1, 0, 0, 1, 0, 0);
     var S = g.getImageData(0, 0, SW, SH).data, out = new ImageData(W, H), O = out.data, ca = k.ca || 0;
@@ -438,7 +462,7 @@
       var vx = raw.dx[i], vy = raw.dy[i], bx = x + p + 0.5, by = y + p + 0.5, o = i * 4;
       O[o] = at(bx + vx * (1 - ca), by + vy * (1 - ca), 0); O[o + 1] = at(bx + vx, by + vy, 1); O[o + 2] = at(bx + vx * (1 + ca), by + vy * (1 + ca), 2); O[o + 3] = a * 255;
     }
-    var oc = document.createElement('canvas'); oc.width = W; oc.height = H; oc.getContext('2d').putImageData(out, 0, 0);
+    var oc = document.createElement('canvas'); oc.width = W; oc.height = H; oc.getContext('2d', { willReadFrequently: true }).putImageData(out, 0, 0);
     e.style.setProperty('--lg-spec', 'url(' + m.spec + ')');
     oc.toBlob(function (b) {
       if (!currentBake(job, im)) return;
@@ -447,8 +471,9 @@
       if (Math.round(e.offsetWidth) !== W || Math.round(e.offsetHeight) !== H || Math.round(lp.x) !== Math.round(r.left) || Math.round(lp.y) !== Math.round(r.top)) {
         e.__lgSig = null; mount(e, kind); return;
       }
-      if (e.__lgRing) URL.revokeObjectURL(e.__lgRing);
-      e.__lgRing = URL.createObjectURL(b); e.style.setProperty('--lg-ring', 'url(' + e.__lgRing + ')');
+      var url = URL.createObjectURL(b); keepRing(job.sig, url, m.spec);
+      if (e.__lgRing !== url) { releaseRing(e); e.__lgRing = url; }
+      e.style.setProperty('--lg-ring', 'url(' + url + ')');
     }, 'image/png');
   }
   function scheduleBakes() { if (!bakeT && !bakeFlight && bakeQ.size && isGlass()) bakeT = setTimeout(flushBakes, 60); }
@@ -503,7 +528,11 @@
       var lp = anchor(e, measured && measured.lp);
       currentWallUrl();
       var sig = W + 'x' + H + '@' + Math.round(lp.x) + ',' + Math.round(lp.y) + ':' + R.toFixed(1) + ':' + kind + ':' + wallSourceId + ':' + innerWidth + 'x' + innerHeight + ':' + root.getAttribute('data-theme');
-      if (e.__lgSig !== sig) { e.__lgSig = sig; queueBake(e, kind); }
+      if (e.__lgSig !== sig) {
+        e.__lgSig = sig;
+        var kept = ringCache.get(sig);
+        if (kept) { ringCache.delete(sig); ringCache.set(sig, kept); useRing(e, kept); } else queueBake(e, kind);
+      }
       return null;
     }
     var B = Math.max(2, Math.min(k.bezel, Math.min(W, H) / 2 - 1)), T = Math.min(k.thick, B * 2.4);
@@ -545,7 +574,7 @@
     forgetAncestors(e, scrollSheets, sheetAncestors);
     bakeQ.delete(e); e.__lgBake = null; e.__lgSig = null; e.__lgF = null;
     if (!bakeQ.size && !bakeFlight && bakeT) { clearTimeout(bakeT); bakeT = 0; }
-    if (e.__lgRing) { URL.revokeObjectURL(e.__lgRing); e.__lgRing = null; }
+    releaseRing(e);
     ['backdrop-filter', '-webkit-backdrop-filter', '--lg-ring', '--lg-spec'].forEach(function (name) { e.style.removeProperty(name); });
     if (sizeWatch) sizeWatch.unobserve(e); glassSet.delete(e);
   }
@@ -1234,6 +1263,10 @@
       if (m.matches('.pmr-menu-list')) lists.push(m);
     });
     if (bead && bead.classList.contains('lg-under') !== (open.length > 0)) bead.classList.toggle('lg-under', open.length > 0);
+    /* an open title-bar menu hides the hover tag (glass.css). It was html:has(.pm6-tb-menu.is-open): a :has() on the root is
+       matched again on every insertion in the page, 40 ms of style in one Usage room change on a P1000 */
+    var tbOpen = open.some(function (o) { return o.el.classList.contains('pm6-tb-menu'); });
+    if (root.hasAttribute('data-lg-tbmenu') !== tbOpen) root.toggleAttribute('data-lg-tbmenu', tbOpen);
     theme.forEach(function (m) { if (m.classList.contains('is-open') && visible(m)) { mount(m, 'menu'); morph(m, document.getElementById('themeSelect')); } else resetMenuMorph(m); });
     lensesUnder(open);
     pops.forEach(function (m) { if (m.classList.contains('open')) { mount(m, 'menu'); morph(m, document.querySelector('.pmu-menu-anchor-open') || lastPress); } else resetMenuMorph(m); });
