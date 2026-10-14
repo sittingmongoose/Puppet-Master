@@ -574,8 +574,12 @@
         if (key === 'lineHeight' && (x === null || x === undefined)) x = R.font.lineHeight;
         if (key === 'opacity' && (x === null || x === undefined)) x = R.theme ? R.theme.bgAlpha : 1;
         if (key === 'sixtyfourScan' || key === 'sixtyfourBleed') x = x === null || x === undefined ? 0 : x;
+        /* a width or a dim left to the style or to Auto shows the value in use */
+        if (key === 'bezelWidth' && (x === null || x === undefined)) x = R.bezel && R.bezel.width ? R.bezel.width : 10;
+        var autoDim = key === 'bgDim' && (x === null || x === undefined);
+        if (autoDim) x = R.background && typeof R.background.dim === 'number' ? R.background.dim : 0.45;
         if (document.activeElement !== r) r.value = String(x);
-        var out = r.parentNode.querySelector('output'); if (out) out.textContent = fmt(key, Number(r.value));
+        var out = r.parentNode.querySelector('output'); if (out) out.textContent = (autoDim ? 'Auto · ' : '') + fmt(key, Number(r.value));
         r.closest('[data-slider]').classList.toggle('pmt-cz-is-mine', mine(key));
       });
       var fs = root.querySelector('[data-out="fontSize"]'); if (fs) fs.textContent = fmt('fontSize', R.font.size);

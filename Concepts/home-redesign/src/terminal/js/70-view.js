@@ -397,7 +397,12 @@
   View.prototype._groundSized = function () {
     var bg = this._bgSpec; if (!bg || !(bg.paint || bg.motion) || !this._bgKey) return;
     var r = this.bodyEl.getBoundingClientRect(), key = sizeStep(r.width) + 'x' + sizeStep(r.height);
-    if (key !== this._bgKey) { this.contrastGround = this._applyBackground(bg); this.renderer.invalidate(); }
+    if (key !== this._bgKey) { this.contrastGround = this._applyBackground(bg); this.renderer.invalidate(); this.schedule(true); }
+  };
+  /* ... once a resize settles, never inside the resize frame */
+  View.prototype._groundSoon = function () {
+    var self = this; clearTimeout(this._groundTimer);
+    if (this._bgKey) this._groundTimer = setTimeout(function () { self._groundTimer = 0; if (self.visible) self._groundSized(); }, 250);
   };
   /* cell metrics for the current font at the current device pixel ratio */
   View.prototype._measure = function () {
@@ -1181,6 +1186,7 @@
   /* ---- lifecycle from the host ---- */
   View.prototype.onResize = function () {
     this.layout();
+    this._groundSoon();
     /* the host may have maximized or restored the panel itself (its menu, a key): keep the action's label true */
     if (this.hrow && this.api && this.api.isMaximized) {
       var max = !!this.api.isMaximized();
@@ -1188,7 +1194,7 @@
     }
   };
   /* image animation runs only while the terminal shows (SPEC section 7) */
-  View.prototype.onShow = function () { this.visible = true; if (this.term.images) this.term.images.pause(false); this.layout(); this.schedule(true); if (this.fx) this.fx.visible(true); };
+  View.prototype.onShow = function () { this.visible = true; if (this.term.images) this.term.images.pause(false); this.layout(); this._groundSoon(); this.schedule(true); if (this.fx) this.fx.visible(true); };
   View.prototype.onHide = function () { this.visible = false; if (this.term.images) this.term.images.pause(true); if (this.fx) this.fx.visible(false); if (this.pop && this.closeAppearance) this.closeAppearance(true); };
   View.prototype.onLook = function () {
     var h = document.documentElement;
@@ -1208,7 +1214,7 @@
     if (this.closeAppearance) this.closeAppearance(true);
     if (T.Appearance && T.Appearance.forget) T.Appearance.forget(this);
     this.disposers.forEach(function (d) { try { d(); } catch (e) {} });
-    clearInterval(this.blinkTimer); clearInterval(this.clockTimer);
+    clearInterval(this.blinkTimer); clearInterval(this.clockTimer); clearTimeout(this._groundTimer);
     if (this._dprOff) this._dprOff();
     if (this.raf) cancelAnimationFrame(this.raf);
     if (this.fx) { this.fx.dispose(); this.fx = null; }

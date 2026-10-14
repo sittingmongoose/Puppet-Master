@@ -28,6 +28,9 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-root[data-pmt-bell="inverse"].pmt-bell .pmt-screen { animation: pmt-bell-inv .12s steps(1) 1; }
 @keyframes pmt-bell-inv { 0% { filter: invert(1); } 100% { filter: none; } }
 .pmt-root[data-pmt-bell="marker"].pmt-bell > .pmw-hrow { box-shadow: inset 0 -2px 0 var(--pmw-warn, var(--accent-warning)); }
+/* the Customize screen's preview has no header: its marker sits on its top edge, where the header would meet it
+   (pm7-customizer-audit #3) */
+.pmt-root.pmt-cz-pvroot[data-pmt-bell="marker"].pmt-bell .pmt-body { box-shadow: inset 0 2px 0 var(--pmw-warn, var(--accent-warning)); }
 
 /* ---- command marks per look ---- */
 .pmt-root[data-pmt-look="retro"] .pmt-mark svg { display: none; }
