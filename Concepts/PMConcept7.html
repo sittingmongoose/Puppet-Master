@@ -29569,9 +29569,9 @@ html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-hero, .pm6-wi
 /* the Orchestrator's one header sheet (title row, scope row, banners, the lens's tab strip along its bottom edge) and
    its board share one column: the same left and right edges */
 html[data-lg="on"][data-theme^="glass"] #panel-orchestrator > .wo-orch-head {
-  display: flex; flex-direction: column; flex: none; gap: 2px; margin: 12px 16px 10px; padding: 12px 16px 8px; border-radius: var(--lg-r-card, 16px);
+  display: flex; flex-direction: column; flex: none; gap: 2px; margin: 12px 16px 10px; padding: 12px 16px 8px; border-radius: var(--lg-r-bar, 14px);
 }
-html[data-lg="on"][data-theme^="glass"] #panel-orchestrator > .orch-content[data-lg-surface] { margin: 0 16px 16px !important; border-radius: var(--lg-r-card, 16px); }
+html[data-lg="on"][data-theme^="glass"] #panel-orchestrator > .orch-content[data-lg-surface] { margin: 0 16px 16px !important; border-radius: var(--lg-r-sheet, 18px); }
 html[data-lg="on"][data-theme^="glass"] #panel-orchestrator > .wo-orch-head > :is(.orch-header, #pm7-named-plan-scope, #pm7-named-plan-cards, .pm6-orch-banner, .orch-tabs) {
   margin-left: 0 !important; margin-right: 0 !important; background: transparent !important; border: 0 !important; box-shadow: none !important;
 }
@@ -29579,9 +29579,9 @@ html[data-lg="on"][data-theme^="glass"] #panel-orchestrator > .wo-orch-head > .o
 html[data-lg="on"][data-theme^="glass"] #panel-orchestrator > .wo-orch-head > #pm7-named-plan-scope { padding: 8px 0 !important; }
 html[data-lg="on"][data-theme^="glass"] #panel-orchestrator > .wo-orch-head > .orch-tabs { margin-top: 2px !important; background: var(--lg-fill) !important; }
 /* the Wizard's sheets keep 12 px of glass inside their edge, so the rim shows and nothing sits on it; the cards inside
-   nest their corners (sheet radius less the inset). The thread column already carries its own inset. */
+   nest their corners (a panel sheet's 18 px radius, --lg-r-sheet, less the inset). The thread column already carries its own inset. */
 html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-topics, .pm6-wiz-right, .pm6-wiz-prdrail, .pm6-wiz-prdpreview)[data-lg-surface] {
-  padding: 12px !important; box-sizing: border-box; --wo-lg-inner: calc(var(--lg-r-card, 16px) - 12px);
+  padding: 12px !important; box-sizing: border-box; --wo-lg-inner: calc(var(--lg-r-sheet, 18px) - 12px);
 }
 html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-topics, .pm6-wiz-right, .pm6-wiz-prdrail, .pm6-wiz-prdpreview)[data-lg-surface] :is(.pm6-wiz-topic-card, .pm6-wiz-preview, .pm6-wiz-rail, .pm6-wiz-doc, .pm6-wiz-prd-sec, .pm6-wiz-drop, .pm6-wiz-docrow) {
   border-radius: var(--wo-lg-inner) !important;
