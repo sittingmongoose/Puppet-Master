@@ -1135,34 +1135,9 @@ jumpToWorkspace = function (wsId, behavior) {
 };
 
 /* ---------- re-renders keep the reader's place ------------------------ */
-/* Host-driven setting changes (theme, density, host projections) call renderApp() without a
-   navigation intent. The engine's full remount reset the page to the top of the domain and the
-   scroll spy then reported the first workspace as active. When the rendered domain is unchanged
-   and no navigation scroll is pending, render softly and re-anchor the active workspace block at
-   the same offset it had before. Navigation (pendingScroll), Home, and explicit soft renders are
-   untouched. */
-const pm51OriginalRenderApp = renderApp;
-const pm51DocOffset = (scroller, block) => block.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop;
-let pm51Anchor = null;
-renderApp = function (options = {}) {
-  pm51Anchor = null;
-  if (!state.home && !options.soft && !pendingScroll) {
-    const rendered = root.querySelector('.domain-link.active');
-    const scroller = root.querySelector('#settings-document');
-    const block = scroller && state.workspace ? root.querySelector(`[data-workspace-block="${cssEscape(state.workspace)}"]`) : null;
-    if (rendered && rendered.dataset.domain === state.domain && block) {
-      pm51Anchor = { domain: state.domain, workspace: state.workspace, delta: scroller.scrollTop - pm51DocOffset(scroller, block) };
-      options = Object.assign({}, options, { soft: true });
-    }
-  }
-  return pm51OriginalRenderApp(options);
-};
-/* The engine restores a soft remount numerically (preservedScrollTop) in three consecutive frames,
-   before the blocks above the active workspace exist; that both landed on placeholder heights and
-   clobbered any navigation started in between (same-domain jumps do not re-render, so their smooth
-   scroll was overwritten by the second and third apply). The kit takes the restore over: hydrate the
-   blocks above, apply the exact offset once, re-check once, and yield to any navigation in flight. */
-const pm51OriginalAfterRender = afterRender;
+/* A redraw that is not a navigation updates the page in place (kit.d/28-in-place.js), and the reader's place, the end
+   space and the active section have one owner, kit.d/27-place.js. (This block used to render softly and put the
+   active workspace back at its old offset by number, three times, before late rows had arrived: M4, 2026-10-14.) */
 /* Sticky rosters need the scroller height as a CSS variable (the settings host is only an
    inline-size container, so cqh is unavailable). */
 let pm51RosterFitObserver = null, pm51RosterFitTarget = null;
@@ -1174,32 +1149,11 @@ function installRosterFit() {
   if (pm51RosterFitObserver) pm51RosterFitObserver.disconnect();
   pm51RosterFitObserver = new ResizeObserver(apply); pm51RosterFitObserver.observe(scroller); pm51RosterFitTarget = scroller;
 }
+const pm51OriginalAfterRender = afterRender;
 afterRender = function () {
   popoutClose({ restoreFocus: false });
   try { installRosterFit(); } catch (e) { /* cosmetic */ }
-  const a = pm51Anchor; pm51Anchor = null;
-  let restore = null;
-  if (a) {
-    preservedScrollTop = null;
-    if (softRemount && !state.home && state.domain === a.domain && state.workspace === a.workspace && !pendingScroll) {
-      const scroller = root.querySelector('#settings-document');
-      const block = scroller && root.querySelector(`[data-workspace-block="${cssEscape(a.workspace)}"]`);
-      if (scroller && block) { pm51MountPreceding(a.workspace); restore = { scroller, workspace: a.workspace, wanted: Math.max(0, Math.round(pm51DocOffset(scroller, block) + a.delta)) }; }
-    }
-  }
-  /* the scroll spy would otherwise re-label the active workspace at scrollTop 0 before the restore */
-  if (restore) suppressScrollSpyUntil = Math.max(suppressScrollSpyUntil, performance.now() + 200);
-  const out = pm51OriginalAfterRender.apply(this, arguments);
-  if (restore) {
-    const apply = () => {
-      if (state.workspace !== restore.workspace || pendingScroll || !restore.scroller.isConnected) return;
-      restore.scroller.style.scrollBehavior = 'auto'; restore.scroller.scrollTop = restore.wanted; restore.scroller.style.scrollBehavior = '';
-      suppressScrollSpyUntil = Math.max(suppressScrollSpyUntil, performance.now() + 180);
-    };
-    apply();
-    requestAnimationFrame(() => { if (Math.abs(restore.scroller.scrollTop - restore.wanted) > 1) apply(); });
-  }
-  return out;
+  return pm51OriginalAfterRender.apply(this, arguments);
 };
 if (window.PM12_KIMI && typeof window.PM12_KIMI === 'object') window.PM12_KIMI.renderApp = (...args) => renderApp(...args);
 const pm51OriginalBoot = boot;
@@ -1208,7 +1162,11 @@ boot = function () { const r = pm51OriginalBoot.apply(this, arguments); if (wind
 /* ---------- motion: no blank frames ----------------------------------- */
 armSectionReveal = function () {
   try { PM51.applyFilters(root); } catch (e) { /* filters are a convenience; never block reveal */ }
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  /* reduced motion, the system's or the app's own Reduce motion: every section is simply there */
+  if (o55Still()) {
+    root.querySelectorAll('.will-reveal').forEach(node => { node.classList.remove('will-reveal'); node.classList.add('is-revealed', 'pm51-instant'); });
+    return;
+  }
   const nodes = root.querySelectorAll('.section-block, .settings-section, .manager-section');
   if (!nodes.length) return;
   const scroller = root.querySelector('#settings-document');

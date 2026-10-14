@@ -805,6 +805,32 @@ PATCHES = [
     # the 515 px chat and a 751 px Settings, the next one 1278 px, so everything in Settings jumped 295 px sideways.
     # The decision only toggles a body class, so it is made in the observer itself, before that frame is painted.
     ("assign(width);scheduleSyncHost();", "assign(width);syncHost();", 'settings host: decide focus host before paint'),
+    # Settings updates in place (M4, 2026-10-14). Two seams in the Settings engine: how renderApp() commits the page's
+    # markup, and how the end space under the chapter's last section is sized. Both keep today's behaviour as their
+    # default; the kit takes them over (src/settings/kit.d/28-in-place.js patches the page in place instead of
+    # replacing it, and 27-place.js sizes the end space so it never pulls the page up under the reader).
+    ("  let softRemount = false;\n",
+     "  let softRemount = false;\n"
+     "  let commitSettingsShell = markup => { root.innerHTML = markup; };\n"
+     "  let sizeSettingsEndSpace = (scroller, end, sections) => {\n"
+     "    if (!sections.length) return;\n"
+     "    const last = sections[sections.length - 1];\n"
+     "    end.style.height = `${Math.max(140, scroller.clientHeight - Math.min(last.offsetHeight, scroller.clientHeight * .62) + 48)}px`;\n"
+     "  };\n",
+     'M4: settings commit and end-space seams'),
+    ("    root.innerHTML = `\n      <div class=\"pm-shell ${state.railOpen ? 'rail-open' : ''}\">",
+     "    commitSettingsShell(`\n      <div class=\"pm-shell ${state.railOpen ? 'rail-open' : ''}\">",
+     'M4: renderApp commits through the seam'),
+    ("      <div class=\"toast-stack\" id=\"toast-stack\"></div>`;\n    root.classList.add('is-ready');",
+     "      <div class=\"toast-stack\" id=\"toast-stack\"></div>`);\n    root.classList.add('is-ready');",
+     'M4: renderApp commit seam close'),
+    ("      if (scroller && end && sections.length) {\n"
+     "        const last = sections[sections.length - 1];\n"
+     "        const required = Math.max(140, scroller.clientHeight - Math.min(last.offsetHeight, scroller.clientHeight * .62) + 48);\n"
+     "        end.style.height = `${required}px`;\n"
+     "      }\n",
+     "      if (scroller && end) sizeSettingsEndSpace(scroller, end, sections);\n",
+     'M4: end space through the seam'),
 ]
 
 # Text typed under a Custom choice survives a reload (2026-10-13, pm7-terminal-options-audit-sol on frozen a1ca: Terminal
