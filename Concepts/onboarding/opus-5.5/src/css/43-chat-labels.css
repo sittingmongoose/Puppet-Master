@@ -19,3 +19,6 @@
   font-family: var(--display-font-sm, 'Rajdhani', sans-serif); letter-spacing: 0.08em; }
 html[data-o55-nier="on"] :is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]) .runtime-snapshot {
   color: var(--o55-nier-ink); font-family: var(--mono-font, 'IBM Plex Mono', monospace); font-weight: 500; letter-spacing: 0.14em; }
+/* inside the person's own bubble NieR inverts the bubble (ink on parchment in Dark, parchment on ink in Light), so the
+   label takes the bubble's own text colour there too; in NieR's ink it vanished into the bubble (1.00) */
+html[data-o55-nier="on"] :is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]).user .runtime-snapshot { color: inherit; }

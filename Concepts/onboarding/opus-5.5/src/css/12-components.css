@@ -10,7 +10,7 @@
 .o55-card.o55-card-quiet .o55-cardsub { font-size: 12.5px; }
 .o55-subchoices { margin: -4px 0 2px; padding: 8px; border-radius: var(--o55-card-r); background: color-mix(in srgb, var(--o55-accent) 6%, transparent); }
 .o55-card-link { grid-template-columns: auto minmax(0, 1fr) auto; border-style: dashed; }
-.o55-cardarrow { font-size: 22px; line-height: 1; color: var(--o55-accent); padding-right: 4px; }
+.o55-cardarrow { font-size: 22px; line-height: 1; color: var(--o55-ink-accent); padding-right: 4px; }
 .o55-row-wait { color: var(--text-secondary); }
 .o55-row-wait .o55-spin { margin: 0 6px; color: var(--o55-accent); }
 
@@ -65,7 +65,9 @@
 #pm-o55-onboarding[data-family="retro"] .o55-qrbox { border-radius: 0; }
 .o55-pairinfo, .o55-devicecode { display: grid; gap: 6px; }
 .o55-pairtitle { font-weight: 700; font-size: 14px; }
-.o55-paircode { font: 800 26px/1.1 var(--display-font, var(--body-font)); letter-spacing: 0.08em; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+/* the code keeps its font's own figures: it never ticks, and tabular figures (a 1 centred in a wider cell) are drawn where
+   no glyph mask taken from the text expects them, which reads as ink on ink */
+.o55-paircode { font: 800 26px/1.1 var(--display-font, var(--body-font)); letter-spacing: 0.08em; color: var(--text-primary); }
 #pm-o55-onboarding[data-family="retro"] .o55-paircode { color: var(--o55-accent); }
 .o55-pairbtns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
 .o55-devicecode { padding: 14px 16px; border-radius: var(--o55-card-r); border: 1px dashed color-mix(in srgb, var(--o55-accent) 50%, var(--o55-line)); }
@@ -143,8 +145,11 @@
 .o55-providers { display: grid; gap: 8px; }
 .o55-provider { display: grid; gap: 0; }
 .o55-provider .o55-row { grid-template-columns: auto minmax(0, 1fr) auto auto; }
-.o55-plogo { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: hsl(var(--plh, 210) 60% 50% / 0.18); color: hsl(var(--plh, 210) 70% 62%); font: 800 16px/1 var(--display-font, var(--body-font)); }
-#pm-o55-onboarding[data-mode="light"] .o55-plogo { color: hsl(var(--plh, 210) 60% 38%); }
+/* a provider's monogram: its letter in the provider's hue on a tint of it, the letter lightened (dark) or deepened
+   (light) far enough that every hue reads 4.5:1 on its tint (at 62% and 38% lightness the yellows and oranges read
+   about 2.3:1) */
+.o55-plogo { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: hsl(var(--plh, 210) 60% 50% / 0.18); color: hsl(var(--plh, 210) 80% 76%); font: 800 16px/1 var(--display-font, var(--body-font)); }
+#pm-o55-onboarding[data-mode="light"] .o55-plogo { color: hsl(var(--plh, 210) 70% 21%); }
 #pm-o55-onboarding[data-family="friendly"] .o55-plogo { border-radius: 50%; }
 #pm-o55-onboarding[data-family="retro"] .o55-plogo { border-radius: 0; }
 .o55-plogo-m { display: none; } /* the two-letter code NieR Mode shows instead (11-window-nier.css) */

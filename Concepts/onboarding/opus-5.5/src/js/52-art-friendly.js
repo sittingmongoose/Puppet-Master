@@ -26,6 +26,8 @@
   const sh = (p, shape) => `<g transform="translate(3 4)" fill="${p.shadow}" stroke="none">${shape}</g>`;
   const label = (p, x, y, s, color) => `<text x="${x}" y="${y}" text-anchor="middle" font-family="Poppins, Nunito, system-ui, sans-serif" font-weight="600" font-size="9" fill="${color || p.ink}">${U.esc(s)}</text>`;
   const variants = (p) => [p.peach, p.mint, p.sky, p.lilac];
+  /* an identity's words in two lines of two: in one line the four words ran out past the stage's curtain */
+  const words2 = (s) => { const w = String(s).split(/\s+/).filter(Boolean); if (w.length < 3) return [w.join(' ')]; const h = Math.ceil(w.length / 2); return [w.slice(0, h).join(' '), w.slice(h).join(' ')]; };
 
   /* A felt puppet whose every part is sewn on: two-part sleeves (upper arm over forearm, folded at the elbow) end in a
      mitten hand, and short legs run up under the hem so the shoes are always attached. A waving arm is the rig's
@@ -143,7 +145,7 @@
       return `<g>${sh(p, `<path d="${d}Z"/>`)}<path d="${d}Z" fill="${col}" ${OL(p)}/><circle r="20" fill="${p.paper}" ${OL(p, 1.6)}/>`
         + `<g transform="translate(-12 -12)" style="color:${p.ink}">${A.glyph(o.icon || 'spark', 'currentColor', 2)}</g>`
         /* its name: no box, the words on a hand-drawn squiggle in the node's own colour (as the captions are) */
-        + (o.label ? (() => { const w = o.label.length * 5.8 + 6, n = Math.max(2, Math.round(w / 8)), st = w / n; let sq = `M${(-w / 2).toFixed(1)} 9`; for (let i = 0; i < n; i++) sq += ` q${(st / 2).toFixed(2)} ${i % 2 ? 2.2 : -2.2} ${st.toFixed(2)} 0`;
+        + (o.label ? (() => { const w = o.label.length * 5.8 + 6, n = Math.max(2, Math.round(w / 8)), st = w / n; let sq = `M${(-w / 2).toFixed(1)} 9.6`; for (let i = 0; i < n; i++) sq += ` q${(st / 2).toFixed(2)} ${i % 2 ? 2.2 : -2.2} ${st.toFixed(2)} 0`;
           return `<g transform="translate(0 44)"><path d="${sq}" fill="none" stroke="${col}" stroke-width="2" stroke-linecap="round"/>${label(p, 0, 3, o.label, p.label)}</g>`; })() : '') + '</g>';
     },
     pathline(ctx, item) {
@@ -163,7 +165,9 @@
     folder(ctx, item) {
       const p = ctx.pal, d = 'M-32 -20 a5 5 0 0 1 5 -5 h16 l6 6 h32 a5 5 0 0 1 5 5 v30 a5 5 0 0 1 -5 5 h-54 a5 5 0 0 1 -5 -5Z';
       return `<g>${sh(p, `<path d="${d}"/>`)}<path d="${d}" fill="${p.sun}" ${OL(p)}/><path d="M-32 -10 H32" stroke="${p.ink}" stroke-width="1.6" opacity="0.4"/>`
-        + ((item.opts || {}).label ? label(p, 0, 36, item.opts.label, p.label) : '') + '</g>';
+        /* its name under it, or above it where the folder sits on the NAS's corner (opts.labelAt 'above'), where a name
+           under it ran across the NAS's outline */
+        + ((item.opts || {}).label ? label(p, 0, item.opts.labelAt === 'above' ? -31 : 36, item.opts.label, p.label) : '') + '</g>';
     },
     spark(ctx, item) {
       const p = ctx.pal, o = item.opts || {}, c = o.tone != null ? A.tone(ctx, o.tone) : p.sun;
@@ -186,14 +190,14 @@
       const p = ctx.pal, o = item.opts || {};
       return `<g>${sh(p, '<rect x="-36" y="-36" width="72" height="72" rx="16"/>')}<rect x="-36" y="-36" width="72" height="72" rx="16" fill="${p.paper}" ${OL(p)}/>`
         + `<g transform="translate(-22 -22)">${A.identitySvg(o.seed || 'nas', 44, 'friendly').replace('<svg', '<svg x="0" y="0"')}</g>`
-        + (o.words ? label(p, 0, 52, o.words, p.dark ? p.paper : p.ink) : '') + '</g>';
+        + (o.words ? words2(o.words).map((w, i) => label(p, 0, 52 + i * 11, w, p.dark ? p.paper : p.ink)).join('') : '') + '</g>';
     },
     /* a caption: no box. A dotted thread runs from a felt dot on the thing it names to a second felt dot, and the words
        stand beside it on a hand-drawn squiggle in the puppet colours */
     note(ctx, item) {
       const p = ctx.pal, o = item.opts || {}, dx = o.dx == null ? 60 : o.dx, dy = o.dy == null ? -30 : o.dy, right = dx >= 0, w = (o.text || '').length * 5.8 + 6, x0 = right ? dx + 6 : dx - 6 - w;
       const n = Math.max(2, Math.round(w / 8)), step = w / n;
-      let sq = `M${x0.toFixed(1)} ${dy + 6}`; for (let i = 0; i < n; i++) sq += ` q${(step / 2).toFixed(2)} ${i % 2 ? 2.2 : -2.2} ${step.toFixed(2)} 0`;
+      let sq = `M${x0.toFixed(1)} ${dy + 8.8}`; /* (below the words' box, which ends about 2.3 under the baseline) */ for (let i = 0; i < n; i++) sq += ` q${(step / 2).toFixed(2)} ${i % 2 ? 2.2 : -2.2} ${step.toFixed(2)} 0`;
       const tone = variants(p)[(o.tone || 2) % 4];
       return `<g><path d="M0 0 Q${(dx * 0.5).toFixed(1)} ${(dy * 0.15).toFixed(1)} ${dx} ${dy}" fill="none" stroke="${p.label}" stroke-width="1.4" stroke-dasharray="2 3" stroke-linecap="round"/>`
         + `<circle r="2.8" fill="${tone}" ${OL(p, 1.3)}/><circle cx="${dx}" cy="${dy}" r="2.6" fill="${tone}" ${OL(p, 1.3)}/>`
@@ -216,9 +220,11 @@
     },
     background(ctx) {
       const p = ctx.pal, W = A.W, H = A.H, frame = ctx.frame !== false;
+      /* (the third star sat at 370, 176, right behind a device's identity words under its card: light words on a gold
+         star read 1.2:1; it is up and to the right, behind the card on those steps) */
       const sky = p.dark
         ? `<g class="o55-amb o55-amb-twinkle-all"><path d="M142 92 a20 20 0 1 0 22 26 a15 15 0 1 1 -22 -26Z" fill="${p.sun}" ${OL(p, 1.6)}/>`
-          + [[212, 80], [340, 104], [370, 176], [150, 196], [286, 70], [236, 150], [322, 238]].map(([x, y], i) => `<path transform="translate(${x} ${y}) scale(${i % 2 ? 0.55 : 0.8})" d="M0 -8 L2.4 -2.4 L8 0 L2.4 2.4 L0 8 L-2.4 2.4 L-8 0 L-2.4 -2.4Z" fill="${p.sun}" opacity="0.9" class="o55-star" style="--si:${i}"/>`).join('') + '</g>'
+          + [[212, 80], [340, 104], [388, 140], [150, 196], [286, 70], [236, 150], [322, 238]].map(([x, y], i) => `<path transform="translate(${x} ${y}) scale(${i % 2 ? 0.55 : 0.8})" d="M0 -8 L2.4 -2.4 L8 0 L2.4 2.4 L0 8 L-2.4 2.4 L-8 0 L-2.4 -2.4Z" fill="${p.sun}" opacity="0.9" class="o55-star" style="--si:${i}"/>`).join('') + '</g>'
         : `<g><circle cx="352" cy="104" r="26" fill="${p.sun}" ${OL(p, 1.8)}/>` + [0, 45, 90, 135, 180, 225, 270, 315].map((a) => `<path transform="translate(352 104) rotate(${a})" d="M0 -34 V-42" stroke="${p.ink}" stroke-width="2" stroke-linecap="round" opacity="0.5"/>`).join('')
           + `<path d="M140 122 a12 12 0 0 1 2 -23 a16 16 0 0 1 29 -5 a12 12 0 0 1 21 11 a10 10 0 0 1 -2 17Z" fill="${p.paper}" ${OL(p, 1.6)}/></g>`;
       /* the side drapes are drawn narrower than the stage opening needs (they crowded props near the edges) */

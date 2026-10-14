@@ -14,12 +14,18 @@
   --o55g-switch-off: var(--lg-switch-off, rgba(255, 255, 255, 0.16)); --o55g-sel: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.1));
   /* the main action's tint: Glass Dark's accent is a pale sky blue, under which white words read at about 2:1, so its
      glass is cut from a deeper blue (as the Glass layer does), about 5.6:1 */
-  --o55g-action: rgb(38, 102, 210); }
+  --o55g-action: rgb(38, 102, 210);
+  --o55g-row: var(--o55g-fill); --o55g-row-on: var(--o55g-fill-press); }
 #pm-o55-onboarding[data-family="glass"][data-mode="light"], .o55t-root[data-family="glass"][data-mode="light"] {
   --o55g-fill: var(--lg-fill, rgba(12, 15, 21, 0.055)); --o55g-fill-hover: var(--lg-fill-hover, rgba(12, 15, 21, 0.09)); --o55g-fill-press: var(--lg-fill-press, rgba(12, 15, 21, 0.13));
   --o55g-line: var(--lg-line, rgba(12, 15, 21, 0.09)); --o55g-edge-top: var(--lg-edge-top, rgba(255, 255, 255, 0.9)); --o55g-edge-bot: var(--lg-edge-bot, rgba(30, 45, 90, 0.14));
   --o55g-switch-off: var(--lg-switch-off, rgba(12, 15, 21, 0.14)); --o55g-sel: linear-gradient(180deg, #fff, rgba(255, 255, 255, 0.86));
-  --o55g-action: var(--accent-blue); }
+  /* Light's action: the accent deepened toward navy, so its white word reads 5.5:1 or more (the plain accent with the
+     old highlight read 3.6:1 at its brightest pixel) */
+  --o55g-action: color-mix(in srgb, var(--accent-blue) 78%, #0b1f4d);
+  /* Light's rows, tiles and segments are white frosted glass on the pale sheet (an ink fill darkened what lay under
+     their words: a tile's description read about 4:1) */
+  --o55g-row: rgba(255, 255, 255, 0.66); --o55g-row-on: rgba(255, 255, 255, 0.86); }
 
 /* actions: a glass button (a fill with light along its top edge and a shade along its foot); the press springs */
 #pm-o55-onboarding[data-family="glass"] :is(.o55-btn, .o55-iconbtn, .o55-sound),
@@ -45,8 +51,9 @@
 #pm-o55-onboarding[data-family="glass"] .o55-btn.o55-primary,
 .o55t-root[data-family="glass"] .o55t-btn.o55t-primary {
   color: #fff; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
-  background: radial-gradient(120% 140% at 30% -20%, rgba(255, 255, 255, 0.42), transparent 55%),
-    linear-gradient(180deg, color-mix(in srgb, var(--o55g-action) 96%, transparent), color-mix(in srgb, var(--o55g-action) 78%, #0a1430));
+  /* its light is a sheen along the top edge that has faded out before the word begins */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0, rgba(255, 255, 255, 0.08) 18%, rgba(255, 255, 255, 0) 30%),
+    linear-gradient(180deg, color-mix(in srgb, var(--o55g-action) 96%, transparent), color-mix(in srgb, var(--o55g-action) 80%, #0a1430));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 1px rgba(0, 0, 0, 0.22), 0 8px 22px -8px color-mix(in srgb, var(--o55g-action) 75%, transparent), 0 1px 2px rgba(0, 0, 0, 0.25); }
 #pm-o55-onboarding[data-family="glass"] .o55-btn.o55-primary:not([aria-disabled="true"]):hover,
 .o55t-root[data-family="glass"] .o55t-btn.o55t-primary:not([aria-disabled="true"]):hover { filter: brightness(1.06); }
@@ -58,11 +65,11 @@
 /* choices: glass rows; the chosen one lights up with a ring of the accent and a glow under it */
 #pm-o55-onboarding[data-family="glass"] :is(.o55-card, .o55-tile, .o55-provider),
 .o55t-root[data-family="glass"] .o55t-choice {
-  border-color: transparent; border-radius: 12px; background: var(--o55g-fill);
+  border-color: transparent; border-radius: 12px; background: var(--o55g-row);
   box-shadow: inset 0 1px 0 var(--o55g-edge-top), inset 0 -1px 1px var(--o55g-edge-bot), 0 0 0 0.5px var(--o55g-line); }
 #pm-o55-onboarding[data-family="glass"] :is(.o55-card, .o55-tile, .o55-provider):is(.o55-on, [aria-checked="true"], [aria-pressed="true"]),
 .o55t-root[data-family="glass"] .o55t-choice.o55t-on {
-  background: radial-gradient(120% 120% at 20% -10%, rgba(255, 255, 255, 0.16), transparent 60%), var(--o55g-fill-press);
+  background: radial-gradient(120% 120% at 20% -10%, rgba(255, 255, 255, 0.16), transparent 60%), var(--o55g-row-on);
   box-shadow: inset 0 1px 0 var(--o55g-edge-top), inset 0 0 0 1.5px color-mix(in srgb, var(--accent-blue) 85%, transparent), 0 10px 26px -14px color-mix(in srgb, var(--accent-blue) 60%, transparent); }
 
 /* segments: a glass track; the chosen segment is a raised piece of clear glass (the Glass layer's lens, when it is
@@ -91,6 +98,12 @@ html:not([data-lg="on"]) .o55t-root[data-family="glass"] .o55t-seg button.o55t-o
   box-shadow: inset 0 1px 0 #fff, inset 0 -1px 1px rgba(20, 30, 60, 0.14), 0 2px 5px rgba(0, 8, 30, 0.32);
   transition: transform 520ms cubic-bezier(0.45, 0, 0.2, 1.15), background 220ms ease; }
 #pm-o55-onboarding[data-family="glass"] .o55-toggle.o55-on .o55-switch span { transform: translateX(16px); }
+
+/* words that have to read on the sheet: a step still to come is lettered at the secondary text's strength (the muted
+   ink read 2.8:1 on Light's pale sheet), and the accent as words (the eyebrow over each title, a link, a card's arrow)
+   is the accent deepened toward the text */
+#pm-o55-onboarding[data-family="glass"] .o55-railitem:not([data-state="current"]) { color: var(--text-secondary); }
+#pm-o55-onboarding[data-family="glass"][data-mode="light"] { --o55-ink-accent: color-mix(in srgb, var(--o55-accent) 68%, var(--text-primary)); }
 
 /* the step rail is the Glass owner's: with the Glass layer on, its lens is the current step's only highlight, so the
    current node's own halo steps aside (pm7-liquid-glass, 2026-10-13; without the layer the rail is as it was) */

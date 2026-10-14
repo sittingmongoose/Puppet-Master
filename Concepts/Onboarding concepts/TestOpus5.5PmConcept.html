@@ -26948,6 +26948,20 @@ html[data-o55-open][data-o55-solid] body > [inert] { visibility: hidden !importa
   --o55-win-bg: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(243, 238, 252, 0.86) 55%, rgba(233, 241, 248, 0.88)), var(--background); }
 #pm-o55-onboarding[data-family="glass"] .o55-win { border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: 0 34px 90px -16px rgba(25, 10, 50, 0.62), inset 0 1px 0 rgba(255, 255, 255, 0.4); }
 #pm-o55-onboarding[data-family="retro"] { --o55-r: 0; --o55-card-r: 0; --o55-btn-r: 0; }
+/* Muted words read 4.5:1 or more (2026-10-14, worst-pixel contrast round). Each look's muted ink is its own theme token,
+   and in several looks it reads under 4.5:1 on the window (Basic Dark 3.3:1, Friendly Light 3.0:1): the upcoming steps,
+   group titles, hints and phase labels all use it. The window and the tour read the theme's muted ink once (--o55-tm,
+   inherited from the page) and letter their muted words in that ink mixed toward the primary text by the share each look
+   needs (--o55-tm-k: how much of the muted ink stays), so the words stay quieter than the body text but read. NieR Mode
+   keeps its own inks. The look tiles carry their own look's tokens and are not touched. */
+:is(#pm-o55-onboarding, .o55t-root) { --o55-tm: var(--text-muted); --o55-tm-k: 100%; }
+:is(#pm-o55-onboarding, .o55t-root)[data-family="basic"][data-mode="light"] { --o55-tm-k: 92%; }
+:is(#pm-o55-onboarding, .o55t-root)[data-family="basic"][data-mode="dark"] { --o55-tm-k: 66%; }
+:is(#pm-o55-onboarding, .o55t-root)[data-family="friendly"][data-mode="light"] { --o55-tm-k: 44%; }
+:is(#pm-o55-onboarding, .o55t-root)[data-family="friendly"][data-mode="dark"] { --o55-tm-k: 70%; }
+:is(#pm-o55-onboarding, .o55t-root)[data-family="glass"] { --o55-tm-k: 45%; }
+:is(#pm-o55-onboarding, .o55t-root)[data-family="retro"][data-mode="dark"] { --o55-tm-k: 82%; }
+html:not([data-o55-nier="on"]) :is(#pm-o55-onboarding > .o55-win, .o55t-root > *) { --text-muted: color-mix(in srgb, var(--o55-tm) var(--o55-tm-k), var(--text-primary)); }
 #pm-o55-onboarding[data-family="retro"][data-mode="dark"] { --o55-accent: var(--accent-lime); --o55-on-accent: #0a0c08; }
 #pm-o55-onboarding[data-family="retro"] .o55-win { border: 3px solid var(--text-primary); box-shadow: 10px 10px 0 color-mix(in srgb, var(--text-primary) 38%, transparent); }
 
@@ -27008,7 +27022,7 @@ html[data-o55-open][data-o55-solid] body > [inert] { visibility: hidden !importa
 #pm-o55-onboarding[data-family="glass"] .o55-pane > .o55-layer { background: transparent; }
 .o55-scroll { display: flex; flex-direction: column; overflow: auto; min-height: 0; overscroll-behavior: contain; scrollbar-width: thin; }
 .o55-content { margin-block: auto; padding: 32px var(--o55-pad) 28px; max-width: 640px; width: 100%; box-sizing: border-box; }
-.o55-eyebrow { margin: 0 0 10px; font: 700 11.5px/1.2 var(--body-font); letter-spacing: 0.13em; text-transform: uppercase; color: var(--o55-accent); }
+.o55-eyebrow { margin: 0 0 10px; font: 700 11.5px/1.2 var(--body-font); letter-spacing: 0.13em; text-transform: uppercase; color: var(--o55-ink-accent); }
 .o55-title { margin: 0 0 10px; font: 750 clamp(24px, 2.35vw, 31px)/1.16 var(--display-font, var(--body-font)); letter-spacing: -0.012em; color: var(--text-primary); outline: none; text-wrap: balance; }
 .o55-lead { margin: 0 0 24px; font: 400 15.5px/1.55 var(--body-font); color: var(--text-secondary); max-width: 52ch; text-wrap: pretty; }
 #pm-o55-onboarding[data-family="retro"] .o55-title { text-transform: uppercase; letter-spacing: 0.02em; font-size: clamp(20px, 2vw, 26px); }
@@ -27029,7 +27043,7 @@ html[data-o55-open][data-o55-solid] body > [inert] { visibility: hidden !importa
   cursor: pointer; border: 1px solid transparent; background: transparent; color: var(--text-primary); transition: transform 140ms ease, background 160ms ease, box-shadow 160ms ease; white-space: nowrap; }
 .o55-btn:active { transform: translateY(1px) scale(0.985); }
 .o55-btn.o55-small { min-height: 32px; padding: 0 12px; font-size: 13px; }
-.o55-primary { background: var(--o55-accent); color: var(--o55-on-accent); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 8px 18px -8px color-mix(in srgb, var(--o55-accent) 80%, transparent); }
+.o55-primary { background: var(--o55-action); color: var(--o55-on-accent); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 8px 18px -8px color-mix(in srgb, var(--o55-accent) 80%, transparent); }
 /* hover and disabled states are colour mixes, not filters (Slint has no filters; its colours have mix()) */
 .o55-primary:hover { background-color: color-mix(in srgb, var(--o55-accent) 91%, #fff); }
 .o55-secondary { border-color: var(--o55-line); background: color-mix(in srgb, var(--surface) 70%, transparent); }
@@ -27073,10 +27087,16 @@ html[data-o55-open][data-o55-solid] body > [inert] { visibility: hidden !importa
    (measured 2026-10-13: a tag on a chosen card, a status on its row, the route on its line). Elsewhere a tag is the
    accent taken a little toward the text and a status is its tone. NieR's words keep NieR's inks (11-window-nier.css). */
 #pm-o55-onboarding { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 88%, var(--text-primary)); --o55-ink-wait: var(--o55-accent); --o55-ink-ready: var(--accent-lime);
-  --o55-ink-needs: var(--accent-orange); }
+  --o55-ink-needs: var(--accent-orange);
+  /* the accent as words (an eyebrow, a link, a card's arrow) and as the main action's fill under its words: the accent
+     itself unless the look's accent is too light for that */
+  --o55-ink-accent: var(--o55-accent); --o55-action: var(--o55-accent); }
 #pm-o55-onboarding[data-family="basic"][data-mode="light"] { --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 88%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 74%, #000); }
 #pm-o55-onboarding[data-family="friendly"][data-mode="light"] { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 66%, #000); --o55-ink-wait: var(--o55-ink-tag);
-  --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 76%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 66%, #000); }
+  --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 76%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 66%, #000);
+  /* Paper theatre's orange reads 2.8:1 as words on white and under white words: words take the tag's brick, the main
+     action a brick a little lighter (5.2:1 under white) */
+  --o55-ink-accent: var(--o55-ink-tag); --o55-action: color-mix(in srgb, var(--o55-accent) 70%, #000); }
 #pm-o55-onboarding[data-family="glass"][data-mode="light"] { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 70%, #000); --o55-ink-wait: var(--o55-ink-tag);
   --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 94%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 88%, #000); }
 #pm-o55-onboarding[data-family="retro"][data-mode="light"] { --o55-ink-ready: color-mix(in srgb, var(--accent-lime) 93%, #000); --o55-ink-needs: color-mix(in srgb, var(--accent-orange) 61%, #000); }
@@ -27102,7 +27122,9 @@ html[data-o55-open][data-o55-solid] body > [inert] { visibility: hidden !importa
 .o55-tile.o55-on { border-color: var(--o55-accent); box-shadow: inset 0 0 0 1px var(--o55-accent), 0 12px 26px -16px color-mix(in srgb, var(--o55-accent) 90%, transparent); }
 .o55-tileart { position: relative; display: block; height: 100px; border-radius: calc(var(--o55-card-r) * 0.7); overflow: hidden; background: var(--background); margin-bottom: 6px; }
 .o55-tilename { font: 700 14px/1.2 var(--body-font); padding: 0 4px; }
-.o55-tilesub { font: 400 12.5px/1.35 var(--body-font); color: var(--text-secondary); padding: 0 4px; }
+/* (each look tile carries its own look's tokens; some looks' secondary ink is a tint that reads under 4.5:1 on a tile in
+   another look's window, so a tile's line is its own text colour at 82%) */
+.o55-tilesub { font: 400 12.5px/1.35 var(--body-font); color: color-mix(in srgb, var(--text-primary) 82%, transparent); padding: 0 4px; }
 .o55-tile > .o55-check { position: absolute; right: 16px; top: 16px; background: var(--surface); }
 .o55-tile.o55-on > .o55-check { background: var(--o55-accent); border-color: var(--o55-accent); box-shadow: inset 0 0 0 4px var(--surface); }
 .o55-lookmode { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
@@ -27120,7 +27142,9 @@ html[data-o55-open][data-o55-solid] body > [inert] { visibility: hidden !importa
 .o55-toggle.o55-on .o55-switch span { transform: translateX(16px); }
 #pm-o55-onboarding[data-family="retro"] .o55-switch, #pm-o55-onboarding[data-family="retro"] .o55-switch span { border-radius: 0; }
 .o55-toggletext { display: grid; gap: 2px; } .o55-toggletitle { font-weight: 600; font-size: 14px; } .o55-togglesub { font-size: 12.5px; color: var(--text-secondary); }
-.o55-link { background: none; border: 0; padding: 2px 0; color: var(--o55-accent); font: 600 13.5px/1.4 var(--body-font); cursor: pointer; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--o55-accent) 40%, transparent); text-underline-offset: 3px; }
+.o55-link { background: none; border: 0; padding: 2px 0; color: var(--o55-ink-accent); font: 600 13.5px/1.4 var(--body-font); cursor: pointer; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--o55-ink-accent) 40%, transparent);
+  /* the underline runs under the descenders, clear of the words' own box, so it never sits behind a letter */
+  text-underline-position: under; text-underline-offset: 2px; }
 .o55-link:hover { text-decoration-color: currentColor; }
 .o55-sublinks { display: flex; gap: 18px; flex-wrap: wrap; padding-top: 2px; }
 .o55-details { border-radius: var(--o55-card-r); }
@@ -27206,7 +27230,12 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="retro"] .o55-name
 .o55-phmark { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; border: 1.6px solid color-mix(in srgb, var(--text-primary) 25%, transparent); color: var(--o55-on-accent); font: 700 12px/1 var(--body-font); transition: all 260ms ease; }
 .o55-ph-done { color: var(--text-primary); } .o55-ph-done .o55-phmark { background: var(--accent-lime); border-color: var(--accent-lime); color: #0b1f12; }
 .o55-ph-active { color: var(--text-primary); font-weight: 600; } .o55-ph-active .o55-phmark { border-color: var(--o55-accent); border-right-color: transparent; animation: o55-spin 0.9s linear infinite; }
-.o55-ph-failed { color: var(--accent-orange); } .o55-ph-failed .o55-phmark { background: var(--accent-orange); border-color: var(--accent-orange); color: #1b0f06; }
+/* a step that failed: its words in the look's needs-attention ink (the label inks above; the raw orange read 3.2:1 on a
+   light sheet), a step deeper on light sheets, and its mark that ink with words that read on it (dark on Dark's bright
+   orange, white on Light's deepened one, where dark read 4.2:1) */
+#pm-o55-onboarding { --o55-ink-failed: var(--o55-ink-needs); --o55-on-failed: #1b0f06; }
+#pm-o55-onboarding[data-mode="light"] { --o55-ink-failed: color-mix(in srgb, var(--o55-ink-needs) 88%, #000); --o55-on-failed: #fff; }
+.o55-ph-failed { color: var(--o55-ink-failed); } .o55-ph-failed .o55-phmark { background: var(--o55-ink-failed); border-color: var(--o55-ink-failed); color: var(--o55-on-failed); }
 .o55-phdetail { grid-column: 2; font-size: 12.5px; color: var(--text-muted); font-weight: 400; }
 #pm-o55-onboarding[data-family="retro"] .o55-phmark { border-radius: 0; }
 .o55-inlinecheck { padding: 12px 14px; border-radius: var(--o55-card-r); background: color-mix(in srgb, var(--accent-lime) 7%, transparent); border: 1px dashed color-mix(in srgb, var(--accent-lime) 40%, transparent); }
@@ -27328,6 +27357,11 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-foot { background: var(--o55-wi
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-stage { border-right-color: rgba(var(--o55-nier-ink-rgb), .38); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-title { font-weight: 600; letter-spacing: .005em; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-eyebrow { color: var(--o55-nier-ink); }
+/* the quieter ink, one step further from the ground inside the window and the tour: a paragraph crosses the world's
+   grid lines, and on a line the theme's own light secondary ink (#4d4b3f) reads 4.16:1; the tokens stay the theme's */
+html[data-o55-nier="on"] :is(#pm-o55-onboarding[data-mode="light"] > .o55-win, .o55t-root[data-mode="light"] > *) { --text-secondary: #3f3d33; --text-muted: #3f3d33; }
+/* dark: the theme's #a8a593 / #9d9986 read 3.5 to 4.2:1 where a line or a raised panel lifts the ground */
+html[data-o55-nier="on"] :is(#pm-o55-onboarding[data-mode="dark"] > .o55-win, .o55t-root[data-mode="dark"] > *) { --text-secondary: #c0bca7; --text-muted: #c0bca7; }
 
 /* flat ink controls: the primary is an ink block, nothing glows, a hover is a tone of the ground */
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-primary { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); box-shadow: none; text-shadow: none; }
@@ -27359,6 +27393,10 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-field.o55-invalid input { borde
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-phmark { width: 14px; height: 14px; margin: 3px; border: 1px solid rgba(var(--o55-nier-ink-rgb), .5); color: var(--o55-nier-on-ink); font: 700 10px/1 var(--mono-font); }
 html[data-o55-nier="on"] #pm-o55-onboarding :is(.o55-ph-done, .o55-step-done) .o55-phmark { background: var(--o55-nier-ink); border-color: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-ph-failed { color: var(--o55-nier-error-text); }
+/* (the error ink a step further from the ground, as it crosses the world's grid lines: light #7d3427 read 4.2:1 on a
+   line, dark #d98a77 3.9:1) */
+html[data-o55-nier="on"] #pm-o55-onboarding[data-mode="light"] .o55-ph-failed { color: color-mix(in srgb, var(--o55-nier-error-text) 80%, #000); }
+html[data-o55-nier="on"] #pm-o55-onboarding[data-mode="dark"] .o55-ph-failed { color: color-mix(in srgb, var(--o55-nier-error-text) 70%, #fff); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-ph-failed .o55-phmark { background: var(--o55-nier-error); border-color: var(--o55-nier-error); color: var(--o55-nier-on-ink); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-step-active .o55-phmark { box-shadow: none; border-color: var(--o55-nier-ink); }
 /* the working mark keeps the ink (the Diamond loaders part turns it into a hollow diamond drawn in currentColor) */
@@ -27444,6 +27482,9 @@ html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-routelink span { bac
 html[data-o55-nier-parts~="square"] #pm-o55-onboarding .o55-lookmenu { border: 1px solid var(--o55-nier-ink); background: var(--o55-nier-overlay); box-shadow: 4px 4px 0 rgba(var(--o55-nier-shadow-rgb), .28); }
 
 /* ======================================================================================================= Menu cursor */
+/* a look tile's line under its name is NieR's ink, not the previewed look's own text colour (Paper theatre's and Light
+   lab's read 4.0 and 4.4:1 on the parchment); the chosen tile's paper words below still win */
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-tile .o55-tilesub { color: color-mix(in srgb, var(--o55-nier-ink) 82%, transparent); }
 /* The chosen card, tile or segment is an inverted ink block with paper words (O55.nierFx.cursor slides the same ink
    in under the pointer and keeps its square stepping beside it). The tile's living art keeps its own look. */
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-card.o55-on,
@@ -27528,7 +27569,7 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-kick { grid-row: 
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-kick > i { display: block; width: 4px; height: 4px; background: currentColor; }
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-kick > i:nth-child(2) { opacity: .6; }
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-kick > i:nth-child(3) { opacity: .3; }
-html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-sub { display: block; font: 500 8.5px/1 var(--mono-font); letter-spacing: .24em; opacity: .72; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-sub { display: block; font: 500 8.5px/1 var(--mono-font); letter-spacing: .24em; opacity: .84; }
 /* the chapter rail: an ink ruler with square caps; strings hang to a tab per chapter; where you are is an ink block,
    a chapter done carries a small square tick, one still to come a hollow square */
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-railbar {
@@ -27651,8 +27692,9 @@ html[data-o55-nier-parts~="pod"]:not([data-motion="reduced"]):not([data-o55-lowr
 @keyframes o55nw-bob { from { transform: translateY(0); } to { transform: translateY(-6px); } }
 @keyframes o55nw-bob-shadow { from { transform: scaleX(1); opacity: .9; } to { transform: scaleX(.7); opacity: .5; } }
 /* -- Drifting particles [particles]: eight small ink squares drifting slowly across the panel -- */
-html[data-o55-nier-parts~="particles"] #pm-o55-onboarding .o55nw-mote { display: block; width: 4px; height: 4px; background: rgba(var(--o55-nier-ink-rgb), .26); will-change: transform; }
-html[data-o55-nier-parts~="particles"] #pm-o55-onboarding .o55nw-mote:nth-of-type(3n) { width: 6px; height: 6px; background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .3); }
+/* (the motes are the ink at 16%: at 26 to 30% a caption a mote drifted onto read 3.7:1 where it lay) */
+html[data-o55-nier-parts~="particles"] #pm-o55-onboarding .o55nw-mote { display: block; width: 4px; height: 4px; background: rgba(var(--o55-nier-ink-rgb), .16); will-change: transform; }
+html[data-o55-nier-parts~="particles"] #pm-o55-onboarding .o55nw-mote:nth-of-type(3n) { width: 6px; height: 6px; background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .18); }
 html[data-o55-nier-parts~="particles"] #pm-o55-onboarding .o55nw-mote:nth-of-type(4n + 1) { width: 3px; height: 3px; }
 .o55nw-mote:nth-of-type(2) { left: 9%; top: 24%; --d: 46s; --dl: -12s; }
 .o55nw-mote:nth-of-type(3) { left: 22%; top: 70%; --d: 58s; --dl: -31s; }
@@ -27843,7 +27885,7 @@ html[data-o55-nier="on"][data-motion="reduced"] #pm-o55-onboarding .o55-phases::
 .o55-card.o55-card-quiet .o55-cardsub { font-size: 12.5px; }
 .o55-subchoices { margin: -4px 0 2px; padding: 8px; border-radius: var(--o55-card-r); background: color-mix(in srgb, var(--o55-accent) 6%, transparent); }
 .o55-card-link { grid-template-columns: auto minmax(0, 1fr) auto; border-style: dashed; }
-.o55-cardarrow { font-size: 22px; line-height: 1; color: var(--o55-accent); padding-right: 4px; }
+.o55-cardarrow { font-size: 22px; line-height: 1; color: var(--o55-ink-accent); padding-right: 4px; }
 .o55-row-wait { color: var(--text-secondary); }
 .o55-row-wait .o55-spin { margin: 0 6px; color: var(--o55-accent); }
 
@@ -27898,7 +27940,9 @@ html[data-o55-nier="on"][data-motion="reduced"] #pm-o55-onboarding .o55-phases::
 #pm-o55-onboarding[data-family="retro"] .o55-qrbox { border-radius: 0; }
 .o55-pairinfo, .o55-devicecode { display: grid; gap: 6px; }
 .o55-pairtitle { font-weight: 700; font-size: 14px; }
-.o55-paircode { font: 800 26px/1.1 var(--display-font, var(--body-font)); letter-spacing: 0.08em; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+/* the code keeps its font's own figures: it never ticks, and tabular figures (a 1 centred in a wider cell) are drawn where
+   no glyph mask taken from the text expects them, which reads as ink on ink */
+.o55-paircode { font: 800 26px/1.1 var(--display-font, var(--body-font)); letter-spacing: 0.08em; color: var(--text-primary); }
 #pm-o55-onboarding[data-family="retro"] .o55-paircode { color: var(--o55-accent); }
 .o55-pairbtns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
 .o55-devicecode { padding: 14px 16px; border-radius: var(--o55-card-r); border: 1px dashed color-mix(in srgb, var(--o55-accent) 50%, var(--o55-line)); }
@@ -27976,8 +28020,11 @@ html[data-o55-nier="on"][data-motion="reduced"] #pm-o55-onboarding .o55-phases::
 .o55-providers { display: grid; gap: 8px; }
 .o55-provider { display: grid; gap: 0; }
 .o55-provider .o55-row { grid-template-columns: auto minmax(0, 1fr) auto auto; }
-.o55-plogo { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: hsl(var(--plh, 210) 60% 50% / 0.18); color: hsl(var(--plh, 210) 70% 62%); font: 800 16px/1 var(--display-font, var(--body-font)); }
-#pm-o55-onboarding[data-mode="light"] .o55-plogo { color: hsl(var(--plh, 210) 60% 38%); }
+/* a provider's monogram: its letter in the provider's hue on a tint of it, the letter lightened (dark) or deepened
+   (light) far enough that every hue reads 4.5:1 on its tint (at 62% and 38% lightness the yellows and oranges read
+   about 2.3:1) */
+.o55-plogo { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: hsl(var(--plh, 210) 60% 50% / 0.18); color: hsl(var(--plh, 210) 80% 76%); font: 800 16px/1 var(--display-font, var(--body-font)); }
+#pm-o55-onboarding[data-mode="light"] .o55-plogo { color: hsl(var(--plh, 210) 70% 21%); }
 #pm-o55-onboarding[data-family="friendly"] .o55-plogo { border-radius: 50%; }
 #pm-o55-onboarding[data-family="retro"] .o55-plogo { border-radius: 0; }
 .o55-plogo-m { display: none; } /* the two-letter code NieR Mode shows instead (11-window-nier.css) */
@@ -31277,7 +31324,7 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-handoff:not([data-o55nw-hand]
 .o55t-root[data-family="basic"] .o55t-callout::before, .o55t-root[data-family="basic"] .o55t-callout::after { content: ''; position: absolute; width: 14px; height: 14px; border: 2px solid var(--o55t-accent); }
 .o55t-root[data-family="basic"] .o55t-callout::before { left: -6px; top: -6px; border-right: 0; border-bottom: 0; }
 .o55t-root[data-family="basic"] .o55t-callout::after { right: -6px; bottom: -6px; border-left: 0; border-top: 0; }
-.o55t-kicker { margin: 0 0 6px; font: 700 11px/1.2 var(--body-font); letter-spacing: 0.12em; text-transform: uppercase; color: var(--o55t-accent); }
+.o55t-kicker { margin: 0 0 6px; font: 700 11px/1.2 var(--body-font); letter-spacing: 0.12em; text-transform: uppercase; color: var(--o55t-ink-accent); }
 .o55t-root[data-family="retro"] .o55t-kicker::before { content: '> '; }
 /* the heading takes focus only so a screen reader announces the new step; it is not a control, so no ring (the
    shell's family skins draw one on every focused element) */
@@ -31289,9 +31336,14 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-handoff:not([data-o55nw-hand]
 /* "Try it" is a plain word after a small square, like the window's tags; never a capsule (no pills). It reads 4.5:1 or
    more on the callout: the accent a little toward the text, or, where the look's accent is too light for a word, that
    accent toward black by the least that reads (as the window's label inks, 10-window.css). */
-.o55t-root { --o55t-ink-try: color-mix(in srgb, var(--o55t-accent) 88%, var(--text-primary)); }
-.o55t-root[data-family="friendly"][data-mode="light"] { --o55t-ink-try: color-mix(in srgb, var(--o55t-accent) 66%, #000); }
-.o55t-root[data-family="glass"][data-mode="light"] { --o55t-ink-try: color-mix(in srgb, var(--o55t-accent) 72%, #000); }
+.o55t-root { --o55t-ink-try: color-mix(in srgb, var(--o55t-accent) 88%, var(--text-primary));
+  /* the accent as words (the kicker, the brand) and as the main action's fill: the accent unless it is too light */
+  --o55t-ink-accent: var(--o55t-accent); --o55t-action: var(--o55t-accent); }
+.o55t-root[data-family="friendly"][data-mode="light"] { --o55t-ink-try: color-mix(in srgb, var(--o55t-accent) 66%, #000);
+  --o55t-ink-accent: var(--o55t-ink-try); --o55t-action: color-mix(in srgb, var(--o55t-accent) 70%, #000); }
+.o55t-root[data-family="glass"][data-mode="light"] { --o55t-ink-try: color-mix(in srgb, var(--o55t-accent) 72%, #000);
+  /* the kicker and the brand sit on the callout's clear glass, over whatever the app shows behind it: a little deeper */
+  --o55t-ink-accent: color-mix(in srgb, var(--o55t-accent) 64%, #000); }
 .o55t-trylabel { display: inline-block; margin-right: 8px; padding: 0; border-radius: 0; font: 700 11px/1.5 var(--body-font); letter-spacing: 0.06em; text-transform: uppercase; background: none;
   color: var(--o55t-ink-try); }
 .o55t-trylabel::before { content: ""; display: inline-block; width: 5px; height: 5px; margin: 0 6px 0 0; vertical-align: 0.12em; background: currentColor; }
@@ -31300,7 +31352,7 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-handoff:not([data-o55nw-hand]
 .o55t-actions, .o55t-inline { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
 .o55t-inline { justify-content: flex-start; margin: -4px 0 10px; }
 .o55t-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 34px; padding: 0 14px; border-radius: 9px; border: 1px solid transparent; font: 650 13.5px/1 var(--body-font); cursor: pointer; background: transparent; color: var(--text-primary); }
-.o55t-primary { background: var(--o55t-accent); color: var(--background); }
+.o55t-primary { background: var(--o55t-action); color: var(--background); }
 .o55t-root[data-family="glass"] .o55t-primary { background: linear-gradient(135deg, var(--accent-blue), var(--accent-magenta)); color: #fff; }
 .o55t-secondary { border-color: var(--o55t-line); }
 .o55t-ghost { color: var(--text-secondary); }
@@ -31321,7 +31373,7 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-handoff:not([data-o55nw-hand]
 /* with the bar at the top, the look menu opens downward (upward it would leave the window, showing only its last row) */
 .o55t-bar.o55t-top .o55t-lookslot .o55-lookmenu { top: calc(100% + 12px); bottom: auto; animation-name: o55-lookin; }
 .o55t-root[data-family="retro"] .o55t-bar { border-radius: 0; border: 2px solid var(--text-primary); font-family: var(--display-font); }
-.o55t-brand { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--o55t-accent); }
+.o55t-brand { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--o55t-ink-accent); }
 .o55t-pips { display: inline-flex; align-items: center; gap: 10px; }
 .o55t-pip { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); }
 .o55t-pip.o55t-cur { color: var(--text-primary); font-weight: 650; }
@@ -31334,7 +31386,7 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-handoff:not([data-o55nw-hand]
 .o55t-tick.o55t-cur { background: var(--o55t-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--o55t-accent) 25%, transparent); }
 .o55t-root[data-family="retro"] .o55t-tick { border-radius: 0; }
 .o55t-seg { display: inline-flex; align-items: center; gap: 2px; padding: 2px; border-radius: 999px; background: color-mix(in srgb, var(--text-primary) 7%, transparent); }
-.o55t-seglabel { padding: 0 6px 0 8px; color: var(--text-muted); }
+.o55t-seglabel { padding: 0 6px 0 8px; color: var(--text-secondary); } /* (the muted ink read 4.4:1 on the bar) */
 .o55t-seg button { height: 24px; padding: 0 10px; border-radius: 999px; border: 0; background: transparent; color: var(--text-secondary); font: 600 12px/1 var(--body-font); cursor: pointer; }
 .o55t-seg button.o55t-on { background: var(--o55t-bg); color: var(--text-primary); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25); }
 .o55t-root[data-family="retro"] .o55t-seg, .o55t-root[data-family="retro"] .o55t-seg button { border-radius: 0; }
@@ -31385,7 +31437,8 @@ html[data-motion="reduced"] #pm-o55-onboarding.o55-handoff:not([data-o55nw-hand]
 .o55-explain .o55-sg { flex: none; color: var(--accent-lime); }
 .o55-explain:hover, .o55-explain:focus-visible { color: var(--text-primary); border-color: var(--accent-lime); background: color-mix(in srgb, var(--accent-lime) 8%, transparent); }
 .o55-explain[aria-disabled="true"] { opacity: 0.5; cursor: default; border-color: var(--border); background: transparent; color: var(--text-secondary); }
-.o55-explains { display: flex; align-items: center; gap: 6px; margin: 0 0 6px; color: var(--text-muted); font: 600 11px/1.3 var(--body-font); }
+/* (the Chat's own muted ink read 3.0:1 here in Friendly Light, where the tour's spotlight takes in the whole Chat) */
+.o55-explains { display: flex; align-items: center; gap: 6px; margin: 0 0 6px; color: var(--text-secondary); font: 600 11px/1.3 var(--body-font); }
 .o55-explains .o55-sg { flex: none; color: var(--accent-lime); }
 html[data-theme^="retro"] .o55-explain { border-radius: 0; }
 .o55-guided-thread .thread-title::before { content: ''; display: inline-block; width: 6px; height: 6px; margin-right: 6px; border-radius: 50%; background: var(--accent-lime); vertical-align: middle; }
@@ -31541,7 +31594,7 @@ html[data-o55-nier="on"] #pm-o55-tour .o55t-tips { background: rgba(var(--o55-ni
 /* the Pod is out doing the Show Me: its dock is empty until it flies home */
 #pm-o55-tour[data-showme] .o55t-pod-unit, #pm-o55-tour.o55t-npodout .o55t-pod-unit { visibility: hidden; }
 #pm-o55-tour .o55t-pod-copy { flex: 1; min-width: 0; }
-#pm-o55-tour .o55t-pod-head { display: flex; align-items: center; gap: 4px; margin: 0 0 4px; font: 500 9px/1.4 var(--mono-font); letter-spacing: .3em; text-transform: uppercase; color: rgba(var(--o55-nier-ink-rgb), .78); white-space: nowrap; }
+#pm-o55-tour .o55t-pod-head { display: flex; align-items: center; gap: 4px; margin: 0 0 4px; font: 500 9px/1.4 var(--mono-font); letter-spacing: .3em; text-transform: uppercase; color: rgba(var(--o55-nier-ink-rgb), .9); white-space: nowrap; }
 #pm-o55-tour .o55t-pod-head > i { flex: none; width: 4px; height: 4px; background: currentColor; }
 #pm-o55-tour .o55t-pod-head > i:nth-child(2) { opacity: .6; }
 #pm-o55-tour .o55t-pod-head > i:nth-child(3) { opacity: .3; margin-right: 6px; }
@@ -31803,6 +31856,9 @@ html[data-motion="reduced"] #pm-o55-tour .o55t-npod-body { transition: none !imp
   font-family: var(--display-font-sm, 'Rajdhani', sans-serif); letter-spacing: 0.08em; }
 html[data-o55-nier="on"] :is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]) .runtime-snapshot {
   color: var(--o55-nier-ink); font-family: var(--mono-font, 'IBM Plex Mono', monospace); font-weight: 500; letter-spacing: 0.14em; }
+/* inside the person's own bubble NieR inverts the bubble (ink on parchment in Dark, parchment on ink in Light), so the
+   label takes the bubble's own text colour there too; in NieR's ink it vanished into the bubble (1.00) */
+html[data-o55-nier="on"] :is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[data-o55-pod042="1"]).user .runtime-snapshot { color: inherit; }
 
 /* ---- css/45-glass-controls.css ---- */
 /* Onboarding and the tour in Liquid Glass: the action controls (Jared, 2026-10-11: "update the buttons and switches in
@@ -31821,12 +31877,18 @@ html[data-o55-nier="on"] :is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[d
   --o55g-switch-off: var(--lg-switch-off, rgba(255, 255, 255, 0.16)); --o55g-sel: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.1));
   /* the main action's tint: Glass Dark's accent is a pale sky blue, under which white words read at about 2:1, so its
      glass is cut from a deeper blue (as the Glass layer does), about 5.6:1 */
-  --o55g-action: rgb(38, 102, 210); }
+  --o55g-action: rgb(38, 102, 210);
+  --o55g-row: var(--o55g-fill); --o55g-row-on: var(--o55g-fill-press); }
 #pm-o55-onboarding[data-family="glass"][data-mode="light"], .o55t-root[data-family="glass"][data-mode="light"] {
   --o55g-fill: var(--lg-fill, rgba(12, 15, 21, 0.055)); --o55g-fill-hover: var(--lg-fill-hover, rgba(12, 15, 21, 0.09)); --o55g-fill-press: var(--lg-fill-press, rgba(12, 15, 21, 0.13));
   --o55g-line: var(--lg-line, rgba(12, 15, 21, 0.09)); --o55g-edge-top: var(--lg-edge-top, rgba(255, 255, 255, 0.9)); --o55g-edge-bot: var(--lg-edge-bot, rgba(30, 45, 90, 0.14));
   --o55g-switch-off: var(--lg-switch-off, rgba(12, 15, 21, 0.14)); --o55g-sel: linear-gradient(180deg, #fff, rgba(255, 255, 255, 0.86));
-  --o55g-action: var(--accent-blue); }
+  /* Light's action: the accent deepened toward navy, so its white word reads 5.5:1 or more (the plain accent with the
+     old highlight read 3.6:1 at its brightest pixel) */
+  --o55g-action: color-mix(in srgb, var(--accent-blue) 78%, #0b1f4d);
+  /* Light's rows, tiles and segments are white frosted glass on the pale sheet (an ink fill darkened what lay under
+     their words: a tile's description read about 4:1) */
+  --o55g-row: rgba(255, 255, 255, 0.66); --o55g-row-on: rgba(255, 255, 255, 0.86); }
 
 /* actions: a glass button (a fill with light along its top edge and a shade along its foot); the press springs */
 #pm-o55-onboarding[data-family="glass"] :is(.o55-btn, .o55-iconbtn, .o55-sound),
@@ -31852,8 +31914,9 @@ html[data-o55-nier="on"] :is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[d
 #pm-o55-onboarding[data-family="glass"] .o55-btn.o55-primary,
 .o55t-root[data-family="glass"] .o55t-btn.o55t-primary {
   color: #fff; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
-  background: radial-gradient(120% 140% at 30% -20%, rgba(255, 255, 255, 0.42), transparent 55%),
-    linear-gradient(180deg, color-mix(in srgb, var(--o55g-action) 96%, transparent), color-mix(in srgb, var(--o55g-action) 78%, #0a1430));
+  /* its light is a sheen along the top edge that has faded out before the word begins */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0, rgba(255, 255, 255, 0.08) 18%, rgba(255, 255, 255, 0) 30%),
+    linear-gradient(180deg, color-mix(in srgb, var(--o55g-action) 96%, transparent), color-mix(in srgb, var(--o55g-action) 80%, #0a1430));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 1px rgba(0, 0, 0, 0.22), 0 8px 22px -8px color-mix(in srgb, var(--o55g-action) 75%, transparent), 0 1px 2px rgba(0, 0, 0, 0.25); }
 #pm-o55-onboarding[data-family="glass"] .o55-btn.o55-primary:not([aria-disabled="true"]):hover,
 .o55t-root[data-family="glass"] .o55t-btn.o55t-primary:not([aria-disabled="true"]):hover { filter: brightness(1.06); }
@@ -31865,11 +31928,11 @@ html[data-o55-nier="on"] :is(.pm6-chat-msg[data-o55-guided="1"], .pm6-chat-msg[d
 /* choices: glass rows; the chosen one lights up with a ring of the accent and a glow under it */
 #pm-o55-onboarding[data-family="glass"] :is(.o55-card, .o55-tile, .o55-provider),
 .o55t-root[data-family="glass"] .o55t-choice {
-  border-color: transparent; border-radius: 12px; background: var(--o55g-fill);
+  border-color: transparent; border-radius: 12px; background: var(--o55g-row);
   box-shadow: inset 0 1px 0 var(--o55g-edge-top), inset 0 -1px 1px var(--o55g-edge-bot), 0 0 0 0.5px var(--o55g-line); }
 #pm-o55-onboarding[data-family="glass"] :is(.o55-card, .o55-tile, .o55-provider):is(.o55-on, [aria-checked="true"], [aria-pressed="true"]),
 .o55t-root[data-family="glass"] .o55t-choice.o55t-on {
-  background: radial-gradient(120% 120% at 20% -10%, rgba(255, 255, 255, 0.16), transparent 60%), var(--o55g-fill-press);
+  background: radial-gradient(120% 120% at 20% -10%, rgba(255, 255, 255, 0.16), transparent 60%), var(--o55g-row-on);
   box-shadow: inset 0 1px 0 var(--o55g-edge-top), inset 0 0 0 1.5px color-mix(in srgb, var(--accent-blue) 85%, transparent), 0 10px 26px -14px color-mix(in srgb, var(--accent-blue) 60%, transparent); }
 
 /* segments: a glass track; the chosen segment is a raised piece of clear glass (the Glass layer's lens, when it is
@@ -31898,6 +31961,12 @@ html:not([data-lg="on"]) .o55t-root[data-family="glass"] .o55t-seg button.o55t-o
   box-shadow: inset 0 1px 0 #fff, inset 0 -1px 1px rgba(20, 30, 60, 0.14), 0 2px 5px rgba(0, 8, 30, 0.32);
   transition: transform 520ms cubic-bezier(0.45, 0, 0.2, 1.15), background 220ms ease; }
 #pm-o55-onboarding[data-family="glass"] .o55-toggle.o55-on .o55-switch span { transform: translateX(16px); }
+
+/* words that have to read on the sheet: a step still to come is lettered at the secondary text's strength (the muted
+   ink read 2.8:1 on Light's pale sheet), and the accent as words (the eyebrow over each title, a link, a card's arrow)
+   is the accent deepened toward the text */
+#pm-o55-onboarding[data-family="glass"] .o55-railitem:not([data-state="current"]) { color: var(--text-secondary); }
+#pm-o55-onboarding[data-family="glass"][data-mode="light"] { --o55-ink-accent: color-mix(in srgb, var(--o55-accent) 68%, var(--text-primary)); }
 
 /* the step rail is the Glass owner's: with the Glass layer on, its lens is the current step's only highlight, so the
    current node's own halo steps aside (pm7-liquid-glass, 2026-10-13; without the layer the rail is as it was) */
@@ -137382,6 +137451,25 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     return '#' + v.map((x) => x.toString(16).padStart(2, '0')).join('');
   };
   A.defineFamily = function defineFamily(name, def) { A.families[name] = def; };
+  /* The width of a run of art text in its own units, so a caption can be laid on a surface that covers its whole box
+     (the words in the art keep their contrast whatever passes behind them: a stage edge, a string, a wave). Measured with
+     a detached canvas's measureText, which reads no layout of the page; cached per font and text. A face not loaded yet
+     falls back to a generous estimate. ls: letter-spacing in units, added per character. */
+  const tw = new Map();
+  let twx = null;
+  A.textW = function textW(text, size, family, weight, ls) {
+    text = String(text || ''); const k = `${weight || 600}|${size}|${family}|${ls || 0}|${text}`;
+    if (tw.has(k)) return tw.get(k);
+    let w = text.length * size * 0.62;
+    try {
+      twx = twx || document.createElement('canvas').getContext('2d');
+      twx.font = `${weight || 600} ${size}px ${family}`;
+      const m = twx.measureText(text).width; if (m > 0) w = Math.max(m, text.length * size * 0.42);
+    } catch (_) {}
+    w += (ls || 0) * text.length;
+    if (tw.size > 600) tw.clear();
+    tw.set(k, w); return w;
+  };
   /* Semantic tones: scenes ask for tone 0..3; each family maps them onto its own accents. */
   A.tone = function tone(ctx, i) { const t = ctx.pal.tones || [ctx.pal.ink || '#888']; return t[((i || 0) % t.length + t.length) % t.length]; };
   A.defineScene = function defineScene(id, def) { A.scenes[id] = def; };
@@ -138043,6 +138131,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       grid: A.rgba(ink, dark ? 0.06 : 0.08), gridMajor: A.rgba(ink, dark ? 0.12 : 0.15),
       fill: A.rgba(ink, dark ? 0.07 : 0.06), fill2: A.rgba(ink, dark ? 0.14 : 0.12),
       accent: tok.orange, accentFill: A.rgba(tok.orange, 0.14), text: tok.text, dim: A.rgba(tok.text, 0.6),
+      /* the inks words are lettered in: the drawing's lines stay faint, but a word is lettered in solid ink so it reads
+         4.5:1 or more on the paper (the half-strength ink2 read about 2.5:1); a small word in the accent is the accent
+         deepened toward the text on light paper, where the orange itself reads about 2.6:1 */
+      inkText: ink, accentInk: dark ? tok.orange : A.mix(tok.orange, tok.text, 0.42),
       tones: [ink, tok.orange, ink, tok.orange]
     };
   };
@@ -138050,7 +138142,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const S = (p, w, color) => `fill="none" stroke="${color || p.ink}" stroke-width="${w || 1.5}" stroke-linecap="round" stroke-linejoin="round" pathLength="1" class="o55-draw"`;
   const SD = (p, w, color) => `fill="none" stroke="${color || p.ink}" stroke-width="${w || 1.5}" stroke-linecap="round" stroke-linejoin="round" class="o55-fadeline"`;
   const F = (p, fill, w, color) => `fill="${fill}" stroke="${color || p.ink}" stroke-width="${w || 1.5}" stroke-linejoin="round" pathLength="1" class="o55-draw"`;
-  const txt = (p, x, y, s, size, anchor, color, extra) => `<text x="${x}" y="${y}" font-size="${size || 7}" letter-spacing="1.1" font-family="Inter, system-ui, sans-serif" font-weight="600" text-anchor="${anchor || 'middle'}" fill="${color || p.ink2}"${extra || ''}>${U.esc(String(s).toUpperCase())}</text>`;
+  const txt = (p, x, y, s, size, anchor, color, extra) => `<text x="${x}" y="${y}" font-size="${size || 7}" letter-spacing="1.1" font-family="Inter, system-ui, sans-serif" font-weight="600" text-anchor="${anchor || 'middle'}" fill="${color || p.inkText}"${extra || ''}>${U.esc(String(s).toUpperCase())}</text>`;
   /* dimension line with end ticks and a centred label */
   const dim = (p, x1, y1, x2, y2, label) => {
     const mx = (x1 + x2) / 2, my = (y1 + y2) / 2, horiz = Math.abs(y2 - y1) < Math.abs(x2 - x1);
@@ -138148,7 +138240,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const on = o.state === 'on' || o.accent;
       return `<g><circle r="26" ${F(p, on ? p.accentFill : p.fill, 1.5, on ? p.accent : p.ink)}/><path d="${ticks}" ${S(p, 0.8, p.ink2)}/>`
         + `<g transform="translate(-12 -12)" class="o55-draw-g" style="color:${on ? p.accent : p.ink}">${A.glyph(o.icon || 'spark', 'currentColor', 1.6)}</g>`
-        + (o.label ? txt(p, 0, 46, o.label, 7, 'middle', p.ink) : '') + (o.sub ? txt(p, 0, 57, o.sub, 5.8, 'middle', p.ink2) : '') + '</g>';
+        + (o.label ? txt(p, 0, 46, o.label, 7, 'middle', p.ink) : '') + (o.sub ? txt(p, 0, 57, o.sub, 5.8, 'middle', p.inkText) : '') + '</g>';
     },
     pathline(ctx, item) {
       const p = ctx.pal, pts = (item.opts || {}).pts || [];
@@ -138182,7 +138274,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const tw = String(o.label || '').length * 6.1, gw = o.glyph ? 18 : 0, w = Math.max(88, Math.ceil(tw + gw + 20)), x0 = -w / 2;
       return `<g><rect x="${x0}" y="-15" width="${w}" height="30" rx="3" fill="${p.paper}" stroke="${o.accent ? p.accent : p.ink}" stroke-width="1.2"/>`
         + (o.glyph ? `<g transform="translate(${x0 + 6} -9) scale(0.75)" style="color:${o.accent ? p.accent : p.ink}">${A.glyph(o.glyph)}</g>` : '')
-        + txt(p, gw / 2, 3, o.label || '', 6.8, 'middle', o.accent ? p.accent : p.ink) + '</g>';
+        + txt(p, gw / 2, 3, o.label || '', 6.8, 'middle', o.accent ? p.accentInk : p.inkText) + '</g>';
     },
     identity(ctx, item) {
       const p = ctx.pal, o = item.opts || {};
@@ -138250,6 +138342,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const sh = (p, shape) => `<g transform="translate(3 4)" fill="${p.shadow}" stroke="none">${shape}</g>`;
   const label = (p, x, y, s, color) => `<text x="${x}" y="${y}" text-anchor="middle" font-family="Poppins, Nunito, system-ui, sans-serif" font-weight="600" font-size="9" fill="${color || p.ink}">${U.esc(s)}</text>`;
   const variants = (p) => [p.peach, p.mint, p.sky, p.lilac];
+  /* an identity's words in two lines of two: in one line the four words ran out past the stage's curtain */
+  const words2 = (s) => { const w = String(s).split(/\s+/).filter(Boolean); if (w.length < 3) return [w.join(' ')]; const h = Math.ceil(w.length / 2); return [w.slice(0, h).join(' '), w.slice(h).join(' ')]; };
 
   /* A felt puppet whose every part is sewn on: two-part sleeves (upper arm over forearm, folded at the elbow) end in a
      mitten hand, and short legs run up under the hem so the shoes are always attached. A waving arm is the rig's
@@ -138367,7 +138461,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       return `<g>${sh(p, `<path d="${d}Z"/>`)}<path d="${d}Z" fill="${col}" ${OL(p)}/><circle r="20" fill="${p.paper}" ${OL(p, 1.6)}/>`
         + `<g transform="translate(-12 -12)" style="color:${p.ink}">${A.glyph(o.icon || 'spark', 'currentColor', 2)}</g>`
         /* its name: no box, the words on a hand-drawn squiggle in the node's own colour (as the captions are) */
-        + (o.label ? (() => { const w = o.label.length * 5.8 + 6, n = Math.max(2, Math.round(w / 8)), st = w / n; let sq = `M${(-w / 2).toFixed(1)} 9`; for (let i = 0; i < n; i++) sq += ` q${(st / 2).toFixed(2)} ${i % 2 ? 2.2 : -2.2} ${st.toFixed(2)} 0`;
+        + (o.label ? (() => { const w = o.label.length * 5.8 + 6, n = Math.max(2, Math.round(w / 8)), st = w / n; let sq = `M${(-w / 2).toFixed(1)} 9.6`; for (let i = 0; i < n; i++) sq += ` q${(st / 2).toFixed(2)} ${i % 2 ? 2.2 : -2.2} ${st.toFixed(2)} 0`;
           return `<g transform="translate(0 44)"><path d="${sq}" fill="none" stroke="${col}" stroke-width="2" stroke-linecap="round"/>${label(p, 0, 3, o.label, p.label)}</g>`; })() : '') + '</g>';
     },
     pathline(ctx, item) {
@@ -138387,7 +138481,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     folder(ctx, item) {
       const p = ctx.pal, d = 'M-32 -20 a5 5 0 0 1 5 -5 h16 l6 6 h32 a5 5 0 0 1 5 5 v30 a5 5 0 0 1 -5 5 h-54 a5 5 0 0 1 -5 -5Z';
       return `<g>${sh(p, `<path d="${d}"/>`)}<path d="${d}" fill="${p.sun}" ${OL(p)}/><path d="M-32 -10 H32" stroke="${p.ink}" stroke-width="1.6" opacity="0.4"/>`
-        + ((item.opts || {}).label ? label(p, 0, 36, item.opts.label, p.label) : '') + '</g>';
+        /* its name under it, or above it where the folder sits on the NAS's corner (opts.labelAt 'above'), where a name
+           under it ran across the NAS's outline */
+        + ((item.opts || {}).label ? label(p, 0, item.opts.labelAt === 'above' ? -31 : 36, item.opts.label, p.label) : '') + '</g>';
     },
     spark(ctx, item) {
       const p = ctx.pal, o = item.opts || {}, c = o.tone != null ? A.tone(ctx, o.tone) : p.sun;
@@ -138410,14 +138506,14 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const p = ctx.pal, o = item.opts || {};
       return `<g>${sh(p, '<rect x="-36" y="-36" width="72" height="72" rx="16"/>')}<rect x="-36" y="-36" width="72" height="72" rx="16" fill="${p.paper}" ${OL(p)}/>`
         + `<g transform="translate(-22 -22)">${A.identitySvg(o.seed || 'nas', 44, 'friendly').replace('<svg', '<svg x="0" y="0"')}</g>`
-        + (o.words ? label(p, 0, 52, o.words, p.dark ? p.paper : p.ink) : '') + '</g>';
+        + (o.words ? words2(o.words).map((w, i) => label(p, 0, 52 + i * 11, w, p.dark ? p.paper : p.ink)).join('') : '') + '</g>';
     },
     /* a caption: no box. A dotted thread runs from a felt dot on the thing it names to a second felt dot, and the words
        stand beside it on a hand-drawn squiggle in the puppet colours */
     note(ctx, item) {
       const p = ctx.pal, o = item.opts || {}, dx = o.dx == null ? 60 : o.dx, dy = o.dy == null ? -30 : o.dy, right = dx >= 0, w = (o.text || '').length * 5.8 + 6, x0 = right ? dx + 6 : dx - 6 - w;
       const n = Math.max(2, Math.round(w / 8)), step = w / n;
-      let sq = `M${x0.toFixed(1)} ${dy + 6}`; for (let i = 0; i < n; i++) sq += ` q${(step / 2).toFixed(2)} ${i % 2 ? 2.2 : -2.2} ${step.toFixed(2)} 0`;
+      let sq = `M${x0.toFixed(1)} ${dy + 8.8}`; /* (below the words' box, which ends about 2.3 under the baseline) */ for (let i = 0; i < n; i++) sq += ` q${(step / 2).toFixed(2)} ${i % 2 ? 2.2 : -2.2} ${step.toFixed(2)} 0`;
       const tone = variants(p)[(o.tone || 2) % 4];
       return `<g><path d="M0 0 Q${(dx * 0.5).toFixed(1)} ${(dy * 0.15).toFixed(1)} ${dx} ${dy}" fill="none" stroke="${p.label}" stroke-width="1.4" stroke-dasharray="2 3" stroke-linecap="round"/>`
         + `<circle r="2.8" fill="${tone}" ${OL(p, 1.3)}/><circle cx="${dx}" cy="${dy}" r="2.6" fill="${tone}" ${OL(p, 1.3)}/>`
@@ -138440,9 +138536,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     },
     background(ctx) {
       const p = ctx.pal, W = A.W, H = A.H, frame = ctx.frame !== false;
+      /* (the third star sat at 370, 176, right behind a device's identity words under its card: light words on a gold
+         star read 1.2:1; it is up and to the right, behind the card on those steps) */
       const sky = p.dark
         ? `<g class="o55-amb o55-amb-twinkle-all"><path d="M142 92 a20 20 0 1 0 22 26 a15 15 0 1 1 -22 -26Z" fill="${p.sun}" ${OL(p, 1.6)}/>`
-          + [[212, 80], [340, 104], [370, 176], [150, 196], [286, 70], [236, 150], [322, 238]].map(([x, y], i) => `<path transform="translate(${x} ${y}) scale(${i % 2 ? 0.55 : 0.8})" d="M0 -8 L2.4 -2.4 L8 0 L2.4 2.4 L0 8 L-2.4 2.4 L-8 0 L-2.4 -2.4Z" fill="${p.sun}" opacity="0.9" class="o55-star" style="--si:${i}"/>`).join('') + '</g>'
+          + [[212, 80], [340, 104], [388, 140], [150, 196], [286, 70], [236, 150], [322, 238]].map(([x, y], i) => `<path transform="translate(${x} ${y}) scale(${i % 2 ? 0.55 : 0.8})" d="M0 -8 L2.4 -2.4 L8 0 L2.4 2.4 L0 8 L-2.4 2.4 L-8 0 L-2.4 -2.4Z" fill="${p.sun}" opacity="0.9" class="o55-star" style="--si:${i}"/>`).join('') + '</g>'
         : `<g><circle cx="352" cy="104" r="26" fill="${p.sun}" ${OL(p, 1.8)}/>` + [0, 45, 90, 135, 180, 225, 270, 315].map((a) => `<path transform="translate(352 104) rotate(${a})" d="M0 -34 V-42" stroke="${p.ink}" stroke-width="2" stroke-linecap="round" opacity="0.5"/>`).join('')
           + `<path d="M140 122 a12 12 0 0 1 2 -23 a16 16 0 0 1 29 -5 a12 12 0 0 1 21 11 a10 10 0 0 1 -2 17Z" fill="${p.paper}" ${OL(p, 1.6)}/></g>`;
       /* the side drapes are drawn narrower than the stage opening needs (they crowded props near the edges) */
@@ -138480,7 +138578,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       dark,
       bg: dark ? '#1f1730' : '#ead7ec', bg2: dark ? '#140e22' : '#dcc2e3',
       lav: tok.blue, pink: tok.magenta, mint: tok.lime, amber: tok.orange,
-      text: tok.text, textDim: A.rgba(tok.text, 0.7),
+      text: tok.text, textDim: A.rgba(tok.text, 0.78),
+      slip: dark ? 'rgba(16,11,30,0.84)' : 'rgba(255,255,255,0.88)', slipEdge: dark ? 'rgba(255,255,255,0.22)' : A.rgba(A.mix(tok.blue, tok.text, 0.4), 0.35),
       g0: dark ? 0.34 : 0.78, g1: dark ? 0.07 : 0.34, g2: dark ? 0.02 : 0.14,
       e0: dark ? 0.85 : 1, e1: dark ? 0.18 : 0.55,
       core: dark ? '#ffffff' : '#fffaff', shade: dark ? 'rgba(10,6,20,0.35)' : 'rgba(90,60,120,0.16)',
@@ -138490,7 +138589,20 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const G = (ctx) => `fill="${ctx.url('glass')}" stroke="${ctx.url('edge')}" stroke-width="1.2"`;
   const hl = (d) => `<path d="${d}" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="1.4" stroke-linecap="round"/>`;
   const glow = (ctx, color, r, x, y) => `<circle cx="${x || 0}" cy="${y || 0}" r="${r}" fill="${ctx.url('glow-' + color)}"/>`;
-  const label = (p, x, y, s, size) => `<text x="${x}" y="${y}" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="${size || 8.5}" letter-spacing="0.4" fill="${p.text}">${U.esc(s)}</text>`;
+  /* Every word in the art is etched on a slip of frosted glass that covers its whole box: a near-solid pane (dark in
+     Dark, white in Light) with a lit top edge, so a word keeps its contrast whatever passes behind it (a stage edge, a
+     glow, a string, a wave). slip(p, x, y, w, size, anchor): the pane for a word of width w set at baseline y. */
+  const FONT = 'Inter, system-ui, sans-serif';
+  const slip = (p, x, y, w, size, anchor) => {
+    const padX = Math.max(3.5, size * 0.42), top = y - size * 1.12, h = size * 1.6, x0 = (anchor === 'start' ? x : anchor === 'end' ? x - w : x - w / 2) - padX, W = w + padX * 2;
+    return `<rect x="${x0.toFixed(2)}" y="${top.toFixed(2)}" width="${W.toFixed(2)}" height="${h.toFixed(2)}" rx="2.4" fill="${p.slip}" stroke="${p.slipEdge}" stroke-width="0.6"/>`
+      + `<path d="M${(x0 + 2.4).toFixed(2)} ${(top + 0.7).toFixed(2)} H${(x0 + W - 2.4).toFixed(2)}" stroke="#fff" stroke-width="0.6" stroke-linecap="round" opacity="${p.dark ? 0.35 : 0.95}"/>`;
+  };
+  const label = (p, x, y, s, size, fill, anchor) => {
+    size = size || 8.5; const w = A.textW(s, size, FONT, 600, 0.4);
+    return slip(p, x, y, w, size, anchor || 'middle')
+      + `<text x="${x}" y="${y}" text-anchor="${anchor || 'middle'}" font-family="${FONT}" font-weight="600" font-size="${size}" letter-spacing="0.4" fill="${fill || p.text}">${U.esc(s)}</text>`;
+  };
   const tints = ['lav', 'pink', 'mint', 'amber'];
 
   /* The crystal marionette: a cut-glass torso with a socket at every corner, and glass rods for limbs that meet at glass
@@ -138644,7 +138756,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const p = ctx.pal, o = item.opts || {}, tint = o.color || tints[(o.v || 0) % 4];
       return `<g>${glow(ctx, tint, 46, 0, 0)}<circle r="26" ${G(ctx)}/>${hl('M-17 -14 A21 21 0 0 1 2 -23')}`
         + `<g transform="translate(-12 -12)" style="color:${p.dark ? p.core : '#4f3596'}">${A.glyph(o.icon || 'spark', 'currentColor', 1.8)}</g>`
-        + (o.label ? label(p, 0, 44, o.label) : '') + (o.sub ? `<text x="0" y="56" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="7" fill="${p.textDim}">${U.esc(o.sub)}</text>` : '') + '</g>';
+        + (o.label ? label(p, 0, 44, o.label) : '') + (o.sub ? label(p, 0, 57.5, o.sub, 7, p.textDim) : '') + '</g>';
     },
     pathline(ctx, item) {
       const p = ctx.pal, pts = (item.opts || {}).pts || [];
@@ -138674,16 +138786,17 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        troupe's torso, with a bevel cut a little inside the edge, light along its top facet and a thin line of the
        accent along its foot; the word is engraved in it (the last text, where a typed letter's fleck leaves from) */
     badge(ctx, item) {
-      const p = ctx.pal, o = item.opts || {}, w = Math.max(76, (o.label || '').length * 6.1 + (o.glyph ? 38 : 26)), h = 28, c = 5, x = w / 2, y = h / 2, i = 3.2, ci = c - 1.6;
+      const p = ctx.pal, o = item.opts || {}, tw = A.textW(o.label || '', 9, FONT, 600, 0.4), w = Math.max(76, tw + (o.glyph ? 40 : 28)), h = 28, c = 5, x = w / 2, y = h / 2, i = 3.2, ci = c - 1.6;
       const plate = (X, Y, C) => `M${-X + C} ${-Y} H${X - C} L${X} ${-Y + C} V${Y - C} L${X - C} ${Y} H${-X + C} L${-X} ${Y - C} V${-Y + C} Z`;
       const tint = o.accent ? 'lav' : 'mint';
       return `<g>${o.accent ? glow(ctx, 'lav', Math.min(70, w * 0.55), 0, 2) : ''}<path d="${plate(x, y, c)}" ${G(ctx)} stroke-linejoin="round"/>`
-        + `<path d="${plate(x - i, y - i, ci)}" fill="none" stroke="#fff" stroke-width="0.6" stroke-linejoin="round" opacity="${p.dark ? 0.3 : 0.5}"/>`
+        /* the face inside the bevel is frosted near-solid, so the word engraved on it reads whatever glows behind the plate */
+        + `<path d="${plate(x - i, y - i, ci)}" fill="${p.slip}" stroke="#fff" stroke-width="0.6" stroke-linejoin="round" stroke-opacity="${p.dark ? 0.3 : 0.5}"/>`
         + `<path d="M${-x + c} ${-y} L${-x + i + ci} ${-y + i} M${x - c} ${-y} L${x - i - ci} ${-y + i} M${-x + c} ${y} L${-x + i + ci} ${y - i} M${x - c} ${y} L${x - i - ci} ${y - i}" stroke="#fff" stroke-width="0.5" opacity="${p.dark ? 0.3 : 0.5}"/>`
         + hl(`M${-x + c + 3} ${-y + 1.6} H${x - c - 12}`)
         + `<rect x="${-x + c + 4}" y="${y - 2.4}" width="${w - 2 * c - 8}" height="0.9" fill="${p[tint]}" opacity="${p.dark ? 0.75 : 0.6}"/>`
         + (o.glyph ? `<g transform="translate(${-x + 10} -9) scale(0.75)" style="color:${p.dark ? p.core : '#4f3596'}">${A.glyph(o.glyph, 'currentColor', 2)}</g>` : '')
-        + label(p, o.glyph ? 9 : 0, 3.4, o.label || '', 9) + '</g>';
+        + `<text x="${o.glyph ? 9 : 0}" y="3.4" text-anchor="middle" font-family="${FONT}" font-weight="600" font-size="9" letter-spacing="0.4" fill="${p.text}">${U.esc(o.label || '')}</text></g>`;
     },
     identity(ctx, item) {
       const p = ctx.pal, o = item.opts || {};
@@ -138695,13 +138808,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        as a shelf of light, fading away, that the words stand on (the shelf is a hairline plate, so its gradient has a
        box to span) */
     note(ctx, item) {
-      const p = ctx.pal, o = item.opts || {}, dx = o.dx == null ? 60 : o.dx, dy = o.dy == null ? -30 : o.dy, right = dx >= 0, w = (o.text || '').length * 5.4 + 14;
+      const p = ctx.pal, o = item.opts || {}, dx = o.dx == null ? 60 : o.dx, dy = o.dy == null ? -30 : o.dy, right = dx >= 0, tw = A.textW(o.text || '', 9, FONT, 600, 0.3), w = tw + 14;
       const sy = dy + 5.5, x0 = right ? dx : dx - w, ink = p.dark ? p.core : A.mix(p.lav, p.text, 0.3); /* white light on a dark sky, the deepened tint on a pale one */
       return `<g><path d="M0 0 L${dx} ${sy}" stroke="${p.lav}" stroke-width="3.6" opacity="0.13" stroke-linecap="round"/><path d="M0 0 L${dx} ${sy}" stroke="${ink}" stroke-width="0.9" opacity="0.85" stroke-linecap="round"/>`
-        + `<rect x="${x0}" y="${sy - 0.5}" width="${w}" height="1" fill="${ctx.url(right ? 'shelf' : 'shelfR')}"/>`
         + `<circle r="2.6" ${G(ctx)}/><circle r="1.2" fill="${ink}"/>`
-        + `<rect x="${dx - 1.8}" y="${sy - 1.8}" width="3.6" height="3.6" fill="${ink}" transform="rotate(45 ${dx} ${sy})"/>`
-        + `<text x="${right ? dx + 4 : dx - 4}" y="${dy + 2}" text-anchor="${right ? 'start' : 'end'}" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="9" letter-spacing="0.3" fill="${p.text}">${U.esc(o.text || '')}</text></g>`;
+        /* the words on their frosted slip (it covers the words' whole box), the shelf of light along its foot */
+        + slip(p, right ? dx + 4 : dx - 4, dy + 2, tw, 9, right ? 'start' : 'end')
+        + `<rect x="${x0}" y="${sy + 0.3}" width="${w}" height="1" fill="${ctx.url(right ? 'shelf' : 'shelfR')}"/>`
+        + `<rect x="${dx - 1.8}" y="${sy - 1.8 + 0.8}" width="3.6" height="3.6" fill="${ink}" transform="rotate(45 ${dx} ${sy + 0.8})"/>`
+        + `<text x="${right ? dx + 4 : dx - 4}" y="${dy + 2}" text-anchor="${right ? 'start' : 'end'}" font-family="${FONT}" font-weight="600" font-size="9" letter-spacing="0.3" fill="${p.text}">${U.esc(o.text || '')}</text></g>`;
     }
   };
 
@@ -138839,7 +138954,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       dark, nier: true,
       /* lines: ink (coats, visors, outlines, ink blocks, You), secondary (strings, leaders), mono labels, seams and
          hatching, the far ruins, the dot grid */
-      ink, ink2, lab: A.rgba(ink, 0.62), faint: A.rgba(ink, 0.2), hatch: A.rgba(ink, 0.09), grid: A.rgba(ink, 0.12),
+      /* (the mono labels are the ink at 90%: a step under the drawing's solid ink, and 4.5:1 or more on the ground and on
+         a grid line in both modes; at 62% they read about 3.6:1, at 80% 4.15:1 on a dark grid line) */
+      ink, ink2, lab: A.rgba(ink, 0.9), faint: A.rgba(ink, 0.2), hatch: A.rgba(ink, 0.09), grid: A.rgba(ink, 0.12),
       /* paper: the scene ground, knock-outs and display faces; raised faces (pins, hands, prop bodies, the column, the
          machine); the stage top; text and detail on an ink block */
       ground: t.bg, raised: t.raised || t.surface, surface: t.surface, onInk: t.onInk || t.bg,
@@ -138888,7 +139005,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   }
   /* a prop's caption: an ink square bullet and mono caps. The bullet is left out of the prop's measured outline
      (A.box drops [class*="shade"]), like the text, so strings and connectors end on the drawing itself. */
-  const caption = (K, y, s) => K.SQ(-(s.length * 3.1) - 6, y - 2.3, 3, 'i', null, 'o55-nier-shade-lbl') + K.T(3, y, s, { size: 6.6, role: 'txi' });
+  /* (the words stand on a knock-out of the ground the width of their line, so a line, a mark or a ruin drawn under them
+     never shows between the letters: one did, between THIS and COMPUTER, at 3.7:1; mono caps advance 0.6 em plus the
+     1.3 tracking) */
+  const caption = (K, y, s) => { const w = s.length * (6.6 * 0.6 + 1.3) + 4;
+    return K.SQ(-(s.length * 3.1) - 6, y - 2.3, 3, 'i', null, 'o55-nier-shade-lbl') + K.R(3 - w / 2, y - 7.6, w, 9.6, 'g', null, 'o55-nier-shade-ko') + K.T(3, y, s, { size: 6.6, role: 'txi' }); };
   const say = (key, fb) => { const v = O55.t(key); return v === key ? fb : v; };
   const L = (k, fb) => say('art.labels.' + k, fb), NT = (k, fb) => say('art.nier.' + k, fb);
   /* Ochre once per scene: the one item that holds it, chosen from the whole composition (ctx.items, set by the core
@@ -139273,7 +139394,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const K = kit(ctx.pal), o = item.opts || {}, id = A.identity(o.seed || 'nas');
       const cells = id.cells.map(([x, y]) => K.R(-20 + x * 8, -20 + y * 8, 8, 8, 'i')).join('');
       return `${G}>${K.R(-32, -32, 64, 64, 'p s', 1.2)}${K.P(brackets(27, 7), 's2', 0.9)}<g shape-rendering="crispEdges">${cells}</g>`
-        + `${o.words ? K.T(0, 46, o.words, { size: 6, role: 'txi' }) : ''}</g>`;
+        /* its words over the card, under the kicker's rule, and marked for Pod 042 to keep clear of (data-o55fx-avoid,
+           read by O55.nierFx's narrator lanes): under the card they ran beneath Pod and its speech box (1.00) */
+        + `${o.words ? K.T(0, -40, o.words, { size: 6, role: 'txi', extra: ' data-o55fx-avoid=""' }) : ''}</g>`;
     },
     /* a badge and the name sign: a raised box, an ink kicker block with a paper diamond, mono caps with wide tracking,
        an underline; accent (on): inverted, an ink box beside a paper kicker block outlined in ink, so the sign reads as
@@ -139427,6 +139550,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     };
   };
   const sprite = A.sprite;
+  /* a prop's caption on the ground: the words on a knock-out of the ground the width of their line (IBM Plex Mono
+     advances 0.6 em), so a star of the field or a fleck of confetti never shows between the letters (a twinkling star
+     inside SAFE HISTORY read 1.2:1). It is drawn first in the prop, under its sprite, so it never clips the drawing */
+  const ko = (p, x, y, s, size) => { if (!s) return ''; const z = size || 9, w = String(s).length * z * 0.6 + 4;
+    return `<rect x="${(x - w / 2).toFixed(1)}" y="${(y - z * 1.1).toFixed(1)}" width="${w.toFixed(1)}" height="${(z * 1.45).toFixed(1)}" fill="${p.bg}" class="o55-shade-ko"/>`; };
   const mono = (p, x, y, s, size, color, anchor) => `<text x="${x}" y="${y}" text-anchor="${anchor || 'middle'}" font-family="'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace" font-weight="600" font-size="${size || 9}" fill="${color || p.text}">${U.esc(String(s).toUpperCase())}</text>`;
 
   const HELPER = {
@@ -139519,12 +139647,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     computer(ctx, item) {
       const p = ctx.pal, o = item.opts || {};
       const map = { k: p.dark ? '#000' : p.ink, d: p.hw, g: p.screen, w: p.a, p: p.hw2 };
-      return `<g><g transform="translate(0 -30)">${sprite(o.screen === 'check' ? COMPUTER_OK : COMPUTER, map, 6)}</g>${o.label ? mono(p, 0, 24, o.label, 8) : ''}</g>`;
+      return `<g>${ko(p, 0, 24, o.label, 8)}<g transform="translate(0 -30)">${sprite(o.screen === 'check' ? COMPUTER_OK : COMPUTER, map, 6)}</g>${o.label ? mono(p, 0, 24, o.label, 8) : ''}</g>`;
     },
     nas(ctx, item) {
       const p = ctx.pal, o = item.opts || {};
       const map = { k: p.dark ? '#000' : p.ink, d: p.hw, p: p.hw2, L: { fill: p.a, cls: 'o55-px-blink' } };
-      return `<g><g transform="translate(0 -45)">${sprite(NAS, map, 6)}</g>${mono(p, 0, 20, o.label || 'home nas', 8)}</g>`;
+      return `<g>${ko(p, 0, 20, o.label || 'home nas', 8)}<g transform="translate(0 -45)">${sprite(NAS, map, 6)}</g>${mono(p, 0, 20, o.label || 'home nas', 8)}</g>`;
     },
     key(ctx) {
       const p = ctx.pal;
@@ -139537,7 +139665,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     node(ctx, item) {
       const p = ctx.pal, o = item.opts || {}, col = [p.a, p.c, p.d, p.b][(o.v || 0) % 4];
       const icon = ICONS[o.icon] || ICONS.spark;
-      return `<g shape-rendering="crispEdges"><rect x="-26" y="-26" width="52" height="52" fill="${p.dark ? '#000' : p.ink}"/><rect x="-22" y="-22" width="44" height="44" fill="${p.panel}"/>`
+      return `<g shape-rendering="crispEdges">${ko(p, 0, 42, o.label, 8)}${ko(p, 0, 53, o.sub, 6.5)}<rect x="-26" y="-26" width="52" height="52" fill="${p.dark ? '#000' : p.ink}"/><rect x="-22" y="-22" width="44" height="44" fill="${p.panel}"/>`
         + `<rect x="-22" y="-22" width="44" height="4" fill="${col}"/><g class="o55-gl o55-gl-${ICONS[o.icon] ? o.icon : 'spark'}">${sprite(icon, { x: col }, 4, 0, 3)}</g>`
         + (o.label ? mono(p, 0, 42, o.label, 8) : '') + (o.sub ? mono(p, 0, 53, o.sub, 6.5, p.mid) : '') + '</g>';
     },
@@ -139553,7 +139681,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     },
     folder(ctx, item) {
       const p = ctx.pal;
-      return `<g>${sprite(FOLDER, { k: p.dark ? '#000' : p.ink, y: p.c }, 5)}${(item.opts || {}).label ? mono(p, 0, 36, item.opts.label, 7.5) : ''}</g>`;
+      return `<g>${ko(p, 0, 36, (item.opts || {}).label, 7.5)}${sprite(FOLDER, { k: p.dark ? '#000' : p.ink, y: p.c }, 5)}${(item.opts || {}).label ? mono(p, 0, 36, item.opts.label, 7.5) : ''}</g>`;
     },
     spark(ctx, item) {
       const p = ctx.pal, o = item.opts || {}, c = o.tone != null ? A.tone(ctx, o.tone) : p.c;
@@ -139567,7 +139695,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const p = ctx.pal, o = item.opts || {}, text = `${o.accent ? '> ' : ''}${o.label || ''}`, w = Math.max(80, text.length * 6.2 + (o.glyph ? 30 : 18));
       return `<g shape-rendering="crispEdges"><rect x="${-w / 2}" y="-14" width="${w}" height="28" fill="${p.dark ? '#000' : p.ink}"/><rect x="${-w / 2 + 3}" y="-11" width="${w - 6}" height="22" fill="${o.accent ? p.a : p.panel}"/>`
         + (o.glyph && ICONS[o.glyph] ? sprite(ICONS[o.glyph], { x: o.accent ? p.ink : p.text }, 2, -w / 2 + 14, 0) : '')
-        + mono(p, o.glyph ? 8 : 0, 3.5, text, 8, o.accent ? (p.dark ? '#000' : p.ink) : p.text) + '</g>';
+        /* an accent sign's words: black on Dark's lime, cream on Light's cobalt (ink on cobalt read 1.9:1). PRESS START
+           blinks its block cursor (opts.cursor), not its words: the whole sign blinking down to a quarter read 1.1:1 */
+        + mono(p, (o.glyph ? 8 : 0) - (o.cursor ? 3 : 0), 3.5, text, 8, o.accent ? (p.dark ? '#000' : p.bg) : p.text)
+        + (o.cursor ? `<rect class="o55-amb o55-amb-blink" x="${(text.length * 2.4).toFixed(1)}" y="-3" width="5" height="8" fill="${o.accent ? (p.dark ? '#000' : p.bg) : p.text}"/>` : '') + '</g>';
     },
     identity(ctx, item) {
       const p = ctx.pal, o = item.opts || {};
@@ -139684,7 +139815,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       items.push(...sparks([[74, 262, 0], [410, 230, 1], [398, 352, 2], [88, 380, 3]]));
       items.push({ key: 'dim', prop: 'dimv', x: 414, y: m.barY, layer: 'back', anim: 'fade', delay: 700, opts: { h: m.floor - m.barY, label: L('strings', 'strings') } });
       items.push({ key: 'n-plan', prop: 'note', x: 252, y: m.floor - 62, layer: 'front', anim: 'fade', delay: 1300, opts: { text: L('plan', 'the plan'), dx: 64, dy: 116 } });
-      if (ctx.family === 'retro' && ctx.beat !== 'ready') items.push({ key: 'ready', prop: 'badge', x: 240, y: 574, layer: 'front', anim: 'type', delay: 1300, amb: 'blink', opts: { label: L('pressStart', 'press start'), accent: true } });
+      if (ctx.family === 'retro' && ctx.beat !== 'ready') items.push({ key: 'ready', prop: 'badge', x: 240, y: 574, layer: 'front', anim: 'type', delay: 1300, opts: { label: L('pressStart', 'press start'), accent: true, cursor: true } });
       /* the pages that end Connect and restore ("… is ready", "… is back") open on the troupe too */
       if (ctx.beat === 'ready') items.push({ key: 'curtain', prop: 'curtain', x: 240, y: standing && ctx.band ? 350 : 300, layer: 'front' });
       return items;
@@ -139784,7 +139915,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
            signs in with a name and password, the others simply connect */
         const ln = A.link(ctx, pc, nas), mid = [(ln[0][0] + ln[1][0]) / 2, (ln[0][1] + ln[1][1]) / 2], tr = A.attach(ctx, nas, 'topRight');
         return [pc, nas, { key: 'path', prop: 'pathline', x: 0, y: 0, layer: 'back', anim: 'draw', delay: 320, opts: { pts: ln } },
-          { key: 'fold', prop: 'folder', x: tr[0] - 6, y: tr[1] - 6, s: retro ? 1 : 1.05, layer: 'front', anim: 'drop', delay: 380, opts: { label: L('sharedFolder', 'shared') } },
+          { key: 'fold', prop: 'folder', x: tr[0] - 6, y: tr[1] - 6, s: retro ? 1 : 1.05, layer: 'front', anim: 'drop', delay: 380, opts: { label: L('sharedFolder', 'shared'), labelAt: 'above' } },
           { key: 'how', prop: 'node', x: mid[0], y: mid[1], s: retro ? 1 : 0.95, layer: 'front', anim: 'pop', delay: 460, opts: { icon: pr.share === 'smb' ? 'person' : 'link', accent: true } },
           ...sparks([[70, 150, 1], [410, 520, 2]], 800)];
       }
@@ -143750,7 +143881,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const f = ctx.family, m = A.metrics(f), floor = m.floor, nar = !!ctx.band;
       /* (Basic's impression across the middle of the sheet, between the control bar and the heads, its word gap on h1's
          string; on the band, half size above h2's pointing arm, clear of h2's head and string) */
-      if (f === 'basic') return [{ key: 'fm-stamp', prop: 'fmStamp', x: nar ? 420 : 240, y: nar ? 344 : 266, s: nar ? 0.5 : 1, r: nar ? -5 : -6, layer: 'front' }];
+      if (f === 'basic') return [{ key: 'fm-stamp', prop: 'fmStamp', x: nar ? 420 : 240, y: nar ? 344 : 266, s: nar ? 0.5 : 1, r: nar ? -2 : -2, layer: 'front' }]; /* (turned only a little: a turned word's box takes in the lines around it) */
       if (f === 'friendly') return (nar ? [[184, 420], [296, 424], [372, 428]] : [[148, floor + 44], [262, floor + 50], [374, floor + 44]]).map(([x, y], i) => ({ key: 'fm-rose' + i, prop: 'fmRose', x, y, s: nar ? 2 : 3.5, r: (nar ? [-60, 40, 70] : [-70, 18, 74])[i], layer: 'front', opts: { v: i } }));
       if (f === 'glass') return [-1, 0, 1].map((s, i) => ({ key: 'fm-spot' + i, prop: 'fmSpot', x: 240 + s * 112, y: floor + 4, layer: 'back', opts: { v: i, top: 30 - floor, tint: ['lav', 'pink', 'mint'][i] } }));
       /* (on the band ALL CLEAR sits just inside its top, about y 318, clear of h1's crown through its one-step hop, with
@@ -143762,16 +143893,18 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* the emblems' drawings, in each family's materials */
   function addProps() {
     const F = A.families;
-    /* Basic's impression: ink on the drawing (the strings and the grid show through it), a worn double border, the
-       word, and today's date under a rule */
+    /* Basic's impression: a worn double border, the word, and today's date under a rule. Its field is the paper tinted
+       with the stamp's ink, laid solid, and every line keeps clear of the words' boxes, so the word and the date read
+       on an even ground (the strings and the grid used to show through behind the letters, and the date's rule ran
+       through the word's box); on light paper they are lettered in the deepened accent */
     if (F.basic && !F.basic.props.fmStamp) F.basic.props.fmStamp = (ctx) => {
-      const p = ctx.pal, w = 200, h = 58;
+      const p = ctx.pal, w = 212, h = 70, ink = p.accentInk || p.accent;
       let date = '';
       try { date = new Intl.DateTimeFormat(undefined, { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date()); } catch (_) {}
-      return `<g><rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" rx="5" fill="${p.accentFill}" stroke="${p.accent}" stroke-width="2.8" stroke-dasharray="84 1.6 132 2.2 58 1.4 101 2 120 2.8"/>`
+      return `<g><rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" rx="5" fill="${A.mix(p.paper, p.accent, p.dark ? 0.1 : 0.08)}" stroke="${p.accent}" stroke-width="2.8" stroke-dasharray="84 1.6 132 2.2 58 1.4 101 2 120 2.8"/>`
         + `<rect x="${-w / 2 + 5.5}" y="${-h / 2 + 5.5}" width="${w - 11}" height="${h - 11}" rx="2.5" fill="none" stroke="${p.accent}" stroke-width="1.1"/>`
-        + txt('basic', 2, 1.5, T('call.basic.stamp'), 23, { fill: p.accent, w: 800, ls: 4 })
-        + `<path d="M-64 8H64" stroke="${p.accent}" stroke-width="0.8"/>` + txt('basic', 0, 17.5, date, 7, { fill: p.accent, w: 700, ls: 1.8 }) + '</g>';
+        + txt('basic', 2, -1, T('call.basic.stamp'), 23, { fill: ink, w: 800, ls: 4 })
+        + `<path d="M-64 12H64" stroke="${p.accent}" stroke-width="0.8"/>` + txt('basic', 0, 22.5, date, 7, { fill: ink, w: 700, ls: 1.8 }) + '</g>';
     };
     if (F.friendly && !F.friendly.props.fmRose) F.friendly.props.fmRose = (ctx, item) => {
       const p = ctx.pal, c = [p.peach, p.lilac, p.sky][((item.opts || {}).v || 0) % 3];
@@ -143790,13 +143923,21 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         + `<path d="M-16 ${top}L-62 -6M16 ${top}L62 -6" fill="none" stroke="${tint}" stroke-opacity="${p.dark ? 0.22 : 0.4}" stroke-width="1"/>`
         + `<ellipse cx="0" cy="-4" rx="70" ry="13" fill="${ctx.url('glow-' + (o.tint || 'lav'))}"/><ellipse cx="0" cy="-4" rx="46" ry="7" fill="none" stroke="${p.core}" stroke-opacity="${p.dark ? 0.35 : 0.6}" stroke-width="1"/></g>`;
     };
+    /* ALL CLEAR on a game's message box: an ink frame round a panel, its hard drop shadow outside the words. The box
+       hangs in front of the strings, so no string and no shadow copy of the words runs through them (the words used to
+       cast a second, offset copy of themselves, and the strings crossed both: 1.1:1 at worst). The box takes in
+       IBM Plex Mono's whole line (1.025 em up, 0.275 em down) with room to spare. */
     if (F.retro && !F.retro.props.fmClear) F.retro.props.fmClear = (ctx, item) => {
       const p = ctx.pal, a = T('call.retro.clear').toUpperCase(), z = (item.opts || {}).size || 26, d = Math.max(2, Math.round(z / 9));
-      return `<g>${txt('retro', d, d, a, z, { fill: p.dark ? '#000' : p.dim, w: 700 })}${txt('retro', 0, 0, a, z, { fill: p.a, w: 700 })}</g>`;
+      const w = Math.round(monoW(a, z) + z), top = -Math.round(z * 1.3), h = Math.round(z * 1.85), ink = p.dark ? '#000' : p.ink;
+      return `<g shape-rendering="crispEdges"><rect x="${-w / 2 + d}" y="${top + d}" width="${w}" height="${h}" fill="${p.dark ? '#000' : p.dim}"/>`
+        + `<rect x="${-w / 2}" y="${top}" width="${w}" height="${h}" fill="${ink}"/><rect x="${-w / 2 + 3}" y="${top + 3}" width="${w - 6}" height="${h - 6}" fill="${p.panel}"/>`
+        + `${txt('retro', 0, 0, a, z, { fill: p.a, w: 700 })}</g>`;
     };
+    /* the score in the orange deepened toward black on cream (the orange itself read 2:1 there) */
     if (F.retro && !F.retro.props.fmScore) F.retro.props.fmScore = (ctx) => {
       const p = ctx.pal, s = T('call.retro.score', { n: 100 }).toUpperCase();
-      return `<g><text data-fm="score" x="0" y="0" text-anchor="middle" font-family="${esc(FONT.retro)}" font-weight="600" font-size="11" fill="${p.c}">${esc(s)}</text></g>`;
+      return `<g><text data-fm="score" x="0" y="0" text-anchor="middle" font-family="${esc(FONT.retro)}" font-weight="600" font-size="11" fill="${p.dark ? p.c : A.mix(p.c, '#000', 0.45)}">${esc(s)}</text></g>`;
     };
     /* an arrow down and to the right, toward the tour button, blinking between the accent and nothing (14-family-
        moments.css .o55fm-blink; still under Reduced Motion and on a low-resource computer) */

@@ -816,7 +816,7 @@
       const f = ctx.family, m = A.metrics(f), floor = m.floor, nar = !!ctx.band;
       /* (Basic's impression across the middle of the sheet, between the control bar and the heads, its word gap on h1's
          string; on the band, half size above h2's pointing arm, clear of h2's head and string) */
-      if (f === 'basic') return [{ key: 'fm-stamp', prop: 'fmStamp', x: nar ? 420 : 240, y: nar ? 344 : 266, s: nar ? 0.5 : 1, r: nar ? -5 : -6, layer: 'front' }];
+      if (f === 'basic') return [{ key: 'fm-stamp', prop: 'fmStamp', x: nar ? 420 : 240, y: nar ? 344 : 266, s: nar ? 0.5 : 1, r: nar ? -2 : -2, layer: 'front' }]; /* (turned only a little: a turned word's box takes in the lines around it) */
       if (f === 'friendly') return (nar ? [[184, 420], [296, 424], [372, 428]] : [[148, floor + 44], [262, floor + 50], [374, floor + 44]]).map(([x, y], i) => ({ key: 'fm-rose' + i, prop: 'fmRose', x, y, s: nar ? 2 : 3.5, r: (nar ? [-60, 40, 70] : [-70, 18, 74])[i], layer: 'front', opts: { v: i } }));
       if (f === 'glass') return [-1, 0, 1].map((s, i) => ({ key: 'fm-spot' + i, prop: 'fmSpot', x: 240 + s * 112, y: floor + 4, layer: 'back', opts: { v: i, top: 30 - floor, tint: ['lav', 'pink', 'mint'][i] } }));
       /* (on the band ALL CLEAR sits just inside its top, about y 318, clear of h1's crown through its one-step hop, with
@@ -828,16 +828,18 @@
   /* the emblems' drawings, in each family's materials */
   function addProps() {
     const F = A.families;
-    /* Basic's impression: ink on the drawing (the strings and the grid show through it), a worn double border, the
-       word, and today's date under a rule */
+    /* Basic's impression: a worn double border, the word, and today's date under a rule. Its field is the paper tinted
+       with the stamp's ink, laid solid, and every line keeps clear of the words' boxes, so the word and the date read
+       on an even ground (the strings and the grid used to show through behind the letters, and the date's rule ran
+       through the word's box); on light paper they are lettered in the deepened accent */
     if (F.basic && !F.basic.props.fmStamp) F.basic.props.fmStamp = (ctx) => {
-      const p = ctx.pal, w = 200, h = 58;
+      const p = ctx.pal, w = 212, h = 70, ink = p.accentInk || p.accent;
       let date = '';
       try { date = new Intl.DateTimeFormat(undefined, { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date()); } catch (_) {}
-      return `<g><rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" rx="5" fill="${p.accentFill}" stroke="${p.accent}" stroke-width="2.8" stroke-dasharray="84 1.6 132 2.2 58 1.4 101 2 120 2.8"/>`
+      return `<g><rect x="${-w / 2}" y="${-h / 2}" width="${w}" height="${h}" rx="5" fill="${A.mix(p.paper, p.accent, p.dark ? 0.1 : 0.08)}" stroke="${p.accent}" stroke-width="2.8" stroke-dasharray="84 1.6 132 2.2 58 1.4 101 2 120 2.8"/>`
         + `<rect x="${-w / 2 + 5.5}" y="${-h / 2 + 5.5}" width="${w - 11}" height="${h - 11}" rx="2.5" fill="none" stroke="${p.accent}" stroke-width="1.1"/>`
-        + txt('basic', 2, 1.5, T('call.basic.stamp'), 23, { fill: p.accent, w: 800, ls: 4 })
-        + `<path d="M-64 8H64" stroke="${p.accent}" stroke-width="0.8"/>` + txt('basic', 0, 17.5, date, 7, { fill: p.accent, w: 700, ls: 1.8 }) + '</g>';
+        + txt('basic', 2, -1, T('call.basic.stamp'), 23, { fill: ink, w: 800, ls: 4 })
+        + `<path d="M-64 12H64" stroke="${p.accent}" stroke-width="0.8"/>` + txt('basic', 0, 22.5, date, 7, { fill: ink, w: 700, ls: 1.8 }) + '</g>';
     };
     if (F.friendly && !F.friendly.props.fmRose) F.friendly.props.fmRose = (ctx, item) => {
       const p = ctx.pal, c = [p.peach, p.lilac, p.sky][((item.opts || {}).v || 0) % 3];
@@ -856,13 +858,21 @@
         + `<path d="M-16 ${top}L-62 -6M16 ${top}L62 -6" fill="none" stroke="${tint}" stroke-opacity="${p.dark ? 0.22 : 0.4}" stroke-width="1"/>`
         + `<ellipse cx="0" cy="-4" rx="70" ry="13" fill="${ctx.url('glow-' + (o.tint || 'lav'))}"/><ellipse cx="0" cy="-4" rx="46" ry="7" fill="none" stroke="${p.core}" stroke-opacity="${p.dark ? 0.35 : 0.6}" stroke-width="1"/></g>`;
     };
+    /* ALL CLEAR on a game's message box: an ink frame round a panel, its hard drop shadow outside the words. The box
+       hangs in front of the strings, so no string and no shadow copy of the words runs through them (the words used to
+       cast a second, offset copy of themselves, and the strings crossed both: 1.1:1 at worst). The box takes in
+       IBM Plex Mono's whole line (1.025 em up, 0.275 em down) with room to spare. */
     if (F.retro && !F.retro.props.fmClear) F.retro.props.fmClear = (ctx, item) => {
       const p = ctx.pal, a = T('call.retro.clear').toUpperCase(), z = (item.opts || {}).size || 26, d = Math.max(2, Math.round(z / 9));
-      return `<g>${txt('retro', d, d, a, z, { fill: p.dark ? '#000' : p.dim, w: 700 })}${txt('retro', 0, 0, a, z, { fill: p.a, w: 700 })}</g>`;
+      const w = Math.round(monoW(a, z) + z), top = -Math.round(z * 1.3), h = Math.round(z * 1.85), ink = p.dark ? '#000' : p.ink;
+      return `<g shape-rendering="crispEdges"><rect x="${-w / 2 + d}" y="${top + d}" width="${w}" height="${h}" fill="${p.dark ? '#000' : p.dim}"/>`
+        + `<rect x="${-w / 2}" y="${top}" width="${w}" height="${h}" fill="${ink}"/><rect x="${-w / 2 + 3}" y="${top + 3}" width="${w - 6}" height="${h - 6}" fill="${p.panel}"/>`
+        + `${txt('retro', 0, 0, a, z, { fill: p.a, w: 700 })}</g>`;
     };
+    /* the score in the orange deepened toward black on cream (the orange itself read 2:1 there) */
     if (F.retro && !F.retro.props.fmScore) F.retro.props.fmScore = (ctx) => {
       const p = ctx.pal, s = T('call.retro.score', { n: 100 }).toUpperCase();
-      return `<g><text data-fm="score" x="0" y="0" text-anchor="middle" font-family="${esc(FONT.retro)}" font-weight="600" font-size="11" fill="${p.c}">${esc(s)}</text></g>`;
+      return `<g><text data-fm="score" x="0" y="0" text-anchor="middle" font-family="${esc(FONT.retro)}" font-weight="600" font-size="11" fill="${p.dark ? p.c : A.mix(p.c, '#000', 0.45)}">${esc(s)}</text></g>`;
     };
     /* an arrow down and to the right, toward the tour button, blinking between the accent and nothing (14-family-
        moments.css .o55fm-blink; still under Reduced Motion and on a low-resource computer) */

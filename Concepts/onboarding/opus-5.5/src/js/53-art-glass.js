@@ -14,7 +14,8 @@
       dark,
       bg: dark ? '#1f1730' : '#ead7ec', bg2: dark ? '#140e22' : '#dcc2e3',
       lav: tok.blue, pink: tok.magenta, mint: tok.lime, amber: tok.orange,
-      text: tok.text, textDim: A.rgba(tok.text, 0.7),
+      text: tok.text, textDim: A.rgba(tok.text, 0.78),
+      slip: dark ? 'rgba(16,11,30,0.84)' : 'rgba(255,255,255,0.88)', slipEdge: dark ? 'rgba(255,255,255,0.22)' : A.rgba(A.mix(tok.blue, tok.text, 0.4), 0.35),
       g0: dark ? 0.34 : 0.78, g1: dark ? 0.07 : 0.34, g2: dark ? 0.02 : 0.14,
       e0: dark ? 0.85 : 1, e1: dark ? 0.18 : 0.55,
       core: dark ? '#ffffff' : '#fffaff', shade: dark ? 'rgba(10,6,20,0.35)' : 'rgba(90,60,120,0.16)',
@@ -24,7 +25,20 @@
   const G = (ctx) => `fill="${ctx.url('glass')}" stroke="${ctx.url('edge')}" stroke-width="1.2"`;
   const hl = (d) => `<path d="${d}" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="1.4" stroke-linecap="round"/>`;
   const glow = (ctx, color, r, x, y) => `<circle cx="${x || 0}" cy="${y || 0}" r="${r}" fill="${ctx.url('glow-' + color)}"/>`;
-  const label = (p, x, y, s, size) => `<text x="${x}" y="${y}" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="${size || 8.5}" letter-spacing="0.4" fill="${p.text}">${U.esc(s)}</text>`;
+  /* Every word in the art is etched on a slip of frosted glass that covers its whole box: a near-solid pane (dark in
+     Dark, white in Light) with a lit top edge, so a word keeps its contrast whatever passes behind it (a stage edge, a
+     glow, a string, a wave). slip(p, x, y, w, size, anchor): the pane for a word of width w set at baseline y. */
+  const FONT = 'Inter, system-ui, sans-serif';
+  const slip = (p, x, y, w, size, anchor) => {
+    const padX = Math.max(3.5, size * 0.42), top = y - size * 1.12, h = size * 1.6, x0 = (anchor === 'start' ? x : anchor === 'end' ? x - w : x - w / 2) - padX, W = w + padX * 2;
+    return `<rect x="${x0.toFixed(2)}" y="${top.toFixed(2)}" width="${W.toFixed(2)}" height="${h.toFixed(2)}" rx="2.4" fill="${p.slip}" stroke="${p.slipEdge}" stroke-width="0.6"/>`
+      + `<path d="M${(x0 + 2.4).toFixed(2)} ${(top + 0.7).toFixed(2)} H${(x0 + W - 2.4).toFixed(2)}" stroke="#fff" stroke-width="0.6" stroke-linecap="round" opacity="${p.dark ? 0.35 : 0.95}"/>`;
+  };
+  const label = (p, x, y, s, size, fill, anchor) => {
+    size = size || 8.5; const w = A.textW(s, size, FONT, 600, 0.4);
+    return slip(p, x, y, w, size, anchor || 'middle')
+      + `<text x="${x}" y="${y}" text-anchor="${anchor || 'middle'}" font-family="${FONT}" font-weight="600" font-size="${size}" letter-spacing="0.4" fill="${fill || p.text}">${U.esc(s)}</text>`;
+  };
   const tints = ['lav', 'pink', 'mint', 'amber'];
 
   /* The crystal marionette: a cut-glass torso with a socket at every corner, and glass rods for limbs that meet at glass
@@ -178,7 +192,7 @@
       const p = ctx.pal, o = item.opts || {}, tint = o.color || tints[(o.v || 0) % 4];
       return `<g>${glow(ctx, tint, 46, 0, 0)}<circle r="26" ${G(ctx)}/>${hl('M-17 -14 A21 21 0 0 1 2 -23')}`
         + `<g transform="translate(-12 -12)" style="color:${p.dark ? p.core : '#4f3596'}">${A.glyph(o.icon || 'spark', 'currentColor', 1.8)}</g>`
-        + (o.label ? label(p, 0, 44, o.label) : '') + (o.sub ? `<text x="0" y="56" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="7" fill="${p.textDim}">${U.esc(o.sub)}</text>` : '') + '</g>';
+        + (o.label ? label(p, 0, 44, o.label) : '') + (o.sub ? label(p, 0, 57.5, o.sub, 7, p.textDim) : '') + '</g>';
     },
     pathline(ctx, item) {
       const p = ctx.pal, pts = (item.opts || {}).pts || [];
@@ -208,16 +222,17 @@
        troupe's torso, with a bevel cut a little inside the edge, light along its top facet and a thin line of the
        accent along its foot; the word is engraved in it (the last text, where a typed letter's fleck leaves from) */
     badge(ctx, item) {
-      const p = ctx.pal, o = item.opts || {}, w = Math.max(76, (o.label || '').length * 6.1 + (o.glyph ? 38 : 26)), h = 28, c = 5, x = w / 2, y = h / 2, i = 3.2, ci = c - 1.6;
+      const p = ctx.pal, o = item.opts || {}, tw = A.textW(o.label || '', 9, FONT, 600, 0.4), w = Math.max(76, tw + (o.glyph ? 40 : 28)), h = 28, c = 5, x = w / 2, y = h / 2, i = 3.2, ci = c - 1.6;
       const plate = (X, Y, C) => `M${-X + C} ${-Y} H${X - C} L${X} ${-Y + C} V${Y - C} L${X - C} ${Y} H${-X + C} L${-X} ${Y - C} V${-Y + C} Z`;
       const tint = o.accent ? 'lav' : 'mint';
       return `<g>${o.accent ? glow(ctx, 'lav', Math.min(70, w * 0.55), 0, 2) : ''}<path d="${plate(x, y, c)}" ${G(ctx)} stroke-linejoin="round"/>`
-        + `<path d="${plate(x - i, y - i, ci)}" fill="none" stroke="#fff" stroke-width="0.6" stroke-linejoin="round" opacity="${p.dark ? 0.3 : 0.5}"/>`
+        /* the face inside the bevel is frosted near-solid, so the word engraved on it reads whatever glows behind the plate */
+        + `<path d="${plate(x - i, y - i, ci)}" fill="${p.slip}" stroke="#fff" stroke-width="0.6" stroke-linejoin="round" stroke-opacity="${p.dark ? 0.3 : 0.5}"/>`
         + `<path d="M${-x + c} ${-y} L${-x + i + ci} ${-y + i} M${x - c} ${-y} L${x - i - ci} ${-y + i} M${-x + c} ${y} L${-x + i + ci} ${y - i} M${x - c} ${y} L${x - i - ci} ${y - i}" stroke="#fff" stroke-width="0.5" opacity="${p.dark ? 0.3 : 0.5}"/>`
         + hl(`M${-x + c + 3} ${-y + 1.6} H${x - c - 12}`)
         + `<rect x="${-x + c + 4}" y="${y - 2.4}" width="${w - 2 * c - 8}" height="0.9" fill="${p[tint]}" opacity="${p.dark ? 0.75 : 0.6}"/>`
         + (o.glyph ? `<g transform="translate(${-x + 10} -9) scale(0.75)" style="color:${p.dark ? p.core : '#4f3596'}">${A.glyph(o.glyph, 'currentColor', 2)}</g>` : '')
-        + label(p, o.glyph ? 9 : 0, 3.4, o.label || '', 9) + '</g>';
+        + `<text x="${o.glyph ? 9 : 0}" y="3.4" text-anchor="middle" font-family="${FONT}" font-weight="600" font-size="9" letter-spacing="0.4" fill="${p.text}">${U.esc(o.label || '')}</text></g>`;
     },
     identity(ctx, item) {
       const p = ctx.pal, o = item.opts || {};
@@ -229,13 +244,15 @@
        as a shelf of light, fading away, that the words stand on (the shelf is a hairline plate, so its gradient has a
        box to span) */
     note(ctx, item) {
-      const p = ctx.pal, o = item.opts || {}, dx = o.dx == null ? 60 : o.dx, dy = o.dy == null ? -30 : o.dy, right = dx >= 0, w = (o.text || '').length * 5.4 + 14;
+      const p = ctx.pal, o = item.opts || {}, dx = o.dx == null ? 60 : o.dx, dy = o.dy == null ? -30 : o.dy, right = dx >= 0, tw = A.textW(o.text || '', 9, FONT, 600, 0.3), w = tw + 14;
       const sy = dy + 5.5, x0 = right ? dx : dx - w, ink = p.dark ? p.core : A.mix(p.lav, p.text, 0.3); /* white light on a dark sky, the deepened tint on a pale one */
       return `<g><path d="M0 0 L${dx} ${sy}" stroke="${p.lav}" stroke-width="3.6" opacity="0.13" stroke-linecap="round"/><path d="M0 0 L${dx} ${sy}" stroke="${ink}" stroke-width="0.9" opacity="0.85" stroke-linecap="round"/>`
-        + `<rect x="${x0}" y="${sy - 0.5}" width="${w}" height="1" fill="${ctx.url(right ? 'shelf' : 'shelfR')}"/>`
         + `<circle r="2.6" ${G(ctx)}/><circle r="1.2" fill="${ink}"/>`
-        + `<rect x="${dx - 1.8}" y="${sy - 1.8}" width="3.6" height="3.6" fill="${ink}" transform="rotate(45 ${dx} ${sy})"/>`
-        + `<text x="${right ? dx + 4 : dx - 4}" y="${dy + 2}" text-anchor="${right ? 'start' : 'end'}" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="9" letter-spacing="0.3" fill="${p.text}">${U.esc(o.text || '')}</text></g>`;
+        /* the words on their frosted slip (it covers the words' whole box), the shelf of light along its foot */
+        + slip(p, right ? dx + 4 : dx - 4, dy + 2, tw, 9, right ? 'start' : 'end')
+        + `<rect x="${x0}" y="${sy + 0.3}" width="${w}" height="1" fill="${ctx.url(right ? 'shelf' : 'shelfR')}"/>`
+        + `<rect x="${dx - 1.8}" y="${sy - 1.8 + 0.8}" width="3.6" height="3.6" fill="${ink}" transform="rotate(45 ${dx} ${sy + 0.8})"/>`
+        + `<text x="${right ? dx + 4 : dx - 4}" y="${dy + 2}" text-anchor="${right ? 'start' : 'end'}" font-family="${FONT}" font-weight="600" font-size="9" letter-spacing="0.3" fill="${p.text}">${U.esc(o.text || '')}</text></g>`;
     }
   };
 
