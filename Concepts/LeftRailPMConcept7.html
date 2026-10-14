@@ -173251,7 +173251,11 @@ dropZones.probe = function (g, o) {
       // the strip is drawn where the preview put its panel: read its tabs there, at the pointer's place in the panel
       var drawn = el.getBoundingClientRect();
       var px = x - r.x + drawn.left;
-      var moreR = st.more.hidden ? null : st.more.getBoundingClientRect();
+      // "+N" is measured where it rests, as the insert slots are (33-tabdrag.js insertionIn): the gap an end slot opens
+      // slides "+N" right by a chip's width, and read where it was drawn it ran from the pointer (landing of 2026-10-14,
+      // Glass dark, a crowded strip: 128 px); on "+N" the gap closes and it slides back under the pointer
+      var moreR = null;
+      if (!st.more.hidden) { var mx = PMW.tabDrag.layoutX(st.more), mw = st.more.offsetWidth; moreR = { left: mx, right: mx + mw, width: mw }; }
       if (moreR && px >= moreR.left - 4 && px <= moreR.right + 4) {
         return { key: 'more-' + p.id, type: 'strip', panelId: p.id, index: p.tabs.length, rect: { x: moreR.left, y: drawn.top + 3, w: moreR.width, h: sh - 3 }, label: 'To the end' };
       }
@@ -174416,6 +174420,7 @@ function insertionIn(st, p, x) {
   return { index: p.tabs.length, x: layoutX(last) + last.offsetWidth + stripGap(st) };
 }
 tabDrag.insertionIn = insertionIn;
+tabDrag.layoutX = layoutX;
 function stripGap(st) { return parseFloat(getComputedStyle(st.tabsEl).columnGap) || 0; }
 /* the strip a torn tab hovers opens a gap at the insert index: the tabs from there slide right by the chip's width (the
    250 ms neighbour slide; instant under Reduced Motion), so the slot is drawn in the gap and covers no label */
