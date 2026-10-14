@@ -1,0 +1,138 @@
+/* The editor's Customize screen (kinds/11-editor-customize.js). It wears the terminal screen's classes and every look's
+   drawing of them (src/terminal/css/26-customize.css, .pmt-cz), so the two screens are one family; this file adds only
+   what the editor shows: its live preview's box, the schemes as tiny editors, the faces, the caret's shapes, blinks
+   and movements, the guides, and the chips' small pictures. Pictures that move (a blink, a glide) move only while the
+   pointer or the focus is on their tile, never at idle, and not at all under Reduced Motion. No pills, no :has(). */
+
+/* ---- the preview: a real editor in a tab body of its own (the editor sizes against @container pmw-body) ---- */
+.pmed-cz .pmt-cz-pvbox { height: 262px; min-height: 200px; }
+.pmed-pvhost { position: absolute; inset: 0; container-type: size; container-name: pmw-body; overflow: hidden; }
+.pmed-cz .pmt-cz-dockbox .pmed-pvhost { inset: 0; }
+.pmed-cz .pmt-cz-dock { height: 176px; width: min(44%, 400px); }
+@container pmt-cz (max-width: 640px) { .pmed-cz .pmt-cz-dock { width: 42%; height: 140px; } }
+@container pmt-cz (max-width: 640px) { .pmed-cz .pmt-cz-pvbox { height: 226px; } }
+@container pmt-cz (max-width: 440px) { .pmed-cz .pmt-cz-pvbox { height: 200px; } }
+/* Liquid Glass (its CONTRACT, pm7-liquid-glass 2026-10-14): the reading plate is a plain fill, the look's editor ground at
+   82 %, a 1 px glass line and a radius concentric with the dialog; no blur and no transparency setting under code */
+html[data-lg="on"][data-theme^="glass"] .pmed-cz .pmt-cz-preview {
+  background: color-mix(in srgb, var(--rg-reading, #14112a) 82%, transparent); border-color: var(--lg-line, rgba(255, 255, 255, .1));
+  border-radius: calc(var(--pmt-cz-radius) - 6px);
+}
+html[data-lg="on"][data-theme="glass-light"] .pmed-cz .pmt-cz-preview { background: color-mix(in srgb, #f0f3f3 82%, transparent); }
+
+/* ---- schemes as tiny editors ---- */
+.pmed-sw { display: flex; flex-direction: column; justify-content: center; gap: 1px; height: 100%; padding: 3px 8px; font: 500 10.5px/1.28 var(--pm-font-code, ui-monospace, monospace); white-space: pre; overflow: hidden; }
+.pmed-swl { display: block; overflow: hidden; text-overflow: clip; }
+.pmed-swl b { font-weight: 650; }
+.pmed-swl i, .pmed-swl u { font-style: normal; text-decoration: none; }
+.pmed-swc { font-style: italic; }
+/* ---- faces: their own letters and a ligature pair ---- */
+.pmed-cz .pmed-face { font-size: 17px; }
+.pmed-face em { margin-left: 10px; font-style: normal; font-size: 13px; opacity: .78; font-variant-ligatures: normal; font-feature-settings: "liga" 1, "calt" 1; }
+
+/* ---- the caret's shapes ---- */
+.pmed-cur { display: flex; align-items: center; gap: 0; height: 100%; padding: 0 10px; font: 12.5px/1 var(--pm-font-code, ui-monospace, monospace); color: var(--pmw-text-2, inherit); white-space: pre; }
+.pmed-cur i { position: relative; display: block; flex: none; width: 2px; height: 17px; margin: 0 1px; background: var(--pmt-cz-accent); border-radius: 1px; }
+.pmed-cur-block i { width: 8px; border-radius: 1px; }
+.pmed-cur-underline i { width: 8px; height: 2px; align-self: flex-end; margin-bottom: 12px; }
+.pmed-cur-look i { width: 8px; background: transparent; outline: 1.5px dashed var(--pmt-cz-accent); outline-offset: -1.5px; }
+/* ---- blinks: played while the tile is pointed at or focused ---- */
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-blink-blink i { animation: pmed-blink 1.06s steps(1, end) infinite; }
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-blink-smooth i { animation: pmed-fade 1.06s ease-in-out infinite; }
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-blink-expand i { animation: pmed-expand 1.06s ease-in-out infinite; }
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-move-instant i { animation: pmed-hop 1.4s steps(1, end) infinite; }
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-move-snappy i { animation: pmed-glide 1.4s cubic-bezier(.2, .8, .2, 1) infinite; }
+  html:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) .pmed-move-glide i { animation: pmed-glide-slow 1.4s cubic-bezier(.2, .75, .25, 1) infinite; }
+}
+@keyframes pmed-blink { 50% { opacity: 0; } }
+@keyframes pmed-fade { 0%, 22% { opacity: 1; } 50%, 72% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes pmed-expand { 0%, 22% { transform: scaleY(1); } 50%, 72% { transform: scaleY(0); } 100% { transform: scaleY(1); } }
+.pmed-blink-solid i { opacity: 1; }
+.pmed-blink-look i { background: transparent; outline: 1.5px dashed var(--pmt-cz-accent); outline-offset: -1.5px; width: 3px; }
+/* ---- movements: the caret going between two marks ---- */
+.pmed-move { position: relative; display: block; height: 100%; }
+.pmed-move b { position: absolute; top: 50%; width: 4px; height: 4px; margin-top: -2px; border-radius: 1px; background: color-mix(in srgb, var(--pmw-text, #fff) 26%, transparent); }
+.pmed-move b:first-child { left: 14px; }
+.pmed-move b:nth-child(2) { right: 14px; }
+.pmed-move i { position: absolute; left: 22px; top: 50%; width: 2px; height: 17px; margin-top: -8.5px; background: var(--pmt-cz-accent); border-radius: 1px; }
+.pmed-move-look i { background: transparent; outline: 1.5px dashed var(--pmt-cz-accent); outline-offset: -1px; }
+@keyframes pmed-hop { 0%, 49% { transform: translateX(0); } 50%, 100% { transform: translateX(56px); } }
+@keyframes pmed-glide { 0%, 18% { transform: translateX(0); } 30%, 68% { transform: translateX(56px); } 80%, 100% { transform: translateX(0); } }
+@keyframes pmed-glide-slow { 0%, 12% { transform: translateX(0); } 40%, 62% { transform: translateX(56px); } 90%, 100% { transform: translateX(0); } }
+.pmed-cz .pmt-cz-small .pmed-move i { left: 18px; }
+/* ---- guides: three levels of code with their lines ---- */
+.pmed-guides { display: grid; align-content: center; gap: 3px; height: 100%; padding: 0 10px; }
+.pmed-guides span { position: relative; display: block; height: 3px; border-radius: 1.5px; background: color-mix(in srgb, var(--pmw-text, #ccc) 34%, transparent); }
+.pmed-guides span:nth-child(1) { width: 70%; }
+.pmed-guides span:nth-child(2) { width: 58%; margin-left: 14px; }
+.pmed-guides span:nth-child(3) { width: 44%; margin-left: 28px; }
+.pmed-guides span:nth-child(4) { width: 52%; margin-left: 14px; }
+.pmed-guides-plain, .pmed-guides-rainbow { position: relative; }
+.pmed-guides-plain::before, .pmed-guides-rainbow::before { content: ""; position: absolute; top: 9px; bottom: 9px; left: 12px; width: 1px; background: color-mix(in srgb, var(--pmw-text, #ccc) 30%, transparent); }
+.pmed-guides-plain::after, .pmed-guides-rainbow::after { content: ""; position: absolute; top: 15px; bottom: 15px; left: 26px; width: 1px; background: color-mix(in srgb, var(--pmw-text, #ccc) 30%, transparent); }
+.pmed-guides-rainbow::before { background: #e5c07b; }
+.pmed-guides-rainbow::after { background: #c678dd; }
+
+/* ---- the chips' small pictures (the terminal's art box, 26-customize.css, for every chip here) ---- */
+.pmed-cz .pmt-cz-chip .pmt-cz-art { display: block; }
+.pmed-art-syntax { background:
+  linear-gradient(#c678dd, #c678dd) 8px 10px / 12px 3px no-repeat, linear-gradient(#61afef, #61afef) 23px 10px / 18px 3px no-repeat,
+  linear-gradient(#98c379, #98c379) 14px 18px / 26px 3px no-repeat, linear-gradient(#e5c07b, #e5c07b) 8px 26px / 14px 3px no-repeat,
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 25px 26px / 16px 3px no-repeat,
+  linear-gradient(color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 50%, transparent), color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 50%, transparent)) 8px 34px / 34px 3px no-repeat,
+  var(--pmt-cz-sbg, #111); }
+.pmed-art-brackets, .pmed-art-lig { display: grid !important; place-items: center; font: 600 13px/1 var(--pm-font-code, ui-monospace, monospace); background: var(--pmt-cz-sbg, #111); color: var(--pmt-cz-sfg, #ccc); }
+.pmed-art-brackets::before { content: "({[ ]})"; letter-spacing: -.02em; background: linear-gradient(90deg, #e5c07b 0 16%, #c678dd 16% 33%, #61afef 33% 66%, #c678dd 66% 83%, #e5c07b 83%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.pmed-art-lig::before { content: "-> !="; font-variant-ligatures: normal; font-feature-settings: "liga" 1, "calt" 1; }
+.pmed-art-wrap { background:
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 10px / 40px 3px no-repeat,
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 16px 17px / 26px 3px no-repeat,
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 27px / 34px 3px no-repeat,
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 16px 34px / 18px 3px no-repeat,
+  linear-gradient(color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 26%, transparent), color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 26%, transparent)) 48px 4px / 1px 40px no-repeat,
+  var(--pmt-cz-sbg, #111); }
+.pmed-art-minimap { background:
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 10px / 28px 3px no-repeat, linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 18px / 22px 3px no-repeat,
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 26px / 30px 3px no-repeat,
+  repeating-linear-gradient(to bottom, color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 45%, transparent) 0 1px, transparent 1px 3px) 44px 6px / 9px 34px no-repeat,
+  linear-gradient(color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 22%, transparent), color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 22%, transparent)) 43px 12px / 11px 12px no-repeat,
+  var(--pmt-cz-sbg, #111); }
+.pmed-art-sticky { background:
+  linear-gradient(color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 16%, var(--pmt-cz-sbg, #111)), color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 16%, var(--pmt-cz-sbg, #111))) 0 0 / 100% 12px no-repeat,
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 4px / 30px 3px no-repeat,
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 14px 20px / 26px 3px no-repeat, linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 14px 28px / 18px 3px no-repeat,
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 14px 36px / 30px 3px no-repeat, var(--pmt-cz-sbg, #111); }
+.pmed-art-reveal { background:
+  linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 10px / 28px 3px no-repeat,
+  linear-gradient(color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 70%, transparent), color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 70%, transparent)) 10px 18px / 34px 3px no-repeat,
+  linear-gradient(color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 42%, transparent), color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 42%, transparent)) 12px 26px / 20px 3px no-repeat,
+  linear-gradient(color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 18%, transparent), color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 18%, transparent)) 14px 34px / 30px 3px no-repeat,
+  var(--pmt-cz-sbg, #111); }
+
+/* ---- Retro: square pictures, phosphor marks ---- */
+.pmed-cz[data-pmt-look="retro"] :is(.pmed-cur i, .pmed-move i, .pmed-move b, .pmed-guides span) { border-radius: 0; }
+.pmed-cz[data-pmt-look="retro"] .pmed-guides-rainbow::before { background: var(--pmt-cz-accent); }
+.pmed-cz[data-pmt-look="retro"] .pmed-guides-rainbow::after { background: color-mix(in srgb, var(--pmt-cz-accent) 55%, transparent); }
+.pmed-cz[data-pmt-look="retro"] .pmt-cz-tile[aria-checked="true"] :is(.pmed-cur i, .pmed-move i) { background: var(--pmt-cz-on-accent); }
+/* ---- NieR: ink and parchment only; marks cut, never glide; squares where its parts ask ---- */
+html[data-o55-nier="on"] .pmed-cz :is(.pmed-cur i, .pmed-move i) { background: var(--o55-nier-ink); border-radius: 0; }
+html[data-o55-nier="on"] .pmed-cz .pmt-cz-tile[aria-checked="true"] :is(.pmed-cur i, .pmed-move i, .pmed-move b) { background: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"] .pmed-cz :is(.pmed-cur-look i, .pmed-blink-look i, .pmed-move-look i) { background: transparent; outline-color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmed-cz .pmed-guides-rainbow::before { background: var(--o55-nier-ink); }
+html[data-o55-nier="on"] .pmed-cz .pmed-guides-rainbow::after { background: var(--o55-nier-warn-text); }
+html[data-o55-nier="on"] .pmed-cz .pmed-art-syntax { background:
+  linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 8px 10px / 12px 3px no-repeat, linear-gradient(var(--o55-nier-ok-text), var(--o55-nier-ok-text)) 14px 18px / 26px 3px no-repeat,
+  linear-gradient(var(--o55-nier-warn-text), var(--o55-nier-warn-text)) 8px 26px / 14px 3px no-repeat,
+  linear-gradient(rgba(var(--o55-nier-ink-rgb), .5), rgba(var(--o55-nier-ink-rgb), .5)) 8px 34px / 34px 3px no-repeat, var(--o55-nier-paper); }
+html[data-o55-nier="on"] .pmed-cz .pmed-art-brackets::before { background: linear-gradient(90deg, var(--o55-nier-ink) 0 16%, var(--o55-nier-warn-text) 16% 33%, var(--o55-nier-ok-text) 33% 66%, var(--o55-nier-warn-text) 66% 83%, var(--o55-nier-ink) 83%); -webkit-background-clip: text; background-clip: text; }
+@media (prefers-reduced-motion: no-preference) {
+  html[data-o55-nier="on"]:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) :is(.pmed-move-snappy, .pmed-move-glide) i { animation-timing-function: steps(8, end); }
+}
+
+/* code named in help: the code face, nothing joined */
+.pmed-code { font-family: var(--pm-font-code, ui-monospace, monospace); font-size: .95em; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; padding: 0 2px; border-radius: 3px; background: color-mix(in srgb, var(--pmw-text, #fff) 8%, transparent); }
+.pmed-cz[data-pmt-look="retro"] .pmed-code, html[data-o55-nier="on"] .pmed-cz .pmed-code { border-radius: 0; }
+/* a slider under its own heading: no label in front of it */
+.pmed-cz .pmed-slider-bare { grid-template-columns: minmax(0, 1fr) 54px; }
+.pmed-cz .pmed-slider-bare .pmt-cz-slabel { display: none; }
