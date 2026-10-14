@@ -948,7 +948,9 @@
 
   /* ---- the bead: a drop of glass that lifts under the icon button the pointer is on and flows to the next one, so the
      icon swells inside it (the self-reflection Jared liked on the lenses, now on the rail's and toolbars' buttons) ---- */
-  var BEADS = '#sidePanelSlot :is(.pm-minibtn, .fm-tbtn, #fmRootBtn, .sh-bhead-acts button), #activityBar .icon:not([data-lg-current]), #activityBarToggle, .pmu-iconbtn, #pm-home-more-btn, #themeSelect, #projectMenuBtn, .pmu-livechev';
+  var BEADS = '#sidePanelSlot :is(.pm-minibtn, .fm-tbtn, #fmRootBtn, .sh-bhead-acts button), #activityBar .icon:not([data-lg-current]), #activityBarToggle, .pmu-iconbtn, #pm-home-more-btn, #themeSelect, #projectMenuBtn, .pmu-livechev, #pmnStack[data-state="empty"]';
+  /* the part of a bead target the bead hugs: a rail icon's glyph box, the notification slot's bell (pm7-notifications) */
+  var BEAD_BOX = ':scope > .symbol, .pmn-bell';
   /* The bead flows only between neighbours (buttons of one toolbar, icons of the rail) and at most 110 px; anything
      further fades out and lifts in at the new place. In the films a quick pointer crossing the side panel sent it flying
      across the panel and diving past the rail's edge on the old spring's overshoot. */
@@ -958,7 +960,7 @@
   function beadEl() { if (bead && bead.isConnected) return bead; if (bead) { resetBead(); removeLensElement(bead); } bead = el('i', { class: 'lg-lens lg-bead', 'aria-hidden': 'true', 'data-lg-lens': 'bead' }); lensLayer().appendChild(bead); return bead; }
   function beadTo(t) {
     clearTimeout(beadHide); beadHide = 0;
-    var b = beadEl(), lr = lensLayer().getBoundingClientRect(), r = boxRect(t.querySelector(':scope > .symbol') || t); beadOn = t;
+    var b = beadEl(), lr = lensLayer().getBoundingClientRect(), r = boxRect(t.querySelector(BEAD_BOX) || t); beadOn = t;
     var R = { x: r.left - lr.left - 2, y: r.top - lr.top - 2, w: r.width + 4, h: r.height + 4 }, A = beadRect;
     var near = A && beadAt && beadAt.isConnected && beadAt.parentElement === t.parentElement && Math.hypot(A.x - R.x, A.y - R.y) < 110;
     var s = b.style; s.left = R.x + 'px'; s.top = R.y + 'px'; s.width = R.w + 'px'; s.height = R.h + 'px'; mount(b, 'bead');
@@ -1107,6 +1109,7 @@
     if (syncQ) { cancelAnimationFrame(syncQ); syncQ = 0; }
     if (lazyT) { clearTimeout(lazyT); lazyT = 0; }
     pruneGlass();
+    if (root.hasAttribute('data-lg-demo-host') && document.getElementById('lg-demo-btn')) demo();
     applyWall(); mountPicker();
     if (!isGlass()) { unmountAll(); return; }
     syncSurfaces();
@@ -1247,7 +1250,10 @@
   document.addEventListener('click', function (e) { var t = e.target.closest && e.target.closest('[data-lg-wall-pick]'); if (!t) return; setWall(t.getAttribute('data-lg-wall-pick')); e.preventDefault(); e.stopPropagation(); }, true);
 
   /* ---- the concept's own control (status bar) -------------------------------------------------------------------- */
+  /* A page that hosts its own demo controls (pm7-demo-studio) sets html[data-lg-demo-host] and drives Glass through
+     window.PM_LG (set, wall, walls); the concept's own status-bar button then stays away. */
   function demo() {
+    if (root.hasAttribute('data-lg-demo-host')) { var old = document.getElementById('lg-demo-btn'); if (old) old.remove(); return; }
     var bar = document.getElementById('pm7GlobalStatusBar'); if (!bar || document.getElementById('lg-demo-btn')) return;
     var groups = bar.querySelectorAll('.pm7-statusbar-group'), host = groups[groups.length - 1] || bar;
     var btn = el('button', { id: 'lg-demo-btn', class: 'pm7-statusitem', type: 'button', title: 'Liquid Glass concept (Alt+Shift+L: on or off)' }); btn.textContent = 'Liquid Glass';
@@ -1277,7 +1283,10 @@
     document.addEventListener('keydown', function (e) { if (e.altKey && e.shiftKey && (e.code === 'KeyL')) { root.setAttribute('data-lg', root.getAttribute('data-lg') === 'on' ? 'off' : 'on'); render(); e.preventDefault(); } });
   }
 
+  /* Public: set({'data-lg': 'on'|'off', 'data-lg-tier': 'gpu'|'cpu', 'data-motion': 'reduced'|null}); wall(id|'look')
+     chooses a wallpaper for every look; walls() lists them; surfaces: data-lg-surface on any element (see syncSurfaces). */
   window.PM_LG = { version: 'v3-2026-10-13', sync: syncAll, materialize: function () { materialize(Array.from(glassSet)); }, kinds: KINDS, count: function () { return glassSet.size; },
-    set: function (o) { for (var k in o) { if (o[k] == null) root.removeAttribute(k); else root.setAttribute(k, o[k]); } syncAll(); } };
+    set: function (o) { for (var k in o) { if (o[k] == null) root.removeAttribute(k); else root.setAttribute(k, o[k]); } syncAll(); },
+    wall: function (id) { setWall(id || 'look'); }, walls: function () { return WALLS.map(function (w) { return { id: w.id, name: w.name, family: w.family }; }); } };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
