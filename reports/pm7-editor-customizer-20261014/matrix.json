@@ -1,6 +1,6 @@
 {
- "head": "3eefd923e7",
- "page_sha256": "fc1e2db43b1fc37e",
+ "head": "a37a198e19",
+ "page_sha256": "a98e87302fa36536c1db60c9fbf7e884b49b0be426eb5a74334780c68b70021b",
  "runs": {
   "basic-dark/tab": true,
   "basic-dark/app": true,
@@ -226,7 +226,7 @@
     "focus": "This editor"
    },
    "tabTrap": {
-    "stops": 52,
+    "stops": 61,
     "leftDialog": 0
    },
    "arrows": {
@@ -643,6 +643,1075 @@
   ],
   "flagsOk": true
  },
+ "round2": {
+  "tokens": {
+   "basic-dark": {
+    "look": "basic-dark",
+    "rows": [
+     "kw:#c678dd",
+     "fn:#61afef",
+     "ty:#e5c07b",
+     "var:#e36f78",
+     "prop:#e36f78",
+     "str:#98c379",
+     "num:#d19a66",
+     "esc:#56b6c2",
+     "com:#8c93a1",
+     "op:#56b6c2",
+     "pun:#abb2bf",
+     "mac:#61afef",
+     "tag:#e36f78",
+     "attr:#d19a66",
+     "head:#e36f78",
+     "link:#61afef",
+     "code:#56b6c2"
+    ],
+    "lead": "Change one kind of word in Basic dark’s own colours. A colour that would read under 4.5:1 on this ground is drawn a little lighter or darker, its hue kept.",
+    "pickOpen": {
+     "open": true,
+     "title": "Keywords in Basic dark",
+     "ratio": "5.7:1 on this ground",
+     "swatches": 12,
+     "focus": "pmed-tok-swatch"
+    },
+    "hoverPreview": {
+     "before": {
+      "inline": "",
+      "drawn": "rgb(198, 120, 221)"
+     },
+     "during": {
+      "inline": "#8c93a1",
+      "drawn": "rgb(140, 147, 161)"
+     }
+    },
+    "hoverEnded": {
+     "inline": "",
+     "drawn": "rgb(198, 120, 221)"
+    },
+    "kept": {
+     "var": {
+      "inline": "#e5c07b",
+      "drawn": "rgb(229, 192, 123)"
+     },
+     "tab": "{\"look:basic-dark/kw\":\"#e5c07b\"}"
+    },
+    "sliding": {
+     "inline": "#f0dcb7",
+     "drawn": "rgb(240, 220, 183)"
+    },
+    "afterSlide": {
+     "var": {
+      "inline": "#f0dcb7",
+      "drawn": "rgb(240, 220, 183)"
+     },
+     "tab": "{\"look:basic-dark/kw\":\"#f0dcb7\"}"
+    },
+    "dark": {
+     "var": {
+      "inline": "#909090",
+      "drawn": "rgb(144, 144, 144)"
+     },
+     "ratio": "1:1 on this ground. Drawn at 4.5:1, as #909090, so it reads",
+     "info": {
+      "own": "#c678dd",
+      "set": "#202020",
+      "drawn": "#909090",
+      "ratio": 1,
+      "held": true
+     }
+    },
+    "own": {
+     "var": {
+      "inline": "",
+      "drawn": "rgb(198, 120, 221)"
+     },
+     "tab": "null"
+    },
+    "closedFocus": "kw",
+    "app": {
+     "row": "{\"look:basic-dark/com\":\"#d19a66\"}",
+     "key": "look:basic-dark",
+     "com": {
+      "own": "#8c93a1",
+      "set": "#d19a66",
+      "drawn": "#d19a66",
+      "ratio": 6.8,
+      "held": false
+     }
+    },
+    "otherScheme": {
+     "key": "nord",
+     "comSet": null
+    },
+    "ok": true
+   },
+   "basic-light": {
+    "look": "basic-light",
+    "rows": [
+     "kw:#a626a4",
+     "fn:#0070a7",
+     "ty:#975d00",
+     "var:#c4372e",
+     "prop:#c4372e",
+     "str:#257927",
+     "num:#906100",
+     "esc:#00748f",
+     "com:#696a6f",
+     "op:#00748f",
+     "pun:#383a42",
+     "mac:#0070a7",
+     "tag:#c4372e",
+     "attr:#906100",
+     "head:#c4372e",
+     "link:#0070a7",
+     "code:#00748f"
+    ],
+    "lead": "Change one kind of word in Basic light’s own colours. A colour that would read under 4.5:1 on this ground is drawn a little lighter or darker, its hue kept.",
+    "pickOpen": {
+     "open": true,
+     "title": "Keywords in Basic light",
+     "ratio": "5.2:1 on this ground",
+     "swatches": 14,
+     "focus": "pmed-tok-swatch"
+    },
+    "hoverPreview": {
+     "before": {
+      "inline": "",
+      "drawn": "rgb(166, 38, 164)"
+     },
+     "during": {
+      "inline": "#696a6f",
+      "drawn": "rgb(105, 106, 111)"
+     }
+    },
+    "hoverEnded": {
+     "inline": "",
+     "drawn": "rgb(166, 38, 164)"
+    },
+    "kept": {
+     "var": {
+      "inline": "#975d00",
+      "drawn": "rgb(151, 93, 0)"
+     },
+     "tab": "{\"look:basic-light/kw\":\"#975d00\"}"
+    },
+    "sliding": {
+     "inline": "#73644c",
+     "drawn": "rgb(115, 100, 76)"
+    },
+    "afterSlide": {
+     "var": {
+      "inline": "#73644c",
+      "drawn": "rgb(115, 100, 76)"
+     },
+     "tab": "{\"look:basic-light/kw\":\"#ffdea8\"}"
+    },
+    "dark": {
+     "var": {
+      "inline": "#616161",
+      "drawn": "rgb(97, 97, 97)"
+     },
+     "ratio": "1.1:1 on this ground. Drawn at 4.5:1, as #616161, so it reads",
+     "info": {
+      "own": "#a626a4",
+      "set": "#f2f2f2",
+      "drawn": "#616161",
+      "ratio": 1.1,
+      "held": true
+     }
+    },
+    "own": {
+     "var": {
+      "inline": "",
+      "drawn": "rgb(166, 38, 164)"
+     },
+     "tab": "null"
+    },
+    "closedFocus": "kw",
+    "app": {
+     "row": "{\"look:basic-light/com\":\"#906100\"}",
+     "key": "look:basic-light",
+     "com": {
+      "own": "#696a6f",
+      "set": "#906100",
+      "drawn": "#906100",
+      "ratio": 4.6,
+      "held": false
+     }
+    },
+    "otherScheme": {
+     "key": "nord",
+     "comSet": null
+    },
+    "ok": true
+   },
+   "friendly-dark": {
+    "look": "friendly-dark",
+    "rows": [
+     "kw:#cba6f7",
+     "fn:#89b4fa",
+     "ty:#f9e2af",
+     "var:#eba0ac",
+     "prop:#b4befe",
+     "str:#a6e3a1",
+     "num:#fab387",
+     "esc:#f5c2e7",
+     "com:#959bb4",
+     "op:#89dceb",
+     "pun:#a6adc8",
+     "mac:#94e2d5",
+     "tag:#89b4fa",
+     "attr:#f9e2af",
+     "head:#f38ba8",
+     "link:#89b4fa",
+     "code:#f5c2e7"
+    ],
+    "lead": "Change one kind of word in Friendly dark’s own colours. A colour that would read under 4.5:1 on this ground is drawn a little lighter or darker, its hue kept.",
+    "pickOpen": {
+     "open": true,
+     "title": "Keywords in Friendly dark",
+     "ratio": "6.2:1 on this ground",
+     "swatches": 15,
+     "focus": "pmed-tok-swatch"
+    },
+    "hoverPreview": {
+     "before": {
+      "inline": "",
+      "drawn": "rgb(203, 166, 247)"
+     },
+     "during": {
+      "inline": "#959bb4",
+      "drawn": "rgb(149, 155, 180)"
+     }
+    },
+    "hoverEnded": {
+     "inline": "",
+     "drawn": "rgb(203, 166, 247)"
+    },
+    "kept": {
+     "var": {
+      "inline": "#f9e2af",
+      "drawn": "rgb(249, 226, 175)"
+     },
+     "tab": "{\"look:friendly-dark/kw\":\"#f9e2af\"}"
+    },
+    "sliding": {
+     "inline": "#fae3b3",
+     "drawn": "rgb(250, 227, 179)"
+    },
+    "afterSlide": {
+     "var": {
+      "inline": "#fae3b3",
+      "drawn": "rgb(250, 227, 179)"
+     },
+     "tab": "{\"look:friendly-dark/kw\":\"#fae3b3\"}"
+    },
+    "dark": {
+     "var": {
+      "inline": "#a6a6a6",
+      "drawn": "rgb(166, 166, 166)"
+     },
+     "ratio": "1.3:1 on this ground. Drawn at 4.5:1, as #a6a6a6, so it reads",
+     "info": {
+      "own": "#cba6f7",
+      "set": "#202020",
+      "drawn": "#a6a6a6",
+      "ratio": 1.3,
+      "held": true
+     }
+    },
+    "own": {
+     "var": {
+      "inline": "",
+      "drawn": "rgb(203, 166, 247)"
+     },
+     "tab": "null"
+    },
+    "closedFocus": "kw",
+    "app": {
+     "row": "{\"look:friendly-dark/com\":\"#fab387\"}",
+     "key": "look:friendly-dark",
+     "com": {
+      "own": "#959bb4",
+      "set": "#fab387",
+      "drawn": "#fab387",
+      "ratio": 7.1,
+      "held": false
+     }
+    },
+    "otherScheme": {
+     "key": "nord",
+     "comSet": null
+    },
+    "ok": true
+   },
+   "friendly-light": {
+    "look": "friendly-light",
+    "rows": [
+     "kw:#8839ef",
+     "fn:#1b63f1",
+     "ty:#a75a00",
+     "var:#cf2c40",
+     "prop:#5363d5",
+     "str:#187f00",
+     "num:#cd3400",
+     "esc:#b24297",
+     "com:#696c7f",
+     "op:#0073b0",
+     "pun:#5c5f77",
+     "mac:#007a81",
+     "tag:#1b63f1",
+     "attr:#a75a00",
+     "head:#d20f39",
+     "link:#1b63f1",
+     "code:#b24297"
+    ],
+    "lead": "Change one kind of word in Friendly light’s own colours. A colour that would read under 4.5:1 on this ground is drawn a little lighter or darker, its hue kept.",
+    "pickOpen": {
+     "open": true,
+     "title": "Keywords in Friendly light",
+     "ratio": "5.2:1 on this ground",
+     "swatches": 21,
+     "focus": "pmed-tok-swatch"
+    },
+    "hoverPreview": {
+     "before": {
+      "inline": "",
+      "drawn": "rgb(136, 57, 239)"
+     },
+     "during": {
+      "inline": "#696c7f",
+      "drawn": "rgb(105, 108, 127)"
+     }
+    },
+    "hoverEnded": {
+     "inline": "",
+     "drawn": "rgb(136, 57, 239)"
+    },
+    "kept": {
+     "var": {
+      "inline": "#a75a00",
+      "drawn": "rgb(167, 90, 0)"
+     },
+     "tab": "{\"look:friendly-light/kw\":\"#a75a00\"}"
+    },
+    "sliding": {
+     "inline": "#806d57",
+     "drawn": "rgb(128, 109, 87)"
+    },
+    "afterSlide": {
+     "var": {
+      "inline": "#806d57",
+      "drawn": "rgb(128, 109, 87)"
+     },
+     "tab": "{\"look:friendly-light/kw\":\"#ffd9ad\"}"
+    },
+    "dark": {
+     "var": {
+      "inline": "#6d6d6d",
+      "drawn": "rgb(109, 109, 109)"
+     },
+     "ratio": "1.1:1 on this ground. Drawn at 4.5:1, as #6d6d6d, so it reads",
+     "info": {
+      "own": "#8839ef",
+      "set": "#f2f2f2",
+      "drawn": "#6d6d6d",
+      "ratio": 1.1,
+      "held": true
+     }
+    },
+    "own": {
+     "var": {
+      "inline": "",
+      "drawn": "rgb(136, 57, 239)"
+     },
+     "tab": "null"
+    },
+    "closedFocus": "kw",
+    "app": {
+     "row": "{\"look:friendly-light/com\":\"#cd3400\"}",
+     "key": "look:friendly-light",
+     "com": {
+      "own": "#696c7f",
+      "set": "#cd3400",
+      "drawn": "#cd3400",
+      "ratio": 4.9,
+      "held": false
+     }
+    },
+    "otherScheme": {
+     "key": "nord",
+     "comSet": null
+    },
+    "ok": true
+   },
+   "glass-dark": {
+    "look": "glass-dark",
+    "rows": [
+     "kw:#bb9af7",
+     "fn:#7aa2f7",
+     "ty:#2ac3de",
+     "var:#e0af68",
+     "prop:#73daca",
+     "str:#9ece6a",
+     "num:#ff9e64",
+     "esc:#b4f9f8",
+     "com:#848ebb",
+     "op:#89ddff",
+     "pun:#9abdf5",
+     "mac:#7dcfff",
+     "tag:#f7768e",
+     "attr:#bb9af7",
+     "head:#7aa2f7",
+     "link:#73daca",
+     "code:#b4f9f8"
+    ],
+    "lead": "Change one kind of word in Glass dark’s own colours. A colour that would read under 4.5:1 on this ground is drawn a little lighter or darker, its hue kept.",
+    "pickOpen": {
+     "open": true,
+     "title": "Keywords in Glass dark",
+     "ratio": "8.3:1 on this ground",
+     "swatches": 22,
+     "focus": "pmed-tok-swatch"
+    },
+    "hoverPreview": {
+     "before": {
+      "inline": "",
+      "drawn": "rgb(187, 154, 247)"
+     },
+     "during": {
+      "inline": "#848ebb",
+      "drawn": "rgb(132, 142, 187)"
+     }
+    },
+    "hoverEnded": {
+     "inline": "",
+     "drawn": "rgb(187, 154, 247)"
+    },
+    "kept": {
+     "var": {
+      "inline": "#2ac3de",
+      "drawn": "rgb(42, 195, 222)"
+     },
+     "tab": "{\"look:glass-dark/kw\":\"#2ac3de\"}"
+    },
+    "sliding": {
+     "inline": "#b4eaf4",
+     "drawn": "rgb(180, 234, 244)"
+    },
+    "afterSlide": {
+     "var": {
+      "inline": "#b4eaf4",
+      "drawn": "rgb(180, 234, 244)"
+     },
+     "tab": "{\"look:glass-dark/kw\":\"#b4eaf4\"}"
+    },
+    "dark": {
+     "var": {
+      "inline": "#848484",
+      "drawn": "rgb(132, 132, 132)"
+     },
+     "ratio": "1.2:1 on this ground. Drawn at 4.5:1, as #848484, so it reads",
+     "info": {
+      "own": "#bb9af7",
+      "set": "#202020",
+      "drawn": "#848484",
+      "ratio": 1.2,
+      "held": true
+     }
+    },
+    "own": {
+     "var": {
+      "inline": "",
+      "drawn": "rgb(187, 154, 247)"
+     },
+     "tab": "null"
+    },
+    "closedFocus": "kw",
+    "app": {
+     "row": "{\"look:glass-dark/com\":\"#ff9e64\"}",
+     "key": "look:glass-dark",
+     "com": {
+      "own": "#848ebb",
+      "set": "#ff9e64",
+      "drawn": "#ff9e64",
+      "ratio": 9.5,
+      "held": false
+     }
+    },
+    "otherScheme": {
+     "key": "nord",
+     "comSet": null
+    },
+    "ok": true
+   },
+   "glass-light": {
+    "look": "glass-light",
+    "rows": [
+     "kw:#823ad7",
+     "fn:#0761ca",
+     "ty:#006e80",
+     "var:#7e5f31",
+     "prop:#356d65",
+     "str:#506c30",
+     "num:#a14d00",
+     "esc:#2e5857",
+     "com:#5c6389",
+     "op:#006a83",
+     "pun:#52629e",
+     "mac:#006d92",
+     "tag:#ca0045",
+     "attr:#823ad7",
+     "head:#0761ca",
+     "link:#356d65",
+     "code:#2e5857"
+    ],
+    "lead": "Change one kind of word in Glass light’s own colours. A colour that would read under 4.5:1 on this ground is drawn a little lighter or darker, its hue kept.",
+    "pickOpen": {
+     "open": true,
+     "title": "Keywords in Glass light",
+     "ratio": "5.3:1 on this ground",
+     "swatches": 29,
+     "focus": "pmed-tok-swatch"
+    },
+    "hoverPreview": {
+     "before": {
+      "inline": "",
+      "drawn": "rgb(130, 58, 215)"
+     },
+     "during": {
+      "inline": "#5c6389",
+      "drawn": "rgb(92, 99, 137)"
+     }
+    },
+    "hoverEnded": {
+     "inline": "",
+     "drawn": "rgb(130, 58, 215)"
+    },
+    "kept": {
+     "var": {
+      "inline": "#006e80",
+      "drawn": "rgb(0, 110, 128)"
+     },
+     "tab": "{\"look:glass-light/kw\":\"#006e80\"}"
+    },
+    "sliding": {
+     "inline": "#4c6d73",
+     "drawn": "rgb(76, 109, 115)"
+    },
+    "afterSlide": {
+     "var": {
+      "inline": "#4c6d73",
+      "drawn": "rgb(76, 109, 115)"
+     },
+     "tab": "{\"look:glass-light/kw\":\"#a8f3ff\"}"
+    },
+    "dark": {
+     "var": {
+      "inline": "#6d6d6d",
+      "drawn": "rgb(109, 109, 109)"
+     },
+     "ratio": "1:1 on this ground. Drawn at 4.5:1, as #6d6d6d, so it reads",
+     "info": {
+      "own": "#823ad7",
+      "set": "#f2f2f2",
+      "drawn": "#6d6d6d",
+      "ratio": 1,
+      "held": true
+     }
+    },
+    "own": {
+     "var": {
+      "inline": "",
+      "drawn": "rgb(130, 58, 215)"
+     },
+     "tab": "null"
+    },
+    "closedFocus": "kw",
+    "app": {
+     "row": "{\"look:glass-light/com\":\"#a14d00\"}",
+     "key": "look:glass-light",
+     "com": {
+      "own": "#5c6389",
+      "set": "#a14d00",
+      "drawn": "#a14d00",
+      "ratio": 5.3,
+      "held": false
+     }
+    },
+    "otherScheme": {
+     "key": "nord",
+     "comSet": null
+    },
+    "ok": true
+   },
+   "retro-dark": {
+    "look": "retro-dark",
+    "rows": [
+     "kw:#c8ffb0",
+     "fn:#b1f59c",
+     "ty:#9fe88a",
+     "var:#d8ffc8",
+     "prop:#8fe97b",
+     "str:#a3f08f",
+     "num:#d8ffc8",
+     "esc:#d8ffc8",
+     "com:#4e9a3e",
+     "op:#7ee36b",
+     "pun:#5fb34e",
+     "mac:#b1f59c",
+     "tag:#b1f59c",
+     "attr:#8fe97b",
+     "head:#d8ffc8",
+     "link:#a3f08f",
+     "code:#a3f08f"
+    ],
+    "lead": "Change one kind of word in Retro dark’s own colours. A colour that would read under 4.5:1 on this ground is drawn a little lighter or darker, its hue kept.",
+    "pickOpen": {
+     "open": true,
+     "title": "Keywords in Retro dark",
+     "ratio": "15.4:1 on this ground",
+     "swatches": 24,
+     "focus": "pmed-tok-swatch"
+    },
+    "hoverPreview": {
+     "before": {
+      "inline": "",
+      "drawn": "rgb(200, 255, 176)"
+     },
+     "during": {
+      "inline": "#4e9a3e",
+      "drawn": "rgb(78, 154, 62)"
+     }
+    },
+    "hoverEnded": {
+     "inline": "",
+     "drawn": "rgb(200, 255, 176)"
+    },
+    "kept": {
+     "var": {
+      "inline": "#9fe88a",
+      "drawn": "rgb(159, 232, 138)"
+     },
+     "tab": "{\"look:retro-dark/kw\":\"#9fe88a\"}"
+    },
+    "sliding": {
+     "inline": "#c3f0b7",
+     "drawn": "rgb(195, 240, 183)"
+    },
+    "afterSlide": {
+     "var": {
+      "inline": "#c3f0b7",
+      "drawn": "rgb(195, 240, 183)"
+     },
+     "tab": "{\"look:retro-dark/kw\":\"#c3f0b7\"}"
+    },
+    "dark": {
+     "var": {
+      "inline": "#848484",
+      "drawn": "rgb(132, 132, 132)"
+     },
+     "ratio": "1.1:1 on this ground. Drawn at 4.5:1, as #848484, so it reads",
+     "info": {
+      "own": "#c8ffb0",
+      "set": "#202020",
+      "drawn": "#848484",
+      "ratio": 1.1,
+      "held": true
+     }
+    },
+    "own": {
+     "var": {
+      "inline": "",
+      "drawn": "rgb(200, 255, 176)"
+     },
+     "tab": "null"
+    },
+    "closedFocus": "kw",
+    "app": {
+     "row": "{\"look:retro-dark/com\":\"#d8ffc8\"}",
+     "key": "look:retro-dark",
+     "com": {
+      "own": "#4e9a3e",
+      "set": "#d8ffc8",
+      "drawn": "#d8ffc8",
+      "ratio": 16,
+      "held": false
+     }
+    },
+    "otherScheme": {
+     "key": "nord",
+     "comSet": null
+    },
+    "ok": true
+   },
+   "retro-light": {
+    "look": "retro-light",
+    "rows": [
+     "kw:#1a1a1a",
+     "fn:#1a1a1a",
+     "ty:#3b3631",
+     "var:#a1281f",
+     "prop:#3b3631",
+     "str:#a1281f",
+     "num:#a1281f",
+     "esc:#a1281f",
+     "com:#5d574c",
+     "op:#3b3631",
+     "pun:#5d574c",
+     "mac:#3b3631",
+     "tag:#1a1a1a",
+     "attr:#a1281f",
+     "head:#1a1a1a",
+     "link:#a1281f",
+     "code:#a1281f"
+    ],
+    "lead": "Change one kind of word in Retro light’s own colours. A colour that would read under 4.5:1 on this ground is drawn a little lighter or darker, its hue kept.",
+    "pickOpen": {
+     "open": true,
+     "title": "Keywords in Retro light",
+     "ratio": "15.3:1 on this ground",
+     "swatches": 20,
+     "focus": "pmed-tok-swatch"
+    },
+    "hoverPreview": {
+     "before": {
+      "inline": "",
+      "drawn": "rgb(26, 26, 26)"
+     },
+     "during": {
+      "inline": "#3b3631",
+      "drawn": "rgb(59, 54, 49)"
+     }
+    },
+    "hoverEnded": {
+     "inline": "",
+     "drawn": "rgb(26, 26, 26)"
+    },
+    "kept": {
+     "var": {
+      "inline": "#a13126",
+      "drawn": "rgb(161, 49, 38)"
+     },
+     "tab": "{\"look:retro-light/kw\":\"#a13126\"}"
+    },
+    "sliding": {
+     "inline": "#785f5c",
+     "drawn": "rgb(120, 95, 92)"
+    },
+    "afterSlide": {
+     "var": {
+      "inline": "#785f5c",
+      "drawn": "rgb(120, 95, 92)"
+     },
+     "tab": "{\"look:retro-light/kw\":\"#efbdb8\"}"
+    },
+    "dark": {
+     "var": {
+      "inline": "#6d6d6d",
+      "drawn": "rgb(109, 109, 109)"
+     },
+     "ratio": "1:1 on this ground. Drawn at 4.5:1, as #6d6d6d, so it reads",
+     "info": {
+      "own": "#1a1a1a",
+      "set": "#f2f2f2",
+      "drawn": "#6d6d6d",
+      "ratio": 1,
+      "held": true
+     }
+    },
+    "own": {
+     "var": {
+      "inline": "",
+      "drawn": "rgb(26, 26, 26)"
+     },
+     "tab": "null"
+    },
+    "closedFocus": "kw",
+    "app": {
+     "row": "{\"look:retro-light/com\":\"#5d574c\"}",
+     "key": "look:retro-light",
+     "com": {
+      "own": "#5d574c",
+      "set": "#5d574c",
+      "drawn": "#5d574c",
+      "ratio": 6.3,
+      "held": false
+     }
+    },
+    "otherScheme": {
+     "key": "nord",
+     "comSet": null
+    },
+    "ok": true
+   },
+   "nier-dark": {
+    "look": "nier-dark",
+    "rows": [
+     "kw:#d1cdb7",
+     "fn:#d1cdb7",
+     "ty:#d3c47e",
+     "var:#d98a77",
+     "prop:#d1cdb7",
+     "str:#c0c379",
+     "num:#d3c47e",
+     "esc:#d3c47e",
+     "com:#d1cdb7",
+     "op:#d1cdb7",
+     "pun:#d1cdb7",
+     "mac:#c0c379",
+     "tag:#d1cdb7",
+     "attr:#d3c47e",
+     "head:#d1cdb7",
+     "link:#d1cdb7",
+     "code:#c0c379"
+    ],
+    "lead": "Change one kind of word in NieR Mode dark’s own colours. A colour that would read under 4.5:1 on this ground is drawn a little lighter or darker, its hue kept.",
+    "pickOpen": {
+     "open": true,
+     "title": "Keywords in NieR Mode dark",
+     "ratio": "8.1:1 on this ground",
+     "swatches": 16,
+     "focus": "pmed-tok-swatch"
+    },
+    "hoverPreview": {
+     "before": {
+      "inline": "",
+      "drawn": "rgb(209, 205, 183)"
+     },
+     "during": {
+      "inline": "#d98a77",
+      "drawn": "rgb(217, 138, 119)"
+     }
+    },
+    "hoverEnded": {
+     "inline": "",
+     "drawn": "rgb(209, 205, 183)"
+    },
+    "kept": {
+     "var": {
+      "inline": "#99aebb",
+      "drawn": "rgb(153, 174, 187)"
+     },
+     "tab": "{\"look:nier-dark/kw\":\"#99aebb\"}"
+    },
+    "sliding": {
+     "inline": "#cbd6dc",
+     "drawn": "rgb(203, 214, 220)"
+    },
+    "afterSlide": {
+     "var": {
+      "inline": "#cbd6dc",
+      "drawn": "rgb(203, 214, 220)"
+     },
+     "tab": "{\"look:nier-dark/kw\":\"#cbd6dc\"}"
+    },
+    "dark": {
+     "var": {
+      "inline": "#9b9b9b",
+      "drawn": "rgb(155, 155, 155)"
+     },
+     "ratio": "1.3:1 on this ground. Drawn at 4.5:1, as #9b9b9b, so it reads",
+     "info": {
+      "own": "#d1cdb7",
+      "set": "#202020",
+      "drawn": "#9b9b9b",
+      "ratio": 1.3,
+      "held": true
+     }
+    },
+    "own": {
+     "var": {
+      "inline": "",
+      "drawn": "rgb(209, 205, 183)"
+     },
+     "tab": "null"
+    },
+    "closedFocus": "kw",
+    "app": {
+     "row": "{\"look:nier-dark/com\":\"#d3c47e\"}",
+     "key": "look:nier-dark",
+     "com": {
+      "own": "#d1cdb7",
+      "set": "#d3c47e",
+      "drawn": "#d3c47e",
+      "ratio": 7.4,
+      "held": false
+     }
+    },
+    "otherScheme": {
+     "key": "nord",
+     "comSet": null
+    },
+    "ok": true
+   },
+   "nier-light": {
+    "look": "nier-light",
+    "rows": [
+     "kw:#211f1b",
+     "fn:#211f1b",
+     "ty:#5c5022",
+     "var:#7d3427",
+     "prop:#211f1b",
+     "str:#525426",
+     "num:#5c5022",
+     "esc:#5c5022",
+     "com:#211f1b",
+     "op:#211f1b",
+     "pun:#211f1b",
+     "mac:#525426",
+     "tag:#211f1b",
+     "attr:#5c5022",
+     "head:#211f1b",
+     "link:#211f1b",
+     "code:#525426"
+    ],
+    "lead": "Change one kind of word in NieR Mode light’s own colours. A colour that would read under 4.5:1 on this ground is drawn a little lighter or darker, its hue kept.",
+    "pickOpen": {
+     "open": true,
+     "title": "Keywords in NieR Mode light",
+     "ratio": "9.2:1 on this ground",
+     "swatches": 16,
+     "focus": "pmed-tok-swatch"
+    },
+    "hoverPreview": {
+     "before": {
+      "inline": "",
+      "drawn": "rgb(33, 31, 27)"
+     },
+     "during": {
+      "inline": "#7d3427",
+      "drawn": "rgb(125, 52, 39)"
+     }
+    },
+    "hoverEnded": {
+     "inline": "",
+     "drawn": "rgb(33, 31, 27)"
+    },
+    "kept": {
+     "var": {
+      "inline": "#3e505a",
+      "drawn": "rgb(62, 80, 90)"
+     },
+     "tab": "{\"look:nier-light/kw\":\"#3e505a\"}"
+    },
+    "sliding": {
+     "inline": "#474b4d",
+     "drawn": "rgb(71, 75, 77)"
+    },
+    "afterSlide": {
+     "var": {
+      "inline": "#474b4d",
+      "drawn": "rgb(71, 75, 77)"
+     },
+     "tab": "{\"look:nier-light/kw\":\"#ccd6db\"}"
+    },
+    "dark": {
+     "var": {
+      "inline": "#494949",
+      "drawn": "rgb(73, 73, 73)"
+     },
+     "ratio": "1.6:1 on this ground. Drawn at 4.5:1, as #494949, so it reads",
+     "info": {
+      "own": "#211f1b",
+      "set": "#f2f2f2",
+      "drawn": "#494949",
+      "ratio": 1.6,
+      "held": true
+     }
+    },
+    "own": {
+     "var": {
+      "inline": "",
+      "drawn": "rgb(33, 31, 27)"
+     },
+     "tab": "null"
+    },
+    "closedFocus": "kw",
+    "app": {
+     "row": "{\"look:nier-light/com\":\"#5c5022\"}",
+     "key": "look:nier-light",
+     "com": {
+      "own": "#211f1b",
+      "set": "#5c5022",
+      "drawn": "#574c20",
+      "ratio": 4.5,
+      "held": true
+     }
+    },
+    "otherScheme": {
+     "key": "nord",
+     "comSet": null
+    },
+    "ok": true
+   }
+  },
+  "scope_dock_settings": {
+   "editorScope": {
+    "menuFirst": "tab",
+    "menuAfterPickingAll": "app",
+    "fromSettings": "app",
+    "menuAfterSettings": "tab",
+    "ok": true
+   },
+   "terminalScope": {
+    "hasView": true,
+    "menuFirst": "tab",
+    "fromSettings": "app",
+    "menuAfterSettings": "tab",
+    "dense": "menu",
+    "ok": true
+   },
+   "dock": {
+    "editorWide": {
+     "beside": true,
+     "docked": false
+    },
+    "editorNarrow": {
+     "beside": false,
+     "docked": true
+    },
+    "terminalWide": {
+     "beside": true,
+     "docked": false
+    },
+    "terminalNarrow": {
+     "beside": false,
+     "docked": true
+    },
+    "ok": true
+   },
+   "settings": {
+    "onEditor": {
+     "preview": "Saving & tabs",
+     "sizing": "Saving & tabs",
+     "max": "Saving & tabs"
+    },
+    "retiredDrawn": [],
+    "onAppInput": [],
+    "tokenRow": false,
+    "ok": true
+   },
+   "ok": true
+  },
+  "settings_token_row": {
+   "emptyText": "None: every scheme's own",
+   "addedThroughSettings": {
+    "row": "1 colour · look:basic-dark/kw: #ff5f87",
+    "state": {
+     "look:basic-dark/kw": "#ff5f87"
+    },
+    "editorKw": {
+     "own": "#c678dd",
+     "set": "#ff5f87",
+     "drawn": "#ff5f87",
+     "ratio": 5.7
+    }
+   },
+   "section": "Editor look: more options",
+   "ok": true
+  }
+ },
  "films": [
   {
    "film": "1-menu.mp4 (45.8 s)",
@@ -673,6 +1742,24 @@
    "looks": "Friendly dark, Reduce motion",
    "gpu": "P1000, 1080p60 H.264",
    "notes": "the same actions under Reduce motion: a solid caret, no glide, no trail, scrolling lands at once, files open at once"
+  },
+  {
+   "film": "6-token-colours.mp4 (50.6 s)",
+   "looks": "Friendly dark",
+   "gpu": "P1000, Chrome, 1080p60 H.264, 60.0 distinct-frame rate decoded",
+   "notes": "Colors, Token colours; Keywords opens the picker; resting on swatches shows each at once on the preview and the editor, leaving puts it back; one kept; the hue slider dragged in one go (in-page, a step per frame): the words and the slider draw every other frame, 30 a second, steady (token-hue-drag-60fps.png); the first take, before e547340e03, drew one frame in three or four (token-hue-drag-60fps-before-fix.png); Comments set to #2a2a2a, held at 4.5:1 with the picker saying so; the look's own puts it back; Dracula keeps its own colours. The screen's first opening drops a few frames on the P1000 (19.4-20.3 s, 6 of 56); an A/B against round 1's page shows the same there"
+  },
+  {
+   "film": "7-scope.mp4 (48.8 s)",
+   "looks": "Basic dark",
+   "gpu": "P1000, Chrome, 1080p60 H.264, 60.0 distinct-frame rate decoded",
+   "notes": "From the editor's menu the screen opens on This editor (17.2 s); All editors picked, Done; the menu again opens on All editors, remembered (26.0 s); This editor, Done; Settings, Editor & Terminal, Open Customize: Home, the screen on All editors for that visit (39.6 s); the menu after it opens on This editor again (45.0 s). scope-states.png has the four"
+  },
+  {
+   "film": "8-dock.mp4 (48.4 s)",
+   "looks": "Glass dark",
+   "gpu": "P1000, Chrome, 1080p60 H.264, 60.0 distinct-frame rate decoded",
+   "notes": "Beside the real editor (1920 px, Home's normal layout) the preview keeps its place as the screen scrolls to Lines & guides and Motion & effects: no dock (19-22 s). Chat closed, files folded and the editor maximized (25-30 s; Home's own layout motion repeats frames on the P1000). The screen opened again has no room beside the editor: scrolling down docks the preview at the screen's top right (37 s); the pointer over it fades it aside so the tiles under it can be reached (39-40 s), and it comes back when the pointer leaves. dock-beside-and-not.png and dock-hover-steps-aside.png"
   }
  ],
  "matrix": [
