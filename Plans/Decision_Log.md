@@ -14511,7 +14511,9 @@ canonical_text: >-
   earlier small catalog and CRT treatment are not final acceptance of those new requirements. Later
   on 2026-10-14 Jared reaffirmed JetBrains Mono's full 100–800 range and directed adding the missing
   upright 100–300 files. F3-644 owns the unchanged range and shared asset delivery; this closes the
-  product question without claiming that the files have landed.
+  product question without claiming that the files have landed. His later round-three bezel review
+  requires another revision or a removal recommendation; F3-643 records that direction and keeps the
+  final effect/control contract held. Round two is not accepted as the final bezel.
 gui_related: true
 gui_classification_reason: Terminal Customize from the panel and Settings.
 split_recommended: false
@@ -14533,6 +14535,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LANDING.md, SHA-256 066a115952b170ef50b5ca77bcc4b771428d2195ccc548e7955a656fed588d7e (landing source recheck; approved direction, not native implementation evidence)"
 - "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LATE-DECISIONS.md, SHA-256 126ae52840c8e5a30d2c1788b5427e6dc219cd2804d7cbd43f94d25aa0de2d07 (Jared decisions at lines 296 and 306; not implementation evidence)"
 - /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256 1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0
   (approved campaign source lineage; not native implementation evidence)

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L44081-L46092
+Source lines: L44081-L46098
 
-Source SHA256: `c6f37125afe9ba846c7962e48363f4144264f6fdf6220a778b58b0c872cd2f58`
+Source SHA256: `a7b6f2c562f2ed1728f99ded5da071b1ae82ca324d50ee32f0e274aa0d0c8f37`
 
 ---
 
@@ -153,7 +153,10 @@ canonical_text: >-
   caption positions: choose the first with 12 px clearance from the carried tab and pointer, retain it
   while at least 4 px remains clear, and return to an earlier place only after 160 ms. Captions draw above
   the carried tab; a place past the tab is the landed last resort. The approved past-first polish is a
-  held follow-up until its packet is verified; neither order may permit a resting occlusion. The guide,
+  held follow-up until its packet is verified; neither order may permit a resting occlusion. While a
+  carried tab rests over "+N", that target stays under the pointer with no insertion gap pushing it away,
+  shows "To the end", and release appends the tab to that strip. Approaching through the end insertion
+  slot or directly produces the same settled target. The guide,
   captions and preview use each family's motion and material; Reduced Motion keeps the legible end state
   without spatial travel. The screen reader announces the held destination once its intent settles. F3-657
   owns resize feedback. Jared’s 2026-10-14 grip correction puts the grip’s narrow end in the panel’s
@@ -191,6 +194,8 @@ acceptance_criteria:
   command, persistence or event; a failed commit rolls back.
 - Under Reduced Motion every glide, slide, settle and cancel duration is 0 and every drag still shows its landing
   preview.
+- Approaching "+N" directly or through the end insertion slot keeps the target under the resting pointer,
+  with no gap, a visible "To the end" caption and a release that appends the tab, in every look and Reduced Motion.
 - An existing Home layout from before this redesign opens converted, with its tabs, on first read; no upgrade resets
   it.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are
@@ -211,6 +216,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/DND-NOTES-20261014-COMBINED.md, SHA-256 6ffc7b0308acc0b371f997fd643f5711169f4d7d9f431ea090f3243668752734 (landing source recheck; approved direction, not native implementation evidence)"
 - Plans/FinalGUISpec.md F3-HOME-002, F3-HOME-004 and F3-HOME-005 (prose headings with no PlanUnit; cited, not
   a dependency (lead ruling L22, 2026-10-10))
 - Plans/FinalGUISpec.md#F3-635 (the tab kinds consume this model; cited, not a dependency (lead ruling L22,

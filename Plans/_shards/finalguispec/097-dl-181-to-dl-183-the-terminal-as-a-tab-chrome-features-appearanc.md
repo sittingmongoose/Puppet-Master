@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46094-L47782
+Source lines: L46100-L47798
 
-Source SHA256: `c6f37125afe9ba846c7962e48363f4144264f6fdf6220a778b58b0c872cd2f58`
+Source SHA256: `a7b6f2c562f2ed1728f99ded5da071b1ae82ca324d50ee32f0e274aa0d0c8f37`
 
 ---
 
@@ -577,7 +577,10 @@ canonical_text: >-
   visible curvature; a chosen bezel must be removable, customizable and smaller, and opt-in CRT curvature
   must be less extreme and read convincingly as a curved screen. The terminal owner's revised effect
   parameters, bezel fields and control contract remain held; the old 0.08 tuning is historical, not
-  acceptance of the criticized treatment. Degauss is the one-shot action in the Customize screen's effects
+  acceptance of the criticized treatment. Jared's later round-three direction requires reflected glow,
+  a curved inner edge and depth in a convincing screen surround; if that cannot be achieved, removal is
+  to be recommended for his decision. This is a held design direction, not approval of the round-two
+  bezel or any final parameters. Degauss is the one-shot action in the Customize screen's effects
   group (F3-650), with the same existing command and no stored setting. The shared Follow look
   cursor/caret voices are Basic line with on/off blink, no trail and no smooth scrolling; Friendly line with smooth
   blink, soft trail and smooth scrolling; Glass line with smooth blink, glow trail and smooth scrolling;
@@ -621,6 +624,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/COORDINATOR-LOG-20261014-LANDING.md, SHA-256 066a115952b170ef50b5ca77bcc4b771428d2195ccc548e7955a656fed588d7e (landing source recheck; approved direction, not native implementation evidence)"
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md,
   SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-wave2-numbers-5e549d6961.md,
@@ -1110,7 +1114,9 @@ canonical_text: >-
   scheme's kinds, hue, saturation, lightness and hex, with labelled numeric/text equivalents to color
   dragging. The stored requested color remains available for editing; drawing adjusts lightness with hue
   retained to the selected 4.5:1 or 7:1 floor and explains any adjustment. The floor also covers Follow
-  look and dimmed inactive editors. Scheme hover after 160 ms rest, or keyboard selection, previews
+  look and dimmed inactive editors, line numbers, diff marks and bracket-pair colors on every ground:
+  the code background, changed-row tint, current line and focused or blurred selections over them.
+  Line numbers stay quieter through size rather than sub-floor color. Scheme hover after 160 ms rest, or keyboard selection, previews
   without transition on the sample and real editor; leaving or Escape restores the committed scheme. A
   commit uses Basic fade, Friendly bloom from the tile, Glass glide, Retro steps or NieR wipe, with
   continuous readable code even on slow frames. Follow look consumes the shared cursor/caret voices in
@@ -1122,7 +1128,8 @@ canonical_text: >-
   scanlines and glow retain their state. Lines Arrive When a File Opens continues across resize and redraw
   instead of restarting or vanishing. Indentation reads applicable .editorconfig first, otherwise the
   file's dominant step of 2, 4 or 8 and its spaces/tabs while detection is on; absent a file choice, Tab
-  Size and Indent With supply defaults. Guides, active guide, Tab, Shift+Tab, Backspace in leading
+  Size and Indent With supply defaults. With detection off, Tab Size and Indent With govern every file
+  regardless of its existing indentation. Guides, active guide, Tab, Shift+Tab, Backspace in leading
   whitespace and Enter after an opener share that unit. Real tabs remain tabs and display to the next tab
   stop, including pasted tabs; Show Spaces marks tabs with an arrow. Indentation... in More names the
   file's unit and provenance and opens these choices. Wrap Long Lines applies to ordinary files and inline
@@ -1140,10 +1147,12 @@ unblocks: []
 acceptance_criteria:
 - Every one of the 17 kinds can be edited independently for two schemes and both scopes, survives reload and falls
   through token by token when cleared.
-- All effective text colors meet the selected floor, including Follow look, comments, selection and inactive dimming.
+- All effective text colors meet the selected floor, including Follow look, comments, line numbers, diff marks,
+  bracket-pair colors and inactive dimming, on changed/current rows and focused or blurred selections.
 - Typing and undo never wait for caret motion; Reduced Motion removes every moving caret/reveal effect.
 - Spaces, tabs, pasted tabs, .editorconfig and 2/4/8-space files share one indentation rule without converting file
   bytes.
+- With detection off, Tab Size and Indent With control new indentation even in a file whose existing unit differs.
 - Wrap, problems and automatic save respect the named exceptions and preserve input/focus.
 validation_surfaces:
 - python3 scripts/pm-shard-plans.py --check
@@ -1159,6 +1168,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/EDITOR-PROPOSAL-20261014-LANDING.md, SHA-256 aa15b3ba9605fb8efcf36486f3a3978af011e90d33096f463f7b21510c414ed4 (landing source recheck; approved direction, not native implementation evidence)"
 - /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
   (approved campaign source lineage; not native implementation evidence)
 - Plans/FinalGUISpec.md#F3-639
