@@ -79,6 +79,14 @@
               "type": "string"
             },
             "uniqueItems": true
+          },
+          "quick_set_ref": {
+            "type": "string",
+            "pattern": "^(editor|terminal)\\.[a-z_]+$"
+          },
+          "reset_group_ref": {
+            "type": "string",
+            "pattern": "^(editor|terminal)\\.[a-z_]+$"
           }
         },
         "allOf": [
@@ -115,6 +123,32 @@
             }
           }
         ]
+      }
+    },
+    "held_controls": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "owner_ref",
+          "direction",
+          "reason"
+        ],
+        "properties": {
+          "owner_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "direction": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
       }
     }
   }

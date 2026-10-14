@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L14961-L15964
+Source lines: L14960-L15967
 
-Source SHA256: `98de231c4fbadcc305e8525a7aa2ad8d7a8ad3ff4ec34e2b6bf94b52a9c0a34f`
+Source SHA256: `7c85cb4fca1c16969475d5e24f4e190ad30237eed30bbf5341c0d5391e3cc6aa`
 
 ---
 
@@ -940,7 +940,7 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/UI_Command_Catalog.md#UCC-138, ContractName:Plans/Commands_System.md#CS-061
 
-### UCC-204 - Editor Appearance And Campaign Control Dispatch
+### UCC-204 - Editor Appearance And Shared Control Dispatch
 
 ```yaml
 plan_unit_id: UCC-204
@@ -948,24 +948,28 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  cmd.editor.appearance.set is a shell_view command with normalization.kind none, normalizes_to_contract F3-651
-  and no alias. Its typed request/result are Plans/editor_appearance.schema.json; it changes only an existing
-  editor tab's sparse appearance fields under the Project/workspace context and owner-state guard. A null field
-  clears its override; a token-map null entry clears that key, revealing the next layer. Reset and quick sets
-  are one atomic patch, never one dispatch per field. The result is a bounded applied/no_change/refused/failed
-  receipt with owner readback, no domain event and no workspace.layout_changed. No Project returns
-  no_project_context and no write. All editors and All terminals, Settings fields, wallpaper selection and
-  resetting those Project values compose the existing cmd.settings.transaction.preview and
-  cmd.settings.transaction.apply with exact inventory ids; the same CAS/permission/readback rules apply and no
-  app-global fallback is admitted. This terminal retains cmd.terminal.appearance.set and import retains
-  cmd.terminal.appearance.import_scheme. CS-102 and WM-093 enumerate typed local affordances and producer
-  bindings; local previews never run a shell command or modify a real file. No new shortcut is added for
-  Customize: More, Open Customize and Indentation are keyboard-reachable entry points. Panel split/move keys
-  retain UCC-200's Alt+Shift+arrows; the earlier concept Ctrl+Alt claim is retired. Notification toast dismissal
-  is view-local and moves a lasting notice into the inbox without resolving it; inbox dismissal uses
-  cmd.alert.dismiss, and Clear all composes that existing command for the captured eligible ids/revisions,
-  preserving truthful per-item refusals and keeping arrivals after the capture. Existing notice action commands
-  retain domain approval semantics. This unit creates no bulk resolve or dismiss-all command.
+  cmd.editor.appearance.set is a shell_view command with normalization.kind none, normalizes_to_contract
+  F3-651 and no alias. Its typed request/result are Plans/editor_appearance.schema.json; it changes only
+  an existing editor tab's sparse appearance fields under the Project/workspace context and owner-state
+  guard. A null field clears its override; a token-map null entry clears that key, revealing the next
+  layer. Reset and quick sets are one atomic patch, never one dispatch per field. The result is a bounded
+  applied/no_change/refused/failed receipt with owner readback, no domain event and no
+  workspace.layout_changed. No Project returns no_project_context and no write. All editors and All
+  terminals, Settings fields, wallpaper selection and resetting those Project values compose the existing
+  cmd.settings.transaction.preview and cmd.settings.transaction.apply with exact inventory ids; the same
+  CAS/permission/readback rules apply and no app-global fallback is admitted. This terminal retains
+  cmd.terminal.appearance.set and import retains cmd.terminal.appearance.import_scheme. CS-102 and WM-093
+  enumerate typed local affordances and producer bindings; local previews never run a shell command or
+  modify a real file. No new shortcut is added for Customize: More, Open Customize and Indentation are
+  keyboard-reachable entry points. Panel split/move keys retain UCC-200's Alt+Shift+arrows; the earlier
+  concept Ctrl+Alt claim is retired. Notification toast dismissal is view-local and moves a lasting notice
+  into the inbox without resolving it; inbox dismissal uses cmd.alert.dismiss, and Clear all composes that
+  existing command for the captured eligible ids/revisions, preserving truthful per-item refusals and
+  keeping arrivals after the capture. Existing notice action commands retain domain approval semantics.
+  This unit creates no bulk resolve or dismiss-all command. The retired visible app-theme preview has no
+  producer: cmd.theme.preview is retired, not an alias of cmd.settings.transaction.preview. Legacy
+  requests cannot open a timed theme trial or create a preview receipt. Activated theme changes retain
+  SSYS-010’s internal Settings transaction; code-scheme previews remain CS-102’s typed local actions.
 gui_related: true
 gui_classification_reason: Editor appearance and campaign control dispatch.
 split_recommended: false

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L46086-L47759
+Source lines: L46086-L47764
 
-Source SHA256: `2a1856fd7af3e23554fe8fdb9a987825496f0a6c519ec4f5bb053780596b1feb`
+Source SHA256: `5c1d158677d7487d45eabd73d96ec7d687048d2023ca46e04a552f4cdd2b83ec`
 
 ---
 
@@ -1027,7 +1027,10 @@ canonical_text: >-
   waits 110 ms and editor F3-651 waits 160 ms; keyboard and cancellation use those owners. Jared approved
   saving terminal looks as user presets on 2026-10-14. This is distinct from the shipped fixed quick sets.
   Naming, storage/scope, import/export and final save/apply controls remain with the terminal owner's
-  pending contract; no new preset command, storage family or fabricated binding is admitted here.
+  pending contract; no new preset command, storage family or fabricated binding is admitted here. A
+  group’s Reset control clears only that group’s registered field set; whole-scope reset and The look’s
+  own use the separately registered full set. Both scopes adapt those exact sets through the existing
+  writers.
 gui_related: true
 gui_classification_reason: The editor and terminal Customize screens.
 split_recommended: false
@@ -1070,6 +1073,8 @@ source_lineage:
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/TERMINAL-QUICKSETS.js, SHA-256 351b7a4234021f745188a26cb97f8f6a1402235267596c47059e25c76e532879
   (decision/source lineage; not native implementation evidence)
 - /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/JARED-FEEDBACK-20261014.md, SHA-256 47218ab2d7bfdbb58e983f9e4b489f3c29cedfc7b54bcf77788d06ced0ef10e6
+  (decision/source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/CUSTOMIZE-RESET-GROUPS.md, SHA-256 f875b1dfdfe5e81386358fb5d92463fbfaeccb85bb186ef50ab3bcd5309b7753
   (decision/source lineage; not native implementation evidence)
 preserved_exact_tokens:
 - This editor

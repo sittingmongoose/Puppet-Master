@@ -383,22 +383,22 @@
     ]
    },
   {
-   "id": "general.visual.wallpaper",
-   "label": "Wallpaper",
-   "desc": "The background in every look. Look's own uses the look's ground, Ribbons for Glass and the selected ink scene for NieR. Choices and Dark/Light assets come from Plans/wallpaper_catalog.json; rendered as the F3-653 gallery.",
-   "type": "select",
-   "default": "look",
-   "scope": [
-    "global"
-   ],
-   "tier": "simple",
-   "search": [
-    "wallpaper",
-    "background",
-    "backdrop",
-    "gallery",
-    "look own"
-   ]
+    "id": "general.visual.wallpaper",
+    "label": "Wallpaper",
+    "desc": "The shared background choice in every look, from Plans/wallpaper_catalog.json. Look’s own uses the look’s ground, Ribbons for Glass and the chosen NieR scene. The most recent gallery or NieR background change wins through SSYS-054’s one writer; a NieR background change also sets this value to look.",
+    "type": "select",
+    "default": "look",
+    "scope": [
+      "global"
+    ],
+    "tier": "simple",
+    "search": [
+      "wallpaper",
+      "background",
+      "backdrop",
+      "gallery",
+      "look own"
+    ]
   },
   {
    "id": "general.visual.accent-color",
@@ -452,20 +452,19 @@
    ]
   },
   {
-   "id": "general.visual.theme-preview",
-   "label": "Preview Themes Before Applying",
-   "desc": "Shows what a theme looks like while you browse, then snaps back if you don't apply it. Turn off to switch instantly.",
-   "type": "toggle",
-   "default": true,
-   "scope": [
-    "global"
-   ],
-   "tier": "simple",
-   "search": [
-    "live preview",
-    "hover preview",
-    "try theme"
-   ]
+    "id": "general.visual.theme-preview",
+    "label": "Preview Themes Before Applying",
+    "desc": "Retired by Jared on 2026-10-13: no visible timed or hover-applied app-theme preview remains, and stored values are ignored. The internal Settings transaction preview/apply still validates and commits an activated theme choice. (Superseded by SSYS-010 and F3-084, DL-200)",
+    "type": "toggle",
+    "scope": [
+      "global"
+    ],
+    "tier": "simple",
+    "search": [
+      "live preview",
+      "hover preview",
+      "try theme"
+    ]
   },
   {
    "id": "general.visual.nier-mode",
@@ -7366,28 +7365,30 @@
    ]
   },
   {
-   "id": "code.terminal.min-contrast",
-   "label": "Minimum Text Contrast",
-   "desc": "The least contrast enabled settled terminal text keeps against its composited background. Choose 4.5:1 or 7:1; adjustment preserves hue.",
-   "type": "select",
-   "options": [
-    "4.5:1",
-    "7:1"
-   ],
-   "default": "4.5:1",
-   "scope": [
-    "global",
-    "project"
-   ],
-   "tier": "simple",
-   "search": [
-    "contrast",
-    "readability",
-    "accessibility"
-   ],
-   "related_features": [
-    "terminal"
-   ]
+    "id": "code.terminal.min-contrast",
+    "label": "Minimum Text Contrast",
+    "desc": "The least contrast for program output only; Off keeps its requested colors. Defaults to 4.5:1, with a higher 7:1 choice. Interface labels, hints and controls retain F3-654’s floor regardless of this value.",
+    "type": "select",
+    "options": [
+      "Off",
+      "3:1",
+      "4.5:1",
+      "7:1"
+    ],
+    "default": "4.5:1",
+    "scope": [
+      "global",
+      "project"
+    ],
+    "tier": "simple",
+    "search": [
+      "contrast",
+      "readability",
+      "accessibility"
+    ],
+    "related_features": [
+      "terminal"
+    ]
   },
   {
    "id": "code.terminal.import-scheme",
@@ -7756,24 +7757,24 @@
    ]
   },
   {
-   "id": "code.terminal.padding",
-   "label": "Terminal Padding",
-   "desc": "Space around the text, in pixels across; the space above and below is 60 % of it.",
-   "type": "number",
-   "default": 8,
-   "scope": [
-    "global",
-    "project"
-   ],
-   "tier": "advanced",
-   "search": [
-    "padding",
-    "margin",
-    "spacing"
-   ],
-   "related_features": [
-    "terminal"
-   ]
+    "id": "code.terminal.padding",
+    "label": "Terminal Padding",
+    "desc": "Space around the text, in pixels across; the space above and below is 60 % of it. Starts at zero (Jared, 2026-10-14).",
+    "type": "number",
+    "default": 0,
+    "scope": [
+      "global",
+      "project"
+    ],
+    "tier": "advanced",
+    "search": [
+      "padding",
+      "margin",
+      "spacing"
+    ],
+    "related_features": [
+      "terminal"
+    ]
   },
   {
    "id": "code.terminal.effects",

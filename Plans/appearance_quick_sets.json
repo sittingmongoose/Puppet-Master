@@ -1,0 +1,305 @@
+{
+  "$schema": "./appearance_quick_sets.schema.json",
+  "schema_id": "pm.appearance_quick_sets.v1",
+  "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+  "scope_adapters": {
+    "this": {
+      "operation_set": "one appearance.set fields patch on the selected tab",
+      "operation_reset": "one appearance.set patch of null/unset over exactly the reset ids; lower layers become visible"
+    },
+    "all": {
+      "operation_set": "one Settings set preview containing exactly the patch, then its bound apply",
+      "operation_reset": "one Settings restore_defaults preview over exactly the reset ids, then its bound apply"
+    }
+  },
+  "kinds": {
+    "editor": {
+      "reset_ids": [
+        "code.editing.color-scheme",
+        "code.editing.scheme-pair",
+        "code.editing.syntax-highlighting",
+        "code.editing.bracket-pair-colors",
+        "code.editing.token-colors",
+        "code.editing.min-contrast",
+        "code.editing.italic-comments",
+        "code.editing.bold-keywords",
+        "code.editing.font-family",
+        "code.editing.font-size",
+        "code.editing.font-weight",
+        "code.editing.line-height",
+        "code.editing.letter-spacing",
+        "code.editing.ligatures",
+        "code.editing.cursor-shape",
+        "code.editing.cursor-width",
+        "code.editing.cursor-blink",
+        "code.editing.cursor-motion",
+        "code.editing.cursor-trail",
+        "code.editing.line-numbers",
+        "code.editing.relative-line-numbers",
+        "code.editing.line-highlight",
+        "code.editing.indent-guides",
+        "code.editing.indent-guides-active",
+        "code.editing.render-whitespace",
+        "code.editing.rulers",
+        "code.editing.word-wrap",
+        "code.editing.wrap-column",
+        "code.editing.minimap",
+        "code.editing.sticky-scroll",
+        "code.editing.sticky-scroll-lines",
+        "code.editing.smooth-scroll",
+        "code.editing.reveal-lines",
+        "code.editing.scroll-past-end",
+        "code.editing.dim-unfocused",
+        "code.editing.scanlines",
+        "code.editing.text-glow",
+        "code.editing.diff-layout",
+        "code.editing.goto-highlight-ms",
+        "code.editing.autosave",
+        "code.editing.diagnostics-visibility",
+        "code.editing.tab-size",
+        "code.editing.insert-spaces",
+        "code.editing.detect-indentation",
+        "code.editing.lsp-hover-delay"
+      ],
+      "quick_sets": {
+        "look_own": {
+          "operation": "reset_scope"
+        },
+        "calm": {
+          "operation": "set",
+          "values": {
+            "code.editing.cursor-blink": "Solid",
+            "code.editing.cursor-motion": "Instant",
+            "code.editing.cursor-trail": "Off",
+            "code.editing.smooth-scroll": "Off",
+            "code.editing.reveal-lines": false
+          }
+        },
+        "easy_reading": {
+          "operation": "set",
+          "values": {
+            "code.editing.font-family": "Atkinson Hyperlegible Mono",
+            "code.editing.font-size": 15,
+            "code.editing.line-height": 1.75,
+            "code.editing.letter-spacing": 0.25,
+            "code.editing.ligatures": false,
+            "code.editing.min-contrast": "7:1",
+            "code.editing.italic-comments": "Off"
+          }
+        },
+        "show_structure": {
+          "operation": "set",
+          "values": {
+            "code.editing.indent-guides": "Rainbow",
+            "code.editing.indent-guides-active": true,
+            "code.editing.bracket-pair-colors": true,
+            "code.editing.rulers": "80 and 120",
+            "code.editing.render-whitespace": "Between words",
+            "code.editing.sticky-scroll-lines": 5
+          }
+        }
+      },
+      "source_ref": "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/EDITOR-QUICKSETS.js",
+      "source_sha256": "3e41e8ae1594be81401985bebaa2a4917e066593236fca04e54f02f9b7e7f7f6",
+      "reset_groups": {
+        "colors": [
+          "code.editing.color-scheme",
+          "code.editing.scheme-pair",
+          "code.editing.syntax-highlighting",
+          "code.editing.bracket-pair-colors",
+          "code.editing.min-contrast",
+          "code.editing.italic-comments",
+          "code.editing.bold-keywords",
+          "code.editing.token-colors"
+        ],
+        "text": [
+          "code.editing.font-family",
+          "code.editing.font-size",
+          "code.editing.font-weight",
+          "code.editing.line-height",
+          "code.editing.letter-spacing",
+          "code.editing.ligatures"
+        ],
+        "caret": [
+          "code.editing.cursor-shape",
+          "code.editing.cursor-width",
+          "code.editing.cursor-blink",
+          "code.editing.cursor-motion",
+          "code.editing.cursor-trail"
+        ],
+        "lines": [
+          "code.editing.line-numbers",
+          "code.editing.relative-line-numbers",
+          "code.editing.line-highlight",
+          "code.editing.indent-guides",
+          "code.editing.indent-guides-active",
+          "code.editing.render-whitespace",
+          "code.editing.rulers",
+          "code.editing.word-wrap",
+          "code.editing.wrap-column",
+          "code.editing.minimap",
+          "code.editing.sticky-scroll",
+          "code.editing.sticky-scroll-lines"
+        ],
+        "motion": [
+          "code.editing.smooth-scroll",
+          "code.editing.reveal-lines",
+          "code.editing.scroll-past-end",
+          "code.editing.dim-unfocused",
+          "code.editing.scanlines",
+          "code.editing.text-glow"
+        ],
+        "behavior": [
+          "code.editing.diff-layout",
+          "code.editing.diagnostics-visibility",
+          "code.editing.goto-highlight-ms",
+          "code.editing.autosave",
+          "code.editing.tab-size",
+          "code.editing.insert-spaces",
+          "code.editing.detect-indentation"
+        ]
+      },
+      "group_source_ref": "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/CUSTOMIZE-RESET-GROUPS.md",
+      "group_source_sha256": "f875b1dfdfe5e81386358fb5d92463fbfaeccb85bb186ef50ab3bcd5309b7753"
+    },
+    "terminal": {
+      "reset_ids": [
+        "code.terminal.theme",
+        "code.terminal.font-family",
+        "code.terminal.font-size",
+        "code.terminal.font-rendering",
+        "code.terminal.scheme-pair",
+        "code.terminal.min-contrast",
+        "code.terminal.font-weight",
+        "code.terminal.line-height",
+        "code.terminal.letter-spacing",
+        "code.terminal.ligatures",
+        "code.terminal.bold-bright",
+        "code.terminal.cursor-shape",
+        "code.terminal.cursor-blink",
+        "code.terminal.cursor-trail",
+        "code.terminal.background",
+        "code.terminal.background-color",
+        "code.terminal.background-gradient",
+        "code.terminal.background-image",
+        "code.terminal.background-image-file",
+        "code.terminal.background-dim",
+        "code.terminal.background-blur",
+        "code.terminal.opacity",
+        "code.terminal.padding",
+        "code.terminal.effects",
+        "code.terminal.scanlines",
+        "code.terminal.scan-strength",
+        "code.terminal.glow",
+        "code.terminal.glow-strength",
+        "code.terminal.crt",
+        "code.terminal.curvature",
+        "code.terminal.burn-in",
+        "code.terminal.noise",
+        "code.terminal.flicker",
+        "code.terminal.flicker-amount",
+        "code.terminal.inactive-dim",
+        "code.terminal.smooth-scroll",
+        "code.terminal.bell",
+        "code.terminal.sixtyfour-scan",
+        "code.terminal.sixtyfour-bleed",
+        "code.terminal.sticky-header",
+        "code.terminal.copy-on-select"
+      ],
+      "quick_sets": {
+        "look_own": {
+          "operation": "reset_scope"
+        },
+        "calm": {
+          "operation": "set",
+          "values": {
+            "code.terminal.effects": "Custom",
+            "code.terminal.cursor-blink": false,
+            "code.terminal.cursor-trail": "Off",
+            "code.terminal.smooth-scroll": "Off",
+            "code.terminal.flicker": false,
+            "code.terminal.crt": false
+          }
+        },
+        "easy_reading": {
+          "operation": "set",
+          "values": {
+            "code.terminal.font-family": "Atkinson Hyperlegible Mono",
+            "code.terminal.min-contrast": "7:1",
+            "code.terminal.line-height": 1.45,
+            "code.terminal.ligatures": false
+          }
+        },
+        "old_monitor": {
+          "operation": "set",
+          "values": {
+            "code.terminal.effects": "Custom",
+            "code.terminal.scanlines": "On",
+            "code.terminal.glow": "On",
+            "code.terminal.crt": true,
+            "code.terminal.cursor-trail": "Phosphor"
+          }
+        }
+      },
+      "source_ref": "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/TERMINAL-QUICKSETS.js",
+      "source_sha256": "351b7a4234021f745188a26cb97f8f6a1402235267596c47059e25c76e532879",
+      "reset_groups": {
+        "colors": [
+          "code.terminal.theme",
+          "code.terminal.scheme-pair",
+          "code.terminal.min-contrast"
+        ],
+        "text": [
+          "code.terminal.font-family",
+          "code.terminal.font-size",
+          "code.terminal.font-weight",
+          "code.terminal.line-height",
+          "code.terminal.letter-spacing",
+          "code.terminal.ligatures",
+          "code.terminal.bold-bright",
+          "code.terminal.font-rendering",
+          "code.terminal.sixtyfour-scan",
+          "code.terminal.sixtyfour-bleed"
+        ],
+        "cursor": [
+          "code.terminal.cursor-shape",
+          "code.terminal.cursor-blink",
+          "code.terminal.cursor-trail"
+        ],
+        "ground": [
+          "code.terminal.background",
+          "code.terminal.background-color",
+          "code.terminal.background-gradient",
+          "code.terminal.background-image",
+          "code.terminal.background-image-file",
+          "code.terminal.background-dim",
+          "code.terminal.background-blur",
+          "code.terminal.opacity",
+          "code.terminal.padding"
+        ],
+        "effects": [
+          "code.terminal.effects",
+          "code.terminal.scanlines",
+          "code.terminal.scan-strength",
+          "code.terminal.glow",
+          "code.terminal.glow-strength",
+          "code.terminal.crt",
+          "code.terminal.curvature",
+          "code.terminal.burn-in",
+          "code.terminal.noise",
+          "code.terminal.flicker",
+          "code.terminal.flicker-amount",
+          "code.terminal.inactive-dim",
+          "code.terminal.smooth-scroll"
+        ],
+        "behavior": [
+          "code.terminal.bell",
+          "code.terminal.sticky-header",
+          "code.terminal.copy-on-select"
+        ]
+      },
+      "group_source_ref": "/mnt/Cursor/share/puppet-master/2026-10-14-plans-canon/sources/CUSTOMIZE-RESET-GROUPS.md",
+      "group_source_sha256": "f875b1dfdfe5e81386358fb5d92463fbfaeccb85bb186ef50ab3bcd5309b7753"
+    }
+  }
+}

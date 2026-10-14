@@ -55970,7 +55970,8 @@
         "Onboarding-selected copy can apply only after SSYS-036 rebind to the actual committed Project and current preview/permission/CAS. It cannot apply an uncreated draft, broaden selected settings, copy secrets or treat command acknowledgement as completion.",
         "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041).",
         "WM-093/pm7_control_bindings.json enumerates every PM7 Settings producer and exact id; preview/apply is the only Project writer, rejects no_project_context, validates catalog wallpaper ids, and keeps the reader anchored under SSYS-053.",
-        "Project reset/look own uses restore_defaults for the exact affected ids; tab overrides remain above the Project result and are disclosed."
+        "Project reset/look own uses restore_defaults for the exact affected ids; tab overrides remain above the Project result and are disclosed.",
+        "All-scope quick sets use only their exact registered ids/values. SSYS-054’s NieR background change binds both nier-background and wallpaper=look in one preview/apply; both selection orders preserve most-recent accepted choice with no second writer."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, sole-owner routing, CAS/race, idempotent replay, restart, readback, partial-failure, and rollback fixtures are required before certification.",
       "state_selector": "state.commands.settings_transaction_apply.availability",
@@ -56039,7 +56040,8 @@
         "Validate the SSYS-036 draft-preview request/result variants without a destination Project, exact current source/draft/explicit setting choices and excluded secrets/local state. Postcommit rebind verifies the actual Project and exact preview/hash, recomputes preview under current ownership/permission, then requires ordinary apply; no precommit write.",
         "Each look surface named in ui_location is a local affordance that composes cmd.settings.transaction.preview then cmd.settings.transaction.apply over the exact IDs: the theme family and mode as the SSYS-009 atomic pair, a NieR preset as one value of general.visual.nier-parts, several NieR rows changed together as one atomic group, the Tour's sound control as general.interaction.sound-effects. Availability and disabled reasons are these commands'. The title bar's Light/Dark/Auto segmented control keeps cmd.theme.set_mode; the onboarding window's look choice is ui.onboarding.choose_look and dispatches neither command before the Project commit (WM-041).",
         "WM-093/pm7_control_bindings.json enumerates every PM7 Settings producer and exact id; preview/apply is the only Project writer, rejects no_project_context, validates catalog wallpaper ids, and keeps the reader anchored under SSYS-053.",
-        "Project reset/look own uses restore_defaults for the exact affected ids; tab overrides remain above the Project result and are disclosed."
+        "Project reset/look own uses restore_defaults for the exact affected ids; tab overrides remain above the Project result and are disclosed.",
+        "All-scope quick sets use only their exact registered ids/values. SSYS-054’s NieR background change binds both nier-background and wallpaper=look in one preview/apply; both selection orders preserve most-recent accepted choice with no second writer."
       ],
       "evidence_required": "Production-intent wiring only; native dispatcher, owner-resolution, permission, stale-CAS, and no-write fixtures are required before production certification.",
       "state_selector": "state.commands.settings_transaction_preview.availability",
@@ -61240,61 +61242,6 @@
         "Assert cmd.testing.watch_run records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
     },
-    "catalog.theme_preview": {
-      "ui_element_id": "catalog.theme_preview",
-      "ui_location": "Settings > Appearance / Theme > Preview",
-      "ui_command_id": "cmd.theme.preview",
-      "handler_location": "handlers::theme::preview",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.theme.preview is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
-        "cmd.theme.preview exposes state selector and disabled reason before dispatch.",
-        "cmd.theme.preview dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
-        "cmd.theme.preview uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
-        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
-      ],
-      "evidence_required": "Production wiring contract for cmd.theme.preview. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.theme_preview.availability",
-      "disabled_reason_projection": "state.commands.theme_preview.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.theme.preview records an explicit no-persist command receipt or route/open disposition and emits no fabricated domain event.",
-        "receipt_or_event_refs": [
-          "cmd.theme.preview.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.theme_preview exposes a stable role/name/description matching cmd.theme.preview.",
-        "keyboard_access": "catalog.theme_preview is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.theme_preview preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.theme_preview surfaces state.commands.theme_preview.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.theme_preview.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.theme.preview reaches handlers::theme::preview with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.theme_preview.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.theme_preview.availability and disabled copy reads state.commands.theme_preview.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.theme_preview.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.theme.preview records an explicit no-persist command receipt or route/open disposition and emits no fabricated domain event."
-        },
-        {
-          "test_id": "wiring.catalog.theme_preview.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.theme.preview records dispatch receipt cmd.theme.preview.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
     "catalog.theme_reset": {
       "ui_element_id": "catalog.theme_reset",
       "ui_location": "Settings > Appearance / Theme > Reset",
@@ -63241,7 +63188,8 @@
         "Corrected 2026-10-09 (WM-092): the row no longer declares workspace.layout_changed; cmd.panel.switch is receipt only, exactly as catalog.panel_switch declares.",
         "Opening the menu or row that holds this control dispatches nothing; a refused dispatch changes nothing.",
         "home.chat.activity_toggle emits no event and no workspace.layout_changed.",
-        "Amended 2026-10-10 (DL-187, D40): the entry works on every page and never changes the page in front; a press that moves 4 px or more is the rail's reorder and toggles nothing (F3-042)."
+        "Amended 2026-10-10 (DL-187, D40): the entry works on every page and never changes the page in front; a press that moves 4 px or more is the rail's reorder and toggles nothing (F3-042).",
+        "Jared 2026-10-14: the rail Chat entry visibly reflects shown/folded chat; the removed Dashboard activity-bar button is not offered by the bar or More tray."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-637. Registration: Plans/UI_Command_Catalog.md#UCC-203. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
       "state_selector": "state.home_workspace.home_chat_activity_toggle.availability",
@@ -73514,7 +73462,8 @@
         "With All terminals selected the same fields compose cmd.settings.transaction.preview then cmd.settings.transaction.apply over SSYS-051's rows and never this command; only the Settings transaction writes the project layer.",
         "Opening the menu or row that holds this control dispatches nothing; a refused dispatch changes nothing.",
         "terminal.appearance.field emits no event and no workspace.layout_changed.",
-        "The full F3-650 Customize screen replaces the old compact popover; all controls/scopes/trials are enumerated by WM-093."
+        "The full F3-650 Customize screen replaces the old compact popover; all controls/scopes/trials are enumerated by WM-093.",
+        "F3-650 quick sets adapt the exact appearance_quick_sets.json patch to This terminal; its ids equal the binding’s affected ids, unrelated values are unchanged, and reset clears only its explicit set. Sticky header and Copy When I Highlight use this same appearance writer."
       ],
       "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-642. Registration: Plans/UI_Command_Catalog.md#UCC-201. Wiring: Plans/Wiring_Matrix.md#WM-091; census: Plans/UI_Wiring_Rules.md#UIW-042. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-076).",
       "state_selector": "state.terminal_tab.terminal_appearance_field.availability",
@@ -75878,7 +75827,8 @@
         "Per-token overlay/reset and sparse field clear fall through without overwriting unrelated entries.",
         "Reset/quick sets are one atomic patch. All editors uses the Settings transaction pair instead.",
         "No file, session, layout revision or workspace.layout_changed is changed; receipt is applied only after saved-state readback.",
-        "Sample/hover/scope/close never dispatch this command."
+        "Sample/hover/scope/close never dispatch this command.",
+        "Quick sets adapt the exact appearance_quick_sets.json patch to This editor, preserving unrelated token maps, autosave and indentation; reset is distinct and clears only its explicit set."
       ],
       "evidence_required": "handler_status: planned. UCC-204, CS-102, WM-093 and ATS-077 require native dispatcher, guarded state/readback, token patch/reset, idempotency, no-Project, bounds and accessibility fixtures. Static declarations are not runtime certification.",
       "state_selector": "state.editor_tab.appearance.availability",

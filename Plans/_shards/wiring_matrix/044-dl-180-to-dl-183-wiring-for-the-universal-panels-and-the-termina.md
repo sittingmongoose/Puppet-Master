@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L5553-L6302
+Source lines: L5553-L6305
 
-Source SHA256: `826430bb9c6501e167e76b435f94efbdd2b3f231c2f12a4f76c4e63df1f8642a`
+Source SHA256: `9bb21bdf27017e6822c4405d412bd96adc79105a411765fcf2424f774e1ff751`
 
 ---
 
@@ -716,7 +716,10 @@ canonical_text: >-
   controls have no fabricated command until their owner contract is reviewed. The NieR background control
   consumes SSYS-054’s admitted two-setting patch through the existing Settings preview/apply pair, not a
   second wallpaper command. The existing rail Chat producer remains home.chat.activity_toggle; its
-  selected state reflects visibility and the removed Dashboard button has no replacement producer.
+  selected state reflects visibility and the removed Dashboard button has no replacement producer. The
+  retired cmd.theme.preview producer is removed from production wiring and its sole obsolete Touch Closure
+  obligation/profile; its rejected packet token is retained and explicitly excluded as lineage
+  under UCC-204; this does not exclude either Settings transaction command.
 gui_related: true
 gui_classification_reason: Campaign controls and Settings bindings.
 split_recommended: false

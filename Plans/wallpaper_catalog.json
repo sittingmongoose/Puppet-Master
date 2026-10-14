@@ -333,76 +333,49 @@
       "thumbnail_source": "same packaged print, resized without changing its crop semantics",
       "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/40-retro.json",
       "source_sha256": "48c2c84d7428069f0be76635440545202c392ce791beaac3e85901814c9fe0ae"
-    },
+    }
+  ],
+  "withdrawn_ids": [
+    "archive",
+    "flora",
+    "fragments",
+    "hatch",
+    "signal"
+  ],
+  "pending_families": [
     {
-      "id": "archive",
-      "name": "Archive",
       "family": "nier",
-      "family_order": 50,
-      "description": "An archive page: a hatched header, a menu list, a level gauge and corner brackets.",
-      "assets": {
-        "dark": "Concepts/wallpapers/opus-5.5/src/walls/archive-dark.webp",
-        "light": "Concepts/wallpapers/opus-5.5/src/walls/archive-light.webp"
-      },
-      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
-      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/50-nier.json",
-      "source_sha256": "ca306d126fb62ae42c1939526894d989a652e4df62821b6462e6d144fc138665"
-    },
-    {
-      "id": "signal",
-      "name": "Signal",
-      "family": "nier",
-      "family_order": 50,
-      "description": "A scanner's rings, ticks and sweep at the lower right, crosshairs across the sheet.",
-      "assets": {
-        "dark": "Concepts/wallpapers/opus-5.5/src/walls/signal-dark.webp",
-        "light": "Concepts/wallpapers/opus-5.5/src/walls/signal-light.webp"
-      },
-      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
-      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/50-nier.json",
-      "source_sha256": "ca306d126fb62ae42c1939526894d989a652e4df62821b6462e6d144fc138665"
-    },
-    {
-      "id": "fragments",
-      "name": "Fragments",
-      "family": "nier",
-      "family_order": 50,
-      "description": "Squares streaming from two corners as something comes apart.",
-      "assets": {
-        "dark": "Concepts/wallpapers/opus-5.5/src/walls/fragments-dark.webp",
-        "light": "Concepts/wallpapers/opus-5.5/src/walls/fragments-light.webp"
-      },
-      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
-      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/50-nier.json",
-      "source_sha256": "ca306d126fb62ae42c1939526894d989a652e4df62821b6462e6d144fc138665"
-    },
-    {
-      "id": "hatch",
-      "name": "Hatch",
-      "family": "nier",
-      "family_order": 50,
-      "description": "Two bands of diagonal hatching across opposite corners over a dotted grid.",
-      "assets": {
-        "dark": "Concepts/wallpapers/opus-5.5/src/walls/hatch-dark.webp",
-        "light": "Concepts/wallpapers/opus-5.5/src/walls/hatch-light.webp"
-      },
-      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
-      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/50-nier.json",
-      "source_sha256": "ca306d126fb62ae42c1939526894d989a652e4df62821b6462e6d144fc138665"
-    },
-    {
-      "id": "flora",
-      "name": "Flora",
-      "family": "nier",
-      "family_order": 50,
-      "description": "Line drawings of grass, flowers, ferns and a vine along the edges, seeds drifting.",
-      "assets": {
-        "dark": "Concepts/wallpapers/opus-5.5/src/walls/flora-dark.webp",
-        "light": "Concepts/wallpapers/opus-5.5/src/walls/flora-light.webp"
-      },
-      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
-      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/50-nier.json",
-      "source_sha256": "ca306d126fb62ae42c1939526894d989a652e4df62821b6462e6d144fc138665"
+      "status": "approved_ids_and_selection_contract_assets_pending",
+      "default_for": null,
+      "owner_ref": "Plans/FinalGUISpec.md#F3-653",
+      "selection_owner": "Plans/Settings_System.md#SSYS-054",
+      "scene_choices": [
+        {
+          "id": "city",
+          "name": "City Ruins"
+        },
+        {
+          "id": "bunker",
+          "name": "The Bunker"
+        },
+        {
+          "id": "desert",
+          "name": "Desert"
+        },
+        {
+          "id": "forest",
+          "name": "Forest Castle"
+        },
+        {
+          "id": "park",
+          "name": "Amusement Park"
+        },
+        {
+          "id": "flooded",
+          "name": "Flooded City"
+        }
+      ],
+      "hold": "Final packaged Dark/Light scene assets and coordinated Glass/wallpaper publication require the feature owner packet; no placeholder paths or stale print aliases."
     }
   ]
 }

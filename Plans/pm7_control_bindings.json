@@ -4257,9 +4257,56 @@
       "production_entries": [
         "editor.appearance.field"
       ],
-      "setting_ids": [],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "setting_ids": [
+        "code.editing.color-scheme",
+        "code.editing.scheme-pair",
+        "code.editing.syntax-highlighting",
+        "code.editing.bracket-pair-colors",
+        "code.editing.token-colors",
+        "code.editing.min-contrast",
+        "code.editing.italic-comments",
+        "code.editing.bold-keywords",
+        "code.editing.font-family",
+        "code.editing.font-size",
+        "code.editing.font-weight",
+        "code.editing.line-height",
+        "code.editing.letter-spacing",
+        "code.editing.ligatures",
+        "code.editing.cursor-shape",
+        "code.editing.cursor-width",
+        "code.editing.cursor-blink",
+        "code.editing.cursor-motion",
+        "code.editing.cursor-trail",
+        "code.editing.line-numbers",
+        "code.editing.relative-line-numbers",
+        "code.editing.line-highlight",
+        "code.editing.indent-guides",
+        "code.editing.indent-guides-active",
+        "code.editing.render-whitespace",
+        "code.editing.rulers",
+        "code.editing.word-wrap",
+        "code.editing.wrap-column",
+        "code.editing.minimap",
+        "code.editing.sticky-scroll",
+        "code.editing.sticky-scroll-lines",
+        "code.editing.smooth-scroll",
+        "code.editing.reveal-lines",
+        "code.editing.scroll-past-end",
+        "code.editing.dim-unfocused",
+        "code.editing.scanlines",
+        "code.editing.text-glow",
+        "code.editing.diff-layout",
+        "code.editing.goto-highlight-ms",
+        "code.editing.autosave",
+        "code.editing.diagnostics-visibility",
+        "code.editing.tab-size",
+        "code.editing.insert-spaces",
+        "code.editing.detect-indentation",
+        "code.editing.lsp-hover-delay"
+      ],
+      "payload": "Use appearance_quick_sets.json kinds.editor.quick_sets.look_own, operation reset_scope, via scope_adapters.this; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "editor.look_own"
     },
     {
       "control_id": "editor.this.quickset.look_own",
@@ -4272,9 +4319,56 @@
       "production_entries": [
         "editor.appearance.field"
       ],
-      "setting_ids": [],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "setting_ids": [
+        "code.editing.color-scheme",
+        "code.editing.scheme-pair",
+        "code.editing.syntax-highlighting",
+        "code.editing.bracket-pair-colors",
+        "code.editing.token-colors",
+        "code.editing.min-contrast",
+        "code.editing.italic-comments",
+        "code.editing.bold-keywords",
+        "code.editing.font-family",
+        "code.editing.font-size",
+        "code.editing.font-weight",
+        "code.editing.line-height",
+        "code.editing.letter-spacing",
+        "code.editing.ligatures",
+        "code.editing.cursor-shape",
+        "code.editing.cursor-width",
+        "code.editing.cursor-blink",
+        "code.editing.cursor-motion",
+        "code.editing.cursor-trail",
+        "code.editing.line-numbers",
+        "code.editing.relative-line-numbers",
+        "code.editing.line-highlight",
+        "code.editing.indent-guides",
+        "code.editing.indent-guides-active",
+        "code.editing.render-whitespace",
+        "code.editing.rulers",
+        "code.editing.word-wrap",
+        "code.editing.wrap-column",
+        "code.editing.minimap",
+        "code.editing.sticky-scroll",
+        "code.editing.sticky-scroll-lines",
+        "code.editing.smooth-scroll",
+        "code.editing.reveal-lines",
+        "code.editing.scroll-past-end",
+        "code.editing.dim-unfocused",
+        "code.editing.scanlines",
+        "code.editing.text-glow",
+        "code.editing.diff-layout",
+        "code.editing.goto-highlight-ms",
+        "code.editing.autosave",
+        "code.editing.diagnostics-visibility",
+        "code.editing.tab-size",
+        "code.editing.insert-spaces",
+        "code.editing.detect-indentation",
+        "code.editing.lsp-hover-delay"
+      ],
+      "payload": "Use appearance_quick_sets.json kinds.editor.quick_sets.look_own, operation reset_scope, via scope_adapters.this; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "editor.look_own"
     },
     {
       "control_id": "editor.this.quickset.calm",
@@ -4287,9 +4381,16 @@
       "production_entries": [
         "editor.appearance.field"
       ],
-      "setting_ids": [],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "setting_ids": [
+        "code.editing.cursor-blink",
+        "code.editing.cursor-motion",
+        "code.editing.cursor-trail",
+        "code.editing.smooth-scroll",
+        "code.editing.reveal-lines"
+      ],
+      "payload": "Use appearance_quick_sets.json kinds.editor.quick_sets.calm, operation set, via scope_adapters.this; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "editor.calm"
     },
     {
       "control_id": "editor.this.quickset.easy_reading",
@@ -4302,9 +4403,18 @@
       "production_entries": [
         "editor.appearance.field"
       ],
-      "setting_ids": [],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "setting_ids": [
+        "code.editing.font-family",
+        "code.editing.font-size",
+        "code.editing.line-height",
+        "code.editing.letter-spacing",
+        "code.editing.ligatures",
+        "code.editing.min-contrast",
+        "code.editing.italic-comments"
+      ],
+      "payload": "Use appearance_quick_sets.json kinds.editor.quick_sets.easy_reading, operation set, via scope_adapters.this; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "editor.easy_reading"
     },
     {
       "control_id": "editor.this.quickset.show_structure",
@@ -4317,9 +4427,17 @@
       "production_entries": [
         "editor.appearance.field"
       ],
-      "setting_ids": [],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "setting_ids": [
+        "code.editing.indent-guides",
+        "code.editing.indent-guides-active",
+        "code.editing.bracket-pair-colors",
+        "code.editing.rulers",
+        "code.editing.render-whitespace",
+        "code.editing.sticky-scroll-lines"
+      ],
+      "payload": "Use appearance_quick_sets.json kinds.editor.quick_sets.show_structure, operation set, via scope_adapters.this; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "editor.show_structure"
     },
     {
       "control_id": "editor.all.reset",
@@ -4381,8 +4499,9 @@
         "code.editing.detect-indentation",
         "code.editing.lsp-hover-delay"
       ],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "payload": "Use appearance_quick_sets.json kinds.editor.quick_sets.look_own, operation reset_scope, via scope_adapters.all; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "editor.look_own"
     },
     {
       "control_id": "editor.all.quickset.look_own",
@@ -4444,8 +4563,9 @@
         "code.editing.detect-indentation",
         "code.editing.lsp-hover-delay"
       ],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "payload": "Use appearance_quick_sets.json kinds.editor.quick_sets.look_own, operation reset_scope, via scope_adapters.all; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "editor.look_own"
     },
     {
       "control_id": "editor.all.quickset.calm",
@@ -4461,54 +4581,15 @@
         "catalog.settings_transaction_apply"
       ],
       "setting_ids": [
-        "code.editing.color-scheme",
-        "code.editing.scheme-pair",
-        "code.editing.syntax-highlighting",
-        "code.editing.bracket-pair-colors",
-        "code.editing.token-colors",
-        "code.editing.min-contrast",
-        "code.editing.italic-comments",
-        "code.editing.bold-keywords",
-        "code.editing.font-family",
-        "code.editing.font-size",
-        "code.editing.font-weight",
-        "code.editing.line-height",
-        "code.editing.letter-spacing",
-        "code.editing.ligatures",
-        "code.editing.cursor-shape",
-        "code.editing.cursor-width",
         "code.editing.cursor-blink",
         "code.editing.cursor-motion",
         "code.editing.cursor-trail",
-        "code.editing.line-numbers",
-        "code.editing.relative-line-numbers",
-        "code.editing.line-highlight",
-        "code.editing.indent-guides",
-        "code.editing.indent-guides-active",
-        "code.editing.render-whitespace",
-        "code.editing.rulers",
-        "code.editing.word-wrap",
-        "code.editing.wrap-column",
-        "code.editing.minimap",
-        "code.editing.sticky-scroll",
-        "code.editing.sticky-scroll-lines",
         "code.editing.smooth-scroll",
-        "code.editing.reveal-lines",
-        "code.editing.scroll-past-end",
-        "code.editing.dim-unfocused",
-        "code.editing.scanlines",
-        "code.editing.text-glow",
-        "code.editing.diff-layout",
-        "code.editing.goto-highlight-ms",
-        "code.editing.autosave",
-        "code.editing.diagnostics-visibility",
-        "code.editing.tab-size",
-        "code.editing.insert-spaces",
-        "code.editing.detect-indentation",
-        "code.editing.lsp-hover-delay"
+        "code.editing.reveal-lines"
       ],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "payload": "Use appearance_quick_sets.json kinds.editor.quick_sets.calm, operation set, via scope_adapters.all; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "editor.calm"
     },
     {
       "control_id": "editor.all.quickset.easy_reading",
@@ -4524,54 +4605,17 @@
         "catalog.settings_transaction_apply"
       ],
       "setting_ids": [
-        "code.editing.color-scheme",
-        "code.editing.scheme-pair",
-        "code.editing.syntax-highlighting",
-        "code.editing.bracket-pair-colors",
-        "code.editing.token-colors",
-        "code.editing.min-contrast",
-        "code.editing.italic-comments",
-        "code.editing.bold-keywords",
         "code.editing.font-family",
         "code.editing.font-size",
-        "code.editing.font-weight",
         "code.editing.line-height",
         "code.editing.letter-spacing",
         "code.editing.ligatures",
-        "code.editing.cursor-shape",
-        "code.editing.cursor-width",
-        "code.editing.cursor-blink",
-        "code.editing.cursor-motion",
-        "code.editing.cursor-trail",
-        "code.editing.line-numbers",
-        "code.editing.relative-line-numbers",
-        "code.editing.line-highlight",
-        "code.editing.indent-guides",
-        "code.editing.indent-guides-active",
-        "code.editing.render-whitespace",
-        "code.editing.rulers",
-        "code.editing.word-wrap",
-        "code.editing.wrap-column",
-        "code.editing.minimap",
-        "code.editing.sticky-scroll",
-        "code.editing.sticky-scroll-lines",
-        "code.editing.smooth-scroll",
-        "code.editing.reveal-lines",
-        "code.editing.scroll-past-end",
-        "code.editing.dim-unfocused",
-        "code.editing.scanlines",
-        "code.editing.text-glow",
-        "code.editing.diff-layout",
-        "code.editing.goto-highlight-ms",
-        "code.editing.autosave",
-        "code.editing.diagnostics-visibility",
-        "code.editing.tab-size",
-        "code.editing.insert-spaces",
-        "code.editing.detect-indentation",
-        "code.editing.lsp-hover-delay"
+        "code.editing.min-contrast",
+        "code.editing.italic-comments"
       ],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "payload": "Use appearance_quick_sets.json kinds.editor.quick_sets.easy_reading, operation set, via scope_adapters.all; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "editor.easy_reading"
     },
     {
       "control_id": "editor.all.quickset.show_structure",
@@ -4587,54 +4631,16 @@
         "catalog.settings_transaction_apply"
       ],
       "setting_ids": [
-        "code.editing.color-scheme",
-        "code.editing.scheme-pair",
-        "code.editing.syntax-highlighting",
-        "code.editing.bracket-pair-colors",
-        "code.editing.token-colors",
-        "code.editing.min-contrast",
-        "code.editing.italic-comments",
-        "code.editing.bold-keywords",
-        "code.editing.font-family",
-        "code.editing.font-size",
-        "code.editing.font-weight",
-        "code.editing.line-height",
-        "code.editing.letter-spacing",
-        "code.editing.ligatures",
-        "code.editing.cursor-shape",
-        "code.editing.cursor-width",
-        "code.editing.cursor-blink",
-        "code.editing.cursor-motion",
-        "code.editing.cursor-trail",
-        "code.editing.line-numbers",
-        "code.editing.relative-line-numbers",
-        "code.editing.line-highlight",
         "code.editing.indent-guides",
         "code.editing.indent-guides-active",
-        "code.editing.render-whitespace",
+        "code.editing.bracket-pair-colors",
         "code.editing.rulers",
-        "code.editing.word-wrap",
-        "code.editing.wrap-column",
-        "code.editing.minimap",
-        "code.editing.sticky-scroll",
-        "code.editing.sticky-scroll-lines",
-        "code.editing.smooth-scroll",
-        "code.editing.reveal-lines",
-        "code.editing.scroll-past-end",
-        "code.editing.dim-unfocused",
-        "code.editing.scanlines",
-        "code.editing.text-glow",
-        "code.editing.diff-layout",
-        "code.editing.goto-highlight-ms",
-        "code.editing.autosave",
-        "code.editing.diagnostics-visibility",
-        "code.editing.tab-size",
-        "code.editing.insert-spaces",
-        "code.editing.detect-indentation",
-        "code.editing.lsp-hover-delay"
+        "code.editing.render-whitespace",
+        "code.editing.sticky-scroll-lines"
       ],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "payload": "Use appearance_quick_sets.json kinds.editor.quick_sets.show_structure, operation set, via scope_adapters.all; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "editor.show_structure"
     },
     {
       "control_id": "terminal.open.more",
@@ -4751,9 +4757,52 @@
       "production_entries": [
         "terminal.appearance.field"
       ],
-      "setting_ids": [],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "setting_ids": [
+        "code.terminal.theme",
+        "code.terminal.font-family",
+        "code.terminal.font-size",
+        "code.terminal.font-rendering",
+        "code.terminal.scheme-pair",
+        "code.terminal.min-contrast",
+        "code.terminal.font-weight",
+        "code.terminal.line-height",
+        "code.terminal.letter-spacing",
+        "code.terminal.ligatures",
+        "code.terminal.bold-bright",
+        "code.terminal.cursor-shape",
+        "code.terminal.cursor-blink",
+        "code.terminal.cursor-trail",
+        "code.terminal.background",
+        "code.terminal.background-color",
+        "code.terminal.background-gradient",
+        "code.terminal.background-image",
+        "code.terminal.background-image-file",
+        "code.terminal.background-dim",
+        "code.terminal.background-blur",
+        "code.terminal.opacity",
+        "code.terminal.padding",
+        "code.terminal.effects",
+        "code.terminal.scanlines",
+        "code.terminal.scan-strength",
+        "code.terminal.glow",
+        "code.terminal.glow-strength",
+        "code.terminal.crt",
+        "code.terminal.curvature",
+        "code.terminal.burn-in",
+        "code.terminal.noise",
+        "code.terminal.flicker",
+        "code.terminal.flicker-amount",
+        "code.terminal.inactive-dim",
+        "code.terminal.smooth-scroll",
+        "code.terminal.bell",
+        "code.terminal.sixtyfour-scan",
+        "code.terminal.sixtyfour-bleed",
+        "code.terminal.sticky-header",
+        "code.terminal.copy-on-select"
+      ],
+      "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.look_own, operation reset_scope, via scope_adapters.this; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "terminal.look_own"
     },
     {
       "control_id": "terminal.this.quickset.look_own",
@@ -4766,9 +4815,52 @@
       "production_entries": [
         "terminal.appearance.field"
       ],
-      "setting_ids": [],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "setting_ids": [
+        "code.terminal.theme",
+        "code.terminal.font-family",
+        "code.terminal.font-size",
+        "code.terminal.font-rendering",
+        "code.terminal.scheme-pair",
+        "code.terminal.min-contrast",
+        "code.terminal.font-weight",
+        "code.terminal.line-height",
+        "code.terminal.letter-spacing",
+        "code.terminal.ligatures",
+        "code.terminal.bold-bright",
+        "code.terminal.cursor-shape",
+        "code.terminal.cursor-blink",
+        "code.terminal.cursor-trail",
+        "code.terminal.background",
+        "code.terminal.background-color",
+        "code.terminal.background-gradient",
+        "code.terminal.background-image",
+        "code.terminal.background-image-file",
+        "code.terminal.background-dim",
+        "code.terminal.background-blur",
+        "code.terminal.opacity",
+        "code.terminal.padding",
+        "code.terminal.effects",
+        "code.terminal.scanlines",
+        "code.terminal.scan-strength",
+        "code.terminal.glow",
+        "code.terminal.glow-strength",
+        "code.terminal.crt",
+        "code.terminal.curvature",
+        "code.terminal.burn-in",
+        "code.terminal.noise",
+        "code.terminal.flicker",
+        "code.terminal.flicker-amount",
+        "code.terminal.inactive-dim",
+        "code.terminal.smooth-scroll",
+        "code.terminal.bell",
+        "code.terminal.sixtyfour-scan",
+        "code.terminal.sixtyfour-bleed",
+        "code.terminal.sticky-header",
+        "code.terminal.copy-on-select"
+      ],
+      "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.look_own, operation reset_scope, via scope_adapters.this; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "terminal.look_own"
     },
     {
       "control_id": "terminal.this.quickset.calm",
@@ -4781,9 +4873,17 @@
       "production_entries": [
         "terminal.appearance.field"
       ],
-      "setting_ids": [],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "setting_ids": [
+        "code.terminal.effects",
+        "code.terminal.cursor-blink",
+        "code.terminal.cursor-trail",
+        "code.terminal.smooth-scroll",
+        "code.terminal.flicker",
+        "code.terminal.crt"
+      ],
+      "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.calm, operation set, via scope_adapters.this; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "terminal.calm"
     },
     {
       "control_id": "terminal.this.quickset.easy_reading",
@@ -4796,9 +4896,15 @@
       "production_entries": [
         "terminal.appearance.field"
       ],
-      "setting_ids": [],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "setting_ids": [
+        "code.terminal.font-family",
+        "code.terminal.min-contrast",
+        "code.terminal.line-height",
+        "code.terminal.ligatures"
+      ],
+      "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.easy_reading, operation set, via scope_adapters.this; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "terminal.easy_reading"
     },
     {
       "control_id": "terminal.this.quickset.old_monitor",
@@ -4811,9 +4917,16 @@
       "production_entries": [
         "terminal.appearance.field"
       ],
-      "setting_ids": [],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "setting_ids": [
+        "code.terminal.effects",
+        "code.terminal.scanlines",
+        "code.terminal.glow",
+        "code.terminal.crt",
+        "code.terminal.cursor-trail"
+      ],
+      "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.old_monitor, operation set, via scope_adapters.this; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "terminal.old_monitor"
     },
     {
       "control_id": "terminal.all.reset",
@@ -4867,10 +4980,13 @@
         "code.terminal.smooth-scroll",
         "code.terminal.bell",
         "code.terminal.sixtyfour-scan",
-        "code.terminal.sixtyfour-bleed"
+        "code.terminal.sixtyfour-bleed",
+        "code.terminal.sticky-header",
+        "code.terminal.copy-on-select"
       ],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.look_own, operation reset_scope, via scope_adapters.all; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "terminal.look_own"
     },
     {
       "control_id": "terminal.all.quickset.look_own",
@@ -4924,10 +5040,13 @@
         "code.terminal.smooth-scroll",
         "code.terminal.bell",
         "code.terminal.sixtyfour-scan",
-        "code.terminal.sixtyfour-bleed"
+        "code.terminal.sixtyfour-bleed",
+        "code.terminal.sticky-header",
+        "code.terminal.copy-on-select"
       ],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.look_own, operation reset_scope, via scope_adapters.all; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "terminal.look_own"
     },
     {
       "control_id": "terminal.all.quickset.calm",
@@ -4943,48 +5062,16 @@
         "catalog.settings_transaction_apply"
       ],
       "setting_ids": [
-        "code.terminal.theme",
-        "code.terminal.font-family",
-        "code.terminal.font-size",
-        "code.terminal.font-rendering",
-        "code.terminal.scheme-pair",
-        "code.terminal.min-contrast",
-        "code.terminal.font-weight",
-        "code.terminal.line-height",
-        "code.terminal.letter-spacing",
-        "code.terminal.ligatures",
-        "code.terminal.bold-bright",
-        "code.terminal.cursor-shape",
+        "code.terminal.effects",
         "code.terminal.cursor-blink",
         "code.terminal.cursor-trail",
-        "code.terminal.background",
-        "code.terminal.background-color",
-        "code.terminal.background-gradient",
-        "code.terminal.background-image",
-        "code.terminal.background-image-file",
-        "code.terminal.background-dim",
-        "code.terminal.background-blur",
-        "code.terminal.opacity",
-        "code.terminal.padding",
-        "code.terminal.effects",
-        "code.terminal.scanlines",
-        "code.terminal.scan-strength",
-        "code.terminal.glow",
-        "code.terminal.glow-strength",
-        "code.terminal.crt",
-        "code.terminal.curvature",
-        "code.terminal.burn-in",
-        "code.terminal.noise",
-        "code.terminal.flicker",
-        "code.terminal.flicker-amount",
-        "code.terminal.inactive-dim",
         "code.terminal.smooth-scroll",
-        "code.terminal.bell",
-        "code.terminal.sixtyfour-scan",
-        "code.terminal.sixtyfour-bleed"
+        "code.terminal.flicker",
+        "code.terminal.crt"
       ],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.calm, operation set, via scope_adapters.all; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "terminal.calm"
     },
     {
       "control_id": "terminal.all.quickset.easy_reading",
@@ -5000,48 +5087,14 @@
         "catalog.settings_transaction_apply"
       ],
       "setting_ids": [
-        "code.terminal.theme",
         "code.terminal.font-family",
-        "code.terminal.font-size",
-        "code.terminal.font-rendering",
-        "code.terminal.scheme-pair",
         "code.terminal.min-contrast",
-        "code.terminal.font-weight",
         "code.terminal.line-height",
-        "code.terminal.letter-spacing",
-        "code.terminal.ligatures",
-        "code.terminal.bold-bright",
-        "code.terminal.cursor-shape",
-        "code.terminal.cursor-blink",
-        "code.terminal.cursor-trail",
-        "code.terminal.background",
-        "code.terminal.background-color",
-        "code.terminal.background-gradient",
-        "code.terminal.background-image",
-        "code.terminal.background-image-file",
-        "code.terminal.background-dim",
-        "code.terminal.background-blur",
-        "code.terminal.opacity",
-        "code.terminal.padding",
-        "code.terminal.effects",
-        "code.terminal.scanlines",
-        "code.terminal.scan-strength",
-        "code.terminal.glow",
-        "code.terminal.glow-strength",
-        "code.terminal.crt",
-        "code.terminal.curvature",
-        "code.terminal.burn-in",
-        "code.terminal.noise",
-        "code.terminal.flicker",
-        "code.terminal.flicker-amount",
-        "code.terminal.inactive-dim",
-        "code.terminal.smooth-scroll",
-        "code.terminal.bell",
-        "code.terminal.sixtyfour-scan",
-        "code.terminal.sixtyfour-bleed"
+        "code.terminal.ligatures"
       ],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.easy_reading, operation set, via scope_adapters.all; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "terminal.easy_reading"
     },
     {
       "control_id": "terminal.all.quickset.old_monitor",
@@ -5057,48 +5110,15 @@
         "catalog.settings_transaction_apply"
       ],
       "setting_ids": [
-        "code.terminal.theme",
-        "code.terminal.font-family",
-        "code.terminal.font-size",
-        "code.terminal.font-rendering",
-        "code.terminal.scheme-pair",
-        "code.terminal.min-contrast",
-        "code.terminal.font-weight",
-        "code.terminal.line-height",
-        "code.terminal.letter-spacing",
-        "code.terminal.ligatures",
-        "code.terminal.bold-bright",
-        "code.terminal.cursor-shape",
-        "code.terminal.cursor-blink",
-        "code.terminal.cursor-trail",
-        "code.terminal.background",
-        "code.terminal.background-color",
-        "code.terminal.background-gradient",
-        "code.terminal.background-image",
-        "code.terminal.background-image-file",
-        "code.terminal.background-dim",
-        "code.terminal.background-blur",
-        "code.terminal.opacity",
-        "code.terminal.padding",
         "code.terminal.effects",
         "code.terminal.scanlines",
-        "code.terminal.scan-strength",
         "code.terminal.glow",
-        "code.terminal.glow-strength",
         "code.terminal.crt",
-        "code.terminal.curvature",
-        "code.terminal.burn-in",
-        "code.terminal.noise",
-        "code.terminal.flicker",
-        "code.terminal.flicker-amount",
-        "code.terminal.inactive-dim",
-        "code.terminal.smooth-scroll",
-        "code.terminal.bell",
-        "code.terminal.sixtyfour-scan",
-        "code.terminal.sixtyfour-bleed"
+        "code.terminal.cursor-trail"
       ],
-      "payload": "One atomic selected-scope field patch; reset/look own clears tab overrides or uses Project restore_defaults over exact affected ids; no unrelated setting changes.",
-      "no_production_reason": ""
+      "payload": "Use appearance_quick_sets.json kinds.terminal.quick_sets.old_monitor, operation set, via scope_adapters.all; exact affected ids are setting_ids. Supply the selected tab identity and its current owner preconditions for This; supply Project identity, expected revision, actor and idempotency for All. Apply exactly one atomic patch/transaction; no implicit changes outside that set.",
+      "no_production_reason": "",
+      "quick_set_ref": "terminal.old_monitor"
     },
     {
       "control_id": "editor.token.select",
@@ -6133,6 +6153,818 @@
       "setting_ids": [],
       "payload": "Enter the existing owner approval/rule review with approval_scope_key and requesting_context when filesafe_add_rule is admitted. That owner validates pattern/scope, persists through its canonical rule commands and makes the final runtime decision; this entry itself opens the review only and never writes an ad-hoc FileSafe allowlist.",
       "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.this.sticky-header",
+      "surface": "Terminal Customize > this > sticky header",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-642",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.sticky-header"
+      ],
+      "payload": "panel_tab_id and matching F3-642 field from the inventory id; unset clears the tab override",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.all.sticky-header",
+      "surface": "Terminal Customize > all > sticky header",
+      "owner_ref": "Plans/Settings_System.md#SSYS-051",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.sticky-header"
+      ],
+      "payload": "operation_kind set; exact_setting_ids=[id]; inventory value; apply current preview",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.this.copy-on-select",
+      "surface": "Terminal Customize > this > copy on select",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-642",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.copy-on-select"
+      ],
+      "payload": "panel_tab_id and matching F3-642 field from the inventory id; unset clears the tab override",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "terminal.all.copy-on-select",
+      "surface": "Terminal Customize > all > copy on select",
+      "owner_ref": "Plans/Settings_System.md#SSYS-051",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.copy-on-select"
+      ],
+      "payload": "operation_kind set; exact_setting_ids=[id]; inventory value; apply current preview",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "settings.general.visual.nier-background",
+      "surface": "Settings > NieR background",
+      "owner_ref": "Plans/Settings_System.md#SSYS-054",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "general.visual.nier-background",
+        "general.visual.wallpaper"
+      ],
+      "payload": "The visible control supplies the requested nier-background only. The one wallpaper coordinator builds the atomic Settings set patch {general.visual.nier-background: requested_scene, general.visual.wallpaper: look} before preview; apply uses that bound preview. Project revision orders accepted choices; no secondary writer or timestamp. A stale/refused change writes neither field.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "nier.background.pick",
+      "surface": "NieR customizer > background choice",
+      "owner_ref": "Plans/Settings_System.md#SSYS-054",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "general.visual.nier-background",
+        "general.visual.wallpaper"
+      ],
+      "payload": "The visible control supplies the requested nier-background only. The one wallpaper coordinator builds the atomic Settings set patch {general.visual.nier-background: requested_scene, general.visual.wallpaper: look} before preview; apply uses that bound preview. Project revision orders accepted choices; no secondary writer or timestamp. A stale/refused change writes neither field.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "rail.chat.toggle",
+      "surface": "Activity bar > Chat",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-042",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.panel.switch"
+      ],
+      "production_entries": [
+        "home.chat.activity_toggle"
+      ],
+      "setting_ids": [],
+      "payload": "Use UCC-203’s existing chat-toggle payload and receipt. Selected state reads chat visibility, including its folded strip; a rail drag never toggles it.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "rail.dashboard.removed",
+      "surface": "Activity bar / More > former Dashboard button",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-042",
+      "disposition": "non_dispatch",
+      "action_ids": [],
+      "production_entries": [],
+      "setting_ids": [],
+      "payload": "Removed by Jared on 2026-10-14; dashboard content remains a Home tab kind.",
+      "no_production_reason": "Removed producer; neither the bar nor More may offer it. Existing dashboard commands are not retired by this removal."
+    },
+    {
+      "control_id": "notifications.activate_toast",
+      "surface": "Toast body activation",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-447",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.alert.open_source"
+      ],
+      "production_entries": [
+        "catalog.alert_open_source"
+      ],
+      "setting_ids": [],
+      "payload": "Open the notice’s existing source through the alert owner and mark that notice read in the view projection; an action-button activation uses its own binding instead and does not bubble to this route.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "shell.theme.family",
+      "surface": "Title-bar theme selector > family",
+      "owner_ref": "Plans/Settings_System.md#SSYS-010",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "general.visual.theme",
+        "general.visual.theme-mode"
+      ],
+      "payload": "Preview and apply the SSYS-009 atomic theme-family/mode pair. The Glass lens consumes F3-652 without changing command, value, scope or transaction; no timed app-theme trial.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "shell.theme.mode",
+      "surface": "Title-bar theme selector > mode",
+      "owner_ref": "Plans/Settings_System.md#SSYS-010",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "general.visual.theme",
+        "general.visual.theme-mode"
+      ],
+      "payload": "Preview and apply the SSYS-009 atomic theme-family/mode pair. The Glass lens consumes F3-652 without changing command, value, scope or transaction; no timed app-theme trial.",
+      "no_production_reason": ""
+    },
+    {
+      "control_id": "editor.this.reset_group.colors",
+      "surface": "editor Customize > this > Reset colors",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.editor.appearance.set"
+      ],
+      "production_entries": [
+        "editor.appearance.field"
+      ],
+      "setting_ids": [
+        "code.editing.color-scheme",
+        "code.editing.scheme-pair",
+        "code.editing.syntax-highlighting",
+        "code.editing.bracket-pair-colors",
+        "code.editing.min-contrast",
+        "code.editing.italic-comments",
+        "code.editing.bold-keywords",
+        "code.editing.token-colors"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.editor.reset_groups.colors through scope_adapters.this. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "editor.colors"
+    },
+    {
+      "control_id": "editor.all.reset_group.colors",
+      "surface": "editor Customize > all > Reset colors",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.editing.color-scheme",
+        "code.editing.scheme-pair",
+        "code.editing.syntax-highlighting",
+        "code.editing.bracket-pair-colors",
+        "code.editing.min-contrast",
+        "code.editing.italic-comments",
+        "code.editing.bold-keywords",
+        "code.editing.token-colors"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.editor.reset_groups.colors through scope_adapters.all. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "editor.colors"
+    },
+    {
+      "control_id": "editor.this.reset_group.text",
+      "surface": "editor Customize > this > Reset text",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.editor.appearance.set"
+      ],
+      "production_entries": [
+        "editor.appearance.field"
+      ],
+      "setting_ids": [
+        "code.editing.font-family",
+        "code.editing.font-size",
+        "code.editing.font-weight",
+        "code.editing.line-height",
+        "code.editing.letter-spacing",
+        "code.editing.ligatures"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.editor.reset_groups.text through scope_adapters.this. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "editor.text"
+    },
+    {
+      "control_id": "editor.all.reset_group.text",
+      "surface": "editor Customize > all > Reset text",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.editing.font-family",
+        "code.editing.font-size",
+        "code.editing.font-weight",
+        "code.editing.line-height",
+        "code.editing.letter-spacing",
+        "code.editing.ligatures"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.editor.reset_groups.text through scope_adapters.all. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "editor.text"
+    },
+    {
+      "control_id": "editor.this.reset_group.caret",
+      "surface": "editor Customize > this > Reset caret",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.editor.appearance.set"
+      ],
+      "production_entries": [
+        "editor.appearance.field"
+      ],
+      "setting_ids": [
+        "code.editing.cursor-shape",
+        "code.editing.cursor-width",
+        "code.editing.cursor-blink",
+        "code.editing.cursor-motion",
+        "code.editing.cursor-trail"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.editor.reset_groups.caret through scope_adapters.this. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "editor.caret"
+    },
+    {
+      "control_id": "editor.all.reset_group.caret",
+      "surface": "editor Customize > all > Reset caret",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.editing.cursor-shape",
+        "code.editing.cursor-width",
+        "code.editing.cursor-blink",
+        "code.editing.cursor-motion",
+        "code.editing.cursor-trail"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.editor.reset_groups.caret through scope_adapters.all. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "editor.caret"
+    },
+    {
+      "control_id": "editor.this.reset_group.lines",
+      "surface": "editor Customize > this > Reset lines",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.editor.appearance.set"
+      ],
+      "production_entries": [
+        "editor.appearance.field"
+      ],
+      "setting_ids": [
+        "code.editing.line-numbers",
+        "code.editing.relative-line-numbers",
+        "code.editing.line-highlight",
+        "code.editing.indent-guides",
+        "code.editing.indent-guides-active",
+        "code.editing.render-whitespace",
+        "code.editing.rulers",
+        "code.editing.word-wrap",
+        "code.editing.wrap-column",
+        "code.editing.minimap",
+        "code.editing.sticky-scroll",
+        "code.editing.sticky-scroll-lines"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.editor.reset_groups.lines through scope_adapters.this. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "editor.lines"
+    },
+    {
+      "control_id": "editor.all.reset_group.lines",
+      "surface": "editor Customize > all > Reset lines",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.editing.line-numbers",
+        "code.editing.relative-line-numbers",
+        "code.editing.line-highlight",
+        "code.editing.indent-guides",
+        "code.editing.indent-guides-active",
+        "code.editing.render-whitespace",
+        "code.editing.rulers",
+        "code.editing.word-wrap",
+        "code.editing.wrap-column",
+        "code.editing.minimap",
+        "code.editing.sticky-scroll",
+        "code.editing.sticky-scroll-lines"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.editor.reset_groups.lines through scope_adapters.all. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "editor.lines"
+    },
+    {
+      "control_id": "editor.this.reset_group.motion",
+      "surface": "editor Customize > this > Reset motion",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.editor.appearance.set"
+      ],
+      "production_entries": [
+        "editor.appearance.field"
+      ],
+      "setting_ids": [
+        "code.editing.smooth-scroll",
+        "code.editing.reveal-lines",
+        "code.editing.scroll-past-end",
+        "code.editing.dim-unfocused",
+        "code.editing.scanlines",
+        "code.editing.text-glow"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.editor.reset_groups.motion through scope_adapters.this. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "editor.motion"
+    },
+    {
+      "control_id": "editor.all.reset_group.motion",
+      "surface": "editor Customize > all > Reset motion",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.editing.smooth-scroll",
+        "code.editing.reveal-lines",
+        "code.editing.scroll-past-end",
+        "code.editing.dim-unfocused",
+        "code.editing.scanlines",
+        "code.editing.text-glow"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.editor.reset_groups.motion through scope_adapters.all. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "editor.motion"
+    },
+    {
+      "control_id": "editor.this.reset_group.behavior",
+      "surface": "editor Customize > this > Reset behavior",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.editor.appearance.set"
+      ],
+      "production_entries": [
+        "editor.appearance.field"
+      ],
+      "setting_ids": [
+        "code.editing.diff-layout",
+        "code.editing.diagnostics-visibility",
+        "code.editing.goto-highlight-ms",
+        "code.editing.autosave",
+        "code.editing.tab-size",
+        "code.editing.insert-spaces",
+        "code.editing.detect-indentation"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.editor.reset_groups.behavior through scope_adapters.this. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "editor.behavior"
+    },
+    {
+      "control_id": "editor.all.reset_group.behavior",
+      "surface": "editor Customize > all > Reset behavior",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.editing.diff-layout",
+        "code.editing.diagnostics-visibility",
+        "code.editing.goto-highlight-ms",
+        "code.editing.autosave",
+        "code.editing.tab-size",
+        "code.editing.insert-spaces",
+        "code.editing.detect-indentation"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.editor.reset_groups.behavior through scope_adapters.all. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "editor.behavior"
+    },
+    {
+      "control_id": "terminal.this.reset_group.colors",
+      "surface": "terminal Customize > this > Reset colors",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.theme",
+        "code.terminal.scheme-pair",
+        "code.terminal.min-contrast"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.colors through scope_adapters.this. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "terminal.colors"
+    },
+    {
+      "control_id": "terminal.all.reset_group.colors",
+      "surface": "terminal Customize > all > Reset colors",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.theme",
+        "code.terminal.scheme-pair",
+        "code.terminal.min-contrast"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.colors through scope_adapters.all. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "terminal.colors"
+    },
+    {
+      "control_id": "terminal.this.reset_group.text",
+      "surface": "terminal Customize > this > Reset text",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.font-family",
+        "code.terminal.font-size",
+        "code.terminal.font-weight",
+        "code.terminal.line-height",
+        "code.terminal.letter-spacing",
+        "code.terminal.ligatures",
+        "code.terminal.bold-bright",
+        "code.terminal.font-rendering",
+        "code.terminal.sixtyfour-scan",
+        "code.terminal.sixtyfour-bleed"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.text through scope_adapters.this. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "terminal.text"
+    },
+    {
+      "control_id": "terminal.all.reset_group.text",
+      "surface": "terminal Customize > all > Reset text",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.font-family",
+        "code.terminal.font-size",
+        "code.terminal.font-weight",
+        "code.terminal.line-height",
+        "code.terminal.letter-spacing",
+        "code.terminal.ligatures",
+        "code.terminal.bold-bright",
+        "code.terminal.font-rendering",
+        "code.terminal.sixtyfour-scan",
+        "code.terminal.sixtyfour-bleed"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.text through scope_adapters.all. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "terminal.text"
+    },
+    {
+      "control_id": "terminal.this.reset_group.cursor",
+      "surface": "terminal Customize > this > Reset cursor",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.cursor-shape",
+        "code.terminal.cursor-blink",
+        "code.terminal.cursor-trail"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.cursor through scope_adapters.this. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "terminal.cursor"
+    },
+    {
+      "control_id": "terminal.all.reset_group.cursor",
+      "surface": "terminal Customize > all > Reset cursor",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.cursor-shape",
+        "code.terminal.cursor-blink",
+        "code.terminal.cursor-trail"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.cursor through scope_adapters.all. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "terminal.cursor"
+    },
+    {
+      "control_id": "terminal.this.reset_group.ground",
+      "surface": "terminal Customize > this > Reset ground",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.background",
+        "code.terminal.background-color",
+        "code.terminal.background-gradient",
+        "code.terminal.background-image",
+        "code.terminal.background-image-file",
+        "code.terminal.background-dim",
+        "code.terminal.background-blur",
+        "code.terminal.opacity",
+        "code.terminal.padding"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.ground through scope_adapters.this. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "terminal.ground"
+    },
+    {
+      "control_id": "terminal.all.reset_group.ground",
+      "surface": "terminal Customize > all > Reset ground",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.background",
+        "code.terminal.background-color",
+        "code.terminal.background-gradient",
+        "code.terminal.background-image",
+        "code.terminal.background-image-file",
+        "code.terminal.background-dim",
+        "code.terminal.background-blur",
+        "code.terminal.opacity",
+        "code.terminal.padding"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.ground through scope_adapters.all. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "terminal.ground"
+    },
+    {
+      "control_id": "terminal.this.reset_group.effects",
+      "surface": "terminal Customize > this > Reset effects",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.effects",
+        "code.terminal.scanlines",
+        "code.terminal.scan-strength",
+        "code.terminal.glow",
+        "code.terminal.glow-strength",
+        "code.terminal.crt",
+        "code.terminal.curvature",
+        "code.terminal.burn-in",
+        "code.terminal.noise",
+        "code.terminal.flicker",
+        "code.terminal.flicker-amount",
+        "code.terminal.inactive-dim",
+        "code.terminal.smooth-scroll"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.effects through scope_adapters.this. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "terminal.effects"
+    },
+    {
+      "control_id": "terminal.all.reset_group.effects",
+      "surface": "terminal Customize > all > Reset effects",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.effects",
+        "code.terminal.scanlines",
+        "code.terminal.scan-strength",
+        "code.terminal.glow",
+        "code.terminal.glow-strength",
+        "code.terminal.crt",
+        "code.terminal.curvature",
+        "code.terminal.burn-in",
+        "code.terminal.noise",
+        "code.terminal.flicker",
+        "code.terminal.flicker-amount",
+        "code.terminal.inactive-dim",
+        "code.terminal.smooth-scroll"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.effects through scope_adapters.all. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "terminal.effects"
+    },
+    {
+      "control_id": "terminal.this.reset_group.behavior",
+      "surface": "terminal Customize > this > Reset behavior",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.terminal.appearance.set"
+      ],
+      "production_entries": [
+        "terminal.appearance.field"
+      ],
+      "setting_ids": [
+        "code.terminal.bell",
+        "code.terminal.sticky-header",
+        "code.terminal.copy-on-select"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.behavior through scope_adapters.this. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "terminal.behavior"
+    },
+    {
+      "control_id": "terminal.all.reset_group.behavior",
+      "surface": "terminal Customize > all > Reset behavior",
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "disposition": "command",
+      "action_ids": [
+        "cmd.settings.transaction.preview",
+        "cmd.settings.transaction.apply"
+      ],
+      "production_entries": [
+        "catalog.settings_transaction_preview",
+        "catalog.settings_transaction_apply"
+      ],
+      "setting_ids": [
+        "code.terminal.bell",
+        "code.terminal.sticky-header",
+        "code.terminal.copy-on-select"
+      ],
+      "payload": "Reset only appearance_quick_sets.json kinds.terminal.reset_groups.behavior through scope_adapters.all. One atomic command/transaction; preserve every value outside this exact group.",
+      "no_production_reason": "",
+      "reset_group_ref": "terminal.behavior"
+    }
+  ],
+  "held_controls": [
+    {
+      "owner_ref": "Plans/FinalGUISpec.md#F3-650",
+      "direction": "User-saved terminal look presets",
+      "reason": "Approved direction; final save/apply affordances, field model and storage/scope await the terminal owner packet. Fixed quick sets do not satisfy this requirement."
+    },
+    {
+      "owner_ref": "Plans/FinalGUISpec.md#F3-643",
+      "direction": "Smaller removable/customizable terminal bezel and convincing opt-in curvature",
+      "reason": "Approved direction; final fields/ranges and controls await the terminal owner. Default bezel/curvature remain absent."
+    },
+    {
+      "owner_ref": "Plans/FinalGUISpec.md#F3-642",
+      "direction": "Expanded terminal backgrounds",
+      "reason": "Approved direction; the researched replacement catalog and any new chooser fields await the terminal owner."
     }
   ]
 }

@@ -1,0 +1,284 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.appearance_quick_sets.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_id",
+    "owner_ref",
+    "scope_adapters",
+    "kinds"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schema_id": {
+      "const": "pm.appearance_quick_sets.v1"
+    },
+    "owner_ref": {
+      "const": "Plans/FinalGUISpec.md#F3-650"
+    },
+    "scope_adapters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "this",
+        "all"
+      ],
+      "properties": {
+        "this": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "operation_set",
+            "operation_reset"
+          ],
+          "properties": {
+            "operation_set": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operation_reset": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "all": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "operation_set",
+            "operation_reset"
+          ],
+          "properties": {
+            "operation_set": {
+              "type": "string",
+              "minLength": 1
+            },
+            "operation_reset": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "kinds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "editor",
+        "terminal"
+      ],
+      "properties": {
+        "editor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reset_ids",
+            "quick_sets",
+            "source_ref",
+            "source_sha256",
+            "reset_groups",
+            "group_source_ref",
+            "group_source_sha256"
+          ],
+          "properties": {
+            "reset_ids": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            "quick_sets": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "operation"
+                ],
+                "properties": {
+                  "operation": {
+                    "enum": [
+                      "set",
+                      "reset_scope"
+                    ]
+                  },
+                  "values": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": {
+                      "type": [
+                        "string",
+                        "number",
+                        "boolean"
+                      ]
+                    }
+                  }
+                },
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "operation": {
+                          "const": "set"
+                        }
+                      }
+                    },
+                    "then": {
+                      "required": [
+                        "values"
+                      ]
+                    },
+                    "else": {
+                      "not": {
+                        "required": [
+                          "values"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "source_ref": {
+              "type": "string"
+            },
+            "source_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "reset_groups": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "group_source_ref": {
+              "type": "string"
+            },
+            "group_source_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "terminal": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reset_ids",
+            "quick_sets",
+            "source_ref",
+            "source_sha256",
+            "reset_groups",
+            "group_source_ref",
+            "group_source_sha256"
+          ],
+          "properties": {
+            "reset_ids": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            "quick_sets": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "operation"
+                ],
+                "properties": {
+                  "operation": {
+                    "enum": [
+                      "set",
+                      "reset_scope"
+                    ]
+                  },
+                  "values": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "additionalProperties": {
+                      "type": [
+                        "string",
+                        "number",
+                        "boolean"
+                      ]
+                    }
+                  }
+                },
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "operation": {
+                          "const": "set"
+                        }
+                      }
+                    },
+                    "then": {
+                      "required": [
+                        "values"
+                      ]
+                    },
+                    "else": {
+                      "not": {
+                        "required": [
+                          "values"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "source_ref": {
+              "type": "string"
+            },
+            "source_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "reset_groups": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "group_source_ref": {
+              "type": "string"
+            },
+            "group_source_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        }
+      }
+    }
+  }
+}
