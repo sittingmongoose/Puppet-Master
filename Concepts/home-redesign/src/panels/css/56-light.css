@@ -24,14 +24,14 @@ html[data-pmw-home="on"] {
   --gl-c: var(--accent-primary, #64b5f6);
   --gl-hot: #FFFFFF;
   --gl-blend: plus-lighter;
-  --gl-bloom-a: .24;
-  --gl-beam-a: .9;
+  --gl-bloom-a: .32;
+  --gl-beam-a: 1;
   --gl-beam-w: 1px;
   --gl-rail-a: 40%;
   --gl-core-w: 2px;
-  --gl-core-l: 44px;
+  --gl-core-l: 52px;
   --gl-core-r: 1px;
-  --gl-core-shadow: 0 0 1.5px .5px var(--gl-c), 0 0 6px 1px color-mix(in srgb, var(--gl-c) 66%, transparent), 0 0 18px 3px color-mix(in srgb, var(--gl-c) 24%, transparent);
+  --gl-core-shadow: 0 0 1.5px .5px var(--gl-c), 0 0 6px 1.5px color-mix(in srgb, var(--gl-c) 78%, transparent), 0 0 20px 4px color-mix(in srgb, var(--gl-c) 32%, transparent);
   --gl-pool-w: 76px;
   --gl-pool-l: 400px;
   --gl-bloom-l: 230px;
@@ -173,11 +173,11 @@ html[data-pmw-home="on"] .pmw-gl.pmw-settle .pmw-gl-rail { animation: gl-drain v
 /* the tips ride the rail's ends: out on the grab, back in on the settle */
 html[data-pmw-home="on"] .pmw-gl-tip {
   width: 2px;
-  height: 18px;
+  height: 28px;
   border-radius: 1px;
   translate: -50% -50%;
   background: linear-gradient(to bottom, transparent, var(--gl-hot) 35%, var(--gl-hot) 65%, transparent);
-  box-shadow: 0 0 3px .5px var(--gl-c), 0 0 10px 1px color-mix(in srgb, var(--gl-c) 45%, transparent);
+  box-shadow: 0 0 3px .5px var(--gl-c), 0 0 12px 2px color-mix(in srgb, var(--gl-c) 55%, transparent);
 }
 html[data-pmw-home="on"] .pmw-gl-tip[data-end="a"] { --gl-tip: var(--gl-tip-a, 0px); }
 html[data-pmw-home="on"] .pmw-gl-tip[data-end="b"] { --gl-tip: var(--gl-tip-b, 0px); }
@@ -369,9 +369,13 @@ html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) {
   --gl-rim: #FFFFFF;
   --gl-rim-x: 3.5px;
   --gl-shade: transparent;
+  --gl-s-plate: transparent, rgba(0, 0, 0, .03) 12%, rgba(0, 0, 0, .1) 24%, rgba(0, 0, 0, .26) 33%, rgba(0, 0, 0, .52) 40%,
+    rgba(0, 0, 0, .82) 44.5%, #000 47%, #000 53%, rgba(0, 0, 0, .82) 55.5%, rgba(0, 0, 0, .52) 60%, rgba(0, 0, 0, .26) 67%,
+    rgba(0, 0, 0, .1) 76%, rgba(0, 0, 0, .03) 88%, transparent;
   --gl-k: 380;
   --gl-z: .82;
-  --gl-scatter: rgba(255, 255, 255, .26);
+  --gl-sc: rgba(255, 255, 255, .36);
+  --gl-ch: rgba(255, 255, 255, .55);
   --gl-core-w: 1px;
   --gl-core-l: 38px;
   --gl-core-shadow: 0 0 1.5px .5px rgba(255, 255, 255, .9), 0 0 6px 1px rgba(255, 255, 255, .32);
@@ -382,29 +386,38 @@ html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) {
 html[data-pmw-home="on"][data-theme="glass-light"]:not([data-o55-nier="on"]) {
   --gl-blend: var(--lg-lens-glint-blend, normal);
   --gl-glint: var(--lg-lens-glint, rgba(255, 255, 255, .7));
-  --gl-shade: var(--lg-edge-bot, rgba(48, 36, 84, .22));
-  --gl-scatter: rgba(255, 255, 255, .78);
+  --gl-shade: var(--lg-edge-bot, rgba(48, 36, 84, .34));
+  --gl-sc: rgba(255, 255, 255, .8);
+  --gl-ch: #FFFFFF;
   --gl-core-shadow: 0 0 0 .5px var(--gl-shade), 0 0 5px 1px rgba(255, 255, 255, .95), 0 0 14px 3px rgba(255, 255, 255, .55);
   --gl-rail-a: 70%;
 }
 /* the two edges: a fine bright line on each, carried along the edge with long tails (::after), and the light
    scattering a few pixels into each frosted plate beside it, brightest at the edge (::before) */
-html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-pool { --gl-pool-w: 48px; --gl-pool-l: 520px; }
+html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-pool { --gl-pool-w: 48px; --gl-pool-l: 460px; }
 html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-pool::after {
   width: calc(var(--gl-rim-x) * 2 + 1px);
   opacity: 1;
   background:
     linear-gradient(to right, var(--gl-shade) 0 .5px, var(--gl-rim) .5px 1.5px, transparent 1.5px calc(100% - 1.5px), var(--gl-rim) calc(100% - 1.5px) calc(100% - .5px), var(--gl-shade) calc(100% - .5px));
-  -webkit-mask: linear-gradient(to bottom, var(--gl-s-beam));
-  mask: linear-gradient(to bottom, var(--gl-s-beam));
+  -webkit-mask: linear-gradient(to bottom, var(--gl-s-plate));
+  mask: linear-gradient(to bottom, var(--gl-s-plate));
 }
 html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-pool::before {
-  height: 260px;
+  height: 340px;
   opacity: 1;
-  background:
-    radial-gradient(ellipse 7px 50% at calc(50% - var(--gl-rim-x) - 1px) 50%, var(--gl-scatter), transparent),
-    radial-gradient(ellipse 7px 50% at calc(50% + var(--gl-rim-x) + 1px) 50%, var(--gl-scatter), transparent),
-    radial-gradient(ellipse 3px 22% at 50% 50%, var(--gl-scatter), transparent);
+  background: linear-gradient(to right,
+    transparent calc(50% - var(--gl-rim-x) - 16px),
+    color-mix(in srgb, var(--gl-sc) 8%, transparent) calc(50% - var(--gl-rim-x) - 11px),
+    color-mix(in srgb, var(--gl-sc) 30%, transparent) calc(50% - var(--gl-rim-x) - 6px),
+    var(--gl-sc) calc(50% - var(--gl-rim-x) - 1px),
+    var(--gl-ch) calc(50% - var(--gl-rim-x) + 1px), var(--gl-ch) calc(50% + var(--gl-rim-x) - 1px),
+    var(--gl-sc) calc(50% + var(--gl-rim-x) + 1px),
+    color-mix(in srgb, var(--gl-sc) 30%, transparent) calc(50% + var(--gl-rim-x) + 6px),
+    color-mix(in srgb, var(--gl-sc) 8%, transparent) calc(50% + var(--gl-rim-x) + 11px),
+    transparent calc(50% + var(--gl-rim-x) + 16px));
+  -webkit-mask: linear-gradient(to bottom, var(--gl-s-plate));
+  mask: linear-gradient(to bottom, var(--gl-s-plate));
 }
 html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-hint::before { display: none; }
 html[data-pmw-home="on"][data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-gl-hint::after {

@@ -1,28 +1,28 @@
 /* The grab light on every resizer (Jared, 2026-10-13: "The glowing resize line is missing from most places ... That
-   effect should also be polished more", and after the first version: "The resize glow look should be polished").
-   One light for the dividers between panels, the chat column's edge (#chatResizer), the rail's edge
-   (#leftPanelResizer) and the browser's DevTools split, in five moments that every look draws its own way
-   (css/56-light.css):
+   effect should also be polished more"; after the first version: "The resize glow look should be polished"). One
+   light for the dividers between panels, the chat column's edge (#chatResizer), the rail's edge (#leftPanelResizer)
+   and the browser's DevTools split, in five moments that each look draws its own way (css/56-light.css):
    - near: a pointer within reach of a bar raises a faint glint on it at the nearest point (the idle hint);
    - hover: after a beat the light gathers there and follows the pointer along the bar on a spring, stretching as it
      is swept;
    - grab: the light catches, and runs from the grab point out to both ends of the bar;
    - drag: the bar stays lit and answers its own speed (heat, and a wake on the side it is moving away from), and
      strains when the pointer pulls past a limit the bar cannot follow;
-   - settle: on release the light drains back along the bar into the point it was held at and seats there.
+   - settle: on release the light drains back along the bar into the point it was let go at, and seats there.
    This module only feeds the CSS. Per bar it writes --gl-at (the light's place along the bar, px from its start,
    sprung), --gl-s and --gl-lag (stretch), --gl-near, --gl-heat, --gl-trail (how far the bar travelled lately, px as a
    plain number, signed toward its wake; --gl-wl and --gl-wr are its two sides), --gl-strain and --gl-push, --gl-g and
-   --gl-r (grab and release points), --gl-len, --gl-thk and --gl-drain; and the classes pmw-gl-on (lit), pmw-gl-hover, pmw-gl-held, pmw-gl-moving, pmw-gl-still and pmw-settle.
-   A look's motion constants are custom properties read once per engagement: --gl-k and --gl-z (spring stiffness and
-   damping ratio; 0 stiffness is stepped), --gl-snap and --gl-snap-o (a grid the light steps along), --gl-trail-step,
-   --gl-settle-ms, and --gl-dots / --gl-echo (Friendly's dot column, the persistence copies). A bar's axis is its
-   aria-orientation (vertical unless it says horizontal); a horizontal bar's light layer is the vertical one turned,
-   so the CSS is written once, along y. Reduced Motion: no spring, stretch, heat, strain, wake or echoes; the light
-   sits where the pointer is and only fades. */
+   --gl-r (grab and release points), --gl-tip-a and --gl-tip-b (the ends, from that point), --gl-len, --gl-thk and
+   --gl-drain; and the classes pmw-gl-on (anything showing), pmw-gl-hover, pmw-gl-held, pmw-gl-moving, pmw-gl-still
+   and pmw-settle. A look's motion constants are custom properties read once per engagement: --gl-k and --gl-z (spring
+   stiffness and damping ratio; 0 stiffness steps), --gl-snap and --gl-snap-o (a grid the light steps along),
+   --gl-trail-step, --gl-settle-ms, and --gl-dots, --gl-echo and --gl-ghost (Friendly's dot lens, the persistence
+   copies across the bar, Retro's cell afterglow). The idle hint rides the page's shared pointermove dispatcher
+   (PM7_PMOVE, T07): no document listener of its own. A bar's axis is its aria-orientation (vertical unless it says
+   horizontal); a horizontal bar's layer is the vertical one turned, so the CSS is written once, along y. Reduced
+   Motion: no spring, stretch, heat, strain, wake or copies; the light sits where the pointer is and only fades. */
 
 var light = PMW.light = {};
-var GL_FX_HALF = 140;     // half the light layer's width across the bar (.pmw-gl-fx)
 var GL_NEAR_PX = 36;      // the idle hint answers a pointer this close to a bar's centre line
 var GL_HOVER_MS = 60;     // a pointer that only crosses a bar does not light it
 var GL_TRAIL_MS = 70;     // the wake measures how far the bar moved over this long
