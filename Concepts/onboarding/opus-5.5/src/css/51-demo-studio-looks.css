@@ -275,8 +275,8 @@ html[data-o55-nier-parts~="ground"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-
 #o55-demo[data-pmds-mode="dark"] .pmds-scene { opacity: .2; }
 #o55-demo .pmds-scene > svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 #o55-demo .pmds-frame > :is(.pmds-head, .pmds-body, .pmds-now) { position: relative; z-index: 1; }
-#o55-demo.pmds[data-pmds-look="nier"][data-pmds-scene] .pmds-main { background-color: transparent; }
-#o55-demo.pmds[data-pmds-look="nier"][data-pmds-scene] .pmds-nav { background-color: color-mix(in srgb, var(--o55-nier-secondary, var(--pmds-bg2)) 82%, transparent); }
+html[data-o55-nier] #o55-demo.pmds[data-pmds-look="nier"][data-pmds-scene] .pmds-main { background-color: transparent; }
+html[data-o55-nier] #o55-demo.pmds[data-pmds-look="nier"][data-pmds-scene] .pmds-nav { background-color: color-mix(in srgb, var(--o55-nier-secondary, var(--pmds-bg2)) 82%, transparent); }
 html[data-o55-nier-parts~="ground"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-nav { background: var(--o55-nier-secondary, var(--pmds-bg2)); }
 /* brackets: target brackets on the focused control */
 html[data-o55-nier-parts~="brackets"] #o55-demo.pmds[data-pmds-look="nier"] :is(.pmds-tile, .pmds-choice, .pmds-laytile, .pmds-looktile, .pmds-btn, .pmds-tab):focus-visible {

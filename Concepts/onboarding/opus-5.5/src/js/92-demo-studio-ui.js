@@ -253,12 +253,13 @@
       const armed = ST.confirm && ST.confirm.id === id;
       const items = M.reset.items(id).map((k) => `<li>${ico('check', 12)}<span>${esc(T(`studio.reset.items.${k}`))}</span></li>`).join('');
       const stays = T(`studio.reset.stays${id[0].toUpperCase()}${id.slice(1)}`);
+      /* the action sits under the description, so the tall Everything card never hides it below the fold */
+      const act = `<div class="pmds-resetact">${btn(armed ? T('studio.reset.confirm') : T('studio.reset.run'), { do: 'reset', arg: id, kind: armed ? 'danger' : 'secondary', icon: 'reset', off: !M.reset.avail(id) })}`
+        + (armed ? `<span class="pmds-fuse" style="--pmds-fuse:${ST.confirm.ms}ms" aria-hidden="true"></span><span class="pmds-fine">${esc(T('studio.reset.confirmHint', { s: Math.round(ST.confirm.ms / 1000) }))}</span>` : '') + '</div>';
       return `<article class="pmds-reset${armed ? ' pmds-armed' : ''}" data-pmds-tone="${'abc'[i]}" data-pmds-reset="${id}"><header><span class="pmds-swart" aria-hidden="true">${ico(id === 'progress' ? 'onboarding' : id === 'layout' ? 'workspace' : 'reset', 18)}</span><span class="pmds-chname">${esc(T(`studio.reset.${id}.title`))}</span></header>`
-        + `<p class="pmds-blead">${esc(T(`studio.reset.${id}.sub`))}</p><h5 class="pmds-gtitle"><span>${esc(T('studio.reset.goes'))}</span></h5><ul class="pmds-goes">${items}</ul>`
+        + `<p class="pmds-blead">${esc(T(`studio.reset.${id}.sub`))}</p>` + act + `<h5 class="pmds-gtitle"><span>${esc(T('studio.reset.goes'))}</span></h5><ul class="pmds-goes">${items}</ul>`
         + `<h5 class="pmds-gtitle"><span>${esc(T('studio.reset.stays'))}</span></h5><p class="pmds-fine">${esc(stays)}</p>`
-        + (id === 'everything' ? `<details class="pmds-keys"><summary>${esc(T('studio.reset.found', { n: keys.length }))}</summary><ul>${keys.map((k) => `<li>${esc(k)}</li>`).join('')}</ul></details>` : '')
-        + `<div class="pmds-resetact">${btn(armed ? T('studio.reset.confirm') : T('studio.reset.run'), { do: 'reset', arg: id, kind: armed ? 'danger' : 'secondary', icon: 'reset', off: !M.reset.avail(id) })}`
-        + (armed ? `<span class="pmds-fuse" style="--pmds-fuse:${ST.confirm.ms}ms" aria-hidden="true"></span><span class="pmds-fine">${esc(T('studio.reset.confirmHint', { s: Math.round(ST.confirm.ms / 1000) }))}</span>` : '') + '</div></article>';
+        + (id === 'everything' ? `<details class="pmds-keys"><summary>${esc(T('studio.reset.found', { n: keys.length }))}</summary><ul>${keys.map((k) => `<li>${esc(k)}</li>`).join('')}</ul></details>` : '') + '</article>';
     }).join('') + '</div>';
     return head('reset') + cards;
   };
