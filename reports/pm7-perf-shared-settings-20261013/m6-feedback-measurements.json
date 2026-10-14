@@ -1,0 +1,766 @@
+[
+  {
+    "run": "m6-film-normal-v1",
+    "frames": 34789,
+    "actions": 96,
+    "bound_ms": 71.76652018229167,
+    "samples": [
+      {
+        "look": "basic-dark",
+        "case": "mode-opposite",
+        "before_ms": 373.7,
+        "after_ms": 267.9,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "mode-auto",
+        "before_ms": 297.7,
+        "after_ms": 231.3,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "scheme-light",
+        "before_ms": 623.8,
+        "after_ms": 524.4,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "scheme-dark",
+        "before_ms": 622.9,
+        "after_ms": 544.2,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "family-next",
+        "before_ms": 686.4,
+        "after_ms": 436.7,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-light",
+        "case": "mode-opposite",
+        "before_ms": 351.3,
+        "after_ms": 272.0,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-light",
+        "case": "mode-auto",
+        "before_ms": 190.9,
+        "after_ms": 105.0,
+        "region": "clicked choice region; unchanged body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-light",
+        "case": "scheme-light",
+        "before_ms": 741.6,
+        "after_ms": 571.1,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-light",
+        "case": "scheme-dark",
+        "before_ms": 741.2,
+        "after_ms": 640.1,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-light",
+        "case": "family-next",
+        "before_ms": 555.6,
+        "after_ms": 484.2,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "friendly-dark",
+        "case": "mode-opposite",
+        "before_ms": 303.9,
+        "after_ms": 326.5,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "friendly-dark",
+        "case": "mode-auto",
+        "before_ms": 358.4,
+        "after_ms": 267.6,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "friendly-dark",
+        "case": "scheme-light",
+        "before_ms": 624.6,
+        "after_ms": 590.4,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "friendly-dark",
+        "case": "scheme-dark",
+        "before_ms": 626.0,
+        "after_ms": 658.9,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "friendly-dark",
+        "case": "family-next",
+        "before_ms": 514.8,
+        "after_ms": 487.3,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "friendly-light",
+        "case": "mode-opposite",
+        "before_ms": 341.2,
+        "after_ms": 266.6,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "friendly-light",
+        "case": "mode-auto",
+        "before_ms": 173.5,
+        "after_ms": 73.6,
+        "region": "clicked choice region; unchanged body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "friendly-light",
+        "case": "scheme-light",
+        "before_ms": 696.5,
+        "after_ms": 573.3,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "friendly-light",
+        "case": "scheme-dark",
+        "before_ms": 677.6,
+        "after_ms": 588.7,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "friendly-light",
+        "case": "family-next",
+        "before_ms": 534.6,
+        "after_ms": 537.5,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "retro-dark",
+        "case": "mode-opposite",
+        "before_ms": 341.0,
+        "after_ms": 251.9,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "retro-dark",
+        "case": "mode-auto",
+        "before_ms": 305.7,
+        "after_ms": 273.3,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "retro-dark",
+        "case": "scheme-light",
+        "before_ms": 670.4,
+        "after_ms": 598.0,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "retro-dark",
+        "case": "scheme-dark",
+        "before_ms": 621.6,
+        "after_ms": 613.9,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "retro-dark",
+        "case": "family-next",
+        "before_ms": 485.9,
+        "after_ms": 323.8,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "retro-light",
+        "case": "mode-opposite",
+        "before_ms": 362.1,
+        "after_ms": 282.0,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "retro-light",
+        "case": "mode-auto",
+        "before_ms": 142.7,
+        "after_ms": 77.6,
+        "region": "clicked choice region; unchanged body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "retro-light",
+        "case": "scheme-light",
+        "before_ms": 700.0,
+        "after_ms": 564.6,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "retro-light",
+        "case": "scheme-dark",
+        "before_ms": 698.6,
+        "after_ms": 549.4,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "retro-light",
+        "case": "family-next",
+        "before_ms": 430.5,
+        "after_ms": 506.9,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-dark",
+        "case": "mode-opposite",
+        "before_ms": 400.5,
+        "after_ms": 619.7,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-dark",
+        "case": "mode-auto",
+        "before_ms": 398.1,
+        "after_ms": 443.5,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-dark",
+        "case": "scheme-light",
+        "before_ms": 777.4,
+        "after_ms": 902.2,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-dark",
+        "case": "scheme-dark",
+        "before_ms": 789.4,
+        "after_ms": 749.7,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-dark",
+        "case": "family-next",
+        "before_ms": 596.9,
+        "after_ms": 609.4,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "mode-opposite",
+        "before_ms": 386.1,
+        "after_ms": 333.4,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "mode-auto",
+        "before_ms": 169.4,
+        "after_ms": 74.0,
+        "region": "clicked choice region; unchanged body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "scheme-light",
+        "before_ms": 923.7,
+        "after_ms": 717.0,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "scheme-dark",
+        "before_ms": 1075.9,
+        "after_ms": 771.9,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "family-next",
+        "before_ms": 690.9,
+        "after_ms": 572.8,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "mode-opposite",
+        "before_ms": 514.6,
+        "after_ms": 486.2,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "mode-auto",
+        "before_ms": 438.9,
+        "after_ms": 396.0,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "scheme-light",
+        "before_ms": 920.0,
+        "after_ms": 1090.0,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "scheme-dark",
+        "before_ms": 919.2,
+        "after_ms": 1053.1,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "mode-opposite",
+        "before_ms": 491.1,
+        "after_ms": 443.9,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "mode-auto",
+        "before_ms": 158.5,
+        "after_ms": 69.1,
+        "region": "clicked choice region; unchanged body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "scheme-light",
+        "before_ms": 905.7,
+        "after_ms": 865.5,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-light",
+        "case": "scheme-dark",
+        "before_ms": 938.0,
+        "after_ms": 898.7,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      }
+    ],
+    "stop": "complete",
+    "native_review": {
+      "motion": "normal",
+      "actions": 96,
+      "reviewed_native_frames": 384,
+      "review_offsets_frames": [
+        0,
+        3,
+        12,
+        30
+      ],
+      "decoded_frames": 34789,
+      "bound_ms": 71.76652018229167,
+      "reviewed_files": [
+        {
+          "path": "m6-film-normal-v1/review-collages/basic-dark-f3.jpg",
+          "sha256": "21e49969c527701aa4342fa167c460b713c4622d205adcb2df334dee12a92505"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/basic-dark-normal.jpg",
+          "sha256": "be7bf8e38f5b210598e62f476c4bd60e0a0bf6eb10f9ecceed8760771ade0958"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/basic-light-f3.jpg",
+          "sha256": "8664849b7416e06e18b25d47e1f5930431f3ed433ff6c0b7586c915d7f9f762e"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/basic-light-normal.jpg",
+          "sha256": "a7350133796fcd1613c116bd3c52a0104c418de75a4a917c01ebc968b34f56b2"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/friendly-dark-f3.jpg",
+          "sha256": "9dbc4817a69129a9c54e47bc202a9a5825138e5fd0389635033eed94325cfa6f"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/friendly-dark-normal.jpg",
+          "sha256": "ff70399c38e59a6c80e7c148db1cd2360746a101b15cc94cd3e55626986a755b"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/friendly-light-f3.jpg",
+          "sha256": "c7687e3fffad2272de2cb63192bd540a9e745b0aa4be0791833020a42906a1cf"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/friendly-light-normal.jpg",
+          "sha256": "27b4afecaf7fb75e2096131763457ce7a2fd687a1669ec02e672c49c7649313e"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/glass-dark-f3.jpg",
+          "sha256": "751bce5640351b5d641aadcba11b5900879904db534044285d43d25d07c8537a"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/glass-dark-normal.jpg",
+          "sha256": "01874c6887858877c9d11a1903b2d16ff798eeae09281a5dd29a0ad4314977b2"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/glass-light-f3.jpg",
+          "sha256": "bb290ba5d56a8ff142cc9aee4c93f02243fa8c0a36e9c8eabcaa67b1f7007848"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/glass-light-normal.jpg",
+          "sha256": "d54376c974c923050839181bc02d50ffb0f0cc1e6a05cdf88e7a4aef87204552"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/nier-dark-f3.jpg",
+          "sha256": "0481a62ee0820902075621ad2875d024b6076ed369006acdf16ba0fcdbe4a13e"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/nier-dark-normal.jpg",
+          "sha256": "545f035d68ef2fa6f2a50f44cdb9a9bfad5d3949d1bfbe6d1c42e718761ce863"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/nier-light-f3.jpg",
+          "sha256": "d27bd637ffbe2048638f4f75d10673758603ff84b89c41af3b1708a99cf5a6eb"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/nier-light-normal.jpg",
+          "sha256": "1aa75a68a0e67ece3940fbd9dca2d96884b629e8a367da53fdc695e42e0c2f3e"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/retro-dark-f3.jpg",
+          "sha256": "292d7e747ffa75c1de9d96cd260c850c0ce9695a598c9ad288b81362a570066a"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/retro-dark-normal.jpg",
+          "sha256": "05a648e7cff908d1253016b49c199a19f1132462db42dcf08d6865f2c1cb888c"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/retro-light-f3.jpg",
+          "sha256": "bb3327805b1f6dfc439196136a22cafd290b5b612345b4824937d9648a9e3c88"
+        },
+        {
+          "path": "m6-film-normal-v1/review-collages/retro-light-normal.jpg",
+          "sha256": "e284ac5f88c5262720a9cc0096029f38ac5b1788a4374306b8dffe052096f116"
+        },
+        {
+          "path": "m6-film-normal-v1/review-detail-crops/basic-light-mode-auto.jpg",
+          "sha256": "b41dcbd2ab34d4abf45ce8935991e36890a9cc4fce62dc37a081595d1931b547"
+        },
+        {
+          "path": "m6-film-normal-v1/review-detail-crops/friendly-light-mode-auto.jpg",
+          "sha256": "c4a5dfc38f6986e7c439ae3ebeef29b02ca215d07ea7bb7749012f08c63888c9"
+        },
+        {
+          "path": "m6-film-normal-v1/review-detail-crops/glass-light-mode-auto.jpg",
+          "sha256": "e1b54ed873d48c836e8673e585fc5eeada8d8e0816a71717c9e7a9ce240ff427"
+        },
+        {
+          "path": "m6-film-normal-v1/review-detail-crops/nier-light-mode-auto.jpg",
+          "sha256": "7859c08b82fff8b06a6487db4db50de50fc0d64893028f4fddbd947a7acbf165"
+        },
+        {
+          "path": "m6-film-normal-v1/review-detail-crops/retro-light-mode-auto.jpg",
+          "sha256": "8fea367eb631f0026caa975b2675f19a31ae031b844f4a39741b32115768443e"
+        }
+      ],
+      "observations": [
+        "Destination content, first-state fitting and sampled transition sequence match.",
+        "Normal control fills, selection ink and Glass bake completion differ in phase at some +50/+200ms samples; the same visual sequence and settled destination remain.",
+        "Unchanged-body Auto samples show the selection transition toward Auto in native menu crops; feedback is labeled separately from body changes.",
+        "No new missing row, displaced anchor or missing layer was observed in these samples."
+      ],
+      "limits": [
+        "Single movie observation per artifact/action. No population first-feedback speedup is established.",
+        "Exact compressed-pixel equality and full-frame-by-frame optical equivalence are not claimed."
+      ]
+    },
+    "limits": [
+      "Timing estimates use two visible calibration sequences and retain their residual plus one capture frame.",
+      "Detection identifies first changed pixels in the specified action region; frame review must establish semantic feedback.",
+      "No distinct-frame-rate claim is made from encoded fps alone."
+    ]
+  },
+  {
+    "run": "m6-film-reduced-v1",
+    "frames": 10840,
+    "actions": 28,
+    "bound_ms": 46.26676432291667,
+    "samples": [
+      {
+        "look": "basic-dark",
+        "case": "mode-opposite",
+        "before_ms": 328.6,
+        "after_ms": 225.8,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "mode-auto",
+        "before_ms": 271.5,
+        "after_ms": 219.0,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "scheme-light",
+        "before_ms": 579.0,
+        "after_ms": 554.2,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "scheme-dark",
+        "before_ms": 599.1,
+        "after_ms": 524.0,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "basic-dark",
+        "case": "family-next",
+        "before_ms": 621.3,
+        "after_ms": 498.5,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "mode-opposite",
+        "before_ms": 389.4,
+        "after_ms": 387.1,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "mode-auto",
+        "before_ms": 142.4,
+        "after_ms": 59.6,
+        "region": "clicked choice region; unchanged body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "scheme-light",
+        "before_ms": 851.0,
+        "after_ms": 690.0,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "scheme-dark",
+        "before_ms": 789.5,
+        "after_ms": 658.6,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "glass-light",
+        "case": "family-next",
+        "before_ms": 677.6,
+        "after_ms": 568.0,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "mode-opposite",
+        "before_ms": 513.4,
+        "after_ms": 430.7,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "mode-auto",
+        "before_ms": 446.7,
+        "after_ms": 405.0,
+        "region": "main Settings body",
+        "origin": "trusted pointerdown",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "scheme-light",
+        "before_ms": 1032.8,
+        "after_ms": 897.9,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      },
+      {
+        "look": "nier-dark",
+        "case": "scheme-dark",
+        "before_ms": 920.1,
+        "after_ms": 952.1,
+        "region": "main Settings body",
+        "origin": "browser timestamp before emulated scheme request, including transport",
+        "n_per_artifact": 1
+      }
+    ],
+    "stop": "complete",
+    "native_review": {
+      "motion": "application reduce-animations enabled; not a separate system-only reduced test",
+      "actions": 28,
+      "reviewed_native_frames": 112,
+      "review_offsets_frames": [
+        0,
+        3,
+        12,
+        30
+      ],
+      "decoded_frames": 10840,
+      "bound_ms": 46.26676432291667,
+      "reviewed_files": [
+        {
+          "path": "m6-film-reduced-v1/review-collages/basic-dark-f3.jpg",
+          "sha256": "970715091bb54255c5a4a84607bc084b611689f24db0f5a5874ae0297b458cde"
+        },
+        {
+          "path": "m6-film-reduced-v1/review-collages/basic-dark-normal.jpg",
+          "sha256": "19a211bbcf282ec9a997b216aa3e7cb8dd2696bf72bd0c4b295f9cbe662fd8ea"
+        },
+        {
+          "path": "m6-film-reduced-v1/review-collages/glass-light-f3.jpg",
+          "sha256": "9db00608686943f1490a74c98a374664271dee5535aff6e86368fc2af18d312f"
+        },
+        {
+          "path": "m6-film-reduced-v1/review-collages/glass-light-normal.jpg",
+          "sha256": "48ea1f9355325a37945b4175a90d74a4a5a17971ffbf1cbd9d2cfc5efcf99307"
+        },
+        {
+          "path": "m6-film-reduced-v1/review-collages/nier-dark-f3.jpg",
+          "sha256": "b0716b58f1c1812d8a0944196df2cba3517d1f757afe221601380cb5a4dd595a"
+        },
+        {
+          "path": "m6-film-reduced-v1/review-collages/nier-dark-normal.jpg",
+          "sha256": "dc9c7e286af2d78fa34d6a9dd2bdd312a14be53b99dca1140b358597d0c59a64"
+        },
+        {
+          "path": "m6-film-reduced-v1/review-detail-crops/glass-light-mode-auto.jpg",
+          "sha256": "248283b3615942be10ca8d0b78f6023459c8cd063a4cf39f4abe20e2880d037c"
+        }
+      ],
+      "observations": [
+        "Destination content, first-state fitting and sampled transition sequence match.",
+        "Normal control fills, selection ink and Glass bake completion differ in phase at some +50/+200ms samples; the same visual sequence and settled destination remain.",
+        "Unchanged-body Auto samples show the selection transition toward Auto in native menu crops; feedback is labeled separately from body changes.",
+        "No new missing row, displaced anchor or missing layer was observed in these samples."
+      ],
+      "limits": [
+        "Single movie observation per artifact/action. No population first-feedback speedup is established.",
+        "Exact compressed-pixel equality and full-frame-by-frame optical equivalence are not claimed."
+      ]
+    },
+    "limits": [
+      "Timing estimates use two visible calibration sequences and retain their residual plus one capture frame.",
+      "Detection identifies first changed pixels in the specified action region; frame review must establish semantic feedback.",
+      "No distinct-frame-rate claim is made from encoded fps alone."
+    ]
+  }
+]

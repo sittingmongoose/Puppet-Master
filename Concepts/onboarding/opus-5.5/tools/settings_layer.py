@@ -399,6 +399,70 @@ def _canon_rows(doc: str, merged: dict, need) -> tuple[str, list]:
     return doc, [r['id'] for r in added]
 
 
+def _theme_and_save_cleanup(doc: str, need) -> str:
+    """M6: one atomic paint; reuse only a successful, unchanged save in the current synchronous operation."""
+    import hashlib
+    def once(old, new, label):
+        nonlocal doc
+        need(doc.count(old) == 1, f'M6: {label} anchor drift')
+        doc = doc.replace(old, new, 1)
+
+    once("          window.PM_THEME.setFamily(family,{persist:false,dispatch:false});\n          window.PM_THEME.setMode(mode,{persist:false,dispatch:false});",
+         "          if(typeof window.PM_THEME.setPair==='function')window.PM_THEME.setPair(family,mode,{persist:false,dispatch:false,refresh:false});\n"
+         "          else { window.PM_THEME.setFamily(family,{persist:false,dispatch:false}); window.PM_THEME.setMode(mode,{persist:false,dispatch:false}); }",
+         'atomic adapter paint with compatible fallback')
+    once("    if (P.getFamily() !== family || P.getMode() !== mode) P.set(family + '-' + scheme, quiet);\n    if (mode === 'auto') P.setMode('auto', quiet);",
+         "    if (typeof P.setPair === 'function') { if (P.getFamily() !== family || P.getMode() !== mode) P.setPair(family, mode, quiet); }\n"
+         "    else { if (P.getFamily() !== family || P.getMode() !== mode) P.set(family + '-' + scheme, quiet); if (mode === 'auto') P.setMode('auto', quiet); }",
+         'atomic NieR stored-mode adoption including Auto')
+    a = doc.index('  function save(snapshot){')
+    b = doc.index('  function reset(){', a)
+    old = doc[a:b]
+    need(hashlib.sha256(old.encode()).hexdigest() ==
+         '28924874c2d8d861aa9cb53f41fcd2c62d323d2dba0806c7f3df8fc7fc2baab9',
+         'M6: adapter save implementation drift')
+    new = old.replace('  function save(snapshot){', r'''  var operationSaveReceipt=null, operationSaveClear=false;
+  function saveUnchanged(receipt){
+    if(!receipt || receipt!==operationSaveReceipt || receipt.key!==key() || receipt.registry!==window.PM_SETTINGS_REGISTRY)return false;
+    if(receipt.persisted){
+      try{if(localStorage.getItem(receipt.key)!==receipt.encoded)return false;}catch(_e){return false;}
+    }
+    if(!bridgeDepth)applyPaint(receipt.snapshot);
+    return true;
+  }
+  function save(snapshot){''', 1)
+    new = new.replace("    if(k&&!window.PM_SETTINGS_REGISTRY&&CONCEPT_FIXTURE_MODE)try{localStorage.setItem(k,JSON.stringify(owned));}catch(_e){}",
+                      r'''    var encoded=null,persisted=false,ok=true;
+    if(k&&!window.PM_SETTINGS_REGISTRY&&CONCEPT_FIXTURE_MODE)try{encoded=JSON.stringify(owned);localStorage.setItem(k,encoded);persisted=true;}catch(_e){ok=false;}
+    var receipt=ok?{key:k,registry:window.PM_SETTINGS_REGISTRY,encoded:encoded,persisted:persisted,snapshot:snapshot}:null;
+    operationSaveReceipt=receipt;
+    if(!operationSaveClear){operationSaveClear=true;Promise.resolve().then(function(){operationSaveReceipt=null;operationSaveClear=false;});}''', 1)
+    doc = doc[:a] + new + doc[b:]
+    once('  function reset(){var k=key();', '  function reset(){operationSaveReceipt=null;var k=key();', 'reset invalidates save receipt')
+    once('window.PM7_SETTINGS_TOME={load:load,save:save,reset:reset,',
+         'window.PM7_SETTINGS_TOME={load:load,save:save,saveUnchanged:saveUnchanged,takeSaveReceipt:function(){return operationSaveReceipt;},reset:reset,', 'save receipt API')
+    old = '''  function saveState() {
+    searchIndexDirty = true;
+    const copy = clone(state);
+    delete copy.home; delete copy.railOpen; delete copy.resourceRosterOpen;
+    window.PM7_SETTINGS_TOME.save(copy);
+  }'''
+    new = r'''  let pm7StateSave=null, pm7StateSaveClear=false;
+  function saveState() {
+    searchIndexDirty = true;
+    const serialized = JSON.stringify(state);
+    if(pm7StateSave && pm7StateSave.serialized===serialized &&
+       typeof window.PM7_SETTINGS_TOME.saveUnchanged==='function' && window.PM7_SETTINGS_TOME.saveUnchanged(pm7StateSave.receipt)) return;
+    const copy = JSON.parse(serialized);
+    delete copy.home; delete copy.railOpen; delete copy.resourceRosterOpen;
+    window.PM7_SETTINGS_TOME.save(copy);
+    pm7StateSave={serialized,receipt:window.PM7_SETTINGS_TOME.takeSaveReceipt()};
+    if(!pm7StateSaveClear){pm7StateSaveClear=true;Promise.resolve().then(()=>{pm7StateSave=null;pm7StateSaveClear=false;});}
+  }'''
+    once(old, new, 'same-operation full-state save reuse')
+    return doc
+
+
 def apply(doc: str, need) -> tuple[str, dict]:
     t50 = _t50()
     doc, canon_defaults = _canon_defaults(doc, need)
@@ -439,4 +503,5 @@ def apply(doc: str, need) -> tuple[str, dict]:
     s = doc.index(STYLE_OPEN) + len(STYLE_OPEN)
     e = doc.index('\n</style>', s)
     doc = doc[:s] + css + doc[e:]
+    doc = _theme_and_save_cleanup(doc, need)
     return doc, dict(census, providers=[p['id'] for p in data['providers']], canon_defaults=canon_defaults, canon_rows=canon_rows)
