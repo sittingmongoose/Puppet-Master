@@ -224,7 +224,7 @@ dropGuide.begin = function (g) {
   ensureGuide();
   var base = baseRects();
   var on = !!base && dropZones.docksOn(g);
-  cap.docks = [];
+  cap.docks = []; cap.trail = []; cap.vel = null; cap.rx = null;
   SIDES.forEach(function (e) {
     var d = dockEls[e];
     if (!on) { d.hidden = true; return; }
@@ -325,24 +325,31 @@ dropGuide.end = function () {
      panel area's side of it, then beside it along the edge, either way; a strip below, left, right, above;
    - it takes the first place clear of the carry (the chip and the pointer) by 12 px, and by 4 px of the other docks
      and of where the live preview draws the new panel's tab and mark (from the zone, so the name never has to move
-     when the preview applies); the place it holds keeps it while 4 px stay clear of the carry, and an earlier place is
-     taken back once it has stayed clear 160 ms, so the name does not hop about while the hand wanders;
-   - the docks and the preview give way first: with no place clear of everything, it takes the first clear of the
-     carry; with none of those (a cramped panel area) it stands just past the chip on its own side; it is drawn above
-     the chip in any case, so a passing overlap never hides its words;
+     when the preview applies);
+   - it moves only when it must or when the hand rests: the place it holds keeps it while 4 px stay clear of the carry,
+     however the hand moves; when the carry reaches it, it goes at once to the first clear place the carry is not
+     heading for (the chip's path for the next 140 px, or 450 ms at its speed), so it steps out behind the hand
+     rather than in front of it;
+     once the hand has rested 200 ms, it settles into the first place that has stayed clear 160 ms;
+   - the docks and the preview give way first: with no place clear of everything, it keeps or takes one clear of the
+     carry; when every clear place lies in the chip's path, or none is clear (a cramped panel area), it stands just
+     past the chip on its own side and rides along with it; it is drawn above the chip in any case, so a passing
+     overlap never hides its words;
    - it steps aside with a short glide in the look's own motion and a slight duck (Retro and NieR stepped, no duck);
      Reduced Motion: it fades out and in again at its new place, nothing travels. Panel to panel it rides with the
      guide's glide; anything else comes in where it lands.
    The carry's boxes come from the gesture (no layout read per frame); the name's own size is read once per words and
    look. */
-var CAP_GAP = 10, CAP_STAY = 4, CAP_ENTER = 12, CAP_BACK_MS = 160, CAP_SWAP_MS = 400;
+var CAP_GAP = 10, CAP_STAY = 4, CAP_ENTER = 12, CAP_BACK_MS = 160, CAP_REST_MS = 200, CAP_SWAP_MS = 400;
+var CAP_AHEAD = [[40, 150], [90, 300], [140, 450]];   // the carry's path: px along its heading, or ms at its speed if further
 var CAP_SIDES = {
   guide: ['below', 'above', 'right', 'left'],
   strip: ['below', 'left', 'right', 'above'],
   dock: { bottom: ['above', 'left', 'right'], top: ['below', 'left', 'right'], left: ['right', 'above', 'below'], right: ['left', 'above', 'below'] }
 };
 var cap = { anchor: null, label: '', side: null, x: null, y: null, shown: false, enter: false, glide: false, backSince: 0,
-  fade: null, swap: null, pend: null, swapTimer: 0, snapRaf: 0, sizes: {}, docks: [], soft: [], bounds: null, speed: 1 };
+  fade: null, swap: null, pend: null, swapTimer: 0, snapRaf: 0, sizes: {}, docks: [], soft: [], bounds: null, speed: 1,
+  rx: null, ry: null, movedAt: 0, trail: [], vel: null };
 dropGuide.caption = function () { return { anchor: cap.anchor && cap.anchor.key, side: cap.side, x: cap.x, y: cap.y, shown: cap.shown }; };
 
 /* what the name sits by for a zone, and its places; null: the zone has no name */
@@ -398,6 +405,7 @@ function capShow() {
 }
 function capHide() {
   cap.anchor = null; cap.side = null; cap.backSince = 0; cap.pend = null; cap.glide = false;
+  if (!gesture.active) { cap.trail = []; cap.vel = null; cap.rx = null; }
   if (!guideCap) return;
   if (cap.swap) { try { cap.swap.cancel(); } catch (_) {} cap.swap = null; }
   if (!cap.shown) return;
@@ -456,42 +464,84 @@ function capSolve(a, size, carry, soft) {
     if (c.side === cap.side) cur = c;
   }
   if (!cands.length) { cap.backSince = 0; return capSideRect(a.rect, a.sides[0], size, null); }
-  return capChoose(cands, cur, function (q, m) { return !capHit(q, carry, m) && !capHit(q, soft, CAP_STAY); })
-    || capChoose(cands, cur, function (q, m) { return !capHit(q, carry, m); })
-    || capPast(cands, carry) || cur || cands[0];
+  // a place just past the chip is held like any other, following the chip along its own side
+  if (!cur && /-past$/.test(cap.side || '')) cur = capPastOn(cands, cap.side.replace(/-past$/, ''), carry);
+  var full = function (q, m) { return !capHit(q, carry, m) && !capHit(q, soft, CAP_STAY); };
+  var bare = function (q, m) { return !capHit(q, carry, m); };
+  if (cur && full(cur, CAP_STAY)) return capSettle(cands, cur, full);
+  cap.backSince = 0;
+  // the carry reached it (or nothing is held yet): a clear place the carry is not heading for; else keep a place that
+  // is clear of the carry and only near a dock or the preview; else just past the chip, following it; else anything clear
+  return capFirst(cands, cur, full, carry, true) || (cur && bare(cur, CAP_STAY) ? cur : null) || capFirst(cands, cur, bare, carry, true)
+    || capPast(cands, carry) || capFirst(cands, cur, full, carry, false) || capFirst(cands, cur, bare, carry, false)
+    || capAny(cands, cur, bare) || cur || cands[0];
 }
-/* the first clear place, holding the one shown while it stays clear and going back to an earlier one only after it has
-   been clear a moment (at once when nothing holds a place yet, or the one held is covered) */
-function capChoose(cands, cur, clear) {
-  var ci = cur ? cands.indexOf(cur) : -1, curClear = !!cur && clear(cur, CAP_STAY), now = performance.now(), i;
-  for (i = 0; i < (ci < 0 ? cands.length : ci); i++) {
+/* held while it stays clear; a better place only once the hand rests and that place has stayed clear a moment */
+function capSettle(cands, cur, clear) {
+  var ci = cands.indexOf(cur), now = performance.now();
+  for (var i = 0; i < (ci < 0 ? cands.length : ci); i++) {
     if (!clear(cands[i], CAP_ENTER)) continue;
-    if (ci < 0 || !curClear) { cap.backSince = 0; return cands[i]; }
     if (!cap.backSince) cap.backSince = now;
-    if (now - cap.backSince >= CAP_BACK_MS * cap.speed) { cap.backSince = 0; return cands[i]; }
+    if (now - cap.backSince >= CAP_BACK_MS * cap.speed && now - cap.movedAt >= CAP_REST_MS * cap.speed) { cap.backSince = 0; return cands[i]; }
     return cur;
   }
   cap.backSince = 0;
-  if (curClear) return cur;
-  for (i = ci + 1; i < cands.length; i++) if (clear(cands[i], CAP_ENTER)) return cands[i];
-  for (i = 0; i < cands.length; i++) if (cands[i] !== cur && clear(cands[i], CAP_STAY)) return cands[i];
+  return cur;
+}
+function capFirst(cands, cur, clear, carry, ahead) {
+  for (var i = 0; i < cands.length; i++) if (cands[i] !== cur && clear(cands[i], CAP_ENTER) && !(ahead && capDoomed(cands[i], carry))) return cands[i];
+  return null;
+}
+function capAny(cands, cur, clear) {
+  for (var i = 0; i < cands.length; i++) if (cands[i] !== cur && clear(cands[i], CAP_STAY)) return cands[i];
+  return null;
+}
+/* where the carry is heading: its boxes moved along the pointer's recent velocity, a little ahead */
+function capDoomed(q, carry) {
+  var v = cap.vel;
+  if (!v) return false;
+  var sp = Math.hypot(v.x, v.y);
+  for (var j = 0; j < CAP_AHEAD.length; j++) {
+    var d = Math.max(CAP_AHEAD[j][0], sp * CAP_AHEAD[j][1]), dx = v.x / sp * d, dy = v.y / sp * d;
+    for (var i = 0; i < carry.length; i++) {
+      var k = carry[i];
+      if (capHit(q, [{ x: k.x + dx, y: k.y + dy, w: k.w, h: k.h }], CAP_STAY)) return true;
+    }
+  }
+  return false;
+}
+/* just past the carry on one side, if that stays in the panel area */
+function capPastOn(cands, side, carry) {
+  for (var i = 0; i < cands.length; i++) {
+    if (cands[i].side !== side) continue;
+    var c = { side: side + '-past', x: cands[i].x, y: cands[i].y, w: cands[i].w, h: cands[i].h };
+    for (var n = 0, k; n < 4 && (k = capHit(c, carry, CAP_ENTER)); n++) {
+      if (side === 'above') c.y = Math.round(k.y - CAP_ENTER - c.h);
+      else if (side === 'below') c.y = Math.round(k.y + k.h + CAP_ENTER);
+      else if (side === 'left') c.x = Math.round(k.x - CAP_ENTER - c.w);
+      else c.x = Math.round(k.x + k.w + CAP_ENTER);
+    }
+    return capInside(c, cap.bounds) && !capHit(c, carry, CAP_STAY) ? c : null;
+  }
   return null;
 }
 /* nothing clear: just past the carry on a side, the first that stays in the panel area */
 function capPast(cands, carry) {
-  for (var i = 0; i < cands.length; i++) {
-    var s = cands[i].side, c = { side: s + '-past', x: cands[i].x, y: cands[i].y, w: cands[i].w, h: cands[i].h };
-    for (var n = 0, k; n < 4 && (k = capHit(c, carry, CAP_ENTER)); n++) {
-      if (s === 'above') c.y = Math.round(k.y - CAP_ENTER - c.h);
-      else if (s === 'below') c.y = Math.round(k.y + k.h + CAP_ENTER);
-      else if (s === 'left') c.x = Math.round(k.x - CAP_ENTER - c.w);
-      else c.x = Math.round(k.x + k.w + CAP_ENTER);
-    }
-    if (capInside(c, cap.bounds) && !capHit(c, carry, CAP_STAY)) return c;
-  }
+  for (var i = 0; i < cands.length; i++) { var c = capPastOn(cands, cands[i].side, carry); if (c) return c; }
   return null;
 }
+/* the hand's recent velocity (px/ms over the last 120 ms) and when it last moved */
+function capTrack(g) {
+  var now = performance.now(), tr = cap.trail;
+  if (cap.rx == null || Math.abs(g.px - cap.rx) + Math.abs(g.py - cap.ry) > 4) { cap.rx = g.px; cap.ry = g.py; cap.movedAt = now; }
+  tr.push([now, g.px, g.py]);
+  while (tr.length > 2 && now - tr[0][0] > 120) tr.shift();
+  var a = tr[0], dt = now - a[0];
+  var vx = dt > 0 ? (g.px - a[1]) / dt : 0, vy = dt > 0 ? (g.py - a[2]) / dt : 0;
+  cap.vel = Math.hypot(vx, vy) > 0.03 ? { x: vx, y: vy } : null;
+}
 function capPlace(g) {
+  capTrack(g);
   var a = cap.anchor;
   if (!a) return;
   if (!cap.shown) capShow();
