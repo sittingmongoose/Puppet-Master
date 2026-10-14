@@ -121,8 +121,11 @@
   },
   "hardware_films": "m1-feedback-measurements.json",
   "cleanup": {
-    "owned_GPU_sessions": 0,
-    "owned_capture_processes": 0,
+    "film_stop_seam": {
+      "owned_GPU_sessions": 0,
+      "owned_capture_processes": 0
+    },
+    "final_fit_validation_browser": "Nonrecording Windows171dde1222cb reused for remaining M6/M5/M10 task; final task cleanup pending.",
     "retained": "Review branch/worktree and hashed evidence; original multi-fix task continues."
   },
   "current_main_first_settled_panes": {
