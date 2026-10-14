@@ -273,22 +273,36 @@ PM51.swapRow = (el, next) => {
   try { o55cNode(el, next); } finally { o55cMode = was; }
 };
 
-/* ---------- an entrance plays once ------------------------------------------------------------------------------------ */
+/* ---------- coming back to Settings never replays an entrance -------------------------------------------------------- */
 /* Settings is display:none while another page shows, and a CSS animation starts over when its element is shown again, so
-   coming back to Settings replayed the page's arrival, every revealed section's slide and the last manager tab swap.
-   Once one has played, its element takes the settled class the styles already have for it. */
-root.addEventListener('animationend', e => {
-  const t = e.target, n = e.animationName;
-  if (!t || !t.classList) return;
-  if (n === 'pageIn' && t.classList.contains('page-enter')) { t.classList.remove('page-enter'); if (t.classList.contains('document-layout')) t.classList.add('is-soft-remount'); }
-  else if (n === 'sectionReveal' && t.classList.contains('section-block')) t.classList.add('pm51-instant');
-  else if (/^pmSettingsTabSwap[AB]$/.test(n)) { t.classList.remove('tab-swap-a', 'tab-swap-b'); t.classList.add('tab-swap-settled'); }
-}, true);
+   coming back replayed the page's arrival, every revealed section's slide and the last manager tab swap. When Settings
+   is shown again, the entrances that had already played and restarted are finished at once, before the first frame is
+   painted. Their classes are left as they are: an entrance's last frame keeps holding (fill both), and taking the class
+   away instead changed how Glass is composited (a whole Glass page repainted on the main thread: +300 ms of every
+   action in Glass Light on the RTX 3090). The first time Settings is shown, its arrival plays as before. */
+const O55C_ENTRANCES = /^(pageIn|sectionReveal|pmSettingsTabSwap[AB])$/;
+const o55cPlayed = new WeakSet();
+root.addEventListener('animationend', e => { if (O55C_ENTRANCES.test(e.animationName || '') && e.target) o55cPlayed.add(e.target); }, true);
+function o55cWatchReturns() {
+  const panel = document.getElementById('panel-settings');
+  if (!panel || panel.o55cReturns || typeof MutationObserver !== 'function') return;
+  panel.o55cReturns = true;
+  let shown = panel.classList.contains('active');
+  new MutationObserver(() => {
+    const now = panel.classList.contains('active');
+    if (now && !shown) for (const a of root.getAnimations({ subtree: true })) {
+      const t = a.effect && a.effect.target;
+      if (t && o55cPlayed.has(t) && O55C_ENTRANCES.test(a.animationName || '')) a.finish();
+    }
+    shown = now;
+  }).observe(panel, { attributes: true, attributeFilter: ['class'] });
+}
 
 /* ---------- leaving Settings and coming back keeps the open Details panel --------------------------------------------- */
 const o55cBoot = boot;
 boot = function () {
   const r = o55cBoot.apply(this, arguments), api = window.PM12_KIMI;
+  o55cWatchReturns();
   if (api && typeof api.closeTransientUi === 'function' && !api.closeTransientUi.o55Keeps) {
     const close = api.closeTransientUi;
     api.closeTransientUi = function () {

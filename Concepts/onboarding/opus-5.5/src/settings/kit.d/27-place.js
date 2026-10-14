@@ -213,13 +213,13 @@ PLACE.sizeEnd = function (sc, end) {
 sizeSettingsEndSpace = (scroller, end) => PLACE.sizeEnd(scroller, end);
 
 /* ---------- watching layout: one observer for the page's blocks, sections, the anchor's ancestors ------------------- */
-let o55pObserver = null, o55pWatched = null, o55pEndSoon = 0;
-/* The end space is sized on the next frame, not here: resizing it inside the observer would resize the document column
-   the observer watches (a loop). Growing it never moves anything, and a shrink stops at the room below the screen. */
+let o55pObserver = null, o55pWatched = null;
+/* Layout is done when this runs, so reading it costs nothing. The end space is sized here too: nothing the observer
+   watches changes size when it does (the document column and the end space itself are left out on purpose). */
 function o55pOnResize() {
   if (PLACE.mode !== 'hold' && !o55pSettle) o55pSettleSoon();   /* e.g. Settings shown again while a landing was pending */
   PLACE.correct();
-  if (!o55pEndSoon) o55pEndSoon = requestAnimationFrame(() => { o55pEndSoon = 0; PLACE.sizeEnd(); });
+  PLACE.sizeEnd();
 }
 function o55pWatch(sc, anchorEl) {
   if (typeof ResizeObserver !== 'function' || !sc) return;
@@ -239,22 +239,24 @@ function o55pWatch(sc, anchorEl) {
 PLACE.watch = function () { const sc = o55pScroller(); if (sc) o55pWatch(sc, this.anchor && this.anchor.el); };
 
 /* ---------- settling: a jump or the reader's scroll has come to rest -------------------------------------------------- */
-let o55pSettle = 0, o55pBar = false;
-function o55pStopSettle() { if (o55pSettle) cancelAnimationFrame(o55pSettle); o55pSettle = 0; }
+/* Judged from the scroller's own scroll events and a timer, never by reading layout in each frame: on a look whose
+   background animates (Glass, NieR) every frame has fresh style to compute, and polling the scroll position in each one
+   forced an extra style pass per frame for the length of a landing. */
+let o55pSettle = 0, o55pBar = false, o55pScrollAt = 0;
+function o55pStopSettle() { clearTimeout(o55pSettle); o55pSettle = 0; }
 function o55pSettleSoon() {
   if (o55pSettle) return;
-  let last = NaN, since = performance.now();
   const step = () => {
     o55pSettle = 0;
     if (PLACE.mode === 'hold') return;
     const sc = o55pScroller(), now = performance.now();
+    if (!sc || !sc.isConnected) return;   /* no document page (Settings Home): the next arrival starts this again */
+    const busy = pendingScroll || o55pBar || o55Landing || now - PLACE.navAt < 260 || now - o55pScrollAt < 160;
+    if (busy) { o55pSettle = setTimeout(step, 80); return; }
     if (!o55pShown(sc)) return;   /* hidden: the observer on the scroller restarts this when Settings shows again */
-    if (sc.scrollTop !== last) { last = sc.scrollTop; since = now; }
-    const busy = pendingScroll || o55pBar || o55Landing || now - PLACE.navAt < 260 || now - since < 160;
-    if (busy) { o55pSettle = requestAnimationFrame(step); return; }
     PLACE.hold('read');
   };
-  o55pSettle = requestAnimationFrame(step);
+  o55pSettle = setTimeout(step, 80);
 }
 
 /* ---------- who is moving the page --------------------------------------------------------------------------------- */
@@ -283,6 +285,7 @@ root.addEventListener('keydown', e => {
 root.addEventListener('scroll', e => {
   const sc = o55pScroller();
   if (!sc || e.target !== sc) return;
+  o55pScrollAt = performance.now();
   const end = sc.querySelector('.settings-end-space');
   if (end && end.__o55Want != null && parseFloat(end.style.height) > end.__o55Want + .5) PLACE.sizeEnd(sc, end);
   /* the reader has scrolled the top reserve out of view: it goes, and the browser's anchoring keeps the page still */
