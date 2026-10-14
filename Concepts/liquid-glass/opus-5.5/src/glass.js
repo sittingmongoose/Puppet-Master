@@ -621,7 +621,8 @@
     { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true, kind: 'lens' },
     { sel: '#activityBar', items: '.icon[data-target]', vertical: true, kind: 'lensIcon', pick: railIcon,
       box: function (i) { return i.querySelector('.symbol') || i; }, label: function (i) { return i.querySelector('.symbol'); } },
-    { sel: '#pm-o55-onboarding .o55-raillist', items: '.o55-railitem', kind: 'lens', active: '[data-state="current"]', pad: 6, magRest: 1, magLift: 1,
+    /* press: false - a progress rail, not a choice: its steps have no click, so the lens moves only when the step does */
+    { sel: '#pm-o55-onboarding .o55-raillist', items: '.o55-railitem', kind: 'lens', active: '[data-state="current"]', pad: 6, magRest: 1, magLift: 1, press: false,
       box: function (i) { var u = unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); return u || i; } },
     { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', active: '.o55-on', magRest: 1 },
     /* 2026-10-13: every Glass tab indicator (Jared): the Orchestrator's views, and the terminal Customize screen's
@@ -630,6 +631,8 @@
        scrolling, reordering and closing. mark: the strip carries data-lg-lensed, so its own fill steps aside. */
     { sel: '.orch-tabs', items: '.orch-tab', kind: 'lens' },
     { sel: '.pmt-cz .pmw-ink-row', items: '.pmw-ink-opt', many: true, kind: 'lens', active: ':is([aria-selected="true"], [aria-checked="true"])', magRest: 1, mark: true },
+    /* 2026-10-14: the Planning Wizard's work-type choice (pm7-wizard-orch); its own .sel fill steps aside under data-lg-lensed */
+    { sel: '#panel-wizard .pm6-wiz-intent-row', items: '.pm6-wiz-intent-chip', kind: 'lens', active: '.sel', magRest: 1, mark: true },
   ];
   function railIcon(strip) {
     var sp = document.getElementById('sidePanelSlot'); if (!sp || !visible(sp)) return null;
@@ -640,11 +643,14 @@
   }
   /* Every lens lives in one layer above the strips and the title bar (#lg-lenses), not inside them: from outside it sees
      the sheet, the wallpaper and the label together, and no sheet can cover it. */
-  /* one layer per host surface: the app shell, or a window that floats above it (onboarding), so a lens is never
-     covered by the surface its strip lives in */
+  /* one layer per host surface: the app shell, or a window that floats above it (onboarding's window, a dialog in
+     #pmw-overlay such as the Customize screens, or any element its owner marks data-lg-lens-host), so a lens is never
+     covered by the surface its strip lives in. #pmw-overlay sits above the app shell, so a lens in #lg-lenses was
+     drawn under those dialogs and never seen (2026-10-14). */
+  var LENS_HOSTS = '#pm-o55-onboarding .o55-win, #pmw-overlay .pmt-cz-dialog, #pmw-overlay [role="dialog"], [data-lg-lens-host]';
   var lenses = new Map(), layer = null, localLayers = new WeakMap();
   function lensLayer(strip) {
-    var host = strip && strip.closest && strip.closest('#pm-o55-onboarding .o55-win');
+    var host = strip && strip.closest && strip.closest(LENS_HOSTS);
     if (host) {
       var own = localLayers.get(host);
       if (own && own.isConnected && own.parentElement === host) return own;
@@ -866,7 +872,12 @@
     var from = visualRect(L) || A, vertical = !!cfg.vertical || Math.abs(from.y - R.y) > Math.abs(from.x - R.x);
     travel(L, from, R, vertical, { labels: labelsOf(cfg, strip, vertical), mags: magsOf(cfg), vertical: vertical });
   }
-  /* the press: the lens leaves for the pressed item at once; the app's choice (or its absence) settles it */
+  /* the press: the lens leaves for the pressed item at once; the app's choice (or its absence) settles it. Only for
+     items the app can choose: a disabled or inert item, or a strip that takes no press (a progress rail), keeps the lens
+     where it is (it used to sit on the pressed step for the 2.5 s hold, then slide back). */
+  function choosable(item, cfg) {
+    return cfg.press !== false && !item.disabled && item.getAttribute('aria-disabled') !== 'true' && !item.closest('[inert]');
+  }
   function stripAt(target) {
     for (var i = 0; i < STRIPS.length; i++) {
       var cfg = STRIPS[i], strip = target.closest && target.closest(cfg.sel); if (!strip) continue;
@@ -877,7 +888,7 @@
   }
   document.addEventListener('pointerdown', function (e) {
     if (!isGlass() || e.button !== 0 || reduced()) return;
-    var hit = stripAt(e.target); if (!hit) return;
+    var hit = stripAt(e.target); if (!hit || !choosable(hit.item, hit.cfg)) return;
     var L = lenses.get(hit.strip); if (!L || !L.rect || L.dragging) return;
     var cur = hit.cfg.pick ? hit.cfg.pick(hit.strip) : hit.strip.querySelector(hit.cfg.items + (hit.cfg.active || '.active'));
     if (hit.item === cur) return;
@@ -897,11 +908,11 @@
   function scrubbing(e) {
     if (!isGlass() || e.button !== 0 || reduced()) return;
     for (var i = 0; i < STRIPS.length; i++) {
-      var cfg = STRIPS[i]; if (!cfg.scrub) continue;
+      var cfg = STRIPS[i]; if (!cfg.scrub || cfg.press === false) continue;
       var strip = e.target.closest && e.target.closest(cfg.sel); if (!strip) continue;
       var L = lenses.get(strip); if (!L || !L.rect) return;
       if (L.scrubCleanup) L.scrubCleanup();
-      var sx = e.clientX, moved2 = false, items = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(visible), labs = null, mags = magsOf(cfg);
+      var sx = e.clientX, moved2 = false, items = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(function (it) { return visible(it) && choosable(it, cfg); }), labs = null, mags = magsOf(cfg);
       var onMove = function (ev) {
         if (!strip.isConnected || !L.lens.isConnected || !isGlass() || reduced()) { cleanup(); return; }
         var dx = ev.clientX - sx;

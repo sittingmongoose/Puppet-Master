@@ -40,7 +40,7 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) {
   --graph-passed: #0B6A2E; --graph-failed: #BE1F2A; --graph-running: #A04B00; --graph-planning: #3D50D6; --graph-gating: #B0216B; --graph-pending: rgba(38, 44, 56, .45);
   --background: #eef1f6; --surface: rgba(255, 255, 255, .5); --surface-elevated: rgba(255, 255, 255, .7);
   --lg-tint-panel: rgba(255, 255, 255, .56); --lg-tint-card: rgba(255, 255, 255, .62); --lg-tint-bar: rgba(255, 255, 255, .58);
-  --lg-tint-menu: rgba(255, 255, 255, .74); --lg-tint-lens: rgba(255, 255, 255, .16); --lg-tint-ctl: rgba(255, 255, 255, .4);
+  --lg-tint-menu: rgba(255, 255, 255, .74); --lg-tint-lens: rgba(255, 255, 255, .05); --lg-tint-ctl: rgba(255, 255, 255, .4);
   --lg-fill: rgba(12, 15, 21, .055); --lg-fill-hover: rgba(12, 15, 21, .09); --lg-fill-press: rgba(12, 15, 21, .13);
   --lg-line: rgba(12, 15, 21, .09);
   --lg-edge-top: rgba(255, 255, 255, .9); --lg-edge-bot: rgba(30, 45, 90, .14); --lg-hl: 1;
@@ -364,6 +364,12 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lens::after {
   background: radial-gradient(70% 100% at 30% 0%, var(--lg-lens-glint), transparent 70%); mix-blend-mode: var(--lg-lens-glint-blend);
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead::after { opacity: .45; }
+/* Light: the lens sits above its label, so any white in its body or glint veils the dark text. With a .16 body (.24 on
+   the CPU tier) and a glint reaching into the letters, a chosen label read 6.9:1 against 14.8:1 for its neighbours,
+   the selection looking weaker than what is not selected (2026-10-14). The drop is drawn by its edge and shadow on a
+   white sheet anyway, so the body is nearly clear and the glint stays on the top edge, above the letters. */
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) .lg-lens::after { height: 26%; }
+
 /* the chosen label rests a little larger under its lens (glass.js keyframes the swell while the lens moves; these match
    KINDS.lens.magRest and KINDS.lensIcon.magRest) */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(nav.page-tabs .page-tab, #pmuRange > button, #sidePanelSlot .pm-segtab-item, .orch-tabs .orch-tab).active { scale: 1.04; }
@@ -377,18 +383,17 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lens[data-lg-lifted]::afte
 /* The Orchestrator's views ride the same lens (a theme match, not its redesign): its capsule fill steps aside. */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .orch-tabs .orch-tab { box-shadow: none !important; }
 /* A strip the lens has taken over (data-lg-lensed, set by glass.js) hides its own chosen fill and its moving ink. */
-/* (A pseudo-element cannot sit inside :is(), so the fill and the ink are listed apart.) Rows inside #pmw-overlay keep
-   their own fill, in the lens's material below, until the lens layer can draw above that overlay. */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmw-ink-row[data-lg-lensed]:not(#pmw-overlay .pmw-ink-row) > .pmw-ink,
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmw-ink-row[data-lg-lensed]:not(#pmw-overlay .pmw-ink-row) > .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after { opacity: 0 !important; }
+/* (A pseudo-element cannot sit inside :is(), so the fill and the ink are listed apart.) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmw-ink-row[data-lg-lensed] > .pmw-ink,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmw-ink-row[data-lg-lensed] > .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after { opacity: 0 !important; }
 /* In-flow indicators that move with their own content (every other segmented choice row and its travelling ink) take
    the lens's material where they are: a clear drop with a hairline edge, a top catch light, a glint, a bottom shade and
    a soft drop shadow, the same tokens as .lg-lens, so they read as one glass. The home panels' document tabs are not
    indicators: their plate is the open document's own surface, one piece with the panel body, and keeps its shape. */
 html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-lens-body: rgba(255, 255, 255, .055); }
 html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(255, 255, 255, .5); }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmw-ink-row:not([data-lg-lensed]), #pmw-overlay .pmw-ink-row) > .pmw-ink,
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.pmw-ink-row:not([data-lg-lensed]), #pmw-overlay .pmw-ink-row) > .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after {
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmw-ink-row:not([data-lg-lensed]) > .pmw-ink,
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmw-ink-row:not([data-lg-lensed]) > .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after {
   background: radial-gradient(70% 100% at 30% 0%, var(--lg-lens-glint), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat, linear-gradient(var(--lg-tint-lens), var(--lg-tint-lens)), linear-gradient(var(--lg-lens-body), var(--lg-lens-body)) !important;
   box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 0 0 .5px var(--lg-lens-edge), var(--lg-lens-drop) !important;
   border-radius: var(--pm-ctl-r) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
@@ -405,7 +410,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-press {
 /* CPU tier: no live blur, so a menu's translucency is ghost text from whatever is behind it (pm7-editor-customizer,
    2026-10-14: Usage rows readable through a Customize dialog at .92). Menus are near opaque here (.97). */
 html[data-lg="on"][data-theme="glass-dark"][data-lg-tier="cpu"]:not(#lgz) { --lg-tint-panel: rgba(10, 13, 26, .80); --lg-tint-card: rgba(10, 13, 26, .82); --lg-tint-bar: rgba(10, 13, 26, .80); --lg-tint-menu: rgba(12, 15, 28, .97); --lg-tint-lens: rgba(255, 255, 255, .10); }
-html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) { --lg-tint-panel: rgba(250, 251, 253, .84); --lg-tint-card: rgba(250, 251, 253, .86); --lg-tint-bar: rgba(250, 251, 253, .84); --lg-tint-menu: rgba(252, 253, 255, .97); --lg-tint-lens: rgba(255, 255, 255, .24); }   /* the CPU lens is a plain tint over its label: light enough to keep the label's contrast */
+html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) { --lg-tint-panel: rgba(250, 251, 253, .84); --lg-tint-card: rgba(250, 251, 253, .86); --lg-tint-bar: rgba(250, 251, 253, .84); --lg-tint-menu: rgba(252, 253, 255, .97); --lg-tint-lens: rgba(255, 255, 255, .06); }   /* the CPU lens is a plain tint over its label: barely any, so the chosen label stays as dark as its neighbours */
 
 /* ---------------------------------------------------------------------------------------------------------------
    8. The concept's own control (status bar), in the same material

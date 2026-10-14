@@ -33,9 +33,11 @@ me. Mail me the strip's selector, its items' selector, how the chosen item is ma
 can be refused (a progress rail takes no press). Paint no highlight of your own behind the chosen item: the lens is the
 highlight.
 
-A strip inside a window that floats above the app (`#pmw-overlay`, onboarding's window) needs a lens layer of its
-own in that window. Onboarding's has one. Strips in `#pmw-overlay` wear the lens's material in place until theirs
-lands (after M3).
+A strip inside a window that floats above the app needs a lens layer of its own in that window, or its lens is drawn
+under the window. Onboarding's window and dialogs in `#pmw-overlay` (the Customize screens) have one. Mark any other
+floating window `data-lg-lens-host`. A strip whose items are not choices (a progress rail) takes no press: its lens
+moves only when the app changes the current item. Disabled, `aria-disabled="true"` and inert items never take a
+press either.
 
 ## Public tokens
 
