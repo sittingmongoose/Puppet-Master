@@ -1,5 +1,8 @@
 {
- "_about": "editor-runtime: sections from the plain-pages audit (2026-09-27). Saving and tabs, the file tree, editing, four terminal groups and the search index; big-file limits and rarely changed terminal and index options under More options. The page is named Editor & Terminal: its containers moved to Containers. Duplicate hand rows are dropped: format-save (Tidy code automatically, Toolchain), large-file (the three inventory size limits), terminal-profile (Shell), terminal-restore (Terminals when a project reopens), index-exclusions (Leave out of search). In: tabs reopened next time, from App & Input.",
+ "_about": "editor-runtime: sections from the plain-pages audit (2026-09-27). Saving and tabs, the file tree, editing, four terminal groups and the search index; big-file limits and rarely changed terminal and index options under More options. The page is named Editor & Terminal: its containers moved to Containers. Duplicate hand rows are dropped: format-save (Tidy code automatically, Toolchain), large-file (the three inventory size limits), terminal-profile (Shell), terminal-restore (Terminals when a project reopens), index-exclusions (Leave out of search). In: tabs reopened next time, from App & Input. Editor look (pm7-editor-customizer, 2026-10-14): the editor's look rows leave Editing for their own group, as the terminal's have Terminal look, with the rarer ones under Editor look: more options; the proposed rows (src/settings/proposed.d) join them. Start With Editor Strip Collapsed is retired (Settings_System.md, Rows retired: there is no separate editor strip, DL-180), so it is drawn nowhere.",
+ "retire_ids": [
+  "code.editing.editor-strip-collapsed"
+ ],
  "pages": {
   "editor-runtime": {
    "label": "Editor & Terminal",
@@ -26,8 +29,21 @@
   "editor-editing": {
    "to": "editor-runtime",
    "title": "Editing",
-   "help": "How code looks while you read and write it.",
+   "help": "Diffs, problems and how long a jumped-to line stays lit.",
    "order": 30
+  },
+  "editor-look": {
+   "to": "editor-runtime",
+   "title": "Editor look",
+   "help": "Colors, font, caret and guides in the code editor.",
+   "order": 32
+  },
+  "editor-look-more": {
+   "to": "editor-runtime",
+   "title": "Editor look: more options",
+   "help": "Finer type, caret motion, spacing, guides and effects.",
+   "order": 34,
+   "advanced": true
   },
   "editor-terminal": {
    "to": "editor-runtime",
@@ -109,12 +125,55 @@
   {
    "section": "editor-editing",
    "ids": [
-    "code.editing.word-wrap",
-    "code.editing.line-numbers",
-    "code.editing.syntax-highlighting",
+    "code.editing.diff-layout",
     "code.editing.diagnostics-visibility",
-    "code.editing.goto-highlight-ms",
-    "code.editing.editor-strip-collapsed"
+    "code.editing.goto-highlight-ms"
+   ]
+  },
+  {
+   "section": "editor-look",
+   "ids": [
+    "code.editing.color-scheme",
+    "code.editing.font-family",
+    "code.editing.font-size",
+    "code.editing.line-height",
+    "code.editing.ligatures",
+    "code.editing.cursor-shape",
+    "code.editing.line-numbers",
+    "code.editing.minimap",
+    "code.editing.sticky-scroll",
+    "code.editing.word-wrap",
+    "code.editing.indent-guides",
+    "code.editing.bracket-pair-colors",
+    "code.editing.syntax-highlighting"
+   ]
+  },
+  {
+   "section": "editor-look-more",
+   "ids": [
+    "code.editing.scheme-pair",
+    "code.editing.min-contrast",
+    "code.editing.italic-comments",
+    "code.editing.bold-keywords",
+    "code.editing.font-weight",
+    "code.editing.letter-spacing",
+    "code.editing.cursor-width",
+    "code.editing.cursor-blink",
+    "code.editing.cursor-motion",
+    "code.editing.cursor-trail",
+    "code.editing.relative-line-numbers",
+    "code.editing.line-highlight",
+    "code.editing.indent-guides-active",
+    "code.editing.render-whitespace",
+    "code.editing.rulers",
+    "code.editing.wrap-column",
+    "code.editing.sticky-scroll-lines",
+    "code.editing.smooth-scroll",
+    "code.editing.reveal-lines",
+    "code.editing.scroll-past-end",
+    "code.editing.dim-unfocused",
+    "code.editing.scanlines",
+    "code.editing.text-glow"
    ]
   },
   {

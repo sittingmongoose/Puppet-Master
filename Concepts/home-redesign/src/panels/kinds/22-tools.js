@@ -388,6 +388,8 @@ var PROBLEMS = [
     { sev: 'info', msg: '`recipe.thumb` can be undefined while the list loads', src: 'svelte-check', line: 6, col: 14 }
   ] }
 ];
+/* the editor draws each one under the word it names (Problems to highlight, code.editing.diagnostics-visibility) */
+PMW.problems = function () { return PROBLEMS; };
 var SEV_ORDER = { error: 0, warn: 1, info: 2 };
 var SEV_WORD = { error: 'Error', warn: 'Warning', info: 'Info' };
 function problemCounts() {

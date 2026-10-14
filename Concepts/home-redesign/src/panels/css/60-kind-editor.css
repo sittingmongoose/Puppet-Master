@@ -238,7 +238,7 @@ html[data-theme^="glass"] .pmw-ed-head, html[data-o55-nier="on"] .pmw-ed-head { 
   position: absolute; top: 0; left: 0; bottom: 0; right: var(--pmw-ed-track, 22px);
   overflow: auto; overscroll-behavior: contain; scrollbar-width: none; outline: none; cursor: text;
   font-family: var(--pmw-ed-font, var(--pm-font-code)); font-size: var(--pmw-ed-fs, 13px); line-height: var(--pmw-ed-lh, 20px);
-  font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; letter-spacing: 0;
+  font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; letter-spacing: var(--pmw-ed-ls, 0); font-weight: var(--pmw-ed-wt, normal);
   -webkit-user-select: none; user-select: none; -webkit-font-smoothing: antialiased;
 }
 .pmw-ed-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
@@ -276,7 +276,7 @@ html[data-theme^="retro"] .pmw-ed-hthumb, html[data-o55-nier="on"] .pmw-ed-hthum
   position: absolute; top: var(--pmw-ed-head, 0px); left: 0; right: var(--pmw-ed-track, 22px); z-index: 5; overflow: hidden;
   background: var(--pmw-ed-gutbg); box-shadow: 0 1px 0 var(--pmw-line), 0 6px 10px -8px rgba(0, 0, 0, .45);
   font-family: var(--pmw-ed-font, var(--pm-font-code)); font-size: var(--pmw-ed-fs, 13px); line-height: var(--pmw-ed-lh, 20px);
-  font-variant-ligatures: none; white-space: pre; cursor: pointer;
+  font-variant-ligatures: none; white-space: pre; cursor: pointer; letter-spacing: var(--pmw-ed-ls, 0); font-weight: var(--pmw-ed-wt, normal);
 }
 .pmw-ed-sticky[hidden] { display: none; }
 html[data-theme$="-light"] .pmw-ed-sticky { box-shadow: 0 1px 0 var(--pmw-line), 0 6px 10px -8px rgba(21, 32, 43, .22); }
@@ -363,7 +363,8 @@ html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-ed-reason-col h2 {
 /* measuring and the clipboard helper */
 .pmw-ed-measure {
   position: absolute; left: -9999px; top: 0; visibility: hidden; white-space: pre; pointer-events: none;
-  font-family: var(--pmw-ed-font, var(--pm-font-code)); font-size: var(--pmw-ed-fs, 13px); font-variant-ligatures: none; letter-spacing: 0;
+  font-family: var(--pmw-ed-font, var(--pm-font-code)); font-size: var(--pmw-ed-fs, 13px); font-variant-ligatures: none;
+  letter-spacing: var(--pmw-ed-ls, 0); font-weight: var(--pmw-ed-wt, normal);
 }
 .pmw-ed-clip { position: absolute; left: -9999px; top: 0; width: 1px; height: 1px; opacity: 0; }
 
@@ -373,3 +374,111 @@ html[data-o55-nier="on"] .pmw-ed-crumbs .pmw-ed-seg, html[data-o55-nier="on"] .p
 /* Reduced Motion: no reveal, no blink, no fades (the shadow rows read data-reduced on their host); everything works */
 html[data-motion="reduced"] .pmw-ed-hbar { transition: none; }
 @media (prefers-reduced-motion: reduce) { .pmw-ed-hbar { transition: none; } }
+
+/* =================================================================================================================
+   The Editor look (09-editor-look.js; the editor Customize proposal of 2026-10-14). Its marks read these tokens:
+   bracket pair colours (--pmw-ed-bp-0..5, a depth each, and -bad for a closing bracket with no opener), indent guides
+   (--pmw-ed-guide, -guide-active, and --pmw-ed-ig-0..5 for Rainbow), dotted spaces (--pmw-ed-ws), rulers
+   (--pmw-ed-ruler), problems (--pmw-ed-diag-error, -warn, -info, drawn with the --pmw-ed-wave mask) and the block
+   caret's character (--pmw-ed-caret-ink). A picked scheme writes its own (schemeVars). Every bracket colour keeps at
+   least 4.5:1 on its look's ground; Retro stays monochrome (brightness steps, F3-639) and NieR stays ink and parchment.
+   ================================================================================================================= */
+.pmw-ed {
+  --pmw-ed-bp-0: #e5c07b; --pmw-ed-bp-1: #c678dd; --pmw-ed-bp-2: #61afef; --pmw-ed-bp-3: #56b6c2; --pmw-ed-bp-4: #98c379; --pmw-ed-bp-5: #e36f78;
+  --pmw-ed-bp-bad: var(--pmw-ed-del-fg);
+  --pmw-ed-guide: color-mix(in srgb, var(--pmw-ed-fg) 13%, transparent);
+  --pmw-ed-guide-active: color-mix(in srgb, var(--pmw-ed-fg) 42%, transparent);
+  --pmw-ed-ig-0: color-mix(in srgb, var(--pmw-ed-bp-0) 44%, transparent); --pmw-ed-ig-1: color-mix(in srgb, var(--pmw-ed-bp-1) 44%, transparent);
+  --pmw-ed-ig-2: color-mix(in srgb, var(--pmw-ed-bp-2) 44%, transparent); --pmw-ed-ig-3: color-mix(in srgb, var(--pmw-ed-bp-3) 44%, transparent);
+  --pmw-ed-ig-4: color-mix(in srgb, var(--pmw-ed-bp-4) 44%, transparent); --pmw-ed-ig-5: color-mix(in srgb, var(--pmw-ed-bp-5) 44%, transparent);
+  --pmw-ed-ws: color-mix(in srgb, var(--pmw-ed-fg) 34%, transparent);
+  --pmw-ed-ruler: color-mix(in srgb, var(--pmw-ed-fg) 11%, transparent);
+  --pmw-ed-diag-error: var(--pmw-ed-del-fg); --pmw-ed-diag-warn: var(--pmw-ed-hit-mark); --pmw-ed-diag-info: var(--pmw-ed-mod-fg);
+  --pmw-ed-caret-ink: var(--pmw-ed-gutbg);
+  --pmw-ed-wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='4' viewBox='0 0 6 4'%3E%3Cpath d='M0 3.2 1.5.8 3 3.2 4.5.8 6 3.2' fill='none' stroke='black' stroke-width='1.1'/%3E%3C/svg%3E");
+  --pmw-ed-dim: .78;
+}
+html[data-theme="basic-light"] .pmw-ed {
+  --pmw-ed-bp-0: #906100; --pmw-ed-bp-1: #a626a4; --pmw-ed-bp-2: #0070a7; --pmw-ed-bp-3: #00748f; --pmw-ed-bp-4: #257927; --pmw-ed-bp-5: #c4372e;
+  --pmw-ed-guide: color-mix(in srgb, var(--pmw-ed-fg) 16%, transparent); --pmw-ed-ws: color-mix(in srgb, var(--pmw-ed-fg) 38%, transparent);
+  --pmw-ed-ruler: color-mix(in srgb, var(--pmw-ed-fg) 13%, transparent);
+}
+html[data-theme="friendly-dark"] .pmw-ed {
+  --pmw-ed-bp-0: #f9e2af; --pmw-ed-bp-1: #cba6f7; --pmw-ed-bp-2: #89b4fa; --pmw-ed-bp-3: #94e2d5; --pmw-ed-bp-4: #a6e3a1; --pmw-ed-bp-5: #f38ba8;
+}
+html[data-theme="friendly-light"] .pmw-ed {
+  --pmw-ed-bp-0: #a75a00; --pmw-ed-bp-1: #8839ef; --pmw-ed-bp-2: #1b63f1; --pmw-ed-bp-3: #007a81; --pmw-ed-bp-4: #187f00; --pmw-ed-bp-5: #d20f39;
+  --pmw-ed-guide: color-mix(in srgb, var(--pmw-ed-fg) 16%, transparent); --pmw-ed-ws: color-mix(in srgb, var(--pmw-ed-fg) 38%, transparent);
+}
+html[data-theme="glass-dark"] .pmw-ed {
+  --pmw-ed-bp-0: #e0af68; --pmw-ed-bp-1: #bb9af7; --pmw-ed-bp-2: #7aa2f7; --pmw-ed-bp-3: #7dcfff; --pmw-ed-bp-4: #9ece6a; --pmw-ed-bp-5: #f7768e;
+  --pmw-ed-dim: .72;
+}
+html[data-theme="glass-light"] .pmw-ed {
+  --pmw-ed-bp-0: #8f5e15; --pmw-ed-bp-1: #823ad7; --pmw-ed-bp-2: #0761ca; --pmw-ed-bp-3: #006d92; --pmw-ed-bp-4: #506c30; --pmw-ed-bp-5: #ca0045;
+  --pmw-ed-guide: color-mix(in srgb, var(--pmw-ed-fg) 16%, transparent); --pmw-ed-ws: color-mix(in srgb, var(--pmw-ed-fg) 40%, transparent);
+  --pmw-ed-dim: .72;
+}
+/* Retro: monochrome, so a bracket's depth is a brightness step and the guides are the phosphor at three strengths */
+html[data-theme="retro-dark"] .pmw-ed {
+  --pmw-ed-bp-0: #e6ffd9; --pmw-ed-bp-1: #a3f08f; --pmw-ed-bp-2: #6fd25c; --pmw-ed-bp-3: #e6ffd9; --pmw-ed-bp-4: #a3f08f; --pmw-ed-bp-5: #6fd25c;
+  --pmw-ed-bp-bad: #e9853f; --pmw-ed-dim: .6;
+}
+html[data-theme="retro-dark"] .pmw-ed[data-phosphor="amber"] {
+  --pmw-ed-bp-0: #fff3de; --pmw-ed-bp-1: #ffd797; --pmw-ed-bp-2: #e8a640; --pmw-ed-bp-3: #fff3de; --pmw-ed-bp-4: #ffd797; --pmw-ed-bp-5: #e8a640;
+}
+html[data-theme="retro-light"] .pmw-ed {
+  --pmw-ed-bp-0: #1a1a1a; --pmw-ed-bp-1: #a1281f; --pmw-ed-bp-2: #5d574c; --pmw-ed-bp-3: #1a1a1a; --pmw-ed-bp-4: #a1281f; --pmw-ed-bp-5: #5d574c;
+  --pmw-ed-bp-bad: #b45a00; --pmw-ed-dim: .6;
+}
+/* NieR: ink and its three marked inks only */
+html[data-o55-nier="on"] .pmw-ed {
+  --pmw-ed-bp-0: var(--o55-nier-ink); --pmw-ed-bp-1: var(--o55-nier-warn-text); --pmw-ed-bp-2: var(--o55-nier-ok-text);
+  --pmw-ed-bp-3: var(--o55-nier-ink); --pmw-ed-bp-4: var(--o55-nier-warn-text); --pmw-ed-bp-5: var(--o55-nier-ok-text);
+  --pmw-ed-bp-bad: var(--o55-nier-error-text);
+  --pmw-ed-guide: rgba(var(--o55-nier-ink-rgb), .16); --pmw-ed-guide-active: rgba(var(--o55-nier-ink-rgb), .55);
+  --pmw-ed-ws: rgba(var(--o55-nier-ink-rgb), .38); --pmw-ed-ruler: rgba(var(--o55-nier-ink-rgb), .14);
+  --pmw-ed-diag-error: var(--o55-nier-error); --pmw-ed-diag-warn: var(--o55-nier-warn); --pmw-ed-diag-info: rgba(var(--o55-nier-ink-rgb), .6);
+  --pmw-ed-dim: .68;
+}
+/* Ligatures: on, the code joins -> and != where the face has them (each keeps its columns) */
+.pmw-ed[data-lig] :is(.pmw-ed-scroll, .pmw-ed-sticky, .pmw-ed-measure) { font-variant-ligatures: normal; font-feature-settings: "liga" 1, "calt" 1; }
+/* Scanlines: still lines over the code, under the sticky lines and the header plate; never moving */
+.pmw-ed-fx { position: absolute; top: var(--pmw-ed-head, 0px); left: 0; bottom: 0; right: var(--pmw-ed-track, 22px); z-index: 3; display: none; pointer-events: none; }
+.pmw-ed[data-fx-scan] .pmw-ed-fx { display: block; background: repeating-linear-gradient(to bottom, transparent 0 2px, rgb(0 0 0 / .2) 2px 3px); }
+html[data-theme$="-light"] .pmw-ed[data-fx-scan] .pmw-ed-fx { background: repeating-linear-gradient(to bottom, transparent 0 2px, rgb(0 0 0 / .06) 2px 3px); }
+html[data-o55-nier="on"] .pmw-ed[data-fx-scan] .pmw-ed-fx { background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(var(--o55-nier-ink-rgb), .07) 2px 3px); }
+/* Fade editors I'm not in: the code steps back while another panel has the focus (the header row keeps the look) */
+.pmw-ed :is(.pmw-ed-scroll, .pmw-ed-sticky) { transition: opacity 220ms ease-out; }
+.pmw-ed[data-dim] :is(.pmw-ed-scroll, .pmw-ed-sticky) { opacity: var(--pmw-ed-dim, .78); }
+html[data-motion="reduced"] .pmw-ed :is(.pmw-ed-scroll, .pmw-ed-sticky) { transition: none; }
+@media (prefers-reduced-motion: reduce) { .pmw-ed :is(.pmw-ed-scroll, .pmw-ed-sticky) { transition: none; } }
+/* a problem's card under its wavy line */
+.pmw-ed-diagcard {
+  position: absolute; left: 0; top: 0; z-index: 8; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 8px; align-items: baseline;
+  max-width: min(440px, calc(100% - 24px)); padding: 7px 10px 8px; pointer-events: none;
+  border: 1px solid var(--pmw-pop-line); border-radius: var(--pmw-radius); background: var(--pmw-pop); box-shadow: var(--pmw-pop-shadow);
+  color: var(--pmw-text); font: 12px/1.4 var(--pm-font-ui);
+}
+.pmw-ed-diagcard[hidden] { display: none; }
+.pmw-ed-dsev { font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.pmw-ed-dsev.is-error { color: var(--pmw-ed-diag-error); } .pmw-ed-dsev.is-warn { color: var(--pmw-ed-diag-warn); } .pmw-ed-dsev.is-info { color: var(--pmw-ed-diag-info); }
+.pmw-ed-dmsg { font-family: var(--pm-font-code); font-size: 12px; }
+.pmw-ed-dsrc { grid-column: 2; font-size: 11px; color: var(--pmw-text-3); }
+html[data-theme^="retro"] .pmw-ed-diagcard, html[data-o55-nier="on"] .pmw-ed-diagcard { border-radius: 0; }
+html[data-o55-nier="on"] .pmw-ed-diagcard { border-color: var(--o55-nier-ink); box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16); }
+/* the recolour sweep (instance.recolorFrom): a plate of the old ground over the code lifts away in the look's motion */
+.pmw-ed-recolor { position: absolute; top: var(--pmw-ed-head, 0px); left: 0; bottom: 0; right: var(--pmw-ed-track, 22px); z-index: 3; pointer-events: none;
+  animation: pmw-ed-recolor-fade 200ms cubic-bezier(.2, 0, 0, 1) both; }
+html[data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-ed-recolor { animation: pmw-ed-recolor-bloom 340ms cubic-bezier(.25, .1, .25, 1) both;
+  -webkit-mask: radial-gradient(circle at var(--rx) var(--ry), transparent var(--pmw-ed-rr), #000 calc(var(--pmw-ed-rr) + 2px));
+  mask: radial-gradient(circle at var(--rx) var(--ry), transparent var(--pmw-ed-rr), #000 calc(var(--pmw-ed-rr) + 2px)); }
+@property --pmw-ed-rr { syntax: '<length>'; inherits: false; initial-value: 0px; }
+html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-ed-recolor { animation: pmw-ed-recolor-glide 320ms cubic-bezier(.05, .7, .1, 1) both; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-ed-recolor { animation: pmw-ed-recolor-fade 180ms steps(4, end) both; }
+html[data-o55-nier="on"] .pmw-ed-recolor { animation: pmw-ed-recolor-glide 240ms steps(8, end) both; }
+@keyframes pmw-ed-recolor-fade { from { opacity: 1; } to { opacity: 0; } }
+@keyframes pmw-ed-recolor-bloom { from { --pmw-ed-rr: 0px; } to { --pmw-ed-rr: 1400px; } }
+@keyframes pmw-ed-recolor-glide { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 0 100%); } }
+html[data-motion="reduced"] .pmw-ed-recolor { display: none; }
+@media (prefers-reduced-motion: reduce) { .pmw-ed-recolor { display: none; } }
