@@ -1,0 +1,39 @@
+{
+ "runs": 20,
+ "totals": {
+  "contexts": 320,
+  "selectors": 3056,
+  "full": 2964,
+  "short": 80,
+  "stack": 12,
+  "ink": 378,
+  "ink_moving": 224,
+  "failures": 0
+ },
+ "lists_where": [
+  [
+   "ed-360",
+   "whitespace"
+  ],
+  [
+   "tm-360",
+   "fontWeight"
+  ]
+ ],
+ "fails": [],
+ "pages": {
+  "full_sweep": "69d85bc0b8bd4dbf (20 runs: ten looks, motion and Reduced Motion, 16 contexts each)",
+  "final": "9757d3b5e1d64fa0 (terminal contexts, the editor at 1920 and 360 re-run in all ten looks; it differs from 69d85bc0 only by the terminal Weight selector's short words)"
+ },
+ "contexts": {
+  "ed-1920": "editor screen from its menu, beside the editor",
+  "ed-1440": "laptop window, not beside (the preview docks)",
+  "ed-1280": "laptop window",
+  "ed-900": "narrow window",
+  "ed-360": "phone",
+  "ed-settings": "from Settings (opens on Home)",
+  "ed-spanned": "chat closed, files folded, editor maximized (docks)",
+  "tm-*": "the terminal screen the same ways",
+  "set-1920/1280/900": "Settings, Editor & Terminal, every segmented row"
+ }
+}

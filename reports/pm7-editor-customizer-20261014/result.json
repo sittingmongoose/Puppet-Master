@@ -2,15 +2,15 @@
  "thread": "pm7-editor-customizer",
  "branch": "concept/pm7-editor-customizer-20261014",
  "base": "cae30c7f2d (origin/main, round 2 rebase; round 1 was on b94e6183b1)",
- "source_head": "e547340e03",
- "branch_head_with_pages": "a37a198e19 (this report is committed after it)",
+ "source_head": "a9a256d090",
+ "branch_head_with_pages": "ac01586f54 (this report is committed after it)",
  "landed": false,
- "published_page_sha256": "a98e87302fa36536c1db60c9fbf7e884b49b0be426eb5a74334780c68b70021b",
+ "published_page_sha256": "9757d3b5e1d64fa0dbd1804a5f26776341a40b015c48b943bf4cb7d1f4790ad9",
  "generated_pages_sha256": {
-  "PMConcept7.html": "a98e87302fa36536c1db60c9fbf7e884b49b0be426eb5a74334780c68b70021b",
-  "HomeTestPMConcept7.html": "a98e87302fa36536c1db60c9fbf7e884b49b0be426eb5a74334780c68b70021b",
-  "LeftRailPMConcept7.html": "d73483d272cd1c9c8018a2e4d97af2cfc68e46b037eac7d57dd6b7776c350a8b",
-  "Onboarding concepts/TestOpus5.5PmConcept.html": "a98e87302fa36536c1db60c9fbf7e884b49b0be426eb5a74334780c68b70021b"
+  "PMConcept7.html": "9757d3b5e1d64fa0dbd1804a5f26776341a40b015c48b943bf4cb7d1f4790ad9",
+  "HomeTestPMConcept7.html": "9757d3b5e1d64fa0dbd1804a5f26776341a40b015c48b943bf4cb7d1f4790ad9",
+  "LeftRailPMConcept7.html": "eaff7106ca75a9268fc44481f9a1675cac3909bd09a113cd7dbccfdd38504b11",
+  "Onboarding concepts/TestOpus5.5PmConcept.html": "9757d3b5e1d64fa0dbd1804a5f26776341a40b015c48b943bf4cb7d1f4790ad9"
  },
  "generators": [
   "Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7",
@@ -129,5 +129,19 @@
    "after": "every other frame (30/s)",
    "note": "e547340e03's message says nearly every frame; this is the measured figure"
   }
+ },
+ "round3": {
+  "ask": "Show spaces wrapped onto two rows with its sliding fill across both; check every segmented or sliding selector in both screens and their Settings rows",
+  "fix": "no selector wraps; PMW.czFit stacks the pair of fields, then shortens the words, then makes a list (phone width only)",
+  "sweep": {
+   "runs": 20,
+   "contexts": 320,
+   "selectors": 3056,
+   "failures": 0,
+   "ink_mid_slide_inside_one_row": 224,
+   "short_and_list_only_at": "360 px"
+  },
+  "regressions": "journeys, indentation, audit defects, auto-save, tab caps, matrix retro-dark/glass-light both scopes (480 cases, 0 failing), round 2 checks: pass",
+  "film": "share films/9-show-spaces-clip.mp4 (25 s) and 9-show-spaces.mp4 (80 s), P1000 1080p60"
  }
 }
