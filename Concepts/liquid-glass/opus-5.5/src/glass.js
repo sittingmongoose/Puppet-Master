@@ -108,8 +108,10 @@
       }
       dx[i] = vx; dy[i] = vy; var mm = Math.max(Math.abs(vx), Math.abs(vy)); if (mm > max) max = mm;
     }
+    /* the maps are encoded on a CPU canvas: on a GPU canvas toDataURL read back synchronously behind the page's own raster
+       (Jared #12: 363 ms of toDataURL in one Glass entry on a P1000) */
     var canvas = document.createElement('canvas'); canvas.width = W; canvas.height = H;
-    var ctx = canvas.getContext('2d'), pixels = ctx.createImageData(W, H);
+    var ctx = canvas.getContext('2d', { willReadFrequently: true }), pixels = ctx.createImageData(W, H);
     function img(fill) { fill(pixels.data); ctx.putImageData(pixels, 0, 0); return canvas.toDataURL('image/png'); }
     var k = max || 1;
     var res = {
@@ -174,7 +176,8 @@
       dx[i] = vx; dy[i] = vy; var mm = Math.max(Math.abs(vx), Math.abs(vy)); if (mm > max) max = mm;
     }
     var canvas = document.createElement('canvas'); canvas.width = W; canvas.height = H;
-    var ctx = canvas.getContext('2d'), pixels = ctx.createImageData(W, H);
+    /* a CPU canvas, as in buildMaps */
+    var ctx = canvas.getContext('2d', { willReadFrequently: true }), pixels = ctx.createImageData(W, H);
     function img(fill) { fill(pixels.data); ctx.putImageData(pixels, 0, 0); return canvas.toDataURL('image/png'); }
     var k = max || 1;
     var res = {
@@ -313,7 +316,12 @@
       }
       var waiters = rec.waiters; rec.waiters = []; waiters.forEach(function (done) { done(ok ? im : null); });
     }
-    im.onload = function () { finish(im.naturalWidth > 0 && im.naturalHeight > 0); };
+    /* decoded off the main thread before anything draws it (the first drawImage of an undecoded 2560 px print decoded it
+       in the frost's task) */
+    im.onload = function () {
+      var ok = im.naturalWidth > 0 && im.naturalHeight > 0;
+      if (ok && typeof im.decode === 'function') im.decode().then(function () { finish(true); }, function () { finish(true); }); else finish(ok);
+    };
     im.onerror = function () { finish(false); }; im.src = u;
   }
   /* where an element sits when nothing is moving it: its layout position from the offset chain, which ignores
@@ -345,7 +353,7 @@
   }
   function viewportVars() { root.style.setProperty('--lg-vw', innerWidth + 'px'); root.style.setProperty('--lg-vh', innerHeight + 'px'); }
   function cover(im) { var vw = innerWidth, vh = innerHeight, sc = Math.max(vw / im.naturalWidth, vh / im.naturalHeight); return { s: sc, ox: (vw - im.naturalWidth * sc) / 2, oy: (vh - im.naturalHeight * sc) / 2, vw: vw, vh: vh }; }
-  var FROST = { heavy: { blur: 26, sat: 1.65 }, light: { blur: 14, sat: 1.6 } };
+  var FROST = { heavy: { blur: 26, sat: 1.65 }, light: { blur: 14, sat: 1.6 } }, FROST_SCALE = 1 / 3;
   function dropFrost(rec) { Object.keys(rec.urls).forEach(function (name) { URL.revokeObjectURL(rec.urls[name]); }); }
   function applyFrost(rec) {
     if (frostKey === rec.key) return;
@@ -365,6 +373,16 @@
   function releaseWallHold() {
     clearTimeout(wallHoldT); wallHoldT = 0;
     if (root.hasAttribute('data-lg-wall-hold')) { root.removeAttribute('data-lg-wall-hold'); root.style.removeProperty('--lg-wall-hold'); }
+  }
+  /* a canvas as a PNG blob, now. canvas.toBlob encodes in the main thread's idle time, so while a Glass entry or a room
+     change kept it busy a frost or a ring came back up to a second later (P1000 trace: the frosts drawn at +1.2 s, their
+     blobs at +2.4 s). A frost at a third of the window encodes in about 13 ms, a 400 x 813 ring in 5 (P1000). */
+  function pngNow(cv) {
+    try {
+      var d = cv.toDataURL('image/png'), bin = atob(d.slice(d.indexOf(',') + 1)), n = bin.length, a = new Uint8Array(n);
+      for (var i = 0; i < n; i++) a[i] = bin.charCodeAt(i);
+      return new Blob([a], { type: 'image/png' });
+    } catch (e) { return null; }
   }
   function makeFrosts(im, done) {
     var c = cover(im), u = im.__lgWallUrl || wallUrl, key = u + ':' + c.vw + 'x' + c.vh, epoch = bakeEpoch;
@@ -400,15 +418,22 @@
       }
       var waiters = job.waiters; job.waiters = []; waiters.forEach(function (cb) { cb(valid); });
     }
+    /* each frost is drawn at FROST_SCALE of the window and stretched back by its background-size (glass.css: / --lg-vw
+       --lg-vh): a 26 px or 14 px blur holds no detail that a third of the pixels cannot carry, and the blur and the encode
+       cost about a ninth. Both canvases are CPU canvases: on a GPU canvas toBlob read the frost back synchronously and
+       waited for the page's own raster first (Jared #12: 812 ms of toBlob on a P1000, on every Glass entry and every
+       wallpaper change) */
+    var k = FROST_SCALE;
     names.forEach(function (name) {
       var F = FROST[name], pad = F.blur * 3, W = c.vw + pad * 2, H = c.vh + pad * 2;
-      var src = document.createElement('canvas'); src.width = W; src.height = H; var g = src.getContext('2d');
+      var src = document.createElement('canvas'); src.width = Math.ceil(W * k); src.height = Math.ceil(H * k); var g = src.getContext('2d', { willReadFrequently: true });
+      g.scale(k, k);
       /* fill the margin with a slightly larger copy, so the blur has real colour to pull from at the window's edges */
       g.save(); g.translate(W / 2, H / 2); g.scale(1.12, 1.12); g.translate(-W / 2, -H / 2); g.drawImage(im, c.ox + pad, c.oy + pad, im.naturalWidth * c.s, im.naturalHeight * c.s); g.restore();
       g.drawImage(im, c.ox + pad, c.oy + pad, im.naturalWidth * c.s, im.naturalHeight * c.s);
-      var out = document.createElement('canvas'); out.width = c.vw; out.height = c.vh; var o = out.getContext('2d');
-      o.filter = 'blur(' + F.blur + 'px) saturate(' + F.sat + ')'; o.drawImage(src, -pad, -pad); o.filter = 'none';
-      out.toBlob(function (b) { finish(name, b); }, 'image/png');
+      var out = document.createElement('canvas'); out.width = Math.round(c.vw * k); out.height = Math.round(c.vh * k); var o = out.getContext('2d', { willReadFrequently: true });
+      o.filter = 'blur(' + (F.blur * k).toFixed(2) + 'px) saturate(' + F.sat + ')'; o.drawImage(src, -pad * k, -pad * k); o.filter = 'none';
+      finish(name, pngNow(out));
     });
   }
   function currentBake(job, im) {
@@ -464,8 +489,7 @@
     }
     var oc = document.createElement('canvas'); oc.width = W; oc.height = H; oc.getContext('2d', { willReadFrequently: true }).putImageData(out, 0, 0);
     e.style.setProperty('--lg-spec', 'url(' + m.spec + ')');
-    oc.toBlob(function (b) {
-      if (!currentBake(job, im)) return;
+    (function (b) {
       if (!b) { e.__lgSig = null; return; }
       var lp = layoutPos(e);
       if (Math.round(e.offsetWidth) !== W || Math.round(e.offsetHeight) !== H || Math.round(lp.x) !== Math.round(r.left) || Math.round(lp.y) !== Math.round(r.top)) {
@@ -474,7 +498,7 @@
       var url = URL.createObjectURL(b); keepRing(job.sig, url, m.spec);
       if (e.__lgRing !== url) { releaseRing(e); e.__lgRing = url; }
       e.style.setProperty('--lg-ring', 'url(' + url + ')');
-    }, 'image/png');
+    })(pngNow(oc));
   }
   function scheduleBakes() { if (!bakeT && !bakeFlight && bakeQ.size && isGlass()) bakeT = setTimeout(flushBakes, 60); }
   function flushBakes() {
@@ -496,7 +520,10 @@
       makeFrosts(im, function (ok) {
         if (bakeFlight !== flight) return;
         if (!ok) { finish(im.__lgWallUrl === currentWallUrl() && innerWidth === flight.vw && innerHeight === flight.vh); return; }
+        /* the largest sheets first (the chrome: title bar, side columns, status bar): theirs is the rim a late bake shows */
         var list = Array.from(bakeQ.values()), next = 0; bakeQ.clear();
+        list.forEach(function (j) { j.area = (j.e.offsetWidth || 0) * (j.e.offsetHeight || 0); });
+        list.sort(function (a, b) { return b.area - a.area; });
         (function step() {
           bakeFrame = 0;
           if (bakeFlight !== flight || flight.epoch !== bakeEpoch || !isGlass()) { finish(false); return; }
