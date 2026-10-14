@@ -296,6 +296,16 @@
       wall: () => document.documentElement.getAttribute('data-lg-wall') || 'look',
       setWall: (id) => W('PM_LG').wall(id)
     },
+    /* wallpapers for every look (pm7-wallpapers, window.PM_WALLPAPERS): one choice, 'look' or an id */
+    walls: {
+      avail: () => !!(W('PM_WALLPAPERS') && fn(W('PM_WALLPAPERS'), 'choose')),
+      families() {
+        const cat = W('PM_WALLPAPERS_CATALOG');
+        return cat && cat.families ? cat.families.map((f) => ({ family: f.family, label: f.label, items: (f.wallpapers || []).map((w) => ({ id: w.id, name: w.name || w.id })) })) : [];
+      },
+      choice: () => { try { return W('PM_WALLPAPERS').choice() || 'look'; } catch (_) { return 'look'; } },
+      choose: (id) => W('PM_WALLPAPERS').choose(id)
+    },
     soundAvail: () => !!(O55.sound && fn(O55.sound, 'setMuted')),
     sound: () => !!(O55.sound && !O55.sound.muted),
     setSound: (on) => O55.sound.setMuted(!on, 'demo_studio')

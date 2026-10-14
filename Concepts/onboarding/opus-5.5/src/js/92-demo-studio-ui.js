@@ -222,10 +222,15 @@
     const G = L.lg, lg = G.avail() ? block(T('studio.looks.lg.title'), `<div class="pmds-lgrows">`
       + `<div class="pmds-rowacts"><span class="pmds-btitle">${esc(T('studio.looks.lg.material'))}</span>${seg({ do: 'lg', value: G.on() ? 'on' : 'off', label: T('studio.looks.lg.material'), items: [{ v: 'on', label: T('studio.looks.lg.on') }, { v: 'off', label: T('studio.looks.lg.off') }] })}`
       + `<span class="pmds-btitle">${esc(T('studio.looks.lg.tier'))}</span>${seg({ do: 'lg-tier', value: G.tier(), label: T('studio.looks.lg.tier'), items: [{ v: 'gpu', label: T('studio.looks.lg.gpu') }, { v: 'cpu', label: T('studio.looks.lg.cpu') }] })}</div>`
-      + `<h5 class="pmds-gtitle"><span>${esc(T('studio.looks.lg.wall'))}</span></h5><div class="pmds-walls" role="radiogroup" aria-label="${esc(T('studio.looks.lg.wall'))}">`
-      + [{ id: 'look', name: T('studio.looks.lg.wallLook') }].concat(G.walls()).map((w) => `<button type="button" role="radio"${at({ class: `pmds-wall${G.wall() === w.id ? ' pmds-on' : ''}`, 'aria-checked': String(G.wall() === w.id), 'data-pmds-do': 'lg-wall', 'data-arg': w.id, 'data-key': `lg-wall:${w.id}`, 'data-pmh': 'row' })}><span class="pmds-mark" aria-hidden="true">${ico('check', 12)}</span><span>${esc(w.name || w.id)}</span>${w.family ? `<span class="pmds-fine">${esc(w.family)}</span>` : ''}</button>`).join('')
-      + '</div></div>', { lead: T('studio.looks.lg.lead') }) : '';
-    return head('looks') + block('', grid + mode) + lg
+      + (L.walls.avail() ? '' : `<h5 class="pmds-gtitle"><span>${esc(T('studio.looks.lg.wall'))}</span></h5><div class="pmds-walls" role="radiogroup" aria-label="${esc(T('studio.looks.lg.wall'))}">`
+      + [{ id: 'look', name: T('studio.looks.lg.wallLook') }].concat(G.walls()).map((w) => `<button type="button" role="radio"${at({ class: `pmds-wall${G.wall() === w.id ? ' pmds-on' : ''}`, 'aria-checked': String(G.wall() === w.id), 'data-pmds-do': 'lg-wall', 'data-arg': w.id, 'data-key': `lg-wall:${w.id}`, 'data-pmh': 'row' })}><span class="pmds-mark" aria-hidden="true">${ico('check', 12)}</span><span>${esc(w.name || w.id)}</span>${w.family ? `<span class="pmds-fine">${esc(w.family)}</span>` : ''}</button>`).join('') + '</div>')
+      + '</div>', { lead: T('studio.looks.lg.lead') }) : '';
+    /* the shared wallpaper gallery: thumbnails are the wallpapers' own --wpk-t-<id>-<mode> prints */
+    const WP = L.walls, wpick = WP.avail() ? WP.choice() : null;
+    const wcell = (id, name) => `<button type="button" role="radio"${at({ class: `pmds-wp${wpick === id ? ' pmds-on' : ''}`, 'aria-checked': String(wpick === id), 'data-pmds-do': 'wall', 'data-arg': id, 'data-key': `wall:${id}`, 'data-pmh': 'tile' })}><span class="pmds-wp-pic" style="${id === 'look' ? '' : `background-image: var(--wpk-t-${esc(id)}-${now.mode})`}" aria-hidden="true">${id === 'look' ? ico('looks', 18) : ''}</span><span class="pmds-wp-name">${esc(name)}</span></button>`;
+    const walls = WP.avail() ? block(T('studio.looks.walls.title'), `<div class="pmds-wps" role="radiogroup" aria-label="${esc(T('studio.looks.walls.title'))}">${wcell('look', T('studio.looks.walls.own'))}</div>`
+      + WP.families().map((f) => `<h5 class="pmds-gtitle"><span>${esc(f.label)}</span><span class="pmds-count">${f.items.length}</span></h5><div class="pmds-wps" role="radiogroup" aria-label="${esc(f.label)}">${f.items.map((w) => wcell(w.id, w.name)).join('')}</div>`).join(''), { lead: T('studio.looks.walls.lead') }) : '';
+    return head('looks') + block('', grid + mode) + walls + lg
       + block('', sw({ id: 'nier', icon: 'pod', title: T('studio.looks.nier'), sub: T('studio.looks.nierSub'), on: L.nierOn(), do: 'nier', off: !L.nierAvail() })
         + (L.nierOn() ? `<div class="pmds-rowacts pmds-indent">${btn(T('studio.looks.nierAdjust'), { do: 'nier-adjust', icon: 'studio' })}</div>` : '')
         + sw({ id: 'reduced', icon: 'motion', title: T('studio.looks.reduced'), sub: T('studio.looks.reducedSub'), on: L.reduced(), do: 'reduced', off: !L.reducedAvail() })
@@ -600,6 +605,7 @@
     notice: (arg) => { M.notices.fire(arg); },
     'notices-clear': () => { M.notices.clear(); },
     look: (arg) => { const [f, m] = arg.split(':'); M.looks.set(f, m); real.setTimeout(() => { syncLook(); refresh(); }, 80); },
+    wall: (arg) => { M.looks.walls.choose(arg); real.setTimeout(refresh, 120); },
     lg: (arg) => { M.looks.lg.set(arg === 'on'); real.setTimeout(refresh, 80); },
     'lg-tier': (arg) => { M.looks.lg.setTier(arg); real.setTimeout(refresh, 80); },
     'lg-wall': (arg) => { M.looks.lg.setWall(arg); real.setTimeout(refresh, 80); },

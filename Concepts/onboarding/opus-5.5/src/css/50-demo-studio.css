@@ -409,6 +409,14 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 #o55-demo .pmds-looklabel .pmds-ico { color: var(--pmds-mute); }
 #o55-demo .pmds-lookmode { margin-left: auto; font-weight: 500; font-size: 11.5px; color: var(--pmds-mute); }
 
+/* the wallpaper gallery: each wallpaper's own thumbnail print */
+#o55-demo .pmds-wps { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 8px; margin-bottom: 12px; }
+#o55-demo .pmds-wp { display: grid; gap: 6px; padding: 5px; border: 1px solid transparent; border-radius: var(--pmds-r2); background: transparent; text-align: left; cursor: pointer; }
+#o55-demo .pmds-wp-pic { display: grid; place-items: center; aspect-ratio: 16 / 9; border: 1px solid var(--pmds-line2); border-radius: max(0px, calc(var(--pmds-r2) - 3px)); background: var(--pmds-bg2) center / cover no-repeat; color: var(--pmds-mute); }
+#o55-demo .pmds-wp-name { overflow: hidden; font-size: 12px; white-space: nowrap; text-overflow: ellipsis; color: var(--pmds-ink2); }
+#o55-demo .pmds-wp.pmds-on { border-color: var(--pmds-acc); box-shadow: 0 0 0 1px var(--pmds-acc); }
+#o55-demo .pmds-wp.pmds-on .pmds-wp-name { color: var(--pmds-ink); font-weight: 600; }
+
 /* Liquid Glass's wallpapers */
 #o55-demo .pmds-walls { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 4px 8px; }
 #o55-demo .pmds-wall { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; align-items: center; gap: 8px; min-height: 32px; padding: 4px 8px; border: 0; border-radius: var(--pmds-ctl); background: transparent; text-align: left; cursor: pointer; font-size: 12.5px; }
