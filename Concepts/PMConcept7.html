@@ -29258,7 +29258,9 @@ html[data-theme$="light"] {
 }
 .pmn-toast[data-level="quiet"] .pmn-timer { opacity: .45; }
 .pmn-toast.pmn-leaving .pmn-timer, .pmn-toast.pmn-flying .pmn-timer { visibility: hidden; }
-.pmn-toast.pmn-flying { z-index: 5; }
+/* an older card joining the stack passes behind the newer cards above it (they sit nearer), then rises into the bell */
+#rsStage.pmn-stage > :not(.pmn-flying) { z-index: 2; }
+#rsStage.pmn-stage > .pmn-toast.pmn-flying { z-index: 0; }
 /* while Usage shows, the notices sit at its stage's bottom right and take no pointer (the Usage owner's rule) */
 body.pmu-page-active #rsStage .pmn-toast { pointer-events: none !important; }
 
@@ -29308,7 +29310,7 @@ body.pmu-page-active #rsStage .pmn-toast { pointer-events: none !important; }
 .pmn-head { display: flex; align-items: center; gap: 8px; padding: 11px 10px 10px 14px; border-bottom: 1px solid var(--pmn-line-soft); flex: 0 0 auto; }
 .pmn-head-ico { width: 15px; height: 15px; color: var(--pmn-text-2); }
 .pmn-head-title { margin: 0; font: 700 13.5px/1.2 var(--pmn-font-head); color: var(--pmn-text); letter-spacing: 0; }
-.pmn-head-count { font: 700 11px/1 var(--pmn-font); color: var(--accent-blue); font-variant-numeric: tabular-nums; }
+.pmn-head-count { font: 700 11px/1 var(--pmn-font); color: var(--accent-blue); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .pmn-head-gap { flex: 1 1 auto; }
 .pmn-textbtn {
   all: unset; box-sizing: border-box; height: 24px; padding: 0 8px; border-radius: var(--pmn-r-btn); cursor: pointer;
