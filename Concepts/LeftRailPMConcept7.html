@@ -92875,7 +92875,14 @@ renderApp = function (options = {}) {
   o55cMode = inPlace ? 'in-place' : 'arrival';
   o55cChapter = !inPlace && (!!state.home !== shownHome || shownDomain !== state.domain);
   place.inPlace = inPlace;
-  if (!inPlace) place.nav();
+  if (!inPlace) {
+    place.nav();
+    /* the page is about to be replaced: a control in it that still has focus lets go now, while style is clean. Taking
+       it out with the page made the browser recompute the whole page's style in the middle of the commit (+40 to
+       60 ms before the new chapter's first frame); the focus ends on the page either way, as before. */
+    const stage = root.querySelector('#workspace-stage'), act = document.activeElement;
+    if (stage && act && act !== document.body && stage.contains(act) && typeof act.blur === 'function') act.blur();
+  }
   let r;
   try { r = o55cRender.call(this, inPlace && !state.home ? Object.assign({}, options, { soft: true }) : options); }
   finally { o55cMode = null; place.inPlace = false; }
@@ -92935,12 +92942,16 @@ PM51.swapRow = (el, next) => {
 /* Settings is display:none while another page shows, and a CSS animation starts over when its element is shown again, so
    coming back replayed the page's arrival, every revealed section's slide and the last manager tab swap. When Settings
    is shown again, the entrances that had already played and restarted are finished at once, before the first frame is
-   painted. Their classes are left as they are: an entrance's last frame keeps holding (fill both), and taking the class
-   away instead changed how Glass is composited (a whole Glass page repainted on the main thread: +300 ms of every
-   action in Glass Light on the RTX 3090). The first time Settings is shown, its arrival plays as before. */
+   painted, which leaves them exactly as a finished entrance always is. Two other ways were measured and dropped: taking
+   the classes away, and placing the animations past their end with a negative delay, each changed how Glass is
+   composited (about +300 ms on every action in Glass Light on the RTX 3090). Nothing is looked at unless an entrance
+   has played since Settings was last shown, so the first entry, which plays its arrival as before, costs nothing. */
 const O55C_ENTRANCES = /^(pageIn|sectionReveal|pmSettingsTabSwap[AB])$/;
 const o55cPlayed = new WeakSet();
-root.addEventListener('animationend', e => { if (O55C_ENTRANCES.test(e.animationName || '') && e.target) o55cPlayed.add(e.target); }, true);
+let o55cPlayedAny = false;
+root.addEventListener('animationend', e => {
+  if (e.target && O55C_ENTRANCES.test(e.animationName || '')) { o55cPlayed.add(e.target); o55cPlayedAny = true; }
+}, true);
 function o55cWatchReturns() {
   const panel = document.getElementById('panel-settings');
   if (!panel || panel.o55cReturns || typeof MutationObserver !== 'function') return;
@@ -92948,7 +92959,7 @@ function o55cWatchReturns() {
   let shown = panel.classList.contains('active');
   new MutationObserver(() => {
     const now = panel.classList.contains('active');
-    if (now && !shown) for (const a of root.getAnimations({ subtree: true })) {
+    if (now && !shown && o55cPlayedAny) for (const a of root.getAnimations({ subtree: true })) {
       const t = a.effect && a.effect.target;
       if (t && o55cPlayed.has(t) && O55C_ENTRANCES.test(a.animationName || '')) a.finish();
     }
