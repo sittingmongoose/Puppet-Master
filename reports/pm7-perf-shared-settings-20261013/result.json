@@ -62,13 +62,21 @@
         "sha256": "f042bc4851007fd0b99f67da5aea8dfa1a1255d45df15ad427d72d9a47380156"
       },
       "new_scope": {
-        "status": "approved_design_wiring_after_M5_M6_M10",
+        "status": "prototype_fails_bottom_anchor_contract_not_delivered",
         "authorization_mail_id": "1014005302-af53",
         "standing_rule": "Jared design decisions belong to Opus5.5xhigh; Sol wires approved designs",
         "decision_path": "/mnt/Cursor/share/puppet-master/2026-10-13-perf-fixes/M4-DESIGN-DECISION.md",
         "decision_sha256": "df7fa857254291a428bc6d9ef6411e1b586beee52aec8a11557ece98ee257df0",
         "visible_exceptions": 8,
-        "required_checks": "A-F Windows, marked checks also P1000 after clearance"
+        "required_checks": "A-F Windows, marked checks also P1000 after clearance",
+        "candidate": "m4-authorized-proto12",
+        "probe_cases": 30,
+        "cases_without_asserted_failure": 25,
+        "failed_cases": 5,
+        "failure_packet": "reports/pm7-perf-shared-settings-20261013/M4-APPROVED-CONTRACT-FAILURES.md",
+        "probe_host": "P1000 Quadro ANGLE/OpenGL4.5.0",
+        "actual_bottom_drift_px": 10,
+        "harness_limitation": "Retained-motion flags include pre-existing will-reveal nodes; qualify before judging replay."
       }
     },
     {
