@@ -1,5 +1,5 @@
 {
-  "status": "final_current_main_supplement_in_progress",
+  "status": "review_ready_M1_only",
   "branch": "fix/pm7-perf-m1-ready-20261014",
   "base_commit": "b94e6183b1",
   "scope": [
@@ -11,12 +11,12 @@
   "legacy_measurement_base": "611b2404e4827675a435e7fe3113a0674bae2ed6",
   "legacy_proof": {
     "id": "M1",
-    "status": "implementation_committed_repeated_traces_passed_films_pending",
+    "status": "repeated all10look proof complete; newer current-main film supplement attached",
     "commit": "9d77f51feb",
     "action_windows": 840,
     "paired_snapshots": 420,
     "snapshot_differences": 0,
-    "measurement_summary": "reports/pm7-perf-shared-settings-20261013/m1-measurements.json",
+    "measurement_summary": "m1-measurements.json",
     "metric_semantics": {
       "task_style_layout": "CDP cumulative duration deltas over action plus fixed3s settlement",
       "largest_task": "page renderer traced RunTask wall duration",
@@ -24,15 +24,16 @@
       "click_to_paint": "trusted-click Event Timing duration,8ms quantization; film-based semantic first feedback pending"
     },
     "limitations": [
-      "Savings are established for Files\u2192Search across all10looks.",
-      "Settings-return and mode-only gains are small or not established.",
-      "Family Basic\u2192Friendly and Glass-entry pilots exist; repeated family proof and hardware films remain."
+      "Frozen-base all10look speedups are established for Files\u2192Search.",
+      "Current-main BasicDark/Light Files\u2192Search and Basic\u2192Friendly CPU savings established.",
+      "Cold Settings entry, General entry and warm return do not establish a material M1 benefit.",
+      "Glass entry reduces layout and peak task costs; remaining Glass work dominates total cost."
     ],
     "raw_manifest": {
       "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m1-repeated-v2/evidence-manifest.json",
       "sha256": "06ec67e35534198dc4b5904dfa139b0f34b70686529487180459b9aa2fba6f40"
     },
-    "phase_measurement_summary": "reports/pm7-perf-shared-settings-20261013/m1-phase-measurements.json"
+    "phase_measurement_summary": "m1-phase-measurements.json"
   },
   "current_main_supplement": {
     "run": "m1-current-ready-v1",
@@ -54,7 +55,15 @@
       "Files\u2192Search",
       "Basic\u2192Friendly",
       "Friendly\u2192Glass entry"
-    ]
+    ],
+    "action_windows": 220,
+    "paired_snapshots": 110,
+    "differences_outside_focus_serialization": 0,
+    "raw_focus_serialization_differences": 2,
+    "focus_identity": "both #themeSelect; attribute order/truncation differs in400-byte diagnostic HTML strings",
+    "measurements": "m1-current-measurements.json",
+    "phases": "m1-current-phase-measurements.json",
+    "fit_parity_scope": "Current3look drag/font readiness supplement plus unchanged guarded fitter/pinned-source all10look first/settled narrow/wide proof. No claim that frozen timing tables describe the current owner integrations."
   },
   "landing": "coordinator_only",
   "raw_root": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013",
@@ -79,5 +88,56 @@
       "bytes": 21047703,
       "sha256": "72694247fed1f95c992de2ddddf088b7192506dedc0087f5f5bf75889cb4ccfa"
     }
-  ]
+  ],
+  "drag_readiness_parity": {
+    "snapshots": 30,
+    "pairs": 15,
+    "differences": 0,
+    "looks": [
+      "basic-dark",
+      "glass-light",
+      "nier-dark"
+    ],
+    "widths": [
+      500,
+      220
+    ],
+    "cases": [
+      "width during pm-resizing",
+      "font readiness during pm-resizing",
+      "PM_DRAGEND",
+      "restore wide"
+    ],
+    "raw": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m1-current-drag-v2/result.json",
+    "failed_attempt_retained": "v1 used wrong Debug locator; v2 uses canonical data-ab-id=run"
+  },
+  "source_commit": "635aea6fbd",
+  "verification": "Three project generators, three generator --check passes and git diff --check; authored source unchanged after that verification.",
+  "current_raw_manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-perf-shared-settings-20261013/m1-current-evidence-manifest.json",
+    "sha256": "d4690be12250ab2b76cfcdbae7ecdeaf754c300d994617d17b2e4ab154dd857d",
+    "file_count": 781,
+    "bytes": 2739872637
+  },
+  "hardware_films": "m1-feedback-measurements.json",
+  "cleanup": {
+    "owned_GPU_sessions": 0,
+    "owned_capture_processes": 0,
+    "retained": "Review branch/worktree and hashed evidence; original multi-fix task continues."
+  },
+  "current_main_first_settled_panes": {
+    "records": 72,
+    "paired_pane_states": 36,
+    "first_and_settled_comparisons": 72,
+    "differences": 0,
+    "looks": [
+      "basic-dark",
+      "glass-light"
+    ],
+    "widths": [
+      220,
+      500
+    ],
+    "panes": 9
+  }
 }
