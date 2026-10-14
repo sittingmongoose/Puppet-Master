@@ -29124,30 +29124,52 @@ html[data-o55-nier][data-o55-nier-parts~="cursor"]:not(#pmhz):not(#pmhz):not(#pm
   --wo-plan: color-mix(in srgb, var(--graph-planning, var(--accent-primary)) 86%, var(--text-primary));
   --wo-label-font: 700 10.5px/1.25 var(--body-font);
   --wo-label-track: .06em;
-  /* the chosen cell of a joined row: the theme menu's chosen fill (24-no-pills.css), with a hairline in its tone */
-  --wo-sel-fill: var(--accent-soft, color-mix(in srgb, var(--accent-primary) 14%, transparent));
-  --wo-sel-line: color-mix(in srgb, var(--accent-primary) 55%, var(--border));
+  /* The chosen option of a one-of-several control (the work type, a reply, the Orchestrator's view tab) takes the
+     concept's one chosen fill (the canon lead's ruling of 2026-10-11, F3-648 / F3-490, as the Home panels draw it in
+     Concepts/home-redesign/src/panels/css/45-frames.css): each look's NEUTRAL selection fill, flat, never an accent and
+     never a ring; a hover is about half its step. */
+  --wo-sel-fill: color-mix(in srgb, var(--text-primary) 11%, transparent);
+  --wo-hover-fill: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  --wo-press-fill: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  --wo-sel-line: var(--border);
   --wo-sel-ink: var(--text-primary);
 }
-/* Light looks' hues are light enough that a bare word needs a deeper ink than its capsule did */
+/* in the light modes that surface is too faint for a 30 px box, so they take the next step of the same ladder */
+html[data-theme="basic-light"] :is(#panel-wizard, #panel-orchestrator) { --wo-sel-fill: color-mix(in srgb, var(--text-primary) 17%, transparent); }
+html[data-theme="friendly-light"] :is(#panel-wizard, #panel-orchestrator) { --wo-sel-fill: color-mix(in srgb, var(--text-primary) 20%, transparent); }
+/* Glass: its own selection frost with its 1 px rim along the top edge; Glass Light takes its near-opaque reading plate */
+html[data-theme^="glass"] :is(#panel-wizard, #panel-orchestrator) {
+  --wo-sel-fill: linear-gradient(var(--glass-edge), var(--glass-edge)) 0 0 / 100% 1px no-repeat, var(--pm6-glass-step-3);
+  --wo-hover-fill: var(--pm6-glass-step-1); --wo-press-fill: var(--pm6-glass-step-2); }
+html[data-theme="glass-light"] :is(#panel-wizard, #panel-orchestrator) {
+  --wo-sel-fill: linear-gradient(var(--glass-edge), var(--glass-edge)) 0 0 / 100% 1px no-repeat, var(--pm6-glass-plate, var(--pm6-glass-step-3));
+  --wo-hover-fill: var(--pm6-glass-step-2); --wo-press-fill: var(--pm6-glass-step-3); }
+/* Light looks' hues are light enough that a bare word needs a deeper ink than its capsule did. Each tone is taken
+   toward black by the least that keeps every look's word at 4.8:1 or more on its card and page (measured 2026-10-13 on
+   Basic, Friendly and Retro Light; Glass Light's page-scoped colours are already deep). */
 html[data-theme$="-light"] :is(#panel-wizard, #panel-orchestrator) {
   --wo-ok: color-mix(in srgb, var(--accent-lime) 72%, #000);
-  --wo-warn: color-mix(in srgb, var(--accent-warning) 64%, #000);
-  --wo-busy: color-mix(in srgb, var(--accent-orange) 70%, #000);
-  --wo-err: color-mix(in srgb, var(--accent-error) 80%, #000);
-  --wo-info: color-mix(in srgb, var(--accent-blue) 82%, #000);
-  --wo-accent: color-mix(in srgb, var(--accent-primary) 80%, #000);
-  --wo-run: color-mix(in srgb, var(--graph-running, var(--accent-blue)) 80%, #000);
-  --wo-done: color-mix(in srgb, var(--graph-passed, var(--accent-lime)) 72%, #000);
-  --wo-plan: color-mix(in srgb, var(--graph-planning, var(--accent-primary)) 80%, #000);
+  --wo-warn: color-mix(in srgb, var(--accent-warning) 56%, #000);
+  --wo-busy: color-mix(in srgb, var(--accent-orange) 60%, #000);
+  --wo-err: color-mix(in srgb, var(--accent-error) 72%, #000);
+  --wo-info: color-mix(in srgb, var(--accent-blue) 72%, #000);
+  --wo-accent: color-mix(in srgb, var(--accent-primary) 64%, #000);
+  --wo-magenta: color-mix(in srgb, var(--accent-magenta, var(--accent-primary)) 64%, #000);
+  --wo-run: color-mix(in srgb, var(--graph-running, var(--accent-blue)) 50%, #000);
+  --wo-done: color-mix(in srgb, var(--graph-passed, var(--accent-lime)) 56%, #000);
+  --wo-plan: color-mix(in srgb, var(--graph-planning, var(--accent-primary)) 56%, #000);
 }
+/* Glass Light's planning blue is the one tone its page colours leave light (measured 3.9:1 on its frost) */
+html[data-theme="glass-light"] :is(#panel-wizard, #panel-orchestrator) { --wo-plan: color-mix(in srgb, var(--graph-planning, var(--accent-primary)) 40%, #000); }
 /* Retro sets its labels in its own face; NieR in its ink and mono face, as its tags are */
 html[data-theme^="retro"] :is(#panel-wizard, #panel-orchestrator) { --wo-label-font: 700 10.5px/1.25 var(--display-font-sm, var(--body-font)); --wo-label-track: .08em; }
 html[data-o55-nier="on"] :is(#panel-wizard, #panel-orchestrator) {
-  --wo-ok: var(--o55-nier-ok-text); --wo-warn: var(--o55-nier-warn-text); --wo-busy: var(--o55-nier-warn-text);
-  --wo-err: var(--o55-nier-error-text); --wo-info: var(--o55-nier-ink); --wo-accent: var(--o55-nier-ink);
-  --wo-magenta: var(--o55-nier-ink); --wo-mut: color-mix(in srgb, var(--o55-nier-ink) 74%, transparent);
-  --wo-run: var(--o55-nier-ink); --wo-done: var(--o55-nier-ok-text); --wo-plan: var(--o55-nier-ink);
+  /* NieR's status texts, taken a little toward its ink so a bare word on a card reads 5:1 or more in both modes */
+  --wo-ok: color-mix(in srgb, var(--o55-nier-ok-text) 72%, var(--o55-nier-ink)); --wo-warn: color-mix(in srgb, var(--o55-nier-warn-text) 72%, var(--o55-nier-ink));
+  --wo-busy: color-mix(in srgb, var(--o55-nier-warn-text) 72%, var(--o55-nier-ink));
+  --wo-err: color-mix(in srgb, var(--o55-nier-error-text) 72%, var(--o55-nier-ink)); --wo-info: var(--o55-nier-ink); --wo-accent: var(--o55-nier-ink);
+  --wo-magenta: var(--o55-nier-ink); --wo-mut: color-mix(in srgb, var(--o55-nier-ink) 86%, transparent);
+  --wo-run: var(--o55-nier-ink); --wo-done: color-mix(in srgb, var(--o55-nier-ok-text) 72%, var(--o55-nier-ink)); --wo-plan: var(--o55-nier-ink);
   --wo-label-font: 500 10.5px/1.25 var(--mono-font, 'IBM Plex Mono', monospace); --wo-label-track: .14em;
   --wo-sel-fill: var(--o55-nier-ink); --wo-sel-line: var(--o55-nier-ink); --wo-sel-ink: var(--o55-nier-on-ink);
 }
@@ -29261,7 +29283,7 @@ html:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier="on"
   font: var(--wo-label-font); letter-spacing: var(--wo-label-track); text-transform: uppercase; color: var(--wo-mut);
 }
 #panel-wizard :is(.pm6-wiz-tbadge, .pm6-wiz-conf, .pm6-wiz-ro-badge)::before { content: ""; flex: none; width: 5px; height: 5px; background: currentColor; }
-#panel-wizard .pm6-wiz-tbadge { text-transform: none; letter-spacing: .01em; font-weight: 600; }
+#panel-wizard :is(.pm6-wiz-tbadge, .pm6-wiz-conf) { text-transform: none; letter-spacing: .01em; font-weight: 600; }
 #panel-wizard .pm6-wiz-evd-receipts { gap: 4px 14px; }
 #panel-wizard .pm6-wiz-conf { color: var(--wo-ok); }
 #panel-wizard .pm6-wiz-conf.medium { color: var(--wo-warn); }
@@ -29280,8 +29302,8 @@ html:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier="on"
 }
 #panel-wizard .pm6-wiz-intent-chip:first-child { border-radius: var(--pm-ctl-r) 0 0 var(--pm-ctl-r); }
 #panel-wizard .pm6-wiz-intent-chip:last-child { border-radius: 0 var(--pm-ctl-r) var(--pm-ctl-r) 0; }
-#panel-wizard .pm6-wiz-intent-chip:hover { z-index: 1; color: var(--text-primary); border-color: var(--border); background: color-mix(in srgb, var(--accent-primary) 7%, var(--surface-elevated)); }
-#panel-wizard .pm6-wiz-intent-chip.sel { z-index: 2; color: var(--wo-sel-ink); border-color: var(--wo-sel-line); background: var(--wo-sel-fill); }
+#panel-wizard .pm6-wiz-intent-chip:hover:not(.sel) { z-index: 1; color: var(--text-primary); border-color: var(--border); background: linear-gradient(var(--wo-hover-fill), var(--wo-hover-fill)), color-mix(in srgb, var(--surface-elevated) 60%, transparent); }
+#panel-wizard .pm6-wiz-intent-chip.sel { z-index: 2; color: var(--wo-sel-ink); font-weight: 700; border-color: var(--wo-sel-line); background: var(--wo-sel-fill); }
 #panel-wizard .pm6-wiz-intent-chip:focus-visible { z-index: 3; outline: 2px solid var(--accent-primary); outline-offset: 1px; }
 
 #panel-wizard :is(.pm6-wiz-quickchips, .pm6-wiz-opts) { gap: 0; padding-top: 1px; flex-direction: column; align-items: stretch; }
@@ -29300,12 +29322,15 @@ html:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier="on"
   content: ""; flex: none; width: 6px; height: 6px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor;
   transform: rotate(45deg); margin-left: -1px; opacity: .55;
 }
-#panel-wizard .pm6-wiz-opt:hover:not(:disabled) { z-index: 1; transform: none; color: var(--text-primary); background: color-mix(in srgb, var(--accent-primary) 8%, var(--surface-elevated)); }
+#panel-wizard .pm6-wiz-opt:hover:not(:disabled):not(.sel) { z-index: 1; transform: none; color: var(--text-primary); background: linear-gradient(var(--wo-hover-fill), var(--wo-hover-fill)), color-mix(in srgb, var(--surface-elevated) 60%, transparent); }
 #panel-wizard .pm6-wiz-opt:hover:not(:disabled)::before { opacity: 1; color: var(--wo-accent); }
 #panel-wizard .pm6-wiz-opt.sel { z-index: 2; color: var(--wo-sel-ink); border-color: var(--wo-sel-line); background: var(--wo-sel-fill); }
 #panel-wizard .pm6-wiz-opt.something { border-style: solid; color: var(--text-secondary); font-weight: 500; }
 #panel-wizard .pm6-wiz-opt:focus-visible { z-index: 3; outline: 2px solid var(--accent-primary); outline-offset: -2px; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-wizard :is(.pm6-wiz-opt, .pm6-wiz-intent-chip) { transition: none; }
+/* pressing a cell or a row deepens its fill for as long as it is held; nothing moves */
+#panel-wizard :is(.pm6-wiz-intent-chip, .pm6-wiz-opt):not(.sel):not(:disabled):active { background: linear-gradient(var(--wo-press-fill), var(--wo-press-fill)), color-mix(in srgb, var(--surface-elevated) 60%, transparent); transition-duration: 40ms; }
+html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-wizard :is(.pm6-wiz-intent-chip, .pm6-wiz-opt):not(.sel):not(:disabled):active { background: var(--wo-sel-fill); color: var(--wo-sel-ink); }
 
 /* ── Meters: square ends (NP-BARS) ─────────────────────────────────────────────────────────────────────────────────
    A topic's progress, the discovery scan, a thread's activity and the Orchestrator's lane bars get flat ends with a
@@ -29375,7 +29400,7 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-orchestrator .pm6-orc
 #panel-orchestrator .pm6-orch-chip[data-tone="err"] { color: var(--wo-err); }
 #panel-orchestrator .pm6-orch-chip[data-tone="mut"], #panel-orchestrator .pm6-orch-chip:not([data-tone]) { color: var(--wo-mut); }
 #panel-orchestrator .pm6-orch-chip:is([data-tone="mut"], :not([data-tone]))::before { width: 5px; height: 5px; border-radius: 0; opacity: .8; }
-#panel-orchestrator .pm6-orch-chip + .pm6-orch-chip { margin-left: 8px; }
+#panel-orchestrator .pm6-orch-chip:not(:last-child) { margin-right: 10px; }
 
 /* the node graph: its search field is the look's rectangle; its legend is a quiet row of marks and words on the canvas */
 #panel-orchestrator .pm6-orch-graph-search { border-radius: var(--pm-ctl-r); height: 26px; }
@@ -29386,27 +29411,19 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-orchestrator .pm6-orc
 html:is([data-theme^="basic"], [data-theme^="retro"], [data-o55-nier="on"]) #panel-orchestrator .pm6-orch-banner-btn { border-radius: var(--pm-ctl-r); }
 
 /* ── The Orchestrator's views: a chosen tab is filled on its own box, never underlined (F3-648, F3-490) ────────────
-   Basic, Friendly and Glass fill the chosen tab with the look's selection fill; Retro shows it in reverse video and NieR
-   as its ink block. The strip keeps its height and its scroll; the counts stay plain numbers. Under Liquid Glass the lens
-   does the choosing (pm7-liquid-glass's glass.css), so these give way to it there. */
+   The chosen view takes the concept's chosen fill (--wo-sel-fill above: the look's neutral selection, Glass's frost with
+   its top rim, Retro's reverse video, NieR's ink block), flat; a hover is the quieter step on the same box. The strip
+   keeps its height and its scroll, and Friendly's loses its capsule tabs and mint glow. The counts stay plain numbers.
+   Under Liquid Glass the lens does the choosing (pm7-liquid-glass's glass.css), so these give way to it there. */
 html:not([data-lg="on"]) #panel-orchestrator .orch-tabs { gap: 2px; padding-block: 4px; }
 html:not([data-lg="on"]) #panel-orchestrator .orch-tab {
   height: 28px; align-self: center; padding: 0 12px; border: 0; border-bottom: 0; border-radius: var(--pm-ctl-r); box-shadow: none;
   transition: background var(--motion-fast, 120ms) var(--ease-default, ease), color var(--motion-fast, 120ms) var(--ease-default, ease);
 }
-html:not([data-lg="on"]) #panel-orchestrator .orch-tab:hover:not(.active) { background: color-mix(in srgb, var(--text-primary) 6%, transparent); }
-html:not([data-lg="on"]) #panel-orchestrator .orch-tab.active {
-  border-bottom: 0; color: var(--wo-sel-ink); background: var(--wo-sel-fill); box-shadow: inset 0 0 0 1px var(--wo-sel-line);
-}
-/* Glass adds its 1 px rim on the top edge of the filled box */
-html[data-theme^="glass"]:not([data-lg="on"]) #panel-orchestrator .orch-tab.active { box-shadow: inset 0 1px 0 var(--glass-edge, rgba(255,255,255,.35)), inset 0 0 0 1px var(--wo-sel-line); }
-/* Friendly's strip loses its capsule tabs and its mint glow for the look's rectangle */
-html[data-theme^="friendly"] #panel-orchestrator .orch-tab.active { box-shadow: inset 0 0 0 1px var(--wo-sel-line); }
-/* Retro: reverse video, no ring */
-html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-orchestrator .orch-tab.active { box-shadow: none; font-weight: 700; }
+html:not([data-lg="on"]) #panel-orchestrator .orch-tab:hover:not(.active) { background: var(--wo-hover-fill); }
+html:not([data-lg="on"]) #panel-orchestrator .orch-tab.active { border-bottom: 0; color: var(--wo-sel-ink); background: var(--wo-sel-fill); box-shadow: none; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-orchestrator .orch-tab.active { font-weight: 700; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) #panel-orchestrator .orch-tab { transition: none; }
-/* NieR: the ink block */
-html[data-o55-nier="on"] #panel-orchestrator .orch-tab.active { box-shadow: none; }
 #panel-orchestrator .orch-tab.active .orch-tab-badge { color: inherit; opacity: .78; }
 
 /* ── The plan scope bar (T46 systems projection) in the look's controls ────────────────────────────────────────────
@@ -29419,12 +29436,13 @@ html[data-o55-nier="on"] #panel-orchestrator .orch-tab.active { box-shadow: none
   background-color: var(--surface-elevated); border: 1px solid var(--border); border-radius: var(--pm-ctl-r); cursor: pointer;
   transition: border-color var(--motion-fast, 120ms) var(--ease-default, ease), background-color var(--motion-fast, 120ms) var(--ease-default, ease);
 }
-#panel-orchestrator #pm7-named-plan-scope select {
+#panel-orchestrator :is(#pm7-named-plan-scope select, select.pm6-orch-select) {
   -webkit-appearance: none; appearance: none; padding-right: 26px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 9px center; background-size: 10px 6px;
 }
-html[data-theme$="-dark"] #panel-orchestrator #pm7-named-plan-scope select { color-scheme: dark; }
+html[data-theme$="-dark"] #panel-orchestrator :is(#pm7-named-plan-scope select, select.pm6-orch-select) { color-scheme: dark; }
+#panel-orchestrator select.pm6-orch-select { height: 26px; padding: 0 26px 0 9px; border-radius: var(--pm-ctl-r); cursor: pointer; }
 #panel-orchestrator #pm7-named-plan-scope :is(select, button):hover { border-color: color-mix(in srgb, var(--accent-primary) 45%, var(--border)); }
 #panel-orchestrator #pm7-named-plan-scope :is(select, button):focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
 #panel-orchestrator #pm7-named-plan-scope button[data-availability="handler_unavailable"] { color: var(--text-secondary); border-style: dashed; background-color: transparent; }
@@ -29491,7 +29509,8 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard :is(.pm-pop, .p
   .pm6-wiz-schip.busy .pm6-wiz-sdot, .pm6-wiz-skel-line, .pm6-wiz-doc-status, .pm6-wiz-disc-spin, .pm6-wiz-pulse),
 html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator :is(.pm-pop, .pm6-orch-dot, .pm6-orch-fresh-dot, .pm6-orch-pc-ring span) { animation: none !important; }
 html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator .pm6-orch-run-mode::after { animation: none !important; }
-html:is([data-motion="reduced"], [data-o55-still]) :is(#panel-wizard, #panel-orchestrator) :is(button, .pm-press, .pm6-wiz-topic-card, .pm6-wiz-attach-card, .pm6-wiz-choice-card):is(:hover, :active) { transform: none !important; }
+html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard :is(.pm-press, .pm6-wiz-bigbtn, .pm6-wiz-btn, .pm6-wiz-integrate-btn, .pm6-wiz-approve, .pm6-wiz-opt, .pm6-wiz-send, .pm6-wiz-topic-card, .pm6-wiz-choice-card):is(:hover, :active),
+html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator :is(.pm-press, .pm6-orch-run-chip, .pm6-orch-ctl, .pm6-orch-widget):is(:hover, :active) { transform: none !important; }
 html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard :is(.pm6-wiz-topic-prog-fill, .pm6-wiz-scanbar-fill),
 html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator .pm6-orch-bar > i { transition: background-color 140ms ease !important; }
 @media (prefers-reduced-motion: reduce) {
@@ -29503,7 +29522,8 @@ html:is([data-motion="reduced"], [data-o55-still]) #panel-orchestrator .pm6-orch
     .pm6-wiz-schip.busy .pm6-wiz-sdot, .pm6-wiz-skel-line, .pm6-wiz-doc-status, .pm6-wiz-disc-spin, .pm6-wiz-pulse),
   #panel-orchestrator :is(.pm-pop, .pm6-orch-dot, .pm6-orch-fresh-dot, .pm6-orch-pc-ring span) { animation: none !important; }
   #panel-orchestrator .pm6-orch-run-mode::after { animation: none !important; }
-  :is(#panel-wizard, #panel-orchestrator) :is(button, .pm-press, .pm6-wiz-topic-card, .pm6-wiz-attach-card, .pm6-wiz-choice-card):is(:hover, :active) { transform: none !important; }
+  #panel-wizard :is(.pm-press, .pm6-wiz-bigbtn, .pm6-wiz-btn, .pm6-wiz-integrate-btn, .pm6-wiz-approve, .pm6-wiz-opt, .pm6-wiz-send, .pm6-wiz-topic-card, .pm6-wiz-choice-card):is(:hover, :active),
+  #panel-orchestrator :is(.pm-press, .pm6-orch-run-chip, .pm6-orch-ctl, .pm6-orch-widget):is(:hover, :active) { transform: none !important; }
   #panel-wizard :is(.pm6-wiz-topic-prog-fill, .pm6-wiz-scanbar-fill), #panel-orchestrator .pm6-orch-bar > i { transition: background-color 140ms ease !important; }
 }
 
@@ -29541,6 +29561,7 @@ html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-hero, .pm6-wi
   -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
 }
 html[data-lg="on"][data-theme^="glass"] #panel-orchestrator .orch-header[data-lg-surface] { padding: 10px 16px !important; }
+html[data-lg="on"][data-theme^="glass"] #panel-orchestrator .pm6-orch-w-head { background: transparent !important; border-bottom: 1px solid var(--lg-line); -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 /* chosen cells and tabs on a sheet: the sheet's selection, with its text */
 html[data-lg="on"][data-theme^="glass"] :is(#panel-wizard, #panel-orchestrator) { --wo-sel-fill: var(--lg-sel); --wo-sel-ink: var(--lg-on-sel); --wo-sel-line: transparent; }
 html[data-lg="on"][data-theme^="glass"] #panel-wizard :is(.pm6-wiz-intent-chip, .pm6-wiz-opt):not(.sel) { background: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
