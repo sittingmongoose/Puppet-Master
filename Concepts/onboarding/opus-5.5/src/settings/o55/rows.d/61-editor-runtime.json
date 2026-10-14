@@ -10,19 +10,18 @@
    "help": "Used when a file does not say which encoding it uses."
   },
   "general.interaction.max-editor-tabs": {
-   "label": "Most tabs open at once",
-   "help": "The tab you used least long ago closes first.",
+   "label": "Most editor tabs open at once",
+   "help": "Past it, the editor tab you used least recently closes. Pinned tabs and tabs with unsaved changes stay, and other kinds of tab don't count.",
    "unit": "tabs",
    "min": 1,
    "max": 100
   },
   "general.startup.max-persisted-tabs": {
    "label": "Tabs reopened next time",
-   "help": "Can't be more than the tabs allowed open at once.",
+   "help": "Tabs of every kind. The ones you used least recently are left out first, and each panel's open tab and pinned tabs always come back.",
    "unit": "tabs",
    "min": 1,
-   "max": 100,
-   "maxFrom": "general.interaction.max-editor-tabs"
+   "max": 100
   },
   "general.interaction.hide-ignored-files": {
    "label": "Hide ignored files",
