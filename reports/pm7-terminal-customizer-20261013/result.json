@@ -77,5 +77,13 @@
  ],
  "audit": "pm7-terminal-options-audit-sol final NOTES.md 60827c18...; all ten diagnostics covered on this branch",
  "proposals": "/mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md (10 canon, 2 source notes)",
- "no_plans_canon_reseal_landing": true
+ "no_plans_canon_reseal_landing": true,
+ "after_landing_review": {
+  "source_head": "b585d3e475",
+  "branch_head_with_pages": "788b1daa24",
+  "published_page_sha256": "b697549363f1be8f7bc557d978f884b1b67e824b997e07659ea91733fd305513",
+  "scheme_hints": "34/34 right on the page before and after (13 Light, 21 Dark); landing harness late-review.mjs 13 failed before, 0 after",
+  "glass_surface": "data-lg-surface=\"menu\" on .pmt-cz-dialog; inert without glass.js; opens, focuses, closes on Escape in Basic and Glass dark",
+  "evidence": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-terminal-customizer-20261013/after-landing-review/"
+ }
 }

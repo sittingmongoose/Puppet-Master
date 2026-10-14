@@ -129,6 +129,26 @@ Two harness defects were found and fixed along the way. Their rows are kept in `
 - The first "Dim terminals I'm not in WORKS" checked only the amount and a forced dim of the preview, never the real
   trigger. The real-focus pass above replaced it.
 
+## After the landing review (2026-10-14)
+
+The landing check stopped on Terminal Colors' Light and Dark hints. Its harness loaded `kit.d/24-terminal-look.js`
+with the internal `T.Appearance`, whose schemes name it `appearance`. On the page, `window.PMT.Appearance` is the
+public catalog (`90-kind.js`), whose schemes name it `mode`, which the bridge read.
+
+On the published page `0931519e`, all 34 hints were already right as drawn (13 Light, 21 Dark), both through
+`PM51.valueHint` and in the dropdown. The bridge now reads `mode`, then `appearance`, so the landing harness passes
+too (before: 13 failed; after: 0). The terminal's own screens read raw schemes and already used `appearance`. The
+bridge's other outside names were checked: the Settings helpers, row keys `pm51` and `actionLabel`, the `meta` hint
+key, `lastInput` and `PMT.open`, and the importer's result. They all match.
+
+The Customize dialog also carries `data-lg-surface="menu"`, the Liquid Glass opt-in its owner asked for. It does
+nothing until `glass.js` lands. The dialog still drops in, takes focus and closes on Escape, in Basic dark and Glass
+dark. The page is now `b697549363f1be8f7bc557d978f884b1b67e824b997e07659ea91733fd305513` (source `b585d3e475`).
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-terminal-customizer-20261013/after-landing-review/`. It holds
+the drawn hints before and after, the landing harness before and after, and the dialog checks with and without the
+attribute.
+
 ## Changed paths
 
 Source:
