@@ -1,7 +1,12 @@
 {
- "_about": "editor-runtime: sections from the plain-pages audit (2026-09-27). Saving and tabs, the file tree, editing, four terminal groups and the search index; big-file limits and rarely changed terminal and index options under More options. The page is named Editor & Terminal: its containers moved to Containers. Duplicate hand rows are dropped: format-save (Tidy code automatically, Toolchain), large-file (the three inventory size limits), terminal-profile (Shell), terminal-restore (Terminals when a project reopens), index-exclusions (Leave out of search). In: tabs reopened next time, from App & Input. Editor look (pm7-editor-customizer, 2026-10-14): the editor's look rows leave Editing for their own group, as the terminal's have Terminal look, with the rarer ones under Editor look: more options; the proposed rows (src/settings/proposed.d) join them. Start With Editor Strip Collapsed is retired (Settings_System.md, Rows retired: there is no separate editor strip, DL-180), so it is drawn nowhere.",
+ "_about": "editor-runtime: sections from the plain-pages audit (2026-09-27). Saving and tabs, the file tree, editing, four terminal groups and the search index; big-file limits and rarely changed terminal and index options under More options. The page is named Editor & Terminal: its containers moved to Containers. Duplicate hand rows are dropped: format-save (Tidy code automatically, Toolchain), large-file (the three inventory size limits), terminal-profile (Shell), terminal-restore (Terminals when a project reopens), index-exclusions (Leave out of search). In: tabs reopened next time, from App & Input; Preview Tabs and Tab Sizing too (canon SSYS-050 groups them in Editor & Terminal, Saving & tabs; Jared, 2026-10-14). Editor look (pm7-editor-customizer, 2026-10-14): the editor's look rows leave Editing for their own group, as the terminal's have Terminal look, with the rarer ones under Editor look: more options; the proposed rows (src/settings/proposed.d) join them. Start With Editor Strip Collapsed is retired (Settings_System.md, Rows retired: there is no separate editor strip, DL-180), so it is drawn nowhere. So are the five terminal rows canon retired (DL-181; code.terminal.search by lead ruling L18): Preferred Layout, Auto-Open a Second Pane, Explain What Commands Do, Tab Purpose Hints and Search in Terminal.",
  "retire_ids": [
-  "code.editing.editor-strip-collapsed"
+  "code.editing.editor-strip-collapsed",
+  "code.terminal.layout-style",
+  "code.terminal.auto-second-pane",
+  "code.terminal.explanations",
+  "code.terminal.tab-role",
+  "code.terminal.search"
  ],
  "pages": {
   "editor-runtime": {
@@ -108,6 +113,8 @@
   {
    "section": "editor-open",
    "ids": [
+    "general.interaction.preview-tabs",
+    "general.interaction.tab-sizing",
     "general.interaction.max-editor-tabs",
     "general.startup.max-persisted-tabs"
    ]
@@ -158,6 +165,7 @@
     "code.editing.min-contrast",
     "code.editing.italic-comments",
     "code.editing.bold-keywords",
+    "code.editing.token-colors",
     "code.editing.font-weight",
     "code.editing.letter-spacing",
     "code.editing.cursor-width",
@@ -185,7 +193,6 @@
     "code.terminal.shell",
     "code.terminal.cwd",
     "code.terminal.startup-command",
-    "code.terminal.layout-style",
     "code.terminal.layout-restore",
     "code.terminal.kill-confirm"
    ]
@@ -196,14 +203,12 @@
     "code.terminal.theme",
     "code.terminal.font-family",
     "code.terminal.font-size",
-    "code.terminal.rendering-mode",
-    "code.terminal.explanations"
+    "code.terminal.rendering-mode"
    ]
   },
   {
    "section": "editor-terminal-output",
    "ids": [
-    "code.terminal.search",
     "code.terminal.sticky-header",
     "code.terminal.readability-signals",
     "code.terminal.transcript-retention",
@@ -238,8 +243,6 @@
    "section": "editor-terminal-more",
    "ids": [
     "code.terminal.allowed-profiles",
-    "code.terminal.auto-second-pane",
-    "code.terminal.tab-role",
     "code.terminal.font-rendering",
     "code.terminal.performance-mode",
     "code.terminal.shell-integration",

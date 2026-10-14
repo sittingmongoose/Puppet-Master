@@ -418,6 +418,11 @@
   "code.editing.bold-keywords": {
    "label": "Keywords in bold"
   },
+  "code.editing.token-colors": {
+   "label": "Token colours",
+   "help": "One kind of word in one scheme, as scheme/kind: #rrggbb. Set them in the editor's Customize screen, under Colors.",
+   "emptyList": "None: every scheme's own"
+  },
   "code.editing.font-weight": {
    "label": "Editor text weight",
    "help": "JetBrains Mono 400 to 800, Atkinson Hyperlegible Mono 200 to 800.",
