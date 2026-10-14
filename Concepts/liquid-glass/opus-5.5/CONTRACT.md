@@ -49,7 +49,8 @@ lands (after M3).
 | `--lg-lens-hair` | white .17 | white .90 | The lens's hairline rim |
 | `--lg-shine-c` / `--lg-shine-blend` | | | The pointer's light (a 96 px disc, `--pmf-r`) |
 | `--lg-switch-off` | white .16 | ink .14 | A switch's off track |
-| `--pm-ctl-r` / `--pm-ctl-r-in` / `--lg-r-card` | 6 / 3 / 16 px | | Corners: controls, inside a control, cards |
+| `--pm-ctl-r` / `--pm-ctl-r-in` | 6 / 3 px | | Corners of a control, and of something inside a control |
+| `--lg-r-sheet` / `--lg-r-card` / `--lg-r-bar` | 18 / 16 / 14 px | | Corners of `panel`, `card` and `bar` sheets. Content inset by *p* inside a sheet takes the sheet's radius minus *p* |
 
 Text keeps the look's own `--text-primary`, `--text-secondary` and `--text-muted`.
 
