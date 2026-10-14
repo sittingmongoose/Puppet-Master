@@ -645,8 +645,8 @@
        draw on where it will land as the last helper bows, the stamp glides in from above the sheet and hovers there
        (its face's outline dashed over it, the drafting sign of an edge hidden from view), lifts a little in the rest,
        and strikes on the resolving chord with its felt thump. The grid under it brightens once, two press lines spread
-       from its edges, and it lifts away up and to the right, uncovering a big APPROVED impression with today's date
-       across the middle of the sheet (on the narrow band, beside h2's head). Measured: nothing overshoots. */
+       from its edges, and it lifts a little up and to the right as it fades, uncovering a big APPROVED impression with
+       today's date across the middle of the sheet (on the narrow band, beside h2's head). Measured: nothing overshoots. */
     basic(p, svg, em, els, cc, o) {
       const s = em('stamp'), C = cc.rise + 30;
       /* (the impression is made at the contact, under the stamp; its words show as the stamp, lifting away, is clear of
@@ -702,7 +702,12 @@
     retro(p, svg, em) {
       const cl = em('clear'), ar = em('arrow'), sc = em('score');
       sc.forEach((el) => p.anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: CC0.rise + 420, fill: 'backwards' }));
-      cl.forEach((el) => p.anim(el, [{ clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)' }], { duration: 360, delay: CC0.rise + 60, easing: 'steps(9, end)', fill: 'backwards' }));
+      /* the message box opens whole and its words type on inside it (the box wiping in with them let the strings run
+         through the words for the wipe's 360 ms) */
+      cl.forEach((el) => {
+        p.anim(el, IN, { duration: 1, delay: CC0.rise + 60, fill: 'backwards' });
+        el.querySelectorAll('text').forEach((t) => p.anim(t, [{ clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)' }], { duration: 360, delay: CC0.rise + 60, easing: 'steps(9, end)', fill: 'backwards' }));
+      });
       ar.forEach((el) => p.anim(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: CC0.rise + 520, fill: 'backwards' }));
       tally(svg, 0, false);
       return { rise() { for (let i = 1; i <= 8; i++) p.at(420 + i * 90, () => { tally(svg, i / 8, false); play('phase', { step: i }); }); } };
@@ -753,7 +758,8 @@
       if (back) back.insertBefore(grid, back.firstChild);
       p.end(() => { L.div.remove(); grid.remove(); });
       /* the beats: the marks at C-300, the stamp in from C-310 to its hover at C-150, lifted a little to C-85, the strike
-         to C, the press and its give, the lift from C+170, gone by C+500 */
+         to C, the press and its give, the lift from C+170, faded out by C+320 while still near the paper (flying off
+         to the top right, it crossed the control bar's CONTROL · 224 label) */
       const s0 = D(C - 310), s1 = D(C + 500), span = s1 - s0, at = (t) => (D(t) - s0) / span;
       /* (from above the view, wherever the band or the slice puts its top) */
       const ty0 = Math.min(-170, (V.y - Y) / k - 120), tx0 = -70;
@@ -770,8 +776,8 @@
         { offset: at(C), transform: 'translate(0px, 0px) scale(1)', easing: 'cubic-bezier(0.2, 0, 0, 1)' },
         { offset: at(C + 40), transform: 'translate(0px, 0px) scale(0.988)', easing: 'cubic-bezier(0.2, 0, 0, 1)' },
         { offset: at(C + 170), transform: 'translate(0px, 0px) scale(1)', easing: 'cubic-bezier(0.45, 0, 0.2, 1)' },
-        { offset: 1, transform: `translate(64px, ${Math.min(-200, ty0 * 0.7).toFixed(1)}px) scale(1.45)` }], { duration: span, delay: s0, fill: 'both' });
-      p.anim(tl, OUT, { duration: 150, delay: D(C + 340), fill: 'forwards' });
+        { offset: 1, transform: 'translate(40px, -120px) scale(1.35)' }], { duration: span, delay: s0, fill: 'both' });
+      p.anim(tl, OUT, { duration: 130, delay: D(C + 190), fill: 'forwards' });
       p.at(D(C - 300), () => play('move', { step: 1 }));
       p.at(D(C + 170), () => play('move', { step: 2 }));
       /* the blow: two press lines spread from the face's edges and fade (one way), the grid brightens once and settles
