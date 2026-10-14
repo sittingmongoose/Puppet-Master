@@ -2,9 +2,10 @@
    Both stages fill the same page; the outgoing stage takes no space and cannot receive input or accessibility focus. */
 #panel-wizard > .pm6-wiz-stage { position: absolute; inset: 0; }
 #panel-wizard > .pm6-wiz-stage.wo-stage-out {
-  display: flex; z-index: 0;
+  display: flex; z-index: 0; overflow: clip; translate: 0 var(--wo-stage-scroll-top, 0px);
   animation: pm-page-in 180ms var(--ease-out) both; pointer-events: none;
 }
+#panel-wizard > .pm6-wiz-stage.wo-stage-out > * { translate: 0 var(--wo-stage-scroll-offset, 0px); }
 #panel-wizard > .pm6-wiz-stage.wo-stage-in { z-index: 1; }
 html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard > .pm6-wiz-stage.wo-stage-out {
   animation: wo-fade 140ms ease-out both;
