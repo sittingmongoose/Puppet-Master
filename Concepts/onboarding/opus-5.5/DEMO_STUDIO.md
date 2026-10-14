@@ -143,12 +143,12 @@ Which owner each section calls:
 |---|---|
 | Onboarding | `PM_O55_ONBOARDING.replay` and `.resume`, `O55.ui.open({ fresh, screen })`, `O55.fixtures.make` and `O55.store` `scenario` (a situation is a start plus twists joined by `+`; twists that describe the same thing two ways replace each other) |
 | Guided Tour | `PM7_GUIDED_TOUR.restart`, `.resume`, `.resumable`; a chapter start restarts the tour and then calls `O55.tour.go` on the chapter's first step (internal to the tour, guarded) |
-| Story | `PM_DEMO.clock` (play, pause, speed), `PM_DEMO.director.ensure`, `PM_DEMO.state.story`, `PM_DEMO.log`; Ctrl+Shift+D opens this section instead of the engine's unstyled director box |
+| Story | `PM_DEMO.clock` (play, pause, speed), `PM_DEMO.director.ensure`, `PM_DEMO.state.story`, `PM_DEMO.log`. No shortcut opens the Studio: Ctrl+Shift+D is left to Readiness & Doctor (Jared, 2026-10-14), and the engine's old unstyled director box it used to toggle is hidden, since this section replaces it |
 | Workspace | `PMW.NAMED`, `PMW.savedLayouts`, `PMW.applyNamed`, `PMW.resetLayout`; `PM_HOME.settings` `chat.standIn`; the stand-in chat's Agent activity rows; `PMT.agent.open` and `.run` |
 | Usage | `PMU.live.pause`, `.resume`, `.hour.play`, `.hour.back`; `PMU.charts.gallery`; `PM_PAGES.go('usage')` |
 | Notices | `PM_TITLEBAR_NOTIFY.demo(name)` when pm7-notifications' engine is on the page, else `window.toast` and `toast.important` with the same words; `PM_TITLEBAR_NOTIFY.clearAll` |
 | Looks | `PM7_SETTINGS_TOME.setChromeThemeFamily` and `.setChromeThemeMode` (the title-bar menu's path, saved to the Project), `PM_NIER.set`, `PM_NIER_CHIPS.popup`, `PM12_KIMI.setSettingFromHost('general.visual.reduce-animations')`, `O55.sound.setMuted`; with Liquid Glass on the page, `PM_LG.set` and `PM_LG.wall` (and `data-lg-demo-host` on `<html>` so Glass's own status button steps aside) |
-| Reset | Progress: `O55.tour.reset`, then onboarding as a new install in a Fresh computer. Workspace layout: `PMW.resetLayout`. Everything: every key this concept keeps in the browser (`pm…`, `o55…`, `widget_layout:`, `widget_presets:`, `home_workspace_layout:`, not the 5.6 Pro chat's `pm56…`) and the terminal's saved-scrollback database, then a reload without the onboarding switches. Each size asks a second press within five seconds. |
+| Reset | Progress: `O55.tour.reset`, then onboarding as a new install in a Fresh computer. Workspace layout: `PMW.resetLayout`. Everything: every key this concept keeps in the browser (`pm…`, `o55…`, `widget_layout:`, `widget_presets:`, `home_workspace_layout:`, the 5.6 Pro chat demo's `pm56…` included, since that chat is ported in next, and the Studio's own place) and the terminal's saved-scrollback database, then a reload without the onboarding switches. Each size asks a second press within five seconds. |
 | Switches | Builds the address from the page's own switches and reloads with it. |
 
 Looks: the sheet carries `data-pmds-look` (basic, friendly, retro, glass, nier) and `data-pmds-mode`. Basic is quiet and
@@ -162,3 +162,13 @@ app's engine (`data-pmh`); labelled controls carry `data-pm-hover-exempt` so the
 Motion: each look has its own voice for opening (out of the item, bottom left), closing, changing section and the rail's
 selection (`VOICE` in `92-demo-studio-ui.js`): Basic eases, Friendly springs and lands, Retro reveals in scan steps, Glass
 rises with depth, NieR opens from a line in steps. Under Reduced Motion every one is a short fade with no travel.
+
+Moving (Jared, 2026-10-14): the sheet is dragged by its header so it never blocks what someone wants to see. While it is
+carried, its corner shows as a dashed outline that lights when a drop would put it back there. Its place is kept in
+`pm.o55.demo-studio.v1` and pulled back inside the window on every resize. From the keyboard, the header's Move handle
+takes the arrow keys (Shift for bigger steps) and Home; Put back (shown while the sheet is away) and a double-click on the
+header return it to its corner with the look's own glide. In onboarding's narrow layout the sheet fills the window and
+does not move.
+
+Grounds: Friendly's sheet stands on Friendly's own ground (the dot grid and three pastel corner glows of its body and
+chat), and NieR's page carries the app's faint grid with NieR Mode's background scene drawn behind it, as the app does.

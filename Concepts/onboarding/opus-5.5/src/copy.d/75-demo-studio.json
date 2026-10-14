@@ -410,7 +410,7 @@
       },
       "everything": {
         "title": "Everything",
-        "sub": "All of the above and everything else this concept saved in this browser. Then the page reloads as a first run."
+        "sub": "All of the above and everything else this concept saved in this browser, the 5.6 Pro chat demo's data included. Then the page reloads as a first run."
       },
       "goes": "What goes",
       "stays": "What stays",
@@ -428,7 +428,9 @@
         "terminal": "Terminal settings and saved scrollback",
         "usage": "Usage boards and readings",
         "rail": "The left rail",
-        "settings": "Settings, looks included"
+        "settings": "Settings, looks included",
+        "chat56": "The assistant chat demo's data (5.6 Pro)",
+        "studio": "Where this Studio was moved to"
       },
       "found": "{n} saved items in this browser",
       "run": "Reset",
@@ -474,6 +476,9 @@
       "resetLayout": "The Home layout is back to its default.",
       "jumped": "Story jumped to {point}",
       "unavailable": "That is not available on this page right now."
-    }
+    },
+    "move": "Move the Studio",
+    "moveHint": "Drag the title bar, or press the arrow keys here (Shift for bigger steps). Home puts it back in its corner.",
+    "putBack": "Put the Studio back in its corner"
   }
 }

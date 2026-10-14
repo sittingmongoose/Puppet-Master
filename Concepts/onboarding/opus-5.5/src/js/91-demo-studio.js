@@ -312,17 +312,18 @@
   };
 
   /* ---- resets ---- */
+  /* every key this concept keeps: PMConcept7's own, the Studio's place, and the 5.6 Pro chat demo's pm56 keys (Jared,
+     2026-10-14: that chat is ported in next, so Everything resets it too) */
   const OWNED = /^(pm[\w]*[.:\-_]|o55|widget_(layout|presets):|home_workspace_layout:)/i;
-  const NOT_OURS = /^pm56/i;   /* the 5.6 Pro chat concept shares a file:// origin and keeps its own */
   function ownedKeys() {
     const out = [];
-    try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && OWNED.test(k) && !NOT_OURS.test(k)) out.push(k); } } catch (_) {}
+    try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && OWNED.test(k)) out.push(k); } } catch (_) {}
     return out.sort();
   }
   const RESETS = {
     progress: ['onboarding', 'tour', 'situation'],
     layout: ['layout'],
-    everything: ['onboarding', 'tour', 'situation', 'layout', 'saved', 'dashboards', 'chat', 'terminal', 'usage', 'rail', 'settings']
+    everything: ['onboarding', 'tour', 'situation', 'layout', 'saved', 'dashboards', 'chat', 'chat56', 'terminal', 'usage', 'rail', 'settings', 'studio']
   };
   const reset = {
     ids: Object.keys(RESETS),

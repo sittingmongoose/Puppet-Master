@@ -59,7 +59,7 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 
 /* ---- the sheet ---- */
 #o55-demo .pmds-sheet {
-  position: fixed; left: var(--pmds-x, 14px); bottom: var(--pmds-y, 40px); width: var(--pmds-w, 960px); height: var(--pmds-h, 640px);
+  position: fixed; left: var(--pmds-x, 14px); top: var(--pmds-top, 120px); width: var(--pmds-w, 960px); height: var(--pmds-h, 640px);
   z-index: 1; color: var(--pmds-ink); font: 400 13px/1.45 var(--pmds-font); letter-spacing: normal; text-align: left;
   transform-origin: 20px 100%; contain: layout style;
 }
@@ -77,13 +77,41 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 
 /* header */
 #o55-demo .pmds-head {
-  display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(180px, 300px) auto; align-items: center; gap: 12px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px;
   padding: 14px 14px 14px 18px; border-bottom: 1px solid var(--pmds-line2);
+  cursor: grab; touch-action: none; user-select: none;
 }
+#o55-demo .pmds-brand { flex: 1 1 auto; min-width: 0; }
+#o55-demo .pmds-head :is(input, button, label) { cursor: auto; }
+#o55-demo .pmds-head button { cursor: pointer; }
+#o55-demo .pmds-sheet[data-pmds-fixed] .pmds-head { cursor: auto; }
+#o55-demo .pmds-sheet[data-pmds-fixed] .pmds-grip { display: none; }
+#o55-demo .pmds-sheet[data-pmds-dragging] .pmds-head { cursor: grabbing; }
+/* the Move handle (arrow keys move the sheet) and Put back (shown while the sheet is away from its corner) */
+#o55-demo :is(.pmds-grip, .pmds-dock) { display: grid; place-items: center; width: 34px; height: 34px; flex: none; border: 1px solid transparent; border-radius: var(--pmds-ctl); background: transparent; color: var(--pmds-mute); }
+#o55-demo .pmds-grip:hover { background: var(--pmds-wash); color: var(--pmds-ink); }
+#o55-demo .pmds-grip { cursor: grab; }
+#o55-demo .pmds-dock { border-color: var(--pmds-line); color: var(--pmds-acc); }
+#o55-demo .pmds-dock:hover { background: var(--pmds-wash); }
+#o55-demo .pmds-dock[hidden] { display: none; }
+#o55-demo .pmds-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+/* home, outlined while the sheet is carried; lit when a drop there would put it back */
+#o55-demo .pmds-homeghost {
+  position: fixed; z-index: 0; box-sizing: border-box; pointer-events: none;
+  border: 2px dashed color-mix(in srgb, var(--pmds-ink) 30%, transparent); border-radius: var(--pmds-r);
+  background: color-mix(in srgb, var(--pmds-acc) 4%, transparent);
+  transition: border-color 140ms ease, background-color 140ms ease;
+  animation: pmds-ghost-in 160ms ease both;
+}
+#o55-demo .pmds-homeghost[data-lit] { border-color: var(--pmds-acc); background: color-mix(in srgb, var(--pmds-acc) 12%, transparent); }
+@keyframes pmds-ghost-in { from { opacity: 0; } }
+/* carried: the sheet lifts (each look adds its own touch in 51-demo-studio-looks.css) */
+#o55-demo .pmds-sheet[data-pmds-dragging] .pmds-frame { box-shadow: 0 40px 90px -20px rgba(0, 0, 0, .65), 0 6px 16px -4px rgba(0, 0, 0, .3); }
 #o55-demo .pmds-brandmark { display: grid; place-items: center; width: 36px; height: 36px; border-radius: var(--pmds-r2); color: var(--pmds-acc-ink); background: var(--pmds-acc); }
 #o55-demo .pmds-brandkicker { font: 600 10.5px/1.2 var(--pmds-font); letter-spacing: .08em; text-transform: uppercase; color: var(--pmds-mute); }
 #o55-demo .pmds-title { font: 700 18px/1.2 var(--pmds-display); letter-spacing: -.01em; }
 #o55-demo .pmds-search {
+  flex: 0 1 300px; min-width: 180px;
   display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 8px 0 10px; color: var(--pmds-mute);
   border: 1px solid var(--pmds-line); border-radius: var(--pmds-ctl); background: var(--pmds-bg2);
 }
@@ -454,8 +482,7 @@ html[data-pmw-home="on"] #o55-demo.pmds[data-pmw-docked]:not([data-o55-narrow]) 
 #o55-demo .pmds-search-none { padding: 30px 0; text-align: center; }
 
 /* ---- a narrow sheet: the rail becomes a strip over the page ---- */
-#o55-demo .pmds-sheet[data-pmds-compact] .pmds-head { grid-template-columns: auto minmax(0, 1fr) auto; }
-#o55-demo .pmds-sheet[data-pmds-compact] .pmds-search { grid-column: 1 / -1; grid-row: 2; }
+#o55-demo .pmds-sheet[data-pmds-compact] .pmds-search { order: 9; flex: 1 1 100%; }
 #o55-demo .pmds-sheet[data-pmds-compact] .pmds-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
 #o55-demo .pmds-sheet[data-pmds-compact] .pmds-nav { flex-direction: row; padding: 6px 8px; overflow-x: auto; overflow-y: hidden; border-right: 0; border-bottom: 1px solid var(--pmds-line2); }
 #o55-demo .pmds-sheet[data-pmds-compact] .pmds-navink { margin-left: 0; }

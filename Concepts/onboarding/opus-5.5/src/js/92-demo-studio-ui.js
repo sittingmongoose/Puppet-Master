@@ -12,13 +12,21 @@
    O55.nierFx (each a no-op unless its part is installed) and CSS gated by data-o55-nier-parts. Hover is the app's own
    engine: tiles, rows and buttons opt in with data-pmh.
 
-   Ctrl+Shift+D, which used to toggle the demo engine's unstyled "Demo director" box, opens the Studio at Story. */
+   No shortcut opens it (Jared, 2026-10-14): Ctrl+Shift+D stays Readiness & Doctor's. The demo engine's old unstyled
+   "Demo director" box, which that key used to toggle, is hidden (51-demo-studio-looks.css): Story replaces it.
+
+   Moving (Jared, 2026-10-14): the sheet can be dragged by its header so it never blocks what someone wants to see. Its
+   place is remembered (pm.o55.demo-studio.v1, cleared by Reset > Everything), kept inside the window on resize, and
+   movable from the keyboard with the header's Move handle (arrows, Shift for big steps, Home to put it back). While it
+   is away from its corner, a Put back button returns it; dropped near its corner, it snaps home. */
 (function () {
   'use strict';
   const O55 = window.O55, U = O55.util, esc = U.esc, T = (k, v) => O55.t(k, v), M = O55.studio;
   const real = O55.motion.real;
   const SECTIONS = ['start', 'onboarding', 'tour', 'story', 'workspace', 'usage', 'notices', 'looks', 'reset', 'switches'];
-  const ST = { el: null, entry: null, sheet: null, open: false, section: 'start', q: '', pick: null, sw: null, confirm: null, timer: 0, tick: 0, anims: [], busy: false, focusKey: null };
+  const ST = { el: null, entry: null, sheet: null, open: false, section: 'start', q: '', pick: null, sw: null, confirm: null, timer: 0, tick: 0, anims: [], busy: false, focusKey: null, pos: null, home: null, drag: null };
+  const POS_KEY = 'pm.o55.demo-studio.v1';
+  const SNAP = 28;   /* px from its corner within which a dropped sheet goes home */
 
   /* ---- icons: one 24 px stroke grammar (NieR's icons part squares their ends in CSS) ---- */
   const PATHS = {
@@ -66,7 +74,9 @@
     gauge: '<path d="M4.5 16.5a7.5 7.5 0 1 1 15 0"/><path d="M12 16.5l3.6-4.4"/>',
     gallery: '<rect x="3.5" y="4.5" width="7.5" height="6.5" rx="1"/><rect x="13" y="4.5" width="7.5" height="6.5" rx="1"/><rect x="3.5" y="13" width="7.5" height="6.5" rx="1"/><path d="M13 19.5l2.5-3.5 2 2 1.5-2 1.5 3.5"/>',
     list: '<path d="M8.5 7h11M8.5 12h11M8.5 17h11"/><path d="M4.5 7h.01M4.5 12h.01M4.5 17h.01"/>',
-    link: '<path d="M10 14a4 4 0 0 1 0-5.7l3-3a4 4 0 0 1 5.7 5.7l-1.4 1.4"/><path d="M14 10a4 4 0 0 1 0 5.7l-3 3a4 4 0 0 1-5.7-5.7l1.4-1.4"/>'
+    link: '<path d="M10 14a4 4 0 0 1 0-5.7l3-3a4 4 0 0 1 5.7 5.7l-1.4 1.4"/><path d="M14 10a4 4 0 0 1 0 5.7l-3 3a4 4 0 0 1-5.7-5.7l1.4-1.4"/>',
+    move: '<path d="M12 3.5v17M3.5 12h17"/><path d="M9.5 6L12 3.5 14.5 6M9.5 18l2.5 2.5 2.5-2.5M6 9.5L3.5 12 6 14.5M18 9.5l2.5 2.5-2.5 2.5"/>',
+    dock: '<rect x="3.5" y="3.5" width="17" height="17" rx="1.5"/><rect x="5.5" y="11" width="8" height="7.5" rx="1" fill="currentColor" stroke="none"/><path d="M19 5l-6.5 6.5M12.5 7v4.5H17"/>'
   };
   const ico = (n, s) => `<svg class="pmds-ico pmds-ico-${n}" viewBox="0 0 24 24" width="${s || 16}" height="${s || 16}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${PATHS[n] || PATHS.spark}</svg>`;
   M.icon = ico;
@@ -320,6 +330,8 @@
   function sheetHtml() {
     return `<div class="pmds-frame" data-lg-surface="menu">`
       + `<header class="pmds-head"><span class="pmds-brandmark" aria-hidden="true">${ico('studio', 20)}</span><div class="pmds-brand"><p class="pmds-brandkicker">${esc(T('studio.kicker'))}</p><h2 class="pmds-title" id="pmds-title">${esc(T('studio.title'))}</h2></div>`
+      + `<button type="button" class="pmds-grip" data-pmh="icon" aria-label="${esc(T('studio.move'))}" aria-describedby="pmds-movehint">${ico('move', 16)}</button><span class="pmds-sr" id="pmds-movehint">${esc(T('studio.moveHint'))}</span>`
+      + `<button type="button" class="pmds-dock" data-pmds-do="put-back" data-pmh="icon" aria-label="${esc(T('studio.putBack'))}" hidden>${ico('dock', 16)}</button>`
       + `<label class="pmds-search">${ico('search', 15)}<input type="search" class="pmds-q" placeholder="${esc(T('studio.search'))}" aria-label="${esc(T('studio.searchLabel'))}" autocomplete="off" spellcheck="false"><kbd aria-hidden="true">/</kbd></label>`
       + `<button type="button" class="pmds-x" data-pmds-do="close" data-pmh="icon" aria-label="${esc(T('studio.close'))}">${ico('close', 16)}</button></header>`
       + `<div class="pmds-body"><nav class="pmds-nav" role="tablist" aria-orientation="vertical" aria-label="${esc(T('studio.title'))}"><span class="pmds-navink" aria-hidden="true"></span>`
@@ -346,6 +358,21 @@
     const l = lookOf();
     ST.el.setAttribute('data-pmds-look', l.look); ST.el.setAttribute('data-pmds-mode', l.mode);
     ST.el.toggleAttribute('data-pmds-reduced', O55.motion.reduced());
+    syncScene(l.look);
+  }
+  /* NieR Mode's background scene, the one the app is showing (html[data-o55-nier-scene], PM_NIER_SCENES), drawn behind
+     the Studio's page too; parsed once per scene */
+  function syncScene(look) {
+    const frame = ST.sheet.querySelector('.pmds-frame'), key = document.documentElement.getAttribute('data-o55-nier-scene');
+    const S = window.PM_NIER_SCENES, want = look === 'nier' && key && S && typeof S.svg === 'function' ? key : null;
+    let layer = frame.querySelector('.pmds-scene');
+    ST.el.toggleAttribute('data-pmds-scene', !!want);
+    if (!want) { if (layer) layer.remove(); return; }
+    if (layer && layer.dataset.scene === want) return;
+    let svg = ''; try { svg = S.svg(want) || ''; } catch (_) { svg = ''; }
+    if (!svg) { if (layer) layer.remove(); ST.el.removeAttribute('data-pmds-scene'); return; }
+    if (!layer) { layer = document.createElement('div'); layer.className = 'pmds-scene'; layer.setAttribute('aria-hidden', 'true'); frame.insertBefore(layer, frame.firstChild); }
+    layer.dataset.scene = want; layer.innerHTML = svg;
   }
   const voice = () => (O55.motion.reduced() ? 'reduced' : lookOf().look);
 
@@ -363,10 +390,84 @@
     const left = narrow ? gap : Math.max(gap, Math.min(14, vw));
     const w = Math.max(300, Math.min(1000, vw - left - gap));
     const h = Math.max(320, Math.min(720, vh - bottom - top));
+    /* home is the corner above the item; a moved sheet keeps its own place, pulled back inside the window */
+    ST.home = { x: left, y: Math.max(gap, vh - bottom - h), w, h };
+    const away = !!ST.pos && !narrow;
+    const x = away ? clamp(ST.pos.x, gap, vw - w - gap) : ST.home.x;
+    const y = away ? clamp(ST.pos.y, gap, vh - h - gap) : ST.home.y;
+    setXY(x, y);
     const s = ST.sheet.style;
-    s.setProperty('--pmds-x', left + 'px'); s.setProperty('--pmds-y', bottom + 'px');
     s.setProperty('--pmds-w', w + 'px'); s.setProperty('--pmds-h', h + 'px');
     ST.sheet.toggleAttribute('data-pmds-compact', w < 700);
+    ST.sheet.toggleAttribute('data-pmds-away', away);
+    ST.sheet.toggleAttribute('data-pmds-fixed', narrow);
+    const dock = ST.sheet.querySelector('.pmds-dock'); if (dock) dock.hidden = !away;
+  }
+  const clamp = (v, a, b) => Math.min(Math.max(v, a), Math.max(a, b));
+  function setXY(x, y) { const s = ST.sheet.style; s.setProperty('--pmds-x', Math.round(x) + 'px'); s.setProperty('--pmds-top', Math.round(y) + 'px'); ST.at = { x, y }; }
+
+  /* ---- moving ---- */
+  function loadPos() { const v = O55.store.get(POS_KEY, null); return v && Number.isFinite(v.x) && Number.isFinite(v.y) ? { x: v.x, y: v.y } : null; }
+  function savePos() { if (ST.pos) O55.store.set(POS_KEY, { x: Math.round(ST.pos.x), y: Math.round(ST.pos.y) }); else O55.store.clear(POS_KEY); }
+  const nearHome = (x, y) => !!ST.home && Math.hypot(x - ST.home.x, y - ST.home.y) <= SNAP;
+  /* the outline of home, shown while the sheet is carried (and lit when a drop would land there) */
+  function ghost(show, lit) {
+    let g = ST.el.querySelector('.pmds-homeghost');
+    if (!show) { if (g) g.remove(); return; }
+    if (!g) { g = document.createElement('span'); g.className = 'pmds-homeghost'; g.setAttribute('aria-hidden', 'true'); ST.el.insertBefore(g, ST.sheet); }
+    const s = g.style, h = ST.home;
+    s.left = h.x + 'px'; s.top = h.y + 'px'; s.width = h.w + 'px'; s.height = h.h + 'px';
+    g.toggleAttribute('data-lit', !!lit);
+  }
+  /* glide from where the sheet is drawn now to where place() puts it (FLIP on translate) */
+  function glideFrom(x0, y0) {
+    const dx = x0 - ST.at.x, dy = y0 - ST.at.y;
+    if (!dx && !dy) return;
+    const v = voice(), ms = v === 'reduced' ? 0 : v === 'friendly' ? 560 : v === 'glass' ? 420 : v === 'retro' ? 160 : v === 'nier' ? 180 : 300;
+    if (!ms) return;
+    const ease = v === 'friendly' ? SPRING : v === 'retro' ? 'steps(4, end)' : v === 'nier' ? 'steps(3, end)' : 'cubic-bezier(.2,.8,.2,1)';
+    const a = ST.sheet.animate([{ translate: `${dx}px ${dy}px` }, { translate: '0 0' }], { duration: ms, easing: ease });
+    ST.anims.push(a); a.finished.then(() => { ST.anims = ST.anims.filter((z) => z !== a); }, () => {});
+  }
+  function putBack() {
+    if (!ST.pos) return;
+    const x0 = ST.at.x, y0 = ST.at.y;
+    ST.pos = null; savePos(); place(); glideFrom(x0, y0);
+    if (O55.sound) O55.sound.play('back');
+  }
+  /* a keyboard step: inside the window, and home again when it lands on its corner */
+  function moveBy(dx, dy) {
+    if (ST.sheet.hasAttribute('data-pmds-fixed')) return;
+    const de = document.documentElement;
+    const x = clamp(ST.at.x + dx, 8, de.clientWidth - ST.home.w - 8), y = clamp(ST.at.y + dy, 8, de.clientHeight - ST.home.h - 8);
+    ST.pos = Math.round(x) === Math.round(ST.home.x) && Math.round(y) === Math.round(ST.home.y) ? null : { x, y };
+    savePos(); place();
+  }
+  function dragStart(e) {
+    if (e.button !== 0 || ST.sheet.hasAttribute('data-pmds-fixed')) return;
+    if (e.target.closest('input, label.pmds-search, .pmds-x, .pmds-dock')) return;
+    const head = e.currentTarget;
+    e.preventDefault();
+    ST.drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, x0: ST.at.x, y0: ST.at.y, moved: false, raf: 0, x: ST.at.x, y: ST.at.y };
+    try { head.setPointerCapture(e.pointerId); } catch (_) {}
+  }
+  function dragMove(e) {
+    const d = ST.drag; if (!d || e.pointerId !== d.id) return;
+    const dx = e.clientX - d.sx, dy = e.clientY - d.sy;
+    if (!d.moved && Math.hypot(dx, dy) < 4) return;
+    if (!d.moved) { d.moved = true; ST.sheet.setAttribute('data-pmds-dragging', ''); ghost(true, false); }
+    const de = document.documentElement;
+    d.x = clamp(d.x0 + dx, 8, de.clientWidth - ST.home.w - 8); d.y = clamp(d.y0 + dy, 8, de.clientHeight - ST.home.h - 8);
+    if (!d.raf) d.raf = real.raf(() => { d.raf = 0; setXY(d.x, d.y); ghost(true, nearHome(d.x, d.y)); });
+  }
+  function dragEnd(e) {
+    const d = ST.drag; if (!d || (e && e.pointerId !== d.id)) return;
+    ST.drag = null;
+    ST.sheet.removeAttribute('data-pmds-dragging'); ghost(false);
+    if (!d.moved) return;
+    setXY(d.x, d.y);
+    if (nearHome(d.x, d.y)) { const x0 = d.x, y0 = d.y; ST.pos = null; savePos(); place(); glideFrom(x0, y0); if (O55.sound) O55.sound.play('select'); return; }
+    ST.pos = { x: d.x, y: d.y }; savePos(); place();
   }
 
   /* ---- motion: each look's own voice ---- */
@@ -512,6 +613,13 @@
     sheet.addEventListener('click', onClick);
     sheet.addEventListener('input', onInput);
     sheet.addEventListener('keydown', onKey);
+    const head = sheet.querySelector('.pmds-head');
+    head.addEventListener('pointerdown', dragStart);
+    head.addEventListener('pointermove', dragMove);
+    head.addEventListener('pointerup', dragEnd);
+    head.addEventListener('pointercancel', dragEnd);
+    head.addEventListener('dblclick', (e) => { if (!e.target.closest('input, label.pmds-search, button')) putBack(); });
+    ST.pos = loadPos();
   }
   function open(section, how) {
     if (!ST.el) return false;
@@ -530,7 +638,7 @@
     if (!was) {
       const v = VOICE[voice()] || VOICE.basic;
       const er = ST.entry.getBoundingClientRect(), sr = ST.sheet.getBoundingClientRect();
-      ST.sheet.style.transformOrigin = `${Math.max(0, er.left + er.width / 2 - sr.left)}px ${sr.height}px`;
+      ST.sheet.style.transformOrigin = `${clamp(er.left + er.width / 2 - sr.left, 0, sr.width)}px ${sr.height}px`;
       play(ST.sheet, v.open);
       stagger(ST.sheet.querySelector('.pmds-page'), v);
       if (v.item && v.stagger) ST.sheet.querySelectorAll('.pmds-tab').forEach((t, i) => play(t, v.item, { delay: 60 + i * Math.round(v.stagger * 0.6) }));
@@ -578,6 +686,7 @@
   function launch(fn) { close({ launch: true, focus: false }); real.setTimeout(() => { try { Promise.resolve(fn()).then(renderEntry, renderEntry); } catch (e) { console.error('[demo studio]', e); } }, 90); }
   const A = {
     close: () => close(),
+    'put-back': () => { putBack(); real.raf(() => { const g = ST.sheet.querySelector('.pmds-grip'); if (g) g.focus({ preventScroll: true }); }); },
     go: (arg) => go(arg),
     'run-onboarding': () => launch(() => M.onboarding.run(M.currentSituation())),
     'run-pick': () => launch(() => M.onboarding.run(M.joinSituation(ST.pick || M.parseSituation(M.currentSituation())))),
@@ -662,6 +771,12 @@
     }
     if (t.classList && t.classList.contains('pmds-q') && e.key === 'Enter') { const first = ST.sheet.querySelector('.pmds-result'); if (first) { e.preventDefault(); first.click(); } return; }
     if (t.classList && t.classList.contains('pmds-q') && e.key === 'ArrowDown') { const first = ST.sheet.querySelector('.pmds-result'); if (first) { e.preventDefault(); first.focus(); } return; }
+    if (t.classList && t.classList.contains('pmds-grip') && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home'].includes(e.key)) {
+      e.preventDefault();
+      if (e.key === 'Home') return putBack();
+      const step = e.shiftKey ? 64 : 16;
+      return moveBy(e.key === 'ArrowLeft' ? -step : e.key === 'ArrowRight' ? step : 0, e.key === 'ArrowUp' ? -step : e.key === 'ArrowDown' ? step : 0);
+    }
     if (e.key === '/' && !(t.matches && t.matches('input, textarea'))) { e.preventDefault(); ST.sheet.querySelector('.pmds-q').focus(); return; }
     if (t.getAttribute && t.getAttribute('role') === 'tab' && ['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) {
       e.preventDefault();
@@ -683,14 +798,10 @@
     ST.el = el; ST.entry = entry;
     entry.innerHTML = entryHtml();
     entry.addEventListener('click', (e) => toggle(null, e.detail ? 'pointer' : 'key'));
-    window.addEventListener('resize', () => { if (ST.open) { place(); moveInk(true); } });
+    window.addEventListener('resize', () => { if (ST.open && !ST.drag) { place(); moveInk(true); } });
     const mo = new MutationObserver(() => { syncLook(); if (ST.open) { renderNow(); place(); } });
-    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-motion'] });
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-motion', 'data-o55-nier-scene'] });
     new MutationObserver(() => { if (ST.open) { place(); real.raf(() => moveInk(true)); } }).observe(el, { attributes: true, attributeFilter: ['data-o55-narrow'] });
-    /* the demo engine's Ctrl+Shift+D (its unstyled director box) now opens the Studio's Story section */
-    window.addEventListener('keydown', (e) => {
-      if (e.ctrlKey && e.shiftKey && !e.altKey && (e.key === 'D' || e.key === 'd')) { e.preventDefault(); e.stopImmediatePropagation(); toggle('story'); }
-    }, true);
     /* the old item's keys stopped at the item so the shell's shortcuts never saw them; the sheet keeps that */
     ['keydown', 'keyup', 'keypress'].forEach((ev) => el.addEventListener(ev, (e) => { e.stopPropagation(); if (ev === 'keydown' && e.key === 'Escape' && ST.open && !ST.sheet.contains(e.target)) close(); }));
     syncLook();

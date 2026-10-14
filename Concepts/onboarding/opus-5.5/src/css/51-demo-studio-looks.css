@@ -20,7 +20,6 @@
   --pmds-tone-c: var(--pm6-cozy-coral, #FF9E80);
   --pmds-bezel: #fff;
   --pmds-ground: color-mix(in srgb, var(--background) 82%, #dfe8f1);
-  --pmds-stripe: color-mix(in srgb, #8fa6bd 13%, transparent);
   --pmds-bg: color-mix(in srgb, var(--surface) 92%, var(--background));
   --pmds-bg2: var(--pmds-ground);
   --pmds-font: 'Nunito', 'Poppins', system-ui, sans-serif;
@@ -31,13 +30,18 @@
 #o55-demo.pmds[data-pmds-look="friendly"][data-pmds-mode="dark"] {
   --pmds-bezel: color-mix(in srgb, #ffffff 16%, var(--surface));
   --pmds-ground: color-mix(in srgb, var(--background) 88%, #2b3b5c);
-  --pmds-stripe: color-mix(in srgb, #9fb6dd 7%, transparent);
   --pmds-shadow: 0 30px 80px -24px rgba(0, 0, 0, .7), 0 4px 14px -4px rgba(0, 0, 0, .4);
   --pmds-sel: color-mix(in srgb, var(--surface) 70%, #ffffff 12%);
 }
+/* the ground is Friendly's own (its body, chat stream and dashboard): the dot grid and three pastel corner glows */
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-frame {
   border: 3px solid var(--pmds-bezel);
-  background: repeating-linear-gradient(180deg, var(--pmds-stripe) 0 2px, transparent 2px 7px), var(--pmds-ground);
+  background:
+    radial-gradient(var(--pm6-cozy-dot, rgba(122, 109, 140, .1)) 1px, transparent 1.5px) 0 0 / 18px 18px,
+    radial-gradient(46% 38% at 16% 6%, var(--pm6-cozy-glow-mint, transparent), transparent 65%),
+    radial-gradient(50% 42% at 88% 12%, var(--pm6-cozy-glow-lav, transparent), transparent 65%),
+    radial-gradient(60% 50% at 50% 100%, var(--pm6-cozy-glow-sky, transparent), transparent 70%),
+    var(--pmds-ground);
 }
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-head { border-bottom: 0; padding: 16px 16px 10px 20px; }
 #o55-demo.pmds[data-pmds-look="friendly"] .pmds-brandmark {
@@ -259,8 +263,20 @@ html[data-o55-nier-parts~="cursor"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-
 html[data-o55-nier-parts~="cursor"] #o55-demo.pmds[data-pmds-look="nier"] :is(.pmds-scrow, .pmds-result):hover { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 html:not([data-o55-nier-parts~="cursor"]) #o55-demo.pmds[data-pmds-look="nier"] .pmds-navink { background: var(--o55-nier-selected, var(--pmds-wash)); }
 html:not([data-o55-nier-parts~="cursor"]) #o55-demo.pmds[data-pmds-look="nier"] .pmds-tab.pmds-on, html:not([data-o55-nier-parts~="cursor"]) #o55-demo.pmds[data-pmds-look="nier"] .pmds-tab.pmds-on :is(.pmds-ico, .pmds-tabmeta) { color: var(--pmds-ink); }
-/* ground: the parchment dot grid under the page */
-html[data-o55-nier-parts~="ground"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-main { background: radial-gradient(rgba(var(--o55-nier-ink-rgb), .16) 1px, transparent 1.2px) 0 0 / 14px 14px, var(--pmds-bg2); }
+/* ground: the same faint grid the app's own grounds carry (14-nier-parts.css), not dots */
+html[data-o55-nier-parts~="ground"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-main {
+  background-color: var(--pmds-bg2);
+  background-image: linear-gradient(rgba(var(--o55-nier-ink-rgb), .045) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .045) 1px, transparent 1px);
+  background-size: 32px 32px, 32px 32px; background-position: -1px -1px, -1px -1px;
+}
+/* NieR Mode's background scene (PM_NIER_SCENES), the one the app shows, drawn in the Studio too: ink line art across the
+   lower part of the sheet at the app's opacity, the page's ground clear over it */
+#o55-demo .pmds-scene { position: absolute; left: 0; right: 0; bottom: 0; height: 60%; z-index: 0; overflow: hidden; pointer-events: none; color: var(--o55-nier-ink, var(--text-primary)); opacity: .15; }
+#o55-demo[data-pmds-mode="dark"] .pmds-scene { opacity: .2; }
+#o55-demo .pmds-scene > svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#o55-demo .pmds-frame > :is(.pmds-head, .pmds-body, .pmds-now) { position: relative; z-index: 1; }
+#o55-demo.pmds[data-pmds-look="nier"][data-pmds-scene] .pmds-main { background-color: transparent; }
+#o55-demo.pmds[data-pmds-look="nier"][data-pmds-scene] .pmds-nav { background-color: color-mix(in srgb, var(--o55-nier-secondary, var(--pmds-bg2)) 82%, transparent); }
 html[data-o55-nier-parts~="ground"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-nav { background: var(--o55-nier-secondary, var(--pmds-bg2)); }
 /* brackets: target brackets on the focused control */
 html[data-o55-nier-parts~="brackets"] #o55-demo.pmds[data-pmds-look="nier"] :is(.pmds-tile, .pmds-choice, .pmds-laytile, .pmds-looktile, .pmds-btn, .pmds-tab):focus-visible {
@@ -311,6 +327,23 @@ html[data-o55-nier-parts~="blocks"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-
 #o55-demo.pmds[data-pmds-look="nier"] .pmds-page[data-pmds-section="start"] :is(.pmds-a-spot, .pmds-a-call, .pmds-a-layer) { animation-timing-function: steps(5, end); }
 #o55-demo.pmds[data-pmds-look="nier"] .pmds-art .pmds-a-sun { rotate: 0deg; }
 
+/* ---- carried, in each look ---- */
+#o55-demo.pmds[data-pmds-look="friendly"] .pmds-sheet[data-pmds-dragging] { rotate: -.6deg; }
+#o55-demo.pmds[data-pmds-look="friendly"] .pmds-sheet[data-pmds-dragging] .pmds-frame { box-shadow: 0 40px 80px -22px rgba(90, 110, 160, .55), 0 8px 18px -6px rgba(90, 110, 160, .35); }
+#o55-demo.pmds[data-pmds-look="friendly"] .pmds-homeghost { border-color: var(--pmds-bezel); border-radius: 26px; }
+#o55-demo.pmds[data-pmds-look="friendly"] .pmds-homeghost[data-lit] { border-color: var(--pmds-acc); }
+#o55-demo.pmds[data-pmds-look="retro"] .pmds-sheet[data-pmds-dragging] .pmds-frame { box-shadow: inset 0 0 0 3px var(--pmds-bg), inset 0 0 0 4px color-mix(in srgb, var(--pmds-ink) 55%, transparent), 12px 12px 0 color-mix(in srgb, var(--text-primary) 40%, transparent); }
+#o55-demo.pmds:is([data-pmds-look="retro"], [data-pmds-look="nier"]) .pmds-homeghost { border-radius: 0; animation-timing-function: steps(2, end); transition: none; }
+#o55-demo.pmds[data-pmds-look="nier"] .pmds-sheet[data-pmds-dragging] .pmds-frame { box-shadow: 0 0 0 1px rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .3), 14px 14px 0 rgba(var(--o55-nier-shadow-rgb, 0, 0, 0), .2); }
+#o55-demo.pmds[data-pmds-look="nier"] .pmds-homeghost { border-color: rgba(var(--o55-nier-ink-rgb, 0, 0, 0), .5); background: transparent; }
+#o55-demo.pmds[data-pmds-look="nier"] .pmds-homeghost[data-lit] { border-style: solid; border-color: var(--o55-nier-ink); }
+#o55-demo.pmds[data-pmds-look="glass"] .pmds-sheet[data-pmds-dragging] .pmds-frame { box-shadow: inset 0 1px 0 var(--glass-edge, rgba(255, 255, 255, .4)), 0 50px 110px -26px rgba(10, 5, 25, .75), 0 4px 14px -2px rgba(10, 5, 25, .4); }
+#o55-demo.pmds[data-pmds-look="glass"] .pmds-homeghost { border-color: rgba(255, 255, 255, .35); border-radius: 22px; background: rgba(255, 255, 255, .04); }
+
+/* The demo engine's old unstyled "Demo director" box (Ctrl+Shift+D in the base page) is the Studio's Story section now;
+   the key itself is left alone for Readiness & Doctor (Jared, 2026-10-14) */
+.pm6-dev-panel { display: none !important; }
+
 /* ================================ Reduced Motion ================================ */
 #o55-demo.pmds[data-pmds-reduced] :is(.pmds-btn, .pmds-tile, .pmds-choice, .pmds-laytile, .pmds-looktile, .pmds-tile-go, .pmds-switch-key, .pmds-entry) { transition-property: background-color, border-color, color, box-shadow, opacity; }
 #o55-demo.pmds[data-pmds-reduced] :is(.pmds-btn, .pmds-tile, .pmds-x):active:not([aria-disabled="true"]) { scale: 1 !important; translate: none !important; }
@@ -322,6 +355,8 @@ html[data-o55-nier-parts~="blocks"] #o55-demo.pmds[data-pmds-look="nier"] .pmds-
 #o55-demo.pmds[data-pmds-reduced] .pmds-tile:hover .pmds-tile-go { translate: none; }
 #o55-demo.pmds[data-pmds-reduced] .pmds-kicker::after { animation: none; }
 #o55-demo.pmds[data-pmds-reduced] .pmds-fuse { animation: none; transform: none; opacity: .7; }
+#o55-demo.pmds[data-pmds-reduced] .pmds-sheet[data-pmds-dragging] { rotate: none; }
+#o55-demo.pmds[data-pmds-reduced] .pmds-homeghost { animation: none; }
 /* the scenes keep their resting picture: no performance on arrival, no travel on hover (the steps still fill, as colour) */
 #o55-demo.pmds[data-pmds-reduced] :is(.pmds-a-steps i, .pmds-a-spot, .pmds-a-call, .pmds-a-layer, .pmds-a-turn, .pmds-a-copy b) { animation: none !important; transition-property: background-color, opacity !important; }
 #o55-demo.pmds[data-pmds-reduced] .pmds-tile:is(:hover, :focus-visible) :is(.pmds-a-spot, .pmds-a-call) { translate: 0 0; }
