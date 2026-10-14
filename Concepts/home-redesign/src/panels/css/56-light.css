@@ -307,10 +307,10 @@ html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-
 html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl-dot {
   width: 10px;
   height: 10px;
-  opacity: calc(.3 + var(--m, 0) * .7);
+  opacity: calc(.45 + var(--m, 0) * .55);
   border-radius: 50%;
-  scale: calc((.24 + var(--m, 0) * .52) * (1 + var(--gl-pop, 0) * var(--m, 0) * .6));
-  background: radial-gradient(circle at 38% 32%, #FFFFFF 0 11%, var(--gl-hot) 26%, var(--gl-c) 60%, color-mix(in srgb, var(--gl-c) 78%, #000) 100%);
+  scale: calc((.26 + var(--m, 0) * .5) * (1 + var(--gl-pop, 0) * var(--m, 0) * .6));
+  background: radial-gradient(circle at 38% 32%, #FFFFFF 0 12%, var(--gl-hot) 30%, var(--gl-c) 62%, color-mix(in srgb, var(--gl-c) 88%, #000) 100%);
 }
 html[data-pmw-home="on"][data-theme^="friendly"]:not([data-o55-nier="on"]) .pmw-gl.pmw-gl-held .pmw-gl-dots { animation: gl-pop 560ms linear both; }
 @keyframes gl-pop { 0% { --gl-pop: 0; } 22% { --gl-pop: 1; } 48% { --gl-pop: -.25; } 72% { --gl-pop: .12; } 100% { --gl-pop: 0; } }
