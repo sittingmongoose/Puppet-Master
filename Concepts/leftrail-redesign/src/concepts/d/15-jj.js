@@ -12,6 +12,8 @@
    The example data continues today's cards (tastebook, current change nkmwqzvw) and lives here, in concept D only. */
 
 const JJ = { strip: null, scroll: null, panes: {}, tab: 'changes', view: null, reasons: [], registered: false };
+/* neon render sizes per icon class (pm7-glyphs, RAIL): static, never measured; the CSS keeps every box as it is */
+const JJ_SIZE = { sm: 13, 'sh-accchev': 10, 'd-jj-chev': 12, 'd-jj-grp-ico': 11 };
 const JJ_TABS = [
   { id: 'changes', label: 'Changes', icon: 'diff', git: 'changes' },
   { id: 'workspaces', label: 'Workspaces', icon: 'folderOpen', git: 'worktrees' },
@@ -63,9 +65,15 @@ const JJ_CMDS = [
 const jh = (spec, attrs, ...kids) => PMR.h(spec, attrs, ...kids);
 function jjIco(name, cls) {
   const i = jh('i', { class: ['pm-ico', cls], 'data-ico': name, 'aria-hidden': 'true' });
-  const raw = JJ_SVG[name]
-    ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + JJ_SVG[name] + '</svg>'
-    : (typeof window.PMIcon === 'function' ? window.PMIcon(name) : '');
+  /* the neon set draws first (oplog -> history), through the shared rail map; JJ_SVG and PMIcon stay as fallback */
+  const G = window.PMG, g = (name && PMR.neonMap[name]) || name;
+  let raw = '';
+  if (g && G && G.has(g)) raw = G.icon(g, JJ_SIZE[cls] || 14, 'nx-r-' + (PMR.neonRole[name] || 'concept'));
+  if (!raw) {
+    raw = JJ_SVG[name]
+      ? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + JJ_SVG[name] + '</svg>'
+      : (typeof window.PMIcon === 'function' ? window.PMIcon(name) : '');
+  }
   i.innerHTML = raw || '';
   return i;
 }
@@ -161,7 +169,7 @@ function jjShelf(s) {
 const jjFoot = text => jh('div.pm-footnote', { text });
 const jjWide = c => jjBtn(Object.assign({ cls: 'd-jj-wide' }, c));
 function jjGroup(icon, name, count, mono) {
-  return jh('div.d-jj-grp', jjIco(icon), jh('span', { class: ['d-jj-grp-n', mono && 'sh-mono'], text: name }), count ? jh('span.d-jj-grp-c', { text: count }) : null);
+  return jh('div.d-jj-grp', jjIco(icon, 'd-jj-grp-ico'), jh('span', { class: ['d-jj-grp-n', mono && 'sh-mono'], text: name }), count ? jh('span.d-jj-grp-c', { text: count }) : null);
 }
 
 /* ---------- the example repository (tastebook; DECISION §5) ---------- */
@@ -528,7 +536,7 @@ function jjCard() {
 /* the card folds like Git's; one remembered preference for both engines */
 function jjWireFold(card) {
   const head = card.querySelector('.pm7-post-card-head');
-  const btn = jh('button', { type: 'button', class: 'd-fold', 'aria-expanded': 'true' }, PMR.icon('chevD'));
+  const btn = jh('button', { type: 'button', class: 'd-fold', 'aria-expanded': 'true' }, PMR.icon('chevD', 'd-fold-chev'));
   PMR.hover(btn, 'Show or hide the destinations', 'Where this publishes, the expected head and the review state');
   head.appendChild(btn);
   const set = (folded, animate) => {

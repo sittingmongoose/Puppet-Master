@@ -246,7 +246,7 @@
           if (used + headH > budget) { hiddenRows += g.rows.length; g.rows.forEach(function (r) { hiddenNames.push(g.name + ' · ' + r.account.nickname + (r.main && r.main.pct !== null ? ' ' + C.fmt(r.main.pct, 'pct') + ' used' : '')); }); return; }
           used += headH;
           out.push('<button type="button" class="pmu-qgroup" data-reveal data-pmu-act="qgroup" data-value="' + esc(g.providerId) + '" aria-expanded="' + !isCol + '" data-prov="' + esc(g.providerId) + '">' +
-            '<span class="pmu-qchev' + (isCol ? ' is-col' : '') + '">' + SVG.chevronDown + '</span>' + PMU.mark(g.providerId, 20) + '<b>' + esc(g.name) + '</b><span>' + esc(g.rows.length + ' accounts · ' + g.windowLabel) + '</span></button>');
+            '<span class="pmu-qchev' + (isCol ? ' is-col' : '') + '">' + PMU.svg('chevronDown', 14) + '</span>' + PMU.mark(g.providerId, 20) + '<b>' + esc(g.name) + '</b><span>' + esc(g.rows.length + ' accounts · ' + g.windowLabel) + '</span></button>');
         }
         if (isCol && !single) return;
         g.rows.forEach(function (r) {
@@ -267,7 +267,7 @@
           out.push('<div class="pmu-qrow pmu-row' + (single ? ' is-single' : '') + (isOpen ? ' is-open' : '') + '" data-reveal data-flash-key="' + esc(key) + '" data-flash-sig="' + esc(String(pct) + '|' + a.effective) + '" data-prov="' + esc(g.providerId) + '" data-pmu-act="qrow" data-value="' + esc(key) + '" role="button" tabindex="0" aria-expanded="' + isOpen + '" style="grid-template-columns:' + tmpl + '"' +
             C.hover(a.nickname, a.identity) + '><span class="pmu-qident">' + ident + meta + '</span><span class="pmu-qline" data-key="' + esc(key) + '"' + (main ? C.shareAttr('win:' + key + '/' + main.key) : '') + '></span><span class="pmu-qusedcell" data-align="r"' + (main ? ' data-share-v="win:' + esc(key + '/' + main.key) + '"' : '') + '>' + usedHtml +
             (mid ? '' : '<em>' + esc(nextTxt) + '</em>') + '</span>' + (mid ? '<span class="pmu-qnext" data-align="r"' + C.hover('Next reset', nextHover) + '>' + esc(nextTxt) + '</span>' : '') +
-            '<span class="pmu-qchev pmu-qrowchev' + (isOpen ? ' is-open' : '') + '">' + SVG.chevronDown + '</span></div>');
+            '<span class="pmu-qchev pmu-qrowchev' + (isOpen ? ' is-open' : '') + '">' + PMU.svg('chevronDown', 14) + '</span></div>');
           rowsDrawn.push(r);
           if (isOpen) out.push('<div class="pmu-qfocus" data-key="' + esc(key) + '">' + (cmpG ? '<div class="pmu-qfocustools">' + C.switchBtn('qcompare', cmpOn, 'Compare ' + cmpG.label + ' across ' + cmpG.g.name + ' accounts',
             'One line per account, never added or averaged; the open account is the solid line and its active time runs along the top') + '</div>' : '') + '<div class="pmu-qfocushost"></div></div>');

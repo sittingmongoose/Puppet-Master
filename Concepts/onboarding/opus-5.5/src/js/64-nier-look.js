@@ -340,5 +340,5 @@
     if (back) try { back.focus({ preventScroll: true }); } catch (_) {}
   }
 
-  O55.nierLook = { IDS, state, toggle, adjust, reapply, commit, closed, look, busy, snap, panelOpen: () => !!panel, closePanel, icon: () => SLIDERS };
+  O55.nierLook = { IDS, state, toggle, adjust, reapply, commit, closed, look, busy, snap, panelOpen: () => !!panel, closePanel, icon: () => U.nx('sliders', 14, 'control', 'o55-sg') || SLIDERS };
 })();

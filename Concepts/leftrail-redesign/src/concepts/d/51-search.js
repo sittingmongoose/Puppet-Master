@@ -39,11 +39,6 @@ function dsrSetStatus(m, st, word, rest, animate) {
     m.setAttribute('data-d-st', st);
     if (gl) { gl.setAttribute('data-gl', st); gl.innerHTML = svgFor(st); }
   }
-  if (gl) {
-    const pulse = st === 'run';
-    if (pulse && !gl.hasAttribute('data-pulse')) gl.setAttribute('data-pulse', '');
-    if (!pulse && gl.hasAttribute('data-pulse')) gl.removeAttribute('data-pulse');
-  }
   if (w.textContent !== word) w.textContent = word;
   if (r.textContent !== rest) r.textContent = rest;
   if (was && was !== st && animate) statusPop(m, gl);

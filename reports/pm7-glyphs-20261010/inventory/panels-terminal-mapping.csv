@@ -1,0 +1,251 @@
+package,name,meaning,neon_candidate,confidence,why
+panels,CLEAR_ICON,clear (slashed circle),slash-circle,med,slashed-ring family
+panels,FOLLOW_ICON,follow (down arrow to tray),download,med,down-arrow-to-tray family
+panels,WRAP_ICON,wrap (unused),NONE,high,dead; no wrap glyph in neon
+panels,agent,agent square+dash,NONE,high,no agent square in neon
+panels,arrowDown,down arrow (next),NONE,high,neon has only arrow-right
+panels,arrowUp,up arrow (previous),NONE,high,neon has only arrow-right
+panels,artifact,versioned artifact view,page,high,neon ALIAS maps artifact to page
+panels,back,back arrow,reply,med,neon reply is the left-curving arrow
+panels,brainstorm,BrainStorm run type (branches),kind-brainstorm,high,same branching motif
+panels,browser,browser tab / web page,globe,med,no browser-window glyph in neon; globe is the web mark
+panels,camera,screenshot / export image,camera,high,same camera
+panels,caseSense,match-case toggle,NONE,high,no case glyph in neon
+panels,chat,chat bubble,chat,high,same bubble
+panels,check,check / done / save,check,high,same tick
+panels,chevronDown,expand / sort arrow,chevron-down,high,same chevron
+panels,chevronLeft,back arrow,chevron-left,high,same chevron
+panels,chevronRight,submenu / expand arrow,chevron-right,high,same chevron
+panels,clock,clock / schedule / queued,clock,high,same clock
+panels,close,close X,close,high,same X
+panels,code,source code,code,high,same brackets concept
+panels,console,debug console window,terminal,med,prompt window; neon terminal is the prompt
+panels,context,context detail rings,lens,med,neon lens is the context lens
+panels,crew,Crew run type,kind-crew,med,same Crew concept; neon draws strands+node not figures
+panels,cross,X twin of close (delete/failed),close,high,identical X drawing to close
+panels,dashboard,dashboard of widgets,table,med,no dashboard grid in neon; table is the cell grid
+panels,debug,debug record row (bug glyph),bug,high,neon bug is the debug mark
+panels,devtools,devtools window+prompt,terminal,med,prompt window; closest neon mark
+panels,diff,diff arrows,changes,high,same two-arrow diff
+panels,doc:check,doc tick,check,high,same tick
+panels,doc:checkCircle,doc circled check,check-circle,high,same circled check
+panels,doc:cross,doc circled X,NONE,med,no circled-X in neon; errors are triangles
+panels,doc:fileEdit,doc file+pen,file-edit,high,same file+pen
+panels,doc:filePlus,doc file+plus,NONE,med,no file-plus in neon
+panels,doc:ring,doc dashed ring (unverified),ring-dashed,high,same dashed ring
+panels,doc:slashCircle,doc slashed ring,slash-circle,high,same slashed ring
+panels,doc:spark,doc 8-ray asterisk,sparkles,med,sparkle family; neon has 3 stars not rays
+panels,doc:trash,doc trash can,trash,high,same trash
+panels,document,document tab,page,high,neon ALIAS maps document to page
+panels,edPalette,editor appearance row,settings,med,settings row; neon settings is the gear
+panels,eye,eye / show / notice default,eye,high,same eye
+panels,file,file / editor tab,page,high,neon ALIAS maps file to page
+panels,folder,folder (unused),folder,high,same folder; dead in panels
+panels,forward,forward arrow,arrow-right,high,same right arrow
+panels,git,git branch,branch,high,same branch nodes
+panels,grip,drag handle,NONE,high,no drag-handle glyph in neon
+panels,history,history / versions clock-arc,history,high,same back-arc+hand
+panels,keep,keep ribbon,bookmark,high,same ribbon
+panels,layout,layout subdivisions,NONE,high,no layout glyph in neon
+panels,link,link / copy-address chain,link,high,same chain
+panels,lock,lock / protected / blocked,lock,high,same padlock
+panels,maximize,maximize corners-out,expand,high,same four-corner language
+panels,message,message bubble+line,chat,med,bubble family; neon chat has no text line
+panels,more,vertical dot menu,more,med,neon more is horizontal dots; axis differs
+panels,moreH,horizontal dot menu,more,high,same horizontal dots
+panels,newPanel,open in new panel,open,med,send-elsewhere; neon open is box+arrow
+panels,output,output log window,terminal,low,log stream; no log-window glyph in neon
+panels,outputNewTab,open channel in new tab,open,med,send-elsewhere action
+panels,panel,panel window,NONE,high,no plain panel glyph in neon
+panels,pause,pause / held,pause,high,same bars
+panels,pin,pin tab,pin,high,same pin
+panels,plan,plan document,plan,med,"same concept; neon plan is a folded map, not ruled lines"
+panels,plan-busy-dot,build-running pulse dot,st-working,med,working indicator; neon home is the status mark
+panels,play,play / start / working,play,high,same triangle
+panels,plus,add / new,plus,high,same plus
+panels,pointer,cursor picker,NONE,high,no cursor glyph in neon
+panels,popOut,pop out window,open,high,same box+arrow-out
+panels,ports,forwarded ports plug,plug,med,connector-adjacent; neon plug is a power plug
+panels,problems,problems / diagnostics triangle,warning,high,same warning triangle
+panels,record,record bookmark,bookmark,med,neon bookmark is the saved-item mark
+panels,regex,regex toggle,NONE,high,no regex glyph in neon
+panels,region,region-select corners,expand,med,corner-bracket language matches neon expand
+panels,reload,retry / recheck circular arrow,refresh,high,same circular arrow
+panels,rename,rename pen,edit,high,same pen
+panels,reopen,reopen / restore curved arrow,reset,med,back-arc family; neon reset is the arc
+panels,replace,swap arrows,swap,high,same two-arrow swap
+panels,restore,restore corners-in,collapse,med,inward; neon collapse is vertical-only
+panels,review,Review run type (doc+lens),kind-review,high,same doc+magnifier
+panels,room,Chat Room run type (bubbles),kind-chat_room,med,same room concept; neon is ring+satellites
+panels,route-change,route-change divert arrow,branch,med,diverted-path family
+panels,run,run tab fallback (two figures),users,med,neon users is the two-person mark
+panels,search,find / search,search,high,same lens+handle
+panels,splitDown,split down,NONE,high,no split glyph in neon
+panels,splitRight,split right,NONE,high,no split glyph in neon
+panels,step:agents,feed step: sub-agents,users,med,multi-agent; neon users is two people not squares
+panels,step:check,feed step: circled check,check-circle,high,same circled check
+panels,step:edit,feed step: edit,edit,high,same pen
+panels,step:hand,feed step: handoff,hand,high,same hand
+panels,step:note,feed step: note,page,med,doc+lines page
+panels,step:read,feed step: read doc,page,high,doc+lines page
+panels,step:run,feed step: ran command,terminal,high,same prompt arrow
+panels,step:search,feed step: search,search,high,same lens
+panels,step:test,feed step: test flask,flask,high,same flask
+panels,stop,stop square,stop,high,same square
+panels,strip-agent-square,agent-driving tab square,NONE,high,no agent square in neon
+panels,strip-attention-square,background-news hollow square,NONE,med,no hollow-square attention in neon
+panels,strip-dirty-dot,unsaved-changes dot,NONE,high,no dirty dot in neon
+panels,target,crosshair target,ring-dot,med,ring+centre family; neon goal adds arrow+rings
+panels,terminal,terminal tab / shell,terminal,high,same prompt-line concept
+panels,tools-mark:error,error severity circled-X,NONE,med,no circled-X in neon; errors are triangles
+panels,tools-mark:info,info severity circled-i,info,high,same circled-i
+panels,tools-mark:ok,ok check,check,high,same tick
+panels,tools-mark:warn,warning severity triangle,warning,high,same triangle
+panels,transcript,agent transcript bubble,chat,med,speech bubble; neon chat is the bubble
+panels,wholeWord,whole-word toggle,NONE,high,no word glyph in neon
+panels,widget,widget grid (unused),NONE,high,dead in panels; no widget glyph in neon
+terminal,agent,gutter agent-typed square,NONE,high,no agent square in neon
+terminal,agent-row:LOCK,agent row secret padlock,lock,high,same padlock
+terminal,agent-row:SQ,agent row square,NONE,high,no agent square in neon
+terminal,branch,T.ICONS branch (dead),branch,high,same branch; never referenced
+terminal,card:chevron,card expand chevron,chevron-down,high,same chevron
+terminal,card:failed,card failed X,close,high,same X
+terminal,card:interrupted,card ring+slash,st-skipped,high,same ring+diagonal
+terminal,card:ok,card ok check,check,high,same tick
+terminal,card:running,card running spinner layers,st-working,med,track+arc spinner language
+terminal,card:waiting,card prompt arrow,terminal,med,prompt-arrow family
+terminal,clock,T.ICONS clock (dead),clock,high,same clock; never referenced
+terminal,fail,gutter exit-N X,close,high,same X
+terminal,find:close,find close X,close,high,same X
+terminal,find:next,find next chevron-down,chevron-down,high,same chevron
+terminal,find:prev,find previous chevron-up,chevron-up,high,same chevron
+terminal,folder,T.ICONS folder (dead),folder,high,same folder; never referenced
+terminal,idle,gutter hollow dot (prompt + indeterminate),ring,med,bare ring family
+terminal,ok,gutter exit-0 check,check,high,same tick
+terminal,popover:close,popover close X,close,high,same X
+terminal,progress-bar,OSC 9;4 progress bar,NONE,high,no progress-bar glyph in neon
+terminal,run,gutter running filled dot,st-working,low,plain dot vs orbiting bead; status map carries it
+terminal,scheme-swatch,scheme preview chip (no tick),NONE,high,"preview chip, not a glyph"
+terminal,terminal-tab,Terminal tab kind prompt,terminal,high,same prompt arrow
+panels,state:artifact/Needs retry,artifact error + retry,failed,med,shown as error with a retry action
+panels,state:artifact/Pinned,version pinned,NONE,high,"pin, not a status"
+panels,state:artifact/Ready,artifact ready,idle,high,neon alias ready
+panels,state:artifact/Rendering,artifact rendering,working,high,live work
+panels,state:artifact/Rendering (retry),artifact drawing again,recovering,high,retry in flight
+panels,state:artifact/Stale,artifact stale,skipped,high,neon alias stale
+panels,state:browser-loading/loading,page loading bar,working,med,transient load
+panels,state:browser-session/Ordinary,ordinary session,NONE,high,"mode, not a status"
+panels,state:browser-session/Protected sign-in,protected session,NONE,med,"mode, not a status"
+panels,state:dashboard-agents/Complete,agent complete,complete,high,done
+panels,state:dashboard-agents/Failed,agent failed,failed,high,failure
+panels,state:dashboard-agents/Fallback route,agent on fallback route,recovering,high,neon alias fallback
+panels,state:dashboard-agents/Queued,agent queued,pending,high,neon alias queued
+panels,state:dashboard-agents/Retrying,agent retrying,recovering,high,neon alias retrying
+panels,state:dashboard-agents/Stalled,agent stalled,blocked,high,neon alias stalled
+panels,state:dashboard-agents/Waiting,agent held,paused,med,pause-icon held state
+panels,state:dashboard-agents/Working,agent working,working,high,live work
+panels,state:debug-console/ended,debug session ended,NONE,med,ended session; no key fits
+panels,state:debug-console/paused,debug session paused,paused,high,paused
+panels,state:debug-console/running,debug session running,working,high,live session
+panels,state:document-checks/fail,check failed,failed,high,failed
+panels,state:document-checks/pass,check passed,complete,high,passed
+panels,state:document-did/deleted,file deleted,NONE,high,"change kind, not a status"
+panels,state:document-did/edited,file edited,NONE,high,"change kind, not a status"
+panels,state:document-did/made,file made,NONE,high,"change kind, not a status"
+panels,state:document-note/unverified,note unverified,pending,high,neon alias unverified
+panels,state:document-note/verified,note verified,complete,high,verified
+panels,state:document-rules/locked,rule locked,blocked,high,neon alias locked
+panels,state:editor-file/Added,file added,NONE,high,"change kind, not a status"
+panels,state:editor-file/Deleted,file deleted,NONE,high,"change kind, not a status"
+panels,state:editor-file/Modified,file modified,NONE,high,"change kind, not a status"
+panels,state:editor-file/Renamed,file renamed,NONE,high,"change kind, not a status"
+panels,state:frames-meta/bad,bad meta word,failed,med,bad tint on text
+panels,state:frames-meta/ok,ok meta word,complete,med,ok tint on text
+panels,state:frames-meta/warn,warn meta word,NONE,high,no warning key
+panels,state:frames-notice/bad tone,error notice,failed,high,error tone
+panels,state:frames-notice/info (default),info notice,NONE,high,"info, not a status"
+panels,state:frames-notice/warn tone,warning notice,NONE,high,no warning key
+panels,state:plan-embed/Cannot be shown,embed unsupported,NONE,med,"capability text, not a status"
+panels,state:plan-embed/Missing,embed missing,NONE,med,"availability text, not a status"
+panels,state:plan-embed/No access,embed denied,blocked,med,cannot proceed
+panels,state:plan-embed/Out of date,embed stale,skipped,med,stale content
+panels,state:plan-steps/done (done),step done,complete,high,done
+panels,state:plan-steps/idle (not started),step not started,idle,high,idle
+panels,state:plan-steps/next (not started),step up next,pending,high,neon alias next
+panels,state:plan-steps/wait (waiting for build window),step held for window,waiting-dep,med,held for the build window
+panels,state:plan-steps/working (working on it),step building,working,high,live work
+panels,state:run-agree/abstain (default),no vote,NONE,high,"vote, not a status"
+panels,state:run-agree/no,reviewer voted no,NONE,high,"vote, not a status"
+panels,state:run-agree/unsure,reviewer unsure,NONE,high,"vote, not a status"
+panels,state:run-agree/yes (voted yes),reviewer voted yes,complete,low,ticked box; votes are not statuses
+panels,state:run-cast/done (done),cast member done,complete,high,done
+panels,state:run-cast/failed (failed),cast member failed,failed,high,failure
+panels,state:run-cast/needs (needs your OK),needs your approval,waiting,high,needs-you
+panels,state:run-cast/queued (waits its turn),cast member queued,pending,high,queued
+panels,state:run-cast/reading (reading on their own),reviewer reading,working,med,active reading
+panels,state:run-cast/set aside (aside),set aside,skipped,med,"laid aside, not run"
+panels,state:run-cast/waiting (idle),idle waiting,idle,high,idle
+panels,state:run-cast/working (working),cast member working,working,high,live work
+panels,state:strip-tabs/agent-driven,agent is driving tab,working,med,live driven work; no agent key
+panels,state:strip-tabs/attention,background-opened tab,pending,med,new and unseen; neon pending is queued/next
+panels,state:strip-tabs/busy,live work (no strip visual),working,med,meaning is live work wherever it surfaces
+panels,state:strip-tabs/dirty,unsaved changes,NONE,high,no unsaved key in neon STATUS
+panels,state:strip-tabs/failed,last command exit N,failed,high,exit-code failure
+panels,state:strip-tabs/pinned,pinned tab,NONE,high,"pin, not a status"
+panels,state:strip-tabs/preview,provisional tab,NONE,high,"tab styling, not a status"
+panels,state:tools-output/error line,error log line,failed,high,error
+panels,state:tools-output/ok line,ok log line,complete,high,success line
+panels,state:tools-output/warning line,warning log line,NONE,high,no warning key
+panels,state:tools-problems/Error,error severity,failed,high,error
+panels,state:tools-problems/Note (Info),note severity,NONE,high,notes are not statuses
+panels,state:tools-problems/Warning,warning severity,NONE,high,no warning key in neon STATUS
+panels,state:transcript-agent/Complete,agent complete,complete,high,done
+panels,state:transcript-agent/Failed,agent failed,failed,high,failure
+panels,state:transcript-agent/Fallback route,agent on fallback,recovering,high,neon alias fallback
+panels,state:transcript-agent/Queued,agent queued,pending,high,neon alias queued
+panels,state:transcript-agent/Retrying,agent retrying,recovering,high,neon alias retrying
+panels,state:transcript-agent/Stalled,agent stalled,blocked,high,neon alias stalled
+panels,state:transcript-agent/Waiting,agent waiting on parent,waiting-dep,med,waiting on a dependency
+panels,state:transcript-agent/Working,agent working,working,high,live work
+panels,state:transcript-event/blocked,blocked event,blocked,high,blocked
+panels,state:transcript-event/route-change,moved to fallback account,recovering,high,fallback account; neon alias fallback
+panels,state:transcript-event/tool-error,tool error event,failed,high,failure
+panels,state:transcript-event/waiting,waiting event,waiting-dep,med,waiting on a dependency
+terminal,state:agent-row/driving,agent driving terminal,working,med,live agency; no agent key
+terminal,state:agent-row/ended (row removed),agent run ended,NONE,high,row removed; no mark
+terminal,state:agent-row/paused,agent paused,paused,high,paused
+terminal,state:agent-row/permission (asking),agent asks to type,waiting,high,needs-you
+terminal,state:agent-row/secret (password),password waits for human,waiting,high,needs-you
+terminal,state:card-status/failed,card command failed,failed,high,failure
+terminal,state:card-status/interrupted,card command interrupted,skipped,med,user-stopped; neon alias cancelled
+terminal,state:card-status/ok (Exit N),card command ok,complete,high,success
+terminal,state:card-status/running,card command running,working,high,live command
+terminal,state:card-status/waiting (Needs input),card needs input,waiting,high,needs-you
+terminal,state:find/Invalid pattern,bad regex,failed,low,transient input error
+terminal,state:find/count,match count text,NONE,high,"count text, not a status"
+terminal,state:gutter-marks/agent-typed (overlay),agent authorship overlay,NONE,high,"authorship, orthogonal to state"
+terminal,state:gutter-marks/fail (exit N),command exit N,failed,high,failure
+terminal,state:gutter-marks/idle (ended with earlier session),orphaned indeterminate,NONE,med,indeterminate ended; no key fits
+terminal,state:gutter-marks/idle (prompt/input),prompt awaiting input,idle,med,awaiting input
+terminal,state:gutter-marks/ok (exit 0),command exit 0,complete,high,success
+terminal,state:gutter-marks/running,command running,working,high,live command
+terminal,state:header-run/running command,header running fact,working,high,live command
+terminal,state:progress/error,progress error,failed,high,error
+terminal,state:progress/indeterminate,indeterminate progress,working,med,work in flight
+terminal,state:progress/paused,progress paused,paused,high,paused
+terminal,state:progress/value (0-100),determinate progress,working,med,work in flight
+terminal,state:scheme-roles/attention,attention colour role,waiting,med,colour role; nearest key
+terminal,state:scheme-roles/link,link colour role,NONE,high,"link colour, not a status"
+terminal,state:scheme-roles/markFail,fail colour role,failed,med,colour role; nearest key
+terminal,state:scheme-roles/markNeutral,neutral colour role,idle,med,colour role; nearest key
+terminal,state:scheme-roles/markOk,ok colour role,complete,med,colour role; nearest key
+terminal,state:scheme-roles/progress,progress colour role,working,med,colour role; nearest key
+terminal,state:sticky-header/Exit 0,sticky exit 0 word,complete,high,success
+terminal,state:sticky-header/Exit N,sticky exit N word,failed,high,failure
+terminal,state:sticky-header/Running,sticky running word,working,high,live command
+terminal,state:terminal-attention/bell (unfocused),bell ping,waiting,med,program asks for a glance
+terminal,state:terminal-attention/long command done (>10s unfocused),completion ping,complete,med,finished while away
+terminal,state:terminal-attention/notification (unfocused),notification,waiting,med,asks for a glance
+terminal,state:terminal-attention/permission ask,agent asks to type,waiting,high,needs-you
+terminal,state:terminal-attention/secret prompt (unfocused),password waits,waiting,high,needs-you
+terminal,state:terminal-session/ended,session ended,NONE,med,ended session; no key fits

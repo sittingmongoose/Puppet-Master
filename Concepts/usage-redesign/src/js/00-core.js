@@ -212,6 +212,52 @@ SVG.toolGear = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
 SVG.toolSize = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a2.5 2.5 0 0 1 2.5 2.5v12a2.5 2.5 0 0 1-2.5 2.5h-12a2.5 2.5 0 0 1-2.5-2.5v-12a2.5 2.5 0 0 1 2.5-2.5zM13 17h4v-4M11 7H7v4"/></svg>';
 SVG.kebab = SVG.dots;
 
+/* The neon glyph set draws first (pm7-glyphs D44, rollout USAGE step 1; the left rail's 00-core.js is the worked
+   example). NEON maps each PM7 name to its glyph (the lead's table; it wins over map.json where they differ: list
+   is the list, resize and size the resize). PMU.icon asks window.PMG first and keeps the SVG table only as the
+   fallback for names PMG cannot draw (notch, diamond, halfCircle, provider, the brand marks and every name
+   the table does not list; the notch stays identical to the meters' notch). Round 2 maps check, users, shield,
+   filter, ring, chart, layers and more to themselves, tool to the wrench and tidy to the layout. SIZE is the static
+   render size per icon class (never measured: PMU.icon runs on every
+   live-beat re-render): pmu-glyph and pmu-lglyph 14 (40-widgets.css), pmu-vs-glyph 13 (30-charts.css .pmu-vs .pmu-ico),
+   pmu-kpiarrow 12 (30-charts.css .pmu-kpidelta .pmu-ico), default 16. The card-head tools (toolGrip, toolSize, toolGear,
+   toolKebab) draw flat at 14 through PMG.flat: one path, no halo, ink-only hover (PERF-3); the kebab is the set's
+   more (horizontal dots, like every other menu). The neon svg string is cached per (glyph, size, role); no box size
+   changes (every svg keeps the CSS box it already had). */
+var NEON = {
+  refresh: 'refresh', 'export': 'outbox', chevron: 'chevron-down', chevronDown: 'chevron-down', chevronRight: 'chevron-right',
+  chevronLeft: 'chevron-left', close: 'close', gear: 'settings', toolGear: 'settings', checkCircle: 'check-circle',
+  alert: 'st-warning', hourglass: 'hourglass', key: 'key', lock: 'lock', link: 'link', arrowUp: 'arrow-up',
+  arrowDown: 'arrow-down', coin: 'coin', info: 'info', plus: 'plus', minus: 'minus', resize: 'resize', toolSize: 'resize',
+  size: 'resize', eye: 'eye', eyeOff: 'eye-off', search: 'search', clock: 'clock', clockCircle: 'clock', file: 'page',
+  user: 'user', briefcase: 'briefcase', pencil: 'edit', grip: 'grip', drag: 'grip', toolGrip: 'grip', kebab: 'more',
+  dots: 'more', toolKebab: 'more', grid: 'grid', list: 'list', wallet: 'wallet', gauge: 'gauge', pulse: 'pulse',
+  spark: 'sparkles', book: 'notebook', check: 'check', users: 'users', shield: 'shield', filter: 'filter', ring: 'ring',
+  chart: 'chart', layers: 'layers', more: 'more', tool: 'wrench', tidy: 'layout'
+};
+var NEON_ROLE = {
+  refresh: 'control', 'export': 'concept', chevron: 'control', chevronDown: 'control', chevronRight: 'control',
+  chevronLeft: 'control', close: 'control', gear: 'control', toolGear: 'control', checkCircle: 'concept',
+  alert: 'concept', hourglass: 'concept', key: 'concept', lock: 'concept', link: 'control', arrowUp: 'control',
+  arrowDown: 'control', coin: 'concept', info: 'concept', plus: 'control', minus: 'control', resize: 'control',
+  toolSize: 'control', size: 'control', eye: 'concept', eyeOff: 'control', search: 'concept', clock: 'concept',
+  clockCircle: 'concept', file: 'concept', user: 'concept', briefcase: 'concept', pencil: 'control', grip: 'control',
+  drag: 'control', toolGrip: 'control', kebab: 'control', dots: 'control', toolKebab: 'control', grid: 'concept',
+  list: 'concept', wallet: 'concept', gauge: 'concept', pulse: 'concept', spark: 'concept', book: 'concept',
+  check: 'concept', users: 'concept', shield: 'concept', filter: 'concept', ring: 'concept', chart: 'concept',
+  layers: 'concept', more: 'control', tool: 'control', tidy: 'control'
+};
+var NEON_SIZE = { 'pmu-glyph': 14, 'pmu-lglyph': 14, 'pmu-vs-glyph': 13, 'pmu-kpiarrow': 12 };
+var NEON_FLAT = { toolGrip: 1, toolSize: 1, toolGear: 1, toolKebab: 1 };
+var ICON_CACHE = Object.create(null);
+function roleFor(name) { return NEON_ROLE[name] || 'concept'; }
+/* the size for a class list: the first token NEON_SIZE knows ('pmu-glyph is-x' -> 14), else 16 */
+function sizeOf(cls) {
+  var t = String(cls || '').split(/\s+/);
+  for (var i = 0; i < t.length; i++) if (NEON_SIZE[t[i]]) return NEON_SIZE[t[i]];
+  return 16;
+}
+
 var PMU = window.PMU = {
   version: 'pmu-b2-2026-10-02b',
   core: {
@@ -219,8 +265,42 @@ var PMU = window.PMU = {
     command: command, completeCommandReceipt: completeCommandReceipt, usageEvent: usageEvent, viewAction: viewAction
   },
   icons: SVG,
+  neonMap: NEON,
+  neonRole: NEON_ROLE,
   icon: function (name, cls) {
-    return '<span class="pmu-ico' + (cls ? ' ' + cls : '') + '" aria-hidden="true">' + (SVG[name] || SVG.grid) + '</span>';
+    /* only names in NEON go to PMG: an unmapped name (notch, diamond, provider, halfCircle, a brand mark) always draws its
+       own Usage drawing, even if PMG ever gains a glyph of that name (t3-usage-pm7 review, 2026-10-11) */
+    var G = window.PMG, g = name ? NEON[name] : '', svg = '';
+    if (g && G && typeof G.has === 'function' && G.has(g)) {
+      var flat = !!NEON_FLAT[name], role = flat ? 'control' : roleFor(name), size = flat ? 14 : sizeOf(cls);
+      var key = (flat ? 'f|' : 'i|') + g + '|' + size + '|' + role;
+      svg = ICON_CACHE[key];
+      if (!svg) {
+        try { svg = flat ? G.flat(g, 14, 'nx-r-control') : G.icon(g, size, 'nx-r-' + role); } catch (error) { svg = ''; }
+        if (svg) ICON_CACHE[key] = svg;
+      }
+    }
+    if (!svg) svg = SVG[name] || SVG.grid;
+    return '<span class="pmu-ico' + (cls ? ' ' + cls : '') + '" aria-hidden="true">' + svg + '</span>';
+  },
+  /* The bare svg for the raw-SVG call sites (rollout USAGE step 6: the card-head tools, the menu's icons, the [data-icon]
+     fill): the same NEON lookup and cache as PMU.icon with no wrapper, so `.pmu-iconbtn > svg` and its siblings still
+     match. size is what that site's CSS gives the svg (never measured); the card-head tools draw flat; role overrides
+     the name's own (a menu's chosen-row check is a control: the row's ink, no concept bloom). '' when neither PMG nor
+     the SVG table has the name, so each caller keeps its own fallback. */
+  svg: function (name, size, role) {
+    var G = window.PMG, g = name ? NEON[name] : '', out = '';
+    if (g && G && typeof G.has === 'function' && G.has(g)) {
+      var flat = !!NEON_FLAT[name], s = size || (flat ? 14 : 16);
+      role = flat ? 'control' : role || roleFor(name);
+      var key = (flat ? 'f|' : 'i|') + g + '|' + s + '|' + role;
+      out = ICON_CACHE[key];
+      if (!out) {
+        try { out = flat ? G.flat(g, s, 'nx-r-control') : G.icon(g, s, 'nx-r-' + role); } catch (error) { out = ''; }
+        if (out) ICON_CACHE[key] = out;
+      }
+    }
+    return out || SVG[name] || '';
   }
 };
 

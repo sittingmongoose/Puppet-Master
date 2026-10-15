@@ -22,15 +22,9 @@
 § [data-d-st="conflict"] { color: var(--d-conflict) !important; }
 § [data-d-st="orphan"] { color: var(--d-orange) !important; }
 § [data-d-st="current"] { color: var(--accent-primary) !important; }
-/* the glyph: its shape is the state, its colour follows the word */
+/* the glyph: the neon set draws it in its tone ink (pm7-glyphs, RAIL); the box stays 12 px */
 §R .d-gl { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 12px; height: 12px; position: relative; color: inherit; }
 §R .d-gl svg { width: 12px; height: 12px; display: block; overflow: visible; }
-§R .d-gl[data-pulse]::after {
-  content: ''; position: absolute; inset: 1px; border-radius: 50%; border: 1.5px solid currentColor; opacity: 0; pointer-events: none;
-  animation: d-pulse 2.2s cubic-bezier(.2, .7, .3, 1) infinite;
-}
-§R[data-o55-nier-parts~="square"] .d-gl[data-pulse]::after, §R[data-theme^="retro"] .d-gl[data-pulse]::after { border-radius: 0; }
-@keyframes d-pulse { 0% { opacity: .55; transform: scale(.7); } 70%, 100% { opacity: 0; transform: scale(1.65); } }
 /* dots that became glyphs: the element stays (contracts, colours from markup) but draws the glyph */
 § :is(.sh-dot, .dot).d-dot {
   width: 12px !important; height: 12px !important; border-radius: 0 !important; background: none !important; box-shadow: none !important;
@@ -53,8 +47,3 @@
 § .fm-gitbadge.d-word { min-width: 0; font: 500 var(--d-fs-small)/1 var(--body-font) !important; color: var(--d-text-3) !important; }
 /* counts that change roll; numbers never jump */
 §R .d-roll { display: inline-block; font-variant-numeric: tabular-nums; }
-/* pending turns slowly (it is waiting on something); a live dot breathes only when it is restarting or watching */
-§R .d-gl .d-spin { transform-origin: 8px 8px; animation: d-spin 7s linear infinite; }
-@keyframes d-spin { to { transform: rotate(360deg); } }
-§R[data-theme^="retro"] .d-gl .d-spin { animation-timing-function: steps(8, end); animation-duration: 4s; }
-§R .d-gl[data-pulse]::after { inset: 0; }

@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "topic": "Glyph system",
+  "model": "Opus 5.5",
+  "presentation": "entries",
+  "order": 100,
+  "widthControl": {"enabled": true, "label": "Component width", "role": "page", "min": 520, "max": 1920, "step": 10, "default": 1600, "presets": [768, 1280, 1600, 1920], "previewWidth": "test"},
+  "entries": [
+    {"id": "glyph-catalog", "title": "Puppet Master glyph catalog", "path": "PMGlyphCatalog.html", "openPath": "PMGlyphCatalog.html", "openActions": "both", "controlMode": "standard", "tags": ["glyphs", "neon", "status"], "order": 10}
+  ]
+}

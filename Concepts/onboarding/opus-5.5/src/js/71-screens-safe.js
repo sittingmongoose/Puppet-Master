@@ -101,7 +101,7 @@
     body(S) {
       const si = SI(S), f = si.kind === 'forge' ? O55.fixtures.forge(si.service) : null, env = S.env.forges[si.service] || { accounts: [], signup: true };
       let out = '';
-      if (si.state === 'done') return `<div class="o55-banner" data-key="done">${C.small('check', 18)}<span>${U.esc(T('online.signin.signedIn', { account: si.account }))}</span></div>`;
+      if (si.state === 'done') return `<div class="o55-banner" data-key="done">${C.done(18)}<span>${U.esc(T('online.signin.signedIn', { account: si.account }))}</span></div>`;
       const known = si.kind === 'forge' ? accountFor(S, si.service) : null;
       if (si.state === 'idle' && known && !si.another) {
         out += C.cards('useKnown', [{ v: known, glyph: 'person', title: T('online.signin.connected', { account: known }), sub: T('online.signin.connectedSub') }], known, {});
@@ -120,7 +120,7 @@
         out += `<div class="o55-inline" data-key="tokbtn">${O55.ui.btn({ label: T('ai.verify'), do: 'tokenCheck', cls: 'o55-small', disabled: !si.tokenTyped, reason: T('online.signin.tokenLabel') }, 'o55-secondary')}</div>`;
       }
       if (si.state === 'waiting' || si.state === 'code') {
-        out += `<div class="o55-row o55-row-wait" data-key="wait"><span class="o55-spin" aria-hidden="true"></span><span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('online.signin.waiting'))}</span><span class="o55-rowmeta">${U.esc(T('official.signin', { name: si.name }))}</span></span></div>`;
+        out += `<div class="o55-row o55-row-wait" data-key="wait">${C.spin(16)}<span class="o55-rowtext"><span class="o55-rowtitle">${U.esc(T('online.signin.waiting'))}</span><span class="o55-rowmeta">${U.esc(T('official.signin', { name: si.name }))}</span></span></div>`;
         /* a device code only where the service has a device sign-in; otherwise the sign-in link to paste */
         if (si.state === 'waiting') out += `<div class="o55-sublinks" data-key="nob">${C.link(T('online.signin.noBrowser'), deviceFor(S, si) ? 'code' : 'copyLink')}</div>`;
         else {
