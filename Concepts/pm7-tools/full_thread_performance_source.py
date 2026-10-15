@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Authored PM7 full-thread performance concept projection.
 
 This registration-neutral transform extends the T46 Browser/SCM performance

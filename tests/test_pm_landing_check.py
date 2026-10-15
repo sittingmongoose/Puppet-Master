@@ -2407,6 +2407,58 @@ class RunExport(unittest.TestCase):
             self.fail(f"the command's own child {pid} outlived the bound")
 
 
+class Pm7InventoryStale(unittest.TestCase):
+    """The settings inventory hook. The runner stands in for build.py, so the real page check never runs."""
+
+    def runner(self, code):
+        seen = {}
+
+        def run(cmd, cwd, capture_output, text):
+            seen["cmd"] = cmd
+            seen["cwd"] = cwd
+            seen["capture_output"] = capture_output
+            seen["text"] = text
+            return subprocess.CompletedProcess(cmd, code, stdout="check ok\n", stderr="")
+
+        run.seen = seen
+        return run
+
+    def test_a_diff_without_the_inventory_does_not_run_the_page_check(self):
+        run = self.runner(1)
+        self.assertIsNone(M.pm7_inventory_stale(["Plans/00-plans-index.md"], ROOT, runner=run))
+        self.assertEqual(run.seen, {})
+        self.assertEqual(M.apply_pm7_inventory(0, ["scripts/pm-landing-check.py"], ROOT, False, runner=run), 0)
+
+    def test_a_clean_page_check_leaves_the_landing_code_alone(self):
+        run = self.runner(0)
+        self.assertIsNone(M.pm7_inventory_stale([M.PM7_INVENTORY], ROOT, runner=run))
+        self.assertEqual(run.seen["cmd"], [
+            "python3", "Concepts/onboarding/opus-5.5/tools/build.py", "--publish-pm7", "--check"])
+        self.assertEqual(run.seen["cwd"], ROOT)
+        self.assertEqual(M.apply_pm7_inventory(1, [M.PM7_INVENTORY], ROOT, False, runner=run), 1)
+
+    def test_a_failed_page_check_is_blocking_and_names_the_regeneration(self):
+        run = self.runner(1)
+        self.assertEqual(M.pm7_inventory_stale([M.PM7_INVENTORY, "scripts/x.py"], ROOT, runner=run),
+                         "Plans inventory changed; regenerate the PM7 pages")
+        code, out, err = capture(lambda: M.apply_pm7_inventory(0, [M.PM7_INVENTORY], ROOT, False, runner=run))
+        self.assertEqual((code, out, err), (2, "Plans inventory changed; regenerate the PM7 pages\n", ""))
+        code, out, err = capture(lambda: M.apply_pm7_inventory(0, [M.PM7_INVENTORY], ROOT, True, runner=run))
+        self.assertEqual((code, out, err), (2, "", "Plans inventory changed; regenerate the PM7 pages\n"))
+
+
+def capture(fn):
+    import io
+    out, err = io.StringIO(), io.StringIO()
+    previous = sys.stdout, sys.stderr
+    sys.stdout, sys.stderr = out, err
+    try:
+        code = fn()
+    finally:
+        sys.stdout, sys.stderr = previous
+    return code, out.getvalue(), err.getvalue()
+
+
 class BaselineReading(unittest.TestCase):
     def test_a_foreign_document_is_refused(self):
         import tempfile

@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Source-owned T41 Usage control-acquisition and page-overflow repairs.
 
 T41 follows T40 and is deliberately limited to two user-authorized defects:

@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Authored T48 refresh for the Home Workspace source embedded in the PM7 base.
 
 The 2026-08-27 re-baseline retired the original T20 assembly transform into

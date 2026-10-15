@@ -1,0 +1,16 @@
+{
+  "purpose": "Whole-page lint ratchet for Concepts/PMConcept7.html. build.py --check fails only when one of these counts grows. A smaller count stays allowed.",
+  "page": "Concepts/PMConcept7.html",
+  "assessment_2026_10_14": {
+    "page_wide_star": 17,
+    "html_rooted_has": 17,
+    "important": 4395
+  },
+  "baseline_revision": "2219c25e579f70b06831ee7a52024660b00379a6",
+  "note": "Counts are from origin/main Concepts/PMConcept7.html at 2219c25e57 (M4 settle-read), measured with build.py page_lint_counts: 16 page-wide * selectors, 17 html-rooted :has() selectors, and 4413 !important with comments removed. The quick-wins branch had recorded 17, 17, and 4410 at 98229e9d6d. Later landings changed the page: the drop-commit rule removal took one page-wide star, and the pages landed after that revision carry 4413 !important. The regenerated quick-wins page measures the same 16, 17, and 4413, so the ratchet is re-recorded at those counts. The 2026-10-14 assessment recorded 4395. One further declaration still fails. A smaller count stays allowed.",
+  "counts": {
+    "page_wide_star": 16,
+    "html_rooted_has": 17,
+    "important": 4413
+  }
+}

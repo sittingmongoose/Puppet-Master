@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Pure local tour-practice reducer; no provider, persistence, or live planning work."""
 
 PLANNING_PRACTICE_SCRIPT = r'''

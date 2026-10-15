@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Source-owned T43 live occupied-neighbor Usage resize preview.
 
 T43 narrowly supersedes the frozen-peer portion of WS-019 for Usage pointer

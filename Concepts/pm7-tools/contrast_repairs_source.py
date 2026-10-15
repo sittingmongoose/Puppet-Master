@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Assertion-guarded PM7 T37 component-scoped contrast repair.
 
 The transform consumes T36.  It strengthens local semantic tokens only inside

@@ -819,6 +819,40 @@ def branch_paths(root: Path, base: str) -> list[str]:
     return sorted({line.strip() for line in proc.stdout.splitlines() if line.strip()})
 
 
+PM7_INVENTORY = "Plans/settings_inventory.json"
+PM7_INVENTORY_MESSAGE = "Plans inventory changed; regenerate the PM7 pages"
+
+
+def pm7_inventory_stale(paths: list[str], root: Path, runner=None) -> str | None:
+    """When the settings inventory is in the branch diff, the PM7 pages have to be rebuilt from it.
+
+    Returns the blocking message only when that file changed and
+    `build.py --publish-pm7 --check` fails. A clean check, or a diff that does not name the
+    inventory, returns None and runs nothing.
+    """
+    if PM7_INVENTORY not in paths:
+        return None
+    run = runner or subprocess.run
+    proc = run(
+        ["python3", "Concepts/onboarding/opus-5.5/tools/build.py", "--publish-pm7", "--check"],
+        cwd=root,
+        capture_output=True,
+        text=True,
+    )
+    if proc.returncode == 0:
+        return None
+    return PM7_INVENTORY_MESSAGE
+
+
+def apply_pm7_inventory(code: int, paths: list[str], root: Path, json_mode: bool, runner=None) -> int:
+    """Leave `code` as exit_code computed it, unless the inventory check is blocking."""
+    message = pm7_inventory_stale(paths, root, runner=runner)
+    if not message:
+        return code
+    print(message, file=sys.stderr if json_mode else sys.stdout)
+    return 2
+
+
 def split_touched(paths: list[str]) -> tuple[list[str], list[str]]:
     """Separate the paths the branch decided from the ones regeneration rewrote.
 
@@ -2064,7 +2098,9 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                   "something above stops the landing. Rerun each on its own and judge what it reports by "
                   "the same rules before pushing main.")
 
-    return exit_code(reported, grown, subcheck_growth, blocking, infrastructure)
+    return apply_pm7_inventory(
+        exit_code(reported, grown, subcheck_growth, blocking, infrastructure),
+        touched, root, args.json)
 
 
 def untracked_check_inputs(root: Path) -> list[str]:
