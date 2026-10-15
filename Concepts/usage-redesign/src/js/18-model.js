@@ -81,8 +81,10 @@
         if (wn !== null) pol.warnLeft = wn;
         if (sw !== null) pol.switchLeft = sw;
         if (cdOwn) pol.cooldown = cooldownOf(cd);
-        /* the switch level stays under the warn level at the account scope too (the owner holds every write; a level that
-           a later provider or shared warn change crossed is read at the highest switch choice below the warn level) */
+        /* the switch level stays under the warn level at the account scope too. The owner holds every write, a provider's
+           or the shared warn write against the own switch levels of the accounts that follow it included (2026-10-15);
+           this read is the safety net for a stored state from before that hold: a crossing level is read at the
+           highest switch choice below the warn level */
         if (pol.switchLeft >= pol.warnLeft) pol.switchLeft = Math.max(5, Math.ceil(pol.warnLeft / 5) * 5 - 5);
       }
     }

@@ -1320,6 +1320,11 @@
     id = ids.length > 1 ? null : ids[0];
     var pol = PMU.roster.thresholds(pid || null), what = !id ? 'follows the shared settings' : id === 'ai.accounts.multi-account-switching' ? (pol.auto ? 'auto-switch on' : 'auto-switch off')
       : id === 'ai.accounts.hard-switch-level' ? 'switches at ' + (100 - pol.switchLeft) + '% used' : id === 'ai.accounts.soft-warning-level' ? 'warns at ' + (100 - pol.warnLeft) + '% used' : POL_WORD[id] + ' ' + pol.cooldown;
+    /* the Settings owner holds a level to the switch-below-warn order (the accounts that follow it included, 2026-10-15):
+       a level it moved is named as stored, and says why it is not the one asked for */
+    var asked = id && value !== null && value !== undefined && value !== '' ? Number(value) : null;
+    if (asked !== null && id === IDS().warnLeft && asked !== pol.warnLeft) what += ' (the nearest level that keeps every switch level below it)';
+    else if (asked !== null && id === IDS().switchLeft && asked !== pol.switchLeft) what += ' (the nearest level that keeps it below every warn level)';
     PMU.shell.toast(t('toast.saved_settings') + ' · ' + (p ? p.name : 'shared setting') + ': ' + what + (pid && id && value === null ? ' (shared)' : ''));
     ripplePlay(cap, step || 30);
     return true;
