@@ -36,7 +36,37 @@ var persist = PMW.persist = {
       }
     }
     (l.closed || []).forEach(function (c) { model.stripLive(c && c.tab); });
+    persist.capSaved(l);
     return { schema: model.SCHEMA, savedAt: Date.now(), layout: l };
+  },
+  /* Tabs Remembered Between Sessions (general.startup.max-persisted-tabs, SSYS-050; 04-settings.js reads the Settings
+     row): the saved layout keeps at most this many tabs of every kind, the least recently used dropping first. Each
+     panel's shown tab and every pinned tab stay; the open layout is not touched, only what is written */
+  capSaved: function (l) {
+    return persist.trim(l, +PMW.settings.get('panels.tabs.maxPersisted') || 50, function () { return true; });
+  },
+  /* the same caps on a layout read back, so a limit set since it was written holds from the first frame: Tabs
+     Remembered Between Sessions, then Max Open Editor Tabs over its editor tabs (40-open.js holds it as tabs open) */
+  capLoaded: function (l) {
+    var n = persist.capSaved(l);
+    return n + persist.trim(l, +PMW.settings.get('panels.tabs.maxEditors') || 25, function (t) { return l.tabs[t].kind === 'editor'; });
+  },
+  /* drop the least recently used of the tabs that count until at most max are left; a panel's shown tab and a pinned
+     tab never go, so no panel is left empty */
+  trim: function (l, max, counts) {
+    var ids = Object.keys(l.tabs).filter(counts), over = ids.length - max;
+    if (over <= 0) return 0;
+    var keep = {};
+    model.panels(l).forEach(function (p) { if (p.active) keep[p.active] = true; });
+    var mru = (l.view && l.view.mru) || [];
+    var rank = function (t) { var i = mru.indexOf(t); return i < 0 ? mru.length + ids.indexOf(t) : i; };
+    var drop = ids.filter(function (t) { return !keep[t] && !l.tabs[t].pinned; }).sort(function (a, b) { return rank(b) - rank(a); }).slice(0, over);
+    drop.forEach(function (t) {
+      model.panels(l).forEach(function (p) { var i = p.tabs.indexOf(t); if (i >= 0) p.tabs.splice(i, 1); });
+      delete l.tabs[t];
+    });
+    if (l.view && l.view.mru) l.view.mru = l.view.mru.filter(function (t) { return !!l.tabs[t]; });
+    return drop.length;
   },
   save: function () {
     clearTimeout(saveTimer);
@@ -70,6 +100,7 @@ var persist = PMW.persist = {
     for (var id in l.tabs) model.stripLive(l.tabs[id]);
     l.closed.forEach(function (c) { model.stripLive(c && c.tab); });
     l.view.maximized = l.view.maximized || null;
+    persist.capLoaded(l);
     return l;
   },
   /* Copy a record to the quarantine key (keeping the earlier ones), then remove the original. Returns false, and

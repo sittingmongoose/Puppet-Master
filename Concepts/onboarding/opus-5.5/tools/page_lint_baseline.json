@@ -6,11 +6,11 @@
     "html_rooted_has": 17,
     "important": 4395
   },
-  "baseline_revision": "2219c25e579f70b06831ee7a52024660b00379a6",
-  "note": "Counts are from origin/main Concepts/PMConcept7.html at 2219c25e57 (M4 settle-read), measured with build.py page_lint_counts: 16 page-wide * selectors, 17 html-rooted :has() selectors, and 4413 !important with comments removed. The quick-wins branch had recorded 17, 17, and 4410 at 98229e9d6d. Later landings changed the page: the drop-commit rule removal took one page-wide star, and the pages landed after that revision carry 4413 !important. The regenerated quick-wins page measures the same 16, 17, and 4413, so the ratchet is re-recorded at those counts. The 2026-10-14 assessment recorded 4395. One further declaration still fails. A smaller count stays allowed.",
+  "baseline_revision": "aed50e8230ce18659924d951f3bb59c80e19dcdd",
+  "note": "Counts are the editor-customizer page regenerated on origin/main aed50e8230, measured with build.py page_lint_counts: 16 page-wide * selectors, 17 html-rooted :has() selectors, and 4418 !important with comments removed. That main's own page was 16, 17, and 4413. The five added declarations are the editor customizer rules: the art-bracket grid, two NieR customizer hover fills, the Liquid Glass search border, and the editor caret no-glide transition. Stars and html-rooted :has() did not grow. The 2026-10-14 assessment recorded 4395. One further declaration still fails. A smaller count stays allowed.",
   "counts": {
     "page_wide_star": 16,
     "html_rooted_has": 17,
-    "important": 4413
+    "important": 4418
   }
 }
