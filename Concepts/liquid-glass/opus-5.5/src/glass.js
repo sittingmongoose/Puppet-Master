@@ -1120,14 +1120,20 @@
     var g = ptr.t && ptr.t.closest ? ptr.t.closest('[data-lg-kind]') : null, sh = shineEl();
     if (document.querySelector('#panel-usage .pmu-card:is([data-lifted],[data-settling])')) { sh.classList.remove('on'); return; }
     if (g !== lit) {
-      if (lit) lit.removeAttribute('data-lg-lit'); lit = g;
+      if (lit) { lit.removeAttribute('data-lg-lit'); lit.style.removeProperty('--lg-px'); lit.style.removeProperty('--lg-py'); }
+      lit = g;
       if (g) {   /* clip the light to this sheet's shape, once per sheet */
         g.setAttribute('data-lg-lit', ''); var r = g.getBoundingClientRect(), cs = getComputedStyle(g);
         sh.style.cssText = 'left:' + r.left + 'px;top:' + r.top + 'px;width:' + r.width + 'px;height:' + r.height + 'px;border-radius:' + cs.borderRadius;
         sh.__r = r; sh.classList.add('on');
       } else sh.classList.remove('on');
     }
-    if (g && sh.__r) sh.firstChild.style.transform = 'translate3d(' + (ptr.x - sh.__r.left).toFixed(0) + 'px,' + (ptr.y - sh.__r.top).toFixed(0) + 'px,0)';
+    if (g && sh.__r) {
+      var lx = (ptr.x - sh.__r.left).toFixed(0) + 'px', ly = (ptr.y - sh.__r.top).toFixed(0) + 'px';
+      sh.firstChild.style.transform = 'translate3d(' + lx + ',' + ly + ',0)';
+      /* Glass Light's light is a layer of the lit sheet's own background, under its words (glass.css --lg-glow) */
+      if (root.getAttribute('data-theme') === 'glass-light' && root.getAttribute('data-lg-tier') === 'gpu') { g.style.setProperty('--lg-px', lx); g.style.setProperty('--lg-py', ly); }
+    }
   }
   document.addEventListener('pointermove', function (e) { ptr = { x: e.clientX, y: e.clientY, t: e.target }; if (!ptrQ) { ptrQ = true; requestAnimationFrame(onPtr); } }, { passive: true });
   /* the press: buttons flex and a small light blooms under the finger. Strip items and rail icons get neither: their

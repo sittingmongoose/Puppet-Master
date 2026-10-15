@@ -97,6 +97,8 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.app-shell, .title-bar, #a
 @property --lg-fy { syntax: '*'; inherits: false; }
 @property --lg-ring { syntax: '*'; inherits: false; }
 @property --lg-spec { syntax: '*'; inherits: false; }
+@property --lg-px { syntax: '*'; inherits: false; }
+@property --lg-py { syntax: '*'; inherits: false; }
 /* how see-through the sheets are. Settings' panel transparency (public --glass-alpha, from its floor, .35 dark and .45
    light, to 1) moves each sheet's tint around today's look, which is the setting's default .55: up to a near-opaque .94
    at 100 %, and down by at most a quarter of the tint at the floor, so the frost keeps text readable. --lg-ga is
@@ -116,19 +118,19 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [d
   -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="panel"] {
-  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-panel) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
     var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
   border-radius: var(--lg-r-sheet) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 30px 60px -30px var(--lg-shadow), 0 2px 10px var(--lg-shadow-near) !important;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="card"] {
-  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-card) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
     var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-heavy, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
   border-radius: var(--lg-r-card) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 22px 44px -24px var(--lg-shadow), 0 2px 6px var(--lg-shadow-near) !important;
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="bar"] {
-  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
+  background: var(--lg-spec, none) 0 0 / 100% 100% no-repeat, var(--lg-glow, none) 0 0 / 100% 100% no-repeat, linear-gradient(180deg, var(--lg-head-shade), transparent 30px), linear-gradient(rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat))), rgb(from var(--lg-tint-bar) r g b / calc((alpha * var(--lg-ga-k) + var(--lg-ga-add)) * var(--lg-mat)))),
     var(--lg-ring, none) 0 0 / 100% 100% no-repeat, var(--lg-frost-light, none) var(--lg-fx, 0px) var(--lg-fy, 0px) / var(--lg-vw, 100vw) var(--lg-vh, 100vh) no-repeat !important;
   border-radius: var(--lg-r-bar) !important;
   box-shadow: inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 16px 34px -18px var(--lg-shadow), 0 1px 4px var(--lg-shadow-near) !important;
@@ -136,7 +138,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) [data-lg-kind="bar"] {
 /* Jared #13 (2026-10-14): while its scroller moves, a sheet's frost is pinned to the viewport by the browser itself, so
    it never trails the content (glass.js sets data-lg-fixed at the first scroll event and lifts it when the scroll settles) */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-fixed] {
-  background-attachment: scroll, scroll, scroll, scroll, fixed !important; background-position: 0 0, 0 0, 0 0, 0 0, 0 0 !important;
+  background-attachment: scroll, scroll, scroll, scroll, scroll, fixed !important; background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0 !important;
 }
 /* the page-in class stays on a page after its entrance ends, and its will-change: transform would make every pinned
    frost element-relative; a running entrance still gets its own layer without it */
@@ -172,9 +174,16 @@ html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) { --lg-shine-c: rgba(255, 
 /* light: no pointer light. Any lightening blend lifts the dark letters under the pointer as much as the glass: an
    additive light washed them to 3.6:1, and the overlay that replaced it (it roughly doubles dark values) still took a
    chosen tab from 8.0:1 to 5.1:1 while the white-on-white glass around it showed no change at all (2026-10-14).
-   A light drawn under the sheet's content would be safe; that needs glass.js (FOLLOW-UPS). */
+   So Light's pointer light is drawn UNDER the sheet's content instead (Jared, 2026-10-14: "add a soft hover light to
+   Glass Light, drawn under the content"): a layer of the lit sheet's own background, above its tint and frost and below
+   every word, so it can only brighten the glass behind dark text (glass.js sets --lg-px / --lg-py on the lit sheet; GPU
+   tier only, since it repaints that sheet's background as the pointer moves). The edge light (the shared hover sheen)
+   is unchanged. */
 html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-shine-c: transparent; --lg-shine-blend: normal; }
 html[data-lg="on"][data-theme="glass-light"]:not(#lgz) #lg-shine { display: none; }
+html[data-lg="on"][data-lg-tier="gpu"][data-theme="glass-light"]:not(#lgz) :is([data-lg-kind="panel"], [data-lg-kind="card"], [data-lg-kind="bar"])[data-lg-lit] {
+  --lg-glow: radial-gradient(circle calc(var(--pmf-r, 96px) * 1.15) at var(--lg-px, -400px) var(--lg-py, -400px), rgba(255, 255, 255, .95), rgba(255, 255, 255, .5) 38%, rgba(246, 250, 255, .16) 72%, rgba(255, 255, 255, 0) 100%);
+}
 /* the arrival sweep: one band of light across the window as the glass condenses */
 /* calm: no light bands cross the board or the cards when a room or page changes (Jared, 2026-10-11: "The usage page
    animations are too busy... the side ways swipe across the whole screen when you change tabs can go away") */
