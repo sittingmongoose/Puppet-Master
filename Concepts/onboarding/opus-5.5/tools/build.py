@@ -1168,6 +1168,62 @@ def build_text(usage: bool = True, home: bool = True) -> str:
 
 
 INERT_SOURCES = TOOLS / 'inert_sources.json'
+PAGE_LINT_BASELINE = TOOLS / 'page_lint_baseline.json'
+PAGE_LINT_KEYS = ('page_wide_star', 'html_rooted_has', 'important')
+
+
+def built_stylesheets(html: str) -> list[tuple[str, str]]:
+    """Every <style> body in the built page, named by its id or by style@offset."""
+    sheets = []
+    for match in re.finditer(r'<style\b([^>]*)>(.*?)</style>', html, re.S | re.I):
+        attrs, body = match.group(1), match.group(2)
+        named = re.search(r'\bid="([^"]+)"', attrs)
+        sheets.append((named.group(1) if named else f'style@{match.start()}', body))
+    return sheets
+
+
+def page_lint_counts(html: str) -> dict[str, int]:
+    """Whole-page counts of the three debts the O55 source lint already knows about.
+
+    page_wide_star: selectors whose last compound is a bare `*` and that switch on a runtime
+    state other than a look change (PAGE_STATE_OK). html_rooted_has: selectors whose first
+    compound is html and that use :has(). important: `!important` in stylesheets, comments removed.
+    """
+    star = has = important = 0
+    for _name, body in built_stylesheets(html):
+        for _line, sel in css_selectors(body):
+            names = page_wide_universal(sel)
+            if names and any(name not in PAGE_STATE_OK for name in names):
+                star += 1
+            comps = compounds(sel)
+            if comps and re.match(r'html(?![\w-])', comps[0]) and ':has(' in sel:
+                has += 1
+        important += re.sub(r'/\*[\s\S]*?\*/', '', body).count('!important')
+    return {'page_wide_star': star, 'html_rooted_has': has, 'important': important}
+
+
+def page_lint_growth(actual: dict[str, int], allowed: dict[str, int]) -> list[str]:
+    """Fail only when a recorded count grows. A shrink stays allowed until the baseline is updated."""
+    labels = {
+        'page_wide_star': 'page-wide * selectors',
+        'html_rooted_has': 'html-rooted :has() selectors',
+        'important': '!important',
+    }
+    problems = []
+    for key in PAGE_LINT_KEYS:
+        if actual[key] > allowed[key]:
+            problems.append(f'page lint ratchet: {labels[key]} grew from {allowed[key]} to {actual[key]}')
+    return problems
+
+
+def page_lint_ratchet(html: str) -> list[str]:
+    if not PAGE_LINT_BASELINE.is_file():
+        return [f'page lint ratchet: baseline missing: {PAGE_LINT_BASELINE.relative_to(CONCEPTS.parent)}']
+    allowed = json.loads(PAGE_LINT_BASELINE.read_text(encoding='utf-8')).get('counts', {})
+    missing = [key for key in PAGE_LINT_KEYS if key not in allowed]
+    if missing:
+        return [f'page lint ratchet: baseline has no count for {", ".join(missing)}']
+    return page_lint_growth(page_lint_counts(html), {key: int(allowed[key]) for key in PAGE_LINT_KEYS})
 
 
 def warn_inert_sources() -> None:
@@ -1219,6 +1275,7 @@ def check(built: str) -> list[str]:
         problems.append('Concepts/PMConcept7.html is missing; run build.py --publish-pm7')
     elif PM7_TARGET.read_bytes() != expected:
         problems.append('Concepts/PMConcept7.html differs from a fresh build; run build.py --publish-pm7')
+    problems.extend(page_lint_ratchet(built))
     return problems
 
 

@@ -1,0 +1,15 @@
+{
+  "purpose": "Whole-page lint ratchet for Concepts/PMConcept7.html. build.py --check fails only when one of these counts grows. A smaller count stays allowed.",
+  "page": "Concepts/PMConcept7.html",
+  "assessment_2026_10_14": {
+    "page_wide_star": 17,
+    "html_rooted_has": 17,
+    "important": 4395
+  },
+  "note": "Measured on the built page's stylesheets. page-wide * selectors and html-rooted :has() selectors are both 17, the same as the 2026-10-14 assessment. !important, with comments removed, is 4409. The assessment recorded 4395; this page is newer, so the ratchet uses 4409. Counting !important inside comments as well would be 4445, and the whole HTML file contains 4460.",
+  "counts": {
+    "page_wide_star": 17,
+    "html_rooted_has": 17,
+    "important": 4409
+  }
+}
