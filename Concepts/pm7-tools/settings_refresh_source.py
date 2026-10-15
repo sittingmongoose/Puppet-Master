@@ -1,4 +1,5 @@
-# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
+# Live helper: settings_layer.apply loads this module (placement loader, reference-row parser, canonical-id regex).
+# Page text is authored in the Opus fork, Concepts/onboarding/opus-5.5/src/settings. Use scripts/pm7-where.py to find a snippet.
 """T50: Settings managers refresh for the published TestPMConcept.
 
 Never hand-edit TestPMConcept.html.  This authored transform is applied on the
