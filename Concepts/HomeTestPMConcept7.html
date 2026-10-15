@@ -42989,8 +42989,8 @@ html[data-motion="reduced"] .pmw-dash-agent-fill { transition: none; }
 .pmw-dash .pmw-hfact[data-id="hour"] .pmw-ico { color: var(--pmw-accent); }
 
 /* Friendly: the Usage page's Live rose; Glass: the dot glows as the Usage page's does */
-html[data-theme^="friendly"] .pmw-dash { --pmw-dash-live: #C2557A; }
-html[data-theme="friendly-dark"] .pmw-dash { --pmw-dash-live: #E07BA0; }
+html[data-theme^="friendly"] .pmw-dash { --pmw-dash-live: #6F55A8; }
+html[data-theme="friendly-dark"] .pmw-dash { --pmw-dash-live: #D2C4EE; }
 html[data-theme^="glass"] .pmw-dash-live-dot { box-shadow: 0 0 6px color-mix(in srgb, var(--pmw-dash-live) 70%, transparent); }
 /* the notice frosts what is under it as Glass frosts the package's menus (the same plate, blur and saturation) */
 html[data-theme^="glass"] .pmw-dash > .pmw-dash-undo { -webkit-backdrop-filter: blur(30px) saturate(1.5); backdrop-filter: blur(30px) saturate(1.5); }
@@ -52355,10 +52355,10 @@ html[data-theme$="-light"] :is(#panel-usage,[data-pmu-host]) .pmu-shell {
 html[data-theme="friendly-light"] :is(#panel-usage,[data-pmu-host]) .pmu-shell {
   --pmu-l-key: #FF8F6B; --pmu-l-key-a: 30%; --pmu-l-key-b: 22%;
   --pmu-l-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 1px 2px rgba(120,72,52,.08), 0 20px 38px -20px rgba(150,86,60,.30);
-  --pmu-l-ink-top: #C2557A; --pmu-l-ink-bot: #2E8F86;
+  --pmu-l-ink-top: #6F55A8; --pmu-l-ink-bot: #2E8F86; /* Friendly's lavender (Jared 2026-10-15; was a rose outside the palette) */
   --pmu-l-r0: #9A86E8; --pmu-l-r1: #3AA7D6; --pmu-l-r2: #2FB38B;
 }
-html[data-theme="friendly-dark"] :is(#panel-usage,[data-pmu-host]) .pmu-shell { --pmu-l-key: #FF9F7A; --pmu-l-ink-top: #FF9DC0; --pmu-l-ink-bot: #7FE0D2; }
+html[data-theme="friendly-dark"] :is(#panel-usage,[data-pmu-host]) .pmu-shell { --pmu-l-key: #FF9F7A; --pmu-l-ink-top: #D2C4EE; --pmu-l-ink-bot: #7FE0D2; }
 html[data-theme^="glass"] :is(#panel-usage,[data-pmu-host]) .pmu-shell { --pmu-l-key-a: 26%; --pmu-l-ink-top: #FFFFFF; --pmu-l-ink-bot: #B9E6FF; --pmu-l-r0: #8D7BFF; --pmu-l-r1: #4FD2FF; --pmu-l-r2: #6CF5C2; }
 html[data-theme="glass-light"] :is(#panel-usage,[data-pmu-host]) .pmu-shell { --pmu-l-key-a: 20%; --pmu-l-ink-top: #17222A; --pmu-l-ink-bot: #2F5FC4; --pmu-l-r0: #6E62D8; --pmu-l-r1: #0F86C6; --pmu-l-r2: #0A8A66; }
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-shell { --pmu-l-key: var(--pmu-s0); --pmu-l-key-a: 10%; --pmu-l-key-b: 6%; --pmu-l-plate-hi: transparent; --pmu-l-hero-spot: 0%;
@@ -52828,7 +52828,8 @@ html[data-motion="reduced"] :is(#panel-usage,[data-pmu-host]) :is(.pmu-seg-ink, 
 :is(#panel-usage,[data-pmu-host]) .pmu-livepulse { position: absolute; left: 0; top: 0; width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 0 1.5px var(--pmu-live-c); opacity: 0; pointer-events: none; }
 :is(#panel-usage,[data-pmu-host]) .pmu-liveword { white-space: nowrap; }
 html[data-theme^="friendly"] :is(#panel-usage,[data-pmu-host]) .pmu-ld-dot { fill: url(#pmuLiveGrad); }
-html[data-theme^="friendly"] :is(#panel-usage,[data-pmu-host]) .pmu-livectl { --pmu-live-c: #C2557A; }
+html[data-theme^="friendly"] :is(#panel-usage,[data-pmu-host]) .pmu-livectl { --pmu-live-c: #6F55A8; }
+html[data-theme="friendly-dark"] :is(#panel-usage,[data-pmu-host]) .pmu-livectl { --pmu-live-c: #D2C4EE; }
 html[data-theme^="glass"] :is(#panel-usage,[data-pmu-host]) .pmu-livectl[data-state="on"] .pmu-livedot svg { filter: drop-shadow(0 0 3px var(--pmu-live-c)); }
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-livectl { --pmu-live-c: var(--pmu-s0); }
 html[data-theme^="retro"] :is(#panel-usage,[data-pmu-host]) .pmu-livebtn { gap: 3px; font-family: var(--pmu-mono); font-size: 12px; letter-spacing: .02em; }
@@ -56064,7 +56065,7 @@ html[data-o55-nier-parts~="headers"] :is(#panel-usage,[data-pmu-host]) .pmu-card
   <aside class="pmu-rail" aria-label="Usage rooms">
     <div class="pmu-brand"><h1>Usage</h1>
       <span class="pmu-livectl" id="pmuLiveCtl" data-state="on" hidden>
-        <button type="button" class="pmu-livebtn" id="pmuLiveBtn" aria-pressed="true"><span class="pmu-livedot" aria-hidden="true"><svg viewBox="0 0 12 12" width="12" height="12" focusable="false"><defs><linearGradient id="pmuLiveGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C2557A"/><stop offset="1" stop-color="#2E8F86"/></linearGradient></defs><circle class="pmu-ld-dot" cx="6" cy="6" r="3"/><circle class="pmu-ld-ring" cx="6" cy="6" r="2.6"/><path class="pmu-ld-dia" d="M6 2.2 9.8 6 6 9.8 2.2 6z"/><rect class="pmu-ld-cur" x="3.5" y="2.5" width="5" height="7"/></svg><i class="pmu-livepulse"></i></span><span class="pmu-liveword">Live</span></button>
+        <button type="button" class="pmu-livebtn" id="pmuLiveBtn" aria-pressed="true"><span class="pmu-livedot" aria-hidden="true"><svg viewBox="0 0 12 12" width="12" height="12" focusable="false"><defs><linearGradient id="pmuLiveGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6F55A8"/><stop offset="1" stop-color="#2E8F86"/></linearGradient></defs><circle class="pmu-ld-dot" cx="6" cy="6" r="3"/><circle class="pmu-ld-ring" cx="6" cy="6" r="2.6"/><path class="pmu-ld-dia" d="M6 2.2 9.8 6 6 9.8 2.2 6z"/><rect class="pmu-ld-cur" x="3.5" y="2.5" width="5" height="7"/></svg><i class="pmu-livepulse"></i></span><span class="pmu-liveword">Live</span></button>
         <button type="button" class="pmu-livechev" id="pmuLiveMenu" aria-haspopup="menu" aria-expanded="false" aria-label="Live readings" data-pm-hover-label="Live readings"><span class="pmu-ico" data-icon="chevronDown" aria-hidden="true"></span></button>
       </span></div>
     <nav class="pmu-nav" id="pmuNav" aria-label="Usage rooms">
