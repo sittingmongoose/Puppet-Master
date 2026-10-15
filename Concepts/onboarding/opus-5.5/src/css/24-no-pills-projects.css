@@ -143,3 +143,22 @@ html[data-o55-nier="on"] #panel-projects { --pmp-ph: color-mix(in srgb, var(--o5
    Glass Light's error ink read 4.43 on the frosted card behind the confirm (contrast round, 2026-10-15): the Remove
    word is drawn a fifth toward the text ink; its edge keeps the error colour. */
 html[data-theme="glass-light"] #panel-projects .pm6-proj-confirm-btns button.danger { color: color-mix(in srgb, var(--accent-error) 80%, var(--text-primary)); }
+
+/* ── the primary buttons' words (contrast round 2, 2026-10-15) ───────────────────────────────────────────────────────
+   "New Project" and the sheet's "Create Project" fill with the look's ok colour, which the page's contrast block draws
+   dark in Friendly, Glass and Retro Light so it reads as a word; the buttons kept their #1A1A1A words on that dark fill
+   (1.8 to 2.3). Their words take white there. Glass Light's "New Project" is a glass button with its own label ink. */
+html:is([data-theme="friendly-light"], [data-theme="glass-light"], [data-theme="retro-light"]) .pm6-proj-sheet-foot button.primary,
+html:is([data-theme="friendly-light"], [data-theme="retro-light"]) .page-projects .projects-actions button.primary { color: #fff; }
+
+/* ── a card's quiet lines and the sheet's labels (contrast round 2) ──────────────────────────────────────────────────
+   A card's branch line ("main · 4 worktrees"), its activity line ("Run #31 complete …") and "Active now" / "3 days ago",
+   and the New Project sheet's field labels and hint, read the look's secondary or muted ink. That fell under 4.5 on
+   Glass Light's frosted cards (3.7 to 4.5) and on NieR Mode's cards and sheet (4.0 to 4.5). There they take a quieter
+   label ink (--pmp-quiet), and a card's reason ("stale — folder missing") the label ink with a fifth of its attention
+   tone (Glass Light; the attention ink itself read 4.1) or a quarter of the ink (NieR Light). */
+html[data-theme="glass-light"] #panel-projects { --pmp-quiet: color-mix(in srgb, var(--text-secondary) 40%, var(--text-primary)); }
+html[data-o55-nier="on"] #panel-projects { --pmp-quiet: color-mix(in srgb, var(--o55-nier-ink) 78%, transparent); }
+html:is([data-theme="glass-light"], [data-o55-nier="on"]) #panel-projects :is(.pm6-proj-branch, .pm6-proj-activity, .project-last-opened, .pm6-proj-field > span, .pm6-proj-sheet-hint) { color: var(--pmp-quiet); }
+html[data-theme="glass-light"] #panel-projects .pm6-proj-reason { color: color-mix(in srgb, var(--accent-warning) 22%, var(--text-primary)); }
+html[data-o55-nier="on"][data-theme$="-light"] #panel-projects .pm6-proj-reason { color: color-mix(in srgb, var(--pmp-attn) 75%, var(--o55-nier-ink)); }
