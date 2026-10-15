@@ -101352,12 +101352,15 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
   /* why a level n of `id` cannot be picked because it crosses the own other levels of the things that follow it ('' when
      it does not): list [{ name, on: the account's service when the level is the shared one, n }], each named; whose says
      what they follow ("Claude's warn level", "this shared level") */
-  function accCrossing(list, id, n, whose) {
+  /* max (optional): name at most that many and count the rest ("… and 2 more"), for a toast that must show whole */
+  function accCrossing(list, id, n, whose, max) {
     const isSw = id === SW_ID, hit = list.filter(x => isSw ? n >= x.n : n <= x.n).sort((x, y) => isSw ? x.n - y.n : y.n - x.n);
     if (!hit.length) return '';
     const kind = isSw ? 'warn' : 'switch', verb = isSw ? 'At or past' : 'At or before', on = x => x.on ? ` on ${x.on}` : '';
     if (hit.length === 1) return `${verb} ${hit[0].name}'s own ${kind} level${on(hit[0])} (${100 - hit[0].n}% used), and it follows ${whose}.`;
-    const names = hit.map(x => `${x.name}${on(x)} (${100 - x.n}% used)`), last = names.pop();
+    const names = hit.map(x => `${x.name}${on(x)} (${100 - x.n}% used)`);
+    if (max && hit.length > max) return `${verb} the own ${kind} levels of ${names.slice(0, max).join(', ')} and ${hit.length - max} more, which follow ${whose}.`;
+    const last = names.pop();
     return `${verb} the own ${kind} levels of ${names.join(', ')} and ${last}, which follow ${whose}.`;
   }
   const leftText = v => { const n = pctLeft(v); return n === null ? String(v || '') : `${n}% left · ${100 - n}% used`; };
@@ -101547,8 +101550,8 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
       const held = holdOrder(null, [{ id, value: def }]);
       if (!held || String(held[0].value) !== String(def)) {
         /* short enough for the toast to show whole: "The default, 20% left, is at or before Lab's own switch level on
-           Claude (75% used)." */
-        const why = sharedCrossing(id, def).replace(/,? (?:and it follows|which follow) this shared level\.$/, '.');
+           Claude (75% used)."; with several blockers it names the first and counts the rest ("… and 2 more.") */
+        const why = sharedCrossing(id, def, 1).replace(/,? (?:and it follows|which follow) this shared level\.$/, '.');
         showToast('Default was not restored', why ? `The default, ${pctLeft(def)}% left, is ${why.charAt(0).toLowerCase()}${why.slice(1)}` : holdWhy || GENERIC_WHY, 'warning');
         return false;
       }
@@ -101562,7 +101565,7 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
      the shared switch level; a shared warn level crosses the shared switch level, or the own switch level of a service
      that follows the shared warn level, or of an account that follows it through its service (2026-10-15). The same
      pairs as holdOrder, so a choice offered here is stored as picked. */
-  function sharedCrossing(id, v) {
+  function sharedCrossing(id, v, max) {
     const n = pctLeft(v); if (n === null) return '';
     const isSw = id === SW_ID, other = isSw ? WARN_ID : SW_ID;
     const crosses = lvl => lvl !== null && (isSw ? n >= lvl : n <= lvl);
@@ -101573,7 +101576,7 @@ ensurePm51State = function () { o55EnsurePm51State(); try { o55PersonaCanon(); }
     const following = all().filter(canSwitch).filter(x => ownPolicy(x, id) === undefined);
     const list = following.filter(x => pctLeft(ownPolicy(x, other)) !== null).map(x => ({ name: x.name, n: pctLeft(ownPolicy(x, other)) }))
       .concat(following.flatMap(x => accFollowers(x, id).map(f => ({ name: f.acc.nickname, on: x.name, n: f.n }))));
-    return accCrossing(list, id, n, 'this shared level');
+    return accCrossing(list, id, n, 'this shared level', max);
   }
   PM51.choiceBlock(SW_ID, v => sharedCrossing(SW_ID, v));
   PM51.choiceBlock(WARN_ID, v => sharedCrossing(WARN_ID, v));
