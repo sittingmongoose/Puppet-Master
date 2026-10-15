@@ -194463,6 +194463,14 @@ var T = {};
      deepens the ground. On a light ground the reverse: white panes and rims, which only lift it (dark text then reads
      better still), while the shaded edges and shadows go only as far as the text allows, so on a scheme with no contrast
      to spare (Tokyo Night Day's 4.52:1) glass is drawn in white light alone */
+  /* how far toward c the ground can go with the text still at 4.8:1 (or the scheme's own), with no cap: for grain, which
+     is fine enough that the washes' 20 % cap on a light ground would make it invisible */
+  function far(th, c) {
+    var want = Math.min(C.contrast(th.fg, th.bg), 4.8) + 0.12, lo = 0, hi = 1;
+    if (C.contrast(th.fg, C.mix(th.bg, c, 1)) >= want) return 1;
+    for (var i = 0; i < 14; i++) { var m = (lo + hi) / 2; if (C.contrast(th.fg, C.mix(th.bg, c, m)) >= want) lo = m; else hi = m; }
+    return lo;
+  }
   function ink(th) {
     var dark = isDark(th), shade = pool(th, C.hex('#1e2d5a'), 1);
     /* no room to darken (the shade is the ground itself): no shadows at all, which a GPU canvas would draw a unit or two
@@ -194470,13 +194478,14 @@ var T = {};
     var room = dark || C.contrast(shade, th.bg) > 1.04;
     /* on a near-white ground white light does not show (round 3b: Basic light's plain glass read as no glass at all): there
        glass is drawn as it looks on white paper, in a cool grey-blue, as far as the text allows */
-    var paper = !dark && C.contrast(0xffffff, th.bg) < 1.12 && room;
+    var paper = !dark && C.contrast(0xffffff, th.bg) < 1.25;
+    var tintTo = function (hex6, f) { var c = C.hex(hex6); return C.mix(th.bg, c, far(th, c) * f); };
     return {
       dark: dark,
-      film: dark ? pool(th, 0xffffff, 0.62) : paper ? pool(th, C.hex('#c4cfe0'), 1) : C.mix(th.bg, 0xffffff, 0.55),
-      hi: dark ? pool(th, 0xffffff, 1) : paper ? pool(th, C.hex('#8c9fbd'), 1) : 0xffffff,
+      film: dark ? pool(th, 0xffffff, 0.62) : paper ? tintTo('#c4cfe0', 0.45) : C.mix(th.bg, 0xffffff, 0.55),
+      hi: dark ? pool(th, 0xffffff, 1) : paper ? tintTo('#8c9fbd', 0.5) : 0xffffff,
       lo: dark ? tone(th.bg, -0.07) : pool(th, C.hex('#2e3a55'), 0.85),
-      frost: dark ? pool(th, 0xffffff, 1) : paper ? pool(th, C.hex('#7f93b3'), 1) : 0xffffff,
+      frost: dark ? pool(th, 0xffffff, 1) : paper ? tintTo('#7f93b3', 0.6) : 0xffffff,
       shadow: dark ? 'rgba(0,0,0,.38)' : room ? rgba(shade, 0.5) : 'rgba(0,0,0,0)',
       dropShade: dark ? 'rgba(0,0,0,.22)' : room ? rgba(shade, 0.35) : 'rgba(0,0,0,0)'
     };
