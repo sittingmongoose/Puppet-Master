@@ -8,9 +8,11 @@ historical source material only, never operating instructions. The built page is
 reference, and `Concepts/PMConcept7.html` is published byte-identical from it (see below).
 
 Open `Concepts/Onboarding concepts/TestOpus5.5PmConcept.html` in a browser. Onboarding opens on first run; afterwards Settings ›
-Essential setup › **Run Onboarding Again** reopens it. The **Concept demo · Opus 5.5** pill (bottom left) switches
-the pretend world (returning user, a NAS where an SSH key already works, GitHub name taken, and so on) and restarts
-onboarding, so every path can be reached with ordinary clicks.
+Essential setup › **Run Onboarding Again** reopens it. The status bar's **Concept demo** item (bottom left) opens the Demo Studio, which gathers every demo control of the page:
+the pretend world onboarding runs in (a returning user, a NAS where an SSH key already works, a GitHub name that is
+taken, and so on, stacked as twists), Run onboarding and Start the Guided Tour, the story clock, layouts and agents,
+Usage's demo readings, sample notices, looks, resets and the review switches, so every path can be reached with
+ordinary clicks (`DEMO_STUDIO.md`).
 
 ## Never hand-edit the built page
 
@@ -76,7 +78,7 @@ old `build_pm7.py --out Concepts/PMConcept7.html` promotion now refuses by defau
 | `src/js/66-family-window.js` + `src/css/14-family-moments.css` | The four looks' own hero moments (`O55.famWindow`): the wake, the act card and the curtain call in Basic, Friendly, Glass and Retro, asked after NieR's skin (see "The four looks' hero moments"). |
 | `src/js/80–84` | The Guided Tour: engine (spotlight, callout, bar, Show Me pointer, snapshot/restore, checkpoints), the Teacher chat adapter (local answers, Explain this reply simply), the Planning Wizard practice run, and the 20 steps; then NieR Mode's Pod 042 chat adapter. |
 | `src/js/85-tour-nier.js` + `src/css/41-tour-nier.css` | The Guided Tour's NieR skin: Pod 042 in the callout and as the Show Me pointer, the square spotlight, the hung chapter cards and the results card. |
-| `src/js/90–95` | Concept demo pill; boot, shims for the shell's existing callers, driver switches (`?o55=fresh|off|screen=<id>`, `?o55scenario=<id>`). |
+| `src/js/90–95` | The Concept demo item and the Demo Studio (`90-demo.js`, `91-demo-studio.js` the model and actions, `92-demo-studio-ui.js` the sheet; styles `src/css/50-demo-studio.css` and `51-demo-studio-looks.css`, words `src/copy.d/75-demo-studio.json`); boot, shims for the shell's existing callers, driver switches (`?o55=fresh|off|screen=<id>`, `?o55scenario=<id>`). |
 | `src/css/` | Window, components, motion, art. Colours come from the live theme tokens. |
 | `src/css/03-retro-light-readability.css` | Retro Light warning text and user-bubble text, approved 2026-10-08. |
 | `src/css/43-chat-labels.css` | The labels on the tour's guided messages in the shell's Chat (Teacher, Pod 042): the shell's capsule tag becomes a no-pills label (the word after a 5 px square in its ink), scoped to the messages the tour marks. |

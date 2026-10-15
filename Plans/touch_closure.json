@@ -52,17 +52,17 @@
       "registry_id": "TCR-SETTINGS-PACKET-COMMANDS",
       "source_path": "Plans/settings_system_contract_fixtures.json",
       "json_pointer": "/packet_command_dispositions",
-      "source_sha256": "eaaee0e3a523a1efd2c7df6d9d3316da676e56146a84974a76accebed054cf85",
+      "source_sha256": "273b2bcdc76f52d157513630c0f0faeeae548f6665fcf5333dc5f234eb0e309e",
       "owner_plan": "Plans/Settings_System.md",
       "plan_unit": "SSYS-023",
       "expected_token_count": 80,
       "expected_disposition_counts": {
-        "reuse_canonical_command": 41,
+        "reuse_canonical_command": 40,
         "superseded_by_typed_local_ui_action": 7,
         "retired_bakeoff_only": 1,
-        "rejected_with_reason": 31
+        "rejected_with_reason": 32
       },
-      "canonical_target_count": 30,
+      "canonical_target_count": 29,
       "typed_local_ui_action_count": 7,
       "manager_registry_count": 38,
       "named_projection_count": 3
@@ -5630,54 +5630,6 @@
       ],
       "evidence_refs": [
         "static_catalog_and_wiring_only"
-      ]
-    },
-    {
-      "profile_id": "TCP-THEME",
-      "requirement_refs": [
-        "Plans/UI_Command_Catalog.md#UCC-108",
-        "Plans/FinalGUISpec.md#F3-513",
-        "Plans/Settings_System.md#SSYS-023"
-      ],
-      "owner_plan": "Plans/UI_Command_Catalog.md",
-      "plan_unit": "UCC-108",
-      "dry_contract_ref": "Plans/UI_Command_Catalog.md#UCC-108",
-      "payload_schema_ref": "typed scope, theme_patch, preview_surface and ttl_ms",
-      "result_schema_ref": "preview_id and expires_at_utc",
-      "error_schema_ref": "invalid_args or handler_unavailable",
-      "availability_rule": "A valid theme patch, supported preview surface, bounded TTL and theme owner are required.",
-      "permission_gate": "Preview is ephemeral and grants no persistence, Settings transaction, or native theme authority.",
-      "disabled_reason_rule": "Expose invalid args or unavailable handler and retain the current theme.",
-      "handler_owner": "Theme preview owner through UCC-108; native handler evidence is absent.",
-      "handler_status": "specified",
-      "wiring_status": "specified",
-      "production_or_simulation": "Static catalog and production-intent row; PMConcept7 theme previews remain concept simulation.",
-      "gui_triggers": [
-        "Settings Appearance theme preview"
-      ],
-      "return_route": "Exact Settings Appearance route and focus with prior theme restorable.",
-      "reverse_consumers": [
-        "Plans/Settings_System.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Wiring_Matrix.production.json"
-      ],
-      "event_refs": [],
-      "receipt_refs": [
-        "explicit dispatch receipt"
-      ],
-      "observable_work": [],
-      "persistence_refs": [
-        "none for preview"
-      ],
-      "migration_refs": [
-        "theme apply remains a Settings preview/apply transaction composition"
-      ],
-      "test_refs": [
-        "Plans/settings_system_contract_fixtures.json",
-        "Plans/UI_Command_Catalog.md#UCC-108"
-      ],
-      "evidence_refs": [
-        "static_catalog_and_concept_only"
       ]
     },
     {
@@ -11411,14 +11363,6 @@
       "Canonical sound-asset export catalog and production-intent row exist; native redaction/FileSafe export and runtime evidence are absent."
     ],
     [
-      "TOUCH-THEME-001",
-      "TCP-THEME",
-      "command",
-      "cmd.theme.preview",
-      "partial",
-      "Canonical ephemeral theme-preview catalog and production-intent row exist; native theme handler, expiry/reversal, and Slint evidence are absent."
-    ],
-    [
       "TOUCH-USE-002",
       "TCP-USAGE-CMD",
       "command",
@@ -13817,6 +13761,17 @@
         "Plans/Wiring_Matrix.md#WM-040"
       ],
       "token": "cmd.settings.agent_rules.dry_method_default_guard.set"
+    },
+    {
+      "token": "cmd.theme.preview",
+      "classification": "forbidden",
+      "source_refs": [
+        "Plans/Settings_System.md#SSYS-010",
+        "Plans/UI_Command_Catalog.md#UCC-204",
+        "Plans/Decision_Log.md#DL-200"
+      ],
+      "reason": "Visible app-theme preview retired by Jared; no handler, dispatch alias or production row. Internal Settings preview/apply is a separate retained transaction.",
+      "replacement": ""
     }
   ],
   "alias_bindings": {

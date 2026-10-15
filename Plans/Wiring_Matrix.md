@@ -5949,7 +5949,7 @@ A terminal is one tab kind with one session per tab (`Plans/Section15_MVP_Promot
 |---|---|---|---|
 | New terminal > an installed shell, or SSH hosts > a host (amended 2026-10-10, DL-187, D39: every installed shell, then after a hairline an SSH hosts submenu) | `cmd.panel_tab.open` with `{ kind: terminal, profile }`, `where: tab` | `terminal.more.new_terminal` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Split down | `cmd.workspace_layout.split` with the terminal spec, `direction: down` | `terminal.more.split_down` | `workspace.layout_changed` |
-| Appearance... | opens the Appearance popover | none | view-local, dispatches nothing |
+| Appearance... | opens the Customize screen (F3-650) | none | view-local, dispatches nothing |
 | Text size > Bigger, Smaller, Reset (Ctrl+=, Ctrl+-, Ctrl+0) | `ui.terminal.zoom` | none | typed local action, no receipt, no event |
 | Copy mode (Ctrl+Shift+X) | `ui.terminal.copy_mode` | none | typed local action, no receipt, no event |
 | Quick select (Ctrl+Shift+E) | `ui.terminal.quick_select` | none | typed local action, no receipt, no event |
@@ -6023,7 +6023,7 @@ A terminal is one tab kind with one session per tab (`Plans/Section15_MVP_Promot
 | The notification permission notice (where the platform asks, once, after a notification arrived) > Allow; Mute this terminal; Not now (added 2026-10-10, DL-187, D38) | Allow asks the platform's own permission; Mute this terminal is `ui.terminal.mute_notifications`; Not now dispatches nothing | none | no command, receipt or event |
 | An image a limit, a quota or a transfer rule refuses | nothing: the image is not drawn and the program receives SMPFS-181's fixed reply; no notice control exists | none | none |
 
-**Appearance popover** (`Plans/FinalGUISpec.md#F3-642`, `#F3-643`)
+**Customize screen (F3-650)** (`Plans/FinalGUISpec.md#F3-642`, `#F3-643`)
 
 | Control | Dispatch | Production entry | Effect |
 |---|---|---|---|
@@ -6042,33 +6042,38 @@ unit_type: integration_contract
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: >-
-  Every control inside a terminal tab (DL-181) has exactly one wiring row as this addendum's terminal tables list
-  them: the header row (Find, Split, Maximize or Restore, More), every More menu leaf, the screen's context menu, the
-  command-mark menu, find, copy mode, quick select, links (Ctrl+click opens the panel's preview tab, Ctrl+double-click
-  keeps it, Ctrl+Alt+click opens a new panel, a URL opens a Browser tab, a plain click selects), the agent rows
-  (Take over, Interrupt, Stop, Hand back, Stop <agent>, Allow once, Allow in this terminal, Deny, Type it), a person's
-  keystroke take-over, the Session ended row (Restart, Close tab, Enter), the close-a-running-terminal row (Close
-  terminal, Keep it open), the restored and image notices, and the Appearance popover (This terminal writes
-  cmd.terminal.appearance.set; All terminals composes the Settings transaction pair over SSYS-051's rows; Import
-  scheme...). The agent rows dispatch cmd.terminal.take_over (a person's keystroke is the same command with
-  origin: keystroke, never a second id), cmd.terminal.hand_back, cmd.terminal.interrupt, cmd.terminal.stop_agent,
-  cmd.terminal.allow_agent_input (grant once or this_terminal) and cmd.terminal.deny_agent_input; the More menu's
-  Agent input rows dispatch cmd.terminal.revoke_agent_input, Clear dispatches cmd.terminal.clear, Send signal's
-  Terminate and Kill dispatch cmd.terminal.send_signal, and Import scheme... dispatches
-  cmd.terminal.appearance.import_scheme. Thirty-six terminal.* production entries carry the command-bearing controls; ui.terminal.* actions,
-  the Ask each time row, the command-mark header, Keep it open and the notices have no entry. Terminal session
-  commands emit no event and no workspace.layout_changed; a Split, a new terminal or a closed tab is the Home
-  structural command it dispatches. The fourteen terminal ids that existed only in this document's runtime-recovery
-  table, and cmd.terminal.split_pane, move_pane, close_pane, detach, reattach_section, move_workgroup and the
-  restart_session spelling, have no row; cmd.terminal.focus_session is alias metadata of cmd.terminal.focus.
-  Amended 2026-10-10 (DL-187; D34, D38, D39; lead ruling F5): Mute notifications, in the More menu and at the end of
-  the tab's menu, and the permission notice's Mute this terminal are the typed local action
-  ui.terminal.mute_notifications with no entry; the notice's Allow asks the platform and Not now dispatches nothing;
-  a click on a system notification brings the terminal forward with ui.panel_tab.activate; New terminal's entry
-  covers every installed shell and the SSH hosts submenu. No control sets a terminal tab's colour or icon (D34), and
-  no terminal.* entry is added.
+  Every control inside a terminal tab (DL-181) has exactly one wiring row as this addendum's terminal
+  tables list them: the header row (Find, Split, Maximize or Restore, More), every More menu leaf, the
+  screen's context menu, the command-mark menu, find, copy mode, quick select, links (Ctrl+click opens the
+  panel's preview tab, Ctrl+double-click keeps it, Ctrl+Alt+click opens a new panel, a URL opens a Browser
+  tab, a plain click selects), the agent rows (Take over, Interrupt, Stop, Hand back, Stop <agent>, Allow
+  once, Allow in this terminal, Deny, Type it), a person's keystroke take-over, the Session ended row
+  (Restart, Close tab, Enter), the close-a-running-terminal row (Close terminal, Keep it open), the
+  restored and image notices, and the Customize screen (F3-650) (This terminal writes
+  cmd.terminal.appearance.set; All terminals composes the Settings transaction pair over SSYS-051's rows;
+  Import scheme...). The agent rows dispatch cmd.terminal.take_over (a person's keystroke is the same
+  command with origin: keystroke, never a second id), cmd.terminal.hand_back, cmd.terminal.interrupt,
+  cmd.terminal.stop_agent, cmd.terminal.allow_agent_input (grant once or this_terminal) and
+  cmd.terminal.deny_agent_input; the More menu's Agent input rows dispatch
+  cmd.terminal.revoke_agent_input, Clear dispatches cmd.terminal.clear, Send signal's Terminate and Kill
+  dispatch cmd.terminal.send_signal, and Import scheme... dispatches
+  cmd.terminal.appearance.import_scheme. Thirty-six terminal.* production entries carry the
+  command-bearing controls; ui.terminal.* actions, the Ask each time row, the command-mark header, Keep it
+  open and the notices have no entry. Terminal session commands emit no event and no
+  workspace.layout_changed; a Split, a new terminal or a closed tab is the Home structural command it
+  dispatches. The fourteen terminal ids that existed only in this document's runtime-recovery table, and
+  cmd.terminal.split_pane, move_pane, close_pane, detach, reattach_section, move_workgroup and the
+  restart_session spelling, have no row; cmd.terminal.focus_session is alias metadata of
+  cmd.terminal.focus. Amended 2026-10-10 (DL-187; D34, D38, D39; lead ruling F5): Mute notifications, in
+  the More menu and at the end of the tab's menu, and the permission notice's Mute this terminal are the
+  typed local action ui.terminal.mute_notifications with no entry; the notice's Allow asks the platform
+  and Not now dispatches nothing; a click on a system notification brings the terminal forward with
+  ui.panel_tab.activate; New terminal's entry covers every installed shell and the SSH hosts submenu. No
+  control sets a terminal tab's colour or icon (D34), and no terminal.* entry is added.
 gui_related: true
-gui_classification_reason: "Binds every control of the terminal tab, its menus, links, notices, agent rows and Appearance popover to exactly one command or typed local action."
+gui_classification_reason: >-
+  Binds every control of the terminal tab, its menus, links, notices, agent rows and Customize screen
+  (F3-650) to exactly one command or typed local action.
 split_recommended: false
 depends_on: [DL-181, DL-183, DL-187, UCC-201, UCC-202, CS-101, F3-640, F3-641, F3-642, F3-645, F3-646, SMPFS-180, SMPFS-182, CV-362, SSYS-051, UIW-042, WM-090]
 unblocks: [ATS-076]
@@ -6224,3 +6229,77 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/UI_Command_Catalog.md#UCC-202, ContractName:Plans/UI_Command_Catalog.md#UCC-203, ContractName:Plans/Contracts_V0.md#CV-361
+
+### WM-093 - Appearance Controls And Settings Bindings
+
+```yaml
+plan_unit_id: WM-093
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  Plans/pm7_control_bindings.json is this unit's enumerated companion table; UIW-043 owns its completeness
+  rule. This editor fields/reset/quick sets bind to production editor.appearance.field and
+  cmd.editor.appearance.set. This terminal binds to terminal.appearance.field; import to
+  terminal.appearance.import_scheme. All scopes, every corresponding Settings row and
+  general.visual.wallpaper bind to catalog.settings_transaction_preview then
+  catalog.settings_transaction_apply, over the exact ids named in each census row. Menu/Settings entry,
+  scope, search, sample trial, token-kind selection and noncommitted previews are CS-102 local actions
+  with no production dispatch row. The notification inbox's dismiss/Delete binds catalog.alert_dismiss;
+  Clear all composes it per captured eligible item, while toast close/swipe remains local and domain
+  actions reuse catalog.alert_acknowledge, catalog.alert_snooze and their existing owner commands. DnD
+  commits reuse UCC-200's panel_tab.move/workspace_layout split or move_surface according to target;
+  cancel/hover commit nothing. Divider/chat/rail/history resize controls keep their existing layout
+  command/view-state ownership, with keyboard alternatives; F3-657 adds presentation only. A rendered
+  control disabled for no Project, stale state, locked target or owner permission dispatches nothing and
+  announces the projected reason. All new evidence is planned production evidence, never inferred from a
+  concept callback or screenshot. Plans/appearance_quick_sets.json supplies the exact composite payloads
+  consumed by the binding rows; each scope names precisely those affected ids. Held user-preset/bezel
+  controls have no fabricated command until their owner contract is reviewed. The NieR background control
+  consumes SSYS-054’s admitted two-setting patch through the existing Settings preview/apply pair, not a
+  second wallpaper command. The existing rail Chat producer remains home.chat.activity_toggle; its
+  selected state reflects visibility and the removed Dashboard button has no replacement producer. The
+  retired cmd.theme.preview producer is removed from production wiring and its sole obsolete Touch Closure
+  obligation/profile; its rejected packet token is retained and explicitly excluded as lineage
+  under UCC-204; this does not exclude either Settings transaction command.
+gui_related: true
+gui_classification_reason: Appearance controls and Settings bindings.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Each census command route resolves a production entry with typed payload, owner state, accessibility and effect
+  assertions.
+- This/All, Clear all races, drop/cancel and no-Project paths have explicit planned fixtures.
+validation_surfaces:
+- python3 scripts/pm-shard-plans.py --check
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: appearance_controls_and_settings_bindings
+implementation_surfaces:
+- Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: doc_standardized_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/share/puppet-master/2026-10-14-editor-customizer/PROPOSAL-canon.md, SHA-256 8b8f3179c3970cb165e4fb4722eb02381f0456faad235c4330207d2bec5f5431
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-terminal-customizer/PROPOSAL-canon-followups.md, SHA-256 1e0739b70d9b0f8c55f8df4747d80ff099baae6d40caf6ae784dc13864d580b0
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
+  (approved campaign source lineage; not native implementation evidence)
+- /mnt/Cursor/share/puppet-master/2026-10-13-panel-dnd-resize/NOTES.md, SHA-256 03a80f0dea3235ea637149bbec63626c4a4be8521078f9dd601f2b691f03d2d6
+  (approved campaign source lineage; not native implementation evidence)
+- Plans/UI_Wiring_Rules.md#UIW-043
+- Plans/UI_Command_Catalog.md#UCC-204
+- Plans/Commands_System.md#CS-102
+preserved_exact_tokens: []
+negative_constraints: []
+owner_hints:
+- Plans/Wiring_Matrix.md
+```
+
+ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-043, ContractName:Plans/UI_Command_Catalog.md#UCC-204, ContractName:Plans/Commands_System.md#CS-102

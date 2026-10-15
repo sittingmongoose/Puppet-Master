@@ -1,0 +1,731 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.editor_appearance.v1",
+  "title": "Editor tab appearance command payload and receipt",
+  "description": "UCC-204/CS-102. Field names and values match Settings. Handler checks Project ownership, known scheme keys, 16 KB full saved-state bound, expected_state_hash, idempotency, write/readback and token-map patch semantics. This schema does not certify a native handler.",
+  "$defs": {
+    "fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "code.editing.color-scheme": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "description": "Existing shared catalog label/id, including a validated imported scheme. Unknown ids are invalid_args before write."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.scheme-pair": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.syntax-highlighting": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.bracket-pair-colors": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.token-colors": {
+          "oneOf": [
+            {
+              "type": "object",
+              "maxProperties": 1024,
+              "propertyNames": {
+                "pattern": "^[a-z0-9][a-z0-9:._-]*/(kw|fn|ty|var|prop|str|num|esc|com|op|pun|mac|tag|attr|head|link|code)$"
+              },
+              "additionalProperties": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^#[0-9a-fA-F]{6}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.min-contrast": {
+          "oneOf": [
+            {
+              "enum": [
+                "4.5:1",
+                "7:1"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.italic-comments": {
+          "oneOf": [
+            {
+              "enum": [
+                "Follow look",
+                "On",
+                "Off"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.bold-keywords": {
+          "oneOf": [
+            {
+              "enum": [
+                "Follow look",
+                "On",
+                "Off"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.font-family": {
+          "oneOf": [
+            {
+              "enum": [
+                "JetBrains Mono",
+                "Atkinson Hyperlegible Mono",
+                "System monospace"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.font-size": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 10,
+              "maximum": 24
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.font-weight": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 100,
+              "maximum": 800
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.line-height": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 1.2,
+              "maximum": 2
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.letter-spacing": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": -0.5,
+              "maximum": 2
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.ligatures": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.cursor-shape": {
+          "oneOf": [
+            {
+              "enum": [
+                "Follow look",
+                "Line",
+                "Block",
+                "Underline"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.cursor-width": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 4
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.cursor-blink": {
+          "oneOf": [
+            {
+              "enum": [
+                "Follow look",
+                "Blink",
+                "Smooth",
+                "Expand",
+                "Solid"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.cursor-motion": {
+          "oneOf": [
+            {
+              "enum": [
+                "Follow look",
+                "Instant",
+                "Snappy",
+                "Gliding"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.cursor-trail": {
+          "oneOf": [
+            {
+              "enum": [
+                "Follow look",
+                "Off",
+                "Soft",
+                "Glow",
+                "Phosphor",
+                "Trace"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.line-numbers": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.relative-line-numbers": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.line-highlight": {
+          "oneOf": [
+            {
+              "enum": [
+                "Follow look",
+                "Line and number",
+                "Line only",
+                "Number only",
+                "Off"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.indent-guides": {
+          "oneOf": [
+            {
+              "enum": [
+                "Off",
+                "Lines",
+                "Rainbow"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.indent-guides-active": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.render-whitespace": {
+          "oneOf": [
+            {
+              "enum": [
+                "Off",
+                "Between words",
+                "In the selection",
+                "At line ends",
+                "Everywhere"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.rulers": {
+          "oneOf": [
+            {
+              "enum": [
+                "Off",
+                "80",
+                "100",
+                "120",
+                "80 and 120"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.word-wrap": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.wrap-column": {
+          "oneOf": [
+            {
+              "enum": [
+                "Window edge",
+                "80",
+                "100",
+                "120"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.minimap": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.sticky-scroll": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.sticky-scroll-lines": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 5
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.smooth-scroll": {
+          "oneOf": [
+            {
+              "enum": [
+                "Follow look",
+                "On",
+                "Off"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.reveal-lines": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.scroll-past-end": {
+          "oneOf": [
+            {
+              "enum": [
+                "A few lines",
+                "Half a page",
+                "A full page"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.dim-unfocused": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.scanlines": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.text-glow": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.diff-layout": {
+          "oneOf": [
+            {
+              "enum": [
+                "Automatic",
+                "Side by side",
+                "Inline"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.goto-highlight-ms": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 500,
+              "maximum": 10000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.autosave": {
+          "oneOf": [
+            {
+              "enum": [
+                "Off",
+                "After 500 ms",
+                "After 1 second",
+                "On focus change"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.diagnostics-visibility": {
+          "oneOf": [
+            {
+              "enum": [
+                "Off",
+                "Errors Only",
+                "Warnings & Errors",
+                "Everything"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.tab-size": {
+          "oneOf": [
+            {
+              "enum": [
+                "2",
+                "4",
+                "8"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.insert-spaces": {
+          "oneOf": [
+            {
+              "enum": [
+                "Spaces",
+                "Tabs"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.detect-indentation": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code.editing.lsp-hover-delay": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "workspace_tab_id",
+        "panel_tab_id",
+        "expected_state_hash",
+        "idempotency_key",
+        "fields"
+      ],
+      "properties": {
+        "project_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "workspace_tab_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "panel_tab_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_state_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "fields": {
+          "$ref": "#/$defs/fields"
+        }
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "correlation_id",
+        "panel_tab_id",
+        "status",
+        "reason",
+        "state_hash",
+        "readback_verified"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.editor.appearance.set"
+        },
+        "correlation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "panel_tab_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "applied",
+            "no_change",
+            "refused",
+            "failed"
+          ]
+        },
+        "reason": {
+          "enum": [
+            null,
+            "no_project_context",
+            "invalid_target",
+            "invalid_args",
+            "stale_projection",
+            "permission_denied",
+            "state_too_large",
+            "idempotency_conflict",
+            "write_failed",
+            "readback_failed"
+          ]
+        },
+        "state_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "readback_verified": {
+          "type": "boolean"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "applied",
+                  "no_change"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reason": {
+                "const": null
+              },
+              "readback_verified": {
+                "const": true
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "reason": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -2570,7 +2570,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
-  The confirmation modal for cmd.orchestrator.safe_point_retry names the safe point id, the affected node and run, and the follow-up action that will occur on confirm, before any retry is dispatched. The action's disabled reasons are exactly safe_point_missing, state_changed, permission_denied, and operation_in_progress, and the invoking control or modal surfaces the applicable reason instead of failing silently. Confirmation copy is specific per the safe-point retry repair row: it names the safe point and the affected node/run rather than showing generic retry text.
+  The confirmation modal for cmd.orchestrator.safe_point_retry names the safe point id, the affected node and
+  run, and the follow-up action that will occur on confirm, before any retry is dispatched. The action's
+  disabled reasons are exactly safe_point_missing, state_changed, permission_denied, and operation_in_progress,
+  and the invoking control or modal surfaces the applicable reason instead of failing silently. Confirmation
+  copy is specific per the safe-point retry repair row: it names the safe point and the affected node/run rather
+  than showing generic retry text. The modal opens only after an explicit retry action, never on first page
+  entry, scope selection or a return from All Active. Missing subject identity keeps it closed/disabled;
+  placeholder copy cannot masquerade as a real retry request.
 gui_related: true
 gui_classification_reason: The safe-point retry confirmation modal, its copy, and its disabled states are user-visible GUI.
 depends_on: []
@@ -2598,10 +2605,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
-  - "Concepts/pm6-build/parts/17-page-orchestrator.part.html"
-  - "Concepts/pm6-build/parts/29x-pm6-js-orchestrator.part.html"
-  - "Plans/Orchestrator_Page.md:2322"
+- Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
+- Concepts/pm6-build/parts/17-page-orchestrator.part.html
+- Concepts/pm6-build/parts/29x-pm6-js-orchestrator.part.html
+- Plans/Orchestrator_Page.md:2322
+- /mnt/Cursor/share/puppet-master/2026-10-13-wizard-orch-theme/NOTES.md, SHA-256 ca7f206e6b92440d26972e4eb4113348722fb45245ba8429dad46633b56b49b8
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - cmd.orchestrator.safe_point_retry
   - safe_point_missing
@@ -2618,6 +2627,7 @@ compatibility_only_notes:
 owner_hints:
   - Plans/Orchestrator_Page.md
   - Plans/UI_Command_Catalog.md
+
 ```
 
 ## PMConcept7 Concept Promotion Addendum - 2026-07-23
@@ -2822,14 +2832,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
-  The Orchestrator header exposes exactly three explicit scopes, All Active, Current Project,
-  and Selected Plan, filtering the existing seven tabs without adding a tab or lifecycle. All
-  Active shows compact cross-Project Plan cards with name, phase, progress, attention, priority,
-  and Project plus short-ID disambiguation; every card and every scoped route carries explicit
-  immutable project_id plus named_plan_id. Current versus historical run routing with
-  active_run_id, focused_run_id, and focus_mode nests inside the Selected Plan scope, and every
-  child join resolves through the single NPLAN-006 owner-join contract. Remembered scope is
-  convenience only; stale scope disables scoped mutation until revalidation.
+  The Orchestrator header exposes exactly three explicit scopes, All Active, Current Project, and Selected Plan,
+  filtering the existing seven tabs without adding a tab or lifecycle. All Active shows compact cross-Project
+  Plan cards with name, phase, progress, attention, priority, and Project plus short-ID disambiguation; every
+  card and every scoped route carries explicit immutable project_id plus named_plan_id. Current versus
+  historical run routing with active_run_id, focused_run_id, and focus_mode nests inside the Selected Plan
+  scope, and every child join resolves through the single NPLAN-006 owner-join contract. Remembered scope is
+  convenience only; stale scope disables scoped mutation until revalidation. The 2026-10-14 theme-matching
+  presentation is FinalGUISpec F3-655's. A current run never inherits a historical-run banner from a previous
+  scope; the LIVE mark animates only for a running run.
 gui_related: true
 gui_classification_reason: Header scopes, Plan cards, and scoped tab filtering are user-visible Orchestrator behavior.
 depends_on: [OP-002, OP-006, OP-007, NPLAN-006]
@@ -2855,7 +2866,9 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08#PERF-001"
+- packet:PM_Full_Thread_Performance_Plans_PMConcept_Implementation_Packet_2026-08-08#PERF-001
+- /mnt/Cursor/share/puppet-master/2026-10-13-wizard-orch-theme/NOTES.md, SHA-256 ca7f206e6b92440d26972e4eb4113348722fb45245ba8429dad46633b56b49b8
+  (approved campaign source lineage; not native implementation evidence)
 preserved_exact_tokens:
   - "All Active"
   - "Current Project"
@@ -2873,4 +2886,5 @@ negative_constraints:
 owner_hints:
   - Plans/Orchestrator_Page.md
   - Plans/Named_Plan_System.md
+
 ```
