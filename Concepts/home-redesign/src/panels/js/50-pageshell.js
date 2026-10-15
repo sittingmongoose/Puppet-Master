@@ -225,11 +225,17 @@ shell.installNotices = function () {
     if (scrollQ || !stage.firstElementChild) return;
     scrollQ = requestAnimationFrame(function () { scrollQ = 0; applyDrop(); });
   }, { capture: true, passive: true });
-  /* a page change: measure again once the new page shows (its strips are laid out two frames on) */
+  /* a page change: measure again once the new page shows (its strips are laid out two frames on), while a card shows.
+     Only a page's own class counts: every class change inside the pages measured too, and a Usage room change makes
+     hundreds (review r3 R2, 2026-10-15: 95-165 ms of forced style and layout over eight room clicks) */
   var main = doc.querySelector('.primary-content'), turn = 0;
-  if (main) new MutationObserver(function () {
-    if (turn) return;
-    turn = requestAnimationFrame(function () { requestAnimationFrame(function () { turn = 0; applyDrop(); }); });
+  if (main) new MutationObserver(function (list) {
+    if (turn || !stage.firstElementChild) return;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].target.parentElement !== main) continue;
+      turn = requestAnimationFrame(function () { requestAnimationFrame(function () { turn = 0; applyDrop(); }); });
+      return;
+    }
   }).observe(main, { attributes: true, subtree: true, attributeFilter: ['class'] });
   applyDrop();
   return true;
