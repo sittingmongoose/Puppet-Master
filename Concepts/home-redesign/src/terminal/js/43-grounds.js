@@ -298,7 +298,8 @@
   function px(n, o) { return Math.round(n * (SCALE[o && o.scale] || 1)); }
   def('pattern', 'dots', 'Dot grid', { looks: ['basic', 'friendly'], css: function (th, h, o) {
     var d = ink(th, 0.1), s = px(20, o);
-    var dr = th.reflect ? 1.7 : 1.2;
+    /* (round 5, Q15: Coarse's dots are larger, as a coarser screen's are; Medium and Coarse were 4.3 apart in Glass dark) */
+    var dr = (th.reflect ? 1.7 : 1.2) * (o && o.scale === 'coarse' ? 1.6 : 1);
     return { css: 'radial-gradient(circle at 50% 50%, ' + hex(d) + ' 0 ' + dr + 'px, transparent ' + (dr + 0.6) + 'px) 0 0 / ' + s + 'px ' + s + 'px, ' + hex(th.bg), colors: [th.bg, d] };
   } });
   def('pattern', 'graph', 'Graph paper', { looks: ['basic'], css: function (th, h, o) {
@@ -337,7 +338,9 @@
       }
     });
     /* (round 4, Q15: drawn in light on a pale ground its hairlines matched Dot grid, Starfield and Rain; twice as thick there) */
-    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMaxYMax slice"><g fill="none" stroke="' + hex(line) + '" stroke-width="' + (th.reflect ? 2 : 1) + '" vector-effect="non-scaling-stroke">' + paths + '</g></svg>';
+    /* (round 5, Q15: Coarse's wider contours are drawn half as heavy again, as a larger map's are; Medium and Coarse were
+       4.4 apart in Retro dark) */
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMaxYMax slice"><g fill="none" stroke="' + hex(line) + '" stroke-width="' + (th.reflect ? 2 : 1) * (k > 1.2 ? 1.5 : 1) + '" vector-effect="non-scaling-stroke">' + paths + '</g></svg>';
     return { css: svgUrl(svg) + ' right bottom / cover no-repeat, ' + hex(th.bg), colors: [th.bg, line] };
   } });
   /* waves: four ribbons across the bottom third, each 3 % of lightness from the next; Size is the swell, short and low to

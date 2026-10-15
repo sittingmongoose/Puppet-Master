@@ -41,7 +41,7 @@
        3:1, so Minimum contrast's Off and 3:1 drew the same; this is the text the floor lifts) */
     var faint = function (s, c) { return ESC + '[2;' + c + 'm' + s + ESC + '[0m'; };
     return cmd(0, 'cargo test') +
-      '    ' + ESC + '[1;32mFinished' + ESC + '[0m test in ' + faint('2.31s', 90) + '\r\n' +
+      '    ' + ESC + '[1;32mFinished' + ESC + '[0m test ' + faint('[unoptimized]', 90) + ' in ' + faint('2.31s', 90) + '\r\n' +
       'test media::thumbs ... ' + ESC + '[32mok' + ESC + '[0m ' + faint('0.02s', 37) + '\r\n' +
       'test search::rank ... ' + ESC + '[1;31mFAILED' + ESC + '[0m ' + faint('0.31s', 90) + '\r\n' +
       ESC + '[33mwarning' + ESC + '[0m: ' + ESC + '[3;2;37m2 ignored' + ESC + '[0m, see ' + ESC + '[4;36mtastebook.dev/t' + ESC + '[0m\r\n' +
