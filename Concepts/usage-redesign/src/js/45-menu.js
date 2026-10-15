@@ -28,7 +28,9 @@
 
   function speed() { return PMU.motion ? PMU.motion.speed() : 1; }
   function reduced() { return PMU.motion ? PMU.motion.reduced() : false; }
-  function icon(name) { return SVG[name] || ''; }
+  /* the neon glyph at the size this menu's CSS gives the svg (15-menu.css: 14 in rows, the back and the search, 16 on the
+     rail), through PMU.svg; the SVG table without PMG */
+  function icon(name, size, role) { return PMU.svg ? PMU.svg(name, size || 14, role) : (SVG[name] || ''); }
   function nierSlice() { return !!(PMU.theme && PMU.theme.has && PMU.theme.has('slice')); }
   /* a spec callback, in the menu's board */
   function inBoard(h, fn) { return h.board && PMU.boards && PMU.boards.run ? PMU.boards.run(h.board, fn) : fn(); }
@@ -56,7 +58,7 @@
     var role = r.toggle ? 'menuitemcheckbox' : r.radio === false || r.action ? 'menuitem' : 'menuitemradio';
     var sub = dis && r.reason ? r.reason : r.sub;
     var trail = r.submenu ? '<span class="pmu-mchev" aria-hidden="true">' + icon('chevronRight') + '</span>'
-      : (on && r.check !== false) || (r.toggle && on) ? '<span class="pmu-mcheck" aria-hidden="true">' + icon('check') + '</span>'
+      : (on && r.check !== false) || (r.toggle && on) ? '<span class="pmu-mcheck" aria-hidden="true">' + icon('check', 14, 'control') + '</span>'
       : r.toggle ? '<span class="pmu-mcheck pmu-mcheck-off" aria-hidden="true"></span>' : '';
     return '<button type="button" class="pmu-poprow pmu-mitem' + (on && !r.toggle ? ' active' : '') + (r.toggle ? ' is-toggle' + (on ? ' is-on' : '') : '') + (dis ? ' is-disabled' : '') + (r.danger ? ' is-danger' : '') +
       (sub ? ' has-sub' : '') + '" role="' + role + '"' + (role !== 'menuitem' ? ' aria-checked="' + (on ? 'true' : 'false') + '"' : '') +
@@ -72,7 +74,7 @@
       var on = (h.rail || 'all') === b.value;
       return '<button type="button" class="pmu-mrailbtn' + (on ? ' active' : '') + '" role="tab" aria-selected="' + on + '" data-rail="' + esc(b.value) + '"' +
         ' aria-label="' + esc(b.label) + '" data-pm-hover-label="' + esc(b.label) + '">' +
-        (b.mark ? PMU.mark(b.mark, 18) : '<span class="pmu-ico">' + icon(b.icon || 'grid') + '</span>') + '</button>';
+        (b.mark ? PMU.mark(b.mark, 18) : '<span class="pmu-ico">' + icon(b.icon || 'grid', 16) + '</span>') + '</button>';
     }).join('') + '</div>';
   }
   function listHtml(h) {
@@ -343,7 +345,10 @@
       var d = 60 + 18 * Math.min(i, 9);
       PMU.motion.animate(r, [{ opacity: 0, transform: 'translateY(3px)' }, { opacity: 1, transform: 'none' }],
         { dur: 110, delay: d, easing: nier ? 'steps(2,jump-start)' : 'cubic-bezier(.22,.8,.28,1)', fill: 'backwards' });
-      var path = r.classList.contains('active') || r.classList.contains('is-on') ? r.querySelector('.pmu-mcheck svg path, .pmu-mcheck svg polyline') : null;
+      /* the neon check's visible tube (.nx-c; its halo .nx-h is hidden at rest and must not take the draw), or the old
+         drawing's path without PMG; a control glyph plays no act as it mounts, so this draw is its one motion */
+      var ck = r.classList.contains('active') || r.classList.contains('is-on') ? r.querySelector('.pmu-mcheck svg') : null;
+      var path = ck ? ck.querySelector('.nx-c') || ck.querySelector('path, polyline') : null;
       if (path) {
         path.setAttribute('pathLength', '1'); path.style.strokeDasharray = '1';
         PMU.motion.animate(path, [{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { dur: 160, delay: d + 60, easing: nier ? 'steps(3,jump-start)' : POP, fill: 'backwards' });

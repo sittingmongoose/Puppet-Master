@@ -19,7 +19,6 @@
 §R .pmr-menu[data-pmr-menu="d-rd-sessions"] [data-d-st="fail"] { color: var(--d-fail); }
 §R .pmr-menu[data-pmr-menu="d-rd-sessions"] [data-d-st="idle"] { color: var(--d-idle); }
 §R .pmr-menu[data-pmr-menu="d-rd-sessions"] [data-d-st="idle"] + .pm6-chat-modelname { text-decoration: line-through; color: var(--d-text-3); }
-§R[data-o55-nier="on"] .pmr-menu[data-pmr-menu="d-rd-sessions"] .pmr-mi:hover > .d-gl { color: inherit; }
 
 /* header status: the skin's line replaces the shell's two lengths */
 §@run #rdStatus > .sh-btext { display: none !important; }
@@ -336,7 +335,6 @@
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 24%, transparent);
 }
 §{nier}@#bottomDebugHost .rd-sestab.active { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink) !important; box-shadow: none; }
-§{nier}@#bottomDebugHost .rd-sestab.active > .d-gl { color: inherit !important; }
 §@#bottomDebugHost .rd-sestab > .sh-sdot { display: none !important; }
 §@#bottomDebugHost .rd-chrome {
   flex-wrap: wrap; gap: 6px 12px !important; min-height: 40px; padding: 5px 12px !important; border-bottom: 1px solid var(--d-line) !important;

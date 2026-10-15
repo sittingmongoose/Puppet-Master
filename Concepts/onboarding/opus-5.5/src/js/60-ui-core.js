@@ -45,7 +45,7 @@
       + `<nav class="o55-rail" aria-label="${U.esc(T('chrome.progressLabel'))}"></nav>`
       + `<div class="o55-headctl"><span class="o55-lookslot"></span><span class="o55-soundslot"></span>`
       + `<button type="button" class="o55-iconbtn o55-close" data-o55-do="close" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.close'))}" title="${U.esc(T('chrome.closeHint'))}">`
-      + `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span>${U.esc(T('chrome.close'))}</span></button></div></header>`
+      + `${U.nx('close', 18, 'control') || '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'}<span>${U.esc(T('chrome.close'))}</span></button></div></header>`
       + `<div class="o55-body"><div class="o55-stage o55-scene-host" aria-hidden="true"></div><section class="o55-pane"></section></div>`
       + `<div class="o55-live" aria-live="polite" role="status"></div></div>`;
     document.body.appendChild(root);
@@ -329,7 +329,7 @@
     return `<span class="o55nw-keys" aria-hidden="true">${foot.primary ? k(T('nierWindow.keys.enterCap'), T('nierWindow.keys.enter')) : ''}`
       + `${k(T('nierWindow.keys.escCap'), T('nierWindow.keys.esc'))}${choose ? k('\u2190 \u2192', T('nierWindow.keys.choose')) : ''}</span>`;
   }
-  const backIcon = () => '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>';
+  const backIcon = () => U.nx('chevron-left', 16, 'control') || '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>';
   function btn(b, cls) {
     const dis = b.disabled ? ` aria-disabled="true" data-disabled-reason="${U.esc(b.reason || '')}"` : '';
     return `<button type="button" class="o55-btn ${cls}${b.cls ? ' ' + b.cls : ''}" data-o55-do="${U.esc(b.do)}"${b.arg != null ? ` data-arg="${U.esc(b.arg)}"` : ''}${dis} data-pm-hover-exempt="true"${b.id ? ` data-key="${U.esc(b.id)}"` : ''}>`

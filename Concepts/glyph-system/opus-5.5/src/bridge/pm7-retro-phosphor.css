@@ -1,0 +1,136 @@
+/* pm7-retro-phosphor.css: Retro lights a neon glyph like phosphor on a CRT, on PMConcept7's 33 ms Retro clock.
+ * OWNER: pm7-glyphs-designer2 (2026-10-10; NEON-GRAMMAR.md section 9, accepted by pm7-glyphs; timing agreed with pm7-hover
+ * against PMH's Retro "Raise", Concepts/onboarding/opus-5.5/src/css/22-hover.css on main 605ce4857c).
+ * Order-proof: it works before or after neon-icons.css (build_catalog.py loads it after). The Retro scope sits inside
+ * :where(), so each rule weighs only what it names: svg.nx (0,1,1) beats the generic hover rule (0,0,1), and svg.nx .nx-h
+ * and .nx-p (0,2,1) beat the generic halo and part rules (0,1,1). Bespoke rules keep their own timing: the wand's sparkle
+ * (0,3,1) and the filled chips' --nx-fl (0,2,1, which this file never sets on a chip's own selector) outrank or miss it,
+ * and the Fast bolt (0,2,1, the one tie) is excluded by name ([data-nx="lightning"]) along with every part that sits out
+ * the loops (.nx-pn, its strike overlays), so it strikes on its own clock in Retro too.
+ *
+ * WHAT CHANGES IN RETRO (the other looks are untouched)
+ * - Ignite, on the rule's tick. PMH raises a hovered plate on the hover-start frame and draws its phosphor rule one tick
+ *   (33 ms) later; the glyph strikes with the rule: its tube takes the hover ink and its halo powers on at +33 ms in two
+ *   held ticks (half strength, then full), with no 180 ms fade and no neon flicker. Its one-shot act starts on the same
+ *   tick and runs 396 ms (twelve ticks, three per step of the look's steps(4) voice).
+ * - Decay, from the leave frame. Phosphor holds briefly after the beam leaves: the halo drops to half on the leave frame
+ *   (with PMH's rule going off) and goes out one tick later (with the plate dropping), and the tube returns to its rest
+ *   ink on that second tick. Nothing glows after the plate drops.
+ * - A tighter bloom on Retro Dark: the core band is 3.0 px (3.6 elsewhere) and the status backlights are halved, so a
+ *   glyph reads as phosphor on glass rather than a sign on a wall. Retro Light keeps the light looks' faint band.
+ * Only timing and strength change: no filter, no blend mode, nothing animates but opacity and transform (PMH's house
+ * rules; F3-465). Status marks, the activity bar and the other self-lit hosts keep their own rhythms, so nothing here
+ * can out-move needs-you. Reduced Motion shows the end state at once: neon-icons.css section 10 removes every transition
+ * and animation, and the routes at the end of this file cover the fills this file adds.
+ *
+ * Hosts are neon-icons.css section 8's: button, summary, [role=button] and [data-action], the glyph their child or
+ * grandchild, minus the self-lit hosts. No :has(), and no rightmost bare :is()/:where() compound (shell-selfcheck).
+ *
+ * PMH TARGETS (section 5; asked by pm7-glyphs 2026-10-10, after pm7-hover-bridge.css 17fd3f9b96). Where the glyph's host
+ * is a PMH target ([data-pmh-kind]) the ignite follows PMH's classes, not :hover, so the phosphor does too: the strike
+ * starts on .pmh-on and the decay is held by .pmh-out (Retro's --pmh-out-ms is 34 ms, one tick; 66 ms on rows, so a row's
+ * glyph fades with its two-step unfill). On .pmh-out the halo holds half strength and the tube its hover ink; when PMH
+ * drops .pmh-out both cut to rest. Under Reduced Motion PMH sets no .pmh-out, so the glyph goes out at once. These rules
+ * outweigh the hover bridge on purpose ((0,6,2) against its (0,4,1), (0,7,2) against (0,5,1) one level down), so they
+ * hold in either load order.
+ */
+
+/* ---- 1. the clock and the bloom */
+html[data-theme^="retro"]:not([data-o55-nier]) body { --nx-d1: 396ms; }
+html[data-theme="retro-dark"]:not([data-o55-nier]) body {
+  --nx-hi-w: 3px;
+  --nx-bl-blocked: .043; --nx-bl-attention: .04; --nx-bl-working: .041; --nx-bl-changed: .021;
+}
+
+/* ---- 2. at rest: how a glyph leaves its hover (the decay), written on the rest state so it applies on the way out */
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])),
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) {
+  /* the tube returns to its rest ink on the second tick, with the plate */
+  transition: stroke 0s linear 33ms;
+}
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) .nx-h,
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) .nx-h {
+  /* half on the leave frame, out one tick later */
+  transition: stroke-opacity 66ms steps(2, start), visibility 0s linear 33ms;
+}
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) .nx-f,
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) .nx-f {
+  transition: fill 0s linear 33ms;
+}
+
+/* ---- 3. hovered or focused: the strike on the rule's tick */
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])),
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) {
+  /* the halo powers on at +33 ms, one tick at half and then full, instead of neon's 300 ms flicker (section 8's slot) */
+  --nx-fl: pmg-phos-on 33ms steps(1, end) 33ms backwards;
+}
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) .nx-h,
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) .nx-h {
+  transition: stroke-opacity 0s linear 33ms, visibility 0s linear 33ms;
+}
+/* A concept glyph's halo has no flicker slot in neon-icons.css (only a control's has), so its power-on is named here. */
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx-r-concept:where(:not(.nx-self, [data-nx="lightning"])) .nx-h,
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx-r-concept:where(:not(.nx-self, [data-nx="lightning"])) .nx-h {
+  animation: pmg-phos-on 33ms steps(1, end) 33ms backwards;
+}
+/* the act starts on the same tick */
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) .nx-p:where(:not(.nx-pn)),
+:where(html[data-theme^="retro"]:not([data-o55-nier])) :where(button, summary, [role="button"], [data-action]):where(:hover, :focus-visible):where(:not(.activity-item, .pm-lens-trigger, .jump-bottom, .orbit-node, .wa-disc, .rail8-item)) > :where(:not(button, summary, [role="button"], [data-action])) > svg.nx:where(.nx-r-control, .nx-r-concept):where(:not(.nx-self, [data-nx="lightning"])) .nx-p:where(:not(.nx-pn)) {
+  animation-delay: calc(var(--ad, 0) * 1ms + 33ms);
+}
+@keyframes pmg-phos-on { from { opacity: .5; } to { opacity: 1; } }
+
+/* ---- 5. PMH targets: the strike on .pmh-on, the decay on .pmh-out (the hosts are pm7-hover-bridge.css's) */
+/* at rest and through .pmh-out every change is a cut: PMH's classes carry the clock, not a transition */
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind]:not(.pmh-on) > svg.nx:is(.nx-r-control, .nx-r-concept):not(.nx-self, [data-nx="lightning"]),
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind]:not(.pmh-on) > :not(button, summary, [role="button"], [data-action]) > svg.nx:is(.nx-r-control, .nx-r-concept):not(.nx-self, [data-nx="lightning"]),
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind]:not(.pmh-on) > svg.nx:is(.nx-r-control, .nx-r-concept):not(.nx-self, [data-nx="lightning"]) :is(.nx-h, .nx-f),
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind]:not(.pmh-on) > :not(button, summary, [role="button"], [data-action]) > svg.nx:is(.nx-r-control, .nx-r-concept):not(.nx-self, [data-nx="lightning"]) :is(.nx-h, .nx-f) {
+  transition: none;
+}
+/* .pmh-out: the beam has left; the halo holds half (a concept glyph halfway from its swell to its rest band) and the
+   tube keeps its hover ink, for exactly as long as PMH holds the plate up */
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-out > svg.nx-r-control:not(.nx-self, [data-nx="lightning"]),
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-out > :not(button, summary, [role="button"], [data-action]) > svg.nx-r-control:not(.nx-self, [data-nx="lightning"]) {
+  --nx-hiv: visible; --nx-hi-a: calc(var(--nx-h-hover-i) / 2);
+}
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-out > svg.nx-r-concept:not(.nx-self, [data-nx="lightning"]),
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-out > :not(button, summary, [role="button"], [data-action]) > svg.nx-r-concept:not(.nx-self, [data-nx="lightning"]) {
+  --nx-hi-a: calc((var(--nx-h-swell-i) + var(--nx-h-concept-i)) / 2);
+}
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-out > svg.nx:not(.nx-self, [class*="nx-t-"], [data-nx="lightning"]),
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-out > :not(button, summary, [role="button"], [data-action]) > svg.nx:not(.nx-self, [class*="nx-t-"], [data-nx="lightning"]) {
+  --nx-ink: var(--text);
+}
+/* .pmh-on: the strike on the rule's tick, as section 3 does for :hover */
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-on > svg.nx-r-control:not(.nx-self, [data-nx="lightning"]),
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-on > :not(button, summary, [role="button"], [data-action]) > svg.nx-r-control:not(.nx-self, [data-nx="lightning"]) {
+  --nx-fl: pmg-phos-on 33ms steps(1, end) 33ms backwards;
+}
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-on > svg.nx:is(.nx-r-control, .nx-r-concept):not(.nx-self, [data-nx="lightning"]),
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-on > :not(button, summary, [role="button"], [data-action]) > svg.nx:is(.nx-r-control, .nx-r-concept):not(.nx-self, [data-nx="lightning"]) {
+  transition: stroke 0s linear 33ms;
+}
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-on > svg.nx:is(.nx-r-control, .nx-r-concept):not(.nx-self, [data-nx="lightning"]) .nx-h,
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-on > :not(button, summary, [role="button"], [data-action]) > svg.nx:is(.nx-r-control, .nx-r-concept):not(.nx-self, [data-nx="lightning"]) .nx-h {
+  transition: stroke-opacity 0s linear 33ms, visibility 0s linear 33ms;
+}
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-on > svg.nx-r-concept:not(.nx-self, [data-nx="lightning"]) .nx-h,
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-on > :not(button, summary, [role="button"], [data-action]) > svg.nx-r-concept:not(.nx-self, [data-nx="lightning"]) .nx-h {
+  animation: pmg-phos-on 33ms steps(1, end) 33ms backwards;
+}
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-on > svg.nx:is(.nx-r-control, .nx-r-concept):not(.nx-self, [data-nx="lightning"]) .nx-f,
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-on > :not(button, summary, [role="button"], [data-action]) > svg.nx:is(.nx-r-control, .nx-r-concept):not(.nx-self, [data-nx="lightning"]) .nx-f {
+  transition: fill 0s linear 33ms;
+}
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-on > svg.nx:is(.nx-r-control, .nx-r-concept):not(.nx-self, [data-nx="lightning"]) .nx-p:not(.nx-pn),
+html[data-theme^="retro"]:not([data-o55-nier]) [data-pmh-kind].pmh-on > :not(button, summary, [role="button"], [data-action]) > svg.nx:is(.nx-r-control, .nx-r-concept):not(.nx-self, [data-nx="lightning"]) .nx-p:not(.nx-pn) {
+  animation-delay: calc(var(--ad, 0) * 1ms + 33ms);
+}
+
+/* ---- 4. Reduced Motion: the end state at once (neon-icons.css section 10 covers the svg, its parts and halos) */
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme^="retro"] svg.nx .nx-f { transition: none !important; }
+}
+html[data-theme^="retro"][data-motion="reduced"] svg.nx .nx-f,
+html[data-theme^="retro"] body.pm56-reduced svg.nx .nx-f { transition: none !important; }

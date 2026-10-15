@@ -109,7 +109,7 @@
     body(S) {
       const d = md(S), row = (k, v, edit) => `<div class="o55-revrow" data-key="rv-${k}"><span class="o55-revk">${U.esc(T('review.rows.' + k))}</span><span class="o55-revv">${U.esc(v)}</span>${edit ? C.link(T('review.edit'), 'edit', edit) : ''}</div>`;
       const st = F.state(S, 'recheck:' + d.project_draft_revision);
-      let out = st && st.state === 'done' ? `<p class="o55-hint" data-key="checked">${C.small('check', 12)}${U.esc(T('review.checked'))}</p>` : F.phases(S, 'recheck:' + d.project_draft_revision, ['check'], { check: T('chrome.working') });
+      let out = st && st.state === 'done' ? `<p class="o55-hint" data-key="checked">${C.done(12)}${U.esc(T('review.checked'))}</p>` : F.phases(S, 'recheck:' + d.project_draft_revision, ['check'], { check: T('chrome.working') });
       if (d.project_mode === 'later') {
         out += C.group(T('review.groups.computer'), row('where', whereWork(S), 'where'));
         if (d.server_mode === 'new_server') out += C.group(T('review.groups.access'), row('remote', remoteLabel(d), 'away'));
@@ -635,7 +635,7 @@
       const next = STEPS.find((s) => !done.includes(s));
       let out = `<ol class="o55-steplist" data-key="steps">` + STEPS.map((s) => {
         const state = done.includes(s) ? 'done' : s === next ? 'active' : 'waiting';
-        return `<li class="o55-step o55-step-${state}" data-key="st-${s}"><span class="o55-phmark" aria-hidden="true">${state === 'done' ? C.small('check', 13) : ''}</span><span>${U.esc(T('protect.steps.' + (s === 'signin' ? signinStep(b.dest) : s), { where }))}</span></li>`;
+        return `<li class="o55-step o55-step-${state}" data-key="st-${s}">${C.stepmark(state, state === 'done' ? C.smallArt('check', 13) : '')}<span>${U.esc(T('protect.steps.' + (s === 'signin' ? signinStep(b.dest) : s), { where }))}</span></li>`;
       }).join('') + '</ol>';
       /* connecting, by kind of place: the NAS over SSH with a key, a bucket or a server with its access details, a
          cloud drive through its own sign-in page */
@@ -659,7 +659,7 @@
       }
       if (!next) out += C.note(T('protect.done'), 'ok', 'check');
       const st = next && F.state(S, 'backup:' + next);
-      if (st && st.state === 'running') out += `<p class="o55-hint" data-key="work"><span class="o55-spin"></span> ${U.esc(T('chrome.working'))}</p>`;
+      if (st && st.state === 'running') out += `<p class="o55-hint" data-key="work">${C.mark('working', 12, '<span class="o55-spin"></span>')} ${U.esc(T('chrome.working'))}</p>`;
       return out;
     },
     foot(S) {

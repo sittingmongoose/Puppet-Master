@@ -25683,7 +25683,10 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
       'st-idle': G([C(12, 12, 4.5)], 'none', 'status'),
       'st-complete': G([M(P('m5 12.5 4.5 4.5L19 7.5'), { ac: '0 20 0 4', ae: '0 4 0 4' })], 'none', 'status'),
       'st-blocked': G([R(5, 11, 14, 9, 2), M(P('M8 11V8a4 4 0 0 1 8 0v3'), { ay: -3 })], 'none', 'status'),
-      'st-failed': G([P('M12 4.2 21 19.5H3z'), P('M12 10v4.2M12 17.1v.1')], 'none', 'status'),
+      /* failed: a ring with a cross (Jared, 2026-10-10, D44/GLY-1: the triangle is warning's alone; PMConcept7 already
+         drew failure as a cross). The ring is the set's r 7.5; the cross is 5.4 units with skipped's clearance, so the
+         two read apart by count. A ring and "!" mirrored info's ring and i at 12 px. Static; the wrapper stutters. */
+      'st-failed': G([C(12, 12, 7.5), P('m9.3 9.3 5.4 5.4M14.7 9.3l-5.4 5.4')], 'none', 'status'),
       'st-paused': G([P('M9 6.5v11M15 6.5v11')], 'none', 'status'),
       'st-recovering': G([M([P('M18.34 9.04A7 7 0 0 0 5.66 9.04'), P('M8.02 7.94 5.66 9.04 4.99 6.53'), P('M5.66 14.96A7 7 0 0 0 18.34 14.96'), P('M15.98 16.06 18.34 14.96 19.01 17.47')], { ar: -180, o: [12, 12] })], 'tick2', 'status'),
       /* pending: six long dashes (4 on, 3.85 off) that do not break into specks on light themes */

@@ -97,11 +97,19 @@ const PHRASES = [
 const metaWords = s => String(s || '').replace(/\b(\d+) ctr\b/g, (m, n) => n + (n === '1' ? ' container' : ' containers')).replace(/\bctr\b/g, 'containers');
 const OWNER = { All: 'All', Threads: 'Threads', Th: 'Threads', Orch: 'Orchestrator', Agents: 'Agents', Ag: 'Agents', Manual: 'Manual', Man: 'Manual' };
 
-/* ---- status: a glyph whose shape is the state; colour comes from data-d-st on the element ----
+/* ---- status: the neon glyph set draws the states (pm7-glyphs, RAIL); the tables below stay as the fallback ----
+   KEY maps each rail state to the shared vocabulary (families/rail.js holds the reasons). svgFor asks window.PMG
+   first (PMG.status draws every vocabulary key) and keeps the old drawings only for when PMG is missing.
    One family on a 16-unit grid. Definite states are solid badges with the mark knocked out (done, failed, warning,
    blocked, info, conflict); live things are a dot with a halo; stopped is a ring; pending is a dashed ring that
    turns slowly; changed is a half-filled circle; a stash is a tray. Knock-outs are masks, so they show whatever
    is behind the glyph (a shelf tint, a selected row) instead of a guessed surface colour. */
+const KEY = {
+  ok: 'complete', fail: 'failed', warn: 'warning', blocked: 'blocked', info: 'info', conflict: 'change-conflict',
+  live: 'working', run: 'working', idle: 'idle', pending: 'pending', unknown: 'pending', stale: 'skipped',
+  orphan: 'skipped', dirty: 'change-modified', stash: 'stash', current: 'ring-dot',
+  paused: 'paused', immutable: 'blocked',
+};
 let maskSeq = 0;
 const SOLID = {
   ok:       { shape: '<circle cx="8" cy="8" r="6.5"/>', cut: '<path d="M5 8.3l2 2 4-4.4" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>' },
@@ -124,6 +132,14 @@ const G = {
   stash: '<path d="M2.5 9.2l1.6-5.1c.2-.6.7-1 1.3-1h5.2c.6 0 1.1.4 1.3 1l1.6 5.1v2.6c0 .8-.6 1.4-1.4 1.4H3.9c-.8 0-1.4-.6-1.4-1.4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M2.6 9.2h3.1l.9 1.4h2.8l.9-1.4h3.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>',
 };
 function svgFor(st) {
+  const P = window.PMG, key = KEY[st];
+  if (P && key) {
+    /* concepts: the tray and the position marker, drawn as concept glyphs */
+    if ((key === 'stash' || key === 'ring-dot') && P.has(key)) return P.icon(key, 12, 'nx-r-concept');
+    /* live states move (the bead orbits at the set's slow 9 s); every other state is lit and still */
+    const cls = (st === 'live' || st === 'run') ? '' : 'nx-still';
+    if (P.hasStatus(key)) return P.status(key, 12, cls);
+  }
   let body = G[st];
   if (!body) {
     const s = SOLID[st] || SOLID.info, id = 'dgm' + (++maskSeq);
@@ -132,10 +148,9 @@ function svgFor(st) {
   }
   return '<svg viewBox="0 0 16 16" width="12" height="12" focusable="false" aria-hidden="true">' + body + '</svg>';
 }
-function glyph(st, pulse) {
+function glyph(st) {
   const s = PMR.h('span', { class: 'd-gl', 'aria-hidden': 'true', 'data-gl': st });
   s.innerHTML = svgFor(st);
-  if (pulse) s.setAttribute('data-pulse', '');
   return s;
 }
 /* a status word -> state */

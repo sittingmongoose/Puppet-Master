@@ -1,0 +1,27 @@
+/* sheet.css: the family contact sheet's chrome (tools/family_sheet.py). OWNER: pm7-glyphs-designer2 (2026-10-10).
+   Plain surfaces in each look's own tokens, so the glyphs are judged on the fields they will sit on. */
+html, body { margin: 0; overflow-x: hidden; }
+body {
+  background: var(--background); color: var(--text-primary);
+  font: 12px/1.45 var(--body-font, system-ui, sans-serif);
+}
+html[data-pmg-matrix] body { background: #0b0b0d; color: #ddd; }
+.pmg-matrix { display: grid; grid-template-columns: repeat(5, var(--fw, 600px)); gap: 6px; padding: 6px; }
+.pmg-matrix iframe { width: var(--fw, 600px); height: var(--fh, 760px); border: 0; display: block; background: #222; }
+.sh { padding: 14px 16px 18px; display: grid; gap: 12px; }
+.sh-title { font-weight: 600; font-size: 13px; letter-spacing: .01em; display: flex; justify-content: space-between; }
+.sh-title small { color: var(--text-muted); font-weight: 400; }
+.sh-sec { display: grid; gap: 6px; }
+.sh-sec > h3 { margin: 0; font-size: 10.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-secondary); }
+.sh-card { background: var(--surface-elevated); border: var(--border-width, 1px) solid var(--border); border-radius: var(--border-radius, 4px); padding: 8px 10px; }
+.sh-sizes { display: flex; align-items: center; gap: 14px; min-height: 26px; }
+.sh-sizes .sh-name { width: 108px; color: var(--text-secondary); font-size: 11px; }
+.sh-sizes .sh-z { display: inline-flex; align-items: center; gap: 5px; color: var(--text-muted); font-size: 10px; }
+.sh-sizes .sh-cr { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--text-muted); font-size: 10.5px; }
+.sh-sizes .sh-cr.low { color: var(--accent-error); font-weight: 600; }
+.sh-row { display: flex; align-items: center; gap: 8px; min-height: 26px; }
+.sh-note { color: var(--text-muted); font-size: 10.5px; }
+button.sh-host { all: unset; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+/* a concept glyph takes the concept ink (pm7-bridge.css), not the size label's muted ink */
+.sh-sizes .sh-z > svg.nx { color: var(--pmg-ink-concept, var(--text-secondary)); }
+.sh-problems { color: var(--accent-error); font-weight: 600; border: 1px solid var(--accent-error); padding: 6px 8px; }

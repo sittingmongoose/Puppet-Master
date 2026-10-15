@@ -20,10 +20,20 @@ function projectedAttempts() {
 /* Widget ids of a room at the current detail level, in board order (the board engine owns layout and levels). */
 function roomWidgets(room) { return PMU.board ? PMU.board.visible(room || state.room) : []; }
 
+var DATA_ICON_SIZE = { 'pmu-ctlchev': 14, 'pmu-ctlicon': 14 };
+function dataIconSize(element) {
+  if (element.closest('.pmu-livechev')) return 12;
+  for (var i = 0; i < element.classList.length; i++) if (DATA_ICON_SIZE[element.classList[i]]) return DATA_ICON_SIZE[element.classList[i]];
+  return 16;
+}
 function injectIcons() {
   if (!app) return;
   $$('[data-icon]', app).forEach(function (element) {
-    element.innerHTML = SVG[element.getAttribute('data-icon')] || SVG.grid;
+    var name = element.getAttribute('data-icon');
+    /* the neon glyph at the size the shell's CSS gives this host (10-shell.css: .pmu-ico and .pmu-navicon 16, .pmu-ctlchev
+       and .pmu-ctlicon 14, the Live readings chevron .pmu-livechev .pmu-ico 12), so its stroke is the catalog's drawing
+       at that size (rollout USAGE step 6) */
+    element.innerHTML = (PMU.svg ? PMU.svg(name, dataIconSize(element)) : SVG[name]) || SVG.grid;
   });
 }
 

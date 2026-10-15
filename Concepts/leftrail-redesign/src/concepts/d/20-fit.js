@@ -361,7 +361,7 @@ function wirePublish(panel) {
   const head = card.querySelector('.pm7-post-card-head');
   if (!head) return;
   card._dPub = true;
-  const btn = PMR.h('button', { type: 'button', class: 'd-fold', 'aria-expanded': 'true' }, PMR.icon('chevD'));
+  const btn = PMR.h('button', { type: 'button', class: 'd-fold', 'aria-expanded': 'true' }, PMR.icon('chevD', 'd-fold-chev'));
   PMR.hover(btn, 'Show or hide the destinations', 'Where this publishes, the expected head and the review state');
   inject(head, btn);
   const set = (folded, animate) => {

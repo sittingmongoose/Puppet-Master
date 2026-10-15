@@ -70,7 +70,6 @@ function applyChips(root, animate) {
     if (isCount) { if (gl) gl.remove(); return; }
     if (!gl) gl = inject(el, glyph(st), el.firstChild);
     else if (gl.getAttribute('data-gl') !== st) { gl.setAttribute('data-gl', st); gl.innerHTML = svgFor(st); }
-    if (st === 'run') gl.setAttribute('data-pulse', ''); else gl.removeAttribute('data-pulse');
     if (changed && animate) statusPop(el, gl);
   });
 }
@@ -82,7 +81,6 @@ function applyDots(root) {
     if (el.closest('[data-pane="branches"]')) st = st === 'live' ? 'current' : st === 'warn' ? 'stash' : st;
     const foot = el.closest('.fm-footstat, .fm-indexchip');
     if (foot) st = foot.classList.contains('warn') ? 'warn' : 'live';
-    const pulse = st === 'run' || !!el.closest('.fm-footstat');
     if (el.getAttribute('data-gl') === st && el.classList.contains('d-dot')) return;
     if (!el.classList.contains('d-dot')) {
       const html = el.innerHTML;
@@ -91,7 +89,6 @@ function applyDots(root) {
     }
     setAttr(el, 'data-d-st', st);
     setAttr(el, 'data-gl', st);
-    if (pulse) setAttr(el, 'data-pulse', '');
     el.innerHTML = svgFor(st);
   });
 }
@@ -133,7 +130,7 @@ function ownerFilter(menuId, hover, classes, start, onChange) {
   const chosen = new Set(start);
   const value = PMR.h('span.d-select-v');
   const trig = PMR.h('button', { type: 'button', class: 'd-select', 'aria-haspopup': 'menu', 'aria-expanded': 'false' },
-    PMR.icon('filter', 'd-select-ico'), PMR.h('span.d-select-k', { text: 'Owner' }), value, PMR.icon('chevD'));
+    PMR.icon('filter', 'd-select-ico'), PMR.h('span.d-select-k', { text: 'Owner' }), value, PMR.icon('chevD', 'd-select-chev'));
   PMR.hover(trig, hover[0], hover[1]);
   const show = () => {
     const names = classes.filter(c => chosen.has(c[0])).map(c => c[1]);
