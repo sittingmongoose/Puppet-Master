@@ -266,8 +266,10 @@
     /* no step: a face's own size need not sit on the half pixel (Departure Mono's is 13.75) */
     fontSize: { id: S + 'font-size', in: num(8, 32), out: numOut },
     fontWeight: { id: S + 'font-weight', in: num(100, 800, 100), out: numOut },
-    lineHeight: { id: S + 'line-height', in: num(1, 2, 0.05), out: numOut },
-    letterSpacing: { id: S + 'letter-spacing', in: num(-1, 3, 0.25), out: numOut },
+    /* no step either (round 5, Q15 #4): Customize offers line height and letter spacing by device pixel (1.2308, 1.2692
+       at 2x), and rounding them to Settings' 0.05 and 0.25 here made neighbouring stops of All terminals draw alike */
+    lineHeight: { id: S + 'line-height', in: num(1, 2), out: numOut },
+    letterSpacing: { id: S + 'letter-spacing', in: num(-1, 3), out: numOut },
     ligatures: { id: S + 'ligatures', in: bool, out: boolOut },
     boldBright: { id: S + 'bold-bright', in: bool, out: boolOut },
     fontRendering: { id: S + 'font-rendering', in: WORDS.drawing.in, out: WORDS.drawing.out },
@@ -518,7 +520,9 @@
        shows a hovered light scheme as its dark sibling */
     else { s = scheme(sid); if (f('schemePair') && !(view && view.previewAppearance && view.previewAppearance.scheme !== undefined)) s = pairOf(s, mode); }
     if (!s) s = (T.SCHEMES || [])[0];
-    if (s && /^pm-yorha/.test(s.id) && look.nier) s = nierScheme(s, s.appearance === 'dark');
+    /* the tokens are NieR's palette for the mode it is in: the YoRHa scheme of the other mode keeps its own colours (the
+       same palette's other half), or Parchment in NieR dark drew as Ink (round 5, Q15) */
+    if (s && /^pm-yorha/.test(s.id) && look.nier && s.appearance === (mode === 'light' ? 'light' : 'dark')) s = nierScheme(s, s.appearance === 'dark');
     var bgKind = f('background'); if (bgKind === 'follow') bgKind = L.background === 'soft' || L.background === 'paper' ? 'theme' : L.background;
     /* Terminal Opacity is Glass's (SSYS-051: "only under a Glass theme"): every other look draws its ground solid */
     var opacity = lk === 'glass' ? f('opacity') : 1;

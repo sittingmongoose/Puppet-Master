@@ -323,8 +323,8 @@
       '<div class="pmt-cz-tiles pmt-cz-faces" role="radiogroup" aria-label="Face">' + faceTiles() + '</div>' +
       '<p class="pmt-cz-note" data-note-face hidden></p>' +
       '<div class="pmt-cz-grid2">' +
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Size</span><span class="pmt-stepper pmt-cz-stepper"><button type="button" class="pmt-step" data-step="-0.5" aria-label="Smaller"' + tagged('Smaller', 'Text size half a pixel smaller') + '>−</button>' +
-      '<output class="pmt-cz-out" data-out="fontSize"></output><button type="button" class="pmt-step" data-step="0.5" aria-label="Bigger"' + tagged('Bigger', 'Text size half a pixel bigger') + '>+</button></span>' +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Size</span><span class="pmt-stepper pmt-cz-stepper"><button type="button" class="pmt-step" data-step="-1" aria-label="Smaller"' + tagged('Smaller', 'The next smaller size that draws differently') + '>−</button>' +
+      '<output class="pmt-cz-out" data-out="fontSize"></output><button type="button" class="pmt-step" data-step="1" aria-label="Bigger"' + tagged('Bigger', 'The next bigger size that draws differently') + '>+</button></span>' +
       '<button type="button" class="pmt-textbtn pmt-cz-default" data-act="default" data-key="fontSize"' + NOTAG + '>Face default</button></div>' +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Weight</span>' + seg('fontWeight', [[100, 'Thin', '100'], [200, 'Extra light', '200'], [300, 'Light', '300'], [400, 'Regular', '400'], [500, 'Medium', '500'], [600, 'Semibold', '600'], [700, 'Bold', '700'], [800, 'Heavy', '800']], 'Weight') +
       '<span class="pmt-cz-fhelp" data-weight-why></span></div>' +
@@ -379,7 +379,9 @@
       }).join('') + '</div>' +
       /* the bezel: its own choice, with or without Full CRT (round 2) */
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bezel</span>' + seg('bezel', BEZELS, 'Bezel') + '<span class="pmt-cz-fhelp">A monitor housing round the screen that catches the screen’s light, on its own or with Full CRT.</span></div>' +
-      '<div class="pmt-cz-bezelmore" data-bezel-more hidden><div class="pmt-cz-grid2">' + slider('bezelWidth', 'Width', 2, 48, 1, ' px') + '</div>' +
+      /* Width by stops (round 5, Q15 #4): a pixel at a time moved NieR's flat frame too little to see; the slim lip's 6
+         and the case's 24 are among them */
+      '<div class="pmt-cz-bezelmore" data-bezel-more hidden><div class="pmt-cz-grid2">' + slider('bezelWidth', 'Width', 2, 48, 1, ' px', [2, 4, 6, 9, 12, 16, 20, 24, 30, 36, 42, 48]) + '</div>' +
       /* round 4 (Q15 #2): four levels a person can tell apart, the material's own marked */
       '<div class="pmt-cz-field" data-reflect-field><span class="pmt-cz-flabel">Reflection</span>' + seg('bezelReflect', [['off', 'Off'], ['low', 'Low'], ['medium', 'Medium'], ['high', 'High']], 'Reflection') +
       '<span class="pmt-cz-fhelp" data-reflect-why></span></div>' +
@@ -513,7 +515,12 @@
           });
         root.querySelector('[data-gtiles]').innerHTML = tiles.join('');
         /* solid: the scheme's own, a step deeper and a step softer, then any colour */
-        var C = T.color, sw = [['Scheme', th.bg], ['Deeper', C.mix(th.bg, 0, 0.35)], ['Softer', C.mix(th.bg, th.fg, 0.08)]];
+        /* Deeper is 35 % of the way to black, or further on a ground already near black, until it is a step the eye
+           sees (round 5, Q15: Retro dark's phosphor black drew its 35 % as nearly the same); none under a black ground */
+        var C = T.color, deep = null;
+        for (var dk = 0.35; dk < 1.001 && deep === null; dk += 0.05) { var dc = C.mix(th.bg, 0, Math.min(1, dk)); if (Math.max(C.r(th.bg) - C.r(dc), C.g(th.bg) - C.g(dc), C.b(th.bg) - C.b(dc)) >= 12) deep = dc; }
+        if (deep === null && Math.max(C.r(th.bg), C.g(th.bg), C.b(th.bg)) >= 8) deep = 0;
+        var sw = [['Scheme', th.bg]].concat(deep === null ? [] : [['Deeper', deep]], [['Softer', C.mix(th.bg, th.fg, 0.08)]]);
         root.querySelector('[data-solid-swatches]').innerHTML = sw.map(function (s) {
           return '<button type="button" class="pmt-cz-swatch" data-solid-color="' + C.toHex(s[1]) + '" aria-label="' + esc(s[0]) + '"' + tagged(s[0]) + NOTAG + '><i style="background:' + C.toHex(s[1]) + '"></i></button>';
         }).join('');
@@ -541,6 +548,18 @@
       var id = val('bezelColor'), mat = !id || id === 'follow' ? (look === 'nier' ? null : T.Bezel.lookMaterial(look, light)) : id;
       var nm = BEZEL_COLORS.filter(function (c) { return c[0] === mat; })[0];
       return { level: T.Bezel.levelOf(val('bezelReflect'), id, look, light), own: T.Bezel.ownLevel(id, look, light), name: nm ? nm[1] : '' };
+    }
+
+    /* the size Smaller or Bigger goes to (round 5, Q15 #4): the nearest whole pixel whose cell is drawn a different
+       number of device pixels wide or tall than the size shown. A cell is whole device pixels (20-metrics.js), so half a
+       pixel often drew the same cell and much the same glyphs (13.5 and 14, 25 and 25.5). null at either end */
+    function nextSize(R, dir) {
+      var f = R.font, mt = pv && pv.metrics ? pv.metrics : v.metrics, dpr = mt ? mt.dpr : (window.devicePixelRatio || 1);
+      var o = { family: f.family, weight: f.weight, boldWeight: f.boldWeight, lineHeight: f.lineHeight, letterSpacing: f.letterSpacing, dpr: dpr, crisp: f.crisp };
+      var cell = function (px) { var m = T.Metrics.measure(Object.assign({}, o, { fontPx: px })); return m.devW + 'x' + m.devH; };
+      var now = cell(f.size);
+      for (var n = dir > 0 ? Math.floor(f.size + 1e-9) + 1 : Math.ceil(f.size - 1e-9) - 1; n >= 8 && n <= 32; n += dir) if (cell(n) !== now) return n;
+      return null;
     }
 
     /* ---- your presets: listed with their own little picture; saved, renamed and deleted in place ---- */
@@ -710,6 +729,7 @@
         r.closest('[data-slider]').classList.toggle('pmt-cz-is-mine', mine(key));
       });
       var fs = root.querySelector('[data-out="fontSize"]'); if (fs) fs.textContent = fmt('fontSize', R.font.size);
+      [].forEach.call(root.querySelectorAll('[data-step]'), function (b) { setA(b, 'aria-disabled', String(nextSize(R, parseFloat(b.getAttribute('data-step')) < 0 ? -1 : 1) === null)); });
       setA(root.querySelector('[data-act="default"][data-key="fontSize"]'), 'aria-disabled', String(!mine('fontSize')));
       var col = root.querySelector('input[data-key="bgColor"]'), bgc = val('bgColor') || (R.theme ? T.color.toHex(R.theme.bg) : '#000000');
       if (col && document.activeElement !== col) col.value = bgc;
@@ -878,7 +898,7 @@
       if (b.getAttribute('aria-disabled') === 'true') return;
       if (b.getAttribute('role') === 'radio' && b.hasAttribute('data-key')) { choose(b); return; }
       if (b.getAttribute('role') === 'switch') { toggle(b); return; }
-      if (b.hasAttribute('data-step')) { var R = eff(); put('fontSize', T.util.clamp(R.font.size + parseFloat(b.getAttribute('data-step')), 8, 32)); return; }
+      if (b.hasAttribute('data-step')) { var ns = nextSize(eff(), parseFloat(b.getAttribute('data-step')) < 0 ? -1 : 1); if (ns !== null) put('fontSize', ns); return; }
       if (b.hasAttribute('data-set')) { quickSet(b.getAttribute('data-set')); return; }
       if (b.hasAttribute('data-gcat')) { gcat = b.getAttribute('data-gcat'); gSig = ''; paint(); return; }
       if (b.hasAttribute('data-solid-color')) { write({ background: 'solid', bgColor: b.getAttribute('data-solid-color') }); return; }

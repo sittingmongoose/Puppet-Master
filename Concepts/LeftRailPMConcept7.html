@@ -46863,8 +46863,8 @@ html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(-
 /* unavailable: no fade (45 % put its words near 2.9:1). Its words go to the second tier, a step under the button's own
    ink that still holds 4.5:1 on the plate and on the token picker in every look, and a dashed edge says it is off, as
    Demo Studio's unavailable controls do (landing QA EC-01) */
-.pmt-cz .pmt-textbtn[aria-disabled="true"] { opacity: 1; color: var(--pmw-text-2, var(--text-secondary)); border-style: dashed; border-color: var(--pmt-cz-line-2); cursor: default; }
-.pmt-cz .pmt-textbtn[aria-disabled="true"]:hover { background: transparent; }
+.pmt-cz :is(.pmt-textbtn, .pmt-step)[aria-disabled="true"] { opacity: 1; color: var(--pmw-text-2, var(--text-secondary)); border-style: dashed; border-color: var(--pmt-cz-line-2); cursor: default; }
+.pmt-cz :is(.pmt-textbtn, .pmt-step)[aria-disabled="true"]:hover { background: transparent; }
 
 /* ---- top: preview and side column ---- */
 .pmt-cz-top { display: grid; grid-template-columns: minmax(0, 1fr) 214px; gap: 14px; align-items: stretch; }
@@ -209870,8 +209870,10 @@ var T = {};
     /* no step: a face's own size need not sit on the half pixel (Departure Mono's is 13.75) */
     fontSize: { id: S + 'font-size', in: num(8, 32), out: numOut },
     fontWeight: { id: S + 'font-weight', in: num(100, 800, 100), out: numOut },
-    lineHeight: { id: S + 'line-height', in: num(1, 2, 0.05), out: numOut },
-    letterSpacing: { id: S + 'letter-spacing', in: num(-1, 3, 0.25), out: numOut },
+    /* no step either (round 5, Q15 #4): Customize offers line height and letter spacing by device pixel (1.2308, 1.2692
+       at 2x), and rounding them to Settings' 0.05 and 0.25 here made neighbouring stops of All terminals draw alike */
+    lineHeight: { id: S + 'line-height', in: num(1, 2), out: numOut },
+    letterSpacing: { id: S + 'letter-spacing', in: num(-1, 3), out: numOut },
     ligatures: { id: S + 'ligatures', in: bool, out: boolOut },
     boldBright: { id: S + 'bold-bright', in: bool, out: boolOut },
     fontRendering: { id: S + 'font-rendering', in: WORDS.drawing.in, out: WORDS.drawing.out },
@@ -210122,7 +210124,9 @@ var T = {};
        shows a hovered light scheme as its dark sibling */
     else { s = scheme(sid); if (f('schemePair') && !(view && view.previewAppearance && view.previewAppearance.scheme !== undefined)) s = pairOf(s, mode); }
     if (!s) s = (T.SCHEMES || [])[0];
-    if (s && /^pm-yorha/.test(s.id) && look.nier) s = nierScheme(s, s.appearance === 'dark');
+    /* the tokens are NieR's palette for the mode it is in: the YoRHa scheme of the other mode keeps its own colours (the
+       same palette's other half), or Parchment in NieR dark drew as Ink (round 5, Q15) */
+    if (s && /^pm-yorha/.test(s.id) && look.nier && s.appearance === (mode === 'light' ? 'light' : 'dark')) s = nierScheme(s, s.appearance === 'dark');
     var bgKind = f('background'); if (bgKind === 'follow') bgKind = L.background === 'soft' || L.background === 'paper' ? 'theme' : L.background;
     /* Terminal Opacity is Glass's (SSYS-051: "only under a Glass theme"): every other look draws its ground solid */
     var opacity = lk === 'glass' ? f('opacity') : 1;
@@ -220651,6 +220655,12 @@ var T = {};
      look (round 4). Medium on a dark screen is round 3's black gloss and graphite; Low on a light one its putty */
   var LEVELS = ['off', 'low', 'medium', 'high'];
   var STRENGTH = { dark: [0, 0.3, 0.6, 1.3], light: [0, 0.2, 0.42, 0.8] };
+  /* clear glass gives back more, level by level: its film shows the page behind it, so the same light reads fainter
+     there (round 5, Q15: Low beside Off on Retro's paper, 3.81, and Low beside Medium in NieR dark, 4.28) */
+  var GLASS = { dark: [0, 1.2, 1.45, 1.3], light: [0, 2.0, 2.2, 2.0] };
+  /* a near-black screen (Retro's phosphor ground) has little light to give a dark case, so its steps are lifted up to
+     a third, and read as far apart as on a grey one (round 5, Q15: Graphite and Gunmetal's Low and Medium, 4.2) */
+  function dimScreen(bg) { return 1 + 0.3 * Math.max(0, Math.min(1, (0.016 - C.lum(bg)) / 0.012)); }
   function levelOf(r, mat, light) {
     if (typeof r === 'number' && isFinite(r)) {
       /* a level stored as a number (round 3's slider): the nearest */
@@ -220745,10 +220755,13 @@ var T = {};
     var chosen = bz.color && bz.color !== 'follow' && MATERIALS[bz.color] ? bz.color : null;
     var mat = bz.style === 'off' ? null : chosen || (look === 'nier' ? 'ink' : lookMaterial(look, light));
     var level = mat === 'ink' ? 'off' : levelOf(bz.reflect, mat, light);
-    this.spec = { style: bz.style || 'off', width: bz.width || 0, gap: bz.gap || 0, material: mat, reflect: level,
-      /* clear glass gives back more: half as much again on a light screen (white on white), a sixth more on a dark one,
-         where the wallpaper behind it softens its steps (round 4) */
-      strength: STRENGTH[light ? 'light' : 'dark'][LEVELS.indexOf(level)] * (mat === 'glass' ? (light ? 1.5 : 1.15) : 1),
+    /* a case paler than a dark screen shows the mirror as a gloss (_reflect): decided by how light its face is drawn, so
+       the accent plastic, a mid tone in most schemes, takes it too (round 5, Q15: its four levels drew alike in Retro dark,
+       2.87, as light added to a mid tone barely shows) */
+    var M0 = MATERIALS[mat], face0 = !M0 || mat === 'glass' ? null : lit(mat === 'accent' ? C.mix(th.palette ? th.palette[4] : th.fg, 0x5c5c5c, 0.45) : C.hex(M0.base), M0.faceLift, !!M0.light);
+    var gloss = !light && face0 !== null && C.lum(face0) >= 0.12, li = LEVELS.indexOf(level), side = light ? 'light' : 'dark';
+    this.spec = { style: bz.style || 'off', width: bz.width || 0, gap: bz.gap || 0, material: mat, reflect: level, gloss: gloss,
+      strength: STRENGTH[side][li] * (mat === 'glass' ? GLASS[side][li] : 1) * (light || gloss ? 1 : dimScreen(th.bg)),
       light: light, bg: th.bg, fg: th.fg, accent: th.palette ? th.palette[4] : th.fg, glow: !!(ap.effects && ap.effects.glow && ap.effects.glow.on), look: look };
     this.el.hidden = !this.on();
     this.view.root.setAttribute('data-pmt-bezel', this.spec.style);
@@ -220970,7 +220983,7 @@ var T = {};
        plainly, as Liquid Glass's glint does there). A pale case (platinum, putty, aluminium) over a dark screen shows the
        mirror as a gloss, the dark picture laid over its face, since a dark screen adds almost no light to a pale one
        (round 4, Q15: its levels drew alike there) */
-    var glassLight = s.material === 'glass' && s.light, gloss = !!(M && M.light) && !s.light;
+    var glassLight = s.material === 'glass' && s.light, gloss = !!(M && s.gloss);
     geo.strips.forEach(function (q) {
       oc.clearRect(q[0], q[1], q[2], q[3]);
       oc.drawImage(this.cache, q[0], q[1], q[2], q[3], q[0], q[1], q[2], q[3]);
@@ -222312,8 +222325,8 @@ var T = {};
       '<div class="pmt-cz-tiles pmt-cz-faces" role="radiogroup" aria-label="Face">' + faceTiles() + '</div>' +
       '<p class="pmt-cz-note" data-note-face hidden></p>' +
       '<div class="pmt-cz-grid2">' +
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Size</span><span class="pmt-stepper pmt-cz-stepper"><button type="button" class="pmt-step" data-step="-0.5" aria-label="Smaller"' + tagged('Smaller', 'Text size half a pixel smaller') + '>−</button>' +
-      '<output class="pmt-cz-out" data-out="fontSize"></output><button type="button" class="pmt-step" data-step="0.5" aria-label="Bigger"' + tagged('Bigger', 'Text size half a pixel bigger') + '>+</button></span>' +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Size</span><span class="pmt-stepper pmt-cz-stepper"><button type="button" class="pmt-step" data-step="-1" aria-label="Smaller"' + tagged('Smaller', 'The next smaller size that draws differently') + '>−</button>' +
+      '<output class="pmt-cz-out" data-out="fontSize"></output><button type="button" class="pmt-step" data-step="1" aria-label="Bigger"' + tagged('Bigger', 'The next bigger size that draws differently') + '>+</button></span>' +
       '<button type="button" class="pmt-textbtn pmt-cz-default" data-act="default" data-key="fontSize"' + NOTAG + '>Face default</button></div>' +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Weight</span>' + seg('fontWeight', [[100, 'Thin', '100'], [200, 'Extra light', '200'], [300, 'Light', '300'], [400, 'Regular', '400'], [500, 'Medium', '500'], [600, 'Semibold', '600'], [700, 'Bold', '700'], [800, 'Heavy', '800']], 'Weight') +
       '<span class="pmt-cz-fhelp" data-weight-why></span></div>' +
@@ -222368,7 +222381,9 @@ var T = {};
       }).join('') + '</div>' +
       /* the bezel: its own choice, with or without Full CRT (round 2) */
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bezel</span>' + seg('bezel', BEZELS, 'Bezel') + '<span class="pmt-cz-fhelp">A monitor housing round the screen that catches the screen’s light, on its own or with Full CRT.</span></div>' +
-      '<div class="pmt-cz-bezelmore" data-bezel-more hidden><div class="pmt-cz-grid2">' + slider('bezelWidth', 'Width', 2, 48, 1, ' px') + '</div>' +
+      /* Width by stops (round 5, Q15 #4): a pixel at a time moved NieR's flat frame too little to see; the slim lip's 6
+         and the case's 24 are among them */
+      '<div class="pmt-cz-bezelmore" data-bezel-more hidden><div class="pmt-cz-grid2">' + slider('bezelWidth', 'Width', 2, 48, 1, ' px', [2, 4, 6, 9, 12, 16, 20, 24, 30, 36, 42, 48]) + '</div>' +
       /* round 4 (Q15 #2): four levels a person can tell apart, the material's own marked */
       '<div class="pmt-cz-field" data-reflect-field><span class="pmt-cz-flabel">Reflection</span>' + seg('bezelReflect', [['off', 'Off'], ['low', 'Low'], ['medium', 'Medium'], ['high', 'High']], 'Reflection') +
       '<span class="pmt-cz-fhelp" data-reflect-why></span></div>' +
@@ -222502,7 +222517,12 @@ var T = {};
           });
         root.querySelector('[data-gtiles]').innerHTML = tiles.join('');
         /* solid: the scheme's own, a step deeper and a step softer, then any colour */
-        var C = T.color, sw = [['Scheme', th.bg], ['Deeper', C.mix(th.bg, 0, 0.35)], ['Softer', C.mix(th.bg, th.fg, 0.08)]];
+        /* Deeper is 35 % of the way to black, or further on a ground already near black, until it is a step the eye
+           sees (round 5, Q15: Retro dark's phosphor black drew its 35 % as nearly the same); none under a black ground */
+        var C = T.color, deep = null;
+        for (var dk = 0.35; dk < 1.001 && deep === null; dk += 0.05) { var dc = C.mix(th.bg, 0, Math.min(1, dk)); if (Math.max(C.r(th.bg) - C.r(dc), C.g(th.bg) - C.g(dc), C.b(th.bg) - C.b(dc)) >= 12) deep = dc; }
+        if (deep === null && Math.max(C.r(th.bg), C.g(th.bg), C.b(th.bg)) >= 8) deep = 0;
+        var sw = [['Scheme', th.bg]].concat(deep === null ? [] : [['Deeper', deep]], [['Softer', C.mix(th.bg, th.fg, 0.08)]]);
         root.querySelector('[data-solid-swatches]').innerHTML = sw.map(function (s) {
           return '<button type="button" class="pmt-cz-swatch" data-solid-color="' + C.toHex(s[1]) + '" aria-label="' + esc(s[0]) + '"' + tagged(s[0]) + NOTAG + '><i style="background:' + C.toHex(s[1]) + '"></i></button>';
         }).join('');
@@ -222530,6 +222550,18 @@ var T = {};
       var id = val('bezelColor'), mat = !id || id === 'follow' ? (look === 'nier' ? null : T.Bezel.lookMaterial(look, light)) : id;
       var nm = BEZEL_COLORS.filter(function (c) { return c[0] === mat; })[0];
       return { level: T.Bezel.levelOf(val('bezelReflect'), id, look, light), own: T.Bezel.ownLevel(id, look, light), name: nm ? nm[1] : '' };
+    }
+
+    /* the size Smaller or Bigger goes to (round 5, Q15 #4): the nearest whole pixel whose cell is drawn a different
+       number of device pixels wide or tall than the size shown. A cell is whole device pixels (20-metrics.js), so half a
+       pixel often drew the same cell and much the same glyphs (13.5 and 14, 25 and 25.5). null at either end */
+    function nextSize(R, dir) {
+      var f = R.font, mt = pv && pv.metrics ? pv.metrics : v.metrics, dpr = mt ? mt.dpr : (window.devicePixelRatio || 1);
+      var o = { family: f.family, weight: f.weight, boldWeight: f.boldWeight, lineHeight: f.lineHeight, letterSpacing: f.letterSpacing, dpr: dpr, crisp: f.crisp };
+      var cell = function (px) { var m = T.Metrics.measure(Object.assign({}, o, { fontPx: px })); return m.devW + 'x' + m.devH; };
+      var now = cell(f.size);
+      for (var n = dir > 0 ? Math.floor(f.size + 1e-9) + 1 : Math.ceil(f.size - 1e-9) - 1; n >= 8 && n <= 32; n += dir) if (cell(n) !== now) return n;
+      return null;
     }
 
     /* ---- your presets: listed with their own little picture; saved, renamed and deleted in place ---- */
@@ -222699,6 +222731,7 @@ var T = {};
         r.closest('[data-slider]').classList.toggle('pmt-cz-is-mine', mine(key));
       });
       var fs = root.querySelector('[data-out="fontSize"]'); if (fs) fs.textContent = fmt('fontSize', R.font.size);
+      [].forEach.call(root.querySelectorAll('[data-step]'), function (b) { setA(b, 'aria-disabled', String(nextSize(R, parseFloat(b.getAttribute('data-step')) < 0 ? -1 : 1) === null)); });
       setA(root.querySelector('[data-act="default"][data-key="fontSize"]'), 'aria-disabled', String(!mine('fontSize')));
       var col = root.querySelector('input[data-key="bgColor"]'), bgc = val('bgColor') || (R.theme ? T.color.toHex(R.theme.bg) : '#000000');
       if (col && document.activeElement !== col) col.value = bgc;
@@ -222867,7 +222900,7 @@ var T = {};
       if (b.getAttribute('aria-disabled') === 'true') return;
       if (b.getAttribute('role') === 'radio' && b.hasAttribute('data-key')) { choose(b); return; }
       if (b.getAttribute('role') === 'switch') { toggle(b); return; }
-      if (b.hasAttribute('data-step')) { var R = eff(); put('fontSize', T.util.clamp(R.font.size + parseFloat(b.getAttribute('data-step')), 8, 32)); return; }
+      if (b.hasAttribute('data-step')) { var ns = nextSize(eff(), parseFloat(b.getAttribute('data-step')) < 0 ? -1 : 1); if (ns !== null) put('fontSize', ns); return; }
       if (b.hasAttribute('data-set')) { quickSet(b.getAttribute('data-set')); return; }
       if (b.hasAttribute('data-gcat')) { gcat = b.getAttribute('data-gcat'); gSig = ''; paint(); return; }
       if (b.hasAttribute('data-solid-color')) { write({ background: 'solid', bgColor: b.getAttribute('data-solid-color') }); return; }

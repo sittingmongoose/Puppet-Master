@@ -73,8 +73,8 @@ html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(-
 /* unavailable: no fade (45 % put its words near 2.9:1). Its words go to the second tier, a step under the button's own
    ink that still holds 4.5:1 on the plate and on the token picker in every look, and a dashed edge says it is off, as
    Demo Studio's unavailable controls do (landing QA EC-01) */
-.pmt-cz .pmt-textbtn[aria-disabled="true"] { opacity: 1; color: var(--pmw-text-2, var(--text-secondary)); border-style: dashed; border-color: var(--pmt-cz-line-2); cursor: default; }
-.pmt-cz .pmt-textbtn[aria-disabled="true"]:hover { background: transparent; }
+.pmt-cz :is(.pmt-textbtn, .pmt-step)[aria-disabled="true"] { opacity: 1; color: var(--pmw-text-2, var(--text-secondary)); border-style: dashed; border-color: var(--pmt-cz-line-2); cursor: default; }
+.pmt-cz :is(.pmt-textbtn, .pmt-step)[aria-disabled="true"]:hover { background: transparent; }
 
 /* ---- top: preview and side column ---- */
 .pmt-cz-top { display: grid; grid-template-columns: minmax(0, 1fr) 214px; gap: 14px; align-items: stretch; }

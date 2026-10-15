@@ -46,6 +46,12 @@
      look (round 4). Medium on a dark screen is round 3's black gloss and graphite; Low on a light one its putty */
   var LEVELS = ['off', 'low', 'medium', 'high'];
   var STRENGTH = { dark: [0, 0.3, 0.6, 1.3], light: [0, 0.2, 0.42, 0.8] };
+  /* clear glass gives back more, level by level: its film shows the page behind it, so the same light reads fainter
+     there (round 5, Q15: Low beside Off on Retro's paper, 3.81, and Low beside Medium in NieR dark, 4.28) */
+  var GLASS = { dark: [0, 1.2, 1.45, 1.3], light: [0, 2.0, 2.2, 2.0] };
+  /* a near-black screen (Retro's phosphor ground) has little light to give a dark case, so its steps are lifted up to
+     a third, and read as far apart as on a grey one (round 5, Q15: Graphite and Gunmetal's Low and Medium, 4.2) */
+  function dimScreen(bg) { return 1 + 0.3 * Math.max(0, Math.min(1, (0.016 - C.lum(bg)) / 0.012)); }
   function levelOf(r, mat, light) {
     if (typeof r === 'number' && isFinite(r)) {
       /* a level stored as a number (round 3's slider): the nearest */
@@ -140,10 +146,13 @@
     var chosen = bz.color && bz.color !== 'follow' && MATERIALS[bz.color] ? bz.color : null;
     var mat = bz.style === 'off' ? null : chosen || (look === 'nier' ? 'ink' : lookMaterial(look, light));
     var level = mat === 'ink' ? 'off' : levelOf(bz.reflect, mat, light);
-    this.spec = { style: bz.style || 'off', width: bz.width || 0, gap: bz.gap || 0, material: mat, reflect: level,
-      /* clear glass gives back more: half as much again on a light screen (white on white), a sixth more on a dark one,
-         where the wallpaper behind it softens its steps (round 4) */
-      strength: STRENGTH[light ? 'light' : 'dark'][LEVELS.indexOf(level)] * (mat === 'glass' ? (light ? 1.5 : 1.15) : 1),
+    /* a case paler than a dark screen shows the mirror as a gloss (_reflect): decided by how light its face is drawn, so
+       the accent plastic, a mid tone in most schemes, takes it too (round 5, Q15: its four levels drew alike in Retro dark,
+       2.87, as light added to a mid tone barely shows) */
+    var M0 = MATERIALS[mat], face0 = !M0 || mat === 'glass' ? null : lit(mat === 'accent' ? C.mix(th.palette ? th.palette[4] : th.fg, 0x5c5c5c, 0.45) : C.hex(M0.base), M0.faceLift, !!M0.light);
+    var gloss = !light && face0 !== null && C.lum(face0) >= 0.12, li = LEVELS.indexOf(level), side = light ? 'light' : 'dark';
+    this.spec = { style: bz.style || 'off', width: bz.width || 0, gap: bz.gap || 0, material: mat, reflect: level, gloss: gloss,
+      strength: STRENGTH[side][li] * (mat === 'glass' ? GLASS[side][li] : 1) * (light || gloss ? 1 : dimScreen(th.bg)),
       light: light, bg: th.bg, fg: th.fg, accent: th.palette ? th.palette[4] : th.fg, glow: !!(ap.effects && ap.effects.glow && ap.effects.glow.on), look: look };
     this.el.hidden = !this.on();
     this.view.root.setAttribute('data-pmt-bezel', this.spec.style);
@@ -365,7 +374,7 @@
        plainly, as Liquid Glass's glint does there). A pale case (platinum, putty, aluminium) over a dark screen shows the
        mirror as a gloss, the dark picture laid over its face, since a dark screen adds almost no light to a pale one
        (round 4, Q15: its levels drew alike there) */
-    var glassLight = s.material === 'glass' && s.light, gloss = !!(M && M.light) && !s.light;
+    var glassLight = s.material === 'glass' && s.light, gloss = !!(M && s.gloss);
     geo.strips.forEach(function (q) {
       oc.clearRect(q[0], q[1], q[2], q[3]);
       oc.drawImage(this.cache, q[0], q[1], q[2], q[3], q[0], q[1], q[2], q[3]);
