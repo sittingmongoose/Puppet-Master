@@ -339,7 +339,7 @@ function drop(g, z) {
   var ok;
   if (z.type === 'strip') ok = PMW.moveTab(g.tid, z.panelId, z.index);
   else if (z.type === 'merge') ok = PMW.moveTab(g.tid, z.panelId, null);
-  else if (z.type === 'split') ok = !!PMW.moveTabToSplit(g.tid, z.panelId, z.edge, { ratio: 0.5 });
+  else if (z.type === 'split') ok = !!PMW.moveTabToSplit(g.tid, z.panelId, z.edge, { ratio: 0.5, centreRect: g.releaseCentreRect });
   else if (z.type === 'root') ok = !!PMW.moveTabToSplit(g.tid, '@root', z.edge, { ratio: 0.34 });
   if (!ok) { dropView.glideHome(); restore(g); if (g.chip) { g.chip.remove(); g.chip = null; } return true; }
   // what listeners heard at the grab is no longer true: the source shows its previous tab, the carried tab is the

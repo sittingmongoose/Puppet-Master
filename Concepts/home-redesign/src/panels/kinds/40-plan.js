@@ -526,7 +526,11 @@ function mountPlan(host, state, api) {
         run: function () { if (v === viewing) return; remember(); viewing = v; paint(); if (frame) frame._scroll.scrollTop = 0; api.announce('Showing version ' + v); api.saveSoon(); } };
     }) };
   }
-  function remember() { if (frame) scrolls[view] = frame._scroll.scrollTop; }
+  function remember() {
+    // A tab hidden with display:none has no scroll box and reports zero. A hidden Home page can keep its boxes,
+    // so use the host's hidden flag, not the kind's onHide state, to avoid only the known-zero layout read.
+    if (frame) scrolls[view] = host.hidden ? 0 : frame._scroll.scrollTop;
+  }
 
   /* ---- body ---- */
   function blocksNow() { return plan.revisions[viewing]; }
@@ -819,7 +823,8 @@ function mountPlan(host, state, api) {
     next._scroll.setAttribute('data-pmh', 'off');
     if (frame) frame.replaceWith(next); else stage.appendChild(next);
     frame = next;
-    frame._scroll.scrollTop = keepScroll;
+    // This is a new scroller, already at zero. Even assigning zero forces layout of the freshly mounted document.
+    if (keepScroll) frame._scroll.scrollTop = keepScroll;
     frame._scroll.addEventListener('scroll', function () { scrolls[view] = frame._scroll.scrollTop; }, { passive: true });
     if (key) {
       var el = host.querySelector('[data-k="' + key.replace(/"/g, '\\"') + '"]');
@@ -855,7 +860,7 @@ function mountPlan(host, state, api) {
     onResize: function (s) {
       width = s.w;
       root.classList.toggle('is-narrow', s.w < NARROW_FOOT);
-      if (!restored && frame) { restored = true; frame._scroll.scrollTop = scrolls[view] || 0; }
+      if (!restored && frame) { restored = true; if (scrolls[view]) frame._scroll.scrollTop = scrolls[view]; }
       syncMax();
     },
     focus: function () { var t = frame && frame._scroll; if (t) { t.setAttribute('tabindex', '-1'); try { t.focus({ preventScroll: true }); } catch (_) {} } },
