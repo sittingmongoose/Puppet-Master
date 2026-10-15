@@ -721,6 +721,16 @@
     { sel: '#panel-wizard .pm6-wiz-intent-row', items: '.pm6-wiz-intent-chip', kind: 'lens', active: '.sel', magRest: 1, mark: true },
     /* Jared #14 (2026-10-14): the theme menu's Light / Dark / Auto, drawn inside the menu (LENS_HOSTS) */
     { sel: '#themeMenu .pm6-tt-modes', items: '.pm6-tt-mode', kind: 'lens', active: '[aria-checked="true"]', magRest: 1, mark: true },
+    /* Jared #22 (2026-10-15): Settings' selectors are the same switcher. The left bar (Settings Home and the chapters),
+       the chapter's section tabs, the page index beside them and each manager's tabs carry the lens; their own fills,
+       bars, dots, underlines and inks step aside (glass.css section 6). Segmented choices and the service lists live in
+       content that scrolls under Settings' sticky bars, so they take the lens's material in place instead. */
+    { sel: '#pm-settings-root .rail-scroll', items: ':is(.side-link[data-action="home"], .domain-link)', vertical: true, kind: 'lensRow', mark: true },
+    { sel: '#pm-settings-root nav.workspace-tabs', items: '.workspace-tab', many: true, kind: 'lens', active: '.is-current', magRest: 1, mark: true },
+    /* the index's own rows: a manager's pages, or a page's sections where it has no manager (their current row follows
+       the scroll); the sections under an open page are words only */
+    { sel: '#pm-settings-root nav.page-index-card', items: '.pm51-index-group > .index-link', many: true, vertical: true, kind: 'lensRow', active: '.is-active', mark: true },
+    { sel: '#pm-settings-root nav.manager-tabs', items: '.manager-tab', many: true, kind: 'lens', active: '[aria-selected="true"]', magRest: 1, mark: true },
   ];
   function railIcon(strip) {
     var sp = document.getElementById('sidePanelSlot'); if (!sp || !visible(sp)) return null;
