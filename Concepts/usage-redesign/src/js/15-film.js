@@ -557,12 +557,29 @@
   }
 
   /* ---- the room key light (2.1, 3.1, 3.2): one static radial light under the board; it blooms on arrival ---- */
+  /* the spare old key lights (40-board.js keyShift) and lens rims (irisRim), made with the key light, hidden: a room change
+     reuses them and inserts nothing. An element inserted into the stage or the scroll pane mid-burst restyled every
+     element of both rooms (the app's positional rules: about 90 ms at the second click of a 3-a-second burst, Glass
+     review r3 R2); three of each cover the fades that overlap at 6 clicks a second */
+  function spares(stage, keyEl) {
+    var olds = stage.querySelectorAll(':scope > .pmu-film-key.pmu-key-old').length, after = keyEl.nextSibling;
+    for (var i = olds; i < 3; i++) {
+      var k = document.createElement('i'); k.className = 'pmu-film-key pmu-key-old'; k.setAttribute('aria-hidden', 'true'); k.style.visibility = 'hidden';
+      stage.insertBefore(k, after);
+    }
+    var scroll = document.getElementById('pmuScroll');
+    if (!scroll) return;
+    for (var j = scroll.querySelectorAll(':scope > .pmu-iris').length; j < 3; j++) {
+      var r = H('i', 'pmu-iris', scroll); r.setAttribute('aria-hidden', 'true'); r.style.visibility = 'hidden'; r._pmuParked = true; r._pmuAll = [];
+    }
+  }
   function key(o) {
     o = o || {};
     var stage = document.getElementById('pmuStage');
     if (!stage) return null;
     var el = stage.querySelector(':scope > .pmu-film-key');
     if (!el) { el = document.createElement('i'); el.className = 'pmu-film-key'; el.setAttribute('aria-hidden', 'true'); stage.insertBefore(el, stage.firstChild); }
+    spares(stage, el);
     el.setAttribute('data-room', o.room || st.room);
     if (o.bloom && !reduced() && !off.key) anim(el, [{ opacity: 0, transform: 'scale(.9)' }, { opacity: 1, transform: 'none' }], { dur: T.key, delay: o.delay || 0, easing: E.out });
     return el;
