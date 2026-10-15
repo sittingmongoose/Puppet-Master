@@ -38,7 +38,7 @@
     rgb(0 0 0 / calc(var(--pmt-fx-scan-a) * 0.25)) 0 calc(var(--pmt-fx-scan-px) / 3),
     rgb(0 0 0 / var(--pmt-fx-scan-a)) calc(var(--pmt-fx-scan-px) / 3) calc(var(--pmt-fx-scan-px) * 2 / 3),
     rgb(0 0 0 / calc(var(--pmt-fx-scan-a) * 0.25)) calc(var(--pmt-fx-scan-px) * 2 / 3) var(--pmt-fx-scan-px));
-  background-position: 0 var(--pmt-pad-y, 0px);
+  background-position: 0 var(--pmt-grid-y, var(--pmt-pad-y, 0px));
 }
 
 /* ---- Full CRT without the GPU (round 2): no fake curvature, which blurs text and costs frames, only the rounded

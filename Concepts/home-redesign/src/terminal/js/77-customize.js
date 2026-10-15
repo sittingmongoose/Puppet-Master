@@ -113,10 +113,14 @@
     ['phosphor', 'Phosphor', 'An afterglow'], ['trace', 'Trace', 'A thin ink line']];
   /* the background's kinds as the screen sorts them (round 2): T.Grounds' categories between Plain and Yours. Show is
      only a filter of the tiles; a tile is the choice */
-  var GCATS = [['plain', 'Plain'], ['tonal', 'Tonal'], ['wash', 'Wash'], ['pattern', 'Pattern'], ['scene', 'Scene'], ['mark', 'Mark'], ['moving', 'Moving'], ['yours', 'Yours']];
+  /* round 3: Glass and Retro kinds, every moving design under Moving whatever its kind, and All: any design in any look */
+  var GCATS = [['plain', 'Plain'], ['tonal', 'Tonal'], ['wash', 'Wash'], ['pattern', 'Pattern'], ['scene', 'Scene'], ['glass', 'Glass'], ['retro', 'Retro'], ['mark', 'Mark'], ['moving', 'Moving'], ['all', 'All'], ['yours', 'Yours']];
+  var LOOK_NAMES = { basic: 'Basic', friendly: 'Friendly', glass: 'Glass', retro: 'Retro', nier: 'NieR' };
   var PLAIN = [['follow', 'Look’s own', 'The look’s own ground'], ['theme', 'Theme surface', 'The scheme’s own colour'], ['solid', 'Solid colour', 'Any colour you pick']];
-  var BEZELS = [['off', 'Off'], ['rim', 'Rim'], ['case', 'Monitor case', 'Case']];
-  var BEZEL_COLORS = [['follow', 'Follow look', ''], ['charcoal', 'Charcoal', '#1c1b19'], ['black', 'Black', '#0d0d0e'], ['platinum', 'Platinum', '#cfc8b8'], ['putty', 'Putty', '#b8b0a0'], ['accent', 'Accent', '']];
+  /* round 3: a slim lip or a monitor case (71-bezel.js), in the materials real housings were made of */
+  var BEZELS = [['off', 'Off'], ['rim', 'Slim'], ['case', 'Monitor']];
+  var BEZEL_COLORS = [['follow', 'Follow look', ''], ['charcoal', 'Graphite plastic', '#393a3e'], ['black', 'Black gloss', '#151517'], ['platinum', 'Platinum plastic', '#cfc8b8'],
+    ['putty', 'Putty plastic', '#b8af9d'], ['aluminium', 'Brushed aluminium', ''], ['gunmetal', 'Gunmetal', ''], ['glass', 'Glass', ''], ['accent', 'Accent plastic', '']];
   var FACE_TAGS = { 'jetbrains-mono': 'Code face', 'atkinson': 'Easy reading', 'vt323': 'Retro', 'departure': 'Retro', 'sixtyfour': 'Retro, scan axes',
     'sixtyfour-raster': 'Retro, baked scan', 'system': 'This computer’s' };
   /* the effect chips: what each draws, in plain words */
@@ -138,7 +142,7 @@
   /* the fields the meter counts, in the order the screen shows them */
   var COUNTED = ['scheme', 'schemePair', 'minContrast', 'font', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing', 'ligatures', 'boldBright',
     'fontRendering', 'sixtyfourScan', 'sixtyfourBleed', 'cursorShape', 'cursorBlink', 'cursorTrail', 'background', 'bgColor', 'bgGradient', 'bgImage',
-    'bgImageData', 'bgDim', 'bgBlur', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat', 'opacity', 'padding', 'bezel', 'bezelWidth', 'bezelColor',
+    'bgImageData', 'bgDim', 'bgBlur', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat', 'opacity', 'padding', 'bezel', 'bezelWidth', 'bezelColor', 'bezelReflect',
     'effects', 'scanlines', 'scanStrength', 'glow', 'glowStrength', 'crt', 'curvature', 'crtMask', 'burnIn',
     'noise', 'flicker', 'flickerAmount', 'inactiveDim', 'smoothScroll', 'bell', 'stickyHeader', 'copyOnSelect'];
   var GROUP_KEYS = {
@@ -147,7 +151,7 @@
     cursor: ['cursorShape', 'cursorBlink', 'cursorTrail'],
     ground: ['background', 'bgColor', 'bgGradient', 'bgImage', 'bgImageData', 'bgDim', 'bgBlur', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat', 'opacity', 'padding'],
     effects: ['effects', 'scanlines', 'scanStrength', 'glow', 'glowStrength', 'crt', 'curvature', 'crtMask', 'burnIn', 'noise', 'flicker', 'flickerAmount', 'inactiveDim', 'smoothScroll',
-      'bezel', 'bezelWidth', 'bezelColor'],
+      'bezel', 'bezelWidth', 'bezelColor', 'bezelReflect'],
     behavior: ['bell', 'stickyHeader', 'copyOnSelect']
   };
   var GROUPS = [['colors', 'Colors'], ['text', 'Text'], ['cursor', 'Cursor'], ['ground', 'Background'], ['effects', 'Effects'], ['behavior', 'Behavior']];
@@ -306,8 +310,9 @@
       '<p class="pmt-cz-note" data-note-trail hidden></p></section>';
     /* background (round 2): the look's own picks, then every kind; each tile is this scheme's own version of it */
     html += '<section class="pmt-cz-group" data-group="ground" aria-labelledby="pmt-cz-g-ground">' + ghead('ground', 'Background', 'Every background is drawn from the colour scheme, so it fits the look, light or dark, and keeps the text readable.') +
-      '<div class="pmt-cz-field pmt-cz-forlook"><span class="pmt-cz-flabel">For this look</span><div class="pmt-cz-tiles pmt-cz-gtiles" role="radiogroup" aria-label="Backgrounds for this look" data-forlook></div></div>' +
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Show</span><div class="pmt-cz-seg pmw-ink-row pmt-cz-gcats" role="tablist" aria-label="Kinds of background" data-seg="groundCat">' +
+      '<div class="pmt-cz-field pmt-cz-forlook"><span class="pmt-cz-flabel" data-forlook-label>Suggested for this look</span><div class="pmt-cz-tiles pmt-cz-gtiles" role="radiogroup" aria-label="Suggested backgrounds" data-forlook></div>' +
+      '<span class="pmt-cz-fhelp">Suggestions only: every background works in every look. Show lists them all.</span></div>' +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Show</span><div class="pmw-ink-row pmt-cz-gcats" role="tablist" aria-label="Kinds of background" data-seg="groundCat">' +
       GCATS.map(function (c) { return '<button type="button" class="pmt-cz-segopt pmw-ink-opt" role="tab" aria-selected="false" data-gcat="' + c[0] + '"' + NOTAG + '>' + esc(c[1]) + '</button>'; }).join('') + '</div></div>' +
       '<div class="pmt-cz-tiles pmt-cz-gtiles" role="radiogroup" aria-label="Backgrounds" data-gtiles></div>' +
       '<div class="pmt-cz-gctl" data-gctl="solid" hidden><div class="pmt-cz-field"><span class="pmt-cz-flabel">Colour</span><span class="pmt-cz-swatches" data-solid-swatches></span>' +
@@ -321,6 +326,7 @@
       '<div class="pmt-cz-field" data-gctl-sub="moving"><span class="pmt-cz-flabel">Motion</span>' + seg('bgMotion', [['off', 'Still'], ['gentle', 'Gentle'], ['lively', 'Lively']], 'Motion') +
       '<span class="pmt-cz-fhelp">It moves only while you work in this terminal, and never under Reduced Motion.</span></div></div>' +
       '<div class="pmt-cz-grid2">' + slider('opacity', 'Opacity (Glass)', 0.4, 1, 0.02, '%') + slider('padding', 'Padding', 0, 24, 1, ' px') + '</div>' +
+      '<p class="pmt-cz-fhelp">Padding is the space round the text: the number is the sides, top and bottom take 60 % of it (8 / 5 px).</p>' +
       '<p class="pmt-cz-note" data-note-ground hidden></p></section>';
     /* effects */
     html += '<section class="pmt-cz-group" data-group="effects" aria-labelledby="pmt-cz-g-effects">' + ghead('effects', 'Effects', 'Effects run only in the terminal you are in and stop when it is idle.') +
@@ -335,9 +341,9 @@
         return chip(e.key, e.name, e.help, extra);
       }).join('') + '</div>' +
       /* the bezel: its own choice, with or without Full CRT (round 2) */
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bezel</span>' + seg('bezel', BEZELS, 'Bezel') + '<span class="pmt-cz-fhelp">A frame round the screen, on its own or with Full CRT.</span></div>' +
-      '<div class="pmt-cz-bezelmore" data-bezel-more hidden><div class="pmt-cz-grid2">' + slider('bezelWidth', 'Width', 2, 24, 1, ' px') + '</div>' +
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Colour</span><div class="pmt-cz-swatches" role="radiogroup" aria-label="Bezel colour">' + BEZEL_COLORS.map(function (c) {
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bezel</span>' + seg('bezel', BEZELS, 'Bezel') + '<span class="pmt-cz-fhelp">A monitor housing round the screen that catches the screen’s light, on its own or with Full CRT.</span></div>' +
+      '<div class="pmt-cz-bezelmore" data-bezel-more hidden><div class="pmt-cz-grid2">' + slider('bezelWidth', 'Width', 2, 48, 1, ' px') + slider('bezelReflect', 'Reflection', 0, 1, 0.05, '%') + '</div>' +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Material</span><div class="pmt-cz-swatches" role="radiogroup" aria-label="Bezel material">' + BEZEL_COLORS.map(function (c) {
         return '<button type="button" class="pmt-cz-swatch" role="radio" aria-checked="false" data-key="bezelColor" data-value="' + c[0] + '" aria-label="' + esc(c[1]) + '"' + tagged(c[1]) + NOTAG + '><i data-bz="' + c[0] + '"' + (c[2] ? ' style="background:' + c[2] + '"' : '') + '></i></button>';
       }).join('') + '</div></div></div>' +
       '<p class="pmt-cz-note" data-note-fx hidden></p></section>';
@@ -426,9 +432,10 @@
       if (gv === 'theme') return hexC(th.bg);
       if (gv === 'solid') return val('bgColor') || hexC(th.bg);
       if (gv === 'custom') { var u = A().imageUrl('custom', val('bgImageData'), 0); return String(val('bgImageData') || '').match(/^img:/) && u ? 'center / cover no-repeat url("' + u + '"), ' + hexC(th.bg) : hexC(th.bg); }
-      var id = gv.slice(2), cat = G.cat(id), mot = G.motion(id);
-      if (cat === 'scene' || mot) {
-        var base = cat === 'scene' ? G.paint(id, th, 240, 150) : mot.under ? G.paint(mot.under, th, 240, 150) : null, lay = mot ? G.paint(id, th, 240, 150) : null;
+      var id = gv.slice(2), mot = G.motion(id), painted = G.painted(id);
+      if (painted || mot) {
+        var o = { rowPx: v.metrics ? v.metrics.cellH : 17, tile: true };
+        var base = painted ? G.paint(id, th, 240, 150, o) : mot.under ? G.paint(mot.under, th, 240, 150, o) : null, lay = mot ? G.paint(id, th, 240, 150, o) : null;
         return (lay ? 'center / cover no-repeat url("' + lay.url + '"), ' : '') + (base ? 'center / cover no-repeat url("' + base.url + '"), ' : '') + hexC(th.bg);
       }
       var D = G.css(id, th, { scale: val('bgScale') }); return D ? D.css : hexC(th.bg);
@@ -446,9 +453,15 @@
         gSig = sig;
         var fl = ['follow'].concat(G.forLook(R.lookKey).map(function (id) { return (G.isGradient(id) ? 'g:' : 'i:') + id; })).slice(0, 6);
         root.querySelector('[data-forlook]').innerHTML = fl.map(function (gv) { return groundTile(gv, gv === 'follow' ? 'Look’s own' : G.name(gv.slice(2)), th); }).join('');
+        root.querySelector('[data-forlook-label]').textContent = 'Suggested for ' + (LOOK_NAMES[R.lookKey] || 'this look');
         var tiles = gcat === 'plain' ? PLAIN.map(function (p) { return groundTile(p[0], p[1], th); }) :
           gcat === 'yours' ? [groundTile('custom', 'Your picture', th, A().pictureName(val('bgImageData') || '') || 'Choose one…')] :
-          G.list().filter(function (d) { return d.cat === gcat; }).map(function (d) { return groundTile((G.isGradient(d.id) ? 'g:' : 'i:') + d.id, d.name, th, d.moving ? 'Moves' : ''); });
+          G.list().filter(function (d) { return gcat === 'all' || (gcat === 'moving' ? d.moving : d.cat === gcat); }).map(function (d) {
+            /* in All, each design says which look suggests it, if one does: a hint, never a limit */
+            var meta = d.moving ? 'Moves' : '';
+            if (gcat === 'all' && d.looks.length) meta = (meta ? meta + ' · ' : '') + d.looks.map(function (l) { return LOOK_NAMES[l] || l; }).join(', ');
+            return groundTile((G.isGradient(d.id) ? 'g:' : 'i:') + d.id, d.name, th, meta);
+          });
         root.querySelector('[data-gtiles]').innerHTML = tiles.join('');
         /* solid: the scheme's own, a step deeper and a step softer, then any colour */
         var C = T.color, sw = [['Scheme', th.bg], ['Deeper', C.mix(th.bg, 0, 0.35)], ['Softer', C.mix(th.bg, th.fg, 0.08)]];
@@ -462,7 +475,10 @@
       root.querySelector('[data-gctl="solid"]').hidden = now !== 'solid';
       root.querySelector('[data-gctl="yours"]').hidden = !custom;
       root.querySelector('[data-gctl="design"]').hidden = !design;
-      [].forEach.call(root.querySelectorAll('[data-gctl-sub]'), function (s) { s.hidden = s.getAttribute('data-gctl-sub') !== cat0; });
+      /* a design's own controls: Blur for painted ones, Size for patterns, Motion for any that moves, whatever its kind */
+      var did = design ? now.slice(2) : '', painted = !!did && G.painted(did), moves = !!did && !!G.motion(did);
+      [].forEach.call(root.querySelectorAll('[data-gctl-sub]'), function (s) { var sub = s.getAttribute('data-gctl-sub');
+        s.hidden = !(sub === 'scene' ? painted || moves : sub === 'moving' ? moves : sub === cat0); });
       root.querySelector('[data-bezel-more]').hidden = val('bezel') === 'off';
     }
 
@@ -523,6 +539,9 @@
       if (key === 'lineHeight') return Number(x).toFixed(2) + '×';
       if (key === 'bgDim' || key === 'opacity' || key === 'scanStrength' || key === 'glowStrength' || key === 'bgStrength' || key === 'bgDesat') return Math.round(x * 100) + '%';
       if (key === 'bezelWidth') return Math.round(x) + ' px';
+      if (key === 'bezelReflect') return Math.round(x * 100) + '%';
+      /* the number is the sides; top and bottom take 60 % of it (pm7-customizer-audit): both shown, the help says which */
+      if (key === 'padding') return Math.round(x) + ' / ' + Math.round(x * 0.6) + ' px';
       if (key === 'letterSpacing' || key === 'bgBlur' || key === 'padding' || key === 'fontSize') return (Math.round(x * 100) / 100) + ' px';
       if (key === 'flickerAmount') return (Math.round(x * 1000) / 10) + '%';
       return String(Math.round(x * 1000) / 1000);
@@ -575,11 +594,13 @@
         if (key === 'opacity' && (x === null || x === undefined)) x = R.theme ? R.theme.bgAlpha : 1;
         if (key === 'sixtyfourScan' || key === 'sixtyfourBleed') x = x === null || x === undefined ? 0 : x;
         /* a width or a dim left to the style or to Auto shows the value in use */
-        if (key === 'bezelWidth' && (x === null || x === undefined)) x = R.bezel && R.bezel.width ? R.bezel.width : 10;
+        if (key === 'bezelWidth' && (x === null || x === undefined)) x = R.bezel && R.bezel.width ? R.bezel.width : 24;
+        var autoReflect = key === 'bezelReflect' && (x === null || x === undefined);
+        if (autoReflect) x = T.Bezel ? T.Bezel.reflectOf(val('bezelColor'), R.effects ? R.effects.look : 'basic', R.theme && R.theme.appearance === 'light') : 0.3;
         var autoDim = key === 'bgDim' && (x === null || x === undefined);
         if (autoDim) x = R.background && typeof R.background.dim === 'number' ? R.background.dim : 0.45;
         if (document.activeElement !== r) r.value = String(x);
-        var out = r.parentNode.querySelector('output'); if (out) out.textContent = (autoDim ? 'Auto · ' : '') + fmt(key, Number(r.value));
+        var out = r.parentNode.querySelector('output'); if (out) out.textContent = (autoDim || autoReflect ? 'Auto · ' : '') + fmt(key, Number(r.value));
         r.closest('[data-slider]').classList.toggle('pmt-cz-is-mine', mine(key));
       });
       var fs = root.querySelector('[data-out="fontSize"]'); if (fs) fs.textContent = fmt('fontSize', R.font.size);

@@ -177,6 +177,32 @@
     }
     return [X * 0.5 + 0.5, Y * 0.5 + 0.5];
   }
+  /* the warp's inverse with no mask: the output uv whose warp lands on (su, sv), Newton from the point itself */
+  function unwarp(su, sv, g) {
+    if (!curved(g)) return [su, sv];
+    var tx = su * 2 - 1, ty = sv * 2 - 1, X = tx, Y = ty;
+    for (var i = 0; i < 16; i++) {
+      var f1 = X * (1 + g.wx * Y * Y) - tx, f2 = Y * (1 + g.wy * X * X) - ty;
+      if (Math.abs(f1) < 1e-12 && Math.abs(f2) < 1e-12) break;
+      var j11 = 1 + g.wx * Y * Y, j12 = 2 * g.wx * X * Y, j21 = 2 * g.wy * X * Y, j22 = 1 + g.wy * X * X, det = j11 * j22 - j12 * j21;
+      X -= (j22 * f1 - j12 * f2) / det; Y -= (j11 * f2 - j21 * f1) / det;
+    }
+    return [X * 0.5 + 0.5, Y * 0.5 + 0.5];
+  }
+  /* the tube's visible edge in output uv, clockwise from the top-left corner's end: the rounded screen rectangle carried
+     back through the warp, so a bezel (71-bezel.js) meets the glass exactly where the shader's mask does. stepPx is the
+     spacing of the straight runs in source device px; each corner takes 10 points */
+  function tubeOutline(g, stepPx) {
+    var W = g.srcW, H = g.srcH, r = Math.min(g.radius, W / 2, H / 2), st = Math.max(2, stepPx || 12), pts = [];
+    var push = function (x, y) { var o = unwarp(x / W, y / H, g); pts.push(o); };
+    var run = function (x0, y0, x1, y1) { var n = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) / st)); for (var i = 0; i < n; i++) push(x0 + (x1 - x0) * i / n, y0 + (y1 - y0) * i / n); };
+    var arc = function (cx, cy, a0) { if (r <= 0) { push(cx, cy); return; } for (var i = 0; i < 10; i++) { var a = a0 + (Math.PI / 2) * i / 10; push(cx + Math.cos(a) * r, cy + Math.sin(a) * r); } };
+    run(r, 0, W - r, 0); arc(W - r, r, -Math.PI / 2);
+    run(W, r, W, H - r); arc(W - r, H - r, 0);
+    run(W - r, H, r, H); arc(r, H - r, Math.PI / 2);
+    run(0, H - r, 0, r); arc(r, r, Math.PI);
+    return pts;
+  }
   /* scanlines locked to the text rows: a whole number of lines per row, each about 3 device px (2 CSS px at DPR >= 1.5) */
   function scanPeriod(rowPx, dpr) {
     if (!(rowPx > 0)) return SCAN_TARGET_CSS * Math.max(1, dpr);
@@ -692,6 +718,7 @@
     geometry: geometry,
     mapUV: mapUV,
     unmapUV: unmapUV,
+    tubeOutline: tubeOutline,
     Timeline: Timeline,
     FLICKER_CAP: FLICKER_CAP,
     AMBIENT_FPS: AMBIENT_FPS,

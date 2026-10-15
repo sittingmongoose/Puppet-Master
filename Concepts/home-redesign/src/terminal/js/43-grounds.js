@@ -132,7 +132,8 @@
     return { css: grain(th) + ', linear-gradient(170deg, ' + hex(top) + ' 0%, ' + hex(mid) + ' 40%, ' + hex(foot) + ' 100%)', colors: [top, mid, foot] };
   } });
   /* Glass's prism: a thin spectral rim along the top edge and the light it throws */
-  def('wash', 'prism', 'Prism edge', { looks: ['glass'], css: function (th, h) {
+  /* round 3: no longer suggested for Glass, whose light is neutral white (Liquid Glass's CONTRACT.md: no colour split) */
+  def('wash', 'prism', 'Prism edge', { css: function (th, h) {
     /* the rim's hues as bright as the text allows: the first row may sit on it, and a brighter rim would veil the rest */
     var glow = pool(th, h.a, 0.6), hs = [h.hot, h.warm, h.d, h.c, h.a, h.b].map(function (c) { return pool(th, c, 1); });
     var rim = 'linear-gradient(90deg, ' + hs.map(function (c, i) { return hex(c) + ' ' + Math.round(i * 20) + '%'; }).join(', ') + ') 0 0 / 100% 2px no-repeat';
@@ -243,7 +244,7 @@
   def('mark', 'mark-strings', 'Puppet cross', { css: function (th) {
     return markCss(th, '<path d="M20 22h80M60 10v34M34 22v74M86 22v64M60 44v56"/><circle cx="34" cy="100" r="5"/><circle cx="86" cy="90" r="5"/><circle cx="60" cy="104" r="6"/>', '0 0 120 120');
   } });
-  def('mark', 'mark-drop', 'Droplet', { looks: ['glass'], css: function (th) {
+  def('mark', 'mark-drop', 'Droplet', { css: function (th) {
     return markCss(th, '<path d="M60 12C60 12 26 52 26 74a34 34 0 0 0 68 0C94 52 60 12 60 12z"/><path d="M44 78a16 16 0 0 0 14 14"/>', '0 0 120 120');
   } });
   def('mark', 'mark-cursor', 'Prompt', { looks: ['retro'], css: function (th) {
@@ -259,8 +260,8 @@
   def('scene', 'city', 'Night city');
   def('scene', 'stars', 'Starfield', { looks: ['retro'] });
   def('scene', 'synthwave', 'Synthwave');
-  def('scene', 'caustics', 'Caustics', { looks: ['glass'] });
-  def('scene', 'bokeh', 'Bokeh', { looks: ['glass'] });
+  def('scene', 'caustics', 'Caustics');
+  def('scene', 'bokeh', 'Bokeh');
   def('scene', 'clouds', 'Clouds', { looks: ['friendly'] });
   /* moving: a painted layer bigger than the terminal, moved by transform only, stepped to about 20 fps */
   def('moving', 'aurora-drift', 'Drifting aurora', { motion: { layer: 'aurora', anim: 'pmt-bg-sway', ms: 45000 } });
@@ -430,19 +431,23 @@
   var canFilter = (function () { try { var g = document.createElement('canvas').getContext('2d'); g.filter = 'blur(2px)'; return g.filter === 'blur(2px)'; } catch (e) { return false; } })();
   function step(n) { return Math.max(160, Math.min(2560, Math.round((n || 960) / 160) * 160)); }
   function paint(id, th, w, h, o) {
-    var d = BY[id], name = d && d.cat === 'scene' ? id : d && d.motion ? d.motion.layer : PAINT[id] ? id : null;
+    var d = BY[id], name = d && d.motion ? d.motion.layer : PAINT[id] ? id : null;
     if (!name || !PAINT[name] || !th) return null;
     o = o || {};
+    /* a design that needs more than the scheme and the size (the lens: the wallpaper behind the terminal; green-bar paper:
+       the text's row height) names it in its key */
+    var extra = PAINT[name].needs ? PAINT[name].needs(o) : '';
+    if (extra === null) return null;
     /* soft layers (washes of light, blurred discs) paint at half size and scale up: the same picture, a quarter of the
        work (on a software renderer a full-size lava took a third of a second) */
     var soft = SOFT[name] ? 0.5 : 1;
     var W = step(w * soft), H = step(h * soft), blur = o.blur || 0;
-    var key = name + '|' + th.id + '|' + th.bg + '|' + th.fg + '|' + W + 'x' + H + '|' + blur;
+    var key = name + '|' + th.id + '|' + th.bg + '|' + th.fg + '|' + W + 'x' + H + '|' + blur + '|' + extra;
     if (cache.has(key)) { var hit = cache.get(key); cache.delete(key); cache.set(key, hit); return hit; }
     var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
     var g = cv.getContext('2d');
     if (!g) return null;
-    try { PAINT[name](g, W, H, th, hues(th)); } catch (e) { console.error('[pmt] background painting failed', e); return null; }
+    try { PAINT[name](g, W, H, th, hues(th), o); } catch (e) { console.error('[pmt] background painting failed', e); return null; }
     if (blur && canFilter) {
       var b = document.createElement('canvas'); b.width = W; b.height = H;
       var bg = b.getContext('2d'); bg.filter = 'blur(' + blur + 'px)'; bg.drawImage(cv, -blur * 2, -blur * 2, W + blur * 4, H + blur * 4); cv = b; g = bg;
@@ -456,9 +461,13 @@
   function sampleWorst(g, W, H, th) {
     var data; try { data = g.getImageData(0, 0, W, H).data; } catch (e) { return null; }
     var worstC = th.bg, worstR = Infinity, st = Math.max(3, Math.round(Math.sqrt(W * H / 9000)));
+    var br = C.r(th.bg), bgg = C.g(th.bg), bb = C.b(th.bg);
     for (var y = 0; y < H; y += st) for (var x = 0; x < W; x += st) {
       var i = (y * W + x) * 4, a = data[i + 3] / 255;
       var c = a >= 1 ? C.rgb(data[i], data[i + 1], data[i + 2]) : C.mix(th.bg, C.rgb(data[i], data[i + 1], data[i + 2]), a);
+      /* a unit off the ground is the ground: the canvas's own rounding when it lays the ground's colour over itself (on a
+         scheme with no contrast to spare, 4.52:1, that unit read as 4.48 and veiled the whole design) */
+      if (Math.abs(C.r(c) - br) <= 1 && Math.abs(C.g(c) - bgg) <= 1 && Math.abs(C.b(c) - bb) <= 1) continue;
       var r = C.contrast(th.fg, c);
       if (r < worstR) { worstR = r; worstC = c; }
     }
@@ -482,7 +491,7 @@
   }
 
   T.Grounds = {
-    CATS: [['tonal', 'Tonal'], ['wash', 'Wash'], ['pattern', 'Pattern'], ['scene', 'Scene'], ['mark', 'Mark'], ['moving', 'Moving']],
+    CATS: [['tonal', 'Tonal'], ['wash', 'Wash'], ['pattern', 'Pattern'], ['scene', 'Scene'], ['glass', 'Glass'], ['retro', 'Retro'], ['mark', 'Mark'], ['moving', 'Moving']],
     list: function () { return LIST.map(function (d) { return { id: d.id, cat: d.cat, name: d.name, legacy: d.legacy || false, looks: d.looks.slice(), moving: !!d.motion }; }); },
     has: function (id) { return !!BY[id]; },
     cat: function (id) { return BY[id] ? BY[id].cat : null; },
@@ -495,7 +504,11 @@
     css: cssFor,
     paint: paint,
     motion: function (id) { var d = BY[id]; return d && d.motion ? d.motion : null; },
+    /* painted at the terminal's own size (scenes, glass, retro art), rather than drawn in CSS */
+    painted: function (id) { var d = BY[id]; return !!d && !d.css && !d.motion && !!PAINT[id]; },
     worst: worst,
-    scrim: scrim
+    scrim: scrim,
+    /* for the files that add designs (44-grounds-glass.js, 45-grounds-retro.js): the catalog's own helpers */
+    kit: { def: def, PAINT: PAINT, SOFT: SOFT, cache: cache, isDark: isDark, tone: tone, wash: wash, pool: pool, ink: ink, lift: lift, hex: hex, rgba: rgba, rng: rng, fill: fill, sky: sky, hues: hues, canFilter: canFilter }
   };
 })();

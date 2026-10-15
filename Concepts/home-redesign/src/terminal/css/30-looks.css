@@ -83,6 +83,9 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-bgmove[data-anim="pmt-bg-rise"] { animation: pmt-bg-rise var(--pmt-bgm-ms, 80000ms) steps(var(--pmt-bgm-steps, 1600)) infinite alternate; }
 .pmt-bgmove[data-anim="pmt-bg-twinkle"] { animation: pmt-bg-twinkle var(--pmt-bgm-ms, 6000ms) steps(var(--pmt-bgm-steps, 120)) infinite alternate; }
 @keyframes pmt-bg-fall { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, 50%, 0); } }
+/* a layer twice the terminal's width, its picture repeated once, slid by exactly one picture: the Oscilloscope's trace */
+.pmt-bgmove[data-anim="pmt-bg-pan"] { right: auto; width: 200%; background-size: 50% 100%; background-repeat: repeat-x; animation: pmt-bg-pan var(--pmt-bgm-ms, 5000ms) steps(var(--pmt-bgm-steps, 100)) infinite; }
+@keyframes pmt-bg-pan { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
 @keyframes pmt-bg-sway { from { transform: translate3d(-3%, -2%, 0) scale(1.02); } to { transform: translate3d(3%, 2%, 0) scale(1.05); } }
 @keyframes pmt-bg-rise { from { transform: translate3d(0, 3%, 0); } to { transform: translate3d(0, -5%, 0); } }
 @keyframes pmt-bg-twinkle { from { opacity: .3; } to { opacity: 1; } }
@@ -90,55 +93,15 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 html[data-motion="reduced"] .pmt-bgmove, .pmt-bgmove[data-anim="still"] { animation: none; }
 @media (prefers-reduced-motion: reduce) { .pmt-bgmove { animation: none; } }
 
-/* ---- the bezel (round 2: off by default, a slim rim or a monitor case, any width from 2 to 24 px) ----
-   A frame over the screen's edge; the text is laid out inside it (42-appearance.js adds its width to the padding), so
-   nothing is scaled. Research (cool-retro-term's frame shading, Mega Bezel, koko-aio): a case is lit from above, so its
-   top face falls into shadow (x 0.33), its sides take some light (x 0.66) and its bottom face catches it (x 1.0); a 1 px
-   outer edge is lighter top-left; a near-black contact line sits where glass meets plastic; corners are concentric with
-   the screen. A rim is one flat band with that contact line. The colour follows the look unless one is chosen: the
-   classic Charcoal, Black, Platinum and Putty cases, or the scheme's accent. Static: no motion, no blur, no filter. */
-.pmt-bezel {
-  position: absolute; inset: 0; z-index: 2; pointer-events: none;
-  --pmt-bz: var(--pmt-bezel-c, #24262c);
-  border: var(--pmt-bezel-w, 4px) solid var(--pmt-bz); border-radius: calc(var(--pmt-bezel-w, 4px) + 6px);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmt-bz) 40%, #000), inset 1px 1px 0 1px rgb(0 0 0 / .18);
-}
-.pmt-root[data-pmt-bezel="case"] .pmt-bezel {
-  border-radius: calc(var(--pmt-bezel-w, 10px) + 10px);
-  border-top-color: color-mix(in srgb, var(--pmt-bz) 72%, #000);
-  border-left-color: color-mix(in srgb, var(--pmt-bz) 86%, #000);
-  border-right-color: color-mix(in srgb, var(--pmt-bz) 86%, #000);
-  border-bottom-color: color-mix(in srgb, var(--pmt-bz) 94%, #fff);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--pmt-bz) 80%, #fff) inset, inset 0 0 0 calc(var(--pmt-bezel-w, 10px) * 0 + 1px) rgb(0 0 0 / .55),
-    inset 0 3px 6px rgb(0 0 0 / .35), inset 0 -1px 2px rgb(255 255 255 / .05);
-}
+/* ---- the bezel (round 3): a monitor housing drawn on two canvases by 71-bezel.js (the housing, painted once per size
+   and material; the screen's reflection on it, live). Off by default. The text is laid out inside it (42-appearance.js
+   adds its width to the padding, 70-view.js centres the grid in the glass), so nothing is scaled. ---- */
+.pmt-bezel { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.pmt-bezel > canvas { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
 /* inside the bezel the sticky header starts at the glass, not across the frame (_placeSticky moves it under curvature) */
 .pmt-root:is([data-pmt-bezel="rim"], [data-pmt-bezel="case"]) .pmt-sticky {
   left: var(--pmt-bezel-w); right: var(--pmt-bezel-w); top: var(--pmt-bezel-w); padding-left: calc(var(--pmt-pad-x) - var(--pmt-bezel-w));
 }
-/* the look's own colour: a graphite or light-grey case in Basic, a soft tint of the stage in Friendly, a clear rim in
-   Glass, charcoal or platinum plastic in Retro (the two classic monitor cases), ink on paper in NieR */
-.pmt-root { --pmt-bezel-c: #23252b; }
-.pmt-root[data-pmt-scheme="light"] { --pmt-bezel-c: #c9ccd3; }
-.pmt-root[data-pmt-look="friendly"] { --pmt-bezel-c: color-mix(in srgb, var(--pmt-bg-solid) 62%, #3b3550); }
-.pmt-root[data-pmt-look="friendly"][data-pmt-scheme="light"] { --pmt-bezel-c: color-mix(in srgb, var(--pmt-bg-solid) 70%, #cdb8d6); }
-.pmt-root[data-pmt-look="glass"] { --pmt-bezel-c: rgb(255 255 255 / .16); }
-.pmt-root[data-pmt-look="glass"][data-pmt-scheme="light"] { --pmt-bezel-c: rgb(255 255 255 / .62); }
-.pmt-root[data-pmt-look="retro"] { --pmt-bezel-c: #1c1b19; }
-.pmt-root[data-pmt-look="retro"][data-pmt-scheme="light"] { --pmt-bezel-c: #cfc8b8; }
-.pmt-root[data-pmt-look="nier"] { --pmt-bezel-c: color-mix(in srgb, var(--pmt-fg) 24%, var(--pmt-bg-solid)); }
-/* a colour chosen for the bezel, the same in every look */
-.pmt-root[data-pmt-bezel-color="charcoal"] { --pmt-bezel-c: #1c1b19; }
-.pmt-root[data-pmt-bezel-color="black"] { --pmt-bezel-c: #0d0d0e; }
-.pmt-root[data-pmt-bezel-color="platinum"] { --pmt-bezel-c: #cfc8b8; }
-.pmt-root[data-pmt-bezel-color="putty"] { --pmt-bezel-c: #b8b0a0; }
-.pmt-root[data-pmt-bezel-color="accent"] { --pmt-bezel-c: var(--pmt-accent); }
-/* Glass's rim is a clear band with a lit top edge, not plastic */
-.pmt-root[data-pmt-look="glass"][data-pmt-bezel-color="follow"] .pmt-bezel {
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / .22), inset 0 1px 0 1px rgb(255 255 255 / .16), 0 0 0 1px rgb(0 0 0 / .12);
-}
-/* NieR: square, flat ink, as every NieR frame is */
-.pmt-root[data-pmt-look="nier"] .pmt-bezel { border-radius: 0; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmt-fg) 40%, var(--pmt-bg-solid)); }
 
 /* ---- chrome shapes per look ---- */
 .pmt-root[data-pmt-look="friendly"] { --pmt-radius: 8px; }

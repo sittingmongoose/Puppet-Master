@@ -42447,7 +42447,7 @@ html[data-motion="reduced"] .pmw-tab, html[data-motion="reduced"] .pmw-tab *, ht
    opacity is the design's dim, set by the view) */
 .pmt-bgmove { position: absolute; inset: 0; pointer-events: none; background-repeat: no-repeat; background-size: cover; background-position: center; }
 .pmt-bgscrim { position: absolute; inset: 0; pointer-events: none; background: var(--pmt-bg-solid); opacity: 0; }
-.pmt-grid, .pmt-fxcanvas, .pmt-trail { position: absolute; left: var(--pmt-pad-x); top: var(--pmt-pad-y); display: block; image-rendering: auto; }
+.pmt-grid, .pmt-fxcanvas, .pmt-trail { position: absolute; left: var(--pmt-grid-x, var(--pmt-pad-x)); top: var(--pmt-grid-y, var(--pmt-pad-y)); display: block; image-rendering: auto; }
 .pmt-fxcanvas, .pmt-trail { pointer-events: none; }
 .pmt-overlays { position: absolute; inset: 0; pointer-events: none; }
 .pmt-overlays > * { pointer-events: auto; }
@@ -42556,7 +42556,7 @@ html[data-motion="reduced"] .pmw-tab, html[data-motion="reduced"] .pmw-tab *, ht
 .pmt-hint {
   position: absolute; height: var(--pmt-cell-h); min-width: var(--pmt-cell-w); padding: 0 3px; display: flex; align-items: center; justify-content: center;
   background: var(--pmt-accent); color: var(--pmt-bg-solid); font-family: var(--pmt-font); font-size: calc(var(--pmt-font-size) - 1px); font-weight: 700;
-  border-radius: 2px; transform: translate(var(--pmt-pad-x), var(--pmt-pad-y));
+  border-radius: 2px; transform: translate(var(--pmt-grid-x, var(--pmt-pad-x)), var(--pmt-grid-y, var(--pmt-pad-y)));
 }
 .pmt-modehint {
   position: absolute; left: 0; right: 0; bottom: 0; height: 24px; padding: 0 10px; display: flex; align-items: center; z-index: 4;
@@ -42968,8 +42968,11 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz-gline b { font-weight: 650; }
 .pmt-cz-forlook .pmt-cz-gtiles { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); }
 .pmt-cz-forlook .pmt-cz-gtiles .pmt-cz-thumb { height: 52px; }
-.pmt-cz-gcats { overflow-x: auto; scrollbar-width: none; }
-.pmt-cz-gcats::-webkit-scrollbar { display: none; }
+/* Show: eleven kinds wrap onto as many rows as the width needs (a filter, not a one-of-several setting, so it is not one
+   of the segmented controls the fit pass narrows or stacks) */
+.pmt-cz-gcats { --pmw-ink-y: 2px; display: flex; flex-wrap: wrap; gap: 2px; max-width: 100%; padding: 2px; border: 1px solid var(--pmt-cz-line); border-radius: 9px; }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz-gcats { border-radius: 12px; }
+.pmt-cz:is([data-pmt-look="retro"], [data-pmt-look="nier"]) .pmt-cz-gcats { border-radius: 0; }
 .pmt-cz-gcats .pmt-cz-segopt[aria-selected="true"] { background: var(--pmt-cz-fill); }
 .pmt-cz-gctl[hidden], [data-gctl-sub][hidden], .pmt-cz-bezelmore[hidden] { display: none; }
 .pmt-cz-gctl, .pmt-cz-bezelmore { display: grid; gap: 10px; }
@@ -42980,7 +42983,13 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz .pmt-cz-swatch:hover { background: var(--pmt-cz-hover); }
 .pmt-cz .pmt-cz-swatch[aria-checked="true"] { border-color: var(--pmt-cz-accent); box-shadow: 0 0 0 1px var(--pmt-cz-accent); }
 .pmt-cz-swatch > i[data-bz="follow"] { background: linear-gradient(135deg, #2b2a28 0 50%, #cfc8b8 50% 100%); }
-.pmt-cz-swatch > i[data-bz="accent"] { background: var(--pmt-cz-accent); }
+.pmt-cz-swatch > i[data-bz="accent"] { background: linear-gradient(160deg, color-mix(in srgb, var(--pmt-cz-accent) 70%, #fff) 0%, color-mix(in srgb, var(--pmt-cz-accent) 58%, #6b6b6b) 70%); }
+/* the materials as small samples: light from above, brushed metal streaked, glass a clear pane with a lit rim */
+.pmt-cz-swatch > i[data-bz="charcoal"], .pmt-cz-swatch > i[data-bz="black"], .pmt-cz-swatch > i[data-bz="platinum"], .pmt-cz-swatch > i[data-bz="putty"] {
+  background-image: linear-gradient(180deg, rgb(255 255 255 / .16), rgb(0 0 0 / .14)) !important; }
+.pmt-cz-swatch > i[data-bz="aluminium"] { background: repeating-linear-gradient(90deg, rgb(255 255 255 / .12) 0 1px, transparent 1px 3px), linear-gradient(180deg, #c8ccd2, #969aa1); }
+.pmt-cz-swatch > i[data-bz="gunmetal"] { background: repeating-linear-gradient(90deg, rgb(255 255 255 / .08) 0 1px, transparent 1px 3px), linear-gradient(180deg, #5a5f67, #383b41); }
+.pmt-cz-swatch > i[data-bz="glass"] { background: linear-gradient(180deg, rgb(255 255 255 / .34), rgb(255 255 255 / .08)); box-shadow: inset 0 1px 0 rgb(255 255 255 / .7), inset 0 0 0 1px rgb(255 255 255 / .35); }
 .pmt-cz[data-pmt-look="nier"] .pmt-cz-swatch, .pmt-cz[data-pmt-look="nier"] .pmt-cz-swatch > i,
 .pmt-cz[data-pmt-look="retro"] .pmt-cz-swatch, .pmt-cz[data-pmt-look="retro"] .pmt-cz-swatch > i { border-radius: 0; }
 
@@ -43026,7 +43035,7 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 /* ---- sliders: the track fills to the value ---- */
 .pmt-cz-slider { display: grid; grid-template-columns: minmax(84px, auto) minmax(0, 1fr) 54px; align-items: center; gap: 10px; min-width: 0; font-size: 12px; }
 .pmt-cz-slabel { font-weight: 600; }
-.pmt-cz-out { font: 500 11.5px/1 var(--pm-font-code, ui-monospace, monospace); color: var(--pmw-text-2, inherit); text-align: right; font-variant-numeric: tabular-nums; }
+.pmt-cz-out { font: 500 11.5px/1 var(--pm-font-code, ui-monospace, monospace); color: var(--pmw-text-2, inherit); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .pmt-cz-is-mine .pmt-cz-out { color: var(--pmt-cz-accent); }
 .pmt-cz input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 22px; margin: 0; background: transparent; cursor: pointer; }
 .pmt-cz input[type="range"]::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: color-mix(in srgb, var(--pmw-text, #fff) 18%, transparent); }
@@ -43361,6 +43370,9 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-bgmove[data-anim="pmt-bg-rise"] { animation: pmt-bg-rise var(--pmt-bgm-ms, 80000ms) steps(var(--pmt-bgm-steps, 1600)) infinite alternate; }
 .pmt-bgmove[data-anim="pmt-bg-twinkle"] { animation: pmt-bg-twinkle var(--pmt-bgm-ms, 6000ms) steps(var(--pmt-bgm-steps, 120)) infinite alternate; }
 @keyframes pmt-bg-fall { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, 50%, 0); } }
+/* a layer twice the terminal's width, its picture repeated once, slid by exactly one picture: the Oscilloscope's trace */
+.pmt-bgmove[data-anim="pmt-bg-pan"] { right: auto; width: 200%; background-size: 50% 100%; background-repeat: repeat-x; animation: pmt-bg-pan var(--pmt-bgm-ms, 5000ms) steps(var(--pmt-bgm-steps, 100)) infinite; }
+@keyframes pmt-bg-pan { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
 @keyframes pmt-bg-sway { from { transform: translate3d(-3%, -2%, 0) scale(1.02); } to { transform: translate3d(3%, 2%, 0) scale(1.05); } }
 @keyframes pmt-bg-rise { from { transform: translate3d(0, 3%, 0); } to { transform: translate3d(0, -5%, 0); } }
 @keyframes pmt-bg-twinkle { from { opacity: .3; } to { opacity: 1; } }
@@ -43368,55 +43380,15 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 html[data-motion="reduced"] .pmt-bgmove, .pmt-bgmove[data-anim="still"] { animation: none; }
 @media (prefers-reduced-motion: reduce) { .pmt-bgmove { animation: none; } }
 
-/* ---- the bezel (round 2: off by default, a slim rim or a monitor case, any width from 2 to 24 px) ----
-   A frame over the screen's edge; the text is laid out inside it (42-appearance.js adds its width to the padding), so
-   nothing is scaled. Research (cool-retro-term's frame shading, Mega Bezel, koko-aio): a case is lit from above, so its
-   top face falls into shadow (x 0.33), its sides take some light (x 0.66) and its bottom face catches it (x 1.0); a 1 px
-   outer edge is lighter top-left; a near-black contact line sits where glass meets plastic; corners are concentric with
-   the screen. A rim is one flat band with that contact line. The colour follows the look unless one is chosen: the
-   classic Charcoal, Black, Platinum and Putty cases, or the scheme's accent. Static: no motion, no blur, no filter. */
-.pmt-bezel {
-  position: absolute; inset: 0; z-index: 2; pointer-events: none;
-  --pmt-bz: var(--pmt-bezel-c, #24262c);
-  border: var(--pmt-bezel-w, 4px) solid var(--pmt-bz); border-radius: calc(var(--pmt-bezel-w, 4px) + 6px);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmt-bz) 40%, #000), inset 1px 1px 0 1px rgb(0 0 0 / .18);
-}
-.pmt-root[data-pmt-bezel="case"] .pmt-bezel {
-  border-radius: calc(var(--pmt-bezel-w, 10px) + 10px);
-  border-top-color: color-mix(in srgb, var(--pmt-bz) 72%, #000);
-  border-left-color: color-mix(in srgb, var(--pmt-bz) 86%, #000);
-  border-right-color: color-mix(in srgb, var(--pmt-bz) 86%, #000);
-  border-bottom-color: color-mix(in srgb, var(--pmt-bz) 94%, #fff);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--pmt-bz) 80%, #fff) inset, inset 0 0 0 calc(var(--pmt-bezel-w, 10px) * 0 + 1px) rgb(0 0 0 / .55),
-    inset 0 3px 6px rgb(0 0 0 / .35), inset 0 -1px 2px rgb(255 255 255 / .05);
-}
+/* ---- the bezel (round 3): a monitor housing drawn on two canvases by 71-bezel.js (the housing, painted once per size
+   and material; the screen's reflection on it, live). Off by default. The text is laid out inside it (42-appearance.js
+   adds its width to the padding, 70-view.js centres the grid in the glass), so nothing is scaled. ---- */
+.pmt-bezel { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.pmt-bezel > canvas { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
 /* inside the bezel the sticky header starts at the glass, not across the frame (_placeSticky moves it under curvature) */
 .pmt-root:is([data-pmt-bezel="rim"], [data-pmt-bezel="case"]) .pmt-sticky {
   left: var(--pmt-bezel-w); right: var(--pmt-bezel-w); top: var(--pmt-bezel-w); padding-left: calc(var(--pmt-pad-x) - var(--pmt-bezel-w));
 }
-/* the look's own colour: a graphite or light-grey case in Basic, a soft tint of the stage in Friendly, a clear rim in
-   Glass, charcoal or platinum plastic in Retro (the two classic monitor cases), ink on paper in NieR */
-.pmt-root { --pmt-bezel-c: #23252b; }
-.pmt-root[data-pmt-scheme="light"] { --pmt-bezel-c: #c9ccd3; }
-.pmt-root[data-pmt-look="friendly"] { --pmt-bezel-c: color-mix(in srgb, var(--pmt-bg-solid) 62%, #3b3550); }
-.pmt-root[data-pmt-look="friendly"][data-pmt-scheme="light"] { --pmt-bezel-c: color-mix(in srgb, var(--pmt-bg-solid) 70%, #cdb8d6); }
-.pmt-root[data-pmt-look="glass"] { --pmt-bezel-c: rgb(255 255 255 / .16); }
-.pmt-root[data-pmt-look="glass"][data-pmt-scheme="light"] { --pmt-bezel-c: rgb(255 255 255 / .62); }
-.pmt-root[data-pmt-look="retro"] { --pmt-bezel-c: #1c1b19; }
-.pmt-root[data-pmt-look="retro"][data-pmt-scheme="light"] { --pmt-bezel-c: #cfc8b8; }
-.pmt-root[data-pmt-look="nier"] { --pmt-bezel-c: color-mix(in srgb, var(--pmt-fg) 24%, var(--pmt-bg-solid)); }
-/* a colour chosen for the bezel, the same in every look */
-.pmt-root[data-pmt-bezel-color="charcoal"] { --pmt-bezel-c: #1c1b19; }
-.pmt-root[data-pmt-bezel-color="black"] { --pmt-bezel-c: #0d0d0e; }
-.pmt-root[data-pmt-bezel-color="platinum"] { --pmt-bezel-c: #cfc8b8; }
-.pmt-root[data-pmt-bezel-color="putty"] { --pmt-bezel-c: #b8b0a0; }
-.pmt-root[data-pmt-bezel-color="accent"] { --pmt-bezel-c: var(--pmt-accent); }
-/* Glass's rim is a clear band with a lit top edge, not plastic */
-.pmt-root[data-pmt-look="glass"][data-pmt-bezel-color="follow"] .pmt-bezel {
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / .22), inset 0 1px 0 1px rgb(255 255 255 / .16), 0 0 0 1px rgb(0 0 0 / .12);
-}
-/* NieR: square, flat ink, as every NieR frame is */
-.pmt-root[data-pmt-look="nier"] .pmt-bezel { border-radius: 0; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmt-fg) 40%, var(--pmt-bg-solid)); }
 
 /* ---- chrome shapes per look ---- */
 .pmt-root[data-pmt-look="friendly"] { --pmt-radius: 8px; }
@@ -43592,7 +43564,7 @@ html[data-o55-nier="on"] .pmt-notice-warn { background: var(--o55-nier-warn-surf
     rgb(0 0 0 / calc(var(--pmt-fx-scan-a) * 0.25)) 0 calc(var(--pmt-fx-scan-px) / 3),
     rgb(0 0 0 / var(--pmt-fx-scan-a)) calc(var(--pmt-fx-scan-px) / 3) calc(var(--pmt-fx-scan-px) * 2 / 3),
     rgb(0 0 0 / calc(var(--pmt-fx-scan-a) * 0.25)) calc(var(--pmt-fx-scan-px) * 2 / 3) var(--pmt-fx-scan-px));
-  background-position: 0 var(--pmt-pad-y, 0px);
+  background-position: 0 var(--pmt-grid-y, var(--pmt-pad-y, 0px));
 }
 
 /* ---- Full CRT without the GPU (round 2): no fake curvature, which blurs text and costs frames, only the rounded
@@ -43951,7 +43923,7 @@ html[data-o55-nier="on"] .pmt-scheme { transition: none; }
    Reduced Motion a short cross-fade, NieR without wipe at once. 70-view.js places the layers and their geometry.
    ================================================================================================================ */
 .pmt-xf { position: absolute; inset: 0; pointer-events: none; }
-.pmt-xf-text > canvas { position: absolute; left: var(--pmt-pad-x); top: var(--pmt-pad-y); display: block; }
+.pmt-xf-text > canvas { position: absolute; left: var(--pmt-grid-x, var(--pmt-pad-x)); top: var(--pmt-grid-y, var(--pmt-pad-y)); display: block; }
 .pmt-xf.pmt-in, .pmt-xf-edge.pmt-in { animation: var(--pmt-a-xf) var(--pmt-t-xf) var(--pmt-ease-xf) both; }
 .pmt-xf-edge { display: none; }
 @media (prefers-reduced-motion: no-preference) {
@@ -201500,11 +201472,13 @@ var T = {};
     opacity: { type: 'number', min: 0.4, max: 1, step: 0.02, default: null, label: 'Opacity' },
     /* none by default (Jared, 2026-10-14: "Default padding should be 0"); a bezel brings its own margin */
     padding: { type: 'number', min: 0, max: 24, step: 1, default: 0, label: 'Padding' },
-    /* the frame round the screen (Jared, 2026-10-14: removable, customizable, much thinner): its own choice, never part
-       of a look's defaults, and drawn with or without the GPU. Width null is the style's own */
+    /* the housing round the screen (Jared, 2026-10-14: removable, customizable; round 3: "still really ugly", so a real
+       monitor case, 71-bezel.js): its own choice, never part of a look's defaults, drawn with or without the GPU. Width
+       null is the style's own; Reflection null is the material's own (how much of the screen its surface gives back) */
     bezel: { type: 'enum', values: ['off', 'rim', 'case'], default: 'off', label: 'Bezel' },
-    bezelWidth: { type: 'number', min: 2, max: 24, step: 1, default: null, label: 'Bezel width' },
-    bezelColor: { type: 'enum', values: ['follow', 'charcoal', 'black', 'platinum', 'putty', 'accent'], default: 'follow', label: 'Bezel colour' },
+    bezelWidth: { type: 'number', min: 2, max: 48, step: 1, default: null, label: 'Bezel width' },
+    bezelColor: { type: 'enum', values: ['follow', 'charcoal', 'black', 'platinum', 'putty', 'aluminium', 'gunmetal', 'glass', 'accent'], default: 'follow', label: 'Bezel material' },
+    bezelReflect: { type: 'number', min: 0, max: 1, step: 0.05, default: null, label: 'Reflection' },
     effects: { type: 'enum', values: ['follow', 'off', 'custom'], default: 'follow', label: 'Effects' },
     scanlines: { type: 'bool', default: null, label: 'Scanlines' },
     scanStrength: { type: 'number', min: 0, max: 0.6, step: 0.05, default: 0.3, label: 'Scanline strength' },
@@ -201531,7 +201505,7 @@ var T = {};
   var DEFAULTS = {}; Object.keys(FIELDS).forEach(function (k) { DEFAULTS[k] = FIELDS[k].default; });
   /* round 2 fields Settings has no row for yet (proposed to the Settings owner): "All terminals" keeps them on this
      computer, beside the earlier copies, until a row exists */
-  var LOCAL_FIELDS = ['bezel', 'bezelWidth', 'bezelColor', 'crtMask', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat'];
+  var LOCAL_FIELDS = ['bezel', 'bezelWidth', 'bezelColor', 'bezelReflect', 'crtMask', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat'];
 
   /* ---- the Settings rows (SSYS-051, the Terminal look groups): one row per field, its stored words to and from the
      field's value. in() returns undefined for a value it cannot read (the field then falls through) and null for an
@@ -201954,9 +201928,9 @@ var T = {};
         if (!G.has(id) || (bgKind === 'gradient') !== G.isGradient(id)) id = bgKind === 'gradient' ? 'fade' : 'hills';
         var strength = T.util.clamp(f('bgStrength'), 0, 1), cat = G.cat(id), mot = G.motion(id);
         bg = { kind: bgKind, design: id, cat: cat, strength: strength };
-        if (cat === 'scene' || mot) {
+        if (G.painted(id) || mot) {
           /* painted at the terminal's own size by the view (_applyBackground), which then knows the worst pixel */
-          bg.paint = cat === 'scene' ? id : (mot.under || null);
+          bg.paint = G.painted(id) ? id : (mot.under || null);
           if (mot) bg.motion = { id: id, anim: mot.anim, ms: mot.ms * (f('bgMotion') === 'lively' ? 0.5 : 1), on: f('bgMotion') !== 'off' && !reduced };
           bg.blur = f('bgBlur');
           if (mot && !mot.under) bg.base = C.toHex(theme.bg);
@@ -202000,13 +201974,16 @@ var T = {};
       flicker: { on: !fxOff && !follow && !!f('flicker') && !reduced, amount: Math.min(0.03, f('flickerAmount')) },
       glowColor: theme && theme.roles.glow
     };
-    /* the bezel: a rim (4 px) or a monitor case (10 px) unless a width was chosen (research: real cases are far wider,
-       right for an emulator's margins, far too big for a pane); the text is laid out inside it, never squeezed */
-    var bzStyle = f('bezel'), bezel = { style: 'off', width: 0, gap: 0, color: 'follow' };
+    /* the bezel: a slim frame (6 px) or a monitor case (24 px) unless a width was chosen. Round 3's research: a case
+       reads as a housing only when its sloped face is wide enough to show the screen's reflection (Mega Bezel's face is
+       about 5 % of the screen's height; round 2's 10 px, about 2 %, read as a flat band). The text is laid out inside it,
+       never squeezed */
+    var bzStyle = f('bezel'), bezel = { style: 'off', width: 0, gap: 0, color: 'follow', reflect: null };
     if (bzStyle === 'rim' || bzStyle === 'case') {
       var bw = f('bezelWidth');
       /* and a breath of glass inside it (3 px in a rim, 6 px in a case), so no glyph touches the frame */
-      bezel = { style: bzStyle, width: bw === null || bw === undefined ? (bzStyle === 'rim' ? 4 : 10) : bw, gap: bzStyle === 'rim' ? 3 : 6, color: f('bezelColor') || 'follow' };
+      bezel = { style: bzStyle, width: bw === null || bw === undefined ? (bzStyle === 'rim' ? 6 : 24) : bw, gap: bzStyle === 'rim' ? 3 : 6,
+        color: f('bezelColor') || 'follow', reflect: f('bezelReflect') };
     }
     var bgShow = lk === 'glass' && bgKind === 'theme';
     /* High Contrast schemes keep every cell at 7:1 unless the user chose a floor themselves */
@@ -202512,7 +202489,8 @@ var T = {};
     return { css: grain(th) + ', linear-gradient(170deg, ' + hex(top) + ' 0%, ' + hex(mid) + ' 40%, ' + hex(foot) + ' 100%)', colors: [top, mid, foot] };
   } });
   /* Glass's prism: a thin spectral rim along the top edge and the light it throws */
-  def('wash', 'prism', 'Prism edge', { looks: ['glass'], css: function (th, h) {
+  /* round 3: no longer suggested for Glass, whose light is neutral white (Liquid Glass's CONTRACT.md: no colour split) */
+  def('wash', 'prism', 'Prism edge', { css: function (th, h) {
     /* the rim's hues as bright as the text allows: the first row may sit on it, and a brighter rim would veil the rest */
     var glow = pool(th, h.a, 0.6), hs = [h.hot, h.warm, h.d, h.c, h.a, h.b].map(function (c) { return pool(th, c, 1); });
     var rim = 'linear-gradient(90deg, ' + hs.map(function (c, i) { return hex(c) + ' ' + Math.round(i * 20) + '%'; }).join(', ') + ') 0 0 / 100% 2px no-repeat';
@@ -202623,7 +202601,7 @@ var T = {};
   def('mark', 'mark-strings', 'Puppet cross', { css: function (th) {
     return markCss(th, '<path d="M20 22h80M60 10v34M34 22v74M86 22v64M60 44v56"/><circle cx="34" cy="100" r="5"/><circle cx="86" cy="90" r="5"/><circle cx="60" cy="104" r="6"/>', '0 0 120 120');
   } });
-  def('mark', 'mark-drop', 'Droplet', { looks: ['glass'], css: function (th) {
+  def('mark', 'mark-drop', 'Droplet', { css: function (th) {
     return markCss(th, '<path d="M60 12C60 12 26 52 26 74a34 34 0 0 0 68 0C94 52 60 12 60 12z"/><path d="M44 78a16 16 0 0 0 14 14"/>', '0 0 120 120');
   } });
   def('mark', 'mark-cursor', 'Prompt', { looks: ['retro'], css: function (th) {
@@ -202639,8 +202617,8 @@ var T = {};
   def('scene', 'city', 'Night city');
   def('scene', 'stars', 'Starfield', { looks: ['retro'] });
   def('scene', 'synthwave', 'Synthwave');
-  def('scene', 'caustics', 'Caustics', { looks: ['glass'] });
-  def('scene', 'bokeh', 'Bokeh', { looks: ['glass'] });
+  def('scene', 'caustics', 'Caustics');
+  def('scene', 'bokeh', 'Bokeh');
   def('scene', 'clouds', 'Clouds', { looks: ['friendly'] });
   /* moving: a painted layer bigger than the terminal, moved by transform only, stepped to about 20 fps */
   def('moving', 'aurora-drift', 'Drifting aurora', { motion: { layer: 'aurora', anim: 'pmt-bg-sway', ms: 45000 } });
@@ -202810,19 +202788,23 @@ var T = {};
   var canFilter = (function () { try { var g = document.createElement('canvas').getContext('2d'); g.filter = 'blur(2px)'; return g.filter === 'blur(2px)'; } catch (e) { return false; } })();
   function step(n) { return Math.max(160, Math.min(2560, Math.round((n || 960) / 160) * 160)); }
   function paint(id, th, w, h, o) {
-    var d = BY[id], name = d && d.cat === 'scene' ? id : d && d.motion ? d.motion.layer : PAINT[id] ? id : null;
+    var d = BY[id], name = d && d.motion ? d.motion.layer : PAINT[id] ? id : null;
     if (!name || !PAINT[name] || !th) return null;
     o = o || {};
+    /* a design that needs more than the scheme and the size (the lens: the wallpaper behind the terminal; green-bar paper:
+       the text's row height) names it in its key */
+    var extra = PAINT[name].needs ? PAINT[name].needs(o) : '';
+    if (extra === null) return null;
     /* soft layers (washes of light, blurred discs) paint at half size and scale up: the same picture, a quarter of the
        work (on a software renderer a full-size lava took a third of a second) */
     var soft = SOFT[name] ? 0.5 : 1;
     var W = step(w * soft), H = step(h * soft), blur = o.blur || 0;
-    var key = name + '|' + th.id + '|' + th.bg + '|' + th.fg + '|' + W + 'x' + H + '|' + blur;
+    var key = name + '|' + th.id + '|' + th.bg + '|' + th.fg + '|' + W + 'x' + H + '|' + blur + '|' + extra;
     if (cache.has(key)) { var hit = cache.get(key); cache.delete(key); cache.set(key, hit); return hit; }
     var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
     var g = cv.getContext('2d');
     if (!g) return null;
-    try { PAINT[name](g, W, H, th, hues(th)); } catch (e) { console.error('[pmt] background painting failed', e); return null; }
+    try { PAINT[name](g, W, H, th, hues(th), o); } catch (e) { console.error('[pmt] background painting failed', e); return null; }
     if (blur && canFilter) {
       var b = document.createElement('canvas'); b.width = W; b.height = H;
       var bg = b.getContext('2d'); bg.filter = 'blur(' + blur + 'px)'; bg.drawImage(cv, -blur * 2, -blur * 2, W + blur * 4, H + blur * 4); cv = b; g = bg;
@@ -202836,9 +202818,13 @@ var T = {};
   function sampleWorst(g, W, H, th) {
     var data; try { data = g.getImageData(0, 0, W, H).data; } catch (e) { return null; }
     var worstC = th.bg, worstR = Infinity, st = Math.max(3, Math.round(Math.sqrt(W * H / 9000)));
+    var br = C.r(th.bg), bgg = C.g(th.bg), bb = C.b(th.bg);
     for (var y = 0; y < H; y += st) for (var x = 0; x < W; x += st) {
       var i = (y * W + x) * 4, a = data[i + 3] / 255;
       var c = a >= 1 ? C.rgb(data[i], data[i + 1], data[i + 2]) : C.mix(th.bg, C.rgb(data[i], data[i + 1], data[i + 2]), a);
+      /* a unit off the ground is the ground: the canvas's own rounding when it lays the ground's colour over itself (on a
+         scheme with no contrast to spare, 4.52:1, that unit read as 4.48 and veiled the whole design) */
+      if (Math.abs(C.r(c) - br) <= 1 && Math.abs(C.g(c) - bgg) <= 1 && Math.abs(C.b(c) - bb) <= 1) continue;
       var r = C.contrast(th.fg, c);
       if (r < worstR) { worstR = r; worstC = c; }
     }
@@ -202862,7 +202848,7 @@ var T = {};
   }
 
   T.Grounds = {
-    CATS: [['tonal', 'Tonal'], ['wash', 'Wash'], ['pattern', 'Pattern'], ['scene', 'Scene'], ['mark', 'Mark'], ['moving', 'Moving']],
+    CATS: [['tonal', 'Tonal'], ['wash', 'Wash'], ['pattern', 'Pattern'], ['scene', 'Scene'], ['glass', 'Glass'], ['retro', 'Retro'], ['mark', 'Mark'], ['moving', 'Moving']],
     list: function () { return LIST.map(function (d) { return { id: d.id, cat: d.cat, name: d.name, legacy: d.legacy || false, looks: d.looks.slice(), moving: !!d.motion }; }); },
     has: function (id) { return !!BY[id]; },
     cat: function (id) { return BY[id] ? BY[id].cat : null; },
@@ -202875,9 +202861,266 @@ var T = {};
     css: cssFor,
     paint: paint,
     motion: function (id) { var d = BY[id]; return d && d.motion ? d.motion : null; },
+    /* painted at the terminal's own size (scenes, glass, retro art), rather than drawn in CSS */
+    painted: function (id) { var d = BY[id]; return !!d && !d.css && !d.motion && !!PAINT[id]; },
     worst: worst,
-    scrim: scrim
+    scrim: scrim,
+    /* for the files that add designs (44-grounds-glass.js, 45-grounds-retro.js): the catalog's own helpers */
+    kit: { def: def, PAINT: PAINT, SOFT: SOFT, cache: cache, isDark: isDark, tone: tone, wash: wash, pool: pool, ink: ink, lift: lift, hex: hex, rgba: rgba, rng: rng, fill: fill, sky: sky, hues: hues, canFilter: canFilter }
   };
+})();
+/* ---- terminal/js/44-grounds-glass.js ---- */
+/* Glass grounds (round 3, Jared 2026-10-14: "do the glass themed ones have actual glass ones?"): glass itself, not
+   washes of colour. Frosted panes, layered sheets with thick refracting edges, rain on glass (still, and running), a
+   lens that magnifies the app's own wallpaper behind the terminal, and etched glass.
+
+   The light is Liquid Glass's (pm7-liquid-glass's CONTRACT.md): neutral white catch lights and hairlines, never split
+   into colours, a lens bending little. Every pane, edge and drop is drawn in this scheme's colours and goes at most as far
+   from its ground as keeps the text readable (43-grounds.js's pool), so the worst pixel needs no veil, and the same design
+   works in every look: under Glass the ground is laid at Glass's own opacity over the app, so the app shows through the
+   panes; under Basic, Friendly, Retro or NieR the terminal is opaque and the panes are glass laid on the scheme's ground.
+   Painted once per size step, cached; nothing here animates except Running rain's layer, which only moves by
+   transform. */
+(function () {
+  'use strict';
+  var G = T.Grounds; if (!G || !G.kit) return;
+  var K = G.kit, C = T.color, def = K.def, PAINT = K.PAINT, hex = K.hex, rgba = K.rgba, rng = K.rng, pool = K.pool, tone = K.tone, isDark = K.isDark;
+
+  /* glass light in this scheme. On a dark ground: white light, as bright as the light text allows, and shadow, which only
+     deepens the ground. On a light ground the reverse: white panes and rims, which only lift it (dark text then reads
+     better still), while the shaded edges and shadows go only as far as the text allows, so on a scheme with no contrast
+     to spare (Tokyo Night Day's 4.52:1) glass is drawn in white light alone */
+  function ink(th) {
+    var dark = isDark(th), shade = pool(th, C.hex('#1e2d5a'), 1);
+    return {
+      dark: dark,
+      film: dark ? pool(th, 0xffffff, 0.62) : C.mix(th.bg, 0xffffff, 0.55),
+      hi: dark ? pool(th, 0xffffff, 1) : 0xffffff,
+      lo: dark ? tone(th.bg, -0.07) : pool(th, C.hex('#2e3a55'), 0.85),
+      frost: dark ? pool(th, 0xffffff, 1) : 0xffffff,
+      shadow: dark ? 'rgba(0,0,0,.38)' : rgba(shade, 0.5),
+      dropShade: dark ? 'rgba(0,0,0,.22)' : rgba(shade, 0.35)
+    };
+  }
+  function rr(g, x, y, w, h, r) {
+    g.beginPath(); r = Math.max(0, Math.min(r, w / 2, h / 2));
+    g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
+  }
+  /* frost: a fine speckle of light, in the brightest colour the text allows (white on a light ground), one tile per colour */
+  var frostTiles = {};
+  function frost(g, w, h, k, alpha) {
+    var key = String(k.frost), tl = frostTiles[key];
+    if (!tl) {
+      tl = frostTiles[key] = document.createElement('canvas'); tl.width = tl.height = 128;
+      var c = tl.getContext('2d'), img = c.createImageData(128, 128), d = img.data, R = rng(91);
+      for (var i = 0; i < d.length; i += 4) { d[i] = C.r(k.frost); d[i + 1] = C.g(k.frost); d[i + 2] = C.b(k.frost); d[i + 3] = Math.round(R() * R() * 120); }
+      c.putImageData(img, 0, 0);
+    }
+    g.save(); g.globalAlpha = alpha; g.fillStyle = g.createPattern(tl, 'repeat'); g.fillRect(0, 0, w, h); g.restore();
+  }
+  /* the scheme's hues, quietly, behind the glass: something for it to frost, bend and catch */
+  function backdrop(g, W, H, th, h, f) {
+    g.fillStyle = hex(th.bg); g.fillRect(0, 0, W, H);
+    [[0.82, 0.78, h.a, 0.6], [0.55, 1.05, h.b, 0.5], [0.98, 0.2, h.c, 0.4]].forEach(function (p) {
+      var gr = g.createRadialGradient(W * p[0], H * p[1], 0, W * p[0], H * p[1], Math.max(W, H) * p[3]);
+      gr.addColorStop(0, hex(pool(th, p[2], f))); gr.addColorStop(1, rgba(th.bg, 0)); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+    });
+  }
+  /* a pane of glass: its shadow, its film, frost, a sheen, a lit top edge and a shaded lower one */
+  function pane(g, k, x, y, w, h, r, opts) {
+    opts = opts || {};
+    g.save();
+    g.shadowColor = k.shadow; g.shadowBlur = opts.shadow === undefined ? 22 : opts.shadow; g.shadowOffsetY = 6;
+    rr(g, x, y, w, h, r); g.fillStyle = rgba(k.film, opts.film === undefined ? 0.62 : opts.film); g.fill();
+    g.shadowColor = 'transparent';
+    g.save(); rr(g, x, y, w, h, r); g.clip();
+    if (opts.frost) frost(g, x + w + 4, y + h + 4, k, opts.frost);
+    var sh = g.createLinearGradient(x, y, x + w * 0.55, y + h); sh.addColorStop(0, rgba(k.hi, k.dark ? 0.32 : 0.55)); sh.addColorStop(0.45, rgba(k.hi, 0)); g.fillStyle = sh; g.fillRect(x, y, w, h);
+    g.restore();
+    /* edges: the whole rim in hairline, the top lit, the bottom shaded (a pane has a thickness) */
+    rr(g, x + 0.5, y + 0.5, w - 1, h - 1, r); g.lineWidth = 1; g.strokeStyle = rgba(k.hi, k.dark ? 0.55 : 0.9); g.stroke();
+    g.save(); g.beginPath(); g.rect(x - 2, y + h * 0.55, w + 4, h); g.clip();
+    rr(g, x + 0.5, y + 0.5, w - 1, h - 1, r); g.lineWidth = 1.5; g.strokeStyle = rgba(k.lo, 0.9); g.stroke(); g.restore();
+    if (opts.thick) { rr(g, x + opts.thick, y + opts.thick, w - opts.thick * 2, h - opts.thick * 2, Math.max(0, r - opts.thick)); g.lineWidth = 1; g.strokeStyle = rgba(k.hi, k.dark ? 0.22 : 0.5); g.stroke(); }
+    g.restore();
+  }
+
+  /* Frosted panes: three sheets of frosted glass floating over the right of the terminal, the top left left calm */
+  PAINT['frosted'] = function (g, W, H, th, h) {
+    var k = ink(th), s = Math.min(W, H);
+    backdrop(g, W, H, th, h, 0.7);
+    [[0.5, 0.14, 0.44, 0.58, -0.035], [0.66, 0.42, 0.3, 0.5, 0.03], [0.36, 0.56, 0.3, 0.36, -0.015]].forEach(function (p) {
+      var w = W * p[2], hh = H * p[3], x = W * p[0], y = H * p[1];
+      g.save(); g.translate(x + w / 2, y + hh / 2); g.rotate(p[4]); g.translate(-(x + w / 2), -(y + hh / 2));
+      pane(g, k, x, y, w, hh, Math.min(18, s * 0.05), { frost: k.dark ? 0.55 : 0.4, film: 0.55 });
+      g.restore();
+    });
+  };
+  /* Layered sheets: tilted sheets stacked out of the lower right, each with the bright double line of a thick edge */
+  PAINT['sheets'] = function (g, W, H, th, h) {
+    var k = ink(th), s = Math.min(W, H);
+    backdrop(g, W, H, th, h, 0.55);
+    for (var i = 0; i < 4; i++) {
+      var w = W * (0.5 - i * 0.06), hh = H * (0.66 - i * 0.07), x = W * (0.46 + i * 0.09), y = H * (0.3 + i * 0.12);
+      g.save(); g.translate(x + w / 2, y + hh / 2); g.rotate(-0.16 + i * 0.03); g.translate(-(x + w / 2), -(y + hh / 2));
+      pane(g, k, x, y, w, hh, Math.min(16, s * 0.045), { film: 0.34, thick: 4, shadow: 14 });
+      g.restore();
+    }
+  };
+  /* Rain on glass: drops that hold the light the other way up (dark above, bright below, as a lens does), a glint on
+     each, and the trails left where some ran */
+  function drop(g, k, x, y, r, th) {
+    g.save();
+    g.fillStyle = k.dropShade; g.beginPath(); g.ellipse(x, y + r * 0.28, r * 1.02, r * 0.95, 0, 0, Math.PI * 2); g.fill();
+    var gr = g.createLinearGradient(x, y - r, x, y + r);
+    gr.addColorStop(0, hex(k.dark ? tone(th.bg, -0.05) : pool(th, C.hex('#2e3a55'), 0.5))); gr.addColorStop(0.55, hex(k.film)); gr.addColorStop(1, hex(k.hi));
+    g.fillStyle = gr; g.beginPath(); g.ellipse(x, y, r, r * 0.94, 0, 0, Math.PI * 2); g.fill();
+    g.lineWidth = Math.max(0.6, r * 0.08); g.strokeStyle = rgba(k.hi, k.dark ? 0.35 : 0.8); g.stroke();
+    if (r > 1.6) { g.fillStyle = hex(k.hi); g.beginPath(); g.ellipse(x - r * 0.34, y - r * 0.38, r * 0.2, r * 0.14, -0.5, 0, Math.PI * 2); g.fill(); }
+    g.restore();
+  }
+  function drops(g, W, H, th, k, seed, density, wrap) {
+    var R = rng(seed), n = Math.round(W * H / density);
+    for (var i = 0; i < n; i++) {
+      var u = R(), r = u < 0.7 ? 1 + R() * 2 : u < 0.94 ? 3 + R() * 4.5 : 7.5 + R() * 5.5, x = R() * W, y = R() * H;
+      if (r > 6 && R() < 0.7) {
+        /* a trail above the bigger drops, where they ran */
+        g.save(); g.strokeStyle = rgba(k.hi, k.dark ? 0.12 : 0.35); g.lineWidth = r * 0.7; g.lineCap = 'round'; g.beginPath(); g.moveTo(x, y);
+        for (var t = 1; t <= 6; t++) g.lineTo(x + Math.sin(t * 1.7 + x) * r * 0.35, y - t * r * 2.2);
+        g.stroke(); g.restore();
+      }
+      drop(g, k, x, y, r, th);
+      if (wrap && y + r > H) drop(g, k, x, y - H, r, th);
+      if (wrap && y - r < 0) drop(g, k, x, y + H, r, th);
+    }
+  }
+  PAINT['raindrops'] = function (g, W, H, th, h) {
+    var k = ink(th);
+    backdrop(g, W, H, th, h, 0.6);
+    /* condensation: a faint mist over the glass that the drops have cleared round themselves */
+    g.fillStyle = rgba(k.film, k.dark ? 0.18 : 0.22); g.fillRect(0, 0, W, H);
+    drops(g, W, H, th, k, 37, 1700, false);
+  };
+  /* Running rain: a sparse layer of drops and their trails that slides down over Rain on glass */
+  PAINT['glassrun'] = function (g, W, H, th) {
+    var k = ink(th);
+    g.clearRect(0, 0, W, H);
+    var R = rng(53);
+    for (var i = 0; i < Math.max(4, Math.round(W / 140)); i++) {
+      var x = R() * W, y = R() * H, r = 3 + R() * 3.5, len = H * (0.25 + R() * 0.3);
+      g.save(); g.strokeStyle = rgba(k.hi, k.dark ? 0.13 : 0.35); g.lineWidth = r * 0.75; g.lineCap = 'round'; g.beginPath(); g.moveTo(x, y);
+      for (var t = 1; t <= 10; t++) g.lineTo(x + Math.sin(t * 1.3 + i) * r * 0.4, y - len * t / 10);
+      g.stroke(); g.restore();
+      drop(g, k, x, y, r, th); if (y - len < 0) drop(g, k, x, y + H, r, th);
+    }
+  };
+
+  /* ---- the wallpaper behind the terminal, for the lens: the print the app paints (wallpapers.js's contract: the id on
+     html[data-lg-wall], its image in --lg-wall-<id>-<mode>), loaded once per print; never body's computed image, which can
+     hold the previous print for a moment while a choice is in flight ---- */
+  var wall = { key: '', img: null, loading: '' };
+  function wallNow() {
+    var root = document.documentElement, theme = root.getAttribute('data-theme') || '', glass = /^glass/.test(theme);
+    if (root.getAttribute('data-o55-nier') === 'on') return null;
+    var id = root.getAttribute('data-lg-wall') || '';
+    if (!id || (!glass && !root.hasAttribute('data-lg-wall-any'))) return null;
+    var key = id + '-' + (/-light$/.test(theme) ? 'light' : 'dark');
+    if (wall.key === key) return wall.img ? wall : null;
+    if (wall.loading !== key) {
+      wall.loading = key;
+      var v = '';
+      try { v = getComputedStyle(root).getPropertyValue('--lg-wall-' + key).trim(); } catch (e) {}
+      var m = /url\(\s*["']?([^"')]+)["']?\s*\)/.exec(v);
+      if (!m) { wall.key = key; wall.img = null; return null; }
+      var img = new Image();
+      img.onload = function () { if (wall.loading !== key) return; wall.key = key; wall.img = img; shownSig = key; window.dispatchEvent(new CustomEvent('pmt-wall')); };
+      img.onerror = function () { if (wall.loading === key) { wall.key = key; wall.img = null; } };
+      img.src = m[1];
+    }
+    return null;
+  }
+  /* a new print, a print that settled, or a look that shows another: load it, and the lenses repaint when it arrives */
+  var shownSig = '';
+  function wallSig() { var w = wallNow(); return w ? w.key : 'none:' + wall.loading; }
+  try {
+    new MutationObserver(function () { var s = wallSig(); if (s !== shownSig) { shownSig = s; window.dispatchEvent(new CustomEvent('pmt-wall')); } })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-lg-wall', 'data-lg-wall-hold', 'data-lg-wall-any', 'data-theme', 'data-o55-nier'] });
+  } catch (e) {}
+
+  /* Lens: a disc of glass that magnifies what lies behind the terminal (the app's wallpaper; without one, the scheme's own
+     light), a neutral hairline rim, a catch light along its top and a shadow under it */
+  PAINT['lens'] = function (g, W, H, th, h, o) {
+    var k = ink(th), cx = W * 0.74, cy = H * 0.56, R = Math.min(W * 0.2, H * 0.4), wl = wallNow();
+    backdrop(g, W, H, th, h, 0.45);
+    g.save();
+    g.shadowColor = k.shadow; g.shadowBlur = 26; g.shadowOffsetY = 10;
+    g.beginPath(); g.arc(cx, cy, R, 0, Math.PI * 2); g.fillStyle = hex(th.bg); g.fill();
+    g.restore();
+    g.save(); g.beginPath(); g.arc(cx, cy, R, 0, Math.PI * 2); g.clip();
+    var mag = 1.35;
+    if (wl && wl.img && o && o.rect && !o.tile) {
+      /* the print as the app lays it (centre, cover, fixed to the viewport, the root's client box), the part behind this
+         point, magnified */
+      var img = wl.img, de = document.documentElement, vw = de.clientWidth || W, vh = de.clientHeight || H, sc = Math.max(vw / img.width, vh / img.height);
+      var ox = (vw - img.width * sc) / 2, oy = (vh - img.height * sc) / 2, rect = o.rect;
+      var px = rect.x + cx / W * rect.w, py = rect.y + cy / H * rect.h, span = R * 2 / mag * (rect.w / W);
+      var sx = (px - span / 2 - ox) / sc, sy = (py - span / 2 - oy) / sc, ss = span / sc;
+      g.drawImage(img, sx, sy, ss, ss, cx - R, cy - R, R * 2, R * 2);
+    } else {
+      /* the scheme's own light, magnified */
+      [[0.3, 0.7, h.a], [0.75, 0.35, h.b], [0.55, 0.9, h.c]].forEach(function (p) {
+        var gx = cx - R + p[0] * R * 2, gy = cy - R + p[1] * R * 2, gr = g.createRadialGradient(gx, gy, 0, gx, gy, R * 1.1);
+        gr.addColorStop(0, hex(pool(th, p[2], 1))); gr.addColorStop(1, rgba(th.bg, 0)); g.fillStyle = gr; g.fillRect(cx - R, cy - R, R * 2, R * 2);
+      });
+    }
+    /* readable through the lens too: as much of the scheme's ground over it as its brightest part needs */
+    var probe = g.getImageData(Math.max(0, Math.round(cx - R * 0.8)), Math.max(0, Math.round(cy - R * 0.8)), Math.max(1, Math.round(R * 1.6)), Math.max(1, Math.round(R * 1.6))).data, worst = th.bg, wr = Infinity;
+    for (var i = 0; i < probe.length; i += 4 * 37) { var c = C.rgb(probe[i], probe[i + 1], probe[i + 2]), q = C.contrast(th.fg, c); if (q < wr) { wr = q; worst = c; } }
+    var veil = G.scrim(worst, th); if (veil > 0) { g.fillStyle = rgba(th.bg, Math.min(1, veil + 0.04)); g.fillRect(cx - R, cy - R, R * 2, R * 2); }
+    /* the glass: brighter toward its lower rim (light gathered through the curve), darker along its upper one */
+    var body = g.createRadialGradient(cx, cy - R * 0.35, R * 0.2, cx, cy, R);
+    body.addColorStop(0, rgba(k.hi, 0)); body.addColorStop(0.8, rgba(k.hi, 0)); body.addColorStop(1, rgba(k.hi, k.dark ? 0.16 : 0.4));
+    g.fillStyle = body; g.fillRect(cx - R, cy - R, R * 2, R * 2);
+    g.restore();
+    g.lineWidth = 1; g.strokeStyle = rgba(k.hi, k.dark ? 0.6 : 0.95); g.beginPath(); g.arc(cx, cy, R - 0.5, 0, Math.PI * 2); g.stroke();
+    g.lineWidth = 2.2; g.strokeStyle = rgba(k.hi, k.dark ? 0.75 : 1); g.lineCap = 'round'; g.beginPath(); g.arc(cx, cy, R - 3, Math.PI * 1.15, Math.PI * 1.62); g.stroke();
+    g.lineWidth = 1.5; g.strokeStyle = rgba(k.lo, 0.8); g.beginPath(); g.arc(cx, cy, R - 2, Math.PI * 0.15, Math.PI * 0.85); g.stroke();
+  };
+  PAINT['lens'].needs = function (o) {
+    var wl = wallNow();
+    if (!wl || !o || o.tile) return o && o.tile ? 'tile' : 'own';
+    var r = o.rect || {};
+    return wl.key + '@' + Math.round((r.x || 0) / 24) + ',' + Math.round((r.y || 0) / 24) + ',' + (document.documentElement.clientWidth || 0) + 'x' + (document.documentElement.clientHeight || 0);
+  };
+
+  /* Etched glass: a frosted panel with a sunburst cut through the frost, each cut catching a thin line of light */
+  PAINT['etched'] = function (g, W, H, th, h) {
+    var k = ink(th);
+    backdrop(g, W, H, th, h, 0.5);
+    var x = W * 0.42, y = H * 0.1, w = W * 0.54, hh = H * 0.8, r = Math.min(14, Math.min(W, H) * 0.04);
+    var layer = document.createElement('canvas'); layer.width = W; layer.height = H;
+    var l = layer.getContext('2d');
+    rr(l, x, y, w, hh, r); l.fillStyle = rgba(k.film, 0.7); l.fill();
+    l.save(); rr(l, x, y, w, hh, r); l.clip(); frost(l, W, H, k, k.dark ? 0.7 : 0.5); l.restore();
+    /* the cuts: rays from the panel's lower corner and arcs round it, and a border line inset from the edge */
+    var ox = x + w, oy = y + hh, cuts = new Path2D();
+    for (var a = 0; a <= 12; a++) { var t = Math.PI + (Math.PI / 2) * a / 12; cuts.moveTo(ox + Math.cos(t) * hh * 0.18, oy + Math.sin(t) * hh * 0.18); cuts.lineTo(ox + Math.cos(t) * hh * 1.6, oy + Math.sin(t) * hh * 1.6); }
+    [0.32, 0.5, 0.72, 0.98].forEach(function (q) { cuts.moveTo(ox - hh * q, oy); cuts.arc(ox, oy, hh * q, Math.PI, Math.PI * 1.5); });
+    var inset = 12; cuts.moveTo(x + inset + r, y + inset); cuts.rect(x + inset, y + inset, w - inset * 2, hh - inset * 2);
+    l.save(); rr(l, x, y, w, hh, r); l.clip();
+    l.globalCompositeOperation = 'destination-out'; l.lineWidth = 2.4; l.strokeStyle = '#000'; l.stroke(cuts);
+    l.globalCompositeOperation = 'source-over'; l.translate(0.8, 0.8); l.lineWidth = 0.8; l.strokeStyle = rgba(k.hi, k.dark ? 0.4 : 0.9); l.stroke(cuts);
+    l.restore();
+    rr(l, x + 0.5, y + 0.5, w - 1, hh - 1, r); l.lineWidth = 1; l.strokeStyle = rgba(k.hi, k.dark ? 0.5 : 0.9); l.stroke();
+    g.save(); g.shadowColor = k.shadow; g.shadowBlur = 18; g.shadowOffsetY = 5; g.drawImage(layer, 0, 0); g.restore();
+  };
+
+  def('glass', 'frosted', 'Frosted panes', { looks: ['glass'] });
+  def('glass', 'sheets', 'Layered sheets', { looks: ['glass'] });
+  def('glass', 'raindrops', 'Rain on glass', { looks: ['glass'] });
+  def('glass', 'lens', 'Lens', { looks: ['glass'] });
+  def('glass', 'etched', 'Etched glass', { looks: ['glass'] });
+  def('glass', 'rain-glass', 'Running rain', { motion: { layer: 'glassrun', anim: 'pmt-bg-fall', ms: 16000, under: 'raindrops' } });
 })();
 /* ---- terminal/js/44-import.js ---- */
 (function () {
@@ -203771,6 +204014,195 @@ var T = {};
     parse: parse
   };
 })();
+/* ---- terminal/js/45-grounds-retro.js ---- */
+/* Retro grounds (round 3, Jared 2026-10-14: "add a few more for retro"; research: Ghostty and kitty shader packs,
+   Windows Terminal's retro shaders, cool-retro-term's profiles, the BBS scene): a phosphor graticule, a CRT test
+   pattern, BBS block art, a vector wireframe terrain, green-bar printer paper, the ghost of a boot screen burned into
+   the tube, and two that move: an oscilloscope trace over the graticule and glyph rain.
+
+   Drawn in the scheme's phosphor (its green, or a one-colour scheme's own glow) and its palette, each line and block at
+   most as bright as keeps the text readable (43-grounds.js's pool), so the art reads in every look, light or dark:
+   under Retro it glows on the tube, under Basic or Glass it is line art in the scheme's colours. Green-bar paper is
+   pure CSS keyed to the text's own row height, so its bands fall exactly on the rows. Moving layers move by transform
+   only, at about 20 fps, and only while the terminal is in use (52-fx.js). */
+(function () {
+  'use strict';
+  var G = T.Grounds; if (!G || !G.kit) return;
+  var K = G.kit, C = T.color, def = K.def, PAINT = K.PAINT, hex = K.hex, rgba = K.rgba, rng = K.rng, pool = K.pool, tone = K.tone, isDark = K.isDark, lift = K.lift;
+
+  function phos(th, h) { return h.d; }
+  /* a line of light: a soft halo under a crisp core, both in the brightest colour the text allows */
+  function glowLine(g, path, col, w, halo) {
+    g.save(); g.lineJoin = 'round'; g.lineCap = 'round';
+    if (halo && K.canFilter) { g.filter = 'blur(' + halo + 'px)'; g.globalAlpha = 0.55; g.lineWidth = w * 3; g.strokeStyle = hex(col); g.stroke(path); g.filter = 'none'; }
+    g.globalAlpha = 1; g.lineWidth = w; g.strokeStyle = hex(col); g.stroke(path);
+    g.restore();
+  }
+  function ground(g, W, H, th) { g.fillStyle = hex(th.bg); g.fillRect(0, 0, W, H); }
+
+  /* Phosphor grid: an oscilloscope's graticule, ten by eight, its centre axes ticked */
+  PAINT['phosphor-grid'] = function (g, W, H, th, h) {
+    ground(g, W, H, th);
+    var c = phos(th, h), major = pool(th, c, 0.42), axis = pool(th, c, 0.75), tick = pool(th, c, 0.9);
+    var cols = 10, rows = 8, mx = W * 0.04, my = H * 0.06, gw = W - mx * 2, gh = H - my * 2, p = new Path2D(), a = new Path2D(), t = new Path2D();
+    for (var i = 0; i <= cols; i++) { var x = Math.round(mx + gw * i / cols) + 0.5; (i === cols / 2 ? a : p).moveTo(x, my); (i === cols / 2 ? a : p).lineTo(x, my + gh); }
+    for (var j = 0; j <= rows; j++) { var y = Math.round(my + gh * j / rows) + 0.5; (j === rows / 2 ? a : p).moveTo(mx, y); (j === rows / 2 ? a : p).lineTo(mx + gw, y); }
+    for (var k = 0; k <= cols * 5; k++) { var tx = Math.round(mx + gw * k / (cols * 5)) + 0.5, cy = Math.round(my + gh / 2); t.moveTo(tx, cy - 3); t.lineTo(tx, cy + 4); }
+    for (var q = 0; q <= rows * 5; q++) { var ty = Math.round(my + gh * q / (rows * 5)) + 0.5, cx = Math.round(mx + gw / 2); t.moveTo(cx - 3, ty); t.lineTo(cx + 4, ty); }
+    glowLine(g, p, major, 1, 1.4); glowLine(g, a, axis, 1, 1.6); glowLine(g, t, tick, 1, 0);
+  };
+
+  /* Test pattern: the circle, the cross-hatch, the colour bars and the grey steps of a broadcast test card, faint */
+  PAINT['test-card'] = function (g, W, H, th, h) {
+    ground(g, W, H, th);
+    var cx = W / 2, cy = H / 2, R = H * 0.44, cell = Math.round(H / 9), line = pool(th, th.fg, 0.3), p = new Path2D();
+    for (var x = cx % cell; x < W; x += cell) { p.moveTo(Math.round(x) + 0.5, 0); p.lineTo(Math.round(x) + 0.5, H); }
+    for (var y = cy % cell; y < H; y += cell) { p.moveTo(0, Math.round(y) + 0.5); p.lineTo(W, Math.round(y) + 0.5); }
+    g.lineWidth = 1; g.strokeStyle = hex(line); g.stroke(p);
+    /* castellations round the edge */
+    g.fillStyle = hex(pool(th, th.fg, 0.22));
+    for (var e = 0; e < W; e += cell * 2) { g.fillRect(e, 0, cell, cell * 0.35); g.fillRect(e + cell, H - cell * 0.35, cell, cell * 0.35); }
+    g.save(); g.beginPath(); g.arc(cx, cy, R, 0, Math.PI * 2); g.clip();
+    g.fillStyle = hex(th.bg); g.fillRect(cx - R, cy - R, R * 2, R * 2);
+    /* colour bars across the upper half, grey steps below, from the scheme's own palette */
+    var pal = th.palette || [], bars = [7, 3, 6, 2, 5, 1, 4, 0].map(function (i) { return pal[i] !== undefined ? pal[i] : th.fg; }), bw = R * 2 / bars.length;
+    bars.forEach(function (c, i) { g.fillStyle = hex(pool(th, c, 0.7)); g.fillRect(cx - R + i * bw, cy - R * 0.62, bw + 0.5, R * 0.46); });
+    for (var s = 0; s < 6; s++) { g.fillStyle = hex(pool(th, th.fg, s / 5 * 0.85)); g.fillRect(cx - R + s * R / 3, cy + R * 0.1, R / 3 + 0.5, R * 0.3); }
+    g.restore();
+    g.lineWidth = 2; g.strokeStyle = hex(pool(th, th.fg, 0.55)); g.beginPath(); g.arc(cx, cy, R, 0, Math.PI * 2); g.stroke();
+    g.beginPath(); g.moveTo(cx - R * 0.2, cy); g.lineTo(cx + R * 0.2, cy); g.moveTo(cx, cy - R * 0.2); g.lineTo(cx, cy + R * 0.2); g.lineWidth = 1.5; g.stroke();
+    g.beginPath(); g.arc(cx, cy, R * 0.08, 0, Math.PI * 2); g.stroke();
+  };
+
+  /* ANSI art: a sunset over mountains and a sea, in text cells of dithered blocks (the BBS scene's 25, 50 and 75 % shade
+     blocks), framed in a double line; the cells are the terminal's own size */
+  var DITHER = [[0, 2], [3, 1]];
+  PAINT['ansi'] = function (g, W, H, th, h, o) {
+    ground(g, W, H, th);
+    var ch = Math.max(10, Math.round((o && o.rowPx) || 17)), cw = Math.max(5, Math.round(ch * 0.55)), px = Math.max(1, Math.round(ch / 9));
+    var x0 = Math.round(W * 0.45 / cw) * cw, y0 = Math.round(H * 0.3 / ch) * ch, cols = Math.floor((W - x0 - cw) / cw), rows = Math.floor((H - y0 - ch) / ch);
+    if (cols < 8 || rows < 4) return;
+    var dark = isDark(th), skyT = pool(th, h.b, 0.55), skyM = pool(th, h.hot, 0.8), horiz = pool(th, h.warm, 0.95), sun = pool(th, h.warm, 1);
+    var mtn = dark ? tone(th.bg, -0.03) : pool(th, h.a, 0.5), mtn2 = pool(th, h.a, dark ? 0.35 : 0.7), sea = pool(th, h.c, 0.5), seaHi = pool(th, h.warm, 0.7);
+    var dots = function (d) { var pth = new Path2D(); for (var yy = 0; yy < ch; yy += px * 2) for (var xx = 0; xx < cw; xx += px * 2) for (var a = 0; a < 2; a++) for (var b = 0; b < 2; b++) if ((DITHER[a][b] + 0.5) / 4 < d) pth.rect(xx + b * px, yy + a * px, px, px); return pth; };
+    var shades = [dots(0.25), dots(0.5), dots(0.75)];
+    var cell = function (cx, cy, back, front, d) {
+      g.fillStyle = hex(back); g.fillRect(x0 + cx * cw, y0 + cy * ch, cw, ch);
+      if (d <= 0) return;
+      g.fillStyle = hex(front);
+      if (d >= 1) { g.fillRect(x0 + cx * cw, y0 + cy * ch, cw, ch); return; }
+      g.save(); g.translate(x0 + cx * cw, y0 + cy * ch); g.fill(shades[Math.min(2, Math.max(0, Math.round(d * 4) - 1))]); g.restore();
+    };
+    var horizonV = 0.58, sx = 0.66, sy = 0.5, sr = 0.2, aspect = cols * cw / (rows * ch);
+    for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) {
+      var u = (c + 0.5) / cols, v = (r + 0.5) / rows;
+      var ridge = horizonV - 0.1 - 0.12 * Math.abs(Math.sin(u * 7.3 + 1.2)) - 0.06 * Math.sin(u * 17.1), ridge2 = horizonV - 0.03 - 0.06 * Math.abs(Math.sin(u * 11 + 0.4));
+      var du = (u - sx) * aspect, dv = v - sy, inSun = du * du + dv * dv < sr * sr && !(v > sy && Math.floor(v * rows) % 2 === 1);
+      if (v < horizonV) {
+        if (v > ridge2) cell(c, r, mtn, mtn2, 0.25);
+        else if (v > ridge) cell(c, r, mtn2, mtn, 0.5);
+        else if (inSun) cell(c, r, horiz, sun, 1);
+        else { var t = v / ridge; cell(c, r, t < 0.5 ? skyT : skyM, t < 0.5 ? skyM : horiz, t < 0.5 ? t * 2 * 0.75 : (t - 0.5) * 2 * 0.75); }
+      } else {
+        var glint = Math.abs(u - sx) < 0.09 * (1 - (v - horizonV)) && (r + c) % 3 !== 0;
+        cell(c, r, sea, glint ? seaHi : th.bg, glint ? 0.5 : 0.25);
+      }
+    }
+    /* the double-line frame round the art */
+    var fr = pool(th, h.c, 0.85), fx = x0 - cw / 2, fy = y0 - ch / 2, fw = cols * cw + cw, fh = rows * ch + ch;
+    g.strokeStyle = hex(fr); g.lineWidth = Math.max(1, px);
+    g.strokeRect(Math.round(fx) + 0.5, Math.round(fy) + 0.5, Math.round(fw), Math.round(fh));
+    g.strokeRect(Math.round(fx + px * 3) + 0.5, Math.round(fy + px * 3) + 0.5, Math.round(fw - px * 6), Math.round(fh - px * 6));
+  };
+  PAINT['ansi'].needs = function (o) { return String(Math.round((o && o.rowPx) || 17)); };
+
+  /* Vector terrain: a wireframe landscape in perspective, the kind a vector monitor drew, fading into the distance */
+  PAINT['wireframe'] = function (g, W, H, th, h) {
+    ground(g, W, H, th);
+    var c = phos(th, h), hor = H * 0.46, fov = H * 0.9, camH = 1.25, Z0 = 1.2, Z1 = 14, nz = 22, nx = 36;
+    var height = function (x, z) { return 0.9 * Math.exp(-Math.pow((x - 2.4) / 1.6, 2) - Math.pow((z - 9) / 3, 2)) * 2.2 + 0.55 * Math.exp(-Math.pow((x + 3) / 1.3, 2) - Math.pow((z - 11) / 2.6, 2)) * 2 + 0.12 * Math.sin(x * 1.7 + z * 0.8); };
+    var proj = function (x, z) { var y = height(x, z); return [W * 0.62 + x / z * fov, hor + (camH - y) / z * fov]; };
+    for (var i = 0; i <= nz; i++) {
+      var z = Z0 + (Z1 - Z0) * Math.pow(i / nz, 1.6), p = new Path2D(), fade = 1 - i / nz * 0.75;
+      for (var j = 0; j <= nx; j++) { var x = -9 + 18 * j / nx, q = proj(x, z); if (j) p.lineTo(q[0], q[1]); else p.moveTo(q[0], q[1]); }
+      glowLine(g, p, pool(th, c, 0.85 * fade), 1, i < 6 ? 1.2 : 0);
+    }
+    for (var jj = 0; jj <= nx; jj++) {
+      var xx = -9 + 18 * jj / nx, pp = new Path2D();
+      for (var ii = 0; ii <= nz; ii++) { var zz = Z0 + (Z1 - Z0) * Math.pow(ii / nz, 1.6), qq = proj(xx, zz); if (ii) pp.lineTo(qq[0], qq[1]); else pp.moveTo(qq[0], qq[1]); }
+      glowLine(g, pp, pool(th, c, 0.5), 1, 0);
+    }
+    /* a vector sun on the horizon */
+    var sun = new Path2D(); sun.arc(W * 0.62, hor - H * 0.02, H * 0.12, Math.PI, 0); glowLine(g, sun, pool(th, h.warm, 0.8), 1.2, 1.4);
+  };
+
+  /* Green-bar paper: the line printer's fan-fold stock, three rows tinted and three plain, sprocket holes down both
+     edges; the bands fall on the terminal's own rows (--pmt-cell-h, from where the grid starts) */
+  def('retro', 'greenbar', 'Green-bar paper', { looks: ['retro'], css: function (th, h) {
+    var dark = isDark(th), band = pool(th, h.d, dark ? 0.32 : 0.55), strip = dark ? lift(th, 0.03) : pool(th, C.hex('#b7b2a4'), 0.5);
+    var hole = dark ? tone(th.bg, -0.07) : pool(th, C.hex('#6d6a62'), 0.7), perf = pool(th, th.fg, 0.35);
+    var rows = 'var(--pmt-cell-h, 17px)', top = 'var(--pmt-grid-y, var(--pmt-pad-y, 0px))';
+    var css = 'radial-gradient(circle at 11px 12px, ' + hex(hole) + ' 0 4px, transparent 4.6px) 0 0 / 22px 24px repeat-y, ' +
+      'radial-gradient(circle at 11px 12px, ' + hex(hole) + ' 0 4px, transparent 4.6px) right 0 top 0 / 22px 24px repeat-y, ' +
+      'repeating-linear-gradient(180deg, ' + hex(perf) + ' 0 3px, transparent 3px 7px) 23px 0 / 1px 100% no-repeat, ' +
+      'repeating-linear-gradient(180deg, ' + hex(perf) + ' 0 3px, transparent 3px 7px) right 23px top 0 / 1px 100% no-repeat, ' +
+      'linear-gradient(90deg, ' + hex(strip) + ' 0 22px, transparent 22px calc(100% - 22px), ' + hex(strip) + ' calc(100% - 22px)), ' +
+      'repeating-linear-gradient(180deg, transparent 0 calc(' + rows + ' * 3), ' + hex(band) + ' calc(' + rows + ' * 3) calc(' + rows + ' * 6)) 0 ' + top + ' / 100% calc(' + rows + ' * 6), ' + hex(th.bg);
+    return { css: css, colors: [th.bg, band, strip, hole, perf] };
+  } });
+
+  /* Boot ghost: a boot screen burned into the phosphor, long gone and still faintly there */
+  var BOOT = ['PUPPET MASTER BIOS v2.11', '(C) 1987-2026 Puppet Master Systems', '', 'Main Processor : PM-386 33 MHz', 'Memory Test    : 640K OK',
+    'Extended Memory: 15360K OK', '', 'Detecting Primary Master ... PM-DISK 40MB', 'Detecting Primary Slave  ... None', '', 'Booting from Hard Disk...'];
+  PAINT['boot-ghost'] = function (g, W, H, th, h, o) {
+    ground(g, W, H, th);
+    var c = pool(th, phos(th, h), 0.3), size = Math.max(10, Math.round(((o && o.rowPx) || 17) * 0.82)), x = Math.round(W * 0.5), y = Math.round(H * 0.16);
+    g.font = '500 ' + size + 'px "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace'; g.textBaseline = 'top';
+    var draw = function (dx, dy, a) { g.globalAlpha = a; g.fillStyle = hex(c); BOOT.forEach(function (l, i) { g.fillText(l, x + dx, y + dy + i * size * 1.35); }); };
+    if (K.canFilter) g.filter = 'blur(0.7px)';
+    draw(0, 0, 0.75); draw(1.5, 0, 0.3);
+    /* the logo block in the corner, as bright as the text was */
+    g.globalAlpha = 0.8; g.fillStyle = hex(pool(th, phos(th, h), 0.4));
+    var bx = Math.round(W * 0.84), by = y, s = size * 0.7, logo = ['1110111', '1010101', '1110101', '1000101', '1000101'];
+    logo.forEach(function (row, i) { for (var k = 0; k < row.length; k++) if (row[k] === '1') g.fillRect(bx + k * s, by + i * s * 1.2, s - 1, s * 1.2 - 1); });
+    g.filter = 'none'; g.globalAlpha = 1;
+  };
+  PAINT['boot-ghost'].needs = PAINT['ansi'].needs;
+
+  /* Oscilloscope: the trace layer, a modulated wave that repeats exactly across the layer's width, so the pan loops */
+  PAINT['scopetrace'] = function (g, W, H, th, h) {
+    g.clearRect(0, 0, W, H);
+    var c = pool(th, phos(th, h), 1), p = new Path2D(), cy = H * 0.5, A = H * 0.2;
+    for (var x = 0; x <= W; x += 2) { var t = x / W * Math.PI * 2, y = cy - A * Math.sin(t * 3) * (0.75 + 0.25 * Math.cos(t * 2)) - A * 0.18 * Math.sin(t * 13); if (x) p.lineTo(x, y); else p.moveTo(x, y); }
+    glowLine(g, p, c, 1.6, 3);
+  };
+  /* Glyph rain: columns of characters falling, each stream bright at its head and fading behind; it repeats down the
+     layer's height, so the fall loops */
+  PAINT['glyphs'] = function (g, W, H, th, h, o) {
+    g.clearRect(0, 0, W, H);
+    var c = pool(th, phos(th, h), 1), size = Math.max(10, Math.round(((o && o.rowPx) || 17) * 0.8)), R = rng(61), chars = '01<>=+*#%$&/\\|ABCDEF7924';
+    g.font = '500 ' + size + 'px "JetBrains Mono", ui-monospace, monospace'; g.textBaseline = 'top'; g.fillStyle = hex(c);
+    for (var x = Math.round(size * 0.3); x < W; x += Math.round(size * 1.15)) {
+      if (R() < 0.45) continue;
+      var head = R() * H, len = 6 + Math.floor(R() * 14);
+      for (var i = 0; i < len; i++) {
+        var y = head - i * size * 1.1; y = ((y % H) + H) % H;
+        g.globalAlpha = i === 0 ? 0.95 : Math.max(0.06, 0.7 * (1 - i / len));
+        g.fillText(chars[Math.floor(R() * chars.length)], x, y);
+      }
+    }
+    g.globalAlpha = 1;
+  };
+  PAINT['glyphs'].needs = PAINT['ansi'].needs;
+
+  def('retro', 'phosphor-grid', 'Phosphor grid', { looks: ['retro'] });
+  def('retro', 'test-card', 'Test pattern');
+  def('retro', 'ansi', 'ANSI art', { looks: ['retro'] });
+  def('retro', 'wireframe', 'Vector terrain');
+  def('retro', 'boot-ghost', 'Boot ghost');
+  def('retro', 'scope', 'Oscilloscope', { motion: { layer: 'scopetrace', anim: 'pmt-bg-pan', ms: 5000, under: 'phosphor-grid' } });
+  def('retro', 'glyph-rain', 'Glyph rain', { motion: { layer: 'glyphs', anim: 'pmt-bg-fall', ms: 9000 } });
+})();
 /* ---- terminal/js/50-fx-gl.js ---- */
 /* Puppet Master terminal: the WebGL effects post-process (T.FXGL), D16.
    T.FXGL.create(canvas, opts?) -> fx | null. null is the no-GPU path: WebGL is missing, the context reports a major
@@ -203950,6 +204382,32 @@ var T = {};
       X -= (j22 * f1 - j12 * f2) / det; Y -= (j11 * f2 - j21 * f1) / det;
     }
     return [X * 0.5 + 0.5, Y * 0.5 + 0.5];
+  }
+  /* the warp's inverse with no mask: the output uv whose warp lands on (su, sv), Newton from the point itself */
+  function unwarp(su, sv, g) {
+    if (!curved(g)) return [su, sv];
+    var tx = su * 2 - 1, ty = sv * 2 - 1, X = tx, Y = ty;
+    for (var i = 0; i < 16; i++) {
+      var f1 = X * (1 + g.wx * Y * Y) - tx, f2 = Y * (1 + g.wy * X * X) - ty;
+      if (Math.abs(f1) < 1e-12 && Math.abs(f2) < 1e-12) break;
+      var j11 = 1 + g.wx * Y * Y, j12 = 2 * g.wx * X * Y, j21 = 2 * g.wy * X * Y, j22 = 1 + g.wy * X * X, det = j11 * j22 - j12 * j21;
+      X -= (j22 * f1 - j12 * f2) / det; Y -= (j11 * f2 - j21 * f1) / det;
+    }
+    return [X * 0.5 + 0.5, Y * 0.5 + 0.5];
+  }
+  /* the tube's visible edge in output uv, clockwise from the top-left corner's end: the rounded screen rectangle carried
+     back through the warp, so a bezel (71-bezel.js) meets the glass exactly where the shader's mask does. stepPx is the
+     spacing of the straight runs in source device px; each corner takes 10 points */
+  function tubeOutline(g, stepPx) {
+    var W = g.srcW, H = g.srcH, r = Math.min(g.radius, W / 2, H / 2), st = Math.max(2, stepPx || 12), pts = [];
+    var push = function (x, y) { var o = unwarp(x / W, y / H, g); pts.push(o); };
+    var run = function (x0, y0, x1, y1) { var n = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) / st)); for (var i = 0; i < n; i++) push(x0 + (x1 - x0) * i / n, y0 + (y1 - y0) * i / n); };
+    var arc = function (cx, cy, a0) { if (r <= 0) { push(cx, cy); return; } for (var i = 0; i < 10; i++) { var a = a0 + (Math.PI / 2) * i / 10; push(cx + Math.cos(a) * r, cy + Math.sin(a) * r); } };
+    run(r, 0, W - r, 0); arc(W - r, r, -Math.PI / 2);
+    run(W, r, W, H - r); arc(W - r, H - r, 0);
+    run(W - r, H, r, H); arc(r, H - r, Math.PI / 2);
+    run(0, H - r, 0, r); arc(r, r, Math.PI);
+    return pts;
   }
   /* scanlines locked to the text rows: a whole number of lines per row, each about 3 device px (2 CSS px at DPR >= 1.5) */
   function scanPeriod(rowPx, dpr) {
@@ -204466,6 +204924,7 @@ var T = {};
     geometry: geometry,
     mapUV: mapUV,
     unmapUV: unmapUV,
+    tubeOutline: tubeOutline,
     Timeline: Timeline,
     FLICKER_CAP: FLICKER_CAP,
     AMBIENT_FPS: AMBIENT_FPS,
@@ -210184,8 +210643,8 @@ var T = {};
     this.canvas = el('canvas', 'pmt-grid');
     this.fxCanvas = el('canvas', 'pmt-fxcanvas'); this.fxCanvas.hidden = true;
     this.trailCanvas = el('canvas', 'pmt-trail'); this.trailCanvas.hidden = true;
-    /* the bezel: a frame round the screen, over the ground and the canvases' edge (30-looks.css draws each style) */
-    this.bezelEl = el('div', 'pmt-bezel'); this.bezelEl.hidden = true; this.bezelEl.setAttribute('aria-hidden', 'true');
+    /* the bezel: a monitor housing round the screen, over the ground and the canvases' edge (71-bezel.js) */
+    this.bezel = new T.Bezel(this); this.bezelEl = this.bezel.el;
     this.sticky = el('button', 'pmt-sticky'); this.sticky.hidden = true; this.sticky.type = 'button';
     this.overlays = el('div', 'pmt-overlays');
     this.input = el('textarea', 'pmt-input');
@@ -210254,6 +210713,11 @@ var T = {};
       mq.addEventListener('change', fn);
       self._dprOff = function () { mq.removeEventListener('change', fn); };
     })();
+    /* a ground that shows what lies behind the terminal (the Lens, 44-grounds-glass.js) repaints when the app's
+       wallpaper changes or its print arrives */
+    var onWall = function () { var bg = self._bgSpec; if (bg && bg.paint === 'lens') { self.contrastGround = self._applyBackground(bg); self.renderer.invalidate(); self.schedule(true); } };
+    window.addEventListener('pmt-wall', onWall);
+    this.disposers.push(function () { window.removeEventListener('pmt-wall', onWall); });
     if (T.FX && T.FX.attach) { this.fx = T.FX.attach(this); this.fx.configure(this.appearance.effects || {}); }
     if (T.Agent && T.Agent.attach) this.agent = T.Agent.attach(this);
     this._updateLabel(); this._updateHeader();
@@ -210299,9 +210763,7 @@ var T = {};
        surface) */
     this.contrastGround = this._applyBackground(ap.background || { kind: 'theme' });
     var bz = ap.bezel || { style: 'off', width: 0, color: 'follow' };
-    this.bezelEl.hidden = bz.style === 'off';
-    if (this.root.getAttribute('data-pmt-bezel') !== bz.style) this.root.setAttribute('data-pmt-bezel', bz.style);
-    if (this.root.getAttribute('data-pmt-bezel-color') !== bz.color) this.root.setAttribute('data-pmt-bezel-color', bz.color);
+    this.bezel.configure(bz, ap);
     this.root.style.setProperty('--pmt-bezel-w', (bz.width || 0) + 'px');
     var f = ap.font, gen = this._fontGen = (this._fontGen || 0) + 1;
     this.fontReady = T.Metrics.ready(f.family, f.size).then(function () {
@@ -210438,13 +210900,13 @@ var T = {};
     if ((bg.paint || moving) && G && th) {
       var r = this.bodyEl.getBoundingClientRect(), w = r.width || 960, h = r.height || 600;
       this._bgKey = sizeStep(w) + 'x' + sizeStep(h);
-      var worsts = [];
+      var worsts = [], po = { blur: bg.blur, rowPx: this.metrics ? this.metrics.cellH : 17, rect: { x: r.left, y: r.top, w: w, h: h } };
       if (bg.paint) {
-        var P = G.paint(bg.paint, th, w, h, { blur: bg.blur });
+        var P = G.paint(bg.paint, th, w, h, po);
         if (P) { L.style.background = 'center / cover no-repeat url("' + P.url + '"), ' + C.toHex(th.bg); if (P.worst !== null) worsts.push(P.worst); }
       } else L.style.background = bg.base || C.toHex(th.bg);
       if (moving) {
-        var M = G.paint(bg.motion.id, th, w, h, {});
+        var M = G.paint(bg.motion.id, th, w, h, { rowPx: po.rowPx, rect: po.rect });
         mv.hidden = !M;
         if (M) {
           mv.style.backgroundImage = 'url("' + M.url + '")';
@@ -210520,7 +210982,18 @@ var T = {};
       [this.fxCanvas, this.trailCanvas].forEach(function (c) { c.width = cw; c.height = ch; c.style.width = (cw / m.dpr) + 'px'; c.style.height = (ch / m.dpr) + 'px'; });
       this.renderer.invalidate();
     }
-    this.gridLeft = px; this.gridTop = py;
+    /* inside a bezel the grid sits in the middle of the glass, so the housing is as wide on every side (the part of a
+       cell left over goes half to each side, in whole device pixels) */
+    var ox = 0, oy = 0, bez = this.bezel && this.bezel.on();
+    if (bez) { ox = Math.max(0, Math.floor((w - px * 2 - cols * m.cellW) / 2 * m.dpr) / m.dpr); oy = Math.max(0, Math.floor((h - py * 2 - rows * m.cellH) / 2 * m.dpr) / m.dpr); }
+    this.gridLeft = px + ox; this.gridTop = py + oy;
+    var off = bez ? this.gridLeft + ',' + this.gridTop : '';
+    if (off !== this._gridOff) {
+      this._gridOff = off;
+      if (bez) { this.root.style.setProperty('--pmt-grid-x', this.gridLeft + 'px'); this.root.style.setProperty('--pmt-grid-y', this.gridTop + 'px'); }
+      else { this.root.style.removeProperty('--pmt-grid-x'); this.root.style.removeProperty('--pmt-grid-y'); }
+    }
+    if (bez) this.bezel.layout(w, h, this.gridLeft, this.gridTop, cols * m.cellW, rows * m.cellH, m.dpr);
     this.root.style.setProperty('--pmt-cell-h', m.cellH + 'px');
     this.root.style.setProperty('--pmt-cell-w', m.cellW + 'px');
     this.root.style.setProperty('--pmt-font', this.appearance.font.family);
@@ -210593,6 +211066,7 @@ var T = {};
     var full = this.fullPending; this.fullPending = false;
     this.renderer.render(full);
     if (this.fx) this.fx.frame();
+    if (this.bezel) this.bezel.frame();
     if (this.marksDirty) { this.marksDirty = false; this._renderGutter(); this._renderScrollbar(); this._renderSticky(); }
     else this._renderScrollbarThumb();
     if (this.agent) this.agent.frame();
@@ -211306,8 +211780,403 @@ var T = {};
     if (this._dprOff) this._dprOff();
     if (this.raf) cancelAnimationFrame(this.raf);
     if (this.fx) { this.fx.dispose(); this.fx = null; }
+    if (this.bezel) this.bezel.dispose();
     this.root.remove();
   };
+})();
+/* ---- terminal/js/71-bezel.js ---- */
+/* The bezel (round 3, Jared 2026-10-14: "The bezels are still really ugly. Is that really what other terminal programs
+   use?"). No mainstream terminal draws one; the retro emulators do, and the good ones (RetroArch's Mega Bezel and
+   koko-aio, cool-retro-term's frame) draw a monitor housing. This one is built from their parts (research/round3.md):
+   - a flat outer frame, a touch lighter along its top, its outer edge darkened;
+   - inside it a sloped face in four parts that meet in crisp diagonal creases at the corners, each lit by where it faces
+     (the light comes from above: the top face, turned down, is darkest; the bottom face, turned up, is brightest; Mega
+     Bezel's 0.5 / 1 / 2);
+   - at the glass a thin bright lip that never goes fully dark, and inside it a 1-2 px unlit ring, the case's shadow
+     falling a few pixels onto the glass under the top lip;
+   - the material's grain (plastic speckle, brushed metal, frost), 2-4 %;
+   - and the screen's light on all of it: the picture mirrored about each edge of the glass onto the face beside it,
+     folded so a narrow face still shows whole rows (Mega Bezel folds at 1:1 on a far wider face), sharp at the lip and
+     blurrier and fainter outward ((1 - sqrt(d/D))^2), a diffused copy under it, and a soft glow of the screen's colour
+     over face and frame (cool-retro-term tints its frame with the text colour). It follows the live terminal at most 15
+     times a second while output changes, and costs nothing while the terminal is still.
+   The inner edge is the tube's own: with Full CRT on, the shader's rounded screen carried back through its warp
+   (FXGL.tubeOutline), so the face meets the glass exactly where the picture ends, curved edges and corners included.
+   One canvas over the screen's edge, under the sticky header and the overlays; the housing is painted once per size,
+   material and tube shape, and only the four strips the case covers are redrawn when the reflection changes, in the
+   canvas itself (no blend layer that the compositor would redo on every repaint of the text).
+   Materials: Platinum and Putty (beige plastic: IBM, Apple), Graphite (grey plastic: DEC), Black gloss (Sony PVM),
+   Brushed aluminium and Gunmetal, Glass (a clear case lit in Liquid Glass's public tokens, neutral white light only, no
+   colour split: its CONTRACT.md), and the scheme's accent in plastic. NieR Mode keeps its own flat ink frame: no glow,
+   no blur, square (DL-152). */
+(function () {
+  'use strict';
+  var C = T.color;
+  var MAX_FPS = 15;
+
+  /* the case colour, how much of the screen's light the face gives back (the Reflection slider's Auto), roughness (the
+     reflection's blur, CSS px), grain; a dark case's face is lifted above its frame so its lighting reads */
+  var MATERIALS = {
+    platinum: { base: '#cbc4b2', reflect: 0.22, blur: 2.4, grain: 'plastic', faceLift: 1.0, light: true },
+    putty: { base: '#b9b09c', reflect: 0.18, blur: 2.8, grain: 'plastic', faceLift: 1.0, light: true },
+    charcoal: { base: '#2c2d31', reflect: 0.45, blur: 1.8, grain: 'plastic', faceLift: 1.7 },
+    black: { base: '#141416', reflect: 0.58, blur: 1.2, grain: 'gloss', faceLift: 2.1 },
+    aluminium: { base: '#a2a6ad', reflect: 0.38, blur: 1.6, grain: 'brushed', faceLift: 1.0, light: true },
+    gunmetal: { base: '#3a3d43', reflect: 0.48, blur: 1.4, grain: 'brushed', faceLift: 1.5 },
+    glass: { base: null, reflect: 0.5, blur: 1.0, grain: 'frost', faceLift: 1.0 },
+    accent: { base: null, reflect: 0.32, blur: 2.0, grain: 'plastic', faceLift: 1.2 }
+  };
+  /* the look's own case: graphite or brushed aluminium in Basic, graphite or putty in Friendly, glass in Glass, black gloss
+     or platinum in Retro (the two classic terminals), ink in NieR */
+  function lookMaterial(look, light) {
+    if (look === 'glass') return 'glass';
+    if (look === 'retro') return light ? 'platinum' : 'black';
+    if (look === 'friendly') return light ? 'putty' : 'charcoal';
+    return light ? 'aluminium' : 'charcoal';
+  }
+  /* light from above and a little left: the sloped face's four parts (Mega Bezel's 0.5 / 1 / 2) and the flat frame */
+  var FACE = { top: 0.5, left: 1.0, right: 0.8, bottom: 2.0 };
+  var FRAME = { top: 1.08, left: 1.0, right: 0.95, bottom: 0.9 };
+  var SIDES = ['top', 'right', 'bottom', 'left'];
+
+  var lin = function (v) { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+  var srgb = function (v) { v = Math.max(0, Math.min(1, v)); return Math.round((v <= 0.0031308 ? v * 12.92 : 1.055 * Math.pow(v, 1 / 2.4) - 0.055) * 255); };
+  /* light on a surface: its colour times k in linear light; a light case answers less, so it never washes to white */
+  function lit(c, k, light) { var kk = light ? 1 + (k - 1) * 0.4 : k; return C.rgb(srgb(lin(C.r(c)) * kk), srgb(lin(C.g(c)) * kk), srgb(lin(C.b(c)) * kk)); }
+  function hex(c) { return C.toHex(c); }
+  function rgba(c, a) { return 'rgba(' + C.r(c) + ',' + C.g(c) + ',' + C.b(c) + ',' + a + ')'; }
+  function cssVar(name) { try { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); } catch (e) { return ''; } }
+
+  /* grain tiles, made once */
+  var tiles = {};
+  function tile(kind) {
+    if (tiles[kind]) return tiles[kind];
+    var cv = document.createElement('canvas'), n = kind === 'brushed' ? 256 : 96;
+    cv.width = n; cv.height = kind === 'brushed' ? 32 : n;
+    var g = cv.getContext('2d'), seed = 7, rnd = function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    if (kind === 'brushed') {
+      for (var y = 0; y < cv.height; y++) for (var k = 0; k < 6; k++) {
+        var x = rnd() * n, l = 20 + rnd() * 120, v = rnd() < 0.5 ? 255 : 0;
+        g.fillStyle = 'rgba(' + v + ',' + v + ',' + v + ',' + (0.03 + rnd() * 0.06) + ')'; g.fillRect(x, y, l, 1); g.fillRect(x - n, y, l, 1);
+      }
+    } else {
+      var img = g.createImageData(n, n), d = img.data;
+      for (var i = 0; i < d.length; i += 4) { var w = rnd() < 0.5 ? 255 : 0; d[i] = d[i + 1] = d[i + 2] = w; d[i + 3] = Math.round(rnd() * (kind === 'frost' ? 12 : 20)); }
+      g.putImageData(img, 0, 0);
+    }
+    tiles[kind] = cv;
+    return cv;
+  }
+
+  function roundRect(x, y, w, h, r) {
+    var p = new Path2D(); r = Math.max(0, Math.min(r, w / 2, h / 2));
+    p.moveTo(x + r, y); p.lineTo(x + w - r, y); p.arcTo(x + w, y, x + w, y + r, r); p.lineTo(x + w, y + h - r);
+    p.arcTo(x + w, y + h, x + w - r, y + h, r); p.lineTo(x + r, y + h); p.arcTo(x, y + h, x, y + h - r, r);
+    p.lineTo(x, y + r); p.arcTo(x, y, x + r, y, r); p.closePath();
+    return p;
+  }
+  function polyPath(pts) { var p = new Path2D(); pts.forEach(function (q, i) { if (i) p.lineTo(q[0], q[1]); else p.moveTo(q[0], q[1]); }); p.closePath(); return p; }
+  /* the opening as points (CSS px, screen coordinates): the tube's curved edge, or a rounded rectangle */
+  function rectPts(x, y, w, h, r) {
+    var pts = [], arc = function (cx, cy, a0) { for (var i = 0; i <= 8; i++) { var a = a0 + (Math.PI / 2) * i / 8; pts.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]); } };
+    r = Math.max(0, Math.min(r, w / 2, h / 2));
+    if (r <= 0) return [[x, y], [x + w, y], [x + w, y + h], [x, y + h]];
+    arc(x + w - r, y + r, -Math.PI / 2); arc(x + w - r, y + h - r, 0); arc(x + r, y + h - r, Math.PI / 2); arc(x + r, y + r, Math.PI);
+    return pts;
+  }
+  /* the four parts of a ring between an outer box and an inner box, split at the diagonals through their corners */
+  function parts(o, i) {
+    return {
+      top: [[o[0], o[1]], [o[2], o[1]], [i[2], i[1]], [i[0], i[1]]],
+      right: [[o[2], o[1]], [o[2], o[3]], [i[2], i[3]], [i[2], i[1]]],
+      bottom: [[o[2], o[3]], [o[0], o[3]], [i[0], i[3]], [i[2], i[3]]],
+      left: [[o[0], o[3]], [o[0], o[1]], [i[0], i[1]], [i[0], i[3]]]
+    };
+  }
+
+  function Bezel(view) {
+    this.view = view;
+    var el = this.el = document.createElement('div');
+    el.className = 'pmt-bezel'; el.hidden = true; el.setAttribute('aria-hidden', 'true');
+    this.housing = document.createElement('canvas'); this.housing.className = 'pmt-bezel-housing';
+    el.appendChild(this.housing);
+    this.spec = { style: 'off' }; this.geoKey = ''; this.dirty = false; this.timer = 0; this.last = 0; this.paintTimer = 0;
+  }
+  Bezel.prototype.on = function () { return this.spec.style !== 'off'; };
+  /* the resolved bezel (42-appearance.js): style, width, gap, material, reflection; and the look's theme */
+  Bezel.prototype.configure = function (bz, ap) {
+    var th = ap.theme || {}, light = th.appearance === 'light' || C.lum(th.bg) > 0.4, look = (ap.effects && ap.effects.look) || 'basic';
+    var mat = bz.style === 'off' ? null : look === 'nier' ? 'ink' : (bz.color && bz.color !== 'follow' ? bz.color : lookMaterial(look, light));
+    this.spec = { style: bz.style || 'off', width: bz.width || 0, gap: bz.gap || 0, material: mat, reflect: bz.reflect,
+      light: light, bg: th.bg, fg: th.fg, accent: th.palette ? th.palette[4] : th.fg, glow: !!(ap.effects && ap.effects.glow && ap.effects.glow.on), look: look };
+    this.el.hidden = !this.on();
+    this.view.root.setAttribute('data-pmt-bezel', this.spec.style);
+    this.geoKey = '';
+    if (!this.on()) this._release();
+  };
+  /* the geometry from the view's layout: screen size, the grid's rectangle; painted just after the layout's frame */
+  Bezel.prototype.layout = function (w, h, gx, gy, gw, gh, dpr) {
+    if (!this.on()) return;
+    this.g = { w: w, h: h, gx: gx, gy: gy, gw: gw, gh: gh, dpr: dpr };
+    var self = this;
+    clearTimeout(this.paintTimer);
+    this.paintTimer = setTimeout(function () { self.paintTimer = 0; self._paint(); }, 30);
+  };
+  Bezel.prototype.frame = function () {
+    if (!this.on() || !this.geo) return;
+    this.dirty = true;
+    if (this.timer) return;
+    var self = this, wait = Math.max(0, 1000 / MAX_FPS - (T.util.now() - this.last));
+    this.timer = setTimeout(function () { self.timer = 0; if (self.dirty) self._reflect(); }, wait);
+  };
+  Bezel.prototype._release = function () {
+    clearTimeout(this.timer); clearTimeout(this.paintTimer); this.timer = this.paintTimer = 0;
+    this.housing.width = this.housing.height = 0;
+    this.cache = this.masks = this.snap = this.reflectCv = this.tmpCv = null; this.geo = null;
+  };
+  Bezel.prototype.dispose = function () { this._release(); this.el.remove(); };
+
+  /* the tube's edge in screen CSS px: Full CRT's curved glass, the CPU fallback's rounded glass, or the case's own opening */
+  Bezel.prototype._opening = function () {
+    var v = this.view, g = this.g, s = this.spec, fx = v.fx, crt = fx && fx.cfg && fx.cfg.crt;
+    if (crt && T.FXGL && fx.active && fx.cfg.curvature && fx.cfg.curvature.on) {
+      var p = fx.params ? fx.params(T.util.now()) : null, dpr = g.dpr, W = Math.round(g.gw * dpr), H = Math.round(g.gh * dpr);
+      if (p && W > 0 && H > 0) {
+        var geo = T.FXGL.geometry(p, W, H, W, H, dpr);
+        return { pts: T.FXGL.tubeOutline(geo, 10 * dpr).map(function (q) { return [g.gx + q[0] * g.gw, g.gy + q[1] * g.gh]; }), tube: true };
+      }
+    }
+    if (crt) return { pts: rectPts(g.gx, g.gy, g.gw, g.gh, T.FXGL ? T.FXGL.CORNER_CSS : 10), tube: true };
+    var r = s.material === 'ink' ? 0 : s.style === 'rim' ? 4 : 7;
+    return { pts: rectPts(s.width, s.width, g.w - s.width * 2, g.h - s.width * 2, r), tube: false };
+  };
+
+  Bezel.prototype._paint = function () {
+    if (!this.on() || !this.g) return;
+    var g = this.g, s = this.spec, dpr = g.dpr, W = Math.max(1, Math.round(g.w * dpr)), H = Math.max(1, Math.round(g.h * dpr));
+    var op = this._opening();
+    var key = [W, H, dpr, s.style, s.width, s.material, s.light, s.bg, s.accent, op.pts.length, op.pts[0].join(','), op.pts[Math.floor(op.pts.length / 3)].join(',')].join('|');
+    if (key === this.geoKey && this.cache) { this._reflect(true); return; }
+    this.geoKey = key;
+    var bb = op.pts.reduce(function (b, q) { return [Math.min(b[0], q[0]), Math.min(b[1], q[1]), Math.max(b[2], q[0]), Math.max(b[3], q[1])]; }, [Infinity, Infinity, -Infinity, -Infinity]);
+    /* the flat frame takes 40 % of a monitor case's width (all of a slim one); the sloped face the rest, out to the glass */
+    var fw = s.material === 'ink' ? s.width : s.style === 'case' ? Math.max(3, Math.round(s.width * 0.4)) : Math.max(2, s.width - 2);
+    var outerR = s.material === 'ink' ? 0 : Math.min(16, (s.style === 'rim' ? 4 : 7) + s.width), innerR = s.material === 'ink' ? 0 : Math.max(2, outerR - fw);
+    var frameIn = [fw, fw, g.w - fw, g.h - fw];
+    /* the strips the case covers: out to how far the curved corners reach into the opening's box, and the shadow beyond */
+    var depth = op.pts.reduce(function (d, q) { return Math.max(d, Math.min(q[0] - bb[0], bb[2] - q[0], q[1] - bb[1], bb[3] - q[1])); }, 0) + 10;
+    var t = Math.min(g.h, bb[1] + depth), b = Math.max(0, bb[3] - depth), l = Math.min(g.w, bb[0] + depth), r = Math.max(0, bb[2] - depth);
+    var strips = [[0, 0, g.w, t], [0, b, g.w, g.h - b], [0, t, l, b - t], [r, t, g.w - r, b - t]].filter(function (q) { return q[2] > 0 && q[3] > 0; })
+      .map(function (q) { var x0 = Math.floor(q[0] * dpr), y0 = Math.floor(q[1] * dpr); return [x0, y0, Math.min(W, Math.ceil((q[0] + q[2]) * dpr)) - x0, Math.min(H, Math.ceil((q[1] + q[3]) * dpr)) - y0]; });
+    var outer = roundRect(0, 0, g.w, g.h, outerR), inner = roundRect(frameIn[0], frameIn[1], frameIn[2] - frameIn[0], frameIn[3] - frameIn[1], innerR), opening = polyPath(op.pts);
+    /* how wide the face is at its narrowest (the middle of an edge): the reflection's reach is measured against it */
+    var faceMin = Math.max(2, Math.min(bb[1] - fw, bb[0] - fw, g.h - fw - bb[3], g.w - fw - bb[2]));
+    this.geo = { W: W, H: H, op: op, bb: bb, strips: strips, fw: fw, frameIn: frameIn, faceMin: faceMin, outer: outer, inner: inner, opening: opening,
+      faceParts: parts(frameIn, bb), frameParts: parts([0, 0, g.w, g.h], frameIn) };
+    var cv = this.cache || (this.cache = document.createElement('canvas'));
+    cv.width = W; cv.height = H;
+    var ctx = cv.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    this._housing(ctx, g, s, this.geo);
+    this.housing.width = W; this.housing.height = H;
+    this._masks(g, s, this.geo);
+    this._reflect(true);
+  };
+
+  Bezel.prototype._housing = function (ctx, g, s, geo) {
+    var mat = s.material, ink = mat === 'ink', glass = mat === 'glass', M = MATERIALS[mat] || MATERIALS.charcoal, light = !!M.light;
+    var base = ink ? C.mix(s.bg, s.fg, 0.24) : mat === 'accent' ? C.mix(s.accent, 0x5c5c5c, 0.45) : glass ? (s.light ? 0xffffff : 0xdfe6f2) : C.hex(M.base);
+    var face = glass || ink ? base : lit(base, M.faceLift, light);
+    var ring = new Path2D(); ring.addPath(geo.outer); ring.addPath(geo.opening);
+    var frameRing = new Path2D(); frameRing.addPath(geo.outer); frameRing.addPath(geo.inner);
+    var faceRing = new Path2D(); faceRing.addPath(geo.inner); faceRing.addPath(geo.opening);
+    /* glass: a clear film of the same light; on a light screen its faces take a faint cool shade by side, so the creases
+       still read (Liquid Glass's shaded edge colour) */
+    var ga = s.light ? 0.4 : 0.1, col = function (c, k, a) {
+      if (!glass) return hex(lit(c, k, light));
+      if (s.light) return k >= 1 ? rgba(0xffffff, Math.min(0.85, 0.35 * k)) : rgba(C.hex('#1e2d5a'), 0.16 * (1 - k) + 0.04);
+      return rgba(lit(c, k, true), a === undefined ? ga : a);
+    };
+    ctx.clearRect(0, 0, g.w, g.h);
+    ctx.save(); ctx.clip(ring, 'evenodd');
+    if (ink) {
+      ctx.fillStyle = hex(base); ctx.fillRect(0, 0, g.w, g.h);
+      ctx.restore();
+      ctx.lineWidth = 1; ctx.strokeStyle = hex(C.mix(s.bg, s.fg, 0.4)); ctx.stroke(geo.opening); ctx.stroke(geo.outer);
+      return;
+    }
+    /* the flat frame: each side a shade of the same light, a touch lighter along the top */
+    ctx.save(); ctx.clip(frameRing, 'evenodd');
+    SIDES.forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = col(base, FRAME[side]); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
+    ctx.restore();
+    /* the sloped face: four parts meeting in crisp creases, each lit by where it faces, a little darker toward the glass */
+    ctx.save(); ctx.clip(faceRing, 'evenodd');
+    var fb = geo.frameIn, bb = geo.bb;
+    SIDES.forEach(function (side) {
+      ctx.save(); ctx.clip(polyPath(geo.faceParts[side]));
+      var k = FACE[side], gr = side === 'top' ? ctx.createLinearGradient(0, fb[1], 0, bb[1]) : side === 'bottom' ? ctx.createLinearGradient(0, fb[3], 0, bb[3])
+        : side === 'left' ? ctx.createLinearGradient(fb[0], 0, bb[0], 0) : ctx.createLinearGradient(fb[2], 0, bb[2], 0);
+      gr.addColorStop(0, col(face, k * 1.08)); gr.addColorStop(1, col(face, k * 0.9));
+      ctx.fillStyle = gr; ctx.fillRect(0, 0, g.w, g.h);
+      ctx.restore();
+    });
+    /* the creases: a hairline of light along each diagonal where two parts of the face meet */
+    ctx.lineWidth = 1; ctx.strokeStyle = glass ? 'rgba(255,255,255,' + (s.light ? 0.5 : 0.16) + ')' : rgba(lit(face, 2.2, light), 0.35);
+    [[fb[0], fb[1], bb[0], bb[1]], [fb[2], fb[1], bb[2], bb[1]], [fb[2], fb[3], bb[2], bb[3]], [fb[0], fb[3], bb[0], bb[3]]].forEach(function (q) { ctx.beginPath(); ctx.moveTo(q[0], q[1]); ctx.lineTo(q[2], q[3]); ctx.stroke(); });
+    ctx.restore();
+    /* the grain: speckle in plastic, streaks along each side in metal, frost in glass */
+    var tl = tile(M.grain === 'brushed' ? 'brushed' : M.grain === 'frost' ? 'frost' : 'plastic');
+    ctx.globalCompositeOperation = glass ? 'source-over' : 'overlay'; ctx.globalAlpha = M.grain === 'gloss' ? 0.45 : glass ? 0.6 : 1;
+    if (M.grain === 'brushed') {
+      ['top', 'bottom'].forEach(function (side) { ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); ctx.restore(); });
+      ['left', 'right'].forEach(function (side) {
+        ctx.save(); ctx.clip(polyPath(geo.frameParts[side])); ctx.translate(g.w / 2, g.h / 2); ctx.rotate(Math.PI / 2); ctx.translate(-g.h / 2, -g.w / 2);
+        ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.h, g.w); ctx.restore();
+      });
+    } else { ctx.fillStyle = ctx.createPattern(tl, 'repeat'); ctx.fillRect(0, 0, g.w, g.h); }
+    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+    /* where frame turns into face: a lit edge on the lower half, a shaded one on the upper */
+    ctx.lineWidth = 1;
+    ctx.save(); ctx.beginPath(); ctx.rect(0, g.h / 2, g.w, g.h); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(255,255,255,.3)' : rgba(lit(base, 2.4, light), 0.6); ctx.stroke(geo.inner); ctx.restore();
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, g.w, g.h / 2); ctx.clip(); ctx.strokeStyle = glass ? 'rgba(0,0,0,.18)' : rgba(lit(base, 0.4, light), 0.8); ctx.stroke(geo.inner); ctx.restore();
+    /* the outer edge: darkened, with a hairline of light along its top and left */
+    ctx.lineWidth = 2; ctx.strokeStyle = glass ? (cssVar('--lg-edge-bot') || 'rgba(0,0,0,.28)') : rgba(lit(base, 0.45, light), 0.9); ctx.stroke(geo.outer);
+    ctx.save(); ctx.clip(polyPath([[0, 0], [g.w, 0], [0, g.h]])); ctx.lineWidth = 1;
+    ctx.strokeStyle = glass ? (cssVar('--lg-edge-top') || 'rgba(255,255,255,.3)') : rgba(lit(base, 2.2, light), 0.55);
+    ctx.stroke(roundRect(1.5, 1.5, g.w - 3, g.h - 3, Math.max(0, (Math.min(16, (s.style === 'rim' ? 4 : 7) + s.width)) - 1.5))); ctx.restore();
+    ctx.restore();
+    /* at the glass: a thin bright lip that never goes fully dark, then a near-black unlit ring; the case's shadow under
+       the top lip falls a few pixels onto the glass */
+    ctx.save(); ctx.lineJoin = 'round';
+    ctx.save(); ctx.clip(ring, 'evenodd'); ctx.lineWidth = 4.4;
+    ctx.strokeStyle = glass ? (cssVar('--lg-lens-hair') || 'rgba(255,255,255,' + (s.light ? 0.9 : 0.5) + ')') : hex(lit(face, light ? 1.35 : 3.2, light));
+    ctx.stroke(geo.opening); ctx.restore();
+    ctx.lineWidth = 2.4; ctx.strokeStyle = glass ? 'rgba(0,0,0,.3)' : 'rgba(0,0,0,.82)'; ctx.stroke(geo.opening);
+    if (glass) { ctx.save(); ctx.clip(polyPath([[0, 0], [g.w, 0], [bb[2], bb[1] + 6], [bb[0], bb[1] + 6]])); ctx.lineWidth = 2; ctx.strokeStyle = cssVar('--lg-lens-glint') || 'rgba(255,255,255,.55)'; ctx.stroke(geo.opening); ctx.restore(); }
+    ctx.clip(geo.opening);
+    ctx.shadowColor = 'rgba(0,0,0,' + (glass ? 0.22 : s.light ? 0.3 : 0.55) + ')'; ctx.shadowBlur = (s.style === 'case' ? 8 : 4) * g.dpr; ctx.shadowOffsetY = 2 * g.dpr;
+    var around = new Path2D(); around.rect(-40, -40, g.w + 80, g.h + 80); around.addPath(geo.opening);
+    ctx.fillStyle = '#000'; ctx.fill(around, 'evenodd');
+    ctx.restore();
+  };
+
+  /* where the screen's light falls, at 0.4 of CSS size: the direct reflection and its diffused copy on the face, faded by
+     Mega Bezel's (1 - sqrt(d/D))^2 from the glass outward and toward the corners; and the glow over face and frame */
+  var RS = 0.4;
+  Bezel.prototype._masks = function (g, s, geo) {
+    if (s.material === 'ink') { this.masks = null; return; }
+    var w = Math.max(1, Math.round(g.w * RS)), h = Math.max(1, Math.round(g.h * RS));
+    var faceRing = new Path2D(); faceRing.addPath(geo.inner); faceRing.addPath(geo.opening);
+    var ring = new Path2D(); ring.addPath(geo.outer); ring.addPath(geo.opening);
+    var bb = geo.bb;
+    var make = function (region, reach, peak, corners) {
+      var cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+      var c = cv.getContext('2d'); c.setTransform(RS, 0, 0, RS, 0, 0); c.clip(region, 'evenodd'); c.lineJoin = 'round'; c.strokeStyle = '#fff';
+      /* bands from the far edge inward, each adding just enough that the band ends at the curve's value */
+      var N = 10, prev = 0;
+      for (var i = N; i >= 1; i--) {
+        var d = reach * i / N, a = peak * Math.pow(1 - Math.sqrt(Math.min(1, (d - reach / N) / reach)), 2);
+        var inc = prev >= 1 ? 0 : Math.max(0, 1 - (1 - a) / (1 - prev));
+        c.globalAlpha = inc; c.lineWidth = d * 2; c.stroke(geo.opening); prev = Math.max(prev, a);
+      }
+      c.globalAlpha = 1; c.setTransform(1, 0, 0, 1, 0, 0);
+      if (corners) {
+        c.globalCompositeOperation = 'destination-out';
+        [[bb[0], bb[1]], [bb[2], bb[1]], [bb[2], bb[3]], [bb[0], bb[3]]].forEach(function (q) {
+          var rr = Math.min(g.w, g.h) * 0.12 * RS, gr = c.createRadialGradient(q[0] * RS, q[1] * RS, 0, q[0] * RS, q[1] * RS, rr);
+          gr.addColorStop(0, 'rgba(0,0,0,.8)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); c.fillStyle = gr; c.fillRect(0, 0, w, h);
+        });
+      }
+      return cv;
+    };
+    var reach = Math.max(8, geo.faceMin * 1.5);
+    this.masks = {
+      direct: make(faceRing, reach, 1, true),
+      diffused: make(faceRing, reach * 2, 0.9, true),
+      glow: make(ring, Math.max(reach * 2.5, s.width + 30), 0.75, false)
+    };
+  };
+
+  /* the screen, small: its ground and its text (the effects pass reads the same canvas) */
+  Bezel.prototype._snapshot = function () {
+    var v = this.view, src = v.canvas, g = this.g;
+    if (!src.width || !src.height) return null;
+    var sw = 200, sh = Math.max(24, Math.round(sw * g.gh / Math.max(1, g.gw)));
+    var cv = this.snap || (this.snap = document.createElement('canvas'));
+    if (cv.width !== sw || cv.height !== sh) { cv.width = sw; cv.height = sh; }
+    var c = cv.getContext('2d');
+    c.globalCompositeOperation = 'source-over'; c.globalAlpha = 1;
+    c.fillStyle = hex(this.spec.bg); c.fillRect(0, 0, sw, sh);
+    try { c.drawImage(src, 0, 0, sw, sh); } catch (e) { return null; }
+    if (this.spec.glow) { c.globalCompositeOperation = 'lighter'; c.globalAlpha = 0.35; c.drawImage(cv, 0, 0); c.globalCompositeOperation = 'source-over'; c.globalAlpha = 1; }
+    return cv;
+  };
+
+  Bezel.prototype._reflect = function (force) {
+    this.dirty = false; this.last = T.util.now();
+    var geo = this.geo, s = this.spec;
+    if (!geo || !this.cache) return;
+    if (!this.view.visible && !force) { this.dirty = true; return; }
+    var out = this.housing, oc = out.getContext('2d');
+    if (out.width !== geo.W || out.height !== geo.H) { out.width = geo.W; out.height = geo.H; }
+    var M = MATERIALS[s.material], strength = s.reflect === null || s.reflect === undefined ? (M ? M.reflect : 0) : s.reflect;
+    var R = M && strength > 0 && this.masks ? this._light(Math.min(1, strength)) : null;
+    /* the four strips: the housing, then the screen's light on it as light (screen blend; Glass in light mode lays it on
+       plainly, as Liquid Glass's glint does there) */
+    var glassLight = s.material === 'glass' && s.light;
+    geo.strips.forEach(function (q) {
+      oc.clearRect(q[0], q[1], q[2], q[3]);
+      oc.drawImage(this.cache, q[0], q[1], q[2], q[3], q[0], q[1], q[2], q[3]);
+      if (R) {
+        oc.save(); oc.beginPath(); oc.rect(q[0], q[1], q[2], q[3]); oc.clip();
+        oc.globalCompositeOperation = glassLight ? 'source-over' : 'screen'; oc.globalAlpha = glassLight ? 0.6 : 1;
+        oc.drawImage(R, 0, 0, geo.W, geo.H);
+        oc.restore();
+      }
+    }, this);
+  };
+  /* each face shows the picture mirrored about the glass edge beside it and folded (a narrow face still shows whole rows),
+     sharp, then diffused; the glow is the picture unfolded and very soft, over the whole case */
+  var FOLD = 2.6;
+  Bezel.prototype._light = function (strength) {
+    var snap = this._snapshot(); if (!snap) return null;
+    var geo = this.geo, g = this.g, s = this.spec, M = MATERIALS[s.material], bb = geo.bb, m = this.masks;
+    var w = m.direct.width, h = m.direct.height;
+    var R = this.reflectCv || (this.reflectCv = document.createElement('canvas')), T2 = this.tmpCv || (this.tmpCv = document.createElement('canvas'));
+    [R, T2].forEach(function (c) { if (c.width !== w || c.height !== h) { c.width = w; c.height = h; } });
+    var rc = R.getContext('2d'), tc = T2.getContext('2d');
+    rc.clearRect(0, 0, w, h);
+    /* the mirror about each edge, folded by f: a point d inside the glass lands d/f outside it */
+    var mirror = function (side, f) {
+      var e = side === 'top' ? bb[1] : side === 'bottom' ? bb[3] : side === 'left' ? bb[0] : bb[2];
+      return side === 'top' || side === 'bottom' ? [RS, 0, 0, -RS / f, 0, RS * (e + e / f)] : [-RS / f, 0, 0, RS, RS * (e + e / f), 0];
+    };
+    var areas = { face: geo.faceParts, all: parts([0, 0, g.w, g.h], bb) };
+    var pass = function (blur, mask, alpha, f, area) {
+      tc.save(); tc.setTransform(1, 0, 0, 1, 0, 0); tc.globalCompositeOperation = 'source-over'; tc.globalAlpha = 1; tc.clearRect(0, 0, w, h);
+      tc.filter = blur > 0 ? 'blur(' + (blur * RS).toFixed(2) + 'px)' : 'none';
+      SIDES.forEach(function (side) {
+        tc.save(); tc.setTransform(RS, 0, 0, RS, 0, 0); tc.clip(polyPath(areas[area][side]));
+        var t = mirror(side, f); tc.setTransform(t[0], t[1], t[2], t[3], t[4], t[5]);
+        tc.drawImage(snap, g.gx, g.gy, g.gw, g.gh);
+        tc.restore();
+      });
+      tc.filter = 'none';
+      tc.globalCompositeOperation = 'destination-in'; tc.drawImage(mask, 0, 0);
+      tc.restore();
+      rc.globalAlpha = Math.min(1, alpha); rc.globalCompositeOperation = 'lighter'; rc.drawImage(T2, 0, 0); rc.globalAlpha = 1; rc.globalCompositeOperation = 'source-over';
+    };
+    pass(M.blur, m.direct, strength * 1.25, FOLD, 'face');
+    pass(M.blur * 4 + 3, m.diffused, strength * 0.55, FOLD, 'face');
+    pass(16, m.glow, strength * (s.glow ? 0.75 : 0.45), 1, 'all');
+    return R;
+  };
+
+  T.Bezel = Bezel;
+  T.Bezel.MATERIALS = Object.keys(MATERIALS);
+  T.Bezel.lookMaterial = lookMaterial;
+  /* the share of the screen's light a material gives back, the Reflection slider's Auto */
+  T.Bezel.reflectOf = function (id, look, light) { var m = MATERIALS[!id || id === 'follow' ? lookMaterial(look, light) : id]; return m ? m.reflect : 0; };
 })();
 /* ---- terminal/js/72-find.js ---- */
 /* Find overlay (D13): regex, case, whole word, highlight all, a count, next and previous. Matches are found on
@@ -212374,10 +213243,14 @@ var T = {};
     ['phosphor', 'Phosphor', 'An afterglow'], ['trace', 'Trace', 'A thin ink line']];
   /* the background's kinds as the screen sorts them (round 2): T.Grounds' categories between Plain and Yours. Show is
      only a filter of the tiles; a tile is the choice */
-  var GCATS = [['plain', 'Plain'], ['tonal', 'Tonal'], ['wash', 'Wash'], ['pattern', 'Pattern'], ['scene', 'Scene'], ['mark', 'Mark'], ['moving', 'Moving'], ['yours', 'Yours']];
+  /* round 3: Glass and Retro kinds, every moving design under Moving whatever its kind, and All: any design in any look */
+  var GCATS = [['plain', 'Plain'], ['tonal', 'Tonal'], ['wash', 'Wash'], ['pattern', 'Pattern'], ['scene', 'Scene'], ['glass', 'Glass'], ['retro', 'Retro'], ['mark', 'Mark'], ['moving', 'Moving'], ['all', 'All'], ['yours', 'Yours']];
+  var LOOK_NAMES = { basic: 'Basic', friendly: 'Friendly', glass: 'Glass', retro: 'Retro', nier: 'NieR' };
   var PLAIN = [['follow', 'Look’s own', 'The look’s own ground'], ['theme', 'Theme surface', 'The scheme’s own colour'], ['solid', 'Solid colour', 'Any colour you pick']];
-  var BEZELS = [['off', 'Off'], ['rim', 'Rim'], ['case', 'Monitor case', 'Case']];
-  var BEZEL_COLORS = [['follow', 'Follow look', ''], ['charcoal', 'Charcoal', '#1c1b19'], ['black', 'Black', '#0d0d0e'], ['platinum', 'Platinum', '#cfc8b8'], ['putty', 'Putty', '#b8b0a0'], ['accent', 'Accent', '']];
+  /* round 3: a slim lip or a monitor case (71-bezel.js), in the materials real housings were made of */
+  var BEZELS = [['off', 'Off'], ['rim', 'Slim'], ['case', 'Monitor']];
+  var BEZEL_COLORS = [['follow', 'Follow look', ''], ['charcoal', 'Graphite plastic', '#393a3e'], ['black', 'Black gloss', '#151517'], ['platinum', 'Platinum plastic', '#cfc8b8'],
+    ['putty', 'Putty plastic', '#b8af9d'], ['aluminium', 'Brushed aluminium', ''], ['gunmetal', 'Gunmetal', ''], ['glass', 'Glass', ''], ['accent', 'Accent plastic', '']];
   var FACE_TAGS = { 'jetbrains-mono': 'Code face', 'atkinson': 'Easy reading', 'vt323': 'Retro', 'departure': 'Retro', 'sixtyfour': 'Retro, scan axes',
     'sixtyfour-raster': 'Retro, baked scan', 'system': 'This computer’s' };
   /* the effect chips: what each draws, in plain words */
@@ -212399,7 +213272,7 @@ var T = {};
   /* the fields the meter counts, in the order the screen shows them */
   var COUNTED = ['scheme', 'schemePair', 'minContrast', 'font', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing', 'ligatures', 'boldBright',
     'fontRendering', 'sixtyfourScan', 'sixtyfourBleed', 'cursorShape', 'cursorBlink', 'cursorTrail', 'background', 'bgColor', 'bgGradient', 'bgImage',
-    'bgImageData', 'bgDim', 'bgBlur', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat', 'opacity', 'padding', 'bezel', 'bezelWidth', 'bezelColor',
+    'bgImageData', 'bgDim', 'bgBlur', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat', 'opacity', 'padding', 'bezel', 'bezelWidth', 'bezelColor', 'bezelReflect',
     'effects', 'scanlines', 'scanStrength', 'glow', 'glowStrength', 'crt', 'curvature', 'crtMask', 'burnIn',
     'noise', 'flicker', 'flickerAmount', 'inactiveDim', 'smoothScroll', 'bell', 'stickyHeader', 'copyOnSelect'];
   var GROUP_KEYS = {
@@ -212408,7 +213281,7 @@ var T = {};
     cursor: ['cursorShape', 'cursorBlink', 'cursorTrail'],
     ground: ['background', 'bgColor', 'bgGradient', 'bgImage', 'bgImageData', 'bgDim', 'bgBlur', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat', 'opacity', 'padding'],
     effects: ['effects', 'scanlines', 'scanStrength', 'glow', 'glowStrength', 'crt', 'curvature', 'crtMask', 'burnIn', 'noise', 'flicker', 'flickerAmount', 'inactiveDim', 'smoothScroll',
-      'bezel', 'bezelWidth', 'bezelColor'],
+      'bezel', 'bezelWidth', 'bezelColor', 'bezelReflect'],
     behavior: ['bell', 'stickyHeader', 'copyOnSelect']
   };
   var GROUPS = [['colors', 'Colors'], ['text', 'Text'], ['cursor', 'Cursor'], ['ground', 'Background'], ['effects', 'Effects'], ['behavior', 'Behavior']];
@@ -212567,8 +213440,9 @@ var T = {};
       '<p class="pmt-cz-note" data-note-trail hidden></p></section>';
     /* background (round 2): the look's own picks, then every kind; each tile is this scheme's own version of it */
     html += '<section class="pmt-cz-group" data-group="ground" aria-labelledby="pmt-cz-g-ground">' + ghead('ground', 'Background', 'Every background is drawn from the colour scheme, so it fits the look, light or dark, and keeps the text readable.') +
-      '<div class="pmt-cz-field pmt-cz-forlook"><span class="pmt-cz-flabel">For this look</span><div class="pmt-cz-tiles pmt-cz-gtiles" role="radiogroup" aria-label="Backgrounds for this look" data-forlook></div></div>' +
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Show</span><div class="pmt-cz-seg pmw-ink-row pmt-cz-gcats" role="tablist" aria-label="Kinds of background" data-seg="groundCat">' +
+      '<div class="pmt-cz-field pmt-cz-forlook"><span class="pmt-cz-flabel" data-forlook-label>Suggested for this look</span><div class="pmt-cz-tiles pmt-cz-gtiles" role="radiogroup" aria-label="Suggested backgrounds" data-forlook></div>' +
+      '<span class="pmt-cz-fhelp">Suggestions only: every background works in every look. Show lists them all.</span></div>' +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Show</span><div class="pmw-ink-row pmt-cz-gcats" role="tablist" aria-label="Kinds of background" data-seg="groundCat">' +
       GCATS.map(function (c) { return '<button type="button" class="pmt-cz-segopt pmw-ink-opt" role="tab" aria-selected="false" data-gcat="' + c[0] + '"' + NOTAG + '>' + esc(c[1]) + '</button>'; }).join('') + '</div></div>' +
       '<div class="pmt-cz-tiles pmt-cz-gtiles" role="radiogroup" aria-label="Backgrounds" data-gtiles></div>' +
       '<div class="pmt-cz-gctl" data-gctl="solid" hidden><div class="pmt-cz-field"><span class="pmt-cz-flabel">Colour</span><span class="pmt-cz-swatches" data-solid-swatches></span>' +
@@ -212582,6 +213456,7 @@ var T = {};
       '<div class="pmt-cz-field" data-gctl-sub="moving"><span class="pmt-cz-flabel">Motion</span>' + seg('bgMotion', [['off', 'Still'], ['gentle', 'Gentle'], ['lively', 'Lively']], 'Motion') +
       '<span class="pmt-cz-fhelp">It moves only while you work in this terminal, and never under Reduced Motion.</span></div></div>' +
       '<div class="pmt-cz-grid2">' + slider('opacity', 'Opacity (Glass)', 0.4, 1, 0.02, '%') + slider('padding', 'Padding', 0, 24, 1, ' px') + '</div>' +
+      '<p class="pmt-cz-fhelp">Padding is the space round the text: the number is the sides, top and bottom take 60 % of it (8 / 5 px).</p>' +
       '<p class="pmt-cz-note" data-note-ground hidden></p></section>';
     /* effects */
     html += '<section class="pmt-cz-group" data-group="effects" aria-labelledby="pmt-cz-g-effects">' + ghead('effects', 'Effects', 'Effects run only in the terminal you are in and stop when it is idle.') +
@@ -212596,9 +213471,9 @@ var T = {};
         return chip(e.key, e.name, e.help, extra);
       }).join('') + '</div>' +
       /* the bezel: its own choice, with or without Full CRT (round 2) */
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bezel</span>' + seg('bezel', BEZELS, 'Bezel') + '<span class="pmt-cz-fhelp">A frame round the screen, on its own or with Full CRT.</span></div>' +
-      '<div class="pmt-cz-bezelmore" data-bezel-more hidden><div class="pmt-cz-grid2">' + slider('bezelWidth', 'Width', 2, 24, 1, ' px') + '</div>' +
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Colour</span><div class="pmt-cz-swatches" role="radiogroup" aria-label="Bezel colour">' + BEZEL_COLORS.map(function (c) {
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bezel</span>' + seg('bezel', BEZELS, 'Bezel') + '<span class="pmt-cz-fhelp">A monitor housing round the screen that catches the screen’s light, on its own or with Full CRT.</span></div>' +
+      '<div class="pmt-cz-bezelmore" data-bezel-more hidden><div class="pmt-cz-grid2">' + slider('bezelWidth', 'Width', 2, 48, 1, ' px') + slider('bezelReflect', 'Reflection', 0, 1, 0.05, '%') + '</div>' +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Material</span><div class="pmt-cz-swatches" role="radiogroup" aria-label="Bezel material">' + BEZEL_COLORS.map(function (c) {
         return '<button type="button" class="pmt-cz-swatch" role="radio" aria-checked="false" data-key="bezelColor" data-value="' + c[0] + '" aria-label="' + esc(c[1]) + '"' + tagged(c[1]) + NOTAG + '><i data-bz="' + c[0] + '"' + (c[2] ? ' style="background:' + c[2] + '"' : '') + '></i></button>';
       }).join('') + '</div></div></div>' +
       '<p class="pmt-cz-note" data-note-fx hidden></p></section>';
@@ -212687,9 +213562,10 @@ var T = {};
       if (gv === 'theme') return hexC(th.bg);
       if (gv === 'solid') return val('bgColor') || hexC(th.bg);
       if (gv === 'custom') { var u = A().imageUrl('custom', val('bgImageData'), 0); return String(val('bgImageData') || '').match(/^img:/) && u ? 'center / cover no-repeat url("' + u + '"), ' + hexC(th.bg) : hexC(th.bg); }
-      var id = gv.slice(2), cat = G.cat(id), mot = G.motion(id);
-      if (cat === 'scene' || mot) {
-        var base = cat === 'scene' ? G.paint(id, th, 240, 150) : mot.under ? G.paint(mot.under, th, 240, 150) : null, lay = mot ? G.paint(id, th, 240, 150) : null;
+      var id = gv.slice(2), mot = G.motion(id), painted = G.painted(id);
+      if (painted || mot) {
+        var o = { rowPx: v.metrics ? v.metrics.cellH : 17, tile: true };
+        var base = painted ? G.paint(id, th, 240, 150, o) : mot.under ? G.paint(mot.under, th, 240, 150, o) : null, lay = mot ? G.paint(id, th, 240, 150, o) : null;
         return (lay ? 'center / cover no-repeat url("' + lay.url + '"), ' : '') + (base ? 'center / cover no-repeat url("' + base.url + '"), ' : '') + hexC(th.bg);
       }
       var D = G.css(id, th, { scale: val('bgScale') }); return D ? D.css : hexC(th.bg);
@@ -212707,9 +213583,15 @@ var T = {};
         gSig = sig;
         var fl = ['follow'].concat(G.forLook(R.lookKey).map(function (id) { return (G.isGradient(id) ? 'g:' : 'i:') + id; })).slice(0, 6);
         root.querySelector('[data-forlook]').innerHTML = fl.map(function (gv) { return groundTile(gv, gv === 'follow' ? 'Look’s own' : G.name(gv.slice(2)), th); }).join('');
+        root.querySelector('[data-forlook-label]').textContent = 'Suggested for ' + (LOOK_NAMES[R.lookKey] || 'this look');
         var tiles = gcat === 'plain' ? PLAIN.map(function (p) { return groundTile(p[0], p[1], th); }) :
           gcat === 'yours' ? [groundTile('custom', 'Your picture', th, A().pictureName(val('bgImageData') || '') || 'Choose one…')] :
-          G.list().filter(function (d) { return d.cat === gcat; }).map(function (d) { return groundTile((G.isGradient(d.id) ? 'g:' : 'i:') + d.id, d.name, th, d.moving ? 'Moves' : ''); });
+          G.list().filter(function (d) { return gcat === 'all' || (gcat === 'moving' ? d.moving : d.cat === gcat); }).map(function (d) {
+            /* in All, each design says which look suggests it, if one does: a hint, never a limit */
+            var meta = d.moving ? 'Moves' : '';
+            if (gcat === 'all' && d.looks.length) meta = (meta ? meta + ' · ' : '') + d.looks.map(function (l) { return LOOK_NAMES[l] || l; }).join(', ');
+            return groundTile((G.isGradient(d.id) ? 'g:' : 'i:') + d.id, d.name, th, meta);
+          });
         root.querySelector('[data-gtiles]').innerHTML = tiles.join('');
         /* solid: the scheme's own, a step deeper and a step softer, then any colour */
         var C = T.color, sw = [['Scheme', th.bg], ['Deeper', C.mix(th.bg, 0, 0.35)], ['Softer', C.mix(th.bg, th.fg, 0.08)]];
@@ -212723,7 +213605,10 @@ var T = {};
       root.querySelector('[data-gctl="solid"]').hidden = now !== 'solid';
       root.querySelector('[data-gctl="yours"]').hidden = !custom;
       root.querySelector('[data-gctl="design"]').hidden = !design;
-      [].forEach.call(root.querySelectorAll('[data-gctl-sub]'), function (s) { s.hidden = s.getAttribute('data-gctl-sub') !== cat0; });
+      /* a design's own controls: Blur for painted ones, Size for patterns, Motion for any that moves, whatever its kind */
+      var did = design ? now.slice(2) : '', painted = !!did && G.painted(did), moves = !!did && !!G.motion(did);
+      [].forEach.call(root.querySelectorAll('[data-gctl-sub]'), function (s) { var sub = s.getAttribute('data-gctl-sub');
+        s.hidden = !(sub === 'scene' ? painted || moves : sub === 'moving' ? moves : sub === cat0); });
       root.querySelector('[data-bezel-more]').hidden = val('bezel') === 'off';
     }
 
@@ -212784,6 +213669,9 @@ var T = {};
       if (key === 'lineHeight') return Number(x).toFixed(2) + '×';
       if (key === 'bgDim' || key === 'opacity' || key === 'scanStrength' || key === 'glowStrength' || key === 'bgStrength' || key === 'bgDesat') return Math.round(x * 100) + '%';
       if (key === 'bezelWidth') return Math.round(x) + ' px';
+      if (key === 'bezelReflect') return Math.round(x * 100) + '%';
+      /* the number is the sides; top and bottom take 60 % of it (pm7-customizer-audit): both shown, the help says which */
+      if (key === 'padding') return Math.round(x) + ' / ' + Math.round(x * 0.6) + ' px';
       if (key === 'letterSpacing' || key === 'bgBlur' || key === 'padding' || key === 'fontSize') return (Math.round(x * 100) / 100) + ' px';
       if (key === 'flickerAmount') return (Math.round(x * 1000) / 10) + '%';
       return String(Math.round(x * 1000) / 1000);
@@ -212836,11 +213724,13 @@ var T = {};
         if (key === 'opacity' && (x === null || x === undefined)) x = R.theme ? R.theme.bgAlpha : 1;
         if (key === 'sixtyfourScan' || key === 'sixtyfourBleed') x = x === null || x === undefined ? 0 : x;
         /* a width or a dim left to the style or to Auto shows the value in use */
-        if (key === 'bezelWidth' && (x === null || x === undefined)) x = R.bezel && R.bezel.width ? R.bezel.width : 10;
+        if (key === 'bezelWidth' && (x === null || x === undefined)) x = R.bezel && R.bezel.width ? R.bezel.width : 24;
+        var autoReflect = key === 'bezelReflect' && (x === null || x === undefined);
+        if (autoReflect) x = T.Bezel ? T.Bezel.reflectOf(val('bezelColor'), R.effects ? R.effects.look : 'basic', R.theme && R.theme.appearance === 'light') : 0.3;
         var autoDim = key === 'bgDim' && (x === null || x === undefined);
         if (autoDim) x = R.background && typeof R.background.dim === 'number' ? R.background.dim : 0.45;
         if (document.activeElement !== r) r.value = String(x);
-        var out = r.parentNode.querySelector('output'); if (out) out.textContent = (autoDim ? 'Auto · ' : '') + fmt(key, Number(r.value));
+        var out = r.parentNode.querySelector('output'); if (out) out.textContent = (autoDim || autoReflect ? 'Auto · ' : '') + fmt(key, Number(r.value));
         r.closest('[data-slider]').classList.toggle('pmt-cz-is-mine', mine(key));
       });
       var fs = root.querySelector('[data-out="fontSize"]'); if (fs) fs.textContent = fmt('fontSize', R.font.size);

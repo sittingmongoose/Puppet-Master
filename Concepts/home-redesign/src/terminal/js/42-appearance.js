@@ -122,11 +122,13 @@
     opacity: { type: 'number', min: 0.4, max: 1, step: 0.02, default: null, label: 'Opacity' },
     /* none by default (Jared, 2026-10-14: "Default padding should be 0"); a bezel brings its own margin */
     padding: { type: 'number', min: 0, max: 24, step: 1, default: 0, label: 'Padding' },
-    /* the frame round the screen (Jared, 2026-10-14: removable, customizable, much thinner): its own choice, never part
-       of a look's defaults, and drawn with or without the GPU. Width null is the style's own */
+    /* the housing round the screen (Jared, 2026-10-14: removable, customizable; round 3: "still really ugly", so a real
+       monitor case, 71-bezel.js): its own choice, never part of a look's defaults, drawn with or without the GPU. Width
+       null is the style's own; Reflection null is the material's own (how much of the screen its surface gives back) */
     bezel: { type: 'enum', values: ['off', 'rim', 'case'], default: 'off', label: 'Bezel' },
-    bezelWidth: { type: 'number', min: 2, max: 24, step: 1, default: null, label: 'Bezel width' },
-    bezelColor: { type: 'enum', values: ['follow', 'charcoal', 'black', 'platinum', 'putty', 'accent'], default: 'follow', label: 'Bezel colour' },
+    bezelWidth: { type: 'number', min: 2, max: 48, step: 1, default: null, label: 'Bezel width' },
+    bezelColor: { type: 'enum', values: ['follow', 'charcoal', 'black', 'platinum', 'putty', 'aluminium', 'gunmetal', 'glass', 'accent'], default: 'follow', label: 'Bezel material' },
+    bezelReflect: { type: 'number', min: 0, max: 1, step: 0.05, default: null, label: 'Reflection' },
     effects: { type: 'enum', values: ['follow', 'off', 'custom'], default: 'follow', label: 'Effects' },
     scanlines: { type: 'bool', default: null, label: 'Scanlines' },
     scanStrength: { type: 'number', min: 0, max: 0.6, step: 0.05, default: 0.3, label: 'Scanline strength' },
@@ -153,7 +155,7 @@
   var DEFAULTS = {}; Object.keys(FIELDS).forEach(function (k) { DEFAULTS[k] = FIELDS[k].default; });
   /* round 2 fields Settings has no row for yet (proposed to the Settings owner): "All terminals" keeps them on this
      computer, beside the earlier copies, until a row exists */
-  var LOCAL_FIELDS = ['bezel', 'bezelWidth', 'bezelColor', 'crtMask', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat'];
+  var LOCAL_FIELDS = ['bezel', 'bezelWidth', 'bezelColor', 'bezelReflect', 'crtMask', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat'];
 
   /* ---- the Settings rows (SSYS-051, the Terminal look groups): one row per field, its stored words to and from the
      field's value. in() returns undefined for a value it cannot read (the field then falls through) and null for an
@@ -576,9 +578,9 @@
         if (!G.has(id) || (bgKind === 'gradient') !== G.isGradient(id)) id = bgKind === 'gradient' ? 'fade' : 'hills';
         var strength = T.util.clamp(f('bgStrength'), 0, 1), cat = G.cat(id), mot = G.motion(id);
         bg = { kind: bgKind, design: id, cat: cat, strength: strength };
-        if (cat === 'scene' || mot) {
+        if (G.painted(id) || mot) {
           /* painted at the terminal's own size by the view (_applyBackground), which then knows the worst pixel */
-          bg.paint = cat === 'scene' ? id : (mot.under || null);
+          bg.paint = G.painted(id) ? id : (mot.under || null);
           if (mot) bg.motion = { id: id, anim: mot.anim, ms: mot.ms * (f('bgMotion') === 'lively' ? 0.5 : 1), on: f('bgMotion') !== 'off' && !reduced };
           bg.blur = f('bgBlur');
           if (mot && !mot.under) bg.base = C.toHex(theme.bg);
@@ -622,13 +624,16 @@
       flicker: { on: !fxOff && !follow && !!f('flicker') && !reduced, amount: Math.min(0.03, f('flickerAmount')) },
       glowColor: theme && theme.roles.glow
     };
-    /* the bezel: a rim (4 px) or a monitor case (10 px) unless a width was chosen (research: real cases are far wider,
-       right for an emulator's margins, far too big for a pane); the text is laid out inside it, never squeezed */
-    var bzStyle = f('bezel'), bezel = { style: 'off', width: 0, gap: 0, color: 'follow' };
+    /* the bezel: a slim frame (6 px) or a monitor case (24 px) unless a width was chosen. Round 3's research: a case
+       reads as a housing only when its sloped face is wide enough to show the screen's reflection (Mega Bezel's face is
+       about 5 % of the screen's height; round 2's 10 px, about 2 %, read as a flat band). The text is laid out inside it,
+       never squeezed */
+    var bzStyle = f('bezel'), bezel = { style: 'off', width: 0, gap: 0, color: 'follow', reflect: null };
     if (bzStyle === 'rim' || bzStyle === 'case') {
       var bw = f('bezelWidth');
       /* and a breath of glass inside it (3 px in a rim, 6 px in a case), so no glyph touches the frame */
-      bezel = { style: bzStyle, width: bw === null || bw === undefined ? (bzStyle === 'rim' ? 4 : 10) : bw, gap: bzStyle === 'rim' ? 3 : 6, color: f('bezelColor') || 'follow' };
+      bezel = { style: bzStyle, width: bw === null || bw === undefined ? (bzStyle === 'rim' ? 6 : 24) : bw, gap: bzStyle === 'rim' ? 3 : 6,
+        color: f('bezelColor') || 'follow', reflect: f('bezelReflect') };
     }
     var bgShow = lk === 'glass' && bgKind === 'theme';
     /* High Contrast schemes keep every cell at 7:1 unless the user chose a floor themselves */

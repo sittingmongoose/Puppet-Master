@@ -96,8 +96,8 @@
     this.canvas = el('canvas', 'pmt-grid');
     this.fxCanvas = el('canvas', 'pmt-fxcanvas'); this.fxCanvas.hidden = true;
     this.trailCanvas = el('canvas', 'pmt-trail'); this.trailCanvas.hidden = true;
-    /* the bezel: a frame round the screen, over the ground and the canvases' edge (30-looks.css draws each style) */
-    this.bezelEl = el('div', 'pmt-bezel'); this.bezelEl.hidden = true; this.bezelEl.setAttribute('aria-hidden', 'true');
+    /* the bezel: a monitor housing round the screen, over the ground and the canvases' edge (71-bezel.js) */
+    this.bezel = new T.Bezel(this); this.bezelEl = this.bezel.el;
     this.sticky = el('button', 'pmt-sticky'); this.sticky.hidden = true; this.sticky.type = 'button';
     this.overlays = el('div', 'pmt-overlays');
     this.input = el('textarea', 'pmt-input');
@@ -166,6 +166,11 @@
       mq.addEventListener('change', fn);
       self._dprOff = function () { mq.removeEventListener('change', fn); };
     })();
+    /* a ground that shows what lies behind the terminal (the Lens, 44-grounds-glass.js) repaints when the app's
+       wallpaper changes or its print arrives */
+    var onWall = function () { var bg = self._bgSpec; if (bg && bg.paint === 'lens') { self.contrastGround = self._applyBackground(bg); self.renderer.invalidate(); self.schedule(true); } };
+    window.addEventListener('pmt-wall', onWall);
+    this.disposers.push(function () { window.removeEventListener('pmt-wall', onWall); });
     if (T.FX && T.FX.attach) { this.fx = T.FX.attach(this); this.fx.configure(this.appearance.effects || {}); }
     if (T.Agent && T.Agent.attach) this.agent = T.Agent.attach(this);
     this._updateLabel(); this._updateHeader();
@@ -211,9 +216,7 @@
        surface) */
     this.contrastGround = this._applyBackground(ap.background || { kind: 'theme' });
     var bz = ap.bezel || { style: 'off', width: 0, color: 'follow' };
-    this.bezelEl.hidden = bz.style === 'off';
-    if (this.root.getAttribute('data-pmt-bezel') !== bz.style) this.root.setAttribute('data-pmt-bezel', bz.style);
-    if (this.root.getAttribute('data-pmt-bezel-color') !== bz.color) this.root.setAttribute('data-pmt-bezel-color', bz.color);
+    this.bezel.configure(bz, ap);
     this.root.style.setProperty('--pmt-bezel-w', (bz.width || 0) + 'px');
     var f = ap.font, gen = this._fontGen = (this._fontGen || 0) + 1;
     this.fontReady = T.Metrics.ready(f.family, f.size).then(function () {
@@ -350,13 +353,13 @@
     if ((bg.paint || moving) && G && th) {
       var r = this.bodyEl.getBoundingClientRect(), w = r.width || 960, h = r.height || 600;
       this._bgKey = sizeStep(w) + 'x' + sizeStep(h);
-      var worsts = [];
+      var worsts = [], po = { blur: bg.blur, rowPx: this.metrics ? this.metrics.cellH : 17, rect: { x: r.left, y: r.top, w: w, h: h } };
       if (bg.paint) {
-        var P = G.paint(bg.paint, th, w, h, { blur: bg.blur });
+        var P = G.paint(bg.paint, th, w, h, po);
         if (P) { L.style.background = 'center / cover no-repeat url("' + P.url + '"), ' + C.toHex(th.bg); if (P.worst !== null) worsts.push(P.worst); }
       } else L.style.background = bg.base || C.toHex(th.bg);
       if (moving) {
-        var M = G.paint(bg.motion.id, th, w, h, {});
+        var M = G.paint(bg.motion.id, th, w, h, { rowPx: po.rowPx, rect: po.rect });
         mv.hidden = !M;
         if (M) {
           mv.style.backgroundImage = 'url("' + M.url + '")';
@@ -432,7 +435,18 @@
       [this.fxCanvas, this.trailCanvas].forEach(function (c) { c.width = cw; c.height = ch; c.style.width = (cw / m.dpr) + 'px'; c.style.height = (ch / m.dpr) + 'px'; });
       this.renderer.invalidate();
     }
-    this.gridLeft = px; this.gridTop = py;
+    /* inside a bezel the grid sits in the middle of the glass, so the housing is as wide on every side (the part of a
+       cell left over goes half to each side, in whole device pixels) */
+    var ox = 0, oy = 0, bez = this.bezel && this.bezel.on();
+    if (bez) { ox = Math.max(0, Math.floor((w - px * 2 - cols * m.cellW) / 2 * m.dpr) / m.dpr); oy = Math.max(0, Math.floor((h - py * 2 - rows * m.cellH) / 2 * m.dpr) / m.dpr); }
+    this.gridLeft = px + ox; this.gridTop = py + oy;
+    var off = bez ? this.gridLeft + ',' + this.gridTop : '';
+    if (off !== this._gridOff) {
+      this._gridOff = off;
+      if (bez) { this.root.style.setProperty('--pmt-grid-x', this.gridLeft + 'px'); this.root.style.setProperty('--pmt-grid-y', this.gridTop + 'px'); }
+      else { this.root.style.removeProperty('--pmt-grid-x'); this.root.style.removeProperty('--pmt-grid-y'); }
+    }
+    if (bez) this.bezel.layout(w, h, this.gridLeft, this.gridTop, cols * m.cellW, rows * m.cellH, m.dpr);
     this.root.style.setProperty('--pmt-cell-h', m.cellH + 'px');
     this.root.style.setProperty('--pmt-cell-w', m.cellW + 'px');
     this.root.style.setProperty('--pmt-font', this.appearance.font.family);
@@ -505,6 +519,7 @@
     var full = this.fullPending; this.fullPending = false;
     this.renderer.render(full);
     if (this.fx) this.fx.frame();
+    if (this.bezel) this.bezel.frame();
     if (this.marksDirty) { this.marksDirty = false; this._renderGutter(); this._renderScrollbar(); this._renderSticky(); }
     else this._renderScrollbarThumb();
     if (this.agent) this.agent.frame();
@@ -1218,6 +1233,7 @@
     if (this._dprOff) this._dprOff();
     if (this.raf) cancelAnimationFrame(this.raf);
     if (this.fx) { this.fx.dispose(); this.fx = null; }
+    if (this.bezel) this.bezel.dispose();
     this.root.remove();
   };
 })();
