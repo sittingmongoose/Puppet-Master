@@ -253,3 +253,11 @@ capture default surviving in disposition 7 quoted wording after R3
 repair (host verification gap). Slice entailment 282/284; critics
 converged on all appendix-visible content. Host caught and redid a
 default-effort Sol final at Max pre-grading. See PHASE17-RESULTS.md.
+
+## Phase 18 pre-registered (2026-10-15)
+Effort-locked routes (all flash at route max, host-asserted per
+launch), extraction-first records inventory, premise-once store,
+absence discipline, host conditions checklist, coverage audit,
+contradiction + gate-composition critics, defect-string repair
+verification. Effort A/B on frozen Case D materials runs first.
+See PHASE18-PREREG.md.
