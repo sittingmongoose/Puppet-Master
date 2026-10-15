@@ -227,8 +227,9 @@ html[data-theme="friendly-light"] #panel-usage .pmu-card > .pmu-film-warm {
 
 /* ---- the room change's own moment (Jared #3, 2026-10-14; 15-film.js): Glass's lens rim and NieR's glitch ---- */
 /* Glass: the rim of the lens the new room opens through, a ring in the board's scroll pane above both rooms, scaled with
-   the lens (transform and opacity only; no blend: a blend here would draw the whole board into a render surface) */
-#panel-usage .pmu-scroll > .pmu-iris { position: absolute; z-index: 3; display: block; border-radius: 50%; pointer-events: none; will-change: transform, opacity;
+   the lens (transform and opacity only; no blend: a blend here would draw the whole board into a render surface). Above
+   the rooms a rapid switch carries on (15-film.js carryGhosts: 3 to 8) */
+#panel-usage .pmu-scroll > .pmu-iris { position: absolute; z-index: 9; display: block; border-radius: 50%; pointer-events: none; will-change: transform, opacity;
   background: radial-gradient(closest-side, transparent calc(100% - 22px), rgba(255,255,255,.05) calc(100% - 14px), rgba(255,255,255,.34) calc(100% - 4px), rgba(214,238,255,.12) calc(100% - 1px), transparent 100%); }
 html[data-theme="glass-light"] #panel-usage .pmu-scroll > .pmu-iris {
   background: radial-gradient(closest-side, transparent calc(100% - 22px), rgba(255,255,255,.18) calc(100% - 14px), rgba(255,255,255,.85) calc(100% - 4px), rgba(30,45,90,.10) calc(100% - 1px), transparent 100%); }
