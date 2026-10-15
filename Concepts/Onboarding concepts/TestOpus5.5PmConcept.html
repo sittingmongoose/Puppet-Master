@@ -41647,6 +41647,16 @@ html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmt-cz { --pmt-cz-on-a
 .pmt-cz .pmt-cz-chipbox.pmt-cz-lit .pmt-cz-chip:hover { background: transparent; }
 html[data-o55-nier="on"] .pmt-cz .pmt-cz-chipbox.pmt-cz-lit .pmt-cz-chip:is(:hover, .pmh-on) { background: transparent !important; }
 html[data-o55-nier="on"] .pmt-cz :is(.pmt-cz-tile[aria-checked="true"], .pmt-cz-set[aria-pressed="true"]):is(:hover, .pmh-on) { background: var(--o55-nier-ink) !important; }
+/* NieR's hover tone lifts a tile, a chip or a set a step toward its ink, and their quieter words take the full ink on
+   it (a hovered scheme's "Dark" read 3.41:1 in NieR dark); a chosen one is reversed, above */
+html[data-o55-nier="on"] .pmt-cz :is(.pmt-cz-tile:not([aria-checked="true"]), .pmt-cz-set:not([aria-pressed="true"]), .pmt-cz-chipbox:not(.pmt-cz-lit) .pmt-cz-chip):is(:hover, .pmh-on) :is(.pmt-cz-tmeta, .pmt-cz-chiphelp, .pmt-cz-chipfoot, .pmt-cz-chipstate, small) { color: var(--pmw-text, inherit); }
+/* words drawn in the accent (Friendly's kicker, the index's change counts, a group's count, "mine"): on a light screen
+   the accent darkens until it reads 4.5:1 on the plate (Friendly light's green kicker read 3.21:1). Retro light's accent
+   is darkened already and NieR's is its ink */
+.pmt-cz { --pmt-cz-accent-ink: var(--pmt-cz-accent); }
+.pmt-cz[data-pmt-mode="light"]:not([data-pmt-look="retro"]) { --pmt-cz-accent-ink: color-mix(in srgb, var(--pmt-cz-accent) 58%, #000); }
+html[data-o55-nier="on"] .pmt-cz { --pmt-cz-accent-ink: var(--pmt-cz-accent); }
+.pmt-cz :is(.pmt-cz-navn, .pmt-cz-gcount, .pmt-cz-mine), .pmt-cz .pmt-cz-is-mine .pmt-cz-out, .pmt-cz[data-pmt-look="friendly"] .pmt-cz-kicker { color: var(--pmt-cz-accent-ink); }
 /* Liquid Glass: the search field's edge is the sheet's hairline too; the base page's architectural Glass forces every
    field's edge with !important, so this one is stated the same way, only while Liquid Glass is on (agreed with
    pm7-liquid-glass, 2026-10-14) */
@@ -193278,6 +193288,13 @@ var T = {};
       stage.forEach(function (c) { var l = C.lum(c); step = Math.min(step, darkStage ? (g0 + 0.05) / (l + 0.05) : (l + 0.05) / (g0 + 0.05)); });
       // 3 % more for the paper grain and the recess under the header that 30-looks.css lays over the stage
       if (step < 1) floor = Math.min(21, Math.round(floor / step * 1.03 * 100) / 100);
+    }
+    /* scanlines and phosphor glow are drawn over the painted text and take some of what a word reads on the screen: in
+       Retro dark (both on, at 0.3 and 0.45) the prompt's branch name painted at 4.54:1 read 3.84:1 as drawn. The floor
+       rises by what they take, so every word holds the chosen floor as it is drawn */
+    if (floor > 1 && (effects.scanlines.on || effects.glow.on)) {
+      var take = 1 + (effects.scanlines.on ? 0.6 * (+effects.scanlines.strength || 0) : 0) + (effects.glow.on ? 0.06 * (+effects.glow.strength || 0) : 0);
+      floor = Math.min(21, Math.round(floor * take * 100) / 100);
     }
     return {
       look: look, lookKey: lk, scheme: s, theme: theme, font: font, background: bg, effects: effects, glassThrough: bgShow,

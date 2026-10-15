@@ -572,6 +572,13 @@
       // 3 % more for the paper grain and the recess under the header that 30-looks.css lays over the stage
       if (step < 1) floor = Math.min(21, Math.round(floor / step * 1.03 * 100) / 100);
     }
+    /* scanlines and phosphor glow are drawn over the painted text and take some of what a word reads on the screen: in
+       Retro dark (both on, at 0.3 and 0.45) the prompt's branch name painted at 4.54:1 read 3.84:1 as drawn. The floor
+       rises by what they take, so every word holds the chosen floor as it is drawn */
+    if (floor > 1 && (effects.scanlines.on || effects.glow.on)) {
+      var take = 1 + (effects.scanlines.on ? 0.6 * (+effects.scanlines.strength || 0) : 0) + (effects.glow.on ? 0.06 * (+effects.glow.strength || 0) : 0);
+      floor = Math.min(21, Math.round(floor * take * 100) / 100);
+    }
     return {
       look: look, lookKey: lk, scheme: s, theme: theme, font: font, background: bg, effects: effects, glassThrough: bgShow,
       opts: { ligatures: f('ligatures'), minContrast: floor, boldBright: f('boldBright'),
