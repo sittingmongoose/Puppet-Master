@@ -20,7 +20,7 @@ edits the page's own markup. apply() only adds:
   2b. <script id="pm-home-early"> in <head> (src/panels/early/*.js): the PM_HOME_WORKSPACE shim, so the old Home
      controller's own guard skips it, and html[data-pmw-home="on"] (?home=current keeps today's Home for an A/B).
      Guarded app JS patches (APP_PATCHES): homeActive lets the chat stay one column on every page; the status bar's
-     host item and NieR's readout of it.
+     host item and NieR's readout of it; the left rail's Dashboard (HOME) toggle is removed.
   3. The panels' NieR hook classes (.pmw-cur, .pmw-chosen, .pmw-strip) in the Settings script's NieR selector lists, on
      anchors the Usage and rail layers do not use, so the three layers compose in either order.
 At run time the panels replace the Home centre (CONTRACT.md); the old Home model stays loaded for the pages and tour
@@ -84,6 +84,17 @@ APP_PATCHES = [
     ("/^Execution host/i.test(e.textContent.trim())",
      "(e.getAttribute('data-status-item') === 'host' || /^Execution host/i.test(e.textContent.trim()))",
      'NieR readout finds the host item (home layer)'),
+    # The rail's Dashboard (HOME) toggle showed and hid #dashboardView, which the panels park (20-shell.css), so it was
+    # always lit and did nothing (Jared, 2026-10-14). The markup goes: the shell's handlers look it up and skip a missing
+    # icon, a saved bar order drops an id that is not in the bar, and no tour step, shortcut or Settings row names it.
+    # The Chat switch above it is lit by the rail's tile while the chat column shows (leftrail-redesign d/40-bar.js).
+    ('<div class="icon" title="Dashboard" id="dashboardToggleIcon" data-ab-id="dashboard"><span class="symbol"><svg'
+     ' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"'
+     ' stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect>'
+     '<rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16"'
+     ' width="7" height="5"></rect></svg></span><span class="icon-label">HOME</span></div>',
+     '<!-- home layer: the rail\'s Dashboard toggle is removed (the panels replaced the dashboard it showed) -->',
+     'rail Dashboard toggle removed (home layer)'),
 ]
 
 # NieR Mode selector lists in the Settings script (opus-5.5 src/settings/kit.d/19-nier-parts.js). Filled from the

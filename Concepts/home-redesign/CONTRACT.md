@@ -435,7 +435,10 @@ the chat is folded to its strip it opens over the centre). The left rail's Chat 
 toggles the column on every page (D40): while the chat is on screen (`chatCol.isOpen()`) a click hides it, otherwise it
 calls `show()`; it never changes the page in front, Enter and Space do the same when the page makes the entry
 focusable, a press that becomes the rail's drag still reorders the rail (or hides the entry in More) and toggles nothing,
-and the entry is lit while the column is shown (its folded strip counts). A popped-out chat starts back in its column
+and the entry is lit while the column is shown (its folded strip counts), with the rail's own tile and accent, the same
+mark as the open panel (concept D's `.d-abind-chat`, Jared 2026-10-14). The rail's Dashboard (HOME) toggle that sat under
+it showed and hid the old dashboard, which the panels park; this layer removes it from the page (`APP_PATCHES` in
+`tools/home_layer.py`). A popped-out chat starts back in its column
 after a restart (D32): the float is never saved, while the column's visibility (`pm.home.chat:v1`) and its width (the
 layout record's chat column `width_px`) are.
 
