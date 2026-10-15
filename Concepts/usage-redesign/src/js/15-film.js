@@ -749,7 +749,7 @@
   function emitMoment(what, m) { momentListeners.slice().forEach(function (fn) { try { fn(what, m); } catch (error) { console.error('[pm-usage] moment', error); } }); }
   function begin(kind, room) {
     var prev = moment, now0 = performance.now(), quick = kind === 'room' && !!prev && prev.kind === 'room' && now0 - prev.start < 900;
-    finishMoment('next');
+    finishMoment('next', kind === 'room' ? room : null);
     var now = performance.now();
     var m = { kind: kind, room: room, start: now, t0: now, quick: quick, released: kind !== 'arrive', entrance: true, anims: [], queue: [], rank: 0,
       heroAt: kind === 'arrive' ? 0 : T3.heroAt, timers: [], built: false, beatDone: false };
@@ -770,6 +770,7 @@
     /* a timer of this moment never acts in the next one (a hold release fired into the next room's entrance) */
     m.timers.forEach(clearTimeout); m.timers = [];
     root.removeAttribute('data-pmu-moment');
+    dropKept();
     var board = document.getElementById('pmuBoard');
     if (board) later(function () { if (!moment) board.removeAttribute('data-film'); });
     releaseBeatHold();
@@ -777,14 +778,14 @@
   }
   /* rapid switching (6.2): the running moment ends at once in its final state (Animation.finish on everything it made;
      waiting bodies show as built) and the next moment starts from there. Nothing stacks. */
-  function finishMoment(why) {
+  function finishMoment(why, next) {
     var m = moment; if (!m) return;
     moment = null; M.track(null);
     root.removeAttribute('data-pmu-moment');
     m.timers.forEach(clearTimeout);
     /* rapid switching (Jared #20): an old room still being cut away is carried into the next change (carryGhosts), and
        the room half laid down, which becomes the next change's ghost, keeps its entrance instead of snapping to it */
-    var keep = why === 'next' ? carryGhosts(m) : (carryOn(null), null);
+    var keep = why === 'next' ? carryGhosts(m, next) : (carryOn(null), dropKept(), null);
     m.anims.forEach(function (a) { try {
       if (keep && a.effect && keep.some(function (el) { return el.contains(a.effect.target); })) return;
       if (a.finish && a.playState !== 'finished' && a.playState !== 'idle') a.finish(); } catch (error) {} });
@@ -793,7 +794,7 @@
     /* only a fade that is still playing is finished: a ghost that is gone had its fade cancelled, and finish() on that
        cancelled fade re-applied opacity 0 to its element, which 40-board.js had just made the new live board (a click 0.9-
        2.3 s after the previous one left the whole new room invisible until the next room change) */
-    if (m.ghost && !m.ghost.gone && !m.ghost.carried) { try { fadeGhost(m); var fa = m.ghost.fade; if (fa && fa.finish && (fa.playState === 'running' || fa.playState === 'paused')) fa.finish(); } catch (error) {} }
+    if (m.ghost && !m.ghost.gone && !m.ghost.carried && m.ghost !== kept) { try { fadeGhost(m); var fa = m.ghost.fade; if (fa && fa.finish && (fa.playState === 'running' || fa.playState === 'paused')) fa.finish(); } catch (error) {} }
     releaseBeatHold();
     var board = document.getElementById('pmuBoard');
     if (board) Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card[data-body-wait]'), function (c) { if (c.querySelector(':scope > .pmu-cardbody > *')) c.removeAttribute('data-body-wait'); });
@@ -870,6 +871,8 @@
         });
       }
     }
+    /* under a room kept on screen (keepRoom) the change's own ghost goes at once and no cut or lens plays */
+    if (kept && m && m.ghost && !m.ghost.gone) dropNow(m.ghost);
     if (m && m.ghost && !m.ghost.fade && !(lens && irisGhost(m, since(m))) && !(cut && wipeGhost(m, since(m)))) fadeGhost(m);
     if (carryQ.length) carryOn((lens || cut) && m ? since(m) : null);
     if (reduced() || M.paused() || !cards || !cards.length || off.plates) return;
@@ -932,7 +935,7 @@
       if (f === 'glass' && hero && !heroMade) { heroMade = true; glint(card, d + 200); }
     });
     /* the room change's light on the click's clock (the hand-off; NieR's glitch); the first arrival keeps Glass's band */
-    if (dir) { var el0 = m ? since(m) : 0; if (f === 'nier') glitch(o.board, el0); else if (lens) irisRim(o.board, el0); }
+    if (dir) { var el0 = m ? since(m) : 0; if (f === 'nier') glitch(o.board, el0); else if (lens && !kept) irisRim(o.board, el0); }
     else if (cam && f === 'glass') refract(1, base + 100);
     if (f === 'retro' && o.scan !== false) scanBar(o.board || (cards[0] && cards[0].parentNode), base);
   }
@@ -998,6 +1001,7 @@
      about T0 + 940, a room change about 1140 after the click), and the moment's end about 900 after that */
   function allBuilt(room, cards) {
     var m = moment; if (!m || m.room !== room || m.beatDone) return;
+    if (kept && !kept.gone && kept.room === room) { swapKept(m); return; }
     m.beatDone = true;
     var beatAt = m.heroAt + T3.heroNum + T3.heroInstr, el = since(m);
     /* MOTION-4 RC5: the beat runs on the moment's timer T3.beatLead before its time, when every body is built AND drawn
@@ -1266,26 +1270,119 @@
     if (G.el.isConnected) G.el.style.opacity = '0';
     later(function () { if (G.done) G.done(); });
   }
+  /* a burst that ends on the room on screen leaves it as it is (review r3 R2): the click back to the room still on screen
+     plays its cut or lens back closed (twice as fast) and keeps it over the copy the change builds under it; when that
+     copy's first screen is built, its entrance ends at once and the two swap unseen (swapKept). Pointer input goes to the
+     copy meanwhile. A further click hands the kept room over like any room on screen (carryGhosts). */
+  var kept = null, keptT = 0;
+  function keepRoom(G, room, whole) {
+    var at = whole || !G.fade || G.fade === true ? 0 : cutAt(G);
+    [G.fade, G.fadeA].concat(G.anims || []).forEach(function (a) { if (a && a !== true && a !== G.move) { try { a.cancel(); } catch (error) {} } });
+    G.fadeA = null; G.from = 0; G.q = 0;
+    /* the camera's drift goes back the way it came; the cut or lens closes from where it stands (140 OUT) */
+    if (G.move && G.move.playState !== 'idle') { try { G.move.playbackRate = -2; G.move.play(); } catch (error) {} }
+    var k = null;
+    if (at > 0 && G.cut === 'iris' && G.iris) {
+      var b = G.blur && !soft() ? G.blur * Math.min(1, at / 0.55) : 0;
+      k = [{ clipPath: irisClip(G.iris.x, G.iris.cy, at * G.iris.R), filter: 'blur(' + b.toFixed(2) + 'px)' }, { clipPath: irisClip(G.iris.x, G.iris.cy, 0), filter: 'blur(0px)' }];
+    } else if (at > 0 && G.cut === 'cut') {
+      var W = G.cutW || boardW();
+      k = [{ clipPath: 'inset(0 0 0 ' + (at * W).toFixed(1) + 'px)' }, { clipPath: 'inset(0 0 0 0px)' }];
+    }
+    G.fade = k ? anim(G.el, k, { dur: 140, easing: E.out, fill: 'forwards' }) : null;
+    G.carried = false; G.room = room; G.el.style.zIndex = '3'; G.el.style.pointerEvents = 'none';
+    /* its own end (a cut or lens finishing) must not empty it while it is kept */
+    if (G.done && !G.done.keepGuard) { var done = G.done; G.done = function () { if (kept !== G) done(); }; G.done.keepGuard = true; }
+    kept = G;
+    clearTimeout(keptT); keptT = setTimeout(dropKept, 2600 * M.speed());   /* the copy never built: the room goes */
+  }
+  function dropKept() {
+    clearTimeout(keptT); keptT = 0;
+    var G = kept; kept = null;
+    if (G && !G.gone) dropNow(G);
+  }
+  function swapKept(m) {
+    m.beatDone = true;
+    m.anims.forEach(function (a) { try { if (a.finish && a.playState !== 'finished' && a.playState !== 'idle') a.finish(); } catch (error) {} });
+    releaseBeatHold();
+    var board = document.getElementById('pmuBoard'), scroll = board && board.parentNode, G = kept;
+    if (board) Array.prototype.forEach.call(board.querySelectorAll(':scope > .pmu-card[data-body-wait]'), function (c) { if (c.querySelector(':scope > .pmu-cardbody > *')) c.removeAttribute('data-body-wait'); });
+    /* the kept room's view: the change scrolled the board to its top */
+    if (G && G.sTop && scroll) scroll.scrollTop = G.sTop;
+    dropKept();
+    endMoment(m);
+  }
   /* finishMoment('next'): the elements whose animations play on (the room carried into the next change, the board that
      becomes the next ghost, a lens rim fading where it stands), or null for none */
-  function carryGhosts(m) {
-    if (reduced() || soft() || M.paused()) return null;
-    var keep = [], G0 = m.ghost, carry = null;
-    var older = (m.carried || []).slice();
-    if (G0 && !G0.gone && G0.el.isConnected) {
-      if (m.framed) older.push(G0);
-      /* the new room never drew: the old room is the one on screen, and the next change takes it over */
-      else if (cutKind(G0) && !(G0.fade && G0.fade !== true && (G0.fade.playState === 'finished' || G0.fade.playState === 'idle'))) carry = G0;
-    }
+  function liveGhost(G) { return !!G && !G.gone && !G.leaving && G.el.isConnected && !(G.fade && G.fade !== true && (G.fade.playState === 'finished' || G.fade.playState === 'idle')); }
+  /* a room on screen that does not hand over fades where it stands (100 OUT, on the compositor) instead of vanishing */
+  function fadeAway(G, ms) {
+    if (!G || G.gone || G.leaving) return;
+    G.leaving = true;
+    if (G.fade && G.fade !== true) freeze(G.fade);
+    if (G.fadeA) { try { G.fadeA.cancel(); } catch (error) {} G.fadeA = null; }
+    var a = G.el.isConnected ? anim(G.el, [{ opacity: 1 }, { opacity: 0 }], { dur: ms, easing: E.out, fill: 'forwards' }) : null;
+    if (a) a.finished.then(function () { dropNow(G); }, function () { dropNow(G); }); else dropNow(G);
+  }
+  function carryGhosts(m, nextRoom) {
+    if (reduced() || soft() || M.paused()) { dropKept(); return null; }
+    var keep = [], G0 = m.ghost, carry = null, layers = [], wasKept = kept && !kept.gone && kept.el.isConnected ? kept : null;
+    /* what is on screen (review r3 R2, repros A, D and E at 3 and 6 clicks a second). Top down the board shows: a room
+       kept over its own rebuild (keepRoom), rooms carried from earlier clicks (frozen, or cut with this change), this
+       change's ghost, then the new room once its frames are in. Each covers the board less what its cut or lens has
+       uncovered, and has to itself what the ones above leave. One room hands over:
+       - a click back to a room with a third of the board or more: that room stays as it is (keepRoom; repro A, Costs
+         then Overview 180 ms later, showed half-built Costs for 150 ms and then rebuilt Overview);
+       - else the newest room, once its frames are in (the newest room's frame, never an older room's: at 6 clicks a
+         second a room kept by its share of the board stayed on screen through several clicks); a room above it with
+         a share of the board fades where it stands (fadeAway) rather than vanishing;
+       - else (no new frames yet) the room with the most of the board. */
+    if (wasKept) layers.push({ G: wasKept, cov: 1 });
+    carryQ.forEach(function (c) { if (!c.G.gone && c.G.el.isConnected && c.G !== wasKept) layers.push({ G: c.G, cov: 1 - c.at }); });
+    (m.carried || []).forEach(function (G) { if (liveGhost(G) && G.cut) layers.push({ G: G, cov: 1 - cutAt(G) }); });
+    var g0 = G0 && liveGhost(G0) && cutKind(G0);
+    if (g0) layers.push({ G: G0, cov: G0.fade && G0.fade !== true ? 1 - cutAt(G0) : 1 });
+    if (m.framed) layers.push({ G: null, cov: 1 });
+    var above = 0, best = null, back = null;
+    layers.forEach(function (L) {
+      L.vis = Math.max(0, L.cov - above); above = Math.max(above, L.cov);
+      if (!best || L.vis > best.vis + 0.001) best = L;
+      if (L.G && nextRoom && L.G.el.getAttribute('data-room') === nextRoom && L.vis >= 0.33 && (!back || L.vis > back.vis)) back = L;
+    });
+    /* a kept room is the room on screen over its own copy (the copy under it is the same room, half built) */
+    carry = back ? back.G : wasKept ? wasKept : m.framed ? null : best ? best.G : null;
+    kept = null; clearTimeout(keptT);
+    var older = [], fading = [];
+    layers.forEach(function (L) { if (L.G && L.G !== carry) { if (!back && m.framed && L.vis >= 0.05) fading.push(L.G); else older.push(L.G); } });
+    (m.carried || []).forEach(function (G) { if (G !== carry && older.indexOf(G) < 0 && fading.indexOf(G) < 0) older.push(G); });
+    if (G0 && !g0 && m.framed && older.indexOf(G0) < 0) older.push(G0);
+    carryQ = carryQ.filter(function (c) { return c.G === carry; });
     older.forEach(dropNow);
-    if (carry) {
-      var a = carry.fade && carry.fade !== true ? carry.fade : null, at = a ? cutAt(carry) : 0;
+    fading.forEach(function (G) { fadeAway(G, 100); keep.push(G.el); });
+    /* the click goes back to the room on screen: it stays as it is (keepRoom) */
+    if (carry && nextRoom && carry.el.getAttribute('data-room') === nextRoom) {
+      carryQ = [];
+      keepRoom(carry, nextRoom, carry === wasKept);
+      keep.push(carry.el);
+      var rim0 = carry === G0 && carry.cut === 'iris' && carry.el.parentNode ? liveRim(carry.el.parentNode) : null;
+      if (rim0 && rim0._pmuA) {
+        /* its rim closes with the lens and fades */
+        try { rim0._pmuA.playbackRate = -2; rim0._pmuA.play(); } catch (error) {}
+        rim0.classList.add('pmu-iris-out'); keep.push(rim0);
+        rimTrack(rim0, anim(rim0, [{ opacity: 1 }, { opacity: 0 }], { dur: 110, easing: E.out, fill: 'forwards' }));
+      }
+      return keep;
+    }
+    if (carry && !carryQ.length) {
+      var a = carry === wasKept ? null : carry.fade && carry.fade !== true ? carry.fade : null, at = a ? cutAt(carry) : 0;
       if (a) freeze(a);
+      /* a kept room stands whole: its closing cut or lens goes */
+      if (carry === wasKept && carry.fade && carry.fade !== true) { try { carry.fade.cancel(); } catch (error) {} carry.fade = null; }
       if (carry.fadeA) { try { carry.fadeA.cancel(); } catch (error) {} carry.fadeA = null; }
       carry.carried = true; carry.el.style.zIndex = '3';
-      keep.push(carry.el);
       carryQ.push({ G: carry, at: at, a: a });
     }
+    if (carry) keep.push(carry.el);
     /* the room that was drawing becomes the next ghost as it stands: its plates keep rising instead of snapping */
     var board = document.getElementById('pmuBoard'); if (board && m.framed) keep.push(board);
     if (!keep.length && !carryQ.length) return null;
