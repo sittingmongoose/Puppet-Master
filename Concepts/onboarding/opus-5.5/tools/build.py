@@ -871,6 +871,48 @@ CUSTOM_TEXT_PATCHES = [
 ]
 
 
+# EDITOR_LOOK_ROWS (pm7-editor-customizer, 2026-10-14): the Editor look rows the editor Customize proposal adds to
+# Plans/settings_inventory.json, kept in src/settings/proposed.d/*.json in the inventory's own shape. They join the
+# base page's two embedded inventories (the Settings engine's window.PM12_REFERENCE and #pm7-settings-data) before the
+# Settings layer reads them, exactly as settings_layer._canon_rows admits canon rows, so placement, search, Details,
+# transfer and the editor treat them as the rows they are proposed to become. A row whose id canon already holds is
+# skipped (the Settings layer admits canon's own), so this block retires itself row by row as canon admits them.
+EDITOR_LOOK_ROWS = SRC / 'settings' / 'proposed.d'
+
+
+def editor_look_rows(text: str) -> tuple[str, list]:
+    files = sorted(EDITOR_LOOK_ROWS.glob('*.json')) if EDITOR_LOOK_ROWS.is_dir() else []
+    if not files:
+        return text, []
+    inventory = PKG.parents[2] / 'Plans' / 'settings_inventory.json'
+    canon = {r['id'] for r in json.loads(inventory.read_text(encoding='utf-8'))['settings']} if inventory.exists() else set()
+    rows = [r for p in files for r in json.loads(p.read_text(encoding='utf-8'))['rows']]
+    need(len({r['id'] for r in rows}) == len(rows), 'EDITOR_LOOK_ROWS: a proposed row id is given twice')
+    key = 'window.PM12_REFERENCE = '
+    need(text.count(key) == 1, 'EDITOR_LOOK_ROWS: PM12_REFERENCE anchor drift')
+    s = text.index(key) + len(key)
+    e = text.index('\n', s)
+    ref = json.loads(text[s:e].rstrip(';'))
+    have = {r['id'] for c in ref['byCat'].values() for r in c.get('settings', [])}
+    added = [r for r in rows if r['id'] not in canon and r['id'] not in have]
+    for r in added:
+        cat, sub, _ = r['id'].split('.', 2)
+        need(cat in ref['byCat'] and any(g['id'] == sub for g in ref['byCat'][cat].get('subgroups', [])),
+             f'EDITOR_LOOK_ROWS: {r["id"]} has no reference subgroup')
+        ref['byCat'][cat]['settings'].append(dict(r, cat=cat, sub=sub))
+    if not added:
+        return text, []
+    ref['total'] = sum(len(c.get('settings', [])) for c in ref['byCat'].values())
+    text = text[:s] + json.dumps(ref, ensure_ascii=False, separators=(',', ':')) + ';' + text[e:]
+    m = re.search(r'(<script type="application/json" id="pm7-settings-data">)(.*?)(</script>)', text, re.S)
+    need(m is not None, 'EDITOR_LOOK_ROWS: pm7-settings-data missing')
+    data = json.loads(m.group(2))
+    known = {r['id'] for r in data['settings']}
+    data['settings'].extend(r for r in added if r['id'] not in known)
+    text = text[:m.start(2)] + json.dumps(data, ensure_ascii=False, separators=(',', ':')) + text[m.end(2):]
+    return text, [r['id'] for r in added]
+
+
 def nier_paint(var: str) -> str:
     """The family to paint for a chosen `var`: window.PM_THEME_PAINT_FAMILY(var) when the hook is present and answers a
     real family, else `var` itself (the hook never decides alone: a throw or an unknown answer paints the choice)."""
@@ -1109,7 +1151,9 @@ def build_text(usage: bool = True, home: bool = True) -> str:
          'TestPMConcept.html changed since the pin; review the strip boundaries and patches, then re-pin BASE_SHA256.')
     text = original.decode('utf-8')
 
-    # 0. Settings: swap the base's T50 managers layer for the Opus 5.5 fork in src/settings.
+    # 0. Settings: swap the base's T50 managers layer for the Opus 5.5 fork in src/settings. The proposed Editor look
+    #    rows join the embedded inventories first (EDITOR_LOOK_ROWS), so the layer places and validates them.
+    text, SETTINGS_NOTES['editor_look_rows'] = editor_look_rows(text)
     text, SETTINGS_NOTES['layer'] = settings_layer.apply(text, need)
 
     # 1. Strip the legacy Product Onboarding + Guided Tour.
@@ -1178,7 +1222,90 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     return note + text
 
 
+INERT_SOURCES = TOOLS / 'inert_sources.json'
+PAGE_LINT_BASELINE = TOOLS / 'page_lint_baseline.json'
+PAGE_LINT_KEYS = ('page_wide_star', 'html_rooted_has', 'important')
+
+
+def built_stylesheets(html: str) -> list[tuple[str, str]]:
+    """Every <style> body in the built page, named by its id or by style@offset."""
+    sheets = []
+    for match in re.finditer(r'<style\b([^>]*)>(.*?)</style>', html, re.S | re.I):
+        attrs, body = match.group(1), match.group(2)
+        named = re.search(r'\bid="([^"]+)"', attrs)
+        sheets.append((named.group(1) if named else f'style@{match.start()}', body))
+    return sheets
+
+
+def page_lint_counts(html: str) -> dict[str, int]:
+    """Whole-page counts of the three debts the O55 source lint already knows about.
+
+    page_wide_star: selectors whose last compound is a bare `*` and that switch on a runtime
+    state other than a look change (PAGE_STATE_OK). html_rooted_has: selectors whose first
+    compound is html and that use :has(). important: `!important` in stylesheets, comments removed.
+    """
+    star = has = important = 0
+    for _name, body in built_stylesheets(html):
+        for _line, sel in css_selectors(body):
+            names = page_wide_universal(sel)
+            if names and any(name not in PAGE_STATE_OK for name in names):
+                star += 1
+            comps = compounds(sel)
+            if comps and re.match(r'html(?![\w-])', comps[0]) and ':has(' in sel:
+                has += 1
+        important += re.sub(r'/\*[\s\S]*?\*/', '', body).count('!important')
+    return {'page_wide_star': star, 'html_rooted_has': has, 'important': important}
+
+
+def page_lint_growth(actual: dict[str, int], allowed: dict[str, int]) -> list[str]:
+    """Fail only when a recorded count grows. A shrink stays allowed until the baseline is updated."""
+    labels = {
+        'page_wide_star': 'page-wide * selectors',
+        'html_rooted_has': 'html-rooted :has() selectors',
+        'important': '!important',
+    }
+    problems = []
+    for key in PAGE_LINT_KEYS:
+        if actual[key] > allowed[key]:
+            problems.append(f'page lint ratchet: {labels[key]} grew from {allowed[key]} to {actual[key]}')
+    return problems
+
+
+def page_lint_ratchet(html: str) -> list[str]:
+    if not PAGE_LINT_BASELINE.is_file():
+        return [f'page lint ratchet: baseline missing: {PAGE_LINT_BASELINE.relative_to(CONCEPTS.parent)}']
+    allowed = json.loads(PAGE_LINT_BASELINE.read_text(encoding='utf-8')).get('counts', {})
+    missing = [key for key in PAGE_LINT_KEYS if key not in allowed]
+    if missing:
+        return [f'page lint ratchet: baseline has no count for {", ".join(missing)}']
+    return page_lint_growth(page_lint_counts(html), {key: int(allowed[key]) for key in PAGE_LINT_KEYS})
+
+
+def warn_inert_sources() -> None:
+    """Warn when a frozen pm7-tools source or pm6-build part differs from the recorded copy.
+
+    Those files no longer feed PMConcept7. A difference is a WARNING, not a failed check:
+    edit the live source scripts/pm7-where.py names, and leave these files alone.
+    """
+    if not INERT_SOURCES.is_file():
+        print(f'WARNING: inert source manifest missing: {INERT_SOURCES.relative_to(CONCEPTS.parent)}', file=sys.stderr)
+        return
+    recorded = json.loads(INERT_SOURCES.read_text(encoding='utf-8')).get('files', {})
+    repo = CONCEPTS.parent
+    for rel in sorted(recorded):
+        path = repo / rel
+        if not path.is_file():
+            print(f'WARNING: inert source missing (no longer feeds PMConcept7; use scripts/pm7-where.py): {rel}',
+                  file=sys.stderr)
+            continue
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        if digest != recorded[rel]:
+            print(f'WARNING: inert source changed (no longer feeds PMConcept7; use scripts/pm7-where.py): {rel}',
+                  file=sys.stderr)
+
+
 def check(built: str) -> list[str]:
+    warn_inert_sources()
     problems = lint_sources() + syntax_check(built) + _rail().published_problems(built) + _home().published_problems(built)
     for removed in dict.fromkeys(['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
                                   'pm7-onboarding-css', 'pm7-guided-tour-css', "'.pm7gt-callout", ".closest('.pm7gt')",
@@ -1203,6 +1330,7 @@ def check(built: str) -> list[str]:
         problems.append('Concepts/PMConcept7.html is missing; run build.py --publish-pm7')
     elif PM7_TARGET.read_bytes() != expected:
         problems.append('Concepts/PMConcept7.html differs from a fresh build; run build.py --publish-pm7')
+    problems.extend(page_lint_ratchet(built))
     return problems
 
 

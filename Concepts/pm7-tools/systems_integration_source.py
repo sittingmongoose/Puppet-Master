@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Source-owned T46 operational projections and K3 host integration.
 
 T46 keeps the winning K3 Settings geometry intact while replacing its

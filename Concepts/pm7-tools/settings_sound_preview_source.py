@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Authored browser-only sound preview for the PM7 Settings concept.
 
 The pinned K3 Settings source animates sound rows but does not play audio and

@@ -65,7 +65,8 @@ PM51.valueText = (setting, v) => {
   const scale = Number((O55R[setting.id] || {}).scale) || 1;
   /* a number whose 0 means "none" says so (rows.d `zero`: a Spending cap of 0 reads "No cap", not "0 $ per run") */
   if ((O55R[setting.id] || {}).zero && Number(v) === 0 && String(v).trim() !== '') return O55R[setting.id].zero;
-  if (typeof v === 'number' || /^-?\d+(\.\d+)?$/.test(String(v))) { const n = scale === 1 ? v : +(Number(v) / scale).toFixed(2); return unit ? `${n} ${unit}` : String(n); }
+  /* a percent sits on its number ("80%", "50% meaning"), as the rows print it; other units keep their space */
+  if (typeof v === 'number' || /^-?\d+(\.\d+)?$/.test(String(v))) { const n = scale === 1 ? v : +(Number(v) / scale).toFixed(2); return unit ? `${n}${unit[0] === '%' ? '' : ' '}${unit}` : String(n); }
   return PM51.valueLabel(setting.id, v);
 };
 function o55ObjectLine(o) { const name = o.name || o.label || o.title || o.id; if (name) return String(name); const e = Object.entries(o); return e.slice(0, 2).map(([k, x]) => `${o55Humanize(k)} ${typeof x === 'object' ? '…' : x}`).join(', '); }

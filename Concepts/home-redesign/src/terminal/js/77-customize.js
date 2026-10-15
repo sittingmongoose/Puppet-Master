@@ -136,12 +136,16 @@
       '<button type="button" class="pmt-textbtn pmt-cz-greset" data-act="group-reset" data-group="' + id + '" hidden' + NOTAG + '>Reset ' + esc(title.toLowerCase()) + '</button></header>' +
       (lead ? '<p class="pmt-cz-glead">' + esc(lead) + '</p>' : '');
   }
-  /* a one-of-several row in the panels' chosen-fill grammar (45-frames.css), its ink moving between the choices */
+  /* a one-of-several row in the panels' chosen-fill grammar (45-frames.css), its ink moving between the choices; a
+     choice may carry shorter words (o[2]) for a row the panels' PMW.czFit finds too narrow for the full ones */
   function seg(key, opts, label) {
     return '<div class="pmt-cz-seg pmw-ink-row" role="radiogroup" aria-label="' + esc(label) + '" data-seg="' + key + '">' + opts.map(function (o) {
-      return '<button type="button" class="pmt-cz-segopt pmw-ink-opt" role="radio" aria-checked="false" data-key="' + key + '" data-value="' + esc(o[0]) + '"' + NOTAG + '>' + esc(o[1]) + '</button>';
+      return '<button type="button" class="pmt-cz-segopt pmw-ink-opt" role="radio" aria-checked="false" data-key="' + key + '" data-value="' + esc(o[0]) + '"' + NOTAG +
+        (o[2] ? ' aria-label="' + esc(o[1]) + '"><span class="pmt-cz-sl">' + esc(o[1]) + '</span><span class="pmt-cz-ss" aria-hidden="true">' + esc(o[2]) + '</span>' : '>' + esc(o[1])) + '</button>';
     }).join('') + '</div>';
   }
+  /* every one-of-several row on one line (the panels' PMW.czFit, 11-editor-customize.js, shared by both screens) */
+  function fit(root) { if (window.PMW && PMW.czFit) PMW.czFit(root); }
   function chip(key, name, help, extra) {
     return '<div class="pmt-cz-chipbox" data-chip="' + key + '"><button type="button" class="pmt-cz-chip" role="switch" aria-checked="false" data-key="' + key + '" data-pmh="tile"' + NOTAG + '>' +
       '<span class="pmt-cz-pins" aria-hidden="true"><i></i><i></i><i></i></span><span class="pmt-cz-chipcopy"><span class="pmt-cz-chipname">' + esc(name) + '</span>' +
@@ -155,7 +159,7 @@
   }
   function tile(key, value, label, art, meta) {
     return '<button type="button" class="pmt-cz-tile" role="radio" aria-checked="false" data-key="' + key + '" data-value="' + esc(value) + '" data-pmh="tile"' + NOTAG + '>' +
-      '<span class="pmt-cz-thumb">' + (art || '') + '</span><span class="pmt-cz-tname">' + esc(label) + '</span>' + (meta ? '<span class="pmt-cz-tmeta">' + esc(meta) + '</span>' : '') + '</button>';
+      '<span class="pmt-cz-thumb" aria-hidden="true">' + (art || '') + '</span><span class="pmt-cz-tname">' + esc(label) + '</span>' + (meta ? '<span class="pmt-cz-tmeta">' + esc(meta) + '</span>' : '') + '</button>';
   }
   /* a scheme as a tiny terminal: its ground, a prompt line in its colours and eight of its sixteen */
   function schemeArt(sch) {
@@ -166,11 +170,11 @@
   function schemeTiles() {
     var list = A().schemes(), out = [], fam = null;
     out.push('<button type="button" class="pmt-cz-tile pmt-cz-scheme" role="radio" aria-checked="false" data-key="scheme" data-value="follow" data-name="follow look" data-pmh="tile"' + NOTAG + '>' +
-      '<span class="pmt-cz-thumb" data-follow-art></span><span class="pmt-cz-tname">Follow look</span><span class="pmt-cz-tmeta" data-follow-meta></span></button>');
+      '<span class="pmt-cz-thumb" aria-hidden="true" data-follow-art></span><span class="pmt-cz-tname">Follow look</span><span class="pmt-cz-tmeta" data-follow-meta></span></button>');
     list.forEach(function (s) {
       if (s.family !== fam) { fam = s.family; out.push('<span class="pmt-cz-fam" role="presentation">' + esc(fam === 'Puppet Master' ? 'Puppet Master originals' : fam) + '</span>'); }
       out.push('<button type="button" class="pmt-cz-tile pmt-cz-scheme" role="radio" aria-checked="false" data-key="scheme" data-value="' + esc(s.id) + '" data-name="' + esc((s.name + ' ' + s.family).toLowerCase()) + '" data-pmh="tile"' + NOTAG + '>' +
-        '<span class="pmt-cz-thumb">' + schemeArt(s) + '</span><span class="pmt-cz-tname">' + esc(s.name) + '</span><span class="pmt-cz-tmeta">' + (s.appearance === 'light' ? 'Light' : 'Dark') + '</span></button>');
+        '<span class="pmt-cz-thumb" aria-hidden="true">' + schemeArt(s) + '</span><span class="pmt-cz-tname">' + esc(s.name) + '</span><span class="pmt-cz-tmeta">' + (s.appearance === 'light' ? 'Light' : 'Dark') + '</span></button>');
     });
     return out.join('');
   }
@@ -190,8 +194,9 @@
     var F = A().FIELDS;
     var html = '';
     html += '<div class="pmt-cz-scrim" data-act="scrim" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="pmt-cz-frame" aria-hidden="true"><span class="pmt-cz-framelabel">This terminal</span></div>';
-    /* data-lg-surface="menu": the Liquid Glass layer's opt-in for a floating sheet (its CONTRACT.md); inert without it */
-    html += '<section class="pmt-cz-dialog" role="dialog" aria-modal="true" aria-labelledby="pmt-cz-title" aria-describedby="pmt-cz-lead" tabindex="-1" data-lg-surface="menu">';
+    /* data-lg-surface="menu": the Liquid Glass layer's opt-in for a floating sheet (its CONTRACT.md); data-lg-dense: a
+       large dialog full of text takes its heavier tint (both inert without Liquid Glass) */
+    html += '<section class="pmt-cz-dialog" role="dialog" aria-modal="true" aria-labelledby="pmt-cz-title" aria-describedby="pmt-cz-lead" tabindex="-1" data-lg-surface="menu" data-lg-dense>';
     html += '<header class="pmt-cz-head"><div class="pmt-cz-titles"><p class="pmt-cz-kicker"><span>' + esc('Customize · ' + label) + '</span></p>' +
       '<h2 class="pmt-cz-title" id="pmt-cz-title">Terminal appearance</h2>' +
       '<p class="pmt-cz-lead" id="pmt-cz-lead">Pick what you want to change. The preview and this terminal show it at once, and it is saved.</p></div>' +
@@ -235,7 +240,7 @@
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Size</span><span class="pmt-stepper pmt-cz-stepper"><button type="button" class="pmt-step" data-step="-0.5" aria-label="Smaller"' + tagged('Smaller', 'Text size half a pixel smaller') + '>−</button>' +
       '<output class="pmt-cz-out" data-out="fontSize"></output><button type="button" class="pmt-step" data-step="0.5" aria-label="Bigger"' + tagged('Bigger', 'Text size half a pixel bigger') + '>+</button></span>' +
       '<button type="button" class="pmt-textbtn pmt-cz-default" data-act="default" data-key="fontSize"' + NOTAG + '>Face default</button></div>' +
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Weight</span>' + seg('fontWeight', [[200, 'Extra light'], [300, 'Light'], [400, 'Regular'], [500, 'Medium'], [600, 'Semibold'], [700, 'Bold'], [800, 'Heavy']], 'Weight') +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Weight</span>' + seg('fontWeight', [[200, 'Extra light', '200'], [300, 'Light', '300'], [400, 'Regular', '400'], [500, 'Medium', '500'], [600, 'Semibold', '600'], [700, 'Bold', '700'], [800, 'Heavy', '800']], 'Weight') +
       '<span class="pmt-cz-fhelp" data-weight-why></span></div>' +
       slider('lineHeight', 'Line height', F.lineHeight.min, F.lineHeight.max, F.lineHeight.step, '×') +
       slider('letterSpacing', 'Letter spacing', F.letterSpacing.min, F.letterSpacing.max, F.letterSpacing.step, ' px') +
@@ -266,7 +271,7 @@
       '<p class="pmt-cz-note" data-note-ground hidden></p></section>';
     /* effects */
     html += '<section class="pmt-cz-group" data-group="effects" aria-labelledby="pmt-cz-g-effects">' + ghead('effects', 'Effects', 'Effects run only in the terminal you are in and stop when it is idle.') +
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Effects</span>' + seg('effects', [['follow', 'Follow look'], ['off', 'Off'], ['custom', 'Custom']], 'Effects') +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Effects</span>' + seg('effects', [['follow', 'Follow look', 'Look'], ['off', 'Off'], ['custom', 'Custom']], 'Effects') +
       '<span class="pmt-cz-fhelp" data-effects-why></span></div>' +
       '<div class="pmt-cz-chips pmt-cz-fxchips">' + EFFECTS.map(function (e) {
         var extra = '';
@@ -277,7 +282,7 @@
       }).join('') + '</div><p class="pmt-cz-note" data-note-fx hidden></p></section>';
     /* behaviour */
     html += '<section class="pmt-cz-group" data-group="behavior" aria-labelledby="pmt-cz-g-behavior">' + ghead('behavior', 'Behavior') +
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bell</span>' + seg('bell', [['follow', 'Follow look'], ['visual', 'Visual'], ['off', 'Off']], 'Bell') +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bell</span>' + seg('bell', [['follow', 'Follow look', 'Look'], ['visual', 'Visual'], ['off', 'Off']], 'Bell') +
       '<span class="pmt-cz-fhelp">What a program’s bell does: the look’s own flash, or nothing.</span></div>' +
       '<div class="pmt-cz-chips">' + chip('stickyHeader', 'Keep command titles visible', 'Pins each command’s line while you scroll its output.') +
       chip('copyOnSelect', 'Copy when I highlight', 'Text you select is copied, ready to paste.') + '</div>' +
@@ -301,7 +306,9 @@
     v.pop = root;
     v._apOnClose = typeof opts.onClose === 'function' ? opts.onClose : null;
     var dialog = root.querySelector('.pmt-cz-dialog'), body = root.querySelector('.pmt-cz-body');
-    var scope = v._apScope || 'tab';
+    /* the scope: All terminals when Settings opens it, for that visit only; otherwise the one last picked on this
+       terminal's screen (remembered while the tab lives), This terminal at first. The editor's screen does the same */
+    var scope = opts.scope === 'app' ? 'app' : v._apScope || 'tab';
     var preview = null;
     try { preview = new Preview(root.querySelector('[data-pv-box]'), v); } catch (e) { console.error('[pmt] the preview could not start', e); }
     var pv = preview && preview.view;
@@ -469,6 +476,7 @@
       if (sw.textContent !== swt) sw.textContent = swt;
       root.querySelector('.pmt-cz-framelabel').textContent = scope === 'tab' ? 'This terminal' : 'This terminal, like all terminals';
       roving();
+      fit(root);
     }
     function lookEffects(R) {
       var fx = R.effects, l = [];
@@ -505,6 +513,8 @@
       var fr = root.querySelector('.pmt-cz-frame'); fr.hidden = !hole;
       if (hole) fr.style.cssText = 'left:' + x0 + 'px;top:' + y0 + 'px;width:' + (x1 - x0) + 'px;height:' + (y1 - y0) + 'px';
       root.classList.toggle('pmt-cz-narrow', narrow);
+      syncDock();
+      fit(root);
     }
 
     /* ---- events ---- */
@@ -746,9 +756,12 @@
       root.setAttribute('aria-hidden', 'true'); root.inert = true;
       if (noFocus) root.remove(); else T.Motion.leave(root, function () { root.remove(); });
     };
-    /* the preview follows you down the screen: when less than 40 % of its own place shows, the same live view moves
-       into the dock under the group index, and back when its place returns */
-    var dock = root.querySelector('[data-dock]'), dockBox = root.querySelector('[data-dock-box]'), homeBox = root.querySelector('[data-pv-box]'), io = null;
+    /* the preview follows you down the screen only where the real terminal is not beside it (the one rule of both
+       Customize screens, 2026-10-14): when less than 40 % of its own place shows and the screen is not placed beside
+       the terminal (a narrow window, or no room on either side), the same live view moves into the dock under the
+       group index, and back when its place returns. Beside the terminal, the terminal itself is the live preview */
+    var dock = root.querySelector('[data-dock]'), dockBox = root.querySelector('[data-dock-box]'), homeBox = root.querySelector('[data-pv-box]'), io = null, wantDock = false;
+    function syncDock() { if (dock) dockTo(wantDock && !dialog.classList.contains('pmt-cz-beside')); }
     function dockTo(on) {
       if (!pv || !!on === !dock.hidden) return;
       (on ? dockBox : homeBox).appendChild(pv.root);
@@ -757,7 +770,7 @@
       pv.layout(true); preview.select();
     }
     if (pv && typeof IntersectionObserver === 'function') {
-      io = new IntersectionObserver(function (list) { var en = list[list.length - 1]; dockTo(en.intersectionRatio < 0.4); }, { root: body, threshold: [0, 0.4, 1] });
+      io = new IntersectionObserver(function (list) { var en = list[list.length - 1]; wantDock = en.intersectionRatio < 0.4; syncDock(); }, { root: body, threshold: [0, 0.4, 1] });
       io.observe(root.querySelector('.pmt-cz-preview'));
     }
     root._pmtPreview = preview; /* the preview, for checks that read what it draws */

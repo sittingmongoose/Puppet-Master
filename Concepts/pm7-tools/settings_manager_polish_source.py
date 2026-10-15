@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Narrow presentation repairs applied after the pinned K3 adaptation.
 
 No manager identity, owner command, permission, theme, or motion contract is

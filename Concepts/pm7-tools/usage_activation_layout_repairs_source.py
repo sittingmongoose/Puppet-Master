@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Source-owned T42 first-visible Usage layout restoration.
 
 T42 follows T41 and is deliberately limited to the user-reported cold-entry

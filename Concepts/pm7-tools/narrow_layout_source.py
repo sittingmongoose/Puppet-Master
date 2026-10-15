@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Assertion-guarded PM7 T36 physical-width layout repair.
 
 T36 consumes T35 and adds presentation-only container-query rules for the

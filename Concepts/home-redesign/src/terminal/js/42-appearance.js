@@ -516,7 +516,7 @@
     if (reduced) trail = 'off';
 
     /* background */
-    var bg = { kind: bgKind };
+    var bg = { kind: bgKind }, stage = null, darkStage = false;
     if (f('background') === 'follow' && lk === 'friendly') {
       /* Friendly's stage: a soft light from above over a gentle fall to the look's tint; 30-looks.css adds the recess
          under the header and the paper grain */
@@ -526,6 +526,8 @@
       var top = C.toHex(theme.bg), foot = C.toHex(C.mix(theme.bg, C.hex(darkGround ? '#3b3550' : '#f6e9f2'), darkGround ? 0.35 : 0.6));
       bg = { kind: 'gradient', soft: true, css: 'radial-gradient(120% 70% at 50% -8%, ' + (darkGround ? 'rgb(255 236 250 / .10)' : 'rgb(255 255 255 / .8)') +
         ', transparent 62%), linear-gradient(180deg, ' + top + ' 0%, ' + foot + ' 100%)' };
+      // the stage's lightest and darkest grounds (the light from above at its centre, the foot), for the text floor below
+      stage = [C.mix(theme.bg, C.hex(darkGround ? '#ffecfa' : '#ffffff'), darkGround ? 0.10 : 0.8), C.hex(foot)]; darkStage = darkGround;
     }
     else if (bgKind === 'solid') bg.color = f('bgColor') || C.toHex(theme.bg);
     else if (bgKind === 'gradient') bg.css = GRADIENTS[f('bgGradient')] || GRADIENTS.dusk;
@@ -561,6 +563,22 @@
     /* High Contrast schemes keep every cell at 7:1 unless the user chose a floor themselves */
     var floor = f('minContrast');
     if (s && /^pm-high-contrast/.test(s.id) && layerOf(view, 'minContrast') === 'look') floor = 7;
+    /* Friendly's soft stage is lighter (dark) or darker (light) than the scheme's own ground, which is what the renderer
+       floors text on: the floor is raised by the stage's worst step, so every word holds the chosen floor on every part
+       of the stage (landing QA EC-13: the prompt's branch name read 3.97:1 on the dark stage's foot) */
+    if (stage && floor > 1) {
+      var g0 = C.lum(theme.bg), step = 1;
+      stage.forEach(function (c) { var l = C.lum(c); step = Math.min(step, darkStage ? (g0 + 0.05) / (l + 0.05) : (l + 0.05) / (g0 + 0.05)); });
+      // 3 % more for the paper grain and the recess under the header that 30-looks.css lays over the stage
+      if (step < 1) floor = Math.min(21, Math.round(floor / step * 1.03 * 100) / 100);
+    }
+    /* scanlines and phosphor glow are drawn over the painted text and take some of what a word reads on the screen: in
+       Retro dark (both on, at 0.3 and 0.45) the prompt's branch name painted at 4.54:1 read 3.84:1 as drawn. The floor
+       rises by what they take, so every word holds the chosen floor as it is drawn */
+    if (floor > 1 && (effects.scanlines.on || effects.glow.on)) {
+      var take = 1 + (effects.scanlines.on ? 0.6 * (+effects.scanlines.strength || 0) : 0) + (effects.glow.on ? 0.06 * (+effects.glow.strength || 0) : 0);
+      floor = Math.min(21, Math.round(floor * take * 100) / 100);
+    }
     return {
       look: look, lookKey: lk, scheme: s, theme: theme, font: font, background: bg, effects: effects, glassThrough: bgShow,
       opts: { ligatures: f('ligatures'), minContrast: floor, boldBright: f('boldBright'),

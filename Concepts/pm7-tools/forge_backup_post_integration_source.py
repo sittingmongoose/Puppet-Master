@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Authored T46F Forge, Source Control, and backup post-integration UI.
 
 This transform consumes the September 1, 2026 post-integration packet without

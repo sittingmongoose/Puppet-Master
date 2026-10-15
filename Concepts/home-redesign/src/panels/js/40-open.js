@@ -228,6 +228,7 @@ function openAs(spec, commandId, cmdArgs) {
   var placed = model.panelOf(state.layout, id);
   var pid2 = placed ? placed.id : null;
   bus.emit('open', { tabId: id, panelId: pid2, kind: s.kind, created: true, by: s.by });
+  if (s.kind === 'editor') capEditors(id);
   if (!background) bus.emit('activate', { tabId: id, panelId: pid2, kind: s.kind, reason: 'open' });
   if (background) announce((s.agent ? s.agent + ' opened ' : 'Opened in the background: ') + tabLabel(rec));
   else if (target.narrowed) announce(tabLabel(rec) + ' opened in the next panel: the window is too narrow for a new panel');
@@ -243,6 +244,25 @@ function openAs(spec, commandId, cmdArgs) {
   return { ok: true, tabId: id, panelId: pid2, created: true };
 }
 PMW.openAs = openAs;
+
+/* Max Open Editor Tabs (general.interaction.max-editor-tabs, SSYS-050; 04-settings.js reads the Settings row): editor
+   tabs are counted across every panel, and past the cap the least recently used editor tab closes at the next open,
+   never a pinned one, one with unsaved changes or the one just opened. Other kinds are not counted */
+function capEditors(keepId) {
+  var max = +PMW.settings.get('panels.tabs.maxEditors') || 25;
+  var l = state.layout, eds = [];
+  model.panels(l).forEach(function (p) { p.tabs.forEach(function (t) { if (l.tabs[t] && l.tabs[t].kind === 'editor') eds.push(t); }); });
+  var over = eds.length - max;
+  if (over <= 0) return;
+  var mru = l.view.mru || [];
+  var rank = function (t) { var i = mru.indexOf(t); return i < 0 ? mru.length + eds.indexOf(t) : i; };
+  var drop = eds.filter(function (t) { var r = l.tabs[t]; return t !== keepId && !r.pinned && !r.dirty; })
+    .sort(function (a, b) { return rank(b) - rank(a); }).slice(0, over);
+  drop.forEach(function (t) { PMW.closeTab(t, { quiet: true, refocus: false, reason: 'cap' }); });
+  if (drop.length) announce(drop.length === 1 ? 'The editor tab used least recently closed: at most ' + max + ' stay open'
+    : drop.length + ' editor tabs used least recently closed: at most ' + max + ' stay open');
+}
+PMW.capEditors = capEditors;
 
 PM_HOME.openFile = function (path, o) { return PM_HOME.open(Object.assign({ kind: 'editor', path: path }, o || {})); };
 PM_HOME.reveal = function (id) {

@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Source-owned T44 port of the winning K3 Tome Tabs Settings concept.
 
 The standalone concept remains the layout/source input.  This transform reads

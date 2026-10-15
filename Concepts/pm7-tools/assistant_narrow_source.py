@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Source-only v3 manager layout refinement, consumed by the T49 Settings lane."""
 from pathlib import Path
 import re,hashlib

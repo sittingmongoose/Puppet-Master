@@ -158,8 +158,8 @@ html[data-o55-nier][data-theme="basic-light"] #panel-settings {
   --k3-line: #a29e89;
   --k3-line-strong: #928e7a;
   --k3-text-1: #211f1b;
-  --k3-text-2: #4d4b3f;
-  --k3-text-3: #4d4b40;
+  --k3-text-2: #39372f; /* derived: the secondary ink toward the text ink */
+  --k3-text-3: #424037; /* derived: the muted ink toward the text ink */
   --k3-muted: #4d4b40;
   --k3-accent: #211f1b;
   --k3-accent-2: #211f1b;
@@ -167,7 +167,7 @@ html[data-o55-nier][data-theme="basic-light"] #panel-settings {
   --k3-accent-soft-2: rgba(33,31,27,0.08);
   --k3-green: #525426; /* derived */
   --k3-green-soft: rgba(103,105,48,0.16);
-  --k3-amber: #5c5022;
+  --k3-amber: #4d4420; /* derived: the warning ink toward the text ink */
   --k3-amber-soft: #ccc49e;
   --k3-red: #7d3427;
   --k3-red-soft: #cfb7a2;
@@ -325,8 +325,8 @@ html[data-o55-nier][data-theme="basic-dark"] #panel-settings {
   --k3-line: #4f4d45;
   --k3-line-strong: #49473f;
   --k3-text-1: #d1cdb7;
-  --k3-text-2: #a8a593;
-  --k3-text-3: #9d9986;
+  --k3-text-2: #c1bda9; /* derived: the secondary ink toward the text ink */
+  --k3-text-3: #b7b39e; /* derived: the muted ink toward the text ink */
   --k3-muted: #9d9986;
   --k3-accent: #d1cdb7;
   --k3-accent-2: #d1cdb7;
@@ -336,7 +336,7 @@ html[data-o55-nier][data-theme="basic-dark"] #panel-settings {
   --k3-green-soft: rgba(182,185,100,0.16);
   --k3-amber: #c2b169;
   --k3-amber-soft: #403a24;
-  --k3-red: #d98a77;
+  --k3-red: #d79e8a; /* derived: the error ink toward the text ink */
   --k3-red-soft: #45302a;
   --k3-blue: #d1cdb7;
   --k3-blue-soft: #3d3b33;
