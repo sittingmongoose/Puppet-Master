@@ -64,6 +64,9 @@ PMW.plusRows = function (panelId, o) {
     if (p.group) return;   // grouped rows (Output, Problems, Ports, Debug Console) are added below
     var row = {
       id: 'kind-' + k.id, label: p.label || k.label, kind: k.icon, right: p.shortcut || '', keywords: (p.keywords || '') + ' ' + k.id,
+      // a kind with its own picker (File..., Plan or document..., Artifact...) opens it as the menu's next level, so
+      // Back returns to these rows (36-menu.js)
+      picker: !!p.pick,
       run: function (info) {
         // a picker hangs from the control that asked for it (the launcher's row button), else from the "+" button
         if (p.pick) { p.pick({ panelId: panelId, newPanel: !!info.alt, anchor: info.anchor || o.anchor }); return; }
@@ -127,7 +130,7 @@ menus.plus = function (panelId, anchor) {
     { id: 'reopen', label: 'Reopen closed tab', right: KEYS.reopen, icon: 'reopen', disabled: !closedN, reason: 'No closed tab yet', run: function () { PMW.reopenClosed(); } }
   ];
   return menu.open(anchor, {
-    id: 'plus:' + panelId, search: { placeholder: 'Open anything: kinds, files, URLs' }, minWidth: 320,
+    id: 'plus:' + panelId, label: 'New tab or panel', search: { placeholder: 'Open anything: kinds, files, URLs' }, minWidth: 320,
     sections: [{ rows: rows }, { rows: actions }],
     filter: function (q) { return PMW.quickOpenSections(panelId, q, rows, actions); }
   });
@@ -223,7 +226,7 @@ menus.panel = function (panelId, anchor) {
     '-',
     { id: 'move', label: 'Move panel', icon: 'grip', disabled: only, reason: 'This is the only panel', submenu: function () { return menus.moveTargets(panelId); } },
     { id: 'lock', label: p.locked ? 'Unlock panel' : 'Lock panel', sub: p.locked ? 'Files can open here again' : 'Files open in other panels', icon: 'lock', run: function () { PMW.lockPanel(panelId, !p.locked); } },
-    { id: 'tabs', label: 'Show all tabs in this panel', icon: 'moreH', disabled: !p.tabs.length, run: function () { menus.overflow(panelId, anchor, { all: true }); } },
+    { id: 'tabs', label: 'Show all tabs in this panel', icon: 'moreH', disabled: !p.tabs.length, picker: true, run: function () { menus.overflow(panelId, anchor, { all: true }); } },
     '-',
     { id: 'layouts', label: 'Layouts', icon: 'layout', submenu: function () { return menus.layouts(anchor); } },
     '-',
