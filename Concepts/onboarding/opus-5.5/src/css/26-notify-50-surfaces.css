@@ -11,6 +11,8 @@
 /* ---------------------------------------------------------------------------------------------------------------
    1. The setup prompt, pinned under the bell
    --------------------------------------------------------------------------------------------------------------- */
+/* the prompt, once it has joined the bell (19-notify.js tuckPin): its element stays, out of sight and out of the way */
+#rsStage > .o55-resume.pmn-pin.pmn-pin-tucked { display: none !important; }
 #rsStage > .o55-resume.pmn-pin {
   position: relative !important; top: auto !important; left: auto !important; transform: none !important; z-index: auto !important;
   display: flex; align-items: stretch; width: 100%; box-sizing: border-box; pointer-events: auto !important;

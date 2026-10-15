@@ -53,9 +53,9 @@
     fresh_attempt: 'Start fresh attempt', open_orch: 'Open Orchestrator', deny: 'Deny', once: 'Once', for_session: 'For Session',
     always: 'Always', filesafe_once: 'Approve once', filesafe_add: 'Approve & add', cancel: 'Cancel', acknowledge: 'Acknowledge',
     dismiss: 'Dismiss', resolve: 'Resolve', open_usage: 'Open Usage', resume_wizard: 'Resume Wizard', view_report: 'View report',
-    continue_assistant: 'Continue in Assistant', open: 'Open'
+    continue_assistant: 'Continue in Assistant', open: 'Open', resume_pin: 'Continue'
   };
-  const PRIMARY = /^(approve|filesafe_once|filesafe_add|for_session|always|once|resolve|open_usage|resume_wizard|retry_safe|open_orch|open)$/;
+  const PRIMARY = /^(approve|filesafe_once|filesafe_add|for_session|always|once|resolve|open_usage|resume_wizard|retry_safe|open_orch|open|resume_pin)$/;
   const DANGER = /^(deny|decline|cancel)$/;
   const NAVIGATES = /^(open_details|open|open_usage|open_orch|resume_wizard|view_report|continue_assistant)$/;
   const PAGE_LABEL = { usage: 'Usage', orchestrator: 'Orchestrator', planning: 'Planning Wizard', wizard: 'Planning Wizard', settings: 'Settings', projects: 'Projects', dashboard: 'Home', home: 'Home', chat: 'Chat' };
@@ -474,6 +474,19 @@
     const rec = { it, el: c, timer: null, left: it.stageMs, started: 0, leaving: false };
     staged.set(it.id, rec);
     clampStage();
+    /* no card over a control (review r3, the coordinator's ruling on #19): the page shell places the stage clear of every
+       control near the bell (home-redesign 50-pageshell.js). Where nothing is clear: the older lasting cards join the
+       stack now, and it is placed again; still crowded, a lasting card joins the stack too (the badge counts it) and a
+       quick note shows for a shorter time. */
+    const place = () => typeof window.PM_NOTICE_PLACE === 'function' && window.PM_NOTICE_PLACE() === true;
+    if (place()) {
+      let joined = false;
+      staged.forEach((r) => { if (r !== rec && !r.leaving && r.it.durable) { finishStaged(r, 'join'); joined = true; } });
+      if (!joined || place()) {
+        if (it.durable && method() !== 'Banner') { finishStaged(rec, 'join'); sound('callout', 0.4); return; }
+        it.stageMs = Math.min(it.stageMs, Math.max(1800, Math.round(it.stageMs * 0.5)));
+      }
+    }
     flip(before, c);
     /* the cards already showing slide down first; the new one arrives into the slot they open, so two titles never
        show through each other (frame review, 2026-10-13) */
@@ -1011,6 +1024,12 @@
       const t = row && row.querySelector('.pmn-rationale');
       if (!t || !t.value.trim()) { if (t) { t.focus(); t.setAttribute('data-missing', ''); } return; }
     }
+    if (aid === 'resume_pin') {
+      const chip = doc.getElementById(it.pin), b = chip && chip.querySelector('[data-o55-chip="resume"]');
+      closePanel(true); dismiss(it.id);
+      if (b) b.click();
+      return;
+    }
     if (aid === 'explain') { if (explainOpen.has(it.id)) explainOpen.delete(it.id); else explainOpen.add(it.id); renderPanel(true); return; }
     if (aid === 'always' && !patternEdit.has(it.id)) { patternEdit.add(it.id); renderPanel(true); return; }
     if (aid === 'decline') {
@@ -1132,6 +1151,43 @@
      bell, styled like the notices around it (26-notify-50-surfaces.css). The tour's page note (O55.pageToast) becomes
      a quiet notice; it still shows while the tour hushes window.toast. */
   const PINS = ['o55-resume', 'o55-tourchip'];
+  /* the prompt keeps out of the way (review r3, the coordinator's ruling on #19, 2026-10-15). Pinned under the bell until
+     dismissed, it covered Usage's toolbar and Settings' project picker and page options. Once it has arrived and had a
+     moment to be read (PIN_READ_MS), or at the first press, key or wheel anywhere else, it joins the bell the way a
+     lasting notice does: a copy flies into the stack, the badge counts it, and the bell's list keeps it as an entry whose
+     button does what the prompt's own does. The prompt's element stays in the stage, tucked away, with its handlers and
+     selectors (the scenario drivers click it as soon as it shows); a prompt the app shows anew arrives again. */
+  const PIN_READ_MS = 4500, pinAt = new Map();
+  function pinEntry(chip) {
+    const btn = chip.querySelector('[data-o55-chip="resume"]');
+    const it = normalize({ title: clean(btn ? btn.textContent : chip.textContent) || 'Finish setting up', body: '', severity: 'info', kind: 'setup', important: true, allowed_action_ids: ['resume_pin'] });
+    it.id = 'pin-' + chip.id; it.pin = chip.id; it.source = 'settings'; it.icon = 'spark'; it.level = 'notice';
+    return it;
+  }
+  function tuckPin(chip) {
+    const t = pinAt.get(chip.id); if (t) clearTimeout(t.timer); pinAt.delete(chip.id);
+    if (!stageEl || !chip.isConnected || chip.parentElement !== stageEl || chip.classList.contains('pmn-pin-tucked')) return;
+    const it = pinEntry(chip), known = items.some((x) => x.id === it.id);
+    const before = rects(stageKids());
+    if (known || still() || !stackEl || !stackEl.getClientRects().length || method() === 'Banner') {
+      chip.classList.add('pmn-pin-tucked'); flip(before, chip); if (!known) land(it); return;
+    }
+    const copy = chip.cloneNode(true);
+    copy.removeAttribute('id'); copy.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+    copy.classList.add('pmn-pin-copy'); copy.setAttribute('aria-hidden', 'true'); copy.inert = true;
+    stageEl.insertBefore(copy, chip);
+    chip.classList.add('pmn-pin-tucked');
+    fly({ el: copy, it });   /* it lands as an entry when the copy reaches the stack */
+  }
+  function tuckPinsOnInput(e) {
+    if (!pinAt.size) return;
+    const now = performance.now();
+    pinAt.forEach((t, id) => {
+      const chip = doc.getElementById(id);
+      if (!chip || (e.target && e.target.nodeType === 1 && chip.contains(e.target))) return;
+      if (now - t.at > 500) tuckPin(chip);   /* not the press that brought it */
+    });
+  }
   function adopt() {
     if (!stageEl) return;
     PINS.forEach((id) => {
@@ -1142,6 +1198,9 @@
       chip.setAttribute('role', 'group');
       chip.setAttribute('data-lg-surface', 'menu');
       stageEl.insertBefore(chip, stageEl.firstChild);
+      chip.classList.remove('pmn-pin-tucked');
+      const prev = pinAt.get(id); if (prev) clearTimeout(prev.timer);
+      pinAt.set(id, { at: performance.now(), timer: setTimeout(() => tuckPin(chip), PIN_READ_MS + 400) });
       flip(before, chip);
       if (!still()) {
         const L = look(), m = motion();
@@ -1152,6 +1211,11 @@
   function bridges() {
     adopt();
     if (typeof MutationObserver === 'function' && doc.body) new MutationObserver(adopt).observe(doc.body, { childList: true });
+    ['pointerdown', 'keydown', 'wheel'].forEach((t) => doc.addEventListener(t, tuckPinsOnInput, { capture: true, passive: true }));
+    /* the prompt gone (onboarding resumed or finished): its entry goes too */
+    if (typeof MutationObserver === 'function' && stageEl) new MutationObserver(() => {
+      items.filter((it) => it.pin && !doc.getElementById(it.pin)).forEach((it) => dismiss(it.id));
+    }).observe(stageEl, { childList: true });
     if (typeof O55.pageToast === 'function' && !O55.pageToast.__pmn) {
       const quiet = function (text, ms) { push({ title: String(text || ''), kind: 'ephemeral', important: false, ttlMs: ms || 4200 }); };
       quiet.__pmn = true;

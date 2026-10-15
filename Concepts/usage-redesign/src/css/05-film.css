@@ -162,19 +162,8 @@ html[data-theme^="friendly"]:not([data-o55-nier="on"]) #panel-usage .pmu-heronum
   background-image: linear-gradient(100deg, var(--pmu-l-ink-top), var(--pmu-l-ink-bot)); background-size: var(--num-w, 4ch) 1lh; background-position: calc(-1 * var(--col-x, 0ch)) 0; }
 html[data-theme^="friendly"]:not([data-o55-nier="on"]) #panel-usage .pmu-heronum .pmu-odo-s {
   background-image: linear-gradient(100deg, var(--pmu-l-ink-top), var(--pmu-l-ink-bot)); background-size: var(--num-w, 4ch) 1lh; background-position: calc(-1 * var(--col-x, 0ch)) 0; }
-/* the shared-element flight (6.3, film.flight): flyers in one layer above the board, under the menus (70) and the
-   inspector (50); each flyer is an outer (X) and an inner (Y + scale) element around a lift (takeoff) */
+/* the light layer above the board (lightAt: a live lead's flash), under the menus (70) and the inspector (50) */
 #panel-usage .pmu-flight { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 45; pointer-events: none; }
-#panel-usage .pmu-flyer { position: absolute; transform-origin: 0 0; will-change: transform; pointer-events: none; contain: layout style; }
-#panel-usage .pmu-fly-in { position: absolute; inset: 0; transform-origin: 0 0; will-change: transform; }
-#panel-usage .pmu-fly-lift { position: absolute; inset: 0; will-change: transform; }
-#panel-usage .pmu-fly-lift > .pmu-fly-c { position: absolute; left: 0; top: 0; width: 100%; height: 100%; margin: 0; box-sizing: border-box; visibility: visible; }
-#panel-usage .pmu-flyer[data-kind="num"] .pmu-fly-c, #panel-usage .pmu-flyer[data-kind="reset"] .pmu-fly-c { width: auto; height: auto; }
-#panel-usage .pmu-fly-shadow { position: absolute; inset: 0; border-radius: 6px; opacity: 0; box-shadow: 0 10px 24px -8px rgba(0,0,0,.6); }
-html[data-theme$="-light"] #panel-usage .pmu-fly-shadow { box-shadow: 0 8px 18px -8px rgba(21,32,43,.25); }
-#panel-usage .pmu-fly-after { opacity: .4; }
-/* a flight's target waits unseen until its flyer lands (the swap is one frame) */
-#panel-usage [data-pmu-fly-target] { opacity: 0 !important; }
 /* A2 (PERF-3): the app's page-in slides and fades the whole Usage panel as one 300 ms layer; without a GPU every frame of it
    redraws the panel on the CPU while the arrival's structure wave plays. Without a GPU Usage arrives without the panel
    slide (the frames wave is the arrival); with a GPU the app's page-in is unchanged; other pages are untouched. */
@@ -182,16 +171,9 @@ html[data-pmu-soft] .primary-content > #panel-usage.page.pm8-page-in { animation
 /* without a GPU the old room stays still and inert for the click's frame (40-board.js pendingOld); no z-index or other
    paint change on it (a new stacking context repainted the whole board on the CPU in the click's frame); the new board
    is empty until the frame that removes the old one */
-/* light at a measured rect in the flight layer (a landed flyer, a live lead): the flash and sweep fill it */
+/* light at a measured rect in the light layer (a live lead): the flash and sweep fill it */
 #panel-usage .pmu-flight > .pmu-film-at { position: absolute; display: block; border-radius: 6px; pointer-events: none; }
 html[data-theme^="retro"] #panel-usage .pmu-flight > .pmu-film-at, html[data-o55-nier="on"] #panel-usage .pmu-flight > .pmu-film-at { border-radius: 0; }
-/* NieR: a flyer is selected before it travels (its four corner brackets snap in, two steps of 60) */
-#panel-usage .pmu-fly-brk { position: absolute; inset: -4px; pointer-events: none;
-  background: linear-gradient(var(--pmu-ink), var(--pmu-ink)) 0 0 / 7px 1.5px, linear-gradient(var(--pmu-ink), var(--pmu-ink)) 0 0 / 1.5px 7px,
-    linear-gradient(var(--pmu-ink), var(--pmu-ink)) 100% 0 / 7px 1.5px, linear-gradient(var(--pmu-ink), var(--pmu-ink)) 100% 0 / 1.5px 7px,
-    linear-gradient(var(--pmu-ink), var(--pmu-ink)) 0 100% / 7px 1.5px, linear-gradient(var(--pmu-ink), var(--pmu-ink)) 0 100% / 1.5px 7px,
-    linear-gradient(var(--pmu-ink), var(--pmu-ink)) 100% 100% / 7px 1.5px, linear-gradient(var(--pmu-ink), var(--pmu-ink)) 100% 100% / 1.5px 7px;
-  background-repeat: no-repeat; }
 
 /* ---- MOTION-4 (lane b-motion, Jared's items 7 and 8): the layers of the room-change camera and the voices. Each is one
    short-lived element PMU.film adds for one animation (transform and opacity only) and removes at its end. ---- */
@@ -232,9 +214,6 @@ html[data-theme$="-light"] #panel-usage .pmu-card > .pmu-film-floor > i::after {
 html[data-theme="friendly-light"] #panel-usage .pmu-card > .pmu-film-warm {
   background: radial-gradient(60% 70% at 30% 34%, color-mix(in srgb, var(--pmu-l-key, #FF8F6B) 46%, transparent), color-mix(in srgb, var(--pmu-l-key, #FF8F6B) 15%, transparent) 52%, transparent 74%); }
 #panel-usage .pmu-board[data-film] > .pmu-card[data-hero] { isolation: isolate; }
-/* Friendly: the three warm dots of a landing on a meter or a control */
-#panel-usage .pmu-flight > .pmu-film-puff { position: absolute; width: 6px; height: 6px; margin: 0; display: block; border-radius: 50%; pointer-events: none; will-change: transform, opacity;
-  background: var(--pmu-l-key, #FF9F7A); box-shadow: 0 0 6px color-mix(in srgb, var(--pmu-l-key, #FF9F7A) 60%, transparent); }
 /* the head glow in the voices: Friendly a round bead with two echo dots (the comet's hop texture), Glass a white core
    in a wide halo */
 #panel-usage .pmu-film-head[data-voice="hop"]::after { right: -5px; width: 10px; height: 10px; margin-top: -5px;
@@ -242,6 +221,21 @@ html[data-theme="friendly-light"] #panel-usage .pmu-card > .pmu-film-warm {
   box-shadow: 0 0 8px 1px color-mix(in srgb, var(--c, var(--pmu-calm)) 55%, transparent), -9px 0 0 -2px color-mix(in srgb, var(--c, var(--pmu-calm)) 55%, transparent), -16px 0 0 -3px color-mix(in srgb, var(--c, var(--pmu-calm)) 35%, transparent); }
 #panel-usage .pmu-film-head[data-voice="depth"]::after { right: -18px; width: 36px; height: 36px; margin-top: -18px;
   background: radial-gradient(circle, #fff 0, color-mix(in srgb, #fff 70%, var(--c, var(--pmu-calm))) 9%, color-mix(in srgb, var(--c, var(--pmu-calm)) 45%, transparent) 24%, transparent 66%); }
-/* a live lead or a landing in Friendly: the flash is warm (the key light's tint) */
+/* a live lead in Friendly: the flash is warm (the key light's tint) */
 #panel-usage .pmu-flight > .pmu-film-at[data-voice="hop"] > .pmu-film-flash:not([data-tone]) {
   background: radial-gradient(80% 90% at 50% 55%, color-mix(in srgb, var(--pmu-l-key, #FF9F7A) 30%, transparent), transparent 72%); }
+
+/* ---- the room change's own moment (Jared #3, 2026-10-14; 15-film.js): Glass's lens rim and NieR's glitch ---- */
+/* Glass: the rim of the lens the new room opens through, a ring in the board's scroll pane above both rooms, scaled with
+   the lens (transform and opacity only; no blend: a blend here would draw the whole board into a render surface). Above
+   the rooms a rapid switch carries on (15-film.js carryGhosts: 3 to 8) */
+#panel-usage .pmu-scroll > .pmu-iris { position: absolute; z-index: 9; display: block; border-radius: 50%; pointer-events: none; will-change: transform, opacity;
+  background: radial-gradient(closest-side, transparent calc(100% - 22px), rgba(255,255,255,.05) calc(100% - 14px), rgba(255,255,255,.34) calc(100% - 4px), rgba(214,238,255,.12) calc(100% - 1px), transparent 100%); }
+html[data-theme="glass-light"] #panel-usage .pmu-scroll > .pmu-iris {
+  background: radial-gradient(closest-side, transparent calc(100% - 22px), rgba(255,255,255,.18) calc(100% - 14px), rgba(255,255,255,.85) calc(100% - 4px), rgba(30,45,90,.10) calc(100% - 1px), transparent 100%); }
+/* NieR: the signal glitch, three ink lines and one data block */
+#panel-usage .pmu-glitch { position: absolute; inset: 0; z-index: 7; display: block; overflow: hidden; pointer-events: none; }
+#panel-usage .pmu-glitch > i { position: absolute; left: 4%; right: 22%; height: 2px; display: block; background: var(--pmu-ink); opacity: 0; will-change: transform, opacity; }
+#panel-usage .pmu-glitch > i:nth-child(2) { left: 28%; right: 6%; height: 1px; }
+#panel-usage .pmu-glitch > i:nth-child(2)::after { content: ""; position: absolute; right: -12px; top: -3px; width: 7px; height: 7px; background: var(--pmu-ink); }
+#panel-usage .pmu-glitch > i:nth-child(3) { left: 12%; right: 44%; }

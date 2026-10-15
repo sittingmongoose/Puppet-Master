@@ -96,6 +96,9 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-deck { -webkit-mask-image
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-peek { background: var(--lg-fill); box-shadow: inset 0 0 0 1px var(--lg-line); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-badge { background: var(--lg-sel); color: var(--lg-on-sel, #fff); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 2px 8px var(--lg-shadow-near); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-badge[data-sev="warn"] { background: var(--accent-warning); color: #1a1405; }
+/* Glass Light's --accent-warning is the darkened amber for words on a light ground: as a fill under dark ink it read
+   2.25:1 (review r3 round 2). The badge takes a bright amber under the same ink, as Glass Dark has: 9.85:1. */
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) .pmn-badge[data-sev="warn"] { background: #F2B33D; color: #1a1405; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-badge[data-sev="error"] { background: var(--accent-error); color: #fff; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-group[data-folded="true"] .pmn-item[data-under] { background: var(--lg-fill-hover); box-shadow: inset 0 1px 0 var(--lg-edge-top); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmn-group[data-folded="true"] .pmn-item:not([data-under]) { background: var(--lg-fill); box-shadow: inset 0 1px 0 var(--lg-edge-top); }

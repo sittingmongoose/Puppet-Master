@@ -177,11 +177,31 @@
   /* another window chose a wallpaper */
   window.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) { apply(); sync(); } });
 
+  /* Jared #18 (2026-10-14): the most recent wallpaper decision wins, from either control. NieR Mode's customizer writes
+     only its own background (general.visual.nier-background); when that committed value changes, this package hands the
+     wallpaper back to the look ('look'), so NieR's choice shows. A pick in this gallery then wins again. This package
+     stays the only writer of the wallpaper choice. A NieR preview (the onboarding window's) is not a change: only the
+     committed setting counts. */
+  function nierBackground() { try { return window.PM51 && typeof PM51.value === 'function' ? String(PM51.value('general.visual.nier-background') || '') : ''; } catch (e) { return ''; } }
+  var nierBg = null;
+  function hookNier() {
+    var N = window.PM_NIER; if (!N || typeof N.onChange !== 'function') return false;
+    nierBg = nierBackground();
+    N.onChange(function (ev) {
+      if (!ev || !(ev.reason === 'background' || (ev.changed && ev.changed.indexOf('background') >= 0))) return;
+      var now = nierBackground(); if (now === nierBg) return;
+      nierBg = now;
+      if (choice() !== 'look') choose('look', false);
+    });
+    return true;
+  }
+  if (!hookNier()) { var nierTries = 0; (function retry() { if (hookNier() || ++nierTries > 60) return; setTimeout(retry, 250); })(); }
+
   apply();
   if (document.body) watch(); else document.addEventListener('DOMContentLoaded', watch);
 
   window.PM_WALLPAPERS = {
-    version: 'wpk-2026-10-13', key: KEY,
+    version: 'wpk-2026-10-14', key: KEY,
     catalog: function () { return CAT.families.map(function (f) { return { family: f.family, label: f.label, ids: f.wallpapers.map(function (w) { return w.id; }) }; }); },
     choice: choice, shown: shown, choose: function (c) { return choose(c, false); }, stale: function () { return stale; }
   };

@@ -19,7 +19,7 @@ options for wallpapers for the other themes each. All are selectable by any them
 | Basic | Blueprint, Contour, Folds, Sheets, Arcs | Calm, work-first structure (drafting, survey lines, paper) at low contrast, with its detail at the edges |
 | Friendly | Dot Wave, Channels, Bubbles, Hills, Soft Stripes | The DS, 3DS, Wii and Wii U menus, Cocoon and iiSU: soft rounded forms, pastel light, and the dot pattern in every one |
 | Retro | Horizon, Peaks, Circuit, Dither, Stars | Phosphor (dark) and printed-manual (light) pixel art, drawn small and scaled up by whole pixels; square and stepped |
-| NieR | Archive, Signal, Fragments, Hatch, Flora | Ink on parchment, or parchment on ink: rules, brackets, square marks, hatching, line drawings. NieR's eight ink scenes stay its own background |
+| NieR | City Ruins, The Bunker, Desert, Forest Castle, Amusement Park, Flooded City | NieR Mode's own six ink scenes, drawn from its scene art (`tools/nier_prints.mjs`), as faint as NieR Mode shows them (Jared #11, 2026-10-14; the five earlier prints left the catalog) |
 
 All art is original and drawn in code from fixed seeds (`tools/art.js`). The references are mood, not material.
 
