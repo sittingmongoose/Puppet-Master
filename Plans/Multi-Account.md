@@ -5404,7 +5404,9 @@ canonical_text: >-
   choice on its own list that keeps every switch level it reaches below the warning level that applies, the other
   level never moves, and a write with no such choice is refused; a provider's or the shared warning level is held
   against the own switch level of every account whose warning level follows it, whose own value never moves, and the
-  crossing choice names that account. A
+  crossing choice names that account. Restoring a level to its default is the one write that is not moved: a default
+  that would cross is refused, with the reason naming whose level blocks it, because a default is not a level the
+  user chose. A
   provider's value is one Settings value: Settings > Providers & Accounts edits all four rows in the provider's own
   section, and the Usage Accounts room hosts the provider's auto-switch toggle and switch point; both edit it through
   the Settings owner with cmd.settings.transaction.preview and then cmd.settings.transaction.apply at scope provider
