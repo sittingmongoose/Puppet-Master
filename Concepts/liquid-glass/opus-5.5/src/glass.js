@@ -839,13 +839,15 @@
     (document.querySelector('.app-shell') || document.body).appendChild(layer); return layer;
   }
   /* --pm-switch-layer: under. The strip's own layer, added once as the strip's last child (no :first-child or :nth-child
-     rule of its items changes; a custom tag matches no item selector) and positioned over the strip's padding box, so its
+     rule of its items changes; an item's :last-child does, so strips use :last-of-type, which the layer's own tag never
+     takes; a custom tag matches no item selector) and positioned over the strip's padding box, so its
      lens paints over the strip's track and under its items (z-index 1). A static strip is made relative while it holds
      the layer. The layer goes when its lens does (the strip is redrawn or the look leaves this mode). */
   function underLayer(strip) {
     var own = strip.__lgUnder;
     if (own && own.parentElement === strip) return own;
-    own = el('lg-under', { class: 'lg-lenses-under', 'aria-hidden': 'true' });
+    /* data-o55-foreign: Settings' in-place patch (kit.d/28-in-place.js) keeps it through a re-render of the strip */
+    own = el('lg-under', { class: 'lg-lenses-under', 'aria-hidden': 'true', 'data-o55-foreign': '' });
     if (getComputedStyle(strip).position === 'static') { strip.style.position = 'relative'; strip.__lgPos = true; }
     strip.appendChild(own); strip.__lgUnder = own; return own;
   }
@@ -908,6 +910,17 @@
     var lens = el('i', { class: 'lg-lens', 'aria-hidden': 'true', 'data-lg-lens': cfg.kind }), own = lensLayer(strip);
     own.appendChild(lens);
     L = { strip: strip, lens: lens, layer: own, under: own.classList.contains('lg-lenses-under'), rect: null, anim: null, glintAnim: null, magAnims: null, scrubCleanup: null, cfg: cfg, warm: '', scroller: scrollerOf(strip) }; lenses.set(strip, L);
+    /* an under-layer lens lost with its layer while its strip stays (the app redrew the strip's rows: Settings' left bar
+       on a chapter change) comes back where the old chip was drawn, so it glides on to the new choice instead of
+       appearing there */
+    var last = L.under && strip.__lgLast;
+    if (last) {
+      strip.__lgLast = null;
+      if (performance.now() - last.t < 1200) {
+        var s = lens.style; s.left = last.rect.x + 'px'; s.top = last.rect.y + 'px'; s.width = last.rect.w + 'px'; s.height = last.rect.h + 'px';
+        L.rect = last.rect; L.tgt = null; L.pending = last.pending;   /* no target yet: the next sync travels from here */
+      }
+    }
     if (cfg.mark && !strip.hasAttribute('data-lg-lensed')) strip.setAttribute('data-lg-lensed', '');
     return L;
   }
@@ -986,7 +999,9 @@
     e.remove();
   }
   function disposeLens(L) {
-    if (L.pending) { pressMark(L.pending, false); L.pending = null; }
+    if (L.under && L.rect && L.strip.isConnected && !L.lens.isConnected) L.strip.__lgLast = { rect: visualRect(L) || L.rect, pending: L.pending, t: performance.now() };
+    else if (L.pending) pressMark(L.pending, false);
+    L.pending = null;
     forgetAncestors(L.strip, scrollStrips, stripAncestors);
     stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup();
     removeLensElement(L.lens); L.rect = null;
@@ -1663,6 +1678,9 @@
   var mo = new MutationObserver(function (recs) {
     var hot = false, menuHot = false, relevant = false, area = boardMoment() ? document.querySelector(BOARD_AREA) : null;
     for (var i = 0; i < recs.length; i++) {
+      /* an app redrew a strip and dropped its under-layer with the chip in it: the chip comes back in this frame, not after
+         the lazy sync (an opaque chip gone for 140 ms left its inverted label on bare ground) */
+      if (switchUnder && recs[i].type === 'childList') for (var u = 0; u < recs[i].removedNodes.length; u++) { var rn = recs[i].removedNodes[u]; if (rn.nodeType === 1 && rn.matches('.lg-lenses-under')) hot = true; }
       /* optics, lenses and light are outputs of sync, never inputs that should schedule it again */
       if (generatedMutation(recs[i])) continue;
       if (recs[i].type === 'attributes' && recs[i].oldValue === recs[i].target.getAttribute(recs[i].attributeName)) continue;
