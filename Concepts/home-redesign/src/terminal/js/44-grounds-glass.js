@@ -47,7 +47,7 @@
     var key = String(k.frost), tl = frostTiles[key];
     if (!tl) {
       tl = frostTiles[key] = document.createElement('canvas'); tl.width = tl.height = 128;
-      var c = tl.getContext('2d'), img = c.createImageData(128, 128), d = img.data, R = rng(91);
+      var c = tl.getContext('2d', { willReadFrequently: true }), img = c.createImageData(128, 128), d = img.data, R = rng(91);
       for (var i = 0; i < d.length; i += 4) { d[i] = C.r(k.frost); d[i + 1] = C.g(k.frost); d[i + 2] = C.b(k.frost); d[i + 3] = Math.round(R() * R() * 120); }
       c.putImageData(img, 0, 0);
     }
@@ -378,7 +378,7 @@
     g.fillStyle = hex(th.bg); g.fillRect(0, 0, W, H);
     if (!t) {
       t = reedTiles[key] = document.createElement('canvas'); t.width = P; t.height = 2;
-      var c = t.getContext('2d'), gr = c.createLinearGradient(0, 0, P, 0), shade = dark ? 'rgba(0,0,0,.22)' : k.shadow !== 'rgba(0,0,0,0)' ? rgba(k.lo, 0.5) : rgba(k.hi, 0);
+      var c = t.getContext('2d', { willReadFrequently: true }), gr = c.createLinearGradient(0, 0, P, 0), shade = dark ? 'rgba(0,0,0,.22)' : k.shadow !== 'rgba(0,0,0,0)' ? rgba(k.lo, 0.5) : rgba(k.hi, 0);
       gr.addColorStop(0, rgba(k.hi, dark ? 0.38 : 0.9)); gr.addColorStop(0.3, rgba(k.hi, dark ? 0.08 : 0.25)); gr.addColorStop(0.62, rgba(k.hi, 0)); gr.addColorStop(0.9, shade); gr.addColorStop(1, rgba(k.hi, dark ? 0.06 : 0.3));
       c.fillStyle = gr; c.fillRect(0, 0, P, 2);
     }

@@ -194491,7 +194491,7 @@ var T = {};
     var key = String(k.frost), tl = frostTiles[key];
     if (!tl) {
       tl = frostTiles[key] = document.createElement('canvas'); tl.width = tl.height = 128;
-      var c = tl.getContext('2d'), img = c.createImageData(128, 128), d = img.data, R = rng(91);
+      var c = tl.getContext('2d', { willReadFrequently: true }), img = c.createImageData(128, 128), d = img.data, R = rng(91);
       for (var i = 0; i < d.length; i += 4) { d[i] = C.r(k.frost); d[i + 1] = C.g(k.frost); d[i + 2] = C.b(k.frost); d[i + 3] = Math.round(R() * R() * 120); }
       c.putImageData(img, 0, 0);
     }
@@ -194822,7 +194822,7 @@ var T = {};
     g.fillStyle = hex(th.bg); g.fillRect(0, 0, W, H);
     if (!t) {
       t = reedTiles[key] = document.createElement('canvas'); t.width = P; t.height = 2;
-      var c = t.getContext('2d'), gr = c.createLinearGradient(0, 0, P, 0), shade = dark ? 'rgba(0,0,0,.22)' : k.shadow !== 'rgba(0,0,0,0)' ? rgba(k.lo, 0.5) : rgba(k.hi, 0);
+      var c = t.getContext('2d', { willReadFrequently: true }), gr = c.createLinearGradient(0, 0, P, 0), shade = dark ? 'rgba(0,0,0,.22)' : k.shadow !== 'rgba(0,0,0,0)' ? rgba(k.lo, 0.5) : rgba(k.hi, 0);
       gr.addColorStop(0, rgba(k.hi, dark ? 0.38 : 0.9)); gr.addColorStop(0.3, rgba(k.hi, dark ? 0.08 : 0.25)); gr.addColorStop(0.62, rgba(k.hi, 0)); gr.addColorStop(0.9, shade); gr.addColorStop(1, rgba(k.hi, dark ? 0.06 : 0.3));
       c.fillStyle = gr; c.fillRect(0, 0, P, 2);
     }
@@ -195965,15 +195965,26 @@ var T = {};
      light lies on it up and to the left, a fainter one low on the right */
   PAINT['tube'] = function (g, W, H, th) {
     ground(g, W, H, th);
-    var dk = edgeOf(th, 1.4), hi = hiOf(th), layer = document.createElement('canvas'); layer.width = W; layer.height = H;
-    var l = layer.getContext('2d');
-    l.fillStyle = hex(dk); l.fillRect(0, 0, W, H);
-    l.globalCompositeOperation = 'destination-out'; if (K.canFilter) l.filter = 'blur(' + Math.round(Math.min(W, H) * 0.09) + 'px)';
-    var ix = W * 0.07, iy = H * 0.12, r = Math.min(W, H) * 0.22;
-    l.beginPath(); l.moveTo(ix + r, iy); l.arcTo(W - ix, iy, W - ix, H - iy, r); l.arcTo(W - ix, H - iy, ix, H - iy, r); l.arcTo(ix, H - iy, ix, iy, r); l.arcTo(ix, iy, W - ix, iy, r); l.closePath();
+    /* a ground already near black cannot darken toward the corners: there the face itself catches a little grey light
+       from the room, so the corners read darker by contrast */
+    if (C.lum(th.bg) < 0.02) {
+      g.save(); g.translate(W / 2, H * 0.48); g.scale(W * 0.55, H * 0.62);
+      var face = g.createRadialGradient(0, 0, 0, 0, 0, 1), lift = pool(th, 0xffffff, 0.3);
+      [0, 0.3, 0.6, 0.85, 1].forEach(function (t) { face.addColorStop(t, rgba(lift, 1 - t * t * (3 - 2 * t))); });
+      g.fillStyle = face; g.fillRect(-1, -1, 2, 2); g.restore();
+    }
+    /* the darkening is all soft edge, so it is painted at a quarter of the size and laid on scaled up (a full-size blur cost
+       437 ms on the P1000) */
+    var dk = edgeOf(th, 1.4), hi = hiOf(th), q = 4, lw = Math.max(8, Math.round(W / q)), lh = Math.max(8, Math.round(H / q));
+    var layer = document.createElement('canvas'); layer.width = lw; layer.height = lh;
+    var l = layer.getContext('2d', { willReadFrequently: true });
+    l.fillStyle = hex(dk); l.fillRect(0, 0, lw, lh);
+    l.globalCompositeOperation = 'destination-out'; if (K.canFilter) l.filter = 'blur(' + Math.max(1, Math.round(Math.min(lw, lh) * 0.09)) + 'px)';
+    var ix = lw * 0.07, iy = lh * 0.12, r = Math.min(lw, lh) * 0.22;
+    l.beginPath(); l.moveTo(ix + r, iy); l.arcTo(lw - ix, iy, lw - ix, lh - iy, r); l.arcTo(lw - ix, lh - iy, ix, lh - iy, r); l.arcTo(ix, lh - iy, ix, iy, r); l.arcTo(ix, iy, lw - ix, iy, r); l.closePath();
     l.fillStyle = '#000'; l.fill();
-    g.drawImage(layer, 0, 0);
-    [[0.22, 0.24, 0.17, 0.11, -0.28, isDark(th) ? 0.2 : 0.75], [0.84, 0.8, 0.07, 0.05, -0.28, isDark(th) ? 0.1 : 0.45]].forEach(function (q) {
+    g.save(); g.imageSmoothingQuality = 'high'; g.drawImage(layer, 0, 0, W, H); g.restore();
+    [[0.22, 0.24, 0.17, 0.11, -0.28, isDark(th) ? 0.3 : 0.75], [0.84, 0.8, 0.07, 0.05, -0.28, isDark(th) ? 0.16 : 0.45]].forEach(function (q) {
       g.save(); g.translate(W * q[0], H * q[1]); g.rotate(q[4]); g.scale(W * q[2], H * q[3]);
       var hg = g.createRadialGradient(0, 0, 0, 0, 0, 1); hg.addColorStop(0, rgba(hi, q[5])); hg.addColorStop(1, rgba(hi, 0));
       g.fillStyle = hg; g.beginPath(); g.arc(0, 0, 1, 0, Math.PI * 2); g.fill(); g.restore();
@@ -195989,7 +196000,7 @@ var T = {};
     var cols = mono ? [0.35, 0.7, 0.5].map(function (f) { return K.inkFor(th, phos(th, h), Math.min(1, f * lf)); })
       : [pal[9] !== undefined ? pal[9] : h.hot, pal[10] !== undefined ? pal[10] : h.d, pal[12] !== undefined ? pal[12] : h.a].map(function (c) { return K.inkFor(th, c, Math.min(1, 0.42 * lf)); });
     var key = cols.join(','), t = grilleTiles[key];
-    if (!t) { t = grilleTiles[key] = document.createElement('canvas'); t.width = 3; t.height = 1; var c = t.getContext('2d'); cols.forEach(function (col, i) { c.fillStyle = hex(col); c.fillRect(i, 0, 1, 1); }); }
+    if (!t) { t = grilleTiles[key] = document.createElement('canvas'); t.width = 3; t.height = 1; var c = t.getContext('2d', { willReadFrequently: true }); cols.forEach(function (col, i) { c.fillStyle = hex(col); c.fillRect(i, 0, 1, 1); }); }
     g.fillStyle = g.createPattern(t, 'repeat'); g.fillRect(0, 0, W, H);
     g.fillStyle = hex(edgeOf(th, 1.2)); g.fillRect(0, Math.round(H / 3), W, 1); g.fillRect(0, Math.round(H * 2 / 3), W, 1);
   };
@@ -196002,7 +196013,7 @@ var T = {};
     var c = K.inkFor(th, phos(th, h), 0.9, 1.3), key = th.bg + '|' + c, t = staticTiles[key], amp = isDark(th) ? 0.7 : 1;
     if (!t) {
       var N = 240; t = staticTiles[key] = document.createElement('canvas'); t.width = t.height = N;
-      var x = t.getContext('2d'), R = rng(71);
+      var x = t.getContext('2d', { willReadFrequently: true }), R = rng(71);
       for (var y = 0; y < N; y += 2) {
         var torn = R() < 0.04;
         /* (a light ground shows grain less: there more of the grains are mid-tone) */
