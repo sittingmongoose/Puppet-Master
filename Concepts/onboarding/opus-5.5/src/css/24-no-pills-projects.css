@@ -131,9 +131,15 @@ html[data-o55-nier="on"] .pm6-proj-sheet .pm6-proj-chip.active { border-color: v
 
 /* ── the search field: the look's rectangle ──────────────────────────────────────────────────────────────────────────
    Its placeholder was the page's fixed #757575 in every look (2.6 to 3.9:1 on the field); it takes the look's secondary
-   ink, drawn toward the text ink where that alone falls short. */
+   ink, drawn toward the text ink where that alone falls short. The New Project sheet's fields ("my-next-app") had the
+   same #757575 (3.4 in Glass Light) and take the same ink (contrast round, 2026-10-15). */
 html[data-theme] #panel-projects .pm6-proj-search { border-radius: var(--pm-ctl-r); }
-html[data-theme] #panel-projects .pm6-proj-search::placeholder { color: var(--pmp-ph, var(--text-secondary)); opacity: 1; }
+html[data-theme] #panel-projects :is(.pm6-proj-search, .pm6-proj-sheet input)::placeholder { color: var(--pmp-ph, var(--text-secondary)); opacity: 1; }
 html[data-theme$="-light"] #panel-projects { --pmp-ph: color-mix(in srgb, var(--text-secondary) 70%, var(--text-primary)); }
 html[data-theme="glass-light"] #panel-projects { --pmp-ph: color-mix(in srgb, var(--text-secondary) 40%, var(--text-primary)); }
 html[data-o55-nier="on"] #panel-projects { --pmp-ph: color-mix(in srgb, var(--o55-nier-ink) 80%, transparent); }
+
+/* ── a card's Remove confirmation ─────────────────────────────────────────────────────────────────────────────────────
+   Glass Light's error ink read 4.43 on the frosted card behind the confirm (contrast round, 2026-10-15): the Remove
+   word is drawn a fifth toward the text ink; its edge keeps the error colour. */
+html[data-theme="glass-light"] #panel-projects .pm6-proj-confirm-btns button.danger { color: color-mix(in srgb, var(--accent-error) 80%, var(--text-primary)); }
