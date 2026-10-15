@@ -815,8 +815,10 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz :is(.pmt-textbtn, .pmt
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz :is(.pmt-textbtn, .pmt-step):not(.pmt-textbtn-primary):not(.pmt-cz-nav .pmt-textbtn):active { background: var(--lg-fill-press) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz .pmt-cz-done { border-radius: var(--pm-ctl-r) !important; }
 /* the section bar: frosted, so the options scrolling under it blur away instead of reading through its words */
+/* above the dialog's own lens layer (.lg-lenses-local, z-index 30), so a choice row's lens that scrolls under the bar
+   goes under it with its row instead of standing on the bar's words (3.0:1 in Glass Dark) */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz .pmt-cz-nav {
-  margin: -6px 0 -10px; background: color-mix(in srgb, var(--background) 92%, transparent) !important; border: 1px solid var(--lg-line) !important;
+  z-index: 31; margin: -6px 0 -10px; background: color-mix(in srgb, var(--background) 92%, transparent) !important; border: 1px solid var(--lg-line) !important;
   border-radius: var(--lg-r-bar); -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2);
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz .pmt-cz-nav .pmt-textbtn { background: transparent !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important; box-shadow: none !important; }
