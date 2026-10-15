@@ -62,9 +62,9 @@ test('defaults are the Retro dark defaults from the brief', () => {
   const d = G.defaults();
   assert.deepEqual(d.scanlines, { on: true, strength: 0.30, period: 3 });
   assert.deepEqual(d.glow, { on: true, strength: 0.45, radius: 2.5 });
-  assert.deepEqual(d.curvature, { on: false, amount: 0.08 });
+  assert.deepEqual(d.curvature, { on: false, amount: 0.04, flatText: false });
   assert.deepEqual(d.bezel, { on: false, light: false });
-  assert.deepEqual(d.vignette, { on: false, strength: 0.25 });
+  assert.deepEqual(d.vignette, { on: false, strength: 0.08 });
   assert.deepEqual(d.burnIn, { on: false, persistMs: 450 });
   assert.deepEqual(d.noise, { on: false, amount: 0.035 });
   assert.deepEqual(d.flicker, { on: false, amount: 0.02 });
@@ -112,9 +112,9 @@ test('degauss envelope: full at the press, zero from 600 ms, monotone', () => {
   assert.equal(G.DEGAUSS_MS, 600);
 });
 
-/* ---- curvature and pointer mapping ---- */
-function geom(curv, bezel, W = 2000, H = 1000, dpr = 2) {
-  const p = G.normalize({ curvature: { on: curv > 0, amount: curv }, bezel: { on: bezel } });
+/* ---- curvature and pointer mapping (round 2: Lottes' warp with shape-normalised coefficients, CSS bezel) ---- */
+function geom(curv, flat, W = 2000, H = 1000, dpr = 2) {
+  const p = G.normalize({ curvature: { on: curv > 0, amount: curv, flatText: !!flat } });
   return G.geometry(p, W, H, W, H, dpr);
 }
 test('flat screen maps the pointer to itself', () => {
@@ -123,40 +123,77 @@ test('flat screen maps the pointer to itself', () => {
     const s = G.mapUV(u, v, g); assert.ok(Math.abs(s[0] - u) < 1e-12 && Math.abs(s[1] - v) < 1e-12);
   }
 });
-test('unmapUV inverts mapUV to 1e-9 with curvature 0.08 and 0.3, bezel on and off', () => {
+test('unmapUV inverts mapUV to 1e-9 at subtle, medium and the strongest curvature, text curved or flat', () => {
   const r = rng(11);
-  for (const [k, bz] of [[0.08, false], [0.08, true], [0.3, true], [0.3, false]]) {
-    const g = geom(k, bz);
+  for (const [k, flat] of [[0.04, false], [0.08, false], [0.3, false], [0.08, true]]) {
+    const g = geom(k, flat);
     let n = 0;
     for (let i = 0; i < 4000; i++) {
       const su = 0.01 + r() * 0.98, sv = 0.01 + r() * 0.98;
       const o = G.unmapUV(su, sv, g); if (!o) continue;
       const s = G.mapUV(o[0], o[1], g); if (!s) continue;
-      assert.ok(Math.abs(s[0] - su) < 1e-9 && Math.abs(s[1] - sv) < 1e-9, `k=${k} bz=${bz}`);
+      assert.ok(Math.abs(s[0] - su) < 1e-9 && Math.abs(s[1] - sv) < 1e-9, `k=${k} flat=${flat}`);
       n++;
     }
     assert.ok(n > 3000, 'most points round-trip');
   }
 });
-test('outside the curved screen (corners, bezel) maps to null', () => {
-  const g = geom(0.08, true);
-  assert.equal(G.mapUV(0.001, 0.001, g), null);      // inside the bezel
-  assert.equal(G.mapUV(0.999, 0.5, g), null);
+test('the rounded tube: outside its corners maps to null, the middle never does', () => {
+  const g = geom(0.04, false);
+  assert.equal(G.mapUV(0.001, 0.001, g), null);       // inside the 10 px corner
+  assert.ok(G.mapUV(0.5, 0.5, g));
   const g2 = geom(0.3, false);
-  assert.equal(G.mapUV(0.0005, 0.0005, g2), null);   // the warp bends the corner away
-  assert.ok(G.mapUV(0.5, 0.5, g2));
+  assert.equal(G.mapUV(0.0005, 0.0005, g2), null);
+  assert.ok(G.mapUV(0.5, 0.01, g2), 'the middle of an edge stays on the screen');
+});
+test('every edge sags the same share of its own length, on any shape (aspect-normalised)', () => {
+  for (const [W, H] of [[1600, 500], [1280, 800], [700, 900]]) {
+    const g = geom(0.04, false, W, H, 1), s = 0.04 * G.SAG_PER_CURVE;
+    /* the top edge's sag at the corner column, and the left edge's at the corner row, measured by bisection */
+    const edge = (fix, vert) => { let lo = 0, hi = 0.5; for (let i = 0; i < 60; i++) { const m = (lo + hi) / 2, q = vert ? G.mapUV(m, fix, g) : G.mapUV(fix, m, g); if (q && (vert ? q[0] >= 0 : q[1] >= 0)) hi = m; else lo = m; } return hi; };
+    const topSag = edge(0.05, false) * H, sideSag = edge(0.05, true) * W;
+    assert.ok(Math.abs(topSag / W - s * 0.81) < s * 0.25, `top ${topSag} on ${W}x${H}`);
+    assert.ok(Math.abs(sideSag / H - s * 0.81) < s * 0.25, `side ${sideSag} on ${W}x${H}`);
+  }
+});
+test('tube outline (round 3 bezel): a closed loop on the shader’s edge, the rectangle itself when flat', () => {
+  const flat = geom(0, false);
+  for (const q of G.tubeOutline(flat, 20)) assert.ok(Math.min(q[0], 1 - q[0], q[1], 1 - q[1]) < 1e-9, 'flat: every point on the rectangle');
+  for (const k of [0.04, 0.12, 0.2]) {
+    const g = geom(k, false), pts = G.tubeOutline(g, 20);
+    assert.ok(pts.length > 40, 'enough points for a smooth curve');
+    /* each point is where the warped, rounded screen ends: just inside it maps onto the screen, just outside it does not */
+    let ok = 0;
+    for (const q of pts) {
+      const c = [0.5, 0.5], d = [q[0] - c[0], q[1] - c[1]], inP = [q[0] - d[0] * 0.004, q[1] - d[1] * 0.004], outP = [q[0] + d[0] * 0.004, q[1] + d[1] * 0.004];
+      const a = G.mapUV(inP[0], inP[1], g), b = G.mapUV(outP[0], outP[1], g);
+      if (a && (!b || b[0] < 0 || b[0] > 1 || b[1] < 0 || b[1] > 1)) ok++;
+    }
+    assert.ok(ok >= pts.length * 0.95, `k=${k}: ${ok}/${pts.length} points on the edge`);
+    /* Lottes' warp keeps each edge's middle in place and draws it in toward the corners: the top edge near a corner sits
+       lower than at its middle */
+    const near = (x) => pts.filter(q => q[1] < 0.5).reduce((m, q) => Math.abs(q[0] - x) < Math.abs(m[0] - x) ? q : m, [9, 0]);
+    assert.ok(near(0.12)[1] > near(0.5)[1] + 1e-4, `k=${k}: the top edge curves in toward its corners`);
+  }
 });
 test('corner cells: the screen point of each corner cell centre maps back to that cell', () => {
   const W = 2000, H = 1000, dpr = 2, cssW = 1000, cssH = 500, pad = { x: 12, y: 10 }, cw = 8, ch = 22;
   const cols = Math.floor((cssW - 24) / cw), rows = Math.floor((cssH - 20) / ch);
-  for (const [k, bz] of [[0.08, false], [0.08, true], [0.3, true]]) {
-    const g = geom(k, bz, W, H, dpr);
+  for (const [k, flat] of [[0.04, false], [0.08, false], [0.2, false]]) {
+    const g = geom(k, flat, W, H, dpr);
     for (const [c, r] of [[0, 0], [cols - 1, 0], [0, rows - 1], [cols - 1, rows - 1]]) {
       const sx = pad.x + (c + 0.5) * cw, sy = pad.y + (r + 0.5) * ch;
       const o = G.unmapUV(sx / cssW, sy / cssH, g); assert.ok(o, 'on screen');
       const s = G.mapUV(o[0], o[1], g);
       assert.equal(Math.floor((s[0] * cssW - pad.x) / cw), c); assert.equal(Math.floor((s[1] * cssH - pad.y) / ch), r);
     }
+  }
+});
+test('scanlines divide each text row into whole lines of about 3 device px', () => {
+  for (const [row, dpr] of [[17, 1], [16, 1], [34, 2], [26, 1.5], [21, 1]]) {
+    const p = G.scanPeriod(row, dpr), n = row / p;
+    assert.ok(Math.abs(n - Math.round(n)) < 1e-9, `${row}@${dpr}: ${n} lines`);
+    assert.ok(p >= 2.5 && p <= 6, `${row}@${dpr}: period ${p}`);
   }
 });
 

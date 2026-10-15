@@ -106,6 +106,49 @@ html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(-
 .pmt-cz-trylabel { width: 100%; font: 600 9.5px/1.3 var(--pm-font-code, ui-monospace, monospace); letter-spacing: .16em; text-transform: uppercase; color: var(--pmw-text-3, var(--text-muted)); }
 .pmt-cz-try .pmt-textbtn { height: 26px; padding: 0 8px; border-color: var(--pmt-cz-line); }
 
+/* ---- presets (round 2): the four built in, then yours, each a tiny terminal in its own colours; saving, renaming and
+   deleting happen in place, and a delete can be undone ---- */
+.pmt-cz-presets { display: grid; gap: 6px; min-width: 0; }
+.pmt-cz-presets .pmt-cz-sets { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); }
+.pmt-cz-presethead { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.pmt-cz-presethead .pmt-cz-trylabel { width: auto; }
+.pmt-cz-presethead .pmt-textbtn { height: 24px; padding: 0 7px; font-size: 11.5px; border-color: var(--pmt-cz-line); }
+.pmt-cz-psave { display: flex; flex-wrap: wrap; gap: 4px; }
+.pmt-cz-psave[hidden] { display: none; }
+.pmt-cz .pmt-cz-pname-in { flex: 1 1 100%; min-width: 0; height: 28px; margin: 0; padding: 0 8px; font: inherit; font-size: 12px; color: inherit;
+  background: var(--pmt-cz-ground); border: 1px solid var(--pmt-cz-line-2); border-radius: var(--pmt-cz-r); outline: none; }
+.pmt-cz .pmt-cz-pname-in:focus-visible { border-color: var(--pmt-cz-accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--pmt-cz-accent) 30%, transparent); }
+.pmt-cz-psave .pmt-textbtn { height: 26px; padding: 0 9px; border-color: var(--pmt-cz-line); }
+.pmt-cz .pmt-cz-psave-go { background: var(--pmt-cz-accent); color: var(--pmt-cz-on-accent); border-color: transparent; }
+.pmt-cz-mylist { display: grid; gap: 6px; max-height: 236px; overflow: auto; overscroll-behavior: contain; }
+.pmt-cz-mylist[hidden] { display: none; }
+.pmt-cz-mycard { position: relative; min-width: 0; }
+.pmt-cz .pmt-cz-myset { width: 100%; grid-template-columns: 54px minmax(0, 1fr); grid-template-rows: auto auto; align-items: center; column-gap: 9px; min-height: 46px; padding: 5px 52px 5px 5px; }
+.pmt-cz-myset .pmt-cz-pswatch { grid-row: 1 / span 2; }
+.pmt-cz-myset .pmt-cz-pname { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 650; font-size: 12px; }
+.pmt-cz-myset .pmt-cz-pname-in { flex: none; height: 24px; }
+.pmt-cz-pswatch { position: relative; display: grid; align-content: space-between; width: 54px; height: 34px; padding: 4px 5px; overflow: hidden;
+  border-radius: calc(var(--pmt-cz-r) - 2px); box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 18%, transparent); font-size: 7.5px; line-height: 1.1; }
+.pmt-cz-psground { position: absolute; inset: 0; }
+.pmt-cz-psline, .pmt-cz-psdots { position: relative; white-space: nowrap; }
+.pmt-cz-psline b, .pmt-cz-psline i { font-weight: 600; font-style: normal; }
+.pmt-cz-psdots { display: flex; gap: 2px; }
+.pmt-cz-psdots > i { width: 6px; height: 4px; border-radius: 1px; }
+.pmt-cz-pacts { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); display: flex; gap: 1px; }
+.pmt-cz .pmt-cz-pact { width: 22px; height: 22px; opacity: .7; }
+.pmt-cz-mycard:hover .pmt-cz-pact, .pmt-cz .pmt-cz-pact:focus-visible { opacity: 1; }
+.pmt-cz-pact svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.pmt-cz-pnote { margin: 0; font-size: 11.5px; line-height: 1.35; color: var(--pmw-text-2, var(--text-secondary)); }
+.pmt-cz-pnote[hidden] { display: none; }
+.pmt-cz-pnote .pmt-textbtn { height: 22px; padding: 0 6px; margin-left: 2px; border-color: var(--pmt-cz-line); }
+/* NieR: square cards and swatches, as every NieR surface */
+.pmt-cz[data-pmt-look="nier"] :is(.pmt-cz-pswatch, .pmt-cz-pname-in) { border-radius: 0; }
+/* Retro: square, the swatch in its own phosphor */
+.pmt-cz[data-pmt-look="retro"] :is(.pmt-cz-pswatch, .pmt-cz-pname-in) { border-radius: 0; }
+/* a chosen preset in the looks whose chosen fill is the accent (Retro) or ink (NieR) reads in the fill's own text colour */
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-myset[aria-pressed="true"] .pmt-cz-pname { color: var(--pmt-cz-on-accent); }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-myset[aria-pressed="true"] .pmt-cz-pname { color: var(--o55-nier-on-ink); }
+
 /* ---- the group index: stays at the top of the scrolling body ---- */
 .pmt-cz-nav { position: sticky; top: -16px; z-index: 3; display: flex; flex-wrap: wrap; gap: 2px; margin: -6px -8px -10px; padding: 8px; background: var(--pmt-cz-plate); border-bottom: 1px solid var(--pmt-cz-line); }
 .pmt-cz-nav .pmt-textbtn { display: inline-flex; align-items: center; gap: 6px; color: var(--pmw-text-2, inherit); }
@@ -218,6 +261,39 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 /* grounds, gradients and pictures */
 .pmt-cz-gnd { display: block; height: 100%; background-size: cover; background-position: center; }
 .pmt-cz-gnd.pmt-cz-empty { background: repeating-linear-gradient(135deg, transparent 0 6px, color-mix(in srgb, var(--pmw-text, #fff) 9%, transparent) 6px 7px); }
+/* round 2: each background tile is a tiny terminal in this scheme, with a line of its text, so you see what it does to
+   the text before choosing; the kinds are a row of tabs that only filter the tiles */
+.pmt-cz-gtiles { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); }
+.pmt-cz-gtiles .pmt-cz-thumb { height: 64px; }
+.pmt-cz-gtiles .pmt-cz-gnd { position: relative; }
+.pmt-cz-gline { position: absolute; left: 6px; top: 5px; font: 600 9.5px/1.2 var(--pm-font-code, ui-monospace, monospace); white-space: nowrap; }
+.pmt-cz-gline b { font-weight: 650; }
+.pmt-cz-forlook .pmt-cz-gtiles { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); }
+.pmt-cz-forlook .pmt-cz-gtiles .pmt-cz-thumb { height: 52px; }
+/* Show: eleven kinds wrap onto as many rows as the width needs (a filter, not a one-of-several setting, so it is not one
+   of the segmented controls the fit pass narrows or stacks) */
+.pmt-cz-gcats { --pmw-ink-y: 2px; display: flex; flex-wrap: wrap; gap: 2px; max-width: 100%; padding: 2px; border: 1px solid var(--pmt-cz-line); border-radius: 9px; }
+.pmt-cz[data-pmt-look="friendly"] .pmt-cz-gcats { border-radius: 12px; }
+.pmt-cz:is([data-pmt-look="retro"], [data-pmt-look="nier"]) .pmt-cz-gcats { border-radius: 0; }
+.pmt-cz-gcats .pmt-cz-segopt[aria-selected="true"] { background: var(--pmt-cz-fill); }
+.pmt-cz-gctl[hidden], [data-gctl-sub][hidden], .pmt-cz-bezelmore[hidden] { display: none; }
+.pmt-cz-gctl, .pmt-cz-bezelmore { display: grid; gap: 10px; }
+/* colour swatches: the solid ground's three from the scheme, and the bezel's cases */
+.pmt-cz-swatches { display: inline-flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.pmt-cz .pmt-cz-swatch { position: relative; width: 28px; height: 28px; padding: 3px; border-radius: 8px; border: 1px solid var(--pmt-cz-line); background: transparent; cursor: pointer; }
+.pmt-cz-swatch > i { display: block; width: 100%; height: 100%; border-radius: 5px; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pmw-text, #fff) 16%, transparent); }
+.pmt-cz .pmt-cz-swatch:hover { background: var(--pmt-cz-hover); }
+.pmt-cz .pmt-cz-swatch[aria-checked="true"] { border-color: var(--pmt-cz-accent); box-shadow: 0 0 0 1px var(--pmt-cz-accent); }
+.pmt-cz-swatch > i[data-bz="follow"] { background: linear-gradient(135deg, #2b2a28 0 50%, #cfc8b8 50% 100%); }
+.pmt-cz-swatch > i[data-bz="accent"] { background: linear-gradient(160deg, color-mix(in srgb, var(--pmt-cz-accent) 70%, #fff) 0%, color-mix(in srgb, var(--pmt-cz-accent) 58%, #6b6b6b) 70%); }
+/* the materials as small samples: light from above, brushed metal streaked, glass a clear pane with a lit rim */
+.pmt-cz-swatch > i[data-bz="charcoal"], .pmt-cz-swatch > i[data-bz="black"], .pmt-cz-swatch > i[data-bz="platinum"], .pmt-cz-swatch > i[data-bz="putty"] {
+  background-image: linear-gradient(180deg, rgb(255 255 255 / .16), rgb(0 0 0 / .14)) !important; }
+.pmt-cz-swatch > i[data-bz="aluminium"] { background: repeating-linear-gradient(90deg, rgb(255 255 255 / .12) 0 1px, transparent 1px 3px), linear-gradient(180deg, #c8ccd2, #969aa1); }
+.pmt-cz-swatch > i[data-bz="gunmetal"] { background: repeating-linear-gradient(90deg, rgb(255 255 255 / .08) 0 1px, transparent 1px 3px), linear-gradient(180deg, #5a5f67, #383b41); }
+.pmt-cz-swatch > i[data-bz="glass"] { background: linear-gradient(180deg, rgb(255 255 255 / .34), rgb(255 255 255 / .08)); box-shadow: inset 0 1px 0 rgb(255 255 255 / .7), inset 0 0 0 1px rgb(255 255 255 / .35); }
+.pmt-cz[data-pmt-look="nier"] .pmt-cz-swatch, .pmt-cz[data-pmt-look="nier"] .pmt-cz-swatch > i,
+.pmt-cz[data-pmt-look="retro"] .pmt-cz-swatch, .pmt-cz[data-pmt-look="retro"] .pmt-cz-swatch > i { border-radius: 0; }
 
 /* ---- chips: what they turn on (the Plug-in Chips card) ---- */
 .pmt-cz-chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(228px, 1fr)); gap: 8px; }
@@ -259,9 +335,11 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz-art-smoothScroll { background: linear-gradient(to bottom, var(--pmt-cz-sbg, #111), transparent 34%, transparent 66%, var(--pmt-cz-sbg, #111)), var(--pmt-cz-text), var(--pmt-cz-sbg, #111); }
 
 /* ---- sliders: the track fills to the value ---- */
-.pmt-cz-slider { display: grid; grid-template-columns: minmax(84px, auto) minmax(0, 1fr) 54px; align-items: center; gap: 10px; min-width: 0; font-size: 12px; }
+/* the readout keeps its own width ("Auto · 50%", "8 / 5 px" in Retro's monospace) and the track gives way, so a slider never
+   pushes the screen sideways */
+.pmt-cz-slider { display: grid; grid-template-columns: minmax(84px, auto) minmax(0, 1fr) minmax(54px, max-content); align-items: center; gap: 10px; min-width: 0; font-size: 12px; }
 .pmt-cz-slabel { font-weight: 600; }
-.pmt-cz-out { font: 500 11.5px/1 var(--pm-font-code, ui-monospace, monospace); color: var(--pmw-text-2, inherit); text-align: right; font-variant-numeric: tabular-nums; }
+.pmt-cz-out { font: 500 11.5px/1 var(--pm-font-code, ui-monospace, monospace); color: var(--pmw-text-2, inherit); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .pmt-cz-is-mine .pmt-cz-out { color: var(--pmt-cz-accent); }
 .pmt-cz input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 22px; margin: 0; background: transparent; cursor: pointer; }
 .pmt-cz input[type="range"]::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: color-mix(in srgb, var(--pmw-text, #fff) 18%, transparent); }
@@ -311,7 +389,7 @@ html[data-motion="reduced"] .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set, .pmt-cz-chipb
   .pmt-cz-sets { grid-template-columns: 1fr 1fr; }
   .pmt-cz-tiles, .pmt-cz-faces { grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); }
   .pmt-cz-chips { grid-template-columns: 1fr; }
-  .pmt-cz-slider { grid-template-columns: 1fr 54px; }
+  .pmt-cz-slider { grid-template-columns: 1fr minmax(54px, max-content); }
   .pmt-cz-slider .pmt-cz-slabel { grid-column: 1 / -1; }
   .pmt-cz-pvbox { height: 172px; }
   .pmt-cz-foot { flex-wrap: wrap; padding: 10px 12px; }
