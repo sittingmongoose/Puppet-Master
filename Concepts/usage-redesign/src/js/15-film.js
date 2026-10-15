@@ -117,12 +117,19 @@
        board moves as one camera with a ripple), Friendly 40 / 26 / 280 (a looser, lilting wave), Glass from the hero
        outward 24 / 14 / 140 (the hero comes into focus first), Retro 60 / 15 / 240, NieR 45 / 30 / 240 */
     var cv = o.cam ? camVoice() : null, heroIds = o.heroes || [];
-    /* a voice with a hand-off (Basic, Friendly, Glass with a GPU): each plate enters as the edge passes its left side (the
-       old room is cut away there, wipeGhost), on the click's clock (40-board.js adds its own 90 to every plate of a room
-       change) */
-    if (o.cam && handVoice() && !reduced() && !M.paused()) {
-      var hw = boardW();
-      cards.forEach(function (c) { c._pmuEnterDelay = Math.max(0, base + handAt(cardBox(c).l / hw) + HAND_LEAD - 90); });
+    /* Glass: each plate enters as the lens's edge reaches its nearest point; Basic and Friendly as the cut passes its left
+       side (on the click's clock: 40-board.js adds its own 90 to every plate of a room change) */
+    if (o.cam && irisOn() && !reduced() && !M.paused()) {
+      var ig = irisGeo();
+      cards.forEach(function (c) {
+        var b = cardBox(c), dx = Math.max(b.l - ig.x, 0, ig.x - (b.l + b.w)), dy = Math.max(b.t - ig.y, 0, ig.y - (b.t + b.h));
+        c._pmuEnterDelay = Math.max(0, base + irisAt(Math.hypot(dx, dy)) - 90);
+      });
+      return cards.slice().sort(function (a, b) { return a._pmuEnterDelay - b._pmuEnterDelay; });
+    }
+    if (o.cam && riseOn() && !reduced() && !M.paused()) {
+      var ww = boardW();
+      cards.forEach(function (c) { c._pmuEnterDelay = Math.max(0, base + wipeAt(cardBox(c).l / ww) - 90); });
       return cards.slice().sort(function (a, b) { return a._pmuEnterDelay - b._pmuEnterDelay; });
     }
     if (cv && cv.wave) { row = cv.wave[0]; col = cv.wave[1]; cap = cv.wave[2]; }
@@ -662,7 +669,7 @@
   function fadeGhost(m) {
     var G = m && m.ghost; if (!G || G.fade || G.gone) return;
     G.fade = true;
-    var a = G.el.isConnected ? anim(G.el, [{ opacity: 1 }, { opacity: 0 }], { dur: G.fadeMs, easing: E.exit, fill: 'forwards' }) : null;
+    var a = G.el.isConnected ? anim(G.el, [{ opacity: 1 }, { opacity: 0 }], { dur: G.fadeMs, easing: E.out, fill: 'forwards' }) : null;
     G.fade = a || true;
     if (a) a.finished.then(function () { later(G.done); }, G.done); else G.done();
   }
@@ -815,12 +822,12 @@
     /* the new chrome is in: the old room leaves now (MOTION-4 RC2: never earlier, so no empty board), wiped away at the
        hand-off's edge where the voice has one (Jared #3: a fade let the new headings draw over a dimmed old room for up to
        650 ms on a slow frame), else faded */
-    var hand = !!o.dir && !!handVoice() && !reduced() && !M.paused();
-    if (m && m.ghost && !m.ghost.fade && !(hand && wipeGhost(m, since(m)))) fadeGhost(m);
+    var lens = !!o.dir && irisOn() && !reduced() && !M.paused(), cut = !!o.dir && !!riseOn() && !reduced() && !M.paused();
+    if (m && m.ghost && !m.ghost.fade && !(lens && irisGhost(m, since(m))) && !(cut && wipeGhost(m, since(m)))) fadeGhost(m);
     if (reduced() || M.paused() || !cards || !cards.length || off.plates) return;
-    /* a plate laid down by the edge starts at half its opacity: on the rail side of the edge the board is the new room at
-       once (a plate from 0 showed the wallpaper through Glass for a frame or two) */
-    if (hand) o.from = Math.max(o.from || 0, 0.5);
+    /* a plate the lens or the cut uncovers starts at half its opacity, so the uncovered board is the new room at once (a
+       plate from 0 showed the wallpaper through Glass, or the empty stage, for a frame or two) */
+    if (lens || cut) o.from = Math.max(o.from || 0, 0.5);
     var f = fam(), dir = o.dir || 0, sgn = dir < 0 ? -1 : 1, base = o.base || 0, sp = soft(), V = camVoice(f);
     if (o.wave !== false) wave(cards, { base: 0, row: f === 'retro' ? 60 : T3.frameRow, col: T3.frameCol, cap: o.cap || T3.frameCap });
     var cam = !sp && (f === 'basic' || f === 'friendly' || f === 'glass');
@@ -877,7 +884,7 @@
       if (f === 'glass' && hero && !heroMade) { heroMade = true; glint(card, d + 200); }
     });
     /* the room change's light on the click's clock (the hand-off; NieR's glitch); the first arrival keeps Glass's band */
-    if (dir) { var el0 = m ? since(m) : 0; if (f === 'nier') glitch(o.board, el0); else if (cam) handoff(f, o.board, el0); }
+    if (dir) { var el0 = m ? since(m) : 0; if (f === 'nier') glitch(o.board, el0); else if (lens) irisRim(o.board, el0); }
     else if (cam && f === 'glass') refract(1, base + 100);
     if (f === 'retro' && o.scan !== false) scanBar(o.board || (cards[0] && cards[0].parentNode), base);
   }
@@ -990,8 +997,8 @@
          path, at full opacity: Basic pans P up the rail (-P x dir, scale .985, 360 SLIDE); Friendly steps back and tilts
          away about the visible centre (-0.8 P, scale .95, -2.2 deg x dir, 400); Glass passes the lens (push: holds its
          size, pull: .94, -0.5 P, 400) and blurs out (6 px) on a separate animation that leaves no filter behind. When the new
-         chrome is in (frames()) the hand-off's edge wipes it away (wipeGhost), so the board is never empty and no text is
-         under two rooms; without an edge it fades (fadeGhost). */
+         chrome is in (frames()) it leaves: Basic and Friendly cut it away from its left (wipeGhost), Glass's lens opens
+         through it (irisGhost); the board is never empty and no text is under two rooms. */
       var CV = camVoice(f), gv = CV.ghost, P = camP(), cy = viewCentre().y + (o.sTop || 0);
       /* never above 1 (see the Glass voice above): the old board keeps its raster scale, so no plate is rastered again */
       var sc = Math.min(1, f === 'glass' ? (dir > 0 ? gv.push : gv.pull) : gv.sc);
@@ -1001,7 +1008,7 @@
       if (gv.blur && !soft()) gAnims.push(anim(g, [{ filter: 'blur(0px)' }, { filter: 'blur(' + gv.blur + 'px)', offset: 0.55 }, { filter: 'blur(' + gv.blur + 'px)' }], { dur: gv.ms + 200, easing: E.out, fill: 'none' }));
       var mm = moment;
       if (mm && a) {
-        mm.ghost = { el: g, fade: null, fadeMs: CV.fade, done: null, move: a, anims: gAnims };
+        mm.ghost = { el: g, fade: null, fadeMs: CV.fade, done: null, move: a, anims: gAnims, sTop: o.sTop || 0 };
         /* the new chrome never came (an empty room): the old room fades on its own */
         mtimer(mm, 600, function () { fadeGhost(mm); });
       } else if (a) gAnims.push(anim(g, [{ opacity: 1 }, { opacity: 0 }], { dur: CV.fade, delay: 100, easing: E.exit, fill: 'forwards' }));
@@ -1037,57 +1044,82 @@
     return anim(el, [{ transform: 'translateY(' + (pct * d) + '%)' }, { transform: 'none' }], { dur: 600, easing: E.settle });
   }
 
-  /* ======== the hand-off: the room change's light (Jared #3, 2026-10-14) ========
+  /* ======== the room change's own moment (Jared #3, 2026-10-14) ========
      Jared's ruling of 2026-10-14 retired the shared-element flight (6.3-6.6) in every look: its flyers lifted in the click,
-     waited for their targets' bodies to be built and hovered over the new room's text for 400-700 ms, a trail of bars
-     across the board. A room change now hands the board over from the rail. One edge of light leaves the rail side of the
-     stage and crosses it once, on the click's clock, and each plate of the new room enters as the edge passes its left side
-     (wave(), o.cam): the room is laid down behind the light, and no text is ever under two rooms (the old room is gone
-     before the edge reaches it, ghost()). Nothing waits for the build: the plates' frames come in the first frame after the
-     click and their bodies reveal on the film's own clock. One element of transform and opacity in the stage's own layer,
-     gone at its end; a rapid switch finishes it with the moment. Basic: an ink edge (a hairline in the accent over a faint
-     trail of ink). Friendly: a warm soft edge on a gentle overshoot. Glass: a glass rod (a specular core in a narrow frost;
-     with a GPU it blurs what passes under it). Retro keeps its phosphor bar and NieR its boot scanline, and NieR adds a
-     signal glitch: three ink lines flicker across the board in steps. Without a GPU there is no edge (the board moves as
-     one, 6.2). Reduce Motion: no edge and no travel; the new room dissolves in (dissolve(), 46-shell.js). */
-  var HAND = { basic: { at: 40, ms: 280, ease: 'cubic-bezier(.45,0,.2,1)', trail: 160 },
-    friendly: { at: 50, ms: 340, ease: 'cubic-bezier(.3,.85,.35,1.04)', trail: 200 },
-    glass: { at: 40, ms: 360, ease: 'cubic-bezier(.5,.05,.2,1)', trail: 120 } };
-  var HAND_LEAD = 0;
-  function handVoice(f) { return soft() ? null : HAND[f || fam()] || null; }
-  function boardW() { var cls = PMU.board && PMU.board.cls ? PMU.board.cls() : null; return cls && cls.W ? cls.W : 1200; }
-  /* when the edge passes the point at u of the stage's width (0 on the rail side, 1 on the far side), on the click's clock:
-     the edge travels from 40 px off the left to W + trail (05-film.css), so it is at u W when the eased progress is
-     (u W + 40) / (W + trail + 40) */
-  function handAt(u, f) {
-    var V = handVoice(f); if (!V) return 0;
-    var W = boardW(), p = (Math.max(0, Math.min(1, u)) * W + 40) / (W + V.trail + 40), fn = M.curve(V.ease), lo = 0, hi = 1;
+     waited for their targets' bodies to be built and hovered over the new room's text for 400-700 ms. In its place each
+     voice hands the board over in its own way. Nothing waits for the build (the new frames come in the first frame after
+     the click and the bodies reveal on the film's clock), no text is ever under two rooms, and the board is never empty:
+     - Basic and Friendly: a staggered rise from the rail side. The old room is cut away from its left (WIPE, a clip with
+       no light on its edge) and each new plate rises in the voice's own way as the cut passes its left side, Basic with
+       its ink strokes, Friendly with its hop. A rise after a fade showed an empty board for a third of a second whenever
+       the build held the main thread (P1000 films); under the cut the old room stands until the new one is there.
+     - Glass: a lens opens. The new room is seen through a circle that grows from the middle of the board to its corners
+       (IRIS: the old room is clipped to the board less the circle), with a glass rim on the circle's edge; outside it the
+       old room still drifts and defocuses. No band crosses the board (Jared, 2026-10-11: "the side ways swipe across the
+       whole screen when you change tabs can go away").
+     - Retro keeps its phosphor wipe and NieR its scanline, and NieR adds a signal glitch (three ink lines in steps).
+     Without a GPU the old room goes in the new chrome's frame and the board rises as one (6.2). Reduce Motion: nothing
+     travels; the new room dissolves in (dissolve(), 46-shell.js). */
+  /* both start at 80 on the click's clock: 40-board.js lays no new plate before 90 */
+  var WIPE = { basic: { at: 80, ms: 300, ease: 'cubic-bezier(.45,0,.25,1)' }, friendly: { at: 80, ms: 340, ease: 'cubic-bezier(.4,0,.3,1)' } },
+    IRIS = { at: 80, ms: 420, ease: 'cubic-bezier(.4,.1,.2,1)', n: 48 };
+  function riseOn(f) { return soft() ? null : WIPE[f || fam()] || null; }
+  /* when the cut reaches the point at u of the board's width (0 on the rail side), on the click's clock */
+  function wipeAt(u, f) {
+    var V = riseOn(f); if (!V) return 0;
+    var fn = M.curve(V.ease), p = Math.max(0, Math.min(1, u)), lo = 0, hi = 1;
     for (var i = 0; i < 16; i++) { var mid = (lo + hi) / 2; if (fn(mid) < p) lo = mid; else hi = mid; }
     return V.at + V.ms * hi;
   }
-  /* the edge, made where the new room's frames are (frames(), the first frame after the click); `elapsed` is the click's
-     clock then, so the edge is where the click's clock says even when that first frame came late */
-  function handoff(f, board, elapsed) {
-    var V = handVoice(f), stage = document.getElementById('pmuStage');
-    if (!V || !stage || reduced() || M.paused() || off.key || !board || !stage.contains(board)) return null;
-    var old = stage.querySelector(':scope > .pmu-handoff'); if (old) old.remove();
-    var wrap = H('i', 'pmu-handoff', stage), edge = H('i', '', wrap);
-    wrap.setAttribute('aria-hidden', 'true'); wrap.setAttribute('data-voice', f);
-    wrap.style.setProperty('--pmu-hand-trail', V.trail + 'px');
-    var a = anim(edge, [{ transform: 'translateX(calc(-100% - 40px))' }, { transform: 'translateX(0px)' }], { dur: V.ms, delay: V.at - (elapsed || 0), easing: V.ease, fill: 'both' });
-    gone(a, wrap);
-    return a;
-  }
-  /* the hand-off's wipe: the old room is cut away exactly at the edge (handoff()'s clock, curve and travel, as a clip from
-     its left), so on the rail side of the edge the new room is laid down and on the far side the old one still stands */
+  /* the old room cut away from its left, on the click's clock */
   function wipeGhost(m, elapsed) {
-    var G = m && m.ghost, V = handVoice(); if (!G || G.fade || G.gone || !V || !G.el.isConnected) return false;
-    var a = anim(G.el, [{ clipPath: 'inset(0 0 0 -40px)' }, { clipPath: 'inset(0 0 0 ' + (boardW() + V.trail) + 'px)' }],
-      { dur: V.ms, delay: V.at - (elapsed || 0), easing: V.ease, fill: 'forwards' });
+    var G = m && m.ghost, V = riseOn(); if (!G || G.fade || G.gone || !V || !G.el.isConnected) return false;
+    var a = anim(G.el, [{ clipPath: 'inset(0 0 0 0px)' }, { clipPath: 'inset(0 0 0 ' + boardW() + 'px)' }], { dur: V.ms, delay: V.at - (elapsed || 0), easing: V.ease, fill: 'forwards' });
     if (!a) return false;
     G.fade = a;
     a.finished.then(function () { later(G.done); }, function () { if (G.done) G.done(); });
     return true;
+  }
+  function irisOn(f) { return !soft() && (f || fam()) === 'glass'; }
+  function boardW() { var cls = PMU.board && PMU.board.cls ? PMU.board.cls() : null; return cls && cls.W ? cls.W : 1200; }
+  /* the lens's centre and reach in board pixels, the board at its top (no layout read) */
+  function irisGeo() { var W = boardW(), c = viewCentre(); return { x: W / 2, y: c.y, R: Math.ceil(Math.hypot(W / 2, c.y)) + 24 }; }
+  /* when the lens's edge reaches a point d px from its centre, on the click's clock */
+  function irisAt(d) {
+    var g = irisGeo(), p = Math.max(0, Math.min(1, d / g.R)), fn = M.curve(IRIS.ease), lo = 0, hi = 1;
+    for (var i = 0; i < 16; i++) { var mid = (lo + hi) / 2; if (fn(mid) < p) lo = mid; else hi = mid; }
+    return IRIS.at + IRIS.ms * hi;
+  }
+  /* the board less a circle of radius r, as one even-odd polygon (an outline, then the circle; polygons with the same
+     points interpolate everywhere) */
+  function irisClip(cx, cy, r) {
+    var W = boardW(), pts = ['-40px -40px', (W + 40) + 'px -40px', (W + 40) + 'px 100000px', '-40px 100000px', '-40px -40px'];
+    r = Math.max(0.5, r);
+    for (var i = 0; i <= IRIS.n; i++) { var a = (i / IRIS.n) * Math.PI * 2; pts.push((cx + r * Math.cos(a)).toFixed(1) + 'px ' + (cy + r * Math.sin(a)).toFixed(1) + 'px'); }
+    return 'polygon(evenodd, ' + pts.join(', ') + ')';
+  }
+  /* the old room under the lens, on the click's clock (its own scroll offset: the ghost keeps the old scroll position) */
+  function irisGhost(m, elapsed) {
+    var G = m && m.ghost; if (!G || G.fade || G.gone || !G.el.isConnected) return false;
+    var g = irisGeo(), cy = g.y + (G.sTop || 0);
+    var a = anim(G.el, [{ clipPath: irisClip(g.x, cy, 0) }, { clipPath: irisClip(g.x, cy, g.R) }], { dur: IRIS.ms, delay: IRIS.at - (elapsed || 0), easing: IRIS.ease, fill: 'forwards' });
+    if (!a) return false;
+    G.fade = a;
+    a.finished.then(function () { later(G.done); }, function () { if (G.done) G.done(); });
+    return true;
+  }
+  /* the lens's rim: one ring in the board's scroll pane, above both rooms, scaled with the lens on the compositor */
+  function irisRim(board, elapsed) {
+    var scroll = board && board.parentNode, stage = document.getElementById('pmuStage');
+    if (!scroll || !stage || !stage.contains(board) || !irisOn() || reduced() || M.paused() || off.key) return null;
+    var old = scroll.querySelector(':scope > .pmu-iris'); if (old) old.remove();
+    var g = irisGeo(), ring = H('i', 'pmu-iris', scroll);
+    ring.setAttribute('aria-hidden', 'true');
+    ring.style.cssText = 'left:' + (g.x - g.R) + 'px;top:' + (g.y - g.R) + 'px;width:' + (2 * g.R) + 'px;height:' + (2 * g.R) + 'px';
+    var a = anim(ring, [{ transform: 'scale(.01)', opacity: 1 }, { opacity: 1, offset: 0.72 }, { transform: 'scale(1)', opacity: 0 }],
+      { dur: IRIS.ms, delay: IRIS.at - (elapsed || 0), easing: IRIS.ease, fill: 'both' });
+    gone(a, ring);
+    return a;
   }
   /* NieR's signal glitch: three ink lines at fixed heights flicker in three steps each, 40 apart, offset sideways and
      settling (150 ms each, done by about 230 ms) */
@@ -1337,7 +1369,7 @@
     frames: frames, reveal: reveal, bodyBuilt: bodyBuilt, allBuilt: allBuilt, ghost: ghost,
     lit: lit, isQuiet: quietEl, lightBudget: lightBudget, flag: flag,
     budget: function (card, on) { if (card) card._pmuBudget = on !== false; }, lightAt: lightAt, rectIn: rectIn,
-    snapShares: noop, flight: noop, pairFlights: noop, flightCards: function () { return []; }, handoff: handoff, handAt: handAt, glitch: glitch, dissolve: dissolve,
+    snapShares: noop, flight: noop, pairFlights: noop, flightCards: function () { return []; }, irisAt: irisAt, glitch: glitch, dissolve: dissolve,
     /* MOTION-4 (lane b-motion) */
     camera: camera, cam: function () { return { dir: CAM.dir, dist: CAM.dist, p: camP() }; }, CAMV: CAMV, springFn: springFn, refract: refract, heroFloor: heroFloor,
     /* animations made before the moment began (the room title, 46-shell.js render) join it, so a rapid switch ends them too */
