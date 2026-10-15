@@ -60,7 +60,9 @@ press either.
 Text keeps the look's own `--text-primary`, `--text-secondary` and `--text-muted`.
 
 Private, do not read: `--lg-ring`, `--lg-frost-*`, `--lg-fx` / `--lg-fy`, `--lg-vw` / `--lg-vh`, `--lg-spec`,
-`--lg-mat` and `--lg-ga*`. They are per-element bakes and change without notice.
+`--lg-glow`, `--lg-px` / `--lg-py`, `--lg-mat` and `--lg-ga*`. They are per-element bakes and change without notice.
+`--lg-fx`, `--lg-fy`, `--lg-ring`, `--lg-spec`, `--lg-px` and `--lg-py` are registered non-inheriting, so they never reach
+the elements inside a sheet.
 
 ## Light, motion and layers
 
@@ -70,7 +72,8 @@ Private, do not read: `--lg-ring`, `--lg-frost-*`, `--lg-fx` / `--lg-fy`, `--lg-
   frost is anchored to its layout position. A `menu` sheet blurs live, so it may scale or slide in and out (Glass's
   own menus grow out of their button).
 - Layers: the lens layer `#lg-lenses` sits at z-index 45, above the title bar's 40, and lenses stay on top. The
-  pointer light `#lg-shine` is at 2, clipped to the sheet under the pointer and off everywhere else.
+  pointer light `#lg-shine` is at 2, clipped to the sheet under the pointer and off everywhere else. In Glass Light the
+  light is instead a layer of the lit sheet's own background, under its words (GPU tier only).
 - Reduced motion (`html[data-motion="reduced"]`, `data-reduced-motion="1"` or `prefers-reduced-motion`): no travel,
   so draw a static state.
 - Springs: menus and sheets use stiffness 230 and damping 19 (about 8 % overshoot). Switches use 520 ms
