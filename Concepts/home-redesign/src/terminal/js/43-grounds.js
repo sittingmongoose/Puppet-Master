@@ -57,6 +57,22 @@
     roomCache.set(key, lo); return lo;
   }
   function pool(th, c, f) { return C.mix(th.bg, c, room(th, c) * f); }
+  /* ink that always shows (round 3b): the hue as far as the text allows; on a light scheme with too little room to darken
+     for it to read (Tokyo Night Day's 4.52:1, Glass light's own; NieR's paper, which takes at most 8 % of any hue) the
+     same hue paler than the ground, which only lifts the dark text */
+  function inkFor(th, c, f, enough) {
+    var p = pool(th, c, f);
+    if (isDark(th) || C.contrast(p, th.bg) > (enough || 1.12)) return p;
+    /* the hue paler than the ground, from a tint of it to white; whichever stands out most from the ground wins (on
+       near-white paper nothing paler shows, and the hue's own ink stays) */
+    var Yb = C.lum(th.bg), best = p, bc = C.contrast(p, th.bg);
+    [0.22, 0.08, 0].forEach(function (t) {
+      var pale = C.mix(0xffffff, c, t); if (C.lum(pale) <= Yb + 0.01) return;
+      pale = C.mix(th.bg, pale, Math.min(1, f * 1.25));
+      var pc = C.contrast(pale, th.bg); if (pc > bc) { best = pale; bc = pc; }
+    });
+    return best;
+  }
   /* line art: t of the way to the text colour (light grounds a little less, they show it more) */
   function ink(th, t) { return C.mix(th.bg, th.fg, isDark(th) ? t * 1.7 : t * 1.1); }
   /* the ground a little lighter (dark) or darker (light) */
@@ -73,7 +89,7 @@
   }
 
   /* ---- the catalog ---- */
-  var LIST = [], BY = {};
+  var LIST = [], BY = {}, SUGGEST = {};
   function def(cat, id, name, extra) { var d = Object.assign({ id: id, cat: cat, name: name, looks: [] }, extra || {}); LIST.push(d); BY[id] = d; return d; }
 
   /* tonal: the scheme's own ground, a few per cent lighter or darker; a grain tile keeps them from banding */
@@ -265,7 +281,8 @@
   def('scene', 'clouds', 'Clouds', { looks: ['friendly'] });
   /* moving: a painted layer bigger than the terminal, moved by transform only, stepped to about 20 fps */
   def('moving', 'aurora-drift', 'Drifting aurora', { motion: { layer: 'aurora', anim: 'pmt-bg-sway', ms: 45000 } });
-  def('moving', 'twinkle', 'Twinkling stars', { motion: { layer: 'stars2', anim: 'pmt-bg-twinkle', ms: 6000, under: 'stars' } });
+  /* (round 3b: its few bright stars on the scheme's own sky, no longer over Starfield's, so the two are distinct at rest) */
+  def('moving', 'twinkle', 'Twinkling stars', { motion: { layer: 'stars2', anim: 'pmt-bg-twinkle', ms: 6000 } });
   def('moving', 'rain', 'Rain', { motion: { layer: 'rain', anim: 'pmt-bg-fall', ms: 2400 } });
   def('moving', 'snow', 'Snow', { motion: { layer: 'snow', anim: 'pmt-bg-snow', ms: 30000 } });
   def('moving', 'lava', 'Lava', { motion: { layer: 'lava', anim: 'pmt-bg-rise', ms: 80000 } });
@@ -376,7 +393,18 @@
         g.fillStyle = gr; g.fillRect(-R, -R, R * 2, R * 2); g.restore();
       });
     },
-    stars2: function (g, W, H, th) { g.clearRect(0, 0, W, H); starsOn(g, W, H, th, 0.35, 23, 1.6); },
+    /* the stars that twinkle: fewer, larger and brighter than the field under them, each with a soft halo and a cross of
+       light, so Twinkling stars is its own design even when it rests (round 3b: its still frame matched Starfield) */
+    stars2: function (g, W, H, th) {
+      g.clearRect(0, 0, W, H);
+      var R = rng(23), s = isDark(th) ? pool(th, th.fg, 1) : inkFor(th, th.fg, 1);
+      for (var i = 0; i < Math.round(W * H / 6000); i++) {
+        var x = R() * W, y = R() * H, r = 1.1 + R() * 1.1, a = 0.5 + R() * 0.4;
+        var gl = g.createRadialGradient(x, y, 0, x, y, r * 5); gl.addColorStop(0, rgba(s, a * 0.5)); gl.addColorStop(1, rgba(s, 0)); g.fillStyle = gl; g.fillRect(x - r * 5, y - r * 5, r * 10, r * 10);
+        g.fillStyle = rgba(s, a); g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill();
+        g.fillRect(x - r * 4, y - 0.5, r * 8, 1); g.fillRect(x - 0.5, y - r * 4, 1, r * 8);
+      }
+    },
     rain: function (g, W, H, th, h) {
       g.clearRect(0, 0, W, H);
       var R = rng(31), c = wash(th, h.c, isDark(th) ? 0.32 : 0.22);
@@ -500,7 +528,12 @@
     name: function (id) { return BY[id] ? BY[id].name : null; },
     /* the gradients (bgGradient) and the rest (bgImage) */
     isGradient: function (id) { return !!BY[id] && (BY[id].cat === 'tonal' || BY[id].cat === 'wash'); },
-    forLook: function (lk) { return LIST.filter(function (d) { return d.looks.indexOf(lk) >= 0; }).map(function (d) { return d.id; }); },
+    /* a look's suggestions: its own order when it set one (round 3b: the plain designs first), else every design that
+       names it, in catalog order */
+    forLook: function (lk) {
+      if (SUGGEST[lk]) return SUGGEST[lk].filter(function (id) { return !!BY[id]; });
+      return LIST.filter(function (d) { return d.looks.indexOf(lk) >= 0; }).map(function (d) { return d.id; });
+    },
     /* the id an earlier word names: the picture 'paper' is the Paper pattern now */
     alias: function (id) { return id === 'paper-pic' ? 'fibre' : id; },
     css: cssFor,
@@ -511,6 +544,6 @@
     worst: worst,
     scrim: scrim,
     /* for the files that add designs (44-grounds-glass.js, 45-grounds-retro.js): the catalog's own helpers */
-    kit: { def: def, PAINT: PAINT, SOFT: SOFT, cache: cache, isDark: isDark, tone: tone, wash: wash, pool: pool, ink: ink, lift: lift, hex: hex, rgba: rgba, rng: rng, fill: fill, sky: sky, hues: hues, canFilter: canFilter }
+    kit: { def: def, suggest: function (lk, ids) { SUGGEST[lk] = ids.slice(); }, PAINT: PAINT, SOFT: SOFT, cache: cache, isDark: isDark, tone: tone, wash: wash, pool: pool, inkFor: inkFor, ink: ink, lift: lift, hex: hex, rgba: rgba, rng: rng, fill: fill, sky: sky, hues: hues, canFilter: canFilter }
   };
 })();

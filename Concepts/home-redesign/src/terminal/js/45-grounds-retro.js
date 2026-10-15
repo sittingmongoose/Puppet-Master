@@ -1,7 +1,8 @@
 /* Retro grounds (round 3, Jared 2026-10-14: "add a few more for retro"; research: Ghostty and kitty shader packs,
    Windows Terminal's retro shaders, cool-retro-term's profiles, the BBS scene): a phosphor graticule, a CRT test
    pattern, BBS block art, a vector wireframe terrain, green-bar printer paper, the ghost of a boot screen burned into
-   the tube, and two that move: an oscilloscope trace over the graticule and glyph rain.
+   the tube, and two that move: an oscilloscope trace over the graticule and glyph rain; and (round 3b) four plain ones:
+   phosphor glow, tube glass, an aperture grille and static.
 
    Drawn in the scheme's phosphor (its green, or a one-colour scheme's own glow) and its palette, each line and block at
    most as bright as keeps the text readable (43-grounds.js's pool), so the art reads in every look, light or dark:
@@ -178,6 +179,77 @@
   };
   PAINT['glyphs'].needs = PAINT['ansi'].needs;
 
+  /* ---- plainer Retro (round 3b, Jared: "the retro wallpapers need some plainer ones"): nothing drawn, only the tube ---- */
+  function hiOf(th) { return isDark(th) ? pool(th, 0xffffff, 1) : 0xffffff; }
+  function edgeOf(th, f) { return isDark(th) ? tone(th.bg, -0.09 * f) : pool(th, 0x000000, 0.7 * f); }
+  /* Phosphor glow: a lit tube, its phosphor glowing softly from the middle out, its edge falling away into the dark */
+  PAINT['phosphor-glow'] = function (g, W, H, th, h) {
+    ground(g, W, H, th);
+    /* an ellipse the terminal's own shape, its light falling off smoothly (no knee for the eye to read as an edge) */
+    var c = phos(th, h), cx = W * 0.5, cy = H * 0.45, dk = edgeOf(th, 1), top = K.inkFor(th, c, isDark(th) ? 0.62 : 0.85);
+    g.save(); g.translate(cx, cy); g.scale(W * 0.62, H * 0.75);
+    var gr = g.createRadialGradient(0, 0, 0, 0, 0, 1);
+    [0, 0.2, 0.4, 0.6, 0.8, 1].forEach(function (t) { var e = Math.pow(1 - t, 2) * (1 + 2 * t); gr.addColorStop(t, rgba(top, e)); });
+    g.fillStyle = gr; g.fillRect(-1.2, -1.2, 2.4, 2.4);
+    var v = g.createRadialGradient(0, 0, 0.55, 0, 0, 1.25);
+    [0, 0.25, 0.5, 0.75, 1].forEach(function (t) { v.addColorStop(t, rgba(dk, 0.95 * t * t * (3 - 2 * t))); });
+    g.fillStyle = v; g.fillRect(-2, -2, 4, 4);
+    g.restore();
+  };
+  /* Tube glass: the screen's curved glass, unlit. Its face darkens toward the rounded corners of the tube, and a window's
+     light lies on it up and to the left, a fainter one low on the right */
+  PAINT['tube'] = function (g, W, H, th) {
+    ground(g, W, H, th);
+    var dk = edgeOf(th, 1.4), hi = hiOf(th), layer = document.createElement('canvas'); layer.width = W; layer.height = H;
+    var l = layer.getContext('2d');
+    l.fillStyle = hex(dk); l.fillRect(0, 0, W, H);
+    l.globalCompositeOperation = 'destination-out'; if (K.canFilter) l.filter = 'blur(' + Math.round(Math.min(W, H) * 0.09) + 'px)';
+    var ix = W * 0.07, iy = H * 0.12, r = Math.min(W, H) * 0.22;
+    l.beginPath(); l.moveTo(ix + r, iy); l.arcTo(W - ix, iy, W - ix, H - iy, r); l.arcTo(W - ix, H - iy, ix, H - iy, r); l.arcTo(ix, H - iy, ix, iy, r); l.arcTo(ix, iy, W - ix, iy, r); l.closePath();
+    l.fillStyle = '#000'; l.fill();
+    g.drawImage(layer, 0, 0);
+    [[0.22, 0.24, 0.17, 0.11, -0.28, isDark(th) ? 0.2 : 0.75], [0.84, 0.8, 0.07, 0.05, -0.28, isDark(th) ? 0.1 : 0.45]].forEach(function (q) {
+      g.save(); g.translate(W * q[0], H * q[1]); g.rotate(q[4]); g.scale(W * q[2], H * q[3]);
+      var hg = g.createRadialGradient(0, 0, 0, 0, 0, 1); hg.addColorStop(0, rgba(hi, q[5])); hg.addColorStop(1, rgba(hi, 0));
+      g.fillStyle = hg; g.beginPath(); g.arc(0, 0, 1, 0, Math.PI * 2); g.fill(); g.restore();
+    });
+  };
+  /* Aperture grille: a Trinitron's phosphor stripes seen close, red, green and blue a pixel each, and the two thin damper
+     wires that cross every such screen a third and two thirds of the way down */
+  var grilleTiles = {};
+  PAINT['grille'] = function (g, W, H, th, h) {
+    ground(g, W, H, th);
+    var pal = th.palette || [], mono = !!th.mono;
+    var lf = isDark(th) ? 1 : 1.7;
+    var cols = mono ? [0.35, 0.7, 0.5].map(function (f) { return K.inkFor(th, phos(th, h), Math.min(1, f * lf)); })
+      : [pal[9] !== undefined ? pal[9] : h.hot, pal[10] !== undefined ? pal[10] : h.d, pal[12] !== undefined ? pal[12] : h.a].map(function (c) { return K.inkFor(th, c, Math.min(1, 0.42 * lf)); });
+    var key = cols.join(','), t = grilleTiles[key];
+    if (!t) { t = grilleTiles[key] = document.createElement('canvas'); t.width = 3; t.height = 1; var c = t.getContext('2d'); cols.forEach(function (col, i) { c.fillStyle = hex(col); c.fillRect(i, 0, 1, 1); }); }
+    g.fillStyle = g.createPattern(t, 'repeat'); g.fillRect(0, 0, W, H);
+    g.fillStyle = hex(edgeOf(th, 1.2)); g.fillRect(0, Math.round(H / 3), W, 1); g.fillRect(0, Math.round(H * 2 / 3), W, 1);
+  };
+  /* Static: an empty channel, faint. Snow of 2 px grains in the phosphor's colour, and here and there a line where the
+     picture tore */
+  var staticTiles = {};
+  PAINT['static'] = function (g, W, H, th, h) {
+    ground(g, W, H, th);
+    /* (grain needs more than a line to show: on a light ground it goes paler than the paper unless the ink is clearly there) */
+    var c = K.inkFor(th, phos(th, h), 0.9, 1.3), key = th.bg + '|' + c, t = staticTiles[key], amp = isDark(th) ? 0.7 : 1;
+    if (!t) {
+      var N = 240; t = staticTiles[key] = document.createElement('canvas'); t.width = t.height = N;
+      var x = t.getContext('2d'), R = rng(71);
+      for (var y = 0; y < N; y += 2) {
+        var torn = R() < 0.04;
+        /* (a light ground shows grain less: there more of the grains are mid-tone) */
+        for (var xx = 0; xx < N; xx += 2) { var v = R(); v = torn ? 0.3 + v * 0.45 : amp < 1 ? v * v * amp : Math.pow(v, 1.25); x.fillStyle = hex(C.mix(th.bg, c, v)); x.fillRect(xx, y, 2, 2); }
+      }
+    }
+    g.fillStyle = g.createPattern(t, 'repeat'); g.fillRect(0, 0, W, H);
+  };
+  def('retro', 'phosphor-glow', 'Phosphor glow', { looks: ['retro'] });
+  def('retro', 'tube', 'Tube glass', { looks: ['retro'] });
+  def('retro', 'grille', 'Aperture grille', { looks: ['retro'] });
+  def('retro', 'static', 'Static');
   def('retro', 'phosphor-grid', 'Phosphor grid', { looks: ['retro'] });
   def('retro', 'test-card', 'Test pattern');
   def('retro', 'ansi', 'ANSI art', { looks: ['retro'] });
@@ -185,4 +257,6 @@
   def('retro', 'boot-ghost', 'Boot ghost');
   def('retro', 'scope', 'Oscilloscope', { motion: { layer: 'scopetrace', anim: 'pmt-bg-pan', ms: 5000, under: 'phosphor-grid' } });
   def('retro', 'glyph-rain', 'Glyph rain', { motion: { layer: 'glyphs', anim: 'pmt-bg-fall', ms: 9000 } });
+  /* Retro suggests the plain ones first (round 3b), then its scanlines and paper */
+  K.suggest('retro', ['phosphor-glow', 'tube', 'grille', 'scanfield', 'greenbar']);
 })();

@@ -1,6 +1,7 @@
 /* Glass grounds (round 3, Jared 2026-10-14: "do the glass themed ones have actual glass ones?"): glass itself, not
    washes of colour. Frosted panes, layered sheets with thick refracting edges, rain on glass (still, and running), a
-   lens that magnifies the app's own wallpaper behind the terminal, and etched glass.
+   lens that magnifies what lies under it, and etched glass; and (round 3b) four plain sheets with nothing drawn on them:
+   clear, frosted, tinted and reeded glass.
 
    The light is Liquid Glass's (pm7-liquid-glass's CONTRACT.md): neutral white catch lights and hairlines, never split
    into colours, a lens bending little. Every pane, edge and drop is drawn in this scheme's colours and goes at most as far
@@ -23,12 +24,15 @@
     /* no room to darken (the shade is the ground itself): no shadows at all, which a GPU canvas would draw a unit or two
        under the ground */
     var room = dark || C.contrast(shade, th.bg) > 1.04;
+    /* on a near-white ground white light does not show (round 3b: Basic light's plain glass read as no glass at all): there
+       glass is drawn as it looks on white paper, in a cool grey-blue, as far as the text allows */
+    var paper = !dark && C.contrast(0xffffff, th.bg) < 1.12 && room;
     return {
       dark: dark,
-      film: dark ? pool(th, 0xffffff, 0.62) : C.mix(th.bg, 0xffffff, 0.55),
-      hi: dark ? pool(th, 0xffffff, 1) : 0xffffff,
+      film: dark ? pool(th, 0xffffff, 0.62) : paper ? pool(th, C.hex('#c4cfe0'), 1) : C.mix(th.bg, 0xffffff, 0.55),
+      hi: dark ? pool(th, 0xffffff, 1) : paper ? pool(th, C.hex('#8c9fbd'), 1) : 0xffffff,
       lo: dark ? tone(th.bg, -0.07) : pool(th, C.hex('#2e3a55'), 0.85),
-      frost: dark ? pool(th, 0xffffff, 1) : 0xffffff,
+      frost: dark ? pool(th, 0xffffff, 1) : paper ? pool(th, C.hex('#7f93b3'), 1) : 0xffffff,
       shadow: dark ? 'rgba(0,0,0,.38)' : room ? rgba(shade, 0.5) : 'rgba(0,0,0,0)',
       dropShade: dark ? 'rgba(0,0,0,.22)' : room ? rgba(shade, 0.35) : 'rgba(0,0,0,0)'
     };
@@ -132,14 +136,25 @@
     g.fillStyle = rgba(k.film, k.dark ? 0.18 : 0.22); g.fillRect(0, 0, W, H);
     drops(g, W, H, th, k, 37, 1700, false);
   };
-  /* Running rain: a sparse layer of drops and their trails that slides down over Rain on glass */
+  /* Running rain's pane (round 3b: its own, so it is a design of its own even at rest): fogged over, the fog thicker toward
+     the bottom where the water gathers, with a few drops still on it */
+  PAINT['fogged'] = function (g, W, H, th, h) {
+    var k = ink(th);
+    backdrop(g, W, H, th, h, 0.45);
+    var fog = g.createLinearGradient(0, 0, 0, H); fog.addColorStop(0, rgba(k.film, k.dark ? 0.22 : 0.3)); fog.addColorStop(1, rgba(k.film, k.dark ? 0.55 : 0.7));
+    g.fillStyle = fog; g.fillRect(0, 0, W, H);
+    frost(g, W, H, k, k.dark ? 0.35 : 0.3);
+    drops(g, W, H, th, k, 53, 6000, false);
+  };
+  /* Running rain: a sparse layer of drops and their trails that slides down over a fogged pane */
   PAINT['glassrun'] = function (g, W, H, th) {
     var k = ink(th);
     g.clearRect(0, 0, W, H);
     var R = rng(53);
-    for (var i = 0; i < Math.max(4, Math.round(W / 140)); i++) {
-      var x = R() * W, y = R() * H, r = 3 + R() * 3.5, len = H * (0.25 + R() * 0.3);
-      g.save(); g.strokeStyle = rgba(k.hi, k.dark ? 0.13 : 0.35); g.lineWidth = r * 0.75; g.lineCap = 'round'; g.beginPath(); g.moveTo(x, y);
+    /* (round 3b: more runs, longer and brighter, so Running rain is its own design even when it rests) */
+    for (var i = 0; i < Math.max(8, Math.round(W / 55)); i++) {
+      var x = R() * W, y = R() * H, r = 3 + R() * 3.5, len = H * (0.35 + R() * 0.45);
+      g.save(); g.strokeStyle = rgba(k.hi, k.dark ? 0.2 : 0.55); g.lineWidth = r * 0.75; g.lineCap = 'round'; g.beginPath(); g.moveTo(x, y);
       for (var t = 1; t <= 10; t++) g.lineTo(x + Math.sin(t * 1.3 + i) * r * 0.4, y - len * t / 10);
       g.stroke(); g.restore();
       drop(g, k, x, y, r, th); if (y - len < 0) drop(g, k, x, y + H, r, th);
@@ -202,55 +217,174 @@
     g.putImageData(img, x0, y0);
   }
 
-  /* Lens: a disc of glass that magnifies what lies behind the terminal (the app's wallpaper; without one, the scheme's own
-     light), a neutral hairline rim, a catch light along its top and a shadow under it */
-  PAINT['lens'] = function (g, W, H, th, h, o) {
-    var k = ink(th), cx = W * 0.74, cy = H * 0.56, R = Math.min(W * 0.2, H * 0.4), wl = wallNow();
-    backdrop(g, W, H, th, h, 0.45);
-    g.save();
-    g.shadowColor = k.shadow; g.shadowBlur = 26; g.shadowOffsetY = 10;
-    g.beginPath(); g.arc(cx, cy, R, 0, Math.PI * 2); g.fillStyle = hex(th.bg); g.fill();
-    g.restore();
-    /* what the lens shows, on its own canvas the lens's size, then laid into the disc */
-    var D = Math.max(2, Math.ceil(R * 2)), lc = document.createElement('canvas'); lc.width = lc.height = D;
-    var l = lc.getContext('2d', { willReadFrequently: true }), mag = 1.35;
-    l.fillStyle = hex(th.bg); l.fillRect(0, 0, D, D);
-    if (wl && wl.img && o && o.rect && !o.tile) {
-      /* the print as the app lays it (centre, cover, fixed to the viewport, the root's client box), the part behind this
-         point, magnified */
-      var img = wl.img, de = document.documentElement, vw = de.clientWidth || W, vh = de.clientHeight || H, sc = Math.max(vw / img.width, vh / img.height);
-      var ox = (vw - img.width * sc) / 2, oy = (vh - img.height * sc) / 2, rect = o.rect;
-      var px = rect.x + cx / W * rect.w, py = rect.y + cy / H * rect.h, span = R * 2 / mag * (rect.w / W);
-      var sx = (px - span / 2 - ox) / sc, sy = (py - span / 2 - oy) / sc, ss = span / sc;
-      l.drawImage(img, sx, sy, ss, ss, 0, 0, D, D);
-    } else {
-      /* the scheme's own light, magnified */
-      [[0.3, 0.7, h.a], [0.75, 0.35, h.b], [0.55, 0.9, h.c]].forEach(function (p) {
-        var gx = p[0] * D, gy = p[1] * D, gr = l.createRadialGradient(gx, gy, 0, gx, gy, R * 1.1);
-        gr.addColorStop(0, hex(pool(th, p[2], 1))); gr.addColorStop(1, rgba(th.bg, 0)); l.fillStyle = gr; l.fillRect(0, 0, D, D);
-      });
+  /* Lens (round 3b, Jared: "The Lens one needs a rework"; round 3's read as a dark ball where no wallpaper shows): a clear
+     magnifier lying on the terminal. Under it there is always something to magnify: a faint graph-paper grid in the
+     scheme's ink, or, where the app shows a wallpaper, that wallpaper. Through the glass the lines grow and bend toward the
+     rim as a real lens bends them, and the disc stays as light as the ground round it (glass gathers light). Around it: a
+     bevelled rim lit above and to the left, a soft window highlight, and on the ground below its shadow, with the bright
+     ring of light the lens focuses there. Neutral white light only (Liquid Glass's contract) */
+  var LENS_M = 1.8, LENS_RIM = 1.14;
+  function gridOn(g, W, H, th) {
+    /* the scheme's ink where the text still reads over it; otherwise (no room to darken) the same hue paler than the ground */
+    var cell = 22, room = C.contrast(th.fg, K.ink(th, 0.085)) >= Math.min(C.contrast(th.fg, th.bg), 4.8) - 0.01;
+    var minor = room ? K.ink(th, 0.045) : K.inkFor(th, th.fg, 0.5), major = room ? K.ink(th, 0.085) : K.inkFor(th, th.fg, 0.95);
+    g.lineWidth = 1;
+    for (var pass = 0; pass < 2; pass++) {
+      g.strokeStyle = hex(pass ? major : minor); g.beginPath();
+      for (var x = 0, i = 0; x <= W; x += cell, i++) if ((i % 5 === 0) === !!pass) { g.moveTo(Math.round(x) + 0.5, 0); g.lineTo(Math.round(x) + 0.5, H); }
+      for (var y = 0, j = 0; y <= H; y += cell, j++) if ((j % 5 === 0) === !!pass) { g.moveTo(0, Math.round(y) + 0.5); g.lineTo(W, Math.round(y) + 0.5); }
+      g.stroke();
     }
-    /* readable through the lens too, without hiding what it shows: the picture's light is squeezed into the band the text
-       allows (on a dark ground from a little under the ground up to the brightest colour the text allows; on a light one
-       from the darkest it allows up to white), keeping its hues and every step of its shading. A flat veil turned the
-       lens into a dark disc */
-    toneInto(l, 0, 0, D, D, th);
+  }
+  /* the disc at (cx, cy), radius R, drawn from src (lens centre at sx, sy in it): magnified LENS_M times at the middle, the
+     magnification giving way toward the rim, where it reaches LENS_RIM times the radius (the bend that says "lens") */
+  function refract(g, W, H, src, sx, sy, cx, cy, R) {
+    var x0 = Math.max(0, Math.floor(cx - R) - 1), y0 = Math.max(0, Math.floor(cy - R) - 1), x1 = Math.min(W, Math.ceil(cx + R) + 1), y1 = Math.min(H, Math.ceil(cy + R) + 1);
+    var w = x1 - x0, h = y1 - y0; if (w < 2 || h < 2) return;
+    var sw = src.width, sh = src.height, sd = src.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, sw, sh).data;
+    var out = g.getImageData(x0, y0, w, h), od = out.data, bend = LENS_M * LENS_RIM - 1;
+    for (var j = 0; j < h; j++) for (var i = 0; i < w; i++) {
+      var dx = (x0 + i + 0.5 - cx) / R, dy = (y0 + j + 0.5 - cy) / R, r2 = dx * dx + dy * dy;
+      if (r2 >= 1) continue;
+      var sc = (1 + bend * r2 * r2) / LENS_M, px = sx + dx * sc * R - 0.5, py = sy + dy * sc * R - 0.5;
+      var ix = Math.max(0, Math.min(sw - 2, Math.floor(px))), iy = Math.max(0, Math.min(sh - 2, Math.floor(py))), fx = Math.max(0, Math.min(1, px - ix)), fy = Math.max(0, Math.min(1, py - iy));
+      var a = (iy * sw + ix) * 4, b = a + 4, c = a + sw * 4, d = c + 4, o = (j * w + i) * 4;
+      /* the last pixel of the rim blends with the ground under it, so the disc's edge is smooth */
+      var edge = Math.max(0, Math.min(1, (1 - Math.sqrt(r2)) * R));
+      for (var k = 0; k < 3; k++) {
+        var v = (sd[a + k] * (1 - fx) + sd[b + k] * fx) * (1 - fy) + (sd[c + k] * (1 - fx) + sd[d + k] * fx) * fy;
+        od[o + k] = Math.round(od[o + k] * (1 - edge) + v * edge);
+      }
+    }
+    g.putImageData(out, x0, y0);
+  }
+  PAINT['lens'] = function (g, W, H, th, h, o) {
+    var k = ink(th), dark = k.dark, cx = W * 0.72, cy = H * 0.5, R = Math.min(W * 0.19, H * 0.38), wl = wallNow();
+    /* the ground: the scheme's own, a quiet pool of its hue, and the grid */
+    g.fillStyle = hex(th.bg); g.fillRect(0, 0, W, H);
+    var gr0 = g.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W, H) * 0.6); gr0.addColorStop(0, hex(K.inkFor(th, h.a, 0.35))); gr0.addColorStop(1, rgba(th.bg, 0)); g.fillStyle = gr0; g.fillRect(0, 0, W, H);
+    gridOn(g, W, H, th);
+    /* what the lens sees: the ground as it is, or the app's wallpaper behind this spot (as the app lays it: centre, cover,
+       fixed to the viewport, the root's client box), its light squeezed into the band the text allows */
+    var src = document.createElement('canvas'), sx = cx, sy = cy;
+    if (wl && wl.img && o && o.rect && !o.tile) {
+      var S = Math.ceil(R * 2 * LENS_RIM) + 6, img = wl.img, de = document.documentElement, vw = de.clientWidth || W, vh = de.clientHeight || H, scl = Math.max(vw / img.width, vh / img.height);
+      var ox = (vw - img.width * scl) / 2, oy = (vh - img.height * scl) / 2, rect = o.rect, per = rect.w / W;
+      var px = rect.x + cx * per, py = rect.y + cy / H * rect.h;
+      src.width = src.height = S; sx = sy = S / 2;
+      var sc2 = src.getContext('2d', { willReadFrequently: true });
+      sc2.fillStyle = hex(th.bg); sc2.fillRect(0, 0, S, S);
+      sc2.drawImage(img, (px - S / 2 * per - ox) / scl, (py - S / 2 * per - oy) / scl, S * per / scl, S * per / scl, 0, 0, S, S);
+      toneInto(sc2, 0, 0, S, S, th);
+    } else {
+      src.width = W; src.height = H; src.getContext('2d', { willReadFrequently: true }).drawImage(g.canvas, 0, 0);
+    }
+    /* the shadow on the ground below and to the right, and in it the ring of light the lens focuses */
+    var off = R * 0.16, offY = R * 0.26;
+    if (k.shadow !== 'rgba(0,0,0,0)') {
+      g.save(); if (K.canFilter) g.filter = 'blur(' + Math.round(R * 0.09) + 'px)';
+      g.fillStyle = dark ? 'rgba(0,0,0,.34)' : k.shadow; g.beginPath(); g.ellipse(cx + off, cy + offY, R * 1.02, R * 0.98, 0, 0, Math.PI * 2); g.fill(); g.restore();
+    }
+    g.save(); if (K.canFilter) g.filter = 'blur(' + Math.max(1, Math.round(R * 0.03)) + 'px)';
+    g.strokeStyle = rgba(k.hi, dark ? 0.5 : 0.95); g.lineWidth = Math.max(2, R * 0.06); g.lineCap = 'round';
+    g.beginPath(); g.ellipse(cx + off, cy + offY, R * 0.96, R * 0.92, 0, Math.PI * 0.05, Math.PI * 0.62); g.stroke(); g.restore();
+    /* the glass itself */
+    refract(g, W, H, src, sx, sy, cx, cy, R);
     g.save(); g.beginPath(); g.arc(cx, cy, R, 0, Math.PI * 2); g.clip();
-    g.drawImage(lc, cx - R, cy - R, R * 2, R * 2);
-    /* the glass: brighter toward its lower rim (light gathered through the curve), darker along its upper one */
-    var body = g.createRadialGradient(cx, cy - R * 0.35, R * 0.2, cx, cy, R);
-    body.addColorStop(0, rgba(k.hi, 0)); body.addColorStop(0.8, rgba(k.hi, 0)); body.addColorStop(1, rgba(k.hi, k.dark ? 0.16 : 0.4));
-    g.fillStyle = body; g.fillRect(cx - R, cy - R, R * 2, R * 2);
+    /* light gathered through the curve: a little brighter toward the lower rim, and the thick edge brighter still */
+    var lit = g.createRadialGradient(cx + R * 0.1, cy + R * 0.35, 0, cx + R * 0.1, cy + R * 0.35, R);
+    lit.addColorStop(0, rgba(k.hi, dark ? 0.1 : 0.35)); lit.addColorStop(1, rgba(k.hi, 0)); g.fillStyle = lit; g.fillRect(cx - R, cy - R, R * 2, R * 2);
+    var rim = g.createRadialGradient(cx, cy, R * 0.82, cx, cy, R);
+    rim.addColorStop(0, rgba(k.hi, 0)); rim.addColorStop(1, rgba(k.hi, dark ? 0.22 : 0.65)); g.fillStyle = rim; g.fillRect(cx - R, cy - R, R * 2, R * 2);
+    /* a window's reflection up and to the left, and a small one low on the right */
+    [[-0.38, -0.44, 0.34, 0.13, -0.6, dark ? 0.42 : 0.95], [0.46, 0.5, 0.1, 0.05, -0.6, dark ? 0.22 : 0.7]].forEach(function (q) {
+      g.save(); g.translate(cx + q[0] * R, cy + q[1] * R); g.rotate(q[4]); g.scale(q[2] * R, q[3] * R);
+      var hg = g.createRadialGradient(0, 0, 0, 0, 0, 1); hg.addColorStop(0, rgba(k.hi, q[5])); hg.addColorStop(1, rgba(k.hi, 0));
+      g.fillStyle = hg; g.beginPath(); g.arc(0, 0, 1, 0, Math.PI * 2); g.fill(); g.restore();
+    });
     g.restore();
-    g.lineWidth = 1; g.strokeStyle = rgba(k.hi, k.dark ? 0.6 : 0.95); g.beginPath(); g.arc(cx, cy, R - 0.5, 0, Math.PI * 2); g.stroke();
-    g.lineWidth = 2.2; g.strokeStyle = rgba(k.hi, k.dark ? 0.75 : 1); g.lineCap = 'round'; g.beginPath(); g.arc(cx, cy, R - 3, Math.PI * 1.15, Math.PI * 1.62); g.stroke();
-    g.lineWidth = 1.5; g.strokeStyle = rgba(k.lo, 0.8); g.beginPath(); g.arc(cx, cy, R - 2, Math.PI * 0.15, Math.PI * 0.85); g.stroke();
+    /* the bevelled rim: a hairline all round, lit along the upper left, shaded along the lower right */
+    g.lineWidth = 1; g.strokeStyle = rgba(k.hi, dark ? 0.55 : 0.95); g.beginPath(); g.arc(cx, cy, R - 0.5, 0, Math.PI * 2); g.stroke();
+    g.lineCap = 'round'; g.lineWidth = 2.4; g.strokeStyle = rgba(k.hi, dark ? 0.8 : 1); g.beginPath(); g.arc(cx, cy, R - 2.2, Math.PI * 1.05, Math.PI * 1.7); g.stroke();
+    if (dark || k.shadow !== 'rgba(0,0,0,0)') { g.lineWidth = 1.6; g.strokeStyle = rgba(k.lo, 0.85); g.beginPath(); g.arc(cx, cy, R - 2, Math.PI * 0.1, Math.PI * 0.8); g.stroke(); }
   };
   PAINT['lens'].needs = function (o) {
     var wl = wallNow();
     if (!wl || !o || o.tile) return o && o.tile ? 'tile' : 'own';
     var r = o.rect || {};
     return wl.key + '@' + Math.round((r.x || 0) / 24) + ',' + Math.round((r.y || 0) / 24) + ',' + (document.documentElement.clientWidth || 0) + 'x' + (document.documentElement.clientHeight || 0);
+  };
+
+  /* ---- plain glass (round 3b, Jared: "a few plain glass ones. Like frosted, see-through, but no graphics"): a whole
+     sheet of glass over the terminal and nothing drawn on it, only how the glass itself takes the light ---- */
+  /* a sheet's four edges: lit along the top and left, shaded along the bottom and right, and a bevel of light inside the top */
+  function sheetEdges(g, W, H, k) {
+    var dark = k.dark, bev = g.createLinearGradient(0, 0, 0, 6);
+    bev.addColorStop(0, rgba(k.hi, dark ? 0.3 : 0.9)); bev.addColorStop(1, rgba(k.hi, 0)); g.fillStyle = bev; g.fillRect(0, 0, W, 6);
+    g.fillStyle = rgba(k.hi, dark ? 0.55 : 1); g.fillRect(0, 0, W, 1); g.fillRect(0, 0, 1, H);
+    var shade = dark ? 'rgba(0,0,0,.35)' : k.shadow !== 'rgba(0,0,0,0)' ? rgba(k.lo, 0.7) : null;
+    if (shade) { g.fillStyle = shade; g.fillRect(0, H - 1, W, 1); g.fillRect(W - 1, 0, 1, H); }
+  }
+  function topSheen(g, W, H, k, a) { var t = g.createLinearGradient(0, 0, 0, H * 0.42); t.addColorStop(0, rgba(k.hi, a)); t.addColorStop(1, rgba(k.hi, 0)); g.fillStyle = t; g.fillRect(0, 0, W, H); }
+  /* light that is safe on a light ground: anything lighter than it (the dark text reads better still); on a dark one, the
+     brightest the light text allows */
+  function lighter(th, c, f) { return isDark(th) || C.lum(c) < C.lum(th.bg) ? pool(th, c, f) : C.mix(th.bg, c, f); }
+
+  /* Clear glass: see-through. The ground as it is, the light the sheet catches along its top, and two reflection bands
+     across its upper right, the mark of a clean pane */
+  PAINT['clear-glass'] = function (g, W, H, th) {
+    var k = ink(th), dark = k.dark;
+    g.fillStyle = hex(th.bg); g.fillRect(0, 0, W, H);
+    topSheen(g, W, H, k, dark ? 0.2 : 0.7);
+    g.save(); g.translate(W * 0.6, -H * 0.3); g.rotate(0.6);
+    [[0, W * 0.13, dark ? 0.2 : 0.75], [W * 0.18, W * 0.04, dark ? 0.28 : 0.9], [W * 0.26, W * 0.012, dark ? 0.3 : 0.95]].forEach(function (b) {
+      var gr = g.createLinearGradient(b[0], 0, b[0] + b[1], 0);
+      gr.addColorStop(0, rgba(k.hi, 0)); gr.addColorStop(0.5, rgba(k.hi, b[2])); gr.addColorStop(1, rgba(k.hi, 0));
+      g.fillStyle = gr; g.fillRect(b[0], 0, b[1], H * 4);
+    });
+    g.restore();
+    sheetEdges(g, W, H, k);
+  };
+  /* Frosted glass: the whole sheet frosted. The frost scatters light, so the ground lifts toward white everywhere (more at
+     the top, where the light comes in), under a fine speckle and a coarser one */
+  PAINT['frost'] = function (g, W, H, th) {
+    var k = ink(th), dark = k.dark;
+    var gr = g.createLinearGradient(0, 0, 0, H);
+    gr.addColorStop(0, hex(C.mix(th.bg, k.film, dark ? 0.5 : 0.75))); gr.addColorStop(1, hex(C.mix(th.bg, k.film, dark ? 0.3 : 0.5)));
+    g.fillStyle = gr; g.fillRect(0, 0, W, H);
+    frost(g, W, H, k, dark ? 0.9 : 0.8);
+    g.save(); g.scale(2, 2); frost(g, W / 2, H / 2, k, dark ? 0.45 : 0.4); g.restore();
+    sheetEdges(g, W, H, k);
+  };
+  /* Tinted glass: a sheet with colour in it. On a dark ground, smoked: deeper and greyer, with one broad gloss; on a light
+     one, a cool clear blue, lighter than the ground */
+  PAINT['tinted'] = function (g, W, H, th) {
+    var k = ink(th), dark = k.dark;
+    /* a ground already near black cannot be smoked deeper: there the smoke is a grey lighter than it */
+    var tint = !dark ? lighter(th, C.hex('#e9f1ff'), 0.85) : C.lum(th.bg) < 0.012 ? pool(th, C.hex('#3a3c42'), 0.75) : C.mix(th.bg, C.hex('#101113'), 0.5);
+    var gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, hex(dark ? C.mix(tint, k.hi, 0.06) : tint)); gr.addColorStop(1, hex(dark ? C.mix(tint, 0x000000, 0.25) : lighter(th, C.hex('#dfeaff'), 0.85)));
+    g.fillStyle = gr; g.fillRect(0, 0, W, H);
+    /* one broad gloss from the upper left, as tinted glass shows */
+    var gl = g.createLinearGradient(0, 0, W * 0.55, H * 1.2);
+    gl.addColorStop(0, rgba(k.hi, dark ? 0.12 : 0.6)); gl.addColorStop(0.42, rgba(k.hi, dark ? 0.04 : 0.2)); gl.addColorStop(0.43, rgba(k.hi, 0)); gl.addColorStop(1, rgba(k.hi, 0));
+    g.fillStyle = gl; g.fillRect(0, 0, W, H);
+    sheetEdges(g, W, H, k);
+  };
+  /* Reeded glass: fluted glass, a rib every 12 px, each lit on its left and shaded on its right, the text sitting on it as
+     on a reeded partition */
+  var reedTiles = {};
+  PAINT['reeded'] = function (g, W, H, th) {
+    var k = ink(th), dark = k.dark, P = 12, key = th.bg + '|' + k.hi + '|' + k.shadow, t = reedTiles[key];
+    g.fillStyle = hex(th.bg); g.fillRect(0, 0, W, H);
+    if (!t) {
+      t = reedTiles[key] = document.createElement('canvas'); t.width = P; t.height = 2;
+      var c = t.getContext('2d'), gr = c.createLinearGradient(0, 0, P, 0), shade = dark ? 'rgba(0,0,0,.22)' : k.shadow !== 'rgba(0,0,0,0)' ? rgba(k.lo, 0.5) : rgba(k.hi, 0);
+      gr.addColorStop(0, rgba(k.hi, dark ? 0.38 : 0.9)); gr.addColorStop(0.3, rgba(k.hi, dark ? 0.08 : 0.25)); gr.addColorStop(0.62, rgba(k.hi, 0)); gr.addColorStop(0.9, shade); gr.addColorStop(1, rgba(k.hi, dark ? 0.06 : 0.3));
+      c.fillStyle = gr; c.fillRect(0, 0, P, 2);
+    }
+    g.fillStyle = g.createPattern(t, 'repeat'); g.fillRect(0, 0, W, H);
+    topSheen(g, W, H, k, dark ? 0.08 : 0.35);
+    sheetEdges(g, W, H, k);
   };
 
   /* Etched glass: a frosted panel with a sunburst cut through the frost, each cut catching a thin line of light */
@@ -279,10 +413,16 @@
     g.drawImage(layer, 0, 0);
   };
 
+  /* the plain ones first (round 3b), then the drawn ones; Glass suggests the plain ones, rain and the lens */
+  def('glass', 'clear-glass', 'Clear glass', { looks: ['glass'] });
+  def('glass', 'frost', 'Frosted glass', { looks: ['glass'] });
+  def('glass', 'tinted', 'Tinted glass', { looks: ['glass'] });
+  def('glass', 'reeded', 'Reeded glass', { looks: ['glass'] });
   def('glass', 'frosted', 'Frosted panes', { looks: ['glass'] });
   def('glass', 'sheets', 'Layered sheets', { looks: ['glass'] });
   def('glass', 'raindrops', 'Rain on glass', { looks: ['glass'] });
   def('glass', 'lens', 'Lens', { looks: ['glass'] });
   def('glass', 'etched', 'Etched glass', { looks: ['glass'] });
-  def('glass', 'rain-glass', 'Running rain', { motion: { layer: 'glassrun', anim: 'pmt-bg-fall', ms: 16000, under: 'raindrops' } });
+  def('glass', 'rain-glass', 'Running rain', { motion: { layer: 'glassrun', anim: 'pmt-bg-fall', ms: 16000, under: 'fogged' } });
+  K.suggest('glass', ['clear-glass', 'frost', 'tinted', 'raindrops', 'lens']);
 })();
