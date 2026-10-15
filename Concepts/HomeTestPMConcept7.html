@@ -1820,7 +1820,7 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
       min-width: 70px !important;
     }
     /* Vertical separator between Agent dropdown and ELI5/YOLO/CREW toggles */
-    [data-theme^="glass"] .chat-input-area > div:first-of-type div[style*="gap:var(--md)"] {
+    [data-theme^="glass"] .chat-input-area > div:first-of-type div.pm7-chat-toggle-group {
       border-left: 1px solid var(--border-light);
       padding-left: 14px !important;
     }
@@ -22795,7 +22795,11 @@ html[data-theme^="retro"] .pm7-perf-installation-card { border-radius:0; }
 /* Thousands of persistent accessible descriptions must not form one enormous
    inline formatting row. Keep every role=tooltip node in the accessibility
    tree while giving the hidden owner a bounded, layout-inert paint footprint. */
-.pm-hover-sr > .pm-hover-description {
+/* These owners are already clipped 1px boxes. Keep their layout work inside those boxes without hiding their
+   accessible description nodes or changing the visible tooltip. */
+.pm-hover-sr, .pm-hover-bucket { contain: strict !important; }
+.pm-hover-sr > .pm-hover-bucket,
+.pm-hover-sr .pm-hover-description {
   position: absolute !important; display: block !important;
   inset: 0 auto auto 0 !important; width: 1px !important; height: 1px !important;
   overflow: hidden !important;
@@ -28583,7 +28587,9 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmh-field: 1; --pmh-near: 1; --pmh-glow: 1; --pmh-frame: 0; --pmh-edge: .4;
   --pmf-ease-out: cubic-bezier(.3, 0, .2, 1);
   /* the light's falloff: a Gaussian exp(-4.5 t^2) tapered to 0 at the radius, sampled every 10 % (hand-set stops left
-     Mach rings in a warm pool). The few-% sheen shows only in the inner third; the hairline reads to about two thirds. */
+     Mach rings in a warm pool). The few-% sheen shows only in the inner third; the hairline reads to about two thirds.
+     Jared's Glass review (2026-10-14, #16): the circle under the pointer was too strong and the edge glow right, so every
+     look's --pmf-sheen below is 0.6 of its 2026-10-10 value and the rim, band, mask and radius are unchanged. */
   --pmf-mask: #000 0, rgb(0 0 0 / .956) 10%, rgb(0 0 0 / .833) 20%, rgb(0 0 0 / .663) 30%, rgb(0 0 0 / .481) 40%, rgb(0 0 0 / .317) 50%, rgb(0 0 0 / .189) 60%, rgb(0 0 0 / .1) 70%, rgb(0 0 0 / .046) 80%, rgb(0 0 0 / .015) 90%, transparent 100%;
 }
 /* Basic: crisp. Critically damped and quick; a cool hairline over a short inner band; a small faint sheen; a tight
@@ -28594,7 +28600,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmf-r: 90px; --pmf-band: 6px;
   --pmf-rim: color-mix(in srgb, color-mix(in srgb, rgb(var(--accent-primary-rgb)) 70%, #fff) 80%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 40%, transparent);
-  --pmf-sheen: rgb(255 255 255 / .07);
+  --pmf-sheen: rgb(255 255 255 / .042);
   --pmf-in: 90ms; --pmf-out: 220ms;
   --pmf-plate: 0 6px 14px -6px rgba(0, 0, 0, .5);
   --pmf-bloom: 0 0 10px rgba(var(--accent-primary-rgb), .2);
@@ -28606,7 +28612,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmf-r: 90px; --pmf-band: 6px;
   --pmf-rim: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 80%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 26%, transparent);
-  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 7.5%, transparent);
+  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 4.5%, transparent);
   --pmf-in: 90ms; --pmf-out: 220ms;
   --pmf-plate: 0 6px 14px -6px rgba(16, 24, 40, .2);
   --pmf-bloom: 0 0 10px rgba(var(--accent-primary-rgb), .12);
@@ -28618,7 +28624,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmh-mag: 2.5; --pmh-mag-k: .03; --pmh-stiff: 170; --pmh-damp: 22;
   --pmh-bleed: 18; --pmh-ramp: 18; --pmh-out-ms: 320; --pmh-glow-reach: 36;
   --pmf-r: 100px; --pmf-band: 16px;
-  --pmf-sheen: rgb(255 228 206 / .1);
+  --pmf-sheen: rgb(255 228 206 / .06);
   --pmf-in: 130ms; --pmf-out: 320ms;
   --pmf-plate: 0 10px 22px -10px rgba(10, 6, 18, .55);
   --pmf-bloom: 0 0 14px color-mix(in srgb, color-mix(in srgb, var(--accent-primary) 55%, #ffc9b0) 18%, transparent);
@@ -28628,7 +28634,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmh-mag: 2.5; --pmh-mag-k: .03; --pmh-stiff: 170; --pmh-damp: 22;
   --pmh-bleed: 18; --pmh-ramp: 18; --pmh-out-ms: 320; --pmh-glow-reach: 36;
   --pmf-r: 100px; --pmf-band: 16px;
-  --pmf-sheen: color-mix(in srgb, #f07a55 11%, transparent);
+  --pmf-sheen: color-mix(in srgb, #f07a55 6.5%, transparent);
   --pmf-in: 130ms; --pmf-out: 320ms;
   --pmf-plate: 0 10px 22px -10px rgba(122, 109, 140, .32);
   --pmf-bloom: 0 0 14px color-mix(in srgb, color-mix(in srgb, var(--accent-primary) 50%, #f07a55) 11%, transparent);
@@ -28643,7 +28649,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmf-r: 96px; --pmf-band: 10px;
   --pmf-rim: color-mix(in srgb, color-mix(in srgb, rgb(var(--accent-primary-rgb)) 45%, #fff) 85%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 38%, transparent);
-  --pmf-sheen: rgb(255 255 255 / .11);
+  --pmf-sheen: rgb(255 255 255 / .066);
   --pmf-in: 140ms; --pmf-out: 360ms;
   --pmf-plate: 0 14px 28px -12px rgba(0, 4, 14, .55);
   --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .2);
@@ -28655,7 +28661,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmf-r: 96px; --pmf-band: 10px;
   --pmf-rim: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 85%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 28%, transparent);
-  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 10%, transparent);
+  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 6%, transparent);
   --pmf-in: 140ms; --pmf-out: 360ms;
   --pmf-plate: 0 12px 24px -12px rgba(30, 40, 60, .18);
   --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .14);
@@ -28936,6 +28942,147 @@ html[data-motion="reduced"] #pmh-frame[data-pmh-family="nier"] > i { transition:
 :not(.primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .terminal-pane-body, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-wrap [class*="scroll"], .pm6-usage-tblwrap, .dashboard-grid, .bento-card, .chat-dropdown-list, textarea, .browser-viewport, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid, .pm6-wiz-workgrid, .pm6-wiz-disc-card, .orch-tab-content, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .pm6-orch-ledger-wrap, .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty, .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list, .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock, .message-block .block-body pre, .pm-command-card.expanded pre, .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx, .activity-card-body, #bottomDebugHost .rd-console) { --pm6-sb-ink: initial; }
 :where(.primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .terminal-pane-body, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-tblwrap, .dashboard-grid, .bento-card, .chat-dropdown-list, .browser-viewport, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid, .pm6-wiz-workgrid, .pm6-wiz-disc-card, .orch-tab-content, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .pm6-orch-ledger-wrap, .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty, .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list, .pm6-route-tree, .pm-ctx-menu, .msg-body, .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx, .activity-card-body, .orch-tabs, .manager-tabs, .pm51-popout, .o55-insp-body, .o55g-layer, .o55-scroll) > * { scrollbar-color: transparent transparent; }
 :where(.primary-content, .page-projects, .panel-content, .message-stream, .messageStream, .chat-thread-list, .terminal-pane-body, .file-tree, .s4-shell, .s4-stage, .s4-panel-body, .s4-psm-body, .s4-rail, .pm6-usage-wrap [class*="scroll"], .pm6-usage-tblwrap, .dashboard-grid, .bento-card, .chat-dropdown-list, textarea, .browser-viewport, .browser-permissions-panel, .browser-console-pane, .browser-network-pane, .browser-evidence-pane, .wizard-step-panel, .wizard-annotation-drawer, .wizard-activity-log, .pm6-wiz-intake-scroll, .pm6-wiz-topic-list, .pm6-wiz-thread-body, .pm6-wiz-doc, .pm6-wiz-doc-overlay-body, .pm6-wiz-chat-log, .pm6-wiz-prdrail, .pm6-wiz-prdgrid, .pm6-wiz-workgrid, .pm6-wiz-disc-card, .orch-tab-content, .pm6-orch-w-body, .pm6-orch-pc-feed, .pm6-orch-pc-sidecol, .pm6-orch-seams, .pm6-orch-inspector-body, .pm6-orch-evlist, .pm6-orch-history, .pm6-orch-ledger-wrap, .pm-editor-term-stack, .pm-inspector-drawer, .pm-debug-cell, .pm6-dash-scroll, .pm6-dash-catalog-panel, .pm6-proj-sheet, .pm6-bottom-scroll, .pm6-bottom-pre, .pm6-bottom-empty, .context-detail-pane, .cdp-scroll, .cdp-raw-view, .wt-test-output, .sa-work-stream, .sc-accordion-body, .sh-scroll, .sh-wtchips, .rs-panel-list, .pm6-route-tree, .pm-ctx-menu, .msg-body, .msg-body .pm6-preblock, .message-block .block-body pre, .pm-command-card.expanded pre, .sa-crew-board, .sa-crew-msg, .debug-thread-header, .debug-investigation-ctx, .activity-card-body, #bottomDebugHost .rd-console):is(:hover, .pm6-sb-active) :is(.orch-tabs, .manager-tabs, .pm51-popout, .o55-insp-body, .o55g-layer, .o55-scroll) { scrollbar-color: var(--pm6-sb-thumb) transparent; }
+
+/* ---- css/24-no-pills-projects.css ---- */
+/* The Projects page without pill labels (Jared's rule via the coordinator, 2026-10-14: no pill-shaped labels, i.e.
+   status chips, tags, suggestion chips, state badges; pill-shaped action buttons stay). The approved no-pills vocabulary
+   (share/2026-10-10-no-pills-patterns, NP-STATUS / NP-CHOICE / NP-SCOPE / NP-CORNERS), as the onboarding window, the
+   Orchestrator and the Chat's tour labels already use it:
+     - a card's status (Running, Run #47 · Needs Attention, Paused, Idle, Ready, Archived) is its mark and its word in
+       the status ink, no box, border or fill; a live run's mark breathes instead of the whole word;
+     - a card's stack tags (SvelteKit, Rust · Axum ...) are words, small and set in capitals, each after a 5 px square
+       in the word's own ink;
+     - the New Project sheet's templates are one row of joined cells with the chosen cell filled;
+     - the search field is the look's rectangle, as the title bar's search field is (24-no-pills.css).
+   Every word reads at least 4.5:1 on its card in every look; the inks below were measured on the P1000 (the light
+   looks mix the tone toward the text ink until it does). The base page's JS still writes the same text and classes. */
+
+/* ── inks ─────────────────────────────────────────────────────────────────────────────────────────────────────────── */
+#panel-projects {
+  --pmp-ok: var(--accent-lime); --pmp-warn: var(--accent-orange); --pmp-attn: var(--accent-warning);
+  --pmp-err: var(--accent-magenta); --pmp-info: var(--accent-blue); --pmp-mut: var(--text-secondary);
+  --pmp-tag: var(--text-secondary);
+  --pmp-label-font: 700 10.5px/1.6 var(--body-font, Inter, system-ui, sans-serif); --pmp-label-track: .06em;
+}
+html[data-theme$="-light"] #panel-projects {
+  --pmp-ok: color-mix(in srgb, var(--accent-lime) 55%, var(--text-primary));
+  --pmp-warn: color-mix(in srgb, var(--accent-orange) 55%, var(--text-primary));
+  --pmp-attn: color-mix(in srgb, var(--accent-warning) 50%, var(--text-primary));
+  --pmp-err: color-mix(in srgb, var(--accent-magenta) 62%, var(--text-primary));
+  --pmp-info: color-mix(in srgb, var(--accent-blue) 70%, var(--text-primary));
+}
+/* Glass Light's cards are frosted glass over the wallpaper, a mid-tone ground (L 0.26 to 0.38 on the default mesh), so
+   its words take the text ink (the status words too: the tone stays in their marks, drawn toward the ink enough to read
+   as marks) */
+html[data-theme="glass-light"] #panel-projects {
+  --pmp-ok: color-mix(in srgb, var(--accent-lime) 34%, var(--text-primary));
+  --pmp-warn: color-mix(in srgb, var(--accent-orange) 38%, var(--text-primary));
+  --pmp-attn: color-mix(in srgb, var(--accent-warning) 34%, var(--text-primary));
+  --pmp-err: color-mix(in srgb, var(--accent-magenta) 44%, var(--text-primary));
+  --pmp-info: color-mix(in srgb, var(--accent-blue) 48%, var(--text-primary));
+  --pmp-mut: color-mix(in srgb, var(--text-secondary) 40%, var(--text-primary));
+  --pmp-tag: var(--text-primary); --pmp-word: var(--text-primary);
+}
+/* Friendly Light's blue and amber are its lightest tones; Glass Dark's lilac sits on cards over the bright part of its
+   wallpaper. Both measured under 4.5 and are drawn further toward the text ink. */
+html[data-theme="friendly-light"] #panel-projects {
+  --pmp-info: color-mix(in srgb, var(--accent-blue) 55%, var(--text-primary));
+  --pmp-attn: color-mix(in srgb, var(--accent-warning) 38%, var(--text-primary));
+}
+html[data-theme="glass-dark"] #panel-projects { --pmp-err: color-mix(in srgb, var(--accent-magenta) 60%, var(--text-primary)); }
+html[data-theme^="retro"] #panel-projects { --pmp-label-font: 700 10.5px/1.6 var(--display-font-sm, var(--body-font)); --pmp-label-track: .08em; }
+html[data-o55-nier="on"] #panel-projects {
+  --pmp-ok: var(--o55-nier-ok-text, var(--o55-nier-ink)); --pmp-warn: var(--o55-nier-warn-text, var(--o55-nier-ink));
+  --pmp-attn: var(--o55-nier-warn-text, var(--o55-nier-ink)); --pmp-err: var(--o55-nier-error-text, var(--o55-nier-ink));
+  --pmp-info: var(--o55-nier-ink); --pmp-mut: color-mix(in srgb, var(--o55-nier-ink) 86%, transparent);
+  --pmp-tag: color-mix(in srgb, var(--o55-nier-ink) 86%, transparent);
+  --pmp-label-font: 500 10.5px/1.6 var(--mono-font, 'IBM Plex Mono', monospace); --pmp-label-track: .14em;
+}
+/* NieR Light's ok ink read 4.46 on its parchment; a fifth of the ink brings it over */
+html[data-o55-nier="on"][data-theme$="-light"] #panel-projects { --pmp-ok: color-mix(in srgb, var(--o55-nier-ok-text, var(--o55-nier-ink)) 78%, var(--o55-nier-ink)); }
+
+/* ── a card's status: the mark and the word ──────────────────────────────────────────────────────────────────────────
+   Each status names its tone (--pmp-st); the word and the mark take it, except where a look's ground is too mid-tone
+   for a tinted word to read (Glass Light: --pmp-word), where the word takes the text ink and the mark keeps the tone. */
+html[data-theme] #panel-projects .pm6-proj-card .status-badge {
+  --pmp-st: var(--pmp-ok);
+  display: inline-flex; align-items: center; gap: 6px; padding: 2px 0; border: 0; border-radius: 0;
+  background: none; box-shadow: none; animation: none;
+  font: var(--pmp-label-font); letter-spacing: var(--pmp-label-track); text-transform: uppercase;
+  color: var(--pmp-word, var(--pmp-st));
+}
+html[data-theme] #panel-projects .pm6-proj-card .status-badge::before {
+  content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--pmp-st);
+}
+html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-projects .pm6-proj-card .status-badge::before { border-radius: 0; }
+html[data-theme] #panel-projects .pm6-proj-card .status-badge.idle { --pmp-st: var(--pmp-mut); }
+html[data-theme] #panel-projects .pm6-proj-card .status-badge.paused { --pmp-st: var(--pmp-warn); }
+html[data-theme] #panel-projects .pm6-proj-card .status-badge.error { --pmp-st: var(--pmp-err); }
+html[data-theme] #panel-projects .pm6-proj-card .status-badge.pm6-ready { --pmp-st: var(--pmp-info); }
+html[data-theme] #panel-projects .pm6-proj-card .status-badge.pm6-attn { --pmp-st: var(--pmp-attn); }
+/* archived: a hollow mark (it was a dashed outline) */
+html[data-theme] #panel-projects .pm6-proj-card .status-badge.pm6-archived { --pmp-st: var(--pmp-mut); }
+html[data-theme] #panel-projects .pm6-proj-card .status-badge.pm6-archived::before { background: none; box-shadow: inset 0 0 0 1.5px var(--pmp-st); }
+/* a live run: the mark breathes; the word stays at full ink (the whole badge used to pulse to 0.6) */
+@keyframes pmp-live { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+html[data-theme] #panel-projects .pm6-proj-card .status-badge.pm6-live::before { animation: pmp-live 2s var(--ease-default, ease) infinite; }
+html[data-motion="reduced"] #panel-projects .pm6-proj-card .status-badge.pm6-live::before { animation: none; }
+@media (prefers-reduced-motion: reduce) { #panel-projects .pm6-proj-card .status-badge.pm6-live::before { animation: none; } }
+
+/* ── a card's stack tags: words after squares ───────────────────────────────────────────────────────────────────── */
+html[data-theme] #panel-projects .project-card-tags { gap: 3px 14px; }
+html[data-theme] #panel-projects .project-card-tags .lang-badge {
+  display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; border-radius: 0;
+  background: none; box-shadow: none;
+  font: var(--pmp-label-font); letter-spacing: var(--pmp-label-track); text-transform: uppercase; color: var(--pmp-tag);
+}
+html[data-theme] #panel-projects .project-card-tags .lang-badge::before {
+  content: ""; flex: none; width: 5px; height: 5px; background: currentColor;
+}
+
+/* ── the New Project sheet's templates: joined cells, the chosen one filled (NP-CHOICE) ─────────────────────────────
+   Each cell draws its own hairline over its neighbour's, so a row that wraps is still joined cells. The chosen cell is
+   on top with the accent edge and fill; Retro and NieR fill it in reverse video. A click still picks the template. */
+/* four templates in a narrow sheet: one 2 x 2 block of equal cells (a free wrap left three and one, ragged), outer
+   corners only */
+html[data-theme] .pm6-proj-sheet .pm6-proj-chips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; padding: 1px 0 0 1px; }
+html[data-theme] .pm6-proj-sheet .pm6-proj-chip {
+  position: relative; margin: -1px 0 0 -1px; border-radius: 0; border: 1px solid var(--border-light);
+  background: transparent; color: var(--text-secondary); box-shadow: none;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+html[data-theme] .pm6-proj-sheet .pm6-proj-chip { justify-content: center; text-align: center; }
+html[data-theme] .pm6-proj-sheet .pm6-proj-chip:nth-child(1) { border-top-left-radius: var(--pm-ctl-r); }
+html[data-theme] .pm6-proj-sheet .pm6-proj-chip:nth-child(2) { border-top-right-radius: var(--pm-ctl-r); }
+html[data-theme] .pm6-proj-sheet .pm6-proj-chip:nth-last-child(2):nth-child(odd) { border-bottom-left-radius: var(--pm-ctl-r); }
+html[data-theme] .pm6-proj-sheet .pm6-proj-chip:last-child { border-bottom-right-radius: var(--pm-ctl-r); }
+html[data-theme] .pm6-proj-sheet .pm6-proj-chip:hover { z-index: 1; background: color-mix(in srgb, var(--accent-primary) 8%, transparent); color: var(--text-primary); }
+html[data-theme] .pm6-proj-sheet .pm6-proj-chip.active {
+  z-index: 2; border-color: color-mix(in srgb, var(--accent-primary) 70%, var(--border-light));
+  background: color-mix(in srgb, var(--accent-primary) 14%, transparent); color: var(--text-primary);
+}
+/* Glass: the page's material rule paints every template cell with the same fill and rim, !important (the base page's
+   html[data-theme^="glass"] :is(.project-action-btn, .pm6-proj-chip, ...)), so the chosen cell only changed its ink.
+   The chosen cell takes more of the accent and its full edge on top of that material, and hover shows through too. */
+html[data-theme^="glass"] .pm6-proj-sheet .pm6-proj-chip:hover:not(.active) {
+  background: color-mix(in srgb, var(--accent-primary) 10%, color-mix(in srgb, var(--rg-chrome-strong) 74%, transparent)) !important;
+}
+html[data-theme^="glass"] .pm6-proj-sheet .pm6-proj-chip.active {
+  border-color: var(--accent-primary) !important;
+  background: color-mix(in srgb, var(--accent-primary) 24%, color-mix(in srgb, var(--rg-chrome-strong) 74%, transparent)) !important;
+}
+html:is([data-theme^="retro"], [data-o55-nier="on"]) .pm6-proj-sheet .pm6-proj-chip { transition: none; }
+html[data-theme^="retro"] .pm6-proj-sheet .pm6-proj-chip.active { border-color: var(--accent-primary); background: var(--accent-primary); color: var(--surface); }
+html[data-o55-nier="on"] .pm6-proj-sheet .pm6-proj-chip.active { border-color: var(--o55-nier-ink); background: var(--o55-nier-ink); color: var(--o55-nier-on-ink, var(--surface)); }
+
+/* ── the search field: the look's rectangle ──────────────────────────────────────────────────────────────────────────
+   Its placeholder was the page's fixed #757575 in every look (2.6 to 3.9:1 on the field); it takes the look's secondary
+   ink, drawn toward the text ink where that alone falls short. */
+html[data-theme] #panel-projects .pm6-proj-search { border-radius: var(--pm-ctl-r); }
+html[data-theme] #panel-projects .pm6-proj-search::placeholder { color: var(--pmp-ph, var(--text-secondary)); opacity: 1; }
+html[data-theme$="-light"] #panel-projects { --pmp-ph: color-mix(in srgb, var(--text-secondary) 70%, var(--text-primary)); }
+html[data-theme="glass-light"] #panel-projects { --pmp-ph: color-mix(in srgb, var(--text-secondary) 40%, var(--text-primary)); }
+html[data-o55-nier="on"] #panel-projects { --pmp-ph: color-mix(in srgb, var(--o55-nier-ink) 80%, transparent); }
 
 /* ---- css/24-no-pills.css ---- */
 /* No pills outside Settings' own panel (Jared 2026-10-10; cards NP-CHOICE and NP-SCOPE, approved as presented; the rule
@@ -30839,6 +30986,23 @@ html:not([data-lg="on"]):not([data-o55-nier="on"]):is([data-theme^="basic"], [da
 html[data-theme^="glass"]:not([data-lg="on"]) .title-bar .pm6-tt-mode { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 html[data-theme^="glass"]:not([data-lg="on"]) .title-bar .pm6-tt-mode[aria-checked="true"] { background: var(--pm-tt-chosen) !important; }
 html[data-theme^="glass"]:not([data-lg="on"]) .title-bar .pm6-tt-mode:not([aria-checked="true"]):hover { background: var(--pm-tt-hover) !important; }
+
+/* ---- css/29-wizard-stage.css ---- */
+/* Keep the previous stage drawn under the existing entrance, including the frames before that entrance is ready.
+   Both stages fill the same page; the outgoing stage takes no space and cannot receive input or accessibility focus. */
+#panel-wizard > .pm6-wiz-stage { position: absolute; inset: 0; }
+#panel-wizard > .pm6-wiz-stage.wo-stage-out {
+  display: flex; z-index: 0; overflow: clip; translate: 0 var(--wo-stage-scroll-top, 0px);
+  animation: pm-page-in 180ms var(--ease-out) both; pointer-events: none;
+}
+#panel-wizard > .pm6-wiz-stage.wo-stage-out > * { translate: 0 var(--wo-stage-scroll-offset, 0px); }
+#panel-wizard > .pm6-wiz-stage.wo-stage-in { z-index: 1; }
+html:is([data-motion="reduced"], [data-o55-still]) #panel-wizard > .pm6-wiz-stage.wo-stage-out {
+  animation: wo-fade 140ms ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  #panel-wizard > .pm6-wiz-stage.wo-stage-out { animation: wo-fade 140ms ease-out both; }
+}
 
 /* ---- css/30-art.css ---- */
 /* ---- O55 art: scene layers, family choreography, ambient loops -------------------------------------------------
@@ -35664,8 +35828,10 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"][data-o55-nier="on"] #panel-agents .pm-sumcard-h > .c { text-transform: none !important; letter-spacing: 0 !important; }
 
 /* ---- 10. Activity bar: one tile marks the open panel and glides to the next ---------------------------------------
-   The tile (.d-abind, placed by JS) is the size of an icon's symbol box, so hover and active are the same box. The
-   chat and home toggles keep their own colour state (they are switches, not the open panel). */
+   The tile (.d-abind, placed by JS) is the size of an icon's symbol box, so hover and active are the same box. The Chat
+   switch is lit the same way while the chat column is shown: a tile of its own (.d-abind-chat, the same paint in every
+   look) and the accent mark, in place of the shell's per-look colour state (Jared, 2026-10-14). The Home switch it sat
+   beside toggled the old dashboard, which the panels replaced; the Home layer removes it from the page. */
 [data-rail-skin="d"] { --d-Rbar: 7px; }
 [data-rail-skin="d"][data-theme^="friendly"] { --d-Rbar: 10px; }
 [data-rail-skin="d"][data-theme^="glass"] { --d-Rbar: 10px; }
@@ -35688,24 +35854,38 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"][data-o55-nier="on"] #activityBar > .d-abind { background: var(--o55-nier-ink); box-shadow: none; }
 [data-rail-skin="d"] #activityBar .icon { z-index: 1; }
 [data-rail-skin="d"] #activityBar .icon .symbol { border-radius: var(--d-Rbar) !important; transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease), transform var(--d-t2) var(--d-spring) !important; }
-[data-rail-skin="d"] #activityBar .icon[data-target] .symbol { width: 28px !important; height: 28px !important; }
-[data-rail-skin="d"] #activityBar .icon[data-target]:hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
-[data-rail-skin="d"] #activityBar .icon[data-target].active .symbol { background: none !important; box-shadow: none !important; }
-[data-rail-skin="d"] #activityBar .icon[data-target].active { color: var(--accent-primary) !important; }
-[data-rail-skin="d"][data-o55-nier="on"] #activityBar .icon[data-target].active { color: var(--o55-nier-on-ink) !important; }
-[data-rail-skin="d"] #activityBar .icon[data-target].d-bump .symbol svg { animation: d-bump var(--d-t3) var(--d-spring); }
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]) .symbol { width: 28px !important; height: 28px !important; }
+/* Chat takes the bar's own hover too, as it takes the lit tile: the shell's per-look switch hover (Friendly's 1.1 scale
+   and glow) would grow the symbol out from under its tile */
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]):hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active .symbol { background: none !important; box-shadow: none !important; }
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active { color: var(--accent-primary) !important; }
+[data-rail-skin="d"][data-o55-nier="on"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active { color: var(--o55-nier-on-ink) !important; }
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).d-bump .symbol svg { animation: d-bump var(--d-t3) var(--d-spring); }
 @keyframes d-bump { 0% { transform: scale(.82); } 60% { transform: scale(1.08); } 100% { transform: none; } }
 /* expanded bar labels: readable sentence case (the DOM keeps the shell's capitals, other tooling reads them) */
 [data-rail-skin="d"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label {
   display: block; font: 500 11px/1.2 var(--body-font) !important; letter-spacing: 0 !important; text-transform: lowercase;
 }
 [data-rail-skin="d"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label::first-letter { text-transform: uppercase; }
-[data-rail-skin="d"] #activityBar .icon[data-target].active .icon-label { color: var(--d-text) !important; }
-/* NieR marks the open panel the shell's way, the whole item (icon and name) as one ink band, collapsed or expanded, as
-   it marks Chat and Home: the name is paper on that ink, never ink on ink */
-[data-rail-skin="d"][data-o55-nier="on"] #activityBar .icon[data-target].active .icon-label { color: var(--o55-nier-on-ink) !important; }
-/* Glass light: the Chat and Home switches are white marks on their tiles; their names sit under the tile on the light
-   bar, so they take the text colour (white there could not be read) */
+/* every expanded label reads at least 4.5:1 wherever it lands on the bar (measured on the P1000, 2026-10-14). The
+   shell gave the names the muted ink, about 2.7 in Friendly Light and under 4.5 in Friendly Dark and both Glass looks,
+   and removing the Home switch moved every name up a slot onto another part of the bar's gradient. They take the
+   secondary ink; Glass Light, whose frosted bar is a mid-tone, the text ink; Glass Dark, whose bar runs to a light lilac
+   at the top and under a lit tile's glow, the text ink over a soft shadow of the bar's own deep violet (no box, nothing
+   behind the bar changes). */
+[data-rail-skin="d"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon:not(.active) .icon-label { color: var(--d-label, var(--d-text-2)) !important; }
+[data-rail-skin="d"][data-theme="glass-light"] { --d-label: var(--text-primary); }
+[data-rail-skin="d"][data-theme="glass-dark"] { --d-label: var(--text-primary); }
+[data-rail-skin="d"][data-theme="glass-dark"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label {
+  text-shadow: 0 1px 2px rgba(18, 10, 36, .85), 0 0 9px rgba(18, 10, 36, .7);
+}
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active .icon-label { color: var(--d-text) !important; }
+/* NieR marks the open panel and the shown chat the shell's way, the whole item (icon and name) as one ink band,
+   collapsed or expanded: the name is paper on that ink, never ink on ink */
+[data-rail-skin="d"][data-o55-nier="on"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active .icon-label { color: var(--o55-nier-on-ink) !important; }
+/* Glass light: any other lit switch is a white mark on its tile; its name sits under the tile on the light bar, so it
+   takes the text colour (white there could not be read) */
 [data-rail-skin="d"][data-theme^="glass"][data-theme$="-light"] #activityBar:not(.collapsed) .icon.active:not([data-target]) .icon-label { color: var(--d-text) !important; }
 /* the expand / collapse toggle: a chevron in the same tile as the icons (the shell writes ">" or "<" into it; the text
    stays for other code, the chevron is drawn and turns when the bar shows its names) */
@@ -35769,6 +35949,10 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
   width: 28px !important; height: 28px !important; border-radius: var(--d-Rbar) !important;
   transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease), box-shadow var(--d-t1) var(--d-ease) !important;
 }
+/* empty, the button is the shell's muted affordance (opacity .45 on the whole item); the glyph stays muted, the name is
+   at full label ink so it reads (it still opens: the menu says how to hide an icon) */
+[data-rail-skin="d"] #activityBar > #abMoreBtn[data-empty="1"] { opacity: 1; }
+[data-rail-skin="d"] #activityBar > #abMoreBtn[data-empty="1"]:not(:hover, .is-menu-open, .pm-ab-drop-hot) .symbol { opacity: .45; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn:hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn.is-menu-open { color: var(--d-text) !important; opacity: 1; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn.is-menu-open .symbol { background: var(--d-press) !important; }
@@ -35885,6 +36069,15 @@ try {
    { ok: false, reason: 'retired' }. ?home=current leaves today's Home running for an A/B in the review copy. */
 
 if (/[?&]home=current\b/.test(location.search)) return;
+// The disabled legacy controller's global cursor/selection rules would still restyle every element when the tour
+// compatibility flag changes. The panel kit uses pointer capture and selectstart instead. Remove only those two
+// rules before first paint; ?home=current keeps the original sheet and cascade order. The build guards the anchors.
+var legacySheet = document.getElementById('pm6-css-dashboard').sheet;
+for (var ri = legacySheet.cssRules.length - 1; ri >= 0; ri--) {
+  var rule = legacySheet.cssRules[ri];
+  if ((rule.selectorText === 'body.pm-home-dragging, body.pm-home-dragging *' && rule.style.cursor === 'grabbing') ||
+      (rule.selectorText === 'body.pm-home-dragging' && rule.style.userSelect === 'none')) legacySheet.deleteRule(ri);
+}
 var root = document.documentElement;
 root.setAttribute('data-pmw-home', 'on');
 
@@ -36110,7 +36303,8 @@ html[data-theme$="-light"] #pm-home-centre, html[data-theme$="-light"] #pmw-over
 .pmw-divider[data-dir="row"] .pmw-divider-line { top: 6px; bottom: 6px; left: 3.5px; width: 1px; }
 .pmw-divider[data-dir="col"] .pmw-divider-line { left: 6px; right: 6px; top: 3.5px; height: 1px; }
 body.pmw-resizing, body.pmw-resizing * { user-select: none !important; -webkit-user-select: none !important; }
-body.pmw-dragging, body.pmw-dragging * { user-select: none !important; -webkit-user-select: none !important; }
+/* Panel drags prevent selectstart in 30-gesture.js. A body-wide selection rule would restyle the entire app on
+   pickup and release, although the captured pointer cannot start a selection anywhere. */
 
 /* ---- the strip ---- */
 .pmw-strip {
@@ -36158,7 +36352,10 @@ body.pmw-dragging, body.pmw-dragging * { user-select: none !important; -webkit-u
 .pmw-tab:hover:not([data-active]) { background: var(--pmw-tab-hover); color: var(--pmw-text); }
 .pmw-strip.is-dragging .pmw-tab:hover:not([data-active]) { background: var(--pmw-tab-idle-fill, transparent); }
 /* hover tags never open during a drag or a resize */
-body.pmw-dragging #pm-hover-tag-root, body.pm-resizing #pm-hover-tag-root { display: none !important; }
+/* The legacy tag root also holds hundreds of screen-reader descriptions. A panel drag hides its paint without
+   detaching and rebuilding that entire layout tree; the gesture pairs this with aria-hidden for the same rest. */
+body.pmw-dragging #pm-hover-tag-root { opacity: 0 !important; }
+body.pm-resizing:not(.pmw-dragging) #pm-hover-tag-root { display: none !important; }
 .pmw-tab[data-active] { color: var(--pmw-tab-active, var(--pmw-text)); font-weight: var(--pmw-tab-weight, 600); z-index: 2; }
 .pmw-tab:not([data-active]) { background: var(--pmw-tab-idle-fill, transparent); }
 /* one ring, on the tab's own top and sides: the bottom stays open, so a focused active tab is still one surface with its
@@ -36288,7 +36485,19 @@ body.pmw-dragging #pm-hover-tag-root, body.pm-resizing #pm-hover-tag-root { disp
   touch-action: none;
   z-index: 3;
 }
-.pmw-grip .pmw-ico { width: 9px; height: 9px; stroke-width: 1.3; }
+/* the mark points into the panel's top right corner and sits on that corner's diagonal, the same distance from the top
+   and the right edge, moved in with the look's corner radius so the curve never crowds it (square looks 3.5 px, Basic
+   5.1, Glass 5.9, Friendly 6.7). The drawing sits 1.3 px inside its 6 px box on both sides (icon grip, 06-icons.js);
+   the stroke is 0.73 px on screen, as the menu row's 1.6 at 14 px is 1.4. */
+.pmw-grip { --pmw-grip-inset: calc(3.5px + var(--pmw-panel-radius, 8px) * .2); }
+.pmw-grip .pmw-ico {
+  position: absolute;
+  top: calc(var(--pmw-grip-inset) - 1.3px);
+  right: calc(var(--pmw-grip-inset) - 1.3px);
+  width: 6px;
+  height: 6px;
+  stroke-width: 1.95;
+}
 .pmw-grip:hover, .pmw-grip:focus-visible { opacity: 1; color: var(--pmw-text); }
 .pmw-grip:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: -2px; border-radius: 4px; }
 .pmw-panel[data-collapsed] .pmw-pmenu, .pmw-panel[data-collapsed] .pmw-plus { opacity: .8; }
@@ -43929,7 +44138,7 @@ html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-card .pmt-card-glyph 
       <div class="left-panel">
         <nav class="activity-bar collapsed" id="activityBar" aria-label="Activity bar">
           <div class="icon" title="Chat" data-ab-id="chat"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="icon-label">CHAT</span></div>
-          <div class="icon" title="Dashboard" id="dashboardToggleIcon" data-ab-id="dashboard"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg></span><span class="icon-label">HOME</span></div>
+          <!-- home layer: the rail's Dashboard toggle is removed (the panels replaced the dashboard it showed) -->
           <div class="icon active" title="File Manager" data-ab-id="files" data-target="panel-files"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg></span><span class="icon-label">FILES</span></div>
           <div class="pm6-ab-group" role="group" aria-label="Project" data-group="project">
             <div class="icon" title="Search" data-ab-id="search" data-target="panel-search"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><span class="icon-label">SEARCH</span></div>
@@ -61124,12 +61333,12 @@ var PMU_SERIES = {
       });
       return best ? [best.id] : [];
     }
-    /* the board class on the board and the shell: written only when it changes (--pmu-tracks is an inherited custom
-       property: writing it, even with the same value, restyles every element of the board) */
+    /* The tracks belong only to this grid. Writing grid-template-columns directly gives the same track sizes without
+       changing an inherited custom property on every card and chart when the board crosses a width class. */
     function setBoardClass() {
-      var name = current.cls.name, tr = String(current.cls.tracks);
+      var name = current.cls.name, tracks = 'repeat(' + current.cls.tracks + ', minmax(0px, 1fr))';
       if (boardEl.getAttribute('data-cls') !== name) boardEl.setAttribute('data-cls', name);
-      if (boardEl.style.getPropertyValue('--pmu-tracks') !== tr) boardEl.style.setProperty('--pmu-tracks', tr);
+      if (boardEl.style.gridTemplateColumns !== tracks) boardEl.style.gridTemplateColumns = tracks;
       var app = appEl; if (app && app.getAttribute('data-cls') !== name) app.setAttribute('data-cls', name);
     }
     /* the menu open now is this board's (opened from it, or anchored inside it) */
@@ -120866,6 +121075,7 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
 
   /* ---------------- stage switching ---------------- */
   function setStage(name) {
+    if (window.PM_WIZARD_STAGES) window.PM_WIZARD_STAGES.prepare(name);
     W.stage = name;
     var r = root();
     if (!r) return;
@@ -121706,7 +121916,8 @@ html[data-theme^="retro"] #panel-settings .o55-goals-phase-n { border-radius: 0;
   /* ---------------- render everything ---------------- */
   function renderAll() {
     if (!WS()) return;
-    try { renderPrd(); } catch (e) {}
+    if (W.stage === 'prd_builder') { try { renderPrd(); } catch (e) {} }
+    if (W.stage !== 'workspace') { hydrateIcons(); return; }
     try { renderTopics(); } catch (e) {}
     try { renderDock(); } catch (e) {}
     try { renderStatePill(); } catch (e) {}
@@ -126140,7 +126351,7 @@ policies for tenant isolation, and add migration script.</textarea>
       '<div class="pm6-chat-composer-foot" style="display:flex; justify-content:space-between; align-items:center; gap:var(--sm); padding:var(--xs) var(--sm); border-top: 1px solid var(--border-light); flex-wrap:wrap;">' +
       '<div style="display:flex; gap:var(--sm); align-items:center; flex-wrap:wrap;">' +
       '<button type="button" title="Attach file or image" data-demo-action="demo.toast" data-demo-arg="Attachments ride along as context — images land in the plan review too." style="background:none; border:none; color:var(--text-secondary); cursor:pointer; padding:4px;">' + SVG.attach + '</button>' +
-      '<div style="display:flex; gap:var(--md); align-items:center; margin-left:var(--sm); font-size:10px;">' +
+      '<div class="pm7-chat-toggle-group" style="display:flex; gap:var(--md); align-items:center; margin-left:var(--sm); font-size:10px;">' +
       '<span class="chat-toggle-btn toggle-eli5" title="Explain Like I\'m 5" onclick="this.classList.toggle(\'active\')">ELI5</span>' +
       '<span class="chat-toggle-btn toggle-yolo" title="Auto-approve eligible tools. Never bypasses FileSafe, permissions, policy, secrets or protected-branch guards." onclick="this.classList.toggle(\'active\')">YOLO</span>' +
       '<span class="chat-toggle-btn toggle-crew" title="Multi-model Crew overlay with an inspectable crew board" onclick="this.classList.toggle(\'active\')">CREW</span>' +
@@ -130031,7 +130242,7 @@ policies for tenant isolation, and add migration script.</textarea>
       var head = ev.target && ev.target.closest ? ev.target.closest('[data-collapse]') : null;
       if (head && !ev.target.closest('button, a, input, .pm6-tb-menu-trigger, .pm-minibtn')) { ev.preventDefault(); accToggle(head); }
     });
-    document.addEventListener('mouseup', function () { remeasureOpenAccordions(); });
+    document.addEventListener('mouseup', function (ev) { if (window.PMW && PMW.gesture && PMW.gesture.releasedAt === ev.timeStamp) return; remeasureOpenAccordions(); });
     window.addEventListener('resize', function () { remeasureOpenAccordions(); });
   }
   function wireTabber() {
@@ -139074,6 +139285,134 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     provider: (id) => PROVIDERS.find((p) => p.id === id),
     forge: (id) => FORGES.find((f) => f.id === id)
   };
+})();
+
+/* ---- js/27-wizard-stage.js ---- */
+/* A stage's CSS entrance can spend several frames pending at opacity 0 while Chrome prepares its layers. Keep the
+   outgoing stage underneath it until that entrance finishes. The existing entrance still owns its duration,
+   easing and movement (including Reduced Motion); its actual ready/start time also drives the outgoing fade. */
+(function () {
+  'use strict';
+  function boot() {
+    const root = document.getElementById('panel-wizard');
+    if (!root) return;
+    const stages = [...root.querySelectorAll('.pm6-wiz-stage')];
+    let current = stages.find(s => s.classList.contains('active'));
+    let pageShown = root.classList.contains('active');
+    let serial = 0;
+    let watching = null;
+    const leaving = new Map();
+    const scrollOrigins = new Map();
+
+    function release(stage) {
+      const exit = leaving.get(stage);
+      leaving.delete(stage);
+      scrollOrigins.delete(stage);
+      stage.style.removeProperty('--wo-stage-scroll-offset');
+      stage.style.removeProperty('--wo-stage-scroll-top');
+      if (exit) exit.cancel();
+      if (stage.classList.contains('wo-stage-out')) stage.classList.remove('wo-stage-out');
+      if (stage.inert) stage.inert = false;
+    }
+    function finish(token, incoming) {
+      if (token !== serial) return;
+      for (const stage of leaving.keys()) release(stage);
+      if (incoming && incoming.classList.contains('wo-stage-in')) incoming.classList.remove('wo-stage-in');
+      watching = null;
+    }
+    function watch(entrance, token, incoming) {
+      if (watching === entrance) return;
+      watching = entrance;
+      entrance.ready.then(() => {
+        if (token !== serial || current !== incoming || watching !== entrance) return;
+        // CSS puts animation-timing-function on each keyframe, not on the effect timing.
+        const frames = entrance.effect.getKeyframes().map(f => ({
+          opacity: 1 - Number(f.opacity), offset: f.computedOffset, easing: f.easing
+        }));
+        for (const [stage, previous] of leaving) {
+          if (previous) previous.cancel();
+          const timing = entrance.effect.getTiming();
+          const exit = stage.animate(frames, { ...timing, duration: timing.duration / 2 });
+          exit.startTime = entrance.startTime;
+          leaving.set(stage, exit);
+        }
+      }).catch(() => {});
+      entrance.finished.then(() => {
+        if (watching === entrance) finish(token, incoming);
+      }, () => {
+        // A motion-mode change replaces the entrance. Keep the old stage until the replacement is ready too.
+        requestAnimationFrame(() => {
+          if (token !== serial || current !== incoming || watching !== entrance) return;
+          if (!incoming.getAnimations().some(a => a instanceof CSSAnimation && a.playState !== 'idle')) {
+            finish(token, incoming);
+          }
+        });
+      });
+    }
+    // Read animation timing only after the browser prepares it, not during the synchronous stage render.
+    root.addEventListener('animationstart', event => {
+      const incoming = event.target;
+      if (incoming !== current || !incoming.classList.contains('wo-stage-in')) return;
+      const entrance = incoming.getAnimations().find(a => a.animationName === event.animationName);
+      if (entrance) watch(entrance, serial, incoming);
+      else finish(serial, incoming);
+    });
+
+    // Called BEFORE either stage writer removes .active. Renderers can synchronously measure during that write;
+    // an observer would run too late to preserve the outgoing layout and its already-finished CSS entrances.
+    function prepare(name) {
+      const incoming = stages.find(s => s.dataset.wizStage === name);
+      if (!incoming || incoming === current) return;
+      const outgoing = current;
+      const scrollTop = root.scrollTop;
+      const reversing = leaving.has(incoming);
+      current = incoming;
+      const token = ++serial;
+      watching = null;
+      release(incoming);
+      if (!outgoing || !pageShown || !root.classList.contains('active')) {
+        finish(token, incoming);
+        return;
+      }
+      if (outgoing.classList.contains('wo-stage-in')) outgoing.classList.remove('wo-stage-in');
+      outgoing.classList.add('wo-stage-out');
+      outgoing.inert = true;
+      leaving.set(outgoing, null);
+      scrollOrigins.set(outgoing, scrollTop);
+      incoming.classList.add('wo-stage-in');
+      // Clipping the retained stage lets the page clamp to the incoming stage's scroll range. After both
+      // writers finish, pin the old contents at their pre-switch position before the browser paints.
+      if (scrollTop || scrollOrigins.size > 1) {
+        // A previous retained box must not keep a rapid replacement's scroll range alive either.
+        for (const stage of scrollOrigins.keys()) stage.style.removeProperty('--wo-stage-scroll-top');
+        queueMicrotask(() => {
+          if (token !== serial) return;
+          const clamped = root.scrollTop;
+          for (const [stage, origin] of scrollOrigins) {
+            stage.style.setProperty('--wo-stage-scroll-top', clamped + 'px');
+            stage.style.setProperty('--wo-stage-scroll-offset', -origin + 'px');
+          }
+        });
+      }
+      // Returning to a stage that is still underneath the current one can reuse a completed entrance. That has
+      // no new animationstart event, so finish or watch the reused animation on this uncommon reversal path.
+      if (reversing) requestAnimationFrame(() => {
+        if (token !== serial || current !== incoming) return;
+        const entrance = incoming.getAnimations().find(a => a instanceof CSSAnimation);
+        if (!entrance || entrance.playState === 'finished') finish(token, incoming);
+        else watch(entrance, token, incoming);
+      });
+    }
+    window.PM_WIZARD_STAGES = { prepare };
+    const observer = new MutationObserver(() => {
+      pageShown = root.classList.contains('active');
+      if (!pageShown) finish(serial, current);
+    });
+    observer.observe(root, { attributes: true, attributeFilter: ['class'] });
+  }
+  // The authored scripts follow the page markup. Install before the legacy DOMContentLoaded stage writer runs.
+  if (!document.getElementById('panel-wizard')) document.addEventListener('DOMContentLoaded', boot);
+  else boot();
 })();
 
 /* ---- js/30-owners.js ---- */
@@ -152857,7 +153196,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 
   /* ---------------------------------------------------------------- start / remove */
   function activeStage() { const s = document.querySelector('#panel-wizard .pm6-wiz-stage.active'); return s ? s.getAttribute('data-wiz-stage') : 'intake'; }
-  function setStage(name) { document.querySelectorAll('#panel-wizard .pm6-wiz-stage').forEach((s) => s.classList.toggle('active', s.getAttribute('data-wiz-stage') === name)); }
+  function setStage(name) {
+    if (window.PM_WIZARD_STAGES) window.PM_WIZARD_STAGES.prepare(name);
+    document.querySelectorAll('#panel-wizard .pm6-wiz-stage').forEach((s) => s.classList.toggle('active', s.getAttribute('data-wiz-stage') === name));
+  }
   P.start = function start() {
     if (P.active) return;
     const saved = { stage: activeStage(), regions: {}, title: (document.querySelector('#pm6WizRunHead .pm6-wiz-runhead-title') || {}).textContent };
@@ -156389,7 +156731,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   PMHoverTag.prototype.text=function(){return this.primary+(this.detail?' '+this.detail:'');};
 
   function HoverTagController(){
-    this.root=null;this.tag=null;this.descriptions=null;this.active=null;this.activeModel=null;
+    this.root=null;this.tag=null;this.descriptions=null;this.descriptionBuckets=[];this.active=null;this.activeModel=null;
     this.pendingOpenTimer=0;this.pendingOpenTarget=null;this.pendingOpenSource=null;this.pendingPointerIntent=null;this.departureTimer=0;this.closeTimer=0;this.scanFrame=0;this.pendingScanScope=null;this.visualEnabled=true;this.observer=null;this.overlayScope=null;this.pageSettling=false;this.pageScanTimer=0;this.overlaySettling=false;this.overlayScanTimer=0;
     this.keyOwners=new Map();this.preparedByElement=new WeakMap();this.scanNodes=[];this.scanPrepareCursor=0;this.scanPhase='idle';this.scanQueue=[];this.scanCursor=0;this.scanning=false;this.scanComplete=true;this.bootstrapPass=0;this.observeAfterBootstrap=false;this.lastScan={candidates:0,bound:0,duration_ms:0,batches:0};
     this.deferredLiveScopes=new Set();this.deferredLiveTimer=0;
@@ -156412,6 +156754,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if(!root){root=document.createElement('div');root.id=ROOT_ID;root.setAttribute('data-visual-enabled','true');root.setAttribute('data-pm-hover-exempt','tooltip-owner');
       root.innerHTML='<div id="'+TAG_ID+'" class="pm-hover-tag" role="tooltip" aria-hidden="true" data-open="false" data-detail="false" data-placement="above"><strong></strong><p></p></div><div id="'+DESCRIPTIONS_ID+'" class="pm-hover-sr" aria-live="off"></div>';document.body.appendChild(root);}
     this.root=root;this.tag=root.querySelector('#'+TAG_ID);this.descriptions=root.querySelector('#'+DESCRIPTIONS_ID);
+    /* Fixed, invisible groups bound sibling-selector invalidation when one description is added or removed.
+       The description nodes, IDs, text, roles and aria-describedby links are unchanged. Keep groups for the
+       controller's lifetime: adding/removing groups would invalidate all their descendants again. */
+    this.descriptionBuckets=Array.prototype.slice.call(this.descriptions.querySelectorAll('.pm-hover-bucket'));
+    if(!this.descriptionBuckets.length){
+      var existing=Array.prototype.slice.call(this.descriptions.children);
+      for(var bi=0;bi<64;bi++){var bucket=document.createElement('div');bucket.className='pm-hover-bucket';this.descriptions.appendChild(bucket);this.descriptionBuckets.push(bucket);}
+      for(var ei=0;ei<existing.length;ei++){var old=existing[ei];if(old.classList.contains('pm-hover-description'))this.descriptionBuckets[(parseInt(old.id.slice('pm-hover-desc-'.length),36)>>>0)%64].appendChild(old);}
+    }
   };
   HoverTagController.prototype.prepare=function(el){
     var facts=factsFor(el);if(!isCandidate(el,facts)||attr(el,'data-pm-hover-exempt'))return null;
@@ -156436,7 +156787,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     setAttrIfChanged(el,'data-pm-hover-key',key);setAttrIfChanged(el,'data-pm-hover-bound','true');setAttrIfChanged(el,'data-pm-hover-kind',kindList.join(','));
     addDescriptionToken(el,id);
     var desc=document.getElementById(id);
-    if(!desc){desc=document.createElement('span');desc.id=id;desc.className='pm-hover-description';this.descriptions.appendChild(desc);}
+    if(!desc){desc=document.createElement('span');desc.id=id;desc.className='pm-hover-description';this.descriptionBuckets[parseInt(hash(key),36)%64].appendChild(desc);}
     if(overlayAllows(el)){setAttrIfChanged(desc,'role','tooltip');desc.removeAttribute('aria-hidden');}else{setAttrIfChanged(desc,'role','presentation');setAttrIfChanged(desc,'aria-hidden','true');}
     setAttrIfChanged(desc,'data-pm-hover-description-key',key);if(desc.textContent!==currentText)desc.textContent=currentText;
     return new PMHoverTag({key:key,primary:info.label,detail:info.detail,description_id:id,kinds:kindList,visual_enabled:this.visualEnabled});
@@ -159961,12 +160312,16 @@ PANEL_IDS.forEach(id => panelHook(id, {
 /* ---- concepts/d/40-bar.js ---- */
 /* Activity bar: one tile marks the open panel and glides to the next one (springy in Friendly, a liquid stretch in
    Glass, stepped in Retro, an ink cut in NieR). It is measured from the icon's symbol box, so it is exactly the size of
-   the hover tile, and it follows the bar while the bar widens or narrows. The chat and home toggles keep their own
-   colour state. The More tray opens as PMR.menu (41-more.js). */
+   the hover tile, and it follows the bar while the bar widens or narrows. The Chat switch takes a tile of its own, the
+   same tile, lit in place while the chat column is shown (Jared, 2026-10-14: the chat button says the chat is shown,
+   like the rest of the bar); it sits where the chat icon sits and never glides, since it marks a column and not the open
+   panel. The More tray opens as PMR.menu (41-more.js). */
 
 function mountBar(barEl) {
   const tile = PMR.h('span.d-abind', { 'aria-hidden': 'true' });
   barEl.insertBefore(tile, barEl.firstChild);
+  const chatTile = PMR.h('span.d-abind.d-abind-chat', { 'aria-hidden': 'true' });
+  barEl.insertBefore(chatTile, tile.nextSibling);
   let last = null;
   const slot = document.getElementById('sidePanelSlot');
   const target = () => {
@@ -159981,7 +160336,29 @@ function mountBar(barEl) {
     if (!r.width || !r.height) return null;
     return { x: r.left - b.left + barEl.scrollLeft, y: r.top - b.top + barEl.scrollTop, w: r.width, h: r.height };
   }
+  /* the Chat switch: lit while its icon is (46-chat.js syncRailEntry keeps .active on it while the column shows, folded
+     to a strip included); it fades in on the icon with the open panel's bump and fades out in place */
+  const chatIcon = () => barEl.querySelector(':scope > .icon[data-ab-id="chat"]');
+  /* only a change of the lit state moves the tile (hover and bump classes come and go on the same icon); the icon is
+     watched from the first time it is on the bar, so one restored from the More tray is watched too */
+  const chatLit = () => { const ic = chatIcon(); return !!(ic && ic.classList.contains('active')); };
+  const chatMo = new MutationObserver(() => { if (chatLit() !== chatTile.classList.contains('is-on')) placeChat(true); });
+  let chatWatched = null;
+  function placeChat(animate) {
+    const icon = chatIcon();
+    if (icon && icon !== chatWatched) { chatMo.observe(icon, { attributes: true, attributeFilter: ['class'] }); chatWatched = icon; }
+    const r = icon && icon.classList.contains('active') && rectOf(icon);
+    if (!r) { chatTile.classList.remove('is-on'); return; }
+    chatTile.style.width = r.w + 'px'; chatTile.style.height = r.h + 'px';
+    chatTile.style.transform = 'translate(' + r.x + 'px, ' + r.y + 'px)';
+    if (chatTile.classList.contains('is-on')) return;
+    chatTile.classList.add('is-on');
+    if (!animate || PMR.motion.reduced() || fam() === 'nier') return;   /* NieR cuts: the ink tile is simply there */
+    icon.classList.add('d-bump');
+    setTimeout(() => icon.classList.remove('d-bump'), 520);
+  }
   function place(animate) {
+    placeChat(animate);
     const icon = iconFor(target());
     const r = icon && rectOf(icon);
     if (!r) { tile.classList.remove('is-on'); last = null; return; }
@@ -160020,6 +160397,7 @@ function mountBar(barEl) {
     last = icon;
   }
   const mo = new MutationObserver(() => place(true));
+  placeChat(false);
   if (slot) {
     mo.observe(slot, { attributes: true, attributeFilter: ['class'] });
     slot.querySelectorAll(':scope > .side-panel-view').forEach(v => mo.observe(v, { attributes: true, attributeFilter: ['class'] }));
@@ -160055,7 +160433,7 @@ function mountBar(barEl) {
   return {
     panel() { place(true); },
     destroy() {
-      mo.disconnect(); mo2.disconnect(); if (ro) ro.disconnect();
+      mo.disconnect(); mo2.disconnect(); chatMo.disconnect(); if (ro) ro.disconnect();
       cancelAnimationFrame(follow);
       barEl.removeEventListener('transitionrun', onWidthRun);
       barEl.removeEventListener('transitionend', onWidthEnd);
@@ -160063,7 +160441,7 @@ function mountBar(barEl) {
       more.destroy();
       window.removeEventListener('resize', onResize); barEl.removeEventListener('transitionend', onResize);
       barEl.querySelectorAll('.d-bump').forEach(i => i.classList.remove('d-bump'));
-      tile.remove();
+      tile.remove(); chatTile.remove();
     },
   };
 }
@@ -162098,7 +162476,9 @@ var ICON_PATHS = {
   chevronRight: 'M6 3.5 10.5 8 6 12.5',
   chevronDown: 'M3.5 6 8 10.5 12.5 6',
   chevronLeft: 'M10 3.5 5.5 8l4.5 4.5',
-  grip: 'M2.5 8.5 8.5 2.5M5.5 8.5l3-3',
+  // the panel's corner grip: two strokes across the top right corner, the short one nearest it, so the narrow end points
+  // into the corner the grip sits in. Drawn at full icon size for the Move panel menu row; the corner draws it at 6 px
+  grip: 'M3.5 3.5l9 9M8 3.5l4.5 4.5',
   reopen: 'M3.5 6.5h6.5a3 3 0 0 1 0 6H6M5.5 4.2 3.2 6.5l2.3 2.3',
   panel: 'M2.5 3h11v10h-11zM2.5 6h11',
   newPanel: 'M2.5 3h11v10h-11zM8 3v10M10.8 6.2v3.6M9 8h3.6',
@@ -163549,12 +163929,13 @@ render.schedule = function (opts) {
   if (paintQueued) return;
   paintQueued = true;
   nextFrame(function () {
+    if (!paintQueued) return;   // a synchronous paint already consumed this request
     paintQueued = false;
     var anim = paintAnimate; paintAnimate = false;
     try { render.paint({ animate: anim }); } catch (err) { try { console.error('[pm-home] paint failed', err); } catch (_) {} }
   });
 };
-render.now = function (opts) { paintQueued = false; render.paint(opts || {}); };
+render.now = function (opts) { paintQueued = false; paintAnimate = false; render.paint(opts || {}); };
 
 var CENTRE_PAD = PMW.CENTRE_PAD = 6;   // the same 6 px gap between the panels and the rail, the chat and the bars
 function centreRect() {
@@ -163598,10 +163979,10 @@ render.paint = function (opts) {
   // retire tab instances whose tabs are gone, even while Home is hidden: a tab closed from the chat or by an agent on
   // another page must release its session and timers now (CONTRACT section 3), not when Home is next shown
   for (var tid in instances) if (!l.tabs[tid]) unmountTab(tid);
-  if (c.offsetParent === null && !c.getClientRects().length) return;   // Home not shown: paint when it is
+  if (!opts.centreRect && c.offsetParent === null && !c.getClientRects().length) return;   // Home not shown: paint when it is
   l = viewOf(l);
   var narrow = PMW.narrow && PMW.narrow.singleColumn();
-  var rects = geom.layout(l, centreRect(), {
+  var rects = geom.layout(l, opts.centreRect || centreRect(), {
     maximized: narrow ? null : l.view.maximized,
     narrow: narrow,
     narrowFocus: l.view.focus
@@ -163622,7 +164003,7 @@ render.paint = function (opts) {
   setAttr(c, 'data-pmw-dv', dv ? 'on' : null);
 
   // panels
-  var alive = {};
+  var alive = {}, panels = [], placedWithoutMotion = [];
   model.panels(l).forEach(function (p) {
     alive[p.id] = true;
     var el = panelEls[p.id] || createPanelEl(p);
@@ -163636,11 +164017,9 @@ render.paint = function (opts) {
     setAttr(el, 'data-role', PMW.panelRole(l, p));
     setAttr(el, 'data-maximized', l.view.maximized === p.id && rects.mode === 'maximized');
     el.setAttribute('aria-label', panelLabel(l, p));
-    if (r) placeEl(el, r, animate);
+    if (r) placeEl(el, r, animate, placedWithoutMotion);
     setAttr(el, 'data-dv-leaving', dv && dv.leaving && dv.leaving[p.id] ? true : null);
-    PMW.strip.render(el, p, l, { narrow: narrow, rects: shown });
-    syncBodies(el, p, l, hidden);
-    PMW.renderEmpty(el, p);
+    panels.push({ panel: p, el: el, hidden: hidden });
   });
   for (var id in panelEls) {
     if (!alive[id]) { var gone = panelEls[id]; delete panelEls[id]; retirePanelEl(gone, animate); }
@@ -163657,10 +164036,26 @@ render.paint = function (opts) {
     setAttr(el, 'hidden', d.virtual);
     el.setAttribute('aria-orientation', d.dir === 'row' ? 'vertical' : 'horizontal');
     el._pmwDivider = d;
-    placeEl(el, d.rect, animate);
+    placeEl(el, d.rect, animate, placedWithoutMotion);
     updateDividerAria(el, d, l);
   });
   for (var k in dividerEls) if (!seen[k]) { dividerEls[k].remove(); delete dividerEls[k]; }
+
+  // With motion off, commit every target while transitions are disabled, then restore them after one layout.
+  // No frame can paint between these writes; forcing a layout for each panel/divider only repeats the same work.
+  if (placedWithoutMotion.length) {
+    void c.offsetWidth;
+    placedWithoutMotion.forEach(function (el) { el.style.transition = ''; });
+  }
+
+  // Place all panels and dividers before any strip reads layout. Fit every strip before updating tab bodies: a
+  // reparented editor or terminal otherwise makes the following strip pay for a full layout of the changed body.
+  var strips = panels.map(function (p) { return PMW.strip.prepare(p.el, p.panel, l, { narrow: narrow, rects: shown }); });
+  strips.forEach(function (s) { s.measure(); });
+  strips.forEach(function (s) { s.place(); });
+  strips.forEach(function (s) { s.finish(); });
+  if (opts.afterStrips) opts.afterStrips();
+  panels.forEach(function (p) { syncBodies(p.el, p.panel, l, p.hidden); PMW.renderEmpty(p.el, p.panel); });
 
   if (dv && PMW.dropView) PMW.dropView.place(shown, animate);
   if (animate) {
@@ -163704,13 +164099,13 @@ function panelLabel(l, p) {
 
 /* an element already headed for this rect is left alone: a paint without motion would otherwise cut a running glide
    short (a kind's update during a drag preview, a strip refit) */
-function placeEl(el, r, animate) {
+function placeEl(el, r, animate, batch) {
   var s = el.style;
   var x = r.x + 'px', y = r.y + 'px', w = r.w + 'px', hh = r.h + 'px';
   if (s.left === x && s.top === y && s.width === w && s.height === hh) return;
   if (!animate) s.transition = 'none';
   s.left = x; s.top = y; s.width = w; s.height = hh;
-  if (!animate) { void el.offsetWidth; s.transition = ''; }
+  if (!animate) { if (batch) batch.push(el); else { void el.offsetWidth; s.transition = ''; } }
 }
 render.placeEl = placeEl;
 
@@ -163814,17 +164209,23 @@ var bodyObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(fun
   }
 }) : null;
 function observeBody(entry) { if (bodyObserver) bodyObserver.observe(entry.host); }
-var resizePending = {}, resizeQueued = false;
+var resizePending = {}, resizeQueued = false, resizeAll = false;
 function queueResize(tid) {
-  resizePending[tid] = true;
+  if (tid) resizePending[tid] = true;
   if (resizeQueued) return;
   resizeQueued = true;
-  nextFrame(function () { resizeQueued = false; flushResizes(false); });
+  nextFrame(function () {
+    resizeQueued = false;
+    var all = resizeAll; resizeAll = false;
+    flushResizes(all);
+  });
 }
+render.flushResizesSoon = function () { resizeAll = true; queueResize(); };
 function flushResizes(forceFinal) {
   var ids = forceFinal ? Object.keys(instances) : Object.keys(resizePending);
   resizePending = {};
   var final = !state.moving && !state.dragging && !state.resizing;
+  var sized = [];
   for (var i = 0; i < ids.length; i++) {
     var e = instances[ids[i]];
     if (!e || !e.visible || !e.instance || !e.instance.onResize) continue;
@@ -163833,8 +164234,12 @@ function flushResizes(forceFinal) {
     var key = w + 'x' + hh + (final ? 'f' : '');
     if (e.size === key) continue;
     e.size = key;
-    try { e.instance.onResize({ w: w, h: hh, final: final }); } catch (err) { try { console.error('[pm-home] onResize failed', err); } catch (_) {} }
+    sized.push({ entry: e, size: { w: w, h: hh, final: final } });
   }
+  sized.forEach(function (s) {
+    if (instances[s.entry.id] !== s.entry || !s.entry.visible) return;
+    try { s.entry.instance.onResize(s.size); } catch (err) { try { console.error('[pm-home] onResize failed', err); } catch (_) {} }
+  });
 }
 render.flushResizes = flushResizes;
 
@@ -165940,7 +166345,11 @@ gesture.start = function (ev, spec) {
     if (e.pointerId !== g.pointerId) return;
     g.px = e.clientX; g.py = e.clientY;
     if (!g.started) { detach(); return; }
+    gesture.releasedAt = e.timeStamp;   // the compatibility mouseup is not a rail resize
     frame(true);
+    // Capture the visible chip and the unchanged centre viewport before retiring drag flags or the preview.
+    // The drop can then batch those writes with the new panel layout instead of flushing layout between them.
+    if (g.chip) { g.releaseChipRect = g.chip.getBoundingClientRect(); g.releaseCentreRect = render.centreRect(); }
     end('drop');
   }
   function onCancel(e) { if (e.pointerId !== g.pointerId) return; if (!g.started) { detach(); return; } end('pointercancel'); }
@@ -165983,10 +166392,18 @@ gesture.start = function (ev, spec) {
     try { var sel = window.getSelection(); if (sel && sel.removeAllRanges) sel.removeAllRanges(); } catch (_) {}
     try { g.el.setPointerCapture(g.pointerId); g.el.addEventListener('lostpointercapture', onLost); } catch (_) {}
     try { if (window.PM_HOVER_TAG_CONTROLLER && PM_HOVER_TAG_CONTROLLER.close) PM_HOVER_TAG_CONTROLLER.close(true); } catch (_) {}
+    g.hoverRoot = doc.getElementById('pm-hover-tag-root');
+    if (g.hoverRoot) { g.hoverAria = g.hoverRoot.getAttribute('aria-hidden'); g.hoverRoot.setAttribute('aria-hidden', 'true'); }
     var cl = doc.body.classList;
     if (!cl.contains('pm-resizing')) { cl.add('pm-resizing'); g.ownsResizing = true; }
-    cl.add('pmw-dragging');
-    if (spec.cursor) doc.body.style.cursor = spec.cursor;
+    cl.add('pmw-dragging', 'pm-home-dragging');
+    // Pointer capture uses this element's cursor everywhere the pointer travels. Changing body's inherited cursor
+    // instead would invalidate thousands of unrelated elements on both pickup and release.
+    if (spec.cursor && g.el) {
+      g.cursor = g.el.style.getPropertyValue('cursor');
+      g.cursorPriority = g.el.style.getPropertyPriority('cursor');
+      g.el.style.setProperty('cursor', spec.cursor, 'important');
+    }
     state.dragging = true;
     loop();
     return true;
@@ -166020,8 +166437,15 @@ gesture.start = function (ev, spec) {
     if (gesture.active === g) gesture.active = null;
     detach();
     var cl = doc.body.classList;
-    cl.remove('pmw-dragging');
-    if (spec.cursor) doc.body.style.cursor = '';
+    // Retire the compatibility flags together, before the drop measures its new layout. Clearing them in separate
+    // phases (including the body's observer microtask) made the same release force several app-wide style passes.
+    cl.remove('pmw-dragging', 'pm-home-dragging');
+    if (g.ownsResizing) cl.remove('pm-resizing');
+    if (g.hoverRoot) {
+      if (g.hoverAria == null) g.hoverRoot.removeAttribute('aria-hidden');
+      else g.hoverRoot.setAttribute('aria-hidden', g.hoverAria);
+    }
+    if (spec.cursor && g.el) g.el.style.setProperty('cursor', g.cursor || '', g.cursorPriority || '');
     state.dragging = false;
     var committed = false;
     try {
@@ -166031,10 +166455,9 @@ gesture.start = function (ev, spec) {
     if (!committed && spec.onCancel) spec.onCancel(g, how);
     if (spec.onEnd) spec.onEnd(g, committed, how);
     if (g.ownsResizing) {
-      cl.remove('pm-resizing');
       try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) {}
     }
-    render.flushResizes(true);
+    render.flushResizesSoon();
     try { if (window.PM_HOVER_TAG_CONTROLLER && PM_HOVER_TAG_CONTROLLER.close) PM_HOVER_TAG_CONTROLLER.close(true); } catch (_) {}
     suppressClick();
   }
@@ -166469,7 +166892,11 @@ dropZones.probe = function (g, o) {
       // the strip is drawn where the preview put its panel: read its tabs there, at the pointer's place in the panel
       var drawn = el.getBoundingClientRect();
       var px = x - r.x + drawn.left;
-      var moreR = st.more.hidden ? null : st.more.getBoundingClientRect();
+      // "+N" is measured where it rests, as the insert slots are (33-tabdrag.js insertionIn): the gap an end slot opens
+      // slides "+N" right by a chip's width, and read where it was drawn it ran from the pointer (landing of 2026-10-14,
+      // Glass dark, a crowded strip: 128 px); on "+N" the gap closes and it slides back under the pointer
+      var moreR = null;
+      if (!st.more.hidden) { var mx = PMW.tabDrag.layoutX(st.more), mw = st.more.offsetWidth; moreR = { left: mx, right: mx + mw, width: mw }; }
       if (moreR && px >= moreR.left - 4 && px <= moreR.right + 4) {
         return { key: 'more-' + p.id, type: 'strip', panelId: p.id, index: p.tabs.length, rect: { x: moreR.left, y: drawn.top + 3, w: moreR.width, h: sh - 3 }, label: 'To the end' };
       }
@@ -166656,10 +167083,11 @@ dropGuide.end = function () {
      heading for (the chip's path for the next 140 px, or 450 ms at its speed), so it steps out behind the hand
      rather than in front of it;
      once the hand has rested 200 ms, it settles into the first place that has stayed clear 160 ms;
-   - the docks and the preview give way first: with no place clear of everything, it keeps or takes one clear of the
-     carry; when every clear place lies in the chip's path, or none is clear (a cramped panel area), it stands just
-     past the chip on its own side and rides along with it; it is drawn above the chip in any case, so a passing
-     overlap never hides its words;
+   - with no place clear of everything, it stands just past the chip on its own side if that is clear of everything
+     (the side docks: the chip covers the place above, the place below would cover the preview's mark); else the
+     docks and the preview give way: it keeps or takes a place clear of the carry; when every clear place lies in the
+     chip's path, or none is clear (a cramped panel area), it stands just past the chip and rides along with it; it
+     is drawn above the chip in any case, so a passing overlap never hides its words;
    - it steps aside with a short glide in the look's own motion and a slight duck (Retro and NieR stepped, no duck);
      Reduced Motion: it fades out and in again at its new place, nothing travels. Panel to panel it rides with the
      guide's glide; anything else comes in where it lands.
@@ -166795,11 +167223,13 @@ function capSolve(a, size, carry, soft) {
   var bare = function (q, m) { return !capHit(q, carry, m); };
   if (cur && full(cur, CAP_STAY)) return capSettle(cands, cur, full);
   cap.backSince = 0;
-  // the carry reached it (or nothing is held yet): a clear place the carry is not heading for; else keep a place that
-  // is clear of the carry and only near a dock or the preview; else just past the chip, following it; else anything clear
-  return capFirst(cands, cur, full, carry, true) || (cur && bare(cur, CAP_STAY) ? cur : null) || capFirst(cands, cur, bare, carry, true)
-    || capPast(cands, carry) || capFirst(cands, cur, full, carry, false) || capFirst(cands, cur, bare, carry, false)
-    || capAny(cands, cur, bare) || cur || cands[0];
+  // the carry reached it (or nothing is held yet): a clear place the carry is not heading for; else just past the chip
+  // where that is clear of everything too (at the side docks the chip covers "above" and "below" would cover the
+  // preview's mark: the name stands over the chip instead, as at the bottom dock); else keep a place that is clear of
+  // the carry and only near a dock or the preview; else just past the chip, following it; else anything clear
+  return capFirst(cands, cur, full, carry, true) || capPast(cands, carry, soft) || (cur && bare(cur, CAP_STAY) ? cur : null)
+    || capFirst(cands, cur, bare, carry, true) || capPast(cands, carry) || capFirst(cands, cur, full, carry, false)
+    || capFirst(cands, cur, bare, carry, false) || capAny(cands, cur, bare) || cur || cands[0];
 }
 /* held while it stays clear; a better place only once the hand rests and that place has stayed clear a moment */
 function capSettle(cands, cur, clear) {
@@ -166850,9 +167280,10 @@ function capPastOn(cands, side, carry) {
   }
   return null;
 }
-/* nothing clear: just past the carry on a side, the first that stays in the panel area */
-function capPast(cands, carry) {
-  for (var i = 0; i < cands.length; i++) { var c = capPastOn(cands, cands[i].side, carry); if (c) return c; }
+/* just past the carry on a side, the first that stays in the panel area (and, given soft, clear of the docks and the
+   preview's marks too) */
+function capPast(cands, carry, soft) {
+  for (var i = 0; i < cands.length; i++) { var c = capPastOn(cands, cands[i].side, carry); if (c && !(soft && capHit(c, soft, CAP_STAY))) return c; }
   return null;
 }
 /* the hand's recent velocity (px/ms over the last 120 ms) and when it last moved */
@@ -167092,6 +167523,11 @@ function fitColumn(p, l, height, pinnedIds, restIds) {
 
 /* ---- render ---- */
 strip.render = function (panelEl, p, l, opts) {
+  var pass = strip.prepare(panelEl, p, l, opts);
+  pass.measure(); pass.place(); pass.finish();
+};
+/* The renderer batches these phases across panels. Standalone strip callers keep the same synchronous contract. */
+strip.prepare = function (panelEl, p, l, opts) {
   opts = opts || {};
   var host = panelEl.querySelector('.pmw-strip-host');
   if (!host._pmw) buildStrip(host, p.id);
@@ -167117,53 +167553,62 @@ strip.render = function (panelEl, p, l, opts) {
   restIds.forEach(function (tid, i) { placeTab(s, s.tabsEl, tid, i, l, p); });
   setAttr(s.pins, 'hidden', !pinnedIds.length);
   setAttr(s.sep, 'hidden', !pinnedIds.length || !restIds.length);
-  // fit against the panel's target width: an animated paint has only just written the new width, so the strip's own
-  // clientWidth still reports where the glide starts (the panel-to-strip inset is the same at either end of it)
-  var tr = opts.rects && opts.rects.panels && opts.rects.panels[p.id];
-  var stripW = host.clientWidth;
-  if (tr && panelEl.offsetWidth) stripW = Math.max(0, tr.w - (panelEl.offsetWidth - host.clientWidth));
-  else if (!stripW) stripW = render.rects() && render.rects().panels[p.id] ? render.rects().panels[p.id].w : 0;
-  s.fitW = stripW;
-  // a panel collapsed beside another (a row split) is a 35 px column: its tabs stand as icons, one above the other
-  var column = p.collapsed && panelEl.getAttribute('data-collapsed') === 'row';
-  setAttr(host, 'data-column', column);
-  setAttr(s.expand, 'hidden', !p.collapsed);
-  if (p.collapsed) {
-    var kidsOf = model.parentOf(l, p.id), first = kidsOf && kidsOf.kids[0] && kidsOf.kids[0].id === p.id;
-    s.expand.setAttribute('data-dir', column ? (first ? 'right' : 'left') : (first ? 'down' : 'up'));
-  }
-  var fixed = TAB.stripPadL + TAB.stripPadR + TAB.plus + TAB.menu + TAB.gripReserve + (narrow && panels.length > 1 ? 52 : 0) + (pinnedIds.length && restIds.length ? 9 : 0) + (p.collapsed ? TAB.plus + 2 : 0);
-  var font = stripFont(host);
-  var fit = column ? fitColumn(p, l, tr ? tr.h : panelEl.offsetHeight, pinnedIds, restIds)
-    : strip.fit(p.tabs, l.tabs, p.active, Math.max(0, stripW - fixed), font, s.frozen, host);
-  var hiddenSet = {};
-  fit.hidden.forEach(function (t) { hiddenSet[t] = true; });
-  s.hidden = fit.hidden.slice();
-  // every width first, then the labels are measured against them (one layout, not one per tab)
-  p.tabs.forEach(function (tid) {
-    var el = s.tabEls[tid];
-    var w = fit.widths[tid];
-    setAttr(el, 'hidden', !!hiddenSet[tid]);
-    setAttr(el, 'data-size', fit.size[tid] || 'full');
-    if (column) { if (el.style.width) el.style.width = ''; }
-    else if (w != null && !hiddenSet[tid]) { var px = w + 'px'; if (el.style.width !== px) el.style.width = px; }
-  });
-  p.tabs.forEach(function (tid) { if (!hiddenSet[tid]) middleEllipsis(s.tabEls[tid], l.tabs[tid], fit.size[tid]); });
-  // +N: plain text, counts the hidden tabs only
-  var n = fit.hidden.length;
-  setAttr(s.more, 'hidden', !n);
-  if (n) {
-    setText(s.more, '+' + n);
-    var activeHidden = hiddenSet[p.active];
-    s.more.setAttribute('aria-label', n + ' more tab' + (n === 1 ? '' : 's') + (activeHidden ? ', including the active tab' : ''));
-    s.more.setAttribute('data-pm-hover-label', n + ' more tab' + (n === 1 ? '' : 's'));
-    s.more.setAttribute('data-pm-hover-detail', 'List the tabs that do not fit');
-  }
-  setAttr(s.lock, 'hidden', !p.locked);
-  s.plus.setAttribute('data-pm-hover-label', 'New tab or panel');
-  s.plus.setAttribute('data-pm-hover-detail', PMW.keyLabel(KEYS.plusMenu) + ' opens this menu, ' + PMW.keyLabel(KEYS.newTab) + ' makes a new tab of this panel\'s usual kind');
-  setAttr(host, 'data-collapsed', p.collapsed ? 'yes' : null);
-  if (PMW.shape) PMW.shape.sync(host, p, l, opts);
+  var fit, hiddenSet, column;
+  return {
+    measure: function () {
+      // fit against the panel's target width: an animated paint has only just written the new width, so the strip's own
+      // clientWidth still reports where the glide starts (the panel-to-strip inset is the same at either end of it)
+      var tr = opts.rects && opts.rects.panels && opts.rects.panels[p.id];
+      var stripW = host.clientWidth;
+      if (tr && panelEl.offsetWidth) stripW = Math.max(0, tr.w - (panelEl.offsetWidth - host.clientWidth));
+      else if (!stripW) stripW = render.rects() && render.rects().panels[p.id] ? render.rects().panels[p.id].w : 0;
+      s.fitW = stripW;
+      // a panel collapsed beside another (a row split) is a 35 px column: its tabs stand as icons, one above the other
+      column = p.collapsed && panelEl.getAttribute('data-collapsed') === 'row';
+      setAttr(host, 'data-column', column);
+      setAttr(s.expand, 'hidden', !p.collapsed);
+      if (p.collapsed) {
+        var kidsOf = model.parentOf(l, p.id), first = kidsOf && kidsOf.kids[0] && kidsOf.kids[0].id === p.id;
+        s.expand.setAttribute('data-dir', column ? (first ? 'right' : 'left') : (first ? 'down' : 'up'));
+      }
+      var fixed = TAB.stripPadL + TAB.stripPadR + TAB.plus + TAB.menu + TAB.gripReserve + (narrow && panels.length > 1 ? 52 : 0) + (pinnedIds.length && restIds.length ? 9 : 0) + (p.collapsed ? TAB.plus + 2 : 0);
+      var font = stripFont(host);
+      fit = column ? fitColumn(p, l, tr ? tr.h : panelEl.offsetHeight, pinnedIds, restIds)
+        : strip.fit(p.tabs, l.tabs, p.active, Math.max(0, stripW - fixed), font, s.frozen, host);
+      hiddenSet = {};
+      fit.hidden.forEach(function (t) { hiddenSet[t] = true; });
+      s.hidden = fit.hidden.slice();
+    },
+    place: function () {
+      // every width first, then the labels are measured against them (one layout, not one per tab)
+      p.tabs.forEach(function (tid) {
+        var el = s.tabEls[tid];
+        var w = fit.widths[tid];
+        setAttr(el, 'hidden', !!hiddenSet[tid]);
+        setAttr(el, 'data-size', fit.size[tid] || 'full');
+        if (column) { if (el.style.width) el.style.width = ''; }
+        else if (w != null && !hiddenSet[tid]) { var px = w + 'px'; if (el.style.width !== px) el.style.width = px; }
+      });
+    },
+    finish: function () {
+      p.tabs.forEach(function (tid) { if (!hiddenSet[tid]) middleEllipsis(s.tabEls[tid], l.tabs[tid], fit.size[tid]); });
+      // +N: plain text, counts the hidden tabs only
+      var n = fit.hidden.length;
+      setAttr(s.more, 'hidden', !n);
+      if (n) {
+        setText(s.more, '+' + n);
+        var activeHidden = hiddenSet[p.active];
+        s.more.setAttribute('aria-label', n + ' more tab' + (n === 1 ? '' : 's') + (activeHidden ? ', including the active tab' : ''));
+        s.more.setAttribute('data-pm-hover-label', n + ' more tab' + (n === 1 ? '' : 's'));
+        s.more.setAttribute('data-pm-hover-detail', 'List the tabs that do not fit');
+      }
+      setAttr(s.lock, 'hidden', !p.locked);
+      s.plus.setAttribute('data-pm-hover-label', 'New tab or panel');
+      s.plus.setAttribute('data-pm-hover-detail', PMW.keyLabel(KEYS.plusMenu) + ' opens this menu, ' + PMW.keyLabel(KEYS.newTab) + ' makes a new tab of this panel\'s usual kind');
+      setAttr(host, 'data-collapsed', p.collapsed ? 'yes' : null);
+      if (PMW.shape) PMW.shape.sync(host, p, l, opts);
+    }
+  };
 };
 
 /* A shrunk file tab keeps both ends of its name ("rec\u2026es.rs"), so same-prefix files stay apart (research 6.3).
@@ -167294,7 +167739,7 @@ function buildStrip(host, panelId) {
     'data-pm-hover-detail': 'Show this panel at its size again', 'data-pmh': 'icon' }, [icon('chevronRight', { size: 14 })]);
   s.lock = h('span', { class: 'pmw-lockmark', hidden: true, 'data-pm-hover-label': 'Locked', 'data-pm-hover-detail': 'Files open in other panels' }, [icon('lock', { size: 12 })]);
   s.menuBtn = h('button', { type: 'button', class: 'pmw-pmenu pmw-sbtn', 'aria-label': 'Panel options', 'aria-haspopup': 'menu', 'data-pm-hover-label': 'Panel options', 'data-pmh': 'icon' }, [icon('more', { size: 14 })]);
-  s.grip = h('button', { type: 'button', class: 'pmw-grip', 'aria-label': 'Move panel (drag, or Enter then arrows)', 'data-pm-hover-label': 'Move panel', 'data-pm-hover-detail': 'Drag it to another place, or press Enter and use the arrows', 'data-pmh': 'off' }, [icon('grip', { size: 9 })]);
+  s.grip = h('button', { type: 'button', class: 'pmw-grip', 'aria-label': 'Move panel (drag, or Enter then arrows)', 'data-pm-hover-label': 'Move panel', 'data-pm-hover-detail': 'Drag it to another place, or press Enter and use the arrows', 'data-pmh': 'off' }, [icon('grip', { size: 6 })]);
   s.plate = h('div', { class: 'pmw-plate', 'aria-hidden': 'true' });
   append(host, [s.plate, s.switcher, s.list, s.more, s.plus, s.expand, s.fill, s.lock, s.menuBtn, s.grip]);
   host._pmw = s;
@@ -167634,6 +168079,7 @@ function insertionIn(st, p, x) {
   return { index: p.tabs.length, x: layoutX(last) + last.offsetWidth + stripGap(st) };
 }
 tabDrag.insertionIn = insertionIn;
+tabDrag.layoutX = layoutX;
 function stripGap(st) { return parseFloat(getComputedStyle(st.tabsEl).columnGap) || 0; }
 /* the strip a torn tab hovers opens a gap at the insert index: the tabs from there slide right by the chip's width (the
    250 ms neighbour slide; instant under Reduced Motion), so the slot is drawn in the gap and covers no label */
@@ -167731,7 +168177,7 @@ function drop(g, z) {
     return true;
   }
   if (!z) return false;
-  var chipRect = g.chip ? g.chip.getBoundingClientRect() : null;
+  var chipRect = g.releaseChipRect || (g.chip ? g.chip.getBoundingClientRect() : null);
   clearGap(g, false);
   finishStrip(g);
   // the source panel goes back to the tab it showed before the grab; model.moveTab would otherwise show the carried
@@ -167751,15 +168197,18 @@ function drop(g, z) {
   var srcNow = model.panel(state.layout, g.origin.panelId), landedP = model.panelOf(state.layout, g.tid);
   if (g.activated && srcNow && srcNow.active && srcNow !== landedP) bus.emit('activate', { tabId: srcNow.active, panelId: srcNow.id, kind: state.layout.tabs[srcNow.active].kind, reason: 'drag' });
   if (landedP && landedP.id !== g.origin.panelId) bus.emit('activate', { tabId: g.tid, panelId: landedP.id, kind: g.rec.kind, reason: 'drag' });
-  render.now({ animate: true });
-  var landed = strip.tabEl(g.tid);
-  if (landed && chipRect && !reducedMotion()) {
-    var lr = landed.getBoundingClientRect();
-    var st = motion.settle();
-    motion.animate(landed, [{ transform: 'translate(' + (chipRect.left - lr.left) + 'px,' + (chipRect.top - lr.top) + 'px)' }, { transform: 'none' }], { dur: st.dur, easing: st.easing });
-    var host2 = landed.closest('.pmw-strip');
-    if (host2) rideShape(host2, st.dur);
-  }
+  render.now({ animate: true, centreRect: g.releaseCentreRect, afterStrips: function () {
+    // The strip's box is independent of its absolutely placed tab bodies. Read the landing and its shape together
+    // while strip layout is current, before the moved editor/terminal body invalidates layout again.
+    var landed = strip.tabEl(g.tid);
+    if (landed && chipRect && !reducedMotion()) {
+      var lr = landed.getBoundingClientRect();
+      var st = motion.settle();
+      motion.animate(landed, [{ transform: 'translate(' + (chipRect.left - lr.left) + 'px,' + (chipRect.top - lr.top) + 'px)' }, { transform: 'none' }], { dur: st.dur, easing: st.easing });
+      var host2 = landed.closest('.pmw-strip');
+      if (host2) rideShape(host2, st.dur);
+    }
+  } });
   if (g.chip) { g.chip.remove(); g.chip = null; }
   nextFrame(function () { var t = strip.tabEl(g.tid); if (t) t.focus({ preventScroll: true }); });
   return true;

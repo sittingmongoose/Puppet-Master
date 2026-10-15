@@ -468,6 +468,17 @@ def shared_fitting_patch(text: str) -> str:
 
 
 PATCHES = [
+    # Wizard continuity retains the outgoing stage through the incoming entrance. Rebuilding its PRD while
+    # entering the workspace needlessly lays out that retained stage again. Replay similarly leaves the workspace.
+    # Each stage entry renders its current content; requirement events also refresh PRD directly while it is hidden.
+    ("function renderAll() {\n    if (!WS()) return;\n    try { renderPrd(); } catch (e) {}",
+     "function renderAll() {\n    if (!WS()) return;\n    if (W.stage === 'prd_builder') { try { renderPrd(); } catch (e) {} }\n"
+     "    if (W.stage !== 'workspace') { hydrateIcons(); return; }",
+     'wizard stage continuity: render the current stage'),
+    # Preserve the outgoing stage before a synchronous renderer can flush the stage visibility change.
+    ("function setStage(name) {\n    W.stage = name;",
+     "function setStage(name) {\n    if (window.PM_WIZARD_STAGES) window.PM_WIZARD_STAGES.prepare(name);\n    W.stage = name;",
+     'wizard stage continuity: prepare before the stage write'),
     # Hover-tag layer: recognise the new overlay roots instead of the removed pm7 ones.
     ("function activeOverlay(){var tour=document.getElementById('pm7-guided-tour'),onboarding=document.getElementById('pm7-onboarding');",
      "function activeOverlay(){var tour=document.getElementById('pm-o55-tour'),onboarding=document.getElementById('pm-o55-onboarding');",

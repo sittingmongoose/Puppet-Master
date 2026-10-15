@@ -4,6 +4,15 @@
    { ok: false, reason: 'retired' }. ?home=current leaves today's Home running for an A/B in the review copy. */
 
 if (/[?&]home=current\b/.test(location.search)) return;
+// The disabled legacy controller's global cursor/selection rules would still restyle every element when the tour
+// compatibility flag changes. The panel kit uses pointer capture and selectstart instead. Remove only those two
+// rules before first paint; ?home=current keeps the original sheet and cascade order. The build guards the anchors.
+var legacySheet = document.getElementById('pm6-css-dashboard').sheet;
+for (var ri = legacySheet.cssRules.length - 1; ri >= 0; ri--) {
+  var rule = legacySheet.cssRules[ri];
+  if ((rule.selectorText === 'body.pm-home-dragging, body.pm-home-dragging *' && rule.style.cursor === 'grabbing') ||
+      (rule.selectorText === 'body.pm-home-dragging' && rule.style.userSelect === 'none')) legacySheet.deleteRule(ri);
+}
 var root = document.documentElement;
 root.setAttribute('data-pmw-home', 'on');
 
