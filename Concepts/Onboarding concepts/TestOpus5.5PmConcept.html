@@ -135572,7 +135572,17 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     } catch (_) { return null; }
   }
   S.unlock = function unlock() { const c = ensureContext(); return !!c; };
-  ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, (e) => { if (e.isTrusted && (document.documentElement.hasAttribute('data-o55-open') || document.documentElement.hasAttribute('data-o55-tour'))) ensureContext(); }, true));
+  /* The shell may stay silent until a usage warning. Warm its context and takes in idle time after the first
+     gesture, so that warning's flush does not also open the audio device. Onboarding keeps its immediate unlock. */
+  let warmingContext = false;
+  ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, (e) => {
+    if (!e.isTrusted) return;
+    if (document.documentElement.hasAttribute('data-o55-open') || document.documentElement.hasAttribute('data-o55-tour')) ensureContext();
+    else if (!S.ctx && !warmingContext) {
+      warmingContext = true;
+      idle(() => { warmingContext = false; ensureContext(); });
+    }
+  }, true));
 
   /* ---- playing: queue, merge, voice ---- */
   let queue = [], flushing = false, recent = null, playSeed = 1;
@@ -135598,21 +135608,31 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      the helper's voice, the depth, the layer, the intensity or the pitch drift in it; its only randomness where its
      noise clicks start in the noise buffer) is rendered once per sample rate, offline, in quiet moments after the first
      gesture, and played as one buffer through the play's own chain (level, lp, shelf, pan): NieR's world opening
-     (wake), its switching on and off (nierOn, nierOff) and the reboot hum. Built live each was 60 to 75 nodes and 5 to
-     12 ms of main thread, wake on the very frame the world is revealed (design/hero-spec.md H1). A take is kept only
+     (wake), its switching on and off (nierOn, nierOff) and the reboot hum. Basic and Glass's fixed warning chimes
+     use the same cache, prepared first so a shell notification only schedules playback. Built live each NieR take
+     was 60 to 75 nodes and 5 to 12 ms of main thread, wake on the very frame the world is revealed
+     (design/hero-spec.md H1). A take is kept only
      when two renders made at two different places of the journey agree (sameTake); until it is ready, or where it was
      not kept, the recipe plays live as before. prepare(rate) -> Promise (the live context asks for its own rate;
      a test may ask for another); takeReady(kit, event, variant, rate). */
-  const TAKES = [['nier', 'wake'], ['nier', 'nierOn'], ['nier', 'nierOff'], ['nier', 'reboot']];
+  const TAKES = [['basic', 'warn'], ['glass', 'warn'], ['nier', 'wake'], ['nier', 'nierOn'], ['nier', 'nierOff'], ['nier', 'reboot']];
   const takes = new Map(); /* sample rate -> Map('kit:event:variant' -> AudioBuffer | null) */
   const preparing = new Map(); /* sample rate -> Promise */
   const PLACES = [{ o: {}, v: 1 }, { o: { chapter: 'ai', step: 5, voice: 2, depth: 1, intensity: 1, layer: true }, v: 1.02 }];
   function renderTake(rate, kit, ev, vi, place) {
     const fn = poolOf(kit, ev)[vi]; if (!fn || typeof OfflineAudioContext === 'undefined') return Promise.resolve(null);
-    const off = new OfflineAudioContext(2, Math.ceil(rate * (tailOf(kit, ev) + 0.3)), rate);
+    /* Keep the live 4 ms offset within the render quantum: starting on a quantum boundary changes the attack
+       in Chrome. Trim whole samples only; the warning buffer keeps any fractional-sample onset within it. */
+    const lead = ev === 'warn' ? rate * 0.004 : 0, cut = Math.floor(lead);
+    const off = new OfflineAudioContext(2, cut + Math.ceil(rate * (tailOf(kit, ev) + 0.3)), rate);
     const out = off.createGain(); out.connect(off.destination);
-    run(fn, off, out, 0, place.v, mk(kit, ev, place.o, true, vi, O55.util.rng('take:' + kit + ':' + ev + ':' + vi)));
-    return off.startRendering();
+    run(fn, off, out, lead / rate, place.v, mk(kit, ev, place.o, true, vi, O55.util.rng('take:' + kit + ':' + ev + ':' + vi)));
+    return off.startRendering().then((buf) => {
+      if (!lead) return buf;
+      const take = new AudioBuffer({ length: buf.length - cut, numberOfChannels: buf.numberOfChannels, sampleRate: rate });
+      for (let ch = 0; ch < buf.numberOfChannels; ch++) take.copyToChannel(buf.getChannelData(ch).subarray(cut), ch);
+      return take;
+    });
   }
   /* two renders agree when they differ nowhere by more than -80 dB (an offline render is not bit-exact from one
      context to the next: the same graph twice differs by up to 6e-7); a recipe that follows the chord, the step, the
@@ -135675,7 +135695,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const t0 = ctx.currentTime + 0.004 + (item.layer && ev === 'pod' ? 0.09 : 0), v = 1 + (k.r() - 0.5) * 0.04;
     const take = takeOf(ctx.sampleRate, kit, ev, vi);
     try {
-      if (take) { const src = ctx.createBufferSource(); src.buffer = take; src.connect(g); src.start(t0); nodes.push(src); entry.take = true; }
+      if (take) {
+        const src = ctx.createBufferSource(); src.buffer = take; src.connect(g);
+        /* A warning take already contains the 4 ms offset's fractional sample; do not interpolate it twice. */
+        src.start(ev === 'warn' ? Math.floor(t0 * ctx.sampleRate + 1e-6) / ctx.sampleRate : t0);
+        nodes.push(src); entry.take = true;
+      }
       else run(fns[vi], ctx, g, t0, v, k);
       entry.played = true; entry.variant = vi; if (item.layer) entry.layer = true;
       if (entry.voice != null) lastVoice[item.event] = entry.voice; /* the chord-note checks read the last voice that played */
