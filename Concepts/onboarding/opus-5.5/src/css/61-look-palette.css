@@ -1,0 +1,69 @@
+/* O55 · Each look in its own colours (Q16 consistency pass, pm7-q16-consistency, 2026-10-15).
+   Jared #22: "there are still things that are purple ... Same for the home page with the colors." A sweep of every
+   page and every Settings chapter and section in all ten looks (Basic, Friendly, Glass, Retro, light and dark, and
+   NieR Mode) found colours that belong to no palette of the look they sat in. Each is replaced by that look's own hue
+   at a step that keeps text at 4.5:1 or more on its ground (measured; NOTES.md in the Q16 share folder):
+   - Settings' primary buttons (Back Up Now, Send test, Install & restart) were a fixed purple gradient in Basic,
+     Friendly and Retro: they take the look's accent with its on-accent ink, and Retro its reverse-video key, as the
+     chat's own primary buttons do. Glass and NieR keep theirs.
+   - Settings' danger buttons (Remove, Reset...) had a fixed pink line and maroon fill in every look: they take the
+     look's own red (--k3-red).
+   - The base's component contrast repair (PM7 T37) gave Projects, the Planning Wizard and the Orchestrator one shared
+     set of inks: Friendly's mint and a pink in Basic Dark and Retro Dark, a purple accent in Friendly Light, a forest
+     green and a wine red in Basic Light and Retro Light. Each look gets its own hues back, at the same contrast.
+   - Basic's "added" file names were Material green (--graph-passed, 2.6:1 on Basic Light): Basic's lime.
+   Glass's own tokens are its owner's; the Usage page's inks are in Concepts/usage-redesign. */
+
+/* ---- Settings' primary and danger buttons --------------------------------------------------------------------------- */
+html:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier]) #panel-settings .btn.primary {
+  color: var(--k3-on-accent); border-color: color-mix(in srgb, var(--k3-accent) 72%, #000);
+  background: linear-gradient(135deg, var(--k3-accent), color-mix(in srgb, var(--k3-accent) 86%, #000));
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--k3-accent) 24%, transparent), inset 0 1px rgba(255, 255, 255, .16);
+}
+html:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier]) #panel-settings .btn.primary:hover {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--k3-accent) 88%, #fff), var(--k3-accent));
+}
+/* Retro: the chat's primary key, reverse video in the text ink */
+html[data-theme^="retro"]:not([data-o55-nier]) #panel-settings .btn.primary,
+html[data-theme^="retro"]:not([data-o55-nier]) #panel-settings .btn.primary:hover { color: var(--surface); border-color: var(--text-primary); background: var(--text-primary); }
+html #panel-settings .btn.danger {
+  border-color: color-mix(in srgb, var(--k3-red) 36%, transparent); background: color-mix(in srgb, var(--k3-red) 10%, transparent);
+}
+
+/* ---- Projects, the Planning Wizard and the Orchestrator: each look's own inks (the T37 scope) ----------------------- */
+html[data-theme="basic-dark"] :is(.page-wizard, .page-orchestrator, .page-projects > .projects-header-bento, .page-projects > .projects-toolbar,
+  .page-projects > .projects-grid-bento, .page-projects > .pm6-proj-empty, .page-projects > .pm6-proj-sheet-backdrop) {
+  --accent-lime: #3DD68C; --graph-passed: #3DD68C; --accent-error: #F2716D; --graph-failed: #F2716D; --accent-warning: #FFB74D; --accent-orange: #FFA347;
+}
+html[data-theme="retro-dark"] :is(.page-wizard, .page-orchestrator, .page-projects > .projects-header-bento, .page-projects > .projects-toolbar,
+  .page-projects > .projects-grid-bento, .page-projects > .pm6-proj-empty, .page-projects > .pm6-proj-sheet-backdrop) {
+  --accent-lime: #86c46a; --graph-passed: #86c46a; --accent-error: #e27860; --graph-failed: #e27860; --accent-warning: #d8b93c; --accent-orange: #e9853f;
+}
+html[data-theme="basic-light"] :is(.page-wizard, .page-orchestrator, .page-projects > .projects-header-bento, .page-projects > .projects-toolbar,
+  .page-projects > .projects-grid-bento, .page-projects > .pm6-proj-empty, .page-projects > .pm6-proj-sheet-backdrop) {
+  --accent-lime: #0B6B38; --graph-passed: #0B6B38; --accent-error: #B3261E; --graph-failed: #B3261E; --accent-warning: #8A3A00; --accent-orange: #8A3A00;
+  --accent-magenta: #9C1C3C;
+}
+html[data-theme="retro-light"] :is(.page-wizard, .page-orchestrator, .page-projects > .projects-header-bento, .page-projects > .projects-toolbar,
+  .page-projects > .projects-grid-bento, .page-projects > .pm6-proj-empty, .page-projects > .pm6-proj-sheet-backdrop) {
+  --accent-primary: #00439E; --accent-blue: #00439E; --accent-lime: #2A6E37; --graph-passed: #2A6E37; --accent-error: #A82424; --graph-failed: #A82424;
+  --accent-warning: #8A4A00; --accent-orange: #9A4300; --accent-magenta: #A0105E;
+}
+html[data-theme="friendly-light"] :is(.page-wizard, .page-orchestrator, .page-projects > .projects-header-bento, .page-projects > .projects-toolbar,
+  .page-projects > .projects-grid-bento, .page-projects > .pm6-proj-empty, .page-projects > .pm6-proj-sheet-backdrop) {
+  --accent-primary: #2A6F8F; --accent-blue: #2A6F8F; --accent-lime: #1D6E58; --graph-passed: #1D6E58; --accent-error: #A53A26; --graph-failed: #A53A26;
+  --accent-warning: #7A5A00; --accent-orange: #9A3F22; --accent-magenta: #5E4A8C;
+}
+html[data-theme="friendly-dark"] :is(.page-wizard, .page-orchestrator, .page-projects > .projects-header-bento, .page-projects > .projects-toolbar,
+  .page-projects > .projects-grid-bento, .page-projects > .pm6-proj-empty, .page-projects > .pm6-proj-sheet-backdrop) {
+  --accent-lime: #6FDABC; --graph-passed: #6FDABC; --accent-error: #FF8A73; --graph-failed: #FF8A73; --accent-warning: #FFD97F; --accent-orange: #FFAD93;
+}
+/* Retro Light's New Project key: the base pins a forest green (#17613f, !important); Retro Light's own lime keeps its
+   white words at 5.3:1 */
+html[data-theme="retro-light"]:not([data-o55-nier]) .page-projects > .projects-header-bento .projects-actions > button.primary {
+  background: var(--accent-lime) !important; border-color: var(--accent-lime) !important;
+}
+
+/* ---- Basic's "added" files and graph passes: Basic's lime, not Material green ------------------------------------------ */
+html[data-theme="basic-dark"]:not([data-o55-nier]) { --graph-passed: #3DD68C; }
+html[data-theme="basic-light"]:not([data-o55-nier]) { --graph-passed: #0B6B38; }
