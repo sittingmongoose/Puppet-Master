@@ -45932,6 +45932,16 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-bell="rim"].pmt-bell .pmt-body
 /* (round 3c: from full to faint, so the still frame, paused or under Reduced Motion, shows the stars at full strength) */
 /* (round 4, Q15: a deeper fade, so a star's change shows in the time it takes to look) */
 @keyframes pmt-bg-twinkle { from { opacity: 1; } to { opacity: .2; } }
+/* Lively for the slow drifts (round 5, Q15): a motion of its own that starts where Gentle's does. The aurora dances: its
+   curtains sweep twice as far, lean as they go and pulse brighter and fainter. The lava boils: it climbs further and its
+   wax swells wide and tall in turn, never under the layer's own size, so no edge shows */
+.pmt-bgmove[data-anim="pmt-bg-dance"], .pmt-bgmove[data-anim="pmt-bg-boil"] { inset: -10%; }
+.pmt-bgmove[data-anim="pmt-bg-dance"] { animation: pmt-bg-dance var(--pmt-bgm-ms, 11250ms) steps(var(--pmt-bgm-steps, 225)) infinite alternate, pmt-bg-pulse var(--pmt-bgm-pulse-ms, 2400ms) steps(var(--pmt-bgm-steps2, 48)) infinite alternate; }
+.pmt-bgmove[data-anim="pmt-bg-boil"] { animation: pmt-bg-boil var(--pmt-bgm-ms, 8000ms) steps(var(--pmt-bgm-steps, 160)) infinite alternate, pmt-bg-swell var(--pmt-bgm-pulse-ms, 1600ms) steps(var(--pmt-bgm-steps2, 32)) infinite alternate; }
+@keyframes pmt-bg-dance { 0% { transform: translate3d(-3%, -2%, 0) scale(1.02); } 50% { transform: translate3d(1.5%, 1%, 0) skewX(-6deg) scale(1.06); } 100% { transform: translate3d(6%, 2%, 0) skewX(3deg) scale(1.04); } }
+@keyframes pmt-bg-pulse { from { opacity: 1; } to { opacity: .5; } }
+@keyframes pmt-bg-boil { from { transform: translate3d(0, 3%, 0); } to { transform: translate3d(0, -8%, 0); } }
+@keyframes pmt-bg-swell { 0% { scale: 1 1; } 50% { scale: 1.08 1; } 100% { scale: 1 1.08; } }
 .pmt-root:not(.pmt-bg-live) .pmt-bgmove { animation-play-state: paused; }
 html[data-motion="reduced"] .pmt-bgmove, .pmt-bgmove[data-anim="still"] { animation: none; }
 @media (prefers-reduced-motion: reduce) { .pmt-bgmove { animation: none; } }
@@ -197861,6 +197871,28 @@ var T = {};
     return th.mono ? bgMono(rgb, th) : rgb;
   };
 
+  /* Crisp (Settings' Font Rendering): the text's edges are drawn hard, as a terminal with anti-aliasing off draws them.
+     Round 5 (Q15): with only its whole-pixel size of its own, Crisp drew exactly as Auto at every whole size. A row's text
+     is drawn on a scratch canvas and laid on once through a steep alpha curve (an SVG filter in the page), so an edge's
+     half-covered pixels go to the ink or to the ground; one filter pass per repainted row. Where a canvas cannot take the
+     filter, Crisp keeps its whole-pixel size alone */
+  var crispUrl = null;
+  function crispFilter() {
+    if (crispUrl !== null) return crispUrl;
+    crispUrl = '';
+    try {
+      var NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('focusable', 'false');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden;pointer-events:none';
+      svg.innerHTML = '<filter id="pmt-crisp-text" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%"><feComponentTransfer><feFuncA type="table" tableValues="0 0 0.08 0.92 1 1"/></feComponentTransfer></filter>';
+      document.body.appendChild(svg);
+      var probe = document.createElement('canvas').getContext('2d');
+      probe.filter = 'url(#pmt-crisp-text)';
+      if (String(probe.filter).indexOf('pmt-crisp-text') >= 0) crispUrl = 'url(#pmt-crisp-text)';
+    } catch (e) { crispUrl = ''; }
+    return crispUrl;
+  }
+
   Renderer.prototype._row = function (ctx, y, abs, line, cols, m, th, pal, hasCursor) {
     var v = this.view, term = v.term, styles = term.styles;
     var W = m.devW, H = m.devH, y0 = y * H, x, i;
@@ -197914,7 +197946,14 @@ var T = {};
       ctx.strokeRect(finds[i].x0 * W + lw / 2, y0 + lw / 2, (finds[i].x1 - finds[i].x0) * W - lw, H - lw);
     }
     if (images) images.drawRow(ctx, abs, y0, 'under-text', v);
-    /* 3. text */
+    /* 3. text (Crisp: on the scratch canvas, laid on through the filter below) */
+    var outer = ctx, crisp = v.opts.crispText ? crispFilter() : '';
+    if (crisp) {
+      var lay = this.crispLayer || (this.crispLayer = document.createElement('canvas'));
+      if (lay.width !== cols * W || lay.height !== H) { lay.width = cols * W; lay.height = H; }
+      ctx = lay.getContext('2d');
+      ctx.setTransform(1, 0, 0, 1, 0, -y0); ctx.clearRect(0, y0, cols * W, H);
+    }
     var lig = v.opts.ligatures && !m.letterSpacing;
     var curFont = '';
     ctx.textBaseline = 'alphabetic';
@@ -197971,6 +198010,7 @@ var T = {};
       ctx.fillText(String.fromCharCode(cp), x * W, baseY);
       x++;
     }
+    if (crisp) { ctx = outer; ctx.save(); ctx.filter = crisp; ctx.drawImage(this.crispLayer, 0, y0); ctx.restore(); }
     /* 4. decorations */
     for (x = 0; x < cols; x++) {
       var sd = styles.get(line.st[x]);
@@ -200405,8 +200445,9 @@ var T = {};
     letterSpacing: { type: 'number', min: -1, max: 3, step: 0.25, default: 0, label: 'Letter spacing' },
     ligatures: { type: 'bool', default: true, label: 'Ligatures' },
     boldBright: { type: 'bool', default: false, label: 'Bold text in bright colours' },
-    /* Settings' Font Rendering (Text drawing): Crisp draws the text at a whole number of device pixels, Smooth draws the
-       outlines unhinted (canvas textRendering geometricPrecision); Auto is the browser's own */
+    /* Settings' Font Rendering (Text drawing): Crisp draws the text at a whole number of device pixels with hard edges
+       (24-renderer.js, round 5), Smooth draws the outlines unhinted (canvas textRendering geometricPrecision); Auto is the
+       browser's own */
     fontRendering: { type: 'enum', values: ['auto', 'crisp', 'smooth'], default: 'auto', label: 'Text drawing' },
     cursorShape: { type: 'enum', values: ['follow', 'block', 'bar', 'underline'], default: 'follow', label: 'Cursor' },
     cursorBlink: { type: 'bool', default: true, label: 'Blink' },
@@ -200813,6 +200854,10 @@ var T = {};
     paper: 'linear-gradient(180deg, #f3ecdc 0%, #ebe2cf 100%)'
   };
 
+  /* Solid colour with no colour of its own: the scheme's ground a step toward its text, the Softer swatch, so choosing it
+     always shows (round 5, Q15: the scheme's own ground drew exactly as Look's own); the Scheme swatch is that ground */
+  function solidDefault(th) { return C.toHex(C.mix(th.bg, th.fg, 0.08)); }
+
   function resolve(view) {
     var look = view && view.api && view.api.look ? Object.assign(T.look(), view.api.look()) : T.look();
     var lk = lookKey(look), L = LOOKS[lk], mode = look.mode;
@@ -200879,7 +200924,7 @@ var T = {};
       // the stage's lightest and darkest grounds (the light from above at its centre, the foot), for the text floor below
       stage = [C.mix(theme.bg, C.hex(darkGround ? '#ffecfa' : '#ffffff'), darkGround ? 0.10 : 0.8), C.hex(foot)]; darkStage = darkGround;
     }
-    else if (bgKind === 'solid') { bg.color = f('bgColor') || C.toHex(theme.bg); bg.ground = C.hex(bg.color); }
+    else if (bgKind === 'solid') { bg.color = f('bgColor') || solidDefault(theme); bg.ground = C.hex(bg.color); }
     else if ((bgKind === 'gradient' || bgKind === 'image') && T.Grounds) {
       /* round 2: a recipe of this scheme (43-grounds.js). Strength scales it between the plain ground (0) and the most
          that stays readable (1): a scrim of the scheme's ground, never thinner than Auto readability needs */
@@ -200909,7 +200954,8 @@ var T = {};
         if (G.painted(id) || mot) {
           /* painted at the terminal's own size by the view (_applyBackground), which then knows the worst pixel */
           bg.paint = G.painted(id) ? id : (mot.under || null);
-          if (mot) bg.motion = { id: id, anim: mot.anim, ms: mot.ms * (f('bgMotion') === 'lively' ? mot.lively || 0.5 : 1), on: f('bgMotion') !== 'off' && !reduced };
+          var lively = f('bgMotion') === 'lively';
+          if (mot) bg.motion = { id: id, anim: lively && mot.livelyAnim || mot.anim, ms: mot.ms * (lively ? mot.lively || 0.5 : 1), pulse: lively && mot.pulse || 0, on: f('bgMotion') !== 'off' && !reduced };
           /* Blur is a picture's own (round 4): the built-in designs are drawn soft already and barely changed under it */
           if (mot && !mot.under) bg.base = C.toHex(theme.bg);
         } else {
@@ -200987,7 +201033,7 @@ var T = {};
       look: look, lookKey: lk, scheme: s, theme: theme, font: font, background: bg, effects: effects, glassThrough: bgShow,
       opts: { ligatures: f('ligatures'), minContrast: floor, boldBright: f('boldBright'),
         cursor: { shape: shape, blink: f('cursorBlink') && L.blink !== 'off' }, stickyHeader: f('stickyHeader'), copyOnSelect: f('copyOnSelect'),
-        textRendering: drawing === 'smooth' ? 'geometricPrecision' : drawing === 'crisp' ? 'optimizeLegibility' : 'auto' },
+        textRendering: drawing === 'smooth' ? 'geometricPrecision' : drawing === 'crisp' ? 'optimizeLegibility' : 'auto', crispText: drawing === 'crisp' },
       padding: { x: f('padding') + bezel.width + bezel.gap, y: Math.round(f('padding') * 0.6) + bezel.width + bezel.gap, own: f('padding') },
       bezel: bezel,
       sixtyfour: { scan: f('sixtyfourScan'), bleed: f('sixtyfourBleed') }
@@ -201332,7 +201378,7 @@ var T = {};
     forget: function (view) { views.delete(view); },
     get: field, layerOf: layerOf, own: own, set: set, setMany: setMany, live: live, commit: commit, reset: resetScope,
     preview: preview, endPreview: endPreview, settingsReady: settingsReady, settingsValues: settingsLayer, presets: presets,
-    refreshAll: refreshAll, addUserScheme: addUserScheme, imageUrl: imageUrl, lookKey: lookKey,
+    refreshAll: refreshAll, addUserScheme: addUserScheme, imageUrl: imageUrl, lookKey: lookKey, solidDefault: solidDefault,
     rememberPicture: rememberPicture, pictureName: pictureName, importText: importText, importFile: importFile, canBlur: canFilter,
     onChange: function (fn) { return changeEvents.on('change', fn); },
     setTabFont: function (view, o) { if (o.size) set('tab', 'fontSize', o.size, view); },
@@ -201669,8 +201715,12 @@ var T = {};
   } });
   def('pattern', 'grid', 'Blueprint', { legacy: true, css: function (th, h, o) {
     var line = wash(th, h.a, isDark(th) ? 0.14 : 0.24), major = wash(th, h.a, isDark(th) ? 0.2 : 0.34), ground = wash(th, h.a, 0.05), s = px(24, o), m = s * 5;
-    var l = function (c, n) { return 'linear-gradient(' + hex(c) + ' 1px, transparent 1px) 0 0 / ' + n + 'px ' + n + 'px, linear-gradient(90deg, ' + hex(c) + ' 1px, transparent 1px) 0 0 / ' + n + 'px ' + n + 'px'; };
-    return { css: l(major, m) + ', ' + l(line, s) + ', ' + hex(ground), colors: [ground, line, major] };
+    /* (round 5, Q15: drawn in light on a pale ground, its lines lighter still, they nearly vanished and Fine, Medium and
+       Coarse drew alike. There the paper is the light one and the lines are the scheme's own ground, which the text is
+       made for, every fifth twice as thick) */
+    if (th.reflect) { line = major = th.bg; }
+    var l = function (c, n, lw) { return 'linear-gradient(' + hex(c) + ' ' + lw + 'px, transparent ' + lw + 'px) 0 0 / ' + n + 'px ' + n + 'px, linear-gradient(90deg, ' + hex(c) + ' ' + lw + 'px, transparent ' + lw + 'px) 0 0 / ' + n + 'px ' + n + 'px'; };
+    return { css: l(major, m, th.reflect ? 2 : 1) + ', ' + l(line, s, 1) + ', ' + hex(ground), colors: [ground, line, major] };
   } });
   def('pattern', 'hatch', 'Diagonal hatch', { css: function (th, h, o) {
     var d = ink(th, 0.05), s = px(9, o);
@@ -201783,13 +201833,17 @@ var T = {};
   def('scene', 'clouds', 'Clouds', { looks: ['friendly'] });
   /* moving: a painted layer bigger than the terminal, moved by transform only, stepped to about 20 fps. Lively is twice
      as fast, and four times for the two slow drifts (round 4, Q15: at twice, Gentle and Lively looked alike for seconds) */
-  def('moving', 'aurora-drift', 'Drifting aurora', { motion: { layer: 'aurora', anim: 'pmt-bg-sway', ms: 45000, lively: 0.25 } });
+  /* Lively is a livelier motion of its own for the two slow drifts (round 5, Q15: four times as fast still looked like
+     Gentle for the first seconds): the aurora dances (its curtains sweep further, lean as they go and pulse brighter and
+     fainter, as a real aurora does), the lava boils (it rises faster and its wax stretches and swells as it climbs).
+     pulse is the second motion's period, ms */
+  def('moving', 'aurora-drift', 'Drifting aurora', { motion: { layer: 'aurora', anim: 'pmt-bg-sway', ms: 45000, lively: 0.25, livelyAnim: 'pmt-bg-dance', pulse: 2400 } });
   /* (round 3b: its few bright stars on the scheme's own sky, no longer over Starfield's, so the two are distinct at rest) */
   /* (round 4: a 2.6 s fade, 1.3 s when Lively; at 6 s a star hardly changed in the time it takes to look) */
   def('moving', 'twinkle', 'Twinkling stars', { motion: { layer: 'stars2', anim: 'pmt-bg-twinkle', ms: 2600 } });
   def('moving', 'rain', 'Rain', { motion: { layer: 'rain', anim: 'pmt-bg-fall', ms: 2400 } });
   def('moving', 'snow', 'Snow', { motion: { layer: 'snow', anim: 'pmt-bg-snow', ms: 30000 } });
-  def('moving', 'lava', 'Lava', { motion: { layer: 'lava', anim: 'pmt-bg-rise', ms: 80000, lively: 0.25 } });
+  def('moving', 'lava', 'Lava', { motion: { layer: 'lava', anim: 'pmt-bg-rise', ms: 80000, lively: 0.1, livelyAnim: 'pmt-bg-boil', pulse: 1600 } });
 
   /* ---- painting ---- */
   function rng(seed) { var s = seed >>> 0; return function () { s = (s + 0x6D2B79F5) >>> 0; var t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
@@ -202263,9 +202317,14 @@ var T = {};
     /* (round 3b: more runs, longer and brighter, so Running rain is its own design even when it rests) */
     for (var i = 0; i < Math.max(8, Math.round(W / 55)); i++) {
       var x = R() * W, y = R() * H, r = 3 + R() * 3.5, len = H * (0.35 + R() * 0.45);
-      g.save(); g.strokeStyle = rgba(k.hi, k.dark ? 0.2 : 0.55); g.lineWidth = r * 0.75; g.lineCap = 'round'; g.beginPath(); g.moveTo(x, y);
-      for (var t = 1; t <= 10; t++) g.lineTo(x + Math.sin(t * 1.3 + i) * r * 0.4, y - len * t / 10);
-      g.stroke(); g.restore();
+      var run = function (dx) { g.beginPath(); g.moveTo(x + dx, y); for (var t = 1; t <= 10; t++) g.lineTo(x + dx + Math.sin(t * 1.3 + i) * r * 0.4, y - len * t / 10); };
+      g.save(); g.lineCap = 'round';
+      /* (round 5, Q15: on a pale pane a run of white light barely showed, so Gentle and Lively looked alike. There a run
+         clears the fog as it goes: the pane shows through it in the scheme's own ground, never darker than the text
+         allows, with the light caught along its edge) */
+      if (!k.dark) { g.strokeStyle = rgba(th.bg, 0.9); g.lineWidth = r * 0.9; run(0); g.stroke(); g.strokeStyle = rgba(k.hi, 0.85); g.lineWidth = Math.max(1, r * 0.22); run(r * 0.3); g.stroke(); }
+      else { g.strokeStyle = rgba(k.hi, 0.2); g.lineWidth = r * 0.75; run(0); g.stroke(); }
+      g.restore();
       drop(g, k, x, y, r, th); if (y - len < 0) drop(g, k, x, y + H, r, th);
     }
   };
@@ -202532,7 +202591,8 @@ var T = {};
   def('glass', 'raindrops', 'Rain on glass', { looks: ['glass'] });
   def('glass', 'lens', 'Lens', { looks: ['glass'] });
   def('glass', 'etched', 'Etched glass', { looks: ['glass'] });
-  def('glass', 'rain-glass', 'Running rain', { motion: { layer: 'glassrun', anim: 'pmt-bg-fall', ms: 16000, under: 'fogged' } });
+  /* (round 5, Q15: Lively four times as fast, not twice: on a pale pane twice as fast read as Gentle) */
+  def('glass', 'rain-glass', 'Running rain', { motion: { layer: 'glassrun', anim: 'pmt-bg-fall', ms: 16000, lively: 0.25, under: 'fogged' } });
   K.suggest('glass', ['clear-glass', 'frost', 'tinted', 'raindrops', 'lens']);
 })();
 /* ---- terminal/js/44-import.js ---- */
@@ -204072,8 +204132,10 @@ var T = {};
     '    float gv = uNoise.x * max(0.0, 1.0 - length(uv - 0.5) * 1.3);',
     '    c.rgb += vec3(n * gv) * c.a;',
     /* round 4 (Q15): where the screen is see-through (Friendly's stage, Glass) the grain lies over the ground under it as
-       well, light and dark specks in turn so it shows on a pale ground too; it had touched the text alone there */
-    '    float tg = (1.0 - c.a) * (n - 0.5) * 2.0 * gv;',
+       well, light and dark specks in turn so it shows on a pale ground too; it had touched the text alone there. Round 5:
+       a half as strong again there, as the stage's soft light swallowed the default grain (Friendly dark, Off beside 0.035:
+       4.33 as filmed) */
+    '    float tg = (1.0 - c.a) * (n - 0.5) * 3.0 * gv;',
     '    c = tg > 0.0 ? c + vec4(tg) : vec4(c.rgb, c.a - tg);',
     '  }',
     '  if (uGain < 1.0) {',
@@ -210432,6 +210494,8 @@ var T = {};
           mv.style.setProperty('--pmt-bgm-ms', Math.round(bg.motion.ms) + 'ms');
           /* about 20 fps; NieR moves in its own visible steps, about 2.5 a second */
           mv.style.setProperty('--pmt-bgm-steps', String(Math.max(1, Math.round(bg.motion.ms / (T.look().nier ? 400 : 50)))));
+          /* a Lively drift's second motion (its pulse), stepped the same way */
+          if (bg.motion.pulse) { mv.style.setProperty('--pmt-bgm-pulse-ms', Math.round(bg.motion.pulse) + 'ms'); mv.style.setProperty('--pmt-bgm-steps2', String(Math.max(1, Math.round(bg.motion.pulse / (T.look().nier ? 400 : 50))))); }
           mv.setAttribute('data-anim', bg.motion.on ? bg.motion.anim : 'still');
           if (M.worst !== null) worsts.push(M.worst);
         }
@@ -212742,10 +212806,13 @@ var T = {};
     for (var i = 0; i < 8; i++) blocks += ESC + '[3' + i + 'm' + '██';
     blocks += ' ';
     for (i = 0; i < 8; i++) blocks += ESC + '[9' + i + 'm' + '██';
+    /* each test's time in faint grey, as test runners print it (round 5, Q15: nothing in the preview sat under 3:1, so
+       Minimum contrast's Off and 3:1 drew the same; this is the kind of text the floor lifts) */
+    var took = function (s) { return ' ' + ESC + '[2;90m' + s + ESC + '[0m'; };
     return cmd(0, 'cargo test') +
       '    ' + ESC + '[1;32mFinished' + ESC + '[0m test in 2.31s\r\n' +
-      'test media::thumbs ... ' + ESC + '[32mok' + ESC + '[0m\r\n' +
-      'test search::rank ... ' + ESC + '[1;31mFAILED' + ESC + '[0m\r\n' +
+      'test media::thumbs ... ' + ESC + '[32mok' + ESC + '[0m' + took('0.02s') + '\r\n' +
+      'test search::rank ... ' + ESC + '[1;31mFAILED' + ESC + '[0m' + took('0.31s') + '\r\n' +
       ESC + '[33mwarning' + ESC + '[0m: ' + ESC + '[3m2 ignored' + ESC + '[0m, see ' + ESC + '[4;36mtastebook.dev/t' + ESC + '[0m\r\n' +
       mark('D', 101) + cmd(101, 'ls') +
       'Cargo.toml  ' + ESC + '[1;34msrc/' + ESC + '[0m  ' + ESC + '[1;32mrun.sh*' + ESC + '[0m  ' + ESC + '[35mlogo.png' + ESC + '[0m  ' + ESC + '[1;31mdist.tgz' + ESC + '[0m\r\n' +
@@ -213037,7 +213104,7 @@ var T = {};
       slider('lineHeight', 'Line height', F.lineHeight.min, F.lineHeight.max, F.lineHeight.step, '×', []) +
       slider('letterSpacing', 'Letter spacing', F.letterSpacing.min, F.letterSpacing.max, F.letterSpacing.step, ' px', []) +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Text drawing</span>' + seg('fontRendering', [['auto', 'Auto'], ['crisp', 'Crisp'], ['smooth', 'Smooth']], 'Text drawing') +
-      '<span class="pmt-cz-fhelp">Crisp keeps glyphs on whole pixels; try it if text looks blurry.</span></div>' +
+      '<span class="pmt-cz-fhelp">Crisp draws hard, pixel-sharp edges; try it if text looks blurry. Smooth draws the exact outlines.</span></div>' +
       '</div><div class="pmt-cz-chips">' + chip('ligatures', 'Ligatures', 'Joins pairs such as -> and != into one glyph where the face has them.') +
       chip('boldBright', 'Bold as bright', 'Bold text in the bright version of its colour, as older terminals did.') + '</div>' +
       '<div class="pmt-cz-axes" data-axes hidden><p class="pmt-cz-glead">Sixtyfour’s own axes: scanlines and bleed drawn by the face itself, with no motion.</p><div class="pmt-cz-grid2">' +
@@ -213186,7 +213253,7 @@ var T = {};
       var G = T.Grounds, hexC = T.color.toHex;
       if (gv === 'follow') { var Rf = A().peek({ api: v.api, tabAppearance: { background: 'follow', scheme: val('scheme') }, previewAppearance: null, state: {} }); return Rf.background && Rf.background.css ? Rf.background.css : hexC(th.bg); }
       if (gv === 'theme') return hexC(th.bg);
-      if (gv === 'solid') return val('bgColor') || hexC(th.bg);
+      if (gv === 'solid') return val('bgColor') || A().solidDefault(th);
       if (gv === 'custom') { var u = A().imageUrl('custom', val('bgImageData'), 0); return String(val('bgImageData') || '').match(/^img:/) && u ? 'center / cover no-repeat url("' + u + '"), ' + hexC(th.bg) : hexC(th.bg); }
       var id = gv.slice(2), mot = G.motion(id), painted = G.painted(id);
       if (painted || mot) {
@@ -213226,7 +213293,7 @@ var T = {};
         var C = T.color, deep = null;
         for (var dk = 0.35; dk < 1.001 && deep === null; dk += 0.05) { var dc = C.mix(th.bg, 0, Math.min(1, dk)); if (Math.max(C.r(th.bg) - C.r(dc), C.g(th.bg) - C.g(dc), C.b(th.bg) - C.b(dc)) >= 12) deep = dc; }
         if (deep === null && Math.max(C.r(th.bg), C.g(th.bg), C.b(th.bg)) >= 8) deep = 0;
-        var sw = [['Scheme', th.bg]].concat(deep === null ? [] : [['Deeper', deep]], [['Softer', C.mix(th.bg, th.fg, 0.08)]]);
+        var sw = [['Scheme', th.bg]].concat(deep === null ? [] : [['Deeper', deep]], [['Softer', C.hex(A().solidDefault(th))]]);
         root.querySelector('[data-solid-swatches]').innerHTML = sw.map(function (s) {
           return '<button type="button" class="pmt-cz-swatch" data-solid-color="' + C.toHex(s[1]) + '" aria-label="' + esc(s[0]) + '"' + tagged(s[0]) + NOTAG + '><i style="background:' + C.toHex(s[1]) + '"></i></button>';
         }).join('');
@@ -213437,7 +213504,7 @@ var T = {};
       var fs = root.querySelector('[data-out="fontSize"]'); if (fs) fs.textContent = fmt('fontSize', R.font.size);
       [].forEach.call(root.querySelectorAll('[data-step]'), function (b) { setA(b, 'aria-disabled', String(nextSize(R, parseFloat(b.getAttribute('data-step')) < 0 ? -1 : 1) === null)); });
       setA(root.querySelector('[data-act="default"][data-key="fontSize"]'), 'aria-disabled', String(!mine('fontSize')));
-      var col = root.querySelector('input[data-key="bgColor"]'), bgc = val('bgColor') || (R.theme ? T.color.toHex(R.theme.bg) : '#000000');
+      var col = root.querySelector('input[data-key="bgColor"]'), bgc = val('bgColor') || (R.theme ? A().solidDefault(R.theme) : '#000000');
       if (col && document.activeElement !== col) col.value = bgc;
       var bo = root.querySelector('[data-out="bgColor"]'); if (bo) bo.textContent = bgc;
       /* what shows when (SSYS-051's visibility rule, kept for the person's sake: a hidden part keeps its value) */

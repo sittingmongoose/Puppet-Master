@@ -308,8 +308,12 @@
   } });
   def('pattern', 'grid', 'Blueprint', { legacy: true, css: function (th, h, o) {
     var line = wash(th, h.a, isDark(th) ? 0.14 : 0.24), major = wash(th, h.a, isDark(th) ? 0.2 : 0.34), ground = wash(th, h.a, 0.05), s = px(24, o), m = s * 5;
-    var l = function (c, n) { return 'linear-gradient(' + hex(c) + ' 1px, transparent 1px) 0 0 / ' + n + 'px ' + n + 'px, linear-gradient(90deg, ' + hex(c) + ' 1px, transparent 1px) 0 0 / ' + n + 'px ' + n + 'px'; };
-    return { css: l(major, m) + ', ' + l(line, s) + ', ' + hex(ground), colors: [ground, line, major] };
+    /* (round 5, Q15: drawn in light on a pale ground, its lines lighter still, they nearly vanished and Fine, Medium and
+       Coarse drew alike. There the paper is the light one and the lines are the scheme's own ground, which the text is
+       made for, every fifth twice as thick) */
+    if (th.reflect) { line = major = th.bg; }
+    var l = function (c, n, lw) { return 'linear-gradient(' + hex(c) + ' ' + lw + 'px, transparent ' + lw + 'px) 0 0 / ' + n + 'px ' + n + 'px, linear-gradient(90deg, ' + hex(c) + ' ' + lw + 'px, transparent ' + lw + 'px) 0 0 / ' + n + 'px ' + n + 'px'; };
+    return { css: l(major, m, th.reflect ? 2 : 1) + ', ' + l(line, s, 1) + ', ' + hex(ground), colors: [ground, line, major] };
   } });
   def('pattern', 'hatch', 'Diagonal hatch', { css: function (th, h, o) {
     var d = ink(th, 0.05), s = px(9, o);
@@ -422,13 +426,17 @@
   def('scene', 'clouds', 'Clouds', { looks: ['friendly'] });
   /* moving: a painted layer bigger than the terminal, moved by transform only, stepped to about 20 fps. Lively is twice
      as fast, and four times for the two slow drifts (round 4, Q15: at twice, Gentle and Lively looked alike for seconds) */
-  def('moving', 'aurora-drift', 'Drifting aurora', { motion: { layer: 'aurora', anim: 'pmt-bg-sway', ms: 45000, lively: 0.25 } });
+  /* Lively is a livelier motion of its own for the two slow drifts (round 5, Q15: four times as fast still looked like
+     Gentle for the first seconds): the aurora dances (its curtains sweep further, lean as they go and pulse brighter and
+     fainter, as a real aurora does), the lava boils (it rises faster and its wax stretches and swells as it climbs).
+     pulse is the second motion's period, ms */
+  def('moving', 'aurora-drift', 'Drifting aurora', { motion: { layer: 'aurora', anim: 'pmt-bg-sway', ms: 45000, lively: 0.25, livelyAnim: 'pmt-bg-dance', pulse: 2400 } });
   /* (round 3b: its few bright stars on the scheme's own sky, no longer over Starfield's, so the two are distinct at rest) */
   /* (round 4: a 2.6 s fade, 1.3 s when Lively; at 6 s a star hardly changed in the time it takes to look) */
   def('moving', 'twinkle', 'Twinkling stars', { motion: { layer: 'stars2', anim: 'pmt-bg-twinkle', ms: 2600 } });
   def('moving', 'rain', 'Rain', { motion: { layer: 'rain', anim: 'pmt-bg-fall', ms: 2400 } });
   def('moving', 'snow', 'Snow', { motion: { layer: 'snow', anim: 'pmt-bg-snow', ms: 30000 } });
-  def('moving', 'lava', 'Lava', { motion: { layer: 'lava', anim: 'pmt-bg-rise', ms: 80000, lively: 0.25 } });
+  def('moving', 'lava', 'Lava', { motion: { layer: 'lava', anim: 'pmt-bg-rise', ms: 80000, lively: 0.1, livelyAnim: 'pmt-bg-boil', pulse: 1600 } });
 
   /* ---- painting ---- */
   function rng(seed) { var s = seed >>> 0; return function () { s = (s + 0x6D2B79F5) >>> 0; var t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }

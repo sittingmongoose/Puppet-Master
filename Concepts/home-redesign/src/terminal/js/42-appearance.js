@@ -97,8 +97,9 @@
     letterSpacing: { type: 'number', min: -1, max: 3, step: 0.25, default: 0, label: 'Letter spacing' },
     ligatures: { type: 'bool', default: true, label: 'Ligatures' },
     boldBright: { type: 'bool', default: false, label: 'Bold text in bright colours' },
-    /* Settings' Font Rendering (Text drawing): Crisp draws the text at a whole number of device pixels, Smooth draws the
-       outlines unhinted (canvas textRendering geometricPrecision); Auto is the browser's own */
+    /* Settings' Font Rendering (Text drawing): Crisp draws the text at a whole number of device pixels with hard edges
+       (24-renderer.js, round 5), Smooth draws the outlines unhinted (canvas textRendering geometricPrecision); Auto is the
+       browser's own */
     fontRendering: { type: 'enum', values: ['auto', 'crisp', 'smooth'], default: 'auto', label: 'Text drawing' },
     cursorShape: { type: 'enum', values: ['follow', 'block', 'bar', 'underline'], default: 'follow', label: 'Cursor' },
     cursorBlink: { type: 'bool', default: true, label: 'Blink' },
@@ -505,6 +506,10 @@
     paper: 'linear-gradient(180deg, #f3ecdc 0%, #ebe2cf 100%)'
   };
 
+  /* Solid colour with no colour of its own: the scheme's ground a step toward its text, the Softer swatch, so choosing it
+     always shows (round 5, Q15: the scheme's own ground drew exactly as Look's own); the Scheme swatch is that ground */
+  function solidDefault(th) { return C.toHex(C.mix(th.bg, th.fg, 0.08)); }
+
   function resolve(view) {
     var look = view && view.api && view.api.look ? Object.assign(T.look(), view.api.look()) : T.look();
     var lk = lookKey(look), L = LOOKS[lk], mode = look.mode;
@@ -571,7 +576,7 @@
       // the stage's lightest and darkest grounds (the light from above at its centre, the foot), for the text floor below
       stage = [C.mix(theme.bg, C.hex(darkGround ? '#ffecfa' : '#ffffff'), darkGround ? 0.10 : 0.8), C.hex(foot)]; darkStage = darkGround;
     }
-    else if (bgKind === 'solid') { bg.color = f('bgColor') || C.toHex(theme.bg); bg.ground = C.hex(bg.color); }
+    else if (bgKind === 'solid') { bg.color = f('bgColor') || solidDefault(theme); bg.ground = C.hex(bg.color); }
     else if ((bgKind === 'gradient' || bgKind === 'image') && T.Grounds) {
       /* round 2: a recipe of this scheme (43-grounds.js). Strength scales it between the plain ground (0) and the most
          that stays readable (1): a scrim of the scheme's ground, never thinner than Auto readability needs */
@@ -601,7 +606,8 @@
         if (G.painted(id) || mot) {
           /* painted at the terminal's own size by the view (_applyBackground), which then knows the worst pixel */
           bg.paint = G.painted(id) ? id : (mot.under || null);
-          if (mot) bg.motion = { id: id, anim: mot.anim, ms: mot.ms * (f('bgMotion') === 'lively' ? mot.lively || 0.5 : 1), on: f('bgMotion') !== 'off' && !reduced };
+          var lively = f('bgMotion') === 'lively';
+          if (mot) bg.motion = { id: id, anim: lively && mot.livelyAnim || mot.anim, ms: mot.ms * (lively ? mot.lively || 0.5 : 1), pulse: lively && mot.pulse || 0, on: f('bgMotion') !== 'off' && !reduced };
           /* Blur is a picture's own (round 4): the built-in designs are drawn soft already and barely changed under it */
           if (mot && !mot.under) bg.base = C.toHex(theme.bg);
         } else {
@@ -679,7 +685,7 @@
       look: look, lookKey: lk, scheme: s, theme: theme, font: font, background: bg, effects: effects, glassThrough: bgShow,
       opts: { ligatures: f('ligatures'), minContrast: floor, boldBright: f('boldBright'),
         cursor: { shape: shape, blink: f('cursorBlink') && L.blink !== 'off' }, stickyHeader: f('stickyHeader'), copyOnSelect: f('copyOnSelect'),
-        textRendering: drawing === 'smooth' ? 'geometricPrecision' : drawing === 'crisp' ? 'optimizeLegibility' : 'auto' },
+        textRendering: drawing === 'smooth' ? 'geometricPrecision' : drawing === 'crisp' ? 'optimizeLegibility' : 'auto', crispText: drawing === 'crisp' },
       padding: { x: f('padding') + bezel.width + bezel.gap, y: Math.round(f('padding') * 0.6) + bezel.width + bezel.gap, own: f('padding') },
       bezel: bezel,
       sixtyfour: { scan: f('sixtyfourScan'), bleed: f('sixtyfourBleed') }
@@ -1024,7 +1030,7 @@
     forget: function (view) { views.delete(view); },
     get: field, layerOf: layerOf, own: own, set: set, setMany: setMany, live: live, commit: commit, reset: resetScope,
     preview: preview, endPreview: endPreview, settingsReady: settingsReady, settingsValues: settingsLayer, presets: presets,
-    refreshAll: refreshAll, addUserScheme: addUserScheme, imageUrl: imageUrl, lookKey: lookKey,
+    refreshAll: refreshAll, addUserScheme: addUserScheme, imageUrl: imageUrl, lookKey: lookKey, solidDefault: solidDefault,
     rememberPicture: rememberPicture, pictureName: pictureName, importText: importText, importFile: importFile, canBlur: canFilter,
     onChange: function (fn) { return changeEvents.on('change', fn); },
     setTabFont: function (view, o) { if (o.size) set('tab', 'fontSize', o.size, view); },

@@ -366,6 +366,8 @@
           mv.style.setProperty('--pmt-bgm-ms', Math.round(bg.motion.ms) + 'ms');
           /* about 20 fps; NieR moves in its own visible steps, about 2.5 a second */
           mv.style.setProperty('--pmt-bgm-steps', String(Math.max(1, Math.round(bg.motion.ms / (T.look().nier ? 400 : 50)))));
+          /* a Lively drift's second motion (its pulse), stepped the same way */
+          if (bg.motion.pulse) { mv.style.setProperty('--pmt-bgm-pulse-ms', Math.round(bg.motion.pulse) + 'ms'); mv.style.setProperty('--pmt-bgm-steps2', String(Math.max(1, Math.round(bg.motion.pulse / (T.look().nier ? 400 : 50))))); }
           mv.setAttribute('data-anim', bg.motion.on ? bg.motion.anim : 'still');
           if (M.worst !== null) worsts.push(M.worst);
         }

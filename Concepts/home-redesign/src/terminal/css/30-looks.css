@@ -94,6 +94,16 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-bell="rim"].pmt-bell .pmt-body
 /* (round 3c: from full to faint, so the still frame, paused or under Reduced Motion, shows the stars at full strength) */
 /* (round 4, Q15: a deeper fade, so a star's change shows in the time it takes to look) */
 @keyframes pmt-bg-twinkle { from { opacity: 1; } to { opacity: .2; } }
+/* Lively for the slow drifts (round 5, Q15): a motion of its own that starts where Gentle's does. The aurora dances: its
+   curtains sweep twice as far, lean as they go and pulse brighter and fainter. The lava boils: it climbs further and its
+   wax swells wide and tall in turn, never under the layer's own size, so no edge shows */
+.pmt-bgmove[data-anim="pmt-bg-dance"], .pmt-bgmove[data-anim="pmt-bg-boil"] { inset: -10%; }
+.pmt-bgmove[data-anim="pmt-bg-dance"] { animation: pmt-bg-dance var(--pmt-bgm-ms, 11250ms) steps(var(--pmt-bgm-steps, 225)) infinite alternate, pmt-bg-pulse var(--pmt-bgm-pulse-ms, 2400ms) steps(var(--pmt-bgm-steps2, 48)) infinite alternate; }
+.pmt-bgmove[data-anim="pmt-bg-boil"] { animation: pmt-bg-boil var(--pmt-bgm-ms, 8000ms) steps(var(--pmt-bgm-steps, 160)) infinite alternate, pmt-bg-swell var(--pmt-bgm-pulse-ms, 1600ms) steps(var(--pmt-bgm-steps2, 32)) infinite alternate; }
+@keyframes pmt-bg-dance { 0% { transform: translate3d(-3%, -2%, 0) scale(1.02); } 50% { transform: translate3d(1.5%, 1%, 0) skewX(-6deg) scale(1.06); } 100% { transform: translate3d(6%, 2%, 0) skewX(3deg) scale(1.04); } }
+@keyframes pmt-bg-pulse { from { opacity: 1; } to { opacity: .5; } }
+@keyframes pmt-bg-boil { from { transform: translate3d(0, 3%, 0); } to { transform: translate3d(0, -8%, 0); } }
+@keyframes pmt-bg-swell { 0% { scale: 1 1; } 50% { scale: 1.08 1; } 100% { scale: 1 1.08; } }
 .pmt-root:not(.pmt-bg-live) .pmt-bgmove { animation-play-state: paused; }
 html[data-motion="reduced"] .pmt-bgmove, .pmt-bgmove[data-anim="still"] { animation: none; }
 @media (prefers-reduced-motion: reduce) { .pmt-bgmove { animation: none; } }

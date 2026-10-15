@@ -36,10 +36,13 @@
     for (var i = 0; i < 8; i++) blocks += ESC + '[3' + i + 'm' + '██';
     blocks += ' ';
     for (i = 0; i < 8; i++) blocks += ESC + '[9' + i + 'm' + '██';
+    /* each test's time in faint grey, as test runners print it (round 5, Q15: nothing in the preview sat under 3:1, so
+       Minimum contrast's Off and 3:1 drew the same; this is the kind of text the floor lifts) */
+    var took = function (s) { return ' ' + ESC + '[2;90m' + s + ESC + '[0m'; };
     return cmd(0, 'cargo test') +
       '    ' + ESC + '[1;32mFinished' + ESC + '[0m test in 2.31s\r\n' +
-      'test media::thumbs ... ' + ESC + '[32mok' + ESC + '[0m\r\n' +
-      'test search::rank ... ' + ESC + '[1;31mFAILED' + ESC + '[0m\r\n' +
+      'test media::thumbs ... ' + ESC + '[32mok' + ESC + '[0m' + took('0.02s') + '\r\n' +
+      'test search::rank ... ' + ESC + '[1;31mFAILED' + ESC + '[0m' + took('0.31s') + '\r\n' +
       ESC + '[33mwarning' + ESC + '[0m: ' + ESC + '[3m2 ignored' + ESC + '[0m, see ' + ESC + '[4;36mtastebook.dev/t' + ESC + '[0m\r\n' +
       mark('D', 101) + cmd(101, 'ls') +
       'Cargo.toml  ' + ESC + '[1;34msrc/' + ESC + '[0m  ' + ESC + '[1;32mrun.sh*' + ESC + '[0m  ' + ESC + '[35mlogo.png' + ESC + '[0m  ' + ESC + '[1;31mdist.tgz' + ESC + '[0m\r\n' +
@@ -331,7 +334,7 @@
       slider('lineHeight', 'Line height', F.lineHeight.min, F.lineHeight.max, F.lineHeight.step, '×', []) +
       slider('letterSpacing', 'Letter spacing', F.letterSpacing.min, F.letterSpacing.max, F.letterSpacing.step, ' px', []) +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Text drawing</span>' + seg('fontRendering', [['auto', 'Auto'], ['crisp', 'Crisp'], ['smooth', 'Smooth']], 'Text drawing') +
-      '<span class="pmt-cz-fhelp">Crisp keeps glyphs on whole pixels; try it if text looks blurry.</span></div>' +
+      '<span class="pmt-cz-fhelp">Crisp draws hard, pixel-sharp edges; try it if text looks blurry. Smooth draws the exact outlines.</span></div>' +
       '</div><div class="pmt-cz-chips">' + chip('ligatures', 'Ligatures', 'Joins pairs such as -> and != into one glyph where the face has them.') +
       chip('boldBright', 'Bold as bright', 'Bold text in the bright version of its colour, as older terminals did.') + '</div>' +
       '<div class="pmt-cz-axes" data-axes hidden><p class="pmt-cz-glead">Sixtyfour’s own axes: scanlines and bleed drawn by the face itself, with no motion.</p><div class="pmt-cz-grid2">' +
@@ -480,7 +483,7 @@
       var G = T.Grounds, hexC = T.color.toHex;
       if (gv === 'follow') { var Rf = A().peek({ api: v.api, tabAppearance: { background: 'follow', scheme: val('scheme') }, previewAppearance: null, state: {} }); return Rf.background && Rf.background.css ? Rf.background.css : hexC(th.bg); }
       if (gv === 'theme') return hexC(th.bg);
-      if (gv === 'solid') return val('bgColor') || hexC(th.bg);
+      if (gv === 'solid') return val('bgColor') || A().solidDefault(th);
       if (gv === 'custom') { var u = A().imageUrl('custom', val('bgImageData'), 0); return String(val('bgImageData') || '').match(/^img:/) && u ? 'center / cover no-repeat url("' + u + '"), ' + hexC(th.bg) : hexC(th.bg); }
       var id = gv.slice(2), mot = G.motion(id), painted = G.painted(id);
       if (painted || mot) {
@@ -520,7 +523,7 @@
         var C = T.color, deep = null;
         for (var dk = 0.35; dk < 1.001 && deep === null; dk += 0.05) { var dc = C.mix(th.bg, 0, Math.min(1, dk)); if (Math.max(C.r(th.bg) - C.r(dc), C.g(th.bg) - C.g(dc), C.b(th.bg) - C.b(dc)) >= 12) deep = dc; }
         if (deep === null && Math.max(C.r(th.bg), C.g(th.bg), C.b(th.bg)) >= 8) deep = 0;
-        var sw = [['Scheme', th.bg]].concat(deep === null ? [] : [['Deeper', deep]], [['Softer', C.mix(th.bg, th.fg, 0.08)]]);
+        var sw = [['Scheme', th.bg]].concat(deep === null ? [] : [['Deeper', deep]], [['Softer', C.hex(A().solidDefault(th))]]);
         root.querySelector('[data-solid-swatches]').innerHTML = sw.map(function (s) {
           return '<button type="button" class="pmt-cz-swatch" data-solid-color="' + C.toHex(s[1]) + '" aria-label="' + esc(s[0]) + '"' + tagged(s[0]) + NOTAG + '><i style="background:' + C.toHex(s[1]) + '"></i></button>';
         }).join('');
@@ -731,7 +734,7 @@
       var fs = root.querySelector('[data-out="fontSize"]'); if (fs) fs.textContent = fmt('fontSize', R.font.size);
       [].forEach.call(root.querySelectorAll('[data-step]'), function (b) { setA(b, 'aria-disabled', String(nextSize(R, parseFloat(b.getAttribute('data-step')) < 0 ? -1 : 1) === null)); });
       setA(root.querySelector('[data-act="default"][data-key="fontSize"]'), 'aria-disabled', String(!mine('fontSize')));
-      var col = root.querySelector('input[data-key="bgColor"]'), bgc = val('bgColor') || (R.theme ? T.color.toHex(R.theme.bg) : '#000000');
+      var col = root.querySelector('input[data-key="bgColor"]'), bgc = val('bgColor') || (R.theme ? A().solidDefault(R.theme) : '#000000');
       if (col && document.activeElement !== col) col.value = bgc;
       var bo = root.querySelector('[data-out="bgColor"]'); if (bo) bo.textContent = bgc;
       /* what shows when (SSYS-051's visibility rule, kept for the person's sake: a hidden part keeps its value) */

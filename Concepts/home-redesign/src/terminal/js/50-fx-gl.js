@@ -365,8 +365,10 @@
     '    float gv = uNoise.x * max(0.0, 1.0 - length(uv - 0.5) * 1.3);',
     '    c.rgb += vec3(n * gv) * c.a;',
     /* round 4 (Q15): where the screen is see-through (Friendly's stage, Glass) the grain lies over the ground under it as
-       well, light and dark specks in turn so it shows on a pale ground too; it had touched the text alone there */
-    '    float tg = (1.0 - c.a) * (n - 0.5) * 2.0 * gv;',
+       well, light and dark specks in turn so it shows on a pale ground too; it had touched the text alone there. Round 5:
+       a half as strong again there, as the stage's soft light swallowed the default grain (Friendly dark, Off beside 0.035:
+       4.33 as filmed) */
+    '    float tg = (1.0 - c.a) * (n - 0.5) * 3.0 * gv;',
     '    c = tg > 0.0 ? c + vec4(tg) : vec4(c.rgb, c.a - tg);',
     '  }',
     '  if (uGain < 1.0) {',

@@ -102,6 +102,28 @@
     return th.mono ? bgMono(rgb, th) : rgb;
   };
 
+  /* Crisp (Settings' Font Rendering): the text's edges are drawn hard, as a terminal with anti-aliasing off draws them.
+     Round 5 (Q15): with only its whole-pixel size of its own, Crisp drew exactly as Auto at every whole size. A row's text
+     is drawn on a scratch canvas and laid on once through a steep alpha curve (an SVG filter in the page), so an edge's
+     half-covered pixels go to the ink or to the ground; one filter pass per repainted row. Where a canvas cannot take the
+     filter, Crisp keeps its whole-pixel size alone */
+  var crispUrl = null;
+  function crispFilter() {
+    if (crispUrl !== null) return crispUrl;
+    crispUrl = '';
+    try {
+      var NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('focusable', 'false');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden;pointer-events:none';
+      svg.innerHTML = '<filter id="pmt-crisp-text" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%"><feComponentTransfer><feFuncA type="table" tableValues="0 0 0.08 0.92 1 1"/></feComponentTransfer></filter>';
+      document.body.appendChild(svg);
+      var probe = document.createElement('canvas').getContext('2d');
+      probe.filter = 'url(#pmt-crisp-text)';
+      if (String(probe.filter).indexOf('pmt-crisp-text') >= 0) crispUrl = 'url(#pmt-crisp-text)';
+    } catch (e) { crispUrl = ''; }
+    return crispUrl;
+  }
+
   Renderer.prototype._row = function (ctx, y, abs, line, cols, m, th, pal, hasCursor) {
     var v = this.view, term = v.term, styles = term.styles;
     var W = m.devW, H = m.devH, y0 = y * H, x, i;
@@ -155,7 +177,14 @@
       ctx.strokeRect(finds[i].x0 * W + lw / 2, y0 + lw / 2, (finds[i].x1 - finds[i].x0) * W - lw, H - lw);
     }
     if (images) images.drawRow(ctx, abs, y0, 'under-text', v);
-    /* 3. text */
+    /* 3. text (Crisp: on the scratch canvas, laid on through the filter below) */
+    var outer = ctx, crisp = v.opts.crispText ? crispFilter() : '';
+    if (crisp) {
+      var lay = this.crispLayer || (this.crispLayer = document.createElement('canvas'));
+      if (lay.width !== cols * W || lay.height !== H) { lay.width = cols * W; lay.height = H; }
+      ctx = lay.getContext('2d');
+      ctx.setTransform(1, 0, 0, 1, 0, -y0); ctx.clearRect(0, y0, cols * W, H);
+    }
     var lig = v.opts.ligatures && !m.letterSpacing;
     var curFont = '';
     ctx.textBaseline = 'alphabetic';
@@ -212,6 +241,7 @@
       ctx.fillText(String.fromCharCode(cp), x * W, baseY);
       x++;
     }
+    if (crisp) { ctx = outer; ctx.save(); ctx.filter = crisp; ctx.drawImage(this.crispLayer, 0, y0); ctx.restore(); }
     /* 4. decorations */
     for (x = 0; x < cols; x++) {
       var sd = styles.get(line.st[x]);
