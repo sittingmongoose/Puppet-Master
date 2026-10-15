@@ -201989,7 +201989,9 @@ var T = {};
       /* (round 3c: each a four-pointed star with long rays and short diagonal ones, so it reads as a star, never as a
          flake of Snow or a dot) */
       for (var i = 0; i < Math.round(W * H / (tight(th) ? 4500 : 7000)); i++) {
-        var x = R() * W, y = R() * H, r = 1.2 + R() * 1.2, a = tight(th) ? 1 : 0.55 + R() * 0.4, L = r * (6 + R() * 3);
+        /* (round 5, Q15: on a scheme with no contrast to spare its stars can only be light on a pale pane, and Gentle's and
+           Lively's fades looked alike there; they are drawn half as large again) */
+        var x = R() * W, y = R() * H, r = (1.2 + R() * 1.2) * (tight(th) ? 1.5 : 1), a = tight(th) ? 1 : 0.55 + R() * 0.4, L = r * (6 + R() * 3);
         var gl = g.createRadialGradient(x, y, 0, x, y, r * 4); gl.addColorStop(0, rgba(s, a * 0.45)); gl.addColorStop(1, rgba(s, 0)); g.fillStyle = gl; g.fillRect(x - r * 4, y - r * 4, r * 8, r * 8);
         g.fillStyle = rgba(s, a); g.beginPath(); g.arc(x, y, r * 0.9, 0, Math.PI * 2); g.fill();
         [[1, 0, L], [0, 1, L], [0.7071, 0.7071, L * 0.45], [0.7071, -0.7071, L * 0.45]].forEach(function (q) {
