@@ -151,15 +151,36 @@
      which play() and the renders point at a seeded generator, so a render of a sound is always the same. ---- */
   const note = (n) => 440 * Math.pow(2, (n - 69) / 12); // MIDI -> Hz
   let R = Math.random;
-  const noiseBufs = new WeakMap();
+  /* Shared PCM is independent of context and play state. Bound every retained take, noise, room and string
+     buffer together to 20 MiB; a miss always uses the original synthesis. Active Web Audio nodes own their
+     playing buffers separately. No rounding of musical pitch or change to the per-play random stream. */
+  const BUFFER_BYTES = 20 * 1024 * 1024, buffers = new Map();
+  let bufferBytes = 0;
+  function bufferOf(key) {
+    const b = buffers.get(key);
+    if (b) { buffers.delete(key); buffers.set(key, b); }
+    return b || null;
+  }
+  function keepBuffer(key, b) {
+    const bytes = b.length * b.numberOfChannels * 4;
+    if (bytes > BUFFER_BYTES) return b;
+    if (buffers.has(key)) { const old = buffers.get(key); bufferBytes -= old.length * old.numberOfChannels * 4; buffers.delete(key); }
+    while (bufferBytes + bytes > BUFFER_BYTES) {
+      const first = buffers.keys().next().value, old = buffers.get(first);
+      bufferBytes -= old.length * old.numberOfChannels * 4; buffers.delete(first);
+    }
+    buffers.set(key, b); bufferBytes += bytes;
+    return b;
+  }
   function noiseBuf(ctx) {
-    let b = noiseBufs.get(ctx);
+    const key = 'noise:' + ctx.sampleRate;
+    let b = bufferOf(key);
     if (b) return b;
     const len = Math.ceil(ctx.sampleRate * 2.4), r = O55.util.rng(7);
     b = ctx.createBuffer(1, len, ctx.sampleRate);
     const d = b.getChannelData(0);
     for (let i = 0; i < len; i++) d[i] = r() * 2 - 1;
-    noiseBufs.set(ctx, b);
+    keepBuffer(key, b);
     return b;
   }
   function envGain(ctx, t0, peak, attack, dur, curve) {
@@ -230,17 +251,26 @@
      intensity and jitter scale the room with the sound, and a quiet sound's room is as dark and as far left or right
      as the sound, so the dry-to-room balance is the same at every level */
   const reverbs = new WeakMap(), roomOut = new WeakMap(), sendOf = new WeakMap(), chainOf = new WeakMap();
-  function reverb(ctx, out) {
-    let send = sendOf.get(out);
-    if (send) return send;
+  function roomBuffer(ctx) {
+    const key = 'room:' + ctx.sampleRate, cached = bufferOf(key);
+    if (cached) return cached;
+    const len = Math.ceil(ctx.sampleRate * 2.2), ir = ctx.createBuffer(2, len, ctx.sampleRate), r = O55.util.rng(42);
+    for (let ch = 0; ch < 2; ch++) { const d = ir.getChannelData(ch); for (let i = 0; i < len; i++) d[i] = (r() * 2 - 1) * Math.pow(1 - i / len, 3.2); }
+    return keepBuffer(key, ir);
+  }
+  function room(ctx, out) {
     let conv = reverbs.get(ctx);
     if (!conv) {
       conv = ctx.createConvolver();
-      const len = Math.ceil(ctx.sampleRate * 2.2), ir = ctx.createBuffer(2, len, ctx.sampleRate), r = O55.util.rng(42);
-      for (let ch = 0; ch < 2; ch++) { const d = ir.getChannelData(ch); for (let i = 0; i < len; i++) d[i] = (r() * 2 - 1) * Math.pow(1 - i / len, 3.2); }
-      conv.buffer = ir; const wet = ctx.createGain(); wet.gain.value = 0.32; conv.connect(wet); wet.connect(roomOut.get(ctx) || out);
+      conv.buffer = roomBuffer(ctx); const wet = ctx.createGain(); wet.gain.value = 0.32; conv.connect(wet); wet.connect(roomOut.get(ctx) || out);
       reverbs.set(ctx, conv);
     }
+    return conv;
+  }
+  function reverb(ctx, out) {
+    let send = sendOf.get(out);
+    if (send) return send;
+    const conv = room(ctx, out);
     let spec = chainOf.get(out);
     if (!spec) { spec = { level: out.gain ? out.gain.value : 1 }; chainOf.set(out, spec); }
     send = ctx.createGain(); send.gain.value = spec.level;
@@ -280,13 +310,12 @@
      low-pass, so it rings at the note and darkens as it dies. The loss per pass allows for the low-pass's own loss at
      the note, so every note rings `ring` seconds (to -60 dB) at any pitch; the low-pass rises with the pitch, so a
      high note keeps some overtones; the line is read between samples and the low-pass's own delay taken out, so the
-     note is in tune (within about 6 cents). Rendered once per context, note and colour into a buffer and played like a
+     note is in tune (within about 6 cents). Rendered once per sample rate, note and colour into a buffer and played like a
      sample: any pitch, and nothing left ringing in a feedback loop when the play is torn down. */
-  const ksBufs = new WeakMap();
   function ksBuffer(ctx, f, ring, bright) {
-    let m = ksBufs.get(ctx); if (!m) { m = new Map(); ksBufs.set(ctx, m); }
     const key = f.toFixed(2) + ':' + ring + ':' + bright;
-    let b = m.get(key); if (b) return b;
+    const cacheKey = 'string:' + ctx.sampleRate + ':' + key;
+    let b = bufferOf(cacheKey); if (b) return b;
     const sr = ctx.sampleRate, len = Math.ceil(sr * (ring + 0.04));
     const a = Math.exp(-2 * Math.PI * Math.min(sr * 0.4, Math.max(900 + bright * 3000, f * (2.5 + bright * 5))) / sr);
     const w0 = 2 * Math.PI * f / sr, atF = (1 - a) / Math.hypot(1 - a * Math.cos(w0), a * Math.sin(w0));
@@ -306,8 +335,7 @@
     }
     const fade = Math.round(sr * 0.03); /* the end leaves on a short fade, never a click */
     for (let n = 0; n < len; n++) y[n] *= 0.8 / peak * (n > len - fade ? (len - n) / fade : 1);
-    m.set(key, b);
-    return b;
+    return keepBuffer(cacheKey, b);
   }
   function pluck(ctx, out, t0, f, o) {
     const src = ctx.createBufferSource(), g = ctx.createGain();
@@ -450,6 +478,7 @@
     if (ch && ch !== music.chapter) { music.prev = music.chapter; music.chapter = ch; music.base = music.step; music.changedAt = performance.now(); music.announced = false; }
     /* the caller plays this chapter's sting itself (the NieR act card): it counts as stung, nothing converts */
     if (o.sting === false && music.chapter) music.stung.add(music.chapter);
+    queueNext();
   };
   /* how many motif notes chapter ch's sting plays: its place in the journey, or (for a chapter with no place) how many
      chapters this run has stung, the journey's first chapter not counted; at most 4 */
@@ -1369,7 +1398,7 @@
       const { master, comp } = buildMaster(ctx);
       const tap = ctx.createAnalyser(); tap.fftSize = 2048; comp.connect(tap);
       S.ctx = ctx; S.master = master; S.tap = tap;
-      S.prepare(ctx.sampleRate);
+      warmLook();
       return ctx;
     } catch (_) { return null; }
   }
@@ -1418,8 +1447,9 @@
      not kept, the recipe plays live as before. prepare(rate) -> Promise (the live context asks for its own rate;
      a test may ask for another); takeReady(kit, event, variant, rate). */
   const TAKES = [['basic', 'warn'], ['glass', 'warn'], ['nier', 'wake'], ['nier', 'nierOn'], ['nier', 'nierOff'], ['nier', 'reboot']];
-  const takes = new Map(); /* sample rate -> Map('kit:event:variant' -> AudioBuffer | null) */
-  const preparing = new Map(); /* sample rate -> Promise */
+  const warmKeys = new WeakMap(); /* preparation promise -> required PCM keys; eviction makes a later prepare rebuild */
+  const nextBanks = new Map();
+  const preparing = new Map(); /* sample rate -> Map(kit -> Promise), at most two rates and five kits */
   const PLACES = [{ o: {}, v: 1 }, { o: { chapter: 'ai', step: 5, voice: 2, depth: 1, intensity: 1, layer: true }, v: 1.02 }];
   function renderTake(rate, kit, ev, vi, place) {
     const fn = poolOf(kit, ev)[vi]; if (!fn || typeof OfflineAudioContext === 'undefined') return Promise.resolve(null);
@@ -1455,22 +1485,189 @@
     b.__mono = mono; return mono;
   }
   const idle = (fn) => (window.requestIdleCallback ? window.requestIdleCallback(fn, { timeout: 4000 }) : later(200, fn));
-  S.prepare = function prepare(rate) {
-    rate = Math.round(+rate || 0); if (!rate) return Promise.resolve(false);
-    if (preparing.has(rate)) return preparing.get(rate);
-    const m = new Map(); takes.set(rate, m);
-    const jobs = [];
-    TAKES.forEach(([kit, ev]) => { for (let vi = 0; vi < poolOf(kit, ev).length; vi++) jobs.push([kit, ev, vi]); });
-    /* one take per quiet moment: each render builds its graph on the main thread */
-    const p = jobs.reduce((chain, [kit, ev, vi]) => chain.then(() => new Promise((res) => idle(() => {
+  /* The dynamic recipes cannot be frozen as whole takes: callout follows its chapter; other sounds follow
+     pitch drift, shuffle rotation, helper voice and random noise offsets. Prepare their exact expensive PCM
+     ingredients instead, then schedule the original nodes through the original dry and room chains. */
+  function resourceJobs(ctx, kit) {
+    const jobs = [() => noiseBuf(ctx)]; jobs.pcmKeys = ['noise:' + ctx.sampleRate];
+    if (kit === 'glass') { jobs.pcmKeys.push('room:' + ctx.sampleRate); jobs.push(() => roomBuffer(ctx), () => { if (ctx === S.ctx) room(ctx, S.master); }); }
+    if (kit === 'retro' || kit === 'nier') jobs.push(() => { pulse25(ctx); pulse12(ctx); square(ctx); });
+    if (kit !== 'friendly') return jobs;
+    /* All three helpers, the eight string climb positions, every chapter, all Friendly string variants.
+       Unusual explicit voice values still take the unchanged live fallback on a cache miss. */
+    const strings = new Map();
+    Object.keys(CHORDS).forEach((chapter) => {
+      for (let voice = 0; voice < 3; voice++) for (let step = 0; step < 8; step++) {
+        const k = mk('friendly', 'string', { chapter, voice, step }, true, 0, null);
+        const f = note(k.m(k.voice + k.climb, -1));
+        [[f, 0.3, 0.45], [f, 0.24, 0.6], [f, 0.34, 0.4], [f / 2, 0.28, 0.3]].forEach((args) => {
+          strings.set(args.join(':'), args);
+        });
+      }
+    });
+    strings.forEach((args) => { jobs.pcmKeys.push('string:' + ctx.sampleRate + ':' + args[0].toFixed(2) + ':' + args[1] + ':' + args[2]); jobs.push(() => ksBuffer(ctx, ...args)); });
+    return jobs;
+  }
+  S.prepare = function prepare(rate, kit) {
+    rate = Math.round(+rate || 0);
+    /* Two outstanding/completed rate preparations at most, and bounded OfflineAudioContext allocations.
+       Other rates retain live synthesis. Superseded idle jobs stop without repopulating an evicted rate. */
+    if (rate < 8000 || rate > 96000 || typeof OfflineAudioContext === 'undefined') return Promise.resolve(false);
+    kit = KITS[kit] ? kit : kitFor('tap', {});
+    if (!preparing.has(rate)) {
+      if (preparing.size >= 2) {
+        const old = preparing.keys().next().value; preparing.delete(old);
+        for (const key of nextBanks.keys()) if (key.startsWith(old + ':')) nextBanks.delete(key);
+      }
+      preparing.set(rate, new Map());
+    }
+    const pending = preparing.get(rate);
+    if (pending.has(kit)) {
+      const prior = pending.get(kit);
+      return prior.then((ok) => {
+        if (!ok) return false;
+        if ((warmKeys.get(prior) || []).some((key) => !buffers.has(key))) {
+          pending.delete(kit); return S.prepare(rate, kit);
+        }
+        return finishWarm(rate, kit);
+      });
+    }
+    const current = () => preparing.get(rate) === pending && pending.get(kit) === p;
+    const ctx = S.ctx && S.ctx.sampleRate === rate ? S.ctx : new OfflineAudioContext(1, 1, rate);
+    const jobs = [], keys = [];
+    TAKES.filter(([family]) => family === kit).forEach(([kit, ev]) => { for (let vi = 0; vi < poolOf(kit, ev).length; vi++) { keys.push('take:' + rate + ':' + kit + ':' + ev + ':' + vi); jobs.push(() =>
       Promise.all(PLACES.map((pl) => renderTake(rate, kit, ev, vi, pl).catch(() => null)))
-        .then(([a, b]) => { m.set(kit + ':' + ev + ':' + vi, a && sameTake(a, b) && monoOf(a) ? monoOf(a) : null); res(); }, () => res());
-    }))), Promise.resolve()).then(() => true);
-    preparing.set(rate, p);
-    return p;
+        .then(([a, b]) => { if (!current()) return; const mono = a && sameTake(a, b) && monoOf(a);
+          if (mono) keepBuffer('take:' + rate + ':' + kit + ':' + ev + ':' + vi, mono); })); }
+    });
+    /* Preserve the active look's existing take priority before its shared ingredients. */
+    const resources = resourceJobs(ctx, kit); jobs.push(...resources); keys.push(...resources.pcmKeys);
+    /* One resource per idle callback, including each pluck, so warmup itself never builds a whole bank in a frame. */
+    const p = jobs.reduce((chain, job) => chain.then(() => new Promise((res) => {
+      if (!current()) { res(); return; }
+      idle(() => { if (!current()) { res(); return; } Promise.resolve().then(job).catch(() => {}).then(res); });
+    })), Promise.resolve()).then(current);
+    pending.set(kit, p); warmKeys.set(p, keys);
+    return p.then((ok) => ok ? finishWarm(rate, kit) : false);
   };
-  const takeOf = (rate, kit, ev, vi) => { const m = takes.get(Math.round(rate)); return (m && m.get(kit + ':' + ev + ':' + vi)) || null; };
-  S.takeReady = (kit, ev, vi, rate) => !!takeOf(rate || (S.ctx && S.ctx.sampleRate) || 0, kit, ev, vi || 0);
+  /* A look switch schedules preparation after the gesture, outside that switch's task. Release inactive
+     look PCM and invalidate its outstanding jobs; playing Web Audio nodes keep their own tails intact. */
+  let warmingLook = null, lookIdle = false;
+  function warmLook() {
+    if (!S.ctx || !hasGesture()) return;
+    const kit = kitFor('tap', {});
+    if (warmingLook !== kit) {
+      warmingLook = kit; preparing.clear(); nextBanks.clear();
+      for (const [key, b] of buffers) {
+        const kind = key.split(':')[0];
+        if ((kind === 'string' && kit !== 'friendly') || (kind === 'room' && kit !== 'glass') ||
+            ((kind === 'take' || kind === 'next') && key.split(':')[2] !== kit)) {
+          buffers.delete(key); bufferBytes -= b.length * b.numberOfChannels * 4;
+        }
+      }
+    }
+    S.prepare(S.ctx.sampleRate, kit);
+  }
+  new MutationObserver(() => {
+    if (!S.ctx || !hasGesture() || lookIdle) return;
+    lookIdle = true; idle(() => { lookIdle = false; warmLook(); });
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier', 'data-o55-nier-parts'] });
+  /* Exact next-play takes for callouts and the large fixed stings. These recipes ignore musical rotation,
+     step, helper, intensity and pitch drift; callout alone follows the chapter. Their random noise offsets
+     still use the actual next play seed, after the two live-chain draws. Never substitute a different seed.
+     Glass keeps dry PCM and pre-convolution room-feed PCM separate: both retain the live shaping chain. */
+  const NEXT_EVENTS = new Set(['callout', 'commit', 'finish', 'success', 'error']);
+  const nextKey = (rate, kit, ev, vi, chapter, seed) =>
+    'next:' + rate + ':' + kit + ':' + seed + ':' + (ev === 'callout' ? chapter : 'fixed') + ':' + ev + ':' + vi;
+  function renderNext(rate, kit, ev, vi, chapter, seed) {
+    const cut = Math.floor(rate * 0.004), length = Math.ceil(rate * (tailOf(kit, ev) + 0.6));
+    const off = new OfflineAudioContext(2, cut + length, rate), merge = off.createChannelMerger(2);
+    merge.connect(off.destination);
+    const out = off.createGain(), wet = off.createGain();
+    [out, wet].forEach((g) => { g.channelCount = 1; g.channelCountMode = 'explicit'; });
+    out.connect(merge, 0, 0); wet.connect(merge, 0, 1);
+    /* Substitute the room's input, so this render contains the send before convolution, without its tail. */
+    reverbs.set(off, wet);
+    const r = O55.util.rng(0x5eed + seed * 7919); r(); const v = 1 + (r() - 0.5) * 0.04;
+    run(poolOf(kit, ev)[vi], off, out, 0.004, v, mk(kit, ev, { chapter }, true, vi, r));
+    return off.startRendering().then((b) => [0, 1].map((ch) => {
+      const data = b.getChannelData(ch).subarray(cut);
+      const n = ch === 1 && !data.some((x) => x !== 0) ? 1 : length;
+      const pcm = new AudioBuffer({ length: n, numberOfChannels: 1, sampleRate: rate });
+      if (n > 1) pcm.copyToChannel(data, 0);
+      return pcm;
+    }));
+  }
+  function prepareNext(rate, kit, chapter = music.chapter) {
+    if (kit === 'nier' || rate < 8000 || rate > 96000 || typeof OfflineAudioContext === 'undefined') return Promise.resolve(true);
+    const seed = playSeed, id = rate + ':' + kit, old = nextBanks.get(id), jobs = [];
+    NEXT_EVENTS.forEach((ev) => poolOf(kit, ev).forEach((_, vi) => jobs.push({ ev, vi, key: nextKey(rate, kit, ev, vi, chapter, seed) })));
+    if (old && old.seed === seed && old.chapter === chapter &&
+        (!old.done || jobs.every(({key}) => buffers.has(key + ':dry') && buffers.has(key + ':wet')))) return old.promise;
+    const wanted = new Set(jobs.flatMap(({key}) => [key + ':dry', key + ':wet']));
+    for (const [key, b] of buffers) if (key.startsWith('next:' + rate + ':' + kit + ':') && !wanted.has(key)) {
+      buffers.delete(key); bufferBytes -= b.length * b.numberOfChannels * 4;
+    }
+    const bank = { seed, chapter, done: false };
+    nextBanks.set(id, bank);
+    const current = () => nextBanks.get(id) === bank && playSeed === seed;
+    bank.promise = jobs.reduce((p, { ev, vi, key }) => p.then(() => new Promise((res) => {
+      if (!current()) { res(); return; }
+      idle(() => { if (!current()) { res(); return; }
+        renderNext(rate, kit, ev, vi, chapter, seed).then(([dry, wet]) => {
+          if (current()) { keepBuffer(key + ':dry', dry); keepBuffer(key + ':wet', wet); }
+        }).catch(() => {}).then(res);
+      });
+    })), Promise.resolve()).then(() => { bank.done = true; return current(); });
+    return bank.promise;
+  }
+  /* Rehearse the first callback on a silent one-sample offline destination, once per live context/look.
+     This pays the browser's first-use callback/node setup in idle time too. The queue, musical place and
+     bookkeeping are restored synchronously; no log entry or source reaches the live master. NieR is untouched. */
+  const primed = new WeakMap();
+  function finishWarm(rate, kit) {
+    return prepareNext(rate, kit).then((ok) => {
+      if (typeof OfflineAudioContext === 'undefined') return ok;
+      const ctx = S.ctx;
+      if (!ok || !ctx || ctx.sampleRate !== rate || kit === 'nier' || ctx instanceof OfflineAudioContext ||
+          (primed.get(ctx) && primed.get(ctx).has(kit))) return ok;
+      return new Promise((res) => idle(() => { primePlayback(rate, kit); res(ok); }));
+    });
+  }
+  function primePlayback(rate, kit) {
+    if (typeof OfflineAudioContext === 'undefined') return;
+    const ctx = S.ctx;
+    if (!ctx || ctx.sampleRate !== rate || ctx instanceof OfflineAudioContext || kit !== kitFor('tap', {})) return;
+    let done = primed.get(ctx); if (!done) { done = new Set(); primed.set(ctx, done); }
+    if (done.has(kit)) return;
+    const saved = { ctx, master: S.master, queue, flushing, recent, big, playSeed, rot: music.rot,
+      starts: starts.slice(), active: active.slice(), played: Object.assign({}, playedAt) };
+    try {
+      const off = new OfflineAudioContext(2, 1, rate);
+      S.ctx = off; S.master = buildMaster(off).master;
+      music.rot = Object.assign({}, music.rot); starts.length = 0; active.length = 0; recent = null;
+      queue = [{ kit, ev: 'callout', event: 'callout', opts: { variant: 0, intensity: 0.55, pan: 0 },
+        entry: {}, prio: PRIO.callout, at: performance.now() }];
+      flushing = true; flush(); off.startRendering().catch(() => {}); done.add(kit);
+    } catch (_) { /* Preparation never prevents the original live fallback. */ }
+    finally {
+      S.ctx = saved.ctx; S.master = saved.master; queue = saved.queue; flushing = saved.flushing;
+      recent = saved.recent; big = saved.big; playSeed = saved.playSeed; music.rot = saved.rot;
+      starts.length = 0; starts.push(...saved.starts); active.length = 0; active.push(...saved.active);
+      Object.keys(playedAt).forEach((key) => delete playedAt[key]); Object.assign(playedAt, saved.played);
+    }
+  }
+  let nextIdle = false;
+  function queueNext() {
+    if (!S.ctx || !hasGesture() || nextIdle || (typeof OfflineAudioContext !== 'undefined' && S.ctx instanceof OfflineAudioContext)) return;
+    nextIdle = true; idle(() => { nextIdle = false; prepareNext(S.ctx.sampleRate, kitFor('tap', {})); });
+  }
+  const takeOf = (rate, kit, ev, vi) => bufferOf('take:' + Math.round(rate) + ':' + kit + ':' + ev + ':' + vi);
+  S.takeReady = (kit, ev, vi, rate) => {
+    rate = rate || (S.ctx && S.ctx.sampleRate) || 0;
+    const key = nextKey(rate, kit, ev, vi || 0, music.chapter, playSeed);
+    return !!takeOf(rate, kit, ev, vi || 0) || (kit !== 'nier' && NEXT_EVENTS.has(ev) && buffers.has(key + ':dry') && buffers.has(key + ':wet'));
+  };
 
   /* one sound: its chain (level and trim, darker when quiet, placed toward the click or where its helper stands) and
      the kit's recipe (or its pre-rendered take) */
@@ -1479,6 +1676,7 @@
     if (!ctx || ctx.state === 'closed') { drop(item, 'no-audio'); return null; }
     const { kit, ev, opts, entry } = item, fns = poolOf(kit, ev);
     const vi = opts.variant != null ? Math.max(0, Math.min(fns.length - 1, opts.variant | 0)) : pick(kit, ev, fns.length);
+    const seed = playSeed;
     const k = mk(kit, ev, Object.assign({}, opts, { layer: item.layer }), false, vi, O55.util.rng(0x5eed + (playSeed++) * 7919));
     const inten = k.intensity;
     const pan = opts.pan != null && Number.isFinite(+opts.pan) ? +opts.pan
@@ -1496,8 +1694,17 @@
     const nodes = [g].concat(sh.nodes);
     const t0 = ctx.currentTime + 0.004 + (item.layer && ev === 'pod' ? 0.09 : 0), v = 1 + (k.r() - 0.5) * 0.04;
     const take = takeOf(ctx.sampleRate, kit, ev, vi);
+    const key = kit !== 'nier' && NEXT_EVENTS.has(ev) ? nextKey(ctx.sampleRate, kit, ev, vi, opts.chapter || music.chapter, seed) : null;
+    const dry = key && bufferOf(key + ':dry'), wet = key && bufferOf(key + ':wet');
     try {
-      if (take) {
+      if (dry && wet) {
+        const start = Math.floor(t0 * ctx.sampleRate + 1e-6) / ctx.sampleRate;
+        const src = ctx.createBufferSource(); src.buffer = dry; src.connect(g); src.start(start); nodes.push(src);
+        if (wet.length > 1) { const roomSrc = ctx.createBufferSource(); roomSrc.buffer = wet;
+          roomSrc.connect(reverb(ctx, g)); roomSrc.start(start); nodes.push(roomSrc); }
+        entry.take = true; entry.prepared = true;
+      }
+      else if (take) {
         const src = ctx.createBufferSource(); src.buffer = take; src.connect(g);
         /* A warning take already contains the 4 ms offset's fractional sample; do not interpolate it twice. */
         src.start(ev === 'warn' ? Math.floor(t0 * ctx.sampleRate + 1e-6) / ctx.sampleRate : t0);
@@ -1514,6 +1721,7 @@
     const h = { gain: g, send, until: t0 + tailOf(kit, ev) + 0.5 };
     for (let i = active.length - 1; i >= 0; i--) if (active[i].until < ctx.currentTime) active.splice(i, 1);
     active.push(h);
+    queueNext();
     return h;
   }
   /* several asked for in one moment: the most important plays. The moment is when each was asked for (a long render
