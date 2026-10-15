@@ -506,9 +506,15 @@
     paper: 'linear-gradient(180deg, #f3ecdc 0%, #ebe2cf 100%)'
   };
 
-  /* Solid colour with no colour of its own: the scheme's ground a step toward its text, the Softer swatch, so choosing it
-     always shows (round 5, Q15: the scheme's own ground drew exactly as Look's own); the Scheme swatch is that ground */
-  function solidDefault(th) { return C.toHex(C.mix(th.bg, th.fg, 0.08)); }
+  /* Solid colour with no colour of its own: the scheme's ground a visible step away from its text (deeper under light
+     text, paler under dark text), so choosing it always shows and the text only gains contrast (round 5, Q15: the
+     scheme's own ground drew exactly as Look's own). A ground already at black or white steps toward its text instead.
+     The Scheme swatch is the ground itself */
+  function solidDefault(th) {
+    var to = C.lum(th.fg) > C.lum(th.bg) ? 0 : 0xffffff, step = function (c) { return Math.max(Math.abs(C.r(th.bg) - C.r(c)), Math.abs(C.g(th.bg) - C.g(c)), Math.abs(C.b(th.bg) - C.b(c))); };
+    for (var k = 0.35; k < 1.001; k += 0.05) { var c = C.mix(th.bg, to, Math.min(1, k)); if (step(c) >= 12) return C.toHex(c); }
+    return C.toHex(C.mix(th.bg, th.fg, 0.08));
+  }
 
   function resolve(view) {
     var look = view && view.api && view.api.look ? Object.assign(T.look(), view.api.look()) : T.look();
