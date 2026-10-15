@@ -57,9 +57,10 @@ html[data-o55-nier="on"][data-o55-nier-parts~="brackets"] .pmt-root.pmt-focused 
 /* the bell snaps the brackets in, in three steps, only while a motion part is installed (Still and Colors only show
    the end state at once) */
 html[data-o55-nier="on"][data-o55-nier-parts~="brackets"][data-o55-nier-parts~="glitch"] .pmt-root.pmt-bell .pmt-body::before {
-  content: ""; animation: pmt-nier-snap .24s steps(3, end);
+  content: ""; animation: pmt-nier-snap .3s steps(3, end);
 }
-@keyframes pmt-nier-snap { 0% { inset: 10px; } 100% { inset: 2px; } }
+/* (round 4, Q15: from further in, so the snap reads beside Bell Off, which no longer snaps at all) */
+@keyframes pmt-nier-snap { 0% { inset: 18px; } 100% { inset: 2px; } }
 
 /* ---- icons: square command marks (hollow done, filled rust failed, dotted running) ---- */
 html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-mark svg { display: none; }

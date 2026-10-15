@@ -15,7 +15,9 @@
      Hyperlegible Mono 200 to 800; Jared 2026-10-14: JetBrains Mono keeps its full range, so its Latin file runs 100-800,
      opus-5.5 src/fonts/SOURCE.md); a face without it has one weight */
   var FONTS = {
-    'jetbrains-mono': { label: 'JetBrains Mono', stack: "'JetBrains Mono', 'PM Symbols Mono', ui-monospace, Menlo, Consolas, monospace", size: 13, lineHeight: 1.3, weights: [100, 800], licence: 'OFL-1.1' },
+    /* drawn: where the face's own steps sit too close at text size, the weight its variable axis is drawn at (round 4,
+       Q15 #6: JetBrains Mono's Semibold and Bold were the closest pair in every look; 580 and 720 space its eight evenly) */
+    'jetbrains-mono': { label: 'JetBrains Mono', stack: "'JetBrains Mono', 'PM Symbols Mono', ui-monospace, Menlo, Consolas, monospace", size: 13, lineHeight: 1.3, weights: [100, 800], drawn: { 600: 580, 700: 720 }, licence: 'OFL-1.1' },
     'atkinson': { label: 'Atkinson Hyperlegible Mono', stack: "'Atkinson Hyperlegible Mono', 'JetBrains Mono', ui-monospace, monospace", size: 13, lineHeight: 1.35, weight: 400, weights: [200, 800], licence: 'OFL-1.1' },
     'vt323': { label: 'VT323', stack: "'VT323', 'JetBrains Mono', ui-monospace, monospace", size: 19, lineHeight: 1.05, licence: 'OFL-1.1' },
     'departure': { label: 'Departure Mono', stack: "'Departure Mono', 'JetBrains Mono', ui-monospace, monospace", size: 13.75, lineHeight: 1.2, licence: 'OFL-1.1' },
@@ -118,17 +120,20 @@
     bgScale: { type: 'enum', values: ['fine', 'medium', 'coarse'], default: 'medium', label: 'Size' },
     bgMotion: { type: 'enum', values: ['off', 'gentle', 'lively'], default: 'gentle', label: 'Motion' },
     bgFit: { type: 'enum', values: ['cover', 'contain', 'tile', 'center'], default: 'cover', label: 'Fit' },
-    bgDesat: { type: 'number', min: 0, max: 1, step: 0.05, default: 0.3, label: 'Desaturate' },
+    /* round 4: half by default, one of the three stops Customize offers (full colour, half, grey; Q15 #4) */
+    bgDesat: { type: 'number', min: 0, max: 1, step: 0.05, default: 0.5, label: 'Desaturate' },
     opacity: { type: 'number', min: 0.4, max: 1, step: 0.02, default: null, label: 'Opacity' },
     /* none by default (Jared, 2026-10-14: "Default padding should be 0"); a bezel brings its own margin */
     padding: { type: 'number', min: 0, max: 24, step: 1, default: 0, label: 'Padding' },
     /* the housing round the screen (Jared, 2026-10-14: removable, customizable; round 3: "still really ugly", so a real
        monitor case, 71-bezel.js): its own choice, never part of a look's defaults, drawn with or without the GPU. Width
-       null is the style's own; Reflection null is the material's own (how much of the screen its surface gives back) */
+       null is the style's own; Reflection null is the material's own level (how much of the screen its surface gives back) */
     bezel: { type: 'enum', values: ['off', 'rim', 'case'], default: 'off', label: 'Bezel' },
     bezelWidth: { type: 'number', min: 2, max: 48, step: 1, default: null, label: 'Bezel width' },
     bezelColor: { type: 'enum', values: ['follow', 'charcoal', 'black', 'platinum', 'putty', 'aluminium', 'gunmetal', 'glass', 'accent'], default: 'follow', label: 'Bezel material' },
-    bezelReflect: { type: 'number', min: 0, max: 1, step: 0.05, default: null, label: 'Reflection' },
+    /* round 4 (Q15): four levels, each material starting at its own (null); a number stored by round 3's slider reads as
+       the nearest level (71-bezel.js) */
+    bezelReflect: { type: 'enum', values: ['off', 'low', 'medium', 'high'], default: null, label: 'Reflection' },
     effects: { type: 'enum', values: ['follow', 'off', 'custom'], default: 'follow', label: 'Effects' },
     scanlines: { type: 'bool', default: null, label: 'Scanlines' },
     scanStrength: { type: 'number', min: 0, max: 0.6, step: 0.05, default: 0.3, label: 'Scanline strength' },
@@ -136,7 +141,7 @@
     glowStrength: { type: 'number', min: 0, max: 1, step: 0.05, default: 0.45, label: 'Glow strength' },
     crt: { type: 'bool', default: false, label: 'Full CRT' },
     /* round 2: the edge sag is Curvature x 0.125 (50-fx-gl.js), subtle by default; the phosphor mask is Full CRT's own
-       choice (drawn at a device pixel ratio of 2 or more) */
+       choice (an aperture grille three device px to a triad, at any density since round 4) */
     curvature: { type: 'number', min: 0, max: 0.2, step: 0.01, default: 0.04, label: 'Curvature' },
     crtMask: { type: 'bool', default: false, label: 'Phosphor mask' },
     burnIn: { type: 'bool', default: true, label: 'Burn-in' },
@@ -536,7 +541,7 @@
       if (inst) family = "'" + inst + "', " + FD.stack; else axes.unavailable = true;
     }
     var drawing = f('fontRendering');
-    var font = { id: fid, family: family, size: size, weight: wt, boldWeight: FD.weights ? Math.min(FD.weights[1], wt <= 500 ? 700 : 800) : 700,
+    var font = { id: fid, family: family, size: size, weight: FD.drawn && FD.drawn[wt] || wt, chosen: wt, boldWeight: FD.weights ? Math.min(FD.weights[1], wt <= 500 ? 700 : 800) : 700,
       lineHeight: lh, letterSpacing: f('letterSpacing') || 0, label: FD.label, crisp: drawing === 'crisp', axes: axes,
       local: FD.local ? { name: FD.label, installed: hasLocalFace(FD.label) } : null };
 
@@ -573,9 +578,18 @@
         var purl = T.Appearance.imageUrl('custom', f('bgImageData'), f('bgBlur'), f('bgDesat')), st = pictureStats(purl);
         /* the worst pixel for this scheme's text: the picture's lightest under light text, its darkest under dark text */
         var pw = st ? (C.lum(theme.fg) > C.lum(theme.bg) ? st.hi : st.lo) : (C.lum(theme.fg) > C.lum(theme.bg) ? 0xffffff : 0);
-        var pAuto = T.Grounds.scrim(pw, theme), pDim = dim === null || dim === undefined ? (st ? pAuto : 0.6) : Math.max(dim, st ? pAuto : 0);
+        var pAuto = T.Grounds.scrim(pw, theme), veil = null;
+        /* round 4 (Q15 #2): a scheme with little contrast to spare (Tokyo Night Day's 4.52:1, Glass light's own) needs
+           almost all of its own ground over a picture, which then vanished with every Fit and Dim the same. There the
+           veil is white under dark text (black under light text) instead: the picture stays as a pale (or deep) print
+           of itself, its light squeezed into what the text allows, as 3c's lighter-than-ground designs do */
+        if (st && pAuto >= 0.9) {
+          var vt = C.lum(theme.fg) < C.lum(theme.bg) ? 0xffffff : 0x000000, va = veilTo(pw, theme, vt);
+          if (va < pAuto - 0.04) { veil = vt; pAuto = va; }
+        }
+        var pDim = dim === null || dim === undefined ? (st ? pAuto : 0.6) : Math.max(dim, st ? pAuto : 0);
         bg = { kind: 'image', custom: true, url: purl, fit: f('bgFit'), dim: pDim, dimAuto: dim === null || dim === undefined, raised: dim !== null && dim !== undefined && st && pAuto > dim,
-          ground: C.mix(pw, theme.bg, pDim) };
+          floor: st ? pAuto : 0, veil: veil === null ? null : C.toHex(veil), ground: C.mix(pw, veil === null ? theme.bg : veil, pDim) };
       } else {
         if (!G.has(id) || (bgKind === 'gradient') !== G.isGradient(id)) id = bgKind === 'gradient' ? 'fade' : 'hills';
         var strength = T.util.clamp(f('bgStrength'), 0, 1), cat = G.cat(id), mot = G.motion(id);
@@ -583,8 +597,8 @@
         if (G.painted(id) || mot) {
           /* painted at the terminal's own size by the view (_applyBackground), which then knows the worst pixel */
           bg.paint = G.painted(id) ? id : (mot.under || null);
-          if (mot) bg.motion = { id: id, anim: mot.anim, ms: mot.ms * (f('bgMotion') === 'lively' ? 0.5 : 1), on: f('bgMotion') !== 'off' && !reduced };
-          bg.blur = f('bgBlur');
+          if (mot) bg.motion = { id: id, anim: mot.anim, ms: mot.ms * (f('bgMotion') === 'lively' ? mot.lively || 0.5 : 1), on: f('bgMotion') !== 'off' && !reduced };
+          /* Blur is a picture's own (round 4): the built-in designs are drawn soft already and barely changed under it */
           if (mot && !mot.under) bg.base = C.toHex(theme.bg);
         } else {
           var D = G.css(id, theme, { scale: f('bgScale') }) || { css: C.toHex(theme.bg), colors: [theme.bg] };
@@ -873,13 +887,15 @@
     pending[key] = true;
     var im = new Image();
     im.onload = function () {
-      var cv = document.createElement('canvas'); cv.width = 960; cv.height = 600;
-      var g = cv.getContext('2d'), k = Math.max(960 / im.naturalWidth, 600 / im.naturalHeight);
-      var dw = im.naturalWidth * k, dh = im.naturalHeight * k;
+      /* at the picture's own size (at most 1920 x 1200): drawn into a fixed 960 x 600 a small picture filled it, so Tile
+         and Centre showed the same (round 4, Q15). A blurred picture is drawn a little larger so its edges stay whole */
+      var k = Math.min(1, 1920 / im.naturalWidth, 1200 / im.naturalHeight), W = Math.max(1, Math.round(im.naturalWidth * k)), H = Math.max(1, Math.round(im.naturalHeight * k));
+      var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+      var g = cv.getContext('2d'), pad = blur ? blur * 2 : 0;
       if (canFilter) g.filter = (blur ? 'blur(' + blur + 'px) ' : '') + (desat ? 'saturate(' + (1 - desat) + ')' : '') || 'none';
-      g.drawImage(im, (960 - dw) / 2, (600 - dh) / 2, dw, dh);
-      if (blur) blurCanvas(cv, blur);
-      if (desat && !canFilter) desaturate(g, 960, 600, desat);
+      g.drawImage(im, -pad, -pad, W + pad * 2, H + pad * 2);
+      if (blur && !canFilter) blurCanvas(cv, blur);
+      if (desat && !canFilter) desaturate(g, W, H, desat);
       imgCache.set(key, cv.toDataURL('image/jpeg', 0.86)); delete pending[key];
       refreshAll();
     };
@@ -896,6 +912,14 @@
      dim and the text's contrast floor measure against (research: the WCAG F83 check, against the picture's own
      lightest or darkest area) */
   var picStats = new Map();
+  /* the least veil of colour t over the worst pixel w that keeps the text at its floor (T.Grounds.scrim's rule, with
+     a colour of its own in place of the scheme's ground) */
+  function veilTo(w, th, t) {
+    var own = C.contrast(th.fg, th.bg), want = Math.min(own, 4.8) - 0.004;
+    if (C.contrast(th.fg, w) >= want) return 0;
+    for (var a = 0.05; a < 0.999; a += 0.05) if (C.contrast(th.fg, C.mix(w, t, a)) >= want) return Math.round(a * 100) / 100;
+    return 1;
+  }
   function pictureStats(url) {
     if (!url) return null;
     if (picStats.has(url)) return picStats.get(url);

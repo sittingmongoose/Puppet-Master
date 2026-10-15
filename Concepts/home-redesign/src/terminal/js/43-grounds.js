@@ -332,7 +332,8 @@
         paths += '<path d="' + d + 'Z"/>';
       }
     });
-    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMaxYMax slice"><g fill="none" stroke="' + hex(line) + '" stroke-width="1" vector-effect="non-scaling-stroke">' + paths + '</g></svg>';
+    /* (round 4, Q15: drawn in light on a pale ground its hairlines matched Dot grid, Starfield and Rain; twice as thick there) */
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMaxYMax slice"><g fill="none" stroke="' + hex(line) + '" stroke-width="' + (th.reflect ? 2 : 1) + '" vector-effect="non-scaling-stroke">' + paths + '</g></svg>';
     return { css: svgUrl(svg) + ' right bottom / cover no-repeat, ' + hex(th.bg), colors: [th.bg, line] };
   } });
   /* waves: four ribbons across the bottom third, each 3 % of lightness from the next */
@@ -419,13 +420,15 @@
   def('scene', 'caustics', 'Caustics');
   def('scene', 'bokeh', 'Bokeh');
   def('scene', 'clouds', 'Clouds', { looks: ['friendly'] });
-  /* moving: a painted layer bigger than the terminal, moved by transform only, stepped to about 20 fps */
-  def('moving', 'aurora-drift', 'Drifting aurora', { motion: { layer: 'aurora', anim: 'pmt-bg-sway', ms: 45000 } });
+  /* moving: a painted layer bigger than the terminal, moved by transform only, stepped to about 20 fps. Lively is twice
+     as fast, and four times for the two slow drifts (round 4, Q15: at twice, Gentle and Lively looked alike for seconds) */
+  def('moving', 'aurora-drift', 'Drifting aurora', { motion: { layer: 'aurora', anim: 'pmt-bg-sway', ms: 45000, lively: 0.25 } });
   /* (round 3b: its few bright stars on the scheme's own sky, no longer over Starfield's, so the two are distinct at rest) */
-  def('moving', 'twinkle', 'Twinkling stars', { motion: { layer: 'stars2', anim: 'pmt-bg-twinkle', ms: 6000 } });
+  /* (round 4: a 2.6 s fade, 1.3 s when Lively; at 6 s a star hardly changed in the time it takes to look) */
+  def('moving', 'twinkle', 'Twinkling stars', { motion: { layer: 'stars2', anim: 'pmt-bg-twinkle', ms: 2600 } });
   def('moving', 'rain', 'Rain', { motion: { layer: 'rain', anim: 'pmt-bg-fall', ms: 2400 } });
   def('moving', 'snow', 'Snow', { motion: { layer: 'snow', anim: 'pmt-bg-snow', ms: 30000 } });
-  def('moving', 'lava', 'Lava', { motion: { layer: 'lava', anim: 'pmt-bg-rise', ms: 80000 } });
+  def('moving', 'lava', 'Lava', { motion: { layer: 'lava', anim: 'pmt-bg-rise', ms: 80000, lively: 0.25 } });
 
   /* ---- painting ---- */
   function rng(seed) { var s = seed >>> 0; return function () { s = (s + 0x6D2B79F5) >>> 0; var t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
@@ -461,6 +464,18 @@
         g.fillStyle = gr; g.beginPath(); g.moveTo(0, H);
         for (var x = 0; x <= W; x += 6) g.lineTo(x, y0 + Math.sin(x / (W / (1.2 + k * 0.6)) + k * 2.2) * H * 0.03);
         g.lineTo(W, H); g.closePath(); g.fill();
+        /* (round 4, Q15: wind ripples down each face, fine wavy lines that follow its curve, so Dunes are sand and not
+           Ridgelines' ranges) */
+        g.strokeStyle = hex(tone(base, dark ? 0.035 : -0.03)); g.lineWidth = 1;
+        for (var j = 1; j <= 4; j++) {
+          g.globalAlpha = 0.85 - j * 0.15; g.beginPath();
+          for (x = 0; x <= W; x += 3) {
+            var yy = y0 + Math.sin(x / (W / (1.2 + k * 0.6)) + k * 2.2) * H * 0.03 + j * H * 0.017 + Math.sin(x / 7 + j * 1.3 + k) * 1.1;
+            if (x) g.lineTo(x, yy); else g.moveTo(x, yy);
+          }
+          g.stroke();
+        }
+        g.globalAlpha = 1;
       }
     },
     city: function (g, W, H, th, h) {
@@ -558,9 +573,11 @@
          they were nearly invisible there) */
       var dark = isDark(th), R = rng(31), c = dark ? wash(th, h.c, 0.32) : inkUp(th, h.c, th.mono ? 0.3 : 0.35), a0 = dark ? 0.25 : tight(th) ? 0.7 : 0.35, a1 = dark ? 0.4 : tight(th) ? 0.3 : 0.6;
       /* (and long, slanted streaks: rain, not flakes or dots) */
-      g.strokeStyle = hex(c); g.lineWidth = dark ? 1.1 : 1.3; g.lineCap = 'round';
+      /* (round 4, Q15: longer and firmer still on a ground with no contrast to spare, where they came close to Snow) */
+      var tk = tight(th);
+      g.strokeStyle = hex(c); g.lineWidth = dark ? 1.1 : tk ? 1.6 : 1.3; g.lineCap = 'round';
       for (var i = 0; i < Math.round(W * H / 3200); i++) {
-        var x = R() * W, y = R() * H, l = 16 + R() * 26;
+        var x = R() * W, y = R() * H, l = tk ? 26 + R() * 34 : 16 + R() * 26;
         g.globalAlpha = a0 + R() * a1; g.beginPath(); g.moveTo(x, y); g.lineTo(x - l * 0.06, y + l); g.stroke();
       }
       g.globalAlpha = 1; g.lineCap = 'butt';

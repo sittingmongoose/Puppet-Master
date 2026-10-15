@@ -44282,6 +44282,10 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz-chip[aria-checked="true"]::after { content: ""; position: absolute; left: 12px; top: 12px; width: 16px; height: 16px; background: var(--pmt-cz-on-accent);
   -webkit-mask: var(--pmt-cz-check) center / 12px no-repeat; mask: var(--pmt-cz-check) center / 12px no-repeat; }
 .pmt-cz-chip[aria-checked="true"] .pmt-cz-chipstate { color: var(--pmw-text, inherit); }
+/* a switch that cannot act now (Ligatures while letters are spaced): a dashed box, no hover; its words say why */
+.pmt-cz .pmt-cz-chip[aria-disabled="true"] { cursor: default; }
+.pmt-cz .pmt-cz-chip[aria-disabled="true"]:hover { background: transparent; }
+.pmt-cz-chip[aria-disabled="true"]::before { border-style: dashed; }
 .pmt-cz-chipmore { display: grid; gap: 8px; padding: 2px 12px 11px 38px; }
 .pmt-cz-mini { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; cursor: pointer; }
 .pmt-cz-mini input { accent-color: var(--pmt-cz-accent); width: 15px; height: 15px; margin: 0; }
@@ -44617,6 +44621,9 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-root[data-pmt-bell="flash"].pmt-bell .pmt-body::after { opacity: 0; background: var(--pmt-fg); animation: pmt-bell-flash .4s ease-out; }
 @keyframes pmt-bell-flash { 0% { opacity: .09; } 100% { opacity: 0; } }
 .pmt-root[data-pmt-bell="rim"].pmt-bell .pmt-body { box-shadow: inset 0 0 0 2px rgba(255,255,255,.55); }
+/* Glass light: a white rim cannot show on its pale ground, and the focused rim above outranks this one, so the bell is
+   a rim of the text's own ink there (Q15 #8), neutral as the rest of Glass */
+html[data-theme="glass-light"] .pmt-root[data-pmt-bell="rim"].pmt-bell .pmt-body { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--pmt-fg) 62%, transparent), inset 0 1px 0 rgba(255,255,255,.9); }
 .pmt-root[data-pmt-bell="inverse"].pmt-bell .pmt-screen { animation: pmt-bell-inv .12s steps(1) 1; }
 @keyframes pmt-bell-inv { 0% { filter: invert(1); } 100% { filter: none; } }
 .pmt-root[data-pmt-bell="marker"].pmt-bell > .pmw-hrow { box-shadow: inset 0 -2px 0 var(--pmw-warn, var(--accent-warning)); }
@@ -44681,7 +44688,8 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 @keyframes pmt-bg-sway { from { transform: translate3d(-3%, -2%, 0) scale(1.02); } to { transform: translate3d(3%, 2%, 0) scale(1.05); } }
 @keyframes pmt-bg-rise { from { transform: translate3d(0, 3%, 0); } to { transform: translate3d(0, -5%, 0); } }
 /* (round 3c: from full to faint, so the still frame, paused or under Reduced Motion, shows the stars at full strength) */
-@keyframes pmt-bg-twinkle { from { opacity: 1; } to { opacity: .45; } }
+/* (round 4, Q15: a deeper fade, so a star's change shows in the time it takes to look) */
+@keyframes pmt-bg-twinkle { from { opacity: 1; } to { opacity: .2; } }
 .pmt-root:not(.pmt-bg-live) .pmt-bgmove { animation-play-state: paused; }
 html[data-motion="reduced"] .pmt-bgmove, .pmt-bgmove[data-anim="still"] { animation: none; }
 @media (prefers-reduced-motion: reduce) { .pmt-bgmove { animation: none; } }
@@ -44804,9 +44812,10 @@ html[data-o55-nier="on"][data-o55-nier-parts~="brackets"] .pmt-root.pmt-focused 
 /* the bell snaps the brackets in, in three steps, only while a motion part is installed (Still and Colors only show
    the end state at once) */
 html[data-o55-nier="on"][data-o55-nier-parts~="brackets"][data-o55-nier-parts~="glitch"] .pmt-root.pmt-bell .pmt-body::before {
-  content: ""; animation: pmt-nier-snap .24s steps(3, end);
+  content: ""; animation: pmt-nier-snap .3s steps(3, end);
 }
-@keyframes pmt-nier-snap { 0% { inset: 10px; } 100% { inset: 2px; } }
+/* (round 4, Q15: from further in, so the snap reads beside Bell Off, which no longer snaps at all) */
+@keyframes pmt-nier-snap { 0% { inset: 18px; } 100% { inset: 2px; } }
 
 /* ---- icons: square command marks (hollow done, filled rust failed, dotted running) ---- */
 html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-mark svg { display: none; }
@@ -206208,7 +206217,9 @@ var T = {};
      Hyperlegible Mono 200 to 800; Jared 2026-10-14: JetBrains Mono keeps its full range, so its Latin file runs 100-800,
      opus-5.5 src/fonts/SOURCE.md); a face without it has one weight */
   var FONTS = {
-    'jetbrains-mono': { label: 'JetBrains Mono', stack: "'JetBrains Mono', 'PM Symbols Mono', ui-monospace, Menlo, Consolas, monospace", size: 13, lineHeight: 1.3, weights: [100, 800], licence: 'OFL-1.1' },
+    /* drawn: where the face's own steps sit too close at text size, the weight its variable axis is drawn at (round 4,
+       Q15 #6: JetBrains Mono's Semibold and Bold were the closest pair in every look; 580 and 720 space its eight evenly) */
+    'jetbrains-mono': { label: 'JetBrains Mono', stack: "'JetBrains Mono', 'PM Symbols Mono', ui-monospace, Menlo, Consolas, monospace", size: 13, lineHeight: 1.3, weights: [100, 800], drawn: { 600: 580, 700: 720 }, licence: 'OFL-1.1' },
     'atkinson': { label: 'Atkinson Hyperlegible Mono', stack: "'Atkinson Hyperlegible Mono', 'JetBrains Mono', ui-monospace, monospace", size: 13, lineHeight: 1.35, weight: 400, weights: [200, 800], licence: 'OFL-1.1' },
     'vt323': { label: 'VT323', stack: "'VT323', 'JetBrains Mono', ui-monospace, monospace", size: 19, lineHeight: 1.05, licence: 'OFL-1.1' },
     'departure': { label: 'Departure Mono', stack: "'Departure Mono', 'JetBrains Mono', ui-monospace, monospace", size: 13.75, lineHeight: 1.2, licence: 'OFL-1.1' },
@@ -206311,17 +206322,20 @@ var T = {};
     bgScale: { type: 'enum', values: ['fine', 'medium', 'coarse'], default: 'medium', label: 'Size' },
     bgMotion: { type: 'enum', values: ['off', 'gentle', 'lively'], default: 'gentle', label: 'Motion' },
     bgFit: { type: 'enum', values: ['cover', 'contain', 'tile', 'center'], default: 'cover', label: 'Fit' },
-    bgDesat: { type: 'number', min: 0, max: 1, step: 0.05, default: 0.3, label: 'Desaturate' },
+    /* round 4: half by default, one of the three stops Customize offers (full colour, half, grey; Q15 #4) */
+    bgDesat: { type: 'number', min: 0, max: 1, step: 0.05, default: 0.5, label: 'Desaturate' },
     opacity: { type: 'number', min: 0.4, max: 1, step: 0.02, default: null, label: 'Opacity' },
     /* none by default (Jared, 2026-10-14: "Default padding should be 0"); a bezel brings its own margin */
     padding: { type: 'number', min: 0, max: 24, step: 1, default: 0, label: 'Padding' },
     /* the housing round the screen (Jared, 2026-10-14: removable, customizable; round 3: "still really ugly", so a real
        monitor case, 71-bezel.js): its own choice, never part of a look's defaults, drawn with or without the GPU. Width
-       null is the style's own; Reflection null is the material's own (how much of the screen its surface gives back) */
+       null is the style's own; Reflection null is the material's own level (how much of the screen its surface gives back) */
     bezel: { type: 'enum', values: ['off', 'rim', 'case'], default: 'off', label: 'Bezel' },
     bezelWidth: { type: 'number', min: 2, max: 48, step: 1, default: null, label: 'Bezel width' },
     bezelColor: { type: 'enum', values: ['follow', 'charcoal', 'black', 'platinum', 'putty', 'aluminium', 'gunmetal', 'glass', 'accent'], default: 'follow', label: 'Bezel material' },
-    bezelReflect: { type: 'number', min: 0, max: 1, step: 0.05, default: null, label: 'Reflection' },
+    /* round 4 (Q15): four levels, each material starting at its own (null); a number stored by round 3's slider reads as
+       the nearest level (71-bezel.js) */
+    bezelReflect: { type: 'enum', values: ['off', 'low', 'medium', 'high'], default: null, label: 'Reflection' },
     effects: { type: 'enum', values: ['follow', 'off', 'custom'], default: 'follow', label: 'Effects' },
     scanlines: { type: 'bool', default: null, label: 'Scanlines' },
     scanStrength: { type: 'number', min: 0, max: 0.6, step: 0.05, default: 0.3, label: 'Scanline strength' },
@@ -206329,7 +206343,7 @@ var T = {};
     glowStrength: { type: 'number', min: 0, max: 1, step: 0.05, default: 0.45, label: 'Glow strength' },
     crt: { type: 'bool', default: false, label: 'Full CRT' },
     /* round 2: the edge sag is Curvature x 0.125 (50-fx-gl.js), subtle by default; the phosphor mask is Full CRT's own
-       choice (drawn at a device pixel ratio of 2 or more) */
+       choice (an aperture grille three device px to a triad, at any density since round 4) */
     curvature: { type: 'number', min: 0, max: 0.2, step: 0.01, default: 0.04, label: 'Curvature' },
     crtMask: { type: 'bool', default: false, label: 'Phosphor mask' },
     burnIn: { type: 'bool', default: true, label: 'Burn-in' },
@@ -206729,7 +206743,7 @@ var T = {};
       if (inst) family = "'" + inst + "', " + FD.stack; else axes.unavailable = true;
     }
     var drawing = f('fontRendering');
-    var font = { id: fid, family: family, size: size, weight: wt, boldWeight: FD.weights ? Math.min(FD.weights[1], wt <= 500 ? 700 : 800) : 700,
+    var font = { id: fid, family: family, size: size, weight: FD.drawn && FD.drawn[wt] || wt, chosen: wt, boldWeight: FD.weights ? Math.min(FD.weights[1], wt <= 500 ? 700 : 800) : 700,
       lineHeight: lh, letterSpacing: f('letterSpacing') || 0, label: FD.label, crisp: drawing === 'crisp', axes: axes,
       local: FD.local ? { name: FD.label, installed: hasLocalFace(FD.label) } : null };
 
@@ -206766,9 +206780,18 @@ var T = {};
         var purl = T.Appearance.imageUrl('custom', f('bgImageData'), f('bgBlur'), f('bgDesat')), st = pictureStats(purl);
         /* the worst pixel for this scheme's text: the picture's lightest under light text, its darkest under dark text */
         var pw = st ? (C.lum(theme.fg) > C.lum(theme.bg) ? st.hi : st.lo) : (C.lum(theme.fg) > C.lum(theme.bg) ? 0xffffff : 0);
-        var pAuto = T.Grounds.scrim(pw, theme), pDim = dim === null || dim === undefined ? (st ? pAuto : 0.6) : Math.max(dim, st ? pAuto : 0);
+        var pAuto = T.Grounds.scrim(pw, theme), veil = null;
+        /* round 4 (Q15 #2): a scheme with little contrast to spare (Tokyo Night Day's 4.52:1, Glass light's own) needs
+           almost all of its own ground over a picture, which then vanished with every Fit and Dim the same. There the
+           veil is white under dark text (black under light text) instead: the picture stays as a pale (or deep) print
+           of itself, its light squeezed into what the text allows, as 3c's lighter-than-ground designs do */
+        if (st && pAuto >= 0.9) {
+          var vt = C.lum(theme.fg) < C.lum(theme.bg) ? 0xffffff : 0x000000, va = veilTo(pw, theme, vt);
+          if (va < pAuto - 0.04) { veil = vt; pAuto = va; }
+        }
+        var pDim = dim === null || dim === undefined ? (st ? pAuto : 0.6) : Math.max(dim, st ? pAuto : 0);
         bg = { kind: 'image', custom: true, url: purl, fit: f('bgFit'), dim: pDim, dimAuto: dim === null || dim === undefined, raised: dim !== null && dim !== undefined && st && pAuto > dim,
-          ground: C.mix(pw, theme.bg, pDim) };
+          floor: st ? pAuto : 0, veil: veil === null ? null : C.toHex(veil), ground: C.mix(pw, veil === null ? theme.bg : veil, pDim) };
       } else {
         if (!G.has(id) || (bgKind === 'gradient') !== G.isGradient(id)) id = bgKind === 'gradient' ? 'fade' : 'hills';
         var strength = T.util.clamp(f('bgStrength'), 0, 1), cat = G.cat(id), mot = G.motion(id);
@@ -206776,8 +206799,8 @@ var T = {};
         if (G.painted(id) || mot) {
           /* painted at the terminal's own size by the view (_applyBackground), which then knows the worst pixel */
           bg.paint = G.painted(id) ? id : (mot.under || null);
-          if (mot) bg.motion = { id: id, anim: mot.anim, ms: mot.ms * (f('bgMotion') === 'lively' ? 0.5 : 1), on: f('bgMotion') !== 'off' && !reduced };
-          bg.blur = f('bgBlur');
+          if (mot) bg.motion = { id: id, anim: mot.anim, ms: mot.ms * (f('bgMotion') === 'lively' ? mot.lively || 0.5 : 1), on: f('bgMotion') !== 'off' && !reduced };
+          /* Blur is a picture's own (round 4): the built-in designs are drawn soft already and barely changed under it */
           if (mot && !mot.under) bg.base = C.toHex(theme.bg);
         } else {
           var D = G.css(id, theme, { scale: f('bgScale') }) || { css: C.toHex(theme.bg), colors: [theme.bg] };
@@ -207066,13 +207089,15 @@ var T = {};
     pending[key] = true;
     var im = new Image();
     im.onload = function () {
-      var cv = document.createElement('canvas'); cv.width = 960; cv.height = 600;
-      var g = cv.getContext('2d'), k = Math.max(960 / im.naturalWidth, 600 / im.naturalHeight);
-      var dw = im.naturalWidth * k, dh = im.naturalHeight * k;
+      /* at the picture's own size (at most 1920 x 1200): drawn into a fixed 960 x 600 a small picture filled it, so Tile
+         and Centre showed the same (round 4, Q15). A blurred picture is drawn a little larger so its edges stay whole */
+      var k = Math.min(1, 1920 / im.naturalWidth, 1200 / im.naturalHeight), W = Math.max(1, Math.round(im.naturalWidth * k)), H = Math.max(1, Math.round(im.naturalHeight * k));
+      var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+      var g = cv.getContext('2d'), pad = blur ? blur * 2 : 0;
       if (canFilter) g.filter = (blur ? 'blur(' + blur + 'px) ' : '') + (desat ? 'saturate(' + (1 - desat) + ')' : '') || 'none';
-      g.drawImage(im, (960 - dw) / 2, (600 - dh) / 2, dw, dh);
-      if (blur) blurCanvas(cv, blur);
-      if (desat && !canFilter) desaturate(g, 960, 600, desat);
+      g.drawImage(im, -pad, -pad, W + pad * 2, H + pad * 2);
+      if (blur && !canFilter) blurCanvas(cv, blur);
+      if (desat && !canFilter) desaturate(g, W, H, desat);
       imgCache.set(key, cv.toDataURL('image/jpeg', 0.86)); delete pending[key];
       refreshAll();
     };
@@ -207089,6 +207114,14 @@ var T = {};
      dim and the text's contrast floor measure against (research: the WCAG F83 check, against the picture's own
      lightest or darkest area) */
   var picStats = new Map();
+  /* the least veil of colour t over the worst pixel w that keeps the text at its floor (T.Grounds.scrim's rule, with
+     a colour of its own in place of the scheme's ground) */
+  function veilTo(w, th, t) {
+    var own = C.contrast(th.fg, th.bg), want = Math.min(own, 4.8) - 0.004;
+    if (C.contrast(th.fg, w) >= want) return 0;
+    for (var a = 0.05; a < 0.999; a += 0.05) if (C.contrast(th.fg, C.mix(w, t, a)) >= want) return Math.round(a * 100) / 100;
+    return 1;
+  }
   function pictureStats(url) {
     if (!url) return null;
     if (picStats.has(url)) return picStats.get(url);
@@ -207550,7 +207583,8 @@ var T = {};
         paths += '<path d="' + d + 'Z"/>';
       }
     });
-    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMaxYMax slice"><g fill="none" stroke="' + hex(line) + '" stroke-width="1" vector-effect="non-scaling-stroke">' + paths + '</g></svg>';
+    /* (round 4, Q15: drawn in light on a pale ground its hairlines matched Dot grid, Starfield and Rain; twice as thick there) */
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMaxYMax slice"><g fill="none" stroke="' + hex(line) + '" stroke-width="' + (th.reflect ? 2 : 1) + '" vector-effect="non-scaling-stroke">' + paths + '</g></svg>';
     return { css: svgUrl(svg) + ' right bottom / cover no-repeat, ' + hex(th.bg), colors: [th.bg, line] };
   } });
   /* waves: four ribbons across the bottom third, each 3 % of lightness from the next */
@@ -207637,13 +207671,15 @@ var T = {};
   def('scene', 'caustics', 'Caustics');
   def('scene', 'bokeh', 'Bokeh');
   def('scene', 'clouds', 'Clouds', { looks: ['friendly'] });
-  /* moving: a painted layer bigger than the terminal, moved by transform only, stepped to about 20 fps */
-  def('moving', 'aurora-drift', 'Drifting aurora', { motion: { layer: 'aurora', anim: 'pmt-bg-sway', ms: 45000 } });
+  /* moving: a painted layer bigger than the terminal, moved by transform only, stepped to about 20 fps. Lively is twice
+     as fast, and four times for the two slow drifts (round 4, Q15: at twice, Gentle and Lively looked alike for seconds) */
+  def('moving', 'aurora-drift', 'Drifting aurora', { motion: { layer: 'aurora', anim: 'pmt-bg-sway', ms: 45000, lively: 0.25 } });
   /* (round 3b: its few bright stars on the scheme's own sky, no longer over Starfield's, so the two are distinct at rest) */
-  def('moving', 'twinkle', 'Twinkling stars', { motion: { layer: 'stars2', anim: 'pmt-bg-twinkle', ms: 6000 } });
+  /* (round 4: a 2.6 s fade, 1.3 s when Lively; at 6 s a star hardly changed in the time it takes to look) */
+  def('moving', 'twinkle', 'Twinkling stars', { motion: { layer: 'stars2', anim: 'pmt-bg-twinkle', ms: 2600 } });
   def('moving', 'rain', 'Rain', { motion: { layer: 'rain', anim: 'pmt-bg-fall', ms: 2400 } });
   def('moving', 'snow', 'Snow', { motion: { layer: 'snow', anim: 'pmt-bg-snow', ms: 30000 } });
-  def('moving', 'lava', 'Lava', { motion: { layer: 'lava', anim: 'pmt-bg-rise', ms: 80000 } });
+  def('moving', 'lava', 'Lava', { motion: { layer: 'lava', anim: 'pmt-bg-rise', ms: 80000, lively: 0.25 } });
 
   /* ---- painting ---- */
   function rng(seed) { var s = seed >>> 0; return function () { s = (s + 0x6D2B79F5) >>> 0; var t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
@@ -207679,6 +207715,18 @@ var T = {};
         g.fillStyle = gr; g.beginPath(); g.moveTo(0, H);
         for (var x = 0; x <= W; x += 6) g.lineTo(x, y0 + Math.sin(x / (W / (1.2 + k * 0.6)) + k * 2.2) * H * 0.03);
         g.lineTo(W, H); g.closePath(); g.fill();
+        /* (round 4, Q15: wind ripples down each face, fine wavy lines that follow its curve, so Dunes are sand and not
+           Ridgelines' ranges) */
+        g.strokeStyle = hex(tone(base, dark ? 0.035 : -0.03)); g.lineWidth = 1;
+        for (var j = 1; j <= 4; j++) {
+          g.globalAlpha = 0.85 - j * 0.15; g.beginPath();
+          for (x = 0; x <= W; x += 3) {
+            var yy = y0 + Math.sin(x / (W / (1.2 + k * 0.6)) + k * 2.2) * H * 0.03 + j * H * 0.017 + Math.sin(x / 7 + j * 1.3 + k) * 1.1;
+            if (x) g.lineTo(x, yy); else g.moveTo(x, yy);
+          }
+          g.stroke();
+        }
+        g.globalAlpha = 1;
       }
     },
     city: function (g, W, H, th, h) {
@@ -207776,9 +207824,11 @@ var T = {};
          they were nearly invisible there) */
       var dark = isDark(th), R = rng(31), c = dark ? wash(th, h.c, 0.32) : inkUp(th, h.c, th.mono ? 0.3 : 0.35), a0 = dark ? 0.25 : tight(th) ? 0.7 : 0.35, a1 = dark ? 0.4 : tight(th) ? 0.3 : 0.6;
       /* (and long, slanted streaks: rain, not flakes or dots) */
-      g.strokeStyle = hex(c); g.lineWidth = dark ? 1.1 : 1.3; g.lineCap = 'round';
+      /* (round 4, Q15: longer and firmer still on a ground with no contrast to spare, where they came close to Snow) */
+      var tk = tight(th);
+      g.strokeStyle = hex(c); g.lineWidth = dark ? 1.1 : tk ? 1.6 : 1.3; g.lineCap = 'round';
       for (var i = 0; i < Math.round(W * H / 3200); i++) {
-        var x = R() * W, y = R() * H, l = 16 + R() * 26;
+        var x = R() * W, y = R() * H, l = tk ? 26 + R() * 34 : 16 + R() * 26;
         g.globalAlpha = a0 + R() * a1; g.beginPath(); g.moveTo(x, y); g.lineTo(x - l * 0.06, y + l); g.stroke();
       }
       g.globalAlpha = 1; g.lineCap = 'butt';
@@ -209582,7 +209632,7 @@ var T = {};
    soft edge), the tube edge darkens 8 % over 4 px as Royale's border does, and the vignette is pow(16uv(1-u)(1-v), e)
    with e = 0.08. Scanlines live in content space, locked to the text rows (a whole number of lines per row, about 3
    device px each) and box-filtered against moire, so they curve with the text; the optional phosphor mask is a
-   'lite' aperture grille in screen space, drawn only at a device pixel ratio of 2 or more. Scanlines, mask and
+   aperture grille in screen space, three device px to a triad at any device pixel ratio. Scanlines, mask and
    vignette multiply in linear light. The bezel is the view's own CSS frame now (30-looks.css): the shader no longer
    insets the picture for it. (A curved silhouette over flat text, the research's "edges only", would clip the corner
    cells, since this canvas is exactly the text grid; it is not offered, and uFlat stays 0.) */
@@ -209595,7 +209645,10 @@ var T = {};
   var SAG_PER_CURVE = 0.125;    // relative edge sag s per unit of the Curvature field (0.04 -> 0.005, 0.2 -> 0.025)
   var CORNER_CSS = 10;          // the tube's rounded corner, CSS px, whenever Full CRT is on
   var EDGE_DARK = 0.08, EDGE_CSS = 4;   // the tube edge: 8 % darker over 4 CSS px inside the glass
-  var MASK_LITE = 0.10;         // the phosphor mask's depth ('lite' grille), only at DPR >= 2
+  /* the phosphor mask's depth: each device px column loses this much of one of red, green and blue in turn (an
+     aperture grille's stripes), its brightness kept. Round 4 (Q15 #3): drawn at every density, since at 1x a 3 px triad
+     is what emulators draw on a 1080p screen; deeper than round 2's 'lite' 0.10, which read as nothing at 2x either */
+  var MASK_DEPTH = 0.24;
   var SCAN_REGAIN = 0.5;        // scanlines give back part of the light they take, in linear light
   var SCAN_TARGET_CSS = 3;      // about one scanline per 3 device px (DPR 1) or 2 CSS px (DPR >= 1.5), whole lines per row
   var BURN_GHOST = 0.65;        // afterglow brightness relative to the content that left (cool-retro-term uses 0.65)
@@ -209644,7 +209697,7 @@ var T = {};
       mask: { on: on(p.mask, D.mask.on) },
       rowPx: num(p.rowPx, 0) > 0 ? p.rowPx : 0,
       outside: Array.isArray(p.outside) && p.outside.length === 3 ? p.outside.slice() : null,
-      burnIn: { on: on(bi, D.burnIn.on), persistMs: clamp(num(bi.persistMs, D.burnIn.persistMs), L.persistMs[0], L.persistMs[1]) },
+      burnIn: { on: on(bi, D.burnIn.on), persistMs: clamp(num(bi.persistMs, D.burnIn.persistMs), L.persistMs[0], L.persistMs[1]), ink: !!bi.ink },
       noise: { on: on(nz, D.noise.on), amount: clamp(num(nz.amount, D.noise.amount), L.noise[0], L.noise[1]) },
       flicker: { on: on(fl, D.flicker.on), amount: clamp(num(fl.amount, D.flicker.amount), L.flicker[0], L.flicker[1]) },
       degauss: dg,
@@ -209788,17 +209841,21 @@ var T = {};
   var FS_COPY = PREC + 'varying vec2 vUv;\nuniform sampler2D uTex;\nvoid main() { gl_FragColor = texture2D(uTex, vUv); }\n';
   var FS_BURN = PREC + [
     'varying vec2 vUv;',
-    'uniform sampler2D uAcc; uniform sampler2D uPrev; uniform float uDecay; uniform float uAddPrev;',
+    'uniform sampler2D uAcc; uniform sampler2D uPrev; uniform float uDecay; uniform float uAddPrev; uniform float uInk;',
     'void main() {',
     '  vec4 a = max(texture2D(uAcc, vUv) - vec4(uDecay), vec4(0.0));',
-    '  gl_FragColor = max(a, texture2D(uPrev, vUv) * uAddPrev);',
+    '  vec4 pv = texture2D(uPrev, vUv);',
+    /* on a ground lighter than its text the ghost is the text's ink: keep how dark each pixel was (premultiplied) */
+    '  if (uInk > 0.5) pv.rgb = pv.a - pv.rgb;',
+    '  gl_FragColor = max(a, pv * uAddPrev);',
     '}'].join('\n');
   var FS_DOWN = PREC + [
     'varying vec2 vUv;',
-    'uniform sampler2D uSrc; uniform sampler2D uAcc; uniform float uBurnK; uniform vec2 uTexel;',
+    'uniform sampler2D uSrc; uniform sampler2D uAcc; uniform float uBurnK; uniform vec2 uTexel; uniform float uInk;',
+    'vec4 ghost(vec4 c, vec4 g) { if (uInk < 0.5) return max(c, g); vec4 d = max(vec4(c.a - c.rgb, c.a), g); return vec4(d.a - d.rgb, d.a); }',
     'vec4 tap(vec2 p) {',
     '  vec4 c = texture2D(uSrc, p);',
-    '  if (uBurnK > 0.0) c = max(c, texture2D(uAcc, p) * uBurnK);',
+    '  if (uBurnK > 0.0) c = ghost(c, texture2D(uAcc, p) * uBurnK);',
     '  vec3 s = c.rgb / max(c.a, 0.0001);',
     '  float l = dot(s, vec3(0.2126, 0.7152, 0.0722));',
     '  return c * smoothstep(0.12, 0.5, l);',
@@ -209822,8 +209879,9 @@ var T = {};
     'uniform sampler2D uSrc; uniform sampler2D uAcc; uniform sampler2D uGlow;',
     'uniform vec2 uOut; uniform float uDpr;',
     'uniform vec2 uWarp; uniform float uFlat; uniform float uRadius; uniform vec2 uEdge; uniform float uVigExp; uniform float uMask; uniform vec3 uOutside;',
-    'uniform vec4 uScan; uniform float uGlowK; uniform float uBurnK;',
+    'uniform vec4 uScan; uniform float uGlowK; uniform float uBurnK; uniform float uInk;',
     'uniform vec2 uNoise; uniform float uGain; uniform vec2 uDeg; uniform float uDim;',
+    'vec4 ghost(vec4 c, vec4 g) { if (uInk < 0.5) return max(c, g); vec4 d = max(vec4(c.a - c.rgb, c.a), g); return vec4(d.a - d.rgb, d.a); }',
     /* Lottes' warp with shape-normalised coefficients (round 2): the centre row and column stay where they are */
     'vec2 warp(vec2 p) { vec2 q = p * 2.0 - 1.0; q *= vec2(1.0 + q.y * q.y * uWarp.x, 1.0 + q.x * q.x * uWarp.y); return q * 0.5 + 0.5; }',
     'float hash12(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }',
@@ -209854,7 +209912,7 @@ var T = {};
     '  } else {',
     '    c = texture2D(uSrc, t);',
     '  }',
-    '  if (uBurnK > 0.0) c = max(c, texture2D(uAcc, t) * uBurnK);',
+    '  if (uBurnK > 0.0) c = ghost(c, texture2D(uAcc, t) * uBurnK);',
     '  if (uGlowK > 0.0) {',
     '    vec3 g = min(texture2D(uGlow, t).rgb * uGlowK, vec3(1.0));',
     '    c.rgb += g * (1.0 - c.rgb / max(c.a, 0.0001));',
@@ -209901,7 +209959,12 @@ var T = {};
     '  if (uNoise.x > 0.0) {',
     '    vec2 cell = floor(gl_FragCoord.xy / uDpr);',
     '    float n = hash12(cell + uNoise.y * vec2(7.13, 3.71));',
-    '    c.rgb += vec3(n * uNoise.x * max(0.0, 1.0 - length(uv - 0.5) * 1.3)) * c.a;',
+    '    float gv = uNoise.x * max(0.0, 1.0 - length(uv - 0.5) * 1.3);',
+    '    c.rgb += vec3(n * gv) * c.a;',
+    /* round 4 (Q15): where the screen is see-through (Friendly's stage, Glass) the grain lies over the ground under it as
+       well, light and dark specks in turn so it shows on a pale ground too; it had touched the text alone there */
+    '    float tg = (1.0 - c.a) * (n - 0.5) * 2.0 * gv;',
+    '    c = tg > 0.0 ? c + vec4(tg) : vec4(c.rgb, c.a - tg);',
     '  }',
     '  if (uGain < 1.0) {',
     '    vec3 st = c.rgb / max(c.a, 0.0001);',
@@ -210109,7 +210172,7 @@ var T = {};
     /* 1. burn-in: the content that is about to be replaced joins the accumulator at full strength; older ghosts fade
           linearly by dt / persistMs, in exact 1/255 steps (the remainder carries to the next frame). */
     var burnOn = p.burnIn.on && this.hasSource && !sizeChanged;
-    if (!p.burnIn.on) this.accValid = false;
+    if (!p.burnIn.on || !!p.burnIn.ink !== this.accInk) { this.accValid = false; this.accInk = !!p.burnIn.ink; }
     if (burnOn) {
       var A = this._target('accA', W, H), B = this._target('accB', W, H);
       if (!this.accValid) {
@@ -210122,7 +210185,7 @@ var T = {};
         var pb = this.prog.burn;
         gl.useProgram(pb.p);
         this._bind(0, A.tex, pb, 'uAcc'); this._bind(1, any ? this._srcTex() : null, pb, 'uPrev');
-        gl.uniform1f(pb.u.uDecay, q); gl.uniform1f(pb.u.uAddPrev, any ? 1 : 0);
+        gl.uniform1f(pb.u.uDecay, q); gl.uniform1f(pb.u.uAddPrev, any ? 1 : 0); gl.uniform1f(pb.u.uInk, p.burnIn.ink ? 1 : 0);
         this._draw(pb, B, W, H);
         this.targets.accA = B; this.targets.accB = A;
         this.accCarry = decay >= 1 ? 0 : decay - q; this.lastBurnMs = now;
@@ -210170,7 +210233,7 @@ var T = {};
         var G1 = this._target('glowA', hw, hh), G2 = this._target('glowB', hw, hh), pd = this.prog.down, pl = this.prog.blur;
         gl.useProgram(pd.p);
         this._bind(0, src, pd, 'uSrc'); this._bind(1, burnK ? this.targets.accA.tex : null, pd, 'uAcc');
-        gl.uniform1f(pd.u.uBurnK, burnK); gl.uniform2f(pd.u.uTexel, 1 / W, 1 / H);
+        gl.uniform1f(pd.u.uBurnK, burnK); gl.uniform1f(pd.u.uInk, p.burnIn.ink ? 1 : 0); gl.uniform2f(pd.u.uTexel, 1 / W, 1 / H);
         this._draw(pd, G1, hw, hh);
         var stride = Math.max(1, sigma / 2);
         gl.useProgram(pl.p); gl.uniform1fv(pl.u.uW, this._weights);
@@ -210195,9 +210258,9 @@ var T = {};
     var oc = outsideColor(p); gl.uniform3f(u.uOutside, oc[0], oc[1], oc[2]);
     /* scanlines: locked to the text rows (rowPx, device px) when the view says how tall a row is */
     gl.uniform4f(u.uScan, p.scanlines.on ? p.scanlines.strength : 0, scanPeriod(p.rowPx, this.dpr), 0, SCAN_REGAIN);
-    gl.uniform1f(u.uMask, p.mask.on && this.dpr >= 2 ? MASK_LITE : 0);
+    gl.uniform1f(u.uMask, p.mask.on ? MASK_DEPTH : 0);
     gl.uniform1f(u.uGlowK, this.glowValid ? p.glow.strength * GLOW_GAIN : 0);
-    gl.uniform1f(u.uBurnK, burnK);
+    gl.uniform1f(u.uBurnK, burnK); gl.uniform1f(u.uInk, p.burnIn.ink ? 1 : 0);
     gl.uniform1f(u.uVigExp, p.vignette.on ? p.vignette.strength : 0);
     gl.uniform2f(u.uNoise, p.noise.on ? p.noise.amount : 0, ambientStep(now) % 997);
     gl.uniform1f(u.uGain, p.flicker.on ? flickerGain(p.flicker.amount, now) : 1);
@@ -210428,7 +210491,10 @@ var T = {};
       var lead = easeOut((nowMs - a.start) / (a.ms * LEAD)), back = easeOut((nowMs - a.start) / a.ms);
       var hx = tail[0] + (head[0] - tail[0]) * lead, hy = tail[1] + (head[1] - tail[1]) * lead;
       var tx = tail[0] + (head[0] - tail[0]) * back, ty = tail[1] + (head[1] - tail[1]) * back;
-      var lw = Math.max(1, Math.round(k)) / k;                       // one device-px multiple, at least 1 px
+      /* one device-px multiple, at least 1 px; dark ink (a light ground) draws 2 CSS px, as ink on paper needs the
+         weight to show (round 4, Q15: on Basic, NieR and Retro light the 1 px line hardly showed) */
+      var inkLine = (0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]) / 255 < 0.45;
+      var lw = Math.max(1, Math.round(k * (inkLine ? 2 : 1))) / k;
       var snap = function (v) { return (Math.round(v * k - 0.5) + 0.5) / k; };
       if (Math.abs(hy - ty) < 0.01) { hy = ty = snap(ty); }        // horizontal and vertical lines land on pixel centres
       if (Math.abs(hx - tx) < 0.01) { hx = tx = snap(tx); }
@@ -210589,7 +210655,9 @@ var T = {};
       /* scanlines lock to the text rows; beyond the tube is the scheme's own ground, unlit */
       rowPx: v.metrics ? v.metrics.devH : 0,
       outside: e.tube ? [parseInt(e.tube.slice(1, 3), 16) / 255, parseInt(e.tube.slice(3, 5), 16) / 255, parseInt(e.tube.slice(5, 7), 16) / 255] : null,
-      burnIn: { on: !!(e.burnIn && e.burnIn.on) && !reduced, persistMs: e.burnIn ? e.burnIn.persistMs : 450 },
+      /* a light ground keeps the cleared text's ink as its ghost, a dark one its light (Q15 #9) */
+      burnIn: { on: !!(e.burnIn && e.burnIn.on) && !reduced, persistMs: e.burnIn ? e.burnIn.persistMs : 450,
+        ink: !!(v.theme && T.color.lum(v.theme.bg) > T.color.lum(v.theme.fg)) },
       noise: { on: !!(e.noise && e.noise.on) && moving, amount: e.noise ? e.noise.amount : 0 },
       flicker: { on: !!(e.flicker && e.flicker.on) && moving, amount: e.flicker ? Math.min(0.03, e.flicker.amount) : 0 },
       degauss: this.degaussAt && !reduced ? { startMs: this.degaussAt } : null,
@@ -216277,6 +216345,8 @@ var T = {};
     } else if (bg.kind === 'gradient' && bg.css) L.style.background = bg.css;
     else if (bg.kind === 'solid' && bg.color) L.style.background = bg.color;
     this.bgScrim.style.opacity = dim > 0 ? String(Math.round(dim * 1000) / 1000) : '0';
+    /* a picture on a scheme with no contrast to spare is veiled in white or black, not the scheme's ground (round 4) */
+    this.bgScrim.style.background = bg.custom && bg.veil ? bg.veil : '';
     /* Glass: a design is laid on the glass at Glass's own opacity, so the app still shows through as it does on the
        theme surface (no blur is added, F3-431) */
     if (typeof bg.alpha === 'number' && bg.alpha < 1) L.style.opacity = String(bg.alpha);
@@ -217021,8 +217091,12 @@ var T = {};
     if (this._lastBell && now - this._lastBell < 1000) return; /* at most one visual bell a second (WCAG 2.3.1) */
     this._lastBell = now;
     var r = this.root;
-    r.classList.remove('pmt-bell'); void r.offsetWidth; r.classList.add('pmt-bell');
-    setTimeout(function () { r.classList.remove('pmt-bell'); }, 420);
+    /* Bell Off draws nothing in any look (Q15 #8: NieR's bracket snap and Reduced Motion's marker ran with it off);
+       an unfocused terminal still asks for attention */
+    if (r.getAttribute('data-pmt-bell') !== 'off') {
+      r.classList.remove('pmt-bell'); void r.offsetWidth; r.classList.add('pmt-bell');
+      setTimeout(function () { r.classList.remove('pmt-bell'); }, 420);
+    }
     if (!this.focused && this.api && this.api.update) this.api.update({ attention: true });
   };
   View.prototype.setProgress = function (p) {
@@ -217108,6 +217182,7 @@ var T = {};
     this._lookSig = sig;
     if (T.Appearance) this.applyAppearance(T.Appearance.resolve(this));
     else this.applyAppearance(this._fallbackAppearance());
+    if (this._czLook) this._czLook();
   };
   View.prototype.setDimmed = function (on) { if (this.dimmed === on) return; this.dimmed = on; this.root.classList.toggle('pmt-inactive', on); this.schedule(true); };
   View.prototype.dispose = function () {
@@ -217148,25 +217223,43 @@ var T = {};
    canvas itself (no blend layer that the compositor would redo on every repaint of the text).
    Materials: Platinum and Putty (beige plastic: IBM, Apple), Graphite (grey plastic: DEC), Black gloss (Sony PVM),
    Brushed aluminium and Gunmetal, Glass (a clear case lit in Liquid Glass's public tokens, neutral white light only, no
-   colour split: its CONTRACT.md), and the scheme's accent in plastic. NieR Mode keeps its own flat ink frame: no glow,
-   no blur, square (DL-152). */
+   colour split: its CONTRACT.md), and the scheme's accent in plastic. NieR Mode's own case (Follow look) is its flat ink
+   frame: no glow, no blur, square; a material chosen in NieR is that material's housing, as in any look (round 4, Q15
+   #1: the nine choices drew the one ink frame). Reflection is four levels, Off, Low, Medium and High, each material
+   starting at its own (Q15 #2: 21 steps of 5 % were too fine to tell apart, and the face saturated above 80 %). */
 (function () {
   'use strict';
   var C = T.color;
   var MAX_FPS = 15;
 
-  /* the case colour, how much of the screen's light the face gives back (the Reflection slider's Auto), roughness (the
-     reflection's blur, CSS px), grain; a dark case's face is lifted above its frame so its lighting reads */
+  /* the case colour, its own Reflection level (on a dark screen and on a light one), roughness (the reflection's blur,
+     CSS px), grain; a dark case's face is lifted above its frame so its lighting reads */
   var MATERIALS = {
-    platinum: { base: '#cbc4b2', reflect: 0.22, blur: 2.4, grain: 'plastic', faceLift: 1.0, light: true },
-    putty: { base: '#b9b09c', reflect: 0.18, blur: 2.8, grain: 'plastic', faceLift: 1.0, light: true },
-    charcoal: { base: '#2c2d31', reflect: 0.45, blur: 1.8, grain: 'plastic', faceLift: 1.7 },
-    black: { base: '#141416', reflect: 0.58, blur: 1.2, grain: 'gloss', faceLift: 2.1 },
-    aluminium: { base: '#a2a6ad', reflect: 0.38, blur: 1.6, grain: 'brushed', faceLift: 1.0, light: true },
-    gunmetal: { base: '#3a3d43', reflect: 0.48, blur: 1.4, grain: 'brushed', faceLift: 1.5 },
-    glass: { base: null, reflect: 0.5, blur: 1.0, grain: 'frost', faceLift: 1.0 },
-    accent: { base: null, reflect: 0.32, blur: 2.0, grain: 'plastic', faceLift: 1.2 }
+    platinum: { base: '#cbc4b2', own: ['low', 'low'], blur: 2.4, grain: 'plastic', faceLift: 1.0, light: true },
+    putty: { base: '#b9b09c', own: ['low', 'low'], blur: 2.8, grain: 'plastic', faceLift: 1.0, light: true },
+    charcoal: { base: '#2c2d31', own: ['medium', 'medium'], blur: 1.8, grain: 'plastic', faceLift: 1.7 },
+    black: { base: '#141416', own: ['medium', 'medium'], blur: 1.2, grain: 'gloss', faceLift: 2.1 },
+    aluminium: { base: '#a2a6ad', own: ['low', 'medium'], blur: 1.6, grain: 'brushed', faceLift: 1.0, light: true },
+    gunmetal: { base: '#3a3d43', own: ['medium', 'medium'], blur: 1.4, grain: 'brushed', faceLift: 1.5 },
+    glass: { base: null, own: ['medium', 'medium'], blur: 1.0, grain: 'frost', faceLift: 1.0 },
+    accent: { base: null, own: ['low', 'low'], blur: 2.0, grain: 'plastic', faceLift: 1.2 }
   };
+  /* the four Reflection levels as the share of the screen's light the face gives back. A light screen lights its case
+     far more than a dark one does, so its steps are smaller; each step measured apart from its neighbours in every
+     look (round 4). Medium on a dark screen is round 3's black gloss and graphite; Low on a light one its putty */
+  var LEVELS = ['off', 'low', 'medium', 'high'];
+  var STRENGTH = { dark: [0, 0.3, 0.6, 1.3], light: [0, 0.2, 0.42, 0.8] };
+  function levelOf(r, mat, light) {
+    if (typeof r === 'number' && isFinite(r)) {
+      /* a level stored as a number (round 3's slider): the nearest */
+      var t = STRENGTH[light ? 'light' : 'dark'], best = 0;
+      for (var i = 1; i < t.length; i++) if (Math.abs(t[i] - r) < Math.abs(t[best] - r)) best = i;
+      return LEVELS[best];
+    }
+    if (LEVELS.indexOf(r) >= 0) return r;
+    var M = MATERIALS[mat];
+    return M ? M.own[light ? 1 : 0] : 'off';
+  }
   /* the look's own case: graphite or brushed aluminium in Basic, graphite or putty in Friendly, glass in Glass, black gloss
      or platinum in Retro (the two classic terminals), ink in NieR */
   function lookMaterial(look, light) {
@@ -217247,8 +217340,12 @@ var T = {};
   /* the resolved bezel (42-appearance.js): style, width, gap, material, reflection; and the look's theme */
   Bezel.prototype.configure = function (bz, ap) {
     var th = ap.theme || {}, light = th.appearance === 'light' || C.lum(th.bg) > 0.4, look = (ap.effects && ap.effects.look) || 'basic';
-    var mat = bz.style === 'off' ? null : look === 'nier' ? 'ink' : (bz.color && bz.color !== 'follow' ? bz.color : lookMaterial(look, light));
-    this.spec = { style: bz.style || 'off', width: bz.width || 0, gap: bz.gap || 0, material: mat, reflect: bz.reflect,
+    var chosen = bz.color && bz.color !== 'follow' && MATERIALS[bz.color] ? bz.color : null;
+    var mat = bz.style === 'off' ? null : chosen || (look === 'nier' ? 'ink' : lookMaterial(look, light));
+    var level = mat === 'ink' ? 'off' : levelOf(bz.reflect, mat, light);
+    this.spec = { style: bz.style || 'off', width: bz.width || 0, gap: bz.gap || 0, material: mat, reflect: level,
+      /* clear glass on a light screen gives back half as much again: white on white, its steps read faintly otherwise */
+      strength: STRENGTH[light ? 'light' : 'dark'][LEVELS.indexOf(level)] * (mat === 'glass' && light ? 1.5 : 1),
       light: light, bg: th.bg, fg: th.fg, accent: th.palette ? th.palette[4] : th.fg, glow: !!(ap.effects && ap.effects.glow && ap.effects.glow.on), look: look };
     this.el.hidden = !this.on();
     this.view.root.setAttribute('data-pmt-bezel', this.spec.style);
@@ -217264,7 +217361,7 @@ var T = {};
     this.paintTimer = setTimeout(function () { self.paintTimer = 0; self._paint(); }, 30);
   };
   Bezel.prototype.frame = function () {
-    if (!this.on() || !this.geo) return;
+    if (!this.on() || !this.geo || !this.spec.strength) return;   /* Reflection Off: the case never changes */
     /* only when the screen's picture changed (the renderer counts the frames it actually paints) */
     var st = this.view.renderer && this.view.renderer.stats, n = st ? st.frames : -1;
     if (n === this.seenFrames && !this.dirty) return;
@@ -217464,17 +217561,19 @@ var T = {};
     if (!this.view.visible && !force) { this.dirty = true; return; }
     var out = this.housing, oc = out.getContext('2d');
     if (out.width !== geo.W || out.height !== geo.H) { out.width = geo.W; out.height = geo.H; }
-    var M = MATERIALS[s.material], strength = s.reflect === null || s.reflect === undefined ? (M ? M.reflect : 0) : s.reflect;
-    var R = M && strength > 0 && this.masks ? this._light(Math.min(1, strength)) : null;
+    var M = MATERIALS[s.material], strength = s.strength || 0;
+    var R = M && strength > 0 && this.masks ? this._light(strength) : null;
     /* the four strips: the housing, then the screen's light on it as light (screen blend; Glass in light mode lays it on
-       plainly, as Liquid Glass's glint does there) */
-    var glassLight = s.material === 'glass' && s.light;
+       plainly, as Liquid Glass's glint does there). A pale case (platinum, putty, aluminium) over a dark screen shows the
+       mirror as a gloss, the dark picture laid over its face, since a dark screen adds almost no light to a pale one
+       (round 4, Q15: its levels drew alike there) */
+    var glassLight = s.material === 'glass' && s.light, gloss = !!(M && M.light) && !s.light;
     geo.strips.forEach(function (q) {
       oc.clearRect(q[0], q[1], q[2], q[3]);
       oc.drawImage(this.cache, q[0], q[1], q[2], q[3], q[0], q[1], q[2], q[3]);
       if (R) {
         oc.save(); oc.beginPath(); oc.rect(q[0], q[1], q[2], q[3]); oc.clip();
-        oc.globalCompositeOperation = glassLight ? 'source-over' : 'screen'; oc.globalAlpha = glassLight ? 0.6 : 1;
+        oc.globalCompositeOperation = glassLight || gloss ? 'source-over' : 'screen'; oc.globalAlpha = glassLight ? GLASS_LIGHT : gloss ? 0.85 : 1;
         oc.drawImage(R, 0, 0, geo.W, geo.H);
         oc.restore();
       }
@@ -217483,6 +217582,9 @@ var T = {};
   /* each face shows the picture mirrored about the glass edge beside it and folded (a narrow face still shows whole rows),
      sharp, then diffused; the glow is the picture unfolded and very soft, over the whole case */
   var FOLD = 2.6;
+  /* clear glass on a light screen lays the reflection on plainly (Liquid Glass's glint does so there); round 3's 0.6 made
+     its Medium hard to tell from Off (Q15), so it is laid on whole */
+  var GLASS_LIGHT = 1;
   Bezel.prototype._light = function (strength) {
     var snap = this._snapshot(); if (!snap) return null;
     var geo = this.geo, g = this.g, s = this.spec, M = MATERIALS[s.material], bb = geo.bb, m = this.masks;
@@ -217509,7 +217611,11 @@ var T = {};
       tc.filter = 'none';
       tc.globalCompositeOperation = 'destination-in'; tc.drawImage(mask, 0, 0);
       tc.restore();
-      rc.globalAlpha = Math.min(1, alpha); rc.globalCompositeOperation = 'lighter'; rc.drawImage(T2, 0, 0); rc.globalAlpha = 1; rc.globalCompositeOperation = 'source-over';
+      /* added as light; past full strength (High) the same pass is added again, so the face keeps brightening instead of
+         stopping at one copy */
+      rc.globalCompositeOperation = 'lighter';
+      for (var a = alpha; a > 0.004; a -= 1) { rc.globalAlpha = Math.min(1, a); rc.drawImage(T2, 0, 0); }
+      rc.globalAlpha = 1; rc.globalCompositeOperation = 'source-over';
     };
     pass(M.blur, m.direct, strength * 1.25, FOLD, 'face');
     pass(M.blur * 4 + 3, m.diffused, strength * 0.55, FOLD, 'face');
@@ -217520,8 +217626,13 @@ var T = {};
   T.Bezel = Bezel;
   T.Bezel.MATERIALS = Object.keys(MATERIALS);
   T.Bezel.lookMaterial = lookMaterial;
-  /* the share of the screen's light a material gives back, the Reflection slider's Auto */
-  T.Bezel.reflectOf = function (id, look, light) { var m = MATERIALS[!id || id === 'follow' ? lookMaterial(look, light) : id]; return m ? m.reflect : 0; };
+  /* a material's own Reflection level (Follow look gives the look's own case; NieR's ink frame reflects nothing) */
+  T.Bezel.LEVELS = LEVELS;
+  T.Bezel.ownLevel = function (id, look, light) {
+    var m = !id || id === 'follow' ? (look === 'nier' ? null : lookMaterial(look, light)) : id;
+    return m && MATERIALS[m] ? MATERIALS[m].own[light ? 1 : 0] : null;
+  };
+  T.Bezel.levelOf = function (r, id, look, light) { var m = !id || id === 'follow' ? (look === 'nier' ? null : lookMaterial(look, light)) : id; return m ? levelOf(r, m, light) : null; };
 })();
 /* ---- terminal/js/72-find.js ---- */
 /* Find overlay (D13): regex, case, whole word, highlight all, a count, next and previous. Matches are found on
@@ -218600,10 +218711,12 @@ var T = {};
     'sixtyfour-raster': 'Retro, baked scan', 'system': 'This computer’s' };
   /* the effect chips: what each draws, in plain words */
   var EFFECTS = [
-    { key: 'scanlines', name: 'Scanlines', help: 'Thin dark lines across the text, like an old monitor.', strength: ['scanStrength', 0, 0.6, 0.05] },
-    { key: 'glow', name: 'Phosphor glow', help: 'A soft glow around the text in the scheme’s glow colour.', strength: ['glowStrength', 0, 1, 0.05] },
+    { key: 'scanlines', name: 'Scanlines', help: 'Thin dark lines across the text, like an old monitor.', strength: ['scanStrength', 0, 0.6, 0.05, [0, 0.15, 0.3, 0.45, 0.6]] },
+    { key: 'glow', name: 'Phosphor glow', help: 'A soft glow around the text in the scheme’s glow colour.', strength: ['glowStrength', 0, 1, 0.05, [0, 0.15, 0.3, 0.45, 0.6, 0.8, 1]] },
     { key: 'crt', name: 'Full CRT', help: 'A tube: gently curved glass with rounded corners, burn-in and grain. Pointing follows the curve.' },
-    { key: 'flicker', name: 'Flicker', help: 'A faint flicker, at most 3 % and never a flash.', strength: ['flickerAmount', 0, 0.03, 0.005] },
+    /* no amount slider (round 4, Q15 #4): within the 3 % that keeps it from ever being a flash, no two amounts look
+       apart; Settings still holds the amount */
+    { key: 'flicker', name: 'Flicker', help: 'A faint flicker, at most 3 % and never a flash.' },
     { key: 'inactiveDim', name: 'Dim terminals I’m not in', help: 'Terminals you are not typing in step back.', tryIt: 'dim' },
     { key: 'smoothScroll', name: 'Smooth scrolling', help: 'Scrolling glides instead of jumping a line at a time.' }
   ];
@@ -218653,10 +218766,43 @@ var T = {};
       '<span class="pmt-cz-chiphelp">' + esc(help) + '</span><span class="pmt-cz-chipfoot"><span class="pmt-cz-chipstate">Off</span><span class="pmt-cz-mine">Changed</span></span></span>' +
       '<span class="pmt-cz-art pmt-cz-art-' + key + '" aria-hidden="true"></span></button>' + (extra || '') + '</div>';
   }
-  function slider(key, label, min, max, step, unit) {
+  /* stops (round 4, Q15 #4): the values a slider offers, each one drawing visibly apart from its neighbours, measured
+     in every look; the thumb moves by index. [] is a list the screen works out as it paints (line height, letter
+     spacing and a picture's dim follow the face, the display's density and the picture). A value Settings stored between
+     two stops shows as itself until the slider moves */
+  function slider(key, label, min, max, step, unit, stops) {
+    var range = stops ? ' min="0" max="' + Math.max(0, stops.length - 1) + '" step="1" data-stops="' + esc(JSON.stringify(stops)) + '"' : ' min="' + min + '" max="' + max + '" step="' + step + '"';
     return '<label class="pmt-cz-slider" data-slider="' + key + '"><span class="pmt-cz-slabel">' + esc(label) + '</span>' +
-      '<input type="range" data-key="' + key + '" min="' + min + '" max="' + max + '" step="' + step + '" data-unit="' + (unit || '') + '"' + tagged(label) + NOTAG + '>' +
+      '<input type="range" data-key="' + key + '"' + range + ' data-unit="' + (unit || '') + '"' + tagged(label) + NOTAG + '>' +
       '<output class="pmt-cz-out"></output></label>';
+  }
+  /* how a face draws a weight: a hash of a line of text at 20 px, or null where a canvas cannot tell */
+  var drawn = {};
+  function weightDraws(stack, w) {
+    var key = stack + '|' + w;
+    if (key in drawn) return drawn[key];
+    var h = null;
+    try {
+      var cv = document.createElement('canvas'); cv.width = 180; cv.height = 28;
+      var g = cv.getContext('2d', { willReadFrequently: true });
+      g.font = w + ' 20px ' + stack; g.fillStyle = '#000'; g.textBaseline = 'top'; g.fillText('Hamburg 0123 {[]} ->', 2, 3);
+      var d = g.getImageData(0, 0, 180, 28).data; h = 0;
+      for (var i = 3; i < d.length; i += 4) h = (Math.imul(h, 31) + d[i]) | 0;
+    } catch (e) { h = null; }
+    return (drawn[key] = h);
+  }
+  function stopsOf(r) { var s = r.getAttribute('data-stops'); return s ? JSON.parse(s) : null; }
+  function rangeValue(r) { var st = stopsOf(r), x = parseFloat(r.value); return st && st.length ? st[Math.max(0, Math.min(st.length - 1, Math.round(x)))] : x; }
+  function rangeShow(r, x) {
+    var st = stopsOf(r);
+    if (!st || !st.length) { r.value = String(x); return; }
+    var best = 0; for (var i = 1; i < st.length; i++) if (Math.abs(st[i] - x) < Math.abs(st[best] - x)) best = i;
+    r.value = String(best);
+  }
+  function setStops(r, list) {
+    var j = JSON.stringify(list);
+    if (r.getAttribute('data-stops') === j) return;
+    r.setAttribute('data-stops', j); r.min = '0'; r.max = String(Math.max(0, list.length - 1)); r.step = '1';
   }
   function tile(key, value, label, art, meta) {
     return '<button type="button" class="pmt-cz-tile" role="radio" aria-checked="false" data-key="' + key + '" data-value="' + esc(value) + '" data-pmh="tile"' + NOTAG + '>' +
@@ -218768,14 +218914,14 @@ var T = {};
       '<button type="button" class="pmt-textbtn pmt-cz-default" data-act="default" data-key="fontSize"' + NOTAG + '>Face default</button></div>' +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Weight</span>' + seg('fontWeight', [[100, 'Thin', '100'], [200, 'Extra light', '200'], [300, 'Light', '300'], [400, 'Regular', '400'], [500, 'Medium', '500'], [600, 'Semibold', '600'], [700, 'Bold', '700'], [800, 'Heavy', '800']], 'Weight') +
       '<span class="pmt-cz-fhelp" data-weight-why></span></div>' +
-      slider('lineHeight', 'Line height', F.lineHeight.min, F.lineHeight.max, F.lineHeight.step, '×') +
-      slider('letterSpacing', 'Letter spacing', F.letterSpacing.min, F.letterSpacing.max, F.letterSpacing.step, ' px') +
+      slider('lineHeight', 'Line height', F.lineHeight.min, F.lineHeight.max, F.lineHeight.step, '×', []) +
+      slider('letterSpacing', 'Letter spacing', F.letterSpacing.min, F.letterSpacing.max, F.letterSpacing.step, ' px', []) +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Text drawing</span>' + seg('fontRendering', [['auto', 'Auto'], ['crisp', 'Crisp'], ['smooth', 'Smooth']], 'Text drawing') +
       '<span class="pmt-cz-fhelp">Crisp keeps glyphs on whole pixels; try it if text looks blurry.</span></div>' +
       '</div><div class="pmt-cz-chips">' + chip('ligatures', 'Ligatures', 'Joins pairs such as -> and != into one glyph where the face has them.') +
       chip('boldBright', 'Bold as bright', 'Bold text in the bright version of its colour, as older terminals did.') + '</div>' +
       '<div class="pmt-cz-axes" data-axes hidden><p class="pmt-cz-glead">Sixtyfour’s own axes: scanlines and bleed drawn by the face itself, with no motion.</p><div class="pmt-cz-grid2">' +
-      slider('sixtyfourScan', 'Scanlines', -53, 100, 1, '') + slider('sixtyfourBleed', 'Bleed', 0, 100, 1, '') + '</div></div></section>';
+      slider('sixtyfourScan', 'Scanlines', -53, 100, 1, '', [-50, -25, 0, 25, 50, 75, 100]) + slider('sixtyfourBleed', 'Bleed', 0, 100, 1, '', [0, 33, 67, 100]) + '</div></div></section>';
     /* cursor */
     html += '<section class="pmt-cz-group" data-group="cursor" aria-labelledby="pmt-cz-g-cursor">' + ghead('cursor', 'Cursor') +
       '<div class="pmt-cz-tiles pmt-cz-small" role="radiogroup" aria-label="Cursor shape">' + CURSORS.map(function (c) { return tile('cursorShape', c[0], c[1], cursorArt(c[0] === 'follow' ? 'look' : c[0]), ''); }).join('') + '</div>' +
@@ -218794,13 +218940,15 @@ var T = {};
       '<input type="color" class="pmt-cz-color" data-key="bgColor" aria-label="Background colour"' + NOTAG + '><output class="pmt-cz-out" data-out="bgColor"></output></div></div>' +
       '<div class="pmt-cz-gctl" data-gctl="yours" hidden><div class="pmt-cz-import"><button type="button" class="pmt-textbtn" data-act="upload"' + tagged('Choose a picture', 'PNG, JPEG or WebP from this computer, under 4 MB') + '>Choose a picture…</button><span class="pmt-cz-fhelp" data-picture-name></span></div>' +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Fit</span>' + seg('bgFit', [['cover', 'Fill'], ['contain', 'Fit'], ['tile', 'Tile'], ['center', 'Centre']], 'How the picture fits') + '</div>' +
-      '<div class="pmt-cz-grid2">' + slider('bgDim', 'Dim', 0, 0.9, 0.05, '%') + slider('bgBlur', 'Blur', 0, 24, 1, ' px') + slider('bgDesat', 'Less colour', 0, 1, 0.05, '%') + '</div></div>' +
-      '<div class="pmt-cz-gctl" data-gctl="design" hidden><div class="pmt-cz-grid2">' + slider('bgStrength', 'Strength', 0, 1, 0.05, '%') +
-      '<div data-gctl-sub="scene">' + slider('bgBlur', 'Blur', 0, 24, 1, ' px') + '</div></div>' +
+      '<div class="pmt-cz-grid2">' + slider('bgDim', 'Dim', 0, 0.9, 0.05, '%', []) + slider('bgBlur', 'Blur', 0, 24, 1, ' px', [0, 3, 6, 12, 24]) + slider('bgDesat', 'Less colour', 0, 1, 0.05, '%', [0, 0.5, 1]) + '</div>' +
+      '<p class="pmt-cz-fhelp" data-dim-why hidden></p></div>' +
+      /* a design's Strength in three steps; no Blur on the built-in designs (round 4, Q15: their soft art barely changed
+         under it), a picture of yours keeps it */
+      '<div class="pmt-cz-gctl" data-gctl="design" hidden><div class="pmt-cz-grid2">' + slider('bgStrength', 'Strength', 0, 1, 0.05, '%', [0.35, 0.65, 1]) + '</div>' +
       '<div class="pmt-cz-field" data-gctl-sub="pattern"><span class="pmt-cz-flabel">Size</span>' + seg('bgScale', [['fine', 'Fine'], ['medium', 'Medium'], ['coarse', 'Coarse']], 'Pattern size') + '</div>' +
       '<div class="pmt-cz-field" data-gctl-sub="moving"><span class="pmt-cz-flabel">Motion</span>' + seg('bgMotion', [['off', 'Still'], ['gentle', 'Gentle'], ['lively', 'Lively']], 'Motion') +
       '<span class="pmt-cz-fhelp">It moves only while you work in this terminal, and never under Reduced Motion.</span></div></div>' +
-      '<div class="pmt-cz-grid2">' + slider('opacity', 'Opacity (Glass)', 0.4, 1, 0.02, '%') + slider('padding', 'Padding', 0, 24, 1, ' px') + '</div>' +
+      '<div class="pmt-cz-grid2">' + slider('opacity', 'Opacity (Glass)', 0.4, 1, 0.02, '%', []) + slider('padding', 'Padding', 0, 24, 1, ' px') + '</div>' +
       '<p class="pmt-cz-fhelp">Padding is the space round the text: the number is the sides, top and bottom take 60 % of it (8 / 5 px).</p>' +
       '<p class="pmt-cz-note" data-note-ground hidden></p></section>';
     /* effects */
@@ -218809,15 +218957,18 @@ var T = {};
       '<span class="pmt-cz-fhelp" data-effects-why></span></div>' +
       '<div class="pmt-cz-chips pmt-cz-fxchips">' + EFFECTS.map(function (e) {
         var extra = '';
-        if (e.strength) extra = '<div class="pmt-cz-chipmore" data-more="' + e.key + '">' + slider(e.strength[0], 'Strength', e.strength[1], e.strength[2], e.strength[3], e.key === 'flicker' ? '' : '%') + '</div>';
-        if (e.key === 'crt') extra = '<div class="pmt-cz-chipmore" data-more="crt">' + slider('curvature', 'Curvature', 0, 0.2, 0.01, '') +
+        if (e.strength) extra = '<div class="pmt-cz-chipmore" data-more="' + e.key + '">' + slider(e.strength[0], 'Strength', e.strength[1], e.strength[2], e.strength[3], '%', e.strength[4]) + '</div>';
+        if (e.key === 'crt') extra = '<div class="pmt-cz-chipmore" data-more="crt">' + slider('curvature', 'Curvature', 0, 0.2, 0.02, '') +
           '<label class="pmt-cz-mini"><input type="checkbox" data-key="burnIn"' + NOTAG + '><span>Burn-in</span></label>' +
-          '<label class="pmt-cz-mini"><input type="checkbox" data-key="crtMask"' + NOTAG + '><span>Phosphor mask</span></label>' + slider('noise', 'Grain', 0, 0.12, 0.005, '') + '</div>';
+          '<label class="pmt-cz-mini"><input type="checkbox" data-key="crtMask"' + NOTAG + '><span>Phosphor mask</span></label>' + slider('noise', 'Grain', 0, 0.12, 0.005, '', [0, 0.035, 0.075, 0.12]) + '</div>';
         return chip(e.key, e.name, e.help, extra);
       }).join('') + '</div>' +
       /* the bezel: its own choice, with or without Full CRT (round 2) */
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bezel</span>' + seg('bezel', BEZELS, 'Bezel') + '<span class="pmt-cz-fhelp">A monitor housing round the screen that catches the screen’s light, on its own or with Full CRT.</span></div>' +
-      '<div class="pmt-cz-bezelmore" data-bezel-more hidden><div class="pmt-cz-grid2">' + slider('bezelWidth', 'Width', 2, 48, 1, ' px') + slider('bezelReflect', 'Reflection', 0, 1, 0.05, '%') + '</div>' +
+      '<div class="pmt-cz-bezelmore" data-bezel-more hidden><div class="pmt-cz-grid2">' + slider('bezelWidth', 'Width', 2, 48, 1, ' px') + '</div>' +
+      /* round 4 (Q15 #2): four levels a person can tell apart, the material's own marked */
+      '<div class="pmt-cz-field" data-reflect-field><span class="pmt-cz-flabel">Reflection</span>' + seg('bezelReflect', [['off', 'Off'], ['low', 'Low'], ['medium', 'Medium'], ['high', 'High']], 'Reflection') +
+      '<span class="pmt-cz-fhelp" data-reflect-why></span></div>' +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Material</span><div class="pmt-cz-swatches" role="radiogroup" aria-label="Bezel material">' + BEZEL_COLORS.map(function (c) {
         return '<button type="button" class="pmt-cz-swatch" role="radio" aria-checked="false" data-key="bezelColor" data-value="' + c[0] + '" aria-label="' + esc(c[1]) + '"' + tagged(c[1]) + NOTAG + '><i data-bz="' + c[0] + '"' + (c[2] ? ' style="background:' + c[2] + '"' : '') + '></i></button>';
       }).join('') + '</div></div></div>' +
@@ -218959,11 +219110,23 @@ var T = {};
       root.querySelector('[data-gctl="solid"]').hidden = now !== 'solid';
       root.querySelector('[data-gctl="yours"]').hidden = !custom;
       root.querySelector('[data-gctl="design"]').hidden = !design;
-      /* a design's own controls: Blur for painted ones, Size for patterns, Motion for any that moves, whatever its kind */
-      var did = design ? now.slice(2) : '', painted = !!did && G.painted(did), moves = !!did && !!G.motion(did);
+      /* a design's own controls: Size for patterns, Motion for any that moves, whatever its kind */
+      var did = design ? now.slice(2) : '', moves = !!did && !!G.motion(did);
       [].forEach.call(root.querySelectorAll('[data-gctl-sub]'), function (s) { var sub = s.getAttribute('data-gctl-sub');
-        s.hidden = !(sub === 'scene' ? painted || moves : sub === 'moving' ? moves : sub === cat0); });
+        s.hidden = !(sub === 'moving' ? moves : sub === cat0); });
       root.querySelector('[data-bezel-more]').hidden = val('bezel') === 'off';
+      /* Reflection: the material's own level named; none for NieR's ink frame, which reflects nothing */
+      var rf = reflect(R), rtxt = rf.own ? rf.name + '’s own is ' + rf.own.charAt(0).toUpperCase() + rf.own.slice(1) + '.' : '';
+      root.querySelector('[data-reflect-field]').hidden = !rf.own;
+      var rw = root.querySelector('[data-reflect-why]'); if (rw.textContent !== rtxt) rw.textContent = rtxt;
+    }
+    /* the case's Reflection now: its level, the material's own level and the material's name (Follow look: the look's own
+       case), as the bezel resolves them (71-bezel.js) */
+    function reflect(R) {
+      var look = R.effects ? R.effects.look : 'basic', th = R.theme || {}, light = th.appearance === 'light' || (th.bg !== undefined && T.color.lum(th.bg) > 0.4);
+      var id = val('bezelColor'), mat = !id || id === 'follow' ? (look === 'nier' ? null : T.Bezel.lookMaterial(look, light)) : id;
+      var nm = BEZEL_COLORS.filter(function (c) { return c[0] === mat; })[0];
+      return { level: T.Bezel.levelOf(val('bezelReflect'), id, look, light), own: T.Bezel.ownLevel(id, look, light), name: nm ? nm[1] : '' };
     }
 
     /* ---- your presets: listed with their own little picture; saved, renamed and deleted in place ---- */
@@ -219023,7 +219186,6 @@ var T = {};
       if (key === 'lineHeight') return Number(x).toFixed(2) + '×';
       if (key === 'bgDim' || key === 'opacity' || key === 'scanStrength' || key === 'glowStrength' || key === 'bgStrength' || key === 'bgDesat') return Math.round(x * 100) + '%';
       if (key === 'bezelWidth') return Math.round(x) + ' px';
-      if (key === 'bezelReflect') return Math.round(x * 100) + '%';
       /* the number is the sides; top and bottom take 60 % of it (pm7-customizer-audit): both shown, the help says which */
       if (key === 'padding') return Math.round(x) + ' / ' + Math.round(x * 0.6) + ' px';
       if (key === 'letterSpacing' || key === 'bgBlur' || key === 'padding' || key === 'fontSize') return (Math.round(x * 100) / 100) + ' px';
@@ -219042,11 +219204,28 @@ var T = {};
         root.style.setProperty('--pmt-cz-sglow', R.theme.roles && R.theme.roles.glow ? R.theme.roles.glow : T.color.toHex(R.theme.fg));
       }
       root.classList.toggle('pmt-cz-reduced', !!R.look.reduced);
+      /* the weights the face draws apart: a face of this computer (System monospace, or one Settings names) often comes
+         in only two weights, and the browser draws the others as the nearest of them, so each group of weights that
+         draws the same is offered once, as its lightest (Q15 #5). The bundled faces carry every weight they list */
+      var FDw = A().fontDef(R.font.id), wrange = FDw && FDw.weights, wrep = {};
+      if (wrange && (R.font.id === 'system' || R.font.local)) {
+        /* each group shows as Regular (400) or Bold (700) when it holds one, the weights such a face really has */
+        var groups = [], ww, gi;
+        for (ww = wrange[0]; ww <= wrange[1]; ww += 100) {
+          var hh = weightDraws(R.font.family || FDw.stack, ww), last = groups[groups.length - 1];
+          if (hh !== null && last && last.h === hh) last.w.push(ww); else groups.push({ h: hh, w: [ww] });
+        }
+        groups.forEach(function (g) {
+          var lead = g.w.indexOf(400) >= 0 ? 400 : g.w.indexOf(700) >= 0 ? 700 : g.w[0];
+          for (gi = 0; gi < g.w.length; gi++) if (g.w[gi] !== lead) wrep[g.w[gi]] = lead;
+        });
+      }
       /* radios: tiles and segments */
       [].forEach.call(root.querySelectorAll('[role="radio"][data-key]:not([data-key="ground"])'), function (b) {
         var key = b.getAttribute('data-key'), cur = key === 'scope' ? scope : val(key);
         if (key === 'scheme' && /^follow:/.test(String(cur))) cur = 'follow';
-        if (key === 'fontWeight') cur = R.font.weight;
+        if (key === 'fontWeight') cur = wrep[R.font.chosen] || R.font.chosen;
+        if (key === 'bezelReflect') cur = reflect(R).level;
         setA(b, 'aria-checked', String(String(cur) === b.getAttribute('data-value')));
       });
       /* switches: what applies now (Follow look shows the look's own state) */
@@ -219056,7 +219235,7 @@ var T = {};
       if (val('effects') === 'custom' && !R.look.reduced) on.flicker = !!val('flicker');
       /* ligatures cannot join letters that are spaced apart (canvas text drops them, as CSS does): the chip shows what
          applies and why, and the choice comes back when the spacing is 0 again (pm7-customizer-audit #2) */
-      var ligPaused = !!val('ligatures') && !!R.font.letterSpacing;
+      var ligPaused = !!val('ligatures') && !!R.font.letterSpacing, ligBlocked = !!R.font.letterSpacing;
       if (ligPaused) on.ligatures = false;
       [].forEach.call(root.querySelectorAll('.pmt-cz-chip'), function (c) {
         var key = c.getAttribute('data-key'), o = !!on[key];
@@ -219064,13 +219243,44 @@ var T = {};
         var st = c.querySelector('.pmt-cz-chipstate'), word = o ? 'On' : 'Off';
         if (fx.off && c.closest('.pmt-cz-fxchips')) word = 'Off · effects off';
         else if (val('effects') === 'follow' && c.closest('.pmt-cz-fxchips')) word += ' · from the look';
-        else if (key === 'ligatures' && ligPaused) word = 'Off while letters are spaced';
+        else if (key === 'ligatures' && ligBlocked) word = 'Needs letter spacing 0';
         if (st.textContent !== word) st.textContent = word;
+        /* and while they are spaced the switch is not offered: either position would draw the same (Q15 #6) */
+        if (key === 'ligatures') setA(c, 'aria-disabled', String(ligBlocked));
         c.classList.toggle('pmt-cz-is-mine', mine(key));
         var box = c.parentNode, more = box.querySelector('.pmt-cz-chipmore'); if (more) more.hidden = !o;
         box.classList.toggle('pmt-cz-lit', o);
       });
       var bi = root.querySelector('input[data-key="burnIn"]'); if (bi) bi.checked = !!val('burnIn');
+      /* the stops that depend on what is drawn (round 4, Q15 #4): a cell is a whole number of device pixels (20-metrics.js),
+         so letter spacing moves by one device pixel and line height by one device pixel of row, from the least row the
+         face takes (anything under it draws that row); a picture's Dim starts at what keeps the text readable */
+      var mt = pv && pv.metrics ? pv.metrics : v.metrics, dpr = mt ? mt.dpr : (window.devicePixelRatio || 1), sl = [], k, opacityOff = false;
+      for (k = Math.ceil(-dpr - 1e-9); k <= Math.floor(3 * dpr + 1e-9); k++) sl.push(Math.round(k / dpr * 1000) / 1000);
+      setStops(root.querySelector('input[data-key="letterSpacing"]'), sl);
+      if (mt) {
+        var fpx = mt.fontPx, lo = Math.max(Math.ceil((mt.ascent + mt.descent) * dpr * 0.9), Math.ceil(fpx * dpr - 1e-9)), hi = Math.round(fpx * 2 * dpr);
+        sl = []; for (k = lo; k <= hi; k++) sl.push(Math.round(k / (fpx * dpr) * 10000) / 10000);
+        if (sl.length) setStops(root.querySelector('input[data-key="lineHeight"]'), sl);
+      }
+      var bgR = R.background || {}, floor = bgR.custom ? Math.ceil((bgR.floor || 0) * 20 - 1e-6) / 20 : 0;
+      sl = []; for (k = floor; k <= 0.9 + 1e-6; k += 0.05) sl.push(Math.round(k * 100) / 100);
+      if (!sl.length) sl = [Math.min(1, Math.round((bgR.floor || 0.9) * 100) / 100)];
+      setStops(root.querySelector('input[data-key="bgDim"]'), sl);
+      root.querySelector('[data-slider="bgDim"]').hidden = sl.length < 2;
+      /* under a heavy dim a picture keeps less of itself, so fewer of its steps can be told apart: from 85 % only full
+         colour or grey, and from 90 % (a scheme with no contrast to spare) colour hardly shows and blur has two steps */
+      var pdim = bgR.custom ? bgR.dim || 0 : 0;
+      setStops(root.querySelector('input[data-key="bgDesat"]'), pdim >= 0.85 ? [0, 1] : [0, 0.5, 1]);
+      setStops(root.querySelector('input[data-key="bgBlur"]'), pdim >= 0.9 ? [0, 12] : [0, 3, 6, 12, 24]);
+      root.querySelector('[data-slider="bgDesat"]').hidden = pdim >= 0.9;
+      note('[data-dim-why]', bgR.custom && sl.length < 2 ? 'Dim stays at ' + Math.round(sl[0] * 100) + ' %: any less and this picture would hide the text.' +
+        (pdim >= 0.9 ? ' So little of it shows that its colour hardly changes, so Less colour is not offered.' : '') : '');
+      /* Glass's opacity: the least, its own (0.74 dark, 0.7 light) and solid. Glass light's terminal lies on glass of its
+         own pale tone, so there it shows only over a wallpaper, and is offered only then (round 4, Q15 #4) */
+      var opLight = R.look && R.look.mode === 'light', opDef = opLight ? 0.7 : 0.74, wall = !!document.documentElement.getAttribute('data-lg-wall');
+      setStops(root.querySelector('input[data-key="opacity"]'), [0.4, opDef, 1]);
+      opacityOff = opLight && !wall;
       /* sliders and outputs */
       [].forEach.call(root.querySelectorAll('input[type="range"][data-key]'), function (r) {
         var key = r.getAttribute('data-key'), x = val(key);
@@ -219079,12 +219289,10 @@ var T = {};
         if (key === 'sixtyfourScan' || key === 'sixtyfourBleed') x = x === null || x === undefined ? 0 : x;
         /* a width or a dim left to the style or to Auto shows the value in use */
         if (key === 'bezelWidth' && (x === null || x === undefined)) x = R.bezel && R.bezel.width ? R.bezel.width : 24;
-        var autoReflect = key === 'bezelReflect' && (x === null || x === undefined);
-        if (autoReflect) x = T.Bezel ? T.Bezel.reflectOf(val('bezelColor'), R.effects ? R.effects.look : 'basic', R.theme && R.theme.appearance === 'light') : 0.3;
         var autoDim = key === 'bgDim' && (x === null || x === undefined);
         if (autoDim) x = R.background && typeof R.background.dim === 'number' ? R.background.dim : 0.45;
-        if (document.activeElement !== r) r.value = String(x);
-        var out = r.parentNode.querySelector('output'); if (out) out.textContent = (autoDim || autoReflect ? 'Auto · ' : '') + fmt(key, Number(r.value));
+        if (document.activeElement !== r) rangeShow(r, x);
+        var out = r.parentNode.querySelector('output'); if (out) out.textContent = (autoDim ? 'Auto · ' : '') + fmt(key, document.activeElement === r ? rangeValue(r) : x);
         r.closest('[data-slider]').classList.toggle('pmt-cz-is-mine', mine(key));
       });
       var fs = root.querySelector('[data-out="fontSize"]'); if (fs) fs.textContent = fmt('fontSize', R.font.size);
@@ -219095,12 +219303,13 @@ var T = {};
       /* what shows when (SSYS-051's visibility rule, kept for the person's sake: a hidden part keeps its value) */
       var ground = val('background');
       paintGround(R);
-      root.querySelector('[data-slider="opacity"]').hidden = look !== 'glass';
+      root.querySelector('[data-slider="opacity"]').hidden = look !== 'glass' || opacityOff;
       root.querySelector('[data-axes]').hidden = R.font.id !== 'sixtyfour';
       /* weights the face has */
       var FD = A().fontDef(R.font.id), wr = FD && FD.weights;
-      [].forEach.call(root.querySelectorAll('[data-key="fontWeight"]'), function (b) { var n = Number(b.getAttribute('data-value')); b.hidden = !wr || n < wr[0] || n > wr[1]; });
-      var why = root.querySelector('[data-weight-why]'), wtxt = wr ? '' : R.font.label + ' comes in one weight.';
+      [].forEach.call(root.querySelectorAll('[data-key="fontWeight"]'), function (b) { var n = Number(b.getAttribute('data-value')); b.hidden = !wr || n < wr[0] || n > wr[1] || !!wrep[n]; });
+      var nw = wr ? Object.keys(wrep).length : 0;
+      var why = root.querySelector('[data-weight-why]'), wtxt = wr ? (nw ? 'Only the weights ' + R.font.label + ' has on this computer.' : '') : R.font.label + ' comes in one weight.';
       if (why.textContent !== wtxt) why.textContent = wtxt;
       root.querySelector('[data-seg="fontWeight"]').hidden = !wr;
       /* thumbnails that follow the look and the scheme */
@@ -219126,7 +219335,8 @@ var T = {};
         isNier && !/(^|\s)sweep(\s|$)/.test(document.documentElement.getAttribute('data-o55-nier-parts') || '') ? 'NieR’s trace needs its Scan sweep part; with it removed the trail stays off.' : '');
       var pic = String(val('bgImageData') || '');
       note('[data-note-ground]', ground === 'image' && val('bgImage') === 'custom' && pic.indexOf('path:') === 0 ? 'Settings names ' + pic.slice(5) + ', which this page cannot open; choose the picture here to use it.' :
-        look !== 'glass' && A().own(scope, v, 'opacity') !== undefined ? 'Opacity applies under a Glass look; this one draws the ground solid.' : '');
+        look !== 'glass' && A().own(scope, v, 'opacity') !== undefined ? 'Opacity applies under a Glass look; this one draws the ground solid.' :
+        opacityOff && A().own(scope, v, 'opacity') !== undefined ? 'Opacity shows over a wallpaper: without one, Glass light’s terminal lies on glass of its own pale tone.' : '');
       var eNotes = [], effective = v.fx ? v.fx.effective : {};
       if (R.look.reduced) eNotes.push('Reduced Motion is on: nothing moves; still effects stay.');
       else if (effective.motion && /^Battery saver/.test(effective.motion)) eNotes.push('Battery saver is on: nothing moves; still effects stay.');
@@ -219229,7 +219439,7 @@ var T = {};
         write({ scheme: value, schemePair: false });
         pairNote = 'Switch with light and dark is now off, so ' + pick.name + ' stays while the app is ' + mode + '.';
         paint();
-      } else put(key, value);
+      } else put(key, key === 'bezelReflect' && value === reflect(eff()).own ? null : value);   /* the material's own level is its Auto */
       moveInk(key, before);
       if (key === 'scheme') v.announce('Scheme: ' + b.querySelector('.pmt-cz-tname').textContent);
       if ((key === 'cursorShape' || key === 'cursorTrail') && preview) preview.moveCursor();
@@ -219301,7 +219511,7 @@ var T = {};
       if (t.classList.contains('pmt-cz-search')) { filter(t.value); return; }
       if (!key) return;
       if (t.type === 'range') {
-        var x = parseFloat(t.value);
+        var x = rangeValue(t);
         A().live(scope, key, x, v); syncPreview();
         var out = t.parentNode.querySelector('output'); if (out) out.textContent = fmt(key, x);
         return;
@@ -219475,6 +219685,7 @@ var T = {};
     }
     root._pmtClose = function (noFocus) {
       endPreview();
+      if (v._czLook === onLook) v._czLook = null;
       if (offChange) offChange();
       window.removeEventListener('resize', onResize);
       if (ro) ro.disconnect();
@@ -219510,7 +219721,9 @@ var T = {};
     /* the focus starts on the scope switch, the first thing to decide; the dialog's name and lead are its context */
     var first = root.querySelector('[data-seg="scope"] [aria-checked="true"]') || dialog;
     first.focus({ preventScroll: true });
-    v._apRender = function () { paint(); };
+    /* the host's look or mode changed while the screen is open (View.onLook): the preview resolves again, so a scheme
+       that switches with light and dark switches in the preview too (Q15 #7) */
+    var onLook = v._czLook = function () { if (v.pop === root) { syncPreview(); paint(); } };
     return { el: root, close: function () { close(); }, refresh: function () { if (v.pop === root) { syncPreview(); paint(); } } };
   }
 

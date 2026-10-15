@@ -149,7 +149,10 @@
       var lead = easeOut((nowMs - a.start) / (a.ms * LEAD)), back = easeOut((nowMs - a.start) / a.ms);
       var hx = tail[0] + (head[0] - tail[0]) * lead, hy = tail[1] + (head[1] - tail[1]) * lead;
       var tx = tail[0] + (head[0] - tail[0]) * back, ty = tail[1] + (head[1] - tail[1]) * back;
-      var lw = Math.max(1, Math.round(k)) / k;                       // one device-px multiple, at least 1 px
+      /* one device-px multiple, at least 1 px; dark ink (a light ground) draws 2 CSS px, as ink on paper needs the
+         weight to show (round 4, Q15: on Basic, NieR and Retro light the 1 px line hardly showed) */
+      var inkLine = (0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]) / 255 < 0.45;
+      var lw = Math.max(1, Math.round(k * (inkLine ? 2 : 1))) / k;
       var snap = function (v) { return (Math.round(v * k - 0.5) + 0.5) / k; };
       if (Math.abs(hy - ty) < 0.01) { hy = ty = snap(ty); }        // horizontal and vertical lines land on pixel centres
       if (Math.abs(hx - tx) < 0.01) { hx = tx = snap(tx); }

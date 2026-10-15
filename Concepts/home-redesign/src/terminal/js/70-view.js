@@ -389,6 +389,8 @@
     } else if (bg.kind === 'gradient' && bg.css) L.style.background = bg.css;
     else if (bg.kind === 'solid' && bg.color) L.style.background = bg.color;
     this.bgScrim.style.opacity = dim > 0 ? String(Math.round(dim * 1000) / 1000) : '0';
+    /* a picture on a scheme with no contrast to spare is veiled in white or black, not the scheme's ground (round 4) */
+    this.bgScrim.style.background = bg.custom && bg.veil ? bg.veil : '';
     /* Glass: a design is laid on the glass at Glass's own opacity, so the app still shows through as it does on the
        theme surface (no blur is added, F3-431) */
     if (typeof bg.alpha === 'number' && bg.alpha < 1) L.style.opacity = String(bg.alpha);
@@ -1133,8 +1135,12 @@
     if (this._lastBell && now - this._lastBell < 1000) return; /* at most one visual bell a second (WCAG 2.3.1) */
     this._lastBell = now;
     var r = this.root;
-    r.classList.remove('pmt-bell'); void r.offsetWidth; r.classList.add('pmt-bell');
-    setTimeout(function () { r.classList.remove('pmt-bell'); }, 420);
+    /* Bell Off draws nothing in any look (Q15 #8: NieR's bracket snap and Reduced Motion's marker ran with it off);
+       an unfocused terminal still asks for attention */
+    if (r.getAttribute('data-pmt-bell') !== 'off') {
+      r.classList.remove('pmt-bell'); void r.offsetWidth; r.classList.add('pmt-bell');
+      setTimeout(function () { r.classList.remove('pmt-bell'); }, 420);
+    }
     if (!this.focused && this.api && this.api.update) this.api.update({ attention: true });
   };
   View.prototype.setProgress = function (p) {
@@ -1220,6 +1226,7 @@
     this._lookSig = sig;
     if (T.Appearance) this.applyAppearance(T.Appearance.resolve(this));
     else this.applyAppearance(this._fallbackAppearance());
+    if (this._czLook) this._czLook();
   };
   View.prototype.setDimmed = function (on) { if (this.dimmed === on) return; this.dimmed = on; this.root.classList.toggle('pmt-inactive', on); this.schedule(true); };
   View.prototype.dispose = function () {
