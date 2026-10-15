@@ -213,7 +213,8 @@ html:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier="on"
   transition: background var(--motion-fast, 120ms) var(--ease-default, ease), color var(--motion-fast, 120ms) var(--ease-default, ease), border-color var(--motion-fast, 120ms) var(--ease-default, ease);
 }
 #panel-wizard .pm6-wiz-intent-chip:first-child { border-radius: var(--pm-ctl-r) 0 0 var(--pm-ctl-r); }
-#panel-wizard .pm6-wiz-intent-chip:last-child { border-radius: 0 var(--pm-ctl-r) var(--pm-ctl-r) 0; }
+/* :last-of-type: a look whose switcher is drawn under its labels appends its layer (<lg-under>) to the row (Q16) */
+#panel-wizard .pm6-wiz-intent-chip:last-of-type { border-radius: 0 var(--pm-ctl-r) var(--pm-ctl-r) 0; }
 #panel-wizard .pm6-wiz-intent-chip:hover:not(.sel) { z-index: 1; color: var(--text-primary); border-color: var(--border); background: linear-gradient(var(--wo-hover-fill), var(--wo-hover-fill)), color-mix(in srgb, var(--surface-elevated) 60%, transparent); }
 #panel-wizard .pm6-wiz-intent-chip.sel { z-index: 2; color: var(--wo-sel-ink); font-weight: 700; border-color: var(--wo-sel-line); background: var(--wo-sel-fill), color-mix(in srgb, var(--surface-elevated) 60%, transparent); }
 #panel-wizard .pm6-wiz-intent-chip:focus-visible { z-index: 3; outline: 2px solid var(--accent-primary); outline-offset: 1px; }
