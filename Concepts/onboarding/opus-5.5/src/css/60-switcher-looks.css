@@ -63,7 +63,7 @@ html[data-theme="friendly-light"]:not([data-o55-nier="on"]) {
   --pm-switch: lens;
   --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
   --pm-switch-hover: color-mix(in srgb, var(--pm6-cozy-mint) 10%, transparent);
-  --pm-switch-fill: color-mix(in srgb, var(--pm6-cozy-mint) 20%, transparent); --pm-switch-body: color-mix(in srgb, var(--pm6-cozy-card-base) 62%, transparent);
+  --pm-switch-fill: color-mix(in srgb, var(--pm6-cozy-mint) 20%, transparent); --pm-switch-body: color-mix(in srgb, var(--pm6-cozy-card-base) 72%, transparent);
   --pm-switch-line: color-mix(in srgb, var(--pm6-cozy-mint) 55%, transparent); --pm-switch-edge: transparent;
   --pm-switch-top: rgba(255, 255, 255, .8); --pm-switch-bottom: transparent;
   --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
@@ -89,7 +89,7 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) {
   --pm-switch-swell: 0; --pm-switch-liquid: 0;
 }
 /* the phosphor's bloom on the dark screen, a printed key's hard shadow on the light one */
-html[data-theme="retro-dark"]:not([data-o55-nier="on"]) { --pm-switch-shadow: 0 0 8px color-mix(in srgb, var(--accent-lime) 28%, transparent); }
+html[data-theme="retro-dark"]:not([data-o55-nier="on"]) { --pm-switch-shadow: 0 0 7px color-mix(in srgb, var(--accent-lime) 24%, transparent); }
 /* Retro Light's chip is its lime a step deeper: the cream words read 5.7:1 on it (4.65 on #2F7A3D itself) */
 html[data-theme="retro-light"]:not([data-o55-nier="on"]) { --pm-switch-fill: color-mix(in srgb, var(--accent-lime) 86%, #000); --pm-switch-shadow: 2px 2px 0 color-mix(in srgb, var(--text-primary) 70%, transparent); }
 
@@ -161,8 +161,10 @@ html[data-pm-switch="lens"] #panel-orchestrator .orch-tabs .orch-tab.active .orc
    phosphor line, NieR's ink line) without covering it, at every tab size and panel width. A seated tab casts no drop
    shadow onto that rule (Retro Light's printed shadow stays on its other chips). Glass keeps its approved lens drop. */
 html[data-pm-switch="lens"]:not(#lgz):not(#lgy) .pmw-plate::before { top: 0; bottom: 2px; }
+/* the chosen tab's words are the switcher's chosen ink, as on every other chip of the look */
+html[data-pm-switch="lens"]:not(#lgz) :is(#pm-home-centre, .pmw-scope) { --pmw-tab-active: var(--pm-switch-ink-on); }
 html[data-pm-switch="lens"] .pmw-plate { --pm-switch-shadow: 0 0 0 0 transparent; }
-html[data-theme="retro-dark"][data-pm-switch="lens"] .pmw-plate { --pm-switch-shadow: 0 0 8px color-mix(in srgb, var(--accent-lime) 28%, transparent); }
+html[data-theme="retro-dark"][data-pm-switch="lens"] .pmw-plate { --pm-switch-shadow: 0 0 7px color-mix(in srgb, var(--accent-lime) 24%, transparent); }
 html[data-theme="friendly-dark"][data-pm-switch="lens"] .pmw-plate { --pm-switch-shadow: 0 0 14px color-mix(in srgb, var(--pm6-cozy-mint) 28%, transparent); }
 html[data-theme="friendly-light"][data-pm-switch="lens"] .pmw-plate { --pm-switch-shadow: 0 0 12px color-mix(in srgb, var(--pm6-cozy-mint) 30%, transparent); }
 /* a panel folded to a column of icon tabs: its chosen tab is the same chip, in place (it was the neutral press fill) */
