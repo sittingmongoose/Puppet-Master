@@ -53825,6 +53825,7 @@ var PMU_SERIES = {
     var a = anim(G.el, [{ clipPath: 'inset(0 0 0 0px)' }, { clipPath: 'inset(0 0 0 ' + boardW() + 'px)' }], { dur: V.ms, delay: V.at - (elapsed || 0), easing: V.ease, fill: 'forwards' });
     if (!a) return false;
     G.fade = a; G.cut = 'cut'; G.cutW = boardW();
+    ghostFade(G, V.ms, V.at - (elapsed || 0));
     /* cancelled because it was carried into the next change (carryOn), it has a new exit and is not done */
     a.finished.then(function () { later(G.done); }, function () { if (G.fade === a && G.done) G.done(); });
     return true;
@@ -53854,6 +53855,7 @@ var PMU_SERIES = {
     var a = anim(G.el, irisKeys(G, irisClip(g.x, cy, 0), 0, irisClip(g.x, cy, g.R)), { dur: IRIS.ms, delay: IRIS.at - (elapsed || 0), easing: IRIS.ease, fill: 'forwards' });
     if (!a) return false;
     G.fade = a; G.cut = 'iris'; G.iris = { x: g.x, cy: cy, R: g.R };
+    ghostFade(G, IRIS.ms, IRIS.at - (elapsed || 0));
     a.finished.then(function () { later(G.done); }, function () { if (G.fade === a && G.done) G.done(); });
     return true;
   }
@@ -53861,6 +53863,17 @@ var PMU_SERIES = {
      by the time the lens is half open. The blur is part of the lens's own animation: a separate one ran on the
      compositor and went on blurring while the lens stood still behind a busy main thread (a frosted board). In one
      animation with the clip (a main-thread property) the two always move together. */
+  /* the cut and the lens are clip-path animations, which run on the main thread: while the new room's bodies build they
+     stand still where they are. Alongside each one the old room fades on the compositor from just past its middle to
+     a little after its end, so a stalled edge never leaves the old room (blurred, in Glass) standing for the length of
+     the build: without a stall the cut or lens has finished first and the fade is never seen (review r3, P1000 film:
+     the lens stood at a wide circle with blurred corners for 0.4 s). */
+  function ghostFade(G, dur, delay) {
+    if (!G || !G.el.isConnected || reduced()) return null;
+    if (G.fadeA) { try { G.fadeA.cancel(); } catch (error) {} }
+    G.fadeA = anim(G.el, [{ opacity: 1 }, { opacity: 1, offset: 0.55 }, { opacity: 0 }], { dur: dur + 140, delay: delay, easing: 'linear', fill: 'forwards' });
+    return G.fadeA;
+  }
   function irisKeys(G, c0, q, c1) {
     var b = G.blur && !soft() ? G.blur : 0, k = [{ clipPath: c0 }];
     if (q > 0) k.push({ clipPath: c0, offset: q });
@@ -53920,7 +53933,7 @@ var PMU_SERIES = {
   function dropNow(G) {
     if (!G || G.gone) return;
     G.gone = true;
-    var list = [G.fade, G.move].concat(G.anims || []); G.fade = null;
+    var list = [G.fade, G.move, G.fadeA].concat(G.anims || []); G.fade = null;
     list.forEach(function (x) { if (x && x !== true && x.cancel) { try { x.cancel(); } catch (error) {} } });
     if (G.el.isConnected) G.el.style.opacity = '0';
     later(function () { if (G.done) G.done(); });
@@ -53940,6 +53953,7 @@ var PMU_SERIES = {
     if (carry) {
       var a = carry.fade && carry.fade !== true ? carry.fade : null, at = a ? cutAt(carry) : 0;
       if (a) freeze(a);
+      if (carry.fadeA) { try { carry.fadeA.cancel(); } catch (error) {} carry.fadeA = null; }
       carry.carried = true; carry.el.style.zIndex = '3';
       keep.push(carry.el);
       carryQ.push({ G: carry, at: at, a: a });
@@ -53978,7 +53992,7 @@ var PMU_SERIES = {
           a2 = anim(G.el, irisKeys(G, irisClip(g.x, g.cy, r0), q, irisClip(g.x, g.cy, g.R)), { dur: IRIS.ms, delay: IRIS.at - elapsed, easing: IRIS.ease, fill: 'both' });
         }
       }
-      if (a2) { if (c.a) try { c.a.cancel(); } catch (error) {} G.from = c.at; G.q = q; }
+      if (a2) { if (c.a) try { c.a.cancel(); } catch (error) {} G.from = c.at; G.q = q; ghostFade(G, G.cut === 'iris' ? IRIS.ms : (riseOn() || {}).ms || 300, (G.cut === 'iris' ? IRIS.at : (riseOn() || {}).at || 80) - elapsed); }
       else {
         /* nothing to follow: it fades where it stands (its cut stays paused under the fade) */
         G.cut = null;
