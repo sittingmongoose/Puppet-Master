@@ -181172,6 +181172,10 @@ function mountEditor(host, st, api) {
   var V = null;                                     // the row model for the current mode
   var caret = { r: 0, c: 0 }, anchor = null, side = 'r', goalCol = -1;
   var focused = !!preview, visible = true, alive = true, dimmed = false;
+  /* while a Customize screen is open on this editor, it draws what it draws when focused (the caret, the current line's
+     band), though the screen has the focus: it is the preview beside the screen, and a blurred editor showed none of
+     the caret's or the current line's choices */
+  var customizing = false;
   var fs = 13, lh = 20, cw = 7.8, headH = 31, padT = 35, padB = 80, padL = 10, padR = 32;
   var lnW = 40, gutW = 54, textX = 64, contentW = 0, trackW = 22, half = 0, gutS = 54;
   var sxl = 0, sxr = 0;                             // side by side: each side's own horizontal offset
@@ -181965,7 +181969,7 @@ function mountEditor(host, st, api) {
     var frag = doc.createDocumentFragment(), sfrag = doc.createDocumentFragment(), dfrag = doc.createDocumentFragment();
     /* Highlight the current line: the band (Line and number, Line only); the number (Line and number, Number only) */
     var hl = R.lines.highlight;
-    var showCur = focused && mode === 'file' && !selRange() && (hl === 'all' || hl === 'line');
+    var showCur = (focused || customizing) && mode === 'file' && !selRange() && (hl === 'all' || hl === 'line');
     curEl.hidden = !showCur;
     if (showCur) { curEl.style.top = yRow(caret.r) + 'px'; curEl.style.height = (nSeg(caret.r) * lh) + 'px'; }
     focusEl.hidden = !focusBand;
@@ -182075,7 +182079,7 @@ function mountEditor(host, st, api) {
   var lastCurRow = -1, caretPx = null, typingMove = false;
   function placeCaret() {
     if (lastCurRow !== caret.r) { lastCurRow = caret.r; markCurrentRow(); }
-    var show = focused && !special && V && V.text(caret.r, side) != null;
+    var show = (focused || customizing) && !special && V && V.text(caret.r, side) != null;
     caretEl.hidden = !show || composing;
     if (!show) { caretPx = null; return; }
     var shape = R.caret.shape;
@@ -183706,6 +183710,7 @@ function mountEditor(host, st, api) {
       unmount: function () { instance.unmount(); }
     },
     openCustomize: function (o) { openCustomize(view, (o && o.anchor) || hrow.action('more') || head); },
+    customizing: function (on) { on = !!on; if (customizing === on) return; customizing = on; renderOverlays(); updatePos(); },
     // the scheme's colours as set on the code (null under Follow look, whose colours are the look's CSS): read without
     // asking the page for computed style
     schemeVarsNow: function () { return schemeOn ? Object.assign({}, schemeOn) : null; },
@@ -186104,6 +186109,8 @@ function open(opts) {
   if (!inst || !inst.view) return null;
   var v = inst.view;
   if (openRoot && openRoot._pmedClose) openRoot._pmedClose(true);
+  // the editor beside the screen draws its caret and current line while the screen is open (10-editor.js, customizing)
+  if (inst.customizing) inst.customizing(true);
   var overlay = PMW.overlay ? PMW.overlay() : document.body;
   var root = el('div', 'pmt-cz pmed-cz pmt-calm');
   root.setAttribute('data-pmw-overlay', 'editor-appearance');
@@ -186731,6 +186738,7 @@ function open(opts) {
     if (io) io.disconnect();
     if (preview) { try { preview.unmount(); } catch (_) {} preview = null; }
     if (openRoot === root) openRoot = null;
+    if (inst.customizing) inst.customizing(false);
     root.setAttribute('aria-hidden', 'true'); root.inert = true;
     if (noFocus) root.remove(); else Motion.leave(root, function () { root.remove(); });
     if (!noFocus) { try { (anchor && anchor.isConnected ? anchor : null) ? anchor.focus({ preventScroll: true }) : inst.focus(); } catch (_) {} }

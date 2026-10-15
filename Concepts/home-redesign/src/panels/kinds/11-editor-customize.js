@@ -389,6 +389,8 @@ function open(opts) {
   if (!inst || !inst.view) return null;
   var v = inst.view;
   if (openRoot && openRoot._pmedClose) openRoot._pmedClose(true);
+  // the editor beside the screen draws its caret and current line while the screen is open (10-editor.js, customizing)
+  if (inst.customizing) inst.customizing(true);
   var overlay = PMW.overlay ? PMW.overlay() : document.body;
   var root = el('div', 'pmt-cz pmed-cz pmt-calm');
   root.setAttribute('data-pmw-overlay', 'editor-appearance');
@@ -1016,6 +1018,7 @@ function open(opts) {
     if (io) io.disconnect();
     if (preview) { try { preview.unmount(); } catch (_) {} preview = null; }
     if (openRoot === root) openRoot = null;
+    if (inst.customizing) inst.customizing(false);
     root.setAttribute('aria-hidden', 'true'); root.inert = true;
     if (noFocus) root.remove(); else Motion.leave(root, function () { root.remove(); });
     if (!noFocus) { try { (anchor && anchor.isConnected ? anchor : null) ? anchor.focus({ preventScroll: true }) : inst.focus(); } catch (_) {} }
