@@ -731,9 +731,10 @@
   var moment = null, inBeat = 0, momentListeners = [];
   function emitMoment(what, m) { momentListeners.slice().forEach(function (fn) { try { fn(what, m); } catch (error) { console.error('[pm-usage] moment', error); } }); }
   function begin(kind, room) {
+    var prev = moment, now0 = performance.now(), quick = kind === 'room' && !!prev && prev.kind === 'room' && now0 - prev.start < 900;
     finishMoment('next');
     var now = performance.now();
-    var m = { kind: kind, room: room, start: now, t0: now, released: kind !== 'arrive', entrance: true, anims: [], queue: [], rank: 0,
+    var m = { kind: kind, room: room, start: now, t0: now, quick: quick, released: kind !== 'arrive', entrance: true, anims: [], queue: [], rank: 0,
       heroAt: kind === 'arrive' ? 0 : T3.heroAt, timers: [], built: false, beatDone: false };
     m.quietAt = m.heroAt + T3.quietGap;
     moment = m;
@@ -840,7 +841,8 @@
        all keep their order). The new room shows as early as before; its hand-off plays instead of jumping. */
     if (m && (lens || cut) && !m.lagged) {
       m.lagged = true;
-      var V0 = lens ? IRIS : riseOn(), late = since(m) - (V0.at + V0.ms / 3);
+      /* a quick lens (lensT) always starts from its first frame: entered part way, its fast start jumped */
+      var V0 = lens ? lensT() : riseOn(), late = since(m) - (V0.at + (lens && m.quick ? 0 : V0.ms / 3));
       if (late > 0) {
         m.t0 += late * M.speed(); m.lag = late;
         var ig0 = lens ? irisGeo() : null, w0 = boardW(), now0 = since(m);
@@ -1093,7 +1095,12 @@
      travels; the new room dissolves in (dissolve(), 46-shell.js). */
   /* both start at 80 on the click's clock: 40-board.js lays no new plate before 90 */
   var WIPE = { basic: { at: 80, ms: 300, ease: 'cubic-bezier(.45,0,.25,1)' }, friendly: { at: 80, ms: 340, ease: 'cubic-bezier(.4,0,.3,1)' } },
-    IRIS = { at: 80, ms: 420, ease: 'cubic-bezier(.4,.1,.2,1)', n: 48 };
+    IRIS = { at: 80, ms: 420, ease: 'cubic-bezier(.4,.1,.2,1)', n: 48 },
+    /* a change that interrupts one still handing over (about 3 clicks a second or faster) opens its lens quick: the lens
+       starts when the new room's frame is in, and the slow start of the 420 ms lens kept the board on the old room for
+       200-300 ms after the title had named the new one (review r3 R2, 2026-10-15: never more than one hand-off apart) */
+    IRIS_QUICK = { at: 80, ms: 280, ease: 'cubic-bezier(.2,.75,.25,1)', n: 48 };
+  function lensT() { return moment && moment.quick ? IRIS_QUICK : IRIS; }
   function riseOn(f) { return soft() ? null : WIPE[f || fam()] || null; }
   /* when the cut reaches the point at u of the board's width (0 on the rail side), on the click's clock */
   function wipeAt(u, f) {
@@ -1119,9 +1126,9 @@
   function irisGeo() { var W = boardW(), c = viewCentre(); return { x: W / 2, y: c.y, R: Math.ceil(Math.hypot(W / 2, c.y)) + 24 }; }
   /* when the lens's edge reaches a point d px from its centre, on the click's clock */
   function irisAt(d) {
-    var g = irisGeo(), p = Math.max(0, Math.min(1, d / g.R)), fn = M.curve(IRIS.ease), lo = 0, hi = 1;
+    var L = lensT(), g = irisGeo(), p = Math.max(0, Math.min(1, d / g.R)), fn = M.curve(L.ease), lo = 0, hi = 1;
     for (var i = 0; i < 16; i++) { var mid = (lo + hi) / 2; if (fn(mid) < p) lo = mid; else hi = mid; }
-    return IRIS.at + IRIS.ms * hi;
+    return L.at + L.ms * hi;
   }
   /* the board less a circle of radius r, as one even-odd polygon (an outline, then the circle; polygons with the same
      points interpolate everywhere) */
@@ -1135,10 +1142,10 @@
   function irisGhost(m, elapsed) {
     var G = m && m.ghost; if (!G || G.fade || G.gone || !G.el.isConnected) return false;
     var g = irisGeo(), cy = g.y + (G.sTop || 0);
-    var a = anim(G.el, irisKeys(G, irisClip(g.x, cy, 0), 0, irisClip(g.x, cy, g.R)), { dur: IRIS.ms, delay: IRIS.at - (elapsed || 0), easing: IRIS.ease, fill: 'forwards' });
+    var L = lensT(), a = anim(G.el, irisKeys(G, irisClip(g.x, cy, 0), 0, irisClip(g.x, cy, g.R)), { dur: L.ms, delay: L.at - (elapsed || 0), easing: L.ease, fill: 'forwards' });
     if (!a) return false;
     G.fade = a; G.cut = 'iris'; G.iris = { x: g.x, cy: cy, R: g.R };
-    ghostFade(G, IRIS.ms, IRIS.at - (elapsed || 0));
+    ghostFade(G, L.ms, L.at - (elapsed || 0));
     a.finished.then(function () { later(G.done); }, function () { if (G.fade === a && G.done) G.done(); });
     return true;
   }
@@ -1164,18 +1171,39 @@
     k.push(b ? { clipPath: c1, filter: 'blur(' + b + 'px)' } : { clipPath: c1 });
     return k;
   }
-  /* the lens's rim: one ring in the board's scroll pane, above both rooms, scaled with the lens on the compositor */
+  /* the lens's rim: one ring in the board's scroll pane, above both rooms, scaled with the lens on the compositor.
+     The rings are kept and reused, hidden once faded (as the old key lights, 40-board.js keyShift): inserting one and
+     removing it changed the scroll pane's children, which laid the whole Usage page out again (100 ms in the middle of
+     the next room's build on the RTX 3090; Glass review r3 R2, 2026-10-15). Moving or sizing a ring lays out only it. */
+  function rimPark(ring) {
+    (ring._pmuAll || []).forEach(function (x) { try { x.cancel(); } catch (error) {} });
+    ring._pmuAll = []; ring._pmuA = null; ring._pmuParked = true;
+    ring.classList.remove('pmu-iris-out'); ring.style.visibility = 'hidden';
+  }
+  function rimTrack(ring, a) {
+    if (!a) { rimPark(ring); return; }
+    (ring._pmuAll = ring._pmuAll || []).push(a);
+    var last = function () { return !ring._pmuParked && ring._pmuAll[ring._pmuAll.length - 1] === a; };
+    a.finished.then(function () { if (last()) later(function () { if (last()) rimPark(ring); }); }, function () {});
+  }
+  function liveRim(scroll) {
+    var live = null;
+    Array.prototype.some.call(scroll.querySelectorAll(':scope > .pmu-iris:not(.pmu-iris-out)'), function (r) { if (!r._pmuParked) live = r; return !!live; });
+    return live;
+  }
   function irisRim(board, elapsed) {
     var scroll = board && board.parentNode, stage = document.getElementById('pmuStage');
     if (!scroll || !stage || !stage.contains(board) || !irisOn() || reduced() || M.paused() || off.key) return null;
-    var old = scroll.querySelector(':scope > .pmu-iris:not(.pmu-iris-out)'); if (old) old.remove();
-    var g = irisGeo(), ring = H('i', 'pmu-iris', scroll);
-    ring.setAttribute('aria-hidden', 'true');
+    var old = liveRim(scroll); if (old) rimPark(old);
+    var g = irisGeo(), ring = null;
+    Array.prototype.some.call(scroll.querySelectorAll(':scope > .pmu-iris'), function (r) { if (r._pmuParked) ring = r; return !!ring; });
+    if (!ring) { ring = H('i', 'pmu-iris', scroll); ring.setAttribute('aria-hidden', 'true'); }
+    ring._pmuParked = false;
     ring.style.cssText = 'left:' + (g.x - g.R) + 'px;top:' + (g.y - g.R) + 'px;width:' + (2 * g.R) + 'px;height:' + (2 * g.R) + 'px';
     var a = anim(ring, [{ transform: 'scale(.01)', opacity: 1 }, { opacity: 1, offset: 0.72 }, { transform: 'scale(1)', opacity: 0 }],
-      { dur: IRIS.ms, delay: IRIS.at - (elapsed || 0), easing: IRIS.ease, fill: 'both' });
+      { dur: lensT().ms, delay: lensT().at - (elapsed || 0), easing: lensT().ease, fill: 'both' });
     ring._pmuA = a;
-    gone(a, ring);
+    rimTrack(ring, a);
     return a;
   }
   /* rapid switching (Jared #20: "when you change the page quickly it breaks"; review r3, 2026-10-15: "an interrupted
@@ -1245,11 +1273,11 @@
     var board = document.getElementById('pmuBoard'); if (board && m.framed) keep.push(board);
     if (!keep.length && !carryQ.length) return null;
     /* the lens's rim fades where it stands (finished, it went at once) */
-    var rim = G0 && G0.cut === 'iris' && G0.el.parentNode ? G0.el.parentNode.querySelector(':scope > .pmu-iris:not(.pmu-iris-out)') : null;
+    var rim = G0 && G0.cut === 'iris' && G0.el.parentNode ? liveRim(G0.el.parentNode) : null;
     if (rim && rim._pmuA) {
       freeze(rim._pmuA);
       rim.classList.add('pmu-iris-out'); keep.push(rim);
-      gone(anim(rim, [{ opacity: 1 }, { opacity: 0 }], { dur: 140, easing: E.out, fill: 'forwards' }), rim);
+      rimTrack(rim, anim(rim, [{ opacity: 1 }, { opacity: 0 }], { dur: 140, easing: E.out, fill: 'forwards' }));
     }
     if (carryQ.length) { clearTimeout(carryT); carryT = setTimeout(function () { carryOn(null); }, 900 * M.speed()); }   /* the next change drew no frames */
     return keep;
@@ -1272,10 +1300,10 @@
             { dur: V.ms, delay: V.at - elapsed, easing: V.ease, fill: 'both' });
         } else if (G.cut === 'iris' && irisOn() && G.iris) {
           var g = G.iris, r0 = c.at * g.R; q = Math.min(0.999, r0 / irisGeo().R);
-          a2 = anim(G.el, irisKeys(G, irisClip(g.x, g.cy, r0), q, irisClip(g.x, g.cy, g.R)), { dur: IRIS.ms, delay: IRIS.at - elapsed, easing: IRIS.ease, fill: 'both' });
+          a2 = anim(G.el, irisKeys(G, irisClip(g.x, g.cy, r0), q, irisClip(g.x, g.cy, g.R)), { dur: lensT().ms, delay: lensT().at - elapsed, easing: lensT().ease, fill: 'both' });
         }
       }
-      if (a2) { if (c.a) try { c.a.cancel(); } catch (error) {} G.from = c.at; G.q = q; ghostFade(G, G.cut === 'iris' ? IRIS.ms : (riseOn() || {}).ms || 300, (G.cut === 'iris' ? IRIS.at : (riseOn() || {}).at || 80) - elapsed); }
+      if (a2) { if (c.a) try { c.a.cancel(); } catch (error) {} G.from = c.at; G.q = q; ghostFade(G, G.cut === 'iris' ? lensT().ms : (riseOn() || {}).ms || 300, (G.cut === 'iris' ? lensT().at : (riseOn() || {}).at || 80) - elapsed); }
       else {
         /* nothing to follow: it fades where it stands (its cut stays paused under the fade) */
         G.cut = null;

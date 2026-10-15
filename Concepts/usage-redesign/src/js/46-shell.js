@@ -115,21 +115,31 @@
   function titleGhost(tb, geo) {
     var head = tb.parentNode; if (!head) return;
     geo = geo || ghostGeo(tb);
-    var old = head.querySelector(':scope > .pmu-titleghost'); if (old) old.remove();
-    var g = tb.cloneNode(true);
-    g.classList.add('pmu-titleghost'); g.setAttribute('aria-hidden', 'true');
+    /* one ghost per head, kept and refilled, and hidden once it has left: inserting or removing it changed the head's
+       children, which laid the whole Usage page out again (100-150 ms in the middle of a room's build on the RTX 3090,
+       once per click; Glass review r3 R2, 2026-10-15). What changes inside it is laid out alone: it is placed
+       absolutely, at a fixed size, with its overflow clipped. */
+    var g = head.querySelector(':scope > .pmu-titleghost'), fresh = !g;
+    if (g) { if (g._pmuA) { try { g._pmuA.cancel(); } catch (error) {} g._pmuA = null; } }
+    else { g = document.createElement('div'); g.setAttribute('aria-hidden', 'true'); }
+    g.className = tb.className + ' pmu-titleghost';
+    var copy = tb.cloneNode(true);
     /* the title's look comes from its id: the copy takes the computed face */
-    var dst = g.querySelector('h2');
+    var dst = copy.querySelector('h2');
     if (dst && geo.css) dst.style.cssText = geo.css;
-    Array.prototype.forEach.call([g].concat(Array.prototype.slice.call(g.querySelectorAll('*'))), function (n) {
+    Array.prototype.forEach.call(copy.querySelectorAll('*'), function (n) {
       n.removeAttribute('id'); n.removeAttribute('data-pm-hover-label'); n.removeAttribute('data-pm-hover-detail'); n.removeAttribute('tabindex');
     });
+    g.replaceChildren.apply(g, Array.prototype.slice.call(copy.childNodes));
     g.style.left = geo.l + 'px'; g.style.top = geo.t + 'px'; g.style.width = geo.w + 'px'; g.style.height = geo.h + 'px';
-    head.appendChild(g);
+    g.style.visibility = '';
+    if (fresh) head.appendChild(g);
     var stepped = PMU.motion.family() === 'retro';
     var a = PMU.motion.animate(g, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(' + (-8 * titleDir) + 'px)' }],
       { dur: 90, easing: stepped ? 'steps(2,jump-start)' : 'cubic-bezier(.22,.8,.28,1)', fill: 'forwards' });
-    if (a) a.finished.then(function () { g.remove(); }, function () { g.remove(); }); else g.remove();
+    function gone() { if (g._pmuA === a) { g._pmuA = null; g.style.visibility = 'hidden'; } }
+    g._pmuA = a;
+    if (a) a.finished.then(gone, function () {}); else gone();
   }
   /* the Animation speed for CSS (WOW-SPEC 9, E-10): every Usage transition duration reads calc(<ms> * var(--pmu-speed));
      every hosted board's shell and the shared layer's carry it too (D10 6.5 and 7.1), from their creation on */

@@ -941,11 +941,19 @@
       if (!key) { if (FILM && FILM.key) FILM.key({ room: room }); return; }
       if (key.getAttribute('data-room') === room) return;
       if (!reduced() && !(PMU.theme.look().nier) && !softGpu()) {
-        var old = key.cloneNode(false);
+        /* the old lights are kept and reused, hidden once faded: inserting one and removing it 420 ms later changed the
+           stage's children, which laid the whole Usage page out again each time (100-150 ms in the middle of the next
+           room's build on the RTX 3090; Glass review r3 R2, 2026-10-15). Rapid clicks fade several at once. */
+        var old = null;
+        Array.prototype.some.call(stage.querySelectorAll(':scope > .pmu-film-key.pmu-key-old'), function (o) { if (!o._pmuA) old = o; return !!old; });
+        if (!old) { old = document.createElement(key.tagName); key.parentNode.insertBefore(old, key.nextSibling); }
+        Array.prototype.slice.call(old.attributes).forEach(function (at) { if (!key.hasAttribute(at.name)) old.removeAttribute(at.name); });
+        Array.prototype.slice.call(key.attributes).forEach(function (at) { if (old.getAttribute(at.name) !== at.value) old.setAttribute(at.name, at.value); });
         old.classList.add('pmu-key-old');
-        key.parentNode.insertBefore(old, key.nextSibling);
         var a = PMU.motion.animate(old, [{ opacity: 1 }, { opacity: 0 }], { dur: 420, easing: filmE('out', 'cubic-bezier(.22,.8,.28,1)'), fill: 'forwards' });
-        if (a) a.finished.then(function () { old.remove(); }, function () { old.remove(); }); else old.remove();
+        var parked = function () { if (old._pmuA === a) { old._pmuA = null; old.style.visibility = 'hidden'; } };
+        old._pmuA = a || null;
+        if (a) a.finished.then(parked, parked); else parked();
       }
       if (FILM && FILM.key) FILM.key({ room: room }); else key.setAttribute('data-room', room);
     }
