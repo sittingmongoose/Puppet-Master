@@ -76,10 +76,20 @@ A token you leave out takes the default in `glass.css` section 12.
 | `--pm-switch-shadow` | none | The drop shadow |
 | `--pm-switch-r` / `--pm-switch-r-in` | 6 px / 3 px | The lens's corner; a label's corner inside it |
 | `--pm-switch-ink` / `--pm-switch-ink-on` | `--text-secondary` / `--text-primary` | The labels' colour, at rest and chosen |
-| `--pm-switch-mark` | `--accent-primary` | Small marks inside a chosen row (Usage's icon, the index's dot) |
+| `--pm-switch-mark` | `--accent-primary` | Small marks beside or inside a chosen row (the index's dot, Usage's icon) |
+| `--pm-switch-mark-on` | `--pm-switch-mark` | A mark inside a chosen item when the chip is opaque (Usage's icon, the rail's tab icon) |
+| `--pm-switch-layer` | (unset: over) | `under` draws each lens inside its own strip, over the track and under the labels: an opaque chip with its label in `--pm-switch-ink-on` (Retro's reverse video, NieR's ink bar). Mirrored on `<html data-pm-switch-layer>` |
+| `--pm-switch-swell` | 1 | How much of the chosen label's swell the look keeps, 0 to 1 (its resting size and its size under a moving lens) |
+| `--pm-switch-liquid` | 1 | How much of the drop's stretch, lift and landing wobble the look keeps, 0 to 1 |
 
 The look's own chosen fills, accent bars, dots, underlines and sliding inks on these strips step aside while the
-component is on. A new strip joins by being added to `STRIPS` (mail me, as under "Ride the lens"). Reduce Motion: the
+component is on.
+
+Every look but Glass adopts it (Q16, 2026-10-15): the token blocks are in
+`Concepts/onboarding/opus-5.5/src/css/60-switcher-looks.css` (Basic, Friendly and Retro, light and dark, and NieR Mode,
+which is re-read whenever NieR Mode is turned on or off). With `--pm-switch-layer: under`, a press marks the pressed item
+`data-lg-press="on"` and the one it leaves `"off"` until the app chooses, so each label takes its chosen or resting ink
+while the chip moves ahead of the app; scrubbing a strip is off in that mode. Glass sets none of these tokens. A new strip joins by being added to `STRIPS` (mail me, as under "Ride the lens"). Reduce Motion: the
 lens jumps.
 
 ## Public tokens

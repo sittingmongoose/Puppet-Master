@@ -49689,9 +49689,10 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-mode:is(.is
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-divider { margin: 6px 4px !important; }
 /* Jared #14 (2026-10-14): Light / Dark / Auto is a Glass tab switcher, the lens drawn inside the menu (glass.js); the
    plain chosen fill above stays only for the moment before the lens lands */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-modes[data-lg-lensed] .pm6-tt-mode:is(.is-selected, [aria-pressed="true"], [aria-checked="true"], .active) { background: transparent !important; }
 /* Q16: a look that adopts the switcher hands it the same lens; the chosen mode's own fill and edge step aside there too, and
-   its words take the switcher's chosen ink */
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #themeMenu .pm6-tt-modes[data-lg-lensed] .pm6-tt-mode:is(.is-selected, [aria-pressed="true"], [aria-checked="true"], .active) { background: transparent !important; box-shadow: none !important; border-color: transparent !important; color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
+   its words take the switcher's chosen ink (Glass keeps the rule above) */
+html[data-pm-switch="lens"]:not(#lgz) #themeMenu .pm6-tt-modes[data-lg-lensed] .pm6-tt-mode:is(.is-selected, [aria-pressed="true"], [aria-checked="true"], .active) { background: transparent !important; box-shadow: none !important; border-color: transparent !important; color: var(--pm-switch-ink-on) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tb-menu-item {
   min-height: 34px; margin: 1px 0 !important; padding: 8px 10px !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important;
   background: transparent !important; box-shadow: none !important; display: flex; align-items: center; gap: 10px;
