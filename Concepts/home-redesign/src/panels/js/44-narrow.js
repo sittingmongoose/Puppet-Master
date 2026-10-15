@@ -240,7 +240,16 @@ narrow.install = function () {
   if (ab) new MutationObserver(narrow.schedule).observe(ab, { attributes: true, attributeFilter: ['class'] });
   // the chat column (width_px, history_pinned, keep_open) lives in the layout record: a project switch or a restored
   // layout can change it (the width's commit emits layout too; the two pins' actions schedule the ladder themselves)
-  bus.on('layout', narrow.schedule);
+  // Moving tabs or panels inside the absolute centre cannot change the outer row's width. Re-measuring it after
+  // every drop flushed the newly mounted tab's layout in the same frame. Only a changed chat record needs this hook;
+  // window, rail and chat visibility changes retain their own listeners above.
+  var layoutChat = JSON.stringify(state.layout && state.layout.chat_column);
+  bus.on('layout', function () {
+    var nextChat = JSON.stringify(state.layout && state.layout.chat_column);
+    if (nextChat === layoutChat) return;
+    layoutChat = nextChat;
+    narrow.schedule();
+  });
   narrow.installRailPeek();
   narrow.update();
 };
