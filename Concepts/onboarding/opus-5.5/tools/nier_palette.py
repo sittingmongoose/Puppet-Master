@@ -52,6 +52,11 @@ def olive(warning: str, lightness: float) -> str:
     return hexs(colorsys.hls_to_rgb((h * 360 + 14) / 360 % 1, lightness, s * 0.9))
 
 
+def toward(a: str, b: str, k: float) -> str:
+    """A hex k of the way from a to b (in sRGB, as color-mix(in srgb) mixes)."""
+    return hexs(tuple((x * (1 - k) + y * k) / 255 for x, y in zip(rgb(a), rgb(b))))
+
+
 def roles(mode: str, c: dict, light: dict) -> dict:
     """Every token of one variant: {'root': {...}, 'settings': {...}, 't37': {...}, 'onboarding': {...}, 'wizard': {...}}.
     Each value is a CSS value; a trailing '  /* note */' is kept as a comment."""
@@ -115,15 +120,24 @@ def roles(mode: str, c: dict, light: dict) -> dict:
         '--o55-nier-term-selection': c['terminalSelection'], '--o55-nier-term-cursor': c['terminalCursor'],
         '--o55-nier-shadow-rgb': shadow_rgb,
     }
+    # Settings' quieter inks, derived (contrast round, 2026-10-15): the theme's muted and secondary inks drawn toward its
+    # text ink until every word reads 4.5:1 on Settings' grounds, the parchment's grid lines and hover rows included
+    # (the muted ink read 3.3 to 4.4 in dark, 4.2 to 4.4 on the light grid lines); the secondary ink stays above the
+    # muted one, and dark's error words and light's warning words likewise
+    s_text2 = toward(c['secondaryLabel'], c['text'], .45 if L else .6)
+    s_muted = toward(muted, c['text'], .25 if L else .5)
+    s_err = err_text if L else toward(err_text, c['text'], .3)
+    s_amber = toward(c['warningForeground'], c['text'], .25) if L else c['warning']
     settings = {
         '--k3-bg-0': c['canvas'], '--k3-bg-1': c['sidebar'], '--k3-bg-2': c['surface'],
         '--k3-surface-0': c['surface'], '--k3-surface-1': c['surfaceRaised'], '--k3-surface-2': c['sidebar'], '--k3-surface-3': c['surfaceRaised'],
         '--k3-line': c['border'], '--k3-line-strong': c['input'] if L else c['sidebarBorder'],
-        '--k3-text-1': c['text'], '--k3-text-2': c['secondaryLabel'], '--k3-text-3': muted, '--k3-muted': muted,
+        '--k3-text-1': c['text'], '--k3-text-2': s_text2 + '  /* derived: the secondary ink toward the text ink */',
+        '--k3-text-3': s_muted + '  /* derived: the muted ink toward the text ink */', '--k3-muted': muted,
         '--k3-accent': ink, '--k3-accent-2': ink, '--k3-accent-soft': a(ink, .15), '--k3-accent-soft-2': a(ink, .08),
         '--k3-green': ok_text + '  /* derived */', '--k3-green-soft': a(ok, .16),
-        '--k3-amber': c['warningForeground'] if L else c['warning'], '--k3-amber-soft': c['warningSurface'],
-        '--k3-red': err_text, '--k3-red-soft': c['errorSurface'],
+        '--k3-amber': s_amber + ('  /* derived: the warning ink toward the text ink */' if L else ''), '--k3-amber-soft': c['warningSurface'],
+        '--k3-red': s_err + ('' if L else '  /* derived: the error ink toward the text ink */'), '--k3-red-soft': c['errorSurface'],
         '--k3-blue': ink, '--k3-blue-soft': c['accentSurface'],
         '--k3-shadow-lg': f'0 6px 16px rgba({shadow_rgb},{shade(2)})', '--k3-shadow-md': f'0 2px 6px rgba({shadow_rgb},{shade(1)})',
         '--k3-on-accent': c['accentForeground'],

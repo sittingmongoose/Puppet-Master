@@ -58,7 +58,7 @@ html[data-o55-nier] .o55nc-host { --k3-line-strong: var(--o55-nier-line-strong, 
 :is(#panel-settings, .o55nc-host) .o55nc-preset[aria-pressed="true"] { background: var(--o55nc-ink); color: var(--o55nc-paper); border-color: var(--o55nc-ink); }
 :is(#panel-settings, .o55nc-host) .o55nc-preset[aria-pressed="true"] small { color: inherit; opacity: .78; }
 :is(#panel-settings, .o55nc-host) .o55nc-replay { justify-content: center; }
-:is(#panel-settings, .o55nc-host) .o55nc-replay[aria-disabled="true"] { opacity: .5; cursor: default; }
+:is(#panel-settings, .o55nc-host) .o55nc-replay[aria-disabled="true"] { opacity: var(--k3-dim, .7); cursor: default; }
 :is(#panel-settings, .o55nc-host) .o55nc-replay-why { margin: -4px 0 0; min-height: 0; font-size: 11px; color: var(--o55nc-soft); }
 :is(#panel-settings, .o55nc-host) .o55nc-replay-why:empty { display: none; }
 
@@ -174,7 +174,7 @@ html[data-motion="reduced"] :is(#panel-settings, .o55nc-host) :is(.o55nc-chip, .
 }
 .o55nc-host .o55nc .btn:hover { border-color: var(--o55nc-ink); }
 .o55nc-host .o55nc .btn.primary { background: var(--o55nc-ink); color: var(--o55nc-paper); border-color: var(--o55nc-ink); }
-.o55nc-host .o55nc .btn[aria-disabled="true"] { opacity: .5; cursor: default; }
+.o55nc-host .o55nc .btn[aria-disabled="true"] { opacity: var(--k3-dim, .7); cursor: default; }
 @media (max-width: 820px) {
   .o55nc-host .o55nc-top { grid-template-columns: 1fr; }
   .o55nc-host .o55nc-scenes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
