@@ -506,7 +506,8 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) { --lg-lens-body: rgba(25
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmw-ink-row:not([data-lg-lensed]) > .pmw-ink,
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmw-ink-row:not([data-lg-lensed]) > .pmw-ink-opt:is([aria-selected="true"], [aria-checked="true"])::after,
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .segmented > button:is([aria-checked="true"], [aria-pressed="true"]),
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"] {
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"],
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmt-cz :is(.pmt-cz-tile[aria-checked="true"], .pmt-cz-set[aria-pressed="true"], .pmt-cz-chipbox.pmt-cz-lit) {
   background: radial-gradient(70% 100% at 30% 0%, var(--pm-switch-glint, var(--lg-lens-glint)), transparent 70%) 2px 1px / calc(100% - 4px) 38% no-repeat, linear-gradient(var(--pm-switch-fill, var(--lg-tint-lens)), var(--pm-switch-fill, var(--lg-tint-lens))), linear-gradient(var(--pm-switch-body, var(--lg-lens-body)), var(--pm-switch-body, var(--lg-lens-body))) !important;
   box-shadow: inset 0 0 0 .5px var(--pm-switch-line, var(--lg-lens-hair)), inset 0 1px 0 var(--pm-switch-top, var(--lg-edge-top)), inset 0 -1px 1px var(--pm-switch-bottom, var(--lg-edge-bot)), 0 0 0 .5px var(--pm-switch-edge, var(--lg-lens-edge)), var(--pm-switch-shadow, var(--lg-lens-drop)) !important;
   border-radius: var(--pm-switch-r, var(--pm-ctl-r)) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
@@ -779,3 +780,52 @@ html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings :is(header.workspa
 html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings header.workspace-separator { padding: 10px 16px 11px !important; }
 html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings .home-page > section.home-hero { padding: 20px 22px 22px !important; }
 html[data-theme^="glass"]:not([data-lg="on"]) #panel-settings :is(.pm51-quiet, .o55-quiet-line, .o55-mgp-lead):not(:is(.domain-card, .panel-card, .pm51-stats, .pm51-panel-card, .pm51-advanced, .pm51-hero-facts, .pm51-settings-inline .settings-section, .drawer, .detail-inspector) *) { padding: 8px 12px !important; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   14. The Customize screens (Jared #24, 2026-10-15): the terminal's and the editor's (.pmt-cz; the editor's adds
+   .pmed-cz), opened from a terminal's or an editor's menu, or from Settings' Terminal look and Editor look groups. The
+   dialog is a dense glass menu sheet (data-lg-surface="menu" data-lg-dense, set by 77-customize.js and
+   11-editor-customize.js) and its one-of-several rows ride the lens (STRIPS, .pmt-cz .pmw-ink-row). Inside it, the
+   older "glass" drawing in 26-customize.css used pre-Liquid-Glass tokens, which read in Liquid Glass as white panels
+   with lines that vanished on Glass Light and tiles that were white plates on the sheet. Here:
+   - controls and tiles are glass fills on the sheet, with its hairline and a top catch light;
+   - the chosen tile, scheme, set and lit chip wear the lens's material where they are (section 6, as Settings' choices);
+   - the section bar that stays on top while the options scroll is a frosted bar of the sheet, its jump buttons quiet
+     until pointed at;
+   - the preview that docks while you scroll is a small glass card;
+   - every line and edge is the sheet's hairline.
+   --------------------------------------------------------------------------------------------------------------- */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz {
+  --pmt-cz-line: var(--lg-line); --pmt-cz-line-2: color-mix(in srgb, var(--text-primary) 22%, transparent);
+  --pmt-cz-fill: var(--lg-fill); --pmt-cz-hover: var(--lg-fill-hover); --pmt-cz-edge: var(--lg-edge-top);
+  --pmt-cz-radius: var(--lg-r-card); --pmt-cz-r: 10px; --pmt-cz-r-in: 6px;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set, .pmt-cz-chipbox, .pmt-cz-myset):not([aria-checked="true"]):not([aria-pressed="true"]):not(.pmt-cz-lit) {
+  background: var(--lg-fill) !important; border-color: var(--lg-line) !important; box-shadow: inset 0 1px 0 color-mix(in srgb, var(--lg-edge-top) 45%, transparent) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set, .pmt-cz-chipbox, .pmt-cz-myset):not([aria-checked="true"]):not([aria-pressed="true"]):not(.pmt-cz-lit):hover {
+  background: var(--lg-fill-hover) !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set, .pmt-cz-chipbox, .pmt-cz-myset) { border-radius: var(--pmt-cz-r) !important; }
+/* buttons: Save this look..., Try it, Reset, the step buttons; Done keeps the look's primary */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz :is(.pmt-textbtn, .pmt-step):not(.pmt-textbtn-primary):not(.pmt-cz-nav .pmt-textbtn) {
+  background: var(--lg-fill) !important; border: 1px solid var(--lg-line) !important; border-radius: var(--pm-ctl-r) !important; box-shadow: none !important;
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz :is(.pmt-textbtn, .pmt-step):not(.pmt-textbtn-primary):not(.pmt-cz-nav .pmt-textbtn):hover { background: var(--lg-fill-hover) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz :is(.pmt-textbtn, .pmt-step):not(.pmt-textbtn-primary):not(.pmt-cz-nav .pmt-textbtn):active { background: var(--lg-fill-press) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz .pmt-cz-done { border-radius: var(--pm-ctl-r) !important; }
+/* the section bar: frosted, so the options scrolling under it blur away instead of reading through its words */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz .pmt-cz-nav {
+  margin: -6px 0 -10px; background: color-mix(in srgb, var(--background) 92%, transparent) !important; border: 1px solid var(--lg-line) !important;
+  border-radius: var(--lg-r-bar); -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2);
+}
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz .pmt-cz-nav .pmt-textbtn { background: transparent !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important; box-shadow: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz .pmt-cz-nav .pmt-textbtn:hover { background: var(--lg-fill-hover) !important; }
+/* the one-of-several rows: the switcher's track (the lens is the chosen one) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz .pmt-cz-seg { background: var(--pm-switch-track, var(--lg-fill)) !important; border-color: transparent !important; border-radius: var(--pm-ctl-r) !important; }
+/* the sheet's lines, and the plates inside it */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz :is(.pmt-cz-head, .pmt-cz-foot, .pmt-cz-meter, .pmt-cz-preview, .pmt-cz-search, .pmt-cz-thumb) { border-color: var(--lg-line) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmt-cz .pmt-cz-dock {
+  border-color: var(--lg-line) !important; border-radius: var(--pmt-cz-r) !important;
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), 0 12px 30px -8px var(--lg-shadow), 0 3px 10px var(--lg-shadow-near) !important;
+}
