@@ -53542,6 +53542,8 @@ var PMU_SERIES = {
        hand-off's edge where the voice has one (Jared #3: a fade let the new headings draw over a dimmed old room for up to
        650 ms on a slow frame), else faded */
     var lens = !!o.dir && irisOn() && !reduced() && !M.paused(), cut = !!o.dir && !!riseOn() && !reduced() && !M.paused();
+    /* the new room is on screen from here (a click from now on hands this room over, not the one before it) */
+    if (m && cards && cards.length) m.framed = true;
     /* a late build (Jared #20: "the page change animation is not smooth"). The cut and the lens run on the click's clock,
        and the new room's chrome can come several hundred ms after the click (P1000 films: the board's build holds the main
        thread), when the whole hand-off was already due: the old room went in one frame and the new one stood there as
@@ -53744,10 +53746,12 @@ var PMU_SERIES = {
       var tr = { base: base, y: gv.y * P * dir, rot: gv.rot ? gv.rot * dir : 0, sc: sc, ms: gv.ms, fn: M.curve(gv.ease), out: true,
         origin: f === 'friendly' || f === 'glass' ? '50% ' + cy.toFixed(0) + 'px' : null };
       a = anim(g, camKeys(gv.ms, { tr: tr }, 14), { dur: gv.ms, easing: 'linear', fill: 'forwards' });
-      if (gv.blur && !soft()) gAnims.push(anim(g, [{ filter: 'blur(0px)' }, { filter: 'blur(' + gv.blur + 'px)', offset: 0.55 }, { filter: 'blur(' + gv.blur + 'px)' }], { dur: gv.ms + 200, easing: E.out, fill: 'none' }));
       var mm = moment;
+      /* Glass's old room defocuses as the lens opens through it, not from the click: a room still building held the
+         blurred board for 0.4 s with nothing readable (review r3) */
+      if (gv.blur && !soft() && !(mm && a && irisOn(f))) gAnims.push(anim(g, [{ filter: 'blur(0px)' }, { filter: 'blur(' + gv.blur + 'px)', offset: 0.55 }, { filter: 'blur(' + gv.blur + 'px)' }], { dur: gv.ms + 200, easing: E.out, fill: 'none' }));
       if (mm && a) {
-        mm.ghost = { el: g, fade: null, fadeMs: CV.fade, done: null, move: a, anims: gAnims, sTop: o.sTop || 0 };
+        mm.ghost = { el: g, fade: null, fadeMs: CV.fade, done: null, move: a, anims: gAnims, sTop: o.sTop || 0, blur: gv.blur && !soft() && irisOn(f) ? gv.blur : 0 };
         /* the new chrome never came (an empty room): the old room fades on its own */
         mtimer(mm, 600, function () { fadeGhost(mm); });
       } else if (a) gAnims.push(anim(g, [{ opacity: 1 }, { opacity: 0 }], { dur: CV.fade, delay: 100, easing: E.exit, fill: 'forwards' }));
@@ -53842,11 +53846,22 @@ var PMU_SERIES = {
   function irisGhost(m, elapsed) {
     var G = m && m.ghost; if (!G || G.fade || G.gone || !G.el.isConnected) return false;
     var g = irisGeo(), cy = g.y + (G.sTop || 0);
-    var a = anim(G.el, [{ clipPath: irisClip(g.x, cy, 0) }, { clipPath: irisClip(g.x, cy, g.R) }], { dur: IRIS.ms, delay: IRIS.at - (elapsed || 0), easing: IRIS.ease, fill: 'forwards' });
+    var a = anim(G.el, irisKeys(G, irisClip(g.x, cy, 0), 0, irisClip(g.x, cy, g.R)), { dur: IRIS.ms, delay: IRIS.at - (elapsed || 0), easing: IRIS.ease, fill: 'forwards' });
     if (!a) return false;
     G.fade = a; G.cut = 'iris'; G.iris = { x: g.x, cy: cy, R: g.R };
     a.finished.then(function () { later(G.done); }, function () { if (G.fade === a && G.done) G.done(); });
     return true;
+  }
+  /* the lens's keyframes: the old room's clip from c0 (held to offset q) to c1, and outside the lens it defocuses to 6 px
+     by the time the lens is half open. The blur is part of the lens's own animation: a separate one ran on the
+     compositor and went on blurring while the lens stood still behind a busy main thread (a frosted board). In one
+     animation with the clip (a main-thread property) the two always move together. */
+  function irisKeys(G, c0, q, c1) {
+    var b = G.blur && !soft() ? G.blur : 0, k = [{ clipPath: c0 }];
+    if (q > 0) k.push({ clipPath: c0, offset: q });
+    if (b) { k[0].filter = 'blur(0px)'; if (q > 0) k[1].filter = 'blur(0px)'; k.push({ filter: 'blur(' + b + 'px)', offset: q + (1 - q) * 0.55 }); }
+    k.push(b ? { clipPath: c1, filter: 'blur(' + b + 'px)' } : { clipPath: c1 });
+    return k;
   }
   /* the lens's rim: one ring in the board's scroll pane, above both rooms, scaled with the lens on the compositor */
   function irisRim(board, elapsed) {
@@ -53862,11 +53877,17 @@ var PMU_SERIES = {
     gone(a, ring);
     return a;
   }
-  /* rapid switching (Jared #20: "when you change the page quickly it breaks"). A click during a room change used to
-     finish everything at once: the old room's uncut part vanished, the half laid down room snapped into place, and
-     only then did the next cut begin. Now the old room is paused where its cut or lens stands, kept above the room that
-     becomes the next ghost, and finished in step with the next change's cut or lens as it passes that point (carryOn),
-     so one cut keeps sweeping and nothing stacks, vanishes or jumps. Ghosts already carried are carried again. */
+  /* rapid switching (Jared #20: "when you change the page quickly it breaks"; review r3, 2026-10-15: "an interrupted
+     change never shows a room you have already left; a room still building never freezes the board behind frost"). At a
+     click during a room change exactly one room hands over to the next: the room on screen.
+     - The change had not drawn its new room yet (its frames never came): the old room is still what is on screen, so it
+       stays the outgoing room, and the next change's cut or lens takes it from where it stands (carryQ, carryOn).
+     - The new room had drawn: it becomes the next change's outgoing room (40-board.js makes it the ghost), and every
+       room before it goes in the click's own frame (dropNow). No older room is held behind the next change, and none
+       comes back.
+     A click used to finish everything at once instead: the old room's uncut part vanished and the half laid down room
+     snapped into place. Holding every older room until the next change's cut reached it (the first fix) showed two or
+     three rooms side by side at three clicks a second, and an old room around the next lens. */
   var carryQ = [], carryT = 0;
   /* where a ghost's cut or lens stands (0-1 of its own reach): its exit holds at G.from until the eased progress passes
      G.q, then runs with it to the end */
@@ -53879,41 +53900,48 @@ var PMU_SERIES = {
      paused in the click ran on until then and its follower restarted behind it; seeking back to the click's time makes
      the freeze where it is read */
   function freeze(a) { try { var t = a.currentTime; a.pause(); if (t != null) a.currentTime = t; } catch (error) {} }
-  /* finishMoment('next'): the elements whose animations play on (the carried ghosts, the board that becomes the next
-     ghost, a lens rim fading where it stands), or null when nothing is carried */
+  /* a ghost's cut or lens, chosen for the look now when it has none yet (its hand-off had not begun) */
+  function cutKind(G) {
+    if (G.cut) return G.cut;
+    if (irisOn()) { var g = irisGeo(); G.cut = 'iris'; G.iris = { x: g.x, cy: g.y + (G.sTop || 0), R: g.R }; }
+    else if (riseOn()) { G.cut = 'cut'; G.cutW = boardW(); }
+    return G.cut;
+  }
+  /* a room the click has left behind twice over goes in the click's own frame. Finishing its exit (about 150 ms) still
+     showed it beside the room now leaving, and on a slow machine for the whole of the next build (review r3: "an
+     interrupted change never shows a room you have already left"). Its animations stop and it turns invisible at once
+     (one opacity on the ghost board, nothing restyled inside it); its element empties into the spare with the next
+     batch of finished layers. */
+  function dropNow(G) {
+    if (!G || G.gone) return;
+    G.gone = true;
+    var list = [G.fade, G.move].concat(G.anims || []); G.fade = null;
+    list.forEach(function (x) { if (x && x !== true && x.cancel) { try { x.cancel(); } catch (error) {} } });
+    if (G.el.isConnected) G.el.style.opacity = '0';
+    later(function () { if (G.done) G.done(); });
+  }
+  /* finishMoment('next'): the elements whose animations play on (the room carried into the next change, the board that
+     becomes the next ghost, a lens rim fading where it stands), or null for none */
   function carryGhosts(m) {
-    var list = (m.carried || []).slice(), G0 = m.ghost;
-    if (G0 && !G0.cut && !G0.fade && !G0.gone && G0.el.isConnected) {
-      /* the old room is still whole (the click came before the new room's first frame): carried from nothing cut */
-      if (irisOn()) { var g = irisGeo(); G0.cut = 'iris'; G0.iris = { x: g.x, cy: g.y + (G0.sTop || 0), R: g.R }; }
-      else if (riseOn()) { G0.cut = 'cut'; G0.cutW = boardW(); }
-    }
-    if (G0 && G0.cut && list.indexOf(G0) < 0) list.push(G0);
     if (reduced() || soft() || M.paused()) return null;
-    var keep = [], board = document.getElementById('pmuBoard'), cover = 1, kind = null;
-    list = list.filter(function (G) {
-      var a = G.fade;
-      if (!G.cut || G.gone || !G.el.isConnected || (a && (a === true || a.playState === 'finished' || a.playState === 'idle'))) return false;
-      G.at = a ? cutAt(G) : 0; return true;
-    });
-    /* older rooms lie above newer ones and cover from their own edge on: a room whose edge is at or past the edge of one
-       above it shows nothing and goes now (rapid clicks on a slow build stacked a full board per click) */
-    list.sort(function (x, y) { return (y.carries || 0) - (x.carries || 0); });
-    list.forEach(function (G) {
-      var a = G.fade, at = G.at;
-      if (kind && G.cut !== kind) cover = 1;
-      kind = G.cut;
-      if (at >= cover - 0.002) { G.gone = true; if (a && a !== true) freeze(a); if (G.done) G.done(); return; }
-      cover = Math.min(cover, at);
+    var keep = [], G0 = m.ghost, carry = null;
+    var older = (m.carried || []).slice();
+    if (G0 && !G0.gone && G0.el.isConnected) {
+      if (m.framed) older.push(G0);
+      /* the new room never drew: the old room is the one on screen, and the next change takes it over */
+      else if (cutKind(G0) && !(G0.fade && G0.fade !== true && (G0.fade.playState === 'finished' || G0.fade.playState === 'idle'))) carry = G0;
+    }
+    older.forEach(dropNow);
+    if (carry) {
+      var a = carry.fade && carry.fade !== true ? carry.fade : null, at = a ? cutAt(carry) : 0;
       if (a) freeze(a);
-      G.carried = true; G.carries = (G.carries || 0) + 1;
-      /* above the room that becomes the next ghost, and each older room above the newer (it has been carried more) */
-      G.el.style.zIndex = String(Math.min(8, 2 + G.carries));   /* under the lens's rim (9) */
-      keep.push(G.el);
-      carryQ.push({ G: G, at: at, a: a });
-    });
-    if (!carryQ.length) return null;
-    if (board) keep.push(board);
+      carry.carried = true; carry.el.style.zIndex = '3';
+      keep.push(carry.el);
+      carryQ.push({ G: carry, at: at, a: a });
+    }
+    /* the room that was drawing becomes the next ghost as it stands: its plates keep rising instead of snapping */
+    var board = document.getElementById('pmuBoard'); if (board && m.framed) keep.push(board);
+    if (!keep.length && !carryQ.length) return null;
     /* the lens's rim fades where it stands (finished, it went at once) */
     var rim = G0 && G0.cut === 'iris' && G0.el.parentNode ? G0.el.parentNode.querySelector(':scope > .pmu-iris:not(.pmu-iris-out)') : null;
     if (rim && rim._pmuA) {
@@ -53921,8 +53949,7 @@ var PMU_SERIES = {
       rim.classList.add('pmu-iris-out'); keep.push(rim);
       gone(anim(rim, [{ opacity: 1 }, { opacity: 0 }], { dur: 140, easing: E.out, fill: 'forwards' }), rim);
     }
-    clearTimeout(carryT);
-    carryT = setTimeout(function () { carryOn(null); }, 900 * M.speed());   /* the next change drew no frames and made no ghost */
+    if (carryQ.length) { clearTimeout(carryT); carryT = setTimeout(function () { carryOn(null); }, 900 * M.speed()); }   /* the next change drew no frames */
     return keep;
   }
   /* the next change's frames are in: each carried room holds where it stands until the new cut or lens reaches it, then
@@ -53943,8 +53970,7 @@ var PMU_SERIES = {
             { dur: V.ms, delay: V.at - elapsed, easing: V.ease, fill: 'both' });
         } else if (G.cut === 'iris' && irisOn() && G.iris) {
           var g = G.iris, r0 = c.at * g.R; q = Math.min(0.999, r0 / irisGeo().R);
-          a2 = anim(G.el, [{ clipPath: irisClip(g.x, g.cy, r0) }, { clipPath: irisClip(g.x, g.cy, r0), offset: q }, { clipPath: irisClip(g.x, g.cy, g.R) }],
-            { dur: IRIS.ms, delay: IRIS.at - elapsed, easing: IRIS.ease, fill: 'both' });
+          a2 = anim(G.el, irisKeys(G, irisClip(g.x, g.cy, r0), q, irisClip(g.x, g.cy, g.R)), { dur: IRIS.ms, delay: IRIS.at - elapsed, easing: IRIS.ease, fill: 'both' });
         }
       }
       if (a2) { if (c.a) try { c.a.cancel(); } catch (error) {} G.from = c.at; G.q = q; }
