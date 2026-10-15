@@ -332,7 +332,9 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz-art-smoothScroll { background: linear-gradient(to bottom, var(--pmt-cz-sbg, #111), transparent 34%, transparent 66%, var(--pmt-cz-sbg, #111)), var(--pmt-cz-text), var(--pmt-cz-sbg, #111); }
 
 /* ---- sliders: the track fills to the value ---- */
-.pmt-cz-slider { display: grid; grid-template-columns: minmax(84px, auto) minmax(0, 1fr) 54px; align-items: center; gap: 10px; min-width: 0; font-size: 12px; }
+/* the readout keeps its own width ("Auto · 50%", "8 / 5 px" in Retro's monospace) and the track gives way, so a slider never
+   pushes the screen sideways */
+.pmt-cz-slider { display: grid; grid-template-columns: minmax(84px, auto) minmax(0, 1fr) minmax(54px, max-content); align-items: center; gap: 10px; min-width: 0; font-size: 12px; }
 .pmt-cz-slabel { font-weight: 600; }
 .pmt-cz-out { font: 500 11.5px/1 var(--pm-font-code, ui-monospace, monospace); color: var(--pmw-text-2, inherit); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .pmt-cz-is-mine .pmt-cz-out { color: var(--pmt-cz-accent); }
@@ -384,7 +386,7 @@ html[data-motion="reduced"] .pmt-cz :is(.pmt-cz-tile, .pmt-cz-set, .pmt-cz-chipb
   .pmt-cz-sets { grid-template-columns: 1fr 1fr; }
   .pmt-cz-tiles, .pmt-cz-faces { grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); }
   .pmt-cz-chips { grid-template-columns: 1fr; }
-  .pmt-cz-slider { grid-template-columns: 1fr 54px; }
+  .pmt-cz-slider { grid-template-columns: 1fr minmax(54px, max-content); }
   .pmt-cz-slider .pmt-cz-slabel { grid-column: 1 / -1; }
   .pmt-cz-pvbox { height: 172px; }
   .pmt-cz-foot { flex-wrap: wrap; padding: 10px 12px; }
