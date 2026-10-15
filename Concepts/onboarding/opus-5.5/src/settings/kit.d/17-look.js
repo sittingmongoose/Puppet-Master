@@ -283,6 +283,13 @@ renderControl = function (setting, value) {
     .replace('data-action="input-setting"', 'data-action="o55-glass-alpha"');
   return `<span class="o55-inherit">${control}${number}</span>`;
 };
+/* Details, toasts and search say the value the way the row does: the stored alpha (.56) as the row's stepper shows it
+   (56%), after the same readability floor, never as "0.56 %" (contrast round, 2026-10-15). */
+const o55LookValueText = PM51.valueText;
+PM51.valueText = (setting, v) => {
+  if (!setting || setting.id !== O55_GLASS_ALPHA_ID || v == null || v === '' || !Number.isFinite(Number(v))) return o55LookValueText(setting, v);
+  return `${Math.round(o55GlassPercent(window.PM7_SETTINGS_TOME.clampGlassAlpha(state.settings, v)))}%`;
+};
 function o55SyncGlassNumber() {
   const shown = o55GlassPercent(o55GlassShownAlpha());
   root.querySelectorAll(`input[data-action="o55-glass-alpha"]`).forEach(el => {
