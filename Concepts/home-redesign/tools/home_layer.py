@@ -50,6 +50,14 @@ JS_START, JS_END = '<!-- HOME:BODY:START -->', '<!-- HOME:BODY:END -->'
 HEAD_ANCHOR = '\n</head>'
 BODY_ANCHOR = '\n</body>'
 
+# The old Home controller changes the cursor on every descendant of body. The panel gesture already captures the
+# pointer; its capture element owns the cursor, and selectstart prevents selection. Keep the original stylesheet for
+# ?home=current; the early shim removes just these CSSOM rules for panels. An ancestor guard still invalidates the
+# whole document when the body class changes, even when that guard does not match.
+LEGACY_GESTURE_CSS = '''body.pm-home-dragging,
+body.pm-home-dragging * { cursor: grabbing !important; }
+body.pm-home-dragging { -webkit-user-select: none; user-select: none; }'''
+
 # The page parts the panels take over or call. Each must exist exactly once in the input.
 REQUIRED = ['id="pm-home-workspace"', 'id="panel-dashboard"', 'id="chatPanel"', 'id="bottomPanel"',
             'class="center-column"', 'id="leftPanelResizer"', 'id="sidePanelSlot"',
@@ -64,6 +72,7 @@ REQUIRED = ['id="pm-home-workspace"', 'id="panel-dashboard"', 'id="chatPanel"', 
             # the Guided Tour's workspace steps (opus-5.5 83-tour-steps.js), which call the panels' tour hooks (52-tour.js)
             "id: 'workspace_orientation'", "id: 'open_from_plus'", "id: 'open_file_from_rail'", "id: 'split_by_drag'",
             "id: 'widget_action'"]
+REQUIRED.append(LEGACY_GESTURE_CSS)
 
 # Present at least once (the chat column CSS must outrank this rule; it occurs in two media variants).
 PRESENT = ['body.pm7-chat-global-owner #chatPanel.pm7-global-chat-panel{']
@@ -71,6 +80,34 @@ PRESENT = ['body.pm7-chat-global-owner #chatPanel.pm7-global-chat-panel{']
 # App JS patches (guarded, exactly once, like the Usage layer's APP_PATCHES). With the home layer on, the chat is one
 # column on every page: pm7-t23's seatChatForPage treats Home like any other page (no inline flex !important).
 APP_PATCHES = [
+    # Same matched composer elements, specificity and declarations. The old inline-style attribute selector
+    # invalidated unrelated SVG gradient stops after sibling mutations, even when Glass was not active.
+    ('[data-theme^="glass"] .chat-input-area > div:first-of-type div[style*="gap:var(--md)"]',
+     '[data-theme^="glass"] .chat-input-area > div:first-of-type div.pm7-chat-toggle-group',
+     'composer toggle class selector'),
+    ('<div style="display:flex; gap:var(--md); align-items:center; margin-left:var(--sm); font-size:10px;">',
+     '<div class="pm7-chat-toggle-group" style="display:flex; gap:var(--md); align-items:center; margin-left:var(--sm); font-size:10px;">',
+     'composer toggle class anchor'),
+    # The published generator starts from the pinned pre-Home page, not build_pm7.py. Mirror the small hidden
+    # description grouping change in pm7-tools/global_hover_tags_source.py through these exactly-once anchors.
+    ('.pm-hover-sr > .pm-hover-description {',
+     '/* These owners are already clipped 1px boxes. Keep their layout work inside those boxes without hiding their\n   accessible description nodes or changing the visible tooltip. */\n.pm-hover-sr, .pm-hover-bucket { contain: strict !important; }\n.pm-hover-sr > .pm-hover-bucket,\n.pm-hover-sr .pm-hover-description {',
+     'hidden description group styles'),
+    ('    this.root=null;this.tag=null;this.descriptions=null;this.active=null;this.activeModel=null;',
+     '    this.root=null;this.tag=null;this.descriptions=null;this.descriptionBuckets=[];this.active=null;this.activeModel=null;',
+     'hidden description group storage'),
+    ("    this.root=root;this.tag=root.querySelector('#'+TAG_ID);this.descriptions=root.querySelector('#'+DESCRIPTIONS_ID);\n",
+     "    this.root=root;this.tag=root.querySelector('#'+TAG_ID);this.descriptions=root.querySelector('#'+DESCRIPTIONS_ID);\n    /* Fixed, invisible groups bound sibling-selector invalidation when one description is added or removed.\n       The description nodes, IDs, text, roles and aria-describedby links are unchanged. Keep groups for the\n       controller's lifetime: adding/removing groups would invalidate all their descendants again. */\n    this.descriptionBuckets=Array.prototype.slice.call(this.descriptions.querySelectorAll('.pm-hover-bucket'));\n    if(!this.descriptionBuckets.length){\n      var existing=Array.prototype.slice.call(this.descriptions.children);\n      for(var bi=0;bi<64;bi++){var bucket=document.createElement('div');bucket.className='pm-hover-bucket';this.descriptions.appendChild(bucket);this.descriptionBuckets.push(bucket);}\n      for(var ei=0;ei<existing.length;ei++){var old=existing[ei];if(old.classList.contains('pm-hover-description'))this.descriptionBuckets[(parseInt(old.id.slice('pm-hover-desc-'.length),36)>>>0)%64].appendChild(old);}\n    }\n",
+     'fixed hidden description groups'),
+    ("    if(!desc){desc=document.createElement('span');desc.id=id;desc.className='pm-hover-description';this.descriptions.appendChild(desc);}",
+     "    if(!desc){desc=document.createElement('span');desc.id=id;desc.className='pm-hover-description';this.descriptionBuckets[parseInt(hash(key),36)%64].appendChild(desc);}",
+     'route description to stable group'),
+    # A panel release does not resize or change the rail's accordions. Its compatibility mouseup used to force the
+    # panel body's pending layout in an unrelated rail measurement. Actual rail releases and window resizes retain
+    # the original pass; the PointerEvent and its compatibility MouseEvent share the input timestamp.
+    ("document.addEventListener('mouseup', function () { remeasureOpenAccordions(); });",
+     "document.addEventListener('mouseup', function (ev) { if (window.PMW && PMW.gesture && PMW.gesture.releasedAt === ev.timeStamp) return; remeasureOpenAccordions(); });",
+     'panel release skips unrelated rail accordion measure'),
     ("  function homeActive() { return activePage() === 'dashboard'; }",
      "  function homeActive() { return activePage() === 'dashboard' && document.documentElement.getAttribute('data-pmw-home') !== 'on'; }"
      " /* home layer: the chat is one column on every page */",

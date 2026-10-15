@@ -39,7 +39,11 @@ gesture.start = function (ev, spec) {
     if (e.pointerId !== g.pointerId) return;
     g.px = e.clientX; g.py = e.clientY;
     if (!g.started) { detach(); return; }
+    gesture.releasedAt = e.timeStamp;   // the compatibility mouseup is not a rail resize
     frame(true);
+    // Capture the visible chip and the unchanged centre viewport before retiring drag flags or the preview.
+    // The drop can then batch those writes with the new panel layout instead of flushing layout between them.
+    if (g.chip) { g.releaseChipRect = g.chip.getBoundingClientRect(); g.releaseCentreRect = render.centreRect(); }
     end('drop');
   }
   function onCancel(e) { if (e.pointerId !== g.pointerId) return; if (!g.started) { detach(); return; } end('pointercancel'); }
@@ -82,10 +86,18 @@ gesture.start = function (ev, spec) {
     try { var sel = window.getSelection(); if (sel && sel.removeAllRanges) sel.removeAllRanges(); } catch (_) {}
     try { g.el.setPointerCapture(g.pointerId); g.el.addEventListener('lostpointercapture', onLost); } catch (_) {}
     try { if (window.PM_HOVER_TAG_CONTROLLER && PM_HOVER_TAG_CONTROLLER.close) PM_HOVER_TAG_CONTROLLER.close(true); } catch (_) {}
+    g.hoverRoot = doc.getElementById('pm-hover-tag-root');
+    if (g.hoverRoot) { g.hoverAria = g.hoverRoot.getAttribute('aria-hidden'); g.hoverRoot.setAttribute('aria-hidden', 'true'); }
     var cl = doc.body.classList;
     if (!cl.contains('pm-resizing')) { cl.add('pm-resizing'); g.ownsResizing = true; }
-    cl.add('pmw-dragging');
-    if (spec.cursor) doc.body.style.cursor = spec.cursor;
+    cl.add('pmw-dragging', 'pm-home-dragging');
+    // Pointer capture uses this element's cursor everywhere the pointer travels. Changing body's inherited cursor
+    // instead would invalidate thousands of unrelated elements on both pickup and release.
+    if (spec.cursor && g.el) {
+      g.cursor = g.el.style.getPropertyValue('cursor');
+      g.cursorPriority = g.el.style.getPropertyPriority('cursor');
+      g.el.style.setProperty('cursor', spec.cursor, 'important');
+    }
     state.dragging = true;
     loop();
     return true;
@@ -119,8 +131,15 @@ gesture.start = function (ev, spec) {
     if (gesture.active === g) gesture.active = null;
     detach();
     var cl = doc.body.classList;
-    cl.remove('pmw-dragging');
-    if (spec.cursor) doc.body.style.cursor = '';
+    // Retire the compatibility flags together, before the drop measures its new layout. Clearing them in separate
+    // phases (including the body's observer microtask) made the same release force several app-wide style passes.
+    cl.remove('pmw-dragging', 'pm-home-dragging');
+    if (g.ownsResizing) cl.remove('pm-resizing');
+    if (g.hoverRoot) {
+      if (g.hoverAria == null) g.hoverRoot.removeAttribute('aria-hidden');
+      else g.hoverRoot.setAttribute('aria-hidden', g.hoverAria);
+    }
+    if (spec.cursor && g.el) g.el.style.setProperty('cursor', g.cursor || '', g.cursorPriority || '');
     state.dragging = false;
     var committed = false;
     try {
@@ -130,10 +149,9 @@ gesture.start = function (ev, spec) {
     if (!committed && spec.onCancel) spec.onCancel(g, how);
     if (spec.onEnd) spec.onEnd(g, committed, how);
     if (g.ownsResizing) {
-      cl.remove('pm-resizing');
       try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (_) {}
     }
-    render.flushResizes(true);
+    render.flushResizesSoon();
     try { if (window.PM_HOVER_TAG_CONTROLLER && PM_HOVER_TAG_CONTROLLER.close) PM_HOVER_TAG_CONTROLLER.close(true); } catch (_) {}
     suppressClick();
   }
