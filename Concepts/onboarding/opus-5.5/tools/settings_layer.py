@@ -29,6 +29,45 @@ MARKER = '/* PM51_SETTINGS_REFRESH */\n'
 BOOT = '  boot();\n})();'
 STYLE_OPEN = '<style id="pm51-settings-refresh">\n'
 
+# Approved canon may precede its concept UI. Do not publish generic fallback rows for
+# these pending features. The editor-customizer and Glass owners remove their IDs
+# when their feature lands, after its Settings placement and controls are integrated.
+# Coordinator direction: pm-mail 1015011245-ba7b, 2026-10-15 UTC.
+CONCEPT_PENDING_ROWS = {
+    'code.editing.bold-keywords',
+    'code.editing.bracket-pair-colors',
+    'code.editing.cursor-blink',
+    'code.editing.cursor-motion',
+    'code.editing.cursor-shape',
+    'code.editing.cursor-trail',
+    'code.editing.cursor-width',
+    'code.editing.detect-indentation',
+    'code.editing.dim-unfocused',
+    'code.editing.font-weight',
+    'code.editing.indent-guides',
+    'code.editing.indent-guides-active',
+    'code.editing.insert-spaces',
+    'code.editing.italic-comments',
+    'code.editing.letter-spacing',
+    'code.editing.ligatures',
+    'code.editing.line-highlight',
+    'code.editing.min-contrast',
+    'code.editing.relative-line-numbers',
+    'code.editing.render-whitespace',
+    'code.editing.reveal-lines',
+    'code.editing.rulers',
+    'code.editing.scanlines',
+    'code.editing.scheme-pair',
+    'code.editing.scroll-past-end',
+    'code.editing.smooth-scroll',
+    'code.editing.sticky-scroll-lines',
+    'code.editing.tab-size',
+    'code.editing.text-glow',
+    'code.editing.token-colors',
+    'code.editing.wrap-column',
+    'general.visual.wallpaper',
+}
+
 
 def _t50():
     """Load the T50 transform module with its source folder re-pointed at the fork."""
@@ -380,7 +419,8 @@ def _canon_rows(doc: str, merged: dict, need) -> tuple[str, list]:
     e = doc.index('\n', s)
     ref = json.loads(doc[s:e].rstrip(';'))
     have = {r['id'] for c in ref['byCat'].values() for r in c.get('settings', [])}
-    added = [r for r in canon if r['id'] not in have and r['id'] not in hand]
+    added = [r for r in canon
+             if r['id'] not in have and r['id'] not in hand and r['id'] not in CONCEPT_PENDING_ROWS]
     for r in added:
         cat, sub, _ = r['id'].split('.', 2)
         need(cat in ref['byCat'] and any(g['id'] == sub for g in ref['byCat'][cat].get('subgroups', [])),
