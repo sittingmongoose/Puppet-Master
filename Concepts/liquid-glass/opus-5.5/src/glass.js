@@ -998,6 +998,27 @@
     var left = arrivalLeft(target); if (left < 40) return;
     try { L.lens.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 160, delay: Math.max(0, left - 160), fill: 'backwards', easing: 'ease-out' }); } catch (e) {}
   }
+  /* a lens hidden because its strip or item stopped showing comes back when they show again (Jared #23: "the page
+     selector starts out being there but goes away eventually"). A strip can be hidden and shown in ways no observed
+     mutation reports: an inline style, inert, an attribute on <html> such as the onboarding window's data-o55-open. Such
+     lenses are checked every 400 ms, and only while there are any. */
+  var hiddenLenses = new Map(), showT = 0;
+  function awaitShow(L, cfg) {
+    if (!L.strip.isConnected) { hiddenLenses.delete(L); return; }
+    hiddenLenses.set(L, cfg);
+    if (!showT) showT = setTimeout(checkShown, 400);
+  }
+  function checkShown() {
+    showT = 0;
+    if (!isGlass()) { hiddenLenses.clear(); return; }
+    hiddenLenses.forEach(function (cfg, L) {
+      if (!L.strip.isConnected) { hiddenLenses.delete(L); return; }
+      if (!visible(L.strip)) return;
+      var t = cfg.pick ? cfg.pick(L.strip) : L.strip.querySelector(cfg.items + (cfg.active || '.active'));
+      if (t && visible(t)) { hiddenLenses.delete(L); syncStrip(cfg, L.strip); }
+    });
+    if (hiddenLenses.size) showT = setTimeout(checkShown, 400);
+  }
   function syncStrip(cfg, strip) {
     var L = lensFor(strip, cfg);
     var target = cfg.pick ? cfg.pick(strip) : strip.querySelector(cfg.items + (cfg.active || '.active'));
@@ -1009,7 +1030,8 @@
       if (!P.el.isConnected || target !== P.from || P.away || (P.up && now - P.up > 2500)) L.pending = null;
       else target = P.el;
     }
-    if (!target || !visible(target) || !visible(strip)) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; return; }
+    if (!target || !visible(target) || !visible(strip)) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
+    hiddenLenses.delete(L);
     if (L.scroller && L.scroller.isConnected) {
       var sr = L.scroller.getBoundingClientRect(), tr = boxRect(cfg.box ? (cfg.box(target).getBoundingClientRect ? cfg.box(target) : target) : target);
       if (tr.left < sr.left - 1 || tr.left + tr.width > sr.right + 1 || tr.top < sr.top - 1 || tr.top + tr.height > sr.bottom + 1) {
@@ -1460,6 +1482,7 @@
   }
   var lastPage = null, lastTheme = root.getAttribute('data-theme'), lastLg = root.getAttribute('data-lg');
   var lastTier = root.getAttribute('data-lg-tier'), lastWall = root.getAttribute('data-lg-wall'), lastMotion = root.getAttribute('data-motion');
+  var lastO55 = root.hasAttribute('data-o55-open');
   var mo = new MutationObserver(function (recs) {
     var hot = false, relevant = false;
     for (var i = 0; i < recs.length; i++) {
@@ -1487,6 +1510,9 @@
   new MutationObserver(function () {
     var th = root.getAttribute('data-theme'), lg = root.getAttribute('data-lg');
     var tier = root.getAttribute('data-lg-tier'), wall = root.getAttribute('data-lg-wall'), motion = root.getAttribute('data-motion');
+    /* the onboarding window opening or closing hides or shows the app's strips: every lens is checked again */
+    var o55 = root.hasAttribute('data-o55-open');
+    if (o55 !== lastO55) { lastO55 = o55; dirtyAll = true; queueSync(); }
     if (th === lastTheme && lg === lastLg && tier === lastTier && wall === lastWall && motion === lastMotion) return;
     /* the print is about to change under glass that stays glass: hold the one the current frost was made from */
     var wasGlass = lastLg === 'on' && /^glass/.test(lastTheme || '');
@@ -1501,7 +1527,7 @@
       syncAll(); lastWall = root.getAttribute('data-lg-wall');
       if (enter) materialize(Array.from(glassSet));
     } else { dirtyAll = true; queueSync(); }
-  }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-lg-tier', 'data-lg-wall', 'data-motion'] });
+  }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-lg-tier', 'data-lg-wall', 'data-motion', 'data-o55-open'] });
   applyWall();
   window.addEventListener('blur', function () { root.setAttribute('data-lg-inactive', ''); });
   window.addEventListener('focus', function () { root.removeAttribute('data-lg-inactive'); });
