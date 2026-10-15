@@ -229,6 +229,7 @@ function insertionIn(st, p, x) {
   return { index: p.tabs.length, x: layoutX(last) + last.offsetWidth + stripGap(st) };
 }
 tabDrag.insertionIn = insertionIn;
+tabDrag.layoutX = layoutX;
 function stripGap(st) { return parseFloat(getComputedStyle(st.tabsEl).columnGap) || 0; }
 /* the strip a torn tab hovers opens a gap at the insert index: the tabs from there slide right by the chip's width (the
    250 ms neighbour slide; instant under Reduced Motion), so the slot is drawn in the gap and covers no label */
