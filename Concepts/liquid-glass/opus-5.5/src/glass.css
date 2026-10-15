@@ -268,7 +268,10 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #lg-sweep > i {
   background: linear-gradient(100deg, transparent, var(--lg-shine-c) 45%, var(--lg-shine-c) 55%, transparent); will-change: transform;
 }
 .lg-lens, .lg-press, #lg-lenses { display: none; }
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #lg-lenses { display: block; position: absolute; inset: 0; z-index: 45; pointer-events: none; }   /* above the title bar (40) */
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #lg-lenses { display: block; position: absolute; inset: 0; z-index: 51; pointer-events: none; }
+/* above the title bar, which rises from 40 to 50 while one of its menus is open: at 45 the page selector's lens went
+   under the bar's glass whenever the theme menu, the project picker or the bell's panel was open (review r3, #23). A
+   lens an open menu covers steps aside (lensesUnder), so none is drawn over a menu. */
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .lg-lens.lg-under { opacity: 0; transition: opacity 120ms ease; }
 /* the window is not focused: the glass recedes, its rims dim and its selection greys */
 html[data-lg="on"][data-theme^="glass"][data-lg-inactive]:not(#lgz) { --lg-sel: rgba(150, 156, 170, .45); }

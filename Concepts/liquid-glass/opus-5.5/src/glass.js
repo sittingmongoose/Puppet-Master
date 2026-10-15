@@ -1413,7 +1413,7 @@
       if (L.lens.classList.contains('lg-under') !== hit) L.lens.classList.toggle('lg-under', hit);
     });
   }
-  var MENU_SELECTOR = '.pmu-pop, .pmr-menu-list, #lg-demo-pop, .pm6-tb-menu, #themeMenu', knownMenus = new Set();
+  var MENU_SELECTOR = '.pmu-pop, .pmr-menu-list, #lg-demo-pop, .pm6-tb-menu, #themeMenu, .pmn-panel', knownMenus = new Set();
   function scanMenus(scopes) {
     scopedNodes(MENU_SELECTOR, scopes).forEach(function (m) { knownMenus.add(m); });
     var open = [], theme = [], pops = [], lists = [];

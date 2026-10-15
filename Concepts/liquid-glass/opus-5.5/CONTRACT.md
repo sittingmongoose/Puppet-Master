@@ -114,7 +114,8 @@ the elements inside a sheet.
 - Never put `filter` or `backdrop-filter` on a sheet. Never transform a baked sheet (`panel`, `card`, `bar`): its
   frost is anchored to its layout position. A `menu` sheet blurs live, so it may scale or slide in and out (Glass's
   own menus grow out of their button).
-- Layers: the lens layer `#lg-lenses` sits at z-index 45, above the title bar's 40, and lenses stay on top. The
+- Layers: the lens layer `#lg-lenses` sits at z-index 51, above the title bar (40, and 50 while one of its menus is open),
+  and lenses stay on top; a lens an open menu covers steps aside. The
   pointer light `#lg-shine` is at 2, clipped to the sheet under the pointer and off everywhere else. In Glass Light the
   light is instead a layer of the lit sheet's own background, under its words (GPU tier only).
 - Reduced motion (`html[data-motion="reduced"]`, `data-reduced-motion="1"` or `prefers-reduced-motion`): no travel,
