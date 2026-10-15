@@ -30312,6 +30312,8 @@ html[data-o55-nier-parts~="voice"][data-o55-nier-parts~="headers"] .pmn-toast[da
 /* ---------------------------------------------------------------------------------------------------------------
    1. The setup prompt, pinned under the bell
    --------------------------------------------------------------------------------------------------------------- */
+/* the prompt, once it has joined the bell (19-notify.js tuckPin): its element stays, out of sight and out of the way */
+#rsStage > .o55-resume.pmn-pin.pmn-pin-tucked { display: none !important; }
 #rsStage > .o55-resume.pmn-pin {
   position: relative !important; top: auto !important; left: auto !important; transform: none !important; z-index: auto !important;
   display: flex; align-items: stretch; width: 100%; box-sizing: border-box; pointer-events: auto !important;
@@ -36786,6 +36788,9 @@ html[data-pmw-home="on"] #o55-demo[data-pmw-docked]:not([data-o55-narrow]) .o55-
    bar on every page, and drop past a tab strip right under it (on Home also past the panel's strip, header row or chat
    header below it); measured again on every page change */
 html[data-pmw-home="on"] #rsStage { top: calc(100% + 10px + var(--pmw-notice-drop, 0px)); }
+/* ... and never over a control: the column moves down or to a side where it covers none (js/50-pageshell.js noticeSpot) */
+html[data-pmw-home="on"] #rsStage.pmn-stage { margin-left: calc(var(--pmn-stage-shift, 0px) + var(--pmw-notice-shift, 0px)); transition: top 180ms cubic-bezier(.2, .8, .2, 1), margin-left 180ms cubic-bezier(.2, .8, .2, 1); }
+html[data-pmw-home="on"][data-motion="reduced"] #rsStage.pmn-stage { transition: none; }
 /* ---- panels/css/30-menu.css ---- */
 /* PMW.menu: the picker look every PM dropdown uses (metrics from the Usage PMU.menu, itself the 5.6 Pro chat's menus):
    13 px type, 34 px rows (42 with a description), 8 px row radius, 13 px plate radius, the corner sprout on open and
@@ -137947,9 +137952,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     fresh_attempt: 'Start fresh attempt', open_orch: 'Open Orchestrator', deny: 'Deny', once: 'Once', for_session: 'For Session',
     always: 'Always', filesafe_once: 'Approve once', filesafe_add: 'Approve & add', cancel: 'Cancel', acknowledge: 'Acknowledge',
     dismiss: 'Dismiss', resolve: 'Resolve', open_usage: 'Open Usage', resume_wizard: 'Resume Wizard', view_report: 'View report',
-    continue_assistant: 'Continue in Assistant', open: 'Open'
+    continue_assistant: 'Continue in Assistant', open: 'Open', resume_pin: 'Continue'
   };
-  const PRIMARY = /^(approve|filesafe_once|filesafe_add|for_session|always|once|resolve|open_usage|resume_wizard|retry_safe|open_orch|open)$/;
+  const PRIMARY = /^(approve|filesafe_once|filesafe_add|for_session|always|once|resolve|open_usage|resume_wizard|retry_safe|open_orch|open|resume_pin)$/;
   const DANGER = /^(deny|decline|cancel)$/;
   const NAVIGATES = /^(open_details|open|open_usage|open_orch|resume_wizard|view_report|continue_assistant)$/;
   const PAGE_LABEL = { usage: 'Usage', orchestrator: 'Orchestrator', planning: 'Planning Wizard', wizard: 'Planning Wizard', settings: 'Settings', projects: 'Projects', dashboard: 'Home', home: 'Home', chat: 'Chat' };
@@ -138368,6 +138373,19 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const rec = { it, el: c, timer: null, left: it.stageMs, started: 0, leaving: false };
     staged.set(it.id, rec);
     clampStage();
+    /* no card over a control (review r3, the coordinator's ruling on #19): the page shell places the stage clear of every
+       control near the bell (home-redesign 50-pageshell.js). Where nothing is clear: the older lasting cards join the
+       stack now, and it is placed again; still crowded, a lasting card joins the stack too (the badge counts it) and a
+       quick note shows for a shorter time. */
+    const place = () => typeof window.PM_NOTICE_PLACE === 'function' && window.PM_NOTICE_PLACE() === true;
+    if (place()) {
+      let joined = false;
+      staged.forEach((r) => { if (r !== rec && !r.leaving && r.it.durable) { finishStaged(r, 'join'); joined = true; } });
+      if (!joined || place()) {
+        if (it.durable && method() !== 'Banner') { finishStaged(rec, 'join'); sound('callout', 0.4); return; }
+        it.stageMs = Math.min(it.stageMs, Math.max(1800, Math.round(it.stageMs * 0.5)));
+      }
+    }
     flip(before, c);
     /* the cards already showing slide down first; the new one arrives into the slot they open, so two titles never
        show through each other (frame review, 2026-10-13) */
@@ -138905,6 +138923,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const t = row && row.querySelector('.pmn-rationale');
       if (!t || !t.value.trim()) { if (t) { t.focus(); t.setAttribute('data-missing', ''); } return; }
     }
+    if (aid === 'resume_pin') {
+      const chip = doc.getElementById(it.pin), b = chip && chip.querySelector('[data-o55-chip="resume"]');
+      closePanel(true); dismiss(it.id);
+      if (b) b.click();
+      return;
+    }
     if (aid === 'explain') { if (explainOpen.has(it.id)) explainOpen.delete(it.id); else explainOpen.add(it.id); renderPanel(true); return; }
     if (aid === 'always' && !patternEdit.has(it.id)) { patternEdit.add(it.id); renderPanel(true); return; }
     if (aid === 'decline') {
@@ -139026,6 +139050,43 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      bell, styled like the notices around it (26-notify-50-surfaces.css). The tour's page note (O55.pageToast) becomes
      a quiet notice; it still shows while the tour hushes window.toast. */
   const PINS = ['o55-resume', 'o55-tourchip'];
+  /* the prompt keeps out of the way (review r3, the coordinator's ruling on #19, 2026-10-15). Pinned under the bell until
+     dismissed, it covered Usage's toolbar and Settings' project picker and page options. Once it has arrived and had a
+     moment to be read (PIN_READ_MS), or at the first press, key or wheel anywhere else, it joins the bell the way a
+     lasting notice does: a copy flies into the stack, the badge counts it, and the bell's list keeps it as an entry whose
+     button does what the prompt's own does. The prompt's element stays in the stage, tucked away, with its handlers and
+     selectors (the scenario drivers click it as soon as it shows); a prompt the app shows anew arrives again. */
+  const PIN_READ_MS = 4500, pinAt = new Map();
+  function pinEntry(chip) {
+    const btn = chip.querySelector('[data-o55-chip="resume"]');
+    const it = normalize({ title: clean(btn ? btn.textContent : chip.textContent) || 'Finish setting up', body: '', severity: 'info', kind: 'setup', important: true, allowed_action_ids: ['resume_pin'] });
+    it.id = 'pin-' + chip.id; it.pin = chip.id; it.source = 'settings'; it.icon = 'spark'; it.level = 'notice';
+    return it;
+  }
+  function tuckPin(chip) {
+    const t = pinAt.get(chip.id); if (t) clearTimeout(t.timer); pinAt.delete(chip.id);
+    if (!stageEl || !chip.isConnected || chip.parentElement !== stageEl || chip.classList.contains('pmn-pin-tucked')) return;
+    const it = pinEntry(chip), known = items.some((x) => x.id === it.id);
+    const before = rects(stageKids());
+    if (known || still() || !stackEl || !stackEl.getClientRects().length || method() === 'Banner') {
+      chip.classList.add('pmn-pin-tucked'); flip(before, chip); if (!known) land(it); return;
+    }
+    const copy = chip.cloneNode(true);
+    copy.removeAttribute('id'); copy.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+    copy.classList.add('pmn-pin-copy'); copy.setAttribute('aria-hidden', 'true'); copy.inert = true;
+    stageEl.insertBefore(copy, chip);
+    chip.classList.add('pmn-pin-tucked');
+    fly({ el: copy, it });   /* it lands as an entry when the copy reaches the stack */
+  }
+  function tuckPinsOnInput(e) {
+    if (!pinAt.size) return;
+    const now = performance.now();
+    pinAt.forEach((t, id) => {
+      const chip = doc.getElementById(id);
+      if (!chip || (e.target && e.target.nodeType === 1 && chip.contains(e.target))) return;
+      if (now - t.at > 500) tuckPin(chip);   /* not the press that brought it */
+    });
+  }
   function adopt() {
     if (!stageEl) return;
     PINS.forEach((id) => {
@@ -139036,6 +139097,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       chip.setAttribute('role', 'group');
       chip.setAttribute('data-lg-surface', 'menu');
       stageEl.insertBefore(chip, stageEl.firstChild);
+      chip.classList.remove('pmn-pin-tucked');
+      const prev = pinAt.get(id); if (prev) clearTimeout(prev.timer);
+      pinAt.set(id, { at: performance.now(), timer: setTimeout(() => tuckPin(chip), PIN_READ_MS + 400) });
       flip(before, chip);
       if (!still()) {
         const L = look(), m = motion();
@@ -139046,6 +139110,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   function bridges() {
     adopt();
     if (typeof MutationObserver === 'function' && doc.body) new MutationObserver(adopt).observe(doc.body, { childList: true });
+    ['pointerdown', 'keydown', 'wheel'].forEach((t) => doc.addEventListener(t, tuckPinsOnInput, { capture: true, passive: true }));
+    /* the prompt gone (onboarding resumed or finished): its entry goes too */
+    if (typeof MutationObserver === 'function' && stageEl) new MutationObserver(() => {
+      items.filter((it) => it.pin && !doc.getElementById(it.pin)).forEach((it) => dismiss(it.id));
+    }).observe(stageEl, { childList: true });
     if (typeof O55.pageToast === 'function' && !O55.pageToast.__pmn) {
       const quiet = function (text, ms) { push({ title: String(text || ''), kind: 'ephemeral', important: false, ttlMs: ms || 4200 }); };
       quiet.__pmn = true;
@@ -171160,12 +171229,68 @@ function noticeDrop(host) {
   }
   return Math.max(0, Math.round(want - top));
 }
+/* review r3 (2026-10-15), the coordinator's ruling on #19: nothing the notices show may sit over a control. From the
+   place above (under the bell), the cards' column moves to the nearest spot where it covers no button, field, link, tab
+   or switch of the page: first down, then to either side, within reach of the bell. With no such spot it stays and says
+   so (data-pmn-crowded); a toast staged there then shows for a shorter time (onboarding 19-notify.js). The controls are
+   read once per placement from their boxes (no hit tests), and only while a card shows. */
+var CONTROL_SEL = 'button, a[href], input:not([type="hidden"]), select, textarea, summary, [role="button"], [role="tab"], [role="switch"], [role="checkbox"], [role="radio"], [role="menuitem"], [role="option"], [role="slider"], [contenteditable="true"]';
+var SPOT_DOWN = 320, SPOT_SIDE = 280, SPOT_STEP = 12, SPOT_PAD = 4;
+function controlsIn(x0, x1, y0, y1, stage) {
+  /* the page that shows (the others keep their layout while hidden), the chat, the left column and the title bar */
+  var out = [], roots = [doc.querySelector('.primary-content > .page.active'), doc.getElementById('chatPanel'), doc.querySelector('.left-panel'), doc.querySelector('.title-bar')];
+  for (var r = 0; r < roots.length; r++) {
+    if (!roots[r]) continue;
+    var list = roots[r].querySelectorAll(CONTROL_SEL);
+    for (var i = 0; i < list.length; i++) {
+      var e = list[i]; if (stage.contains(e) || e.closest('#notifySlot')) continue;
+      var b = e.getBoundingClientRect();
+      if (b.width < 2 || b.height < 2 || b.right < x0 || b.left > x1 || b.bottom < y0 || b.top > y1) continue;
+      out.push(b);
+    }
+  }
+  return out;
+}
+function noticeSpot(host, stage) {
+  var drop = noticeDrop(host), spot = { drop: drop, shift: 0, crowded: false };
+  var cards = 0; for (var c = stage.firstElementChild; c; c = c.nextElementSibling) if (c.getClientRects().length && !c.classList.contains('pmn-flying') && !c.classList.contains('pmn-leaving')) cards++;
+  if (!cards) return spot;
+  var sr = stage.getBoundingClientRect(); if (sr.height < 4 || sr.width < 4) return spot;
+  /* where the column starts with no drop and no shift: its top from the bell's slot (top: 100% + NOTICE_GAP + drop, in
+     css/20-shell.css), its left from where it is now less the shift it has */
+  var curShift = parseFloat(stage.style.getPropertyValue('--pmw-notice-shift')) || 0;
+  var left0 = sr.left - curShift, top0 = host.getBoundingClientRect().bottom + NOTICE_GAP, w = sr.width, h = sr.height;
+  var vw = doc.documentElement.clientWidth, vh = doc.documentElement.clientHeight;   /* the app's own frame */
+  var cs = controlsIn(left0 - SPOT_SIDE, left0 + w + SPOT_SIDE, top0 + drop, top0 + drop + SPOT_DOWN + h, stage);
+  function free(d, sh) {
+    var x0 = left0 + sh - SPOT_PAD, x1 = left0 + sh + w + SPOT_PAD, y0 = top0 + d - SPOT_PAD, y1 = top0 + d + h + SPOT_PAD;
+    if (x0 < 6 || x1 > vw - 6 || y1 > vh - 6) return false;
+    for (var i = 0; i < cs.length; i++) { var b = cs[i]; if (b.right > x0 && b.left < x1 && b.bottom > y0 && b.top < y1) return false; }
+    return true;
+  }
+  var best = null, bestCost = Infinity;
+  for (var dd = 0; dd <= SPOT_DOWN; dd += SPOT_STEP) {
+    if (dd > bestCost) break;
+    for (var k = 0; k <= SPOT_SIDE; k += SPOT_STEP * 2) {
+      var cost = dd + k * 0.8; if (cost >= bestCost) break;
+      if (free(drop + dd, k)) { best = { drop: drop + dd, shift: k }; bestCost = cost; break; }
+      if (k && free(drop + dd, -k)) { best = { drop: drop + dd, shift: -k }; bestCost = cost; break; }
+    }
+  }
+  if (best) { spot.drop = best.drop; spot.shift = best.shift; } else spot.crowded = true;
+  return spot;
+}
 function applyDrop() {
   var stage = doc.getElementById('rsStage'), host = stage && stage.parentElement;
-  if (!stage || !host) return;
-  var d = noticeDrop(host) + 'px';
+  if (!stage || !host) return false;
+  var spot = noticeSpot(host, stage), d = spot.drop + 'px', x = spot.shift + 'px';
   if (stage.style.getPropertyValue('--pmw-notice-drop') !== d) stage.style.setProperty('--pmw-notice-drop', d);
+  if (stage.style.getPropertyValue('--pmw-notice-shift') !== x) stage.style.setProperty('--pmw-notice-shift', x);
+  if (stage.hasAttribute('data-pmn-crowded') !== spot.crowded) stage.toggleAttribute('data-pmn-crowded', spot.crowded);
+  return spot.crowded;
 }
+/* the notices ask before a toast's time starts (19-notify.js stage()) */
+window.PM_NOTICE_PLACE = applyDrop;
 shell.installNotices = function () {
   if (shell.noticesOn) return true;
   var stage = doc.getElementById('rsStage');
@@ -171187,6 +171312,12 @@ shell.installNotices = function () {
     pending = requestAnimationFrame(function () { requestAnimationFrame(function () { pending = 0; applyDrop(); }); });
   }
   ['pointerdown', 'keydown', 'focusin'].forEach(function (t) { doc.addEventListener(t, later, true); });
+  /* the page scrolling controls under cards already shown: placed again once per frame */
+  var scrollQ = 0;
+  doc.addEventListener('scroll', function () {
+    if (scrollQ || !stage.firstElementChild) return;
+    scrollQ = requestAnimationFrame(function () { scrollQ = 0; applyDrop(); });
+  }, { capture: true, passive: true });
   /* a page change: measure again once the new page shows (its strips are laid out two frames on) */
   var main = doc.querySelector('.primary-content'), turn = 0;
   if (main) new MutationObserver(function () {
