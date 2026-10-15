@@ -295,6 +295,11 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .main-area { column-gap: 2px !
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #chatPanel { border-radius: var(--lg-r-sheet) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-rail { margin: 0 6px 0 2px; border-radius: var(--lg-r-sheet) !important; position: relative; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-stagehead { margin: 0 6px 6px; border-radius: var(--lg-r-bar) !important; position: relative; z-index: 4; }
+/* the bar sits 6 px in from each side, so at 1920 x 1080 the room's title had 107 px for its 123 ("Current u..."; Basic
+   shows it whole: review r3 round 3, follow-up 2). The bar's spacing gives 28 px back: its gap 5 px, its controls' 3 px,
+   its right padding 8 px. The left padding stays, so the title still lines up with the board. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-stagehead { gap: 5px; padding-right: 8px; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-stagehead > .pmu-headctl { gap: 3px; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-usage .pmu-board > .pmu-card { border-radius: var(--lg-r-card) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm7GlobalStatusBar { margin: 0 8px 4px; border-radius: 10px !important; border: 0 !important; }
 /* inside a sheet nothing paints its own plate: the sheet is the material */
@@ -548,6 +553,17 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root nav.manager-
   background: color-mix(in srgb, var(--background) 94%, transparent) !important; border-color: var(--lg-line) !important; border-radius: var(--lg-r-bar) !important;
   -webkit-backdrop-filter: blur(16px) saturate(1.2) !important; backdrop-filter: blur(16px) saturate(1.2) !important;
 }
+/* Settings' search results float over the page: a frosted menu as dense as a Customize screen, so none of the page's
+   words read through them (Glass's publish check, 2026-10-15: 70 % white in Glass Light and 62 % navy in Glass Dark,
+   with no blur, under "Wallpaper"); near opaque without a GPU, where nothing blurs */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings .search-results {
+  -webkit-backdrop-filter: blur(24px) saturate(1.4); backdrop-filter: blur(24px) saturate(1.4); border-color: var(--lg-line);
+  box-shadow: inset 0 1px 0 var(--lg-edge-top), 0 30px 60px -20px var(--lg-shadow), 0 4px 14px var(--lg-shadow-near);
+}
+html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) #panel-settings .search-results { background: rgba(10, 13, 26, .86); }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) #panel-settings .search-results { background: rgba(250, 251, 253, .88); }
+html[data-lg="on"][data-theme="glass-dark"][data-lg-tier="cpu"]:not(#lgz) #panel-settings .search-results { background: rgba(12, 15, 28, .97); }
+html[data-lg="on"][data-theme="glass-light"][data-lg-tier="cpu"]:not(#lgz) #panel-settings .search-results { background: rgba(252, 253, 255, .97); }
 /* field placeholders read as words (review r3: "Filter services" at 2.2-3.0:1) */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root :is(input, textarea)::placeholder { color: var(--text-muted) !important; opacity: 1 !important; }
 /* the page index's open sections: the current one reads by its words and a small blue mark, never a second fill */
