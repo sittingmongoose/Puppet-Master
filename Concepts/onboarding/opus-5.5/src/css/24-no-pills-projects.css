@@ -1,0 +1,139 @@
+/* The Projects page without pill labels (Jared's rule via the coordinator, 2026-10-14: no pill-shaped labels, i.e.
+   status chips, tags, suggestion chips, state badges; pill-shaped action buttons stay). The approved no-pills vocabulary
+   (share/2026-10-10-no-pills-patterns, NP-STATUS / NP-CHOICE / NP-SCOPE / NP-CORNERS), as the onboarding window, the
+   Orchestrator and the Chat's tour labels already use it:
+     - a card's status (Running, Run #47 · Needs Attention, Paused, Idle, Ready, Archived) is its mark and its word in
+       the status ink, no box, border or fill; a live run's mark breathes instead of the whole word;
+     - a card's stack tags (SvelteKit, Rust · Axum ...) are words, small and set in capitals, each after a 5 px square
+       in the word's own ink;
+     - the New Project sheet's templates are one row of joined cells with the chosen cell filled;
+     - the search field is the look's rectangle, as the title bar's search field is (24-no-pills.css).
+   Every word reads at least 4.5:1 on its card in every look; the inks below were measured on the P1000 (the light
+   looks mix the tone toward the text ink until it does). The base page's JS still writes the same text and classes. */
+
+/* ── inks ─────────────────────────────────────────────────────────────────────────────────────────────────────────── */
+#panel-projects {
+  --pmp-ok: var(--accent-lime); --pmp-warn: var(--accent-orange); --pmp-attn: var(--accent-warning);
+  --pmp-err: var(--accent-magenta); --pmp-info: var(--accent-blue); --pmp-mut: var(--text-secondary);
+  --pmp-tag: var(--text-secondary);
+  --pmp-label-font: 700 10.5px/1.6 var(--body-font, Inter, system-ui, sans-serif); --pmp-label-track: .06em;
+}
+html[data-theme$="-light"] #panel-projects {
+  --pmp-ok: color-mix(in srgb, var(--accent-lime) 55%, var(--text-primary));
+  --pmp-warn: color-mix(in srgb, var(--accent-orange) 55%, var(--text-primary));
+  --pmp-attn: color-mix(in srgb, var(--accent-warning) 50%, var(--text-primary));
+  --pmp-err: color-mix(in srgb, var(--accent-magenta) 62%, var(--text-primary));
+  --pmp-info: color-mix(in srgb, var(--accent-blue) 70%, var(--text-primary));
+}
+/* Glass Light's cards are frosted glass over the wallpaper, a mid-tone ground (L 0.26 to 0.38 on the default mesh), so
+   its words take the text ink (the status words too: the tone stays in their marks, drawn toward the ink enough to read
+   as marks) */
+html[data-theme="glass-light"] #panel-projects {
+  --pmp-ok: color-mix(in srgb, var(--accent-lime) 34%, var(--text-primary));
+  --pmp-warn: color-mix(in srgb, var(--accent-orange) 38%, var(--text-primary));
+  --pmp-attn: color-mix(in srgb, var(--accent-warning) 34%, var(--text-primary));
+  --pmp-err: color-mix(in srgb, var(--accent-magenta) 44%, var(--text-primary));
+  --pmp-info: color-mix(in srgb, var(--accent-blue) 48%, var(--text-primary));
+  --pmp-mut: color-mix(in srgb, var(--text-secondary) 40%, var(--text-primary));
+  --pmp-tag: var(--text-primary); --pmp-word: var(--text-primary);
+}
+/* Friendly Light's blue and amber are its lightest tones; Glass Dark's lilac sits on cards over the bright part of its
+   wallpaper. Both measured under 4.5 and are drawn further toward the text ink. */
+html[data-theme="friendly-light"] #panel-projects {
+  --pmp-info: color-mix(in srgb, var(--accent-blue) 55%, var(--text-primary));
+  --pmp-attn: color-mix(in srgb, var(--accent-warning) 38%, var(--text-primary));
+}
+html[data-theme="glass-dark"] #panel-projects { --pmp-err: color-mix(in srgb, var(--accent-magenta) 60%, var(--text-primary)); }
+html[data-theme^="retro"] #panel-projects { --pmp-label-font: 700 10.5px/1.6 var(--display-font-sm, var(--body-font)); --pmp-label-track: .08em; }
+html[data-o55-nier="on"] #panel-projects {
+  --pmp-ok: var(--o55-nier-ok-text, var(--o55-nier-ink)); --pmp-warn: var(--o55-nier-warn-text, var(--o55-nier-ink));
+  --pmp-attn: var(--o55-nier-warn-text, var(--o55-nier-ink)); --pmp-err: var(--o55-nier-error-text, var(--o55-nier-ink));
+  --pmp-info: var(--o55-nier-ink); --pmp-mut: color-mix(in srgb, var(--o55-nier-ink) 86%, transparent);
+  --pmp-tag: color-mix(in srgb, var(--o55-nier-ink) 86%, transparent);
+  --pmp-label-font: 500 10.5px/1.6 var(--mono-font, 'IBM Plex Mono', monospace); --pmp-label-track: .14em;
+}
+/* NieR Light's ok ink read 4.46 on its parchment; a fifth of the ink brings it over */
+html[data-o55-nier="on"][data-theme$="-light"] #panel-projects { --pmp-ok: color-mix(in srgb, var(--o55-nier-ok-text, var(--o55-nier-ink)) 78%, var(--o55-nier-ink)); }
+
+/* ── a card's status: the mark and the word ──────────────────────────────────────────────────────────────────────────
+   Each status names its tone (--pmp-st); the word and the mark take it, except where a look's ground is too mid-tone
+   for a tinted word to read (Glass Light: --pmp-word), where the word takes the text ink and the mark keeps the tone. */
+html[data-theme] #panel-projects .pm6-proj-card .status-badge {
+  --pmp-st: var(--pmp-ok);
+  display: inline-flex; align-items: center; gap: 6px; padding: 2px 0; border: 0; border-radius: 0;
+  background: none; box-shadow: none; animation: none;
+  font: var(--pmp-label-font); letter-spacing: var(--pmp-label-track); text-transform: uppercase;
+  color: var(--pmp-word, var(--pmp-st));
+}
+html[data-theme] #panel-projects .pm6-proj-card .status-badge::before {
+  content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--pmp-st);
+}
+html:is([data-theme^="retro"], [data-o55-nier="on"]) #panel-projects .pm6-proj-card .status-badge::before { border-radius: 0; }
+html[data-theme] #panel-projects .pm6-proj-card .status-badge.idle { --pmp-st: var(--pmp-mut); }
+html[data-theme] #panel-projects .pm6-proj-card .status-badge.paused { --pmp-st: var(--pmp-warn); }
+html[data-theme] #panel-projects .pm6-proj-card .status-badge.error { --pmp-st: var(--pmp-err); }
+html[data-theme] #panel-projects .pm6-proj-card .status-badge.pm6-ready { --pmp-st: var(--pmp-info); }
+html[data-theme] #panel-projects .pm6-proj-card .status-badge.pm6-attn { --pmp-st: var(--pmp-attn); }
+/* archived: a hollow mark (it was a dashed outline) */
+html[data-theme] #panel-projects .pm6-proj-card .status-badge.pm6-archived { --pmp-st: var(--pmp-mut); }
+html[data-theme] #panel-projects .pm6-proj-card .status-badge.pm6-archived::before { background: none; box-shadow: inset 0 0 0 1.5px var(--pmp-st); }
+/* a live run: the mark breathes; the word stays at full ink (the whole badge used to pulse to 0.6) */
+@keyframes pmp-live { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+html[data-theme] #panel-projects .pm6-proj-card .status-badge.pm6-live::before { animation: pmp-live 2s var(--ease-default, ease) infinite; }
+html[data-motion="reduced"] #panel-projects .pm6-proj-card .status-badge.pm6-live::before { animation: none; }
+@media (prefers-reduced-motion: reduce) { #panel-projects .pm6-proj-card .status-badge.pm6-live::before { animation: none; } }
+
+/* ── a card's stack tags: words after squares ───────────────────────────────────────────────────────────────────── */
+html[data-theme] #panel-projects .project-card-tags { gap: 3px 14px; }
+html[data-theme] #panel-projects .project-card-tags .lang-badge {
+  display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; border-radius: 0;
+  background: none; box-shadow: none;
+  font: var(--pmp-label-font); letter-spacing: var(--pmp-label-track); text-transform: uppercase; color: var(--pmp-tag);
+}
+html[data-theme] #panel-projects .project-card-tags .lang-badge::before {
+  content: ""; flex: none; width: 5px; height: 5px; background: currentColor;
+}
+
+/* ── the New Project sheet's templates: joined cells, the chosen one filled (NP-CHOICE) ─────────────────────────────
+   Each cell draws its own hairline over its neighbour's, so a row that wraps is still joined cells. The chosen cell is
+   on top with the accent edge and fill; Retro and NieR fill it in reverse video. A click still picks the template. */
+/* four templates in a narrow sheet: one 2 x 2 block of equal cells (a free wrap left three and one, ragged), outer
+   corners only */
+html[data-theme] .pm6-proj-sheet .pm6-proj-chips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; padding: 1px 0 0 1px; }
+html[data-theme] .pm6-proj-sheet .pm6-proj-chip {
+  position: relative; margin: -1px 0 0 -1px; border-radius: 0; border: 1px solid var(--border-light);
+  background: transparent; color: var(--text-secondary); box-shadow: none;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+html[data-theme] .pm6-proj-sheet .pm6-proj-chip { justify-content: center; text-align: center; }
+html[data-theme] .pm6-proj-sheet .pm6-proj-chip:nth-child(1) { border-top-left-radius: var(--pm-ctl-r); }
+html[data-theme] .pm6-proj-sheet .pm6-proj-chip:nth-child(2) { border-top-right-radius: var(--pm-ctl-r); }
+html[data-theme] .pm6-proj-sheet .pm6-proj-chip:nth-last-child(2):nth-child(odd) { border-bottom-left-radius: var(--pm-ctl-r); }
+html[data-theme] .pm6-proj-sheet .pm6-proj-chip:last-child { border-bottom-right-radius: var(--pm-ctl-r); }
+html[data-theme] .pm6-proj-sheet .pm6-proj-chip:hover { z-index: 1; background: color-mix(in srgb, var(--accent-primary) 8%, transparent); color: var(--text-primary); }
+html[data-theme] .pm6-proj-sheet .pm6-proj-chip.active {
+  z-index: 2; border-color: color-mix(in srgb, var(--accent-primary) 70%, var(--border-light));
+  background: color-mix(in srgb, var(--accent-primary) 14%, transparent); color: var(--text-primary);
+}
+/* Glass: the page's material rule paints every template cell with the same fill and rim, !important (the base page's
+   html[data-theme^="glass"] :is(.project-action-btn, .pm6-proj-chip, ...)), so the chosen cell only changed its ink.
+   The chosen cell takes more of the accent and its full edge on top of that material, and hover shows through too. */
+html[data-theme^="glass"] .pm6-proj-sheet .pm6-proj-chip:hover:not(.active) {
+  background: color-mix(in srgb, var(--accent-primary) 10%, color-mix(in srgb, var(--rg-chrome-strong) 74%, transparent)) !important;
+}
+html[data-theme^="glass"] .pm6-proj-sheet .pm6-proj-chip.active {
+  border-color: var(--accent-primary) !important;
+  background: color-mix(in srgb, var(--accent-primary) 24%, color-mix(in srgb, var(--rg-chrome-strong) 74%, transparent)) !important;
+}
+html:is([data-theme^="retro"], [data-o55-nier="on"]) .pm6-proj-sheet .pm6-proj-chip { transition: none; }
+html[data-theme^="retro"] .pm6-proj-sheet .pm6-proj-chip.active { border-color: var(--accent-primary); background: var(--accent-primary); color: var(--surface); }
+html[data-o55-nier="on"] .pm6-proj-sheet .pm6-proj-chip.active { border-color: var(--o55-nier-ink); background: var(--o55-nier-ink); color: var(--o55-nier-on-ink, var(--surface)); }
+
+/* ── the search field: the look's rectangle ──────────────────────────────────────────────────────────────────────────
+   Its placeholder was the page's fixed #757575 in every look (2.6 to 3.9:1 on the field); it takes the look's secondary
+   ink, drawn toward the text ink where that alone falls short. */
+html[data-theme] #panel-projects .pm6-proj-search { border-radius: var(--pm-ctl-r); }
+html[data-theme] #panel-projects .pm6-proj-search::placeholder { color: var(--pmp-ph, var(--text-secondary)); opacity: 1; }
+html[data-theme$="-light"] #panel-projects { --pmp-ph: color-mix(in srgb, var(--text-secondary) 70%, var(--text-primary)); }
+html[data-theme="glass-light"] #panel-projects { --pmp-ph: color-mix(in srgb, var(--text-secondary) 40%, var(--text-primary)); }
+html[data-o55-nier="on"] #panel-projects { --pmp-ph: color-mix(in srgb, var(--o55-nier-ink) 80%, transparent); }
