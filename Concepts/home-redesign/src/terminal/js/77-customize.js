@@ -403,8 +403,16 @@
     /* ---- the background group (round 2): a tile's value is 'follow', 'theme', 'solid', 'custom', 'g:<gradient>' or
        'i:<picture>'; each tile is drawn in this scope's own scheme, with a line of its text ---- */
     var gcat = null, gSig = '';
+    /* where the look's own ground is the scheme's own surface (Basic, Glass, Retro, NieR; Friendly has a stage of its own)
+       the two choices draw the same ground, so only Look's own is offered; a saved Theme surface still resolves to that
+       ground and shows as Look's own (coordinator, round 3c) */
+    function ownIsTheme() {
+      var Rf = A().peek({ api: v.api, tabAppearance: { background: 'follow', scheme: val('scheme') }, previewAppearance: null, state: {} }), b = Rf.background || {};
+      return b.kind === 'theme' && !b.css && !b.soft;
+    }
     function groundNow() {
       var k = val('background');
+      if (k === 'theme' && ownIsTheme()) return 'follow';
       if (k === 'gradient') return 'g:' + val('bgGradient');
       if (k === 'image') { var im = val('bgImage'); return im === 'custom' ? 'custom' : 'i:' + (im === 'paper' ? 'fibre' : im); }
       return k;
@@ -454,7 +462,8 @@
         var fl = ['follow'].concat(G.forLook(R.lookKey).map(function (id) { return (G.isGradient(id) ? 'g:' : 'i:') + id; })).slice(0, 6);
         root.querySelector('[data-forlook]').innerHTML = fl.map(function (gv) { return groundTile(gv, gv === 'follow' ? 'Look’s own' : G.name(gv.slice(2)), th); }).join('');
         root.querySelector('[data-forlook-label]').textContent = 'Suggested for ' + (LOOK_NAMES[R.lookKey] || 'this look');
-        var tiles = gcat === 'plain' ? PLAIN.map(function (p) { return groundTile(p[0], p[1], th); }) :
+        var same = ownIsTheme();
+        var tiles = gcat === 'plain' ? PLAIN.filter(function (p) { return !(same && p[0] === 'theme'); }).map(function (p) { return groundTile(p[0], p[1], th); }) :
           gcat === 'yours' ? [groundTile('custom', 'Your picture', th, A().pictureName(val('bgImageData') || '') || 'Choose one…')] :
           G.list().filter(function (d) { return gcat === 'all' || (gcat === 'moving' ? d.moving : d.cat === gcat); }).map(function (d) {
             /* in All, each design says which look suggests it, if one does: a hint, never a limit */
