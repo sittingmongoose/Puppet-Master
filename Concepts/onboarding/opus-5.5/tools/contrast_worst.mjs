@@ -1,7 +1,7 @@
 /* Worst-case text contrast over the onboarding window and the guided tour (2026-10-14).
  *   node tools/contrast_worst.mjs <page path or url> --cdp <endpoint> [--looks basic,friendly,glass,retro,nier]
  *        [--modes light,dark] [--motion normal,reduced] [--screens a,b|all] [--tour all|none|<step ids>]
- *        [--frames 3] [--viewport 1440x900] [--out <dir>]
+ *        [--frames 3] [--viewport 1440x900] [--out <dir>] [--coverage <file>]
  * The method is the landing check's (PuppetMaster-Evidence/tests/pm7-onboarding-landing-focused-20261013/scripts/
  * pixels.mjs, used here unchanged in substance): for every rendered text run in the window, the tour, its landing note
  * and the tour's guided Chat messages, a native Page.captureScreenshot frame is taken between two read-only text
@@ -32,11 +32,13 @@ import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { join, resolve, dirname } from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { inflateSync } from 'node:zlib';
+import { beginCoverage, endCoverage, takeCoverageFlag } from './coverage_union.mjs';
 
 const require = createRequire(join(process.env.PM_PLAYWRIGHT_DIR || '/home/sittingmongoose/pmt-dev/pw/', 'noop.js'));
 const { chromium } = require('playwright-core');
 const here = dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
+const coverageFile = takeCoverageFlag(argv);
 const opt = (k, d) => { const i = argv.indexOf('--' + k); return i >= 0 ? argv[i + 1] : d; };
 const page0 = argv[0] && !argv[0].startsWith('--') ? argv[0] : null;
 const cdp = opt('cdp');
@@ -272,7 +274,16 @@ try {
     /* a context's tab on a remote browser can open behind the session's own tab, where animation frames are throttled:
        screens never finish leaving and the art never moves. Bring it to the front and emulate focus. */
     await page.bringToFront().catch(() => {});
-    try { const c = await ctx.newCDPSession(page); await c.send('Emulation.setFocusEmulationEnabled', { enabled: true }); await c.send('Page.setWebLifecycleState', { state: 'active' }).catch(() => {}); } catch (_) {}
+    let cov = null;
+    if (coverageFile) {
+      const c = await ctx.newCDPSession(page);
+      await c.send('Emulation.setFocusEmulationEnabled', { enabled: true });
+      await c.send('Page.setWebLifecycleState', { state: 'active' }).catch(() => {});
+      await beginCoverage(c);
+      cov = c;
+    } else {
+      try { const c = await ctx.newCDPSession(page); await c.send('Emulation.setFocusEmulationEnabled', { enabled: true }); await c.send('Page.setWebLifecycleState', { state: 'active' }).catch(() => {}); } catch (_) {}
+    }
     const errors = []; page.on('pageerror', (e) => errors.push(String(e && e.message || e).slice(0, 240)));
     try {
       await page.goto(url + (url.includes('?') ? '&' : '?') + 'o55=off&o55scenario=fresh', { waitUntil: 'load', timeout: 180000 });
@@ -349,6 +360,7 @@ try {
       }
     } catch (e) { unreachable.push({ look, mode, motion, view: '*', why: String(e.message).split('\n')[0].slice(0, 200) }); console.log('ERROR', look, mode, motion, String(e.message).split('\n')[0]); }
     if (errors.length) unreachable.push({ look, mode, motion, view: 'page errors', why: errors.slice(0, 5).join(' | ') });
+    if (cov) await endCoverage(cov, coverageFile);
     await ctx.close().catch(() => {});
     writeFileSync(join(out, 'contrast.json'), JSON.stringify({ url, viewport: [VW, VH], frames, method: 'landing-check worst background pixel (pixels.mjs), two-pixel glyph fringe guard', results, unreachable, layerHolds, recaptured }, null, 1));
     writeFileSync(join(out, 'failures.json'), JSON.stringify(failures, null, 1));
