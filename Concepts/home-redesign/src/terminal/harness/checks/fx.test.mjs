@@ -156,6 +156,26 @@ test('every edge sags the same share of its own length, on any shape (aspect-nor
     assert.ok(Math.abs(sideSag / H - s * 0.81) < s * 0.25, `side ${sideSag} on ${W}x${H}`);
   }
 });
+test('tube outline (round 3 bezel): a closed loop on the shader’s edge, the rectangle itself when flat', () => {
+  const flat = geom(0, false);
+  for (const q of G.tubeOutline(flat, 20)) assert.ok(Math.min(q[0], 1 - q[0], q[1], 1 - q[1]) < 1e-9, 'flat: every point on the rectangle');
+  for (const k of [0.04, 0.12, 0.2]) {
+    const g = geom(k, false), pts = G.tubeOutline(g, 20);
+    assert.ok(pts.length > 40, 'enough points for a smooth curve');
+    /* each point is where the warped, rounded screen ends: just inside it maps onto the screen, just outside it does not */
+    let ok = 0;
+    for (const q of pts) {
+      const c = [0.5, 0.5], d = [q[0] - c[0], q[1] - c[1]], inP = [q[0] - d[0] * 0.004, q[1] - d[1] * 0.004], outP = [q[0] + d[0] * 0.004, q[1] + d[1] * 0.004];
+      const a = G.mapUV(inP[0], inP[1], g), b = G.mapUV(outP[0], outP[1], g);
+      if (a && (!b || b[0] < 0 || b[0] > 1 || b[1] < 0 || b[1] > 1)) ok++;
+    }
+    assert.ok(ok >= pts.length * 0.95, `k=${k}: ${ok}/${pts.length} points on the edge`);
+    /* Lottes' warp keeps each edge's middle in place and draws it in toward the corners: the top edge near a corner sits
+       lower than at its middle */
+    const near = (x) => pts.filter(q => q[1] < 0.5).reduce((m, q) => Math.abs(q[0] - x) < Math.abs(m[0] - x) ? q : m, [9, 0]);
+    assert.ok(near(0.12)[1] > near(0.5)[1] + 1e-4, `k=${k}: the top edge curves in toward its corners`);
+  }
+});
 test('corner cells: the screen point of each corner cell centre maps back to that cell', () => {
   const W = 2000, H = 1000, dpr = 2, cssW = 1000, cssH = 500, pad = { x: 12, y: 10 }, cw = 8, ch = 22;
   const cols = Math.floor((cssW - 24) / cw), rows = Math.floor((cssH - 20) / ch);

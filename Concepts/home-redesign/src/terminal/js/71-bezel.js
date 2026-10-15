@@ -137,6 +137,10 @@
   };
   Bezel.prototype.frame = function () {
     if (!this.on() || !this.geo) return;
+    /* only when the screen's picture changed (the renderer counts the frames it actually paints) */
+    var st = this.view.renderer && this.view.renderer.stats, n = st ? st.frames : -1;
+    if (n === this.seenFrames && !this.dirty) return;
+    this.seenFrames = n;
     this.dirty = true;
     if (this.timer) return;
     var self = this, wait = Math.max(0, 1000 / MAX_FPS - (T.util.now() - this.last));

@@ -445,12 +445,14 @@
     var key = name + '|' + th.id + '|' + th.bg + '|' + th.fg + '|' + W + 'x' + H + '|' + blur + '|' + extra;
     if (cache.has(key)) { var hit = cache.get(key); cache.delete(key); cache.set(key, hit); return hit; }
     var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
-    var g = cv.getContext('2d');
+    /* drawn on the CPU: the layer is read back once for its worst pixel, which from a GPU canvas costs a stall (664 ms
+       for Frosted panes on the P1000) */
+    var g = cv.getContext('2d', { willReadFrequently: true });
     if (!g) return null;
     try { PAINT[name](g, W, H, th, hues(th), o); } catch (e) { console.error('[pmt] background painting failed', e); return null; }
     if (blur && canFilter) {
       var b = document.createElement('canvas'); b.width = W; b.height = H;
-      var bg = b.getContext('2d'); bg.filter = 'blur(' + blur + 'px)'; bg.drawImage(cv, -blur * 2, -blur * 2, W + blur * 4, H + blur * 4); cv = b; g = bg;
+      var bg = b.getContext('2d', { willReadFrequently: true }); bg.filter = 'blur(' + blur + 'px)'; bg.drawImage(cv, -blur * 2, -blur * 2, W + blur * 4, H + blur * 4); cv = b; g = bg;
     }
     var out = { url: cv.toDataURL('image/png'), worst: sampleWorst(g, W, H, th), w: W, h: H };
     cache.set(key, out);
