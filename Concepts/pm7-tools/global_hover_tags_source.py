@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Source-owned PMConcept7 global hover/focus tag transform (T47).
 
 The browser artifact is a deterministic prototype of one native

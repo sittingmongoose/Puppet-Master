@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Source-owned PM7 real-shell Guided Tour transform.
 
 This module is deliberately registration-neutral.  ``build_pm7.py`` may call

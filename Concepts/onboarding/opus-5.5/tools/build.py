@@ -1167,7 +1167,34 @@ def build_text(usage: bool = True, home: bool = True) -> str:
     return note + text
 
 
+INERT_SOURCES = TOOLS / 'inert_sources.json'
+
+
+def warn_inert_sources() -> None:
+    """Warn when a frozen pm7-tools source or pm6-build part differs from the recorded copy.
+
+    Those files no longer feed PMConcept7. A difference is a WARNING, not a failed check:
+    edit the live source scripts/pm7-where.py names, and leave these files alone.
+    """
+    if not INERT_SOURCES.is_file():
+        print(f'WARNING: inert source manifest missing: {INERT_SOURCES.relative_to(CONCEPTS.parent)}', file=sys.stderr)
+        return
+    recorded = json.loads(INERT_SOURCES.read_text(encoding='utf-8')).get('files', {})
+    repo = CONCEPTS.parent
+    for rel in sorted(recorded):
+        path = repo / rel
+        if not path.is_file():
+            print(f'WARNING: inert source missing (no longer feeds PMConcept7; use scripts/pm7-where.py): {rel}',
+                  file=sys.stderr)
+            continue
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        if digest != recorded[rel]:
+            print(f'WARNING: inert source changed (no longer feeds PMConcept7; use scripts/pm7-where.py): {rel}',
+                  file=sys.stderr)
+
+
 def check(built: str) -> list[str]:
+    warn_inert_sources()
     problems = lint_sources() + syntax_check(built) + _rail().published_problems(built) + _home().published_problems(built)
     for removed in dict.fromkeys(['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
                                   'pm7-onboarding-css', 'pm7-guided-tour-css', "'.pm7gt-callout", ".closest('.pm7gt')",

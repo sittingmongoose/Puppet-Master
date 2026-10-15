@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """T50: Settings managers refresh for the published TestPMConcept.
 
 Never hand-edit TestPMConcept.html.  This authored transform is applied on the

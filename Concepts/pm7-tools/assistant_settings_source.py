@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """T49: Assistant Settings source transform. Never edit TestPMConcept by hand.
 
 The normal PM7 build invokes apply after T48. A verified-checkpoint build is

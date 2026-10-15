@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Narrow authored bridge from the selected pre-T50 checkpoint to current T44/T46/T46P repairs.
 
 The historical full pipeline is not the selected concept: its Guided Tour and Home

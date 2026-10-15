@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Source-owned T40 Usage preview-paint and directional-resize repairs.
 
 T40 follows T39 and is deliberately limited to two user-reported Usage

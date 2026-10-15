@@ -1,3 +1,4 @@
+# This file no longer feeds PMConcept7. Use scripts/pm7-where.py to find where to edit.
 """Authored PM7 Product Onboarding / Guided Tour cinematic module.
 
 This transform is intentionally registration-neutral.  ``build_pm7.py`` may
