@@ -1,0 +1,484 @@
+{
+  "studio": {
+    "entry": "Concept demo",
+    "entryHint": "Open the Demo Studio",
+    "title": "Demo Studio",
+    "lead": "Set up the pretend world, then watch Puppet Master in it. Nothing real is touched.",
+    "kicker": "Concept demo · Opus 5.5",
+    "close": "Close the Demo Studio",
+    "search": "Find a control",
+    "searchLabel": "Find a demo control",
+    "searchNone": "Nothing matches “{q}”.",
+    "searchIn": "in {section}",
+    "plus": "+{n}",
+    "nav": {
+      "start": "Start",
+      "onboarding": "Onboarding",
+      "tour": "Guided Tour",
+      "story": "Story",
+      "workspace": "Workspace",
+      "usage": "Usage",
+      "notices": "Notices",
+      "looks": "Looks",
+      "reset": "Reset",
+      "switches": "Switches"
+    },
+    "navMeta": {
+      "start": "The big three and recipes",
+      "onboarding": "{n} situations",
+      "tour": "{n} steps",
+      "story": "Clock and five points",
+      "workspace": "Layouts and agents",
+      "usage": "Demo readings",
+      "notices": "Sample notifications",
+      "looks": "Five looks, light and dark",
+      "reset": "Three sizes",
+      "switches": "Reload with switches"
+    },
+    "now": {
+      "label": "Right now",
+      "situation": "Situation",
+      "look": "Look",
+      "motion": "Motion",
+      "motionFull": "Full",
+      "motionReduced": "Reduced",
+      "story": "Story",
+      "storyPlaying": "{t} · playing {x}",
+      "storyPaused": "{t} · paused",
+      "tour": "Tour",
+      "tourNone": "Not started",
+      "tourAt": "Step {n} of {total}",
+      "tourRunning": "Running"
+    },
+    "start": {
+      "kicker": "Start here",
+      "title": "What do you want to show?",
+      "lead": "The three things people ask for most. Everything else is in the sections on the left.",
+      "runTitle": "Run onboarding",
+      "runSub": "From the first screen, in {situation}.",
+      "tourTitle": "Start the Guided Tour",
+      "tourSub": "{n} steps in three chapters: ask, make the workspace yours, plan.",
+      "tourResumeSub": "Stopped at step {n} of {total}. Start it over from step one.",
+      "resetTitle": "Reset the demo",
+      "resetSub": "Progress only, the layout, or everything this browser kept.",
+      "recipesTitle": "Recipes",
+      "recipesLead": "One click sets the world up and starts the moment."
+    },
+    "recipes": {
+      "newComputer": {
+        "title": "A brand-new computer",
+        "sub": "Fresh computer, no progress kept, onboarding from the start."
+      },
+      "returningNas": {
+        "title": "Back with a Home NAS",
+        "sub": "A returning user whose key already works with the Home NAS."
+      },
+      "roughDay": {
+        "title": "A rough first day",
+        "sub": "Wrong NAS password, a flaky network and a GitHub name that is taken."
+      },
+      "noAi": {
+        "title": "No AI account yet",
+        "sub": "Nothing signed in anywhere, so onboarding offers Free Models."
+      },
+      "learn": {
+        "title": "Learn the app",
+        "sub": "The Guided Tour from its first step."
+      },
+      "storyFinish": {
+        "title": "Watch a run finish",
+        "sub": "The story jumps to Run #47 complete and plays at 2x."
+      },
+      "busy": {
+        "title": "A busy afternoon",
+        "sub": "Agents open things, notices arrive and Usage plays the next hour."
+      },
+      "nierTour": {
+        "title": "The tour in NieR Mode",
+        "sub": "NieR Mode on, then the Guided Tour with Pod 042."
+      }
+    },
+    "onboarding": {
+      "kicker": "Onboarding",
+      "title": "Run onboarding in any situation",
+      "lead": "Pick where the person starts, add any twists, then run it. Twists stack.",
+      "run": "Run onboarding",
+      "runWith": "Run onboarding in this situation",
+      "continue": "Continue where it stopped",
+      "savedNone": "Onboarding has not been run in this browser.",
+      "savedDone": "Onboarding was finished in this browser.",
+      "savedClosed": "Onboarding was closed at {screen}.",
+      "savedOpen": "Onboarding is open now.",
+      "startAs": "Start as",
+      "twists": "Twists",
+      "twistsNone": "No twists",
+      "replaces": "Replaces {name}",
+      "will": "Onboarding will run as",
+      "screensTitle": "Open at one screen",
+      "screensLead": "Jump straight to a screen, in the situation above. Screens that need earlier answers fill them in.",
+      "groups": {
+        "computer": "This computer",
+        "nas": "Home NAS",
+        "online": "Online copy",
+        "ai": "AI accounts"
+      },
+      "chapters": {
+        "welcome": "Welcome",
+        "computer": "Computer",
+        "project": "Project",
+        "ai": "AI",
+        "ready": "Ready"
+      },
+      "situations": {
+        "fresh": {
+          "title": "Fresh computer",
+          "sub": "Nothing set up yet. The usual first run."
+        },
+        "returning": {
+          "title": "Returning user",
+          "sub": "Projects from before are already here."
+        },
+        "lowResource": {
+          "title": "Low-resource computer",
+          "sub": "Effects step down so the window stays smooth."
+        },
+        "noKeys": {
+          "title": "No SSH keys here",
+          "sub": "This computer has no key to offer the Home NAS."
+        },
+        "homeNasPm": {
+          "title": "Home NAS runs Puppet Master",
+          "sub": "Pairing replaces the key steps."
+        },
+        "keyWorks": {
+          "title": "A key already works",
+          "sub": "The Home NAS already trusts a key from this computer."
+        },
+        "hostChanged": {
+          "title": "Home NAS ID changed",
+          "sub": "The NAS answers with a different identity than before."
+        },
+        "wrongPassword": {
+          "title": "Wrong NAS password first",
+          "sub": "The first password is refused; the second works."
+        },
+        "keyRefused": {
+          "title": "NAS refuses the key once",
+          "sub": "Its folder permissions are too open the first time."
+        },
+        "selfKeyMissing": {
+          "title": "Hand-added key not there yet",
+          "sub": "The person says they added the key, but it is missing."
+        },
+        "readOnly": {
+          "title": "Read-only NAS folder",
+          "sub": "The projects folder on the NAS cannot be written."
+        },
+        "nameTaken": {
+          "title": "GitHub name taken",
+          "sub": "The online copy's name is already used at creation."
+        },
+        "flaky": {
+          "title": "Flaky network",
+          "sub": "Making the online copy fails once on the network."
+        },
+        "cliMissing": {
+          "title": "Claude not installed",
+          "sub": "Claude has to be installed before signing in."
+        },
+        "signedOut": {
+          "title": "Claude signed out",
+          "sub": "Claude is installed but nobody is signed in."
+        },
+        "copiedUnavailable": {
+          "title": "Copied account unavailable",
+          "sub": "An account copied from another computer cannot be used here."
+        },
+        "remoteAi": {
+          "title": "AI on a remote Server",
+          "sub": "The AI accounts live on the Server, not here."
+        },
+        "noAi": {
+          "title": "No AI account anywhere",
+          "sub": "Nothing signed in on this computer or the Server."
+        }
+      },
+      "screens": {
+        "welcome": "Welcome",
+        "look": "Pick a look",
+        "where": "Where the work happens",
+        "s-kind": "What kind of Server",
+        "s-wait": "Waiting for the Server",
+        "s-confirm": "Set up the Server",
+        "s-ready": "The Server is ready",
+        "c-route": "Which Puppet Master to use",
+        "c-review": "Connect this device",
+        "c-pair": "Check the picture matches",
+        "c-ready": "This device is ready",
+        "r-source": "Where the backup is",
+        "r-unlock": "Unlock the backup",
+        "r-pick": "Choose what comes back",
+        "r-preview": "What comes back",
+        "r-done": "Restored",
+        "begin": "How the Project begins",
+        "ex-folder": "A folder on this computer",
+        "ex-repos": "A Project stored online",
+        "nas-find": "Find the Home NAS",
+        "nas-identity": "Is this your device",
+        "nas-key": "Choose a key",
+        "nas-signin": "Sign in to the NAS once",
+        "nas-install": "Set up the secure connection",
+        "nas-pmpair": "Pair with Puppet Master on the NAS",
+        "nas-folder": "Choose a folder on the NAS",
+        "nas-smb": "Sign in to the shared folder",
+        "nas-nfs": "Choose the NFS share",
+        "nas-mounted": "Choose the drive",
+        "name": "Name the Project",
+        "like": "Start like another Project",
+        "safe": "Keep it safe",
+        "online-service": "Where the online copy lives",
+        "online-signin": "Sign in to the service",
+        "online-details": "The online copy's name",
+        "away": "While you are away",
+        "review": "Review the setup",
+        "creating": "Creating the Project",
+        "protect": "Protect the Project",
+        "ai": "Choose what powers it",
+        "ai-all": "Every AI option",
+        "ai-none": "No AI account",
+        "free": "Set up Free Models",
+        "ready": "You're ready"
+      }
+    },
+    "tour": {
+      "kicker": "Guided Tour",
+      "title": "Teach the app, step by step",
+      "lead": "The tour uses the real app. The Demo Studio steps aside while it runs; the tour has its own Skip.",
+      "start": "Start the Guided Tour",
+      "startOver": "Start over from step one",
+      "resume": "Resume at step {n}",
+      "stateNone": "Not started in this browser.",
+      "stateAt": "Stopped at step {n} of {total}, in {chapter}.",
+      "stateDone": "Finished in this browser.",
+      "chapter": "Chapter {n}",
+      "steps": "{n} steps",
+      "startHere": "Start here",
+      "more": "and {n} more"
+    },
+    "story": {
+      "kicker": "Story",
+      "title": "The Tastebook story",
+      "lead": "Behind the app runs a pretend project with its own clock. Play it, speed it up, or jump ahead.",
+      "clock": "Story clock",
+      "play": "Play",
+      "pause": "Pause",
+      "speed": "Speed",
+      "points": "Story points",
+      "pointsLead": "A jump fills in everything before it. The story only moves forward; start it over to go back.",
+      "jump": "Jump here",
+      "done": "Happened",
+      "next": "Next",
+      "beats": "What just happened",
+      "beatsNone": "Nothing yet. Press Play.",
+      "over": "Start the story over",
+      "overSub": "Reloads the page. Your layout and settings stay.",
+      "c1": "Wizard done, plan approved",
+      "c2": "Compiled, run executing",
+      "c3": "Run #47 complete",
+      "c4": "PR #88 merged",
+      "c5": "Published to Unraid"
+    },
+    "workspace": {
+      "kicker": "Workspace",
+      "title": "The Home workspace",
+      "lead": "Change the panel layout and watch agents work beside you.",
+      "layouts": "Layouts",
+      "layoutsLead": "Open tabs move into the new shape; nothing closes.",
+      "current": "In use",
+      "use": "Use",
+      "resetLayout": "Restore the Home layout",
+      "resetLayoutSub": "Panels go back to their default places. Open files, terminals and chats stay.",
+      "standIn": "Stand-in chat",
+      "standInSub": "The scripted chat beside the panels that can open every kind of tab.",
+      "agents": "Agents open things",
+      "agentsSub": "Six agents open a terminal, a browser, a plan, a file, a crew run and a transcript, each behind your work.",
+      "agentsGo": "Play every agent",
+      "terminal": "An agent drives a terminal",
+      "terminalSub": "Query Analyzer opens its own terminal in the background and reruns the bench.",
+      "terminalGo": "Start the agent",
+      "ask": "An agent asks to type",
+      "askSub": "An agent asks to type into your terminal. You allow it once, for the terminal, or say no.",
+      "askGo": "Make the request",
+      "unavailable": "Not on this page"
+    },
+    "usage": {
+      "kicker": "Usage",
+      "title": "Usage demo readings",
+      "lead": "The Usage page reads pretend accounts. Pause them, or run the clock an hour ahead.",
+      "live": "Demo readings",
+      "liveSub": "New readings arrive about every six seconds while Usage is open.",
+      "hour": "Play the next hour",
+      "hourSub": "Two demo minutes pass every tick until an hour has gone by.",
+      "back": "Back to now",
+      "backSub": "The clock and readings return to the real time.",
+      "gallery": "Chart gallery",
+      "gallerySub": "Every chart in every state, on the current look.",
+      "galleryGo": "Open the gallery",
+      "open": "Open Usage"
+    },
+    "notices": {
+      "kicker": "Notices",
+      "title": "Sample notifications",
+      "lead": "Each one arrives through the title bar's bell exactly as a real one would.",
+      "quiet": {
+        "title": "A quiet confirmation",
+        "sub": "“Settings saved”"
+      },
+      "run": {
+        "title": "Something finished",
+        "sub": "Run #47 completed"
+      },
+      "usage": {
+        "title": "A usage warning",
+        "sub": "Claude's 5-hour window at 80%"
+      },
+      "approval": {
+        "title": "Needs your approval",
+        "sub": "A builder waits on a decision"
+      },
+      "burst": {
+        "title": "A burst",
+        "sub": "Five notices in two seconds"
+      },
+      "all": {
+        "title": "All four in a row",
+        "sub": "Quiet, finished, warning, approval"
+      },
+      "clear": "Clear every notice"
+    },
+    "looks": {
+      "kicker": "Looks",
+      "title": "Every look, light and dark",
+      "lead": "The whole app changes, this Studio included. The choice is saved to the Project like the title bar's.",
+      "mode": "Light or dark",
+      "light": "Light",
+      "dark": "Dark",
+      "auto": "Auto",
+      "nier": "NieR Mode",
+      "nierSub": "Ink and parchment over Basic, with Pod 042.",
+      "nierAdjust": "Adjust NieR look",
+      "reduced": "Reduce motion",
+      "reducedSub": "Movement becomes fades. The Studio, onboarding and the tour follow it.",
+      "sound": "Sound effects",
+      "soundSub": "Clicks and chimes in the look's own voice.",
+      "families": {
+        "basic": "Basic",
+        "friendly": "Friendly",
+        "retro": "Retro",
+        "glass": "Glass",
+        "nier": "NieR"
+      },
+      "lg": {
+        "title": "Liquid Glass",
+        "lead": "Glass's newer material. These change only the Glass look.",
+        "material": "Material",
+        "on": "Liquid Glass",
+        "off": "Today's Glass",
+        "tier": "Drawn by",
+        "gpu": "Graphics card",
+        "cpu": "Processor",
+        "wall": "Wallpaper",
+        "wallLook": "The look's own"
+      },
+      "walls": {
+        "title": "Wallpaper",
+        "lead": "Any wallpaper in any look. It shows behind the app in every look, in the print that follows light or dark.",
+        "own": "Look's own"
+      }
+    },
+    "reset": {
+      "kicker": "Reset",
+      "title": "Start the demo over",
+      "lead": "Choose how much goes. Nothing outside this concept is touched.",
+      "progress": {
+        "title": "Progress",
+        "sub": "Onboarding, the Guided Tour and the situation go back to a fresh computer. Then onboarding opens."
+      },
+      "layout": {
+        "title": "Workspace layout",
+        "sub": "The Home panels go back to their default layout. Nothing else changes."
+      },
+      "everything": {
+        "title": "Everything",
+        "sub": "All of the above and everything else this concept saved in this browser, the 5.6 Pro chat demo's data included. Then the page reloads as a first run."
+      },
+      "goes": "What goes",
+      "stays": "What stays",
+      "staysProgress": "The layout, looks and settings.",
+      "staysLayout": "Open tabs, onboarding, the tour and settings.",
+      "staysEverything": "Nothing kept by this concept. Your real files and accounts were never touched.",
+      "items": {
+        "onboarding": "Onboarding progress",
+        "tour": "Guided Tour progress and its saved layout",
+        "situation": "The situation",
+        "layout": "The panel layout",
+        "saved": "Saved layouts",
+        "dashboards": "Dashboards and widgets",
+        "chat": "The chat column",
+        "terminal": "Terminal settings and saved scrollback",
+        "usage": "Usage boards and readings",
+        "rail": "The left rail",
+        "settings": "Settings, looks included",
+        "chat56": "The assistant chat demo's data (5.6 Pro)",
+        "studio": "Where this Studio was moved to"
+      },
+      "found": "{n} saved items in this browser",
+      "run": "Reset",
+      "confirm": "Yes, reset now",
+      "confirmHint": "Press again within {s} seconds.",
+      "done": "Done."
+    },
+    "switches": {
+      "kicker": "Switches",
+      "title": "Reload with switches",
+      "lead": "Review switches live in the page address. Pick them, then reload. They last for that visit.",
+      "onLoad": "When the page opens",
+      "normal": "As usual",
+      "normalSub": "Onboarding opens on a first run.",
+      "off": "Skip onboarding",
+      "offSub": "Straight to the app (what automated checks use).",
+      "fresh": "A new install",
+      "freshSub": "Onboarding from the start, in Basic Dark.",
+      "tourOn": "Start the Guided Tour",
+      "tourOnSub": "The tour begins as the page opens.",
+      "situation": "Use the situation",
+      "situationSub": "Carries {situation} in the address.",
+      "home": "Today's Home",
+      "homeSub": "The old Home instead of the panels, for comparing.",
+      "pmh": "Hover engine off",
+      "pmhSub": "Cards and rows without the shared hover.",
+      "live": "Usage readings start paused",
+      "liveSub": "The Usage page opens without new readings.",
+      "soft": "Usage without a GPU",
+      "softSub": "Usage draws the way a computer without graphics acceleration sees it.",
+      "gallery": "Open the chart gallery",
+      "gallerySub": "Usage opens with every chart.",
+      "address": "Address",
+      "reload": "Reload with these",
+      "copy": "Copy the address",
+      "copied": "Address copied",
+      "active": "On now"
+    },
+    "toast": {
+      "situation": "Situation: {situation}",
+      "layout": "{name} layout",
+      "resetProgress": "Progress reset. Onboarding starts over.",
+      "resetLayout": "The Home layout is back to its default.",
+      "jumped": "Story jumped to {point}",
+      "unavailable": "That is not available on this page right now."
+    },
+    "move": "Move the Studio",
+    "moveHint": "Drag the title bar, or press the arrow keys here (Shift for bigger steps). Home puts it back in its corner.",
+    "putBack": "Put the Studio back in its corner"
+  }
+}
