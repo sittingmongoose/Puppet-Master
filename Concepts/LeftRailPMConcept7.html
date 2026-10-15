@@ -217344,8 +217344,9 @@ var T = {};
     var mat = bz.style === 'off' ? null : chosen || (look === 'nier' ? 'ink' : lookMaterial(look, light));
     var level = mat === 'ink' ? 'off' : levelOf(bz.reflect, mat, light);
     this.spec = { style: bz.style || 'off', width: bz.width || 0, gap: bz.gap || 0, material: mat, reflect: level,
-      /* clear glass on a light screen gives back half as much again: white on white, its steps read faintly otherwise */
-      strength: STRENGTH[light ? 'light' : 'dark'][LEVELS.indexOf(level)] * (mat === 'glass' && light ? 1.5 : 1),
+      /* clear glass gives back more: half as much again on a light screen (white on white), a sixth more on a dark one,
+         where the wallpaper behind it softens its steps (round 4) */
+      strength: STRENGTH[light ? 'light' : 'dark'][LEVELS.indexOf(level)] * (mat === 'glass' ? (light ? 1.5 : 1.15) : 1),
       light: light, bg: th.bg, fg: th.fg, accent: th.palette ? th.palette[4] : th.fg, glow: !!(ap.effects && ap.effects.glow && ap.effects.glow.on), look: look };
     this.el.hidden = !this.on();
     this.view.root.setAttribute('data-pmt-bezel', this.spec.style);
