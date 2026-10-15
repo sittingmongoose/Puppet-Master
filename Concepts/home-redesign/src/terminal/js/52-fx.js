@@ -96,7 +96,11 @@
     if (style !== 'off' && T.FXTrail && !this.trail) this.trail = T.FXTrail.create(v.trailCanvas);
     this.trailStyle = style;
     v.trailCanvas.hidden = style === 'off' || this.active;
-    v.trailCanvas.style.mixBlendMode = this.trail && this.trail.blend === 'add' ? 'screen' : '';
+    /* the chosen style's own blend, not the last jump's (round 5, Q15: after Glow or Phosphor, a Trace or Soft trail kept
+       the screen blend, and on a light ground its dark ink vanished) */
+    var spec = T.FXTrail && T.FXTrail.STYLES[style];
+    if (this.trail && spec) this.trail.blend = spec.blend;
+    v.trailCanvas.style.mixBlendMode = spec && spec.blend === 'add' ? 'screen' : '';
     this.kick();
   };
   Policy.prototype.params = function (now) {
