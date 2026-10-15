@@ -735,7 +735,10 @@
      #pmw-overlay such as the Customize screens, or any element its owner marks data-lg-lens-host), so a lens is never
      covered by the surface its strip lives in. #pmw-overlay sits above the app shell, so a lens in #lg-lenses was
      drawn under those dialogs and never seen (2026-10-14). */
-  var LENS_HOSTS = '#pm-o55-onboarding .o55-win, #pmw-overlay .pmt-cz-dialog, #pmw-overlay [role="dialog"], #themeMenu, [data-lg-lens-host]';
+  /* a page is a host too (Jared #21, 2026-10-15): a strip inside a page (Usage's rail and range, Home's panel tabs,
+     Settings') has its lens in the page's own layer, so the lens rides the page's entrance with its tabs instead of being
+     measured mid-slide in the app-wide layer and then sliding the last 50 px into place */
+  var LENS_HOSTS = '#pm-o55-onboarding .o55-win, #pmw-overlay .pmt-cz-dialog, #pmw-overlay [role="dialog"], #themeMenu, [data-lg-lens-host], .primary-content > .page';
   var lenses = new Map(), layer = null, localLayers = new WeakMap();
   function lensLayer(strip) {
     var host = strip && strip.closest && strip.closest(LENS_HOSTS);
@@ -771,8 +774,29 @@
       x += p.clientLeft - p.scrollLeft; y += p.clientTop - p.scrollTop; n = p;
     }
   }
+  /* an element's place in its host's own layout (the offset chain up to the host, less what scrolls between): a host's
+     transform (a page's entrance, a menu growing from its button) moves the element and the host's lens layer alike,
+     so a lens placed in these units stays on its item through the whole entrance. null when the chain does not reach
+     the host. */
+  function hostRect(e, host) {
+    if (!e.offsetParent) return null;
+    var x = 0, y = 0, n = e;
+    while (n && n !== host) {
+      var p = n.offsetParent; if (!p) return null;
+      x += n.offsetLeft; y += n.offsetTop;
+      for (var a = n.parentElement; a && a !== p; a = a.parentElement) { x -= a.scrollLeft; y -= a.scrollTop; }
+      if (p !== host) { if (!host.contains(p)) return null; x += p.clientLeft - p.scrollLeft; y += p.clientTop - p.scrollTop; }
+      n = p;
+    }
+    return n === host ? { left: x, top: y, width: e.offsetWidth, height: e.offsetHeight } : null;
+  }
   function rectIn(strip, t, pad) {
-    var r = t.getBoundingClientRect ? boxRect(t) : t, lr = lensLayer(strip).getBoundingClientRect(); pad = pad || 0;
+    var L = lensLayer(strip); pad = pad || 0;
+    if (t.getBoundingClientRect && L !== layer && L.parentElement) {
+      var h = hostRect(t, L.parentElement);
+      if (h) return { x: h.left - pad, y: h.top - pad, w: h.width + 2 * pad, h: h.height + 2 * pad };
+    }
+    var r = t.getBoundingClientRect ? boxRect(t) : t, lr = L.getBoundingClientRect();
     return { x: r.left - lr.left - pad, y: r.top - lr.top - pad, w: r.width + 2 * pad, h: r.height + 2 * pad };
   }
   function lensFor(strip, cfg) {
@@ -813,8 +837,37 @@
     sizes.forEach(function (s) { var wh = s.split('x').map(Number); if (wh[0] >= 4 && wh[1] >= 4) lensFilterFor(cfg.kind, wh[0], wh[1], radiusOf(L.lens, wh[0], wh[1])); });
   }
   function stopMagnify(L) { if (L.magAnims) { var a = L.magAnims; L.magAnims = null; a.forEach(function (an) { an.cancel(); }); } }
+  /* a lens first shown while its item is still entering (Usage's rail rows slide 12 px in, a menu's rows fade in) moves
+     with the item: the running transform and opacity animations of the item and of its ancestors up to the lens's host
+     are mirrored onto the lens on the same clock, so the item never slides into a lens already in place (Jared #21) */
+  var RIDE_MOVE = ['transform', 'translate', 'scale', 'rotate'];
+  function ride(L, target) {
+    stopRide(L);
+    var stop = L.layer.parentElement, out = [];
+    function mirror(a, props, composite) {
+      var kf = [], any = false;
+      a.effect.getKeyframes().forEach(function (k) {
+        var o = { offset: k.computedOffset, easing: k.easing || 'linear' };
+        props.forEach(function (p) { if (k[p] != null && k[p] !== '') { o[p] = k[p]; any = true; } });
+        kf.push(o);
+      });
+      if (!any || kf.length < 2) return;
+      var t = a.effect.getTiming(), m;
+      try { m = L.lens.animate(kf, { duration: t.duration, delay: t.delay, easing: t.easing, fill: 'backwards', iterations: 1, composite: composite }); } catch (e) { return; }
+      if (a.startTime != null) m.startTime = a.startTime; else if (a.currentTime != null) m.currentTime = a.currentTime;
+      out.push(m);
+    }
+    for (var n = target; n && n !== stop && n !== document.documentElement; n = n.parentElement) {
+      n.getAnimations().forEach(function (a) {
+        if (!a.effect || (a.playState !== 'running' && a.playState !== 'pending')) return;
+        mirror(a, RIDE_MOVE, 'add'); mirror(a, ['opacity'], 'replace');
+      });
+    }
+    L.ride = out.length ? out : null;
+  }
+  function stopRide(L) { if (L.ride) { var r = L.ride; L.ride = null; r.forEach(function (m) { m.cancel(); }); } }
   function stopLensTravel(L) {
-    stopMagnify(L);
+    stopMagnify(L); stopRide(L);
     if (L.glintAnim) { var g = L.glintAnim; L.glintAnim = null; g.cancel(); }
     if (L.anim) { var an = L.anim; L.anim = null; an.onfinish = null; an.cancel(); } L.reducedAnim = false;
   }
@@ -975,16 +1028,23 @@
     if (!A || quiet || !isGlass()) {
       stopLensTravel(L);
       if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } }; }
-      setLensBox(L, R);
-      if (!A && !quiet && isGlass()) arrive(L, target);
+      setLensBox(L, R); L.tgt = target;
+      /* a lens in the app-wide layer waits for its strip's entrance; one in its host's own layer (a page, a menu, a
+         dialog) is part of that entrance already */
+      if (!A && !quiet && isGlass()) { if (L.layer === layer) arrive(L, target); ride(L, target); }
       return;
     }
     /* the destination moved by a pixel or two (the chosen label turned bold): a move in flight carries on, re-based;
        a lens at rest just takes the new box. Neither starts a new move (it would lift and swell for nothing). */
     if (Math.max(Math.abs(A.x - R.x), Math.abs(A.y - R.y), Math.abs(A.w - R.w), Math.abs(A.h - R.h)) < 4) {
       if (!(L.anim && L.path && performance.now() - L.path.t0 < L.path.dur)) stopLensTravel(L);
-      setLensBox(L, R); return;
+      setLensBox(L, R); L.tgt = target; return;
     }
+    /* the lens travels only when the chosen item changes. The same item seen somewhere else (its page or menu settled,
+       the strip scrolled or reflowed) is followed at once (Jared #21: a lens measured mid-entrance slid 50 px into
+       place after the page had landed) */
+    if (L.tgt === target && !L.dragging) { stopLensTravel(L); setLensBox(L, R); return; }
+    L.tgt = target;
     var from = visualRect(L) || A, vertical = !!cfg.vertical || Math.abs(from.y - R.y) > Math.abs(from.x - R.x);
     travel(L, from, R, vertical, { labels: labelsOf(cfg, strip, vertical), mags: magsOf(cfg), vertical: vertical });
   }
@@ -1275,7 +1335,10 @@
     menu.style.transformOrigin = '0 0';
     menuAnimation(menu, menu, frames, { duration: S[S.length - 1].t, easing: 'linear', fill: 'backwards' });
     menuAnimation(menu, menu, [{ opacity: 0.2 }, { opacity: 1, offset: 0.25 }, { opacity: 1 }], { duration: S[S.length - 1].t, easing: 'linear' });
-    Array.prototype.slice.call(menu.children, 0, 30).forEach(function (k, i) { menuAnimation(menu, k, [{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: 110 + i * 10, easing: 'ease-out', fill: 'backwards' }); });
+    /* each child fades in, 10 ms apart; the lens layer is not one of them: each lens takes its own row's entrance (ride),
+       so it never arrives after its tabs (Jared #21) */
+    Array.prototype.slice.call(menu.children, 0, 30).filter(function (k) { return !k.classList.contains('lg-lenses-local'); }).forEach(function (k, i) { menuAnimation(menu, k, [{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: 110 + i * 10, easing: 'ease-out', fill: 'backwards' }); });
+    lenses.forEach(function (L) { if (L.tgt && L.rect && L.layer !== layer && menu.contains(L.layer)) ride(L, L.tgt); });
   }
   function lensesUnder(menus) {
     lenses.forEach(function (L) {
