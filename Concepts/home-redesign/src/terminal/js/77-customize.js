@@ -537,7 +537,7 @@
       /* a design's own controls: Size for patterns, Motion for any that moves, whatever its kind */
       var did = design ? now.slice(2) : '', moves = !!did && !!G.motion(did);
       [].forEach.call(root.querySelectorAll('[data-gctl-sub]'), function (s) { var sub = s.getAttribute('data-gctl-sub');
-        s.hidden = !(sub === 'moving' ? moves : sub === cat0); });
+        s.hidden = !(sub === 'moving' ? moves : sub === 'pattern' ? !!did && G.sized(did) : sub === cat0); });
       root.querySelector('[data-bezel-more]').hidden = val('bezel') === 'off';
       /* Reflection: the material's own level named; none for NieR's ink frame, which reflects nothing */
       var rf = reflect(R), rtxt = rf.own ? rf.name + '’s own is ' + rf.own.charAt(0).toUpperCase() + rf.own.slice(1) + '.' : '';
