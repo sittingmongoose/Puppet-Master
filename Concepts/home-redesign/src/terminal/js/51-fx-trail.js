@@ -152,7 +152,9 @@
       /* one device-px multiple, at least 1 px; dark ink (a light ground) draws 2 CSS px, as ink on paper needs the
          weight to show (round 4, Q15: on Basic, NieR and Retro light the 1 px line hardly showed) */
       var inkLine = (0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]) / 255 < 0.45;
-      var lw = Math.max(1, Math.round(k * (inkLine ? 2 : 1))) / k;
+      /* (round 5, Q15: and its weight follows the text's, an eighth of the cell's height, so it holds beside a tall face:
+         Retro light's VT323 drew it at 3.88 beside Off) */
+      var lw = Math.max(1, Math.round(k * (inkLine ? Math.max(2, (a.cell && a.cell.h || 0) / 8) : 1))) / k;
       var snap = function (v) { return (Math.round(v * k - 0.5) + 0.5) / k; };
       if (Math.abs(hy - ty) < 0.01) { hy = ty = snap(ty); }        // horizontal and vertical lines land on pixel centres
       if (Math.abs(hx - tx) < 0.01) { hx = tx = snap(tx); }
