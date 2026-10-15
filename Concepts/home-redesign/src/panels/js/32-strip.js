@@ -361,7 +361,7 @@ function buildStrip(host, panelId) {
     'data-pm-hover-detail': 'Show this panel at its size again', 'data-pmh': 'icon' }, [icon('chevronRight', { size: 14 })]);
   s.lock = h('span', { class: 'pmw-lockmark', hidden: true, 'data-pm-hover-label': 'Locked', 'data-pm-hover-detail': 'Files open in other panels' }, [icon('lock', { size: 12 })]);
   s.menuBtn = h('button', { type: 'button', class: 'pmw-pmenu pmw-sbtn', 'aria-label': 'Panel options', 'aria-haspopup': 'menu', 'data-pm-hover-label': 'Panel options', 'data-pmh': 'icon' }, [icon('more', { size: 14 })]);
-  s.grip = h('button', { type: 'button', class: 'pmw-grip', 'aria-label': 'Move panel (drag, or Enter then arrows)', 'data-pm-hover-label': 'Move panel', 'data-pm-hover-detail': 'Drag it to another place, or press Enter and use the arrows', 'data-pmh': 'off' }, [icon('grip', { size: 9 })]);
+  s.grip = h('button', { type: 'button', class: 'pmw-grip', 'aria-label': 'Move panel (drag, or Enter then arrows)', 'data-pm-hover-label': 'Move panel', 'data-pm-hover-detail': 'Drag it to another place, or press Enter and use the arrows', 'data-pmh': 'off' }, [icon('grip', { size: 6 })]);
   s.plate = h('div', { class: 'pmw-plate', 'aria-hidden': 'true' });
   append(host, [s.plate, s.switcher, s.list, s.more, s.plus, s.expand, s.fill, s.lock, s.menuBtn, s.grip]);
   host._pmw = s;

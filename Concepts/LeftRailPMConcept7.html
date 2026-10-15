@@ -28579,7 +28579,9 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmh-field: 1; --pmh-near: 1; --pmh-glow: 1; --pmh-frame: 0; --pmh-edge: .4;
   --pmf-ease-out: cubic-bezier(.3, 0, .2, 1);
   /* the light's falloff: a Gaussian exp(-4.5 t^2) tapered to 0 at the radius, sampled every 10 % (hand-set stops left
-     Mach rings in a warm pool). The few-% sheen shows only in the inner third; the hairline reads to about two thirds. */
+     Mach rings in a warm pool). The few-% sheen shows only in the inner third; the hairline reads to about two thirds.
+     Jared's Glass review (2026-10-14, #16): the circle under the pointer was too strong and the edge glow right, so every
+     look's --pmf-sheen below is 0.6 of its 2026-10-10 value and the rim, band, mask and radius are unchanged. */
   --pmf-mask: #000 0, rgb(0 0 0 / .956) 10%, rgb(0 0 0 / .833) 20%, rgb(0 0 0 / .663) 30%, rgb(0 0 0 / .481) 40%, rgb(0 0 0 / .317) 50%, rgb(0 0 0 / .189) 60%, rgb(0 0 0 / .1) 70%, rgb(0 0 0 / .046) 80%, rgb(0 0 0 / .015) 90%, transparent 100%;
 }
 /* Basic: crisp. Critically damped and quick; a cool hairline over a short inner band; a small faint sheen; a tight
@@ -28590,7 +28592,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmf-r: 90px; --pmf-band: 6px;
   --pmf-rim: color-mix(in srgb, color-mix(in srgb, rgb(var(--accent-primary-rgb)) 70%, #fff) 80%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 40%, transparent);
-  --pmf-sheen: rgb(255 255 255 / .07);
+  --pmf-sheen: rgb(255 255 255 / .042);
   --pmf-in: 90ms; --pmf-out: 220ms;
   --pmf-plate: 0 6px 14px -6px rgba(0, 0, 0, .5);
   --pmf-bloom: 0 0 10px rgba(var(--accent-primary-rgb), .2);
@@ -28602,7 +28604,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmf-r: 90px; --pmf-band: 6px;
   --pmf-rim: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 80%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 26%, transparent);
-  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 7.5%, transparent);
+  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 4.5%, transparent);
   --pmf-in: 90ms; --pmf-out: 220ms;
   --pmf-plate: 0 6px 14px -6px rgba(16, 24, 40, .2);
   --pmf-bloom: 0 0 10px rgba(var(--accent-primary-rgb), .12);
@@ -28614,7 +28616,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmh-mag: 2.5; --pmh-mag-k: .03; --pmh-stiff: 170; --pmh-damp: 22;
   --pmh-bleed: 18; --pmh-ramp: 18; --pmh-out-ms: 320; --pmh-glow-reach: 36;
   --pmf-r: 100px; --pmf-band: 16px;
-  --pmf-sheen: rgb(255 228 206 / .1);
+  --pmf-sheen: rgb(255 228 206 / .06);
   --pmf-in: 130ms; --pmf-out: 320ms;
   --pmf-plate: 0 10px 22px -10px rgba(10, 6, 18, .55);
   --pmf-bloom: 0 0 14px color-mix(in srgb, color-mix(in srgb, var(--accent-primary) 55%, #ffc9b0) 18%, transparent);
@@ -28624,7 +28626,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmh-mag: 2.5; --pmh-mag-k: .03; --pmh-stiff: 170; --pmh-damp: 22;
   --pmh-bleed: 18; --pmh-ramp: 18; --pmh-out-ms: 320; --pmh-glow-reach: 36;
   --pmf-r: 100px; --pmf-band: 16px;
-  --pmf-sheen: color-mix(in srgb, #f07a55 11%, transparent);
+  --pmf-sheen: color-mix(in srgb, #f07a55 6.5%, transparent);
   --pmf-in: 130ms; --pmf-out: 320ms;
   --pmf-plate: 0 10px 22px -10px rgba(122, 109, 140, .32);
   --pmf-bloom: 0 0 14px color-mix(in srgb, color-mix(in srgb, var(--accent-primary) 50%, #f07a55) 11%, transparent);
@@ -28639,7 +28641,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmf-r: 96px; --pmf-band: 10px;
   --pmf-rim: color-mix(in srgb, color-mix(in srgb, rgb(var(--accent-primary-rgb)) 45%, #fff) 85%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 38%, transparent);
-  --pmf-sheen: rgb(255 255 255 / .11);
+  --pmf-sheen: rgb(255 255 255 / .066);
   --pmf-in: 140ms; --pmf-out: 360ms;
   --pmf-plate: 0 14px 28px -12px rgba(0, 4, 14, .55);
   --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .2);
@@ -28651,7 +28653,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmf-r: 96px; --pmf-band: 10px;
   --pmf-rim: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 85%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 28%, transparent);
-  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 10%, transparent);
+  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 6%, transparent);
   --pmf-in: 140ms; --pmf-out: 360ms;
   --pmf-plate: 0 12px 24px -12px rgba(30, 40, 60, .18);
   --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .14);
@@ -35660,8 +35662,10 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"][data-o55-nier="on"] #panel-agents .pm-sumcard-h > .c { text-transform: none !important; letter-spacing: 0 !important; }
 
 /* ---- 10. Activity bar: one tile marks the open panel and glides to the next ---------------------------------------
-   The tile (.d-abind, placed by JS) is the size of an icon's symbol box, so hover and active are the same box. The
-   chat and home toggles keep their own colour state (they are switches, not the open panel). */
+   The tile (.d-abind, placed by JS) is the size of an icon's symbol box, so hover and active are the same box. The Chat
+   switch is lit the same way while the chat column is shown: a tile of its own (.d-abind-chat, the same paint in every
+   look) and the accent mark, in place of the shell's per-look colour state (Jared, 2026-10-14). The Home switch it sat
+   beside toggled the old dashboard, which the panels replaced; the Home layer removes it from the page. */
 [data-rail-skin="d"] { --d-Rbar: 7px; }
 [data-rail-skin="d"][data-theme^="friendly"] { --d-Rbar: 10px; }
 [data-rail-skin="d"][data-theme^="glass"] { --d-Rbar: 10px; }
@@ -35684,24 +35688,38 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"][data-o55-nier="on"] #activityBar > .d-abind { background: var(--o55-nier-ink); box-shadow: none; }
 [data-rail-skin="d"] #activityBar .icon { z-index: 1; }
 [data-rail-skin="d"] #activityBar .icon .symbol { border-radius: var(--d-Rbar) !important; transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease), transform var(--d-t2) var(--d-spring) !important; }
-[data-rail-skin="d"] #activityBar .icon[data-target] .symbol { width: 28px !important; height: 28px !important; }
-[data-rail-skin="d"] #activityBar .icon[data-target]:hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
-[data-rail-skin="d"] #activityBar .icon[data-target].active .symbol { background: none !important; box-shadow: none !important; }
-[data-rail-skin="d"] #activityBar .icon[data-target].active { color: var(--accent-primary) !important; }
-[data-rail-skin="d"][data-o55-nier="on"] #activityBar .icon[data-target].active { color: var(--o55-nier-on-ink) !important; }
-[data-rail-skin="d"] #activityBar .icon[data-target].d-bump .symbol svg { animation: d-bump var(--d-t3) var(--d-spring); }
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]) .symbol { width: 28px !important; height: 28px !important; }
+/* Chat takes the bar's own hover too, as it takes the lit tile: the shell's per-look switch hover (Friendly's 1.1 scale
+   and glow) would grow the symbol out from under its tile */
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]):hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active .symbol { background: none !important; box-shadow: none !important; }
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active { color: var(--accent-primary) !important; }
+[data-rail-skin="d"][data-o55-nier="on"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active { color: var(--o55-nier-on-ink) !important; }
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).d-bump .symbol svg { animation: d-bump var(--d-t3) var(--d-spring); }
 @keyframes d-bump { 0% { transform: scale(.82); } 60% { transform: scale(1.08); } 100% { transform: none; } }
 /* expanded bar labels: readable sentence case (the DOM keeps the shell's capitals, other tooling reads them) */
 [data-rail-skin="d"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label {
   display: block; font: 500 11px/1.2 var(--body-font) !important; letter-spacing: 0 !important; text-transform: lowercase;
 }
 [data-rail-skin="d"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label::first-letter { text-transform: uppercase; }
-[data-rail-skin="d"] #activityBar .icon[data-target].active .icon-label { color: var(--d-text) !important; }
-/* NieR marks the open panel the shell's way, the whole item (icon and name) as one ink band, collapsed or expanded, as
-   it marks Chat and Home: the name is paper on that ink, never ink on ink */
-[data-rail-skin="d"][data-o55-nier="on"] #activityBar .icon[data-target].active .icon-label { color: var(--o55-nier-on-ink) !important; }
-/* Glass light: the Chat and Home switches are white marks on their tiles; their names sit under the tile on the light
-   bar, so they take the text colour (white there could not be read) */
+/* every expanded label reads at least 4.5:1 wherever it lands on the bar (measured on the P1000, 2026-10-14). The
+   shell gave the names the muted ink, about 2.7 in Friendly Light and under 4.5 in Friendly Dark and both Glass looks,
+   and removing the Home switch moved every name up a slot onto another part of the bar's gradient. They take the
+   secondary ink; Glass Light, whose frosted bar is a mid-tone, the text ink; Glass Dark, whose bar runs to a light lilac
+   at the top and under a lit tile's glow, the text ink over a soft shadow of the bar's own deep violet (no box, nothing
+   behind the bar changes). */
+[data-rail-skin="d"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon:not(.active) .icon-label { color: var(--d-label, var(--d-text-2)) !important; }
+[data-rail-skin="d"][data-theme="glass-light"] { --d-label: var(--text-primary); }
+[data-rail-skin="d"][data-theme="glass-dark"] { --d-label: var(--text-primary); }
+[data-rail-skin="d"][data-theme="glass-dark"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label {
+  text-shadow: 0 1px 2px rgba(18, 10, 36, .85), 0 0 9px rgba(18, 10, 36, .7);
+}
+[data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active .icon-label { color: var(--d-text) !important; }
+/* NieR marks the open panel and the shown chat the shell's way, the whole item (icon and name) as one ink band,
+   collapsed or expanded: the name is paper on that ink, never ink on ink */
+[data-rail-skin="d"][data-o55-nier="on"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active .icon-label { color: var(--o55-nier-on-ink) !important; }
+/* Glass light: any other lit switch is a white mark on its tile; its name sits under the tile on the light bar, so it
+   takes the text colour (white there could not be read) */
 [data-rail-skin="d"][data-theme^="glass"][data-theme$="-light"] #activityBar:not(.collapsed) .icon.active:not([data-target]) .icon-label { color: var(--d-text) !important; }
 /* the expand / collapse toggle: a chevron in the same tile as the icons (the shell writes ">" or "<" into it; the text
    stays for other code, the chevron is drawn and turns when the bar shows its names) */
@@ -35765,6 +35783,10 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
   width: 28px !important; height: 28px !important; border-radius: var(--d-Rbar) !important;
   transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease), box-shadow var(--d-t1) var(--d-ease) !important;
 }
+/* empty, the button is the shell's muted affordance (opacity .45 on the whole item); the glyph stays muted, the name is
+   at full label ink so it reads (it still opens: the menu says how to hide an icon) */
+[data-rail-skin="d"] #activityBar > #abMoreBtn[data-empty="1"] { opacity: 1; }
+[data-rail-skin="d"] #activityBar > #abMoreBtn[data-empty="1"]:not(:hover, .is-menu-open, .pm-ab-drop-hot) .symbol { opacity: .45; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn:hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn.is-menu-open { color: var(--d-text) !important; opacity: 1; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn.is-menu-open .symbol { background: var(--d-press) !important; }
@@ -37865,7 +37887,19 @@ body.pmw-dragging #pm-hover-tag-root, body.pm-resizing #pm-hover-tag-root { disp
   touch-action: none;
   z-index: 3;
 }
-.pmw-grip .pmw-ico { width: 9px; height: 9px; stroke-width: 1.3; }
+/* the mark points into the panel's top right corner and sits on that corner's diagonal, the same distance from the top
+   and the right edge, moved in with the look's corner radius so the curve never crowds it (square looks 3.5 px, Basic
+   5.1, Glass 5.9, Friendly 6.7). The drawing sits 1.3 px inside its 6 px box on both sides (icon grip, 06-icons.js);
+   the stroke is 0.73 px on screen, as the menu row's 1.6 at 14 px is 1.4. */
+.pmw-grip { --pmw-grip-inset: calc(3.5px + var(--pmw-panel-radius, 8px) * .2); }
+.pmw-grip .pmw-ico {
+  position: absolute;
+  top: calc(var(--pmw-grip-inset) - 1.3px);
+  right: calc(var(--pmw-grip-inset) - 1.3px);
+  width: 6px;
+  height: 6px;
+  stroke-width: 1.95;
+}
 .pmw-grip:hover, .pmw-grip:focus-visible { opacity: 1; color: var(--pmw-text); }
 .pmw-grip:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: -2px; border-radius: 4px; }
 .pmw-panel[data-collapsed] .pmw-pmenu, .pmw-panel[data-collapsed] .pmw-plus { opacity: .8; }
@@ -45505,7 +45539,7 @@ html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-card .pmt-card-glyph 
       <div class="left-panel">
         <nav class="activity-bar collapsed" id="activityBar" aria-label="Activity bar">
           <div class="icon" title="Chat" data-ab-id="chat"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="icon-label">CHAT</span></div>
-          <div class="icon" title="Dashboard" id="dashboardToggleIcon" data-ab-id="dashboard"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg></span><span class="icon-label">HOME</span></div>
+          <!-- home layer: the rail's Dashboard toggle is removed (the panels replaced the dashboard it showed) -->
           <div class="icon active" title="File Manager" data-ab-id="files" data-target="panel-files"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg></span><span class="icon-label">FILES</span></div>
           <div class="pm6-ab-group" role="group" aria-label="Project" data-group="project">
             <div class="icon" title="Search" data-ab-id="search" data-target="panel-search"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><span class="icon-label">SEARCH</span></div>
@@ -161842,12 +161876,16 @@ PANEL_IDS.forEach(id => panelHook(id, {
 /* ---- concepts/d/40-bar.js ---- */
 /* Activity bar: one tile marks the open panel and glides to the next one (springy in Friendly, a liquid stretch in
    Glass, stepped in Retro, an ink cut in NieR). It is measured from the icon's symbol box, so it is exactly the size of
-   the hover tile, and it follows the bar while the bar widens or narrows. The chat and home toggles keep their own
-   colour state. The More tray opens as PMR.menu (41-more.js). */
+   the hover tile, and it follows the bar while the bar widens or narrows. The Chat switch takes a tile of its own, the
+   same tile, lit in place while the chat column is shown (Jared, 2026-10-14: the chat button says the chat is shown,
+   like the rest of the bar); it sits where the chat icon sits and never glides, since it marks a column and not the open
+   panel. The More tray opens as PMR.menu (41-more.js). */
 
 function mountBar(barEl) {
   const tile = PMR.h('span.d-abind', { 'aria-hidden': 'true' });
   barEl.insertBefore(tile, barEl.firstChild);
+  const chatTile = PMR.h('span.d-abind.d-abind-chat', { 'aria-hidden': 'true' });
+  barEl.insertBefore(chatTile, tile.nextSibling);
   let last = null;
   const slot = document.getElementById('sidePanelSlot');
   const target = () => {
@@ -161862,7 +161900,29 @@ function mountBar(barEl) {
     if (!r.width || !r.height) return null;
     return { x: r.left - b.left + barEl.scrollLeft, y: r.top - b.top + barEl.scrollTop, w: r.width, h: r.height };
   }
+  /* the Chat switch: lit while its icon is (46-chat.js syncRailEntry keeps .active on it while the column shows, folded
+     to a strip included); it fades in on the icon with the open panel's bump and fades out in place */
+  const chatIcon = () => barEl.querySelector(':scope > .icon[data-ab-id="chat"]');
+  /* only a change of the lit state moves the tile (hover and bump classes come and go on the same icon); the icon is
+     watched from the first time it is on the bar, so one restored from the More tray is watched too */
+  const chatLit = () => { const ic = chatIcon(); return !!(ic && ic.classList.contains('active')); };
+  const chatMo = new MutationObserver(() => { if (chatLit() !== chatTile.classList.contains('is-on')) placeChat(true); });
+  let chatWatched = null;
+  function placeChat(animate) {
+    const icon = chatIcon();
+    if (icon && icon !== chatWatched) { chatMo.observe(icon, { attributes: true, attributeFilter: ['class'] }); chatWatched = icon; }
+    const r = icon && icon.classList.contains('active') && rectOf(icon);
+    if (!r) { chatTile.classList.remove('is-on'); return; }
+    chatTile.style.width = r.w + 'px'; chatTile.style.height = r.h + 'px';
+    chatTile.style.transform = 'translate(' + r.x + 'px, ' + r.y + 'px)';
+    if (chatTile.classList.contains('is-on')) return;
+    chatTile.classList.add('is-on');
+    if (!animate || PMR.motion.reduced() || fam() === 'nier') return;   /* NieR cuts: the ink tile is simply there */
+    icon.classList.add('d-bump');
+    setTimeout(() => icon.classList.remove('d-bump'), 520);
+  }
   function place(animate) {
+    placeChat(animate);
     const icon = iconFor(target());
     const r = icon && rectOf(icon);
     if (!r) { tile.classList.remove('is-on'); last = null; return; }
@@ -161901,6 +161961,7 @@ function mountBar(barEl) {
     last = icon;
   }
   const mo = new MutationObserver(() => place(true));
+  placeChat(false);
   if (slot) {
     mo.observe(slot, { attributes: true, attributeFilter: ['class'] });
     slot.querySelectorAll(':scope > .side-panel-view').forEach(v => mo.observe(v, { attributes: true, attributeFilter: ['class'] }));
@@ -161936,7 +161997,7 @@ function mountBar(barEl) {
   return {
     panel() { place(true); },
     destroy() {
-      mo.disconnect(); mo2.disconnect(); if (ro) ro.disconnect();
+      mo.disconnect(); mo2.disconnect(); chatMo.disconnect(); if (ro) ro.disconnect();
       cancelAnimationFrame(follow);
       barEl.removeEventListener('transitionrun', onWidthRun);
       barEl.removeEventListener('transitionend', onWidthEnd);
@@ -161944,7 +162005,7 @@ function mountBar(barEl) {
       more.destroy();
       window.removeEventListener('resize', onResize); barEl.removeEventListener('transitionend', onResize);
       barEl.querySelectorAll('.d-bump').forEach(i => i.classList.remove('d-bump'));
-      tile.remove();
+      tile.remove(); chatTile.remove();
     },
   };
 }
@@ -171693,7 +171754,9 @@ var ICON_PATHS = {
   chevronRight: 'M6 3.5 10.5 8 6 12.5',
   chevronDown: 'M3.5 6 8 10.5 12.5 6',
   chevronLeft: 'M10 3.5 5.5 8l4.5 4.5',
-  grip: 'M2.5 8.5 8.5 2.5M5.5 8.5l3-3',
+  // the panel's corner grip: two strokes across the top right corner, the short one nearest it, so the narrow end points
+  // into the corner the grip sits in. Drawn at full icon size for the Move panel menu row; the corner draws it at 6 px
+  grip: 'M3.5 3.5l9 9M8 3.5l4.5 4.5',
   reopen: 'M3.5 6.5h6.5a3 3 0 0 1 0 6H6M5.5 4.2 3.2 6.5l2.3 2.3',
   panel: 'M2.5 3h11v10h-11zM2.5 6h11',
   newPanel: 'M2.5 3h11v10h-11zM8 3v10M10.8 6.2v3.6M9 8h3.6',
@@ -176889,7 +176952,7 @@ function buildStrip(host, panelId) {
     'data-pm-hover-detail': 'Show this panel at its size again', 'data-pmh': 'icon' }, [icon('chevronRight', { size: 14 })]);
   s.lock = h('span', { class: 'pmw-lockmark', hidden: true, 'data-pm-hover-label': 'Locked', 'data-pm-hover-detail': 'Files open in other panels' }, [icon('lock', { size: 12 })]);
   s.menuBtn = h('button', { type: 'button', class: 'pmw-pmenu pmw-sbtn', 'aria-label': 'Panel options', 'aria-haspopup': 'menu', 'data-pm-hover-label': 'Panel options', 'data-pmh': 'icon' }, [icon('more', { size: 14 })]);
-  s.grip = h('button', { type: 'button', class: 'pmw-grip', 'aria-label': 'Move panel (drag, or Enter then arrows)', 'data-pm-hover-label': 'Move panel', 'data-pm-hover-detail': 'Drag it to another place, or press Enter and use the arrows', 'data-pmh': 'off' }, [icon('grip', { size: 9 })]);
+  s.grip = h('button', { type: 'button', class: 'pmw-grip', 'aria-label': 'Move panel (drag, or Enter then arrows)', 'data-pm-hover-label': 'Move panel', 'data-pm-hover-detail': 'Drag it to another place, or press Enter and use the arrows', 'data-pmh': 'off' }, [icon('grip', { size: 6 })]);
   s.plate = h('div', { class: 'pmw-plate', 'aria-hidden': 'true' });
   append(host, [s.plate, s.switcher, s.list, s.more, s.plus, s.expand, s.fill, s.lock, s.menuBtn, s.grip]);
   host._pmw = s;

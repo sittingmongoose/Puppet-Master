@@ -7,6 +7,10 @@
   width: 28px !important; height: 28px !important; border-radius: var(--d-Rbar) !important;
   transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease), box-shadow var(--d-t1) var(--d-ease) !important;
 }
+/* empty, the button is the shell's muted affordance (opacity .45 on the whole item); the glyph stays muted, the name is
+   at full label ink so it reads (it still opens: the menu says how to hide an icon) */
+§B > #abMoreBtn[data-empty="1"] { opacity: 1; }
+§B > #abMoreBtn[data-empty="1"]:not(:hover, .is-menu-open, .pm-ab-drop-hot) .symbol { opacity: .45; }
 §B > #abMoreBtn:hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
 §B > #abMoreBtn.is-menu-open { color: var(--d-text) !important; opacity: 1; }
 §B > #abMoreBtn.is-menu-open .symbol { background: var(--d-press) !important; }

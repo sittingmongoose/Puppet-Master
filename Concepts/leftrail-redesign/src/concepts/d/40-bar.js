@@ -1,11 +1,15 @@
 /* Activity bar: one tile marks the open panel and glides to the next one (springy in Friendly, a liquid stretch in
    Glass, stepped in Retro, an ink cut in NieR). It is measured from the icon's symbol box, so it is exactly the size of
-   the hover tile, and it follows the bar while the bar widens or narrows. The chat and home toggles keep their own
-   colour state. The More tray opens as PMR.menu (41-more.js). */
+   the hover tile, and it follows the bar while the bar widens or narrows. The Chat switch takes a tile of its own, the
+   same tile, lit in place while the chat column is shown (Jared, 2026-10-14: the chat button says the chat is shown,
+   like the rest of the bar); it sits where the chat icon sits and never glides, since it marks a column and not the open
+   panel. The More tray opens as PMR.menu (41-more.js). */
 
 function mountBar(barEl) {
   const tile = PMR.h('span.d-abind', { 'aria-hidden': 'true' });
   barEl.insertBefore(tile, barEl.firstChild);
+  const chatTile = PMR.h('span.d-abind.d-abind-chat', { 'aria-hidden': 'true' });
+  barEl.insertBefore(chatTile, tile.nextSibling);
   let last = null;
   const slot = document.getElementById('sidePanelSlot');
   const target = () => {
@@ -20,7 +24,29 @@ function mountBar(barEl) {
     if (!r.width || !r.height) return null;
     return { x: r.left - b.left + barEl.scrollLeft, y: r.top - b.top + barEl.scrollTop, w: r.width, h: r.height };
   }
+  /* the Chat switch: lit while its icon is (46-chat.js syncRailEntry keeps .active on it while the column shows, folded
+     to a strip included); it fades in on the icon with the open panel's bump and fades out in place */
+  const chatIcon = () => barEl.querySelector(':scope > .icon[data-ab-id="chat"]');
+  /* only a change of the lit state moves the tile (hover and bump classes come and go on the same icon); the icon is
+     watched from the first time it is on the bar, so one restored from the More tray is watched too */
+  const chatLit = () => { const ic = chatIcon(); return !!(ic && ic.classList.contains('active')); };
+  const chatMo = new MutationObserver(() => { if (chatLit() !== chatTile.classList.contains('is-on')) placeChat(true); });
+  let chatWatched = null;
+  function placeChat(animate) {
+    const icon = chatIcon();
+    if (icon && icon !== chatWatched) { chatMo.observe(icon, { attributes: true, attributeFilter: ['class'] }); chatWatched = icon; }
+    const r = icon && icon.classList.contains('active') && rectOf(icon);
+    if (!r) { chatTile.classList.remove('is-on'); return; }
+    chatTile.style.width = r.w + 'px'; chatTile.style.height = r.h + 'px';
+    chatTile.style.transform = 'translate(' + r.x + 'px, ' + r.y + 'px)';
+    if (chatTile.classList.contains('is-on')) return;
+    chatTile.classList.add('is-on');
+    if (!animate || PMR.motion.reduced() || fam() === 'nier') return;   /* NieR cuts: the ink tile is simply there */
+    icon.classList.add('d-bump');
+    setTimeout(() => icon.classList.remove('d-bump'), 520);
+  }
   function place(animate) {
+    placeChat(animate);
     const icon = iconFor(target());
     const r = icon && rectOf(icon);
     if (!r) { tile.classList.remove('is-on'); last = null; return; }
@@ -59,6 +85,7 @@ function mountBar(barEl) {
     last = icon;
   }
   const mo = new MutationObserver(() => place(true));
+  placeChat(false);
   if (slot) {
     mo.observe(slot, { attributes: true, attributeFilter: ['class'] });
     slot.querySelectorAll(':scope > .side-panel-view').forEach(v => mo.observe(v, { attributes: true, attributeFilter: ['class'] }));
@@ -94,7 +121,7 @@ function mountBar(barEl) {
   return {
     panel() { place(true); },
     destroy() {
-      mo.disconnect(); mo2.disconnect(); if (ro) ro.disconnect();
+      mo.disconnect(); mo2.disconnect(); chatMo.disconnect(); if (ro) ro.disconnect();
       cancelAnimationFrame(follow);
       barEl.removeEventListener('transitionrun', onWidthRun);
       barEl.removeEventListener('transitionend', onWidthEnd);
@@ -102,7 +129,7 @@ function mountBar(barEl) {
       more.destroy();
       window.removeEventListener('resize', onResize); barEl.removeEventListener('transitionend', onResize);
       barEl.querySelectorAll('.d-bump').forEach(i => i.classList.remove('d-bump'));
-      tile.remove();
+      tile.remove(); chatTile.remove();
     },
   };
 }
