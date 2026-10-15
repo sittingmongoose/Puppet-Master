@@ -33502,6 +33502,12 @@ html[data-theme^="friendly"]:not([data-o55-nier]) .pmw-menu .pmw-msearch { borde
 html:is([data-theme^="retro"], [data-o55-nier]) .pmw-menu .pmw-msearch { border-radius: 0; }
 html:not([data-theme^="glass"]) .pmw-menu .pmw-msearch:focus-within, html[data-o55-nier] .pmw-menu .pmw-msearch:focus-within { border-color: color-mix(in srgb, var(--pmw-accent) 60%, transparent); }
 
+/* ---- Settings' attention notes and sections: the look's own amber (--k3-amber), not a fixed one (Basic Light's warning
+   is a deep orange; the note's line and wash were Basic Dark's amber, rgba(247,189,99) and rgba(212,157,68)). Glass keeps
+   its own. */
+html:not([data-theme^="glass"]) #panel-settings .pm51-note.tone-attention { border-color: color-mix(in srgb, var(--k3-amber) 32%, transparent); background: color-mix(in srgb, var(--k3-amber) 9%, transparent); }
+html:not([data-theme^="glass"]) #panel-settings .pm51-section.tone-attention { border-color: color-mix(in srgb, var(--k3-amber) 35%, transparent); }
+
 </style>
 <!-- O55:CSS:END -->
 <!-- RAIL:CSS:START -->
