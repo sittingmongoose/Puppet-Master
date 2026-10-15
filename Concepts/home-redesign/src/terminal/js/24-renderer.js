@@ -88,8 +88,19 @@
     if (c === 0) rgb = defFg;
     else if (c < 0x200) {
       var idx = c - 0x100;
-      if ((st.flags & A.BOLD) && idx < 8 && this.view.opts.boldBright) idx += 8;
+      var brighten = false;
+      if ((st.flags & A.BOLD) && idx < 8 && this.view.opts.boldBright) {
+        /* a scheme whose bright colours are its normal ones (One Half, Rose Pine, Everforest; NieR's nearly): bold takes a
+           more intense colour instead, as terminals' "brighten bold text" does (round 5, Q15: Bold as bright drew nothing
+           in Basic and Friendly) */
+        var n0 = pal[idx], b0 = pal[idx + 8];
+        brighten = Math.max(Math.abs(C.r(n0) - C.r(b0)), Math.abs(C.g(n0) - C.g(b0)), Math.abs(C.b(n0) - C.b(b0))) < 24;
+        idx += 8;
+      }
       rgb = pal[idx];
+      /* toward the text on a two-tone scheme (NieR's ink and parchment, a phosphor), so it stays on its line, and further
+         on NieR's, whose accents already sit near the text's lightness; otherwise a step away from the ground */
+      if (brighten) rgb = C.mix(rgb, th.mono || th.duotone ? th.fg : C.lum(th.bg) > C.lum(th.fg) ? 0 : 0xffffff, th.duotone ? 0.6 : 0.35);
       if (th.mono && programPal(term, idx)) rgb = mono(rgb, th);
     } else { rgb = c & 0xffffff; if (th.mono) rgb = mono(rgb, th); }
     return rgb;

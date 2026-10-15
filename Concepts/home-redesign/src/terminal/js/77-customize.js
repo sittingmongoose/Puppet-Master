@@ -337,7 +337,7 @@
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Text drawing</span>' + seg('fontRendering', [['auto', 'Auto'], ['crisp', 'Crisp'], ['smooth', 'Smooth']], 'Text drawing') +
       '<span class="pmt-cz-fhelp">Crisp draws hard, pixel-sharp edges; try it if text looks blurry. Smooth draws the exact outlines.</span></div>' +
       '</div><div class="pmt-cz-chips">' + chip('ligatures', 'Ligatures', 'Joins pairs such as -> and != into one glyph where the face has them.') +
-      chip('boldBright', 'Bold as bright', 'Bold text in the bright version of its colour, as older terminals did.') + '</div>' +
+      chip('boldBright', 'Bold as bright', 'Bold text in the bright version of its colour, as older terminals did, or a more intense one where the scheme has none.') + '</div>' +
       '<div class="pmt-cz-axes" data-axes hidden><p class="pmt-cz-glead">Sixtyfour’s own axes: scanlines and bleed drawn by the face itself, with no motion.</p><div class="pmt-cz-grid2">' +
       slider('sixtyfourScan', 'Scanlines', -53, 100, 1, '', [-50, -25, 0, 25, 50, 75, 100]) + slider('sixtyfourBleed', 'Bleed', 0, 100, 1, '', [0, 33, 67, 100]) + '</div></div></section>';
     /* cursor */
