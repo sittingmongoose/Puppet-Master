@@ -11,10 +11,11 @@
 (function () {
   var C = T.color;
 
-  /* weights: the range the face is drawn in (Settings' Terminal Text Weight help: JetBrains Mono 400 to 800, Atkinson
-     Hyperlegible Mono 200 to 800); a face without it has one weight */
+  /* weights: the range the face is drawn in (Settings' Terminal Text Weight help: JetBrains Mono 100 to 800, Atkinson
+     Hyperlegible Mono 200 to 800; Jared 2026-10-14: JetBrains Mono keeps its full range, so its Latin file runs 100-800,
+     opus-5.5 src/fonts/SOURCE.md); a face without it has one weight */
   var FONTS = {
-    'jetbrains-mono': { label: 'JetBrains Mono', stack: "'JetBrains Mono', 'PM Symbols Mono', ui-monospace, Menlo, Consolas, monospace", size: 13, lineHeight: 1.3, weights: [400, 800], licence: 'OFL-1.1' },
+    'jetbrains-mono': { label: 'JetBrains Mono', stack: "'JetBrains Mono', 'PM Symbols Mono', ui-monospace, Menlo, Consolas, monospace", size: 13, lineHeight: 1.3, weights: [100, 800], licence: 'OFL-1.1' },
     'atkinson': { label: 'Atkinson Hyperlegible Mono', stack: "'Atkinson Hyperlegible Mono', 'JetBrains Mono', ui-monospace, monospace", size: 13, lineHeight: 1.35, weight: 400, weights: [200, 800], licence: 'OFL-1.1' },
     'vt323': { label: 'VT323', stack: "'VT323', 'JetBrains Mono', ui-monospace, monospace", size: 19, lineHeight: 1.05, licence: 'OFL-1.1' },
     'departure': { label: 'Departure Mono', stack: "'Departure Mono', 'JetBrains Mono', ui-monospace, monospace", size: 13.75, lineHeight: 1.2, licence: 'OFL-1.1' },
@@ -89,7 +90,7 @@
     minContrast: { type: 'enum', values: [1, 3, 4.5, 7], default: 4.5, label: 'Minimum contrast' },
     font: { type: 'enum', values: Object.keys(FONTS).concat(['follow']), default: 'follow', label: 'Font' },
     fontSize: { type: 'number', min: 8, max: 32, step: 0.5, default: null, label: 'Size' },
-    fontWeight: { type: 'number', min: 200, max: 800, step: 100, default: 400, label: 'Weight' },
+    fontWeight: { type: 'number', min: 100, max: 800, step: 100, default: 400, label: 'Weight' },
     lineHeight: { type: 'number', min: 1, max: 2, step: 0.05, default: null, label: 'Line height' },
     letterSpacing: { type: 'number', min: -1, max: 3, step: 0.25, default: 0, label: 'Letter spacing' },
     ligatures: { type: 'bool', default: true, label: 'Ligatures' },
@@ -102,20 +103,42 @@
     cursorTrail: { type: 'enum', values: ['follow', 'off', 'soft', 'glow', 'phosphor', 'trace'], default: 'follow', label: 'Trail' },
     background: { type: 'enum', values: ['follow', 'theme', 'solid', 'gradient', 'image'], default: 'follow', label: 'Background' },
     bgColor: { type: 'color', default: null, label: 'Colour' },
-    bgGradient: { type: 'enum', values: ['dusk', 'dawn', 'deep', 'paper'], default: 'dusk', label: 'Gradient' },
-    bgImage: { type: 'enum', values: ['hills', 'grid', 'paper', 'custom'], default: 'hills', label: 'Image' },
+    /* round 2: the gradients and pictures are T.Grounds' recipes (43-grounds.js); the earlier ids (dusk, dawn, deep and
+       paper; hills, grid, paper) keep their meaning as recipes of the scheme */
+    bgGradient: { type: 'enum', values: null, default: 'fade', label: 'Gradient' },
+    bgImage: { type: 'enum', values: null, default: 'hills', label: 'Image' },
     bgImageData: { type: 'string', default: null, label: 'Custom image' },
-    bgDim: { type: 'number', min: 0, max: 0.9, step: 0.05, default: 0.45, label: 'Dim' },
+    /* Dim: Auto (null) lays just enough of the scheme's ground over a picture to keep the text readable; a chosen dim
+       never goes under that */
+    bgDim: { type: 'number', min: 0, max: 0.9, step: 0.05, default: null, label: 'Dim' },
     bgBlur: { type: 'number', min: 0, max: 24, step: 1, default: 0, label: 'Blur' },
+    /* round 2 (research: one strength scaled to what stays readable; size for patterns; motion off, gentle or lively;
+       a picture's fit and desaturation) */
+    bgStrength: { type: 'number', min: 0, max: 1, step: 0.05, default: 1, label: 'Strength' },
+    bgScale: { type: 'enum', values: ['fine', 'medium', 'coarse'], default: 'medium', label: 'Size' },
+    bgMotion: { type: 'enum', values: ['off', 'gentle', 'lively'], default: 'gentle', label: 'Motion' },
+    bgFit: { type: 'enum', values: ['cover', 'contain', 'tile', 'center'], default: 'cover', label: 'Fit' },
+    bgDesat: { type: 'number', min: 0, max: 1, step: 0.05, default: 0.3, label: 'Desaturate' },
     opacity: { type: 'number', min: 0.4, max: 1, step: 0.02, default: null, label: 'Opacity' },
-    padding: { type: 'number', min: 0, max: 24, step: 1, default: 8, label: 'Padding' },
+    /* none by default (Jared, 2026-10-14: "Default padding should be 0"); a bezel brings its own margin */
+    padding: { type: 'number', min: 0, max: 24, step: 1, default: 0, label: 'Padding' },
+    /* the housing round the screen (Jared, 2026-10-14: removable, customizable; round 3: "still really ugly", so a real
+       monitor case, 71-bezel.js): its own choice, never part of a look's defaults, drawn with or without the GPU. Width
+       null is the style's own; Reflection null is the material's own (how much of the screen its surface gives back) */
+    bezel: { type: 'enum', values: ['off', 'rim', 'case'], default: 'off', label: 'Bezel' },
+    bezelWidth: { type: 'number', min: 2, max: 48, step: 1, default: null, label: 'Bezel width' },
+    bezelColor: { type: 'enum', values: ['follow', 'charcoal', 'black', 'platinum', 'putty', 'aluminium', 'gunmetal', 'glass', 'accent'], default: 'follow', label: 'Bezel material' },
+    bezelReflect: { type: 'number', min: 0, max: 1, step: 0.05, default: null, label: 'Reflection' },
     effects: { type: 'enum', values: ['follow', 'off', 'custom'], default: 'follow', label: 'Effects' },
     scanlines: { type: 'bool', default: null, label: 'Scanlines' },
     scanStrength: { type: 'number', min: 0, max: 0.6, step: 0.05, default: 0.3, label: 'Scanline strength' },
     glow: { type: 'bool', default: null, label: 'Phosphor glow' },
     glowStrength: { type: 'number', min: 0, max: 1, step: 0.05, default: 0.45, label: 'Glow strength' },
     crt: { type: 'bool', default: false, label: 'Full CRT' },
-    curvature: { type: 'number', min: 0, max: 0.2, step: 0.01, default: 0.08, label: 'Curvature' },
+    /* round 2: the edge sag is Curvature x 0.125 (50-fx-gl.js), subtle by default; the phosphor mask is Full CRT's own
+       choice (drawn at a device pixel ratio of 2 or more) */
+    curvature: { type: 'number', min: 0, max: 0.2, step: 0.01, default: 0.04, label: 'Curvature' },
+    crtMask: { type: 'bool', default: false, label: 'Phosphor mask' },
     burnIn: { type: 'bool', default: true, label: 'Burn-in' },
     noise: { type: 'number', min: 0, max: 0.12, step: 0.005, default: 0.035, label: 'Noise' },
     flicker: { type: 'bool', default: false, label: 'Flicker' },
@@ -130,6 +153,9 @@
     sixtyfourBleed: { type: 'number', min: 0, max: 100, step: 1, default: null, label: 'Sixtyfour bleed' }
   };
   var DEFAULTS = {}; Object.keys(FIELDS).forEach(function (k) { DEFAULTS[k] = FIELDS[k].default; });
+  /* round 2 fields Settings has no row for yet (proposed to the Settings owner): "All terminals" keeps them on this
+     computer, beside the earlier copies, until a row exists */
+  var LOCAL_FIELDS = ['bezel', 'bezelWidth', 'bezelColor', 'bezelReflect', 'crtMask', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat'];
 
   /* ---- the Settings rows (SSYS-051, the Terminal look groups): one row per field, its stored words to and from the
      field's value. in() returns undefined for a value it cannot read (the field then falls through) and null for an
@@ -156,6 +182,12 @@
       in: function (v) { var k = String(v); if (has(map, k)) return map[k]; var lo = k.toLowerCase(); for (var m in map) if (m.toLowerCase() === lo) return map[m]; return undefined; },
       out: function (v) { return has(inv, String(v)) ? inv[String(v)] : undefined; }
     };
+  }
+  function lazyWords(make) { var w = null; return { in: function (v) { return (w = w || words(make())).in(v); }, out: function (v) { return (w = w || words(make())).out(v); } }; }
+  function groundWords(gradients, legacy) {
+    var m = Object.assign({}, legacy);
+    if (T.Grounds) T.Grounds.list().forEach(function (d) { if (T.Grounds.isGradient(d.id) === gradients && !has(m, d.name)) m[d.name] = d.id; });
+    return m;
   }
   var same = function (v) { return v; };
   function colorIn(v) { var s = String(v || '').trim(); if (!/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(s)) return undefined; return s.length === 4 ? '#' + s[1] + s[1] + s[2] + s[2] + s[3] + s[3] : s.toLowerCase(); }
@@ -213,8 +245,9 @@
     shape: words({ 'Follow look': 'follow', 'Block': 'block', 'Bar': 'bar', 'Underline': 'underline' }),
     trail: words({ 'Follow look': 'follow', 'Off': 'off', 'Soft': 'soft', 'Glow': 'glow', 'Phosphor': 'phosphor', 'Trace': 'trace' }),
     ground: words({ 'Follow look': 'follow', 'Theme surface': 'theme', 'Solid color': 'solid', 'Gradient': 'gradient', 'Image': 'image' }),
-    gradient: words({ 'Dusk': 'dusk', 'Dawn': 'dawn', 'Deep': 'deep', 'Paper': 'paper' }),
-    picture: words({ 'Hills': 'hills', 'Grid': 'grid', 'Paper': 'paper', 'Custom': 'custom' }),
+    /* T.Grounds' names, read when asked (43-grounds.js loads after this file); the earlier words still read */
+    gradient: lazyWords(function () { return groundWords(true, { 'Dusk': 'dusk', 'Dawn': 'dawn', 'Deep': 'deep', 'Paper': 'paper' }); }),
+    picture: lazyWords(function () { return groundWords(false, { 'Hills': 'hills', 'Grid': 'grid', 'Paper': 'paper', 'Custom': 'custom' }); }),
     effects: words({ 'Follow look': 'follow', 'Off': 'off', 'Custom': 'custom' }),
     bell: words({ 'Follow look': 'follow', 'Visual': 'visual', 'Off': 'off' })
   };
@@ -227,7 +260,7 @@
     font: { id: S + 'font-family', in: fontIn, out: fontOut, custom: true },
     /* no step: a face's own size need not sit on the half pixel (Departure Mono's is 13.75) */
     fontSize: { id: S + 'font-size', in: num(8, 32), out: numOut },
-    fontWeight: { id: S + 'font-weight', in: num(200, 800, 100), out: numOut },
+    fontWeight: { id: S + 'font-weight', in: num(100, 800, 100), out: numOut },
     lineHeight: { id: S + 'line-height', in: num(1, 2, 0.05), out: numOut },
     letterSpacing: { id: S + 'letter-spacing', in: num(-1, 3, 0.25), out: numOut },
     ligatures: { id: S + 'ligatures', in: bool, out: boolOut },
@@ -241,7 +274,7 @@
     bgGradient: { id: S + 'background-gradient', in: WORDS.gradient.in, out: WORDS.gradient.out },
     bgImage: { id: S + 'background-image', in: WORDS.picture.in, out: WORDS.picture.out },
     bgImageData: { id: S + 'background-image-file', in: pictureIn, out: pictureOut },
-    bgDim: { id: S + 'background-dim', in: num(0, 0.9), out: numOut },
+    bgDim: { id: S + 'background-dim', in: function (v) { return /^(auto|follow look)$/i.test(String(v)) ? null : num(0, 0.9)(v); }, out: function (v) { return v === null ? 'Auto' : numOut(v); } },
     bgBlur: { id: S + 'background-blur', in: num(0, 24, 1), out: numOut },
     opacity: { id: S + 'opacity', in: function (v) { return v === FOLLOW ? null : num(0.4, 1)(v); }, out: function (v) { return v === null ? FOLLOW : numOut(v); } },
     padding: { id: S + 'padding', in: num(0, 24, 1), out: numOut },
@@ -529,10 +562,41 @@
       // the stage's lightest and darkest grounds (the light from above at its centre, the foot), for the text floor below
       stage = [C.mix(theme.bg, C.hex(darkGround ? '#ffecfa' : '#ffffff'), darkGround ? 0.10 : 0.8), C.hex(foot)]; darkStage = darkGround;
     }
-    else if (bgKind === 'solid') bg.color = f('bgColor') || C.toHex(theme.bg);
+    else if (bgKind === 'solid') { bg.color = f('bgColor') || C.toHex(theme.bg); bg.ground = C.hex(bg.color); }
+    else if ((bgKind === 'gradient' || bgKind === 'image') && T.Grounds) {
+      /* round 2: a recipe of this scheme (43-grounds.js). Strength scales it between the plain ground (0) and the most
+         that stays readable (1): a scrim of the scheme's ground, never thinner than Auto readability needs */
+      var G = T.Grounds, id = bgKind === 'gradient' ? f('bgGradient') : f('bgImage');
+      if (bgKind === 'image' && id === 'paper') id = 'fibre';
+      if (bgKind === 'image' && id === 'custom') {
+        var dim = f('bgDim');
+        var purl = T.Appearance.imageUrl('custom', f('bgImageData'), f('bgBlur'), f('bgDesat')), st = pictureStats(purl);
+        /* the worst pixel for this scheme's text: the picture's lightest under light text, its darkest under dark text */
+        var pw = st ? (C.lum(theme.fg) > C.lum(theme.bg) ? st.hi : st.lo) : (C.lum(theme.fg) > C.lum(theme.bg) ? 0xffffff : 0);
+        var pAuto = T.Grounds.scrim(pw, theme), pDim = dim === null || dim === undefined ? (st ? pAuto : 0.6) : Math.max(dim, st ? pAuto : 0);
+        bg = { kind: 'image', custom: true, url: purl, fit: f('bgFit'), dim: pDim, dimAuto: dim === null || dim === undefined, raised: dim !== null && dim !== undefined && st && pAuto > dim,
+          ground: C.mix(pw, theme.bg, pDim) };
+      } else {
+        if (!G.has(id) || (bgKind === 'gradient') !== G.isGradient(id)) id = bgKind === 'gradient' ? 'fade' : 'hills';
+        var strength = T.util.clamp(f('bgStrength'), 0, 1), cat = G.cat(id), mot = G.motion(id);
+        bg = { kind: bgKind, design: id, cat: cat, strength: strength };
+        if (G.painted(id) || mot) {
+          /* painted at the terminal's own size by the view (_applyBackground), which then knows the worst pixel */
+          bg.paint = G.painted(id) ? id : (mot.under || null);
+          if (mot) bg.motion = { id: id, anim: mot.anim, ms: mot.ms * (f('bgMotion') === 'lively' ? 0.5 : 1), on: f('bgMotion') !== 'off' && !reduced };
+          bg.blur = f('bgBlur');
+          if (mot && !mot.under) bg.base = C.toHex(theme.bg);
+        } else {
+          var D = G.css(id, theme, { scale: f('bgScale') }) || { css: C.toHex(theme.bg), colors: [theme.bg] };
+          var w = G.worst(D.colors, theme), auto = G.scrim(w, theme), a = 1 - (1 - auto) * strength;
+          bg.css = D.css; bg.dim = a; bg.ground = C.mix(w, theme.bg, a);
+        }
+      }
+    }
     else if (bgKind === 'gradient') bg.css = GRADIENTS[f('bgGradient')] || GRADIENTS.dusk;
     else if (bgKind === 'image') { bg.url = T.Appearance.imageUrl(f('bgImage'), f('bgImageData'), f('bgBlur')); bg.dim = f('bgDim'); }
     if (f('background') === 'follow' && lk === 'nier') bg.paper = true;
+    if (lk === 'glass' && bg.kind !== 'theme' && !bg.soft) bg.alpha = opacity;
 
     /* effects (D16): Theme (follow) is the look's own effects whatever the per-effect fields hold; ticking an effect in
        the popover switches to Custom first, so choosing Theme again undoes it */
@@ -553,12 +617,26 @@
       glow: { on: !fxOff && gl('glow', retroDark && !!L.glow), strength: f('glowStrength'), radius: 2.5 },
       crt: crtOn,
       curvature: { on: crtOn, amount: f('curvature') },
-      bezel: { on: crtOn, light: mode === 'light' }, vignette: { on: crtOn, strength: mode === 'light' ? 0.10 : 0.25 },
+      mask: { on: crtOn && !!f('crtMask') },
+      tube: theme ? C.toHex(theme.bg) : null,
+      /* the bezel is the view's own frame now (resolve's bezel, 30-looks.css), never drawn by the shader */
+      bezel: { on: false }, vignette: { on: crtOn, strength: mode === 'light' ? 0.05 : 0.08 },
       burnIn: { on: crtOn && f('burnIn') && !reduced, persistMs: 450 },
       noise: { on: crtOn && f('noise') > 0 && !reduced, amount: f('noise') },
       flicker: { on: !fxOff && !follow && !!f('flicker') && !reduced, amount: Math.min(0.03, f('flickerAmount')) },
       glowColor: theme && theme.roles.glow
     };
+    /* the bezel: a slim frame (6 px) or a monitor case (24 px) unless a width was chosen. Round 3's research: a case
+       reads as a housing only when its sloped face is wide enough to show the screen's reflection (Mega Bezel's face is
+       about 5 % of the screen's height; round 2's 10 px, about 2 %, read as a flat band). The text is laid out inside it,
+       never squeezed */
+    var bzStyle = f('bezel'), bezel = { style: 'off', width: 0, gap: 0, color: 'follow', reflect: null };
+    if (bzStyle === 'rim' || bzStyle === 'case') {
+      var bw = f('bezelWidth');
+      /* and a breath of glass inside it (3 px in a rim, 6 px in a case), so no glyph touches the frame */
+      bezel = { style: bzStyle, width: bw === null || bw === undefined ? (bzStyle === 'rim' ? 6 : 24) : bw, gap: bzStyle === 'rim' ? 3 : 6,
+        color: f('bezelColor') || 'follow', reflect: f('bezelReflect') };
+    }
     var bgShow = lk === 'glass' && bgKind === 'theme';
     /* High Contrast schemes keep every cell at 7:1 unless the user chose a floor themselves */
     var floor = f('minContrast');
@@ -584,7 +662,8 @@
       opts: { ligatures: f('ligatures'), minContrast: floor, boldBright: f('boldBright'),
         cursor: { shape: shape, blink: f('cursorBlink') && L.blink !== 'off' }, stickyHeader: f('stickyHeader'), copyOnSelect: f('copyOnSelect'),
         textRendering: drawing === 'smooth' ? 'geometricPrecision' : drawing === 'crisp' ? 'optimizeLegibility' : 'auto' },
-      padding: { x: f('padding'), y: Math.max(2, Math.round(f('padding') * 0.6)) },
+      padding: { x: f('padding') + bezel.width + bezel.gap, y: Math.round(f('padding') * 0.6) + bezel.width + bezel.gap, own: f('padding') },
+      bezel: bezel,
       sixtyfour: { scan: f('sixtyfourScan'), bleed: f('sixtyfourBleed') }
     };
   }
@@ -682,6 +761,68 @@
     saveLocal();
     refreshAll();
   }
+  /* ---- presets (Jared, 2026-10-14: "a way to save looks as presets"). A preset is a named set of field values, kept on
+     this machine beside imported schemes. It holds every field the scope it was saved from chose (any layer above the
+     look's own), and applying it makes a scope hold exactly those, so it looks the same wherever it is applied; the
+     fields it leaves out follow the look there ---- */
+  var PRESETS_KEY = 'pm.home.terminal:v1:presets', PRESETS_MAX = 40;
+  function presetList() {
+    try {
+      var l = JSON.parse(localStorage.getItem(PRESETS_KEY) || '[]');
+      return Array.isArray(l) ? l.filter(function (p) { return p && typeof p.id === 'string' && typeof p.name === 'string' && p.fields && typeof p.fields === 'object'; }) : [];
+    } catch (e) { return []; }
+  }
+  function presetStore(l) {
+    try { localStorage.setItem(PRESETS_KEY, JSON.stringify(l.slice(0, PRESETS_MAX))); } catch (e) { return false; }
+    changeEvents.emit('change');
+    return true;
+  }
+  /* what a scope chose: This terminal reads through its own choices, All terminals without them; never a preview */
+  function capture(scope, view) {
+    var sv = { api: view && view.api, tabAppearance: scope === 'tab' && view ? view.tabAppearance || {} : {}, previewAppearance: null, state: {} };
+    var out = {};
+    Object.keys(FIELDS).forEach(function (k) {
+      if (layerOf(sv, k) === 'look') return;
+      var v = field(sv, k); if (v !== undefined && v !== null) out[k] = v;
+    });
+    return out;
+  }
+  function presetName(name, l, except) {
+    var base = String(name || '').replace(/\s+/g, ' ').trim().slice(0, 40) || 'My look', n = base, i = 2;
+    var taken = function (x) { return l.some(function (p) { return p.id !== except && p.name.toLowerCase() === x.toLowerCase(); }); };
+    while (taken(n)) n = base + ' ' + i++;
+    return n;
+  }
+  var presets = {
+    list: presetList,
+    capture: capture,
+    save: function (name, scope, view) {
+      var l = presetList();
+      var entry = { id: 'p' + Date.now().toString(36) + Math.floor(Math.random() * 1296).toString(36), name: presetName(name, l), fields: capture(scope, view), at: Date.now() };
+      l.unshift(entry);
+      return presetStore(l) ? entry : null;
+    },
+    rename: function (id, name) {
+      var l = presetList(), p = l.filter(function (x) { return x.id === id; })[0]; if (!p) return null;
+      p.name = presetName(name, l, id);
+      return presetStore(l) ? p : null;
+    },
+    remove: function (id) { var l = presetList(), n = l.filter(function (x) { return x.id !== id; }); return n.length !== l.length && presetStore(n); },
+    /* Undo after a delete: the same preset, back where it was */
+    restore: function (entry, at) {
+      if (!entry || !entry.id) return false;
+      var l = presetList().filter(function (x) { return x.id !== entry.id; });
+      l.splice(Math.max(0, Math.min(at || 0, l.length)), 0, entry);
+      return presetStore(l);
+    },
+    /* every field the preset holds, and null (follow the look) for every other: one write, one transaction */
+    patch: function (fields) { var out = {}; Object.keys(FIELDS).forEach(function (k) { out[k] = fields && has(fields, k) ? fields[k] : null; }); return out; },
+    apply: function (id, scope, view) {
+      var p = presetList().filter(function (x) { return x.id === id; })[0]; if (!p) return false;
+      return setMany(scope, presets.patch(p.fields), view);
+    }
+  };
+
   function preview(view, patch) { view.previewAppearance = patch; view.applyAppearance(resolve(view)); }
   function endPreview(view) { if (!view.previewAppearance) return; view.previewAppearance = null; view.applyAppearance(resolve(view)); }
 
@@ -726,7 +867,7 @@
   /* a picture of the person's own, blurred once at this blur and cached; until it is ready the sharp copy shows, and
      every terminal repaints when it is */
   var pending = {};
-  function blurredPicture(key, url, blur) {
+  function blurredPicture(key, url, blur, desat) {
     if (imgCache.has(key)) return imgCache.get(key);
     if (pending[key]) return null;
     pending[key] = true;
@@ -735,9 +876,10 @@
       var cv = document.createElement('canvas'); cv.width = 960; cv.height = 600;
       var g = cv.getContext('2d'), k = Math.max(960 / im.naturalWidth, 600 / im.naturalHeight);
       var dw = im.naturalWidth * k, dh = im.naturalHeight * k;
-      if (canFilter) g.filter = 'blur(' + blur + 'px)';
+      if (canFilter) g.filter = (blur ? 'blur(' + blur + 'px) ' : '') + (desat ? 'saturate(' + (1 - desat) + ')' : '') || 'none';
       g.drawImage(im, (960 - dw) / 2, (600 - dh) / 2, dw, dh);
-      blurCanvas(cv, blur);
+      if (blur) blurCanvas(cv, blur);
+      if (desat && !canFilter) desaturate(g, 960, 600, desat);
       imgCache.set(key, cv.toDataURL('image/jpeg', 0.86)); delete pending[key];
       refreshAll();
     };
@@ -745,7 +887,36 @@
     im.src = url;
     return null;
   }
-  function imageUrl(name, data, blur) {
+  function desaturate(g, w, h, amt) {
+    var img = g.getImageData(0, 0, w, h), a = img.data;
+    for (var i = 0; i < a.length; i += 4) { var y = 0.2126 * a[i] + 0.7152 * a[i + 1] + 0.0722 * a[i + 2]; a[i] += (y - a[i]) * amt; a[i + 1] += (y - a[i + 1]) * amt; a[i + 2] += (y - a[i + 2]) * amt; }
+    g.putImageData(img, 0, 0);
+  }
+  /* a picture's brightest and darkest pixels (its 98th and 2nd percentile by luminance on a 64 x 40 copy): what Auto
+     dim and the text's contrast floor measure against (research: the WCAG F83 check, against the picture's own
+     lightest or darkest area) */
+  var picStats = new Map();
+  function pictureStats(url) {
+    if (!url) return null;
+    if (picStats.has(url)) return picStats.get(url);
+    picStats.set(url, null);
+    var im = new Image();
+    im.onload = function () {
+      try {
+        var cv = document.createElement('canvas'); cv.width = 64; cv.height = 40;
+        var g = cv.getContext('2d'); g.drawImage(im, 0, 0, 64, 40);
+        var d = g.getImageData(0, 0, 64, 40).data, px = [];
+        for (var i = 0; i < d.length; i += 4) px.push(C.rgb(d[i], d[i + 1], d[i + 2]));
+        px.sort(function (x, y) { return C.lum(x) - C.lum(y); });
+        picStats.set(url, { lo: px[Math.floor(px.length * 0.02)], hi: px[Math.floor(px.length * 0.98)] });
+        if (picStats.size > 24) picStats.delete(picStats.keys().next().value);
+        refreshAll();
+      } catch (e) { /* a picture the canvas cannot read keeps the cautious dim */ }
+    };
+    im.src = url;
+    return null;
+  }
+  function imageUrl(name, data, blur, desat) {
     /* a chosen image is a reference ('img:<hash>') to the copy kept on this machine (77-customize.js); one that is
        gone (evicted, or named by another machine's settings) falls back to the default image, as does a path typed in
        Settings ('path:'), which a browser cannot open. Resolved before the cache, whose key holds only the data's
@@ -753,7 +924,7 @@
     if (name === 'custom' && data && data.indexOf('img:') === 0) {
       var stored = null;
       try { stored = localStorage.getItem('pm.home.terminal:v1:bg:' + data.slice(4)); } catch (e) {}
-      if (stored) return blur ? blurredPicture(data + '|' + blur, stored, blur) || stored : stored;
+      if (stored) return blur || desat ? blurredPicture(data + '|' + blur + '|' + (desat || 0), stored, blur, desat || 0) || stored : stored;
       name = 'hills'; data = null;
     }
     if (name === 'custom' && data && data.indexOf('path:') === 0) { name = 'hills'; data = null; }
@@ -817,14 +988,14 @@
   }
 
   T.Appearance = {
-    FIELDS: FIELDS, FONTS: FONTS, LOOKS: LOOKS, DEFAULTS: DEFAULTS, GRADIENTS: GRADIENTS, LINK: LINK,
+    FIELDS: FIELDS, FONTS: FONTS, LOOKS: LOOKS, DEFAULTS: DEFAULTS, GRADIENTS: GRADIENTS, LINK: LINK, LOCAL_FIELDS: LOCAL_FIELDS,
     schemes: allSchemes, scheme: scheme, pairOf: pairOf, toTheme: toTheme, fontDef: fontDef, hasLocalFace: hasLocalFace,
     resolve: function (view) { if (view) views.add(view); return resolve(view); },
     /* the same resolution without joining the live terminals (thumbnails and previews that repaint themselves) */
     peek: function (view) { return resolve(view); },
     forget: function (view) { views.delete(view); },
     get: field, layerOf: layerOf, own: own, set: set, setMany: setMany, live: live, commit: commit, reset: resetScope,
-    preview: preview, endPreview: endPreview, settingsReady: settingsReady, settingsValues: settingsLayer,
+    preview: preview, endPreview: endPreview, settingsReady: settingsReady, settingsValues: settingsLayer, presets: presets,
     refreshAll: refreshAll, addUserScheme: addUserScheme, imageUrl: imageUrl, lookKey: lookKey,
     rememberPicture: rememberPicture, pictureName: pictureName, importText: importText, importFile: importFile, canBlur: canFilter,
     onChange: function (fn) { return changeEvents.on('change', fn); },

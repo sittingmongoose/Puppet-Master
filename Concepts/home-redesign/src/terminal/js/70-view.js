@@ -89,9 +89,15 @@
     screen.setAttribute('role', 'group');
     screen.setAttribute('aria-roledescription', 'terminal');
     this.bgLayer = el('div', 'pmt-bglayer');
+    /* inside the ground: a moving design's layer (transform only) and the scrim that keeps text readable over it */
+    this.bgMove = el('div', 'pmt-bgmove'); this.bgMove.hidden = true;
+    this.bgScrim = el('div', 'pmt-bgscrim');
+    this.bgLayer.appendChild(this.bgMove); this.bgLayer.appendChild(this.bgScrim);
     this.canvas = el('canvas', 'pmt-grid');
     this.fxCanvas = el('canvas', 'pmt-fxcanvas'); this.fxCanvas.hidden = true;
     this.trailCanvas = el('canvas', 'pmt-trail'); this.trailCanvas.hidden = true;
+    /* the bezel: a monitor housing round the screen, over the ground and the canvases' edge (71-bezel.js) */
+    this.bezel = new T.Bezel(this); this.bezelEl = this.bezel.el;
     this.sticky = el('button', 'pmt-sticky'); this.sticky.hidden = true; this.sticky.type = 'button';
     this.overlays = el('div', 'pmt-overlays');
     this.input = el('textarea', 'pmt-input');
@@ -105,7 +111,7 @@
     this.input.setAttribute('autocapitalize', 'off'); this.input.setAttribute('autocomplete', 'off');
     this.input.setAttribute('autocorrect', 'off'); this.input.setAttribute('spellcheck', 'false');
     screen.appendChild(this.canvas); screen.appendChild(this.fxCanvas);
-    screen.appendChild(this.trailCanvas); screen.appendChild(this.sticky); screen.appendChild(this.overlays); screen.appendChild(this.input);
+    screen.appendChild(this.trailCanvas); screen.appendChild(this.bezelEl); screen.appendChild(this.sticky); screen.appendChild(this.overlays); screen.appendChild(this.input);
     this.sb = el('div', 'pmt-scrollbar');
     this.sbMarks = el('canvas', 'pmt-sb-marks');
     this.sbThumb = el('div', 'pmt-sb-thumb');
@@ -160,6 +166,11 @@
       mq.addEventListener('change', fn);
       self._dprOff = function () { mq.removeEventListener('change', fn); };
     })();
+    /* a ground that shows what lies behind the terminal (the Lens, 44-grounds-glass.js) repaints when the app's
+       wallpaper changes or its print arrives */
+    var onWall = function () { var bg = self._bgSpec; if (bg && bg.paint === 'lens') { self.contrastGround = self._applyBackground(bg); self.renderer.invalidate(); self.schedule(true); } };
+    window.addEventListener('pmt-wall', onWall);
+    this.disposers.push(function () { window.removeEventListener('pmt-wall', onWall); });
     if (T.FX && T.FX.attach) { this.fx = T.FX.attach(this); this.fx.configure(this.appearance.effects || {}); }
     if (T.Agent && T.Agent.attach) this.agent = T.Agent.attach(this);
     this._updateLabel(); this._updateHeader();
@@ -201,7 +212,12 @@
     this.root.style.setProperty('--pmt-pad-x', (ap.padding ? ap.padding.x : 8) + 'px');
     this.root.style.setProperty('--pmt-pad-y', (ap.padding ? ap.padding.y : 6) + 'px');
     this.root.setAttribute('data-pmt-scheme', ap.theme.appearance || '');
-    this._applyBackground(ap.background || { kind: 'theme' });
+    /* the background, and its worst pixel for the text's contrast floor (24-renderer.js; none over the scheme's own
+       surface) */
+    this.contrastGround = this._applyBackground(ap.background || { kind: 'theme' });
+    var bz = ap.bezel || { style: 'off', width: 0, color: 'follow' };
+    this.bezel.configure(bz, ap);
+    this.root.style.setProperty('--pmt-bezel-w', (bz.width || 0) + 'px');
     var f = ap.font, gen = this._fontGen = (this._fontGen || 0) + 1;
     this.fontReady = T.Metrics.ready(f.family, f.size).then(function () {
       if (gen !== self._fontGen) return; /* a later appearance replaced this font before it finished loading */
@@ -323,16 +339,73 @@
     this.root.style.setProperty('--pmt-bg-solid', C.toHex(d.bg));
     this.root.style.setProperty('--pmt-fg', C.toHex(d.fg));
   };
+  /* the ground (round 2): a design of T.Grounds drawn as CSS, a painted scene at the terminal's own size, a moving
+     layer, your own picture, a solid colour or the scheme's surface. Returns the colour the text's contrast floor
+     measures against (the design's worst pixel under its scrim), or null for the scheme's own surface */
+  function sizeStep(n) { return Math.max(160, Math.min(2560, Math.round((n || 960) / 160) * 160)); }
   View.prototype._applyBackground = function (bg) {
-    var L = this.bgLayer;
+    var L = this.bgLayer, th = this.theme, G = T.Grounds, ground = typeof bg.ground === 'number' ? bg.ground : null, dim = 0;
+    this._bgSpec = bg; this._bgKey = '';
     L.style.cssText = '';
-    L.className = 'pmt-bglayer pmt-bg-' + (bg.kind || 'theme');
-    if (bg.kind === 'gradient') L.style.background = bg.css;
-    else if (bg.kind === 'image' && bg.url) {
+    L.className = 'pmt-bglayer pmt-bg-' + (bg.kind || 'theme') + (bg.cat ? ' pmt-bg-' + bg.cat : '') + (bg.custom ? ' pmt-bg-custom' : '') + (bg.motion ? ' pmt-bg-moving' : '');
+    var mv = this.bgMove, moving = !!(bg.motion && G);
+    if (!moving) { mv.hidden = true; mv.style.cssText = ''; mv.removeAttribute('data-anim'); }
+    if ((bg.paint || moving) && G && th) {
+      var r = this.bodyEl.getBoundingClientRect(), w = r.width || 960, h = r.height || 600;
+      this._bgKey = sizeStep(w) + 'x' + sizeStep(h);
+      var worsts = [], po = { blur: bg.blur, rowPx: this.metrics ? this.metrics.cellH : 17, rect: { x: r.left, y: r.top, w: w, h: h } };
+      if (bg.paint) {
+        var P = G.paint(bg.paint, th, w, h, po);
+        if (P) { L.style.background = 'center / cover no-repeat url("' + P.url + '"), ' + C.toHex(th.bg); if (P.worst !== null) worsts.push(P.worst); }
+      } else L.style.background = bg.base || C.toHex(th.bg);
+      if (moving) {
+        var M = G.paint(bg.motion.id, th, w, h, { rowPx: po.rowPx, rect: po.rect });
+        mv.hidden = !M;
+        if (M) {
+          mv.style.backgroundImage = 'url("' + M.url + '")';
+          mv.style.setProperty('--pmt-bgm-ms', Math.round(bg.motion.ms) + 'ms');
+          /* about 20 fps; NieR moves in its own visible steps, about 2.5 a second */
+          mv.style.setProperty('--pmt-bgm-steps', String(Math.max(1, Math.round(bg.motion.ms / (T.look().nier ? 400 : 50)))));
+          mv.setAttribute('data-anim', bg.motion.on ? bg.motion.anim : 'still');
+          if (M.worst !== null) worsts.push(M.worst);
+        }
+      }
+      if (worsts.length) {
+        var w0 = G.worst(worsts, th), auto = G.scrim(w0, th);
+        dim = 1 - (1 - auto) * (bg.strength === undefined ? 0.6 : bg.strength);
+        ground = C.mix(w0, th.bg, dim);
+      }
+    } else if (bg.css) { L.style.background = bg.css; dim = bg.dim || 0; }
+    else if (bg.custom && bg.url) {
+      var fit = bg.fit || 'cover';
       L.style.backgroundImage = 'url("' + bg.url + '")';
-      L.style.setProperty('--pmt-bg-dim', String(bg.dim === undefined ? 0.35 : bg.dim));
-      if (bg.blurredUrl) L.style.backgroundImage = 'url("' + bg.blurredUrl + '")';
-    } else if (bg.kind === 'solid' && bg.color) L.style.background = bg.color;
+      L.style.backgroundSize = fit === 'tile' || fit === 'center' ? 'auto' : fit;
+      L.style.backgroundRepeat = fit === 'tile' ? 'repeat' : 'no-repeat';
+      L.style.backgroundPosition = 'center';
+      dim = bg.dim === undefined || bg.dim === null ? 0.45 : bg.dim;
+    } else if (bg.kind === 'image' && bg.url) {
+      L.style.backgroundImage = 'url("' + (bg.blurredUrl || bg.url) + '")';
+      dim = bg.dim === undefined || bg.dim === null ? 0.35 : bg.dim;
+    } else if (bg.kind === 'gradient' && bg.css) L.style.background = bg.css;
+    else if (bg.kind === 'solid' && bg.color) L.style.background = bg.color;
+    this.bgScrim.style.opacity = dim > 0 ? String(Math.round(dim * 1000) / 1000) : '0';
+    /* Glass: a design is laid on the glass at Glass's own opacity, so the app still shows through as it does on the
+       theme surface (no blur is added, F3-431) */
+    if (typeof bg.alpha === 'number' && bg.alpha < 1) L.style.opacity = String(bg.alpha);
+    if (this.fx && this.fx.groundLive) this.fx.groundLive();
+    this.root.classList.toggle('pmt-bg-moves', moving && !!bg.motion.on);
+    return ground;
+  };
+  /* a painted ground follows the terminal's size in 160 px steps: repainted only when a step changes */
+  View.prototype._groundSized = function () {
+    var bg = this._bgSpec; if (!bg || !(bg.paint || bg.motion) || !this._bgKey) return;
+    var r = this.bodyEl.getBoundingClientRect(), key = sizeStep(r.width) + 'x' + sizeStep(r.height);
+    if (key !== this._bgKey) { this.contrastGround = this._applyBackground(bg); this.renderer.invalidate(); this.schedule(true); }
+  };
+  /* ... once a resize settles, never inside the resize frame */
+  View.prototype._groundSoon = function () {
+    var self = this; clearTimeout(this._groundTimer);
+    if (this._bgKey) this._groundTimer = setTimeout(function () { self._groundTimer = 0; if (self.visible) self._groundSized(); }, 250);
   };
   /* cell metrics for the current font at the current device pixel ratio */
   View.prototype._measure = function () {
@@ -362,7 +435,18 @@
       [this.fxCanvas, this.trailCanvas].forEach(function (c) { c.width = cw; c.height = ch; c.style.width = (cw / m.dpr) + 'px'; c.style.height = (ch / m.dpr) + 'px'; });
       this.renderer.invalidate();
     }
-    this.gridLeft = px; this.gridTop = py;
+    /* inside a bezel the grid sits in the middle of the glass, so the housing is as wide on every side (the part of a
+       cell left over goes half to each side, in whole device pixels) */
+    var ox = 0, oy = 0, bez = this.bezel && this.bezel.on();
+    if (bez) { ox = Math.max(0, Math.floor((w - px * 2 - cols * m.cellW) / 2 * m.dpr) / m.dpr); oy = Math.max(0, Math.floor((h - py * 2 - rows * m.cellH) / 2 * m.dpr) / m.dpr); }
+    this.gridLeft = px + ox; this.gridTop = py + oy;
+    var off = bez ? this.gridLeft + ',' + this.gridTop : '';
+    if (off !== this._gridOff) {
+      this._gridOff = off;
+      if (bez) { this.root.style.setProperty('--pmt-grid-x', this.gridLeft + 'px'); this.root.style.setProperty('--pmt-grid-y', this.gridTop + 'px'); }
+      else { this.root.style.removeProperty('--pmt-grid-x'); this.root.style.removeProperty('--pmt-grid-y'); }
+    }
+    if (bez) this.bezel.layout(w, h, this.gridLeft, this.gridTop, cols * m.cellW, rows * m.cellH, m.dpr);
     this.root.style.setProperty('--pmt-cell-h', m.cellH + 'px');
     this.root.style.setProperty('--pmt-cell-w', m.cellW + 'px');
     this.root.style.setProperty('--pmt-font', this.appearance.font.family);
@@ -435,6 +519,7 @@
     var full = this.fullPending; this.fullPending = false;
     this.renderer.render(full);
     if (this.fx) this.fx.frame();
+    if (this.bezel) this.bezel.frame();
     if (this.marksDirty) { this.marksDirty = false; this._renderGutter(); this._renderScrollbar(); this._renderSticky(); }
     else this._renderScrollbarThumb();
     if (this.agent) this.agent.frame();
@@ -1116,6 +1201,7 @@
   /* ---- lifecycle from the host ---- */
   View.prototype.onResize = function () {
     this.layout();
+    this._groundSoon();
     /* the host may have maximized or restored the panel itself (its menu, a key): keep the action's label true */
     if (this.hrow && this.api && this.api.isMaximized) {
       var max = !!this.api.isMaximized();
@@ -1123,7 +1209,7 @@
     }
   };
   /* image animation runs only while the terminal shows (SPEC section 7) */
-  View.prototype.onShow = function () { this.visible = true; if (this.term.images) this.term.images.pause(false); this.layout(); this.schedule(true); if (this.fx) this.fx.visible(true); };
+  View.prototype.onShow = function () { this.visible = true; if (this.term.images) this.term.images.pause(false); this.layout(); this._groundSoon(); this.schedule(true); if (this.fx) this.fx.visible(true); };
   View.prototype.onHide = function () { this.visible = false; if (this.term.images) this.term.images.pause(true); if (this.fx) this.fx.visible(false); if (this.pop && this.closeAppearance) this.closeAppearance(true); };
   View.prototype.onLook = function () {
     var h = document.documentElement;
@@ -1143,10 +1229,11 @@
     if (this.closeAppearance) this.closeAppearance(true);
     if (T.Appearance && T.Appearance.forget) T.Appearance.forget(this);
     this.disposers.forEach(function (d) { try { d(); } catch (e) {} });
-    clearInterval(this.blinkTimer); clearInterval(this.clockTimer);
+    clearInterval(this.blinkTimer); clearInterval(this.clockTimer); clearTimeout(this._groundTimer);
     if (this._dprOff) this._dprOff();
     if (this.raf) cancelAnimationFrame(this.raf);
     if (this.fx) { this.fx.dispose(); this.fx = null; }
+    if (this.bezel) this.bezel.dispose();
     this.root.remove();
   };
 })();

@@ -304,7 +304,7 @@ html[data-o55-nier="on"] .pmt-scheme { transition: none; }
    Reduced Motion a short cross-fade, NieR without wipe at once. 70-view.js places the layers and their geometry.
    ================================================================================================================ */
 .pmt-xf { position: absolute; inset: 0; pointer-events: none; }
-.pmt-xf-text > canvas { position: absolute; left: var(--pmt-pad-x); top: var(--pmt-pad-y); display: block; }
+.pmt-xf-text > canvas { position: absolute; left: var(--pmt-grid-x, var(--pmt-pad-x)); top: var(--pmt-grid-y, var(--pmt-pad-y)); display: block; }
 .pmt-xf.pmt-in, .pmt-xf-edge.pmt-in { animation: var(--pmt-a-xf) var(--pmt-t-xf) var(--pmt-ease-xf) both; }
 .pmt-xf-edge { display: none; }
 @media (prefers-reduced-motion: no-preference) {

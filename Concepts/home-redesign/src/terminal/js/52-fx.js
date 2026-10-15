@@ -23,6 +23,16 @@
     }).catch(function () {});
   } catch (e) {}
 
+  /* is there a GPU at all (asked once, on a scratch canvas, by the same test the effects pass uses) */
+  function hasGpu() {
+    if (gpu !== null) return gpu;
+    if (hasGpu.probe === undefined) {
+      var c = document.createElement('canvas'); c.width = c.height = 1;
+      var fx = T.FXGL ? T.FXGL.create(c) : null;
+      hasGpu.probe = !!fx; if (fx) fx.dispose();
+    }
+    return hasGpu.probe;
+  }
   function Policy(view) {
     this.view = view; this.cfg = {}; this.gl = null; this.trail = null; this.active = false;
     this.lastActivity = T.util.now(); this.raf = 0; this.lastAmbient = 0; this.degaussAt = 0;
@@ -30,7 +40,7 @@
     this.failedAt = '';      /* the grid size (WxH device px) the GL pass could not draw, until the grid changes size */
     var self = this;
     view._on(view.term, 'dirty', function () { self.lastActivity = T.util.now(); });
-    view.on('focus', function () { self.lastActivity = T.util.now(); self.kick(); });
+    view.on('focus', function () { self.lastActivity = T.util.now(); self.kick(); self.groundLive(); });
     policies.add(this);
   }
   Policy.prototype.configure = function (e) {
@@ -63,6 +73,12 @@
     scr.classList.toggle('pmt-fx-scan', !!cpuScan);
     scr.classList.toggle('pmt-fx-glow', !!cpuGlow);
     scr.classList.toggle('pmt-fx-paper', !!e.paper);
+    /* Full CRT without the GPU: no fake curvature (it blurs text), only the rounded glass, its edge and a vignette
+       (50-fx.css), as the emulators' CSS-only fallbacks do */
+    scr.classList.toggle('pmt-fx-crt', !!(e.crt && !this.active));
+    var m0 = v.metrics, dpr0 = (m0 && m0.dpr) || window.devicePixelRatio || 1;
+    var per = T.FXGL && T.FXGL.scanPeriod ? T.FXGL.scanPeriod(m0 ? m0.devH : 0, dpr0) : 3;
+    root.style.setProperty('--pmt-scan-p', (per / dpr0) + 'px');
     root.style.setProperty('--pmt-glow-color', e.glowColor || '');
     /* the static fallbacks draw at the chosen strengths too (50-fx.css reads these; the shader takes them from params) */
     root.style.setProperty('--pmt-scan-strength', String(e.scanlines && isFinite(e.scanlines.strength) ? e.scanlines.strength : 0.3));
@@ -89,6 +105,10 @@
     var p = {
       scanlines: e.scanlines || { on: false }, glow: e.glow || { on: false },
       curvature: e.curvature || { on: false }, bezel: e.bezel || { on: false }, vignette: e.vignette || { on: false },
+      mask: e.mask || { on: false },
+      /* scanlines lock to the text rows; beyond the tube is the scheme's own ground, unlit */
+      rowPx: v.metrics ? v.metrics.devH : 0,
+      outside: e.tube ? [parseInt(e.tube.slice(1, 3), 16) / 255, parseInt(e.tube.slice(3, 5), 16) / 255, parseInt(e.tube.slice(5, 7), 16) / 255] : null,
       burnIn: { on: !!(e.burnIn && e.burnIn.on) && !reduced, persistMs: e.burnIn ? e.burnIn.persistMs : 450 },
       noise: { on: !!(e.noise && e.noise.on) && moving, amount: e.noise ? e.noise.amount : 0 },
       flicker: { on: !!(e.flicker && e.flicker.on) && moving, amount: e.flicker ? Math.min(0.03, e.flicker.amount) : 0 },
@@ -97,9 +117,23 @@
     };
     return p;
   };
+  /* a moving ground plays only while this terminal is focused, visible and in use (10 s after the last output or key,
+     as every effect), outside a full-screen program, and never under Reduced Motion or a battery saver (round 2) */
+  Policy.prototype.groundLive = function (now) {
+    var v = this.view, self = this;
+    if (!v.root.classList.contains('pmt-bg-moves')) { v.root.classList.remove('pmt-bg-live'); return; }
+    now = now || T.util.now();
+    var left = IDLE_MS - (now - this.lastActivity);
+    /* where no GPU draws the terminal nothing moves (F3-643): the ground shows its still frame */
+    var live = !!(v.focused && v.visible && left > 0 && !this.cfg.reduced && !battery.saver && !(v.term && v.term.buf && v.term.buf.isAlt) && hasGpu());
+    v.root.classList.toggle('pmt-bg-live', live);
+    clearTimeout(this.liveTimer);
+    if (live) this.liveTimer = setTimeout(function () { self.groundLive(); }, left + 20);
+  };
   /* called by the view after each grid paint */
   Policy.prototype.frame = function () {
     var v = this.view, now = T.util.now();
+    this.groundLive(now);
     this._trackCursor(now);
     var size = v.canvas.width + 'x' + v.canvas.height;
     if (this.failedAt && this.failedAt !== size) { this.failedAt = ''; this.configure(this.cfg); }
@@ -183,6 +217,7 @@
   Policy.prototype.dispose = function () {
     policies.delete(this);
     if (this.raf) { cancelAnimationFrame(this.raf); clearTimeout(this.raf); }
+    clearTimeout(this.liveTimer);
     if (this.gl) this.gl.dispose();
     if (this.trail && this.trail.clear) this.trail.clear();
   };

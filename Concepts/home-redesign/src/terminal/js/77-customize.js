@@ -70,22 +70,38 @@
     }
   };
   Preview.prototype.later = function (ms, fn) { var t = setTimeout(fn, ms); this.timers.push(t); };
+  /* one demo at a time (pm7-customizer-audit #1: two quick cursor choices overlapped their demos, the second saved
+     the first's mid-jump position and left the cursor on row 2): a new demo cancels the old one's jumps, puts the
+     cursor back at the prompt it started from without drawing a trail for that, and starts from there */
+  Preview.prototype.stopDemo = function () {
+    this.timers.forEach(clearTimeout); this.timers = [];
+    var pv = this.view, home = this.home;
+    if (!home) return;
+    this.home = null;
+    this.session.term.write('\x1b[' + (home.y + 1) + ';' + (home.x + 1) + 'H');
+    if (pv.fx) { pv.fx.lastCursor = null; if (pv.fx.trail && pv.fx.trail.clear) pv.fx.trail.clear(); }
+    pv.schedule(true);
+  };
   /* the cursor jumps twice and comes home: the trail, the shape and the blink show */
   Preview.prototype.moveCursor = function () {
     var pv = this.view, term = this.session.term, self = this;
+    this.stopDemo();
+    var c = term.buf.cursor, home = this.home = { x: c.x, y: c.y };
+    var go = function (row, col) { term.write('\x1b[' + row + ';' + col + 'H'); pv.lastInput = T.util.now(); pv.schedule(true); };
     pv.lastInput = T.util.now(); if (pv._wakeCursor) pv._wakeCursor();
-    term.write('\x1b7');
-    this.later(140, function () { term.write('\x1b[3;22H'); pv.lastInput = T.util.now(); });
-    this.later(560, function () { term.write('\x1b[7;38H'); pv.lastInput = T.util.now(); });
-    this.later(980, function () { term.write('\x1b8'); pv.lastInput = T.util.now(); self.view.schedule(true); });
+    this.later(140, function () { go(3, 22); });
+    this.later(560, function () { go(7, 38); });
+    this.later(980, function () { go(home.y + 1, home.x + 1); self.home = null; self.timers = []; });
   };
   Preview.prototype.ring = function () { this.view._lastBell = 0; this.session.term.write('\x07'); };
-  /* how a terminal you are not in looks, held a moment */
+  /* how a terminal you are not in looks, held a moment (its own timer: a cursor demo never cancels it) */
   Preview.prototype.dim = function () {
-    var pv = this.view; pv.setDimmed(true);
-    this.later(1600, function () { pv.setDimmed(false); });
+    var pv = this.view;
+    clearTimeout(this.dimTimer); pv.setDimmed(true);
+    this.dimTimer = setTimeout(function () { pv.setDimmed(false); }, 1600);
   };
   Preview.prototype.dispose = function () {
+    clearTimeout(this.dimTimer);
     this.timers.forEach(clearTimeout);
     if (T.Appearance) T.Appearance.forget(this.view);
     this.view.dispose();
@@ -95,15 +111,23 @@
   var CURSORS = [['follow', 'Follow look'], ['block', 'Block'], ['bar', 'Bar'], ['underline', 'Underline']];
   var TRAILS = [['follow', 'Follow look', ''], ['off', 'Off', 'None'], ['soft', 'Soft', 'A short fade'], ['glow', 'Glow', 'A bright streak'],
     ['phosphor', 'Phosphor', 'An afterglow'], ['trace', 'Trace', 'A thin ink line']];
-  var GROUNDS = [['follow', 'Follow look'], ['theme', 'Theme surface'], ['solid', 'Solid colour'], ['gradient', 'Gradient'], ['image', 'Picture']];
-  var PICTURES = [['hills', 'Hills'], ['grid', 'Grid'], ['paper', 'Paper'], ['custom', 'Your picture']];
+  /* the background's kinds as the screen sorts them (round 2): T.Grounds' categories between Plain and Yours. Show is
+     only a filter of the tiles; a tile is the choice */
+  /* round 3: Glass and Retro kinds, every moving design under Moving whatever its kind, and All: any design in any look */
+  var GCATS = [['plain', 'Plain'], ['tonal', 'Tonal'], ['wash', 'Wash'], ['pattern', 'Pattern'], ['scene', 'Scene'], ['glass', 'Glass'], ['retro', 'Retro'], ['mark', 'Mark'], ['moving', 'Moving'], ['all', 'All'], ['yours', 'Yours']];
+  var LOOK_NAMES = { basic: 'Basic', friendly: 'Friendly', glass: 'Glass', retro: 'Retro', nier: 'NieR' };
+  var PLAIN = [['follow', 'Look’s own', 'The look’s own ground'], ['theme', 'Theme surface', 'The scheme’s own colour'], ['solid', 'Solid colour', 'Any colour you pick']];
+  /* round 3: a slim lip or a monitor case (71-bezel.js), in the materials real housings were made of */
+  var BEZELS = [['off', 'Off'], ['rim', 'Slim'], ['case', 'Monitor']];
+  var BEZEL_COLORS = [['follow', 'Follow look', ''], ['charcoal', 'Graphite plastic', '#393a3e'], ['black', 'Black gloss', '#151517'], ['platinum', 'Platinum plastic', '#cfc8b8'],
+    ['putty', 'Putty plastic', '#b8af9d'], ['aluminium', 'Brushed aluminium', ''], ['gunmetal', 'Gunmetal', ''], ['glass', 'Glass', ''], ['accent', 'Accent plastic', '']];
   var FACE_TAGS = { 'jetbrains-mono': 'Code face', 'atkinson': 'Easy reading', 'vt323': 'Retro', 'departure': 'Retro', 'sixtyfour': 'Retro, scan axes',
     'sixtyfour-raster': 'Retro, baked scan', 'system': 'This computer’s' };
   /* the effect chips: what each draws, in plain words */
   var EFFECTS = [
     { key: 'scanlines', name: 'Scanlines', help: 'Thin dark lines across the text, like an old monitor.', strength: ['scanStrength', 0, 0.6, 0.05] },
     { key: 'glow', name: 'Phosphor glow', help: 'A soft glow around the text in the scheme’s glow colour.', strength: ['glowStrength', 0, 1, 0.05] },
-    { key: 'crt', name: 'Full CRT', help: 'Curved glass, burn-in and grain. Pointing follows the curve.' },
+    { key: 'crt', name: 'Full CRT', help: 'A tube: gently curved glass with rounded corners, burn-in and grain. Pointing follows the curve.' },
     { key: 'flicker', name: 'Flicker', help: 'A faint flicker, at most 3 % and never a flash.', strength: ['flickerAmount', 0, 0.03, 0.005] },
     { key: 'inactiveDim', name: 'Dim terminals I’m not in', help: 'Terminals you are not typing in step back.', tryIt: 'dim' },
     { key: 'smoothScroll', name: 'Smooth scrolling', help: 'Scrolling glides instead of jumping a line at a time.' }
@@ -111,21 +135,23 @@
   /* quick sets: several existing fields at once, in this scope (NieR's presets, for a terminal) */
   var SETS = [
     { id: 'look', label: 'The look’s own', help: 'Everything follows the look', patch: null },
-    { id: 'calm', label: 'Calm', help: 'Nothing moves', patch: { effects: 'custom', cursorBlink: false, cursorTrail: 'off', smoothScroll: false, flicker: false, crt: false } },
+    { id: 'calm', label: 'Calm', help: 'Nothing moves', patch: { effects: 'custom', cursorBlink: false, cursorTrail: 'off', smoothScroll: false, flicker: false, crt: false, bgMotion: 'off' } },
     { id: 'reading', label: 'Easy reading', help: 'Clear face, high contrast', patch: { font: 'atkinson', minContrast: 7, lineHeight: 1.45, ligatures: false } },
-    { id: 'crt', label: 'Old monitor', help: 'Scanlines, glow, curve', patch: { effects: 'custom', scanlines: true, glow: true, crt: true, cursorTrail: 'phosphor' } }
+    { id: 'crt', label: 'Old monitor', help: 'A tube in a case', patch: { effects: 'custom', scanlines: true, glow: true, crt: true, curvature: 0.06, bezel: 'case', cursorTrail: 'phosphor' } }
   ];
   /* the fields the meter counts, in the order the screen shows them */
   var COUNTED = ['scheme', 'schemePair', 'minContrast', 'font', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing', 'ligatures', 'boldBright',
     'fontRendering', 'sixtyfourScan', 'sixtyfourBleed', 'cursorShape', 'cursorBlink', 'cursorTrail', 'background', 'bgColor', 'bgGradient', 'bgImage',
-    'bgImageData', 'bgDim', 'bgBlur', 'opacity', 'padding', 'effects', 'scanlines', 'scanStrength', 'glow', 'glowStrength', 'crt', 'curvature', 'burnIn',
+    'bgImageData', 'bgDim', 'bgBlur', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat', 'opacity', 'padding', 'bezel', 'bezelWidth', 'bezelColor', 'bezelReflect',
+    'effects', 'scanlines', 'scanStrength', 'glow', 'glowStrength', 'crt', 'curvature', 'crtMask', 'burnIn',
     'noise', 'flicker', 'flickerAmount', 'inactiveDim', 'smoothScroll', 'bell', 'stickyHeader', 'copyOnSelect'];
   var GROUP_KEYS = {
     colors: ['scheme', 'schemePair', 'minContrast'],
     text: ['font', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing', 'ligatures', 'boldBright', 'fontRendering', 'sixtyfourScan', 'sixtyfourBleed'],
     cursor: ['cursorShape', 'cursorBlink', 'cursorTrail'],
-    ground: ['background', 'bgColor', 'bgGradient', 'bgImage', 'bgImageData', 'bgDim', 'bgBlur', 'opacity', 'padding'],
-    effects: ['effects', 'scanlines', 'scanStrength', 'glow', 'glowStrength', 'crt', 'curvature', 'burnIn', 'noise', 'flicker', 'flickerAmount', 'inactiveDim', 'smoothScroll'],
+    ground: ['background', 'bgColor', 'bgGradient', 'bgImage', 'bgImageData', 'bgDim', 'bgBlur', 'bgStrength', 'bgScale', 'bgMotion', 'bgFit', 'bgDesat', 'opacity', 'padding'],
+    effects: ['effects', 'scanlines', 'scanStrength', 'glow', 'glowStrength', 'crt', 'curvature', 'crtMask', 'burnIn', 'noise', 'flicker', 'flickerAmount', 'inactiveDim', 'smoothScroll',
+      'bezel', 'bezelWidth', 'bezelColor', 'bezelReflect'],
     behavior: ['bell', 'stickyHeader', 'copyOnSelect']
   };
   var GROUPS = [['colors', 'Colors'], ['text', 'Text'], ['cursor', 'Cursor'], ['ground', 'Background'], ['effects', 'Effects'], ['behavior', 'Behavior']];
@@ -188,6 +214,23 @@
   function cursorArt(shape) { return '<span class="pmt-cz-cur pmt-cz-cur-' + shape + '"><span>$ ls</span><i></i></span>'; }
   function trailArt(kind) { return '<span class="pmt-cz-trail pmt-cz-trail-' + kind + '"><i></i><b></b></span>'; }
 
+  /* a preset as a tiny terminal in its own ground, scheme and face: what putting it on will show */
+  function presetArt(v, fields) {
+    var R = null;
+    try { R = A().peek({ api: v.api, tabAppearance: fields || {}, previewAppearance: null, state: {} }); } catch (e) { R = null; }
+    if (!R || !R.theme) return '<span class="pmt-cz-pswatch"></span>';
+    var C = T.color, th = R.theme, b = R.background || {}, pal = th.palette || [];
+    var ground = b.css ? b.css : b.url ? 'center / cover no-repeat url(&quot;' + esc(b.url) + '&quot;)' : b.color ? b.color : C.toHex(th.bg);
+    var hex = function (i) { return pal[i] !== undefined ? C.toHex(pal[i]) : C.toHex(th.fg); };
+    return '<span class="pmt-cz-pswatch" style="background:' + esc(C.toHex(th.bg)) + ';color:' + esc(C.toHex(th.fg)) + '"><span class="pmt-cz-psground" style="background:' + ground + '"></span>' +
+      '<span class="pmt-cz-psline" style="font-family:' + esc(R.font.family) + '"><b style="color:' + esc(hex(4)) + '">~/api</b> <i style="color:' + esc(hex(2)) + '">ok</i> $</span>' +
+      '<span class="pmt-cz-psdots">' + [1, 3, 5, 6].map(function (i) { return '<i style="background:' + esc(hex(i)) + '"></i>'; }).join('') + '</span></span>';
+  }
+  function sameFields(a, b) {
+    var ka = Object.keys(a || {}).sort(), kb = Object.keys(b || {}).sort();
+    return ka.join('|') === kb.join('|') && ka.every(function (k) { return String(a[k]) === String(b[k]); });
+  }
+
   function skeleton(v) {
     var label = 'Terminal';
     try { label = JSON.parse(v._lsig || '{}').label || label; } catch (e) {}
@@ -207,10 +250,18 @@
     html += '<div class="pmt-cz-top"><figure class="pmt-cz-preview"><figcaption class="pmt-cz-pvcap"><span class="pmt-cz-pvtitle">Preview</span><span class="pmt-cz-pvdesc" data-pv-desc></span></figcaption>' +
       '<div class="pmt-cz-pvbox" data-pv-box inert></div></figure>' +
       '<aside class="pmt-cz-side"><div class="pmt-cz-meter"><div class="pmt-cz-meterhead"><span data-meter-scope>This terminal</span><b data-meter-n></b></div>' +
-      '<div class="pmt-cz-cells" aria-hidden="true">' + COUNTED.map(function () { return '<i></i>'; }).join('') + '</div></div>' +
-      '<div class="pmt-cz-sets" role="group" aria-label="Quick sets">' + SETS.map(function (s) {
+      '<div class="pmt-cz-cells" aria-hidden="true" style="grid-template-columns:repeat(' + COUNTED.length + ',1fr)">' + COUNTED.map(function () { return '<i></i>'; }).join('') + '</div></div>' +
+      /* presets: the four built in (each changes its own few fields), then yours (each is a whole look), and saving the
+         look this scope shows as a new one */
+      '<div class="pmt-cz-presets" role="group" aria-labelledby="pmt-cz-presets-h"><div class="pmt-cz-presethead"><span class="pmt-cz-trylabel" id="pmt-cz-presets-h">Presets</span>' +
+      '<button type="button" class="pmt-textbtn" data-act="preset-save"' + tagged('Save as a preset', 'Keep this look under a name, to put on any terminal later') + '>Save this look…</button></div>' +
+      '<form class="pmt-cz-psave" data-psave hidden><input type="text" class="pmt-cz-pname-in" data-pname maxlength="40" autocomplete="off" spellcheck="false" aria-label="Preset name" placeholder="Name this look"' + NOTAG + '>' +
+      '<button type="submit" class="pmt-textbtn pmt-cz-psave-go"' + NOTAG + '>Save</button><button type="button" class="pmt-textbtn" data-act="preset-cancel"' + NOTAG + '>Cancel</button></form>' +
+      '<div class="pmt-cz-sets" role="group" aria-label="Built-in presets">' + SETS.map(function (s) {
         return '<button type="button" class="pmt-cz-set" aria-pressed="false" data-set="' + s.id + '" data-pmh="tile"' + NOTAG + '><span>' + esc(s.label) + '</span><small>' + esc(s.help) + '</small></button>';
       }).join('') + '</div>' +
+      '<div class="pmt-cz-mylist" role="group" aria-label="Your presets" data-presets hidden></div>' +
+      '<p class="pmt-cz-pnote" data-pnote role="status" hidden></p></div>' +
       '<div class="pmt-cz-try" role="group" aria-label="Try it in the preview"><span class="pmt-cz-trylabel">Try it</span>' +
       '<button type="button" class="pmt-textbtn" data-act="try-cursor"' + NOTAG + '>Move the cursor</button>' +
       '<button type="button" class="pmt-textbtn" data-act="try-bell"' + NOTAG + '>Ring the bell</button>' +
@@ -240,7 +291,7 @@
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Size</span><span class="pmt-stepper pmt-cz-stepper"><button type="button" class="pmt-step" data-step="-0.5" aria-label="Smaller"' + tagged('Smaller', 'Text size half a pixel smaller') + '>−</button>' +
       '<output class="pmt-cz-out" data-out="fontSize"></output><button type="button" class="pmt-step" data-step="0.5" aria-label="Bigger"' + tagged('Bigger', 'Text size half a pixel bigger') + '>+</button></span>' +
       '<button type="button" class="pmt-textbtn pmt-cz-default" data-act="default" data-key="fontSize"' + NOTAG + '>Face default</button></div>' +
-      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Weight</span>' + seg('fontWeight', [[200, 'Extra light', '200'], [300, 'Light', '300'], [400, 'Regular', '400'], [500, 'Medium', '500'], [600, 'Semibold', '600'], [700, 'Bold', '700'], [800, 'Heavy', '800']], 'Weight') +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Weight</span>' + seg('fontWeight', [[100, 'Thin', '100'], [200, 'Extra light', '200'], [300, 'Light', '300'], [400, 'Regular', '400'], [500, 'Medium', '500'], [600, 'Semibold', '600'], [700, 'Bold', '700'], [800, 'Heavy', '800']], 'Weight') +
       '<span class="pmt-cz-fhelp" data-weight-why></span></div>' +
       slider('lineHeight', 'Line height', F.lineHeight.min, F.lineHeight.max, F.lineHeight.step, '×') +
       slider('letterSpacing', 'Letter spacing', F.letterSpacing.min, F.letterSpacing.max, F.letterSpacing.step, ' px') +
@@ -257,17 +308,25 @@
       '<h4 class="pmt-cz-sub">Trail when the cursor jumps</h4>' +
       '<div class="pmt-cz-tiles pmt-cz-small" role="radiogroup" aria-label="Cursor trail">' + TRAILS.map(function (t) { return tile('cursorTrail', t[0], t[1], trailArt(t[0] === 'follow' ? 'look' : t[0]), t[2]); }).join('') + '</div>' +
       '<p class="pmt-cz-note" data-note-trail hidden></p></section>';
-    /* background */
-    html += '<section class="pmt-cz-group" data-group="ground" aria-labelledby="pmt-cz-g-ground">' + ghead('ground', 'Background') +
-      '<div class="pmt-cz-tiles pmt-cz-small" role="radiogroup" aria-label="Background">' + GROUNDS.map(function (g) { return tile('background', g[0], g[1], '<span class="pmt-cz-gnd" data-ground-art="' + g[0] + '"></span>', ''); }).join('') + '</div>' +
-      '<div class="pmt-cz-sub-solid" data-when="solid" hidden><div class="pmt-cz-field"><span class="pmt-cz-flabel">Colour</span><input type="color" class="pmt-cz-color" data-key="bgColor" aria-label="Background colour"' + NOTAG + '><output class="pmt-cz-out" data-out="bgColor"></output></div></div>' +
-      '<div data-when="gradient" hidden><div class="pmt-cz-tiles pmt-cz-small" role="radiogroup" aria-label="Gradient">' +
-      Object.keys(A().GRADIENTS).map(function (g) { return tile('bgGradient', g, g.charAt(0).toUpperCase() + g.slice(1), '<span class="pmt-cz-gnd" style="background:' + esc(A().GRADIENTS[g]) + '"></span>', ''); }).join('') + '</div></div>' +
-      '<div data-when="image" hidden><div class="pmt-cz-tiles pmt-cz-small" role="radiogroup" aria-label="Picture">' +
-      PICTURES.map(function (p) { return tile('bgImage', p[0], p[1], '<span class="pmt-cz-gnd" data-picture-art="' + p[0] + '"></span>', ''); }).join('') + '</div>' +
-      '<div class="pmt-cz-import"><button type="button" class="pmt-textbtn" data-act="upload"' + tagged('Choose a picture', 'PNG, JPEG or WebP from this computer, under 4 MB') + '>Choose a picture…</button><span class="pmt-cz-fhelp" data-picture-name></span></div>' +
-      '<div class="pmt-cz-grid2">' + slider('bgDim', 'Dimming', 0, 0.9, 0.05, '%') + slider('bgBlur', 'Blur', 0, 24, 1, ' px') + '</div></div>' +
+    /* background (round 2): the look's own picks, then every kind; each tile is this scheme's own version of it */
+    html += '<section class="pmt-cz-group" data-group="ground" aria-labelledby="pmt-cz-g-ground">' + ghead('ground', 'Background', 'Every background is drawn from the colour scheme, so it fits the look, light or dark, and keeps the text readable.') +
+      '<div class="pmt-cz-field pmt-cz-forlook"><span class="pmt-cz-flabel" data-forlook-label>Suggested for this look</span><div class="pmt-cz-tiles pmt-cz-gtiles" role="radiogroup" aria-label="Suggested backgrounds" data-forlook></div>' +
+      '<span class="pmt-cz-fhelp">Suggestions only: every background works in every look. Show lists them all.</span></div>' +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Show</span><div class="pmw-ink-row pmt-cz-gcats" role="tablist" aria-label="Kinds of background" data-seg="groundCat">' +
+      GCATS.map(function (c) { return '<button type="button" class="pmt-cz-segopt pmw-ink-opt" role="tab" aria-selected="false" data-gcat="' + c[0] + '"' + NOTAG + '>' + esc(c[1]) + '</button>'; }).join('') + '</div></div>' +
+      '<div class="pmt-cz-tiles pmt-cz-gtiles" role="radiogroup" aria-label="Backgrounds" data-gtiles></div>' +
+      '<div class="pmt-cz-gctl" data-gctl="solid" hidden><div class="pmt-cz-field"><span class="pmt-cz-flabel">Colour</span><span class="pmt-cz-swatches" data-solid-swatches></span>' +
+      '<input type="color" class="pmt-cz-color" data-key="bgColor" aria-label="Background colour"' + NOTAG + '><output class="pmt-cz-out" data-out="bgColor"></output></div></div>' +
+      '<div class="pmt-cz-gctl" data-gctl="yours" hidden><div class="pmt-cz-import"><button type="button" class="pmt-textbtn" data-act="upload"' + tagged('Choose a picture', 'PNG, JPEG or WebP from this computer, under 4 MB') + '>Choose a picture…</button><span class="pmt-cz-fhelp" data-picture-name></span></div>' +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Fit</span>' + seg('bgFit', [['cover', 'Fill'], ['contain', 'Fit'], ['tile', 'Tile'], ['center', 'Centre']], 'How the picture fits') + '</div>' +
+      '<div class="pmt-cz-grid2">' + slider('bgDim', 'Dim', 0, 0.9, 0.05, '%') + slider('bgBlur', 'Blur', 0, 24, 1, ' px') + slider('bgDesat', 'Less colour', 0, 1, 0.05, '%') + '</div></div>' +
+      '<div class="pmt-cz-gctl" data-gctl="design" hidden><div class="pmt-cz-grid2">' + slider('bgStrength', 'Strength', 0, 1, 0.05, '%') +
+      '<div data-gctl-sub="scene">' + slider('bgBlur', 'Blur', 0, 24, 1, ' px') + '</div></div>' +
+      '<div class="pmt-cz-field" data-gctl-sub="pattern"><span class="pmt-cz-flabel">Size</span>' + seg('bgScale', [['fine', 'Fine'], ['medium', 'Medium'], ['coarse', 'Coarse']], 'Pattern size') + '</div>' +
+      '<div class="pmt-cz-field" data-gctl-sub="moving"><span class="pmt-cz-flabel">Motion</span>' + seg('bgMotion', [['off', 'Still'], ['gentle', 'Gentle'], ['lively', 'Lively']], 'Motion') +
+      '<span class="pmt-cz-fhelp">It moves only while you work in this terminal, and never under Reduced Motion.</span></div></div>' +
       '<div class="pmt-cz-grid2">' + slider('opacity', 'Opacity (Glass)', 0.4, 1, 0.02, '%') + slider('padding', 'Padding', 0, 24, 1, ' px') + '</div>' +
+      '<p class="pmt-cz-fhelp">Padding is the space round the text: the number is the sides, top and bottom take 60 % of it (8 / 5 px).</p>' +
       '<p class="pmt-cz-note" data-note-ground hidden></p></section>';
     /* effects */
     html += '<section class="pmt-cz-group" data-group="effects" aria-labelledby="pmt-cz-g-effects">' + ghead('effects', 'Effects', 'Effects run only in the terminal you are in and stop when it is idle.') +
@@ -277,9 +336,17 @@
         var extra = '';
         if (e.strength) extra = '<div class="pmt-cz-chipmore" data-more="' + e.key + '">' + slider(e.strength[0], 'Strength', e.strength[1], e.strength[2], e.strength[3], e.key === 'flicker' ? '' : '%') + '</div>';
         if (e.key === 'crt') extra = '<div class="pmt-cz-chipmore" data-more="crt">' + slider('curvature', 'Curvature', 0, 0.2, 0.01, '') +
-          '<label class="pmt-cz-mini"><input type="checkbox" data-key="burnIn"' + NOTAG + '><span>Burn-in</span></label>' + slider('noise', 'Grain', 0, 0.12, 0.005, '') + '</div>';
+          '<label class="pmt-cz-mini"><input type="checkbox" data-key="burnIn"' + NOTAG + '><span>Burn-in</span></label>' +
+          '<label class="pmt-cz-mini"><input type="checkbox" data-key="crtMask"' + NOTAG + '><span>Phosphor mask</span></label>' + slider('noise', 'Grain', 0, 0.12, 0.005, '') + '</div>';
         return chip(e.key, e.name, e.help, extra);
-      }).join('') + '</div><p class="pmt-cz-note" data-note-fx hidden></p></section>';
+      }).join('') + '</div>' +
+      /* the bezel: its own choice, with or without Full CRT (round 2) */
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bezel</span>' + seg('bezel', BEZELS, 'Bezel') + '<span class="pmt-cz-fhelp">A monitor housing round the screen that catches the screen’s light, on its own or with Full CRT.</span></div>' +
+      '<div class="pmt-cz-bezelmore" data-bezel-more hidden><div class="pmt-cz-grid2">' + slider('bezelWidth', 'Width', 2, 48, 1, ' px') + slider('bezelReflect', 'Reflection', 0, 1, 0.05, '%') + '</div>' +
+      '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Material</span><div class="pmt-cz-swatches" role="radiogroup" aria-label="Bezel material">' + BEZEL_COLORS.map(function (c) {
+        return '<button type="button" class="pmt-cz-swatch" role="radio" aria-checked="false" data-key="bezelColor" data-value="' + c[0] + '" aria-label="' + esc(c[1]) + '"' + tagged(c[1]) + NOTAG + '><i data-bz="' + c[0] + '"' + (c[2] ? ' style="background:' + c[2] + '"' : '') + '></i></button>';
+      }).join('') + '</div></div></div>' +
+      '<p class="pmt-cz-note" data-note-fx hidden></p></section>';
     /* behaviour */
     html += '<section class="pmt-cz-group" data-group="behavior" aria-labelledby="pmt-cz-g-behavior">' + ghead('behavior', 'Behavior') +
       '<div class="pmt-cz-field"><span class="pmt-cz-flabel">Bell</span>' + seg('bell', [['follow', 'Follow look', 'Look'], ['visual', 'Visual'], ['off', 'Off']], 'Bell') +
@@ -333,12 +400,157 @@
     }
     function put(key, value) { var p = {}; p[key] = value; write(p); }
 
+    /* ---- the background group (round 2): a tile's value is 'follow', 'theme', 'solid', 'custom', 'g:<gradient>' or
+       'i:<picture>'; each tile is drawn in this scope's own scheme, with a line of its text ---- */
+    var gcat = null, gSig = '';
+    /* where the look's own ground is the scheme's own surface (Basic, Glass, Retro, NieR; Friendly has a stage of its own)
+       the two choices draw the same ground, so only Look's own is offered; a saved Theme surface still resolves to that
+       ground and shows as Look's own (coordinator, round 3c) */
+    function ownIsTheme() {
+      var Rf = A().peek({ api: v.api, tabAppearance: { background: 'follow', scheme: val('scheme') }, previewAppearance: null, state: {} }), b = Rf.background || {};
+      return b.kind === 'theme' && !b.css && !b.soft;
+    }
+    function groundNow() {
+      var k = val('background');
+      if (k === 'theme' && ownIsTheme()) return 'follow';
+      if (k === 'gradient') return 'g:' + val('bgGradient');
+      if (k === 'image') { var im = val('bgImage'); return im === 'custom' ? 'custom' : 'i:' + (im === 'paper' ? 'fibre' : im); }
+      return k;
+    }
+    function groundCat(gv) {
+      if (gv === 'follow' || gv === 'theme' || gv === 'solid') return 'plain';
+      if (gv === 'custom') return 'yours';
+      return (T.Grounds && T.Grounds.cat(gv.slice(2))) || 'plain';
+    }
+    function groundPatch(gv) {
+      if (gv === 'follow' || gv === 'theme' || gv === 'solid') return { background: gv };
+      if (gv === 'custom') return { background: 'image', bgImage: 'custom' };
+      var id = gv.slice(2);
+      return gv.charAt(0) === 'g' ? { background: 'gradient', bgGradient: id } : { background: 'image', bgImage: id === 'fibre' ? 'paper' : id };
+    }
+    function chooseGround(gv) {
+      clearTimeout(intent); if (previewing !== null) { previewing = null; A().endPreview(v); }
+      if (gv === 'custom' && !String(val('bgImageData') || '').match(/^img:/)) { gcat = 'yours'; paint(); uploadImage(); return; }
+      write(groundPatch(gv));
+    }
+    /* a tile's picture: the design as this scheme draws it, the look's own ground, or your picture */
+    function groundArt(gv, th) {
+      var G = T.Grounds, hexC = T.color.toHex;
+      if (gv === 'follow') { var Rf = A().peek({ api: v.api, tabAppearance: { background: 'follow', scheme: val('scheme') }, previewAppearance: null, state: {} }); return Rf.background && Rf.background.css ? Rf.background.css : hexC(th.bg); }
+      if (gv === 'theme') return hexC(th.bg);
+      if (gv === 'solid') return val('bgColor') || hexC(th.bg);
+      if (gv === 'custom') { var u = A().imageUrl('custom', val('bgImageData'), 0); return String(val('bgImageData') || '').match(/^img:/) && u ? 'center / cover no-repeat url("' + u + '"), ' + hexC(th.bg) : hexC(th.bg); }
+      var id = gv.slice(2), mot = G.motion(id), painted = G.painted(id);
+      if (painted || mot) {
+        var o = { rowPx: v.metrics ? v.metrics.cellH : 17, tile: true };
+        var base = painted ? G.paint(id, th, 240, 150, o) : mot.under ? G.paint(mot.under, th, 240, 150, o) : null, lay = mot ? G.paint(id, th, 240, 150, o) : null;
+        return (lay ? 'center / cover no-repeat url("' + lay.url + '"), ' : '') + (base ? 'center / cover no-repeat url("' + base.url + '"), ' : '') + hexC(th.bg);
+      }
+      var D = G.css(id, th, { scale: val('bgScale') }); return D ? D.css : hexC(th.bg);
+    }
+    function groundTile(gv, name, th, meta) {
+      var fg = T.color.toHex(th.fg), acc = T.color.toHex(th.palette && th.palette[4] !== undefined ? th.palette[4] : th.fg);
+      return tile('ground', gv, name, '<span class="pmt-cz-gnd" style="background:' + esc(groundArt(gv, th)) + '"><span class="pmt-cz-gline" style="color:' + fg + '"><b style="color:' + acc + '">~/api</b> $ ls</span></span>', meta || '');
+    }
+    function paintGround(R) {
+      var G = T.Grounds, th = R.theme, now = groundNow(), cat0 = groundCat(now);
+      if (!G || !th) return;
+      if (!gcat) gcat = cat0;
+      var sig = [gcat, th.id, th.bg, th.fg, R.lookKey, val('bgScale'), val('bgColor'), val('bgImageData'), val('scheme')].join('|');
+      if (sig !== gSig) {
+        gSig = sig;
+        var fl = ['follow'].concat(G.forLook(R.lookKey).map(function (id) { return (G.isGradient(id) ? 'g:' : 'i:') + id; })).slice(0, 6);
+        root.querySelector('[data-forlook]').innerHTML = fl.map(function (gv) { return groundTile(gv, gv === 'follow' ? 'Look’s own' : G.name(gv.slice(2)), th); }).join('');
+        root.querySelector('[data-forlook-label]').textContent = 'Suggested for ' + (LOOK_NAMES[R.lookKey] || 'this look');
+        var same = ownIsTheme();
+        var tiles = gcat === 'plain' ? PLAIN.filter(function (p) { return !(same && p[0] === 'theme'); }).map(function (p) { return groundTile(p[0], p[1], th); }) :
+          gcat === 'yours' ? [groundTile('custom', 'Your picture', th, A().pictureName(val('bgImageData') || '') || 'Choose one…')] :
+          G.list().filter(function (d) { return gcat === 'all' || (gcat === 'moving' ? d.moving : d.cat === gcat); }).map(function (d) {
+            /* in All, each design says which look suggests it, if one does: a hint, never a limit */
+            var meta = d.moving ? 'Moves' : '';
+            if (gcat === 'all' && d.looks.length) meta = (meta ? meta + ' · ' : '') + d.looks.map(function (l) { return LOOK_NAMES[l] || l; }).join(', ');
+            return groundTile((G.isGradient(d.id) ? 'g:' : 'i:') + d.id, d.name, th, meta);
+          });
+        root.querySelector('[data-gtiles]').innerHTML = tiles.join('');
+        /* solid: the scheme's own, a step deeper and a step softer, then any colour */
+        var C = T.color, sw = [['Scheme', th.bg], ['Deeper', C.mix(th.bg, 0, 0.35)], ['Softer', C.mix(th.bg, th.fg, 0.08)]];
+        root.querySelector('[data-solid-swatches]').innerHTML = sw.map(function (s) {
+          return '<button type="button" class="pmt-cz-swatch" data-solid-color="' + C.toHex(s[1]) + '" aria-label="' + esc(s[0]) + '"' + tagged(s[0]) + NOTAG + '><i style="background:' + C.toHex(s[1]) + '"></i></button>';
+        }).join('');
+      }
+      [].forEach.call(root.querySelectorAll('[data-key="ground"]'), function (b) { setA(b, 'aria-checked', String(b.getAttribute('data-value') === now)); });
+      [].forEach.call(root.querySelectorAll('[data-gcat]'), function (b) { setA(b, 'aria-selected', String(b.getAttribute('data-gcat') === gcat)); });
+      var custom = now === 'custom', design = now.indexOf(':') === 1;
+      root.querySelector('[data-gctl="solid"]').hidden = now !== 'solid';
+      root.querySelector('[data-gctl="yours"]').hidden = !custom;
+      root.querySelector('[data-gctl="design"]').hidden = !design;
+      /* a design's own controls: Blur for painted ones, Size for patterns, Motion for any that moves, whatever its kind */
+      var did = design ? now.slice(2) : '', painted = !!did && G.painted(did), moves = !!did && !!G.motion(did);
+      [].forEach.call(root.querySelectorAll('[data-gctl-sub]'), function (s) { var sub = s.getAttribute('data-gctl-sub');
+        s.hidden = !(sub === 'scene' ? painted || moves : sub === 'moving' ? moves : sub === cat0); });
+      root.querySelector('[data-bezel-more]').hidden = val('bezel') === 'off';
+    }
+
+    /* ---- your presets: listed with their own little picture; saved, renamed and deleted in place ---- */
+    var presetSig = '', renaming = null, undoPreset = null;
+    function paintPresets() {
+      var box = root.querySelector('[data-presets]'), list = A().presets.list(), mineNow = A().presets.capture(scope, v);
+      var sig = JSON.stringify(list) + '|' + renaming + '|' + JSON.stringify(mineNow) + '|' + eff().look.mode + '|' + eff().lookKey;
+      if (sig === presetSig) return;
+      presetSig = sig;
+      box.hidden = !list.length;
+      box.innerHTML = list.map(function (p) {
+        var on = sameFields(mineNow, p.fields), n = Object.keys(p.fields).length;
+        var label = renaming === p.id ? '<input type="text" class="pmt-cz-pname-in" data-rename="' + esc(p.id) + '" value="' + esc(p.name) + '" maxlength="40" autocomplete="off" spellcheck="false" aria-label="New name for ' + esc(p.name) + '"' + NOTAG + '>' :
+          '<span class="pmt-cz-pname">' + esc(p.name) + '</span>';
+        return '<div class="pmt-cz-mycard" data-pid="' + esc(p.id) + '">' +
+          (renaming === p.id ? '<div class="pmt-cz-set pmt-cz-myset">' + presetArt(v, p.fields) + label + '</div>' :
+          '<button type="button" class="pmt-cz-set pmt-cz-myset" aria-pressed="' + on + '" data-preset="' + esc(p.id) + '" data-pmh="tile"' + tagged('Put on ' + p.name, n ? n + (n === 1 ? ' choice' : ' choices') + '; everything else follows the look' : 'Everything follows the look') + '>' +
+            presetArt(v, p.fields) + label + '<small>' + (n ? n + (n === 1 ? ' choice' : ' choices') : 'The look’s own') + '</small></button>') +
+          '<span class="pmt-cz-pacts"><button type="button" class="pmt-pop-x pmt-cz-pact" data-act="preset-rename" data-pid="' + esc(p.id) + '" aria-label="Rename ' + esc(p.name) + '"' + NOTAG + '><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13l.6-2.6L10.5 3.5l2 2-6.9 6.9z M9.4 4.6l2 2"/></svg></button>' +
+          '<button type="button" class="pmt-pop-x pmt-cz-pact" data-act="preset-delete" data-pid="' + esc(p.id) + '" aria-label="Delete ' + esc(p.name) + '"' + NOTAG + '><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></span></div>';
+      }).join('');
+      if (renaming) { var ri = box.querySelector('[data-rename]'); if (ri && document.activeElement !== ri) { ri.focus(); ri.select(); } }
+    }
+    function presetNote(text, undo) {
+      var n = root.querySelector('[data-pnote]');
+      n.hidden = !text;
+      n.innerHTML = text ? esc(text) + (undo ? ' <button type="button" class="pmt-textbtn" data-act="preset-undo"' + NOTAG + '>Undo</button>' : '') : '';
+    }
+    function presetSaveOpen() {
+      var f = root.querySelector('[data-psave]'), i = f.querySelector('[data-pname]'), R = eff();
+      f.hidden = false;
+      i.value = (R.scheme ? R.scheme.name : 'My look') + (R.font && R.font.label ? ' · ' + R.font.label : '');
+      i.focus(); i.select();
+    }
+    function presetSaveClose(focusBtn) { var f = root.querySelector('[data-psave]'); f.hidden = true; if (focusBtn) { var b = root.querySelector('[data-act="preset-save"]'); if (b) b.focus(); } }
+    function presetSave() {
+      var i = root.querySelector('[data-pname]'), p = A().presets.save(i.value, scope, v);
+      presetSaveClose(false);
+      if (!p) { presetNote('This computer could not keep the preset (its storage is full).'); return; }
+      presetNote('Saved “' + p.name + '”. It holds ' + (Object.keys(p.fields).length || 'none of the') + (Object.keys(p.fields).length === 1 ? ' choice.' : ' choices.'));
+      v.announce('Saved the preset ' + p.name);
+      paint();
+      var card = root.querySelector('[data-preset="' + p.id + '"]'); if (card) card.focus();
+    }
+    function presetRenameEnd(commit, refocus) {
+      var ri = root.querySelector('[data-rename]'), id = renaming;
+      renaming = null;
+      if (commit && ri && id) { var p = A().presets.rename(id, ri.value); if (p) v.announce('Renamed to ' + p.name); }
+      presetSig = ''; paint();
+      var card = refocus !== false && id && root.querySelector('[data-preset="' + id + '"]'); if (card) card.focus();
+    }
+
     /* ---- painting: every control shows this scope's value ---- */
     var setA = function (e, n, x) { if (e.getAttribute(n) !== x) e.setAttribute(n, x); };
     function fmt(key, x) {
       if (x === null || x === undefined || x === '') return '';
       if (key === 'lineHeight') return Number(x).toFixed(2) + '×';
-      if (key === 'bgDim' || key === 'opacity' || key === 'scanStrength' || key === 'glowStrength') return Math.round(x * 100) + '%';
+      if (key === 'bgDim' || key === 'opacity' || key === 'scanStrength' || key === 'glowStrength' || key === 'bgStrength' || key === 'bgDesat') return Math.round(x * 100) + '%';
+      if (key === 'bezelWidth') return Math.round(x) + ' px';
+      if (key === 'bezelReflect') return Math.round(x * 100) + '%';
+      /* the number is the sides; top and bottom take 60 % of it (pm7-customizer-audit): both shown, the help says which */
+      if (key === 'padding') return Math.round(x) + ' / ' + Math.round(x * 0.6) + ' px';
       if (key === 'letterSpacing' || key === 'bgBlur' || key === 'padding' || key === 'fontSize') return (Math.round(x * 100) / 100) + ' px';
       if (key === 'flickerAmount') return (Math.round(x * 1000) / 10) + '%';
       return String(Math.round(x * 1000) / 1000);
@@ -356,7 +568,7 @@
       }
       root.classList.toggle('pmt-cz-reduced', !!R.look.reduced);
       /* radios: tiles and segments */
-      [].forEach.call(root.querySelectorAll('[role="radio"][data-key]'), function (b) {
+      [].forEach.call(root.querySelectorAll('[role="radio"][data-key]:not([data-key="ground"])'), function (b) {
         var key = b.getAttribute('data-key'), cur = key === 'scope' ? scope : val(key);
         if (key === 'scheme' && /^follow:/.test(String(cur))) cur = 'follow';
         if (key === 'fontWeight') cur = R.font.weight;
@@ -367,12 +579,17 @@
         schemePair: !!val('schemePair'), ligatures: !!val('ligatures'), boldBright: !!val('boldBright'), cursorBlink: !!val('cursorBlink'),
         stickyHeader: !!val('stickyHeader'), copyOnSelect: !!val('copyOnSelect') };
       if (val('effects') === 'custom' && !R.look.reduced) on.flicker = !!val('flicker');
+      /* ligatures cannot join letters that are spaced apart (canvas text drops them, as CSS does): the chip shows what
+         applies and why, and the choice comes back when the spacing is 0 again (pm7-customizer-audit #2) */
+      var ligPaused = !!val('ligatures') && !!R.font.letterSpacing;
+      if (ligPaused) on.ligatures = false;
       [].forEach.call(root.querySelectorAll('.pmt-cz-chip'), function (c) {
         var key = c.getAttribute('data-key'), o = !!on[key];
         setA(c, 'aria-checked', String(o));
         var st = c.querySelector('.pmt-cz-chipstate'), word = o ? 'On' : 'Off';
         if (fx.off && c.closest('.pmt-cz-fxchips')) word = 'Off · effects off';
         else if (val('effects') === 'follow' && c.closest('.pmt-cz-fxchips')) word += ' · from the look';
+        else if (key === 'ligatures' && ligPaused) word = 'Off while letters are spaced';
         if (st.textContent !== word) st.textContent = word;
         c.classList.toggle('pmt-cz-is-mine', mine(key));
         var box = c.parentNode, more = box.querySelector('.pmt-cz-chipmore'); if (more) more.hidden = !o;
@@ -385,8 +602,14 @@
         if (key === 'lineHeight' && (x === null || x === undefined)) x = R.font.lineHeight;
         if (key === 'opacity' && (x === null || x === undefined)) x = R.theme ? R.theme.bgAlpha : 1;
         if (key === 'sixtyfourScan' || key === 'sixtyfourBleed') x = x === null || x === undefined ? 0 : x;
+        /* a width or a dim left to the style or to Auto shows the value in use */
+        if (key === 'bezelWidth' && (x === null || x === undefined)) x = R.bezel && R.bezel.width ? R.bezel.width : 24;
+        var autoReflect = key === 'bezelReflect' && (x === null || x === undefined);
+        if (autoReflect) x = T.Bezel ? T.Bezel.reflectOf(val('bezelColor'), R.effects ? R.effects.look : 'basic', R.theme && R.theme.appearance === 'light') : 0.3;
+        var autoDim = key === 'bgDim' && (x === null || x === undefined);
+        if (autoDim) x = R.background && typeof R.background.dim === 'number' ? R.background.dim : 0.45;
         if (document.activeElement !== r) r.value = String(x);
-        var out = r.parentNode.querySelector('output'); if (out) out.textContent = fmt(key, Number(r.value));
+        var out = r.parentNode.querySelector('output'); if (out) out.textContent = (autoDim || autoReflect ? 'Auto · ' : '') + fmt(key, Number(r.value));
         r.closest('[data-slider]').classList.toggle('pmt-cz-is-mine', mine(key));
       });
       var fs = root.querySelector('[data-out="fontSize"]'); if (fs) fs.textContent = fmt('fontSize', R.font.size);
@@ -396,7 +619,7 @@
       var bo = root.querySelector('[data-out="bgColor"]'); if (bo) bo.textContent = bgc;
       /* what shows when (SSYS-051's visibility rule, kept for the person's sake: a hidden part keeps its value) */
       var ground = val('background');
-      [].forEach.call(root.querySelectorAll('[data-when]'), function (w) { w.hidden = w.getAttribute('data-when') !== ground; });
+      paintGround(R);
       root.querySelector('[data-slider="opacity"]').hidden = look !== 'glass';
       root.querySelector('[data-axes]').hidden = R.font.id !== 'sixtyfour';
       /* weights the face has */
@@ -413,17 +636,6 @@
       if (fm.textContent !== ftxt) fm.textContent = ftxt;
       var ff = root.querySelector('[data-follow-face]'), lf = A().fontDef(A().LOOKS[look].font);
       if (ff && lf) ff.style.fontFamily = lf.stack;
-      [].forEach.call(root.querySelectorAll('[data-ground-art]'), function (g) {
-        var k = g.getAttribute('data-ground-art'), bgc2 = R.theme ? T.color.toHex(R.theme.bg) : '#222';
-        var css = k === 'solid' ? bgc : k === 'gradient' ? A().GRADIENTS[val('bgGradient')] || A().GRADIENTS.dusk : k === 'image' ? 'center / cover no-repeat url("' + (A().imageUrl(val('bgImage'), val('bgImageData'), 0) || '') + '")' : bgc2;
-        if (k === 'follow' && look === 'friendly') css = 'linear-gradient(180deg, ' + bgc2 + ', color-mix(in srgb, ' + bgc2 + ' 70%, #f6e9f2))';
-        if (g.getAttribute('data-css') !== css) { g.style.background = css; g.setAttribute('data-css', css); }
-      });
-      [].forEach.call(root.querySelectorAll('[data-picture-art]'), function (g) {
-        var k = g.getAttribute('data-picture-art'), u = A().imageUrl(k, k === 'custom' ? val('bgImageData') : null, 0);
-        if (k === 'custom' && !(val('bgImageData') || '').match(/^img:/)) u = '';
-        if (g.getAttribute('data-u') !== u) { g.style.backgroundImage = u ? 'url("' + u + '")' : ''; g.setAttribute('data-u', u); g.classList.toggle('pmt-cz-empty', !u); }
-      });
       var pn = root.querySelector('[data-picture-name]'), pname = A().pictureName(val('bgImageData') || '') || '';
       if (pn.textContent !== pname) pn.textContent = pname;
       /* a face from this computer, named by Settings */
@@ -475,6 +687,7 @@
       var sw = root.querySelector('[data-scope-why]'), swt = scope === 'app' ? (A().settingsReady() ? 'Saved in this project’s Settings' : 'Saved on this computer') : 'Saved with this tab';
       if (sw.textContent !== swt) sw.textContent = swt;
       root.querySelector('.pmt-cz-framelabel').textContent = scope === 'tab' ? 'This terminal' : 'This terminal, like all terminals';
+      paintPresets();
       roving();
       fit(root);
     }
@@ -522,6 +735,7 @@
     function moveInk(key, before) { var row = root.querySelector('[data-seg="' + key + '"]'), now = prevChosen(row); if (inks[key] && before && now && before !== now && !reducedNow()) try { inks[key].move(before, now); } catch (e) {} }
     function choose(b) {
       var key = b.getAttribute('data-key'), raw = b.getAttribute('data-value');
+      if (key === 'ground') { chooseGround(raw); return; }
       var before = prevChosen(b.closest('.pmw-ink-row'));
       if (key === 'scope') {
         if (raw === scope) return;
@@ -567,6 +781,14 @@
       if (b.getAttribute('role') === 'switch') { toggle(b); return; }
       if (b.hasAttribute('data-step')) { var R = eff(); put('fontSize', T.util.clamp(R.font.size + parseFloat(b.getAttribute('data-step')), 8, 32)); return; }
       if (b.hasAttribute('data-set')) { quickSet(b.getAttribute('data-set')); return; }
+      if (b.hasAttribute('data-gcat')) { gcat = b.getAttribute('data-gcat'); gSig = ''; paint(); return; }
+      if (b.hasAttribute('data-solid-color')) { write({ background: 'solid', bgColor: b.getAttribute('data-solid-color') }); return; }
+      if (b.getAttribute('data-key') === 'ground') { chooseGround(b.getAttribute('data-value')); return; }
+      if (b.hasAttribute('data-preset')) {
+        var pid = b.getAttribute('data-preset'), pp = A().presets.list().filter(function (x) { return x.id === pid; })[0];
+        if (pp && A().presets.apply(pid, scope, v)) { syncPreview(); paint(); presetNote(''); v.announce(pp.name + (scope === 'tab' ? ' is on this terminal' : ' is on all terminals')); }
+        return;
+      }
       if (b.hasAttribute('data-jump')) { var g = root.querySelector('[data-group="' + b.getAttribute('data-jump') + '"]'); if (g) { g.scrollIntoView({ block: 'start', behavior: reducedNow() ? 'auto' : 'smooth' }); var h = g.querySelector('h3'); if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); } } return; }
       var act = b.getAttribute('data-act');
       if (act === 'close') close();
@@ -577,6 +799,17 @@
       else if (act === 'try-cursor') { if (preview) preview.moveCursor(); }
       else if (act === 'try-bell') { if (preview) preview.ring(); }
       else if (act === 'try-dim') { if (preview) preview.dim(); }
+      else if (act === 'preset-save') presetSaveOpen();
+      else if (act === 'preset-cancel') presetSaveClose(true);
+      else if (act === 'preset-rename') { renaming = b.getAttribute('data-pid'); presetSig = ''; paint(); }
+      else if (act === 'preset-delete') {
+        var did = b.getAttribute('data-pid'), all = A().presets.list(), at = -1;
+        all.forEach(function (x, i) { if (x.id === did) at = i; });
+        if (at >= 0 && A().presets.remove(did)) { undoPreset = { entry: all[at], at: at }; presetNote('Deleted “' + all[at].name + '”.', true); paint(); var u = root.querySelector('[data-act="preset-undo"]'); if (u) u.focus(); }
+      }
+      else if (act === 'preset-undo') {
+        if (undoPreset) { A().presets.restore(undoPreset.entry, undoPreset.at); v.announce('Restored ' + undoPreset.entry.name); undoPreset = null; presetNote(''); paint(); }
+      }
       else if (act === 'import') importScheme();
       else if (act === 'upload') uploadImage();
     });
@@ -621,21 +854,40 @@
     var INTENT_MS = 110, intent = 0, previewing = null, pairNote = '';
     function previewSoon(tileEl, ms) {
       clearTimeout(intent);
-      var id = tileEl.getAttribute('data-value');
-      if (previewing === id) return;
+      var id = tileEl.getAttribute('data-value'), isGround = tileEl.getAttribute('data-key') === 'ground', pid = (isGround ? 'ground:' : '') + id;
+      if (previewing === pid) return;
+      /* your picture is shown only once there is one */
+      if (isGround && id === 'custom' && !String(val('bgImageData') || '').match(/^img:/)) return;
       intent = setTimeout(function () {
         if (!root.isConnected || v.pop !== root) return;
-        previewing = id; v.recolorFrom.apply(v, centre(tileEl));
-        A().preview(v, { scheme: id }); syncPreview();
+        previewing = pid; v.recolorFrom.apply(v, centre(tileEl));
+        A().preview(v, isGround ? groundPatch(id) : { scheme: id }); syncPreview();
       }, ms);
     }
     function endPreview() { clearTimeout(intent); if (previewing === null) return; previewing = null; A().endPreview(v); syncPreview(); }
     var schemesEl = root.querySelector('.pmt-cz-schemes');
     schemesEl.addEventListener('mouseover', function (e) { var o = e.target.closest('.pmt-cz-scheme'); if (o) previewSoon(o, INTENT_MS); });
     schemesEl.addEventListener('mouseleave', function () { endPreview(); });
+    /* backgrounds preview the same way: hover one and the terminal and the preview show it; leave and it goes back */
+    [].forEach.call(root.querySelectorAll('[data-forlook], [data-gtiles]'), function (box) {
+      box.addEventListener('mouseover', function (e) { var o = e.target.closest('[data-key="ground"]'); if (o) previewSoon(o, INTENT_MS); });
+      box.addEventListener('mouseleave', function () { endPreview(); });
+    });
     /* keyboard: Escape closes, Tab stays inside, arrows move within a group of tiles or a segment (choosing, as radios
        do; in the schemes they preview, and Enter or Space keeps one) */
+    /* naming a preset: Enter keeps it, Escape leaves it (and not the screen) */
+    root.querySelector('[data-psave]').addEventListener('submit', function (e) { e.preventDefault(); presetSave(); });
+    /* leaving the name field keeps the name typed (Enter and Escape have already ended it by then) */
+    root.addEventListener('focusout', function (e) {
+      if (e.target.hasAttribute && e.target.hasAttribute('data-rename')) setTimeout(function () { if (renaming) presetRenameEnd(true, false); }, 0);
+    });
     root.addEventListener('keydown', function (e) {
+      var tg = e.target;
+      if (tg && tg.hasAttribute && tg.hasAttribute('data-rename')) {
+        if (e.key === 'Enter') { e.preventDefault(); e.stopPropagation(); presetRenameEnd(true); return; }
+        if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); presetRenameEnd(false); return; }
+      }
+      if (tg && tg.hasAttribute && tg.hasAttribute('data-pname') && e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); presetSaveClose(true); return; }
       if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); if (previewing !== null) { endPreview(); return; } close(); return; }
       if (e.key === 'Tab') {
         var items = [].filter.call(dialog.querySelectorAll('button, input, select, textarea, [tabindex]'), function (x) {
