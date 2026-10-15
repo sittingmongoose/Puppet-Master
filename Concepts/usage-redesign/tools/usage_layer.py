@@ -106,14 +106,14 @@ def nier_selector_patches(names: dict | None = None) -> list[tuple[str, str, str
     names = NIER_NAMES if names is None else names
     out = []
     if names.get('cursor'):
-        old = "'.pm51-menu-item', '.pm7u-navbtn', '.pm7u-poprow',"
-        out.append((old, old[:-1] + ', ' + ', '.join(f"'{s}'" for s in names['cursor']) + ',', 'nier cursor list'))
+        old = "'.pm51-menu-item',"
+        out.append((old, old + ' ' + ', '.join(f"'{s}'" for s in names['cursor']) + ',', 'nier cursor list'))
     if names.get('chosen'):
-        old = '.orch-tab, .pm7u-navbtn, .domain-link'
-        out.append((old, '.orch-tab, .pm7u-navbtn, ' + ', '.join(names['chosen']) + ', .domain-link', 'nier chosen list'))
+        old = '.orch-tab, .domain-link'
+        out.append((old, '.orch-tab, ' + ', '.join(names['chosen']) + ', .domain-link', 'nier chosen list'))
     if names.get('strip'):
-        old = ".pm6-tt-mode, .pm7u-range button';"
-        out.append((old, '.pm6-tt-mode, .pm7u-range button, ' + ', '.join(names['strip']) + "';", 'nier strip list'))
+        old = ".pm6-tt-mode';"
+        out.append((old, '.pm6-tt-mode, ' + ', '.join(names['strip']) + "';", 'nier strip list'))
     if names.get('titles'):
         old = "usage: '#pm7uRoomTitle, .pm7u-brand h1',"
         out.append((old, "usage: '" + ', '.join(names['titles']) + "',", 'nier page titles'))
