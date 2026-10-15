@@ -1,16 +1,16 @@
 {
  "thread": "pm7-editor-customizer",
  "branch": "concept/pm7-editor-customizer-20261014",
- "base": "cae30c7f2d (origin/main, round 2 rebase; round 1 was on b94e6183b1)",
- "source_head": "a9a256d090",
- "branch_head_with_pages": "ac01586f54 (this report is committed after it)",
+ "base": "cae30c7f2d (round 2 rebase); merged main 747b3b1407 and fbc3871593 (M4) in round 4, build.py keeping both sides",
+ "source_head": "0475f5713f",
+ "branch_head_with_pages": "0475f5713f (this report is committed after it)",
  "landed": false,
- "published_page_sha256": "9757d3b5e1d64fa0dbd1804a5f26776341a40b015c48b943bf4cb7d1f4790ad9",
+ "published_page_sha256": "a86f94f0e6e8518d6c0561a0a6600aecb737028c98e41e137c952b0ceec3288a",
  "generated_pages_sha256": {
-  "PMConcept7.html": "9757d3b5e1d64fa0dbd1804a5f26776341a40b015c48b943bf4cb7d1f4790ad9",
-  "HomeTestPMConcept7.html": "9757d3b5e1d64fa0dbd1804a5f26776341a40b015c48b943bf4cb7d1f4790ad9",
-  "LeftRailPMConcept7.html": "eaff7106ca75a9268fc44481f9a1675cac3909bd09a113cd7dbccfdd38504b11",
-  "Onboarding concepts/TestOpus5.5PmConcept.html": "9757d3b5e1d64fa0dbd1804a5f26776341a40b015c48b943bf4cb7d1f4790ad9"
+  "PMConcept7.html": "a86f94f0e6e8518d6c0561a0a6600aecb737028c98e41e137c952b0ceec3288a",
+  "HomeTestPMConcept7.html": "a86f94f0e6e8518d6c0561a0a6600aecb737028c98e41e137c952b0ceec3288a",
+  "LeftRailPMConcept7.html": "c89b169bd7fc4bb5525f48ca72245661af2991acfb4d63fea33ab89283f6964f",
+  "Onboarding concepts/TestOpus5.5PmConcept.html": "a86f94f0e6e8518d6c0561a0a6600aecb737028c98e41e137c952b0ceec3288a"
  },
  "generators": [
   "Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7",
@@ -143,5 +143,75 @@
   },
   "regressions": "journeys, indentation, audit defects, auto-save, tab caps, matrix retro-dark/glass-light both scopes (480 cases, 0 failing), round 2 checks: pass",
   "film": "share films/9-show-spaces-clip.mp4 (25 s) and 9-show-spaces.mp4 (80 s), P1000 1080p60"
+ },
+ "round4": {
+  "blockers": "landing QA EC-01 to EC-13 (pm7-editor-customizer-landing, QA.md), all fixed as ruled; EC-11 listed (pre-existing on main)",
+  "extra_fixes_from_pixel_pass": {
+   "friendly_light_kicker": "3.21 -> accent ink",
+   "nier_dark_hovered_meta": "3.41 -> full ink",
+   "retro_dark_terminal_branch_name": "3.84 as drawn -> 4.59 (floor 5.43 under scanlines and glow)"
+  },
+  "audit_items": [
+   "E-DEMO",
+   "E-DIM",
+   "E-TABS",
+   "E-TOK (incl. JavaScript quoted-string escapes)"
+  ],
+  "sol_evidence_gaps": [
+   "Current line choice drops the preview selection",
+   "Smooth scrolling choice plays a preview jump",
+   "the editor beside an open Customize screen draws its caret and current line"
+  ],
+  "contrast": {
+   "pages": {
+    "full_sweep": "20fe7aec3de5514f",
+    "final_page_pass": "cb1e07dc7459e4c3",
+    "final": "a86f94f0e6e8518d"
+   },
+   "confirmed_below_floor_customizer": 0,
+   "exempt": "scheme thumbnails (aria-hidden pictures; names read 4.5)",
+   "lowest_per_look": {
+    "basic-dark": 4.51,
+    "basic-light": 4.51,
+    "friendly-dark": 4.65,
+    "friendly-light": 4.55,
+    "glass-dark": 4.81,
+    "glass-light": 4.5,
+    "nier-dark": 4.53,
+    "nier-light": 4.5,
+    "retro-dark": 4.59,
+    "retro-light": 4.51
+   },
+   "method": "landing harness (pixel-confirmed) plus every unconfirmed estimate measured from pixels and the terminal measured as drawn; see CONTRAST.md"
+  },
+  "settings_ec11": "every confirmed Settings row under 4.5 on the final page fails identically on main fbc3871593; listed in CONTRAST.md, not fixed (no file this branch touches)",
+  "functional": "20/20 (2 NieR motion cases passed alone on the final page after out-of-step runs under load)",
+  "selectors": "20/20, 3,056 measurements",
+  "glass_edges": "pass (4 cases, 93 controls)",
+  "probes": {
+   "current_line_preview_distinct": true,
+   "smooth_scroll_preview_in_between_on": "11-12",
+   "smooth_scroll_preview_in_between_off": 0,
+   "real_caret_widths_px": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "tokens_rust_js": true,
+   "demos": true,
+   "tabs": true,
+   "beside_editor_caret_and_band": true
+  },
+  "films": {
+   "host": "Mac GPU, 1080p60 H.264",
+   "files": [
+    "10-current-line.mp4",
+    "11-smooth-scrolling.mp4",
+    "12-line-width.mp4"
+   ]
+  },
+  "evidence": "/mnt/Cursor/PuppetMaster-Evidence/tests/pm7-editor-customizer-20261014/round4/",
+  "landing_note": "remove the 31 editor IDs from CONCEPT_PENDING_ROWS in build.py at landing"
  }
 }
