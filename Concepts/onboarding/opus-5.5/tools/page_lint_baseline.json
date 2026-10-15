@@ -6,10 +6,11 @@
     "html_rooted_has": 17,
     "important": 4395
   },
-  "note": "Measured on the built page's stylesheets. page-wide * selectors and html-rooted :has() selectors are both 17, the same as the 2026-10-14 assessment. !important, with comments removed, is 4409. The assessment recorded 4395; this page is newer, so the ratchet uses 4409. Counting !important inside comments as well would be 4445, and the whole HTML file contains 4460.",
+  "baseline_revision": "98229e9d6d4efe4be51f687bcab3d47e2cf25704",
+  "note": "Counts are from origin/main Concepts/PMConcept7.html at 98229e9d6d (combined drag-and-drop), measured with build.py page_lint_counts: 17 page-wide * selectors, 17 html-rooted :has() selectors, and 4410 !important with comments removed. The 2026-10-14 assessment recorded 4395. The branch base before shell polish measured 4409. Shell polish on main added one, so the ratchet uses main's 4410. One further declaration fails. A smaller count stays allowed.",
   "counts": {
     "page_wide_star": 17,
     "html_rooted_has": 17,
-    "important": 4409
+    "important": 4410
   }
 }
