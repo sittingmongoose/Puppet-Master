@@ -252,12 +252,13 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # stacked and narrow rows, look variants and reduced motion; the same account controls on a hosted board) = 2,675, plus
 # the room change's own moment (2026-10-14, Jared #3, 05-film.css: the retired flyers' 9 rules out, Glass's lens rim and
 # NieR's glitch in; a hosted board makes neither: the lens rim is made only for the Usage board's room change and the
-# glitch only in #pmuStage) = 2,670. A Usage CSS
+# glitch only in #pmuStage) = 2,670, plus Friendly Dark's own Live control pulse ink (2026-10-15, Friendly's lavender
+# key light; the Live control is the same on a hosted board) = 2,671. A Usage CSS
 # edit that adds or removes an anchored rule moves 'rewritten': look at what the new rules style (a hosted board gets
 # them too), then re-pin the number here. Any other use of #panel-usage (a child or sibling combinator, a rule for the
 # panel itself, an anchor outside a selector) stops the build: it would be Usage-only, or not a selector, without
 # saying so.
-HOST_SCOPE_EXPECT = {'rewritten': 2670, 'compound': 1}
+HOST_SCOPE_EXPECT = {'rewritten': 2671, 'compound': 1}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 
