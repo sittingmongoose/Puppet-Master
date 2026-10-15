@@ -20,6 +20,7 @@
 
 var doc = document;
 var EDITORS = [];            // live instances (font loads and settings re-measure them)
+var lastUsed = null;         // the editor instance the person last typed or clicked in (Customize from Settings opens on it)
 var untitledSeq = 0;
 
 /* ---- small DOM helpers ---- */
@@ -78,16 +79,28 @@ var JS_KW = 'import export from as default const let var function return if else
   'instanceof void delete this super null undefined true false static readonly declare';
 var JS_ROOT = [
   [/\/\/.*/y, 'com'], [/\/\*/y, 'com', 'jsCom'], [/`/y, 'str', 'jsTpl'],
-  [/"(?:[^"\\]|\\.)*"?/y, 'str'], [/'(?:[^'\\]|\\.)*'?/y, 'str'],
+  [/["']$/y, 'str'], [/"/y, 'str', 'jsDq'], [/'/y, 'str', 'jsSq'],
   [W(JS_KW), 'kw'], [W('string number boolean any unknown never object'), 'ty'],
   [/0[xX][\da-fA-F_]+n?|\d[\d_]*(?:\.\d[\d_]*)?(?:[eE][+-]?\d+)?n?/y, 'num'],
-  [/[A-Z][\w$]*/y, 'ty'], [/[a-z_$][\w$]*(?=\s*\()/y, 'fn'], [/[A-Za-z_$][\w$]*/y, null],
+  [/[A-Z][\w$]*/y, 'ty'], [/[a-z_$][\w$]*(?=\s*\()/y, 'fn'],
+  // a name bound by const, let or var is a variable; a name after one dot (or ?.) is a property (the customizer audit's
+  // E-TOK: Variables and Properties reached none of their advertised examples)
+  [/(?<=\b(?:const|let|var)\s+)[A-Za-z_$][\w$]*/y, 'var'], [/(?<=(?:^|[^.])\.)[A-Za-z_$][\w$]*/y, 'prop'], [/[A-Za-z_$][\w$]*/y, null],
   [/=>|\?\.|\.\.\.|[{}()\[\];,.:]/y, 'pun'], [/[=+\-*\/%<>!&|^?~@]+/y, 'op'], WS
 ];
+function jsQuoted(q) {
+  var esc = '\\\\(?:x[\\da-fA-F]{2}|u\\{[\\da-fA-F]+\\}|u[\\da-fA-F]{4}|.)', body = '[^' + q + '\\\\]+';
+  return [[new RegExp(q, 'y'), 'str', '@pop'], [new RegExp(esc + '$', 'y'), 'esc', '@pop'], [new RegExp(esc, 'y'), 'esc'],
+    [/\\$/y, 'esc'], [new RegExp(body + '$', 'y'), 'str', '@pop'], [new RegExp(body, 'y'), 'str']];
+}
 var JS = {
   root: JS_ROOT,
   jsCom: [[/.*?\*\//y, 'com', '@pop'], [/.+/y, 'com']],
   jsTpl: [[/\\./y, 'esc'], [/\$\{/y, 'pun', 'jsExpr'], [/`/y, 'str', '@pop'], [/[^`\\$]+/y, 'str'], [/\$/y, 'str']],
+  // a quoted string's escapes are their own kind (\n, \x7f, \u00e9, \u{1F600}), as in Rust; the string ends with its line
+  // unless the line ends in a backslash (the customizer audit's E-TOK: Escapes reached no JavaScript example)
+  jsDq: jsQuoted('"'),
+  jsSq: jsQuoted("'"),
   jsExpr: [[/\}/y, 'pun', '@pop'], [/\{/y, 'pun', 'jsExpr']].concat(JS_ROOT)
 };
 
@@ -95,18 +108,21 @@ var RUST = {
   root: [
     [/\/\/.*/y, 'com'], [/\/\*/y, 'com', 'rsCom'],
     [/b?r(#*)"/y, 'str', 'rsRaw'],
-    [/b?"(?:[^"\\]|\\.)*"/y, 'str'], [/b?"(?:[^"\\]|\\.)*$/y, 'str', 'rsStr'],
+    [/b?"/y, 'str', 'rsStr'],
     [/b?'(?:[^'\\]|\\.(?:\{[\da-fA-F]+\})?)'/y, 'str'], [/'[a-z_]\w*/y, 'mac'],
     [/#!?\[[^\]]*\]?/y, 'attr'], [/[a-z_]\w*!/y, 'mac'],
     [W('as async await break const continue crate dyn else enum extern false fn for if impl in let loop match mod move ' +
       'mut pub ref return self Self static struct super trait true type unsafe use where while'), 'kw'],
     [W('u8 u16 u32 u64 u128 usize i8 i16 i32 i64 i128 isize f32 f64 bool char str'), 'ty'],
     [/0x[\da-fA-F_]+|\d[\d_]*(?:\.\d[\d_]*)?(?:[eE][+-]?\d+)?(?:[iuf](?:8|16|32|64|128|size))?/y, 'num'],
-    [/[A-Z][A-Za-z0-9_]*/y, 'ty'], [/[a-z_]\w*(?=\s*(?:::<[^>]*>)?\()/y, 'fn'], [/[A-Za-z_]\w*/y, null],
+    [/[A-Z][A-Za-z0-9_]*/y, 'ty'], [/[a-z_]\w*(?=\s*(?:::<[^>]*>)?\()/y, 'fn'],
+    [/(?<=\blet\s+(?:mut\s+)?)[a-z_]\w*/y, 'var'], [/(?<=\|\s*(?:[a-z_]\w*\s*,\s*)*)[a-z_]\w*(?=\s*[,|:])/y, 'var'],
+    [/(?<=(?:^|[^.])\.)[a-z_]\w*/y, 'prop'], [/[A-Za-z_]\w*/y, null],
     [/::|->|=>|[{}()\[\];,.:]/y, 'pun'], [/[=+\-*\/%<>!&|^?@]+/y, 'op'], WS
   ],
   rsCom: [[/.*?\*\//y, 'com', '@pop'], [/.+/y, 'com']],
-  rsStr: [[/(?:[^"\\]|\\.)*"/y, 'str', '@pop'], [/.+/y, 'str']],
+  // a string's escapes are their own kind (\n, \x7f, \u{1F600}); a string runs on over lines until its quote
+  rsStr: [[/\\(?:x[\da-fA-F]{2}|u\{[\da-fA-F]+\}|.)/y, 'esc'], [/\\/y, 'esc'], [/"/y, 'str', '@pop'], [/[^"\\]+/y, 'str']],
   rsRaw: [[/.*?"#*/y, 'str', '@pop'], [/.+/y, 'str']]
 };
 
@@ -154,7 +170,7 @@ function markup(svelte) {
     st.mkScript = [[/<\/script>/y, 'tag', '@pop'], [/\/\*/y, 'com', 'jsCom'], [/`/y, 'str', 'jsTpl']].concat(JS_ROOT);
     st.mkStyleTag = [[/>/y, 'tag', '@swap:mkStyle']].concat(attrs);
     st.mkStyle = [[/<\/style>/y, 'tag', '@pop']].concat(CSS.root);
-    st.jsCom = JS.jsCom; st.jsTpl = JS.jsTpl; st.jsExpr = JS.jsExpr;
+    st.jsCom = JS.jsCom; st.jsTpl = JS.jsTpl; st.jsExpr = JS.jsExpr; st.jsDq = JS.jsDq; st.jsSq = JS.jsSq;
     st.cssBlock = CSS.cssBlock; st.cssCom = CSS.cssCom;
   }
   return st;
@@ -324,7 +340,36 @@ var BINARY = {
 };
 var DOCS = {};           // path -> doc (one per path, shared, kept for the session so a reopened file keeps its edits)
 
-function splitLines(text) { return String(text == null ? '' : text).replace(/\r\n?/g, '\n').replace(/\t/g, '    ').split('\n'); }
+/* the buffer holds no tab: a tab opens (and pastes) as spaces to the next tab stop of the tab size, from col */
+function expandTabs(l, unit, col) {
+  if (l.indexOf('\t') < 0) return l;
+  var out = '', c = col || 0;
+  for (var i = 0; i < l.length; i++) {
+    var ch = l.charAt(i);
+    if (ch === '\t') { var n = unit - ((c + out.length) % unit); out += '        '.slice(0, n); } else out += ch;
+  }
+  return out;
+}
+function expandText(t, unit, col) { return String(t).replace(/\r\n?/g, '\n').split('\n').map(function (l, i) { return expandTabs(l, unit, i ? 0 : col); }).join('\n'); }
+function splitLines(text, unit) { return expandText(text == null ? '' : text, unit || 4, 0).split('\n'); }
+/* a file indented with tabs (any line that starts with one), read before they become spaces */
+function tabbedText(text) { return /(^|\n)\t/.test(String(text == null ? '' : text)); }
+/* how wide a level of this file's own indentation is: the step between one line's indentation and the next that
+   occurs most (2, 4 or 8 spaces), or 0 when the file has too little indentation to tell */
+function guessIndent(lines) {
+  var n = { 2: 0, 4: 0, 8: 0 }, prev = 0, seen = 0;
+  for (var i = 0; i < lines.length && i < 4000; i++) {
+    var t = lines[i] || '';
+    if (!/\S/.test(t)) continue;
+    var w = indentCols(t), dl = Math.abs(w - prev);
+    if (dl === 2 || dl === 4 || dl === 8) { n[dl]++; seen++; }
+    prev = w;
+  }
+  if (seen < 2) return 0;
+  var best = 4;
+  [2, 4, 8].forEach(function (k) { if (n[k] > n[best]) best = k; });
+  return n[best] ? best : 0;
+}
 
 function newDoc(o) {
   var d = {
@@ -389,6 +434,7 @@ function scheduleTokens(d) {
 }
 function invalidateTokens(d, line, removed, inserted) {
   d.guess = {};
+  if (d.bst && d.bst.length > line + 1) d.bst.length = line + 1;   // bracket stacks after the edit are computed again
   // keep the cache arrays aligned with the lines, then re-tokenize from `line` until the end state matches again
   var oldFrom = d.tokFrom, k, nulls = [], ends = [];
   for (k = 0; k < inserted; k++) { nulls.push(null); ends.push('\u0000'); }
@@ -677,7 +723,8 @@ var SHADOW_CSS = [
   '.pmw-ed-row.is-conf .pmw-ed-gut { background: linear-gradient(var(--pmw-ed-conf-bg), var(--pmw-ed-conf-bg)), var(--pmw-ed-gutbg); }',
   '.pmw-ed-row.is-del .pmw-ed-gut, .pmw-ed-half.is-del .pmw-ed-gut { background: linear-gradient(var(--pmw-ed-del-bg), var(--pmw-ed-del-bg)), var(--pmw-ed-gutbg); }',
   '.pmw-ed-ln { flex: none; width: var(--pmw-ed-lnw, 40px); box-sizing: border-box; padding-right: 6px; text-align: right; color: var(--pmw-ed-ln); font-size: max(11px, calc(var(--pmw-ed-fs, 13px) - 1px)); font-variant-numeric: tabular-nums; }',
-  '.pmw-ed-ln.is-old { opacity: .78; }',
+  // an old side's number is quieter by size, never by fading under the 4.5:1 floor (landing QA EC-08)
+  '.pmw-ed-ln.is-old { font-size: max(10.5px, calc(var(--pmw-ed-fs, 13px) - 2px)); }',
   '.pmw-ed-row.is-cur .pmw-ed-ln { color: var(--pmw-ed-ln-cur); }',
   '.pmw-ed-sg { position: relative; flex: none; width: 16px; text-align: center; font-weight: 700; color: var(--pmw-ed-ln); }',
   '.pmw-ed-row.is-add .pmw-ed-sg, .pmw-ed-half.is-add .pmw-ed-sg { color: var(--pmw-ed-sg-ink, var(--pmw-ed-add-fg)); background: var(--pmw-ed-sg-fill-add, transparent); }',
@@ -693,6 +740,31 @@ var SHADOW_CSS = [
   '.pmw-ed-row.has-del::after { top: 0; }',
   '.pmw-ed-row.has-del-end::after { bottom: 0; }',
   '.pmw-ed-tx { flex: none; padding-left: 10px; color: var(--pmw-ed-fg); }',
+  /* a wrapped line: its pieces one under the other, each a row high (the pieces after the first carry its indent) */
+  '.pmw-ed-tx.is-wrap { display: flex; flex-direction: column; min-width: 0; }',
+  '.pmw-ed-piece { display: block; height: var(--pmw-ed-lh); }',
+  /* indent guides behind the text (one background per row, 10-editor.js guideImage) */
+  '.pmw-ed-ig { position: absolute; top: 0; bottom: 0; z-index: -1; pointer-events: none; }',
+  /* bracket pair colours, depth by depth; a closing bracket with no opener of its kind in the error colour */
+  '.pmw-ed-t-b0 { color: var(--pmw-ed-bp-0); } .pmw-ed-t-b1 { color: var(--pmw-ed-bp-1); } .pmw-ed-t-b2 { color: var(--pmw-ed-bp-2); }',
+  '.pmw-ed-t-b3 { color: var(--pmw-ed-bp-3); } .pmw-ed-t-b4 { color: var(--pmw-ed-bp-4); } .pmw-ed-t-b5 { color: var(--pmw-ed-bp-5); }',
+  '.pmw-ed-t-bx { color: var(--pmw-ed-bp-bad, var(--pmw-bad)); text-decoration: underline wavy; text-decoration-skip-ink: none; text-underline-offset: 3px; }',
+  /* spaces shown as faint dots (Show spaces); in the selection they are drawn over it */
+  '.pmw-ed-t-ws, .pmw-ed-wsdots { color: var(--pmw-ed-ws); }',
+  '.pmw-ed-wsdots { position: absolute; height: var(--pmw-ed-lh); white-space: pre; pointer-events: none; }',
+  /* glow (Text glow): each token in its own colour */
+  ':host([data-glow]) .pmw-ed-tx { text-shadow: 0 0 .32em color-mix(in srgb, currentColor 58%, transparent), 0 0 1px color-mix(in srgb, currentColor 40%, transparent); }',
+  /* rulers and the active indent guide, under the rows */
+  '.pmw-ed-rulers { position: absolute; inset: 0; pointer-events: none; }',
+  '.pmw-ed-ruler { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--pmw-ed-ruler); }',
+  '.pmw-ed-aguide { position: absolute; width: 1px; background: var(--pmw-ed-ag, var(--pmw-ed-guide-active)); pointer-events: none; }',
+  '.pmw-ed-aguide[hidden] { display: none; }',
+  /* problems: a wavy line under the named word, in the severity's colour */
+  '.pmw-ed-diags { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }',
+  '.pmw-ed-diag { position: absolute; height: var(--pmw-ed-lh); pointer-events: none; }',
+  '.pmw-ed-diag::after { content: ""; position: absolute; left: 0; right: 0; bottom: 1px; height: 4px; background: var(--pmw-ed-dc); -webkit-mask: var(--pmw-ed-wave) 0 0 / 6px 4px repeat-x; mask: var(--pmw-ed-wave) 0 0 / 6px 4px repeat-x; }',
+  '.pmw-ed-diag.is-error { --pmw-ed-dc: var(--pmw-ed-diag-error); } .pmw-ed-diag.is-warn { --pmw-ed-dc: var(--pmw-ed-diag-warn); } .pmw-ed-diag.is-info { --pmw-ed-dc: var(--pmw-ed-diag-info); }',
+  ':host([data-look="retro"]) .pmw-ed-diag::after, :host([data-look="nier"]) .pmw-ed-diag::after { -webkit-mask: none; mask: none; height: 2px; background: repeating-linear-gradient(90deg, var(--pmw-ed-dc) 0 3px, transparent 3px 5px); }',
   '.pmw-ed-t-kw { color: var(--pmw-ed-s-kw); font-weight: var(--pmw-ed-kw-weight, 400); }',
   '.pmw-ed-t-str { color: var(--pmw-ed-s-str); }',
   '.pmw-ed-t-com { color: var(--pmw-ed-s-com); font-style: var(--pmw-ed-com-style, italic); }',
@@ -722,6 +794,8 @@ var SHADOW_CSS = [
   '@keyframes pmw-ed-reveal { from { opacity: 0; transform: translateX(-4px); } to { opacity: 1; transform: none; } }',
   '.pmw-ed-row.is-reveal { animation: pmw-ed-reveal 150ms cubic-bezier(.2, .8, .2, 1) both; }',
   '.pmw-ed-curline, .pmw-ed-focus { position: absolute; left: 0; right: 0; height: var(--pmw-ed-lh); }',
+  /* Highlight the current line: Line only and Off keep the caret line's number like the others */
+  ':host([data-curline="line"]) .pmw-ed-row.is-cur .pmw-ed-ln, :host([data-curline="off"]) .pmw-ed-row.is-cur .pmw-ed-ln { color: var(--pmw-ed-ln); }',
   '.pmw-ed-curline { background: var(--pmw-ed-line); }',
   '.pmw-ed-focus { background: var(--pmw-ed-focus-bg); transition: opacity 600ms ease-out; }',
   '.pmw-ed-focus.is-fading { opacity: 0; }',
@@ -730,8 +804,37 @@ var SHADOW_CSS = [
   ':host(:not(:focus)) .pmw-ed-sel { background: var(--pmw-ed-sel-blur); }',
   '.pmw-ed-hit { position: absolute; height: var(--pmw-ed-lh); background: var(--pmw-ed-hit); border-radius: var(--pmw-ed-r2, 2px); }',
   '.pmw-ed-hit.is-cur { background: var(--pmw-ed-hit-cur); outline: 1px var(--pmw-ed-ring-style, solid) var(--pmw-ed-hit-ring); outline-offset: 0; }',
-  '.pmw-ed-caret { position: absolute; left: 0; top: 0; width: var(--pmw-ed-caret-w, 2px); height: var(--pmw-ed-lh); background: var(--pmw-ed-caret); border-radius: var(--pmw-ed-r1, 1px); }',
-  '.pmw-ed-caret.is-blink { animation: pmw-ed-blink 1.06s steps(1, end) .5s infinite; }',
+  /* the caret: a box at the caret (moved by transform, which Caret movement glides) drawing its shape in ::before and,
+     as a block, the character under it in ::after. Blink: on and off, a fade, or growing from its middle */
+  '.pmw-ed-caret { position: absolute; left: 0; top: 0; width: var(--pmw-ed-caret-w, 2px); height: var(--pmw-ed-lh); }',
+  '.pmw-ed-caret::before { content: ""; position: absolute; inset: 0; background: var(--pmw-ed-caret); border-radius: var(--pmw-ed-r1, 1px); }',
+  ':host([data-caret="underline"]) .pmw-ed-caret::before { top: auto; height: 2px; bottom: 1px; border-radius: 0; }',
+  ':host([data-caret="block"]) .pmw-ed-caret::before { border-radius: var(--pmw-ed-r1, 1px); }',
+  ':host([data-caret="block"]) .pmw-ed-caret::after { content: attr(data-ch); position: absolute; left: 0; top: 0; color: var(--pmw-ed-caret-ink, var(--pmw-ed-gutbg)); line-height: var(--pmw-ed-lh); white-space: pre; }',
+  /* Retro draws its block in reverse video (the caret layer blends by difference), so the character is not drawn again */
+  ':host([data-look="retro"]) .pmw-ed-caret::after { content: none; }',
+  ':host([data-blink="blink"]) .pmw-ed-caret.is-blink { animation: pmw-ed-blink 1.06s steps(1, end) .5s infinite; }',
+  ':host([data-blink="smooth"]) .pmw-ed-caret.is-blink { animation: pmw-ed-fade 1.06s ease-in-out .5s infinite; }',
+  ':host([data-blink="expand"]) .pmw-ed-caret.is-blink::before { animation: pmw-ed-expand 1.06s ease-in-out .5s infinite; }',
+  ':host([data-blink="expand"]) .pmw-ed-caret.is-blink::after { animation: pmw-ed-fade 1.06s ease-in-out .5s infinite; }',
+  '@keyframes pmw-ed-fade { 0%, 22% { opacity: 1; } 50%, 72% { opacity: 0; } 100% { opacity: 1; } }',
+  '@keyframes pmw-ed-expand { 0%, 22% { transform: scaleY(1); } 50%, 72% { transform: scaleY(0); } 100% { transform: scaleY(1); } }',
+  /* Caret movement: Snappy and Gliding ease the caret to where it goes (Retro and NieR step there); typing never waits */
+  ':host([data-motion="snappy"]) .pmw-ed-caret { transition: transform 80ms cubic-bezier(.2, .8, .2, 1); }',
+  ':host([data-motion="glide"]) .pmw-ed-caret { transition: transform 150ms cubic-bezier(.2, .75, .25, 1); }',
+  ':host([data-motion="glide"][data-look="friendly"]) .pmw-ed-caret { transition-timing-function: cubic-bezier(.3, 1.25, .5, 1); }',
+  ':host([data-look="retro"]) .pmw-ed-caret, :host([data-look="nier"]) .pmw-ed-caret { transition-timing-function: steps(4, end); }',
+  '.pmw-ed-caret.no-glide { transition: none !important; }',
+  /* the trail when the caret jumps: a streak from where it was, fading toward its head; each look its own */
+  '.pmw-ed-trail { position: absolute; left: 0; top: 0; height: 0; transform-origin: 0 0; pointer-events: none; }',
+  '.pmw-ed-trail > b { position: absolute; left: 0; right: 0; top: -5px; height: 10px; transform-origin: 100% 50%; animation: pmw-ed-trail 300ms cubic-bezier(.2, .7, .2, 1) both; }',
+  '.pmw-ed-trail.is-soft > b { background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--pmw-ed-caret) 42%, transparent)); border-radius: 5px; }',
+  '.pmw-ed-trail.is-glow > b { top: -2px; height: 4px; background: linear-gradient(90deg, transparent, var(--pmw-ed-caret)); border-radius: 2px; box-shadow: 0 0 10px color-mix(in srgb, var(--pmw-ed-caret) 65%, transparent); animation-duration: 340ms; }',
+  '.pmw-ed-trail.is-phosphor > b { top: -4px; height: 8px; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--pmw-ed-caret) 55%, transparent)); animation-duration: 460ms; animation-timing-function: steps(6, end); }',
+  '.pmw-ed-trail.is-trace > b { top: -1px; height: 1.5px; background: var(--pmw-ed-caret); animation-duration: 320ms; animation-timing-function: steps(8, end); }',
+  '@keyframes pmw-ed-trail { from { opacity: 1; transform: scaleX(1); } to { opacity: 0; transform: scaleX(0); } }',
+  '.pmw-ed-ghost { position: absolute; left: 0; top: 0; width: var(--pmw-ed-caret-w, 8px); height: var(--pmw-ed-lh); background: var(--pmw-ed-caret); pointer-events: none; animation: pmw-ed-ghost 520ms steps(6, end) both; }',
+  '@keyframes pmw-ed-ghost { from { opacity: .7; } to { opacity: 0; } }',
   /* the IME field: the keyboard focus for typing, kept at the caret so a composition window opens there; invisible
      until a composition shows its text in place */
   '.pmw-ed-ime { position: absolute; left: 0; top: 0; z-index: 3; width: 1px; height: var(--pmw-ed-lh); margin: 0; padding: 0; border: 0; outline: none; resize: none; overflow: hidden; white-space: pre; opacity: 0; color: transparent; caret-color: transparent; background: transparent; font: inherit; line-height: var(--pmw-ed-lh); -webkit-user-select: text; user-select: text; pointer-events: none; }',
@@ -761,9 +864,11 @@ var SHADOW_CSS = [
   '.pmw-ed-srow .pmw-ed-gut { position: relative; }',
   '.pmw-ed-srow:hover { background: var(--pmw-hover); }',
   '.pmw-ed-srow:hover .pmw-ed-gut { background: linear-gradient(var(--pmw-hover), var(--pmw-hover)), var(--pmw-ed-gutbg); }',
-  ':host([data-reduced]) .pmw-ed-row.is-reveal, :host([data-reduced]) .pmw-ed-caret.is-blink { animation: none; }',
+  ':host([data-reduced]) .pmw-ed-row.is-reveal, :host([data-reduced]) .pmw-ed-caret.is-blink, :host([data-reduced]) .pmw-ed-caret.is-blink::before, :host([data-reduced]) .pmw-ed-caret.is-blink::after { animation: none; }',
+  ':host([data-reduced]) .pmw-ed-caret { transition: none; }',
+  ':host([data-reduced]) .pmw-ed-trail, :host([data-reduced]) .pmw-ed-ghost { display: none; }',
   ':host([data-reduced]) .pmw-ed-focus { transition: none; }',
-  '@media (prefers-reduced-motion: reduce) { .pmw-ed-row.is-reveal, .pmw-ed-caret.is-blink { animation: none; } .pmw-ed-focus { transition: none; } }'
+  '@media (prefers-reduced-motion: reduce) { .pmw-ed-row.is-reveal, .pmw-ed-caret.is-blink, .pmw-ed-caret.is-blink::before, .pmw-ed-caret.is-blink::after { animation: none; } .pmw-ed-focus { transition: none; } .pmw-ed-caret { transition: none; } .pmw-ed-trail, .pmw-ed-ghost { display: none; } }'
 ].join('\n');
 var shadowSheet = null;
 function shadowFor(hostEl, delegates) {
@@ -783,12 +888,15 @@ function linesEqual(a, b) {
   for (var i = 0; i < a.length; i++) if (a[i] !== b[i]) return false;
   return true;
 }
-function paintTokens(el, text, toks, words) {
-  // toks [[s, e, kind]]; words [[s, e]] (diff word marks) split the tokens
+function paintTokens(el, text, toks, words, from, to) {
+  // toks [[s, e, kind]]; words [[s, e]] (diff word marks) split the tokens; from..to (optional) paints one wrapped
+  // segment of the line
   if (!text) return;
   if (!toks || !toks.length) toks = [[0, text.length, null]];
+  var lo = from == null ? 0 : from, hi = to == null ? text.length : to;
   for (var t = 0; t < toks.length; t++) {
-    var s = toks[t][0], e = toks[t][1], kind = toks[t][2];
+    var s = Math.max(lo, toks[t][0]), e = Math.min(hi, toks[t][1]), kind = toks[t][2];
+    if (e <= s) continue;
     var cuts = [s];
     if (words) for (var w = 0; w < words.length; w++) {
       if (words[w][0] > s && words[w][0] < e) cuts.push(words[w][0]);
@@ -809,6 +917,125 @@ function paintTokens(el, text, toks, words) {
       el.appendChild(sp);
     }
   }
+}
+
+/* ======================================================================================================== */
+/* Line decorations (the Editor look, 09-editor-look.js): colour by meaning off, bracket pair colours, spaces      */
+/* shown as dots. Each one rewrites a line's tokens (and, for spaces, the drawn text, the same length) before it   */
+/* is painted, so wrapping, selection and the caret never see a difference: every column stays one character.      */
+/* ======================================================================================================== */
+
+var BR_OPEN = '([{', BR_PAIR = { ')': '(', ']': '[', '}': '{' };
+/* the languages whose brackets are tokens of their own (pun): bracket pair colours apply there */
+var BRACKET_LANGS = { rust: 1, js: 1, ts: 1, css: 1, json: 1, svelte: 1, sql: 1, toml: 1, yaml: 1 };
+var WS_DOT = '·';
+var WS_TAB = '→';                   // a tab's mark in a file indented with tabs (the buffer holds the spaces it opened as)
+/* the brackets still open at the start of line i, as a string of their opening characters (only those in pun
+   tokens, so brackets in strings and comments never count); computed forward once and cut back by edits */
+function bracketStack(d, i) {
+  if (!d.bst) d.bst = [''];
+  while (d.bst.length <= i) {
+    var k = d.bst.length - 1, st = d.bst[k], text = d.lines[k] || '', toks = tokensOf(d, k) || [];
+    for (var t = 0; t < toks.length; t++) {
+      if (toks[t][2] !== 'pun') continue;
+      for (var c = toks[t][0]; c < toks[t][1]; c++) {
+        var ch = text.charAt(c);
+        if (BR_OPEN.indexOf(ch) >= 0) { if (st.length < 64) st += ch; }
+        else if (BR_PAIR[ch] && st.charAt(st.length - 1) === BR_PAIR[ch]) st = st.slice(0, -1);
+      }
+    }
+    d.bst.push(st);
+  }
+  return d.bst[i];
+}
+/* o: { syntax, stack (the open brackets at the line's start, or null for no bracket colours), ws ('boundary',
+   'trailing', 'all' or off), tabUnit (in a file indented with tabs, the columns one tab takes: its indentation is
+   marked a tab at a time, not a space at a time) } -> { text, toks } */
+function decorateLine(text, toks, o) {
+  var n = text.length;
+  var wsMode = o.ws === 'boundary' || o.ws === 'trailing' || o.ws === 'all' ? o.ws : null;
+  if (o.syntax && o.stack == null && !wsMode) return { text: text, toks: toks };
+  if (!n) return { text: text, toks: toks };
+  var kinds = new Array(n), list = toks && toks.length ? toks : [[0, n, null]], i, t;
+  for (t = 0; t < list.length; t++) for (i = list[t][0]; i < list[t][1] && i < n; i++) kinds[i] = o.syntax ? list[t][2] : null;
+  if (o.stack != null && toks) {
+    var st = o.stack;
+    for (t = 0; t < toks.length; t++) {
+      if (toks[t][2] !== 'pun') continue;
+      for (i = toks[t][0]; i < toks[t][1]; i++) {
+        var ch = text.charAt(i);
+        if (BR_OPEN.indexOf(ch) >= 0) { kinds[i] = 'b' + (st.length % 6); if (st.length < 64) st += ch; }
+        else if (BR_PAIR[ch]) {
+          if (st.charAt(st.length - 1) === BR_PAIR[ch]) { st = st.slice(0, -1); kinds[i] = 'b' + (st.length % 6); }
+          else kinds[i] = 'bx';      // a closing bracket with no opener of its kind: the error colour
+        }
+      }
+    }
+  }
+  var shown = text;
+  if (wsMode) {
+    var first = text.search(/\S/), last = n - 1;
+    while (last >= 0 && text.charAt(last) === ' ') last--;
+    var chars = text.split(''), tu = o.tabUnit || 0, lead = first < 0 ? n : first;
+    for (i = 0; i < n; i++) {
+      if (chars[i] !== ' ') continue;
+      var mark = wsMode === 'all' || (wsMode === 'trailing' ? (i > last) :
+        (first < 0 || i < first || i > last || chars[i - 1] === ' ' || chars[i + 1] === ' '));
+      if (!mark) continue;
+      if (tu > 1 && i < lead && i % tu === 0 && i + tu <= lead) {
+        chars[i] = WS_TAB; kinds[i] = 'ws';
+        for (var j = 1; j < tu; j++) kinds[i + j] = 'ws';
+        i += tu - 1; continue;
+      }
+      chars[i] = WS_DOT; kinds[i] = 'ws';
+    }
+    shown = chars.join('');
+  }
+  var out = [];
+  for (i = 0; i < n; i++) {
+    var last2 = out[out.length - 1];
+    if (last2 && last2[2] === kinds[i] && last2[1] === i) last2[1] = i + 1; else out.push([i, i + 1, kinds[i] || null]);
+  }
+  return { text: shown, toks: out };
+}
+/* indentation: a level is the file's indent unit in columns (the editor's IND.unit: the file's own, or Tab size); a
+   blank line takes the smaller of its neighbours' levels so the guides run through it */
+function indentCols(t) { var m = /^ */.exec(t || ''); return m ? m[0].length : 0; }
+function guideLevel(lines, r, unit) {
+  var t = lines[r], u = unit || 4;
+  if (t != null && /\S/.test(t)) return Math.floor(indentCols(t) / u);
+  var up = 0, down = 0, i;
+  for (i = r - 1; i >= 0 && i >= r - 400; i--) if (/\S/.test(lines[i] || '')) { up = Math.floor(indentCols(lines[i]) / u); break; }
+  for (i = r + 1; i < lines.length && i <= r + 400; i++) if (/\S/.test(lines[i] || '')) { down = Math.floor(indentCols(lines[i]) / u); break; }
+  return Math.min(up, down);
+}
+/* the guides of one row as a background: one 1 px line per level, every level the same tint or a colour each */
+var guideCache = {};
+function guideImage(levels, rainbow, cw, unit) {
+  var key = levels + '|' + (rainbow ? 1 : 0) + '|' + cw + '|' + unit;
+  if (guideCache[key]) return guideCache[key];
+  var step = cw * (unit || 4), stops = [];
+  for (var k = 0; k < levels; k++) {
+    var x = Math.round(k * step) + 0.5, c = rainbow ? 'var(--pmw-ed-ig-' + (k % 6) + ')' : 'var(--pmw-ed-guide)';
+    stops.push('linear-gradient(' + c + ', ' + c + ') ' + x + 'px 0 / 1px 100% no-repeat');
+  }
+  return (guideCache[key] = stops.join(', '));
+}
+/* where a long line breaks when wrapped: after the last space that leaves the piece at least a third full, else at
+   the width; pieces after the first are indented like the line (at most a third of the width). Returns the start
+   column of each piece and that indent */
+function wrapPieces(text, cols) {
+  var n = text.length;
+  if (n <= cols || cols < 8) return { starts: [0], indent: 0 };
+  var indent = Math.min(indentCols(text), Math.floor(cols / 3)), starts = [0], s = 0, w = cols;
+  while (n - s > w) {
+    var end = s + w, brk = -1;
+    for (var i = end; i > s + Math.floor(w / 3); i--) if (text.charAt(i - 1) === ' ' && text.charAt(i) !== ' ') { brk = i; break; }
+    s = brk > 0 ? brk : end;
+    starts.push(s);
+    w = cols - indent;
+  }
+  return { starts: starts, indent: indent };
 }
 
 /* ======================================================================================================== */
@@ -875,9 +1102,28 @@ function legible(c, bg, min) {
   for (var t = 0.05; t <= 1.0001; t += 0.05) { var m = mixRgb(c, to, t); if (contrastOf(m, bg) >= min) return m; }
   return to;
 }
+/* legible() on every background a colour can sit on (the ground, a focused and a blurred selection, the current line;
+   for the gutter's numbers, the gutter and a changed row's tint): it moves until it reads at min:1 on the one it reads
+   least on, its hue kept */
+function legibleOn(c, bgs, min) {
+  if (!c) return null;
+  for (var i = 0; i < 4; i++) {
+    var w = bgs[0];
+    bgs.forEach(function (b) { if (contrastOf(c, b) < contrastOf(c, w)) w = b; });
+    if (contrastOf(c, w) >= min) return c;
+    c = legible(c, w, min);
+  }
+  return c;
+}
 function alphaOf(c, a) { return 'rgba(' + Math.round(c[0]) + ', ' + Math.round(c[1]) + ', ' + Math.round(c[2]) + ', ' + a + ')'; }
+/* the same floor for a colour drawn outside an editor (the Customize screen's bracket picture): hex or rgb() in, hex out */
+PMW.edLegible = function (c, bg, min) {
+  var parse = function (x) { x = String(x || '').trim(); var m = /rgba?\(\s*([\d.]+)[ ,]+([\d.]+)[ ,]+([\d.]+)/.exec(x); return m ? [+m[1], +m[2], +m[3]] : rgbOf(x); };
+  var a = parse(c), b = parse(bg);
+  return a && b ? hexOf(legible(a.slice(0, 3), b.slice(0, 3), min || 4.5)) : c;
+};
 /* the custom properties a scheme writes on the code elements, or null for Follow look (or an unknown id) */
-function schemeVars(id) {
+function schemeVars(id, min) {
   if (!id || id === 'follow') return null;
   var A = edAppearance();
   if (!A) return null;
@@ -888,68 +1134,113 @@ function schemeVars(id) {
   if (!toks || !pal) return null;
   var bg = rgbOf(pal.background), fg0 = rgbOf(pal.foreground);
   if (!bg || !fg0) return null;
+  /* the text floor: 4.5:1 (F3-639), or 7:1 when Editor Text Contrast asks for it */
+  var F = min === 7 ? 7 : 4.5;
   var ansi = Array.isArray(pal.ansi) ? pal.ansi.map(rgbOf) : [];
   function an(i, dflt) { return ansi[i] || ansi[i > 7 ? i - 8 : i + 8] || dflt; }
-  var fg = legible(fg0, bg, 4.5);
-  var red = legible(an(1, [224, 108, 117]), bg, 4.5), green = legible(an(2, [152, 195, 121]), bg, 4.5), yellow = legible(an(3, [229, 192, 123]), bg, 4.5);
+  var red = legible(an(1, [224, 108, 117]), bg, F), green = legible(an(2, [152, 195, 121]), bg, F), yellow = legible(an(3, [229, 192, 123]), bg, F);
   var hitC = an(11, an(3, [229, 192, 123]));
-  var conf = legible(mixRgb(an(1, red), an(3, yellow), 0.5), bg, 4.5);
-  var blue = an(4, fg);
-  var cursor = rgbOf(pal.cursor) || fg, sel = rgbOf(pal.selection);
+  var conf = legible(mixRgb(an(1, red), an(3, yellow), 0.5), bg, F);
+  var blue = an(4, fg0);
   var dark = lumOf(bg) < 0.2;
+  /* the selection a step quieter than the scheme's own (60 %), the blurred one between it and the ground, so a word's
+     colour moves little to read at the floor on all of them (landing QA EC-10: words read 2.4:1 on full selections) */
+  var sel0 = rgbOf(pal.selection), selC = sel0 ? mixRgb(bg, sel0, 0.6) : mixRgb(bg, blue, 0.2), blurC = mixRgb(selC, bg, 0.45);
+  var lineC = mixRgb(bg, fg0, dark ? 0.05 : 0.06);
+  var onGutter = [bg, mixRgb(bg, green, dark ? 0.12 : 0.10), mixRgb(bg, yellow, dark ? 0.10 : 0.08), mixRgb(bg, red, dark ? 0.12 : 0.09), mixRgb(bg, conf, dark ? 0.15 : 0.12)];
+  // every ground a word can sit on: the ground and each changed row's tint, alone and under a focused or blurred selection
+  // and the current line (a selection over a changed row read 3.4:1 in the landing sweep)
+  var onText = [];
+  onGutter.forEach(function (g) { onText.push(g, mixRgb(g, selC, 1), mixRgb(g, blurC, 1), mixRgb(g, fg0, dark ? 0.05 : 0.06)); });
+  var fg = legibleOn(fg0, onText, F);
+  var cursor = rgbOf(pal.cursor) || fg;
   var v = {
     '--pmw-ed-bg': hexOf(bg), '--pmw-ed-gutbg': hexOf(bg), '--pmw-ed-fg': hexOf(fg),
-    '--pmw-ed-ln': hexOf(legible(mixRgb(fg, bg, 0.5), bg, 4.5)), '--pmw-ed-ln-cur': hexOf(fg),
+    '--pmw-ed-ln': hexOf(legibleOn(mixRgb(fg, bg, 0.5), onGutter, F)), '--pmw-ed-ln-cur': hexOf(legibleOn(fg, onGutter, F)),
     '--pmw-ed-line': alphaOf(fg, dark ? 0.05 : 0.06),
-    '--pmw-ed-sel': sel ? hexOf(sel) : alphaOf(blue, 0.32), '--pmw-ed-sel-blur': hexOf(mixRgb(sel || mixRgb(bg, fg, 0.2), bg, 0.45)),
+    '--pmw-ed-sel': hexOf(selC), '--pmw-ed-sel-blur': hexOf(blurC),
     '--pmw-ed-sel-z': '-1', '--pmw-ed-sel-blend': 'normal',
-    '--pmw-ed-caret': hexOf(cursor), '--pmw-ed-caret-mark': alphaOf(fg, 0.55),
+    '--pmw-ed-caret': hexOf(cursor), '--pmw-ed-caret-mark': alphaOf(fg, 0.55), '--pmw-ed-caret-ink': hexOf(bg),
     '--pmw-ed-hit': alphaOf(hitC, 0.26), '--pmw-ed-hit-cur': alphaOf(hitC, 0.5), '--pmw-ed-hit-ring': hexOf(legible(hitC, bg, 3)), '--pmw-ed-hit-mark': hexOf(hitC),
     '--pmw-ed-focus-bg': alphaOf(blue, 0.16),
     '--pmw-ed-mm-ink': hexOf(fg), '--pmw-ed-mm-alpha': dark ? '.28' : '.34',
-    '--pmw-ed-add-fg': hexOf(green), '--pmw-ed-mod-fg': hexOf(yellow), '--pmw-ed-del-fg': hexOf(red), '--pmw-ed-conf-fg': hexOf(conf),
+    '--pmw-ed-add-fg': hexOf(legibleOn(green, onGutter, F)), '--pmw-ed-mod-fg': hexOf(legibleOn(yellow, onGutter, F)), '--pmw-ed-del-fg': hexOf(legibleOn(red, onGutter, F)), '--pmw-ed-conf-fg': hexOf(legibleOn(conf, onGutter, F)),
     '--pmw-ed-add-bg': alphaOf(green, dark ? 0.12 : 0.10), '--pmw-ed-mod-bg': alphaOf(yellow, dark ? 0.10 : 0.08),
     '--pmw-ed-del-bg': alphaOf(red, dark ? 0.12 : 0.09), '--pmw-ed-conf-bg': alphaOf(conf, dark ? 0.15 : 0.12),
     '--pmw-ed-wadd': alphaOf(green, dark ? 0.30 : 0.22), '--pmw-ed-wdel': alphaOf(red, dark ? 0.30 : 0.20),
     '--pmw-ed-fold-hover-bg': alphaOf(fg, 0.10), '--pmw-ed-fold-hover-fg': hexOf(fg),
+    /* the Editor look's marks: guides, spaces and rulers in the scheme's own text colour, faint */
+    '--pmw-ed-guide': alphaOf(fg, dark ? 0.13 : 0.17), '--pmw-ed-guide-active': alphaOf(fg, dark ? 0.42 : 0.5),
+    '--pmw-ed-ws': alphaOf(fg, dark ? 0.34 : 0.4), '--pmw-ed-ruler': alphaOf(fg, dark ? 0.11 : 0.14),
     // the page tokens the code rows read (diff meta rows, folds, log marks): kept on the scheme's background
-    '--pmw-text': hexOf(fg), '--pmw-text-2': hexOf(legible(mixRgb(fg, bg, 0.25), bg, 4.5)), '--pmw-text-3': hexOf(legible(mixRgb(fg, bg, 0.42), bg, 4.5)),
+    '--pmw-text': hexOf(fg), '--pmw-text-2': hexOf(legible(mixRgb(fg, bg, 0.25), bg, F)), '--pmw-text-3': hexOf(legible(mixRgb(fg, bg, 0.42), bg, F)),
     '--pmw-hover': alphaOf(fg, 0.08), '--pmw-line': alphaOf(fg, 0.14),
     '--pmw-ok': hexOf(green), '--pmw-warn': hexOf(yellow), '--pmw-bad': hexOf(red)
   };
-  SYN_KEYS.forEach(function (k) { v['--pmw-ed-s-' + k] = hexOf(legible(rgbOf(toks[k]) || fg, bg, 4.5)); });
+  SYN_KEYS.forEach(function (k) { v['--pmw-ed-s-' + k] = hexOf(legibleOn(rgbOf(toks[k]) || fg, onText, F)); });
+  /* bracket pair colours from the scheme's own yellow, magenta, blue, cyan, green and red, at the text floor; indent
+     guides take the same six, faint */
+  [3, 5, 4, 6, 2, 1].forEach(function (n, i) {
+    var c = legibleOn(an(n, fg), onText, F);
+    v['--pmw-ed-bp-' + i] = hexOf(c);
+    v['--pmw-ed-ig-' + i] = alphaOf(c, dark ? 0.42 : 0.5);
+  });
+  v['--pmw-ed-bp-bad'] = hexOf(red);
+  // the backgrounds a chosen token colour is floored on too (applyTokens); not a custom property, so never written
+  Object.defineProperty(v, '_onText', { value: onText, enumerable: false });
   return v;
 }
-function openAppearance(anchor) {
-  var P = edPopover();
-  if (!P) return;
-  var KEYS = { scheme: 'editor.scheme', font: 'editor.font.family', size: 'editor.font.size' };
-  function full(k) { return KEYS[k] || (String(k).indexOf('editor.') === 0 ? k : null); }
-  function get(k) {
-    if (k == null) return { scheme: setting('editor.scheme', 'follow'), font: setting('editor.font.family', 'JetBrains Mono'), size: setting('editor.font.size', 13) };
-    var f = full(k);
-    return f ? PM_HOME.settings.get(f) : undefined;
-  }
-  function set(k, val) {
-    if (k && typeof k === 'object') { Object.keys(k).forEach(function (kk) { set(kk, k[kk]); }); return; }
-    var f = full(k);
-    if (f) PM_HOME.settings.set(f, val);
-  }
-  try { P.open(anchor, { surface: 'editor', get: get, set: set }); }
-  catch (err) { try { console.error('[pm-home] the Appearance popover failed', err); } catch (_) {} }
+/* what an editor draws when the look model is absent (a build without 09-editor-look.js): today's defaults */
+var FALLBACK_LOOK = {
+  look: { key: 'basic', mode: 'dark', reduced: false }, lookKey: 'basic', scheme: 'follow', schemeName: 'Follow look', schemeObj: null,
+  colors: { syntax: true, bracketPairs: false, contrast: 4.5, italicComments: null, boldKeywords: null, tokenKey: 'look:basic-dark', tokens: {} },
+  font: { id: 'jetbrains-mono', label: 'JetBrains Mono', stack: '', size: 13, weight: 400, weights: [400, 800], lineHeight: 1.55, letterSpacing: 0, ligatures: false },
+  caret: { shape: 'line', width: 2, blink: 'blink', motion: 'instant', trail: 'off' },
+  lines: { numbers: true, relative: false, highlight: 'all', guides: 'off', activeIndent: true, whitespace: 'off', rulers: [], wrap: false,
+    wrapColumn: 0, minimap: true, sticky: true, stickyLines: 3 },
+  motion: { smoothScroll: false, reveal: true, pastEnd: 'little', inactiveDim: false, scanlines: false, glow: false },
+  behavior: { diffLayout: 'auto', gotoHighlightMs: 5000, autosave: 'off', diagnostics: 'warnings', hoverDelay: 300 },
+  indent: { size: 4, spaces: true, detect: true }
+};
+/* the problems the Problems tab lists for a file (22-tools.js publishes them), or a preview's own */
+function problemsOf(d) {
+  if (d.problems) return d.problems;
+  if (!d.path) return [];
+  try {
+    var all = PMW.problems ? PMW.problems() : [];
+    for (var i = 0; i < all.length; i++) if (all[i].path === d.path) return all[i].items || [];
+  } catch (_) {}
+  return [];
+}
+var DIAG_SHOW = { off: {}, errors: { error: 1 }, warnings: { error: 1, warn: 1 }, all: { error: 1, warn: 1, info: 1 } };
+
+/* the editor's Appearance... row opens its Customize screen (11-editor-customize.js) for this editor */
+function openCustomize(view, anchor, group, at) {
+  var C = PMW.edCustomize;
+  if (!C || typeof C.open !== 'function') return;
+  try { C.open({ view: view, anchor: anchor, group: group || null, at: at || null }); }
+  catch (err) { try { console.error('[pm-home] the editor Customize screen failed', err); } catch (_) {} }
 }
 
 function mountEditor(host, st, api) {
   st = st || {};
   var tabId = api.id;
-  var path = st.path || (tabId.indexOf('file:') === 0 ? tabId.slice(5) : null);
+  /* a preview (the Customize screen's live editor): a buffer of its own, drawn as if it had the focus, taking no
+     input; its look comes from the screen's view (its scope and the scheme being hovered) */
+  var preview = st.preview || null;
+  var path = preview ? null : st.path || (tabId.indexOf('file:') === 0 ? tabId.slice(5) : null);
   var d, untitled = false;
-  if (path) d = docForPath(path);
+  if (preview) {
+    d = newDoc({ lines: splitLines(preview.text || ''), base: preview.base ? splitLines(preview.base) : null, language: preview.language || 'rust',
+      title: preview.title || 'Preview', readOnly: 'Preview' });
+    d.problems = preview.problems || [];
+  } else if (path) d = docForPath(path);
   else {
     var title = st.title || null;           // PM_HOME.open passes spec.title as state.title
     untitled = st.text == null || (st.text === '' && (!title || title === 'Untitled'));
     d = newDoc({ lines: splitLines(st.text || ''), language: st.language || (untitled ? 'text' : null), title: title,
       readOnly: (untitled || st.edit) ? null : (typeof st.readOnly === 'string' ? st.readOnly : 'Read-only') });
+    d.src = st.text || ''; d.tabbed = tabbedText(d.src); d.tabUnit = 4;
     if (untitled) { untitledSeq += 1; d.title = 'Untitled ' + untitledSeq; }
     if (untitled) api.update({ label: d.title, title: d.title });   // labelFor names it before mount; the number comes now
   }
@@ -957,18 +1248,64 @@ function mountEditor(host, st, api) {
   var name = path ? basename(path) : (d.title || 'Text');
   var special = d.binary || d.missing;
 
+  /* ---- the Editor look (09-editor-look.js): this editor is one of the model's views. Its own choices (Customize's
+     "This editor") are saved with the tab; R is everything resolved, refreshed whenever a layer or the look changes ---- */
+  var EL = PMW.edLook || null;
+  var view = preview && preview.view ? preview.view : {
+    tabAppearance: st.appearance && typeof st.appearance === 'object' ? JSON.parse(JSON.stringify(st.appearance)) : {},
+    previewAppearance: null
+  };
+  view.saveLook = function () { if (!preview && api.saveSoon) api.saveSoon(); };
+  view.applyLook = function (R2) { onLook(R2); };
+  view.editor = function () { return instance; };
+  var R = EL ? EL.resolve(view) : FALLBACK_LOOK;
+
+  /* ---- indentation (Tab size, Indent with, Follow the file's indentation): IND.unit is a level in columns, the
+     file's own when it has one; IND.tabs says the file's indentation is tabs, which Show spaces marks as such. A tabbed
+     file, still as it was opened, takes a new Tab size by opening its tabs again at the new width ---- */
+  var IND = { unit: 4, tabs: false, own: 0 };
+  function resolveIndent() {
+    var I = R.indent || FALLBACK_LOOK.indent;
+    if (d.indentGuess == null || (!d.indentGuess && d.indentGuessAt !== d.version)) { d.indentGuess = guessIndent(d.lines); d.indentGuessAt = d.version; }
+    var own = I.detect && !d.tabbed ? d.indentGuess : 0;
+    IND.own = own;
+    IND.unit = own || I.size || 4;
+    IND.tabs = I.detect && d.tabbed ? true : I.detect && own ? false : !I.spaces;
+    if (d.tabbed && d.tabUnit !== IND.unit) {
+      if (d.src != null && d.version === d.savedVersion && !(d.undo && d.undo.length)) {
+        d.lines = splitLines(d.src, IND.unit); d.tabUnit = IND.unit;
+        d.toks = []; d.ends = []; d.tokFrom = 0; d.bst = null; d.version++; d.savedVersion = d.version;
+        return true;
+      }
+      IND.unit = d.tabUnit;           // edited since it opened: its tabs keep the width they opened at until it reopens
+    }
+    return false;
+  }
+  resolveIndent();
+  /* the width a tab stop is drawn at, or 0 where the indentation is spaces: the file's own kind while Follow the file's
+     indentation is on, Indent with's when it is off (the customizer audit: with Follow off, Tabs still drew and typed
+     spaces in a file indented with spaces). The editor keeps indentation as spaces at tab stops; a tab is how it is
+     drawn (Show spaces marks it) and a level Tab and Shift+Tab move by */
+  function tabUnitNow() { return IND.tabs ? (d.tabbed ? d.tabUnit : IND.unit) : 0; }
+
   /* ---- state ---- */
   var mode = d.chat ? 'diff' : ((st.mode === 'diff' || st.view === 'diff' || st.diff === true) && d.base ? 'diff' : 'file');
-  var diffLayoutPick = st.diffLayout || null;      // per-tab override of editor.diff.layout
+  var diffLayoutPick = st.diffLayout || null;      // per-tab override of the Diff layout row
   var sideNow = false;                              // the resolved layout (with hysteresis)
   var V = null;                                     // the row model for the current mode
   var caret = { r: 0, c: 0 }, anchor = null, side = 'r', goalCol = -1;
-  var focused = false, visible = true, alive = true;
+  var focused = !!preview, visible = true, alive = true, dimmed = false;
+  /* while a Customize screen is open on this editor, it draws what it draws when focused (the caret, the current line's
+     band), though the screen has the focus: it is the preview beside the screen, and a blurred editor showed none of
+     the caret's or the current line's choices */
+  var customizing = false;
   var fs = 13, lh = 20, cw = 7.8, headH = 31, padT = 35, padB = 80, padL = 10, padR = 32;
   var lnW = 40, gutW = 54, textX = 64, contentW = 0, trackW = 22, half = 0, gutS = 54;
   var sxl = 0, sxr = 0;                             // side by side: each side's own horizontal offset
   var rowEls = new Map(), rendered = { a: -1, b: -1 };
-  var revealPending = !reduced();
+  var revealPending = !!R.motion.reveal && !preview, revealAt = 0, revealTop = 0;
+  var WR = null;                                    // the wrap map while long lines wrap (buildWrap), else null
+  var diagRects = [];                               // the problems drawn now, for the card under the pointer
   var stickyH = 0, stickyRows = [];
   var find = { open: false, replace: false, q: '', rep: '', caseSensitive: false, word: false, regex: false, hits: [], cur: -1, error: null, capped: false };
   var focusBand = null, focusTimer = 0, fadeTimer = 0;
@@ -993,16 +1330,22 @@ function mountEditor(host, st, api) {
   bands.appendChild(curEl); bands.appendChild(focusEl);
   var ov = h('div', { class: 'pmw-ed-ov', 'aria-hidden': 'true' });
   var rowsEl = h('div', { class: 'pmw-ed-rows' });
+  var diagLayer = h('div', { class: 'pmw-ed-diags', 'aria-hidden': 'true' });
   var selsEl = h('div', { class: 'pmw-ed-sels', 'aria-hidden': 'true' });
   var caretLayer = h('div', { class: 'pmw-ed-carets', 'aria-hidden': 'true' });
   var caretEl = h('i', { class: 'pmw-ed-caret' });
   caretLayer.appendChild(caretEl);
+  /* the Editor look's marks: rulers under the rows, the active indent guide, the problems' wavy lines and the dots
+     of spaces shown only in the selection over them */
+  var rulersEl = h('div', { class: 'pmw-ed-rulers', 'aria-hidden': 'true' });
+  var activeGuide = h('i', { class: 'pmw-ed-aguide', hidden: true });
+  bands.appendChild(rulersEl); bands.appendChild(activeGuide);
   /* typing goes through a hidden textarea inside the scroller's shadow root, so dead keys and IME composition
      (Japanese, Chinese, accents) work; [data-pmw-host-keys] keeps every host key (CONTRACT section 9), and to the
      page the focus is still the scroller */
   var ime = h('textarea', { class: 'pmw-ed-ime', 'aria-label': name + ' editor', autocomplete: 'off', autocapitalize: 'off',
     autocorrect: 'off', spellcheck: 'false', wrap: 'off', rows: '1', 'data-pm-hover-visual-suppressed': 'true', 'data-pmh': 'off' });
-  sizer.appendChild(bands); sizer.appendChild(ov); sizer.appendChild(rowsEl); sizer.appendChild(selsEl); sizer.appendChild(caretLayer);
+  sizer.appendChild(bands); sizer.appendChild(ov); sizer.appendChild(rowsEl); sizer.appendChild(diagLayer); sizer.appendChild(selsEl); sizer.appendChild(caretLayer);
   sizer.appendChild(ime);
   shadowFor(scroller, true).appendChild(sizer);
   var sticky = h('div', { class: 'pmw-ed-sticky', 'aria-hidden': 'true', 'data-pmh': 'off', hidden: true });
@@ -1020,8 +1363,13 @@ function mountEditor(host, st, api) {
   var probe = h('i', { class: 'pmw-ed-probe', 'aria-hidden': 'true' });
   track.appendChild(canvas); track.appendChild(thumb); track.appendChild(probe);
   var measureEl = h('span', { class: 'pmw-ed-measure', 'aria-hidden': 'true', text: new Array(101).join('0') });
-  root.appendChild(scroller); root.appendChild(sticky); root.appendChild(hbar); root.appendChild(track);
-  root.appendChild(head); root.appendChild(measureEl);
+  /* still effects over the code (scanlines), under the sticky lines and the header plate; and the card a problem's
+     wavy line shows under the pointer */
+  var fxEl = h('div', { class: 'pmw-ed-fx', 'aria-hidden': 'true' });
+  var diagCard = h('div', { class: 'pmw-ed-diagcard', role: 'tooltip', hidden: true });
+  root.appendChild(scroller); root.appendChild(fxEl); root.appendChild(sticky); root.appendChild(hbar); root.appendChild(track);
+  root.appendChild(head); root.appendChild(measureEl); root.appendChild(diagCard);
+  if (preview) { root.setAttribute('data-preview', ''); scroller.tabIndex = -1; scroller.setAttribute('aria-hidden', 'true'); ime.tabIndex = -1; }
   host.appendChild(root);
 
   /* ---- the header row (CONTRACT section 5): breadcrumb on the left, then the actions ---- */
@@ -1055,7 +1403,7 @@ function mountEditor(host, st, api) {
       var a = 0, r = 0;
       hk.forEach(function (x) { x.lines.forEach(function (l) { if (l.kind === 'add') a++; else if (l.kind === 'del') r++; }); });
       facts.push({ t: '+' + a, cls: 'is-add' }, { t: '−' + r, cls: 'is-del' });
-    } else if (d.readOnly && !special) facts.push({ t: d.readOnly });
+    } else if (d.readOnly && !special && !preview) facts.push({ t: d.readOnly });
     else if (mode === 'diff' && d.base) {
       var mk = marksOf(d);
       facts.push({ t: '+' + mk.add, cls: 'is-add' }, { t: '−' + mk.del, cls: 'is-del' });
@@ -1087,11 +1435,11 @@ function mountEditor(host, st, api) {
   }
   function posLabel() { return 'Ln ' + (caret.r + 1) + ', Col ' + (caret.c + 1); }
   function layoutLabel() {
-    var pick = diffLayoutPick || setting('editor.diff.layout', 'auto');
+    var pick = diffLayoutPick || R.behavior.diffLayout;
     return pick === 'auto' ? (sideNow ? 'Side by side' : 'Inline') : pick === 'side' ? 'Side by side' : 'Inline';
   }
   function layoutMenu() {
-    var pick = diffLayoutPick || setting('editor.diff.layout', 'auto');
+    var pick = diffLayoutPick || R.behavior.diffLayout;
     function row(v, label, sub) {
       return { id: 'layout-' + v, label: label, detail: sub, checked: pick === v, run: function () { diffLayoutPick = v; resolveLayout(true); } };
     }
@@ -1108,13 +1456,21 @@ function mountEditor(host, st, api) {
       rows.push({ id: 'goto', label: 'Go to line', icon: 'target', shortcut: 'Ctrl+G', run: function () { openGoto(); } });
       rows.push({ id: 'replace', label: 'Find and replace', icon: 'replace', shortcut: 'Ctrl+H', run: function () { openFind(true); } });
       rows.push('-');
-      rows.push({ id: 'minimap', label: 'Minimap', detail: 'Line shapes in the scrollbar', checked: !!setting('editor.minimap', true),
-        run: function () { PM_HOME.settings.set('editor.minimap', !setting('editor.minimap', true)); } });
-      rows.push({ id: 'sticky', label: 'Sticky scroll', detail: 'Keep the enclosing lines in view', checked: !!setting('editor.stickyScroll', true),
-        run: function () { PM_HOME.settings.set('editor.stickyScroll', !setting('editor.stickyScroll', true)); } });
-      // D30: the one Appearance popover, shared with the terminal; absent when the terminal package is not in the build
-      if (edPopover()) rows.push({ id: 'appearance', label: 'Appearance...', icon: 'edPalette', detail: schemeName(setting('editor.scheme', 'follow')) + ' · font and size',
-        run: function () { setTimeout(function () { openAppearance(hrow.action('more') || head); }, 0); } });
+      rows.push({ id: 'wrap', label: 'Word wrap', detail: 'Fold long lines at the edge', checked: R.lines.wrap, run: function () { toggleField('wordWrap'); } });
+      rows.push({ id: 'minimap', label: 'Minimap', detail: 'Line shapes in the scrollbar', checked: R.lines.minimap, run: function () { toggleField('minimap'); } });
+      rows.push({ id: 'sticky', label: 'Sticky scroll', detail: 'Keep the enclosing lines in view', checked: R.lines.sticky, run: function () { toggleField('stickyScroll'); } });
+      // the editor's Customize screen (11-editor-customize.js; F3-642's Appearance component, the editor's surface):
+      // the row names the scheme or Follow look with the face and size (F3-639)
+      if (PMW.edCustomize) rows.push({ id: 'appearance', label: 'Appearance...', icon: 'edPalette',
+        detail: R.schemeName + ' · ' + R.font.label + ' ' + (Math.round(R.font.size * 10) / 10) + ' px',
+        run: function () { setTimeout(function () { openCustomize(view, hrow.action('more') || head); }, 0); } });
+      // indentation, as the file has it: the Customize screen opens at the three choices that set it
+      if (PMW.edCustomize && mode === 'file' && !special) {
+        resolveIndent();
+        rows.push({ id: 'indent', label: 'Indentation...', icon: 'edIndent',
+          detail: (IND.tabs ? 'Tabs, ' + IND.unit + ' wide' : IND.unit + ' spaces') + (IND.own || (d.tabbed && R.indent.detect) ? ' · from the file' : ''),
+          run: function () { setTimeout(function () { openCustomize(view, hrow.action('more') || head, 'behavior', 'indent'); }, 0); } });
+      }
       if (isEditable() && isDirty()) { rows.push('-'); rows.push({ id: 'save', label: 'Save', icon: 'check', shortcut: 'Ctrl+S', run: function () { save(); } }); }
     }
     if (path) {
@@ -1122,6 +1478,12 @@ function mountEditor(host, st, api) {
       rows.push({ id: 'copy-path', label: 'Copy path', icon: 'link', run: function () { copyText(path); PMW.toast('Path copied'); } });
     }
     return { id: 'ed-more', width: 260, align: 'end', rows: rows };
+  }
+  /* a menu switch changes the scope its value comes from: this editor when it keeps its own choice, else all editors */
+  function toggleField(key) {
+    if (!EL) return;
+    var scope = EL.layerOf(view, key) === 'tab' ? 'tab' : 'app';
+    EL.set(scope, key, !EL.get(view, key), view);
   }
   function refreshHeader() {
     hrow.set({ actions: actionList() });
@@ -1151,19 +1513,113 @@ function mountEditor(host, st, api) {
   }
 
   /* ==== code colour scheme (D30): written on the code elements only, so the header row and popovers keep the look ==== */
-  var codeEls = [scroller, sticky, track, hbar];
-  var schemeOn = null;
+  var codeEls = [scroller, sticky, track, hbar, fxEl, diagCard];
+  var schemeOn = null, floorOn = null;
   function applyScheme() {
     hookPmt();
     if (retroPhosphor() === 'amber') root.setAttribute('data-phosphor', 'amber'); else root.removeAttribute('data-phosphor');
-    var id = setting('editor.scheme', 'follow');
-    var vars = special ? null : schemeVars(id);
+    var id = R.scheme;                     // already the light or dark sibling when Switch with light and dark is on
+    var vars = special ? null : schemeVars(id, R.colors.contrast);
     var old = schemeOn || {};
     Object.keys(old).forEach(function (n) { if (!vars || !(n in vars)) codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
     if (vars) Object.keys(vars).forEach(function (n) { if (old[n] !== vars[n]) codeEls.forEach(function (el) { el.style.setProperty(n, vars[n]); }); });
     if (vars) root.setAttribute('data-scheme', id); else root.removeAttribute('data-scheme');
     schemeOn = vars;
+    applyFloor(!vars && !special ? (R.colors.contrast === 7 ? 7 : 4.5) : 0);
+    applyTokens();
     colorCache = null;
+  }
+  /* Token colours (Customize, Colors): one kind of word in this scheme, drawn over the scheme's own (or the look's), at
+     the text floor with its hue kept like every scheme colour. Set after the scheme and the floor, every time, so
+     neither leaves its own value over a chosen one; a colour no longer chosen gets the scheme's (or floor's) back */
+  var tokOn = null, lookRead = { key: '', ground: null, tokens: null };
+  var lookProbe = null;
+  function lookTokens() {
+    // the look's own token table (Follow look), read through a probe on the editor's root, which no scheme or choice
+    // writes on (the code elements carry those); once per look, colour mode and phosphor
+    var key = R.lookKey + '|' + R.look.mode + '|' + (root.getAttribute('data-phosphor') || '');
+    if (lookRead.key !== key) {
+      if (!lookProbe) { lookProbe = h('i', { class: 'pmw-ed-probe', 'aria-hidden': 'true' }); root.appendChild(lookProbe); }
+      var read = function (n) { lookProbe.style.color = 'var(' + n + ')'; var c = cssRgb(getComputedStyle(lookProbe).color); return c ? hexOf(c.slice(0, 3)) : ''; };
+      var t = {};
+      SYN_KEYS.forEach(function (k) { t['--pmw-ed-s-' + k] = read('--pmw-ed-s-' + k); });
+      var g = read('--pmw-ed-gutbg') || read('--pmw-ed-bg');
+      lookRead = { key: key, ground: rgbOf(g), tokens: t };
+    }
+    return lookRead;
+  }
+  function groundNow() {
+    var g = schemeOn ? rgbOf(schemeOn['--pmw-ed-bg']) : lookTokens().ground;
+    return g ? g.slice(0, 3) : [16, 16, 20];
+  }
+  function applyTokens() {
+    var ov = special ? {} : (R.colors.tokens || {}), keys = Object.keys(ov), out = {};
+    if (keys.length) {
+      var on = textGrounds(), F = R.colors.contrast === 7 ? 7 : 4.5;
+      keys.forEach(function (k) { var c = rgbOf(ov[k]); if (c) out['--pmw-ed-s-' + k] = hexOf(legibleOn(c, on, F)); });
+    }
+    var old = tokOn || {};
+    Object.keys(old).forEach(function (n) {
+      if (n in out) return;
+      var base = (schemeOn && schemeOn[n]) || (floorOn && floorOn[n]);
+      codeEls.forEach(function (el) { if (base) el.style.setProperty(n, base); else el.style.removeProperty(n); });
+    });
+    Object.keys(out).forEach(function (n) { codeEls.forEach(function (el) { el.style.setProperty(n, out[n]); }); });
+    tokOn = keys.length ? out : null;
+  }
+  /* The text floor under Follow look (a scheme floors its own colours in schemeVars): the look's colours
+     (60-kind-editor.css) are read back, and each that falls short of 4.5:1, or 7:1 when Editor Text Contrast asks for it,
+     moves lighter or darker, its hue kept. A word is floored on every background it can sit on: the ground, a focused and
+     a blurred selection and the current line (landing QA EC-10); a gutter number on the gutter and on a changed row's
+     tint (EC-08). Retro's selection is reverse video (a difference blend), so it is left out there. The reading is kept
+     per look, mode, phosphor and floor: a token colour slider step reads nothing */
+  function cssRgb(str) {
+    var m = /rgba?\(\s*([\d.]+)[ ,]+([\d.]+)[ ,]+([\d.]+)(?:\s*[,/]\s*([\d.]+%?))?\s*\)/.exec(str || '');
+    if (m) return [+m[1], +m[2], +m[3], m[4] == null ? 1 : /%$/.test(m[4]) ? parseFloat(m[4]) / 100 : +m[4]];
+    m = /color\(srgb\s+([\d.e-]+)\s+([\d.e-]+)\s+([\d.e-]+)(?:\s*\/\s*([\d.]+%?))?\s*\)/.exec(str || '');
+    if (m) return [m[1] * 255, m[2] * 255, m[3] * 255, m[4] == null ? 1 : /%$/.test(m[4]) ? parseFloat(m[4]) / 100 : +m[4]];
+    return null;
+  }
+  function tokenColor(name) { probe.style.color = 'var(' + name + ')'; return cssRgb(getComputedStyle(probe).color); }
+  var floorRead = { key: '' };
+  function textGrounds() {
+    if (schemeOn) return schemeOn._onText || [groundNow()];
+    return floorOn && floorRead.on ? floorRead.on : [groundNow()];
+  }
+  function applyFloor(F) {
+    var key = F ? [R.lookKey, R.look.mode, root.getAttribute('data-phosphor') || '', F].join('|') : '';
+    var old = floorOn || {};
+    if (F && floorRead.key !== key) {
+      Object.keys(old).forEach(function (n) { codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
+      old = {}; floorOn = null;
+      var bgc = tokenColor('--pmw-ed-gutbg'), base = [16, 16, 20];
+      if (!bgc) { floorRead = { key: '' }; return; }
+      var bg = bgc[3] < 1 ? mixRgb(base, bgc, bgc[3]) : bgc.slice(0, 3);
+      var on = function (base, c) { return c[3] < 1 ? mixRgb(base, c, c[3]) : c.slice(0, 3); };
+      var blend = getComputedStyle(root).getPropertyValue('--pmw-ed-sel-blend').trim() === 'difference';
+      var layers = (blend ? ['--pmw-ed-line'] : ['--pmw-ed-sel', '--pmw-ed-sel-blur', '--pmw-ed-line']).map(tokenColor).filter(Boolean);
+      var tints = ['--pmw-ed-add-bg', '--pmw-ed-mod-bg', '--pmw-ed-del-bg', '--pmw-ed-conf-bg'].map(tokenColor).filter(Boolean);
+      // a changed row's tint under a selection is a ground too (the landing sweep found words there at 3.4:1)
+      var grounds = [bg].concat(tints.map(function (t) { return on(bg, t); }));
+      var onText = [], onGutter = grounds.slice();
+      grounds.forEach(function (g) { onText.push(g); layers.forEach(function (l) { onText.push(on(g, l)); }); });
+      var out = {};
+      var GUTTER = /^--pmw-ed-(ln|ln-cur|add-fg|mod-fg|del-fg|conf-fg)$/;
+      SYN_KEYS.map(function (k) { return '--pmw-ed-s-' + k; }).concat(['--pmw-ed-fg', '--pmw-ed-ln', '--pmw-ed-ln-cur', '--pmw-ed-add-fg', '--pmw-ed-mod-fg', '--pmw-ed-del-fg', '--pmw-ed-conf-fg',
+        '--pmw-ed-bp-0', '--pmw-ed-bp-1', '--pmw-ed-bp-2', '--pmw-ed-bp-3', '--pmw-ed-bp-4', '--pmw-ed-bp-5']).forEach(function (n) {
+        var c = tokenColor(n); if (!c) return;
+        var flat = c[3] < 1 ? mixRgb(bg, c, c[3]) : c.slice(0, 3);
+        var to = legibleOn(flat, GUTTER.test(n) ? onGutter : onText, F);
+        // a see-through colour is written flat and floored: over a selection it would blend darker than it measured here
+        if (to !== flat || c[3] < 1) out[n] = hexOf(to);
+      });
+      floorRead = { key: key, out: out, on: onText };
+    }
+    var next = F ? floorRead.out : {};
+    Object.keys(old).forEach(function (n) { if (!(n in next)) codeEls.forEach(function (el) { el.style.removeProperty(n); }); });
+    Object.keys(next).forEach(function (n) { if (old[n] !== next[n]) codeEls.forEach(function (el) { el.style.setProperty(n, next[n]); }); });
+    floorOn = F && Object.keys(next).length ? next : null;
+    if (F && !floorOn) floorOn = {};
   }
   applyScheme();
 
@@ -1190,38 +1646,45 @@ function mountEditor(host, st, api) {
     geo.st = scroller.scrollTop; geo.sl = scroller.scrollLeft;
   }
   function measure() {
-    fs = clamp(+setting('editor.font.size', 13) || 13, 10, 22);
-    var lhx = +setting('editor.lineHeight', 1.55) || 1.55;
-    lh = Math.max(Math.round(fs * (lhx < 3 ? lhx : lhx / fs)), fs + 3);
+    var F = R.font;
+    fs = clamp(+F.size || 13, 10, 24);
+    lh = Math.max(Math.round(fs * (+F.lineHeight || 1.55)), fs + 3);
     setVar('--pmw-ed-fs', fs + 'px');
     setVar('--pmw-ed-lh', lh + 'px');
-    var fam = setting('editor.font.family', 'JetBrains Mono');
-    if (fam && fam !== 'JetBrains Mono') setVar('--pmw-ed-font', '"' + String(fam).replace(/"/g, '') + '", var(--pm-font-code)');
-    else setVar('--pmw-ed-font', null);
+    // JetBrains Mono is the page's code face (--pm-font-code: NieR Mode's PM NieR Mono files under that name, F3-644)
+    setVar('--pmw-ed-font', F.id === 'jetbrains-mono' ? null : F.stack);
+    setVar('--pmw-ed-wt', F.weight === 400 ? null : String(F.weight));
+    setVar('--pmw-ed-ls', F.letterSpacing ? F.letterSpacing + 'px' : null);
+    if (F.ligatures) root.setAttribute('data-lig', ''); else root.removeAttribute('data-lig');
     var w = measureEl.getBoundingClientRect().width / 100;
-    if (w > 2) cw = w; else cw = fs * 0.6;
+    if (w > 2) cw = w; else cw = fs * 0.6 + (+F.letterSpacing || 0);
     setVar('--pmw-ed-cw', cw + 'px');
   }
   function layout() {
     headH = head.offsetHeight;
-    var bodyW = host.clientWidth;
-    var mm = !!setting('editor.minimap', true) && bodyW >= NARROW_TRACK_W;
+    var bodyW = host.clientWidth, bodyH = host.clientHeight;
+    var mm = R.lines.minimap && bodyW >= NARROW_TRACK_W;
     trackW = special ? 0 : (mm ? 22 : 10);
     setVar('--pmw-ed-head', headH + 'px');
     setVar('--pmw-ed-track', trackW + 'px');
     root.setAttribute('data-track', mm ? 'full' : 'marks');
     var n = V ? V.n : 1;
     var digits = Math.max(3, String(mode === 'diff' ? maxLineNo() : n).length);
-    lnW = Math.ceil(digits * cw + 16);
+    // Line numbers off keeps the sign column for change marks and a sliver before it
+    lnW = R.lines.numbers ? Math.ceil(digits * cw + 16) : 4;
     gutW = lnW + 16;
     textX = gutW + padL;
     padT = headH + 6;
-    padB = Math.max(lh * 4, 24);
+    var past = R.motion.pastEnd, room = Math.max(0, bodyH - headH);
+    padB = past === 'page' ? Math.max(lh * 4, room - lh * 2) : past === 'half' ? Math.max(lh * 4, Math.round(room / 2)) : Math.max(lh * 4, 24);
     var sw = Math.max(0, bodyW - trackW);
+    buildWrap(sw);
     if (mode === 'diff' && sideNow) {
       half = Math.floor(sw / 2);
       gutS = gutW;
       contentW = sw;
+    } else if (WR) {
+      contentW = sw;                       // wrapped: nothing runs past the edge, so there is no horizontal scroll
     } else {
       var cols = mode === 'diff' ? V.maxCols : maxColsOf(d);
       contentW = Math.max(sw, Math.ceil(textX + (cols + 1) * cw + padR));
@@ -1231,9 +1694,74 @@ function mountEditor(host, st, api) {
     setVar('--pmw-ed-tx', textX + 'px');
     setVar('--pmw-ed-half', half + 'px');
     sizer.style.width = contentW + 'px';
-    sizer.style.height = (padT + n * lh + padB) + 'px';
+    sizer.style.height = (padT + vCount() * lh + padB) + 'px';
     track.setAttribute('aria-valuemax', String(Math.max(1, n)));
+    layoutRulers();
     readGeo();
+  }
+  /* ==== wrapping (Wrap long lines, code.editing.word-wrap): one row per line stays the model (the caret, selection,
+     find and undo keep line and column), and a map gives each line its visual rows. Off, the map is null and every
+     helper below is the identity ==== */
+  function rowText(r) {
+    if (mode !== 'diff') return d.lines[r];
+    var row = V.rows[r];
+    return row && (row.k === 'ctx' || row.k === 'add' || row.k === 'del') ? row.t : null;
+  }
+  function buildWrap(sw) {
+    if (!R.lines.wrap || special || !V || (mode === 'diff' && sideNow)) { WR = null; return; }
+    var cols = Math.floor((sw - textX - padR) / cw);
+    if (R.lines.wrapColumn > 0) cols = Math.min(cols, R.lines.wrapColumn);
+    cols = Math.max(cols, 20);
+    var n = V.n, starts = new Int32Array(n + 1), segs = new Array(n), ind = new Int16Array(n), acc = 0;
+    for (var r = 0; r < n; r++) {
+      starts[r] = acc;
+      var t = rowText(r), p = t ? wrapPieces(t, cols) : null;
+      if (p && p.starts.length > 1) { segs[r] = p.starts; ind[r] = p.indent; acc += p.starts.length; } else acc += 1;
+    }
+    starts[n] = acc;
+    WR = { cols: cols, n: n, starts: starts, segs: segs, ind: ind, total: acc };
+  }
+  function vTop(r) { return WR ? WR.starts[clamp(r, 0, WR.n)] : r; }
+  function vCount() { return WR ? WR.total : (V ? V.n : 1); }
+  function segsOf(r) { return WR && WR.segs[r] ? WR.segs[r] : null; }
+  function nSeg(r) { var sg = segsOf(r); return sg ? sg.length : 1; }
+  function segOf(r, c) { var sg = segsOf(r); if (!sg) return 0; var k = sg.length - 1; while (k > 0 && sg[k] > c) k--; return k; }
+  function rowAt(vr) {
+    if (!WR) return vr;
+    var lo = 0, hi = WR.n - 1;
+    while (lo < hi) { var mid = (lo + hi + 1) >> 1; if (WR.starts[mid] <= vr) lo = mid; else hi = mid - 1; }
+    return lo;
+  }
+  function yRow(r) { return padT + vTop(r) * lh; }
+  function yAt(r, c) { return padT + (vTop(r) + segOf(r, c)) * lh; }
+  function xAt(r, c, sd) {
+    var sg = segsOf(r);
+    if (!sg || V.side) return xOf(c, sd);
+    var k = segOf(r, c);
+    return textX + (c - sg[k] + (k ? WR.ind[r] : 0)) * cw;
+  }
+  /* the pieces of row r between columns c0 and c1 as { y, x0, x1 }, one per visual row (selection, find, problems) */
+  function spans(r, c0, c1, sd) {
+    var sg = segsOf(r);
+    if (!sg || V.side) { var xs = clipX(xOf(c0, sd), xOf(c1, sd), sd); return [{ y: yRow(r), x0: xs[0], x1: xs[1] }]; }
+    var out = [], len = (V.text(r, sd) || '').length;
+    for (var k = 0; k < sg.length; k++) {
+      var a = sg[k], b = k + 1 < sg.length ? sg[k + 1] : Math.max(len + 1, c1);
+      var lo = Math.max(a, c0), hi = Math.min(b, c1);
+      if (hi <= lo) continue;
+      var off = k ? WR.ind[r] : 0;
+      out.push({ y: padT + (vTop(r) + k) * lh, x0: textX + (lo - a + off) * cw, x1: textX + (hi - a + off) * cw });
+    }
+    return out;
+  }
+  /* Rulers: faint lines at the chosen columns, under the rows */
+  function layoutRulers() {
+    var cols = special || (V && V.side) ? [] : R.lines.rulers;
+    var key = cols.join(',') + '|' + textX + '|' + cw;
+    if (rulersEl._key === key) return;
+    rulersEl._key = key;
+    rulersEl.textContent = '';
+    cols.forEach(function (c) { rulersEl.appendChild(h('i', { class: 'pmw-ed-ruler', style: { left: Math.round(textX + c * cw) + 'px' } })); });
   }
   function maxLineNo() {
     var m = 1;
@@ -1368,7 +1896,8 @@ function mountEditor(host, st, api) {
   function visibleRange() {
     var top = geo.st, hgt = geo.ch;
     var a = Math.floor((top - padT) / lh) - 24, b = Math.ceil((top + hgt - padT) / lh) + 24;
-    return { a: clamp(a, 0, Math.max(0, V.n - 1)), b: clamp(b, 0, V.n - 1) };
+    a = clamp(a, 0, Math.max(0, vCount() - 1)); b = clamp(b, 0, Math.max(0, vCount() - 1));
+    return { a: clamp(rowAt(a), 0, Math.max(0, V.n - 1)), b: clamp(rowAt(b), 0, V.n - 1) };
   }
   function renderRows(force) {
     if (special || !V) return;
@@ -1377,13 +1906,22 @@ function mountEditor(host, st, api) {
     if (!force && rg.a === rendered.a && rg.b === rendered.b) return;
     rowEls.forEach(function (el, r) { if (r < rg.a || r > rg.b) { el.remove(); rowEls.delete(r); } });
     var frag = doc.createDocumentFragment(), first = -1;
-    var revealTop = revealPending ? Math.floor((geo.st - padT) / lh) : 0;
+    /* the reveal (Lines arrive when a file opens): it starts with the first rows drawn and runs its course even when
+       the rows are drawn again meanwhile (the tab's first resize, a font arriving): a row made again mid-reveal picks
+       its animation up where it was (a negative delay), so nothing restarts or vanishes */
+    if (revealPending) {
+      revealPending = false;
+      revealAt = nowMs(); revealTop = rowAt(Math.max(0, Math.floor((geo.st - padT) / lh)));
+      clearTimeout(timers.reveal);
+      timers.reveal = setTimeout(function () { revealAt = 0; rowsEl.querySelectorAll('.is-reveal').forEach(function (x) { x.classList.remove('is-reveal'); x.style.animationDelay = ''; }); }, 900);
+    }
+    var since = revealAt ? nowMs() - revealAt : -1;
     for (var r = rg.a; r <= rg.b && V.n; r++) {
       if (rowEls.has(r)) continue;
       var el = mode === 'diff' ? (V.side ? makeSideRow(r) : makeInlineRow(r)) : makeSourceRow(r);
-      if (revealPending && r >= revealTop) {
+      if (since >= 0 && since < 900 && r >= revealTop) {
         var k = r - Math.max(0, revealTop);
-        if (k < 60) { el.classList.add('is-reveal'); el.style.animationDelay = (Math.min(k, 40) * 8) + 'ms'; }
+        if (k < 60) { el.classList.add('is-reveal'); el.style.animationDelay = (Math.min(k, 40) * 8 - since) + 'ms'; }
       }
       rowEls.set(r, el);
       frag.appendChild(el);
@@ -1391,27 +1929,75 @@ function mountEditor(host, st, api) {
     }
     rowsEl.appendChild(frag);
     rendered = rg;
-    if (revealPending) { revealPending = false; clearTimeout(timers.reveal); timers.reveal = setTimeout(function () { rowsEl.querySelectorAll('.is-reveal').forEach(function (x) { x.classList.remove('is-reveal'); x.style.animationDelay = ''; }); }, 900); }
   }
   function rowBase(r, cls) {
     var el = doc.createElement('div');
     el.className = 'pmw-ed-row' + (cls ? ' ' + cls : '');
-    el.style.top = (padT + r * lh) + 'px';
+    el.style.top = yRow(r) + 'px';
+    var ns = nSeg(r);
+    if (ns > 1) el.style.height = (ns * lh) + 'px';
     el.setAttribute('data-r', r);
     return el;
+  }
+  /* the number a row's gutter shows: none with Line numbers off; with Count from the caret, the distance from the
+     caret's line (which keeps its own number) */
+  function lineLabel(r) {
+    if (!R.lines.numbers) return null;
+    if (R.lines.relative && mode === 'file' && r !== caret.r) return Math.abs(r - caret.r);
+    return r + 1;
   }
   function gutter(num, sign, cls, title) {
     var g = doc.createElement('span');
     g.className = 'pmw-ed-gut';
     var ln = doc.createElement('span');
     ln.className = 'pmw-ed-ln' + (cls ? ' ' + cls : '');
-    ln.textContent = num == null ? '' : String(num);
+    ln.textContent = num == null || !R.lines.numbers ? '' : String(num);
     var sg = doc.createElement('span');
     sg.className = 'pmw-ed-sg';
     sg.textContent = sign || '';
     if (title) sg.setAttribute('data-title', title);
     g.appendChild(ln); g.appendChild(sg);
     return g;
+  }
+  /* a line as the Editor look draws it: colour by meaning, bracket pair colours and dotted spaces (decorateLine) */
+  function decorated(text, toks, lineForBrackets) {
+    // a line of the text counts the brackets still open above it; a removed line or a change record's line (whose
+    // text is not the document's) starts from none
+    var wantBr = R.colors.bracketPairs && BRACKET_LANGS[d.lang];
+    var stack = !wantBr ? null : lineForBrackets != null && !d.chat ? bracketStack(d, lineForBrackets) : '';
+    return decorateLine(text || '', toks, { syntax: R.colors.syntax, stack: stack, ws: R.lines.whitespace, tabUnit: tabUnitNow() });
+  }
+  /* the text of a row, piece by piece when it wraps; guides behind it */
+  function paintText(el, r, text, toks, words, lineForBrackets) {
+    var dl = decorated(text, toks, lineForBrackets);
+    var tx = doc.createElement('span');
+    tx.className = 'pmw-ed-tx';
+    var sg = segsOf(r);
+    if (!sg) paintTokens(tx, dl.text, dl.toks, words);
+    else {
+      tx.classList.add('is-wrap');
+      for (var k = 0; k < sg.length; k++) {
+        var piece = doc.createElement('span');
+        piece.className = 'pmw-ed-piece';
+        if (k && WR.ind[r]) piece.style.paddingLeft = (WR.ind[r] * cw) + 'px';
+        paintTokens(piece, dl.text, dl.toks, words, sg[k], k + 1 < sg.length ? sg[k + 1] : dl.text.length);
+        tx.appendChild(piece);
+      }
+    }
+    addGuides(el, r, text);
+    el.appendChild(tx);
+  }
+  /* Indent guides: one 1 px line per level of indentation behind the text (a blank line takes its neighbours') */
+  function addGuides(el, r, text) {
+    if (R.lines.guides === 'off' || (V && V.side)) return;
+    var lv = mode === 'file' ? guideLevel(d.lines, r, IND.unit) : Math.floor(indentCols(text || '') / IND.unit);
+    if (lv <= 0) return;
+    var g = doc.createElement('span');
+    g.className = 'pmw-ed-ig';
+    g.style.left = textX + 'px';
+    g.style.width = Math.ceil(lv * IND.unit * cw) + 'px';
+    g.style.background = guideImage(lv, R.lines.guides === 'rainbow', cw, IND.unit);
+    el.appendChild(g);
   }
   function makeSourceRow(r) {
     var mk = marksOf(d);
@@ -1421,12 +2007,9 @@ function mountEditor(host, st, api) {
     var el = rowBase(r, (kind ? 'is-' + kind : '') + (dels ? ' has-del' : '') + (endDels ? ' has-del-end' : '') + (r === caret.r && mode === 'file' ? ' is-cur' : ''));
     var title = kind ? 'Line ' + KIND_WORD[kind] + ' since the last commit' : '';
     if (dels) title = (title ? title + '; ' : '') + dels + (dels === 1 ? ' line removed above' : ' lines removed above');
-    el.appendChild(gutter(r + 1, SIGN[kind] || '', null, title));
-    var tx = doc.createElement('span');
-    tx.className = 'pmw-ed-tx';
+    el.appendChild(gutter(lineLabel(r), SIGN[kind] || '', null, title));
     if (r - d.tokFrom > 300) usedGuess = true;
-    paintTokens(tx, d.lines[r], tokensOf(d, r, true), null);
-    el.appendChild(tx);
+    paintText(el, r, d.lines[r], tokensOf(d, r, true), null, r);
     return el;
   }
   function makeInlineRow(r) {
@@ -1435,10 +2018,8 @@ function mountEditor(host, st, api) {
     var el = rowBase(r, 'is-' + row.k + (focusBand && focusBand.r === r ? ' is-focusrow' : ''));
     var num = row.k === 'del' ? row.o : row.n;
     el.appendChild(gutter(num, row.k === 'ctx' ? '' : SIGN[row.k], row.k === 'del' ? 'is-old' : null));
-    var tx = doc.createElement('span');
-    tx.className = 'pmw-ed-tx';
-    paintTokens(tx, row.t, row.tk, row.w);
-    el.appendChild(tx);
+    // brackets are counted through the current text, so removed lines take none
+    paintText(el, r, row.t, row.tk, row.w, row.k !== 'del' && row.n ? row.n - 1 : null);
     return el;
   }
   function makeSideRow(r) {
@@ -1454,7 +2035,8 @@ function mountEditor(host, st, api) {
         hf.appendChild(gutter(cell.n, kind === 'ctx' ? '' : SIGN[kind], sd === 'l' ? 'is-old' : null));
         var tx = doc.createElement('span');
         tx.className = 'pmw-ed-tx';
-        paintTokens(tx, cell.t, cell.tk, cell.w);
+        var dl = decorated(cell.t, cell.tk, sd === 'r' && cell.n ? cell.n - 1 : null);
+        paintTokens(tx, dl.text, dl.toks, cell.w);
         hf.appendChild(tx);
       }
       el.appendChild(hf);
@@ -1480,7 +2062,7 @@ function mountEditor(host, st, api) {
     return el;
   }
 
-  /* ==== overlays: the caret line, the selection, find hits, the focus band, the caret ==== */
+  /* ==== overlays: the caret line, the selection, find hits, the focus band, problems, the active guide, the caret ==== */
   function selRange() {
     if (!anchor || (anchor.r === caret.r && anchor.c === caret.c)) return null;
     var a = anchor, b = caret;
@@ -1496,18 +2078,27 @@ function mountEditor(host, st, api) {
     var lo = (sd === 'l' ? 0 : half) + gutS, hi = sd === 'l' ? half : contentW;
     return [Math.max(lo, x0), Math.min(hi, x1)];
   }
+  function box(cls, y, x0, x1, extra) {
+    var st0 = { top: y + 'px', left: x0 + 'px', width: Math.max(0, x1 - x0) + 'px' };
+    if (extra) for (var k in extra) st0[k] = extra[k];
+    return h('i', { class: cls, style: st0 });
+  }
   function renderOverlays() {
     if (special || !V) return;
     ov.textContent = '';
     selsEl.textContent = '';
+    diagLayer.textContent = '';
     var rg = visibleRange();
-    var frag = doc.createDocumentFragment(), sfrag = doc.createDocumentFragment();
-    var showCur = focused && mode === 'file' && !selRange();
+    var frag = doc.createDocumentFragment(), sfrag = doc.createDocumentFragment(), dfrag = doc.createDocumentFragment();
+    /* Highlight the current line: the band (Line and number, Line only); the number (Line and number, Number only) */
+    var hl = R.lines.highlight;
+    var showCur = (focused || customizing) && mode === 'file' && !selRange() && (hl === 'all' || hl === 'line');
     curEl.hidden = !showCur;
-    if (showCur) curEl.style.top = (padT + caret.r * lh) + 'px';
+    if (showCur) { curEl.style.top = yRow(caret.r) + 'px'; curEl.style.height = (nSeg(caret.r) * lh) + 'px'; }
     focusEl.hidden = !focusBand;
     if (focusBand) {
-      focusEl.style.top = (padT + focusBand.r * lh) + 'px';
+      focusEl.style.top = yRow(focusBand.r) + 'px';
+      focusEl.style.height = (nSeg(focusBand.r) * lh) + 'px';
       focusEl.classList.toggle('is-fading', !!focusBand.fading);
     }
     var s = selRange();
@@ -1517,49 +2108,158 @@ function mountEditor(host, st, api) {
         if (t == null) continue;
         var c0 = r === s.a.r ? s.a.c : 0, c1 = r === s.b.r ? s.b.c : t.length + 1;
         if (c1 <= c0) continue;
-        var xs = clipX(xOf(c0, side), xOf(c1, side), side);
-        if (xs[1] <= xs[0]) continue;
-        sfrag.appendChild(h('i', { class: 'pmw-ed-sel', style: { top: (padT + r * lh) + 'px', left: xs[0] + 'px', width: (xs[1] - xs[0]) + 'px' } }));
+        spans(r, c0, c1, side).forEach(function (p) {
+          if (p.x1 <= p.x0) return;
+          sfrag.appendChild(box('pmw-ed-sel', p.y, p.x0, p.x1));
+        });
+        /* Show spaces: In the selection draws the dots of the selected spaces only */
+        if (R.lines.whitespace === 'selection' && !V.side) dotsIn(frag, r, t, c0, Math.min(c1, t.length));
       }
     }
     if (find.open && find.hits.length) {
       var lo = lowerBound(find.hits, rg.a), cur = find.hits[find.cur];
       for (var i = lo; i < find.hits.length && find.hits[i].r <= rg.b; i++) {
         var hh = find.hits[i];
-        var hx = clipX(xOf(hh.s, hh.side), xOf(hh.e, hh.side), hh.side);
-        if (hx[1] <= hx[0]) continue;
-        frag.appendChild(h('i', { class: 'pmw-ed-hit' + (hh === cur ? ' is-cur' : ''), style: { top: (padT + hh.r * lh) + 'px', left: hx[0] + 'px', width: (hx[1] - hx[0]) + 'px' } }));
+        spans(hh.r, hh.s, hh.e, hh.side).forEach(function (p) {
+          if (p.x1 <= p.x0) return;
+          frag.appendChild(box('pmw-ed-hit' + (hh === cur ? ' is-cur' : ''), p.y, p.x0, p.x1));
+        });
       }
+    }
+    /* problems (Problems to highlight): a wavy line under the word each one names, file view only */
+    diagRects = [];
+    if (mode === 'file') {
+      var show = DIAG_SHOW[R.behavior.diagnostics] || {};
+      problemsOf(d).forEach(function (it) {
+        var line = (it.line || 1) - 1;
+        if (!show[it.sev] || line < rg.a || line > rg.b || line >= d.lines.length) return;
+        var text = d.lines[line] || '', c = clamp((it.col || 1) - 1, 0, Math.max(0, text.length - 1));
+        var e = c; while (e < text.length && /[\w$.:]/.test(text.charAt(e))) e++;
+        if (e === c) e = Math.min(text.length, c + 1);
+        spans(line, c, Math.max(e, c + 1), 'r').forEach(function (p) {
+          dfrag.appendChild(box('pmw-ed-diag is-' + it.sev, p.y, p.x0, p.x1));
+          diagRects.push({ y: p.y, x0: p.x0, x1: p.x1, it: it });
+        });
+      });
     }
     ov.appendChild(frag);
     selsEl.appendChild(sfrag);
+    diagLayer.appendChild(dfrag);
+    placeGuide();
     placeCaret();
+  }
+  function dotsIn(frag, r, t, c0, c1) {
+    spans(r, c0, c1, 'r').forEach(function (p) {
+      var from = colAtX(r, p.x0, p.y), to = colAtX(r, p.x1, p.y), piece = '';
+      var tu = tabUnitNow(), lead = t.search(/\S/); if (lead < 0) lead = t.length;
+      for (var i = from; i < to; i++) {
+        if (tu > 1 && i < lead && i % tu === 0 && i + tu <= lead) { piece += WS_TAB + '        '.slice(0, Math.min(tu, to - i) - 1); i += tu - 1; continue; }
+        piece += t.charAt(i) === ' ' ? WS_DOT : ' ';
+      }
+      if (piece.length > to - from) piece = piece.slice(0, to - from);
+      if (piece.indexOf(WS_DOT) < 0) return;
+      frag.appendChild(h('i', { class: 'pmw-ed-wsdots', text: piece, style: { top: p.y + 'px', left: p.x0 + 'px' } }));
+    });
+  }
+  /* the column at x on the visual row whose top is y (the inverse of xAt) */
+  function colAtX(r, x, y) {
+    var sg = segsOf(r);
+    if (!sg) return Math.round((x - textX) / cw);
+    var k = clamp(Math.round((y - yRow(r)) / lh), 0, sg.length - 1);
+    return sg[k] + Math.round((x - textX) / cw) - (k ? WR.ind[r] : 0);
   }
   function lowerBound(hits, r) {
     var lo = 0, hi = hits.length;
     while (lo < hi) { var mid = (lo + hi) >> 1; if (hits[mid].r < r) lo = mid + 1; else hi = mid; }
     return lo;
   }
-  var lastCurRow = -1;
+  /* Light the guide of the block I'm in: the guide one level left of the caret's text, over the lines around it that
+     sit deeper (a line that opens a block lights the block it opens) */
+  var guideKey = '';
+  function placeGuide() {
+    var on = R.lines.guides !== 'off' && R.lines.activeIndent && mode === 'file' && !special;
+    // the block only changes with the caret's line, the text, the layout or the choice: scrolling reuses it
+    var key = on ? caret.r + '|' + d.version + '|' + R.lines.guides + '|' + textX + '|' + cw + '|' + lh + '|' + padT + '|' + vCount() + '|' + (WR ? contentW : 0) + '|' + IND.unit : 'off';
+    if (key === guideKey) return;
+    guideKey = key;
+    var lines = d.lines, r = caret.r, a = -1;
+    if (on) {
+      var L = guideLevel(lines, r, IND.unit), next = r + 1;
+      while (next < lines.length && next < r + 400 && !/\S/.test(lines[next] || '')) next++;
+      a = next < lines.length && guideLevel(lines, next, IND.unit) > L && /\S/.test(lines[r] || '') ? L : L - 1;
+    }
+    if (a < 0) { activeGuide.hidden = true; return; }
+    var top = r, bot = r;
+    while (top > 0 && top > r - 2000 && guideLevel(lines, top - 1, IND.unit) > a) top--;
+    while (bot < lines.length - 1 && bot < r + 2000 && guideLevel(lines, bot + 1, IND.unit) > a) bot++;
+    if (top === r && guideLevel(lines, r, IND.unit) <= a) { activeGuide.hidden = true; return; }
+    activeGuide.hidden = false;
+    activeGuide.style.left = (Math.round(textX + a * IND.unit * cw)) + 'px';
+    activeGuide.style.top = yRow(top) + 'px';
+    activeGuide.style.height = (yRow(bot + 1) - yRow(top)) + 'px';
+    activeGuide.style.setProperty('--pmw-ed-ag', R.lines.guides === 'rainbow' ? 'var(--pmw-ed-bp-' + (a % 6) + ')' : 'var(--pmw-ed-guide-active)');
+  }
+  var lastCurRow = -1, caretPx = null, typingMove = false;
   function placeCaret() {
     if (lastCurRow !== caret.r) { lastCurRow = caret.r; markCurrentRow(); }
-    var show = focused && !special && V && V.text(caret.r, side) != null;
+    var show = (focused || customizing) && !special && V && V.text(caret.r, side) != null;
     caretEl.hidden = !show || composing;
-    if (!show) return;
-    var tf = 'translate(' + Math.round(xOf(caret.c, side) - 1) + 'px,' + (padT + caret.r * lh) + 'px)';
+    if (!show) { caretPx = null; return; }
+    var shape = R.caret.shape;
+    var x = Math.round(xAt(caret.r, caret.c, side) - (shape === 'line' ? 1 : 0)), y = yAt(caret.r, caret.c);
+    var tf = 'translate(' + x + 'px,' + y + 'px)';
     if (ime._tf !== tf) { ime._tf = tf; ime.style.transform = tf; }
     if (ime.readOnly === isEditable()) ime.readOnly = !isEditable();   // a read-only view takes no composition
     if (caretEl._tf !== tf) {
+      var from = caretPx;
       caretEl._tf = tf;
-      caretEl.style.transform = tf;
+      // typing never waits for a glide: a move made by an edit lands at once
+      if (typingMove) { caretEl.classList.add('no-glide'); caretEl.style.transform = tf; void caretEl.offsetWidth; caretEl.classList.remove('no-glide'); }
+      else caretEl.style.transform = tf;
       caretEl.classList.remove('is-blink'); void caretEl.offsetWidth; caretEl.classList.add('is-blink');
+      caretPx = { x: x, y: y, st: geo.st };
+      if (pendingTrail && from) spawnTrail(pendingTrail.from || from, caretPx);
     }
+    pendingTrail = null; typingMove = false;
     var ch = (V.text(caret.r, side) || '').charAt(caret.c) || ' ';
     caretEl.setAttribute('data-ch', ch);
   }
   function markCurrentRow() {
     if (mode !== 'file') return;
-    rowEls.forEach(function (el, r) { el.classList.toggle('is-cur', r === caret.r); });
+    var rel = R.lines.relative && R.lines.numbers;
+    rowEls.forEach(function (el, r) {
+      el.classList.toggle('is-cur', r === caret.r);
+      if (rel) { var ln = el.querySelector('.pmw-ed-ln'); if (ln) { var t = String(lineLabel(r)); if (ln.textContent !== t) ln.textContent = t; } }
+    });
+    if (R.lines.guides !== 'off' && R.lines.activeIndent) placeGuide();
+  }
+
+  /* ==== the caret's trail (Trail when the caret jumps): a brief streak from where the caret was to where it went,
+     for a jump of several lines the reader did not point at (find, go to line, a change, a page, a sticky line). Its
+     tail is held to the visible part, so a jump from far away comes in from the edge. Reduced Motion draws none ==== */
+  var pendingTrail = null;
+  function jumpSoon() {
+    if (R.caret.trail === 'off' || !caretPx) return;
+    pendingTrail = { from: { x: caretPx.x, y: caretPx.y, st: geo.st } };
+  }
+  function spawnTrail(from, to) {
+    var kind = R.caret.trail;
+    if (kind === 'off') return;
+    var top = geo.st + headH + stickyH, bot = geo.st + geo.ch;
+    // the tail as the reader saw it: the same place on the screen it held before the scroll, kept on the screen
+    var fy = clamp(from.y - from.st + geo.st, top - lh, bot), fx = from.x;
+    var dy = to.y - fy, dx = to.x - fx;
+    if (Math.abs(dy) < lh * 3 && Math.abs(dx) < cw * 24) return;
+    var len = Math.sqrt(dx * dx + dy * dy), ang = Math.atan2(dy, dx) * 180 / Math.PI;
+    var tr = h('i', { class: 'pmw-ed-trail is-' + kind, style: { width: Math.round(len) + 'px',
+      transform: 'translate(' + Math.round(fx) + 'px,' + Math.round(fy + lh / 2) + 'px) rotate(' + ang + 'deg)' } }, [h('b')]);
+    caretLayer.appendChild(tr);
+    if (kind === 'phosphor') {
+      var ghost = h('i', { class: 'pmw-ed-ghost', style: { transform: 'translate(' + Math.round(fx) + 'px,' + Math.round(fy) + 'px)' } });
+      caretLayer.appendChild(ghost);
+      setTimeout(function () { ghost.remove(); }, 700);
+    }
+    setTimeout(function () { tr.remove(); }, 700);
   }
 
   /* ==== the scroll track (the minimap scrollbar): one mapping for bars, marks and the thumb ==== */
@@ -1585,7 +2285,7 @@ function mountEditor(host, st, api) {
   function colors() {
     if (colorCache) return colorCache;
     var out = {};
-    ['mm-ink', 'add-fg', 'mod-fg', 'del-fg', 'conf-fg', 'hit-mark', 'caret-mark'].forEach(function (k) {
+    ['mm-ink', 'add-fg', 'mod-fg', 'del-fg', 'conf-fg', 'hit-mark', 'caret-mark', 'diag-error', 'diag-warn', 'diag-info'].forEach(function (k) {
       probe.style.color = 'var(--pmw-ed-' + k + ')';
       out[k] = getComputedStyle(probe).color;
     });
@@ -1611,10 +2311,10 @@ function mountEditor(host, st, api) {
     var ctx = canvas.getContext('2d');
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, tw, th);
-    var col = colors(), g = trackGeom(), n = V.n;
+    var col = colors(), g = trackGeom(), n = V.n, vn = vCount();
     var full = root.getAttribute('data-track') === 'full';
     var laneX = 3, laneW = full ? 13 : 0, markX = full ? tw - 5 : 3, markW = 4;
-    var pitch = g.scrollable ? lh * g.k : Math.min(3, th / Math.max(n, 1));
+    var pitch = g.scrollable ? lh * g.k : Math.min(3, th / Math.max(vn, 1));
     var y0 = g.scrollable ? (padT - headH) * g.k : 0;
     var kindColor = { add: col['add-fg'], mod: col['mod-fg'], del: col['del-fg'], conf: col['conf-fg'] };
     function textFor(r) {
@@ -1622,28 +2322,34 @@ function mountEditor(host, st, api) {
       var row = V.rows[r];
       return row.t != null && (row.k === 'ctx' || row.k === 'add' || row.k === 'del') ? row.t : row.R ? row.R.t : row.L ? row.L.t : '';
     }
+    function yFor(r) { return y0 + vTop(r) * pitch; }
     if (laneW) {
       var scale = laneW / 80;
       if (pitch >= 1) {
         for (var r = 0; r < n; r++) {
-          var y = y0 + r * pitch;
-          if (y > th) break;
+          var yr = yFor(r);
+          if (yr > th) break;
           var t = textFor(r) || '';
-          var len = t.length; if (!len) continue;
-          var ind = len - t.replace(/^\s+/, '').length;
-          if (ind >= len) continue;
-          var kd = rowKindFor(r);
+          if (!t.length) continue;
+          var kd = rowKindFor(r), sg = segsOf(r);
           ctx.globalAlpha = kd ? 0.62 : col.inkA;
           ctx.fillStyle = kd ? kindColor[kd] : col['mm-ink'];
           var bh = Math.max(pitch - (pitch >= 3 ? 1 : 0), 1);
-          ctx.fillRect(laneX + Math.min(ind, 70) * scale, y, Math.max(Math.min(len - ind, 80 - Math.min(ind, 70)) * scale, 1), bh);
+          // a wrapped line draws each of its pieces on its own row, as the code does
+          for (var k = 0; k < (sg ? sg.length : 1); k++) {
+            var a0 = sg ? sg[k] : 0, b0 = sg && k + 1 < sg.length ? sg[k + 1] : t.length;
+            var piece = t.slice(a0, b0), lead = piece.length - piece.replace(/^\s+/, '').length;
+            var ind = (k ? WR.ind[r] : 0) + lead, len = piece.replace(/\s+$/, '').length - lead;
+            if (len <= 0) continue;
+            ctx.fillRect(laneX + Math.min(ind, 70) * scale, yr + k * pitch, Math.max(Math.min(len, 80 - Math.min(ind, 70)) * scale, 1), bh);
+          }
         }
       } else {
         // very long documents: one pixel row takes the longest line and the strongest kind under it
         var rank = { '': 0, add: 1, mod: 2, del: 3, conf: 4 };
         var acc = {}, kinds = {};
         for (var r2 = 0; r2 < n; r2++) {
-          var py = Math.floor(y0 + r2 * pitch);
+          var py = Math.floor(yFor(r2));
           var t2 = textFor(r2) || '';
           var ind2 = t2.length - t2.replace(/^\s+/, '').length;
           var w2 = Math.max(0, t2.length - ind2);
@@ -1661,35 +2367,42 @@ function mountEditor(host, st, api) {
         });
       }
     }
-    // the mark lane: changes, find hits, the caret line
+    // the mark lane: changes, find hits, problems, the caret line
     ctx.globalAlpha = 1;
     var markH = Math.max(pitch, 2);
     for (var r3 = 0; r3 < n; r3++) {
       var k3 = rowKindFor(r3);
       if (!k3) continue;
       ctx.fillStyle = kindColor[k3];
-      ctx.fillRect(markX, Math.floor(y0 + r3 * pitch), markW, markH);
+      ctx.fillRect(markX, Math.floor(yFor(r3)), markW, Math.max(markH, nSeg(r3) * pitch));
     }
     if (mode === 'file') {
       var mk = marksOf(d);
       if (mk) Object.keys(mk.dels).forEach(function (at) {
         ctx.fillStyle = kindColor.del;
-        ctx.fillRect(markX - 1, Math.max(0, Math.floor(y0 + (+at) * pitch) - 1), markW + 1, 2);
+        ctx.fillRect(markX - 1, Math.max(0, Math.floor(yFor(+at)) - 1), markW + 1, 2);
       });
     }
     if (find.open && find.hits.length) {
       ctx.fillStyle = col['hit-mark'];
       var lastY = -9;
       find.hits.forEach(function (hh, i) {
-        var yy = Math.floor(y0 + hh.r * pitch);
+        var yy = Math.floor(y0 + (vTop(hh.r) + segOf(hh.r, hh.s)) * pitch);
         if (yy === lastY && i !== find.cur) return;
         lastY = yy;
         ctx.fillRect(i === find.cur ? markX - 2 : markX, yy, i === find.cur ? markW + 2 : markW, Math.max(markH, 2));
       });
     }
     if (mode === 'file') {
+      var show = DIAG_SHOW[R.behavior.diagnostics] || {};
+      problemsOf(d).forEach(function (it) {
+        var line = (it.line || 1) - 1;
+        if (!show[it.sev] || line >= d.lines.length) return;
+        ctx.fillStyle = col['diag-' + (it.sev === 'warn' ? 'warn' : it.sev === 'info' ? 'info' : 'error')];
+        ctx.fillRect(full ? laneX - 2 : 1, Math.floor(yFor(line)), 3, Math.max(markH, 3));
+      });
       ctx.fillStyle = col['caret-mark'];
-      ctx.fillRect(full ? laneX : 1, Math.floor(y0 + caret.r * pitch + Math.max(pitch, 1) / 2), full ? tw - laneX - 1 : tw - 2, 1);
+      ctx.fillRect(full ? laneX : 1, Math.floor(y0 + (vTop(caret.r) + segOf(caret.r, caret.c)) * pitch + Math.max(pitch, 1) / 2), full ? tw - laneX - 1 : tw - 2, 1);
     }
   }
   function queueDraw() {
@@ -1733,6 +2446,7 @@ function mountEditor(host, st, api) {
   track.addEventListener('wheel', function (e) {
     e.preventDefault();
     var unit = e.deltaMode === 1 ? lh : e.deltaMode === 2 ? geo.ch : 1;
+    if (notch(e)) { wheelGlide(e, unit); return; }
     setTop(geo.st + (e.deltaY * unit));
     setLeft(geo.sl + (e.deltaX * unit));
   }, { passive: false });
@@ -1774,10 +2488,10 @@ function mountEditor(host, st, api) {
   });
 
   /* ==== sticky scroll ==== */
-  function topRow() { return Math.max(0, Math.floor((geo.st + headH - padT) / lh + 0.001)); }
+  function topRow() { return rowAt(Math.max(0, Math.floor((geo.st + headH - padT) / lh + 0.001))); }
   function updateSticky() {
-    var on = !!setting('editor.stickyScroll', true) && mode === 'file' && !special && (geo.ch - headH) >= 240;
-    var max = clamp(+setting('editor.stickyScroll.maxLines', 3) || 3, 1, 5);
+    var on = R.lines.sticky && mode === 'file' && !special && (geo.ch - headH) >= 240;
+    var max = clamp(+R.lines.stickyLines || 3, 1, 5);
     var rows = [], shift = 0;
     if (on) {
       var scopes = scopesOf(d), first = topRow();
@@ -1790,11 +2504,11 @@ function mountEditor(host, st, api) {
       var last = rows[rows.length - 1];
       if (last) {
         // push-up: the last sticky row slides out as its scope's end passes (scroll-linked, so it stays under Reduced Motion)
-        var endY = padT + (last.end + 1) * lh - geo.st - headH;
+        var endY = yRow(last.end + 1) - geo.st - headH;
         shift = Math.min(0, endY - rows.length * lh);
       }
     }
-    var key = rows.map(function (s) { return s.start; }).join(',') + '|' + shift + '|' + geo.sl + '|' + d.version;
+    var key = rows.map(function (s) { return s.start; }).join(',') + '|' + shift + '|' + geo.sl + '|' + d.version + '|' + lookSig;
     if (sticky._key === key) return;
     sticky._key = key;
     stickyRows = rows;
@@ -1809,12 +2523,13 @@ function mountEditor(host, st, api) {
       el.className = 'pmw-ed-row pmw-ed-srow';
       el.style.top = (i * lh) + 'px';
       el.setAttribute('data-line', s.start);
-      var g = gutter(s.start + 1, '', null);
+      var g = gutter(R.lines.numbers ? s.start + 1 : null, '', null);
       g.style.transform = 'translateX(' + geo.sl + 'px)';
       el.appendChild(g);
       var tx = doc.createElement('span');
       tx.className = 'pmw-ed-tx';
-      paintTokens(tx, d.lines[s.start], tokensOf(d, s.start, true), null);
+      var dl = decorated(d.lines[s.start], tokensOf(d, s.start, true), s.start);
+      paintTokens(tx, dl.text, dl.toks, null);
       el.appendChild(tx);
       inner.appendChild(el);
     });
@@ -1826,8 +2541,9 @@ function mountEditor(host, st, api) {
     if (!row) return;
     e.preventDefault();
     var line = +row.getAttribute('data-line');
+    jumpSoon();
     setCaret({ r: line, c: firstNonSpace(d.lines[line]) }, false);
-    setTop(padT + line * lh - headH);
+    glideTo(yRow(line) - headH);
     scroller.focus({ preventScroll: true });
   });
 
@@ -1862,33 +2578,88 @@ function mountEditor(host, st, api) {
     clearTimeout(scrollIdle);
     scrollIdle = setTimeout(function () { hbar.classList.remove('is-active'); }, 900);
     if (!timers.sym) timers.sym = requestAnimationFrame(function () { timers.sym = 0; updateSymbol(); });
+    if (!diagCard.hidden) diagCard.hidden = true;
   }
   scroller.addEventListener('scroll', onScroll, { passive: true });
+  /* Smooth scrolling (Editor look): a mouse wheel's notches, a page and a jump to a line glide to where they lead, an
+     eased approach that settles in about 150 ms and takes a new target at once; off, they land at once. A trackpad's
+     own fine-grained scrolling is the browser's and is never animated again. Reduced Motion: off */
+  var glide = { raf: 0, top: 0, left: null, mineTop: 0, mineLeft: 0 };
+  // a scroll the glide did not make since its last step (the scrollbar dragged, a find, a page key)
+  function glideOverruled() { return !!glide.raf && (Math.abs(scroller.scrollTop - glide.mineTop) > 1.5 || (glide.left != null && Math.abs(scroller.scrollLeft - glide.mineLeft) > 1.5)); }
+  function notch(e) { return e.deltaMode !== 0 || (Math.abs(e.deltaY) >= 50 && Math.round(e.deltaY) === e.deltaY); }
+  function glideTo(top, left) {
+    var tTop = clamp(top, 0, Math.max(0, geo.sh - geo.ch));
+    var tLeft = left == null ? null : clamp(left, 0, Math.max(0, geo.sw - geo.cwid));
+    if (!R.motion.smoothScroll || !visible) { cancelAnimationFrame(glide.raf); glide.raf = 0; setTop(tTop); if (tLeft != null) setLeft(tLeft); return; }
+    if (glideOverruled()) { glide.mineTop = scroller.scrollTop; glide.mineLeft = scroller.scrollLeft; }
+    glide.top = tTop; glide.left = tLeft;
+    if (glide.raf) return;
+    /* the approach runs on the clock, not the frame count: a slow frame (a busy machine, a software-drawn Glass) moves
+       as far as the time it took, so the glide still settles in about 150 ms. A scroll from anywhere else meanwhile (the
+       scrollbar dragged, a find, a page key) wins, and the glide lets go */
+    var last = -1;
+    glide.mineTop = scroller.scrollTop; glide.mineLeft = scroller.scrollLeft;
+    var step = function (now) {
+      if (!alive) return;
+      if (glideOverruled()) { glide.raf = 0; glide.left = null; return; }
+      var cur = scroller.scrollTop, cl = scroller.scrollLeft;
+      var dt = last < 0 ? 16 : Math.min(1000, Math.max(0, now - last)); last = now;
+      var k = 1 - Math.exp(-dt / 48);
+      var dy = glide.top - cur, done = Math.abs(dy) < 0.6;
+      setTop(done ? glide.top : cur + dy * k);
+      if (glide.left != null) {
+        var dx = glide.left - cl;
+        if (Math.abs(dx) < 0.6) { setLeft(glide.left); glide.left = null; } else { setLeft(cl + dx * k); done = false; }
+      }
+      glide.mineTop = scroller.scrollTop; glide.mineLeft = scroller.scrollLeft;
+      if (done) { glide.raf = 0; return; }
+      glide.raf = requestAnimationFrame(step);
+    };
+    glide.raf = requestAnimationFrame(step);
+  }
+  function wheelGlide(e, unit) {
+    // notches add up while a glide runs; after a scroll from elsewhere they start from where the view is now
+    var own = glide.raf && !glideOverruled();
+    var baseTop = own ? glide.top : scroller.scrollTop;
+    var baseLeft = own && glide.left != null ? glide.left : scroller.scrollLeft;
+    glideTo(baseTop + e.deltaY * unit, e.deltaX ? baseLeft + e.deltaX * unit : null);
+  }
   scroller.addEventListener('wheel', function (e) {
-    if (!V || !V.side) return;
-    var dx = e.shiftKey ? e.deltaY : e.deltaX;
-    if (!dx) return;
+    if (e.ctrlKey || preview) return;                  // Ctrl+wheel is the page's zoom
+    if (V && V.side) {
+      var dx = e.shiftKey ? e.deltaY : e.deltaX;
+      if (dx) {
+        e.preventDefault();
+        var r = scroller.getBoundingClientRect();
+        var sd = e.clientX - r.left < half ? 'l' : 'r';
+        var maxS = Math.max(0, padL + (V.maxCols + 2) * cw - (half - gutS));
+        if (sd === 'l') sxl = clamp(sxl + dx, 0, maxS); else sxr = clamp(sxr + dx, 0, maxS);
+        setVar('--pmw-ed-sxl', sxl + 'px');
+        setVar('--pmw-ed-sxr', sxr + 'px');
+        renderOverlays();
+        return;
+      }
+    }
+    if (!notch(e)) return;
     e.preventDefault();
-    var r = scroller.getBoundingClientRect();
-    var sd = e.clientX - r.left < half ? 'l' : 'r';
-    var maxS = Math.max(0, padL + (V.maxCols + 2) * cw - (half - gutS));
-    if (sd === 'l') sxl = clamp(sxl + dx, 0, maxS); else sxr = clamp(sxr + dx, 0, maxS);
-    setVar('--pmw-ed-sxl', sxl + 'px');
-    setVar('--pmw-ed-sxr', sxr + 'px');
-    renderOverlays();
+    wheelGlide(e, e.deltaMode === 1 ? lh : e.deltaMode === 2 ? geo.ch : 1);
   }, { passive: false });
 
-  function scrollToRow(r, how) {
-    var y = padT + r * lh;
-    var viewTop = geo.st + headH + stickyH, viewBot = geo.st + geo.ch - 10;
-    if (how === 'center') setTop(y - headH - (geo.ch - headH) / 2 + lh / 2);
-    else if (how === 'top') setTop(y - headH - stickyH);
-    else if (y < viewTop) setTop(y - headH - stickyH - lh);
-    else if (y + lh > viewBot) setTop(y + lh - geo.ch + 10 + lh);
+  function scrollToY(y, how, instant) {
+    var viewTop = geo.st + headH + stickyH, viewBot = geo.st + geo.ch - 10, to = null;
+    if (how === 'center') to = y - headH - (geo.ch - headH) / 2 + lh / 2;
+    else if (how === 'top') to = y - headH - stickyH;
+    else if (y < viewTop) to = y - headH - stickyH - lh;
+    else if (y + lh > viewBot) to = y + lh - geo.ch + 10 + lh;
+    if (to == null) return;
+    // a jump to a line (centred) glides with Smooth scrolling; keeping the caret in view never waits
+    if (how === 'center' && !instant) glideTo(to); else setTop(to);
   }
+  function scrollToRow(r, how, instant) { scrollToY(yRow(r), how, instant); }
   function ensureCaretVisible() {
-    scrollToRow(caret.r);
-    if (V.side) return;
+    scrollToY(yAt(caret.r, caret.c));
+    if (V.side || WR) return;
     var x = textX + caret.c * cw, left = geo.sl + gutW + 8, right = geo.sl + geo.cwid - 24;
     if (x < left) setLeft(Math.max(0, x - gutW - 40));
     else if (x > right) setLeft(x - geo.cwid + 64);
@@ -1899,7 +2670,7 @@ function mountEditor(host, st, api) {
     clearTimeout(focusTimer); clearTimeout(fadeTimer);
     focusBand = { r: r, fading: false };
     renderOverlays();
-    var ms = +setting('code.editing.goto-highlight-ms', 5000) || 5000;
+    var ms = +R.behavior.gotoHighlightMs || 5000;
     focusTimer = setTimeout(function () {
       if (!focusBand) return;
       if (reduced()) { focusBand = null; renderOverlays(); return; }
@@ -1912,7 +2683,7 @@ function mountEditor(host, st, api) {
   function resolveLayout(announceIt) {
     if (mode !== 'diff') return false;
     var w = host.clientWidth, min = +setting('editor.diff.sideBySideMin', SIDE_MIN_DEFAULT) || SIDE_MIN_DEFAULT;
-    var pick = diffLayoutPick || setting('editor.diff.layout', 'auto');
+    var pick = diffLayoutPick || R.behavior.diffLayout;
     var want;
     if (pick === 'inline') want = false;
     else if (pick === 'side') {
@@ -1927,7 +2698,7 @@ function mountEditor(host, st, api) {
       rebuild();
       if (keep.caret) caret = { r: rowForLine(keep.caret - 1), c: 0 };
       if (keep.focus && focusBand) focusBand.r = rowForLine(keep.focus - 1);
-      if (keep.top) setTop(padT + rowForLine(keep.top - 1) * lh - headH);
+      if (keep.top) setTop(yRow(rowForLine(keep.top - 1)) - headH);
       onScroll();
       refreshHeader();
     }
@@ -1945,7 +2716,7 @@ function mountEditor(host, st, api) {
     scroller.setAttribute('aria-readonly', d.readOnly || mode === 'diff' ? 'true' : 'false');
     anchor = null; side = 'r';
     if (mode === 'diff') {
-      var w = host.clientWidth, pick = diffLayoutPick || setting('editor.diff.layout', 'auto');
+      var w = host.clientWidth, pick = diffLayoutPick || R.behavior.diffLayout;
       sideNow = pick === 'side' ? w >= 600 : pick === 'inline' ? false : w >= (+setting('editor.diff.sideBySideMin', SIDE_MIN_DEFAULT) || SIDE_MIN_DEFAULT);
     }
     rebuild();
@@ -1996,6 +2767,7 @@ function mountEditor(host, st, api) {
     if (dir > 0) { for (var i = 0; i < list.length; i++) if (list[i] > cur) { idx = i; break; } if (idx < 0) idx = 0; }
     else { for (var j = list.length - 1; j >= 0; j--) if (list[j] < cur) { idx = j; break; } if (idx < 0) idx = list.length - 1; }
     var r = Math.min(list[idx], V.n - 1);
+    jumpSoon();
     setCaret({ r: r, c: 0 }, false);
     scrollToRow(r, 'center');
     PMW.announce('Change ' + (idx + 1) + ' of ' + list.length);
@@ -2069,19 +2841,40 @@ function mountEditor(host, st, api) {
       else if (p.c < t.length) p.c++; else if (p.r < V.n - 1) { p.r++; p.c = 0; }
       goalCol = -1;
     } else if (kind === 'up' || kind === 'down' || kind === 'pageup' || kind === 'pagedown') {
-      if (goalCol < 0) goalCol = p.c;
+      var page = kind === 'pageup' || kind === 'pagedown';
       var step = kind === 'up' ? -1 : kind === 'down' ? 1 : (kind === 'pageup' ? -1 : 1) * Math.max(1, Math.floor((geo.ch - headH - stickyH) / lh) - 1);
-      var nr = clamp(p.r + step, 0, V.n - 1);
-      if (nr === p.r && step < 0) { p.c = 0; goalCol = -1; }
-      else if (nr === p.r && step > 0) { p.c = lineLen(p.r); goalCol = -1; }
-      else { p.r = nr; p.c = Math.min(goalCol, lineLen(nr)); }
-      if (kind === 'pageup' || kind === 'pagedown') setTop(geo.st + (step * lh));
+      if (WR) {
+        // wrapped: up and down move by visual rows, keeping the column on screen
+        var k0 = segOf(p.r, p.c), sg0 = segsOf(p.r), vr = vTop(p.r) + k0;
+        if (goalCol < 0) goalCol = sg0 ? p.c - sg0[k0] + (k0 ? WR.ind[p.r] : 0) : p.c;
+        var vt = clamp(vr + step, 0, vCount() - 1);
+        if (vt === vr && step < 0) { p.c = 0; goalCol = -1; }
+        else if (vt === vr && step > 0) { p.c = lineLen(p.r); goalCol = -1; }
+        else {
+          var r2 = rowAt(vt), k2 = vt - vTop(r2), sg2 = segsOf(r2), len2 = lineLen(r2);
+          var a2 = sg2 ? sg2[k2] : 0, b2 = sg2 && k2 + 1 < sg2.length ? sg2[k2 + 1] - 1 : len2;
+          p.r = r2; p.c = clamp(a2 + goalCol - (k2 && WR ? WR.ind[r2] : 0), a2, Math.max(a2, b2));
+        }
+      } else {
+        if (goalCol < 0) goalCol = p.c;
+        var nr = clamp(p.r + step, 0, V.n - 1);
+        if (nr === p.r && step < 0) { p.c = 0; goalCol = -1; }
+        else if (nr === p.r && step > 0) { p.c = lineLen(p.r); goalCol = -1; }
+        else { p.r = nr; p.c = Math.min(goalCol, lineLen(nr)); }
+      }
+      if (page) {
+        // a page glides with Smooth scrolling; the caret lands where it will be in view
+        jumpSoon();
+        setCaret(p, extend);
+        glideTo(geo.st + (step * lh));
+        return;
+      }
     } else if (kind === 'home') {
-      if (ctrl) { p.r = 0; p.c = 0; }
+      if (ctrl) { jumpSoon(); p.r = 0; p.c = 0; }
       else { var fns = firstNonSpace(t); p.c = p.c === fns ? 0 : fns; }
       goalCol = -1;
     } else if (kind === 'end') {
-      if (ctrl) { p.r = V.n - 1; p.c = lineLen(p.r); } else p.c = t.length;
+      if (ctrl) { jumpSoon(); p.r = V.n - 1; p.c = lineLen(p.r); } else p.c = t.length;
       goalCol = -1;
     }
     setCaret(p, extend);
@@ -2094,9 +2887,19 @@ function mountEditor(host, st, api) {
     for (var r = s.a.r; r <= s.b.r; r++) {
       var t = V.text(r, side);
       if (t == null) continue;
-      out.push(t.slice(r === s.a.r ? s.a.c : 0, r === s.b.r ? s.b.c : t.length));
+      out.push(withTabs(t, r === s.a.r ? s.a.c : 0, r === s.b.r ? s.b.c : t.length));
     }
     return out.join('\n');
+  }
+  /* copied as drawn: where the indentation is drawn as tabs (tabUnitNow), each whole tab stop of it is copied as a tab
+     character (the customizer audit's E-TABS: Tabs copied spaces); a paste turns tabs back into stops (expandText) */
+  function withTabs(t, c0, c1) {
+    var u = tabUnitNow();
+    if (!u) return t.slice(c0, c1);
+    var lead = t.search(/\S/); if (lead < 0) lead = t.length;
+    var out = '', i = c0, end = Math.min(c1, lead);
+    while (i < end) { if (i % u === 0 && i + u <= end) { out += '\t'; i += u; } else { out += ' '; i++; } }
+    return out + t.slice(i, c1);
   }
   function selectAll() {
     anchor = { r: 0, c: 0 };
@@ -2133,6 +2936,7 @@ function mountEditor(host, st, api) {
     d.redo = [];
     anchor = null;
     caret = endPos;
+    typingMove = true;
     afterEdit();
   }
   function replaceSel(text, kind) {
@@ -2153,6 +2957,7 @@ function mountEditor(host, st, api) {
     caret = { r: sel.caret.r, c: sel.caret.c };
     anchor = sel.anchor ? { r: sel.anchor.r, c: sel.anchor.c } : null;
     to.push(u);
+    typingMove = true;
     afterEdit();
   }
   function afterEdit() {
@@ -2165,6 +2970,7 @@ function mountEditor(host, st, api) {
     markCurrentRow();
     setDirty(isDirty());
     d.views.forEach(function (v) { if (v !== self) v.docChanged(); });
+    scheduleAutosave();
     clearTimeout(timers.edit);
     timers.edit = setTimeout(function () {
       if (!alive) return;
@@ -2191,6 +2997,7 @@ function mountEditor(host, st, api) {
     d.savedLines = d.lines.slice();
     d.savedVersion = d.version;
     setDirty(false);
+    d.views.forEach(function (v) { if (v !== self && v.savedNow) v.savedNow(); });
     PMW.toast('Saved');
     PMW.announce(name + ' saved');
   }
@@ -2203,29 +3010,36 @@ function mountEditor(host, st, api) {
     var opener = /[{(\[]$/.test(before) || (d.lang === 'yaml' && /:$/.test(before)) || (d.lang === 'md' && false);
     var closer = /^\s*[}\])]/.test(after);
     if (opener && closer) {
-      replaceSel('\n' + ind + '    \n' + ind, 'enter');
-      caret = { r: caret.r - 1, c: ind.length + 4 };
+      replaceSel('\n' + ind + unitSpaces() + '\n' + ind, 'enter');
+      caret = { r: caret.r - 1, c: ind.length + unitNow() };
       anchor = null; renderOverlays(); updatePos();
       return;
     }
     var list = d.lang === 'md' && /^(\s*)([-*+]|\d+\.)\s+\S/.exec(t);
     if (list && c === t.length) { replaceSel('\n' + list[1] + (/\d/.test(list[2]) ? (parseInt(list[2], 10) + 1) + '.' : list[2]) + ' ', 'enter'); return; }
-    replaceSel('\n' + ind + (opener ? '    ' : ''), 'enter');
+    replaceSel('\n' + ind + (opener ? unitSpaces() : ''), 'enter');
   }
+  /* the indent unit now: the file's own (guessed again while a new file has none yet), or Tab size */
+  function unitNow() { if (!IND.own) resolveIndent(); return IND.unit; }
+  function unitSpaces() { return '        '.slice(0, unitNow()); }
   function typeTab(outdent) {
     var s = selRange();
-    if (!s && !outdent) { var spaces = 4 - (caret.c % 4); replaceSel(new Array(spaces + 1).join(' '), 'type'); return; }
+    var u = unitNow();
+    /* Indent with Tabs in a file with no indentation yet: its first level is a tab, and from then on it is a file
+       indented with tabs (Show spaces marks them so) */
+    if (IND.tabs && !d.tabbed && !IND.own && !d.lines.some(function (l) { return /^ +\S/.test(l); })) { d.tabbed = true; d.tabUnit = u; d.src = null; renderRows(true); }
+    if (!s && !outdent) { var spaces = u - (caret.c % u); replaceSel(new Array(spaces + 1).join(' '), 'type'); return; }
     var a = s ? s.a : caret, b = s ? s.b : caret;
     var lastLine = b.c === 0 && b.r > a.r ? b.r - 1 : b.r;
     var lines = d.lines.slice(a.r, lastLine + 1).map(function (l) {
-      if (outdent) return l.replace(/^ {1,4}/, '');
-      return l.length ? '    ' + l : l;
+      if (outdent) { var lead = indentCols(l), cut = lead % u || u; return l.slice(Math.min(lead, cut)); }
+      return l.length ? unitSpaces() + l : l;
     });
     var shift0 = lines[0].length - d.lines[a.r].length;
     var shiftN = lines[lines.length - 1].length - d.lines[lastLine].length;
     var keepAnchor = anchor ? { r: anchor.r, c: anchor.c } : null, keepCaret = { r: caret.r, c: caret.c };
     edit({ r: a.r, c: 0 }, { r: lastLine, c: d.lines[lastLine].length }, lines.join('\n'), 'indent');
-    function fix(p) { if (!p) return null; var sh = p.r === a.r ? shift0 : p.r === lastLine ? shiftN : (outdent ? -4 : 4); return { r: p.r, c: Math.max(0, p.c + (p.r >= a.r && p.r <= lastLine ? sh : 0)) }; }
+    function fix(p) { if (!p) return null; var sh = p.r === a.r ? shift0 : p.r === lastLine ? shiftN : (outdent ? -u : u); return { r: p.r, c: Math.max(0, p.c + (p.r >= a.r && p.r <= lastLine ? sh : 0)) }; }
     anchor = fix(keepAnchor); caret = fix(keepCaret);
     if (anchor) { anchor.c = Math.min(anchor.c, d.lines[anchor.r].length); }
     caret.c = Math.min(caret.c, d.lines[caret.r].length);
@@ -2237,7 +3051,7 @@ function mountEditor(host, st, api) {
     if (caret.c === 0) { if (caret.r === 0) return; edit({ r: caret.r - 1, c: d.lines[caret.r - 1].length }, caret, '', 'join'); return; }
     var t = d.lines[caret.r], from = caret.c - 1;
     if (word) from = wordLeft(t, caret.c);
-    else if (/^ +$/.test(t.slice(0, caret.c)) && caret.c % 4 === 0) from = caret.c - 4;
+    else if (/^ +$/.test(t.slice(0, caret.c))) { var bu = unitNow(); from = caret.c - (caret.c % bu || bu); }
     edit({ r: caret.r, c: Math.max(0, from) }, caret, '', 'del');
   }
   function typeDelete(word) {
@@ -2277,7 +3091,7 @@ function mountEditor(host, st, api) {
     e.preventDefault();
     if (t == null) return;
     if (!isEditable()) { noteReadOnly(); return; }
-    replaceSel(t.replace(/\r\n?/g, '\n').replace(/\t/g, '    '), 'paste');
+    replaceSel(expandText(t, unitNow(), caret.c), 'paste');
   });
 
   /* ==== keyboard ==== */
@@ -2327,7 +3141,7 @@ function mountEditor(host, st, api) {
     imeClear();
     if (!text) return;
     if (!isEditable()) { noteReadOnly(); return; }
-    replaceSel(String(text).replace(/\r\n?/g, '\n').replace(/\t/g, '    '), 'type');
+    replaceSel(expandText(text, unitNow(), caret.c), 'type');
   }
   ime.addEventListener('compositionstart', function () {
     composing = true;
@@ -2352,12 +3166,17 @@ function mountEditor(host, st, api) {
   function posAt(cx, cy) {
     var sr = scroller.getBoundingClientRect();
     var y = cy - sr.top + geo.st, xIn = cx - sr.left;
-    var r = clamp(Math.floor((y - padT) / lh), 0, Math.max(0, V.n - 1));
+    var vr = clamp(Math.floor((y - padT) / lh), 0, Math.max(0, vCount() - 1));
+    var r = clamp(rowAt(vr), 0, Math.max(0, V.n - 1));
     var sd = side, x;
     if (V.side) { sd = xIn < half ? 'l' : 'r'; x = xIn; }
     else x = xIn + geo.sl;
-    var t = V.text(r, sd) || '';
-    var c = clamp(Math.round((x - xOf(0, sd)) / cw), 0, t.length);
+    var t = V.text(r, sd) || '', c, sg = V.side ? null : segsOf(r);
+    if (sg) {
+      // a wrapped line: the piece under the pointer, its own indent taken off
+      var k = clamp(vr - vTop(r), 0, sg.length - 1), a = sg[k], b = k + 1 < sg.length ? sg[k + 1] - 1 : t.length;
+      c = clamp(a + Math.round((x - textX) / cw) - (k ? WR.ind[r] : 0), a, Math.max(a, b));
+    } else c = clamp(Math.round((x - xOf(0, sd)) / cw), 0, t.length);
     var inGutter = V.side ? ((sd === 'l' ? xIn : xIn - half) < gutS) : xIn < gutW;
     return { r: r, c: c, side: sd, inGutter: inGutter };
   }
@@ -2443,7 +3262,7 @@ function mountEditor(host, st, api) {
     setTop(keepTop);
     PMW.announce('Unchanged lines shown');
   }
-  scroller.addEventListener('focus', function () { focused = true; root.classList.add('is-focused'); renderOverlays(); });
+  scroller.addEventListener('focus', function () { focused = true; root.classList.add('is-focused'); renderOverlays(); if (!preview) lastUsed = instance; });
   scroller.addEventListener('blur', function () { focused = false; root.classList.remove('is-focused'); renderOverlays(); });
   scroller.addEventListener('mouseenter', function () { hbar.classList.add('is-hover'); });
   scroller.addEventListener('mouseleave', function () { hbar.classList.remove('is-hover'); });
@@ -2594,9 +3413,9 @@ function mountEditor(host, st, api) {
   }
   function revealHit(hh) {
     if (!hh) return;
-    var y = padT + hh.r * lh, top = geo.st + headH + stickyH + 40, bot = geo.st + geo.ch - 20;
-    if (y < top || y + lh > bot) scrollToRow(hh.r, 'center');
-    if (!V.side) {
+    var y = yAt(hh.r, hh.s), top = geo.st + headH + stickyH + 40, bot = geo.st + geo.ch - 20;
+    if (y < top || y + lh > bot) scrollToY(y, 'center');
+    if (!V.side && !WR) {
       var x = textX + hh.s * cw;
       if (x < geo.sl + gutW || x + (hh.e - hh.s) * cw > geo.sl + geo.cwid - 24) setLeft(Math.max(0, x - geo.cwid / 2));
     }
@@ -2605,6 +3424,7 @@ function mountEditor(host, st, api) {
     if (!find.hits.length) { if (find.open) runFind(false, true); return; }
     find.cur = (find.cur + dir + find.hits.length) % find.hits.length;
     var hh = find.hits[find.cur];
+    jumpSoon();
     caret = { r: hh.r, c: hh.s }; anchor = null; side = hh.side || side;
     paintCount();
     revealHit(hh);
@@ -2676,6 +3496,7 @@ function mountEditor(host, st, api) {
       if (t) {
         var r = mode === 'diff' ? rowForLine(t.line - 1) : t.line - 1;
         side = 'r';
+        jumpSoon();
         setCaret({ r: r, c: t.col - 1 }, false);
         scrollToRow(r, 'center');
         showFocus(r);
@@ -2715,8 +3536,9 @@ function mountEditor(host, st, api) {
     var r = mode === 'diff' ? rowForLine(line - 1) : clamp(line - 1, 0, d.lines.length - 1);
     var c = s.col != null ? Math.max(0, +s.col - 1) : (mode === 'file' ? firstNonSpace(d.lines[r]) : 0);
     side = 'r';
+    if (!o.initial) jumpSoon();
     setCaret({ r: r, c: c }, false);
-    scrollToRow(r, 'center');
+    scrollToRow(r, 'center', !!o.initial);
     showFocus(r);
   }
   function onResize(sz) {
@@ -2733,7 +3555,7 @@ function mountEditor(host, st, api) {
     measure();
     layout();
     renderRows(true);
-    setTop(padT + top * lh - headH);
+    setTop(yRow(top) - headH);
     sticky._key = null;
     updateSticky(); renderOverlays(); updateThumb(); updateHbar(); queueDraw();
   }
@@ -2749,7 +3571,7 @@ function mountEditor(host, st, api) {
     firstDone = true;
     measure();
     if (mode === 'diff') {
-      var w0 = host.clientWidth, pick0 = diffLayoutPick || setting('editor.diff.layout', 'auto');
+      var w0 = host.clientWidth, pick0 = diffLayoutPick || R.behavior.diffLayout;
       sideNow = pick0 === 'side' ? w0 >= 600 : pick0 === 'inline' ? false : w0 >= (+setting('editor.diff.sideBySideMin', SIDE_MIN_DEFAULT) || SIDE_MIN_DEFAULT);
       buildView();
       refreshHeader();
@@ -2758,7 +3580,7 @@ function mountEditor(host, st, api) {
     layout();
     if (st.top != null) {
       var topR = mode === 'diff' ? rowForLine(+st.top - 1) : +st.top - 1;
-      setTop(padT + topR * lh - headH);
+      setTop(yRow(topR) - headH);
     } else if (st.line != null || d.chat) {
       reveal({ line: st.line != null ? st.line : null, col: st.col }, { initial: true });
     }
@@ -2775,17 +3597,117 @@ function mountEditor(host, st, api) {
   }
   firstPaint();
 
+  /* ==== the Editor look applied (09-editor-look.js calls this whenever a layer or the look changes): what changed
+     decides what is redone; a change of face, size, spacing, numbers, wrapping or the minimap lays everything out again ==== */
+  var lookSig = '', geoSig = '';
+  function setAttr(el, n, v) { if (v === null || v === false || v === undefined) { if (el.hasAttribute(n)) el.removeAttribute(n); } else if (el.getAttribute(n) !== String(v)) el.setAttribute(n, String(v)); }
+  function applyAttrs() {
+    // the shadow rows read these on their hosts: caret shape, blink and movement, the current line, the look, glow
+    [scroller, sticky].forEach(function (el) {
+      setAttr(el, 'data-caret', R.caret.shape); setAttr(el, 'data-blink', R.caret.blink); setAttr(el, 'data-motion', R.caret.motion);
+      setAttr(el, 'data-curline', R.lines.highlight); setAttr(el, 'data-look', R.lookKey); setAttr(el, 'data-glow', R.motion.glow ? '' : null);
+    });
+    setVar('--pmw-ed-caret-w', R.caret.shape === 'line' ? R.caret.width + 'px' : Math.max(2, Math.round(cw)) + 'px');
+    /* Comments in italics, Keywords in bold: an explicit choice over the look's own (Follow look leaves the look's CSS);
+       bold keywords stay heavier than whatever weight the text has */
+    var it = R.colors.italicComments, bk = R.colors.boldKeywords;
+    setVar('--pmw-ed-com-style', it === true ? 'italic' : it === false ? 'normal' : null);
+    var lookBold = R.lookKey === 'retro' || R.lookKey === 'nier';
+    var boldNow = bk === null || bk === undefined ? lookBold : bk;
+    setVar('--pmw-ed-kw-weight', boldNow ? String(Math.min(800, Math.max(650, R.font.weight + 200))) : (bk === false || R.font.weight !== 400 ? 'inherit' : null));
+    setAttr(root, 'data-fx-scan', R.motion.scanlines ? '' : null);
+    applyDim();
+  }
+  // the Customize preview steps back only while its Step back plays (demoDim); a real editor while another panel has the focus
+  var demoDim = false;
+  function applyDim() { setAttr(root, 'data-dim', R.motion.inactiveDim && (preview ? demoDim : dimmed) ? '' : null); }
+  /* what of the colours needs the rows drawn again: token colours are CSS variables only (applyTokens), so a colour
+     slider being dragged repaints without rebuilding a row */
+  function colorSig() { var c = R.colors; return [c.syntax, c.bracketPairs, c.contrast, c.italicComments, c.boldKeywords]; }
+  function onLook(R2) {
+    var prev = R; R = R2;
+    if (!alive) return;
+    var reopened = resolveIndent();
+    applyScheme();
+    applyAttrs();
+    markReduced();
+    // a token colour is a CSS variable (applyScheme set it above): when nothing else changed, nothing is drawn again, and
+    // a hue slider dragged across its track repaints the words alone, not the rows, the minimap or the scrollbar's marks
+    var dk = JSON.stringify(R, noTokens), same = dk === drawKey;
+    drawKey = dk;
+    if (!firstDone || (same && !reopened)) return;
+    var g = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
+    var l = JSON.stringify([colorSig(), R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
+    if (prev.behavior.diffLayout !== R.behavior.diffLayout && mode === 'diff' && !diffLayoutPick) resolveLayout(true);
+    // the header's height can only change with the look (its face and spacing), never with colours: reading it forces
+    // the whole page to restyle and lay out at once, so it is read only when the look itself changed
+    else if (reopened || g !== geoSig || ((R.lookKey !== prev.lookKey || R.look.mode !== prev.look.mode) && head.offsetHeight !== headH)) relayoutAll();
+    else if (l !== lookSig) { renderRows(true); sticky._key = null; updateSticky(); renderOverlays(); }
+    geoSig = g; lookSig = l;
+    if (R.lines.relative !== prev.lines.relative) markCurrentRow();
+    colorCache = null;
+    queueDraw();
+  }
+  geoSig = JSON.stringify([R.font, R.lines.numbers, R.lines.wrap, R.lines.wrapColumn, R.lines.minimap, R.motion.pastEnd, R.lines.rulers]);
+  lookSig = JSON.stringify([colorSig(), R.lines, R.caret, R.scheme, R.lookKey, R.look.mode, R.behavior.diagnostics, IND.unit, IND.tabs]);
+  function noTokens(k, x) { return k === 'tokens' ? undefined : x; }
+  var drawKey = JSON.stringify(R, noTokens);
+  applyAttrs();
+  var detachLook = EL ? EL.attach(view) : null;
+
   var offs = [];
-  offs.push(api.on('look', function () { applyScheme(); markReduced(); if (!firstDone) return; measure(); var hh = head.offsetHeight; if (hh !== headH) relayoutAll(); else { renderOverlays(); queueDraw(); } }));
+  // without the look model (a build lacking 09-editor-look.js) the editor still follows the look itself
+  if (!EL) offs.push(api.on('look', function () { applyScheme(); markReduced(); if (!firstDone) return; measure(); var hh = head.offsetHeight; if (hh !== headH) relayoutAll(); else { renderOverlays(); queueDraw(); } }));
   offs.push(api.on('settings', function (ev) {
     var key = ev && ev.key;
-    if (!key || key.indexOf('editor.') !== 0 && key !== 'code.editing.goto-highlight-ms') return;
-    if (key === 'editor.scheme') { applyScheme(); if (firstDone) queueDraw(); return; }
-    if (!firstDone) return;
-    if (key === 'editor.diff.layout' || key === 'editor.diff.sideBySideMin') { resolveLayout(true); return; }
-    if (key === 'editor.stickyScroll' || key === 'editor.stickyScroll.maxLines') { sticky._key = null; updateSticky(); return; }
-    relayoutAll();
+    if (key === 'editor.diff.sideBySideMin' && firstDone) resolveLayout(true);
   }));
+
+  /* ==== Save files automatically (code.editing.autosave): after the pause the row names, or when the focus leaves the
+     editor; never an untitled buffer or a read-only view, and quietly (the tab's unsaved dot goes) ==== */
+  function autoSave() {
+    if (!alive || preview || !path || !isEditable() || !isDirty()) return;
+    d.savedLines = d.lines.slice();
+    d.savedVersion = d.version;
+    d.views.forEach(function (v) { if (v.savedNow) v.savedNow(); });
+    PMW.announce(name + ' saved');
+  }
+  function scheduleAutosave() {
+    clearTimeout(timers.autosave);
+    var a = R.behavior.autosave;
+    if (a === '500' || a === '1000') timers.autosave = setTimeout(autoSave, +a);
+  }
+  scroller.addEventListener('blur', function () { if (R.behavior.autosave === 'focus') autoSave(); });
+
+  /* ==== a problem's card: the pointer resting on a wavy line shows its message and source, after Hover Tip Delay ==== */
+  var diagTimer = 0, diagShown = null;
+  function diagAt(cx, cy) {
+    var sr = scroller.getBoundingClientRect(), x = cx - sr.left + geo.sl, y = cy - sr.top + geo.st;
+    for (var i = 0; i < diagRects.length; i++) { var q = diagRects[i]; if (y >= q.y && y < q.y + lh + 2 && x >= q.x0 - 1 && x <= q.x1 + 1) return q; }
+    return null;
+  }
+  function showDiag(q) {
+    diagShown = q;
+    var sev = q.it.sev === 'error' ? 'Error' : q.it.sev === 'warn' ? 'Warning' : 'Note';
+    diagCard.textContent = '';
+    diagCard.appendChild(h('span', { class: 'pmw-ed-dsev is-' + q.it.sev, text: sev }));
+    diagCard.appendChild(h('span', { class: 'pmw-ed-dmsg', text: q.it.msg }));
+    if (q.it.src) diagCard.appendChild(h('span', { class: 'pmw-ed-dsrc', text: q.it.src }));
+    diagCard.setAttribute('data-sev', q.it.sev);
+    diagCard.hidden = false;
+    var top = q.y - geo.st + lh + 4, left = clamp(q.x0 - geo.sl, gutW, Math.max(gutW, root.clientWidth - diagCard.offsetWidth - trackW - 8));
+    if (top + diagCard.offsetHeight > root.clientHeight - 6) top = q.y - geo.st - diagCard.offsetHeight - 4;
+    diagCard.style.transform = 'translate(' + Math.round(left) + 'px,' + Math.round(top) + 'px)';
+  }
+  scroller.addEventListener('mousemove', function (e) {
+    if (drag || !diagRects.length) { if (!diagCard.hidden) { diagCard.hidden = true; diagShown = null; } return; }
+    var q = diagAt(e.clientX, e.clientY);
+    if (q === diagShown) return;
+    clearTimeout(diagTimer);
+    if (!q) { diagCard.hidden = true; diagShown = null; return; }
+    diagTimer = setTimeout(function () { if (alive) showDiag(q); }, Math.max(0, R.behavior.hoverDelay == null ? 300 : R.behavior.hoverDelay));
+  });
+  scroller.addEventListener('mouseleave', function () { clearTimeout(diagTimer); diagCard.hidden = true; diagShown = null; });
 
   var self = {
     docChanged: function () { if (!alive || !firstDone) return; V.n = d.lines.length; layout(); renderRows(true); renderOverlays(); queueDraw(); },
@@ -2795,7 +3717,8 @@ function mountEditor(host, st, api) {
       if (done) { sticky._key = null; updateSticky(); updateSymbol(); }
     },
     relayout: relayoutAll,
-    scheme: function () { if (!alive) return; applyScheme(); if (firstDone) queueDraw(); }
+    scheme: function () { if (!alive) return; if (EL) onLook(EL.resolve(view)); else { applyScheme(); if (firstDone) queueDraw(); } },
+    savedNow: function () { if (alive) setDirty(isDirty()); }
   };
   d.views.push(self);
   EDITORS.push(self);
@@ -2806,6 +3729,9 @@ function mountEditor(host, st, api) {
       Object.keys(timers).forEach(function (k) { if (typeof timers[k] === 'number') { clearTimeout(timers[k]); } });
       clearTimeout(focusTimer); clearTimeout(fadeTimer); clearTimeout(scrollIdle);
       offs.forEach(function (f) { try { f(); } catch (_) {} });
+      if (detachLook) detachLook();
+      if (glide.raf) cancelAnimationFrame(glide.raf);
+      clearTimeout(diagTimer);
       d.views = d.views.filter(function (v) { return v !== self; });
       var i = EDITORS.indexOf(self); if (i >= 0) EDITORS.splice(i, 1);
       root.remove();
@@ -2817,6 +3743,8 @@ function mountEditor(host, st, api) {
       out.line = mode === 'diff' ? (lineOfRow(topRow()) || 1) : topRow() + 1;
       out.top = out.line;                     // restore puts this line back at the top (a plain `line` is a target)
       if (mode === 'diff' && diffLayoutPick) out.diffLayout = diffLayoutPick;
+      // this editor's own look (Customize's "This editor"), over every other layer
+      if (view.tabAppearance && Object.keys(view.tabAppearance).length) out.appearance = JSON.parse(JSON.stringify(view.tabAppearance));
       if (!path) {
         out.title = d.title; out.language = d.lang;
         if (d.readOnly) out.readOnly = d.readOnly; else out.edit = true;
@@ -2827,10 +3755,110 @@ function mountEditor(host, st, api) {
     },
     onResize: onResize,
     onShow: function () { visible = true; if (!firstDone) { firstPaint(); return; } queueDraw(); },
-    onHide: function () { visible = false; clearTimeout(scrollIdle); },
-    onFocus: function () {},
-    onBlur: function () {},
+    onHide: function () { visible = false; clearTimeout(scrollIdle); if (R.behavior.autosave === 'focus') autoSave(); },
+    // the host's focus lifecycle (CONTRACT section 3): Fade editors I'm not in steps this editor back while another
+    // panel has the focus
+    onFocus: function () { dimmed = false; applyDim(); },
+    onBlur: function () { dimmed = true; applyDim(); },
     onLook: function () { colorCache = null; queueDraw(); },
+    view: view,
+    root: root,
+    look: function () { return R; },
+    /* the colours change under a sweep in the look's own motion, from the point of the choice (a scheme tile): a plate
+       of the old ground lifts away (Basic fades, Friendly blooms from the point, Glass glides across, Retro steps,
+       NieR wipes in its eight steps); Reduced Motion changes at once */
+    recolorFrom: function (x, y) {
+      if (reduced() || special) return;
+      var bgc = tokenColor('--pmw-ed-gutbg'); if (!bgc) return;
+      var plate = h('i', { class: 'pmw-ed-recolor', 'aria-hidden': 'true', style: { background: 'rgb(' + bgc.slice(0, 3).map(Math.round).join(',') + ')' } });
+      root.appendChild(plate);
+      /* Friendly's bloom grows from the point of the choice (often a tile beside the editor), measured on the plate: it
+         starts at the plate's nearest edge and ends at its farthest corner, so the first frame already shows the new
+         colours */
+      var r0 = plate.getBoundingClientRect();
+      var px = (x == null ? r0.left : x) - r0.left, py = (y == null ? r0.top : y) - r0.top, w = r0.width, hh = r0.height;
+      var near = Math.hypot(Math.max(0, -px, px - w), Math.max(0, -py, py - hh));
+      var far = Math.max(Math.hypot(px, py), Math.hypot(px - w, py), Math.hypot(px, py - hh), Math.hypot(px - w, py - hh));
+      plate.style.setProperty('--rx', Math.round(px) + 'px'); plate.style.setProperty('--ry', Math.round(py) + 'px');
+      plate.style.setProperty('--pmw-ed-r0', Math.round(near + 12) + 'px'); plate.style.setProperty('--pmw-ed-r1', Math.ceil(far + 4) + 'px');
+      setTimeout(function () { plate.remove(); }, 700);
+    },
+    /* the Customize screen's preview: scripted moves for its Try it row */
+    demo: !preview ? null : {
+      place: function (r, c, ar, ac) { anchor = ar != null ? { r: ar, c: ac } : null; caret = { r: clamp(r, 0, V.n - 1), c: c }; markCurrentRow(); renderOverlays(); updatePos(); queueDraw(); },
+      jump: function (r, c) {
+        jumpSoon(); caret = { r: clamp(r, 0, V.n - 1), c: c }; anchor = null;
+        markCurrentRow(); scrollToY(yAt(caret.r, caret.c)); renderOverlays(); updatePos(); queueDraw();
+      },
+      /* a jump to a line as Go to line makes one, centred: it glides with Smooth scrolling and jumps without (Sol's review
+         of the customizer audit: the preview showed no difference between the Smooth scrolling choices) */
+      goTo: function (r) {
+        jumpSoon(); caret = { r: clamp(r, 0, V.n - 1), c: 0 }; anchor = null;
+        markCurrentRow(); scrollToRow(caret.r, 'center'); renderOverlays(); updatePos(); queueDraw();
+      },
+      // the letters typed so far are kept (typed), so stop() can take them out if another try starts mid-way
+      type: function (text, done) {
+        var self = this, i = 0, start = { r: caret.r, c: caret.c };
+        clearTimeout(timers.demo);
+        self.typed = { start: start, n: 0 };
+        (function next() {
+          if (!alive) return;
+          if (i >= text.length) { if (done) done(start); return; }
+          var L0 = d.lines; L0[start.r] = L0[start.r].slice(0, start.c + i) + text.charAt(i) + L0[start.r].slice(start.c + i);
+          invalidateTokens(d, start.r, 1, 1); d.version++;
+          i++; self.typed.n = i;
+          caret = { r: start.r, c: start.c + i };
+          typingMove = true; renderRows(true); renderOverlays();
+          timers.demo = setTimeout(next, 55);
+        })();
+      },
+      erase: function (start, n) {
+        var L0 = d.lines; L0[start.r] = L0[start.r].slice(0, start.c) + L0[start.r].slice(start.c + n);
+        invalidateTokens(d, start.r, 1, 1); d.version++;
+        if (this.typed && this.typed.start === start) this.typed = null;
+        caret = { r: start.r, c: start.c }; typingMove = true; renderRows(true); renderOverlays();
+      },
+      /* Step back shows an editor you are not in as this scope draws one: faded only when Fade editors I'm not in is on
+         (the customizer audit: it faded with the option off) */
+      dim: function (on) { demoDim = !!on; applyDim(); },
+      /* ends whatever a try left running before the next one starts (the customizer audit: Type then Move typed a stray
+         letter at the moved caret and left // tidy behind): the typing stops, its letters come out, the fade goes */
+      stop: function () {
+        clearTimeout(timers.demo); timers.demo = 0;
+        if (this.typed && this.typed.n) this.erase(this.typed.start, this.typed.n);
+        this.typed = null;
+        if (demoDim) this.dim(false);
+      },
+      relayout: function () { if (firstDone) relayoutAll(); else firstPaint(); },
+      unmount: function () { instance.unmount(); }
+    },
+    openCustomize: function (o) { openCustomize(view, (o && o.anchor) || hrow.action('more') || head); },
+    customizing: function (on) { on = !!on; if (customizing === on) return; customizing = on; renderOverlays(); updatePos(); },
+    // the scheme's colours as set on the code (null under Follow look, whose colours are the look's CSS): read without
+    // asking the page for computed style
+    schemeVarsNow: function () { return schemeOn ? Object.assign({}, schemeOn) : null; },
+    /* the token colours as this editor draws them, for the Customize screen's Token colours: each kind of word's own
+       colour (the scheme's, or the look's under Follow look), the one chosen, the one drawn (held to the floor), its
+       contrast on the ground, and a palette to pick from (the scheme's sixteen and its own token colours) */
+    tokenInfo: function () {
+      var ground = groundNow(), F = R.colors.contrast === 7 ? 7 : 4.5, lt = schemeOn ? null : lookTokens();
+      var set = R.colors.tokens || {}, toks = {}, pal = [];
+      SYN_KEYS.forEach(function (k) {
+        var n = '--pmw-ed-s-' + k;
+        var own = (schemeOn && schemeOn[n]) || (floorOn && floorOn[n]) || (lt && lt.tokens[n]) || '';
+        var drawn = (tokOn && tokOn[n]) || own, pick = set[k] || null, src = rgbOf(pick || own);
+        toks[k] = { own: own, set: pick, drawn: drawn, ratio: src ? Math.round(contrastOf(src.slice(0, 3), ground) * 10) / 10 : 0, held: !!(pick && drawn && drawn.toLowerCase() !== pick.toLowerCase()) };
+        if (own) pal.push(own.toLowerCase());
+      });
+      var A = edAppearance(), sid = R.scheme !== 'follow' ? R.scheme : (R.followScheme && R.followScheme.id);
+      try { var p = A && sid ? A.palette(sid) : null; if (p && Array.isArray(p.ansi)) p.ansi.forEach(function (c) { var x = rgbOf(c); if (x) pal.push(hexOf(x.slice(0, 3))); }); } catch (_) {}
+      var seen = {};
+      pal = pal.filter(function (c) { if (!c || seen[c]) return false; seen[c] = true; var x = rgbOf(c); return !!x && contrastOf(x.slice(0, 3), ground) >= 1.6; });
+      return { key: R.colors.tokenKey, scheme: R.schemeName, ground: hexOf(ground), floor: F, tokens: toks, palette: pal };
+    },
+    // the file's indentation as this editor reads it (the Customize screen's Indentation note)
+    path: path,
+    indent: function () { resolveIndent(); return { unit: IND.unit, tabs: IND.tabs, own: IND.own, tabbed: !!d.tabbed }; },
     focus: function () { if (special) { root.setAttribute('tabindex', '-1'); root.focus({ preventScroll: true }); return; } scroller.focus({ preventScroll: true }); },
     reveal: function (s) { reveal(s || {}); },     // focus is the host's call (D8: an agent's open never takes it)
     wantsKey: function (e) {
@@ -2863,14 +3891,16 @@ function mountEditor(host, st, api) {
         var r = host.getBoundingClientRect();
         api.menu([
           { id: 'save', label: 'Save', icon: 'check', detail: 'Keep the changes, then close', run: function () { save(); fin(true); } },
-          { id: 'discard', label: 'Close without saving', icon: 'close', danger: true, detail: 'The changes are lost', run: function () { d.lines = d.savedLines.slice(); d.version++; d.toks = []; d.ends = []; d.tokFrom = 0; d.undo = []; d.redo = []; fin(true); } },
+          { id: 'discard', label: 'Close without saving', icon: 'close', danger: true, detail: 'The changes are lost', run: function () { d.lines = d.savedLines.slice(); d.version++; d.toks = []; d.ends = []; d.tokFrom = 0; d.bst = null; d.undo = []; d.redo = []; fin(true); } },
           { id: 'cancel', label: 'Cancel', detail: 'Keep the tab open', run: function () { fin(false); } }
         ], { x: Math.round(r.left + Math.max(12, r.width / 2 - 150)), y: Math.round(r.top + Math.min(80, r.height / 3)) },
         { title: 'Save changes to ' + name + '?', width: 300, onClose: function () { setTimeout(function () { fin(false); }, 0); } });
       });
     },
-    _debug: function () { return { mode: mode, side: !!(V && V.side), caret: caret, anchor: anchor, n: V ? V.n : 0, lh: lh, cw: cw, headH: headH, padT: padT, trackW: trackW, gutW: gutW, stickyH: stickyH, find: { q: find.q, n: find.hits.length, cur: find.cur }, dirty: isDirty(), rendered: rowEls.size, lang: d.lang }; }
+    _debug: function () { return { mode: mode, side: !!(V && V.side), caret: caret, anchor: anchor, n: V ? V.n : 0, lh: lh, cw: cw, headH: headH, padT: padT, padB: padB, trackW: trackW, gutW: gutW, lnW: lnW, textX: textX, stickyH: stickyH, find: { q: find.q, n: find.hits.length, cur: find.cur }, dirty: isDirty(), rendered: rowEls.size, lang: d.lang,
+      wrap: WR ? { cols: WR.cols, rows: WR.total } : null, contentW: contentW, dimmed: dimmed, problems: diagRects.length, look: JSON.parse(JSON.stringify(R, function (k, v) { return k === 'schemeObj' || k === 'followScheme' ? undefined : v; })) }; }
   };
+  if (preview && preview.caret) instance.demo.place(preview.caret.r, preview.caret.c, preview.caret.ar, preview.caret.ac);
   host._pmwEditor = instance;
   return instance;
 }
@@ -2988,6 +4018,8 @@ function setup() {
   CHAT_CHANGES.forEach(function (c) { CHAT[c.path] = c; });
   // the Appearance row's mark (D30): a painter's palette in the 16 px stroke grammar
   try { PMW.registerIcon('edPalette', 'M8 2.2a5.8 5.8 0 1 0 0 11.6c1 0 1.4-.7 1.1-1.5-.3-.8.3-1.6 1.1-1.6h1.6a2.2 2.2 0 0 0 2.2-2.2C14 5 11.3 2.2 8 2.2zM5 8.3h.01M6.4 5.3h.01M9.7 5.1h.01', '*'); } catch (_) {}
+  // the Indentation row's mark: lines of text, two of them indented, and the tab's arrow into the indent
+  try { PMW.registerIcon('edIndent', 'M2.5 3.5h11M7 6.5h6.5M7 9.5h6.5M2.5 12.5h11M2.5 6.2l2.3 1.8-2.3 1.8', '*'); } catch (_) {}
 
   PM_HOME.registerKind('editor', {
     label: 'Editor',
@@ -3032,6 +4064,30 @@ function setup() {
   try {
     if (doc.fonts && doc.fonts.addEventListener) doc.fonts.addEventListener('loadingdone', function () { EDITORS.forEach(function (v) { v.relayout(); }); });
   } catch (_) {}
+  /* PMW.editorPreview(host, { text, base, language, problems, view, caret }): a live editor that draws the given text the
+     way an editor tab with that view's look would, as the Customize screen's preview; it takes no input */
+  PMW.editorPreview = function (host, o) {
+    o = o || {};
+    var entry = { id: 'editor-preview', host: host, off: [] };
+    var api = { id: 'buffer:preview', update: function () {}, saveSoon: function () {}, announce: function () {}, menu: function () {},
+      on: function () { return function () {}; }, headerRow: function (spec) { return PMW.headerRow(entry, spec); }, settings: PMW.settings,
+      look: function () { return PMW.look(); } };
+    var inst = mountEditor(host, { preview: o }, api);
+    var unmount = inst.unmount;
+    inst.unmount = function () { unmount(); entry.off.forEach(function (f) { try { f(); } catch (_) {} }); };
+    return inst;
+  };
+  /* the editor a person is working in: the last one used, while it is still on screen; else the widest one shown */
+  PMW.editorInView = function () {
+    var shown = function (inst) { return inst && inst.root && inst.root.isConnected && inst.root.getBoundingClientRect().width > 0; };
+    if (shown(lastUsed)) return lastUsed;
+    var best = null, bw = 0;
+    [].forEach.call(doc.querySelectorAll('.pmw-tabbody'), function (b) {
+      var e = b._pmwEditor; if (!shown(e)) return;
+      var w = e.root.getBoundingClientRect().width; if (w > bw) { bw = w; best = e; }
+    });
+    return best;
+  };
   PMW.editorOf = function (tabId) {
     var body = doc.querySelector('.pmw-tabbody[data-pmw-tab="' + String(tabId).replace(/"/g, '\\"') + '"]');
     return body && body._pmwEditor ? body._pmwEditor : null;

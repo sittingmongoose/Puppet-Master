@@ -168,9 +168,11 @@
     }
   };
 
-  T.View.prototype.openAppearance = function () {
+  /* opts.scope: 'app' when Settings opens it (All terminals for that visit); left out, it opens on the scope last
+     picked for this terminal, This terminal at first */
+  T.View.prototype.openAppearance = function (opts) {
     if (this.pop) { this.closeAppearance(); return; }
-    T.AppearancePopover.open(this.root, { surface: 'terminal', view: this });
+    T.AppearancePopover.open(this.root, Object.assign({ surface: 'terminal', view: this }, opts && opts.scope ? { scope: opts.scope } : {}));
   };
 
   /* noFocus: the view is going away (dispose), so the focus is left where it is */

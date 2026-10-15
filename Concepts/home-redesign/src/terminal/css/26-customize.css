@@ -43,7 +43,7 @@ html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(-
 .pmt-cz-frame { position: fixed; pointer-events: auto; cursor: pointer; border-radius: var(--pmw-panel-radius, 8px);
   box-shadow: 0 0 0 1.5px var(--pmt-cz-ring), 0 0 0 5px color-mix(in srgb, var(--pmt-cz-ring) 20%, transparent); }
 .pmt-cz-framelabel { position: absolute; right: 10px; bottom: 10px; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 600;
-  background: var(--pmt-cz-ring); color: var(--pmt-cz-on-accent); white-space: nowrap; }
+  background: var(--pmt-cz-accent); color: var(--pmt-cz-on-accent); white-space: nowrap; }   /* on the accent: Glass light's ring read 2.2:1 under it */
 
 /* ---- the dialog ---- */
 .pmt-cz-dialog {
@@ -59,16 +59,21 @@ html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(-
 .pmt-cz-scope { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; padding-top: 2px; }
 .pmt-cz-scopewhy { font-size: 11px; color: var(--pmw-text-3, var(--text-muted)); }
 .pmt-cz .pmt-cz-x { width: 30px; height: 30px; border-radius: 8px; }
+/* the gutter is kept: a scrollbar measured again on every slider step lays the whole screen out again (about half of
+   each step's cost) */
 .pmt-cz-body { flex: 1 1 auto; min-height: 0; overflow: auto; display: grid; align-content: start; gap: 22px; padding: 16px 20px 22px; scroll-padding-top: 52px;
-  scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--pmw-text, currentColor) 26%, transparent) transparent; }
+  scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--pmw-text, currentColor) 26%, transparent) transparent; scrollbar-gutter: stable; }
 .pmt-cz-foot { flex: none; display: flex; align-items: center; gap: 10px; padding: 11px 16px 11px 20px; border-top: 1px solid var(--pmt-cz-line); }
 .pmt-cz-footn { font-size: 11.5px; color: var(--pmw-text-3, var(--text-muted)); }
 .pmt-cz .pmt-cz-done { height: 32px; padding: 0 18px; font-size: 12.5px; border-radius: 8px; background: var(--pmt-cz-accent); color: var(--pmt-cz-on-accent); border-color: transparent; }
-.pmt-cz .pmt-cz-done:hover { background: color-mix(in srgb, var(--pmt-cz-accent) 86%, #fff); }
+.pmt-cz .pmt-cz-done:hover { background: var(--pmt-cz-accent-hover); }
 /* the page's button rules (Friendly rounds every button to 14 px) are restated here at two classes */
 .pmt-cz :is(.pmt-textbtn, .pmt-step, .pmt-pop-x) { border-radius: 7px; }
 .pmt-cz .pmt-textbtn { height: 28px; padding: 0 10px; font-size: 12px; }
-.pmt-cz .pmt-textbtn[aria-disabled="true"] { opacity: .45; cursor: default; }
+/* unavailable: no fade (45 % put its words near 2.9:1). Its words go to the second tier, a step under the button's own
+   ink that still holds 4.5:1 on the plate and on the token picker in every look, and a dashed edge says it is off, as
+   Demo Studio's unavailable controls do (landing QA EC-01) */
+.pmt-cz .pmt-textbtn[aria-disabled="true"] { opacity: 1; color: var(--pmw-text-2, var(--text-secondary)); border-style: dashed; border-color: var(--pmt-cz-line-2); cursor: default; }
 .pmt-cz .pmt-textbtn[aria-disabled="true"]:hover { background: transparent; }
 
 /* ---- top: preview and side column ---- */
@@ -93,7 +98,7 @@ html[data-theme="basic-light"] .pmt-cz { --pmt-cz-fill: color-mix(in srgb, var(-
   border: 1px solid var(--pmt-cz-line); border-radius: var(--pmt-cz-r); background: transparent;
   transition: background-color var(--pmt-t-tint, 0ms) linear, border-color var(--pmt-t-tint, 0ms) linear; }
 .pmt-cz-set span { font-weight: 650; font-size: 12px; }
-.pmt-cz-set small { font-size: 10.5px; color: var(--pmw-text-3, var(--text-muted)); }
+.pmt-cz-set small { font-size: 10.5px; color: var(--pmw-text-2, var(--text-secondary)); }
 .pmt-cz .pmt-cz-set:hover { background: var(--pmt-cz-hover); border-color: var(--pmt-cz-line-2); }
 .pmt-cz .pmt-cz-set[aria-pressed="true"] { background: var(--pmt-cz-fill); border-color: var(--pmt-cz-line-2); }
 .pmt-cz-set[aria-pressed="true"] small { color: var(--pmw-text-2, inherit); }
@@ -133,7 +138,7 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz-error { margin: 0; width: 100%; padding: 7px 10px; font-size: 12px; color: var(--pmw-text, inherit); border: 1px solid color-mix(in srgb, var(--pmw-bad, #ef6b6b) 60%, transparent);
   background: color-mix(in srgb, var(--pmw-bad, #ef6b6b) 12%, transparent); border-radius: var(--pmt-cz-r); }
 .pmt-cz-row, .pmt-cz-grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px 18px; align-items: start; }
-.pmt-cz-field { display: grid; gap: 5px; min-width: 0; }
+.pmt-cz-field { display: grid; grid-template-columns: minmax(0, 1fr); gap: 5px; min-width: 0; }   /* one column the field's own width: a one-line row is measured against it (PMW.czFit) */
 .pmt-cz-flabel { font-size: 12px; font-weight: 600; }
 .pmt-cz-fhelp { font-size: 11px; line-height: 1.4; color: var(--pmw-text-3, var(--text-muted)); }
 .pmt-cz-fhelp:empty { display: none; }
@@ -145,10 +150,21 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz-findn { font-size: 11.5px; color: var(--pmw-text-3, var(--text-muted)); }
 .pmt-cz-more { margin: 0; }
 
-/* ---- one of several: the panels' chosen fill ---- */
-.pmt-cz-seg { --pmw-ink-y: 2px; display: inline-flex; flex-wrap: wrap; align-self: start; justify-self: start; gap: 0; padding: 2px; border: 1px solid var(--pmt-cz-line); border-radius: 9px; }
-.pmt-cz .pmt-cz-segopt { height: 30px; padding: 0 12px; border: 0; background: transparent; color: var(--pmw-text-2, inherit); font: inherit; font-size: 12px; font-weight: 550; cursor: pointer; white-space: nowrap; border-radius: 7px; }
+/* ---- one of several: the panels' chosen fill ----
+   A row keeps to one line, since its ink travels along one line. PMW.czFit (11-editor-customize.js, for both screens)
+   gives a row that would overflow the room it needs: its pair of fields stacks into one column (data-cols="1"), then
+   the row says its choices shorter (data-fit="short"; the full words stay each choice's spoken name), and in a
+   phone-narrow window it becomes a list (data-fit="stack"), its fill moving at once. */
+.pmt-cz-seg { --pmw-ink-y: 2px; display: inline-flex; flex-wrap: nowrap; max-width: 100%; align-self: start; justify-self: start; gap: 0; padding: 2px; border: 1px solid var(--pmt-cz-line); border-radius: 9px; }
+.pmt-cz .pmt-cz-segopt { flex: none; height: 30px; padding: 0 12px; border: 0; background: transparent; color: var(--pmw-text-2, inherit); font: inherit; font-size: 12px; font-weight: 550; cursor: pointer; white-space: nowrap; border-radius: 7px; }
 .pmt-cz-seg .pmw-ink-opt::after, .pmt-cz-seg .pmw-ink { border-radius: 7px; }
+.pmt-cz-row[data-cols="1"], .pmt-cz-grid2[data-cols="1"] { grid-template-columns: minmax(0, 1fr); }
+.pmt-cz-ss { display: none; }
+.pmt-cz-seg[data-fit="short"] .pmt-cz-sl { display: none; }
+.pmt-cz-seg[data-fit="short"] .pmt-cz-ss { display: inline; }
+.pmt-cz .pmt-cz-seg[data-fit="short"] .pmt-cz-segopt { padding: 0 9px; }
+.pmt-cz-seg[data-fit="stack"] { flex-direction: column; align-items: stretch; width: 100%; }
+.pmt-cz-seg[data-fit="stack"] .pmt-cz-segopt { text-align: start; }
 
 /* ---- tiles: they show what they choose ---- */
 .pmt-cz-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 8px; }
@@ -163,7 +179,7 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz-thumb { position: relative; display: block; height: 48px; overflow: hidden; border-radius: var(--pmt-cz-r-in); border: 1px solid color-mix(in srgb, var(--pmw-text, #fff) 14%, transparent); background: var(--pmt-cz-ground); }
 .pmt-cz-small .pmt-cz-thumb { height: 40px; }
 .pmt-cz-tname { min-width: 0; padding: 3px 3px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 550; }
-.pmt-cz-tmeta { min-width: 0; padding: 0 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10.5px; color: var(--pmw-text-3, var(--text-muted)); }
+.pmt-cz-tmeta { min-width: 0; padding: 0 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10.5px; color: var(--pmw-text-2, var(--text-secondary)); }
 .pmt-cz-tmeta:empty { display: none; }
 .pmt-cz-tile[aria-checked="true"] .pmt-cz-tname { color: var(--pmt-cz-ink); font-weight: 650; }
 /* the chosen tile's check, on its thumbnail's corner */
@@ -215,7 +231,7 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz-chipcopy { display: flex; flex-direction: column; gap: 3px; flex: 1 1 auto; min-width: 0; padding: 10px 12px 9px 38px; }
 .pmt-cz-chipname { font-size: 12.5px; font-weight: 650; }
 .pmt-cz-chiphelp { font-size: 11.5px; line-height: 1.35; color: var(--pmw-text-2, var(--text-secondary)); }
-.pmt-cz-chipfoot { display: flex; gap: 10px; margin-top: auto; padding-top: 4px; font: 600 9.5px/1.3 var(--pm-font-code, ui-monospace, monospace); letter-spacing: .12em; text-transform: uppercase; color: var(--pmw-text-3, var(--text-muted)); }
+.pmt-cz-chipfoot { display: flex; gap: 10px; margin-top: auto; padding-top: 4px; font: 600 9.5px/1.3 var(--pm-font-code, ui-monospace, monospace); letter-spacing: .12em; text-transform: uppercase; color: var(--pmw-text-2, var(--text-secondary)); }
 .pmt-cz-mine { display: none; color: var(--pmt-cz-accent); }
 .pmt-cz-is-mine .pmt-cz-mine { display: inline; }
 /* the switch's own mark: an empty box, then the accent with its check */
@@ -255,7 +271,7 @@ html[data-o55-nier="on"] .pmt-cz .pmt-cz-dock { box-shadow: 0 3px 10px rgba(var(
 .pmt-cz input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 5px; border: 2px solid var(--pmt-cz-plate); background: var(--pmt-cz-accent); }
 .pmt-cz input[type="range"]:focus-visible { outline: 2px solid var(--pmt-cz-ring); outline-offset: 2px; border-radius: 4px; }
 .pmt-cz-color { width: 44px; height: 30px; padding: 0; border: 1px solid var(--pmt-cz-line-2); border-radius: 7px; background: transparent; cursor: pointer; }
-.pmt-cz-sub-solid .pmt-cz-field { grid-auto-flow: column; justify-content: start; align-items: center; gap: 10px; }
+.pmt-cz-sub-solid .pmt-cz-field { grid-template-columns: none; grid-auto-flow: column; justify-content: start; align-items: center; gap: 10px; }
 .pmt-cz-stepper { gap: 6px; }
 .pmt-cz-stepper .pmt-step { width: 30px; height: 30px; font-size: 15px; border-color: var(--pmt-cz-line-2); }
 .pmt-cz-stepper output { min-width: 56px; text-align: center; }
@@ -490,3 +506,42 @@ html[data-o55-nier="on"][data-o55-nier-parts~="brackets"] .pmt-cz .pmt-cz-frame 
     linear-gradient(var(--b), var(--b)) left bottom / 14px 2px no-repeat, linear-gradient(var(--b), var(--b)) left bottom / 2px 14px no-repeat,
     linear-gradient(var(--b), var(--b)) right bottom / 14px 2px no-repeat, linear-gradient(var(--b), var(--b)) right bottom / 2px 14px no-repeat; }
 html[data-o55-nier="on"][data-o55-nier-parts~="brackets"] .pmt-cz :is(.pmt-cz-tile, .pmt-cz-chip, .pmt-cz-set, .pmt-cz-segopt):focus-visible { outline: 1.5px solid var(--o55-nier-ink); outline-offset: 3px; }
+/* on a Liquid Glass sheet the edges are the sheet's hairline (its CONTRACT: --lg-line, white .10 dark, ink .09 light):
+   the plain Glass rims are white and vanished on the light sheet (a P1000 frame of the editor's screen, which shares
+   these classes; approved by pm7-liquid-glass 1014044501) */
+html[data-lg="on"][data-theme^="glass"] .pmt-cz :is(.pmt-cz-set, .pmt-cz-try .pmt-textbtn, .pmt-cz-search, .pmt-cz-tile, .pmt-cz-chip, .pmt-cz-seg) { border-color: var(--lg-line); }
+
+/* =================================================================================================================
+   Contrast (the landing QA of 2026-10-14, EC-01 to EC-05 and EC-12): every word in the screen reads 4.5:1 or more at
+   rest, under a resting pointer and on its chosen fill, in every look.
+   ================================================================================================================= */
+/* the accent's words: light words on a dark accent darken on hover, dark words on a light accent lighten. Friendly
+   light's bright green takes dark words (light ones read 3.0:1), Glass light's blue takes white (its grey read 3.5:1) */
+.pmt-cz { --pmt-cz-accent-hover: color-mix(in srgb, var(--pmt-cz-accent) 86%, #fff); }
+.pmt-cz[data-pmt-mode="light"] { --pmt-cz-accent-hover: color-mix(in srgb, var(--pmt-cz-accent) 86%, #000); }
+html[data-theme="friendly-light"]:not([data-o55-nier="on"]) .pmt-cz { --pmt-cz-on-accent: #17151b; --pmt-cz-accent-hover: color-mix(in srgb, var(--pmt-cz-accent) 86%, #fff); }
+html[data-theme="glass-light"]:not([data-o55-nier="on"]) .pmt-cz { --pmt-cz-on-accent: #fff; }
+/* a placeholder is text: the second tier, not the browser's grey (#757575 read 2.7-4.4:1) */
+.pmt-cz .pmt-cz-search::placeholder { color: var(--pmw-text-2, var(--text-secondary)); opacity: 1; }
+/* on a chosen tile, a lit chip or a pressed set the quieter words take the full ink: the fill under them is a step off
+   the plate, and the second and third tiers did not hold 4.5:1 on it (Retro and NieR reverse instead, above) */
+.pmt-cz :is(.pmt-cz-tile[aria-checked="true"], .pmt-cz-chipbox.pmt-cz-lit, .pmt-cz-set[aria-pressed="true"]) :is(.pmt-cz-tmeta, .pmt-cz-chiphelp, .pmt-cz-chipfoot, .pmt-cz-chipstate, small, .pmt-cz-out, .pmt-cz-slabel) { color: var(--pmw-text, inherit); }
+/* a pointer resting on a chosen control keeps its fill: a hover tint over it, or NieR's opaque hover tone (and the
+   pointer engine's, !important), put the reversed words on the wrong ground at 1.06:1 */
+.pmt-cz .pmt-cz-chipbox.pmt-cz-lit .pmt-cz-chip:hover { background: transparent; }
+html[data-o55-nier="on"] .pmt-cz .pmt-cz-chipbox.pmt-cz-lit .pmt-cz-chip:is(:hover, .pmh-on) { background: transparent !important; }
+html[data-o55-nier="on"] .pmt-cz :is(.pmt-cz-tile[aria-checked="true"], .pmt-cz-set[aria-pressed="true"]):is(:hover, .pmh-on) { background: var(--o55-nier-ink) !important; }
+/* NieR's hover tone lifts a tile, a chip or a set a step toward its ink, and their quieter words take the full ink on
+   it (a hovered scheme's "Dark" read 3.41:1 in NieR dark); a chosen one is reversed, above */
+html[data-o55-nier="on"] .pmt-cz :is(.pmt-cz-tile:not([aria-checked="true"]), .pmt-cz-set:not([aria-pressed="true"]), .pmt-cz-chipbox:not(.pmt-cz-lit) .pmt-cz-chip):is(:hover, .pmh-on) :is(.pmt-cz-tmeta, .pmt-cz-chiphelp, .pmt-cz-chipfoot, .pmt-cz-chipstate, small) { color: var(--pmw-text, inherit); }
+/* words drawn in the accent (Friendly's kicker, the index's change counts, a group's count, "mine"): on a light screen
+   the accent darkens until it reads 4.5:1 on the plate (Friendly light's green kicker read 3.21:1). Retro light's accent
+   is darkened already and NieR's is its ink */
+.pmt-cz { --pmt-cz-accent-ink: var(--pmt-cz-accent); }
+.pmt-cz[data-pmt-mode="light"]:not([data-pmt-look="retro"]) { --pmt-cz-accent-ink: color-mix(in srgb, var(--pmt-cz-accent) 58%, #000); }
+html[data-o55-nier="on"] .pmt-cz { --pmt-cz-accent-ink: var(--pmt-cz-accent); }
+.pmt-cz :is(.pmt-cz-navn, .pmt-cz-gcount, .pmt-cz-mine), .pmt-cz .pmt-cz-is-mine .pmt-cz-out, .pmt-cz[data-pmt-look="friendly"] .pmt-cz-kicker { color: var(--pmt-cz-accent-ink); }
+/* Liquid Glass: the search field's edge is the sheet's hairline too; the base page's architectural Glass forces every
+   field's edge with !important, so this one is stated the same way, only while Liquid Glass is on (agreed with
+   pm7-liquid-glass, 2026-10-14) */
+html[data-lg="on"][data-theme^="glass"] .pmt-cz .pmt-cz-search { border-color: var(--lg-line) !important; }

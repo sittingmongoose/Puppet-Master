@@ -45,6 +45,8 @@ function stripFont(stripEl) {
 }
 // a look change (theme, NieR and its parts, motion) can change every label's width: measure again and refit
 bus.on('look', function () { measureCache = {}; fontCache.value = ''; render.schedule({ animate: false }); });
+// Tab Sizing changed in Settings: every strip fits again
+PMW.settings.on('panels.tabs.sizing', function () { render.schedule({ animate: false }); });
 
 /* a failed command's mark says what it is in words (a bare number did not; the cross-look review) */
 function exitWords(code) { return 'exited ' + code; }
@@ -93,6 +95,25 @@ strip.fit = function (tabs, recs, activeId, avail, font, frozen, host) {
   }
   if (!others.length) {   // the active tab alone: as wide as the room allows, never under 120
     res.widths[activeId] = activeFor(0); res.size[activeId] = res.widths[activeId] < nat[activeId] ? 'shrunk' : 'full';
+    return res;
+  }
+  /* Tab Sizing: Fixed width (general.interaction.tab-sizing, SSYS-050) skips the shrinking: a run of tabs at their own
+     width around the active one, and what does not fit waits behind "+N" at once (pinned tabs stay 36 px and the active
+     tab stays shown and at least 120 px wide, as in Shrink to fit) */
+  if (PMW.settings.get('panels.tabs.sizing') === 'fixed') {
+    if (activeIn) aW = Math.max(TAB.activeMin, Math.min(aW, room - TAB.more - 2 * TAB.gap));
+    var leftRoom = room - TAB.more - (activeIn ? aW + TAB.gap : 0), keepF = {};
+    var ai0 = activeIn ? rest.indexOf(activeId) : -1, lo = ai0, hi = ai0, goR = true, goL = true;
+    if (ai0 < 0) { lo = -1; hi = -1; goL = false; }
+    while (goR || goL) {
+      if (goR) { var tr = rest[hi + 1]; if (tr !== undefined && leftRoom >= nat[tr] + TAB.gap) { keepF[tr] = true; leftRoom -= nat[tr] + TAB.gap; hi++; } else goR = false; }
+      if (goL) { var tl = rest[lo - 1]; if (tl !== undefined && leftRoom >= nat[tl] + TAB.gap) { keepF[tl] = true; leftRoom -= nat[tl] + TAB.gap; lo--; } else goL = false; }
+    }
+    rest.forEach(function (t) {
+      if (t === activeId) { res.widths[t] = aW; res.size[t] = aW < nat[t] ? 'shrunk' : 'full'; }
+      else if (keepF[t]) { res.widths[t] = nat[t]; res.size[t] = 'full'; }
+      else res.hidden.push(t);
+    });
     return res;
   }
   // 1. shrink inactive tabs evenly toward 72 (a tab never grows past its natural width)
