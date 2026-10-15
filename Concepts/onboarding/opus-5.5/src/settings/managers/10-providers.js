@@ -630,8 +630,8 @@
   /* the pair x {sw, warn, name, acc, on, oSw, oWarn} that crosses, in words */
   function pairWhy(x) {
     const sw = `${100 - x.sw}% used`, warn = `${100 - x.warn}% used`;
-    if (x.acc && x.oSw && !x.oWarn) return `${x.acc}'s own switch level (${sw}) would be at or past the warn level it follows from ${x.on} (${warn}).`;
-    if (x.acc && x.oWarn && !x.oSw) return `${x.acc}'s own warn level (${warn}) would be at or before the switch level it follows from ${x.on} (${sw}).`;
+    if (x.acc && x.oSw && !x.oWarn) return `${x.acc}'s own switch level (${sw}) would be at or past its warn level (${warn}).`;
+    if (x.acc && x.oWarn && !x.oSw) return `${x.acc}'s own warn level (${warn}) would be at or before its switch level (${sw}).`;
     if (x.name) return `${x.name}'s switch level (${sw}) would be at or past its warn level (${warn}).`;
     return `The shared switch level (${sw}) would be at or past the shared warn level (${warn}).`;
   }
@@ -716,7 +716,10 @@
     if (def !== undefined && def !== null && def !== '') {
       const held = holdOrder(null, [{ id, value: def }]);
       if (!held || String(held[0].value) !== String(def)) {
-        showToast('Default was not restored', `The default is ${leftText(def)}. ${sharedCrossing(id, def) || holdWhy || GENERIC_WHY}`, 'warning');
+        /* short enough for the toast to show whole: "The default, 20% left, is at or before Lab's own switch level on
+           Claude (75% used)." */
+        const why = sharedCrossing(id, def).replace(/,? (?:and it follows|which follow) this shared level\.$/, '.');
+        showToast('Default was not restored', why ? `The default, ${pctLeft(def)}% left, is ${why.charAt(0).toLowerCase()}${why.slice(1)}` : holdWhy || GENERIC_WHY, 'warning');
         return false;
       }
     }
