@@ -1,0 +1,136 @@
+/* O55 · The switcher in every look (Q16 consistency pass, pm7-q16-consistency, 2026-10-15).
+   Jared #22: "There are many different tab selectors too, the left bar, the center left bar, the tabs in managers ...
+   Frankly we should do that for all the themes (including nier mode) too."
+   Every tab, segment and list selection is one component: Liquid Glass's switcher (Concepts/liquid-glass/opus-5.5:
+   glass.js STRIPS and glass.css sections 6 and 12; CONTRACT.md, "The switcher"). Glass draws it as the clear lens Jared
+   approved and sets none of these tokens. Each other look adopts it here, by tokens only, so it stays itself and is
+   the same everywhere inside itself:
+   - Basic: a precise tinted chip with a crisp accent hairline, gliding with a little give;
+   - Friendly: a soft mint pebble with a glow, the page tabs' own plate, gliding like Glass's drop;
+   - Retro: a reverse-video phosphor block (opaque, square, the label inverted), gliding rigidly;
+   - NieR Mode: the game's ink bar (opaque ink, paper words, square), gliding rigidly; its hover ink bars stay as they are.
+   An opaque chip needs the lens under its labels (--pm-switch-layer: under). Labels: --pm-switch-ink at rest,
+   --pm-switch-ink-on when chosen; inside an opaque chip every line and icon reads in that one ink, as reverse video and
+   NieR's ink bar do. Reduce Motion: the chip jumps (glass.js). */
+
+/* ---- Basic --------------------------------------------------------------------------------------------------------- */
+html[data-theme="basic-dark"]:not([data-o55-nier="on"]) {
+  --pm-switch: lens;
+  --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  --pm-switch-hover: color-mix(in srgb, var(--text-primary) 7%, transparent);
+  --pm-switch-fill: color-mix(in srgb, var(--accent-primary) 17%, transparent); --pm-switch-body: transparent;
+  --pm-switch-line: color-mix(in srgb, var(--accent-primary) 80%, transparent); --pm-switch-edge: transparent;
+  --pm-switch-top: rgba(255, 255, 255, .07); --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-shadow: 0 1px 2px rgba(0, 0, 0, .45);
+  --pm-switch-r: 6px; --pm-switch-r-in: 4px;
+  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: var(--text-primary);
+  --pm-switch-mark: var(--accent-primary);
+  --pm-switch-swell: .5; --pm-switch-liquid: .35;
+}
+html[data-theme="basic-light"]:not([data-o55-nier="on"]) {
+  --pm-switch: lens;
+  --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  --pm-switch-hover: color-mix(in srgb, var(--text-primary) 6%, transparent);
+  --pm-switch-fill: color-mix(in srgb, var(--accent-primary) 11%, transparent); --pm-switch-body: transparent;
+  --pm-switch-line: color-mix(in srgb, var(--accent-primary) 70%, transparent); --pm-switch-edge: transparent;
+  --pm-switch-top: rgba(255, 255, 255, .55); --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-shadow: 0 1px 2px rgba(16, 24, 40, .10);
+  --pm-switch-r: 6px; --pm-switch-r-in: 4px;
+  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: var(--text-primary);
+  --pm-switch-mark: var(--accent-primary);
+  --pm-switch-swell: .5; --pm-switch-liquid: .35;
+}
+
+/* ---- Friendly: the page tabs' mint plate and glow, everywhere ------------------------------------------------------ */
+html[data-theme="friendly-dark"]:not([data-o55-nier="on"]) {
+  --pm-switch: lens;
+  --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  --pm-switch-hover: color-mix(in srgb, var(--pm6-cozy-mint) 9%, transparent);
+  --pm-switch-fill: color-mix(in srgb, var(--pm6-cozy-mint) 17%, transparent); --pm-switch-body: transparent;
+  --pm-switch-line: color-mix(in srgb, var(--pm6-cozy-mint) 42%, transparent); --pm-switch-edge: transparent;
+  --pm-switch-top: rgba(255, 255, 255, .08); --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-shadow: 0 0 14px color-mix(in srgb, var(--pm6-cozy-mint) 28%, transparent), 0 2px 6px -2px rgba(0, 0, 0, .4);
+  --pm-switch-r: 10px; --pm-switch-r-in: 7px;
+  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: var(--pm6-cozy-mint);
+  --pm-switch-mark: var(--pm6-cozy-mint);
+  --pm-switch-swell: .75; --pm-switch-liquid: .85;
+}
+html[data-theme="friendly-light"]:not([data-o55-nier="on"]) {
+  --pm-switch: lens;
+  --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
+  --pm-switch-hover: color-mix(in srgb, var(--pm6-cozy-mint) 10%, transparent);
+  --pm-switch-fill: color-mix(in srgb, var(--pm6-cozy-mint) 20%, transparent); --pm-switch-body: transparent;
+  --pm-switch-line: color-mix(in srgb, var(--pm6-cozy-mint) 55%, transparent); --pm-switch-edge: transparent;
+  --pm-switch-top: rgba(255, 255, 255, .8); --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-shadow: 0 0 12px color-mix(in srgb, var(--pm6-cozy-mint) 30%, transparent), 0 2px 6px -3px rgba(74, 69, 80, .25);
+  --pm-switch-r: 10px; --pm-switch-r-in: 7px;
+  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: color-mix(in srgb, var(--accent-lime) 66%, #000);
+  --pm-switch-mark: var(--accent-lime);
+  --pm-switch-swell: .75; --pm-switch-liquid: .85;
+}
+
+/* ---- Retro: reverse video ------------------------------------------------------------------------------------------- */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) {
+  --pm-switch: lens; --pm-switch-layer: under;
+  --pm-switch-track: color-mix(in srgb, var(--accent-lime) 6%, transparent);
+  --pm-switch-hover: color-mix(in srgb, var(--accent-lime) 13%, transparent);
+  --pm-switch-fill: var(--accent-lime); --pm-switch-body: transparent;
+  --pm-switch-line: transparent; --pm-switch-edge: transparent;
+  --pm-switch-top: transparent; --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-r: 0px; --pm-switch-r-in: 0px;
+  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: var(--surface);
+  --pm-switch-mark: var(--accent-lime); --pm-switch-mark-on: var(--surface);
+  --pm-switch-swell: 0; --pm-switch-liquid: 0;
+}
+/* the phosphor's bloom on the dark screen, a printed key's hard shadow on the light one */
+html[data-theme="retro-dark"]:not([data-o55-nier="on"]) { --pm-switch-shadow: 0 0 10px color-mix(in srgb, var(--accent-lime) 42%, transparent); }
+html[data-theme="retro-light"]:not([data-o55-nier="on"]) { --pm-switch-shadow: 2px 2px 0 color-mix(in srgb, var(--text-primary) 70%, transparent); }
+
+/* ---- NieR Mode: the ink bar ----------------------------------------------------------------------------------------- */
+html[data-o55-nier="on"] {
+  --pm-switch: lens; --pm-switch-layer: under;
+  --pm-switch-track: transparent;
+  --pm-switch-hover: var(--o55-nier-hover, rgba(var(--o55-nier-ink-rgb), .10));
+  --pm-switch-fill: var(--o55-nier-ink); --pm-switch-body: transparent;
+  --pm-switch-line: transparent; --pm-switch-edge: transparent;
+  --pm-switch-top: transparent; --pm-switch-bottom: transparent;
+  --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
+  --pm-switch-shadow: 0 0 0 0 transparent;
+  --pm-switch-r: 0px; --pm-switch-r-in: 0px;
+  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: var(--o55-nier-on-ink);
+  --pm-switch-mark: var(--o55-nier-ink); --pm-switch-mark-on: var(--o55-nier-on-ink);
+  --pm-switch-swell: 0; --pm-switch-liquid: 0;
+}
+
+/* ---- What the component does not draw, in the same material ----------------------------------------------------------
+   The title bar's one-of-several menus (the look family, the project) are lists that live in a menu, not strips: the
+   chosen row wears the switcher's material in place, as Settings' service list does (glass.css section 6). NieR keeps
+   its ink bar there (14-nier-parts.css), which is the same chip. */
+html[data-pm-switch="lens"]:not([data-o55-nier="on"]) .pm6-tb-menu-item.is-selected {
+  background: linear-gradient(var(--pm-switch-fill), var(--pm-switch-fill)), linear-gradient(var(--pm-switch-body), var(--pm-switch-body));
+  box-shadow: inset 0 0 0 .5px var(--pm-switch-line), inset 0 1px 0 var(--pm-switch-top), 0 0 0 .5px var(--pm-switch-edge), var(--pm-switch-shadow);
+  border-radius: var(--pm-switch-r); color: var(--pm-switch-ink-on);
+}
+
+/* ---- Inside an opaque chip (--pm-switch-layer: under) -------------------------------------------------------------
+   Every word, icon and count of the chosen item takes the chip's ink (the item's own colour, set by glass.css), so a
+   chapter's line, a service's state, a tab's icon and a view's count never sit in their resting colours on the chip. A
+   service's status dot keeps its colour inside a ring of that ink. The press marks (glass.css section 12) carry the same
+   inks while the chip moves ahead of the app's choice. NieR's own rules (14-nier-parts.css) say the same for its list. */
+html[data-pm-switch-layer="under"]:not(#lgz) :is(#pm-settings-root .rail-scroll > .side-link.active, #pm-settings-root .domain-link.active,
+  #pm-settings-root .pm51-index-group > .index-link.is-active, #pm-settings-root .resource-row[aria-current="true"], #pm-settings-root .workspace-tab.is-current,
+  #pm-settings-root .manager-tab[aria-selected="true"], #pmuNav .pmu-navbtn.active, #pmuRange > button.active, #sidePanelSlot .pm-segtab-item.active,
+  nav.page-tabs .page-tab.active, .orch-tabs .orch-tab.active, #themeMenu .pm6-tt-mode[aria-checked="true"], #panel-wizard .pm6-wiz-intent-chip.sel,
+  .pm6-tb-menu-item.is-selected) :where(*) {
+  color: inherit; -webkit-text-fill-color: currentColor;
+}
+html[data-pm-switch-layer="under"]:not(#lgz) #pm-settings-root .resource-row[aria-current="true"] .status-dot { box-shadow: 0 0 0 1.5px var(--pm-switch-ink-on); }
+
+/* ---- The look's own marks that the component does not already set aside ----------------------------------------------
+   The Orchestrator's views kept their 3 px underline under the chip (Basic's blue, Retro's green). */
+html[data-pm-switch="lens"] .orch-tabs .orch-tab.active { border-bottom-color: transparent; }

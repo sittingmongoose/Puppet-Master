@@ -370,7 +370,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuExport { border-radius: 0 
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn::before, :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn::after { opacity: 0 !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn:hover:not(.active) { background: var(--pm-switch-hover, var(--lg-fill-hover)) !important; color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active, :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active * { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active .pmu-navicon { color: var(--pm-switch-mark, var(--accent-blue)) !important; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active .pmu-navicon { color: var(--pm-switch-mark-on, var(--pm-switch-mark, var(--accent-blue))) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active { font-weight: 650; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn:not(.active) .pmu-navcount { color: var(--accent-warning) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row) { border-radius: var(--pm-ctl-r) !important; }
@@ -435,7 +435,9 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-mode:is(.is
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-divider { margin: 6px 4px !important; }
 /* Jared #14 (2026-10-14): Light / Dark / Auto is a Glass tab switcher, the lens drawn inside the menu (glass.js); the
    plain chosen fill above stays only for the moment before the lens lands */
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tt-modes[data-lg-lensed] .pm6-tt-mode:is(.is-selected, [aria-pressed="true"], [aria-checked="true"], .active) { background: transparent !important; }
+/* Q16: a look that adopts the switcher hands it the same lens; the chosen mode's own fill and edge step aside there too, and
+   its words take the switcher's chosen ink */
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) #themeMenu .pm6-tt-modes[data-lg-lensed] .pm6-tt-mode:is(.is-selected, [aria-pressed="true"], [aria-checked="true"], .active) { background: transparent !important; box-shadow: none !important; border-color: transparent !important; color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #themeMenu .pm6-tb-menu-item {
   min-height: 34px; margin: 1px 0 !important; padding: 8px 10px !important; border: 0 !important; border-radius: var(--pm-ctl-r) !important;
   background: transparent !important; box-shadow: none !important; display: flex; align-items: center; gap: 10px;
@@ -488,7 +490,7 @@ html[data-lg="on"][data-theme="glass-light"]:not(#lgz) .lg-lens::after { height:
 
 /* the chosen label rests a little larger under its lens (glass.js keyframes the swell while the lens moves; these match
    KINDS.lens.magRest and KINDS.lensIcon.magRest) */
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(nav.page-tabs .page-tab, #pmuRange > button, #sidePanelSlot .pm-segtab-item, .orch-tabs .orch-tab).active { scale: 1.04; }
+:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) :is(nav.page-tabs .page-tab, #pmuRange > button, #sidePanelSlot .pm-segtab-item, .orch-tabs .orch-tab).active { scale: calc(1 + .04 * var(--pm-switch-swell, 1)); }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #activityBar .icon[data-lg-current] .symbol { scale: 1.08; }
 /* the hover bead: lighter than a lens, gone the moment a press lands or a menu opens */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-bead { opacity: 0; box-shadow: inset 0 0 0 .5px var(--lg-lens-hair), inset 0 1px 0 var(--lg-edge-top), inset 0 -1px 1px var(--lg-edge-bot), 0 0 0 .5px var(--lg-lens-edge), 0 3px 8px -3px var(--lg-shadow); }
@@ -741,8 +743,16 @@ html[data-lg="on"][data-theme^="glass"][data-lg-tier="gpu"]:not(#lgz) #pm-o55-on
 /* the tour: callout and bar are live glass over the app; its spotlight ring is a lit glass edge */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.o55t-callout, .o55t-bar) { border: 0 !important; border-radius: 16px !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .o55t-ring { box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .85), 0 0 0 5px rgba(var(--accent-primary-rgb), .35), 0 0 30px 6px rgba(var(--accent-primary-rgb), .3) !important; border-radius: 12px !important; }
-.lg-lenses-local { display: none; }
+.lg-lenses-local, lg-under { display: none; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .lg-lenses-local { display: block; position: absolute; inset: 0; z-index: 30; pointer-events: none; border-radius: inherit; }
+/* --pm-switch-layer: under (Q16; never in Glass): each lens is inside its own strip, over the strip's track and under its
+   items, which are lifted to z-index 1 here where the rules above do not already */
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz) lg-under.lg-lenses-under { display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz) :is(#themeMenu .pm6-tt-mode, #panel-wizard .pm6-wiz-intent-chip, #pm-o55-onboarding .o55-seg button, #pm-o55-onboarding .o55-railitem) { position: relative; z-index: 1; }
+/* while a press moves the chip ahead of the app's choice (glass.js pressMark), the pressed item reads as chosen and the
+   one it leaves as not, so neither label sits in its old colour on the wrong ground (two ids: above the chosen ink) */
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy) :is([data-lg-press="on"], [data-lg-press="on"] *) { color: var(--pm-switch-ink-on) !important; }
+html[data-pm-switch="lens"][data-pm-switch-layer="under"]:not(#lgz):not(#lgy) :is([data-lg-press="off"], [data-lg-press="off"] *) { color: var(--pm-switch-ink) !important; }
 
 /* Settings' chapter header is a bar sheet under Liquid Glass (glass.js SURFACES): on the bare wallpaper its line, a 62 %
    tint, read 4.2:1 over Ribbons and 1.9-2.9:1 over Prism or Pool in Glass Dark (2026-10-14). The line takes the look's

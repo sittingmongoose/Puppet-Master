@@ -26,7 +26,9 @@ html[data-theme="friendly-light"] #panel-settings { --k3-text-3: #6e6874; --k3-a
   --k3-accent-ink: color-mix(in srgb, var(--k3-accent) 46%, var(--k3-text-1)); --k3-red: color-mix(in srgb, #e8654c 64%, var(--k3-text-1)); --k3-green: color-mix(in srgb, #2fa183 62%, var(--k3-text-1)); }
 html[data-theme="retro-dark"] #panel-settings { --k3-text-3: #9aa489; --k3-red: #e27860; --k3-on-accent: #0a0c08; }
 html[data-theme="retro-light"] #panel-settings { --k3-amber: #9c5000; --k3-red: #bd2c2c; }
-html[data-theme="glass-dark"] #panel-settings { --k3-text-2: rgba(240, 234, 253, .92); --k3-text-3: rgba(236, 228, 252, .86); --k3-on-accent: #1d1430;
+/* Glass Dark's quieter words are Glass's own cool white (Q16, 2026-10-15: they were a lavender, rgba(240, 234, 253) and
+   rgba(236, 228, 252), left from old Glass's violet; the same luminance, so every contrast stays where it was) */
+html[data-theme="glass-dark"] #panel-settings { --k3-text-2: rgba(236, 241, 250, .92); --k3-text-3: rgba(230, 236, 248, .86); --k3-on-accent: #0b1224;
   --k3-accent-ink: color-mix(in srgb, var(--k3-accent) 50%, var(--k3-text-1)); --k3-red: color-mix(in srgb, #ff7893 80%, var(--k3-text-1)); }
 /* Glass Light's sheets are frosted over the wallpaper, a mid-tone ground (luminance down to about .3), where only an
    ink close to the label's reads 4.5 to 1. Its words take the label ink, a little lighter for the quieter ones, and
