@@ -94874,7 +94874,8 @@ PLACE.capture = function (kind, from) {
    node (the first one at the top of the view, never the reading line) and, the moment the page left 0, undid the
    place's correction. It is the browser's again while the reader scrolls or a jump lands. */
 const o55pNative = on => { const sc = o55pScroller(); if (sc && (sc.style.overflowAnchor === 'none') === on) sc.style.overflowAnchor = on ? '' : 'none'; };
-PLACE.hold = function (kind, from) { this.mode = 'hold'; o55pStopSettle(); o55pNative(false); this.capture(kind || 'read', from); };
+/* capture reads before the browser's anchoring is switched off: a read after that style write forced a second pass */
+PLACE.hold = function (kind, from) { this.mode = 'hold'; o55pStopSettle(); this.capture(kind || 'read', from); o55pNative(false); };
 PLACE.user = function () {
   if (this.mode === 'user' && o55pSettle) return;
   this.mode = 'user'; this.anchor = null; suppressScrollSpyUntil = 0; o55pNative(true); o55pSettleSoon();
@@ -94975,17 +94976,33 @@ PLACE.watch = function () { const sc = o55pScroller(); if (sc) o55pWatch(sc, thi
    forced an extra style pass per frame for the length of a landing. */
 let o55pSettle = 0, o55pBar = false, o55pScrollAt = 0;
 function o55pStopSettle() { clearTimeout(o55pSettle); o55pSettle = 0; }
+const o55pBusy = () => { const now = performance.now(); return pendingScroll || o55pBar || o55Landing || now - PLACE.navAt < 260 || now - o55pScrollAt < 160; };
+/* The settled view is read right after the next frame's layout, where reading it costs nothing. Read from the timer, it
+   forced a style pass of its own on NieR's and Glass's animated backgrounds. A node newly observed by a ResizeObserver
+   reports once, after layout; a hidden one never does, and the observer on the scroller restarts the settle when
+   Settings shows again. */
+let o55pAfter = null;
+function o55pReadSettled(sc) {
+  if (typeof ResizeObserver !== 'function') { if (o55pShown(sc)) PLACE.hold('read'); return; }
+  if (!o55pAfter) o55pAfter = new ResizeObserver(() => {
+    o55pAfter.disconnect();
+    if (PLACE.mode === 'hold' || o55pSettle) return;   /* a hold, or a new jump or scroll, came first */
+    if (o55pBusy()) { o55pSettleSoon(); return; }
+    const s = o55pScroller();
+    if (s && s.isConnected && o55pShown(s)) PLACE.hold('read');
+  });
+  o55pAfter.disconnect();
+  o55pAfter.observe(sc);
+}
 function o55pSettleSoon() {
   if (o55pSettle) return;
   const step = () => {
     o55pSettle = 0;
     if (PLACE.mode === 'hold') return;
-    const sc = o55pScroller(), now = performance.now();
+    const sc = o55pScroller();
     if (!sc || !sc.isConnected) return;   /* no document page (Settings Home): the next arrival starts this again */
-    const busy = pendingScroll || o55pBar || o55Landing || now - PLACE.navAt < 260 || now - o55pScrollAt < 160;
-    if (busy) { o55pSettle = setTimeout(step, 80); return; }
-    if (!o55pShown(sc)) return;   /* hidden: the observer on the scroller restarts this when Settings shows again */
-    PLACE.hold('read');
+    if (o55pBusy()) { o55pSettle = setTimeout(step, 80); return; }
+    o55pReadSettled(sc);
   };
   o55pSettle = setTimeout(step, 80);
 }
