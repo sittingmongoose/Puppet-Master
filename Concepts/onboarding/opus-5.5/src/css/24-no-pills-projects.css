@@ -115,8 +115,16 @@ html[data-theme] .pm6-proj-sheet .pm6-proj-chip.active {
   z-index: 2; border-color: color-mix(in srgb, var(--accent-primary) 70%, var(--border-light));
   background: color-mix(in srgb, var(--accent-primary) 14%, transparent); color: var(--text-primary);
 }
-/* Glass's frosted sheet washes a 14 % tint out; the chosen cell takes more of the accent and its full edge */
-html[data-theme^="glass"] .pm6-proj-sheet .pm6-proj-chip.active { border-color: var(--accent-primary); background: color-mix(in srgb, var(--accent-primary) 24%, transparent); }
+/* Glass: the page's material rule paints every template cell with the same fill and rim, !important (the base page's
+   html[data-theme^="glass"] :is(.project-action-btn, .pm6-proj-chip, ...)), so the chosen cell only changed its ink.
+   The chosen cell takes more of the accent and its full edge on top of that material, and hover shows through too. */
+html[data-theme^="glass"] .pm6-proj-sheet .pm6-proj-chip:hover:not(.active) {
+  background: color-mix(in srgb, var(--accent-primary) 10%, color-mix(in srgb, var(--rg-chrome-strong) 74%, transparent)) !important;
+}
+html[data-theme^="glass"] .pm6-proj-sheet .pm6-proj-chip.active {
+  border-color: var(--accent-primary) !important;
+  background: color-mix(in srgb, var(--accent-primary) 24%, color-mix(in srgb, var(--rg-chrome-strong) 74%, transparent)) !important;
+}
 html:is([data-theme^="retro"], [data-o55-nier="on"]) .pm6-proj-sheet .pm6-proj-chip { transition: none; }
 html[data-theme^="retro"] .pm6-proj-sheet .pm6-proj-chip.active { border-color: var(--accent-primary); background: var(--accent-primary); color: var(--surface); }
 html[data-o55-nier="on"] .pm6-proj-sheet .pm6-proj-chip.active { border-color: var(--o55-nier-ink); background: var(--o55-nier-ink); color: var(--o55-nier-on-ink, var(--surface)); }
