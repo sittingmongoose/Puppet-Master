@@ -1,0 +1,381 @@
+{
+  "schema_id": "pm.wallpaper_catalog.v1",
+  "owner_ref": "Plans/FinalGUISpec.md#F3-653",
+  "setting_id": "general.visual.wallpaper",
+  "default": "look",
+  "publication_status": "pending_jared_review",
+  "look_defaults": {
+    "basic": "own_ground",
+    "friendly": "own_ground",
+    "glass": "ribbons",
+    "retro": "own_ground",
+    "nier": "selected_ink_scene"
+  },
+  "wallpapers": [
+    {
+      "id": "ribbons",
+      "name": "Ribbons",
+      "family": "glass",
+      "family_order": 10,
+      "description": "Layered flowing bands with crisp edges, each lit along its crest.",
+      "assets": {
+        "dark": "Concepts/liquid-glass/opus-5.5/src/walls/ribbons-dark.webp",
+        "light": "Concepts/liquid-glass/opus-5.5/src/walls/ribbons-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/10-glass.json",
+      "source_sha256": "7605951c83e4ac84018b0bd52d781bb2c19c5d24d40bbf024bf733a538793274"
+    },
+    {
+      "id": "prism",
+      "name": "Prism",
+      "family": "glass",
+      "family_order": 10,
+      "description": "Bold diagonal shards of light with sharp edges and glass-like gradients.",
+      "assets": {
+        "dark": "Concepts/liquid-glass/opus-5.5/src/walls/prism-dark.webp",
+        "light": "Concepts/liquid-glass/opus-5.5/src/walls/prism-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/10-glass.json",
+      "source_sha256": "7605951c83e4ac84018b0bd52d781bb2c19c5d24d40bbf024bf733a538793274"
+    },
+    {
+      "id": "orbs",
+      "name": "Orbs",
+      "family": "glass",
+      "family_order": 10,
+      "description": "Large overlapping rounded forms with crisp rims, lit from the top left.",
+      "assets": {
+        "dark": "Concepts/liquid-glass/opus-5.5/src/walls/orbs-dark.webp",
+        "light": "Concepts/liquid-glass/opus-5.5/src/walls/orbs-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/10-glass.json",
+      "source_sha256": "7605951c83e4ac84018b0bd52d781bb2c19c5d24d40bbf024bf733a538793274"
+    },
+    {
+      "id": "aurora",
+      "name": "Aurora",
+      "family": "glass",
+      "family_order": 10,
+      "description": "Curtains of light over a night or dawn sky, above layered ridges with lit edges.",
+      "assets": {
+        "dark": "Concepts/liquid-glass/opus-5.5/src/walls/aurora-dark.webp",
+        "light": "Concepts/liquid-glass/opus-5.5/src/walls/aurora-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/10-glass.json",
+      "source_sha256": "7605951c83e4ac84018b0bd52d781bb2c19c5d24d40bbf024bf733a538793274"
+    },
+    {
+      "id": "dunes",
+      "name": "Dunes",
+      "family": "glass",
+      "family_order": 10,
+      "description": "Layered dunes at sunset, or dusk in the dark print, each crest a crisp lit line.",
+      "assets": {
+        "dark": "Concepts/liquid-glass/opus-5.5/src/walls/dunes-dark.webp",
+        "light": "Concepts/liquid-glass/opus-5.5/src/walls/dunes-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/10-glass.json",
+      "source_sha256": "7605951c83e4ac84018b0bd52d781bb2c19c5d24d40bbf024bf733a538793274"
+    },
+    {
+      "id": "bloom",
+      "name": "Bloom",
+      "family": "glass",
+      "family_order": 10,
+      "description": "A fan of petals opening from the lower left, each a crisp-edged gradient leaf.",
+      "assets": {
+        "dark": "Concepts/liquid-glass/opus-5.5/src/walls/bloom-dark.webp",
+        "light": "Concepts/liquid-glass/opus-5.5/src/walls/bloom-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/10-glass.json",
+      "source_sha256": "7605951c83e4ac84018b0bd52d781bb2c19c5d24d40bbf024bf733a538793274"
+    },
+    {
+      "id": "pool",
+      "name": "Pool",
+      "family": "glass",
+      "family_order": 10,
+      "description": "Sunlight focused by rippled water onto a pool floor: bright curved filaments.",
+      "assets": {
+        "dark": "Concepts/liquid-glass/opus-5.5/src/walls/pool-dark.webp",
+        "light": "Concepts/liquid-glass/opus-5.5/src/walls/pool-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/10-glass.json",
+      "source_sha256": "7605951c83e4ac84018b0bd52d781bb2c19c5d24d40bbf024bf733a538793274"
+    },
+    {
+      "id": "facets",
+      "name": "Facets",
+      "family": "glass",
+      "family_order": 10,
+      "description": "Cut crystal: a triangle mesh with every facet lit by its own tilt.",
+      "assets": {
+        "dark": "Concepts/liquid-glass/opus-5.5/src/walls/facets-dark.webp",
+        "light": "Concepts/liquid-glass/opus-5.5/src/walls/facets-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/10-glass.json",
+      "source_sha256": "7605951c83e4ac84018b0bd52d781bb2c19c5d24d40bbf024bf733a538793274"
+    },
+    {
+      "id": "blueprint",
+      "name": "Blueprint",
+      "family": "basic",
+      "family_order": 20,
+      "description": "A drafting sheet: a fine grid, a protractor, a dimensioned part and a title block.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/blueprint-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/blueprint-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/20-basic.json",
+      "source_sha256": "ce1fe15e2c8299bf01f5ec7b469f620bc4e29b07b6a89a3b2ff1d3d8088ee36e"
+    },
+    {
+      "id": "contour",
+      "name": "Contour",
+      "family": "basic",
+      "family_order": 20,
+      "description": "A topographic survey with hills at the corners and a flat, quiet valley in the middle.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/contour-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/contour-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/20-basic.json",
+      "source_sha256": "ce1fe15e2c8299bf01f5ec7b469f620bc4e29b07b6a89a3b2ff1d3d8088ee36e"
+    },
+    {
+      "id": "folds",
+      "name": "Folds",
+      "family": "basic",
+      "family_order": 20,
+      "description": "A large sheet of paper folded and opened flat, each facet lit from the top left.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/folds-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/folds-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/20-basic.json",
+      "source_sha256": "ce1fe15e2c8299bf01f5ec7b469f620bc4e29b07b6a89a3b2ff1d3d8088ee36e"
+    },
+    {
+      "id": "sheets",
+      "name": "Sheets",
+      "family": "basic",
+      "family_order": 20,
+      "description": "Paper on a desk: a stack with a clip, index cards and graph paper at the corners.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/sheets-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/sheets-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/20-basic.json",
+      "source_sha256": "ce1fe15e2c8299bf01f5ec7b469f620bc4e29b07b6a89a3b2ff1d3d8088ee36e"
+    },
+    {
+      "id": "arcs",
+      "name": "Arcs",
+      "family": "basic",
+      "family_order": 20,
+      "description": "Fine concentric arcs from beyond two corners that thin out before the middle.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/arcs-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/arcs-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/20-basic.json",
+      "source_sha256": "ce1fe15e2c8299bf01f5ec7b469f620bc4e29b07b6a89a3b2ff1d3d8088ee36e"
+    },
+    {
+      "id": "dotwave",
+      "name": "Dot Wave",
+      "family": "friendly",
+      "family_order": 30,
+      "description": "A floating dot grid swelling into a halftone wave toward the edges.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/dotwave-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/dotwave-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/30-friendly.json",
+      "source_sha256": "e77fb4a9bed73a5ba0df0d71aa2b489ec3f9a0329b6bbe67c355756fda48aac0"
+    },
+    {
+      "id": "channels",
+      "name": "Channels",
+      "family": "friendly",
+      "family_order": 30,
+      "description": "Two walls of rounded glossy tiles receding over a floor of dots.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/channels-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/channels-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/30-friendly.json",
+      "source_sha256": "e77fb4a9bed73a5ba0df0d71aa2b489ec3f9a0329b6bbe67c355756fda48aac0"
+    },
+    {
+      "id": "bubbles",
+      "name": "Bubbles",
+      "family": "friendly",
+      "family_order": 30,
+      "description": "Soap bubbles with a pastel film drifting up from the corners over the dots.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/bubbles-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/bubbles-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/30-friendly.json",
+      "source_sha256": "e77fb4a9bed73a5ba0df0d71aa2b489ec3f9a0329b6bbe67c355756fda48aac0"
+    },
+    {
+      "id": "hills",
+      "name": "Hills",
+      "family": "friendly",
+      "family_order": 30,
+      "description": "Rolling dotted hills with round trees and soft clouds under a dotted sky.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/hills-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/hills-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/30-friendly.json",
+      "source_sha256": "e77fb4a9bed73a5ba0df0d71aa2b489ec3f9a0329b6bbe67c355756fda48aac0"
+    },
+    {
+      "id": "stripes",
+      "name": "Soft Stripes",
+      "family": "friendly",
+      "family_order": 30,
+      "description": "Diagonal pastel stripes filled with dots, washing out toward the middle.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/stripes-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/stripes-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/30-friendly.json",
+      "source_sha256": "e77fb4a9bed73a5ba0df0d71aa2b489ec3f9a0329b6bbe67c355756fda48aac0"
+    },
+    {
+      "id": "horizon",
+      "name": "Horizon",
+      "family": "retro",
+      "family_order": 40,
+      "description": "A banded sun over a stepped ridge and a grid floor running to the horizon.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/horizon-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/horizon-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/40-retro.json",
+      "source_sha256": "48c2c84d7428069f0be76635440545202c392ce791beaac3e85901814c9fe0ae"
+    },
+    {
+      "id": "peaks",
+      "name": "Peaks",
+      "family": "retro",
+      "family_order": 40,
+      "description": "Stepped mountain ranges with lit ridges under a pixel moon or a pale sun.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/peaks-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/peaks-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/40-retro.json",
+      "source_sha256": "48c2c84d7428069f0be76635440545202c392ce791beaac3e85901814c9fe0ae"
+    },
+    {
+      "id": "circuit",
+      "name": "Circuit",
+      "family": "retro",
+      "family_order": 40,
+      "description": "Board traces running in from the edges to pads, vias and chips.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/circuit-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/circuit-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/40-retro.json",
+      "source_sha256": "48c2c84d7428069f0be76635440545202c392ce791beaac3e85901814c9fe0ae"
+    },
+    {
+      "id": "dither",
+      "name": "Dither",
+      "family": "retro",
+      "family_order": 40,
+      "description": "A ringed planet and a small moon in ordered dithering, like a riso print.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/dither-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/dither-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/40-retro.json",
+      "source_sha256": "48c2c84d7428069f0be76635440545202c392ce791beaac3e85901814c9fe0ae"
+    },
+    {
+      "id": "stars",
+      "name": "Stars",
+      "family": "retro",
+      "family_order": 40,
+      "description": "A pixel starfield with a shooting star, or a printed star chart in the light print.",
+      "assets": {
+        "dark": "Concepts/wallpapers/opus-5.5/src/walls/stars-dark.webp",
+        "light": "Concepts/wallpapers/opus-5.5/src/walls/stars-light.webp"
+      },
+      "thumbnail_source": "same packaged print, resized without changing its crop semantics",
+      "source_ref": "Concepts/wallpapers/opus-5.5/catalog.d/40-retro.json",
+      "source_sha256": "48c2c84d7428069f0be76635440545202c392ce791beaac3e85901814c9fe0ae"
+    }
+  ],
+  "withdrawn_ids": [
+    "archive",
+    "flora",
+    "fragments",
+    "hatch",
+    "signal"
+  ],
+  "pending_families": [
+    {
+      "family": "nier",
+      "status": "approved_scene_contract_publication_pending",
+      "default_for": null,
+      "owner_ref": "Plans/FinalGUISpec.md#F3-653",
+      "selection_owner": "Plans/Settings_System.md#SSYS-054",
+      "scene_choices": [
+        {
+          "id": "city",
+          "name": "City Ruins"
+        },
+        {
+          "id": "bunker",
+          "name": "The Bunker"
+        },
+        {
+          "id": "desert",
+          "name": "Desert"
+        },
+        {
+          "id": "forest",
+          "name": "Forest Castle"
+        },
+        {
+          "id": "park",
+          "name": "Amusement Park"
+        },
+        {
+          "id": "flooded",
+          "name": "Flooded City"
+        }
+      ],
+      "hold": "The built concept contract at 201d602f7d confirms the scene identities and selection rules. Native asset admission and coordinated Glass/wallpaper publication remain held; no placeholder paths or stale print aliases."
+    }
+  ]
+}

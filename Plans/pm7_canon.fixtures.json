@@ -1,0 +1,625 @@
+{
+  "owner_ref": "Plans/Automated_Testing_System.md#ATS-077",
+  "scope": "Static request/result and registry validation only; native effects remain planned.",
+  "editor_appearance_cases": [
+    {
+      "name": "valid_field_patch",
+      "definition": "request",
+      "valid": true,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.cursor-width": 2
+        }
+      }
+    },
+    {
+      "name": "null_clears_override",
+      "definition": "request",
+      "valid": true,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.cursor-width": null
+        }
+      }
+    },
+    {
+      "name": "token_overlay_and_clear",
+      "definition": "request",
+      "valid": true,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.token-colors": {
+            "look:basic-dark/kw": "#ff00aa",
+            "dracula/com": null
+          }
+        }
+      }
+    },
+    {
+      "name": "unknown_field",
+      "definition": "request",
+      "valid": false,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "run.shell": "rm"
+        }
+      }
+    },
+    {
+      "name": "invalid_token_kind",
+      "definition": "request",
+      "valid": false,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.token-colors": {
+            "dracula/unknown": "#abcdef"
+          }
+        }
+      }
+    },
+    {
+      "name": "invalid_hex",
+      "definition": "request",
+      "valid": false,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.token-colors": {
+            "dracula/kw": "red"
+          }
+        }
+      }
+    },
+    {
+      "name": "below_contrast_floor",
+      "definition": "request",
+      "valid": false,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.min-contrast": "3:1"
+        }
+      }
+    },
+    {
+      "name": "caret_width_out_of_range",
+      "definition": "request",
+      "valid": false,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.cursor-width": 5
+        }
+      }
+    },
+    {
+      "name": "empty_patch",
+      "definition": "request",
+      "valid": false,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {}
+      }
+    },
+    {
+      "name": "malformed_state_hash",
+      "definition": "request",
+      "valid": false,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "old",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.cursor-width": 2
+        }
+      }
+    },
+    {
+      "name": "unexpected_key",
+      "definition": "request",
+      "valid": false,
+      "value": {
+        "project_id": "project-a",
+        "workspace_tab_id": "workspace-a",
+        "panel_tab_id": "file:sample.rs",
+        "expected_state_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "idempotency_key": "appearance-1",
+        "fields": {
+          "code.editing.cursor-width": 2
+        },
+        "shell_input": "x"
+      }
+    },
+    {
+      "name": "applied_readback",
+      "definition": "result",
+      "valid": true,
+      "value": {
+        "command_id": "cmd.editor.appearance.set",
+        "correlation_id": "c-1",
+        "panel_tab_id": "file:sample.rs",
+        "status": "applied",
+        "reason": null,
+        "state_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "readback_verified": true
+      }
+    },
+    {
+      "name": "false_success_without_readback",
+      "definition": "result",
+      "valid": false,
+      "value": {
+        "command_id": "cmd.editor.appearance.set",
+        "correlation_id": "c-1",
+        "panel_tab_id": "file:sample.rs",
+        "status": "applied",
+        "reason": null,
+        "state_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "readback_verified": false
+      }
+    },
+    {
+      "name": "no_project_refusal",
+      "definition": "result",
+      "valid": true,
+      "value": {
+        "command_id": "cmd.editor.appearance.set",
+        "correlation_id": "c-1",
+        "panel_tab_id": "file:sample.rs",
+        "status": "refused",
+        "reason": "no_project_context",
+        "state_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "readback_verified": false
+      }
+    },
+    {
+      "name": "failed_without_reason",
+      "definition": "result",
+      "valid": false,
+      "value": {
+        "command_id": "cmd.editor.appearance.set",
+        "correlation_id": "c-1",
+        "panel_tab_id": "file:sample.rs",
+        "status": "failed",
+        "reason": null,
+        "state_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "readback_verified": true
+      }
+    }
+  ],
+  "quick_set_cases": [
+    {
+      "name": "editor_this_calm_exact_patch",
+      "quick_set_ref": "editor.calm",
+      "scope": "this",
+      "expected_operation": "set",
+      "expected_values": {
+        "code.editing.cursor-blink": "Solid",
+        "code.editing.cursor-motion": "Instant",
+        "code.editing.cursor-trail": "Off",
+        "code.editing.smooth-scroll": "Off",
+        "code.editing.reveal-lines": false
+      },
+      "unchanged_values": {
+        "code.editing.token-colors": {
+          "look:basic-dark/com": "#91b59c"
+        },
+        "code.editing.autosave": "On Focus Change",
+        "code.editing.tab-size": 8,
+        "code.editing.insert-spaces": "Tabs",
+        "code.terminal.sticky-header": false,
+        "general.visual.font-size": 14
+      }
+    },
+    {
+      "name": "editor_all_calm_exact_patch",
+      "quick_set_ref": "editor.calm",
+      "scope": "all",
+      "expected_operation": "set",
+      "expected_values": {
+        "code.editing.cursor-blink": "Solid",
+        "code.editing.cursor-motion": "Instant",
+        "code.editing.cursor-trail": "Off",
+        "code.editing.smooth-scroll": "Off",
+        "code.editing.reveal-lines": false
+      },
+      "unchanged_values": {
+        "code.editing.token-colors": {
+          "look:basic-dark/com": "#91b59c"
+        },
+        "code.editing.autosave": "On Focus Change",
+        "code.editing.tab-size": 8,
+        "code.editing.insert-spaces": "Tabs",
+        "code.terminal.sticky-header": false,
+        "general.visual.font-size": 14
+      }
+    },
+    {
+      "name": "editor_this_easy_reading_exact_patch",
+      "quick_set_ref": "editor.easy_reading",
+      "scope": "this",
+      "expected_operation": "set",
+      "expected_values": {
+        "code.editing.font-family": "Atkinson Hyperlegible Mono",
+        "code.editing.font-size": 15,
+        "code.editing.line-height": 1.75,
+        "code.editing.letter-spacing": 0.25,
+        "code.editing.ligatures": false,
+        "code.editing.min-contrast": "7:1",
+        "code.editing.italic-comments": "Off"
+      },
+      "unchanged_values": {
+        "code.editing.token-colors": {
+          "look:basic-dark/com": "#91b59c"
+        },
+        "code.editing.autosave": "On Focus Change",
+        "code.editing.tab-size": 8,
+        "code.editing.insert-spaces": "Tabs",
+        "code.terminal.sticky-header": false,
+        "general.visual.font-size": 14
+      }
+    },
+    {
+      "name": "editor_all_easy_reading_exact_patch",
+      "quick_set_ref": "editor.easy_reading",
+      "scope": "all",
+      "expected_operation": "set",
+      "expected_values": {
+        "code.editing.font-family": "Atkinson Hyperlegible Mono",
+        "code.editing.font-size": 15,
+        "code.editing.line-height": 1.75,
+        "code.editing.letter-spacing": 0.25,
+        "code.editing.ligatures": false,
+        "code.editing.min-contrast": "7:1",
+        "code.editing.italic-comments": "Off"
+      },
+      "unchanged_values": {
+        "code.editing.token-colors": {
+          "look:basic-dark/com": "#91b59c"
+        },
+        "code.editing.autosave": "On Focus Change",
+        "code.editing.tab-size": 8,
+        "code.editing.insert-spaces": "Tabs",
+        "code.terminal.sticky-header": false,
+        "general.visual.font-size": 14
+      }
+    },
+    {
+      "name": "editor_this_show_structure_exact_patch",
+      "quick_set_ref": "editor.show_structure",
+      "scope": "this",
+      "expected_operation": "set",
+      "expected_values": {
+        "code.editing.indent-guides": "Rainbow",
+        "code.editing.indent-guides-active": true,
+        "code.editing.bracket-pair-colors": true,
+        "code.editing.rulers": "80 and 120",
+        "code.editing.render-whitespace": "Between words",
+        "code.editing.sticky-scroll-lines": 5
+      },
+      "unchanged_values": {
+        "code.editing.token-colors": {
+          "look:basic-dark/com": "#91b59c"
+        },
+        "code.editing.autosave": "On Focus Change",
+        "code.editing.tab-size": 8,
+        "code.editing.insert-spaces": "Tabs",
+        "code.terminal.sticky-header": false,
+        "general.visual.font-size": 14
+      }
+    },
+    {
+      "name": "editor_all_show_structure_exact_patch",
+      "quick_set_ref": "editor.show_structure",
+      "scope": "all",
+      "expected_operation": "set",
+      "expected_values": {
+        "code.editing.indent-guides": "Rainbow",
+        "code.editing.indent-guides-active": true,
+        "code.editing.bracket-pair-colors": true,
+        "code.editing.rulers": "80 and 120",
+        "code.editing.render-whitespace": "Between words",
+        "code.editing.sticky-scroll-lines": 5
+      },
+      "unchanged_values": {
+        "code.editing.token-colors": {
+          "look:basic-dark/com": "#91b59c"
+        },
+        "code.editing.autosave": "On Focus Change",
+        "code.editing.tab-size": 8,
+        "code.editing.insert-spaces": "Tabs",
+        "code.terminal.sticky-header": false,
+        "general.visual.font-size": 14
+      }
+    },
+    {
+      "name": "terminal_this_calm_exact_patch",
+      "quick_set_ref": "terminal.calm",
+      "scope": "this",
+      "expected_operation": "set",
+      "expected_values": {
+        "code.terminal.effects": "Custom",
+        "code.terminal.cursor-blink": false,
+        "code.terminal.cursor-trail": "Off",
+        "code.terminal.smooth-scroll": "Off",
+        "code.terminal.flicker": false,
+        "code.terminal.crt": false
+      },
+      "unchanged_values": {
+        "code.editing.token-colors": {
+          "look:basic-dark/com": "#91b59c"
+        },
+        "code.editing.autosave": "On Focus Change",
+        "code.editing.tab-size": 8,
+        "code.editing.insert-spaces": "Tabs",
+        "code.terminal.sticky-header": false,
+        "general.visual.font-size": 14
+      }
+    },
+    {
+      "name": "terminal_all_calm_exact_patch",
+      "quick_set_ref": "terminal.calm",
+      "scope": "all",
+      "expected_operation": "set",
+      "expected_values": {
+        "code.terminal.effects": "Custom",
+        "code.terminal.cursor-blink": false,
+        "code.terminal.cursor-trail": "Off",
+        "code.terminal.smooth-scroll": "Off",
+        "code.terminal.flicker": false,
+        "code.terminal.crt": false
+      },
+      "unchanged_values": {
+        "code.editing.token-colors": {
+          "look:basic-dark/com": "#91b59c"
+        },
+        "code.editing.autosave": "On Focus Change",
+        "code.editing.tab-size": 8,
+        "code.editing.insert-spaces": "Tabs",
+        "code.terminal.sticky-header": false,
+        "general.visual.font-size": 14
+      }
+    },
+    {
+      "name": "terminal_this_easy_reading_exact_patch",
+      "quick_set_ref": "terminal.easy_reading",
+      "scope": "this",
+      "expected_operation": "set",
+      "expected_values": {
+        "code.terminal.font-family": "Atkinson Hyperlegible Mono",
+        "code.terminal.min-contrast": "7:1",
+        "code.terminal.line-height": 1.45,
+        "code.terminal.ligatures": false
+      },
+      "unchanged_values": {
+        "code.editing.token-colors": {
+          "look:basic-dark/com": "#91b59c"
+        },
+        "code.editing.autosave": "On Focus Change",
+        "code.editing.tab-size": 8,
+        "code.editing.insert-spaces": "Tabs",
+        "code.terminal.sticky-header": false,
+        "general.visual.font-size": 14
+      }
+    },
+    {
+      "name": "terminal_all_easy_reading_exact_patch",
+      "quick_set_ref": "terminal.easy_reading",
+      "scope": "all",
+      "expected_operation": "set",
+      "expected_values": {
+        "code.terminal.font-family": "Atkinson Hyperlegible Mono",
+        "code.terminal.min-contrast": "7:1",
+        "code.terminal.line-height": 1.45,
+        "code.terminal.ligatures": false
+      },
+      "unchanged_values": {
+        "code.editing.token-colors": {
+          "look:basic-dark/com": "#91b59c"
+        },
+        "code.editing.autosave": "On Focus Change",
+        "code.editing.tab-size": 8,
+        "code.editing.insert-spaces": "Tabs",
+        "code.terminal.sticky-header": false,
+        "general.visual.font-size": 14
+      }
+    },
+    {
+      "name": "terminal_this_old_monitor_exact_patch",
+      "quick_set_ref": "terminal.old_monitor",
+      "scope": "this",
+      "expected_operation": "set",
+      "expected_values": {
+        "code.terminal.effects": "Custom",
+        "code.terminal.scanlines": "On",
+        "code.terminal.glow": "On",
+        "code.terminal.crt": true,
+        "code.terminal.cursor-trail": "Phosphor"
+      },
+      "unchanged_values": {
+        "code.editing.token-colors": {
+          "look:basic-dark/com": "#91b59c"
+        },
+        "code.editing.autosave": "On Focus Change",
+        "code.editing.tab-size": 8,
+        "code.editing.insert-spaces": "Tabs",
+        "code.terminal.sticky-header": false,
+        "general.visual.font-size": 14
+      }
+    },
+    {
+      "name": "terminal_all_old_monitor_exact_patch",
+      "quick_set_ref": "terminal.old_monitor",
+      "scope": "all",
+      "expected_operation": "set",
+      "expected_values": {
+        "code.terminal.effects": "Custom",
+        "code.terminal.scanlines": "On",
+        "code.terminal.glow": "On",
+        "code.terminal.crt": true,
+        "code.terminal.cursor-trail": "Phosphor"
+      },
+      "unchanged_values": {
+        "code.editing.token-colors": {
+          "look:basic-dark/com": "#91b59c"
+        },
+        "code.editing.autosave": "On Focus Change",
+        "code.editing.tab-size": 8,
+        "code.editing.insert-spaces": "Tabs",
+        "code.terminal.sticky-header": false,
+        "general.visual.font-size": 14
+      }
+    },
+    {
+      "name": "editor_this_look_own_is_reset",
+      "quick_set_ref": "editor.look_own",
+      "scope": "this",
+      "expected_operation": "reset_scope",
+      "sample_owned_ids": [
+        "code.editing.color-scheme",
+        "code.editing.lsp-hover-delay"
+      ],
+      "unchanged_values": {
+        "general.visual.font-size": 14
+      }
+    },
+    {
+      "name": "editor_all_look_own_is_reset",
+      "quick_set_ref": "editor.look_own",
+      "scope": "all",
+      "expected_operation": "reset_scope",
+      "sample_owned_ids": [
+        "code.editing.color-scheme",
+        "code.editing.lsp-hover-delay"
+      ],
+      "unchanged_values": {
+        "general.visual.font-size": 14
+      }
+    },
+    {
+      "name": "terminal_this_look_own_is_reset",
+      "quick_set_ref": "terminal.look_own",
+      "scope": "this",
+      "expected_operation": "reset_scope",
+      "sample_owned_ids": [
+        "code.terminal.theme",
+        "code.terminal.copy-on-select"
+      ],
+      "unchanged_values": {
+        "general.visual.font-size": 14
+      }
+    },
+    {
+      "name": "terminal_all_look_own_is_reset",
+      "quick_set_ref": "terminal.look_own",
+      "scope": "all",
+      "expected_operation": "reset_scope",
+      "sample_owned_ids": [
+        "code.terminal.theme",
+        "code.terminal.copy-on-select"
+      ],
+      "unchanged_values": {
+        "general.visual.font-size": 14
+      }
+    }
+  ],
+  "wallpaper_order_cases": [
+    {
+      "actions": [
+        {
+          "wallpaper": "ribbons"
+        },
+        {
+          "nier_background": "forest"
+        }
+      ],
+      "expected": {
+        "wallpaper": "look",
+        "nier_background": "forest"
+      }
+    },
+    {
+      "actions": [
+        {
+          "nier_background": "forest"
+        },
+        {
+          "wallpaper": "ribbons"
+        }
+      ],
+      "expected": {
+        "wallpaper": "ribbons",
+        "nier_background": "forest"
+      }
+    }
+  ],
+  "group_reset_cases": [
+    {
+      "reset_group_ref": "editor.colors",
+      "cleared_values": {
+        "code.editing.token-colors": {
+          "scheme/com": "#aabbcc"
+        },
+        "code.editing.min-contrast": "7:1"
+      },
+      "unchanged_values": {
+        "code.editing.autosave": "On Focus Change",
+        "code.editing.tab-size": 8
+      }
+    },
+    {
+      "reset_group_ref": "terminal.effects",
+      "cleared_values": {
+        "code.terminal.crt": true,
+        "code.terminal.flicker": true
+      },
+      "unchanged_values": {
+        "code.terminal.padding": 12,
+        "code.terminal.font-size": 16
+      }
+    }
+  ]
+}

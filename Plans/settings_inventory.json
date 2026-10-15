@@ -2,7 +2,7 @@
  "$schema": "Plans/settings_inventory.schema.json",
  "schema_id": "pm.settings_inventory.v1",
  "schema_version": "1.0.0",
- "generated_at_utc": "2026-08-05T00:00:00Z",
+ "generated_at_utc": "2026-10-14T18:30:00Z",
  "owner_doc": "Plans/FinalGUISpec.md",
  "owner_plan_unit": "F3-441",
  "provenance": {
@@ -383,6 +383,24 @@
     ]
    },
   {
+    "id": "general.visual.wallpaper",
+    "label": "Wallpaper",
+    "desc": "The shared background choice in every look, from Plans/wallpaper_catalog.json. Look’s own uses the look’s ground, Ribbons for Glass and the chosen NieR scene. The most recent gallery or NieR background change wins through SSYS-054’s one writer; a NieR background change also sets this value to look.",
+    "type": "select",
+    "default": "look",
+    "scope": [
+      "global"
+    ],
+    "tier": "simple",
+    "search": [
+      "wallpaper",
+      "background",
+      "backdrop",
+      "gallery",
+      "look own"
+    ]
+  },
+  {
    "id": "general.visual.accent-color",
    "label": "Accent Color",
    "desc": "The color of selections, focus outlines, progress and primary buttons. Theme keeps the active theme's own accent; the other choices replace it with a shade tuned for the light or dark look.",
@@ -434,20 +452,19 @@
    ]
   },
   {
-   "id": "general.visual.theme-preview",
-   "label": "Preview Themes Before Applying",
-   "desc": "Shows what a theme looks like while you browse, then snaps back if you don't apply it. Turn off to switch instantly.",
-   "type": "toggle",
-   "default": true,
-   "scope": [
-    "global"
-   ],
-   "tier": "simple",
-   "search": [
-    "live preview",
-    "hover preview",
-    "try theme"
-   ]
+    "id": "general.visual.theme-preview",
+    "label": "Preview Themes Before Applying",
+    "desc": "Retired by Jared on 2026-10-13: no visible timed or hover-applied app-theme preview remains, and stored values are ignored. The internal Settings transaction preview/apply still validates and commits an activated theme choice. (Superseded by SSYS-010 and F3-084, DL-200)",
+    "type": "toggle",
+    "scope": [
+      "global"
+    ],
+    "tier": "simple",
+    "search": [
+      "live preview",
+      "hover preview",
+      "try theme"
+    ]
   },
   {
    "id": "general.visual.nier-mode",
@@ -583,7 +600,7 @@
   {
    "id": "general.visual.glass-background-mode",
    "label": "Glass Background",
-   "desc": "What shows behind the glass panels in Glass themes: Mesh is a slowly drifting color gradient, Depth adds floating soft shapes with gentle parallax, Minimal keeps a calm flat backdrop. Applies instantly.",
+   "desc": "Retired at the coordinated Liquid Glass and wallpaper publication (SSYS-054); compatibility lineage only. Wallpaper replaces Mesh/Depth/Minimal. Publication remains pending Jared review.",
    "type": "select",
    "options": [
     "Mesh",
@@ -7182,7 +7199,7 @@
   {
    "id": "code.terminal.allowed-profiles",
    "label": "Allowed Shell Profiles",
-   "desc": "Which shell profiles this project offers when you open a terminal: the shells on this computer, your own named profiles and the SSH computers saved under Remote Machines (SSH). The shells are listed, every one, in the \"+\" menu's Terminal row and the terminal's New terminal menu, and the SSH computers in their own SSH hosts submenu.",
+   "desc": "System Default offers installed shells and configured SSH computers. An explicit allow-list filters both New terminal and the plus menu.",
    "type": "multiselect",
    "options": [
     "System Default",
@@ -7304,7 +7321,7 @@
   {
    "id": "code.terminal.font-rendering",
    "label": "Font Rendering",
-   "desc": "Fine-tunes how terminal text is drawn. Try Crisp if text looks blurry on your display.",
+   "desc": "Auto uses the look and face defaults. Crisp keeps precise pixel edges where the face supports them; Smooth favors smooth text edges. Neither changes the selected face or promises a renderer capability it cannot provide.",
    "type": "select",
    "options": [
     "Auto",
@@ -7348,30 +7365,30 @@
    ]
   },
   {
-   "id": "code.terminal.min-contrast",
-   "label": "Minimum Text Contrast",
-   "desc": "Keeps terminal text readable against its background by making only the text lighter or darker, never changing its hue. Block, powerline and sextant characters are left as they are.",
-   "type": "select",
-   "options": [
-    "Off",
-    "3:1",
-    "4.5:1",
-    "7:1"
-   ],
-   "default": "4.5:1",
-   "scope": [
-    "global",
-    "project"
-   ],
-   "tier": "simple",
-   "search": [
-    "contrast",
-    "readability",
-    "accessibility"
-   ],
-   "related_features": [
-    "terminal"
-   ]
+    "id": "code.terminal.min-contrast",
+    "label": "Minimum Text Contrast",
+    "desc": "The least contrast for program output only; Off keeps its requested colors. Defaults to 4.5:1, with a higher 7:1 choice. Interface labels, hints and controls retain F3-654’s floor regardless of this value.",
+    "type": "select",
+    "options": [
+      "Off",
+      "3:1",
+      "4.5:1",
+      "7:1"
+    ],
+    "default": "4.5:1",
+    "scope": [
+      "global",
+      "project"
+    ],
+    "tier": "simple",
+    "search": [
+      "contrast",
+      "readability",
+      "accessibility"
+    ],
+    "related_features": [
+      "terminal"
+    ]
   },
   {
    "id": "code.terminal.import-scheme",
@@ -7396,7 +7413,7 @@
   {
    "id": "code.terminal.font-weight",
    "label": "Terminal Text Weight",
-   "desc": "How heavy terminal text is, on faces that come in weights: JetBrains Mono from 400 to 800, Atkinson Hyperlegible Mono from 200 to 800. Faces with one weight ignore it.",
+   "desc": "Text weight for variable faces: JetBrains Mono 100–800 and Atkinson Hyperlegible Mono 200–800. Fixed-weight faces keep their supported weight; the selected face must draw the requested weight truthfully.",
    "type": "number",
    "default": 400,
    "scope": [
@@ -7740,24 +7757,24 @@
    ]
   },
   {
-   "id": "code.terminal.padding",
-   "label": "Terminal Padding",
-   "desc": "Space around the text, in pixels across; the space above and below is 60 % of it.",
-   "type": "number",
-   "default": 8,
-   "scope": [
-    "global",
-    "project"
-   ],
-   "tier": "advanced",
-   "search": [
-    "padding",
-    "margin",
-    "spacing"
-   ],
-   "related_features": [
-    "terminal"
-   ]
+    "id": "code.terminal.padding",
+    "label": "Terminal Padding",
+    "desc": "Space around the text, in pixels across; the space above and below is 60 % of it. Starts at zero (Jared, 2026-10-14).",
+    "type": "number",
+    "default": 0,
+    "scope": [
+      "global",
+      "project"
+    ],
+    "tier": "advanced",
+    "search": [
+      "padding",
+      "margin",
+      "spacing"
+    ],
+    "related_features": [
+      "terminal"
+    ]
   },
   {
    "id": "code.terminal.effects",
@@ -7901,7 +7918,7 @@
   {
    "id": "code.terminal.curvature",
    "label": "Screen Curvature",
-   "desc": "How curved the glass looks in Full CRT; pointing and selecting follow the curve.",
+   "desc": "How curved the glass looks in Full CRT; pointing and selecting follow the curve. The 0.08 value is historical tuning, held for the revised CRT contract (F3-643); it is not acceptance of the criticized curvature.",
    "type": "slider",
    "default": 0.08,
    "scope": [
@@ -22527,6 +22544,706 @@
   "related_features": [
    "working-notebook"
   ]
+  },
+  {
+   "id": "code.editing.scheme-pair",
+   "label": "Switch Editor Colors With Light and Dark",
+   "desc": "When the app changes between light and dark, a scheme you picked for the editor swaps for its family's other version, such as Catppuccin Latte and Mocha. Follow look always does.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "light and dark",
+    "scheme pair",
+    "auto dark",
+    "editor colors"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.bracket-pair-colors",
+   "label": "Bracket Pair Colors",
+   "desc": "Matching brackets share a color, a different one at each depth, so you can see which closes which. A closing bracket with no opener shows in the error color.",
+   "type": "toggle",
+   "default": false,
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "search": [
+    "bracket pair colorization",
+    "rainbow brackets",
+    "brackets",
+    "parentheses"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.min-contrast",
+   "label": "Editor Text Contrast",
+   "desc": "The least contrast every color of code keeps against the editor's background. 4.5:1 is the standard every scheme already meets; 7:1 moves dim colors lighter or darker, never changing their hue.",
+   "type": "select",
+   "options": [
+    "4.5:1",
+    "7:1"
+   ],
+   "default": "4.5:1",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "contrast",
+    "minimum contrast",
+    "accessibility",
+    "readability"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.italic-comments",
+   "label": "Comments in Italics",
+   "desc": "Draws comments in the face's italic. Follow look uses the look's own style: italic in most looks, upright in Retro dark.",
+   "type": "select",
+   "options": [
+    "Follow look",
+    "On",
+    "Off"
+   ],
+   "default": "Follow look",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "italic comments",
+    "font style",
+    "comments"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.bold-keywords",
+   "label": "Keywords in Bold",
+   "desc": "Draws keywords heavier than the rest of the code. Follow look uses the look's own weight: bold in Retro and NieR Mode, regular elsewhere.",
+   "type": "select",
+   "options": [
+    "Follow look",
+    "On",
+    "Off"
+   ],
+   "default": "Follow look",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "bold keywords",
+    "font weight",
+    "keywords"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.font-weight",
+   "label": "Editor Text Weight",
+   "desc": "Text weight for variable faces: JetBrains Mono 100–800 and Atkinson Hyperlegible Mono 200–800. Fixed-weight faces keep their supported weight; the selected face must draw the requested weight truthfully.",
+   "type": "number",
+   "default": 400,
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "font weight",
+    "bold",
+    "thin",
+    "editor font"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.letter-spacing",
+   "label": "Editor Letter Spacing",
+   "desc": "Extra space between characters of code, in pixels. Columns stay aligned, since every character takes the same width.",
+   "type": "number",
+   "default": 0,
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "letter spacing",
+    "tracking",
+    "character spacing"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.ligatures",
+   "label": "Editor Ligatures",
+   "desc": "Joins pairs such as -> and != into one symbol where the face has them (JetBrains Mono). Each still takes its own columns, so the caret and selection are unchanged.",
+   "type": "toggle",
+   "default": false,
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "search": [
+    "ligatures",
+    "font ligatures",
+    "arrows",
+    "calt"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.cursor-shape",
+   "label": "Editor Caret Shape",
+   "desc": "The shape of the editor's caret. Follow look uses the look's own: a line in most looks, a block in Retro.",
+   "type": "select",
+   "options": [
+    "Follow look",
+    "Line",
+    "Block",
+    "Underline"
+   ],
+   "default": "Follow look",
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "search": [
+    "caret",
+    "cursor",
+    "block cursor",
+    "cursor style"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.cursor-width",
+   "label": "Editor Caret Width",
+   "desc": "How thick the line caret is, in pixels.",
+   "type": "number",
+   "default": 2,
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "caret width",
+    "cursor width"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.cursor-blink",
+   "label": "Editor Caret Blink",
+   "desc": "How the caret blinks: on and off, fading, growing from its middle, or not at all. Reduce motion keeps it solid.",
+   "type": "select",
+   "options": [
+    "Follow look",
+    "Blink",
+    "Smooth",
+    "Expand",
+    "Solid"
+   ],
+   "default": "Follow look",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "caret blinking",
+    "cursor blink",
+    "smooth caret"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.cursor-motion",
+   "label": "Editor Caret Movement",
+   "desc": "Whether the caret jumps to where it goes or glides there. Typing never waits for it. Reduce motion makes it jump.",
+   "type": "select",
+   "options": [
+    "Follow look",
+    "Instant",
+    "Snappy",
+    "Gliding"
+   ],
+   "default": "Follow look",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "smooth caret",
+    "caret animation",
+    "cursor animation",
+    "smooth cursor"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.cursor-trail",
+   "label": "Editor Caret Trail",
+   "desc": "A brief trail from where the caret was when it jumps further than a few lines, such as to a search match or a line you named, so your eyes follow it. Clicks and typing make none.",
+   "type": "select",
+   "options": [
+    "Follow look",
+    "Off",
+    "Soft",
+    "Glow",
+    "Phosphor",
+    "Trace"
+   ],
+   "default": "Follow look",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "cursor trail",
+    "caret trail",
+    "smear",
+    "cursor animation"
+   ],
+   "related_features": [
+    "editor",
+    "terminal"
+   ]
+  },
+  {
+   "id": "code.editing.relative-line-numbers",
+   "label": "Count Lines From the Caret",
+   "desc": "Line numbers count up and down from the caret's line, which keeps its own number.",
+   "type": "toggle",
+   "default": false,
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "relative line numbers",
+    "hybrid line numbers",
+    "vim"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.line-highlight",
+   "label": "Highlight the Current Line",
+   "desc": "How the caret's line stands out: a band across the line and a brighter number, the band only, the number only, or nothing.",
+   "type": "select",
+   "options": [
+    "Follow look",
+    "Line and number",
+    "Line only",
+    "Number only",
+    "Off"
+   ],
+   "default": "Follow look",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "current line",
+    "line highlight",
+    "render line highlight"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.indent-guides",
+   "label": "Indent Guides",
+   "desc": "Thin vertical lines at each level of indentation. Rainbow gives each level its own color.",
+   "type": "select",
+   "options": [
+    "Off",
+    "Lines",
+    "Rainbow"
+   ],
+   "default": "Off",
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "search": [
+    "indent guides",
+    "indentation",
+    "rainbow indent",
+    "guides"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.indent-guides-active",
+   "label": "Light the Guide of the Block I'm In",
+   "desc": "With indent guides on, the guide of the block that holds the caret is drawn brighter.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "active indent guide",
+    "highlight active indentation"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.render-whitespace",
+   "label": "Show Spaces",
+   "desc": "Marks spaces with faint dots: between words where there are several, only in the selection, only at the ends of lines, or everywhere.",
+   "type": "select",
+   "options": [
+    "Off",
+    "Between words",
+    "In the selection",
+    "At line ends",
+    "Everywhere"
+   ],
+   "default": "Off",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "render whitespace",
+    "show whitespace",
+    "invisibles",
+    "trailing spaces"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.rulers",
+   "label": "Rulers",
+   "desc": "Faint vertical lines at the columns lines are meant to stay within.",
+   "type": "select",
+   "options": [
+    "Off",
+    "80",
+    "100",
+    "120",
+    "80 and 120"
+   ],
+   "default": "Off",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "rulers",
+    "wrap guide",
+    "column guide",
+    "line length",
+    "visual guides"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.wrap-column",
+   "label": "Wrap Long Lines At",
+   "desc": "Where wrapped lines break: at the edge of the editor, or at a column (or the edge, if that comes first). Applies while Wrap Long Lines is on.",
+   "type": "select",
+   "options": [
+    "Window edge",
+    "80",
+    "100",
+    "120"
+   ],
+   "default": "Window edge",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "word wrap column",
+    "wrap at",
+    "bounded wrap"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.sticky-scroll-lines",
+   "label": "Sticky Scroll Lines",
+   "desc": "The most enclosing lines sticky scroll keeps in view, from 1 to 5.",
+   "type": "number",
+   "default": 3,
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "sticky scroll",
+    "max lines",
+    "sticky lines"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.smooth-scroll",
+   "label": "Smooth Scrolling in the Editor",
+   "desc": "Scrolling with the wheel or by a page glides instead of jumping. Follow look uses the look's own: on in Friendly and Glass. Reduce motion turns it off.",
+   "type": "select",
+   "options": [
+    "Follow look",
+    "On",
+    "Off"
+   ],
+   "default": "Follow look",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "smooth scrolling",
+    "scroll animation"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.reveal-lines",
+   "label": "Lines Arrive When a File Opens",
+   "desc": "The first screen of a file arrives line by line from the top, quickly. Off shows it at once. Reduce motion always shows it at once.",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "open animation",
+    "reveal",
+    "line animation"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.scroll-past-end",
+   "label": "Scroll Past the Last Line",
+   "desc": "How far you can scroll below the last line, so it need not sit at the bottom edge.",
+   "type": "select",
+   "options": [
+    "A few lines",
+    "Half a page",
+    "A full page"
+   ],
+   "default": "A few lines",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "scroll beyond last line",
+    "overscroll",
+    "scroll past end"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.dim-unfocused",
+   "label": "Fade Editors I'm Not In",
+   "desc": "When you are working in another panel, editors you are not in fade back a little, as Dim Terminals I'm Not In does for terminals.",
+   "type": "toggle",
+   "default": false,
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "dim inactive",
+    "fade unfocused",
+    "focus"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.scanlines",
+   "label": "Editor Scanlines",
+   "desc": "Thin dark lines across the code, like an old monitor. They never move.",
+   "type": "toggle",
+   "default": false,
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "scanlines",
+    "crt",
+    "retro"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.text-glow",
+   "label": "Editor Text Glow",
+   "desc": "A soft glow around code in its own color, like phosphor on a tube.",
+   "type": "toggle",
+   "default": false,
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "glow",
+    "phosphor",
+    "bloom",
+    "retro"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.tab-size",
+   "label": "Tab Size",
+   "desc": "How many columns a level of indentation is. Tab moves to the next level and Backspace in the indentation goes back one; a file's tabs open this wide. A file with indentation of its own keeps it while Follow the File's Indentation is on.",
+   "type": "select",
+   "options": [
+    "2",
+    "4",
+    "8"
+   ],
+   "default": "4",
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "search": [
+    "tab size",
+    "tab width",
+    "indent size",
+    "indentation",
+    "spaces per tab"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.insert-spaces",
+   "label": "Indent With",
+   "desc": "What a new level of indentation is made of in a file that doesn't already say: spaces, or a tab. Show Spaces marks a tab as an arrow.",
+   "type": "select",
+   "options": [
+    "Spaces",
+    "Tabs"
+   ],
+   "default": "Spaces",
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "insert spaces",
+    "tabs or spaces",
+    "soft tabs",
+    "hard tabs",
+    "indentation"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.detect-indentation",
+   "label": "Follow the File's Indentation",
+   "desc": "A file indented with 2 spaces keeps 2 and one indented with tabs keeps tabs, whatever Tab Size and Indent With say. The editor reads it from the file's own lines (and, in the app, its .editorconfig).",
+   "type": "toggle",
+   "default": true,
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "detect indentation",
+    "editorconfig",
+    "guess indentation",
+    "indentation"
+   ],
+   "related_features": [
+    "editor"
+   ]
+  },
+  {
+   "id": "code.editing.token-colors",
+   "label": "Token Colors",
+   "desc": "Your own colour for one kind of word (keywords, strings, comments and the other 14 the editor colours) in one scheme, kept as scheme/kind and #rrggbb, such as dracula/kw: #ff79c6. A colour that would read under the editor's text contrast is drawn a little lighter or darker, its hue kept. Set them in the editor's Customize screen, under Colors.",
+   "type": "keyvalue",
+   "default": {},
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "search": [
+    "token colors",
+    "syntax colors",
+    "theme customization",
+    "keyword color",
+    "comment color",
+    "semantic colors"
+   ],
+   "related_features": [
+    "editor"
+   ]
   }
 ]
 }

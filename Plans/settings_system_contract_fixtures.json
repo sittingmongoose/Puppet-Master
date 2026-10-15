@@ -726,13 +726,11 @@
       "native_handler_claim": false
     },
     "cmd.theme.preview": {
-      "disposition": "reuse_canonical_command",
-      "replacement_command_ids": [
-        "cmd.theme.preview"
-      ],
+      "disposition": "rejected_with_reason",
+      "replacement_command_ids": [],
       "typed_local_ui_action_id": null,
       "typed_local_payload_schema_ref": null,
-      "reason": "The exact canonical command already exists; Settings reuses its owner contract and makes no handler or runtime claim.",
+      "reason": "Retired by Jared’s theme-preview removal (SSYS-010, UCC-204, DL-200). No visible timed theme trial or replacement dispatch alias; actual theme changes retain the separate internal Settings preview/apply transaction.",
       "native_handler_claim": false
     },
     "cmd.theme.apply": {
