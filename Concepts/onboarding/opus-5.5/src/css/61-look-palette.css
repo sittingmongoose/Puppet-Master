@@ -67,3 +67,16 @@ html[data-theme="retro-light"]:not([data-o55-nier]) .page-projects > .projects-h
 /* ---- Basic's "added" files and graph passes: Basic's lime, not Material green ------------------------------------------ */
 html[data-theme="basic-dark"]:not([data-o55-nier]) { --graph-passed: #3DD68C; }
 html[data-theme="basic-light"]:not([data-o55-nier]) { --graph-passed: #0B6B38; }
+
+/* ---- The panels' add-a-tab pickers: their search is the look's search field (Jared, 2026-10-15: "the search bars in those
+   sections are not uniform") -----------------------------------------------------------------------------------------------
+   It was a bare outline. Like Settings' search and the title bar's, it is now one filled field of the look: the raised
+   surface, the look's hairline and corner, the input clear inside it, the accent edge on focus (30-menu.css). Glass's is
+   glass.css's field rule (one surface: the control fill and hairline). No positional selector, so the picker's level
+   ghost (.pmw-mghost, pm7-panels-picker) wears the same. */
+html:not([data-theme^="glass"]) .pmw-menu .pmw-msearch, html[data-o55-nier] .pmw-menu .pmw-msearch {
+  background: var(--surface-elevated); border-color: var(--border); border-radius: 8px;
+}
+html[data-theme^="friendly"]:not([data-o55-nier]) .pmw-menu .pmw-msearch { border-radius: 10px; }
+html:is([data-theme^="retro"], [data-o55-nier]) .pmw-menu .pmw-msearch { border-radius: 0; }
+html:not([data-theme^="glass"]) .pmw-menu .pmw-msearch:focus-within, html[data-o55-nier] .pmw-menu .pmw-msearch:focus-within { border-color: color-mix(in srgb, var(--pmw-accent) 60%, transparent); }

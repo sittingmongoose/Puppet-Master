@@ -372,7 +372,9 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pmuExport { border-radius: 0 
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active, :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active * { color: var(--pm-switch-ink-on, var(--text-primary)) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active .pmu-navicon { color: var(--pm-switch-mark-on, var(--pm-switch-mark, var(--accent-blue))) !important; }
 :is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn.active { font-weight: 650; }
-:is(html[data-lg="on"][data-theme^="glass"], html[data-pm-switch="lens"]):not(#lgz) .pmu-navbtn:not(.active) .pmu-navcount { color: var(--accent-warning) !important; }
+/* (Glass only: a look that adopts the switcher keeps Usage's own contrast-tuned count ink; Basic Light's warning colour read
+   3.8:1 there, Q16) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) .pmu-navbtn:not(.active) .pmu-navcount { color: var(--accent-warning) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row) { border-radius: var(--pm-ctl-r) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row):hover { background: var(--lg-fill-hover) !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot :is(.fm-row, .sh-row, .tree-item, .pmr-row):is(.selected, .active, [aria-selected="true"]) { background: var(--lg-fill-press) !important; box-shadow: none !important; }
@@ -584,10 +586,11 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-settings-root :is(input, t
 /* Jared #17 (2026-10-14): a field is one surface. A bar that wraps its input (Settings' rail and main searches, the
    number steppers, the chat composer, the title-bar search's popover) wears the control fill and hairline, and the
    input inside it is clear. A lone input wears them itself. Old Glass gave both layers its purple fill, so the input
-   showed as a darker box inside its bar. (Onboarding's and Usage's fields keep their own rules above.) */
+   showed as a darker box inside its bar. (Onboarding's and Usage's fields keep their own rules above.) The panels' add-a-tab
+   pickers' search (.pmw-msearch) joined the list in Q16 (Jared, 2026-10-15: "the area where you type should blend in"). */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]), textarea, select) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pm6-tb-search-pop, .pmw-sc-box) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
-html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pm6-tb-search-pop, .pmw-sc-box) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]), textarea) { background: transparent !important; border-color: transparent !important; box-shadow: none !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pm6-tb-search-pop, .pmw-sc-box, .pmw-msearch) { background-color: var(--lg-fill) !important; border-color: var(--lg-line) !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.rail-search, .hero-search, .o55-num, .pm6-tb-search-pop, .pmw-sc-box, .pmw-msearch) :is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]), textarea) { background: transparent !important; border-color: transparent !important; box-shadow: none !important; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-press {
   display: block; position: fixed; width: 36px; height: 36px; border-radius: 50%; pointer-events: none; z-index: 2147483000;
   background: radial-gradient(closest-side, rgba(255, 255, 255, .6), rgba(255, 255, 255, .16) 55%, transparent); mix-blend-mode: plus-lighter;
