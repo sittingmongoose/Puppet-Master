@@ -7,6 +7,10 @@ stage that contains the snippet:
 
   1. O55 sources: Concepts/onboarding/opus-5.5/src (including copy.json and copy.d)
   2. rail: Concepts/leftrail-redesign
+     Generated src/concepts/d/d.css is not an edit target. A snippet that
+     lands there is mapped back to the .src.css line whose build_d_css.py
+     macro expanded into it. d.css is printed afterwards as a generated
+     intermediate.
   3. home: Concepts/home-redesign
   4. usage: Concepts/usage-redesign
   5. wizorch: Concepts/onboarding/opus-5.5/tools/wizorch_layer.py
@@ -22,6 +26,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+import importlib.util
 import sys
 from pathlib import Path
 
@@ -35,6 +40,12 @@ HOME = ROOT / "Concepts" / "home-redesign"
 USAGE = ROOT / "Concepts" / "usage-redesign"
 WIZORCH = ROOT / "Concepts" / "onboarding" / "opus-5.5" / "tools" / "wizorch_layer.py"
 SETTINGS_LAYER = ROOT / "Concepts" / "onboarding" / "opus-5.5" / "tools" / "settings_layer.py"
+D_CSS = RAIL / "src" / "concepts" / "d" / "d.css"
+BUILD_D_CSS = RAIL / "tools" / "build_d_css.py"
+GENERATED_D_NOTE = (
+    "generated intermediate: Concepts/leftrail-redesign/src/concepts/d/d.css "
+    "(Concepts/leftrail-redesign/tools/build_d_css.py; edit the .src.css files, never d.css)"
+)
 
 PATCH_LISTS = ("PATCHES", "NIER_PATCHES", "THEME_PREVIEW_PATCHES", "CUSTOM_TEXT_PATCHES")
 PATCH_FUNCTION = "first_paint_patches"
@@ -132,6 +143,80 @@ def search_tree(root: Path, snippet: str) -> list[tuple[Path, int]]:
         for line in search_file(path, snippet):
             found.append((path, line))
     return found
+
+
+def is_generated_d_css(path: Path) -> bool:
+    return path.resolve() == D_CSS.resolve()
+
+
+def dedupe_hits(hits: list[tuple[Path, int]]) -> list[tuple[Path, int]]:
+    seen: set[tuple[Path, int]] = set()
+    out: list[tuple[Path, int]] = []
+    for path, line in hits:
+        key = (path.resolve(), line)
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append((path, line))
+    return out
+
+
+def load_build_d_css():
+    spec = importlib.util.spec_from_file_location("pm7_where_build_d_css", BUILD_D_CSS)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"cannot load {rel(BUILD_D_CSS)}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def macro_source_hits(snippet: str) -> list[tuple[Path, int]]:
+    """Source lines whose build_d_css expansion contains snippet.
+
+    Each .src.css line is expanded on its own. The macro syntax does not cross
+    lines, so a hit on expanded line N is authored on source line N.
+    """
+    module = load_build_d_css()
+    found: list[tuple[Path, int]] = []
+    src = module.SRC
+    if not src.is_dir():
+        return found
+    for path in sorted(src.glob("*.src.css")):
+        text = read_text(path)
+        if text is None:
+            continue
+        lines = text.splitlines()
+        expanded = "\n".join(module.expand(line) for line in lines)
+        start = 0
+        while True:
+            index = expanded.find(snippet, start)
+            if index < 0:
+                break
+            first = expanded.count("\n", 0, index) + 1
+            last = expanded.count("\n", 0, index + max(len(snippet), 1) - 1) + 1
+            for line in range(first, last + 1):
+                found.append((path, line))
+            start = index + max(1, len(snippet))
+    return dedupe_hits(found)
+
+
+def search_rail(snippet: str) -> tuple[list[tuple[Path, int]], list[tuple[Path, int]]]:
+    """Authored rail hits, plus d.css hits when the snippet only exists after macro expansion.
+
+    d.css is never returned as an authored hit. Those lines are mapped through
+    build_d_css.expand back to the .src.css files.
+    """
+    raw = search_tree(RAIL, snippet)
+    generated = [hit for hit in raw if is_generated_d_css(hit[0])]
+    authored = [hit for hit in raw if not is_generated_d_css(hit[0])]
+    if generated:
+        authored.extend(macro_source_hits(snippet))
+        if not any(hit[0].name.endswith(".src.css") for hit in authored):
+            # The snippet is in the generated file but not in any expanded source line
+            # (the generator header). Name the generator so d.css is not the only answer.
+            header = search_file(BUILD_D_CSS, snippet)
+            authored.append((BUILD_D_CSS, header[0] if header else 1))
+    return dedupe_hits(authored), generated
 
 
 def search_paths(paths: list[Path], snippet: str) -> list[tuple[Path, int]]:
@@ -233,7 +318,9 @@ def stage_hits(kind: str, snippet: str) -> list[tuple[Path, int]]:
     if kind == "o55":
         return search_tree(O55_SRC, snippet)
     if kind == "rail":
-        return search_tree(RAIL, snippet)
+        authored, generated = search_rail(snippet)
+        stage_hits.generated = generated
+        return authored
     if kind == "home":
         return search_tree(HOME, snippet)
     if kind == "usage":
@@ -258,6 +345,8 @@ def build_parser() -> argparse.ArgumentParser:
             "wizorch and settings layers, then the PATCHES / NIER_PATCHES / first_paint_patches / "
             "THEME_PREVIEW_PATCHES / CUSTOM_TEXT_PATCHES entries in build.py, then the pinned base. "
             "The first stage that contains the snippet wins, and every match in that stage is printed. "
+            "A rail snippet that exists only in generated d.css is answered from the .src.css line "
+            "build_d_css.py expands, and d.css is named afterwards as a generated intermediate. "
             f"When that stage is the pinned base, the tool adds: {BASE_NOTE}"
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -315,6 +404,11 @@ def main(argv: list[str] | None = None) -> int:
         print(f"source: {title} ({len(hits)} match{'es' if len(hits) != 1 else ''})")
         for path, line in hits:
             print(f"{rel(path)}:{line}")
+        generated = getattr(stage_hits, "generated", []) if kind == "rail" else []
+        if generated:
+            print(GENERATED_D_NOTE)
+            for path, line in generated:
+                print(f"{rel(path)}:{line}")
         if kind == "base":
             print(BASE_NOTE)
         return 0
