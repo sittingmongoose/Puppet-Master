@@ -15,6 +15,9 @@ default per look. It writes nothing but the optional report.
   <script id="wpk-js"> before the last </body>: the merged catalog as window.PM_WALLPAPERS_CATALOG and src/wallpapers.js.
 The usual base is the Glass review page (Concepts/liquid-glass/opus-5.5/tools/build_proto.py), so these come after
 Glass's own; on a page without Glass the wallpapers still paint every other look.
+
+PMConcept7 itself is published only by opus-5.5 build.py, which calls inject() on its built page after Glass's
+inject() (Glass's publish, approved by the coordinator 2026-10-14 and 2026-10-15) and stamps nothing.
 """
 import argparse
 import base64
@@ -158,17 +161,26 @@ def main():
         pathlib.Path(a.report).write_text(json.dumps(rep, indent=1) + '\n', encoding='utf-8')
 
 
-def build(base_path, out_path, fragments, rep):
-    if out_path.resolve().is_relative_to((PKG.parent.parent).resolve()):
-        sys.exit('--out must be outside Concepts/ (review pages go to the share folder)')
-    base = base_path.read_text(encoding='utf-8')
+class LayerError(Exception):
+    pass
+
+
+def inject(base, fragments=None, rep=None):
+    """The page with the wallpapers layer added (its <style id="wpk-css"> before the first </head>, its
+    <script id="wpk-js"> before the last </body>), and what it added: {'images', 'reused', 'style', 'script'}."""
+    if fragments is None:
+        fragments, errors = load_catalog()
+        if errors:
+            raise LayerError('catalog:\n  ' + '\n  '.join(errors))
+    if rep is None:
+        rep = report(fragments)
     for mark in ('id="wpk-css"', 'id="wpk-js"'):
         if mark in base:
-            sys.exit(f'base already carries {mark}')
+            raise LayerError(f'base already carries {mark}')
     js_path = PKG / 'src' / 'wallpapers.js'
     chk = subprocess.run(['node', '--check', str(js_path)], capture_output=True, text=True)
     if chk.returncode:
-        sys.exit('wallpapers.js: ' + chk.stderr)
+        raise LayerError('wallpapers.js: ' + chk.stderr)
     images, reused, rules, thumbs = [], [], [], []
     catalog = {'version': 1, 'families': []}
     for p, frag in fragments:
@@ -182,7 +194,7 @@ def build(base_path, out_path, fragments, rep):
                 m = re.search(re.escape(var) + r':\s*url\(data:image/webp;base64,([A-Za-z0-9+/=]+)\)', base)
                 if m:
                     if m.group(1) != b64:
-                        sys.exit(f'{var}: the base carries different bytes than {w["files"][mode]}')
+                        raise LayerError(f'{var}: the base carries different bytes than {w["files"][mode]}')
                     reused.append(var)
                 else:
                     images.append(f'  {var}: url(data:image/webp;base64,{b64});\n')
@@ -201,8 +213,20 @@ def build(base_path, out_path, fragments, rep):
     script = f'<script id="wpk-js">\nwindow.PM_WALLPAPERS_CATALOG = {cat_js};\n{js_path.read_text(encoding="utf-8")}</script>\n'
     h, b = base.find('</head>'), base.rfind('</body>')
     if h < 0 or b < 0 or b < h:
-        sys.exit('base: no </head> before </body>')
+        raise LayerError('base: no </head> before </body>')
     out = base[:h] + style + base[h:b] + script + base[b:]
+    return out, {'images': images, 'reused': reused, 'style': style, 'script': script}
+
+
+def build(base_path, out_path, fragments, rep):
+    if out_path.resolve().is_relative_to((PKG.parent.parent).resolve()):
+        sys.exit('--out must be outside Concepts/ (review pages go to the share folder)')
+    base = base_path.read_text(encoding='utf-8')
+    try:
+        out, added = inject(base, fragments, rep)
+    except LayerError as exc:
+        sys.exit(str(exc))
+    images, reused, style, script = added['images'], added['reused'], added['style'], added['script']
     if 'data-concept-model=' not in out[:4000]:
         out = out.replace('<html lang="en"', '<html lang="en" data-concept-model="Opus 5.5"', 1)
     raw = out.encode('utf-8')

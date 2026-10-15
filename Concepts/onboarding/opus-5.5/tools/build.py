@@ -13,7 +13,9 @@ The base file is read-only. The legacy Product Onboarding and Guided Tour blocks
 spliced between <!-- O55:*:START/END --> markers, and a short list of guarded, exactly-once patches re-point the shell's
 few remaining references (hover-tag overlay ids, labels, Doctor quiet actions, Teacher persona, owner exposures).
 The Usage page is the redesign in Concepts/usage-redesign: its usage_layer replaces the base's Prism Usage page at step 2b.
-Home is the universal panel system and the terminal in Concepts/home-redesign: its home_layer runs last, at step 5.
+Home is the universal panel system and the terminal in Concepts/home-redesign: its home_layer runs at step 5. Liquid
+Glass (Concepts/liquid-glass/opus-5.5) and then the wallpapers (Concepts/wallpapers/opus-5.5) go over the page last, at
+step 6.
 Concepts/PMConcept7.html is published only from here (2026-09-26 user direction): --publish-pm7 writes the same built
 bytes to both outputs, and --check fails while PMConcept7.html is missing or differs by even one byte.
 """
@@ -1143,6 +1145,15 @@ def _home():
     return home_layer
 
 
+def _layer(folder: str, module: str):
+    """A page layer's build tool (Concepts/<folder>/opus-5.5/tools/<module>.py), imported when first needed."""
+    tools = str(CONCEPTS / folder / 'opus-5.5' / 'tools')
+    if tools not in sys.path:
+        sys.path.insert(0, tools)
+    import importlib  # noqa: E402
+    return importlib.import_module(module)
+
+
 def build_text(usage: bool = True, home: bool = True) -> str:
     """The built page. usage=False leaves the base's Prism Usage page in place, and home=False today's Home: private
     reference builds only (build.py --out PATH --no-usage / --no-home; usage_boot.mjs), never published."""
@@ -1217,6 +1228,19 @@ def build_text(usage: bool = True, home: bool = True) -> str:
         text, SETTINGS_NOTES['home'] = _home().apply(text, need)
     else:
         SETTINGS_NOTES.pop('home', None)
+    # 6. Liquid Glass and the wallpapers (Glass's publish: the coordinator's plan of 2026-10-14, go 2026-10-15, after the
+    #    final review approved Glass round 3). Glass's layer (Concepts/liquid-glass/opus-5.5: glass.css with its prints,
+    #    glass.js) and then the wallpapers package's (Concepts/wallpapers/opus-5.5: every look's prints, the catalog, the
+    #    Settings gallery) go over the whole page, last, each exactly once: Glass's style before </head> and script
+    #    before </body>, then the wallpapers' after them. Both are gated on their own state (html[data-lg] and a Glass
+    #    look; html[data-lg-wall]), so every other look draws what it drew before.
+    for folder, module in (('liquid-glass', 'build_proto'), ('wallpapers', 'build_walls')):
+        layer = _layer(folder, module)
+        try:
+            injected = layer.inject(text)
+        except layer.LayerError as exc:
+            raise BuildError(f'{folder} layer: {exc}') from exc
+        text = injected[0] if isinstance(injected, tuple) else injected
     note = ('<!-- TestOpus5.5PmConcept (Opus 5.5): TestPMConcept.html with a rebuilt Product Onboarding and Guided Tour. '
             'Built by Concepts/onboarding/opus-5.5/tools/build.py; never hand-edit. -->\n')
     return note + text

@@ -33,9 +33,9 @@ STYLE_OPEN = '<style id="pm51-settings-refresh">\n'
 # these pending features. The editor-customizer and Glass owners remove their IDs
 # when their feature lands, after its Settings placement and controls are integrated.
 # Coordinator direction: pm-mail 1015011245-ba7b, 2026-10-15 UTC.
-CONCEPT_PENDING_ROWS = {
-    'general.visual.wallpaper',
-}
+# general.visual.wallpaper left with Glass's publish (pm-mail 1015131953-255d): build.py step 6 now carries the
+# wallpapers package, whose Settings gallery takes the row's place (wallpapers.js, setting-general.visual.wallpaper).
+CONCEPT_PENDING_ROWS: set[str] = set()
 
 
 def _t50():

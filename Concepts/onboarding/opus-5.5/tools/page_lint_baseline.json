@@ -6,9 +6,14 @@
     "html_rooted_has": 17,
     "important": 4395
   },
-  "baseline_revision": "baf1b1ba3ae2973e5ae831153bf870bb8e792f82",
-  "note": "Counts are the terminal round 3 page regenerated on origin/main baf1b1ba3a, measured with build.py page_lint_counts: 16 page-wide * selectors, 17 html-rooted :has() selectors, and 4419 !important with comments removed. That main's page was 16, 17, and 4418. The one added declaration is the terminal bezel face gradient (background-image: linear-gradient(180deg, rgb(255 255 255 / .16), rgb(0 0 0 / .14)) !important). Stars and html-rooted :has() did not grow. The 2026-10-14 assessment recorded 4395. One further declaration still fails. A smaller count stays allowed.",
+  "baseline_revision": "concept/pm7-liquid-glass-20261011 (Glass publish, 2026-10-15)",
+  "note": "Re-recorded for Glass's publish (coordinator pm-mail 1015155159-453f, 2026-10-15): build.py step 6 now injects Liquid Glass (style lg-css) and the wallpapers (style wpk-css) over the page. Page-wide * selectors stay 16 and html-rooted :has() stays 17; !important grows 4419 -> 4797, +378, all of it in the two new stylesheets: lg-css 371 and wpk-css 7 (measured with build.py page_lint_counts on each sheet alone). Glass's rules beat the base Glass theme's own !important declarations, so cutting them means re-proving the approved look; that belongs to the rollout that moves Glass's rules into the surfaces' own sources. Earlier note: Counts are the terminal round 3 page regenerated on origin/main baf1b1ba3a, measured with build.py page_lint_counts: 16 page-wide * selectors, 17 html-rooted :has() selectors, and 4419 !important with comments removed. That main's page was 16, 17, and 4418. The one added declaration is the terminal bezel face gradient (background-image: linear-gradient(180deg, rgb(255 255 255 / .16), rgb(0 0 0 / .14)) !important). Stars and html-rooted :has() did not grow. The 2026-10-14 assessment recorded 4395. One further declaration still fails. A smaller count stays allowed.",
   "counts": {
+    "page_wide_star": 16,
+    "html_rooted_has": 17,
+    "important": 4797
+  },
+  "previous_counts": {
     "page_wide_star": 16,
     "html_rooted_has": 17,
     "important": 4419
