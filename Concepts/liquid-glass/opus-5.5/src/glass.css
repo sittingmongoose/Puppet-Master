@@ -154,6 +154,12 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #sidePanelSlot > .side-panel-v
 }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.app-shell, .title-bar, #activityBar, #sidePanelSlot)::before,
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.app-shell, .title-bar, #activityBar, #sidePanelSlot)::after { opacity: 0 !important; }
+/* The base's Glass theme sizes the main area from its content (flex: 1 1 auto !important), so every change anywhere in
+   the app made the browser measure the whole page's widest content again: one character changed in a Usage card cost
+   4.5-5.3 ms of layout in Glass and 0.3 ms in Basic, and a room change's build ran 3-5 times Basic's layout (review r3
+   R2, 2026-10-15). It is the only area that grows, so it takes the same place from nothing as every other look does
+   (1918 x 1005 either way at 1920 x 1080). Every Glass page, with Liquid Glass on or off. */
+html[data-theme^="glass"]:not(#lgz) .main-area { flex: 1 1 0% !important; }
 
 /* ---------------------------------------------------------------------------------------------------------------
    3. The glass material. A sheet (title bar, sidebar, navigation, toolbar, card, chat, status bar) stacks, top to

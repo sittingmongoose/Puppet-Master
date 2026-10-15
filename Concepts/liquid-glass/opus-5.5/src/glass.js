@@ -45,6 +45,15 @@
   function reduced() { return root.getAttribute('data-motion') === 'reduced' || root.getAttribute('data-reduced-motion') === '1' || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); }
   function el(tag, attrs) { var e = document.createElement(tag); for (var k in attrs || {}) e.setAttribute(k, attrs[k]); return e; }
   function visible(e) { if (!e || !e.isConnected) return false; var r = e.getBoundingClientRect(); return r.width > 1 && r.height > 1 && getComputedStyle(e).visibility !== 'hidden'; }
+  /* Usage's room change (<html data-pmu-moment>, its 15-film.js) builds the new room in 8 ms slices, one a frame, for
+     about a second. Glass used to read the board after every slice, which forced the half-built room's style and
+     layout again each time (review r3 R2, 2026-10-15: eight clicks a third of a second apart cost 2.9 s more main thread
+     than Basic, and the board fell up to a second behind the clicks). While a moment runs, nothing in the board area is
+     synced. A new card is marked as a card where it is inserted (a write, styled in the same pass as the insertion),
+     sizeWatch mounts it from its callback (after layout, so every read is free), its rim bakes in idle time, and the
+     board is checked once when the moment ends. */
+  var BOARD_AREA = '#panel-usage .pmu-scroll', BOARD_CARD = '#panel-usage .pmu-board > .pmu-card', boardStale = false;
+  function boardMoment() { return root.hasAttribute('data-pmu-moment') && isGlass(); }
 
   (function tier() {
     var forced = q.get('lgtier'); if (forced === 'cpu' || forced === 'gpu') { root.setAttribute('data-lg-tier', forced); return; }
@@ -297,7 +306,7 @@
      and draw the same with or without a GPU. */
   var wallUrl = '', wallSources = new Map(), wallSourceKey = null, wallSourceUrl = '', wallSourceId = 0;
   var frosts = {}, frostKey = '', frostCache = new Map(), frostBytes = 0, frostJobs = new Map(), FROST_BYTES = 32 * 1024 * 1024;
-  var bakeQ = new Map(), bakeT = 0, bakeFrame = 0, bakeFlight = null, bakeEpoch = 0;
+  var bakeQ = new Map(), bakeT = 0, bakeFrame = 0, bakeIdle = 0, bakeFlight = null, bakeEpoch = 0, bakeAvg = 8;
   function currentWallUrl(refresh) {
     /* The source's wallpaper variables are selected only by these attributes. Keep the large data URL out of each
        surface signature and resolve the computed variable once per choice, with a fresh read before loading it. */
@@ -535,15 +544,31 @@
         if (!ok) { finish(im.__lgWallUrl === currentWallUrl() && innerWidth === flight.vw && innerHeight === flight.vh); return; }
         /* the largest sheets first (the chrome: title bar, side columns, status bar): theirs is the rim a late bake shows */
         var list = Array.from(bakeQ.values()), next = 0; bakeQ.clear();
-        list.forEach(function (j) { j.area = (j.e.offsetWidth || 0) * (j.e.offsetHeight || 0); });
+        /* the size each sheet was mounted at (no layout read: in a room change's timer task the board may be mid-build) */
+        list.forEach(function (j) { var z = String(j.e.__lgSize || '0x0').split('x'); j.area = (+z[0] || 0) * (+z[1] || 0); });
         list.sort(function (a, b) { return b.area - a.area; });
-        (function step() {
-          bakeFrame = 0;
+        /* in a frame, 12 ms at a time; during a Usage room change, in the main thread's idle time only, so a rim never
+           lengthens a frame of the room's build or forces its layout (idle time follows a drawn frame) */
+        function step(deadline) {
+          bakeFrame = 0; bakeIdle = 0;
           if (bakeFlight !== flight || flight.epoch !== bakeEpoch || !isGlass()) { finish(false); return; }
-          var t0 = performance.now();
-          while (next < list.length && performance.now() - t0 < 12) { var job = list[next++]; if (currentBake(job, im)) bakeRing(job.e, job.kind, im, job); }
-          if (next < list.length) bakeFrame = requestAnimationFrame(step); else finish(false);
-        })();
+          var t0 = performance.now(), ran = 0;
+          while (next < list.length) {
+            /* in a frame, 12 ms; in idle time, a bake starts only if the idle period has room for one (a bake is 5-15 ms:
+               the idle callbacks ran to 27 ms, into the next frame) unless the idle wait timed out */
+            var left = deadline ? deadline.timeRemaining() : 12 - (performance.now() - t0);
+            if (deadline ? !deadline.didTimeout && left < bakeAvg + 1 : ran && left <= 0) break;
+            if (deadline && deadline.didTimeout && ran) break;
+            var job = list[next++];
+            if (currentBake(job, im)) { var b0 = performance.now(); bakeRing(job.e, job.kind, im, job); bakeAvg = bakeAvg * 0.7 + (performance.now() - b0) * 0.3; ran++; }
+          }
+          if (next < list.length) nextStep(); else finish(false);
+        }
+        function nextStep() {
+          if (boardMoment() && window.requestIdleCallback) bakeIdle = requestIdleCallback(step, { timeout: 700 });
+          else bakeFrame = requestAnimationFrame(function () { step(null); });
+        }
+        if (boardMoment()) nextStep(); else step(null);
       });
     });
   }
@@ -623,6 +648,7 @@
     bakeEpoch++; bakeFlight = null; bakeQ.clear();
     if (bakeT) { clearTimeout(bakeT); bakeT = 0; }
     if (bakeFrame) { cancelAnimationFrame(bakeFrame); bakeFrame = 0; }
+    if (bakeIdle) { cancelIdleCallback(bakeIdle); bakeIdle = 0; }
     /* Keep connected sheets' finished images, as before: returning to Glass paints immediately while a changed
        sheet is rebaked. Removed surfaces release their images through unmount; shared frost remains bounded. */
     glassSet.forEach(function (e) {
@@ -669,9 +695,12 @@
       if (!switchOn()) return;
       var glass = isGlass();
       var sheets = new Set(), strips = new Set(), positions = new Map(), offsets = new Map();
+      /* a room change scrolls Usage's board to its top while the old room leaves in place: neither is anchored before the
+         change ends (boardMoment) */
+      var area = boardMoment() ? document.querySelector(BOARD_AREA) : null;
       boxes.forEach(function (b) {
         var ss = scrollSheets.get(b), ls = scrollStrips.get(b);
-        if (ss && glass) ss.forEach(function (e) { if (e.isConnected) { sheets.add(e); settleSheets.add(e); } });
+        if (ss && glass) ss.forEach(function (e) { if (!e.isConnected) return; if (area && area.contains(e)) { boardStale = true; return; } sheets.add(e); settleSheets.add(e); });
         if (ls) ls.forEach(function (s) { if (s.isConnected) { strips.add(s); settleStrips.add(s); } });
       });
       sheets.forEach(function (e) {
@@ -1234,11 +1263,13 @@
     SURFACES.forEach(function (p) { found.forEach(function (e) { if (e.matches(p[0])) targets.set(e, p[1]); }); });
     found.forEach(function (e) { var k = e.getAttribute('data-lg-surface'); if (OPT_IN[k]) { e.__lgOpt = true; targets.set(e, k); } });
     if (extra) extra.forEach(function (e) { var k = e.getAttribute('data-lg-kind'); if (KINDS[k] && KINDS[k].bake && !targets.has(e)) targets.set(e, k); });
+    /* a Usage room change's board is sizeWatch's alone until the change ends (boardMoment, above) */
+    if (boardMoment()) targets.forEach(function (k, e) { if (e.closest(BOARD_AREA)) { targets.delete(e); boardStale = true; } });
     mountMeasured(targets, true);
   }
 
   /* ---- light: the pointer's shine on the rims, and the press ------------------------------------------------------- */
-  var ptr = null, ptrQ = false, lit = null, shine = null;
+  var ptr = null, ptrQ = false, ptrLate = false, lit = null, shine = null;
   function shineEl() {
     if (shine && shine.isConnected) return shine;
     shine = el('div', { id: 'lg-shine', 'aria-hidden': 'true' }); shine.appendChild(el('i')); document.body.appendChild(shine); return shine;
@@ -1247,6 +1278,9 @@
     ptrQ = false; if (!ptr || !isGlass()) return;
     var g = ptr.t && ptr.t.closest ? ptr.t.closest('[data-lg-kind]') : null, sh = shineEl();
     if (document.querySelector('#panel-usage .pmu-card:is([data-lifted],[data-settling])')) { sh.classList.remove('on'); return; }
+    /* a new sheet under the pointer is measured once; during a Usage room change that read forced the half-built room's
+       layout, so the light keeps its sheet until the change ends (boardMoment) */
+    if (g !== lit && boardMoment()) { ptrLate = true; return; }
     if (g !== lit) {
       if (lit) { lit.removeAttribute('data-lg-lit'); lit.style.removeProperty('--lg-px'); lit.style.removeProperty('--lg-py'); }
       lit = g;
@@ -1497,7 +1531,30 @@
   }
   function queueSync(scope) {
     if (scope && scope.nodeType === 1) dirtyScope(scope);
+    if (boardMoment() && afterLayout()) return;
     if (!syncQ) syncQ = requestAnimationFrame(function () { syncQ = 0; syncPending(); });
+  }
+  /* During a Usage room change, a sync waits for the frame's own layout: a ResizeObserver's first report of a fresh
+     observation comes after layout, where every read is free. Synced in the click task or a frame callback, it forced
+     the room's layout (up to 137 ms) and Usage's next callbacks dirtied it again, so the frame laid out a second time
+     (125 ms more: one 312 ms task in r64's trace). */
+  var postEl = null, postRO = null, postQ = false;
+  function afterLayout() {
+    if (!window.ResizeObserver || !document.body) return false;
+    if (postQ) return true;
+    if (!postRO) postRO = new ResizeObserver(function () {
+      if (!postQ) return;
+      postQ = false; postRO.unobserve(postEl);
+      if (syncQ) { cancelAnimationFrame(syncQ); syncQ = 0; }
+      syncPending();
+    });
+    if (!postEl || !postEl.isConnected) {
+      postEl = el('i', { id: 'lg-post', 'aria-hidden': 'true' });
+      postEl.style.cssText = 'position:fixed;left:-8px;top:-8px;width:2px;height:2px;pointer-events:none;visibility:hidden';
+      document.body.appendChild(postEl);
+    }
+    postQ = true; postRO.observe(postEl);
+    return true;
   }
   /* One immediate input sync per actual frame; later genuine changes share the next before-paint pass. A newly
      opened menu still gets its held first keyframe immediately, and pointerdown lens travel stays synchronous. */
@@ -1512,7 +1569,8 @@
     if (!lazyT) lazyT = setTimeout(function () { lazyT = 0; queueSync(); }, 140);
   }
   var HOT = '[data-lg-surface], .page-tab, #pmuRange > button, .pmu-navbtn, .pm-segtab-item, #activityBar .icon, .side-panel-view, .pmu-pop, .pmr-menu-list, .pmr-menu-group, .pm6-tb-menu, .o55-railitem, .o55-seg button, .o55-win, .o55t-callout, .o55t-bar';
-  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, #lg-shine, .lg-press, .pm-segtab-track';
+  var GENERATED = '#lg-optics, #lg-lenses, .lg-lenses-local, #lg-shine, .lg-press, .pm-segtab-track, #lg-post';
+  var MENU_HOT = '[data-lg-surface], .pmu-pop, .pmr-menu-list, .pm6-tb-menu, .o55-win, .o55t-callout, .o55t-bar';
   function generatedMutation(rec) {
     var t = rec.target;
     if (t.nodeType === 1 && t.closest(GENERATED)) return true;
@@ -1527,22 +1585,36 @@
   var lastPage = null, lastTheme = root.getAttribute('data-theme'), lastLg = root.getAttribute('data-lg');
   var lastTier = root.getAttribute('data-lg-tier'), lastWall = root.getAttribute('data-lg-wall'), lastMotion = root.getAttribute('data-motion');
   var lastO55 = root.hasAttribute('data-o55-open');
+  /* a card inserted into the board during a room change: marked now, mounted by sizeWatch after the next layout */
+  function premark(nodes) {
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i];
+      if (n.nodeType !== 1 || !n.isConnected || !n.matches(BOARD_CARD)) continue;
+      if (n.getAttribute('data-lg-kind') !== 'card') n.setAttribute('data-lg-kind', 'card');
+      /* observed afresh, so its first callback reports it even when it kept its size (a shared card moved in from the old
+         board, which needs anchoring at its new place) */
+      if (sizeWatch) { sizeWatch.unobserve(n); sizeWatch.observe(n); }
+    }
+  }
   var mo = new MutationObserver(function (recs) {
-    var hot = false, relevant = false;
+    var hot = false, menuHot = false, relevant = false, area = boardMoment() ? document.querySelector(BOARD_AREA) : null;
     for (var i = 0; i < recs.length; i++) {
       /* optics, lenses and light are outputs of sync, never inputs that should schedule it again */
       if (generatedMutation(recs[i])) continue;
       if (recs[i].type === 'attributes' && recs[i].oldValue === recs[i].target.getAttribute(recs[i].attributeName)) continue;
+      if (area && area.contains(recs[i].target)) { boardStale = true; if (recs[i].type === 'childList') premark(recs[i].addedNodes); continue; }
       relevant = true;
       var t = recs[i].target; if (t.nodeType !== 1) continue;
       dirtyScope(recs[i].type === 'attributes' ? t.parentElement || t : t);
-      if (t.matches(HOT)) hot = true;
-      else for (var j = 0; j < recs[i].addedNodes.length; j++) { var nd = recs[i].addedNodes[j]; if (nd.nodeType === 1 && (nd.matches(HOT) || nd.matches('.pmu-card') || (nd.querySelector && nd.querySelector('.pmr-menu-list, .pmu-card')))) { hot = true; break; } }
+      if (t.matches(HOT)) { hot = true; if (area && t.matches(MENU_HOT)) menuHot = true; }
+      else for (var j = 0; j < recs[i].addedNodes.length; j++) { var nd = recs[i].addedNodes[j]; if (nd.nodeType === 1 && (nd.matches(HOT) || nd.matches('.pmu-card') || (nd.querySelector && nd.querySelector('.pmr-menu-list, .pmu-card')))) { hot = true; if (area && (nd.matches(MENU_HOT) || (nd.querySelector && nd.querySelector('.pmr-menu-list')))) menuHot = true; break; } }
     }
     if (!relevant) return;
     var page = document.querySelector('.page-tabs .page-tab.active'); page = page && page.id;
     var changed = Array.from(dirtyRoots), full = dirtyAll;
-    if (hot && switchOn()) hotSync(); else lazySync(false);
+    /* a Usage room change syncs after layout (afterLayout); a menu opening still gets its first keyframe at once */
+    if (area && !menuHot) afterLayout();
+    else if (hot && switchOn()) hotSync(); else lazySync(false);
     if (page !== lastPage) {
       var first = lastPage === null; lastPage = page;
       if (pageT) { clearTimeout(pageT); pageT = 0; }
@@ -1552,6 +1624,11 @@
     }
   });
   new MutationObserver(function () {
+    /* a Usage room change has ended: its board is checked once (boardMoment) */
+    if (!root.hasAttribute('data-pmu-moment')) {
+      if (boardStale) { boardStale = false; var area = document.querySelector(BOARD_AREA); if (area) { dirtyScope(area); lazySync(false); } }
+      if (ptrLate) { ptrLate = false; if (!ptrQ) { ptrQ = true; requestAnimationFrame(onPtr); } }
+    }
     var th = root.getAttribute('data-theme'), lg = root.getAttribute('data-lg');
     var tier = root.getAttribute('data-lg-tier'), wall = root.getAttribute('data-lg-wall'), motion = root.getAttribute('data-motion');
     /* the onboarding window opening or closing hides or shows the app's strips: every lens is checked again */
@@ -1572,7 +1649,7 @@
       syncAll(); lastWall = root.getAttribute('data-lg-wall');
       if (enter) materialize(Array.from(glassSet));
     } else { dirtyAll = true; queueSync(); }
-  }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-lg-tier', 'data-lg-wall', 'data-motion', 'data-o55-open'] });
+  }).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-lg', 'data-lg-tier', 'data-lg-wall', 'data-motion', 'data-o55-open', 'data-pmu-moment'] });
   applyWall();
   window.addEventListener('blur', function () { root.setAttribute('data-lg-inactive', ''); });
   window.addEventListener('focus', function () { root.removeAttribute('data-lg-inactive'); });
