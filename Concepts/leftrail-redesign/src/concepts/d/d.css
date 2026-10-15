@@ -2548,6 +2548,18 @@
   display: block; font: 500 11px/1.2 var(--body-font) !important; letter-spacing: 0 !important; text-transform: lowercase;
 }
 [data-rail-skin="d"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label::first-letter { text-transform: uppercase; }
+/* every expanded label reads at least 4.5:1 wherever it lands on the bar (measured on the P1000, 2026-10-14). The
+   shell gave the names the muted ink, about 2.7 in Friendly Light and under 4.5 in Friendly Dark and both Glass looks,
+   and removing the Home switch moved every name up a slot onto another part of the bar's gradient. They take the
+   secondary ink; Glass Light, whose frosted bar is a mid-tone, the text ink; Glass Dark, whose bar runs to a light lilac
+   at the top and under a lit tile's glow, the text ink over a soft shadow of the bar's own deep violet (no box, nothing
+   behind the bar changes). */
+[data-rail-skin="d"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon:not(.active) .icon-label { color: var(--d-label, var(--d-text-2)) !important; }
+[data-rail-skin="d"][data-theme="glass-light"] { --d-label: var(--text-primary); }
+[data-rail-skin="d"][data-theme="glass-dark"] { --d-label: var(--text-primary); }
+[data-rail-skin="d"][data-theme="glass-dark"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label {
+  text-shadow: 0 1px 2px rgba(18, 10, 36, .85), 0 0 9px rgba(18, 10, 36, .7);
+}
 [data-rail-skin="d"] #activityBar .icon:is([data-target], [data-ab-id="chat"]).active .icon-label { color: var(--d-text) !important; }
 /* NieR marks the open panel and the shown chat the shell's way, the whole item (icon and name) as one ink band,
    collapsed or expanded: the name is paper on that ink, never ink on ink */
@@ -2617,6 +2629,10 @@
   width: 28px !important; height: 28px !important; border-radius: var(--d-Rbar) !important;
   transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease), box-shadow var(--d-t1) var(--d-ease) !important;
 }
+/* empty, the button is the shell's muted affordance (opacity .45 on the whole item); the glyph stays muted, the name is
+   at full label ink so it reads (it still opens: the menu says how to hide an icon) */
+[data-rail-skin="d"] #activityBar > #abMoreBtn[data-empty="1"] { opacity: 1; }
+[data-rail-skin="d"] #activityBar > #abMoreBtn[data-empty="1"]:not(:hover, .is-menu-open, .pm-ab-drop-hot) .symbol { opacity: .45; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn:hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn.is-menu-open { color: var(--d-text) !important; opacity: 1; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn.is-menu-open .symbol { background: var(--d-press) !important; }
