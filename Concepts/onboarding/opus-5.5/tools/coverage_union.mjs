@@ -1,6 +1,7 @@
 /* Opt-in Chrome coverage for the PM7 harnesses. Off unless a harness is passed --coverage <file>.
  * Collects Profiler.startPreciseCoverage (JS) and CSS.startRuleUsageTracking, and merges every
- * used range into one union file so later runs add to it. A range is kept when any run executed it.
+ * recorded range into one union file. A count of 0 means the range was recorded and never ran.
+ * A range that is absent was not recorded. Later runs add to a count; they do not drop a zero.
  *
  *   takeCoverageFlag(argv)   removes --coverage <file> from argv and returns the absolute path, or null
  *   beginCoverage(session)   session.send(method, params) — call before the page loads
@@ -39,33 +40,109 @@ export async function beginCoverage(session) {
   await send('CSS.startRuleUsageTracking');
 }
 
-function jsKey(entry) {
-  return `${entry.script}|${entry.startOffset}|${entry.endOffset}`;
+function rangeKey(range) {
+  return `${range.startOffset}|${range.endOffset}`;
+}
+function functionKey(fn) {
+  const whole = (fn.ranges && fn.ranges[0]) || { startOffset: 0, endOffset: 0 };
+  return `${fn.functionName}|${whole.startOffset}|${whole.endOffset}`;
 }
 function cssKey(entry) {
   return `${entry.sheet}|${entry.startOffset}|${entry.endOffset}`;
 }
+function scriptKeyOf(entry) {
+  return entry.script;
+}
+
+function copyRange(range) {
+  return { startOffset: range.startOffset, endOffset: range.endOffset, count: range.count ?? 0 };
+}
+function copyFunction(fn) {
+  return {
+    functionName: fn.functionName || '',
+    isBlockCoverage: !!fn.isBlockCoverage,
+    ranges: (fn.ranges || []).map(copyRange),
+  };
+}
+function copyScript(entry) {
+  return {
+    script: entry.script,
+    url: entry.url || '',
+    functions: (entry.functions || []).map(copyFunction),
+  };
+}
+
+function mergeFunctions(baseFns, sampleFns) {
+  const functions = new Map((baseFns || []).map((fn) => [functionKey(fn), copyFunction(fn)]));
+  for (const fn of sampleFns || []) {
+    const key = functionKey(fn);
+    const prev = functions.get(key);
+    if (!prev) {
+      functions.set(key, copyFunction(fn));
+      continue;
+    }
+    const ranges = new Map(prev.ranges.map((range) => [rangeKey(range), copyRange(range)]));
+    for (const range of fn.ranges || []) {
+      const id = rangeKey(range);
+      const had = ranges.get(id);
+      if (had) had.count += range.count ?? 0;
+      else ranges.set(id, copyRange(range));
+    }
+    prev.isBlockCoverage = prev.isBlockCoverage || !!fn.isBlockCoverage;
+    prev.ranges = [...ranges.values()].sort((a, b) => a.startOffset - b.startOffset || a.endOffset - b.endOffset);
+  }
+  return [...functions.values()].sort((a, b) => functionKey(a).localeCompare(functionKey(b)));
+}
 
 export function mergeCoverage(base, sample) {
-  const js = new Map((base.js || []).map((entry) => [jsKey(entry), { ...entry }]));
+  const js = new Map((base.js || []).map((entry) => [scriptKeyOf(entry), copyScript(entry)]));
   for (const entry of sample.js || []) {
-    const key = jsKey(entry);
+    const key = scriptKeyOf(entry);
     const prev = js.get(key);
-    if (prev) prev.count += entry.count;
-    else js.set(key, { ...entry });
+    if (!prev) js.set(key, copyScript(entry));
+    else {
+      prev.functions = mergeFunctions(prev.functions, entry.functions);
+      if (!prev.url && entry.url) prev.url = entry.url;
+    }
   }
   const css = new Map((base.css || []).map((entry) => [cssKey(entry), { ...entry }]));
   for (const entry of sample.css || []) {
-    css.set(cssKey(entry), { sheet: entry.sheet, startOffset: entry.startOffset, endOffset: entry.endOffset });
+    const key = cssKey(entry);
+    const prev = css.get(key);
+    if (!prev) css.set(key, { sheet: entry.sheet, startOffset: entry.startOffset, endOffset: entry.endOffset, used: !!entry.used });
+    else prev.used = !!(prev.used || entry.used);
   }
-  const byJs = (a, b) => jsKey(a).localeCompare(jsKey(b));
   const byCss = (a, b) => cssKey(a).localeCompare(cssKey(b));
-  return { version: 1, js: [...js.values()].sort(byJs), css: [...css.values()].sort(byCss) };
+  return {
+    version: 2,
+    js: [...js.values()].sort((a, b) => a.script.localeCompare(b.script)),
+    css: [...css.values()].sort(byCss),
+  };
+}
+
+export function normalizeJsCoverage(scripts, keyFor) {
+  const entries = [];
+  for (const script of scripts || []) {
+    entries.push({
+      script: keyFor(script),
+      url: script.url || '',
+      functions: (script.functions || []).map((fn) => ({
+        functionName: fn.functionName || '',
+        isBlockCoverage: !!fn.isBlockCoverage,
+        ranges: (fn.ranges || []).map((range) => ({
+          startOffset: range.startOffset,
+          endOffset: range.endOffset,
+          count: range.count ?? 0,
+        })),
+      })),
+    });
+  }
+  return entries;
 }
 
 async function jsEntries(send, payload) {
   const scripts = Array.isArray(payload) ? payload : (payload && payload.result) || [];
-  const entries = [];
+  const keys = new Map();
   let debuggerOn = false;
   for (const script of scripts) {
     let scriptKey = script.url ? `url:${script.url}` : `script:${script.scriptId}`;
@@ -74,21 +151,10 @@ async function jsEntries(send, payload) {
       const { scriptSource } = await send('Debugger.getScriptSource', { scriptId: script.scriptId });
       if (typeof scriptSource === 'string') scriptKey = digest(scriptSource);
     } catch { /* keep the url key when the source cannot be read */ }
-    for (const fn of script.functions || []) {
-      for (const range of fn.ranges || []) {
-        if (!range.count) continue;
-        entries.push({
-          script: scriptKey,
-          url: script.url || '',
-          startOffset: range.startOffset,
-          endOffset: range.endOffset,
-          count: range.count,
-        });
-      }
-    }
+    keys.set(script, scriptKey);
   }
   if (debuggerOn) await send('Debugger.disable').catch(() => {});
-  return entries;
+  return normalizeJsCoverage(scripts, (script) => keys.get(script));
 }
 
 async function cssEntries(send, payload) {
@@ -96,7 +162,6 @@ async function cssEntries(send, payload) {
   const sheets = new Map();
   const entries = [];
   for (const rule of rules) {
-    if (!rule.used) continue;
     let sheet = sheets.get(rule.styleSheetId);
     if (!sheet) {
       try {
@@ -107,20 +172,47 @@ async function cssEntries(send, payload) {
       }
       sheets.set(rule.styleSheetId, sheet);
     }
-    entries.push({ sheet, startOffset: rule.startOffset, endOffset: rule.endOffset });
+    entries.push({
+      sheet,
+      startOffset: rule.startOffset,
+      endOffset: rule.endOffset,
+      used: !!rule.used,
+    });
   }
   return entries;
+}
+
+function emptyUnion() {
+  return { version: 2, js: [], css: [] };
 }
 
 function readUnion(file) {
   try {
     const parsed = JSON.parse(readFileSync(file, 'utf8'));
     if (!parsed || !Array.isArray(parsed.js) || !Array.isArray(parsed.css)) throw new Error('not a coverage union');
+    if (parsed.version !== 2) throw new Error('coverage union is an older shape; delete it and rerun');
     return parsed;
   } catch (err) {
-    if (err && err.code === 'ENOENT') return { version: 1, js: [], css: [] };
+    if (err && err.code === 'ENOENT') return emptyUnion();
     throw err;
   }
+}
+
+function coverageCounts(merged) {
+  let functions = 0;
+  let ranges = 0;
+  let zero = 0;
+  for (const script of merged.js) {
+    for (const fn of script.functions || []) {
+      functions += 1;
+      for (const range of fn.ranges || []) {
+        ranges += 1;
+        if (!range.count) zero += 1;
+      }
+    }
+  }
+  const unused = (merged.css || []).filter((rule) => !rule.used).length;
+  return { functions, ranges, zero, unused };
 }
 
 export async function endCoverage(session, file) {
@@ -137,6 +229,7 @@ export async function endCoverage(session, file) {
   const tmp = `${file}.tmp`;
   writeFileSync(tmp, JSON.stringify(merged));
   renameSync(tmp, file);
-  console.error(`coverage union: ${file} js=${merged.js.length} css=${merged.css.length} bytes=${Buffer.byteLength(JSON.stringify(merged))}`);
+  const counts = coverageCounts(merged);
+  console.error(`coverage union: ${file} scripts=${merged.js.length} functions=${counts.functions} ranges=${counts.ranges} zero=${counts.zero} css=${merged.css.length} unused=${counts.unused} bytes=${Buffer.byteLength(JSON.stringify(merged))}`);
   return merged;
 }
