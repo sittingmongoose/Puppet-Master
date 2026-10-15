@@ -603,3 +603,9 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(.o55t-callout, .o55t-bar) 
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .o55t-ring { box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .85), 0 0 0 5px rgba(var(--accent-primary-rgb), .35), 0 0 30px 6px rgba(var(--accent-primary-rgb), .3) !important; border-radius: 12px !important; }
 .lg-lenses-local { display: none; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) .lg-lenses-local { display: block; position: absolute; inset: 0; z-index: 30; pointer-events: none; border-radius: inherit; }
+
+/* Settings' chapter header is a bar sheet under Liquid Glass (glass.js SURFACES): on the bare wallpaper its line, a 62 %
+   tint, read 4.2:1 over Ribbons and 1.9-2.9:1 over Prism or Pool in Glass Dark (2026-10-14). The line takes the look's
+   secondary text on the bar, and the bar keeps the header's own spacing with room inside its corners. */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings header.workspace-separator[data-lg-kind] { padding: 10px 16px 11px !important; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings header.workspace-separator[data-lg-kind] > p { color: var(--text-secondary) !important; }
