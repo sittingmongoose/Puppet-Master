@@ -87,7 +87,9 @@ html[data-lg="on"][data-theme="glass-light"] .pmed-cz .pmt-cz-preview { backgrou
   linear-gradient(color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 50%, transparent), color-mix(in srgb, var(--pmt-cz-sfg, #ccc) 50%, transparent)) 8px 34px / 34px 3px no-repeat,
   var(--pmt-cz-sbg, #111); }
 .pmed-art-brackets, .pmed-art-lig { display: grid !important; place-items: center; font: 600 13px/1 var(--pm-font-code, ui-monospace, monospace); background: var(--pmt-cz-sbg, #111); color: var(--pmt-cz-sfg, #ccc); }
-.pmed-art-brackets::before { content: "({[ ]})"; letter-spacing: -.02em; background: linear-gradient(90deg, #e5c07b 0 16%, #c678dd 16% 33%, #61afef 33% 66%, #c678dd 66% 83%, #e5c07b 83%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.pmed-art-brackets::before { content: "({[ ]})"; letter-spacing: -.02em; color: transparent;
+  background: linear-gradient(90deg, var(--pmt-cz-sbp0, #e5c07b) 0 16%, var(--pmt-cz-sbp1, #c678dd) 16% 33%, var(--pmt-cz-sbp2, #61afef) 33% 66%, var(--pmt-cz-sbp1, #c678dd) 66% 83%, var(--pmt-cz-sbp0, #e5c07b) 83%);
+  -webkit-background-clip: text; background-clip: text; }
 .pmed-art-lig::before { content: "-> !="; font-variant-ligatures: normal; font-feature-settings: "liga" 1, "calt" 1; }
 .pmed-art-wrap { background:
   linear-gradient(var(--pmt-cz-sfg, #ccc), var(--pmt-cz-sfg, #ccc)) 8px 10px / 40px 3px no-repeat,
@@ -129,13 +131,13 @@ html[data-o55-nier="on"] .pmed-cz .pmed-art-syntax { background:
   linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 8px 10px / 12px 3px no-repeat, linear-gradient(var(--o55-nier-ok-text), var(--o55-nier-ok-text)) 14px 18px / 26px 3px no-repeat,
   linear-gradient(var(--o55-nier-warn-text), var(--o55-nier-warn-text)) 8px 26px / 14px 3px no-repeat,
   linear-gradient(rgba(var(--o55-nier-ink-rgb), .5), rgba(var(--o55-nier-ink-rgb), .5)) 8px 34px / 34px 3px no-repeat, var(--o55-nier-paper); }
-html[data-o55-nier="on"] .pmed-cz .pmed-art-brackets::before { background: linear-gradient(90deg, var(--o55-nier-ink) 0 16%, var(--o55-nier-warn-text) 16% 33%, var(--o55-nier-ok-text) 33% 66%, var(--o55-nier-warn-text) 66% 83%, var(--o55-nier-ink) 83%); -webkit-background-clip: text; background-clip: text; }
 @media (prefers-reduced-motion: no-preference) {
   html[data-o55-nier="on"]:not([data-motion="reduced"]) .pmt-cz-tile:is(:hover, :focus-visible) :is(.pmed-move-snappy, .pmed-move-glide) i { animation-timing-function: steps(8, end); }
 }
 
 /* code named in help: the code face, nothing joined */
-.pmed-code { font-family: var(--pm-font-code, ui-monospace, monospace); font-size: .95em; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; padding: 0 2px; border-radius: 3px; background: color-mix(in srgb, var(--pmw-text, #fff) 8%, transparent); }
+.pmed-code { font-family: var(--pm-font-code, ui-monospace, monospace); font-size: .95em; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; padding: 0 2px; border-radius: 3px; background: color-mix(in srgb, var(--pmw-text, #fff) 8%, transparent);
+  color: var(--pmw-text, inherit); }   /* the full ink on its tint: the help's second tier read 4.2:1 there (EC-05) */
 .pmed-cz[data-pmt-look="retro"] .pmed-code, html[data-o55-nier="on"] .pmed-cz .pmed-code { border-radius: 0; }
 /* a slider under its own heading: no label in front of it */
 .pmed-cz .pmed-slider-bare { grid-template-columns: minmax(0, 1fr) 54px; }

@@ -13,8 +13,10 @@
   --pmw-ed-ln: color-mix(in srgb, var(--pmw-ed-fg) 42%, transparent);
   --pmw-ed-ln-cur: var(--pmw-ed-fg);
   --pmw-ed-line: color-mix(in srgb, var(--pmw-ed-fg) 5%, transparent);
-  --pmw-ed-sel: color-mix(in srgb, var(--pmw-accent) 32%, transparent);
-  --pmw-ed-sel-blur: color-mix(in srgb, var(--pmw-ed-fg) 13%, transparent);
+  /* the selections a step quieter than they were (32 % and 13 %): every word is floored on them as on the ground
+     (10-editor.js, applyFloor), and on these its colour moves little (landing QA EC-10) */
+  --pmw-ed-sel: color-mix(in srgb, var(--pmw-accent) 19%, transparent);
+  --pmw-ed-sel-blur: color-mix(in srgb, var(--pmw-ed-fg) 8%, transparent);
   --pmw-ed-caret: var(--pmw-accent);
   --pmw-ed-hit: color-mix(in srgb, #e5c07b 26%, transparent);
   --pmw-ed-hit-cur: color-mix(in srgb, #e5c07b 52%, transparent);
@@ -127,7 +129,7 @@ html[data-theme="retro-dark"] .pmw-ed {
   --pmw-ed-fg: #7ee36b;
   --pmw-ed-ln: #4e9a3e; --pmw-ed-ln-cur: #c8ffb0;
   --pmw-ed-line: rgba(126, 227, 107, .06);
-  --pmw-ed-sel: #7ee36b; --pmw-ed-sel-blur: #4e9a3e;
+  --pmw-ed-sel: #7ee36b; --pmw-ed-sel-blur: #7ee36b;   /* reverse video when blurred too: a mid green inverted words to 1.1:1 */
   --pmw-ed-caret: #7ee36b;
   --pmw-ed-hit: rgba(216, 185, 60, .22); --pmw-ed-hit-cur: rgba(216, 185, 60, .40); --pmw-ed-hit-ring: #d8b93c; --pmw-ed-hit-mark: #d8b93c;
   --pmw-ed-focus-bg: rgba(126, 227, 107, .14);
@@ -142,7 +144,7 @@ html[data-theme="retro-light"] .pmw-ed {
   --pmw-ed-fg: #1a1a1a;
   --pmw-ed-ln: #8a8478; --pmw-ed-ln-cur: #1a1a1a;
   --pmw-ed-line: rgba(26, 26, 26, .05);
-  --pmw-ed-sel: #ffffff; --pmw-ed-sel-blur: #b9b2a5;
+  --pmw-ed-sel: #ffffff; --pmw-ed-sel-blur: #ffffff;
   --pmw-ed-caret: #ffffff;
   --pmw-ed-hit: rgba(180, 90, 0, .16); --pmw-ed-hit-cur: rgba(180, 90, 0, .32); --pmw-ed-hit-ring: #1a1a1a; --pmw-ed-hit-mark: #b45a00;
   --pmw-ed-focus-bg: rgba(0, 71, 171, .10);
@@ -160,7 +162,7 @@ html[data-theme="retro-dark"] .pmw-ed[data-phosphor="amber"] {
   --pmw-ed-fg: #ffc25f;
   --pmw-ed-ln: #c37800; --pmw-ed-ln-cur: #ffedd1;
   --pmw-ed-line: rgba(255, 194, 95, .06);
-  --pmw-ed-sel: #ffc25f; --pmw-ed-sel-blur: #c37800;
+  --pmw-ed-sel: #ffc25f; --pmw-ed-sel-blur: #ffc25f;
   --pmw-ed-caret: #ffc25f;
   --pmw-ed-hit: rgba(255, 243, 222, .18); --pmw-ed-hit-cur: rgba(255, 243, 222, .34); --pmw-ed-hit-ring: #fff3de; --pmw-ed-hit-mark: #fff3de;
   --pmw-ed-focus-bg: rgba(255, 194, 95, .14);
@@ -188,7 +190,7 @@ html[data-o55-nier="on"] .pmw-ed {
   --pmw-ed-fg: var(--o55-nier-code-fg);
   --pmw-ed-ln: rgba(var(--o55-nier-ink-rgb), .5); --pmw-ed-ln-cur: var(--o55-nier-ink);
   --pmw-ed-line: rgba(var(--o55-nier-ink-rgb), .06);
-  --pmw-ed-sel: var(--o55-nier-term-selection); --pmw-ed-sel-blur: rgba(var(--o55-nier-ink-rgb), .12);
+  --pmw-ed-sel: color-mix(in srgb, var(--o55-nier-term-selection) 60%, transparent); --pmw-ed-sel-blur: rgba(var(--o55-nier-ink-rgb), .08);
   --pmw-ed-caret: var(--o55-nier-ink);
   --pmw-ed-hit: rgba(var(--o55-nier-ink-rgb), .14); --pmw-ed-hit-cur: rgba(var(--o55-nier-ink-rgb), .28);
   --pmw-ed-hit-ring: var(--o55-nier-ink); --pmw-ed-hit-mark: var(--o55-nier-ink);
